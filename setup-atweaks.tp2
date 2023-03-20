@@ -1,0 +1,528 @@
+/*************************************************************************
+ *                        aVENGER's Tweak Pack (aTweaks)
+ *                              -=by aVENGER=-
+ *                 http://www.spellholdstudios.net/ie/atweaks
+ *************************************************************************/
+
+
+
+BACKUP ~atweaks/backup~
+AUTHOR "Wisp, shsforums.net"                                                       // Author and e-mail address
+VERSION ~v4.53~                                                                    // Mod version
+
+ALWAYS                                                                             // Always do this block
+  INCLUDE ~aTweaks/LIB/RR#AGLEF.TPH~                                               // Include my custom "Add Global Effect" function
+  INCLUDE ~aTweaks/LIB/RR#SP2IN.TPH~                                               // Include my custom "Spell to Innate" function
+  INCLUDE ~aTweaks/LIB/REGEXP.TPH~                                                 // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
+  INCLUDE ~aTweaks/lib/iwd1fix.tpa~                                                // fix some IDS file issues with IWD1 to ensure proper script compiling
+  INCLUDE "atweaks/lib/rr#mdcre.tph"
+  INCLUDE "atweaks/lib/rr#mdcsc.tph"
+  INCLUDE "atweaks/lib/lib.tpa"
+  INCLUDE "atweaks/lib/comp_vars.tpa"
+  RANDOM_SEED go
+
+  OUTER_PATCH ~12~ BEGIN
+    WRITE_BYTE 1 0x09
+    READ_ASCII 1 tab (1)  // 0x09, tab
+    WRITE_BYTE 1 0x0a
+    READ_ASCII 1 lnl (1)  // 0x0a, Linux
+    WRITE_BYTE 0 0x0d
+    READ_ASCII 0 mnl (1)  // 0x0d, Mac
+    READ_ASCII 0 wnl (2)  // 0x0d0a, Windows
+  END
+<<<<<<<< ...blank
+>>>>>>>>
+
+  LAM bgee_language
+END                                                                                // End the ALWAYS block
+
+// README ~atweaks/doc/readme_atweaks.html~                                           // Offer to display the main readme
+ASK_EVERY_COMPONENT                                                                // Disallow installing all components at once
+
+
+LANGUAGE ~English~ ~english~ ~atweaks/tra/english/setup.tra~
+                             ~atweaks/tra/english/game.tra~
+
+LANGUAGE ~Francais~ ~french~ ~atweaks/tra/english/setup.tra~
+                             ~atweaks/tra/english/game.tra~
+                             ~atweaks/tra/french/setup-%WEIDU_OS%.tra~
+                             ~atweaks/tra/french/game.tra~
+
+LANGUAGE ~Espanol~ ~spanish~ ~atweaks/tra/english/setup.tra~
+                             ~atweaks/tra/english/game.tra~
+                             ~atweaks/tra/spanish/setup-%WEIDU_OS%.tra~
+                             ~atweaks/tra/spanish/game.tra~
+
+LANGUAGE ~Deutsch~ ~german~ ~atweaks/tra/english/setup.tra~
+                            ~atweaks/tra/english/game.tra~
+                            ~atweaks/tra/german/setup-%WEIDU_OS%.tra~
+                            ~atweaks/tra/german/game.tra~
+
+LANGUAGE ~Italian~ ~italian~ ~atweaks/tra/english/setup.tra~
+                             ~atweaks/tra/english/game.tra~
+                             ~atweaks/tra/italian/setup-%WEIDU_OS%.tra~
+                             ~atweaks/tra/italian/game.tra~
+
+LANGUAGE ~Russian~ ~russian~ ~atweaks/tra/english/setup.tra~
+                             ~atweaks/tra/english/game.tra~
+                             ~atweaks/tra/russian/game.tra~
+
+LANGUAGE ~Polish~ ~polish~ ~atweaks/tra/english/setup.tra~
+                           ~atweaks/tra/english/game.tra~
+                           ~atweaks/tra/polish/setup.tra~
+                           ~atweaks/tra/polish/game.tra~
+
+
+
+// ******************************************************* PnP spell tweaks *************************************************************************************
+
+// Make Spiritual Hammer into a ranged force weapon and remove its strength bonus to damage
+BEGIN @102 DESIGNATED 1000
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED spell_rev.tp2 0 @98
+INCLUDE ~atweaks/lib/pnp-spell/102-spiritual_hammer.tpa~
+
+
+// Allow Dispel/Remove Magic to take down Globes of Invulnerability
+BEGIN @103 DESIGNATED 1010
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED spell_rev.tp2 0 @98
+INCLUDE ~atweaks/lib/pnp-spell/103-dispellable_globes.tpa~
+
+
+// PnP Color Spray
+BEGIN @104 DESIGNATED 1020
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/pnp-spell/104-color_spray.tpa~
+
+
+// PnP Dimension Door
+BEGIN @105 DESIGNATED 1030
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/pnp-spell/105-dimension_door.tpa~
+
+
+// Allow Mages to scribe memorized spells onto scrolls
+BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
+GROUP @5
+REQUIRE_PREDICATE !GAME_IS ~iwdee~ @92
+OUTER_SET Restrictions = 1
+INCLUDE "atweaks/lib/pnp-spell/115-scribe_scrolls.tpa"
+
+BEGIN @116 SUBCOMPONENT @115 DESIGNATED 1041 // Scrolls can be scribed everywhere
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
+OUTER_SET Restrictions = 0
+INCLUDE "atweaks/lib/pnp-spell/115-scribe_scrolls.tpa"
+
+
+
+
+// ******************************************************* PnP class and race tweaks *************************************************************************************
+
+// Restore innate infravision to Half-Orc characters
+BEGIN @100 DESIGNATED 2000
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+INCLUDE ~atweaks/lib/class-and-race/100-infravision.tpa~
+
+
+// Restore innate disease immunity to Paladins
+BEGIN @120 DESIGNATED 2010
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+REQUIRE_PREDICATE !FILE_EXISTS_IN_GAME k0pa001.spl @98
+INCLUDE ~atweaks/lib/class-and-race/120-paladins.tpa~
+
+
+// Rangers' Animal Empathy improves with experience
+BEGIN @125 DESIGNATED 2020
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED SETUP-OVERSIGHT.TP2 3 @98
+INCLUDE ~atweaks/lib/class-and-race/125-animal_empathy.tpa~
+
+
+// Additional racial traits for Dwarves 
+BEGIN @130 DESIGNATED 2030
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/class-and-race/130-dwarf_traits.tpa~
+
+
+// Additional racial traits for Gnomes
+BEGIN @140 DESIGNATED 2040
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE "atweaks/lib/class-and-race/140-gnome_traits.tpa"
+
+
+// ******************************************************* PnP item tweaks *************************************************************************************
+
+// Magical arrows and bolts deal bonus damage equal to their enchantment level
+BEGIN @110 DESIGNATED 3000
+GROUP @7
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bg2ee~ @92
+REQUIRE_PREDICATE !GAME_IS ~tutu tutu_totsc~ @91
+REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 bgee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED item_rev.tp2 0 AND !MOD_IS_INSTALLED bgttweak.tp2 2204 AND !GAME_IS ca @98 //Avoid content duplication
+INCLUDE ~atweaks/lib/pnp-item/110-magical_ammunition.tpa~
+
+
+
+// ******************************************************* PnP monster tweaks *************************************************************************************
+
+// PnP Fiends
+BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4000 // PnP Fiends, mod-added fiends are also affected
+GROUP @6
+COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               //Installation marker
+COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker 
+OUTER_SET FiendsOriginal = 0
+OUTER_SET FiendsScripts = 0
+INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+
+BEGIN @151 SUBCOMPONENT @150 DESIGNATED 4001 // PnP Fiends, Mod-added fiends are not affected
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               // Installation marker 
+OUTER_SET FiendsOriginal = 1
+OUTER_SET FiendsScripts = 0
+INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+
+BEGIN @153 SUBCOMPONENT @150 DESIGNATED 4002 // PnP Fiends, only scripts
+GROUP @6
+COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               //Installation marker
+COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker
+OUTER_SET FiendsOriginal = 0
+OUTER_SET FiendsScripts = 1
+INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+
+
+// Revised Fiend summoning 
+BEGIN @157 DESIGNATED 4010
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME fl#atfiends1.mrk @94
+COPY_EXISTING sw1h01.itm "override/fl#fiendsum.mrk"                               //Installation marker
+INCLUDE "atweaks/lib/pnp-monster/157-fiend_summoning_revised.tpa"
+
+
+// Further Revised Fiend summoning 
+BEGIN @155 DESIGNATED 4020
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME fl#fiendsum.mrk @89
+INCLUDE "atweaks/lib/pnp-monster/155-fiend_summoning_further.tpa"
+
+
+// Fiendish Gating
+BEGIN @156 DESIGNATED 4030
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME fl#atfiends1.mrk @94
+INCLUDE "atweaks/lib/pnp-monster/156-fiendish_gating.tpa"
+
+
+// PnP Undead
+BEGIN @160 DESIGNATED 4040
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+INCLUDE "atweaks/lib/pnp-monster/160-undead.tpa"
+
+
+// Prevent skeletal undead from being affected by Illithids' Devour Brain attack
+BEGIN @101 DESIGNATED 4050
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2~ @92
+INCLUDE "atweaks/lib/pnp-monster/101-devour_brain.tpa"
+
+
+// PnP Mephits
+BEGIN @180 DESIGNATED 4060
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 iwdee~ @92
+REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+INCLUDE "atweaks/lib/pnp-monster/180-mephit.tpa"
+
+
+// PnP Fey creatures
+BEGIN @185 DESIGNATED 4070
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee iwdee~ @90
+REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+INCLUDE "atweaks/lib/pnp-monster/185-fey.tpa"
+
+
+// Revised Call Woodland Beings spell
+BEGIN @186 DESIGNATED 4080
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee iwdee~ @90
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#fdrya.bcs~ @1908                         // PnP Fey creatures required
+INCLUDE ~atweaks/lib/pnp-monster/186-woodland_beings.tpa~
+
+
+// PnP Elementals
+BEGIN @190 DESIGNATED 4090
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90                                              // ToB engine required
+REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+INCLUDE "atweaks/lib/pnp-monster/190-elemental.tpa"
+
+
+// Increase the Hit Dice of Elemental Princes
+BEGIN @191 DESIGNATED 4100
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#easer.bcs~ @2000                         // PnP Elementals component required
+INCLUDE "atweaks/lib/pnp-monster/191-elemental_princes.tpa"
+
+
+// PnP Spiders, Snakes and Ettercaps
+// BEGIN @187 DESIGNATED 4110
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+// INCLUDE "atweaks/lib/pnp-monster/187-spider.tpa"
+
+
+// PnP Ooze creatures
+// BEGIN @188 DESIGNATED 4120
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+// INCLUDE "atweaks/lib/pnp-monster/188-ooze.tpa"
+
+
+// PnP Plant creatures
+// BEGIN @189 DESIGNATED 4130
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
+// INCLUDE "atweaks/lib/pnp-monster/189-plant.tpa"
+
+
+
+// ******************************************************* Gameplay tweaks ********************************************************************************
+
+// Allow Breach to take down Stoneskin effects applied by items
+BEGIN @200 DESIGNATED 5000
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bg2ee~ @92 // Affects nothing in BG: EE
+INCLUDE ~atweaks/lib/gameplay/200-breach_stoneskin.tpa~
+
+
+// Instant casting for warrior innates
+BEGIN @201 DESIGNATED 5010
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/gameplay/201-instant_warrior.tpa~
+
+
+// Revised Bhaalpowers
+BEGIN @240 SUBCOMPONENT @202 DESIGNATED 5020 // Enhance the Bhaalpowers and standardize their casting time
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee~ @90
+REQUIRE_PREDICATE !GAME_IS ~ca~ @92
+REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 iwdee~ @92
+INCLUDE ~atweaks/lib/gameplay/240-revised_bhaalpowers.tpa~
+
+BEGIN @241 SUBCOMPONENT @202 DESIGNATED 5021 // Only standardize the Bhaalpowers' casting time
+GROUP @2
+INCLUDE ~atweaks/lib/gameplay/241-standardised_bhaalpowers.tpa~
+
+
+// Regain Bhaalpowers in ToB
+BEGIN @218 DESIGNATED 5030
+GROUP @2
+REQUIRE_PREDICATE GAME_INCLUDES ~tob~ @90
+INCLUDE ~atweaks/lib/gameplay/218-tob_bhaalpowers.tpa~
+
+
+// Make druidic shapeshifting uninterruptable
+BEGIN @203 DESIGNATED 5040
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+INCLUDE ~atweaks/lib/gameplay/203-druidic_shapeshifting.tpa~
+
+
+// Prevent Mislead clones from singing Bard songs
+BEGIN @204 DESIGNATED 5050
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED spell_rev.tp2 0 @98
+INCLUDE ~atweaks/lib/gameplay/204-misled_bards.tpa~
+
+
+// Prevent Project Image and Simulacrum clones from using quickslot items
+BEGIN @205 DESIGNATED 5060
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED spell_rev.tp2 0 @98
+INCLUDE ~atweaks/lib/gameplay/205-clones_quickslot.tpa~
+
+
+// Restore the Dispel Magic vulnerability to Nishruu and Hakeashars
+BEGIN @210 DESIGNATED 5070
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/gameplay/210-dispel_nishruu.tpa~
+
+
+// Make Death Ward protect against Vorpal Hits
+BEGIN @211 DESIGNATED 5080
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+REQUIRE_PREDICATE !MOD_IS_INSTALLED spell_rev.tp2 0 @98
+INCLUDE ~atweaks/lib/gameplay/211-ward_vorpal.tpa~
+
+
+// Make alignment detection spells more accurate
+BEGIN @212 DESIGNATED 5090
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE "atweaks/lib/gameplay/212-detect_alignment.tpa"
+
+
+// Expanded saving throw bonus tables for Dwarves, Gnomes and Halflings
+BEGIN @213 DESIGNATED 5100
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/213-short_saves.tpa~
+
+
+// Bard songs break invisibility
+BEGIN @217 SUBCOMPONENT @215 DESIGNATED 5110 // All Bard songs break invisibility
+GROUP @2
+COPY_EXISTING ~sw1h01.itm~ ~override/RR#BSBI2.RR~                                  // component marker (needed for the "Simple Bard Script" component)
+OUTER_SET jester_song = 0
+INCLUDE ~atweaks/lib/gameplay/215-song_invisibility.tpa~
+
+BEGIN @216 SUBCOMPONENT @215 DESIGNATED 5111 // Only the Jester song breaks invisibility
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+COPY_EXISTING ~sw1h01.itm~ ~override/RR#BSBI1.RR~                                  // component marker (needed for the "Simple Bard Script" component)
+OUTER_SET jester_song = 1
+INCLUDE ~atweaks/lib/gameplay/215-song_invisibility.tpa~
+
+
+// Altered XP rewards from locks, traps and scrolls
+BEGIN @261 SUBCOMPONENT @260 DESIGNATED 5120 // Improved (lowered) XP rewards from locks, traps and scrolls
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
+OUTER_SET improved_xp_rewards = 1
+INCLUDE ~atweaks/lib/gameplay/260-xp_rewards.tpa~
+
+BEGIN @262 SUBCOMPONENT @260 DESIGNATED 5121 // No XP rewards from locks, traps and scrolls
+GROUP @2
+OUTER_SET improved_xp_rewards = 0
+INCLUDE ~atweaks/lib/gameplay/260-xp_rewards.tpa~
+
+
+// Unbiased quest rewards
+BEGIN @270 DESIGNATED 5130
+GROUP @2
+REQUIRE_PREDICATE GAME_INCLUDES ~soa~ @92
+INCLUDE ~atweaks/lib/gameplay/270-evil_rewards.tpa~
+
+
+// Simple Thief script
+BEGIN @220 DESIGNATED 5140
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob totlm iwd2 bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/gameplay/220-thief_script.tpa~
+
+
+// Simple Bard script
+BEGIN @230 DESIGNATED 5150
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob totlm iwd2 bgee bg2ee~ @92
+INCLUDE ~atweaks/lib/gameplay/230-bard_script.tpa~
+
+
+// Simple Cleric/Paladin script
+BEGIN @239 DESIGNATED 5160
+GROUP @2
+REQUIRE_PREDICATE ENGINE_IS ~tob totlm bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/gameplay/239-cleric_script.tpa~
+
+
+
+// ******************************************************* Cosmetic tweaks ********************************************************************************
+
+// Use Icewind Dale's Dimension Door animation and sound effect
+BEGIN @322 SUBCOMPONENT @300 DESIGNATED 6000 // Slow animation speed (matches BG2)
+GROUP @3
+INCLUDE ~atweaks/lib/cosmetic/322-dimension-door.tpa~
+
+BEGIN @321 SUBCOMPONENT @300 DESIGNATED 6001 // Fast animation speed (matches IWD)
+GROUP @3
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+INCLUDE ~atweaks/lib/cosmetic/321-dimension-door.tpa~
+
+BEGIN @323 SUBCOMPONENT @300 DESIGNATED 6002 // Use IWD animation for spells, retain BG2 animation for other visuals
+GROUP @3
+INCLUDE ~atweaks/lib/cosmetic/323-dimension-door.tpa~
+
+BEGIN @324 SUBCOMPONENT @300 DESIGNATED 6003 // Fast animation speed, shorter delay between animation start and creature appearance/disappearance
+GROUP @3
+INCLUDE ~atweaks/lib/cosmetic/324-dimension-door.tpa~
+
+
+// Change the appearance of Valygar's armor
+BEGIN @301 DESIGNATED 6010
+GROUP @3
+REQUIRE_PREDICATE GAME_INCLUDES ~soa~ @92
+INCLUDE ~atweaks/lib/cosmetic/301-valygar_armour.tpa~
+
+
+// Change the appearance of the Robe of Vecna
+BEGIN @302 DESIGNATED 6020
+GROUP @3
+REQUIRE_PREDICATE GAME_INCLUDES ~soa~ @92
+INCLUDE ~atweaks/lib/cosmetic/302-vecna_robe.tpa~
+
+
+// Distinctive creature coloring
+BEGIN @310 DESIGNATED 6030
+GROUP @3
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+INCLUDE "atweaks/lib/comestic/310-creature_colouring.tpa"
+
+
+// Distinctive creature soundsets
+BEGIN @315 DESIGNATED 6040
+GROUP @3
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+INCLUDE "atweaks/lib/comestic/315-creature_soundset.tpa"
+
+
+
+// ******************************************************* Miscellaneous tweaks ****************************************************************************
+
+// Slightly expanded storage capacity for containers
+BEGIN @501 SUBCOMPONENT @500 DESIGNATED 7000 // Use the recommended storage capacity value
+GROUP @4
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE ~atweaks/lib/misc/501-recommended_storage.tpa~
+
+BEGIN @502 SUBCOMPONENT @500 DESIGNATED 7001 // Manually enter the storage capacity value
+GROUP @4
+INCLUDE ~atweaks/lib/misc/502-manual_storage.tpa~
+
+
+// Expanded temple services
+BEGIN @510 DESIGNATED 7010
+GROUP @4
+REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+INCLUDE "atweaks/lib/misc/510-temple_services.tpa"
+
+
+// BG2-style icons for aTweaks content
+BEGIN @520 DESIGNATED 7020 // BG2-style icons for aTweaks content
+GROUP @4
+COPY    ~atweaks/bam/bg2s~   ~override~

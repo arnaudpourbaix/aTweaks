@@ -1,0 +1,77 @@
+
+COPY ~atweaks/spl/spwi105.spl~ ~override~                                          // Color Spray
+  SAY NAME1 @1000000 SAY NAME2 #-1
+  SAY UNIDENTIFIED_DESC @1890 SAY DESC @1890
+  PATCH_IF GAME_IS ~iwdee~ BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 target = 2 opcode = 324 duration = 1 parameter2 = 23 END // do not affect blinded creatures
+  END
+
+COPY ~atweaks/spl/mephits/rr#mracs.spl~ ~override/spin937.spl~                     // Color Spray (Radiant Mephit version)
+  SAY NAME1 @1000000 SAY NAME2 #-1
+  SAY UNIDENTIFIED_DESC @1890 SAY DESC @1890
+  PATCH_IF GAME_IS ~iwdee~ BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 target = 2 opcode = 324 duration = 1 parameter2 = 23 END // do not affect blinded creatures
+  END
+
+// Patch immunity to both Color Spray versions into spells, items that cause blindness
+// Note: Color Spray should not protect the target from its own effects. It's clunky and can often cause more harm than good. 
+// The drawbacks outweigh the benefits in this case.
+ACTION_IF !GAME_IS ~iwdee~ BEGIN // not needed on IWD:EE
+// Begin : Add Spells from IWDification mod or stratagems mods version
+  ACTION_IF IDS_OF_SYMBOL ("spell" "CLERIC_SUNSCORCH") > 0 BEGIN
+    OUTER_SET code=IDS_OF_SYMBOL ("spell" "CLERIC_SUNSCORCH")
+    OUTER_SET code=code - 1000
+    OUTER_SPRINT IWDsuns "SPpr%code%"
+  END ELSE BEGIN
+    OUTER_SPRINT IWDsuns ""
+  END
+  ACTION_IF IDS_OF_SYMBOL ("spell" "CLERIC_CLOUD_OF_PESTILENCE") > 0 BEGIN
+    OUTER_SET code=IDS_OF_SYMBOL ("spell" "CLERIC_CLOUD_OF_PESTILENCE")
+    OUTER_SET code=code - 1000
+    OUTER_SPRINT IWDcldp "SPpr%code%"
+  END ELSE BEGIN
+    OUTER_SPRINT IWDcldp ""
+  END
+// End : Add Spells from IWDification mod or stratagems mods version
+ACTION_FOR_EACH ~file~ IN
+                ~spdr101.spl~
+                ~spin595.spl~
+                ~spin878.spl~
+                ~spin893.spl~
+                ~spin929.spl~
+                ~spin931.spl~
+                ~sppr313.spl~ //SpellPack b6
+                ~sppr614c.spl~ //SpellPack b6
+                ~sppr614d.spl~ //SpellPack b6				
+                ~sppr704.spl~
+                ~sppr707.spl~
+                ~spwi106.spl~
+                ~spwi118.spl~
+                ~spwi224.spl~
+				~spwi224c.spl~ //SpellPack b6
+                ~spwi714.spl~
+                ~spwi815.spl~
+                ~spwi958.spl~
+                ~spwm178.spl~
+                ~chalcy2.itm~
+                ~gorwom4.itm~
+                 ~halb06.itm~
+                 ~halb06.spl~ // IR/IRR
+				 ~sorb.itm~
+                 ~sw1h51.itm~
+				 ~sw1h51.spl~ // IR/IRR
+                 ~wand19.itm~
+                 ~wand19.spl~ // IR/IRR
+				 ~%IWDsuns%.spl~// Sunscorch (IWDification)
+				 ~%IWDcldp%.spl~ // Cloud of Pestilence (IWDification)
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME ~%file%~ BEGIN
+    COPY_EXISTING ~%file%~ ~override~
+      PATCH_IF (SOURCE_SIZE > 0x71) THEN BEGIN                                     // protects against invalid files
+        LPF add_conditional_immunity INT_VAR f_Condition = 74 STR_VAR f_Spell = spwi105 END
+        LPF add_conditional_immunity INT_VAR f_Condition = 74 STR_VAR f_Spell = spin937 END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
+END

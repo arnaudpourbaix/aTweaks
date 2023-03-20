@@ -1,0 +1,286 @@
+
+**setup-atweak.tp2 :
+    1 - Split fiend summon update mod in order to allow installing summoning separatly : to optain compatibility with Stratagems there is 2 ways : quote mage.tpa line 829 of Stratgems mod or make the atweaks fiend summoning optionnal - New : Component 154 created and 155 renamed
+
+**setup.tra :
+
+   21 - the new component has been introduce and translated in all languagues (not russian, setup.tra does not exist in russian) (@89 and @157)
+
+**125 - animal empathy
+    2 - added compatibility with Divine Remix - Wilderness Runner Kit - 'Enhanced Charm Animal' now evolved with level like 'charm Animal'
+
+**C150 - PnP Fiends
+
+    3 - Compatibility with IAvb5, now if you install atweaks after IAvb5, you will keep animation changes done by IAvb5 (usefull for pit fiends, alu-fiends and others animations change)
+    4 - add more fiends from mods - only if [mod-added fiends] option is installed :
+		- Longer Road
+		- TDD
+		- Wheels
+		- SoS
+		- RoT
+		- Saerileth
+		- BP
+		- Drizzt Saga
+		- Refinement
+		- Spellhold Gauntlet
+		- Tales of Anegh
+		- Aurora
+		- Ascension
+		- NTotSC
+		- DSotSC
+		- Balduran's Seatower
+		- npc stronghold
+		- Planar Sphere Mod
+		- Improved Asylum
+		- Tower of Deception
+		- VCv21
+		- Kiara-Zaiya...
+   22 - Gelugon get proper installation like others fiends
+   23 - Compatibility with Stratagems: update Script to remove (DW2****) 
+   38 - Compatibility with Stratagems component: [Improved Demon Cultists]
+   39 - small script update: move DialogueInterrupt(FALSE) lower for compatibility
+   48 - compatibility with Stratagems component: 7080 [Improved Demon Cultists] (don't mod Aec'Letec)
+   49 - compatibility with Stratagems improved fiend component 6510: MELSUM02 is nomore a tanarri, moove all summoning compatibility part to 154 - component
+   50 - remove the green de-patch, not needed anymore with v34
+   51 - Compatibility with NTotSC Improved Lesser Fiends component 10: fiend could be 3 alu-fiends or 2 maurezhi and 1 succubus
+   52 - Remove BG1NPC compatibility witch is obsolete
+   58 - Add gating script for Ascension fiend even if the component 156-fiendish_gating is not installed
+   61 - Do not touch Priest gate spell if Spell rev. is installed (it summons a death knight not a fiend)
+   67 - missing Thac0 for balor and Marilith
+   68 - Remove vanilla off-hand for Marilith 
+   73 - Add "only" 5 attack instead of emulation of 7 to Marilith at 1d12 (4x) instead of 1d8 (6x) and add a tail attack (off-hand) every rounds
+   74 - Change Alu-fiend animation (female elf mage + wings if exists) + new special armor for compatibility issues with item_rev and +1 to constitution for the challenge (+10 hp)
+   75 - Change Cambion animation (dark human male fighter with dark plate armor and horns), strength (18/100) and add a "bulky metal armor" that allow spellcasting and stealth, new class : MAGE_THIEF and mage kit : Illusionist (3 more spells)
+   76 - Correction to some demons Ability Scores (PnP source for cambion and logic for others) :
+		Pit fiend's wisdom, dexterity and constitution was 16. Update all at 19
+		Marilith's Constitution was 12: set at 21
+		Cambion's strength (18/00 was 18/76), constitution (16 was 17), dexterity (18 was 16) and wisdom (13 was 8)
+		nycaloth level 11 was 12
+   77 - Change Vorpal effect of Balor sword to allow a save at -2 vs death to avoid some frustrations... and you now have to install componenent 211-ward_vorpal to allow protection for it (as for other vorpal effects)
+   82 - Add missing IMMUNINITY to weapons
+   83 - Add missing fiends immunity to Cambions
+   89 - Add Silver and Green Abishai
+   90 - correction to stats for abishai (move, hp and magic resistance)
+   103 - Remove continue() after DestroyItem("dw#sumfi") from summoned fiend scipts to allow the script to work as intended (selection circle become green or red on circonstances) when stratagem is installed
+   104 - remove protection from normal weapon from fiends imminity ring and add it with IMMUNEx.itm
+   113 - PnP Imp and Quasits familliar
+   
+**C190 - pnp elementals
+
+    5 - Compatibility with Stratagems component 4240 [treat mage and priest Hla as innate] : atweaks will change innate version of elemental summoning spells too
+    6 - Compatibility added with mod that add 'water elemntal summoning' (Stratagems + IWDification)
+    7 - Added new graphics for water elemental summoning for IWDification and Stratagems invocations (already present but not used)
+    8 - Add more elementals creatures from mods :
+		- Afaaq the DjinniCompanion
+		- RoT
+		- IWDification
+		- NTotSC
+		- DEVIN
+		- Tower of Deception
+		- Stratagems
+		- Arena
+		- Devin Remix
+		- TDD
+		- Made in heaven Q&E
+		- Pof QuestPack
+		- BST
+		- Refinements
+		- Spell Revision
+		- TS... 
+    9  - Compatibility with IAvb5, now if you install atweaks after IAvb5, you will keep animation changes done by IAvb5 + use new animations for Elementals (12 HD) and for water elementals
+    24 - Compatibility with Stratagems : update Script to remove (DW2****) 
+	28 - fix typo for spair1 should be ELAIRSU2 instead of ELAIRSU1 (alignement to BG2 fixpack and more coherent with other spells)
+	29 - Compatibility with IWDification salamanders (WIZARD_MONSTER_SUMMONING_6)
+	30 - Compatibility with Divine Remix Priest Air elemental summoning spell
+	31 - Compatibility for Invisible Stalker with SCS Script to check updated (DW#SUMEI)
+	36 - Add Ice Paraelemental
+	37 - Nerf Aerial servant (remove the strength bonus from weapon)
+	71 - Small fixes
+	85 - remove useless string "invisible" when concealement spell is cast
+   105 - Reworked Nereid to be more in line with PnP source :
+		 - Rework summoning spell (rr#ensww.eff): Nereid can summons a creature that look like a Water weird (no drown capacity and lower thac0) that deal 1d4 with a Thac0 of 17
+		 - Rework Kiss (rr#enkis.spl): If the player succeed its roll, it finds total ecstasy (PnP) - Add : +2 bonus to THAC0, damage, and morale, as well as a +20% hp and any spells cast will be as if the caster were two levels higher for 5 turns. Additionally it removes and protect against futher use of Beguiling Aura.
+		 - rr#endis (displacement) As for PnP : +2AC and +2 to saves added
+		 - Update Readme
+   106 - Create Fake Water Weird (rr#ewwef.cre), script and weapon
+   107 - Add some Water Weird (rr#ewwei.cre) instead of some Nereid for each new sensible encounters as Nereid does not anymore summons them and in BG1, 1 Nereid is enough for the challenge...
+	
+**C160 - PnP Undead
+
+    10 - Compatibility with IAvb5, now if you install atweaks after IAvb5, you will keep changes done by IAvb5
+    11 - Add more undead from mods :
+		- DSotSC
+		- Drizzt Saga
+		- Dark Horizons
+		- RoT
+		- CtB
+		- Quest Pack
+		- BP
+		- IWDification
+		- Made in heaven Q&E
+		- Bonehill
+		- Neh'taniel...
+    17 - Add Zombie Lord and Zombie sea lord creatures strats and their missing ability : animate dead once/day -- source AD&D 2ed
+    18 - Add Revenant and his abilities of AD&D 2ed : regeneration, acid immunity and like trolls, you need to use fire to kill them (but not acid, they are immuned...)
+    20 - typo in Zombie Sea script -- should have been cleric 50% of the time (Zombie Sea Lord stay with 100%)
+	25 - Compatibility with Stratagems : update Script to remove (DW2****)
+	35 - Typos
+	53 - Update check for Stratagems change with uddoor07
+	54 - Make a small tweak to Stratagems component 6510 by changing MELSUM02, the demon knight, into a death knight
+	59 - treat Tiax Summon as all others summons
+	69 - some small revision of Zombie (sea) Lord stats (lv), skeleton Warrior (strength)
+	70 - Add more weapons diversity (axe and Morning stars) for Skeleton Warrior as the animation (SKELETONA - 0xEB10) allow it
+	86 - Add PnP movement speed (11) for ghoul lord and ghast instead of simply double mvt rate
+	87 - Add Missing vanilla pnp script for Mummy when Resurection is cast on them (Mummy01.bcs)
+	88 - Use Skeleton animation for Skeleton Warrior equiped with a bow
+   100 - Add Greater Mummies fire resistance (pnp source)
+
+**C180 - PnP Mephits
+
+    12 - Add more Mephits from mods :
+		- Afaaq the DjinniCompanion
+		- BG1 NPCs, Dynaheir's quest
+	26 - Compatibility with Stratagems : update Script to remove (DW2****) 
+	112 - PnP mephits familliar
+	
+**C185 - pnp fey
+
+    13 - Add more fey from mods :
+		- Jarl Adv
+		- NTotSC
+		- Pof QuestPack
+		- White Queen
+	27 - Compatibility with Stratagems : update Script to remove (DW2****)
+	60 - Compatibility with Spell Rev - do not touch
+	80 - Call woodland spell need to be nerfed a bit : currently add 3 summons at level 10 and 5 summons at level 13 that does not count for summoning limit is a bit overpower. Changes: 
+		lv7 : 2 Dryads or 1 Hamadryad - No Change
+		lv10: 2 Hamadryads or 1 Hamadryad and 1 Nymph - instead of 3 Hamadryads
+		lv13: 2 Hamadryad and 1 Nymph - instead of 4 Hamadryad and a Nymph
+
+**186 - woodland_beings
+
+    102 - make the spell more balanced. Creatures are gated does not count for the 5 summons limits:
+		lv7: 2 Dryads or 1 Hamadryad - No Change
+		lv10: 2 Hamadryads or 1 Hamadryad and 1 Nymph - instead of 3 Hamadryads
+		lv13: 1 Hamadryad and 1 Nymph or 2 Hamadryad and 1 Nymph - instead of 4 Hamadryad and a Nymph
+		
+
+**310 - creature_colouring
+
+    14 - Add compatibility with IAvb5, now if you install atweaks after IAvb5, you will keep animation changes done by IAvb5
+	41 - add somemore creature from mod
+	42 - add check also for small troll for Ice Troll
+	43 - Add an obvious missing check for pit fiend animation...
+	93 - Typos
+	94 - More sensible list for succubus, hamadryad and dryad as some have already a unic style
+	95 - Use IA for some animations
+	96 - Separate 8 and 12hd elementals
+	97 - Add Water elementals
+
+**212 - Make alignment detection spells more accurate
+
+    15 - add more accurate detection for 'Detect good' spells from any mod that add CLERIC_DETECT_GOOD spell and WTP familliar 'Detect good' ability
+
+**216 - song_invisibility
+
+    16 - Add IWDification and Garrick-tt new songs to break invisibility too
+
+**315 - creature_soundset
+
+    19 - Update with more creatures from mods
+	40 - Marilith and Sirine animation check for compatibility with IAvb5
+	55 - Add missing sounds for sirines
+	56 - Add missing sounds for succubi
+	57 - Standardize Maurezhi soundsets
+	
+**202/218 - improved/restored bg1 Bhaalspawn powers
+
+	32 - Compatibility with Ascension retore BG1 Bhaalspawn powers
+	
+**lib.tpa - update lib with new spells from IWDification
+
+	84 - Fix "add_blindness_immunity" and rework it in c190
+	90 - Add more aTweaks spells for disease and poison immunity lib
+	91 - Add add_water_elemental_effects like others immunities in lib
+	102 - Fix "integrate_sectype_cre"
+	
+**104 - color_spray
+
+	33 - Compatibility with Stratagems, SpellPack and IWDification spells
+	
+**103 - dispellable_globes
+
+	34 - Compatibility with Stratagems
+
+** Script updates:
+
+	44 - ds update
+	45 - Replace the old way of checking if items are equipped for ds-like check for items - borrow from Stratagems
+	46 - Create new stats : ITEM_DISEASE, ITEM_BLIND and ITEM_PROTFROMEVIL
+	47 - Add compatibility with IR in all pnp component: Check in script for Clock of mirroring and Clock of reflection are no more needed
+	62 - Some script update to allow summon to follow the player
+	63 - Typos
+	78 - minor script update to avoid stuttering of creatures that want to speak with you: remove Global("RR#Active","LOCALS",0) in the block NoAction() and add it separatly
+		 Add !Allegiance(Myself,NEUTRAL) or Allegiance(Myself,EVILCUTOFF) to the NoAction() block when needed
+	92 - rework new lib (item_labels.tpa) to make it more addaptable
+	98 - Script update for sirine: Avoid that neutral one cast charm on PC by adding a check for alignement
+	99 - Script update for elementals: 
+		 Air will now use whirlwind against solo player
+		 Earth will now use earthquake against solo player
+		 Correction of regression for Salamanders
+	101 - Script are a little bit less predictive: mage is no more always the first target, others could also be 
+
+** Readme updates: 
+
+	64 - Typos
+	65 - Add Plants, Beasts and magical beasts + explanation (rr#plants.html)
+   109 - Split to fiend component
+   110 - Nereid rework update
+
+**C189 - PnP Plants
+
+    66 - Create this component using rr#plants.html as base
+
+**C187 - PnP Spiders and Ettercaps
+
+    66 - Create this component using pnp as base
+
+**C188 - PnP Ooze creatures
+
+    108 - Create this component using PnP as base and Add missig Olive slime in sewers (BG and slums), durlag cellar and dungeon.
+
+**201 - instant warrior casting
+
+    111 - at speed = 0, the cating sound is not played. add it inside the innate when needed
+	
+** spells: 
+
+Add "Bypass mirror image" (EE/tobex) when needed
+- rr#eairw.spl
+- rr#eceic.spl
+- rr#ecems.spl
+- rr#eimfb.spl
+- rr#eimfd.spl
+- rr#eimhe.spl
+- rr#ezafb.spl
+- rr#ezafd.spl
+- rr#mfiff.spl
+- rr#mmahe.spl
+- rr#msmff.spl
+- rr#mstbr.spl
+- rr#dbfle.spl
+- RR#ICEW.SPL
+- rr#mstbr.spl
+
+Add missing Primary and secondary type to atweaks spells when needed to allow specific spell protections
+Add spell power for innate ability when needed to allow spell to not bypass globe of invulnerability
+
+rr#pflam.spl: 
+- range, 30 instead of 1 
+- target, living actor instead of caster
+- range instead of melee
+
+New additions :
+	72 - add P&P Genies - update gas form and scripts
+	79 - Add constition bonus to all fiends. Rule: +2hp max/level at 16 of constitution.
+	81 - Speed up a little installation process and rationalize immunities (mostly avoid double) by adding them to items instead of creature
