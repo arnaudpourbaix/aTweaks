@@ -1,0 +1,181 @@
+// Skeleton Warrior, melee
+ACTION_FOR_EACH file IN
+               ar18skel
+               ceskel01
+               grskel1
+               grskel2
+               grtomb01
+               hgskl04
+               nevm2
+               riftcr02
+               rskel02
+               sahskel
+               skelwa
+               _skelwa
+               skelwa01
+               skelwa02
+               _kelwa02
+               suundead
+			   tanskw1
+               bgskel02 //BG1
+               bgskelwa //BG1
+               ichary //BG1
+               _ichary //BG1
+//			   bpduehi  // BP - Not Tested
+//			   c#ajske2 // Ajantis for BG2 - Not Tested
+			   cmskel01 // Dark Horizons
+			   cmskel02 // Dark Horizons
+			   dw#semsk // Stratagems
+			   fhlskl1  // The Luxley Family
+			   fhlskl2  // The Luxley Family
+			   jc_ske01 // The Vault		   
+			   tg#dud1  // Refinements
+			   ranske7  // RoT
+			   ranske9  // RoT
+			   skelwa04 // RoT
+			   skelwax2 // TDD
+			   skelwmod // PofQuestPack
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF make_skeleton_warrior
+        STR_VAR
+          notenf_regexp = "hgskl04\|grtomb01\|ar18skel\|ceskel01"
+      END
+      PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~grskel1~ BEGIN
+        LPF promote_script STR_VAR script = initdlg END
+      END
+      LPF RR#MDCSC
+        STR_VAR
+          newscript = fl#sklwm
+          script01 = gpskel1
+          script02 = wtasight
+          script03 = _tasight
+          script04 = wtarsgt
+          script05 = wdasight
+          script06 = _wtarsgt
+          script07 = bpwtsigt
+          script08 = bpwtrsgt
+          script09 = bpwdasgt
+          script10 = bpwtasgt
+          script11 = DW2MS1GE
+          script12 = DW2MS0GE
+		  script13 = DW2MP1GE
+		  script14 = DW2MS2GE
+		  script15 = DW2MS1GW
+		  script16 = DW1MELGE
+		  script17 = DW2MS3GE
+		  script18 = DW2RM0GE
+		  skipfile01 = endske01
+		  skipfile02 = endske02
+		  skipfile03 = endske03
+		  skipfile04 = endske04
+		  skipfile05 = ranske7
+		  skipfile06 = ichary
+		  skipfile07 = _ichary
+      END
+    BUT_ONLY
+  END
+END
+
+// Skeleton Warrior, ranged
+ACTION_FOR_EACH file IN
+			   anscelet
+			   firmon02
+               skelwa03
+               _kelwa03
+               bgskel03 //BG1
+			   dw#angsk // Stratagems
+			   dw#diask // Stratagems
+			   mh#sadet //Made in heaven Q&E
+			   mh#sadis //Made in heaven Q&E
+			   tg#dud2  // Refinements
+			   skelwax3 // TDD
+			   jc_ske02 // The Vault
+			   0xuddg   // ToDG
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+	  WRITE_LONG 0x28 (IDS_OF_SYMBOL (~animate~ ~SKELETON~))  // Use Skeleton animation, bow animation does not work with other skeletons
+	  READ_LONG 0x2b8 "item_offset"
+      PATCH_IF SHORT_AT "item_offset" = "-1" BEGIN
+	    REPLACE_CRE_ITEM ~HELM08~ #0 #0 #0 ~NONE~ ~HELMET~              // add Normal helm for appearence
+	  END
+	  LPF make_skeleton_warrior 
+	  STR_VAR
+	  notenf01 = anscelet
+	  END
+      LPF RR#MDCSC
+        STR_VAR
+          newscript = fl#sklwr
+          script01 = gpskel1
+          script02 = wtasight
+          script03 = _tasight
+          script04 = wtarsgt
+          script05 = wdasight
+          script06 = _wtarsgt
+          script07 = bpwtsigt
+          script08 = bpwtrsgt
+          script09 = bpwdasgt
+          script10 = bpwtasgt
+          script11 = DW2RP3GE
+          script12 = DW2RS0GE
+		  script13 = DW1RANGE
+		  script14 = DW2RS1GE
+		  script15 = DW2RS2GE
+          script16 = 0xuddg
+		  skipfile01 = anscelet  
+	END
+    BUT_ONLY
+  END
+END
+
+// Skeleton Warrior, summoned
+ACTION_IF !MOD_IS_INSTALLED spell_rev.tp2 0 BEGIN // Do not touch if spell revision is installed
+	ACTION_FOR_EACH file IN
+					skelwasu
+	BEGIN
+	  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+		COPY_EXISTING "%file%.cre" override
+		  LPF make_skeleton_warrior END
+		  WRITE_LONG 0x14 "0"
+		  LPF make_summon END
+		  WRITE_ASCII SCRIPT_OVERRIDE "fl#skwsu" #8 // Swaps to fl#sklwm for hostile summons
+		BUT_ONLY
+	  END
+	END
+END
+
+COPY "atweaks/spl/undead/fl#skelw.spl" override
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
+  END
+
+
+// skeleton warrior weapon
+ACTION_IF FILE_EXISTS_IN_GAME "cdax2h1.itm" BEGIN
+	OUTER_SPRINT ~fl#axe1~ ~cdax2h1~
+END ELSE BEGIN 
+	OUTER_SPRINT ~fl#axe1~ ~ax1h01~
+END
+ACTION_IF FILE_EXISTS_IN_GAME "cdax2h2.itm" BEGIN
+    OUTER_SPRINT ~fl#axe2~ ~cdax2h2~
+END ELSE ACTION_IF FILE_EXISTS_IN_GAME "JA#AX2H2.itm" BEGIN
+	OUTER_SPRINT ~fl#axe2~ ~JA#AX2H2~
+END ELSE BEGIN 
+	OUTER_SPRINT ~fl#axe2~ ~ax1h02~
+END
+
+
+COPY_EXISTING "ax1h01.ITM" "override/fl#AXE1.ITM"
+  LPF ALTER_ITEM_HEADER INT_VAR dicesize = 5 dicenumber = 2 END
+  WRITE_LONG 0x18 104
+COPY_EXISTING "BLUN06.ITM" "override/fl#BLUN1.ITM"
+  LPF ALTER_ITEM_HEADER INT_VAR dicesize = 3 dicenumber = 3 END
+  WRITE_LONG 0x18 104
+COPY_EXISTING "SKELWASU.ITM" "override/fl#AXE2.ITM"
+  WRITE_ASCII 0x22 "AX"
+  LPF ALTER_ITEM_HEADER INT_VAR dicesize = 5 dicenumber = 2 END
+COPY_EXISTING "SKELWASU.ITM" "override/fl#BLUN2.ITM"
+  WRITE_ASCII 0x22 "MS"  
+  LPF ALTER_ITEM_HEADER INT_VAR dicesize = 3 dicenumber = 3 damage_type = 6 END

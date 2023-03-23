@@ -1,0 +1,244 @@
+// Shadow
+ACTION_FOR_EACH file IN
+                kshadow  //circus
+                rngsha
+                rngsha01 //in shadow temple
+				rngsha03 //in shadow temple
+                rngsha04 //Shadow Jailer
+                sdshadow //Spawned by area script in shadow temple
+                sewsha03 //Saradush sewers
+                shadow01 //regular
+                shadowsu //summoned shadow (shadow altar)
+                sumshad	 // summons ?
+                uhcreat  //with the kids in umar cave
+                lshadfi  //From BP, apparently
+                lshadow  //likewise
+//				krshadm  // DSoA - Not Tested
+//				krshadow // DSoA - Not Tested
+//				shadesm1 // Arcane-Divine Spell Pack - Not Tested
+//				shadesm2 // Arcane-Divine Spell Pack - Not Tested
+//				shadesm3 // Arcane-Divine Spell Pack - Not Tested
+				a#sdsha1 // Song and Silence Shadowdancer summoning
+				a#sdsha2 // Song and Silence Shadowdancer summoning
+				a#sdsha3 // Song and Silence Shadowdancer summoning
+				a#sdsha4 // Song and Silence Shadowdancer summoning
+				acq10119 // AC_Quest
+				acshad01 //
+				l#gnosh	 // SotSC:Shadow
+				l#gnoen  // SotSC: Shadow Master
+				specx1 	 // TDD
+				va#shdgl // Tower of Deception
+
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+    PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring //+1 or better only
+        REPLACE_CRE_ITEM fl#shad #0 #0 #0 none weapon1 EQUIP
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 420
+            newhp = 27 //3d8+3
+            newac = 7
+            newth = 17
+            newapr = 1
+            newsvd = 13
+            newsvw = 15
+            newsvp = 14
+            newsvb = 16
+            newsvs = 16
+            newlvl1 = 4
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 13
+            newstrx = 0
+            newint = 7
+            newwis = 7
+            newdex = 10
+            newcon = 9
+            newchr = 9
+            newmor = 20
+            newalign = 0x33 //CE
+            newclass = 170 //Shadow
+            newgen = 4 //undead
+            newrace = 132 //Shadow
+            
+            enforce = 1
+          STR_VAR
+            notenf01 = rngsha04
+			notenf02 = a#sdsha1
+			notenf03 = a#sdsha2
+			notenf04 = a#sdsha3
+			notenf05 = a#sdsha4
+			notenf06 = specx1
+			notenf07 = l#gnoen
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#midmc
+            script01 = wtasight
+            script02 = bpshadow
+            script03 = bpwtsigt
+            script04 = bpwdasgt
+            script05 = bpmag14m //maybe we should not strip this for the shadow jailer
+			script06 = DW2MS0GE
+			script07 = DW2MS1GE
+			script08 = DW2MS3GE
+			skipfile01 = va#shdgl
+			skipfile02 = sumshad		
+			skipfile03 = a#sdsha1		
+			skipfile04 = a#sdsha2		
+			skipfile05 = a#sdsha3		
+			skipfile06 = a#sdsha4		
+        END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b1-10.itm "override/fl#shad.itm"
+  LPF set_enchantment END
+  LPF cold_spell_immunities END
+  LPF configure_header
+    INT_VAR
+      f_TargetType = 1
+      f_NumDice = 2
+      f_DieSize = 5
+  END
+  LPF ADD_ITEM_EFFECT
+    INT_VAR
+      type = 1
+
+      opcode = 44 //strengh bonus
+      target = 2
+      parameter1 = "-1"
+      duration = 5*60
+  END
+  LPF ADD_ITEM_EFFECT
+    INT_VAR
+      type = 1
+
+      opcode = 142 //portrait icon
+      target = 2
+      parameter2 = 91 //damaged ability score
+      duration = 5*60
+  END
+
+// Shadow, summoned
+ACTION_FOR_EACH file IN
+				a#sdsha1 // Song and Silence Shadowdancer kit
+				a#sdsha2 // Song and Silence Shadowdancer kit
+				a#sdsha3 // Song and Silence Shadowdancer kit
+				a#sdsha4 // Song and Silence Shadowdancer kit
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+	  WRITE_LONG 0x14 "0"
+      LPF make_summon END
+	  WRITE_BYTE 0x273 "4"	// Thief
+    BUT_ONLY
+  END
+END
+
+
+
+ACTION_IF MOD_IS_INSTALLED ~stratagems.TP2~ ~8140~ BEGIN
+  OUTER_SPRINT fluddoor ""
+END ELSE OUTER_SPRINT fluddoor uddoor07
+
+// Skeleton, melee
+ACTION_FOR_EACH file IN
+				skele2
+                gpskel1 //Underdark adventuring party
+                rskel01 //Ranger plot
+                rskel03 //Ranger plot
+                skelet01 //regular
+                ttskel   //tutorial
+                "%fluddoor%" //drow party by the UD exit; Golem if Stratagems Improved Drow is installed (vide supra)
+                iskelet  //Candlekeep tutorial
+                _iskelet
+                skelet
+                _skelet
+                skelet03 
+                _kelet03
+                skelet_a
+                _kelet_a
+                //skelpetr //The tourist attraction in Durlag's Tower
+                //_kelpetr
+				appar
+				cadskel1 // RoT
+				CBAPPAR1 // CtB
+			    cmske03  // Dark Horizons
+			    cmske04  // Dark Horizons
+				dragbr2  // TDD
+				dW#mulsk // stratagems
+				gholske1 // RoT
+				golbon01
+				hgskl02
+				krshadsk
+				psqsksu  // Planar Sphere mod
+			    ranske1  // RoT
+			    ranske2  // RoT
+			    ranske3  // RoT
+			    ranske4  // RoT
+			    ranske5  // RoT
+			    ranske6  // RoT
+			    ranske8  // RoT
+				shbones
+				sk#ssp2
+				skwr1mod // PofQuestPack
+				skwr2mod // PofQuestPack
+				skwr3mod // PofQuestPack
+				skwr4mod // PofQuestPack
+				skeldmod // PofQuestPack
+				skellord // DSotSC
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF make_skeleton
+        STR_VAR
+          enf_regexp = "skelet01\|rskel01\|_?iskelet\|skelet03\|[s_]kelet_[abc]\|_?skelet"
+      END
+      LPF RR#MDCSC
+        STR_VAR
+          newscript = fl#lowm
+          script01 = wtasight
+          script02 = _tasight
+          script03 = bpwtsigt
+          script04 = bpwtrsgt
+          script05 = bpwdrsgt
+		  script06 = DW2MC0MO
+ 		  script07 = DW2MC1MO
+ 		  script08 = DW2RC0MO
+ 		  script09 = DW2MS0MO
+ 		  script10 = DW2MS1GE
+ 		  script11 = DW2MC1GE
+ 		  script12 = DW2MC3MO
+		  script13 = DW2RS0MO
+		  skipfile01 = ranske1
+		  skipfile02 = ranske2
+		  skipfile03 = ranske3
+		  skipfile04 = ranske4
+		  skipfile05 = ranske5
+		  skipfile06 = ranske6
+		  skipfile07 = appar
+		  skipfile08 = CBAPPAR1
+		  skipfile09 = skellord
+      END
+    BUT_ONLY
+  END
+END

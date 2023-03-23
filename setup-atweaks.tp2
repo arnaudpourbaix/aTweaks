@@ -7,37 +7,43 @@
 
 
 BACKUP ~atweaks/backup~
-AUTHOR "Wisp, shsforums.net"                                                       // Author and e-mail address
-VERSION ~v4.53~                                                                    // Mod version
+AUTHOR "Wisp, shsforums.net"
+VERSION ~v4.53~
 
-ALWAYS                                                                             // Always do this block
-  INCLUDE ~aTweaks/LIB/RR#AGLEF.TPH~                                               // Include my custom "Add Global Effect" function
-  INCLUDE ~aTweaks/LIB/RR#SP2IN.TPH~                                               // Include my custom "Spell to Innate" function
-  INCLUDE ~aTweaks/LIB/REGEXP.TPH~                                                 // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
-  INCLUDE ~aTweaks/lib/iwd1fix.tpa~                                                // fix some IDS file issues with IWD1 to ensure proper script compiling
-  INCLUDE "atweaks/lib/rr#mdcre.tph"
-  INCLUDE "atweaks/lib/rr#mdcsc.tph"
-  INCLUDE "atweaks/lib/lib.tpa"
-  INCLUDE "atweaks/lib/comp_vars.tpa"
-  RANDOM_SEED go
+ALWAYS
+    INCLUDE "aTweaks/lib/common/functions.tpa"        // Common functions used by many mods
+    INCLUDE ~aTweaks/lib/common/rr#sp2in.tph~         // "Spell to Innate" function
+    INCLUDE "aTweaks/lib/common/rr#mdcre.tph"         // "Creature modification" function
+    INCLUDE "aTweaks/lib/common/rr#mdcsc.tph"         // "Creature Script modification" function
+    INCLUDE ~aTweaks/lib/common/regexp.tph~           // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
+    INCLUDE ~aTweaks/lib/common/iwd1fix.tpa~          // fix some IDS file issues with IWD1 to ensure proper script compiling
+    INCLUDE "aTweaks/lib/common/comp_vars.tpa"        // Game engines stuff
+    INCLUDE "aTweaks/lib/common/lib.tpa"
+    RANDOM_SEED go
 
-  OUTER_PATCH ~12~ BEGIN
-    WRITE_BYTE 1 0x09
-    READ_ASCII 1 tab (1)  // 0x09, tab
-    WRITE_BYTE 1 0x0a
-    READ_ASCII 1 lnl (1)  // 0x0a, Linux
-    WRITE_BYTE 0 0x0d
-    READ_ASCII 0 mnl (1)  // 0x0d, Mac
-    READ_ASCII 0 wnl (2)  // 0x0d0a, Windows
-  END
+    OUTER_PATCH ~12~ BEGIN
+        WRITE_BYTE 1 0x09
+        READ_ASCII 1 tab (1)  // 0x09, tab
+        WRITE_BYTE 1 0x0a
+        READ_ASCII 1 lnl (1)  // 0x0a, Linux
+        WRITE_BYTE 0 0x0d
+        READ_ASCII 0 mnl (1)  // 0x0d, Mac
+        READ_ASCII 0 wnl (2)  // 0x0d0a, Windows
+    END
 <<<<<<<< ...blank
 >>>>>>>>
 
-  LAM bgee_language
+    // Load UTF8-encoded tra files if the game is BGEE
+    DEFINE_ACTION_MACRO bgee_language BEGIN
+        ACTION_IF ENGINE_IS ~bgee bg2ee iwdee~ BEGIN
+            LOAD_TRA ~atweaks/tra/bgee/english/game.tra~
+            LOAD_TRA ~atweaks/tra/bgee/%LANGUAGE%/game.tra~
+        END
+    END
 END                                                                                // End the ALWAYS block
 
-// README ~atweaks/doc/readme_atweaks.html~                                           // Offer to display the main readme
-ASK_EVERY_COMPONENT                                                                // Disallow installing all components at once
+README ~atweaks/doc/readme_atweaks.html~
+ASK_EVERY_COMPONENT
 
 
 LANGUAGE ~English~ ~english~ ~atweaks/tra/english/setup.tra~
@@ -179,20 +185,20 @@ INCLUDE ~atweaks/lib/pnp-item/110-magical_ammunition.tpa~
 // PnP Fiends
 BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4000 // PnP Fiends, mod-added fiends are also affected
 GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @90
 COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               //Installation marker
 COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker 
 OUTER_SET FiendsOriginal = 0
 OUTER_SET FiendsScripts = 0
-INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fiend/main.tpa"
 
 BEGIN @151 SUBCOMPONENT @150 DESIGNATED 4001 // PnP Fiends, Mod-added fiends are not affected
 GROUP @6
-REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
-REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @90
 COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               // Installation marker 
 OUTER_SET FiendsOriginal = 1
 OUTER_SET FiendsScripts = 0
-INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fiend/main.tpa"
 
 BEGIN @153 SUBCOMPONENT @150 DESIGNATED 4002 // PnP Fiends, only scripts
 GROUP @6
@@ -200,7 +206,7 @@ COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                            
 COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker
 OUTER_SET FiendsOriginal = 0
 OUTER_SET FiendsScripts = 1
-INCLUDE "atweaks/lib/pnp-monster/150-fiend.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fiend/main.tpa"
 
 
 // Revised Fiend summoning 
@@ -233,7 +239,7 @@ BEGIN @160 DESIGNATED 4040
 GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
 REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
-INCLUDE "atweaks/lib/pnp-monster/160-undead.tpa"
+INCLUDE "atweaks/lib/pnp-monster/unead/main.tpa"
 
 
 // Prevent skeletal undead from being affected by Illithids' Devour Brain attack
@@ -250,15 +256,14 @@ GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
 REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 iwdee~ @92
 REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
-INCLUDE "atweaks/lib/pnp-monster/180-mephit.tpa"
+INCLUDE "atweaks/lib/pnp-monster/mephit/main.tpa"
 
 
 // PnP Fey creatures
 BEGIN @185 DESIGNATED 4070
 GROUP @6
-REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee iwdee~ @90
-REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
-INCLUDE "atweaks/lib/pnp-monster/185-fey.tpa"
+REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
+INCLUDE "atweaks/lib/pnp-monster/fey/main.tpa"
 
 
 // Revised Call Woodland Beings spell
@@ -274,7 +279,7 @@ BEGIN @190 DESIGNATED 4090
 GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90                                              // ToB engine required
 REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
-INCLUDE "atweaks/lib/pnp-monster/190-elemental.tpa"
+INCLUDE "atweaks/lib/pnp-monster/elemental/main.tpa"
 
 
 // Increase the Hit Dice of Elemental Princes
@@ -282,7 +287,7 @@ BEGIN @191 DESIGNATED 4100
 GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
 REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#easer.bcs~ @2000                         // PnP Elementals component required
-INCLUDE "atweaks/lib/pnp-monster/191-elemental_princes.tpa"
+INCLUDE "atweaks/lib/pnp-monster/elemental/princes.tpa"
 
 
 // PnP Spiders, Snakes and Ettercaps

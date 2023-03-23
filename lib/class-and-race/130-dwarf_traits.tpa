@@ -14,6 +14,7 @@ EXTEND_BOTTOM ~dplayer2.bcs~  ~aTweaks/BAF/RR#DWRT.BAF~                         
 // Ogre attack roll penalty vs. dwarves (implemented through patching all CREs of the Ogre race)
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+  LPF FJ_CRE_VALIDITY END
   PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                               // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     READ_BYTE 0x272 "race"                                                      // check the creature's race

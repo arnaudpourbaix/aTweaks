@@ -1,0 +1,182 @@
+// Ghoul Lord
+ACTION_FOR_EACH file IN
+                ghogr01
+                gholor01
+                riftcr01
+//				lester // oncle Lester
+                ghoullor
+                _houllor
+                lacedo02 //Sahuagin Greater Lacedon
+				cmghau01 //Dark Horizons
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REMOVE_CRE_ITEM mage06 _mage06 immune1
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
+        REPLACE_CRE_ITEM fl#glor1 #0 #0 #0 none weapon1 EQUIP
+        REPLACE_CRE_ITEM fl#glor2 #0 #0 #0 none shield
+        PATCH_IF "%SOURCE_RES%" STRING_COMPARE_CASE ~lacedo02~ BEGIN
+          SAY 0x8 @1033
+          SAY 0xc @1033
+        END
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 3000
+			newmove  = 11                                                                  // new movement rate
+            newhp = 48 //6d8
+            newac = 4
+            newth = 15
+            newapr = 2 //2 with main, plus one with off-hand
+            newsvd = 9
+            newsvw = 11
+            newsvp = 10
+            newsvb = 12
+            newsvs = 12
+            newlvl1 = 9 //To approximate the PnP effort of turning them
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 0
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 18
+            newstrx = 0
+            newdex = 9
+            newcon = 9
+            newint = 14
+            newwis = 9
+            newchr =  9
+            newmor = 14
+            newalign = 51
+            ptwf = 1
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#glord
+            script01 = _ghast
+            script02 = _tasight
+            script03 = ghast
+            script04 = wtasight
+            script05 = gholor01
+            script06 = wdasight
+            script07 = riftcr01
+            script08 = DW2MP2GE
+            script09 = bpwtsigt
+			script10 = bpwdasgt
+			script11 = DW2MP2GW
+			script12 = DW2MP0GE
+			script13 = DW2MP1GE
+			script14 = DW#GPSHM
+        END
+		// PATCH_IF LONG_AT 0x28 = 0x7700 BEGIN
+		   // SET parm1 = 200
+		// END ELSE SET parm1 = 150
+        // LPF ADD_CRE_EFFECT
+          // INT_VAR
+            // opcode = 176 //movement bonus
+            // target = 1
+            // parameter1 = "parm1" //double speed
+            // parameter2 = 2
+            // timing = 9
+        // END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING s1-6.itm "override/fl#glor1.itm"
+              s1-10.itm "override/fl#glor2.itm"
+  LPF set_enchantment END
+  DEFINE_ARRAY glor_opcode BEGIN 175 141 141 50 174 174 END
+  DEFINE_ARRAY glor_p1 BEGIN 0 0 0 0x455700 0 0 END
+  DEFINE_ARRAY glor_p2 BEGIN 2 1 33 0x190000 0 0 END
+  DEFINE_ARRAY glor_timing BEGIN 0 1 1 0 1 4 END
+  DEFINE_ARRAY glor_duration BEGIN 54 0 0 2 0 54 END
+  DEFINE_ARRAY glor_resref BEGIN "" "" "" "" eff_p11 eff_e05 END
+  PHP_EACH glor_opcode AS int => opcode BEGIN
+    LPF ADD_ITEM_EFFECT
+      INT_VAR
+        type = 1
+        opcode
+        target = 2
+        parameter1 = $glor_p1("%int%")
+        parameter2 = $glor_p2("%int%")
+        timing = $glor_timing("%int%")
+        duration = $glor_duration("%int%")
+        savingthrow = BIT2 //Paralysation
+      STR_VAR
+        resource = EVAL $glor_resref("%int%")
+    END
+  END
+  PATCH_IF "%DEST_RES%" STRING_EQUAL_CASE fl#glor2 BEGIN
+    LPF ADD_ITEM_EFFECT
+      INT_VAR
+        type = 1
+        opcode = 146 //Cast spell
+        target = 2
+        parameter1 = 1
+        parameter2 = 1
+        timing = 1
+        savingthrow = BIT2 //Poison
+      STR_VAR
+        resource = fl#glor2
+    END
+  END
+
+COPY "atweaks/spl/base.spl" "override/fl#glor2.spl"
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 1 STR_VAR resource = fl#glor2 END
+  FOR (i=1;i<30;++i) BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target = 2 parameter1 = 5 parameter2 = 4194304 timing = 4 duration = i*300 END //5 points of damage
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 1 parameter2 = 6 timing = 4 duration = i*300 END //1 point of con
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 1 parameter2 = 9 timing = 4 duration = i*300 END //1 point of cha
+  END
+
+OUTER_SET $f_AddSecType(fl#glor2.spl) = DiseaseSecType
+
+COPY "atweaks/spl/undead/fl#glord.spl" override
+  WRITE_ASCII 0x10 "" #8 //no casting sound
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
+  END
+  LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = "-1" END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 177 target = 2 parameter1 = 1 parameter2 = 8 STR_VAR resource = fl#glord.eff END //Use EFF on good people
+
+COPY "atweaks/eff/base.eff" "override/fl#glord.eff"
+  WRITE_LONG  0x10 146 //cast spell
+  WRITE_LONG  0x14 2
+  WRITE_ASCII 0x30 fl#glor3
+
+COPY "atweaks/spl/base.spl" "override/fl#glor3.spl"
+  glor3_strref = RESOLVE_STR_REF(@1034)
+  DEFINE_ARRAY glor3_opcode BEGIN 278 139 142 206 END
+  DEFINE_ARRAY glor3_p1 BEGIN "-4" glor3_strref 0 0 END
+  DEFINE_ARRAY glor3_p2 BEGIN 0 0 7 0 END
+  DEFINE_ARRAY glor3_timing BEGIN 0 1 0 0 END
+  DEFINE_ARRAY glor3_duration BEGIN 6 0 6 6 END
+  DEFINE_ARRAY glor3_resref BEGIN "" "" "" fl#glor3 END
+  PHP_EACH glor3_opcode AS int => opcode BEGIN
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode
+        target = 2
+        parameter1 = $glor3_p1("%int%")
+        parameter2 = $glor3_p2("%int%")
+        timing = $glor3_timing("%int%")
+        duration = $glor3_duration("%int%")
+      STR_VAR
+        resource = $glor3_resref("%int%")
+    END
+  END
+
+OUTER_SET $f_AddSecType(fl#glord.spl) = FearSecType

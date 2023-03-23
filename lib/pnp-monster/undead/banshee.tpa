@@ -1,0 +1,102 @@
+// Banshee
+ACTION_FOR_EACH file IN
+                banshe01 //ToB Banshee
+                firmon01 //Unused critter from Firkraag's
+				dsbanshe //DSotSC
+				f_wailin //Drizzt Saga
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM b1-8m2 #0 #0 #0 none weapon1 EQUIP
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none lring
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none rring
+        REMOVE_CRE_ITEM immchs
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 4000
+            newhp = 56 //7d8
+            newac = 0
+            newth = 13
+            newapr = 1
+            newsvd = 9
+            newsvw = 11
+            newsvp = 10
+            newsvb = 12
+            newsvs = 12
+            newlvl1 = 17 //To approximate their "turned as special undead" from PnP
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 50
+            newfr = 0
+            newcr = 100
+            newer = 100
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 16
+            newstrx = 0
+            newint = 16
+            newwis = 16
+            newdex = 15
+            newcon = 9
+            newchr = 9
+            newmor = 13
+            newalign = 51 //CE
+            
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#bansh
+            script01 = banshe01
+            script02 = wtasight
+            script03 = bpwtsigt
+            script04 = bpwdasgt
+			script05 = f_wailin
+			script06 = DW2MC2GE
+			script07 = DW2MS0GE
+			skipfile01 = dsbanshe
+        END
+        LPF cold_spell_immunities END
+        LPF electrical_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY "atweaks/spl/undead/fl#banwa.spl" override //Banshee's wail
+  FOR(i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_SHORT LONG_AT 0x64+i*0x28+0x26 fl#sight
+  END
+
+COPY "atweaks/spl/base.spl" "override/fl#banfa.spl" //Fear aura
+  WRITE_ASCII 0x10 "" #8 //no casting sound
+  WRITE_BYTE 0x27 11 //disabling
+  READ_LONG 0x64 ao
+  FOR(i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_BYTE  ao+i*0x28+0xc 4 //any point
+    WRITE_SHORT ao+i*0x28+0x26 fl#sight
+  END
+  DEFINE_ARRAY banfa_opcode BEGIN 24 139 142 END
+  DEFINE_ARRAY banfa_p1 BEGIN 0 14007 0 END
+  DEFINE_ARRAY banfa_p2 BEGIN 0 0 36 END
+  DEFINE_ARRAY banfa_timing BEGIN 0 1 0 END
+  DEFINE_ARRAY banfa_duration BEGIN 60 0 60 END
+  PHP_EACH banfa_opcode AS int => opcode BEGIN
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode
+        target = 2
+        parameter1 = $banfa_p1("%int%")
+        parameter2 = $banfa_p2("%int%")
+        timing = $banfa_timing("%int%")
+        duration = $banfa_duration("%int%")
+        savingthrow = BIT0 //spell
+    END
+  END

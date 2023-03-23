@@ -1,0 +1,88 @@
+// Spectre
+ACTION_FOR_EACH file IN
+                spectr01 //regular (also ranger stronghold mission)
+//				sahspc01
+				cbmalr6b //CtB
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
+        REPLACE_CRE_ITEM fl#spect #0 #0 #0 none weapon1 EQUIP
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 3000
+            newhp = 59 //7d8+3
+            newac = 2
+            newth = 13
+            newapr = 1
+            newsvd = 7
+            newsvw = 9
+            newsvp = 8
+            newsvb = 9
+            newsvs = 8
+            newlvl1 = 7
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 13
+            newstrx = 0
+            newint = 14
+            newwis = 11
+            newdex = 10
+            newcon = 9
+            newchr = 10
+            newmor = 15
+            newalign = 0x13 //LE
+            newgen = 4 //undead
+            
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#higmc
+            script01 = wtasight
+            script02 = bpmag14m
+            script03 = bpwtsigt
+			script04 = DW2MC2GE
+			script05 = DW2MS4GE
+			skipfile01 = cbmalr6b
+        END
+        // LPF hover_immunities END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b1-8.itm "override/fl#spect.itm"
+  LPF set_enchantment INT_VAR enchantment = 2 END
+  LPF hover_immunities END
+  LPF cold_spell_immunities END
+  DEFINE_ARRAY wigh_opcode BEGIN 216 139 141 END //drain 2 levels
+  DEFINE_ARRAY wigh_p1 BEGIN 2 40968 0 END
+  DEFINE_ARRAY wigh_p2 BEGIN 0 0 1 END
+  PHP_EACH wigh_opcode AS int => opcode BEGIN
+    LPF ADD_ITEM_EFFECT
+      INT_VAR
+        type = 1
+
+        opcode
+        target = 2
+        parameter1 = $wigh_p1("%int%")
+        parameter2 = $wigh_p2("%int%")
+        timing = 1
+     END
+   END

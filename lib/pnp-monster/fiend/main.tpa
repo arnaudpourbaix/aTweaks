@@ -1,0 +1,49 @@
+
+//////////////
+// PnP Fiends
+//////////////
+
+
+INCLUDE "atweaks/lib/pnp-monster/150-fiend-fn.tpa"
+// INCLUDE "atweaks/lib/tactical_shared.tpa"
+// INCLUDE "atweaks/lib/rr#fiend.tph"
+
+////////////////////////////////////////
+// BAATEZU
+////////////////////////////////////////
+
+// Imp
+ACTION_DEFINE_ASSOCIATIVE_ARRAY files BEGIN
+    ~DIMP01~    => 1
+    ~GORBAT4~   => 1
+    ~IMP01~     => 1
+    ~TELIMP1~   => 1
+    ~RUMAR03~   => 1    // Ranger stronghold quest
+    ~MEKIMP01~  => 1    // Mekrath's stolen mirror quest
+    ~FAMIMP25~  => 1    // familiar
+    ~FAMIMP~    => 1    // familiar
+    // ~FSRIDD~    => 1    // has dialog
+    // ~GORIMP01~  => 1    // has dialog
+    // ~SAHIMP01~  => 1    // has dialog
+    // ~SAHIMP02~  => 1    // has dialog
+    // ~UDIMP~     => 1    // has dialog
+    ~TCIMP01~   => 0    // Classic Adventures
+    ~lrimp1~    => 0    // Longer Road
+    ~lrimp2~    => 0    // Longer Road
+END
+
+ACTION_PHP_EACH files AS file => do BEGIN
+  ACTION_IF (do || FiendsOriginal = 0) BEGIN
+    ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+        COPY_EXISTING ~%file%.cre~ ~override~
+            LPF make_imp END
+        BUT_ONLY_IF_IT_CHANGES
+    END      
+  END
+END
+
+COPY_EXISTING ~FAMIMP.cre~ ~override~ // higher level imp
+  WRITE_SHORT 0x24 24
+  WRITE_SHORT 0x26 24
+  WRITE_BYTE  0x234 3 
+BUT_ONLY

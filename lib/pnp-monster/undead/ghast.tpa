@@ -1,0 +1,110 @@
+//Ghast
+ACTION_FOR_EACH file IN
+		BHGHOUL2
+		BHGHOUL4
+		ghast01  // BG2 standard Ghast
+		ghastf01
+		ghastgsu
+		gmayor   // Theshal
+		nevm3    // Nev's undead trap Ghast
+		theshal
+		ghast    // BG1 standard Ghast
+		_ghast
+		ghastd   // Durlag's Tower Ghast Trap Ghast
+		_ghastd
+		ghasts   // Tiax' summoned ghast
+		_ghasts
+		Grael    // BG1 Grael
+		besamen  // Quest Pack
+		bpghast  // BP
+		bgghast  // Aec'Letec's death ray, BGT // BP
+		bsghast1 // BST mod
+		CDI4GHST // IWDification
+		MH#GLGHA // Made in heaven Q&E
+		sghastgr // Bonehill
+		sk#algol // Neh'taniel
+		sk#ssp3  // Neh'taniel
+		XGHAST1  // Mod added
+		XGHAST2  // Mod added
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF make_ghast END
+      LPF RR#MDCSC
+        STR_VAR
+          newscript = fl#ghast
+          script01 = ghast
+          script02 = wtasight
+          script03 = ghastd
+          script04 = movep1
+          script05 = _ghast
+          script06 = _tasight
+          script07 = _ghastd
+          script08 = _movep1
+          script09 = DW2MP1GE
+          script10 = bpwtsigt
+		  script11 = bpundead
+		  skipfile01 = CDI4GHST
+          skipfile02 = ghasts
+          skipfile03 = _ghasts
+          skipfile04 = rr#ghast
+		  skipfile05 = ghastgsu
+      END
+      // LPF ADD_CRE_EFFECT
+        // INT_VAR
+          // opcode = 176 //movement bonus
+          // target = 1
+          // parameter1 = 200 //double speed
+          // parameter2 = 2
+          // timing = 9
+      // END
+    BUT_ONLY
+  END
+END
+ACTION_FOR_EACH file IN
+				~ghasts~
+				~_ghasts~
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+	  COPY_EXISTING "%file%.cre" override
+		WRITE_LONG 0x14 "0"
+		LPF make_summon END
+		WRITE_ASCII SCRIPT_OVERRIDE "fl#ghasu" #8
+      BUT_ONLY
+	END
+END
+
+
+ACTION_IF FILE_EXISTS_IN_GAME rr#ghast.bcs BEGIN
+  COPY_EXISTING rr#ghast.bcs override
+    REPLACE_BCS_BLOCK "atweaks/baf/undead/fiend_ghast_old.baf" "atweaks/baf/undead/fiend_ghast_new.baf"
+  BUT_ONLY
+END
+
+COPY "atweaks/spl/undead/fl#ghaau.spl" override
+  WRITE_ASCII 0x10 "" #8 //no casting sound
+
+COPY_EXISTING s1-4.itm "override/fl#ghas1.itm"
+              s1-8.itm "override/fl#ghas2.itm"
+  LPF set_enchantment END
+  DEFINE_ARRAY ghast_opcode BEGIN 175 141 141 50 174 174 END
+  DEFINE_ARRAY ghast_p1 BEGIN 0 0 0 0x455700 0 0 END
+  DEFINE_ARRAY ghast_p2 BEGIN 2 1 33 0x190000 0 0 END
+  DEFINE_ARRAY ghast_timing BEGIN 0 1 1 0 1 4 END
+  DEFINE_ARRAY ghast_duration BEGIN 42 0 0 2 0 42 END
+  DEFINE_ARRAY ghast_resref BEGIN "" "" "" "" eff_p11 eff_e05 END
+  PHP_EACH ghast_opcode AS int => opcode BEGIN
+    LPF ADD_ITEM_EFFECT
+      INT_VAR
+        type = 1
+        opcode
+        target = 2
+        parameter1 = $ghast_p1("%int%")
+        parameter2 = $ghast_p2("%int%")
+        timing = $ghast_timing("%int%")
+        duration = $ghast_duration("%int%")
+        savingthrow = BIT2 //Paralysation
+      STR_VAR
+        resource = EVAL $ghast_resref("%int%")
+    END
+  END

@@ -1,0 +1,151 @@
+// Mummy
+ACTION_FOR_EACH file IN
+		mummy
+		mummy01
+		// FSMUMM
+		// FSMUMM2
+		// FSMUMM3
+		F_MUMMY  // Drizzt Saga
+		O#LLARU1 // Mod added
+		O#LLARU2 // Mod added
+		O#LLARU3 // Mod added
+		O#LLARU4 // Mod added
+		O#LLARU5 // Mod added
+		O#LLARU6 // Mod added
+		mumx1    // TDD
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM fl#mum #0 #0 #0 none weapon1 EQUIP
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 3000
+            newhp = 51 //6d8+3
+            newac = 3
+            newth = 13
+            newapr = 1
+            newsvd = 10
+            newsvw = 12
+            newsvp = 11
+            newsvb = 12
+            newsvs = 13
+            newmr = 0
+            newlvl1 = 7
+            newfr = "-33"
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 50
+            newrc = 50
+            newrp = 50
+            newrm = 50
+            newstr = 18
+            newstrx = 99
+            newint = 7
+            newwis = 7
+            newdex = 9
+            newcon = 14
+            newchr = 7
+            newmor = 15
+            newalign = 19 //LE
+
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = mummy01
+            script01 = "mummy01'"
+            script02 = "mummy01"
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#mum
+            script01 = wtasight
+            script02 = bpwtsigt
+            script03 = d0mummy //quest pack, "gaze of despair"
+			script04 = DW2MM0GE
+			script05 = DW2MC0GE
+			script06 = O#LLENEM
+        END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b1-12.itm "override/fl#mum.itm"
+  LPF set_enchantment INT_VAR enchantment = 2 END
+  LPF cold_spell_immunities END
+  LPF ADD_ITEM_EFFECT
+    INT_VAR
+      type = 1
+      opcode = 146
+      target = 2
+      parameter1 = 1
+      parameter2 = 1
+      timing = 1
+    STR_VAR
+      resource = fl#mum
+  END
+
+COPY "atweaks/spl/undead/fl#mumfa.spl" override
+  WRITE_SHORT 0x22 0 //no casting animation
+  WRITE_SHORT 0x27 0 //no school
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
+  END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 timing = 1 parameter1 = 1 parameter2 = 1 STR_VAR resource = fl#mumfn END //cast fl#mumfn
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 177 target = 2 parameter1 = 1 parameter2 = 4 STR_VAR resource = fl#mumfh END //Use fl#mumfh.eff for humans
+
+COPY "atweaks/eff/base.eff" "override/fl#mumfh.eff"
+  WRITE_LONG 0x10 146 //cast spell
+  WRITE_LONG 0x14 2
+  WRITE_LONG 0x1c 1
+  WRITE_LONG 0x20 1
+  WRITE_LONG 0x28 1
+  WRITE_ASCII 0x30 fl#mumfh #8
+
+COPY "atweaks/eff/base.eff" "override/fl#mumfn.eff"
+  WRITE_LONG 0x10 206 //Protection from fl#mumfn.spl for Humans, fl#mumfn.eff used by fl#mumfn.spl
+  WRITE_LONG 0x14 2
+  WRITE_LONG 0x28 1
+  WRITE_ASCII 0x30 fl#mumfn #8
+  
+COPY "atweaks/spl/undead/fl#mumfh.spl" override
+     "atweaks/spl/undead/fl#mumfn.spl" override
+  FOR (i=LONG_AT 0x6a;i<SOURCE_SIZE;i+=0x30) BEGIN
+    READ_SHORT i type
+    PATCH_IF type = 139 BEGIN
+      SAY i + 0x4 @1026
+    END
+  END
+
+OUTER_SET $f_AddSecType(fl#mumfh.spl) = FearSecType
+OUTER_SET $f_AddSecType(fl#mumfn.spl) = FearSecType
+
+COPY "atweaks/spl/undead/fl#mum.spl" override
+  FOR (i=LONG_AT 0x6a;i<SOURCE_SIZE;i+=0x30) BEGIN
+    READ_SHORT i type
+    PATCH_IF type = 206 BEGIN
+      SAY i + 0x4 @1028
+    END
+    PATCH_IF type = 139 BEGIN
+      SAY i + 0x4 @1029
+    END
+  END
+  //Already on the spl: display string: disease, immunity to cure spells, portrait icon, colour pulse
+  FOR (i=1;i<6;++i) BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 2 parameter2 = 9 timing = 4 duration = i*7200 END //2 points of chr
+  END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = RESOLVE_STR_REF(@1035) timing = 4 duration = 5*7200 END //display a waring a day before insta-death
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = RESOLVE_STR_REF(@1036) timing = 4 duration = 6*7200 - 1 END //display flavour text right before insta-death
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 13 target = 2 parameter2 = 512 timing = 4 duration = 6*7200 insert_point = "-1" END //death, disintegration-style
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 1 insert_point = "-1" STR_VAR resource = fl#mum END //Non-cumulativity
+
+//Spells and items that cure and protect against disease and fear are patched at the end
+
+OUTER_SET $f_AddSecType(fl#mum.spl) = DiseaseSecType

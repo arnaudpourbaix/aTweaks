@@ -1,0 +1,151 @@
+// Wraith
+ACTION_FOR_EACH file IN
+                chwraith //Neb's child wraiths
+                firwra01 //Greater Wraith at Firkraag's
+                //telslav //Demon Wraith's slaves; not undead, apparently
+                wraith01 //regular
+				WRAITHSU
+				wrashi01
+				BHWRAITH // Mod added (BONEHILL?)
+				cbmalr6a // CtB
+				psqtpa1  // Planar Sphere mod
+				psqtpa2  // Planar Sphere mod
+				psqtpa3  // Planar Sphere mod
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none lring
+        PATCH_IF !"%SOURCE_RES%" STRING_EQUAL_CASE ~chwraith~ BEGIN
+          REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none rring //Standard undead immunities
+        END
+        PATCH_IF !(("%SOURCE_RES%" STRING_EQUAL_CASE ~telslav~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa3~)) BEGIN
+          REPLACE_CRE_ITEM fl#wrai #0 #0 #0 none weapon1 EQUIP
+        END
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 2000
+            newhp = 43 //5d8+3
+            newac = 4
+            newth = 15
+            newapr = 1
+            newsvd = 10
+            newsvw = 12
+            newsvp = 11
+            newsvb = 12
+            newsvs = 13
+            newlvl1 = 6
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 13
+            newstrx = 0
+            newint = 12
+            newwis = 11
+            newdex = 10
+            newcon = 9
+            newchr = 10
+            newmor = 15
+            newalign = 0x13 //LE
+            newgen = 4 //undead
+            
+            enforce = 1
+          STR_VAR
+            notenf01 = chwraith
+            notenf02 = telslav
+            notenf03 = firwra01
+			notenf04 = psqtpa1
+			notenf05 = psqtpa2
+			notenf06 = psqtpa3
+			notenf07 = WRAITHSU
+			notenf08 = wrashi01
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#higmc
+            script01 = wtasight
+			script02 = wdasight
+            script03 = bpshadow
+            script04 = bpmag14m
+            script05 = bpwtsigt
+            script06 = bpwdasgt
+			script07 = DW2MS4GE
+			script08 = DW2MS4GW
+			script09 = DW2MS1GE
+			skipfile01 = WRAITHSU
+        END
+        // LPF hover_immunities END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b1-6.itm "override/fl#wrai.itm"
+  LPF set_enchantment END
+  LPF hover_immunities END
+  LPF cold_spell_immunities END
+  DEFINE_ARRAY wigh_opcode BEGIN 216 139 141 END //drain 1 level
+  DEFINE_ARRAY wigh_p1 BEGIN 1 41495 0 END
+  DEFINE_ARRAY wigh_p2 BEGIN 0 0 1 END
+  PHP_EACH wigh_opcode AS int => opcode BEGIN
+    LPF ADD_ITEM_EFFECT
+      INT_VAR
+        type = 1
+
+        opcode
+        target = 2
+        parameter1 = $wigh_p1("%int%")
+        parameter2 = $wigh_p2("%int%")
+        timing = 1
+     END
+   END
+
+ACTION_IF GAME_INCLUDES ~tob~ BEGIN
+  //Spawned creature inside the Shadow Temple
+  COPY_EXISTING wraith01.cre "override/fl#sdwra.cre"
+    WRITE_ASCIIL 0x248 gensht01 sdshadow fl#higmc NONE
+
+  //Spawned creatures outside the Shadow Temple
+  COPY_EXISTING wraith01.cre "override/fl#stwra.cre"
+    WRITE_ASCIIE 0x280 "%DEST_RES%" #32
+
+  //Replace Shadow Fiends in Saradush sewers with souped-up wraiths
+  COPY_EXISTING wraith01.cre "override/fl#swr01.cre"
+                wraith01.cre "override/fl#swr02.cre"
+    WRITE_ASCIIL 0x248 sewsha01 fl#higmc //scripts
+    PATCH_MATCH "%DEST_RES%"
+    WITH
+      fl#swr01
+      BEGIN
+        WRITE_ASCII 0x280 sewsha01 #32 //script name
+      END
+      DEFAULT
+        WRITE_ASCII 0x280 sewsha02 #32
+    END
+    LPF RR#MDCRE
+      INT_VAR
+        newhp = 59
+        newapr = 4
+        newac = 1
+        newth = 9
+        newfr = 100
+        newcr = 100
+        newar = 100
+        newrs = 30
+        newrc = 30
+        newrp = 30
+        newrm = 30
+    END
+END

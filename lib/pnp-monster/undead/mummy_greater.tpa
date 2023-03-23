@@ -1,0 +1,168 @@
+// Greater Mummy
+ACTION_FOR_EACH file IN
+		mumgre01
+		riftcr03
+		MUMMYX1 // TDD		
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM fl#gmum #0 #0 #0 none weapon1 EQUIP
+        REPLACE_TEXTUALLY CASE_INSENSITIVE immune3 immune2
+        LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 0 END
+        ADD_MEMORIZED_SPELL sppr101 #0 priest (1) //Bless //done
+        ADD_MEMORIZED_SPELL sppr102 #0 priest (2) //Command //done
+        ADD_MEMORIZED_SPELL sppr107 #0 priest (1) //Protection from Evil //done
+        ADD_MEMORIZED_SPELL sppr109 #0 priest (1) //Sanctuary //done
+        ADD_MEMORIZED_SPELL sppr111 #0 priest (2) //Armor of Faith //done
+        ADD_MEMORIZED_SPELL sppr113 #0 priest (5) //Doom //done
+        ADD_MEMORIZED_SPELL sppr203 #1 priest (1) //Chant //done
+        ADD_MEMORIZED_SPELL sppr208 #1 priest (5) //Hold Person
+        ADD_MEMORIZED_SPELL sppr211 #1 priest (3) //Silence 15' Radius //done
+        ADD_MEMORIZED_SPELL sppr214 #1 priest (3) //DUHM //done
+        ADD_MEMORIZED_SPELL sppr301 #2 priest (4) //Animate Dead //done
+        ADD_MEMORIZED_SPELL sppr303 #2 priest (2) //Dispel Magic //done
+        ADD_MEMORIZED_SPELL sppr304 #2 priest (1) //Glyph of Warding
+        ADD_MEMORIZED_SPELL sppr314 #2 priest (4) //Unholy Blight //done
+        ADD_MEMORIZED_SPELL sppr405 #3 priest (2) //Mental Domination //done
+        ADD_MEMORIZED_SPELL sppr407 #3 priest (1) //Protection from Lightning //done
+        ADD_MEMORIZED_SPELL sppr408 #3 priest (1) //Protection from Evil 10' Radius //done
+        ADD_MEMORIZED_SPELL sppr411 #3 priest (2) //Poison //done
+        ADD_MEMORIZED_SPELL sppr412 #3 priest (2) //Holy Power //done
+        ADD_MEMORIZED_SPELL sppr414 #3 priest (2) //Cause Serious Wounds //done
+
+        ADD_MEMORIZED_SPELL sppr505 #4 priest (2) //True Seeing //done
+        ADD_MEMORIZED_SPELL sppr509 #4 priest (1) //Magic Resistance //done
+        PATCH_IF RANDOM (1 2) BEGIN
+          ADD_MEMORIZED_SPELL sppr511 #4 priest (2) //Slay Living //done
+        END ELSE BEGIN
+          ADD_MEMORIZED_SPELL sppr512 #4 priest (2) //Greater Command //done
+        END
+        ADD_MEMORIZED_SPELL sppr513 #4 priest (2) //Righteous Magic //done
+
+        ADD_MEMORIZED_SPELL sppr601 #5 priest (1) //Aerial Servant //done
+        ADD_MEMORIZED_SPELL sppr608 #5 priest (1) //Harm //done
+        ADD_MEMORIZED_SPELL sppr603 #5 priest (1) //Blade Barrier //done
+        ADD_MEMORIZED_SPELL sppr612 #5 priest (1) //Bolt of Glory //done
+
+        ADD_MEMORIZED_SPELL sppr719 #6 priest (1) //Symbol, Death //done
+        ADD_MEMORIZED_SPELL sppr718 #6 priest (1) //Symbol, Stun //done
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 14000
+            newhp = 91 //11d8+3
+            newac = "-1"
+            newth = 9
+            newapr = 1
+            newsvd = 2
+            newsvw = 6
+            newsvp = 7
+            newsvb = 8
+            newsvs = 7
+            newmr = 15
+            newlvl1 = 19
+            newfr = 100
+            newcr = 100
+            newer = "-50"
+            newar = 0
+            newrs = 50
+            newrc = 50
+            newrp = 50
+            newrm = 50
+            newstr = 18
+            newstrx = 99
+            newint = 18
+            newwis = 21
+            newdex = 9
+            newcon = 14
+            newchr = 9
+            newmor = 18
+            newalign = 51 //CE
+            newclass = 3 //cleric
+
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#gmum
+            script01 = wtasight
+            script02 = bpwtsigt
+            script03 = d0mummy //quest pack, "gaze of despair"
+			script04 = DW2MC0GE
+            script05 = "mummy01'"
+            script06 = "mummy01"
+        END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING fl#mum.itm "override/fl#gmum.itm"
+  LPF set_enchantment INT_VAR enchantment = 4 END
+  LPF fire_spell_immunities END
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_BYTE LONG_AT 0x64 + 0x38*i + 0x16 6
+    WRITE_BYTE LONG_AT 0x64 + 0x38*i + 0x18 3 //3d6
+  END
+  FOR (i=LONG_AT 0x6a;i<SOURCE_SIZE;i+=0x30) BEGIN
+    READ_SHORT i type
+    PATCH_IF type = 146 BEGIN
+      WRITE_ASCII i + 0x14 fl#gmum
+    END
+  END
+  
+COPY "atweaks/spl/undead/fl#mum.spl" "override/fl#gmum.spl"
+  FOR (i=LONG_AT 0x6a;i<SOURCE_SIZE;i+=0x30) BEGIN
+    READ_SHORT i type
+    PATCH_IF type = 206 BEGIN
+      SAY i + 0x4 @1028
+    END
+    PATCH_IF type = 139 BEGIN
+      SAY i + 0x4 @1029
+    END
+  END
+  interval = 1200 //Four hours
+  //Already on the spl: display string: disease, immunity to cure spells, portrait icon, colour pulse
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 1 STR_VAR resource = fl#mum END //immunity from regular mummy rot
+  FOR (i=1;i<6;++i) BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 2 parameter2 = 9 timing = 4 duration = i*interval END //2 points of chr
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 1 parameter2 = 4 timing = 4 duration = i*interval END //1 point of str
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 1 parameter2 = 6 timing = 4 duration = i*interval END //1 point of con
+  END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = RESOLVE_STR_REF(@1035) timing = 4 duration = 5*interval END //display a waring a time unit before insta-death
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = RESOLVE_STR_REF(@1036) timing = 4 duration = 6*interval - 1 END //display flavour text right before insta-death
+  PATCH_FOR_EACH parameter2 IN 0 1 BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 145 target = 2 parameter2 duration = 6*interval END //disable spellcasting
+  END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target = 2 parameter2 = 83 duration = 6*interval END //portrait: spell failure
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 13 target = 2 parameter2 = 512 timing = 4 duration = 6*interval insert_point = "-1" END //death, disintigration-style
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 1 insert_point = "-1" STR_VAR resource = fl#gmum END //non-cumulativity
+
+OUTER_SET $f_AddSecType(fl#gmum.spl) = DiseaseSecType
+
+//Fear aura
+COPY "atweaks/spl/undead/fl#mumfa.spl" "override/fl#gmumf.spl"
+  WRITE_SHORT 0x22 0 //no casting animation
+  WRITE_SHORT 0x27 0 //no school
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
+  END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 timing = 1 parameter1 = 1 parameter2 = 1 STR_VAR resource = fl#gmumn END //cast fl#gmumn
+  
+COPY "atweaks/spl/undead/fl#mumfn.spl" "override/fl#gmumn.spl"
+  FOR (i=LONG_AT 0x6a;i<SOURCE_SIZE;i+=0x30) BEGIN
+    READ_SHORT i type
+    PATCH_IF type = 139 BEGIN
+      SAY i + 0x4 @1026
+    END
+    WRITE_LONG i + 0xe  THIS > 2 ? THIS * 2 : THIS //Double duration
+    WRITE_LONG i + 0x28 THIS - 3                   //And a save penalty
+  END
+  LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 177 END
+
+
+OUTER_SET $f_AddSecType(fl#gmumn.spl) = FearSecType

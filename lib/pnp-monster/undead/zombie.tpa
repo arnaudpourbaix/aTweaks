@@ -1,0 +1,333 @@
+// Zombie
+ACTION_FOR_EACH file IN
+                bhghoul3 //undead village
+                bhghoul5 //undead village
+				GTCIT3
+				GTCIT4
+				GTCIT5
+                kelzomb //Keldorn's
+                nevm5 //Nev's
+                rzomb01 //Ranger stronghold mission
+                zombie
+                _zombie
+                zombie01 //Unused, but no accounting for mods
+                zombieb //Bassilus
+                _zombieb
+                zombie_a
+                _ombie_a
+                zombie_b
+                _ombie_b
+                zombie_c
+                _ombie_c
+                zombie_d
+                _ombie_d
+                zombie_e
+                _ombie_e
+				c#q06002 // BGQE
+				crcre004 // The Old Gold
+				CRCRE009 // The Old Gold
+				d0monty2 // Quest Pack
+				ja#zomb1 // Mod added
+				LCADEAD2 // Spellpack
+				LCADEAD3 // Spellpack
+				LCADEAD4 // Spellpack
+				LCADEAD5 // Spellpack
+				LCADEAD6 // Spellpack
+				nszomb01 // Saerileth
+				nszomb02 // Saerileth
+				nszomb03 // Saerileth
+				nszomb04 // Saerileth
+				nszomb05 // Saerileth
+				nszomb06 // Saerileth
+				nszomb07 // Saerileth
+				nszomb08 // Saerileth
+				nszomb09 // Saerileth
+				nszomb10 // Saerileth
+				ntzombie // NTotSC
+				x#garz01 // BG1 NPC
+				x#garz02 // BG1 NPC
+				x#garz03 // BG1 NPC
+				x#garz04 // BG1 NPC
+				zombsexx // TDD
+				zombx1   // TDD
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        REPLACE_CRE_ITEM fl#zomb #0 #0 #0 none weapon1 EQUIP
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 65
+            newhp = 16 //2d8
+            newac = 8
+            newth = 19
+            newapr = 1
+            newsvd = 14
+            newsvw = 16
+            newsvp = 15
+            newsvb = 17
+            newsvs = 17
+            newlvl1 = 2
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 9
+            newstrx = 0
+            newint = 3
+            newwis = 9
+            newdex = 9
+            newcon = 9
+            newchr = 9
+            newmor = 20
+            newalign = 34 //Neutral
+            newclass = 198 //Zombie
+            newgen = 4 //undead
+            newrace = 148 //Zombie
+            
+            enforce = 1
+          STR_VAR
+            notenf01 = zombsexx
+            notenf02 = zombx1	
+			notenf03 = CRCRE009
+        END
+        PATCH_IF "%SOURCE_RES%" STRING_MATCHES_REGEXP "_?zombie[bw]" = 0 BEGIN
+          LPF promote_script STR_VAR script = "_?zombie[bw]" END
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#lowm
+            script01 = wtasight
+            script02 = bpwtsigt
+			script03 = DW2MC0MO
+			script04 = DW2MC0GE
+			script05 = dw2mp1mo
+            skipfile01 = kelzomb
+			skipfile02 = LCADEAD2
+			skipfile03 = LCADEAD3
+			skipfile04 = LCADEAD4
+			skipfile05 = LCADEAD5
+			skipfile06 = LCADEAD6
+			skipfile07 = crcre004
+			skipfile08 = CRCRE009
+        END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b1-8.itm "override/fl#zomb.itm"
+  LPF cold_spell_immunities END
+  FOR (i = 0; i < SHORT_AT 0x68; ++i) BEGIN
+    WRITE_BYTE LONG_AT 0x64 + 0x38*i + 0x12 10 //speed
+  END
+ACTION_FOR_EACH file IN
+			 crcre004 //The old gold
+			 crcre009 //The old gold
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      WRITE_LONG 0x28 25603 // enforce skeleton animation
+	  WRITE_LONG 0x14 "0"
+      LPF make_summon END
+      WRITE_ASCII SCRIPT_OVERRIDE "fl#sklsu" #8 // Swaps to fl#lowm for hostile summons
+    BUT_ONLY
+  END
+END
+
+// Zombie, Lord
+ACTION_FOR_EACH file IN
+            zomblo01
+			dszomblo // DsotSC
+			gzombie  // TS
+			MH#zom12 // Made In Heaven Q&E
+//			xszomb1  // Exnem - Not Tested
+			szombl01 // DSotSC & Bonehill	
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        REPLACE_CRE_ITEM fl#zlord #0 #0 #0 none weapon1 EQUIP
+        LPF unturnable END
+        LPF RR#MDCRE
+		  INT_VAR
+            newxpv = 650
+            newhp = 48 //6d8
+            newac = 6
+            newth = 15
+            newapr = 2
+            newsvd = 11
+            newsvw = 13
+            newsvp = 12
+            newsvb = 13
+            newsvs = 14
+            newlvl1 = 6
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 100
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 18
+            newstrx = 1
+            newint = 10
+            newwis = 10
+            newdex = 10
+            newcon = 10
+            newchr = 10
+            newmor = 18
+            newalign = 35 //Neutral Evil
+            newclass = 198 //Zombie
+            newgen = 4 //undead
+            newrace = 148 //Zombie           
+            enforce = 1
+		  STR_VAR
+            notenf01 = dszomblo
+        END
+        PATCH_IF "%SOURCE_RES%" STRING_MATCHES_REGEXP "_?zombie[bw]" = 0 BEGIN
+          LPF promote_script STR_VAR script = "_?zombie[bw]" END
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#zlord
+            script01 = wtasight
+            script02 = bpwtsigt
+			script03 = GHOLOR01 //Ghoul lord
+			script04 = DW2MP1MO
+			script05 = DW2MP1GE
+			script06 = DW2MP2MW
+			script07 = DW2MC2MO
+        END
+        // LPF cold_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b2-8.itm "override/fl#zlord.itm"
+  LPF set_enchantment INT_VAR enchantment = 2 END
+  LPF cold_spell_immunities END
+  WRITE_BYTE 0x88 4
+  FOR (i = 0; i < SHORT_AT 0x68; ++i) BEGIN
+    WRITE_BYTE LONG_AT 0x64 + 0x38*i + 0x12 10 //speed
+  END
+
+// Zombie, Ju-ju
+ACTION_FOR_EACH file IN
+                zombju01
+                zombiew //zombie farm
+                _zombiew
+				CDI5JZOM // IWDification
+				LCJUJUSU // Spellpack
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        SAY NAME1 @1037
+        SAY NAME2 @1037
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
+        REPLACE_CRE_ITEM fl#zomju #0 #0 #0 none weapon1 EQUIP
+        LPF illusion_immunity END
+        LPF ADD_CRE_EFFECT
+          INT_VAR
+            opcode = 83 //protection from projectile (catch-all)
+            target = 1
+            parameter2 = 0x24 //Magic Missile
+            timing = 9
+        END
+        LPF ADD_CRE_EFFECT
+          INT_VAR
+            opcode = 206 //protection from spell (for the feedback)
+            target = 1
+            parameter1 = 4742 //spell ineffective
+            timing = 9
+          STR_VAR
+            resource = spwi112
+        END
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 975
+            newhp = 36 //3d8+12
+            newac = 6
+            newth = 15
+            newapr = 1
+            newsvd = 11
+            newsvw = 13
+            newsvp = 12
+            newsvb = 13
+            newsvs = 14
+            newlvl1 = 3
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 50
+            newcr = 100
+            newer = 100
+            newar = 0
+            newrs = 0
+            newrc = 50
+            newrp = 50
+            newrm = 50
+            newstr = 9
+            newstrx = 0
+            newint = 7
+            newwis = 9
+            newdex = 16
+            newcon = 9
+            newchr = 9
+            newmor = 20
+            newalign = 35 //NE
+            newclass = 198 //Zombie
+            newgen = 4 //undead
+            newrace = 148 //Zombie
+            
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#midmc
+            script01 = wtasight
+            script02 = bpwtsigt
+			script03 = DW2MC0MO
+			script05 = DW2MC1MO
+			script04 = DW2MS0GE
+			skipfile01 = CDI5JZOM
+			skipfile02 = LCJUJUSU
+        END
+        // LPF cold_spell_immunities END
+        // LPF electrical_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING b3-12.itm "override/fl#zomju.itm"
+  LPF set_enchantment END
+  LPF cold_spell_immunities END
+  LPF electrical_spell_immunities END
+

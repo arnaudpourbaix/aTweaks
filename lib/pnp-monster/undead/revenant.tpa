@@ -1,0 +1,125 @@
+// Revenant
+ACTION_FOR_EACH file IN
+			   firmon04 //BG2 Revenant
+			   grreven //BG2 Revenant
+			   reven01 //BG2 Revenant
+//			   fearm //BG1 Revenant
+			   revent //BG1 Revenant
+			   srevnnt //Bonehill Revenant
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+		REMOVE_CRE_ITEM ~REVENT2~
+		ADD_MEMORIZED_SPELL ~rr#pgaze~ #0 ~innate~ ( 1 )                                   // adds 1x Paralysing Gaze
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring
+        REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
+		PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~firmon04~ BEGIN
+          REPLACE_CRE_ITEM rr#revnt #0 #0 #0 none weapon1 EQUIP
+		END
+		REPLACE_CRE_ITEM monhp1  #0 #0 #0 none amulet
+		REPLACE_CRE_ITEM fl#rvreg #0 #0 #0 none belt
+         LPF unturnable END
+		 LPF RR#MDCRE
+			INT_VAR
+            newxpv = 3000
+            newhp = 64 //8d8
+            newac = 10
+            newth = 13
+            newapr = 1
+            newsvd = 10
+            newsvw = 12
+            newsvp = 11
+            newsvb = 12
+            newsvs = 13
+            newlvl1 = 8
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = "-25"
+            newcr = 100
+            newer = 0
+            newar = 100
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 18
+            newstrx = 79
+            newint = 16
+            newwis = 9
+            newdex = 9
+            newcon = 9
+            newchr = 9
+            newmor = 18
+            newalign = 34 //N
+            newclass = 117 //Ghoul_revenant
+            newgen = 4 //undead
+            newrace = 108 //Ghoul
+			
+			enforce = 1
+        END
+
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = rr#revnt
+			script01 = ""
+			script02 = "None"
+            script03 = wtasight
+            script04 = _tasight
+			script05 = bpwtsigt
+			script06 = bpwtrsgt
+			script07 = bpwdrsgt
+			script08 = DW2RM3GE
+			script09 = DW2RC3GE
+			script10 = revenant
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#revnt
+			script01 = ""
+			script02 = "None"
+         END
+        LPF cold_spell_immunities END
+		LPF acid_spell_immunities END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING "trollreg.itm" "override/fl#rvreg.itm"
+  WRITE_SHORT 0x1c 3
+  LPF ALTER_EFFECT INT_VAR match_opcode = 98 parameter1 = 2 parameter2 = 3 END
+  SAY NAME1 #1292
+
+COPY_EXISTING "REVENT2.itm" "override/rr#revnt.itm"
+  LPF set_enchantment INT_VAR enchantment = 3 END
+
+COPY 	 "atweaks\spl\fl#die.spl" "override/fl#rvdie.spl"
+	LPF ALTER_EFFECT INT_VAR match_opcode = 143 STR_VAR resource = "rr#rvdie" END
+COPY 	 "atweaks\spl\fl#back.spl" "override/fl#rvbac.spl"
+	LPF ALTER_EFFECT STR_VAR match_resource = "REVNREG" resource = "fl#rvreg" END
+COPY 	 "atweaks\spl\fl#itm.spl" "override/fl#rvitm.spl"
+COPY 	 "atweaks\itm\undead\fl#Revn1.itm" "override/rr#rvdie.itm"
+
+COPY_EXISTING ~spwi604.spl~ ~override/rr#rgaze.spl~  								// Revenent Gaze
+  SET gaze_pro = IDS_OF_SYMBOL (~PROJECTL~ ~gaze~) + 1
+  SAY NAME1 @686
+  WRITE_ASCII 0x10 "none" #8														// no casting animation
+  WRITE_SHORT 0x22 0 																// Gaze Range
+  WRITE_SHORT 0x80 30 																// Gaze Range
+  READ_LONG  0x64 ab_off
+  READ_SHORT 0x68 ab_num
+  FOR(i=0; i<ab_num; i+=1) BEGIN
+    WRITE_SHORT (ab_off+i*0x28+0x26) %gaze_pro%                                     // use gaze projectile
+  END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 134 opcode = 109 parameter1 = 0 parameter2 = 2 duration = 30 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 174 duration = 30 timer = 4 STR_VAR resource = "EFF_E05" END
+  LPF DELETE_EFFECT INT_VAR silent = 1 match_opcode = 318 END
+  LPF DELETE_EFFECT INT_VAR silent = 1 match_opcode = 326 END
+  LPF ALTER_EFFECT INT_VAR savingthrow = 1 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 139 parameter1 = RESOLVE_STR_REF(@1026) END
+  LPF ~RR#SP2IN~ INT_VAR ctime=0 rinvs=1 renew=1 END                // Execute the "spell to innate ablity" function

@@ -12,14 +12,8 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.spl~ BEGIN
     COPY_EXISTING ~%file%.spl~ ~override~
       PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN                                   // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
-        LAUNCH_PATCH_FUNCTION ~RR#AGLEF~                                           // Start FUNCTION call (my custom "Add Global Effect" function)
-          INT_VAR                                                                  // initialize variables
-            "rr#opcode" = "136"                                                    // effect: #136 (force visible)
-            "rr#target" = "1"                                                      // target: 1 (self)
-            "rr#timing" = "1"                                                      // timing mode: 1 (permanent)
-            "rr#prob1" = "100"                                                     // probability1: 100%
-        END
-        PATCH_INCLUDE ~aTweaks/lib/fj_spl_itm_reindex.tpp~                         // Nythrun's SPL/ITM re-indexer macro (needed for Global Effects)
+        LPF ADD_SPELL_EFFECT INT_VAR opcode = 136 target = 1 timing = 1 END   // force visible self
+        LPF FJ_SPL_ITM_REINDEX END
       END
     BUT_ONLY_IF_IT_CHANGES
   END
@@ -58,14 +52,8 @@ ACTION_IF !jester_song BEGIN
     ACTION_IF FILE_EXISTS_IN_GAME ~%file%.spl~ BEGIN
       COPY_EXISTING ~%file%.spl~ ~override~
         PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN                                 // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
-          LAUNCH_PATCH_FUNCTION ~RR#AGLEF~                                         // Start FUNCTION call (my custom "Add Global Effect" function)
-            INT_VAR                                                                // initialize variables
-              "rr#opcode" = "136"                                                  // effect: #136 (force visible)
-              "rr#target" = "1"                                                    // target: 1 (self)
-              "rr#timing" = "1"                                                    // timing mode: 1 (permanent)
-              "rr#prob1" = "100"                                                   // probability1: 100%
-          END                                                                      // end FUNCTION call
-          PATCH_INCLUDE ~aTweaks/lib/fj_spl_itm_reindex.tpp~                       // Nythrun's SPL/ITM re-indexer macro (needed for Global Effects)
+          LPF ADD_SPELL_EFFECT INT_VAR opcode=136 target=1 timing=1 END
+          LPF FJ_SPL_ITM_REINDEX END
         END
       BUT_ONLY_IF_IT_CHANGES
     END

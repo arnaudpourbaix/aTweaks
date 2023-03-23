@@ -1,0 +1,98 @@
+// Ghoul and Lacedon
+ACTION_FOR_EACH file IN
+               BHGHOUL1
+			   ghoul01
+			   ghoulsu
+			   GTCIT1
+			   GTCIT2
+               ghoul    //BG1 Ghoul
+			   _ghoul
+               korax    //Korax the Ghoul
+               _korax
+			   bodakmd  // BP
+			   ghuldmod // PofQuestPack
+			   MH#GLGHO // Made in heaven Q&E
+//			   WAGHOUL  // Mod added
+               lacedo01 // Lacedon
+               sahlace  // Lacedon
+			   JA#SUTY1 // Mod added Lacedon
+			   JA#SUTY3 // Mod added Lacedon
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        REPLACE_CRE_ITEM fl#ghou1 #0 #0 #0 none weapon1 EQUIP
+        REPLACE_CRE_ITEM fl#ghou2 #0 #0 #0 none shield
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 175
+            newhp = 16 //2d8
+            newac = 6
+            newth = 19
+            newapr = 2 //2 with main, plus one chomp with the off hand
+            newsvd = 12
+            newsvw = 14
+            newsvp = 13
+            newsvb = 15
+            newsvs = 13
+            newlvl1 = 2
+            newlvl2 = 0
+            newlvl3 = 0
+            newmr = 0
+            newfr = 0
+            newcr = 0
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 16
+            newdex = 9
+            newcon = 9
+            newint = 7
+            newwis = 7
+            newchr = 9
+            newmor = 12
+            newalign = 51 //CE
+            ptwf = 1
+            enforce = 1
+        END
+        LPF RR#MDCSC
+          STR_VAR
+            newscript = fl#ghoul
+            script01 = wdasight
+            script02 = _dasight
+            script03 = _tasight
+            script04 = wtasight
+            script05 = ghoul
+            script06 = DW2MC0GE
+            script07 = bpwtsigt
+            script08 = bpwdasgt
+			script09 = DW2MC0GW
+			script10 = DW1MELGE
+			script11 = DW2MP0GW	
+			script12 = DW2MM0GE	
+			script13 = DW2MP0GE	
+			skipfile01 = ghoulsu	
+        END
+      END
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING s1-3.itm "override/fl#ghou1.itm"
+              s1-6.itm "override/fl#ghou2.itm"
+  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 177 target = 2 duration = 1 parameter1 = 2 parameter2 = 4 STR_VAR resource = fl#ghoul END //Protection from fl#ghoul.spl for elves
+  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 146 target = 2 timing = 1 parameter1 = 1 parameter2 = 1 STR_VAR resource = fl#ghoul END //Cast fl#ghoul.spl
+
+COPY "atweaks/eff/base.eff" "override/fl#ghoul.eff"
+  WRITE_LONG 0x10 206
+  WRITE_LONG 0x14 2
+  WRITE_LONG 0x28 1
+  WRITE_ASCII 0x30 fl#ghoul #8
+
+COPY "atweaks/spl/undead/fl#ghoul.spl" override

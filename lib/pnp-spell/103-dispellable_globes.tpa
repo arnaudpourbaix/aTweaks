@@ -26,7 +26,7 @@ BEGIN
             END      
           END
         END
-        PATCH_INCLUDE ~aTweaks/lib/fj_spl_itm_reindex.tpp~                         // Nythrun's SPL/ITM re-indexer macro (needed for Global Effects)
+        LPF FJ_SPL_ITM_REINDEX END
       END
     BUT_ONLY_IF_IT_CHANGES
   END

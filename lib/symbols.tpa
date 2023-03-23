@@ -1,4 +1,4 @@
-INCLUDE ~atweaks/lib/ds.tpa~
+INCLUDE ~atweaks/lib/common/ds.tpa~
 
 APPEND stats.ids "109 CLERIC_HALLOW" UNLESS CLERIC_HALLOW                         //Ensure that CLERIC_HALLOW is in there
 

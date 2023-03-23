@@ -1,0 +1,347 @@
+// Death Knight
+ACTION_IF (MOD_IS_INSTALLED ~stratagems.TP2~ ~6510~) BEGIN // With Stratagems installed MELSUM02 is a demon knight
+  OUTER_SPRINT Melbf MELSUM02
+END ELSE OUTER_SPRINT Melbf ""
+
+ACTION_FOR_EACH file IN
+               deathk //Death Knight from Durlag's Tower
+               _deathk
+               deathkni //Plain Death Knight used in ToB
+               deck615 //DoMT hitman
+               uddeath //Undeadark Death Knights
+               uddeath2 //Underdark Death Knight leader
+               gooddeat //Durlag's Tower DK mirror fiend
+               _ooddeat
+			   cmskel03 //Dark Horizons
+			   cmskel04 //Dark Horizons
+//			   CADDEM20 //RoT
+//			   CB3579DK //CtB
+			   YSDWFGR2 // Fishing For Trouble
+			   YSDWFGRD // Fishing For Trouble
+			   YSDWFKNT // Fishing For Trouble
+			   F_DEATHK // Drizzt Saga
+			   F_DEATHL // Drizzt Saga
+			   NTDEATH1 // NTotSC
+			   NTGGOTHA // NTotSC
+			   "%Melbf%"
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_IF "%file%" STRING_MATCHES_REGEXP "_?g?ooddeat$" BEGIN
+          SAY 0x8 @1020 //Death Knight
+          SAY 0xc @1020
+        END
+        PATCH_IF SSHORT_AT LONG_AT 0x2b8 = "-1" BEGIN //Do not overwrite existing items (and we use this together with REPLACE_CRE_ITEM -.-)      
+          REPLACE_CRE_ITEM helmnoan #0 #0 #0 none helmet //Helmet
+        END
+        REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
+        LPF unturnable END
+        LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 193 END //Invisibility detection by script
+        LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 0 END //AC bonus
+        LPF DELETE_CRE_ITEM STR_VAR item_to_delete = "sw2h02\sw2h11\|sw2hdeat\|_?sw2h05\|ringdemn\|_?shld06" END
+        LPF RR#MDCRE
+          INT_VAR
+            newxpv = 10000
+            newhp = 90 //9d10
+            newac = 0
+            newth = 8
+            newapr = 1
+            newsvd = 6
+            newsvw = 8
+            newsvp = 7
+            newsvb = 7
+            newsvs = 9
+            newmr = 75
+            newlvl1 = 9 //Fighter
+            newlvl2 = 20 //Mage
+            newlvl3 = 8 //Cleric
+            newfr = 0
+            newcr = 0
+            newer = 0
+            newar = 0
+            newrs = 0
+            newrc = 0
+            newrp = 0
+            newrm = 0
+            newstr = 18
+            newstrx = 100
+            newint = 18
+            newwis = 16
+            newdex = 18
+            newcon = 11
+            newchr = 10
+            newmor = 17
+            newgen = 4 //Undead
+            newrace = 115 //Skeleton
+            newclass = 17 //F_M_C
+            newalign = 51
+
+            enforce = 1
+        STR_VAR
+			notenf01 = MELSUM02
+			notenf02 = F_DEATHK
+			notenf03 = NTGGHOTA
+        END
+        PATCH_IF "%file%" STRING_MATCHES_REGEXP "_?g?ooddeat$" BEGIN
+          PATCH_IF "%file%" STRING_MATCHES_REGEXP "_?deathk$" = 0 BEGIN
+            SPRINT script "fl#bg1kn"
+          END ELSE BEGIN
+            SPRINT script "fl#death"
+          END
+          LPF RR#MDCSC
+            STR_VAR
+              newscript = EVAL "%script%"
+              script01 = deathkni
+              script02 = wtasight
+              script03 = _eathkni
+              script04 = _tasight
+              script05 = uddeath
+              script06 = bpwtsigt
+              script07 = bpmag18a
+              script08 = bpdemon
+			  script09 = dw#death
+			  script10 = CB3579DK
+			  script11 = WTASI2
+			  script12 = DW1MELGE
+			  script13 = DW2MS4GE
+			  script14 = DW2MS2GE
+			  script15 = DW2MS1GE
+			  script16 = DW2MS5GE
+			  script17 = DW2MS0GE
+			  script17 = NTGGHOTA
+			  script18 = F_DEATHK
+          END
+        END
+        LPF add_skeletal_traits END
+      END
+    BUT_ONLY
+  END
+END
+
+ACTION_FOR_EACH file IN
+                deathk1
+                _deathk1
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      SAY NAME1 @1020
+      SAY NAME2 @1020
+    BUT_ONLY
+  END
+END
+
+COPY_EXISTING misc56.itm "override/fl#brsw.itm" //Broken sword
+  SAY 0x8 @1031
+  SAY 0xc @1031
+  SAY 0x50 @1032
+  SAY 0x54 @1032
+
+COPY ~atweaks/spl/undead/fl#dkfa.spl~ override //Death Knight Fear Aura
+     
+COPY "atweaks/itm/undead/fl#dksw3.itm" override //Two-handed sword +4
+  LPF set_enchantment INT_VAR enchantment = 4 END
+
+COPY_EXISTING sw1h02.itm "override/fl#dksw4.itm" //Bastard sword +2, +1 APR
+              sw1h02.itm "override/fl#dksw5.itm" //Bastard sword +2, of dancing
+              sw1h02.itm "override/fl#dksw6.itm" //Bastard sword +2, of life stealing
+  WRITE_SHORT 0x42 0 //lore
+  WRITE_BYTE  0x18 THIS BAND 0xfb //Unset 'droppable' (BIT2)
+  LPF set_enchantment INT_VAR enchantment = 2 END
+  LPF configure_header
+    INT_VAR
+      f_ToHit = 2
+      f_Damage = 2
+  END
+  PATCH_MATCH "%DEST_RES%"
+  WITH
+    fl#dksw4 BEGIN
+      LPF ADD_ITEM_EQEFFECT
+        INT_VAR
+          opcode = 1 //APR mod
+          target = 1
+          parameter1 = 1
+          timing = 2
+      END
+    END
+    fl#dksw6 BEGIN
+      LPF ADD_ITEM_EFFECT
+        INT_VAR
+          type = 1
+          opcode = 216 //Level drain
+          target = 2
+          parameter1 = 1
+          timing = 1
+      END
+      LPF ADD_ITEM_EFFECT
+        INT_VAR
+          type = 1
+          opcode = 139 //display string
+          target = 2
+          parameter1 = 41495 //one level drained
+          timing = 1
+      END
+      LPF ADD_ITEM_EFFECT
+        INT_VAR
+          type = 1
+          opcode = 141 //lighting effect
+          target = 2
+          parameter2 = 1 //necromancy, earth
+          timing = 1
+      END
+    END
+    DEFAULT
+  END
+
+COPY "atweaks/spl/base.spl" "override/fl#dksw5.spl" 
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 112 //remove item
+      target = 1
+      timing = 1
+    STR_VAR
+      resource = fl#dksw5
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 143 //create item in slot
+      target = 1
+      parameter1 = 35 //SLOT_WEAPON
+      timing = 4
+      duration = 24
+    STR_VAR
+      resource = fl#dksw5
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 67 //summon creature
+      target = 1
+      duration = 24
+    STR_VAR
+      resource = fl#dksw5
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 215 //visual effect
+      target = 1
+      timing = 1
+    STR_VAR
+      resource = spcrtwpn
+  END
+
+COPY_EXISTING sword02.cre "override/fl#dksw5.cre" //Dancing sword
+  SAY 0x8 @1030
+  SAY 0xc @1030
+  REPLACE_CRE_ITEM fl#dksw5 #0 #0 #0 "unstealable&undroppable" weapon1 EQUIP
+  WRITE_ASCII SCRIPT_OVERRIDE fl#dksw5 #8
+
+OUTER_SPRINT $dksw(1) sw1h42
+OUTER_SPRINT $dksw(2) sw2h20
+OUTER_SPRINT $dksw(3) fl#dksw3
+OUTER_SPRINT $dksw(4) fl#dksw4
+OUTER_SPRINT $dksw(5) fl#dksw5
+OUTER_SPRINT $dksw(6) fl#dksw6
+
+
+OUTER_SET r = RANDOM(1 6)
+OUTER_SET c = RANDOM(1 100)
+ACTION_FOR_EACH file IN
+                deathk
+                _deathk
+                gooddeat
+                _ooddeat
+				cmskel03
+				cmskel04
+				ysdwfgr2
+				ysdwfgrd
+				ysdwfknt
+				f_deathk
+				f_deathl
+				ntdeath1
+				ntgghota
+				"%Melbf%"
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      LPF FJ_CRE_VALIDITY END
+      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_IF valid BEGIN
+        PATCH_IF c <= 80 BEGIN
+          SPRINT sword $dksw("%r%")
+          PATCH_IF r = 1 BEGIN
+            ADD_CRE_ITEM "%sword%" #0 #0 #0 unstealable ~weapon1 weapon2 weapon3 weapon4~ EQUIP
+          END ELSE PATCH_IF r = 2 BEGIN
+            ADD_CRE_ITEM "%sword%" #0 #0 #0 unstealable ~weapon1 weapon2 weapon3 weapon4~ EQUIP TWOHANDED
+          END ELSE PATCH_IF r = 3 BEGIN
+            ADD_CRE_ITEM "%sword%" #0 #0 #0 "unstealable&undroppable" ~weapon1 weapon2 weapon3 weapon4~ EQUIP TWOHANDED
+            ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+          END ELSE PATCH_IF r = 4 OR r = 6 BEGIN
+            ADD_CRE_ITEM "%sword%" #0 #0 #0 "unstealable&undroppable" ~weapon1 weapon2 weapon3 weapon4~ EQUIP
+            ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+          END ELSE BEGIN
+            ADD_CRE_ITEM fl#dksw5 #0 #1 #0 "unstealable&undroppable" weapon1 EQUIP
+            ADD_CRE_ITEM sw1h02 #0 #0 #0 unstealable ~weapon2 weapon3 weapon4~
+            ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+          END
+        END ELSE BEGIN
+          ADD_CRE_ITEM sw2h01 #0 #0 #0 unstealable weapon1 EQUIP TWOHANDED
+        END
+      END
+    BUT_ONLY
+  END
+END
+
+ACTION_IF GAME_INCLUDES ~tob~ BEGIN
+  COPY_EXISTING uddeath2.cre override
+                deck615.cre  override
+                uddeath.cre  "override/fl#udkn1.cre"
+                uddeath.cre  "override/fl#udkn2.cre"
+                uddeath.cre  "override/fl#udkn3.cre"
+                deathkni.cre "override/fl#wkkn1.cre"
+                deathkni.cre "override/fl#wkkn2.cre"
+                deathkni.cre "override/fl#wkkn3.cre"
+				uddeath.cre  override
+				deathkni.cre override
+
+    LPF FJ_CRE_VALIDITY END
+    PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+    PATCH_IF valid BEGIN
+      r = RANDOM(1 6)
+      SPRINT sword $dksw("%r%")
+      PATCH_IF r = 1 BEGIN
+        ADD_CRE_ITEM "%sword%" #0 #0 #0 unstealable ~weapon1 weapon2 weapon3 weapon4~ EQUIP
+      END ELSE PATCH_IF r = 2 BEGIN
+        ADD_CRE_ITEM "%sword%" #0 #0 #0 unstealable ~weapon1 weapon2 weapon3 weapon4~ EQUIP TWOHANDED
+      END ELSE PATCH_IF r = 3 BEGIN
+        ADD_CRE_ITEM "%sword%" #0 #0 #0 "unstealable&undroppable" ~weapon1 weapon2 weapon3 weapon4~ EQUIP TWOHANDED
+        ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+      END ELSE PATCH_IF r = 4 OR r = 6 BEGIN
+        ADD_CRE_ITEM "%sword%" #0 #0 #0 "unstealable&undroppable" ~weapon1 weapon2 weapon3 weapon4~ EQUIP
+        ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+      END ELSE BEGIN
+        ADD_CRE_ITEM fl#dksw5 #0 #1 #0 "unstealable&undroppable" weapon1 EQUIP
+        ADD_CRE_ITEM sw2h01 #0 #0 #0 unstealable ~weapon2 weapon3 weapon4~ TWOHANDED
+        ADD_CRE_ITEM fl#brsw #0 #0 #0 unstealable inv1
+      END
+    END
+  BUT_ONLY
+  
+  COPY_EXISTING udsac.bcs override
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("uddeath",[2929.1562],12)~ ~("fl#udkn1",[2929.1562],12)~
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("uddeath",[2724.1143],12)~ ~("fl#udkn2",[2724.1143],12)~
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("uddeath",[3280.1348],12)~ ~("fl#udkn3",[3280.1348],12)~
+	END
+  BUT_ONLY
+  
+  COPY_EXISTING ar3007.bcs override
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("deathkni",[550.390],0)~ ~("fl#wkkn1",[550.390],0)~
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("deathkni",[383.505],12)~ ~("fl#wkkn2",[383.505],12)~
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~("deathkni",[574.683],10)~ ~("fl#wkkn3",[574.683],10)~
+    END
+  BUT_ONLY
+END

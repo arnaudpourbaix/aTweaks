@@ -1,0 +1,135 @@
+ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
+                ~SIRINE~                                                           // Sirine (BGT)
+               ~_SIRINE~                                                           // Sirine (Tutu)
+              ~SIRINE_A~                                                           // Sirine (BGT)
+              ~_IRINE_A~                                                           // Sirine (Tutu)
+              ~SIRINE_B~                                                           // Sirine (BGT)
+              ~_IRINE_B~                                                           // Sirine (Tutu)
+              ~SIRINE01~                                                           // Sirine
+              ~SIRINE02~                                                           // Sirine (BGT)
+              ~_IRINE02~                                                           // Sirine (Tutu)
+                   ~SIL~                                                           // Sil (BGT)
+                  ~_SIL~                                                           // Sil (Tutu)
+			  ~J#SIRIN1~ 														   //Sirine (Jarl Adv)
+			  ~J#SIRIN2~ 														   //Sirine (Jarl Adv)
+			    ~L#NDC1~														   // Southern Edge
+			   ~NTSILUA~ 														   //Sirine (NTotSC)
+			  ~NTSIRIN2~ 														   //Sirine (NTotSC)
+			  ~NTSIRIN4~ 														   //Sirine (NTotSC)
+			  ~NTSIRINE~ 														   //Sirine (NTotSC)			  
+			    ~ISLSIR~ 														   //Sirine Queen (BGT)
+			    ~MEIALA~ 														   //Sirine (BGT)
+			  ~QSEROMOD~ 														   //Sirine (PofQuestPack)
+BEGIN                                                                              // execute the following
+ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
+COPY_EXISTING ~%file%.cre~ ~override~
+LPF FJ_CRE_VALIDITY INT_VAR do_message = 1 END                   // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+// =============================================================================== // the actual work starts from here
+REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
+REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
+LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
+LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
+ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ ( 1 )                                   // adds 1x Charming Song
+ADD_MEMORIZED_SPELL ~rr#fcld~ #0 ~innate~ ( 1 )                                    // adds 1x Fog Cloud
+ADD_MEMORIZED_SPELL ~rr#wi405~ #0 ~innate~ ( 1 )                                   // adds 1x Improved Invisibility
+ADD_MEMORIZED_SPELL ~rr#pjell~ #0 ~innate~ ( 1 )                                   // adds 1x Polymorph Mustard Jelly
+ADD_CRE_ITEM ~rr#fsiri~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~boots~                 // add boots which increase Movement Rate to 9 (Sirines only because of Polymorph)
+REMOVE_CRE_ITEM ~SIRINE~                                                           // removes SIRINE.ITM on BGT (Touch of Tranquility is handled differently)
+REMOVE_CRE_ITEM ~_SIRINE~                                                          // removes _SIRINE.ITM on Tutu (Touch of Tranquility is handled differently)
+REMOVE_CRE_ITEM ~SIRINE1~                                                          // removes SIRINE1.ITM on BGT (Touch of Tranquility is handled differently)
+REMOVE_CRE_ITEM ~_SIRINE1~                                                         // removes _SIRINE1.ITM on Tutu (Touch of Tranquility is handled differently)
+ADD_CRE_ITEM ~rr#ftrnq~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~                           // add Touch of Tranquility
+ADD_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~quiver3~                            // add 40 normal arrows
+ADD_CRE_ITEM ~AROW10~ #10 #0 #0 ~UNSTEALABLE~ ~quiver2~                            // add 10 Arrows of Piercing
+REPLACE_CRE_ITEM ~AROW05~ #5 #0 #0 ~UNSTEALABLE~ ~quiver1~  EQUIP                  // make the Arrows of Biting unstealable and equip them
+LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "BOW05" flags = UNSTEALABLE END    // make the Shortbow unstealable (BGT)
+LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "_BOW05" flags = UNSTEALABLE END   // make the Shortbow unstealable (Tutu)
+WRITE_BYTE 0x6f 1                                                                  // BG1 Proficiency slot (small sword)
+WRITE_BYTE 0x70 1                                                                  // BG1 Proficiency slot (bow)
+LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+INT_VAR                                                                            // Initialize variables
+"newxpv"   = "3000"                                                                // new XP value
+"newhp"    = "40"                                                                  // new hit point value
+"newac"    = "3"                                                                   // new Armor Class value
+"newth"    = "15"                                                                  // new THAC0 value
+"newapr"   = "1"                                                                   // new number of attacks per round
+"newsvd"   = "11"                                                                  // new Save vs. Death
+"newsvw"   = "7"                                                                   // new Save vs. Wand
+"newsvp"   = "9"                                                                   // new Save vs. Polymorph
+"newsvb"   = "11"                                                                  // new Save vs. Breath
+"newsvs"   = "8"                                                                   // new Save vs. Spell
+"newmr"    = "20"                                                                  // new Magic Resistance value
+"newlvl1"  = "5"                                                                   // new level (first class)
+"newstr"   = "14"                                                                  // new Strength value
+"newint"   = "18"                                                                  // new Intelligence value
+"newwis"   = "16"                                                                  // new Wisdom value
+"newdex"   = "18"                                                                  // new Dexterity value
+"newcon"   = "11"                                                                  // new Constitution value
+"newchr"   = "17"                                                                  // new Charisma value
+"newmor"   = "12"                                                                  // new morale value
+"newgen"   = "1"                                                                   // new general (HUMANOID)
+"newmorb"  = "4"                                                                   // new morale break value
+"newmorr"  = "15"                                                                  // new morale recovery value
+"newrace"  = "120"                                                                 // new race (FAIRY)
+"newclass" = "130"                                                                 // new class (FAIRY_SIRINE)
+"newgendr" = "2"                                                                   // new gender (Female)
+"newsex"   = "2"                                                                   // new sex (Female)
+"newalign" = "50"                                                                  // new alignment (Chaotic Neutral)
+"enforce"  = "1"                                                                   // values are enforced for all creatures
+STR_VAR                                                                            // Initialize strings
+"notenf01" = "ISLSIR"
+"notenf02" = "MEIALA"
+"notenf03" = "QSEROMOD"
+END                                                                                // ends FUNCTION call
+LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+STR_VAR                                                                            // Initialize strings
+"newscript"  = "RR#FSIRI"                                                          // new AI script
+"script01"   = ""                                                                  // first AI script name
+"script02"   = "None"                                                              // second AI script name
+"script03"   = "SHOUT"                                                             // generic shout script
+"script04"   = "MACSHOUT"                                                          // generic shout script (Tutu)
+"script05"   = "SIRINE"                                                            // default Sirine script
+"script06"   = "SIRSPELL"                                                          // default Sirine script
+"script07"   = "_IRSPELL"                                                          // Sirine script (Tutu)
+"script08"   = "WTARSGT"                                                           // generic AI script
+"script09"   = "_WTARSGT"                                                          // generic AI script (Tutu)
+"script10"   = "SIL"                                                               // Sil's script
+"script11"   = "INITDLG"                                                           // dialogue script (not needed as it's handled within the new script)
+"script12"   = "_INITDLG"                                                          // dialogue script (Tutu)
+"script13"   = "wdarsgt"                                                           // generic AI script
+"script14"   = "_WDARSGT"                                                          // generic AI script (Tutu)
+"script15"   = "BPWTRSGT"                                                          // Big Picture generic AI script
+"script16"   = "CRESHOUT"                                                          // Big Picture shout script
+"script17"   = "DW2RC2MO"                                                          // Stratagems ranged AI script
+"script18"   = "DW2RC2MW"                                                          // Stratagems ranged AI script
+"script19"   = "DW2RC2GE"                                                          // Stratagems ranged AI script
+"script20"   = "DW2MM2MO"                                                          // Stratagems ranged AI script
+END                                                                                
+LPF cloud_spell_immunities END                                   // grant immunities to gas-based area effect spells
+PATCH_IF (("%SOURCE_RES%" STRING_EQUAL_CASE ~SIL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~_SIL~)) BEGIN // special case, Sil should be a 7 HD Sirine
+  WRITE_LONG 0x14 5000                                                             // XP value
+  WRITE_SHORT 0x24 56                                                              // current hit points
+  WRITE_SHORT 0x26 56                                                              // maximum hit points
+  WRITE_BYTE 0x52 13                                                               // THAC0
+  WRITE_BYTE 0x54 10                                                               // save vs. death
+  WRITE_BYTE 0x55 12                                                               // save vs. wands
+  WRITE_BYTE 0x56 11                                                               // save vs. polymorph
+  WRITE_BYTE 0x57 12                                                               // save vs. breath
+  WRITE_BYTE 0x58 13                                                               // save vs. spells
+  WRITE_BYTE 0x234 7                                                               // level (first class)
+REMOVE_CRE_ITEM ~BOW05~                                                            // special case, removes Shortbow (BGT)
+REMOVE_CRE_ITEM ~_BOW05~                                                           // special case, removes Shortbow (Tutu)
+READ_LONG  0x2b8 "slot_off" ELSE 0
+READ_LONG  0x2bc "itm_off" ELSE 0
+READ_LONG  0x2c0 "itm_num" ELSE 0
+READ_SHORT (%slot_off% + (9 * 0x02)) weap1                                         // WEAPON1 slot
+  PATCH_IF (%weap1% = 0xffff) BEGIN                                                // if the WEAPON1 slot is empty
+    ADD_CRE_ITEM ~BOW05~ #0 #0 #0 ~UNSTEALABLE~ ~weapon1~ EQUIP TWOHANDED          // add Shortbow
+  END
+REPLACE_CRE_ITEM ~AROW10~ #15 #0 #0 ~UNSTEALABLE~ ~quiver2~                        // give Sil 15 Arrows of Piercing
+REPLACE_CRE_ITEM ~AROW05~ #10 #0 #0 ~UNSTEALABLE~ ~quiver1~ EQUIP                  // give Sil 10 Arrows of Biting
+END                                                                                // end Sil's block
+// =============================================================================== // the actual work ends here
+BUT_ONLY_IF_IT_CHANGES
+END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
+END                                                                                // ends ACTION_FOR_EACH block

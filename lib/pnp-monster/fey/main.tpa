@@ -1,0 +1,15 @@
+/////////////////////
+// PnP Fey Creatures
+/////////////////////
+INCLUDE "atweaks/lib/tactical_shared.tpa"
+
+INCLUDE "atweaks/lib/pnp-monster/fey/spells.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fey/items.tpa"
+
+INCLUDE "atweaks/lib/pnp-monster/fey/dryad.tpa"      // Dryad
+INCLUDE "atweaks/lib/pnp-monster/fey/hamadryad.tpa"  // Hamadryad
+INCLUDE "atweaks/lib/pnp-monster/fey/sirine.tpa"     // Sirine
+INCLUDE "atweaks/lib/pnp-monster/fey/nymph.tpa"      // Nymph
+
+INCLUDE "atweaks/lib/pnp-monster/fey/scripts.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fey/compatibility.tpa"

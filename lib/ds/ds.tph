@@ -1028,23 +1028,23 @@ ACTION_IF fubar BEGIN
     WRITE_SHORT (0x72 + 0x22) 1
     WRITE_SHORT (0x72 + 0x24) 1
     WRITE_SHORT (0x72 + 0x26) 221
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=230 parameter1=8 parameter2=1 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=215 parameter1=0 parameter2=1 timing=0 duration=3 target=2 power=7 resist_dispel=2
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=230 parameter1=8 parameter2=1 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=215 parameter1=0 parameter2=1 timing=0 duration=3 target=2 power=7 resist_dispel=2
                            STR_VAR resource=~spattck1~ END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=240 parameter1=0 parameter2=28 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=240 parameter1=0 parameter2=28 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
     
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=230 parameter1=8 parameter2=1 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=177 parameter1=0 parameter2=2 timing=3 duration=7 target=2 power=7 resist_dispel=2
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=230 parameter1=8 parameter2=1 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=177 parameter1=0 parameter2=2 timing=3 duration=7 target=2 power=7 resist_dispel=2
                            STR_VAR resource=~spattck1~ END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=240 parameter1=0 parameter2=28 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=240 parameter1=0 parameter2=28 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
 
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=230 parameter1=8 parameter2=1 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=177 parameter1=0 parameter2=2 timing=3 duration=13 target=2 power=7 resist_dispel=2
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=230 parameter1=8 parameter2=1 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=177 parameter1=0 parameter2=2 timing=3 duration=13 target=2 power=7 resist_dispel=2
                            STR_VAR resource=~spattck1~ END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
-    LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=240 parameter1=0 parameter2=28 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=240 parameter1=0 parameter2=28 timing=4 duration=13 target=2 power=7 resist_dispel=2 END
 
 
 END
@@ -1064,7 +1064,7 @@ LAF ds_resolve_stat STR_VAR id=~WEAPON_ENCHANTMENT~ END
 COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override 
 PATCH_TRY
 PATCH_IF SOURCE_SIZE>0x71 BEGIN 
- LPF ~FJ_SPL_ITM_REINDEX~ END
+ LPF FJ_SPL_ITM_REINDEX END
 
   
   READ_LONG  0x64 ab_off
@@ -1123,63 +1123,6 @@ BUT_ONLY
 END // end of function
 
 
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
-// Tightly based on Nythrun's ~fj_spl_itm_reindex~ patch 
-
-DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
-
-PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.spl~) BEGIN
-  hs = 0x28
-  WRITE_LONG 0xc ~-1~ //Identified name
-  WRITE_LONG 0x54 ~-1~ //Identified description
-  PATCH_FOR_EACH tz IN 0x44 0x48 0x58 0x5c BEGIN
-    WRITE_LONG tz 0
-  END
-END ELSE PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.itm~) BEGIN
-  hs = 0x38
-END
-READ_LONG 0x64 hf //Extended header offset
-READ_SHORT 0x68 hc //Extended header count
-READ_LONG 0x6a fb //Feature block table offset
-READ_SHORT 0x70 fc //Feature block count
-PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN
-  READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
-  PATCH_IF (~%eh%~ STRING_EQUAL ~fail~) BEGIN
-    WHILE ((~%eh%~ STRING_EQUAL ~fail~) AND (hc > 0)) BEGIN
-      READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
-      hc -= 1
-    END
-  END
-  DELETE_BYTES hf (hs * hc)
-  hf = 0x72
-  WRITE_LONG 0x64 hf
-  WRITE_SHORT 0x68 hc
-  fb = (0x72 + (hs * hc))
-  WRITE_LONG 0x6a fb
-  PATCH_IF !(~%eh%~ STRING_EQUAL ~fail~) BEGIN
-    INSERT_BYTES hf (hs * hc)
-    WRITE_ASCIIE hf ~%eh%~
-  END
-END ELSE PATCH_IF ((hf != 0x72) AND (hc = 0)) BEGIN
-  hf = 0x72
-  WRITE_LONG 0x64 hf
-END
-FOR (i1 = 0; i1 < (hs * hc); i1 += hs) BEGIN
-  WRITE_SHORT (hf + i1 + 0x20) fc
-  READ_SHORT (hf + i1 + 0x1e) cx
-  fc += cx
-END
-PATCH_IF (SOURCE_SIZE > (0x72 + (hs * hc) + (0x30 * fc))) BEGIN
-  DELETE_BYTES (0x72 + (hs * hc) + (0x30 * fc)) (SOURCE_SIZE - (0x72 + (hs * hc) + (0x30 * fc)))
-END
-
-// added by Ardanis
-WRITE_SHORT 0x6e 0
-
-END // end of function
 
 //////////////////////////////////////////////////////////////////////////////////////
 //// Softcoded version of WEIDU LOOKUP_IDS, because we don't want to have to keep clearing

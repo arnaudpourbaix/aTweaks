@@ -1,0 +1,368 @@
+///////////////
+// PnP Undead
+///////////////
+
+ACTION_IF GAME_IS ~tutu tutu_totsc~ BEGIN //The items in EasyTutu lack the necessary immunities; using items copied from a Fixpacked BG2 game is easier
+  OUTER_SPRINT ring95 fl#rng95
+  OUTER_SPRINT ring99 fl#rng99
+  COPY "atweaks/itm/undead/fl#rng95.itm" override
+       "atweaks/itm/undead/fl#rng99.itm" override
+END ELSE BEGIN
+  OUTER_SPRINT ring95 ring95
+  OUTER_SPRINT ring99 ring99
+END
+
+INCLUDE "atweaks/lib/tactical_shared.tpa"
+INCLUDE "atweaks/lib/pnp-monster/undead/misc.tpa"
+INCLUDE "atweaks/lib/pnp-monster/undead/fn.tpa"
+
+OUTER_SET DiseaseSecType = fl#Disease
+OUTER_SET FearSecType = fl#Fear
+
+INCLUDE "atweaks/lib/pnp-monster/undead/banshee.tpa"            // Banshee
+INCLUDE "atweaks/lib/pnp-monster/undead/death_knight.tpa"       // Death Knight
+INCLUDE "atweaks/lib/pnp-monster/undead/ghoul.tpa"              // Ghoul and Lacedon
+INCLUDE "atweaks/lib/pnp-monster/undead/ghoul_lord.tpa"         // Ghoul Lord
+INCLUDE "atweaks/lib/pnp-monster/undead/mummy.tpa"              // Mummy
+INCLUDE "atweaks/lib/pnp-monster/undead/mummy_greater.tpa"      // Greater Mummy
+INCLUDE "atweaks/lib/pnp-monster/undead/revenant.tpa"           // Revenant
+INCLUDE "atweaks/lib/pnp-monster/undead/shadow.tpa"             // Shadow
+INCLUDE "atweaks/lib/pnp-monster/undead/skeleton.tpa"           // Skeleton
+INCLUDE "atweaks/lib/pnp-monster/undead/skeleton_warrior.tpa"   // Skeleton Warrior
+INCLUDE "atweaks/lib/pnp-monster/undead/spectre.tpa"            // Spectre
+INCLUDE "atweaks/lib/pnp-monster/undead/wight.tpa"              // Wight
+INCLUDE "atweaks/lib/pnp-monster/undead/wraith.tpa"             // Wraith
+INCLUDE "atweaks/lib/pnp-monster/undead/zombie.tpa"             // Zombie, Zombie Lord
+INCLUDE "atweaks/lib/pnp-monster/undead/zombie_sea.tpa"         // Zombie Sea, Zombie Sea Lord
+
+// Fix XP for RIFTCR group
+ACTION_FOR_EACH file IN
+                riftcr01
+                riftcr02
+                riftcr03
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+    COPY_EXISTING "%file%.cre" override
+      WRITE_LONG 0x14 0
+    BUT_ONLY
+  END
+END
+
+COPY "atweaks/spl/base.spl" "override/fl#zomse.spl" //Aura
+  READ_LONG 0x64 ao
+  FOR (i = 0; i < SHORT_AT 0x68; ++i) BEGIN
+    WRITE_BYTE  ao + 0x28*i + 0xc 4 //any point
+    WRITE_SHORT ao + 0x28*i + 0x26 fl#sight
+  END
+  DEFINE_ARRAY zomse_opcode BEGIN 278 0 142 139 END
+  DEFINE_ARRAY zomse_p1 BEGIN "-1" "-1" 0 17398 END
+  DEFINE_ARRAY zomse_p2 BEGIN 0 0 126 0 END
+  PHP_EACH zomse_opcode AS int => opcode BEGIN 
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode
+        target = 2
+        parameter1 = $zomse_p1("%int%")
+        parameter2 = $zomse_p2("%int%")
+        timing = opcode = 139 ? 1 : 0
+        duration = opcode = 139 ? 0 : 30
+        savingthrow = BIT2 //poison
+    END
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 206 //non-cumulativity
+      target = 2
+      duration = 30
+      savingthrow = BIT2
+      insert_point = "-1"
+    STR_VAR
+      resource = fl#zomse
+  END
+
+COPY_EXISTING b1-10.itm "override/fl#zomse.itm" //Sorry, but the zombie animation does not support weapons, so fists it is
+  LPF set_enchantment END
+  LPF ADD_ITEM_EFFECT
+    INT_VAR
+      type = 1
+      opcode = 146 //cast spell
+      target = 2
+      parameter1 = 1
+      parameter2 = 1
+      timing = 1
+      probability1 = 10
+    STR_VAR
+      resource = fl#zomsd
+  END
+
+COPY_EXISTING fl#zomse.itm "override/fl#zsel.itm"
+  LPF set_enchantment INT_VAR enchantment = 2 END
+  WRITE_BYTE 0x88 6
+  WRITE_BYTE 0x8a 2
+
+COPY "atweaks/spl/base.spl" "override/fl#zomsd.spl"
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 78
+      target = 2
+      parameter1 = 1
+      parameter2 = 4 //strength
+      timing = 4
+      duration = 8*300
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 78
+      target = 2
+      parameter1 = 1
+      parameter2 = 6 //constitution
+      timing = 4
+      duration = 8*300
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 142 //portrait icon
+      target = 2
+      parameter2 = 7 //nauseated
+      timing = 1
+  END
+  LPF ADD_SPELL_EFFECT
+    INT_VAR
+      opcode = 139
+      target = 2
+      parameter1 = 39752 //stricken by a foul disease
+      timing = 1
+  END
+
+OUTER_SET $f_AddSecType(fl#zomsd.spl) = DiseaseSecType
+
+
+ACTION_IF GAME_INCLUDES ~soa~ BEGIN
+  //Replace the stupid run-away-and-or-attack script with one that is just responsible for running away
+  COPY_EXISTING sahlace.cre override
+                sahskel.cre override
+                sahzomb.cre override
+    REPLACE_TEXTUALLY sahamb01 fl#saham (8)
+  BUT_ONLY
+END
+
+////////////////////////////////////////////////////////////////////////////////
+// New AI Scripts
+////////////////////////////////////////////////////////////////////////////////
+
+// Scripts
+
+
+ACTION_IF BG1 AND !BGT AND !EET BEGIN
+  OUTER_SPRINT DurlagArea fw0516
+<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+  IF
+    Die()
+  THEN
+    RESPONSE #100
+      EraseJournalEntry(84201)
+      EraseJournalEntry(84195)
+      EraseJournalEntry(83499)
+      EraseJournalEntry(83502)
+      EraseJournalEntry(83506)
+      EraseJournalEntry(83508)
+      EraseJournalEntry(83510)
+      EraseJournalEntry(83512)
+      EraseJournalEntry(83522)
+      EraseJournalEntry(83710)
+      EraseJournalEntry(83561)
+      EraseJournalEntry(83738)
+      EraseJournalEntry(83894)
+      EraseJournalEntry(83899)
+      EraseJournalEntry(83905)
+      EraseJournalEntry(83989)
+      EraseJournalEntry(83993)
+      EraseJournalEntry(83995)
+  END
+>>>>>>>>
+  OUTER_SPRINT Skelwa _skelwa
+  OUTER_SPRINT GGhoul _houllor
+  OUTER_SPRINT SkeletC _kelet_c
+  OUTER_SPRINT killgood _illgood
+  OUTER_SPRINT gooddeat _ooddeat
+END ELSE ACTION_IF BGT BEGIN
+<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+>>>>>>>>
+  OUTER_SPRINT DurlagArea ard016
+  OUTER_SPRINT TutuJournal ""
+  OUTER_SPRINT Skelwa bgskelwa
+  OUTER_SPRINT GGhoul ghoullor
+  OUTER_SPRINT SkeletC skelet_c
+  OUTER_SPRINT killgood killgood
+  OUTER_SPRINT gooddeat gooddeat
+END ELSE ACTION_IF EET BEGIN
+<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+>>>>>>>>
+  OUTER_SPRINT DurlagArea bg0516
+  OUTER_SPRINT TutuJournal ""
+  OUTER_SPRINT Skelwa skelwa_
+  OUTER_SPRINT GGhoul ghoullor
+  OUTER_SPRINT SkeletC skelet_c
+  OUTER_SPRINT killgood killgood
+  OUTER_SPRINT gooddeat gooddeat
+END
+
+ACTION_IF BG1 BEGIN
+<<<<<<<< ...atweaks/fl-inlined/bg1kn_old.baf
+IF
+  False()
+  Global("flPlaceholder4Journal","LOCALS",0)
+THEN
+  RESPONSE #100
+    Continue()
+END
+>>>>>>>>
+  COPY - "atweaks/baf/undead/killgood.baf" "...atweaks/fl-inlined/%killgood%.baf"
+         "atweaks/baf/undead/gooddeat.baf" "...atweaks/fl-inlined/%gooddeat%.baf"
+  COMPILE ~atweaks/baf/undead/fl#bg1kn.baf~ "...atweaks/fl-inlined/%killgood%.baf" "...atweaks/fl-inlined/%gooddeat%.baf" EVAL
+  COPY_EXISTING fl#bg1kn.bcs override
+                "%killgood%.bcs" override
+    REPLACE_BCS_BLOCK "...atweaks/fl-inlined/bg1kn_old.baf" "...atweaks/fl-inlined/bg1kn_new.baf"
+  BUT_ONLY
+END
+
+COMPILE EVALUATE_BUFFER ~atweaks/baf/undead/fl#death.baf~
+						~atweaks/baf/undead/fl#mum.baf~
+						~atweaks/baf/undead/fl#ghoul.baf~
+						~atweaks/baf/undead/fl#ghast.baf~
+						~atweaks/baf/undead/fl#ghasu.baf~
+						"atweaks/baf/undead/fl#dksw5.baf"
+						"atweaks/baf/undead/fl#glord.baf"
+						"atweaks/baf/undead/fl#sklwm.baf"
+						"atweaks/baf/undead/fl#sklwr.baf"
+						"atweaks/baf/undead/fl#bansh.baf"
+						"atweaks/baf/undead/fl#gmum.baf"
+						"atweaks/baf/undead/fl#lowm.baf"
+						"atweaks/baf/undead/fl#zomse.baf"
+						"atweaks/baf/undead/fl#lowr.baf"
+						"atweaks/baf/undead/fl#zlord.baf"
+						"atweaks/baf/undead/fl#zsel.baf"
+						"atweaks/baf/undead/fl#midmc.baf"
+						"atweaks/baf/undead/fl#higmc.baf"
+						"atweaks/baf/undead/fl#saham.baf"
+						"atweaks/baf/undead/fl#skwsu.baf"
+						"atweaks/baf/undead/fl#sklsu.baf"
+						"atweaks/baf/undead/rr#revnt.baf"
+						"atweaks/baf/undead/fl#revnt.baf"
+
+
+//Write the queued-up values
+ACTION_PHP_EACH f_AddSecType AS file => SecTypeToAdd BEGIN
+  COPY_EXISTING "%file%" override
+    WRITE_BYTE 0x27 SecTypeToAdd
+  BUT_ONLY
+END
+
+OUTER_SET $f_ImmunitySecType(78) = DiseaseSecType
+OUTER_SET $f_ImmunitySecType(24) = FearSecType
+
+OUTER_SET $f_RemoveSecType(79) = DiseaseSecType
+OUTER_SET $f_RemoveSecType(161) = FearSecType
+
+LAF integrate_sectypes END
+
+ACTION_IF !FILE_EXISTS_IN_GAME "fl#adead.spl" BEGIN
+//Custom Animate Dead
+COPY_EXISTING sppr301.spl  "override/fl#adead.spl"
+  READ_LONG  0x64 ao
+  READ_LONG  0x6a eo
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    READ_SHORT ao + 0x28*i + 0x10 lvl
+    READ_SHORT ao + 0x28*i + 0x1e ne
+    READ_SHORT ao + 0x28*i + 0x20 ei
+    c = 0
+    FOR (j=0;j<ne;++j) BEGIN
+      READ_SHORT eo + 0x30*(ei + j) type
+      PATCH_IF type = 177 BEGIN
+        READ_ASCII   eo + 0x30*(ei + j) + 0x14 res
+        PATCH_IF "%res%" STRING_EQUAL_CASE spandl15 OR (lvl >= 15 AND !c) BEGIN
+          SPRINT res fl#swasu
+          ++c
+        END ELSE BEGIN
+          SPRINT res fl#skesu
+        END
+        WRITE_ASCIIE eo + 0x30*(ei + j) + 0x14 "%res%" #8
+      END
+    END
+  END  
+  LPF RR#SP2IN INT_VAR rinvis=1 END
+
+COPY_EXISTING spandead.eff "override/fl#skesu.eff"
+              spandl15.eff "override/fl#swasu.eff"
+  WRITE_ASCIIE 0x30 "%DEST_RES%" #8
+
+COPY_EXISTING ghastsu.cre  "override/fl#skesu.cre"
+              skelwasu.cre "override/fl#swasu.cre"
+  WRITE_LONG 0x10 2                                                                // clear flags, leave only "no corpse"
+  WRITE_LONG 0x14 0                                                                //no xp 
+  WRITE_BYTE 0x6e THIS < 2 ? 2 : THIS                                              //large sword prof
+  WRITE_ASCII_LIST 0x248 fl#adead "" "" "" ""                                      //new script
+  WRITE_BYTE   0x270 128                                                           //Initially neutral
+  REPLACE_CRE_ITEM "%DEST_RES%" #0 #0 #0 none weapon1 EQUIP
+  PATCH_IF "%DEST_RES%" STRING_EQUAL_CASE fl#swasu BEGIN
+    WRITE_BYTE 0x271 4 //undead
+    WRITE_BYTE 0x273 135 //SKELETON_WARRIOR
+  END
+  PATCH_MATCH "%DEST_RES%" WITH
+    fl#swasu
+    BEGIN
+      n = 2
+    END
+    DEFAULT
+      n = 1
+  END
+  WRITE_ASCIIE 0x280 "fl#propertyoftheyugoloth%n%" #32
+  
+COPY_EXISTING skelwasu.itm "override/fl#swasu.itm"
+              sw1h05.itm   "override/fl#skesu.itm"
+  WRITE_BYTE 0x18 THIS BAND 251                                                     //remove droppable
+  READ_LONG  0x60 enchantment
+  READ_LONG  0x6a eo
+  type = "-1"
+  p1 = "-1"
+  p2 = "-1"
+  FOR (i=0;i<SHORT_AT 0x70 AND type != 177 AND p1 != enchantment AND p2 != 109;++i) BEGIN
+    READ_SHORT eo + 0x30*i       type
+    READ_LONG  eo + 0x30*i + 0x4 p1
+    READ_LONG  eo + 0x30*i + 0x8 p2
+  END
+  PATCH_IF type != 233 AND p1 != enchantment AND p2 != 109 BEGIN
+    LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 233 target = 1 parameter1 = enchantment parameter2 = 109 timing = 2 END //Detectable enchantment
+  END
+
+  COMPILE "atweaks/baf/fiends/fl#adead.baf"
+END
+////////////////////////////////////////
+// Item Revisions
+////////////////////////////////////////
+
+ACTION_IF MOD_IS_INSTALLED ITEM_REV.TP2 0 BEGIN                               		// Item Revisions mod check
+
+ACTION_IF NOT FILE_EXISTS_IN_GAME ~rr#fake.itm~ BEGIN
+  COPY_EXISTING ~sw1h01.itm~ ~override/rr#fake.itm~
+	WRITE_LONG 0x1e "-1"
+	SAY NAME2 ~Fake item~
+END
+
+//////////// Compatibility with IR: script's check for CLCK26 and CLCK24 are not sensible, replace them with a fake item
+ACTION_FOR_EACH script IN fl#gmum fl#bansh fl#death fl#bg1kn BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME ~%script%.bcs~ BEGIN
+    COPY_EXISTING ~%script%.bcs~ ~override~
+	  DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
+		~clck26~
+		~rr#fake~ // I am a bit lazy but this will do the trick and is easier in this case than R_B_B
+      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
+		~clck24~
+		~rr#fake~ // idem
+	  END	
+    BUT_ONLY
+  END
+END
+
+END                                                                                // ends Item Revisions compatibility block

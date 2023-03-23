@@ -121,7 +121,7 @@ COPY ~aTweaks/EFF/RR#BP3E.EFF~ ~override~                                       
 
 // Dynaheir shouldn't have the Cure Affliction Bhaalpower at her disposal
 COPY_EXISTING ~SPPR212.SPL~  ~override/RR#PR212.SPL~                              // Clone Slow Poison into an innate ability
-  LAUNCH_PATCH_FUNCTION ~RR#SP2IN~ INT_VAR "rr#ctime" = "1" END                   // Execute the "spell to innate ablity" function
+  LPF ~RR#SP2IN~ INT_VAR ctime=1 END                   // Execute the "spell to innate ablity" function
 
 ACTION_FOR_EACH dyna IN dynahe dynahe2 dynahe4 dynahe6 _dynahe _dynahe2 _dynahe4 _dynahe6 BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%dyna%.cre" BEGIN
@@ -178,7 +178,7 @@ ACTION_FOR_EACH ~file~ IN
 BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
     COPY_EXISTING ~%file%.cre~ ~override~
-      LAUNCH_PATCH_FUNCTION FJ_CRE_VALIDITY INT_VAR do_message = 1 END
+      LPF FJ_CRE_VALIDITY INT_VAR do_message = 1 END
       WRITE_BYTE  0x0272 255                                                       // race: No Race
     BUT_ONLY_IF_IT_CHANGES
   END

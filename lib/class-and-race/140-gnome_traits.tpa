@@ -13,6 +13,7 @@ EXTEND_BOTTOM ~dplayer2.bcs~  ~aTweaks/BAF/RR#GNRT.BAF~                         
 // Ogre and Gnoll attack roll penalty vs. gnomes (implemented through patching all CREs of the Ogre and Gnoll race)
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~                               // check all creatures in the game
+  LPF FJ_CRE_VALIDITY END
   PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     READ_BYTE 0x272 "race"                                                     // check the creature's race
@@ -87,6 +88,7 @@ ACTION_FOR_EACH ~file~ IN                                                       
 BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
     COPY_EXISTING ~%file%.cre~ ~override~
+      LPF FJ_CRE_VALIDITY END
       PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
       PATCH_IF valid BEGIN
         PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                             // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)

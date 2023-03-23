@@ -1,0 +1,96 @@
+ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
+              ~ABELA~                                                              // Abela the Nymph (BGT)
+              ~_ABELA~                                                             // Abela the Nymph (Tutu)
+              ~HGNYMPH~                                                            // Nymph
+              ~NYMPHSU~                                                            // default summoned Nymph
+              ~NYMPHSUM~                                                           // summoned Nymph
+//			  ~dvnymph~                                                            // do not touch - Spell Revisions' summoned Nymph
+              ~WQXNYM~															   // White Queen
+			  ~dw#nymsu~                                                           // SCSII summoned Nymph
+BEGIN                                                                              // execute the following
+ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
+COPY_EXISTING ~%file%.cre~ ~override~
+LPF FJ_CRE_VALIDITY INT_VAR do_message = 1 END                   // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+// =============================================================================== // the actual work starts from here
+REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
+REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
+ADD_MEMORIZED_SPELL ~rr#ddor2~ #0 ~innate~ ( 1 )                                   // adds 1x Dimension Door (non-renewable)
+ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ ( 2 )                                    // adds 2x Bless
+ADD_MEMORIZED_SPELL ~SPPR103~ #0 ~priest~ ( 2 )                                    // adds 2x Cure Light Wounds
+ADD_MEMORIZED_SPELL ~SPPR202~ #1 ~priest~ ( 1 )                                    // adds 1x Barkskin
+ADD_MEMORIZED_SPELL ~SPPR204~ #1 ~priest~ ( 1 )                                    // adds 1x Charm Person or Mammal
+ADD_MEMORIZED_SPELL ~SPPR302~ #2 ~priest~ ( 1 )                                    // adds 1x Call Lightning
+ADD_MEMORIZED_SPELL ~SPPR319~ #2 ~priest~ ( 1 )                                    // adds 1x Summon Insects
+ADD_MEMORIZED_SPELL ~SPPR404~ #3 ~priest~ ( 1 )                                    // adds 1x Neutralize Poison
+REPLACE_CRE_ITEM ~rr#nymp~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~                        // replace defaul weapon with a non-damaging attack
+REPLACE_CRE_ITEM ~rr#nymp~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~                        // replace defaul weapon with a non-damaging attack
+LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+INT_VAR                                                                            // Initialize variables
+"newmove"  = "9"                                                                   // new movement rate
+"newxpv"   = "1400"                                                                // new XP value
+"newhp"    = "24"                                                                  // new hit point value
+"newac"    = "9"                                                                   // new Armor Class value
+"newth"    = "17"                                                                  // new THAC0 value
+"newapr"   = "0"                                                                   // new number of attacks per round
+"newsvd"   = "13"                                                                  // new Save vs. Death
+"newsvw"   = "15"                                                                  // new Save vs. Wand
+"newsvp"   = "14"                                                                  // new Save vs. Polymorph
+"newsvb"   = "16"                                                                  // new Save vs. Breath
+"newsvs"   = "16"                                                                  // new Save vs. Spell
+"newmr"    = "50"                                                                  // new Magic Resistance value
+"newlvl1"  = "7"                                                                   // new level (first class)
+"newstr"   = "10"                                                                  // new Strength value
+"newdex"   = "17"                                                                  // new Dexterity value
+"newcon"   = "12"                                                                  // new Constitution value
+"newint"   = "16"                                                                  // new Intelligence value
+"newwis"   = "12"                                                                  // new Wisdom value
+"newchr"   = "19"                                                                  // new Charisma value
+"newmor"   = "7"                                                                   // new morale value
+"newgen"   = "1"                                                                   // new general (HUMANOID)
+"newmorb"  = "2"                                                                   // new morale break value
+"newmorr"  = "15"                                                                  // new morale recovery value
+"newrace"  = "120"                                                                 // new race (FAIRY)
+"newclass" = "11"                                                                  // new class (Druid)
+"newgendr" = "2"                                                                   // new gender (Female)
+"newsex"   = "2"                                                                   // new sex (Female)
+"newalign" = "33"                                                                  // new alignment (Neutral Good)
+"enforce"  = "1"                                                                   // values are enforced for all creatures
+STR_VAR                                                                            // Initialize strings
+"notenf01" = "WQXNYM"
+"notenf02" = "dw#nymsu"
+END                                                                                // ends FUNCTION call
+LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+STR_VAR                                                                            // Initialize strings
+"newscript"  = "RR#FNYMP"                                                          // new AI script
+"script01"   = ""                                                                  // first AI script name
+"script02"   = "None"                                                              // second AI script name
+"script03"   = "WTASIGHT"                                                          // generic AI script
+"script04"   = "wtrunsgt"                                                          // generic AI script
+"script05"   = "_TRUNSGT"                                                          // generic AI script (Tutu)
+"script06"   = "hgnymph"                                                           // original hostile Nymph script
+"script07"   = "nymph"                                                             // original summoned Nymph script
+"script08"   = "DVNYMPH"                                                           // Spell Revisions' summoned Nymph script
+"script09"   = "DVMELEE"                                                           // Spell Revisions' melee script
+"script10"   = "dw#nymph"                                                          // SCSII Nymph script
+"script11"   = "BPNYMPH"                                                           // Big Picture Nymph script
+"script12"   = "BPWDASGT"                                                          // Big Picture generic AI script
+"script13"   = "BPWTSIGT"                                                          // Big Picture generic AI script
+"script14"   = "DW2MS2GE"                                                          // Stratagems melee AI script
+END                                                                                // ends FUNCTION call
+// =============================================================================== // the actual work ends here
+BUT_ONLY_IF_IT_CHANGES
+END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
+END                                                                                // ends ACTION_FOR_EACH block
+ACTION_FOR_EACH file IN
+				~NYMPHSUM~
+				~NYMPHSU~
+				~dw#nymsu~
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
+	  COPY_EXISTING "%file%.cre" override
+		WRITE_LONG 0x14 "0"
+		LPF make_summon END
+		WRITE_ASCII SCRIPT_OVERRIDE "RR#SNYMP" #8
+      BUT_ONLY
+	END
+END

@@ -2,7 +2,7 @@
 // This Function browses throgh all scripts of a creture and identifies the one with the highest priority
 // It also identifies creatures who have no scripts assigned to any of their script slots
 // Sample use:
-// LAUNCH_PATCH_FUNCTION ~RR#IDTLS~ RET rr#topnw = rr#topsc rr#aemnw = rr#allem END
+// LPF ~RR#IDTLS~ RET rr#topnw = rr#topsc rr#aemnw = rr#allem END
 // PATCH_PRINT ~The top script is %rr#topnw% and the all empty variable is %rr#aemnw%~
 
 
