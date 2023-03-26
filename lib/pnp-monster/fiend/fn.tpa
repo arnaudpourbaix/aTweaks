@@ -3,6 +3,11 @@
 // This file contains definitions for aTweaks-adapting fiends
 ///////////////////////////////////////////////////////////////
 
+// TODO: do we really need this ? creature function already handles this test !
+DEFINE_PATCH_MACRO update_fiend_xp BEGIN
+  WRITE_LONG 0x14 THIS > newxpv ? THIS : newxpv
+END
+
 
 DEFINE_PATCH_FUNCTION make_imp BEGIN
     LPF FJ_CRE_VALIDITY END

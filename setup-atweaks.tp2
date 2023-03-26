@@ -18,7 +18,6 @@ ALWAYS
     INCLUDE ~aTweaks/lib/common/regexp.tph~           // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
     INCLUDE ~aTweaks/lib/common/iwd1fix.tpa~          // fix some IDS file issues with IWD1 to ensure proper script compiling
     INCLUDE "aTweaks/lib/common/comp_vars.tpa"        // Game engines stuff
-    INCLUDE "aTweaks/lib/common/lib.tpa"
     RANDOM_SEED go
 
     OUTER_PATCH ~12~ BEGIN
@@ -231,7 +230,7 @@ BEGIN @156 DESIGNATED 4030
 GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
 REQUIRE_PREDICATE FILE_EXISTS_IN_GAME fl#atfiends1.mrk @94
-INCLUDE "atweaks/lib/pnp-monster/156-fiendish_gating.tpa"
+INCLUDE "atweaks/lib/pnp-monster/fiend/gate/main.tpa"
 
 
 // PnP Undead
