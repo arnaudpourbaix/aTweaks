@@ -30,7 +30,7 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF make_ghast END
-      LPF RR#MDCSC
+      LPF patchCreatureScript
         STR_VAR
           newscript = fl#ghast
           script01 = ghast

@@ -24,44 +24,44 @@ BEGIN
           SAY 0x8 @1033
           SAY 0xc @1033
         END
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 3000
-			newmove  = 11                                                                  // new movement rate
-            newhp = 48 //6d8
-            newac = 4
-            newth = 15
-            newapr = 2 //2 with main, plus one with off-hand
-            newsvd = 9
-            newsvw = 11
-            newsvp = 10
-            newsvb = 12
-            newsvs = 12
-            newlvl1 = 9 //To approximate the PnP effort of turning them
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 0
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 18
-            newstrx = 0
-            newdex = 9
-            newcon = 9
-            newint = 14
-            newwis = 9
-            newchr =  9
-            newmor = 14
-            newalign = 51
-            ptwf = 1
+            xpv = 3000
+			move  = 11                                                                  // new movement rate
+            hp = 48 //6d8
+            ac = 4
+            thac0 = 15
+            apr = 2 //2 with main, plus one with off-hand
+            saveDeath = 9
+            saveWand = 11
+            savePolymorph = 10
+            saveBreath = 12
+            saveSpell = 12
+            level1 = 9 //To approximate the PnP effort of turning them
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 0
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 18
+            strengthx = 0
+            dexterity = 9
+            constitution = 9
+            intelligence = 14
+            wisdom = 9
+            charisma =  9
+            morale = 14
+            alignment = 51
+            perfect2weapon = 1
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#glord
             script01 = _ghast

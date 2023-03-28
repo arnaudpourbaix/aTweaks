@@ -12,19 +12,19 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY 24HD_princes BEGIN
   elemsunn => 230  // Sunnis (24+38 HD)
 END
 
-ACTION_PHP_EACH 24HD_princes AS prince => rr#newhp BEGIN
+ACTION_PHP_EACH 24HD_princes AS prince => rr#hp BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%prince%.cre~ BEGIN
     COPY_EXISTING ~%prince%.cre~ ~override~
       LPF FJ_CRE_VALIDITY INT_VAR do_message = 1 END                 // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
-      SET rr#newth = "-3"                                                              // new THAC0 value
-      PATCH_IF SHORT_AT 0x24 < "%rr#newhp%" BEGIN                                      // current hp < newhp
-        WRITE_SHORT 0x24 EVALUATE_BUFFER "%rr#newhp%"                                  // current hit points
+      SET rr#thac0 = "-3"                                                              // new THAC0 value
+      PATCH_IF SHORT_AT 0x24 < "%rr#hp%" BEGIN                                      // current hp < hp
+        WRITE_SHORT 0x24 EVALUATE_BUFFER "%rr#hp%"                                  // current hit points
       END
-      PATCH_IF SHORT_AT 0x26 < "%rr#newhp%" BEGIN                                      // current hp < newhp
-        WRITE_SHORT 0x26 EVALUATE_BUFFER "%rr#newhp%"                                  // current hit points
+      PATCH_IF SHORT_AT 0x26 < "%rr#hp%" BEGIN                                      // current hp < hp
+        WRITE_SHORT 0x26 EVALUATE_BUFFER "%rr#hp%"                                  // current hit points
       END
-      PATCH_IF BYTE_AT 0x52 > "%rr#newth%" BEGIN                                       // old THAC0 > new THAC0
-        WRITE_BYTE 0x52 EVALUATE_BUFFER "%rr#newth%"                                   // THAC0    
+      PATCH_IF BYTE_AT 0x52 > "%rr#thac0%" BEGIN                                       // old THAC0 > new THAC0
+        WRITE_BYTE 0x52 EVALUATE_BUFFER "%rr#thac0%"                                   // THAC0    
       END
     BUT_ONLY_IF_IT_CHANGES
   END

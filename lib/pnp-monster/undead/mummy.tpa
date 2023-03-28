@@ -21,47 +21,47 @@ BEGIN
       PATCH_IF valid BEGIN
         PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM fl#mum #0 #0 #0 none weapon1 EQUIP
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 3000
-            newhp = 51 //6d8+3
-            newac = 3
-            newth = 13
-            newapr = 1
-            newsvd = 10
-            newsvw = 12
-            newsvp = 11
-            newsvb = 12
-            newsvs = 13
-            newmr = 0
-            newlvl1 = 7
-            newfr = "-33"
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 50
-            newrc = 50
-            newrp = 50
-            newrm = 50
-            newstr = 18
-            newstrx = 99
-            newint = 7
-            newwis = 7
-            newdex = 9
-            newcon = 14
-            newchr = 7
-            newmor = 15
-            newalign = 19 //LE
+            xpv = 3000
+            hp = 51 //6d8+3
+            ac = 3
+            thac0 = 13
+            apr = 1
+            saveDeath = 10
+            saveWand = 12
+            savePolymorph = 11
+            saveBreath = 12
+            saveSpell = 13
+            resistMagic = 0
+            level1 = 7
+            resistFire = "-33"
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 50
+            resistCrushing = 50
+            resistPiercing = 50
+            resistMissile = 50
+            strength = 18
+            strengthx = 99
+            intelligence = 7
+            wisdom = 7
+            dexterity = 9
+            constitution = 14
+            charisma = 7
+            morale = 15
+            alignment = 19 //LE
 
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = mummy01
             script01 = "mummy01'"
             script02 = "mummy01"
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#mum
             script01 = wtasight

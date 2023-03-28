@@ -162,7 +162,7 @@ COPY "atweaks/spl/base.spl" "override/RR#mracs.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target power parameter2 = 3 resist_dispel duration dicesize savingthrow header END //confused
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 215 target power parameter2 = 1 resist_dispel duration dicesize savingthrow header STR_VAR resource = spconfus END //visual effect      
   END
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 END ELSE COPY_EXISTING ~fl#clrsp.SPL~  ~override/rr#mracs.spl~                               // Clone Color Spray into an innate ability (Radiant Mephit)
  LAF add_blindness_immunity STR_VAR f_Spell = "rr#mracs" END
 
@@ -171,20 +171,20 @@ END ELSE COPY_EXISTING ~fl#clrsp.SPL~  ~override/rr#mracs.spl~                  
 //////////////////
 
 COPY_EXISTING ~SPWI112.SPL~  ~override/rr#wi112.spl~                               // Clone Magic Missile into an innate ability (Fire Mephit)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 LAUNCH_ACTION_FUNCTION magic_missile_shield END                                    // Make the Shield spell and amulet protect against the cloned Magic Missile
 
 COPY_EXISTING ~SPWI201.SPL~  ~override/rr#wi201.spl~                               // Clone Blur into an innate ability (Air Mephit)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI206.SPL~  ~override/rr#wi206.spl~                               // Clone Invisibility into an innate ability (Smoke Mephit)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI213.SPL~  ~override/rr#mozsc.spl~                               // Clone Stinking Cloud into an innate ability (Ooze Mephit, special version)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI224.SPL~  ~override/rr#wi224.spl~                               // Clone Glitterdust into an innate ability (Mineral Mephit)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 
 /////////////
@@ -293,35 +293,35 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "4"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "4"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPAIR01"                                                            // enforced creature 1 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MAIR"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -366,9 +366,9 @@ REMOVE_MEMORIZED_SPELLS                                                         
 ADD_MEMORIZED_SPELL ~rr#mdugd~ #0 ~innate~ ( 3 )                                   // adds 3x Glass Dust
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-newxpv = 1400
+xpv = 1400
 PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMDUST~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMDUS25~) BEGIN
-  newxpv = 0
+  xpv = 0
   LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode
     INT_VAR opcode_to_delete = "-1" END                                            // all
 	REPLACE_CRE_ITEM ~FAMMY~ #0 #0 #0 ~UNDROPPABLE~ ~BELT~					   	   // Add Remove fog of war item
@@ -377,40 +377,40 @@ PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMDUS25~) BEGIN
 	ADD_MEMORIZED_SPELL ~spwi408~ #0 ~wizard~ ( 1 )                                // adds 1x Stoneskin
 	ADD_MEMORIZED_SPELL ~spwi714~ #0 ~wizard~ ( 1 )                                // adds 1x Prismatic Spray
 END
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
- newxpv			                                                                   // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "6"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "100"                                                                 // new Resist Fire value
-"newrs"    = "50"                                                                  // new Resist Slashing
-"newrp"    = "50"                                                                  // new Resist Piercing
-"newrm"    = "50"                                                                  // new Resist Missiles
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+ xpv			                                                                   // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "6"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "100"                                                                 // new Resist Fire value
+resistSlashing    = "50"                                                                  // new Resist Slashing
+resistPiercing    = "50"                                                                  // new Resist Piercing
+resistMissile    = "50"                                                                  // new Resist Missiles
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPDUS01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP08"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MDUS"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -452,36 +452,36 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newxpv"   = "420"                                                                 // new XP value
-"newmove"  = "18"                                                                  // new movement rate
-"newhp"    = "26"                                                                  // new hit point value
-"newac"    = "5"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "14"                                                                  // new Strength value
-"newint"   = "9"                                                                   // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "10"                                                                  // new Dexterity value
-"newcon"   = "13"                                                                  // new Constitution value
-"newchr"   = "11"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+xpv   = "420"                                                                 // new XP value
+move  = "18"                                                                  // new movement rate
+hp    = "26"                                                                  // new hit point value
+ac    = "5"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+level1  = "3"                                                                   // new level (first class)
+strength   = "14"                                                                  // new strength value
+intelligence   = "9"                                                                   // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "10"                                                                  // new Dexterity value
+constitution   = "13"                                                                  // new Constitution value
+charisma   = "11"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPEAR01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP06"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MEAR"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -528,38 +528,38 @@ PATCH_IF NOT ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMFIRE~) BEGIN
 END                                                           // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "25"                                                                  // new hit point value
-"newac"    = "5"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "127"                                                                 // new Resist Fire value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "13"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "25"                                                                  // new hit point value
+ac    = "5"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "127"                                                                 // new Resist Fire value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "13"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPFIR01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP04"                                                            // enforced creature 2 (uses strict PnP values)
 "enfc03"   = "OBSFIR02"                                                            // enforced creature 3 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MFIR"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -602,39 +602,39 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "5"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "0"                                                                   // new Resist Fire value
-"newcr"    = "127"                                                                 // new Resist Cold value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "5"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "0"                                                                   // new Resist Fire value
+resistCold    = "127"                                                                 // new Resist Cold value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPICE01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "MEPICE02"                                                            // enforced creature 2 (uses strict PnP values)
 "enfc03"   = "OBSICE02"                                                            // enforced creature 3 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MICE"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -675,37 +675,37 @@ PATCH_IF NOT ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMLIGHT~) BEGIN
 END
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "36"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "4"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "100"                                                                 // new Resist Fire value
-"newer"    = "127"                                                                 // new Resist Electricity value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "36"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "4"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "100"                                                                 // new Resist Fire value
+resistElectricity    = "127"                                                                 // new Resist Electricity value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPLIG01"                                                            // enforced creature 1 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MLIG"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -753,39 +753,39 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "6"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "127"                                                                 // new Resist Fire value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "7"                                                                   // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "13"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "6"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "127"                                                                 // new Resist Fire value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "7"                                                                   // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "13"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPMAG01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "MEPMAG02"                                                            // enforced creature 2 (uses strict PnP values)
 "enfc03"   = "ELEMEP05"                                                            // enforced creature 3 (uses strict PnP values)
 "enfc04"   = "OBSFIR03"                                                            // enforced creature 4 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MMAG"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -826,38 +826,38 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "26"                                                                  // new hit point value
-"newac"    = "4"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newrp"    = "100"                                                                 // new Resist Piercing
-"newrm"    = "100"                                                                 // new Resist Missiles
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "12"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "12"                                                                  // new Dexterity value
-"newcon"   = "12"                                                                  // new Constitution value
-"newchr"   = "14"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "26"                                                                  // new hit point value
+ac    = "4"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistPiercing    = "100"                                                                 // new Resist Piercing
+resistMissile    = "100"                                                                 // new Resist Missiles
+level1  = "3"                                                                   // new level (first class)
+strength   = "12"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "12"                                                                  // new Dexterity value
+constitution   = "12"                                                                  // new Constitution value
+charisma   = "14"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPMIN01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP07"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MMIN"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -900,35 +900,35 @@ PATCH_IF NOT ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMMIST~) BEGIN
 END
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "26"                                                                  // new hit point value
-"newac"    = "7"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "26"                                                                  // new hit point value
+ac    = "7"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPMIS01"                                                            // enforced creature 1 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MMST"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -976,40 +976,40 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "6"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "100"                                                                 // new Resist Fire value
-"newrs"    = "100"                                                                 // new Resist Slashing
-"newrp"    = "100"                                                                 // new Resist Piercing
-"newrm"    = "100"                                                                 // new Resist Missiles
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "14"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "10"                                                                  // new Dexterity value
-"newcon"   = "13"                                                                  // new Constitution value
-"newchr"   = "10"                                                                  // new Charisma value
-"newmor"   = "7"                                                                   // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "6"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "100"                                                                 // new Resist Fire value
+resistSlashing    = "100"                                                                 // new Resist Slashing
+resistPiercing    = "100"                                                                 // new Resist Piercing
+resistMissile    = "100"                                                                 // new Resist Missiles
+level1  = "3"                                                                   // new level (first class)
+strength   = "14"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "10"                                                                  // new Dexterity value
+constitution   = "13"                                                                  // new Constitution value
+charisma   = "10"                                                                  // new Charisma value
+morale   = "7"                                                                   // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPOOZ01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP01"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MOOZ"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -1052,36 +1052,36 @@ PATCH_IF NOT ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMRAD~) BEGIN
 END                                                          // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "4"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "20"                                                                  // new Save vs. Spell
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "7"                                                                   // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "4"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "20"                                                                  // new Save vs. Spell
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "7"                                                                   // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPRAD01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "MEPRAD02"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MRAD"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -1124,37 +1124,37 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "6"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "100"                                                                 // new Resist Fire value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "6"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "100"                                                                 // new Resist Fire value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPSAL01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP03"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MSAL"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -1201,37 +1201,37 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "24"                                                                  // new hit point value
-"newac"    = "4"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "14"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "4"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "24"                                                                  // new hit point value
+ac    = "4"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "14"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "4"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPSMO01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "MEPSMO02"                                                            // enforced creature 2 (uses strict PnP values)
 "enfc03"   = "OBSFIR04"                                                            // enforced creature 3 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MSMO"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -1272,37 +1272,37 @@ REMOVE_KNOWN_SPELLS                                                             
 REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "126" END     // mark opcode #126 (Movement Modifier) for deletion
 // LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "176" END     // mark opcode #176 (Movement Modifier II) for deletion
-LPF ~RR#MDCRE~                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
+LPF patchCreature                                                   // Starts FUNCTION call (aTweaks' Creature Modification function)
 INT_VAR                                                                            // Initialize variables
-"newmove"  = "18"                                                                  // new movement rate
-"newxpv"   = "420"                                                                 // new XP value
-"newhp"    = "27"                                                                  // new hit point value
-"newac"    = "7"                                                                   // new Armor Class value
-"newth"    = "17"                                                                  // new THAC0 value
-"newapr"   = "2"                                                                   // new number of attacks per round
-"newsvd"   = "13"                                                                  // new Save vs. Death
-"newsvw"   = "15"                                                                  // new Save vs. Wand
-"newsvp"   = "14"                                                                  // new Save vs. Polymorph
-"newsvb"   = "16"                                                                  // new Save vs. Breath
-"newsvs"   = "16"                                                                  // new Save vs. Spell
-"newfr"    = "100"                                                                 // new Resist Fire value
-"newlvl1"  = "3"                                                                   // new level (first class)
-"newstr"   = "10"                                                                  // new Strength value
-"newint"   = "10"                                                                  // new Intelligence value
-"newwis"   = "11"                                                                  // new Wisdom value
-"newdex"   = "13"                                                                  // new Dexterity value
-"newcon"   = "10"                                                                  // new Constitution value
-"newchr"   = "15"                                                                  // new Charisma value
-"newmor"   = "10"                                                                  // new morale value
-"newmorb"  = "1"                                                                   // new morale break value
-"newmorr"  = "15"                                                                  // new morale recovery value
-"newrace"  = "139"                                                                 // new race (Mephit)
-"newalign" = "34"                                                                  // new alignment (True Neutral)
+move  = "18"                                                                  // new movement rate
+xpv   = "420"                                                                 // new XP value
+hp    = "27"                                                                  // new hit point value
+ac    = "7"                                                                   // new Armor Class value
+thac0    = "17"                                                                  // new THAC0 value
+apr   = "2"                                                                   // new number of attacks per round
+saveDeath   = "13"                                                                  // new Save vs. Death
+saveWand   = "15"                                                                  // new Save vs. Wand
+savePolymorph   = "14"                                                                  // new Save vs. Polymorph
+saveBreath   = "16"                                                                  // new Save vs. Breath
+saveSpell   = "16"                                                                  // new Save vs. Spell
+resistFire    = "100"                                                                 // new Resist Fire value
+level1  = "3"                                                                   // new level (first class)
+strength   = "10"                                                                  // new strength value
+intelligence   = "10"                                                                  // new Intelligence value
+wisdom   = "11"                                                                  // new Wisdom value
+dexterity   = "13"                                                                  // new Dexterity value
+constitution   = "10"                                                                  // new Constitution value
+charisma   = "15"                                                                  // new Charisma value
+morale   = "10"                                                                  // new morale value
+moraleBreak  = "1"                                                                   // new morale break value
+moraleRecovery  = "15"                                                                  // new morale recovery value
+race  = "139"                                                                 // new race (Mephit)
+alignment = "34"                                                                  // new alignment (True Neutral)
 STR_VAR                                                                            // initialize strings
 "enfc01"   = "MEPSTE01"                                                            // enforced creature 1 (uses strict PnP values)
 "enfc02"   = "ELEMEP02"                                                            // enforced creature 2 (uses strict PnP values)
 END                                                                                // ends FUNCTION call
-LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
 STR_VAR                                                                            // Initialize strings
 "newscript"  = "RR#MSTE"                                                           // new AI script
 "script01"   = ""                                                                  // first AI script name
@@ -1483,7 +1483,7 @@ END
 // Note: this is needed in order to grant proper immunity to gas-based spells to certain mephits
 
 COPY_EXISTING ~spwi502.spl~  ~override/rr#wi502.spl~                                          // Clone Cloudkill into an innate ability (used by the Cloudkill wand)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END                // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~wand13.itm~ ~override~
 PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN                                                    // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)

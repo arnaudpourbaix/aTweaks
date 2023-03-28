@@ -1,7 +1,7 @@
 // Convert spell into innate ability macro
 // Useful for assigning spells-like abilities to creatures who have no caster levels
 
-DEFINE_PATCH_FUNCTION ~RR#SP2IN~  
+DEFINE_PATCH_FUNCTION spellToInnate  
 
 INT_VAR
   ctime  = 1 // new casting time, set to 99 to leave as is

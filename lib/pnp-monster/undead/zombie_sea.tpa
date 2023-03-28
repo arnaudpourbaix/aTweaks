@@ -23,46 +23,46 @@ BEGIN
         ADD_MEMORIZED_SPELL sppr102 #0 priest //Command
         ADD_MEMORIZED_SPELL sppr113 #0 priest //Doom
         ADD_MEMORIZED_SPELL sppr208 #1 priest //Hold Person
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 420
-            newhp = 40 //5d8
-            newac = 7
-            newth = 15
-            newapr = 1
-            newsvd = 11
-            newsvw = 13
-            newsvp = 12
-            newsvb = 13
-            newsvs = 14
-            newlvl1 = 5
-            newlvl2 = 3
-            newlvl3 = 0
-            newmr = 0
-            newfr = 50
-            newcr = "-100"
-            newer = "-100"
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 18
-            newstrx = 0
-            newint = 7
-            newwis = 9
-            newdex = 9
-            newcon = 9
-            newchr = 9
-            newmor = 20
-            newalign = 0x33 //NE
-            newclass = 8 //F/C
-            newgen = 4 //undead
-            newrace = 148 //Zombie
+            xpv = 420
+            hp = 40 //5d8
+            ac = 7
+            thac0 = 15
+            apr = 1
+            saveDeath = 11
+            saveWand = 13
+            savePolymorph = 12
+            saveBreath = 13
+            saveSpell = 14
+            level1 = 5
+            level2 = 3
+            level3 = 0
+            resistMagic = 0
+            resistFire = 50
+            resistCold = "-100"
+            resistElectricity = "-100"
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 18
+            strengthx = 0
+            intelligence = 7
+            wisdom = 9
+            dexterity = 9
+            constitution = 9
+            charisma = 9
+            morale = 20
+            alignment = 0x33 //NE
+            class = 8 //F/C
+            general = 4 //undead
+            race = 148 //Zombie
 
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#zomse
             script01 = wtasight
@@ -97,46 +97,46 @@ BEGIN
         ADD_MEMORIZED_SPELL sppr102 #0 priest //Command
         ADD_MEMORIZED_SPELL sppr113 #0 priest //Doom
         ADD_MEMORIZED_SPELL sppr208 #1 priest //Hold Person
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 1500
-            newhp = 64 //8d8
-            newac = "-3"
-            newth = 11
-            newapr = 2
-            newsvd = 7
-            newsvw = 9
-            newsvp = 8
-            newsvb = 9
-            newsvs = 8
-            newlvl1 = 8
-            newlvl2 = 6
-            newlvl3 = 0
-            newmr = 50
-            newfr = 50
-            newcr = "-100"
-            newer = "-100"
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 19
-            newstrx = 0
-            newint = 10
-            newwis = 10
-            newdex = 17
-            newcon = 18
-            newchr = 9
-            newmor = 20
-            newalign = 0x33 //NE
-            newclass = 8 //F/C
-            newgen = 4 //undead
-            newrace = 148 //Zombie
+            xpv = 1500
+            hp = 64 //8d8
+            ac = "-3"
+            thac0 = 11
+            apr = 2
+            saveDeath = 7
+            saveWand = 9
+            savePolymorph = 8
+            saveBreath = 9
+            saveSpell = 8
+            level1 = 8
+            level2 = 6
+            level3 = 0
+            resistMagic = 50
+            resistFire = 50
+            resistCold = "-100"
+            resistElectricity = "-100"
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 19
+            strengthx = 0
+            intelligence = 10
+            wisdom = 10
+            dexterity = 17
+            constitution = 18
+            charisma = 9
+            morale = 20
+            alignment = 0x33 //NE
+            class = 8 //F/C
+            general = 4 //undead
+            race = 148 //Zombie
 
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#zsel
             script01 = wtasight

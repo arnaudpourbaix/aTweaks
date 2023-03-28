@@ -290,7 +290,7 @@ COPY_EXISTING sppr301.spl  "override/fl#adead.spl"
       END
     END
   END  
-  LPF RR#SP2IN INT_VAR rinvis=1 END
+  LPF spellToInnate INT_VAR rinvis=1 END
 
 COPY_EXISTING spandead.eff "override/fl#skesu.eff"
               spandl15.eff "override/fl#swasu.eff"

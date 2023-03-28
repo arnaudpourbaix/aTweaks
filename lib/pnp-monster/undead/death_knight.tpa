@@ -43,42 +43,42 @@ BEGIN
         LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 193 END //Invisibility detection by script
         LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 0 END //AC bonus
         LPF DELETE_CRE_ITEM STR_VAR item_to_delete = "sw2h02\sw2h11\|sw2hdeat\|_?sw2h05\|ringdemn\|_?shld06" END
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 10000
-            newhp = 90 //9d10
-            newac = 0
-            newth = 8
-            newapr = 1
-            newsvd = 6
-            newsvw = 8
-            newsvp = 7
-            newsvb = 7
-            newsvs = 9
-            newmr = 75
-            newlvl1 = 9 //Fighter
-            newlvl2 = 20 //Mage
-            newlvl3 = 8 //Cleric
-            newfr = 0
-            newcr = 0
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 18
-            newstrx = 100
-            newint = 18
-            newwis = 16
-            newdex = 18
-            newcon = 11
-            newchr = 10
-            newmor = 17
-            newgen = 4 //Undead
-            newrace = 115 //Skeleton
-            newclass = 17 //F_M_C
-            newalign = 51
+            xpv = 10000
+            hp = 90 //9d10
+            ac = 0
+            thac0 = 8
+            apr = 1
+            saveDeath = 6
+            saveWand = 8
+            savePolymorph = 7
+            saveBreath = 7
+            saveSpell = 9
+            resistMagic = 75
+            level1 = 9 //Fighter
+            level2 = 20 //Mage
+            level3 = 8 //Cleric
+            resistFire = 0
+            resistCold = 0
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 18
+            strengthx = 100
+            intelligence = 18
+            wisdom = 16
+            dexterity = 18
+            constitution = 11
+            charisma = 10
+            morale = 17
+            general = 4 //Undead
+            race = 115 //Skeleton
+            class = 17 //F_M_C
+            alignment = 51
 
             enforce = 1
         STR_VAR
@@ -92,7 +92,7 @@ BEGIN
           END ELSE BEGIN
             SPRINT script "fl#death"
           END
-          LPF RR#MDCSC
+          LPF patchCreatureScript
             STR_VAR
               newscript = EVAL "%script%"
               script01 = deathkni

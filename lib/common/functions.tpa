@@ -111,51 +111,41 @@ STR_VAR
   animations = ""     // string value with space separator
   spells = ""         // string array
 BEGIN
-  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%effects%" RET_ARRAY array END
-  PATCH_PHP_EACH array AS _ => v1 BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%effects%" RET_ARRAY array1=array END
+  PATCH_PHP_EACH array1 AS _ => v BEGIN
     // Immunity to effect
-    PATCH_PRINT ~Immunity to effect: %v1%~
-    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=101 parameter2=EVALUATE_BUFFER "%v1%" power resist_dispel duration END  
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=101 parameter2=v power resist_dispel duration END  
   END
-  CLEAR_ARRAY array
-  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%prevent_icons%" RET_ARRAY array END
-  PATCH_PHP_EACH array AS _ => v2 BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%prevent_icons%" RET_ARRAY array2=array END
+  PATCH_PHP_EACH array2 AS _ => v BEGIN
     // Prevent portrait icon
-    PATCH_PRINT ~Prevent portrait icon: %v2%~
-    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=169 parameter2=EVALUATE_BUFFER "%v2%" power resist_dispel duration END  
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=169 parameter2=v power resist_dispel duration END  
   END
-  CLEAR_ARRAY array
-  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%display_icons%" RET_ARRAY array END
-  PATCH_PHP_EACH array AS _ => v3 BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%display_icons%" RET_ARRAY array3=array END
+  PATCH_PHP_EACH array3 AS _ => v BEGIN
     // Display portrait icon
-    PATCH_PRINT ~Display portrait icon: %v3%~
-    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=EVALUATE_BUFFER "%v3%" power resist_dispel duration END  
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=v power resist_dispel duration END  
   END
-  CLEAR_ARRAY array
-  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%strings%" RET_ARRAY array END
-  PATCH_PHP_EACH array AS _ => v4 BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%strings%" RET_ARRAY array4=array END
+  PATCH_PHP_EACH array4 AS _ => v BEGIN
     // Disable display string
-    PATCH_PRINT ~Disable display string: %v4%~
-    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=267 parameter1=EVALUATE_BUFFER "%v4%" power resist_dispel duration END  
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=267 parameter1=v power resist_dispel duration END  
   END
-  CLEAR_ARRAY array
-  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%animations%" RET_ARRAY array END
-  PATCH_PHP_EACH array AS _ => v5 BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%animations%" RET_ARRAY array5=array END
+  PATCH_PHP_EACH array5 AS _ => v BEGIN
     // Protection from Specific Animation
-    PATCH_PRINT ~Protection from Specific Animation: %v5%~
-    LPF ADD_CRE_EFFECT INT_VAR opcode=296 STR_VAR resource=EVALUATE_BUFFER "%v5%" END
+    LPF ADD_CRE_EFFECT INT_VAR opcode=296 STR_VAR resource=EVALUATE_BUFFER "%v%" END
   END
-  PATCH_PHP_EACH EVAL ~%spells%~ AS _ => v6 BEGIN
-    PATCH_IF FILE_EXISTS_IN_GAME ~%v6%.spl~ BEGIN
+  PATCH_PHP_EACH EVAL ~%spells%~ AS _ => v BEGIN
+    PATCH_IF FILE_EXISTS_IN_GAME ~%v%.spl~ BEGIN
       // Protection from Spell
-      PATCH_PRINT ~Protection from Spell: %v6%~
-      SET param1 = displaySpellIneffective ? 4742 : 0
+      SET parameter1 = displaySpellIneffective ? 4742 : 0
       LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=206 
-                                         parameter1=EVALUATE_BUFFER "%param1%" 
+                                         parameter1
                                          power 
                                          resist_dispel 
                                          duration
-                                 STR_VAR resource=EVALUATE_BUFFER "%v6%" 
+                                 STR_VAR resource=EVALUATE_BUFFER "%v%" 
       END
     END
   END
@@ -165,7 +155,11 @@ END
 // Adds an opcode 206 (protection from spell) with the resref f_Spell to the extended header of the source spell or item,
 // if an effect of type f_Condition is found on the header
 // the string which is displayed when the spell fails can be set via f_Strref which defaults to 0 (meaning no message)
-DEFINE_PATCH_FUNCTION add_conditional_immunity INT_VAR f_Condition = 999 f_Strref = 0 BEGIN
+DEFINE_PATCH_FUNCTION add_conditional_immunity 
+INT_VAR 
+  f_Condition = 999 
+  f_Strref = 0 
+BEGIN
   PATCH_IF SOURCE_SIZE > 0x71 BEGIN
     READ_LONG  0x64 ao
     READ_LONG  0x6a eo
@@ -1562,232 +1556,113 @@ END
 
 // Immunity to Turn Undead
 DEFINE_PATCH_FUNCTION unturnable BEGIN
-  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+  PATCH_IF !("%SOURCE_EXT%" STRING_EQUAL_CASE "CRE") BEGIN
     PATCH_FAIL ~Function unturnable was not configured for spell or item, file: %SOURCE_RES%~
   END
   LPF ADD_CRE_EFFECT INT_VAR opcode=297 target=1 timing=9 paramater2=1 END
 END
 
 
-
-//TODO:
+// Illusion immmunity
 DEFINE_PATCH_FUNCTION illusion_immunity BEGIN
-  READ_ASCII 0 sig (3)
-  PATCH_FOR_EACH spell IN
-                  sppr704 //Nature's beauty
-                  spwi106 //Blindness
-                  IKDB2   //Spook (mod)
-                  spwi125 //Spook
-                  spwi223 //Deafness
-                  spwm178 //Blindness (Wild mage)
-  BEGIN
-    PATCH_MATCH sig WITH
-      ~CRE~ BEGIN
-        LPF ADD_CRE_EFFECT
-          INT_VAR
-            opcode = 206
-            target = 1
-            parameter1 = 4742 //Spell Ineffective
-            timing = 9
-          STR_VAR
-            resource = EVAL "%spell%"
-        END
-      END
-      ~ITM~ BEGIN
-        LPF ADD_ITEM_EQEFFECT
-          INT_VAR
-            opcode = 206
-            target = 1
-            parameter1 = 4742 //Spell Ineffective
-            timing = 2
-          STR_VAR
-            resource = EVAL "%spell%"
-        END
-      END
-      DEFAULT
-    END
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+    PATCH_FAIL ~Function illusion_immunity was not configured for spell, file: %SOURCE_RES%~
   END
+  DEFINE_ARRAY spells BEGIN  
+    sppr704 //Nature's beauty
+    spwi106 //Blindness
+    IKDB2   //Spook (mod)
+    spwi125 //Spook
+    spwi223 //Deafness
+    spwm178 //Blindness (Wild mage)
+  END
+  LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
 
-// Extraplanar traits
 
+// Extraplanar traits
 DEFINE_PATCH_FUNCTION extraplanar_traits BEGIN
-    PATCH_FOR_EACH ~spell~ IN                                                          // grant immunity to each of the following spells
-                ~SPWI605~                                                              // Death Spell
-                ~cdxvdth~                                                              // Death Spell (mod)
-BEGIN                                                                                  // execute the following
-READ_ASCII 0 sig (3)
-  PATCH_MATCH "%sig%" WITH
-      ~CRE~ BEGIN                                                                      // CRE file parsed
-      LPF ADD_CRE_EFFECT                                           // Starts FUNCTION call
-      INT_VAR                                                                          // initialize variables
-        "opcode" = "206"                                                               // effect: #206 (Protection from Spell)
-        "target" = "1"                                                                 // target: 1 (self)
-        "timing" = "9"                                                                 // timing mode: 9 (Instant/Permanent)
-        "duration" = "0"                                                               // duration: 0
-        "parameter1" = "4742"                                                          // param1: string (Spell Ineffective)
-        "sectype" = "0"                                                                // secondary type: none
-        "probability1" = "100"                                                         // probability1: 100%
-      STR_VAR                                                                          // initialize strings
-        "resource"  = EVALUATE_BUFFER "%spell%"                                        // resref: the current spell
-        "effsource" = ""                                                               // effsource: none
-      END                                                                              // ends LPF
-    END                                                                                // ends WITH CRE block
-    ~ITM~ BEGIN                                                                        // ITM file parsed
-      LPF ADD_ITEM_EQEFFECT                                        // Starts FUNCTION call
-      INT_VAR                                                                          // initialize variables
-        "opcode" = "206"                                                               // effect: #206 (Protection from Spell)
-        "target" = "1"                                                                 // target: 1 (self)
-        "timing" = "2"                                                                 // timing mode: 2 (while equipped)
-        "duration" = "0"                                                               // duration: 0
-        "parameter1" = "4742"                                                          // param1: string (Spell Ineffective)
-        "sectype" = "0"                                                                // secondary type: none
-        "probability1" = "100"                                                         // probability1: 100%
-      STR_VAR                                                                          // initialize strings
-        "resource"  = EVALUATE_BUFFER "%spell%"                                        // resref: the current spell
-        "effsource" = ""                                                               // effsource: none
-      END                                                                              // ends LPF
-    END                                                                                // ends WITH ITM block
-    DEFAULT                                                                            // do nothing
-END                                                                                    // ends PATCH_MATCH
-END                                                                                    // ends PATCH_FOR_EACH
-LPF cure_spell_immunities END                                        // all extraplanar creatures are immune to cure/cause wound spells
-END                                                                                    // ends DEFINE_PATCH_FUNCTION
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+    PATCH_FAIL ~Function extraplanar_traits was not configured for spell, file: %SOURCE_RES%~
+  END
+  DEFINE_ARRAY spells BEGIN  
+    ~SPWI605~ // Death Spell
+    ~cdxvdth~ // Death Spell (mod)
+  END
+  LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+  LPF cure_spell_immunities END                                        
+END
 
 
 // Hover (flight) spell immunities
 DEFINE_PATCH_FUNCTION hover_immunities BEGIN
-READ_ASCII 0 sig (3)
-    PATCH_FOR_EACH ~spell~ IN                                                          // grant immunity to each of the following spells
-                 ~SPIN561~                                                             // Fire Giant Lava Pit (FIRE_GIANT_LAVA)
-                 ~SPIN819~                                                             // Lava Burst (LAVA_BURST)
-                 ~SPIN994~                                                             // Acid Pools in Durlag's Tower (ACID_DAMAGE_1)
-                 ~SPWI022~                                                             // Lava Pit (TRAP_MUCK)
-                 ~SPIN914~                                                             // Mimic Glue
-                ~SPOGRE01~                                                             // Earthquake (Ogremoch)
-                 ~SPPR720~                                                             // Earthquake (Priest version)
-                 ~rr#equa~                                                             // Earthquake (aTweaks)
-                 ~CA#EQ~                                                               // Earthquake (PnP Deva)
-                 ~CDTLQAK~                                                             // Earthquake (mod)
-                 ~SPWI101~                                                             // Grease
-				~rr#r2mud~														   	   // Rock to mud spell (Dao)
-  BEGIN                                                                                  // execute the following
-  PATCH_MATCH "%sig%" WITH
-      ~CRE~ BEGIN                                                                      // CRE file parsed
-      LPF ADD_CRE_EFFECT                                           // Starts FUNCTION call
-      INT_VAR                                                                          // initialize variables
-        "opcode" = "206"                                                               // effect: #206 (Protection from Spell)
-        "target" = "1"                                                                 // target: 1 (self)
-        "timing" = "9"                                                                 // timing mode: 9 (Instant/Permanent)
-        "duration" = "0"                                                               // duration: 0
-        "sectype" = "0"                                                                // secondary type: none
-        "probability1" = "100"                                                         // probability1: 100%
-      STR_VAR                                                                          // initialize strings
-        "resource"  = EVALUATE_BUFFER "%spell%"                                        // resref: the current spell
-        "effsource" = ""                                                               // effsource: none
-      END                                                                              // ends LPF
-    END                                                                                // ends WITH CRE block
-    ~ITM~ BEGIN                                                                        // ITM file parsed
-      LPF ADD_ITEM_EQEFFECT                                        // Starts FUNCTION call
-      INT_VAR                                                                          // initialize variables
-        "opcode" = "206"                                                               // effect: #206 (Protection from Spell)
-        "target" = "1"                                                                 // target: 1 (self)
-        "timing" = "2"                                                                 // timing mode: 2 (while equipped)
-        "duration" = "0"                                                               // duration: 0
-        "sectype" = "0"                                                                // secondary type: none
-        "probability1" = "100"                                                         // probability1: 100%
-      STR_VAR                                                                          // initialize strings
-        "resource"  = EVALUATE_BUFFER "%spell%"                                        // resref: the current spell
-        "effsource" = ""                                                               // effsource: none
-      END                                                                              // ends LPF
-    END                                                                                // ends WITH ITM block
-    DEFAULT                                                                            // do nothing
-END                                                                                    // ends PATCH_MATCH
-END                                                                                    // ends PATCH_FOR_EACH
-LPF entangle_immunities END                                          // all hovering creatures are immune to entangle spells
-LPF web_immunity END                                                 // all hovering creatures are immune to web spells and effects
-END                                                                                    // ends DEFINE_PATCH_FUNCTION
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+    PATCH_FAIL ~Function hover_immunities was not configured for spell, file: %SOURCE_RES%~
+  END
+  DEFINE_ARRAY spells BEGIN  
+    ~SPIN561~ // Fire Giant Lava Pit (FIRE_GIANT_LAVA)
+    ~SPIN819~ // Lava Burst (LAVA_BURST)
+    ~SPIN994~ // Acid Pools in Durlag's Tower (ACID_DAMAGE_1)
+    ~SPWI022~ // Lava Pit (TRAP_MUCK)
+    ~SPIN914~ // Mimic Glue
+   ~SPOGRE01~ // Earthquake (Ogremoch)
+    ~SPPR720~ // Earthquake (Priest version)
+    ~rr#equa~ // Earthquake (aTweaks)
+      ~CA#EQ~ // Earthquake (PnP Deva)
+    ~CDTLQAK~ // Earthquake (mod)
+    ~SPWI101~ // Grease
+   ~rr#r2mud~	// Rock to mud spell (Dao)
+  END
+  LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
+  LPF entangle_immunities END                                          
+  LPF web_immunity END
+END
 
-// Fire Slamander immunities (these apply for the noble variety too, but not for Frost Salamanders)
 
+// Fire Salamander immunities (these apply for the noble variety too, but not for Frost Salamanders)
 DEFINE_PATCH_FUNCTION fire_salamander_immunities BEGIN
-LPF charm_immunity END                                        	   // Charm immunities
-LPF sleep_immunity END                                        	   // Sleep immunities
-LPF hold_immunity END                                        		   // Hold immunities
-LPF fire_spell_immunities END                                        // fire immunities
-LPF extraplanar_traits END                                           // extraplanar traits
-END                                                                                    // ends DEFINE_PATCH_FUNCTION
+  LPF charm_immunity END
+  LPF sleep_immunity END
+  LPF hold_immunity END 
+  LPF fire_spell_immunities END
+  LPF extraplanar_traits END
+END
 
 
 // Water Elemental effect
-
 DEFINE_PATCH_FUNCTION add_water_elemental_effects BEGIN
-READ_ASCII 0 sig (3)
-  PATCH_MATCH "%sig%" WITH
-      ~CRE~ BEGIN                                                                      // CRE file parsed
-	  LPF ADD_CRE_EFFECT
-		INT_VAR
-		  opcode = 52 //Character tint
-		  target = 1
-		  parameter1 = 0x02000000
-		  parameter2 = 0x2
-		  timing = 9
-	  END
-	  LPF ADD_CRE_EFFECT
-		INT_VAR
-		  opcode = 66 //Translucency
-		  target = 1
-		  parameter1 = 100
-		  timing = 9
-	  END
-	  END                                                                                // ends WITH CRE block
-      ~ITM~ BEGIN                                                                        // ITM file parsed
-	  LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-		  opcode = 52 //Character tint
-		  target = 1
-		  parameter1 = 0x02000000
-		  parameter2 = 0x2
-		  timing = 2
-	  END
-	  LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-		  opcode = 66 //Translucency
-		  target = 1
-		  parameter1 = 100
-		  timing = 2
-	  END
-	  END                                                                                // ends WITH ITM block
-    DEFAULT                                                                            // do nothing
-  END                                                                                  // ends PATCH_MATCH
-LPF entangle_immunities END
-LPF web_immunity END
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+    PATCH_FAIL ~Function add_water_elemental_effects was not configured for spell, file: %SOURCE_RES%~
+  END
+  LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=52 parameter1=0x02000000 parameter2=0x2 END // Character tint
+  LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=100 END // Translucency
+  LPF entangle_immunities END
+  LPF web_immunity END
 END
 
 
 // Plant traits
 DEFINE_PATCH_FUNCTION plant_traits BEGIN
-LPF disease_immunity END                                             // all Plants creatures are immune to disease
-LPF bleeding_immunity END                                            // all Plants creatures are immune to bleeding
-LPF petrification_immunity END                                       // all Plants creatures are immune to petrification
-LPF stun_immunity END                                                // all Plants creatures are immune to stun
-LPF hold_immunity END                                                // all Plants creatures are immune to hold
-LPF polymorph_immunity END                                           // all Plants creatures are immune to polymorph
-LPF confusion_immunity END                                           // all Plants creatures are immune to confusion
-LPF charm_immunity END                                               // all Plants creatures are immune to charm
-LPF fear_immunity END                                                // all Plants creatures are immune to charm
-LPF sleep_immunity END                                               // all Plants creatures are immune to sleep
-LPF illusion_immunity END                                            // all Plants creatures are immune to illusion
-LPF poison_immunity END                                              // all Plants creatures are immune to poison
-LPF insect_spell_immunities END                                      // all Plants creatures are immune to Insect Plague and similar spells
-LPF entangle_immunities END                                      	   // all Plants creatures are immune to entangle and similar spells
-END                                                                                    // ends DEFINE_PATCH_FUNCTION
+  LPF disease_immunity END
+  LPF bleeding_immunity END
+  LPF petrification_immunity END
+  LPF stun_immunity END
+  LPF hold_immunity END
+  LPF polymorph_immunity END
+  LPF confusion_immunity END
+  LPF charm_immunity END
+  LPF fear_immunity END
+  LPF sleep_immunity END
+  LPF illusion_immunity END
+  LPF poison_immunity END
+  LPF insect_spell_immunities END
+  LPF entangle_immunities END
+END
 
 
-//Set enchantment, and account for detectable enchantment from DS
+// Set enchantment, and account for detectable enchantment from DS
 DEFINE_PATCH_FUNCTION set_enchantment INT_VAR enchantment = 1 BEGIN
-  READ_ASCII 0 sig (3)
-  PATCH_IF "%sig%" STRING_EQUAL ITM BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "ITM" BEGIN
     WRITE_LONG 0x60 enchantment
     READ_LONG 0x6a eo
     done = 0
@@ -1800,23 +1675,16 @@ DEFINE_PATCH_FUNCTION set_enchantment INT_VAR enchantment = 1 BEGIN
       END
     END
     PATCH_IF !done BEGIN
-      LPF ADD_ITEM_EQEFFECT
-        INT_VAR
-          opcode = 233
-          target = 1
-          parameter1 = enchantment
-          parameter2 = 109
-          timing = 2
-      END
+      LPF ADD_ITEM_EQEFFECT INT_VAR opcode=233 target=1 parameter1=enchantment parameter2=109 timing=2 END
     END
   END
 END
 
-//Will increase the priority of a single script matching the regexp script to the first empty script slot.
-//Script slots with scripts matching the regexp kill will be treated as empty.
+
+// Will increase the priority of a single script matching the regexp script to the first empty script slot.
+// Script slots with scripts matching the regexp kill will be treated as empty.
 DEFINE_PATCH_FUNCTION promote_script STR_VAR script = "^$" kill = "^$" BEGIN
-  READ_ASCII 0 sig (3)
-  PATCH_IF "%sig%" STRING_EQUAL_CASE CRE AND SOURCE_SIZE > 0x2d3 BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "CRE" AND SOURCE_SIZE > 0x2d3 BEGIN
     FOR (o = 0x248; o < 0x270; o += 0x8) BEGIN
       READ_ASCII o s1
       PATCH_IF "%s1%" STRING_MATCHES_REGEXP "%script%" = 0 BEGIN
@@ -1834,42 +1702,29 @@ DEFINE_PATCH_FUNCTION promote_script STR_VAR script = "^$" kill = "^$" BEGIN
   END ELSE PATCH_FAIL "promote_script: incorrect signature or below minimum file size (%SOURCE_FILE%)"
 END
 
+
 DEFINE_PATCH_FUNCTION make_summon STR_VAR slot = boots BEGIN
-  READ_ASCII 0 sig (3)
-  PATCH_IF "%sig%" STRING_EQUAL CRE AND SOURCE_SIZE > 0x2d3 BEGIN
-    WRITE_BYTE 0x10 (THIS BOR BIT1) BAND 0xfb                        //Set 'No corpse' (BIT1) and unset 'Permanent Corpse' (BIT2)
-    ADD_CRE_ITEM rr#dinv #0 #0 #0 "unstealable&undroppable" "%slot%" //item for keeping summons from being killed before the summoning is done
-    ADD_MEMORIZED_SPELL rr#usumn #0 innate (1)                       //'Unsummon' spell
-    WRITE_ASCIIL SCRIPT_OVERRIDE "" "" "" "" "" // Clear all scripts; correct scripts are set by the specialised code
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "CRE" AND SOURCE_SIZE > 0x2d3 BEGIN
+    WRITE_LONG 0x14 0                                                // No experience from summons
+    WRITE_BYTE 0x275 6                                               // Gender: Summon
+    WRITE_BYTE 0x10 (THIS BOR BIT1) BAND 0xfb                        // Set 'No corpse' (BIT1) and unset 'Permanent Corpse' (BIT2)
+    ADD_CRE_ITEM rr#dinv #0 #0 #0 "unstealable&undroppable" "%slot%" // item for keeping summons from being killed before the summoning is done
+    ADD_MEMORIZED_SPELL rr#usumn #0 innate (1)                       // 'Unsummon' spell
+    WRITE_ASCIIL SCRIPT_OVERRIDE "" "" "" "" ""                      // Clear all scripts; correct scripts are set by the specialised code
   END ELSE PATCH_FAIL "make_summon: incorrect signature or below minimum file size (%SOURCE_FILE%)"
 END
 
-/*
- * Basically, with their vanilla scripts, Davaeorn and Andris can
- * act buggy with the IWD/PnP Dimension Door spell, so we keep them
- * on the old spell.
- */
+
+// Basically, with their vanilla scripts, Davaeorn and Andris can act buggy with the IWD/PnP Dimension Door spell, so we keep them on the old spell.
 DEFINE_ACTION_FUNCTION handle_old_dd BEGIN
-  ACTION_IF !FILE_EXISTS_IN_GAME fl#ddold.spl AND
-            !FILE_EXISTS_IN_GAME dw#mage.mrk AND
-            GAME_INCLUDES ~bg1~
-
-  BEGIN
+  ACTION_IF !FILE_EXISTS_IN_GAME fl#ddold.spl AND !FILE_EXISTS_IN_GAME dw#mage.mrk AND GAME_INCLUDES ~bg1~ BEGIN
     COPY_EXISTING spwi402.spl "override/fl#ddold.spl"
-
-    ACTION_FOR_EACH script IN "%TUTU_VAR%andris"
-                              "davaeorn"
-                              "_avaeorn"
-    BEGIN
+    ACTION_FOR_EACH script IN "%TUTU_VAR%andris" "davaeorn" "_avaeorn" BEGIN
       ACTION_IF FILE_EXISTS_IN_GAME "%script%.bcs" BEGIN
         COPY_EXISTING "%script%.bcs" override
           DECOMPILE_AND_PATCH BEGIN
-            REPLACE_TEXTUALLY
-              ~ForceSpellPoint(\(.+\),WIZARD_DIMENSION_DOOR)~
-              ~ForceSpellPointRES("fl#ddold",\1)~
-            REPLACE_TEXTUALLY
-              ~SpellNoDec(\(.+\),WIZARD_DIMENSION_DOOR)~
-              ~SpellNoDecRES("fl#ddold",\1)~
+            REPLACE_TEXTUALLY ~ForceSpellPoint(\(.+\),WIZARD_DIMENSION_DOOR)~ ~ForceSpellPointRES("fl#ddold",\1)~
+            REPLACE_TEXTUALLY ~SpellNoDec(\(.+\),WIZARD_DIMENSION_DOOR)~ ~SpellNoDecRES("fl#ddold",\1)~
           END
         BUT_ONLY
         UNLESS "fl#ddold"
@@ -1879,9 +1734,9 @@ DEFINE_ACTION_FUNCTION handle_old_dd BEGIN
 END
 
 DEFINE_ACTION_FUNCTION make_dimension_door
-  STR_VAR
-    graphic = ""
-    sound = ""
+STR_VAR
+  graphic = ""
+  sound = ""
 BEGIN
   ACTION_FOR_EACH spell IN spwi402 spwi450 BEGIN
     ACTION_IF FILE_EXISTS_IN_GAME "%spell%.spl" BEGIN
@@ -1901,6 +1756,7 @@ BEGIN
   END
 END
 
+
 DEFINE_PATCH_FUNCTION dd_animation
   INT_VAR
     off = "-1"
@@ -1919,6 +1775,7 @@ BEGIN
   END
 END
 
+
 DEFINE_PATCH_FUNCTION dd_sound
   INT_VAR
     off = "-1"
@@ -1933,10 +1790,11 @@ BEGIN
   END
 END
 
+
 DEFINE_ACTION_FUNCTION make_shadow_door
-  STR_VAR
-    graphic = ""
-    sound = ""
+STR_VAR
+  graphic = ""
+  sound = ""
 BEGIN
   COPY_EXISTING spwi505.spl override
     FOR (off = LONG_AT 0x6a; off < BUFFER_LENGTH; off += 0x30) BEGIN
@@ -1949,10 +1807,11 @@ BEGIN
   BUT_ONLY
 END
 
+
 DEFINE_ACTION_FUNCTION make_dryad_teleport
-  STR_VAR
-    graphic = ""
-    sound = ""
+STR_VAR
+  graphic = ""
+  sound = ""
 BEGIN
   COPY_EXISTING spwi995.spl override
     FOR (off = LONG_AT 0x6a; off < BUFFER_LENGTH; off += 0x30) BEGIN
@@ -1970,36 +1829,27 @@ BEGIN
 END
 
 DEFINE_PATCH_FUNCTION fiend_summoning_spell
-  INT_VAR
-    duration = 120
-  STR_VAR
-    lawful = rr#scorn
-    lcneutral = fl#sarca
-    chaotic = spcaco
+INT_VAR
+  duration = 120
+STR_VAR
+  lawful = rr#scorn
+  lcneutral = fl#sarca
+  chaotic = spcaco
 BEGIN
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 177 END
-  SET $p1("%lawful%") = 16 // MASK_LAWFUL
+  SET $p1("%lawful%") = 16    // MASK_LAWFUL
   SET $p1("%lcneutral%") = 32 // MASK_LCNEUTRAL
-  SET $p1("%chaotic%") = 48 // MASK_CHAOTIC
+  SET $p1("%chaotic%") = 48   // MASK_CHAOTIC
   PATCH_FOR_EACH resource IN "%lawful%" "%lcneutral%" "%chaotic%" BEGIN
-    LPF ADD_SPELL_EFFECT
-      INT_VAR
-        opcode = 177
-        target = 1
-        parameter1 = $p1("%resource%")
-        parameter2 = 8
-        resist_dispel = 2
-        duration
-      STR_VAR
-        resource
-    END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 parameter1=$p1("%resource%") parameter2=8 resist_dispel=2 duration STR_VAR resource END
   END
 END
 
+
 DEFINE_PATCH_FUNCTION minimum_proficiency
-  INT_VAR
-    value = 1
-    proficiency = 0
+INT_VAR
+  value = 1
+  proficiency = 0
 BEGIN
   PATCH_IF value >= 0 AND proficiency >= 0 BEGIN
     coveredp = 0
@@ -2019,5 +1869,3 @@ BEGIN
     PATCH_WARN "WARNING: minimum_proficiency received illegal arguments: value = %value%, proficiency = %proficiency%"
   END
 END
-
-

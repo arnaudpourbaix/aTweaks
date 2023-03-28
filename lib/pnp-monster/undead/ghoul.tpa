@@ -26,42 +26,42 @@ BEGIN
         PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM fl#ghou1 #0 #0 #0 none weapon1 EQUIP
         REPLACE_CRE_ITEM fl#ghou2 #0 #0 #0 none shield
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 175
-            newhp = 16 //2d8
-            newac = 6
-            newth = 19
-            newapr = 2 //2 with main, plus one chomp with the off hand
-            newsvd = 12
-            newsvw = 14
-            newsvp = 13
-            newsvb = 15
-            newsvs = 13
-            newlvl1 = 2
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 0
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 16
-            newdex = 9
-            newcon = 9
-            newint = 7
-            newwis = 7
-            newchr = 9
-            newmor = 12
-            newalign = 51 //CE
-            ptwf = 1
+            xpv = 175
+            hp = 16 //2d8
+            ac = 6
+            thac0 = 19
+            apr = 2 //2 with main, plus one chomp with the off hand
+            saveDeath = 12
+            saveWand = 14
+            savePolymorph = 13
+            saveBreath = 15
+            saveSpell = 13
+            level1 = 2
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 0
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 16
+            dexterity = 9
+            constitution = 9
+            intelligence = 7
+            wisdom = 7
+            charisma = 9
+            morale = 12
+            alignment = 51 //CE
+            perfect2weapon = 1
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#ghoul
             script01 = wdasight

@@ -1,74 +1,64 @@
 // Quest Pack compatibility block (for the "New Fate For The Dryads' Acorns" component)
+ACTION_IF FILE_EXISTS_IN_GAME ~sufake.itm~ AND FILE_EXISTS ~questpack/phluafae/appendvae.baf~ BEGIN
+  <<<<<<<<atweaks/inlined/baf/fey/vaelasa.baf
+  IF
+    False()
+    Global("rr#ph4qpack","LOCALS",0)
+  THEN
+    RESPONSE #100
+      Continue()
+  END
+  >>>>>>>>
 
-ACTION_IF ((FILE_EXISTS_IN_GAME ~sufake.itm~) AND (FILE_EXISTS ~questpack/phluafae/appendvae.baf~)) BEGIN  // Quest Pack present and installed check
-
-<<<<<<<<atweaks/inlined/baf/fey/vaelasa.baf
-IF
-	False()
-	Global("rr#ph4qpack","LOCALS",0)
-THEN
-	RESPONSE #100
-		Continue()
+  COPY_EXISTING ~rr#fhama.bcs~ ~override~
+    REPLACE_BCS_BLOCK ~atweaks/inlined/baf/fey/vaelasa.baf~ ~questpack/phluafae/appendvae.baf~
 END
->>>>>>>>
 
-COPY_EXISTING ~rr#fhama.bcs~ ~override~
-  REPLACE_BCS_BLOCK ~atweaks/inlined/baf/fey/vaelasa.baf~ ~questpack/phluafae/appendvae.baf~
 
-END                                                                                                        // ends Quest Pack check
 
 // The Calling compatibility block : add some black pearls to the game
+ACTION_IF FILE_EXISTS_IN_GAME ~cdbpearl.itm~  BEGIN
+  <<<<<<<<atweaks/inlined/baf/fey/black_peal.baf
+  IF
+    HasItem("%TUTU_VAR%misc36",Myself)
+    Global("CDPearls","LOCALS",0)
+  THEN
+    RESPONSE #95
+      SetGlobal("CDPearls","LOCALS",1)
+      Continue()
+    RESPONSE #5
+      SetGlobal("CDPearls","LOCALS",1)
+      TakeItemReplace("cdbpearl","%TUTU_VAR%misc36",Myself)
+      Continue()
+  END
+  >>>>>>>>
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~cdbpearl.itm~)  BEGIN  // The Calling
-
-<<<<<<<<atweaks/inlined/baf/fey/black_peal.baf
-IF
-  HasItem("%TUTU_VAR%misc36",Myself)
-  Global("CDPearls","LOCALS",0)
-THEN
-  RESPONSE #95
-    SetGlobal("CDPearls","LOCALS",1)
-    Continue()
-  RESPONSE #5
-    SetGlobal("CDPearls","LOCALS",1)
-    TakeItemReplace("cdbpearl","%TUTU_VAR%misc36",Myself)
-    Continue()
+  EXTEND_TOP  ~rr#fsiri.bcs~  ~atweaks/inlined/baf/fey/black_peal.baf~ EVALUATE_BUFFER // give sirines a chance to have black pearls
 END
->>>>>>>>
 
-
-EXTEND_TOP  ~rr#fsiri.bcs~  ~atweaks/inlined/baf/fey/black_peal.baf~ EVALUATE_BUFFER // give sirines a chance to have black pearls
-
-
-
-END                                                                                                        // ends The Calling check
 
 
 // Replace shouts with Help() in specific dialogue files
-
-ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
-              ~sil~                                                                // Sil's dialogue (BGT)
-             ~_SIL~                                                                // Sil's dialogue (Tutu)
-BEGIN                                                                              // execute the following
-ACTION_IF FILE_EXISTS_IN_GAME ~%file%.dlg~ BEGIN                                   // if the designated file with a SPL extension exists
-COPY_EXISTING ~%file%.dlg~ ~override~
-PATCH_IF (%SOURCE_SIZE% > 0x01) THEN BEGIN                                         // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
-// =============================================================================== // the actual work starts from here
- DECOMPILE_DLG_TO_D
-  REPLACE_TEXTUALLY EXACT_MATCH ~Shout(1)~ ~Help()~
- COMPILE_D_TO_DLG
-// =============================================================================== // the actual work ends here
-END                                                                                // ends file size check
-BUT_ONLY_IF_IT_CHANGES
-END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
-END                                                                                // ends ACTION_FOR_EACH block
+ACTION_FOR_EACH ~file~ IN
+  sil   // Sil's dialogue (BGT)
+  _SIL  // Sil's dialogue (Tutu)
+BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME ~%file%.dlg~ BEGIN
+    COPY_EXISTING ~%file%.dlg~ ~override~
+      PATCH_IF (%SOURCE_SIZE% > 0x01) THEN BEGIN
+        DECOMPILE_AND_PATCH BEGIN
+          REPLACE_TEXTUALLY EXACT_MATCH ~Shout(1)~ ~Help()~
+        END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
 
 
 ACTION_IF GAME_INCLUDES ~soa~ BEGIN
   // Vaelasa should summoned Dryads instead of Sirines
-
   COPY_EXISTING ~dry01.cre~    ~override/rr#fdrya.cre~                               // Hostile Dryad
-    WRITE_LONG 0x10 2                                                                // clear flags, leave only "no corpse"
+    WRITE_LONG   0x10 2                                                              // clear flags, leave only "no corpse"
     WRITE_ASCIIE 0x248 "%DEST_RES%" #8                                               // Override script
     WRITE_ASCII  0x250 ~~ #8                                                         // disable class AI script
     WRITE_ASCII  0x258 ~~ #8                                                         // disable race AI script
@@ -83,26 +73,24 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
     END
 
   COPY_EXISTING ~AR1200.BCS~ ~override~                                              // Windsper Hills area script
-    DECOMPILE_BCS_TO_BAF
+    DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY EXACT_MATCH ~SIRINE01~ ~rr#fdrya~
-    COMPILE_BAF_TO_BCS
+    END
   BUT_ONLY_IF_IT_CHANGES
 
   // The Spellhold Asylum door should be unlocked and opened once (note: remove this fix once it's included in the BG2 Fixpack)
   COPY_EXISTING ~ar1500.bcs~ ~override~
     PATCH_IF NOT FILE_CONTAINS_EVALUATED (~%SOURCE_FILE%~ ~RR#Door1501~) BEGIN         // prevent duplication in case the Fixpack version is installed
-      DECOMPILE_BCS_TO_BAF
+      DECOMPILE_AND_PATCH BEGIN
         REPLACE_TEXTUALLY EXACT_MATCH ~GlobalGT("AsylumPlot","GLOBAL",55)~
                                       ~GlobalGT("AsylumPlot","GLOBAL",55) Global("RR#Door1501","AR1500",0)~
         REPLACE_TEXTUALLY EXACT_MATCH ~Unlock("Door1501")~
                                       ~SetGlobal("RR#Door1501","AR1500",1) Unlock("Door1501")~
-      COMPILE_BAF_TO_BCS
+      END
     END
   BUT_ONLY_IF_IT_CHANGES
 
-
   // Spawn Sirines instead of Lizardmen and Mists in Spellhold
-
   <<<<<<<<atweaks/inlined/baf/fey/rr#1500.baf
   IF
 	Global("rr#spwn","AR1500",0)
@@ -154,7 +142,6 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
 END
 
 // Give the Cloakwood Hamadryad a few allies
-
 <<<<<<<<atweaks/inlined/baf/fey/rr#chama.baf
 IF
 	Global("rr#chama","MYAREA",0)
@@ -171,15 +158,15 @@ THEN
 END
 >>>>>>>>
 
-ACTION_IF FILE_EXISTS_IN_GAME ~AR8500.BCS~ BEGIN                                   // if the designated file exists
+ACTION_IF FILE_EXISTS_IN_GAME ~AR8500.BCS~ BEGIN
   EXTEND_BOTTOM ~AR8500.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~               // extend the Cloakwood 4 area script (BGT)
 END
 
-ACTION_IF FILE_EXISTS_IN_GAME ~_AR1700.BCS~ BEGIN                                  // if the designated file exists
+ACTION_IF FILE_EXISTS_IN_GAME ~_AR1700.BCS~ BEGIN
   EXTEND_BOTTOM ~_AR1700.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (Tutu)
 END
 
-ACTION_IF FILE_EXISTS_IN_GAME ~BG1700.BCS~ BEGIN                                  // if the designated file exists
+ACTION_IF FILE_EXISTS_IN_GAME ~BG1700.BCS~ BEGIN
   EXTEND_BOTTOM ~BG1700.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (EET)
 END
 
@@ -192,32 +179,29 @@ ACTION_IF GAME_IS ~iwdee~ BEGIN                                                 
   BUT_ONLY
 END
 
-////////////////////////////////////////
+
+
 // Item Revisions
-////////////////////////////////////////
-
 ACTION_IF MOD_IS_INSTALLED ITEM_REV.TP2 0 BEGIN                               		// Item Revisions mod check
+  ACTION_IF NOT FILE_EXISTS_IN_GAME ~rr#fake.itm~ BEGIN
+    COPY_EXISTING ~sw1h01.itm~ ~override/rr#fake.itm~
+      WRITE_LONG 0x1e "-1"
+      SAY NAME2 ~Fake item~
+  END
 
-ACTION_IF NOT FILE_EXISTS_IN_GAME ~rr#fake.itm~ BEGIN
-  COPY_EXISTING ~sw1h01.itm~ ~override/rr#fake.itm~
-	WRITE_LONG 0x1e "-1"
-	SAY NAME2 ~Fake item~
-END
-
-//////////// Compatibility with IR: script's check for CLCK26 and CLCK24 are not sensible, replace them with a fake item
-ACTION_FOR_EACH script IN  rr#fnymp rr#snymp BEGIN
-  ACTION_IF FILE_EXISTS_IN_GAME ~%script%.bcs~ BEGIN
-    COPY_EXISTING ~%script%.bcs~ ~override~
-	  DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
-		~clck26~
-		~rr#fake~ // I am a bit lazy but this will do the trick and is easier in this case than R_B_B
-      REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
-		~clck24~
-		~rr#fake~ // idem
-	  END
-    BUT_ONLY
+  // Compatibility with IR: script's check for CLCK26 and CLCK24 are not sensible, replace them with a fake item
+  ACTION_FOR_EACH script IN  rr#fnymp rr#snymp BEGIN
+    ACTION_IF FILE_EXISTS_IN_GAME ~%script%.bcs~ BEGIN
+      COPY_EXISTING ~%script%.bcs~ ~override~
+        DECOMPILE_AND_PATCH BEGIN
+          REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
+          ~clck26~
+          ~rr#fake~ // I am a bit lazy but this will do the trick and is easier in this case than R_B_B
+          REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH
+          ~clck24~
+          ~rr#fake~ // idem
+        END
+      BUT_ONLY
+    END
   END
 END
-
-END                                                                                // ends Item Revisions compatibility block

@@ -1,86 +1,86 @@
 ACTION_FOR_EACH ~file~ IN
-              ~DRYAD~                                                              // Dryad of the Cloudpeaks (BGT)
-              ~_DRYAD~                                                             // Dryad of the Cloudpeaks (Tutu)
-              ~DRY01~                                                              // Dryad (unused?)
-              ~DRYAD01~                                                            // Dryad (unused?)
-              ~DRYAD02~                                                            // Dryad (unused?)
-              ~DRYAD03~                                                            // Dryad (unused?)
-              ~IDRYAD01~                                                           // Ulene (one of Irenicus captive Dryads)
-              ~IDRYAD02~                                                           // Cania (one of Irenicus captive Dryads)
-              ~IDRYAD03~                                                           // Elyme (one of Irenicus captive Dryads)
-              ~dr01mod~                                                            // Dryad (PofQuestPack)
-              ~drmod~                                                              // Dryad (PofQuestPack)
-              ~RE_DRYAD~                                                           // Dryad (PofQuestPack)
+  DRYAD    // Dryad of the Cloudpeaks (BGT)
+  _DRYAD   // Dryad of the Cloudpeaks (Tutu)
+  DRY01    // Dryad (unused?)
+  DRYAD01  // Dryad (unused?)
+  DRYAD02  // Dryad (unused?)
+  DRYAD03  // Dryad (unused?)
+  IDRYAD01 // Ulene (one of Irenicus captive Dryads)
+  IDRYAD02 // Cania (one of Irenicus captive Dryads)
+  IDRYAD03 // Elyme (one of Irenicus captive Dryads)
+  dr01mod  // Dryad (PofQuestPack)
+  drmod    // Dryad (PofQuestPack)
+  RE_DRYAD // Dryad (PofQuestPack)
 BEGIN
-    ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
-        COPY_EXISTING ~%file%.cre~ ~override~
-        LPF FJ_CRE_VALIDITY END                                          // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
-        REMOVE_KNOWN_SPELLS
-        REMOVE_MEMORIZED_SPELLS
-        ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ ( 3 )                                   // adds 3x Charm Person
-        ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ ( 1 )                                   // adds 1x Speak With Plants
-        ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ ( 1 )                                   // adds 1x Dimension Door
-        WRITE_BYTE 0x6f 1                                                                  // BG1 Proficiency slot (small sword)
-        LPF ~RR#MDCRE~                                                   // aTweaks' Creature Modification
-            INT_VAR                                                                            // Initialize variables
-            "newmove"  = "9"                                                                   // new movement rate
-            "newxpv"   = "975"                                                                 // new XP value
-            "newhp"    = "16"                                                                  // new hit point value
-            "newac"    = "9"                                                                   // new Armor Class value
-            "newth"    = "19"                                                                  // new THAC0 value
-            "newapr"   = "1"                                                                   // new number of attacks per round
-            "newsvd"   = "14"                                                                  // new Save vs. Death
-            "newsvw"   = "16"                                                                  // new Save vs. Wand
-            "newsvp"   = "15"                                                                  // new Save vs. Polymorph
-            "newsvb"   = "17"                                                                  // new Save vs. Breath
-            "newsvs"   = "17"                                                                  // new Save vs. Spell
-            "newmr"    = "50"                                                                  // new Magic Resistance value
-            "newlvl1"  = "2"                                                                   // new level (first class)
-            "newstr"   = "10"                                                                  // new Strength value
-            "newdex"   = "15"                                                                  // new Dexterity value
-            "newcon"   = "12"                                                                  // new Constitution value
-            "newint"   = "14"                                                                  // new Intelligence value
-            "newwis"   = "14"                                                                  // new Wisdom value
-            "newchr"   = "18"                                                                  // new Charisma value
-            "newmor"   = "12"                                                                  // new morale value
-            "newmorb"  = "4"                                                                   // new morale break value
-            "newmorr"  = "15"                                                                  // new morale recovery value
-            "newgen"   = "1"                                                                   // new general (HUMANOID)
-            "newrace"  = "120"                                                                 // new race (FAIRY)
-            "newclass" = "131"                                                                 // new class (FAIRY_DRYAD)
-            "newgendr" = "2"                                                                   // new gender (Female)
-            "newsex"   = "2"                                                                   // new sex (Female)
-            "newalign" = "34"                                                                  // new alignment (True Neutral)
-            "enforce"  = "1"                                                                   // values are enforced for all creatures
-            STR_VAR                                                                            // Initialize strings
-            "notenf01" = "dr01mod"
-            "notenf02" = "RE_DRYAD"
-        END                                                                                // ends FUNCTION call
-        LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
-            STR_VAR                                                                            // Initialize strings
-            "newscript"  = "RR#FDRYA"                                                          // new AI script
-            "script01"   = ""                                                                  // first AI script name
-            "script02"   = "None"                                                              // second AI script name
-            "script03"   = "CDRYAD"                                                            // Dryad AI script
-            "script04"   = "_CDRYAD"                                                           // Dryad AI script (Tutu)
-            "script05"   = "DRYAD"                                                             // Dryad AI script
-            "script06"   = "INITDLG"                                                           // dialogue script (not needed as it's handled within the new script)
-            "script07"   = "_INITDLG"                                                          // dialogue script (Tutu)
-            "script08"   = "SHOUT"                                                             // generic shout script
-            "script09"   = "WTASIGHT"                                                          // generic AI script
-            "script10"   = "wtrunsgt"                                                          // generic AI script
-            "script11"   = "_TRUNSGT"                                                          // generic AI script (Tutu)
-            "script12"   = "IDRYAD01"                                                          // Ulene's dialogue script (not needed as it's handled within the new script)
-            "script13"   = "ULENE"                                                             // Ulene's AI script (not needed as it's handled within the new script)
-            "script14"   = "BPWDASGT"                                                          // Big Picture generic AI script
-            "script15"   = "SIRSPELL"                                                          // default Sirine script
-            "script16"   = "DW2MP0GE"                                                          // Stratagems Melee script
-            "script17"   = "DW2RC2MO"                                                          // Stratagems Melee script
-            "skipfile01" = "drmod"															   // PofQuestPack special script
-        END                                                                                // ends FUNCTION call
-        PATCH_IF (("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~_DRYAD~)) BEGIN // special case, Dryad of the Cloudpeaks
-            WRITE_BYTE 0x273 155                                                           // class = INNOCENT
-        END
-        BUT_ONLY_IF_IT_CHANGES
-    END
+  ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+    COPY_EXISTING ~%file%.cre~ ~override~
+      LPF FJ_CRE_VALIDITY END
+      REMOVE_KNOWN_SPELLS
+      REMOVE_MEMORIZED_SPELLS
+      ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)  // adds 3x Charm Person
+      ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)  // adds 1x Speak With Plants
+      ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)  // adds 1x Dimension Door
+      WRITE_BYTE 0x6f 1                               // BG1 Proficiency slot (small sword)
+      DEFINE_ARRAY notEnforceFiles BEGIN dr01mod RE_DRYAD END
+      LPF patchCreature   
+        INT_VAR 
+          level1=2
+          strength=10
+          dexterity=15
+          constitution=12
+          intelligence=14
+          wisdom=14
+          charisma=18
+          movement=9
+          hp=16
+          ac=9
+          thac0=19
+          apr=1
+          xpv=975
+          alignment=34       // True Neutral
+          saveDeath=14
+          saveWand=16
+          savePolymorph=15
+          saveBreath=17
+          saveSpell=17
+          resistMagic=50
+          morale=12
+          moraleBreak=4
+          moraleRecovery=15
+          general=1          // HUMANOID
+          race=120           // FAIRY
+          class=131          // FAIRY_DRYAD
+          gender=2
+          sex=2
+          enforce=1
+        STR_VAR 
+          notEnforceFiles
+      END
+      DEFINE_ARRAY removeScripts BEGIN 
+        CDRYAD        // Dryad AI script
+        _CDRYAD       // Dryad AI script (Tutu)
+        DRYAD         // Dryad AI script
+        INITDLG       // dialogue script (not needed as it's handled within the new script)
+        _INITDLG      // dialogue script (Tutu)
+        SHOUT         // generic shout script
+        WTASIGHT      // generic AI script
+        wtrunsgt      // generic AI script
+        _TRUNSGT      // generic AI script (Tutu)
+        IDRYAD01      // Ulene's dialogue script (not needed as it's handled within the new script)
+        ULENE         // Ulene's AI script (not needed as it's handled within the new script)
+        BPWDASGT      // Big Picture generic AI script
+        SIRSPELL      // default Sirine script
+        DW2MP0GE      // Stratagems Melee script
+        DW2RC2MO      // Stratagems Melee script
+      END
+      DEFINE_ARRAY skipFiles BEGIN 
+        drmod         // PofQuestPack special script
+      END
+      LPF patchCreatureScript STR_VAR script=RR#FDRYA removeScripts skipFiles END
+      PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~_DRYAD~ BEGIN 
+          // special case, Dryad of the Cloudpeaks: class = INNOCENT
+          WRITE_BYTE 0x273 155
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
 END

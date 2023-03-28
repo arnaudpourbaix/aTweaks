@@ -39,42 +39,42 @@ BEGIN
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring //+1 or better only
         REPLACE_CRE_ITEM fl#shad #0 #0 #0 none weapon1 EQUIP
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 420
-            newhp = 27 //3d8+3
-            newac = 7
-            newth = 17
-            newapr = 1
-            newsvd = 13
-            newsvw = 15
-            newsvp = 14
-            newsvb = 16
-            newsvs = 16
-            newlvl1 = 4
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 13
-            newstrx = 0
-            newint = 7
-            newwis = 7
-            newdex = 10
-            newcon = 9
-            newchr = 9
-            newmor = 20
-            newalign = 0x33 //CE
-            newclass = 170 //Shadow
-            newgen = 4 //undead
-            newrace = 132 //Shadow
+            xpv = 420
+            hp = 27 //3d8+3
+            ac = 7
+            thac0 = 17
+            apr = 1
+            saveDeath = 13
+            saveWand = 15
+            savePolymorph = 14
+            saveBreath = 16
+            saveSpell = 16
+            level1 = 4
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 13
+            strengthx = 0
+            intelligence = 7
+            wisdom = 7
+            dexterity = 10
+            constitution = 9
+            charisma = 9
+            morale = 20
+            alignment = 0x33 //CE
+            class = 170 //Shadow
+            general = 4 //undead
+            race = 132 //Shadow
             
             enforce = 1
           STR_VAR
@@ -86,7 +86,7 @@ BEGIN
 			notenf06 = specx1
 			notenf07 = l#gnoen
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#midmc
             script01 = wtasight
@@ -213,7 +213,7 @@ BEGIN
         STR_VAR
           enf_regexp = "skelet01\|rskel01\|_?iskelet\|skelet03\|[s_]kelet_[abc]\|_?skelet"
       END
-      LPF RR#MDCSC
+      LPF patchCreatureScript
         STR_VAR
           newscript = fl#lowm
           script01 = wtasight

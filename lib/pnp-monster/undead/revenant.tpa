@@ -23,47 +23,47 @@ BEGIN
 		REPLACE_CRE_ITEM monhp1  #0 #0 #0 none amulet
 		REPLACE_CRE_ITEM fl#rvreg #0 #0 #0 none belt
          LPF unturnable END
-		 LPF RR#MDCRE
+		 LPF patchCreature
 			INT_VAR
-            newxpv = 3000
-            newhp = 64 //8d8
-            newac = 10
-            newth = 13
-            newapr = 1
-            newsvd = 10
-            newsvw = 12
-            newsvp = 11
-            newsvb = 12
-            newsvs = 13
-            newlvl1 = 8
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = "-25"
-            newcr = 100
-            newer = 0
-            newar = 100
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 18
-            newstrx = 79
-            newint = 16
-            newwis = 9
-            newdex = 9
-            newcon = 9
-            newchr = 9
-            newmor = 18
-            newalign = 34 //N
-            newclass = 117 //Ghoul_revenant
-            newgen = 4 //undead
-            newrace = 108 //Ghoul
+            xpv = 3000
+            hp = 64 //8d8
+            ac = 10
+            thac0 = 13
+            apr = 1
+            saveDeath = 10
+            saveWand = 12
+            savePolymorph = 11
+            saveBreath = 12
+            saveSpell = 13
+            level1 = 8
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = "-25"
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 100
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 18
+            strengthx = 79
+            intelligence = 16
+            wisdom = 9
+            dexterity = 9
+            constitution = 9
+            charisma = 9
+            morale = 18
+            alignment = 34 //N
+            class = 117 //Ghoul_revenant
+            general = 4 //undead
+            race = 108 //Ghoul
 			
 			enforce = 1
         END
 
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = rr#revnt
 			script01 = ""
@@ -77,7 +77,7 @@ BEGIN
 			script09 = DW2RC3GE
 			script10 = revenant
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#revnt
 			script01 = ""
@@ -122,4 +122,4 @@ COPY_EXISTING ~spwi604.spl~ ~override/rr#rgaze.spl~  								// Revenent Gaze
   LPF DELETE_EFFECT INT_VAR silent = 1 match_opcode = 326 END
   LPF ALTER_EFFECT INT_VAR savingthrow = 1 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 139 parameter1 = RESOLVE_STR_REF(@1026) END
-  LPF ~RR#SP2IN~ INT_VAR ctime=0 rinvs=1 renew=1 END                // Execute the "spell to innate ablity" function
+  LPF spellToInnate INT_VAR ctime=0 rinvs=1 renew=1 END

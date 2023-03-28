@@ -15,43 +15,43 @@ BEGIN
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none lring
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none rring
         REMOVE_CRE_ITEM immchs
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 4000
-            newhp = 56 //7d8
-            newac = 0
-            newth = 13
-            newapr = 1
-            newsvd = 9
-            newsvw = 11
-            newsvp = 10
-            newsvb = 12
-            newsvs = 12
-            newlvl1 = 17 //To approximate their "turned as special undead" from PnP
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 50
-            newfr = 0
-            newcr = 100
-            newer = 100
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 16
-            newstrx = 0
-            newint = 16
-            newwis = 16
-            newdex = 15
-            newcon = 9
-            newchr = 9
-            newmor = 13
-            newalign = 51 //CE
+            xpv = 4000
+            hp = 56 //7d8
+            ac = 0
+            thac0 = 13
+            apr = 1
+            saveDeath = 9
+            saveWand = 11
+            savePolymorph = 10
+            saveBreath = 12
+            saveSpell = 12
+            level1 = 17 //To approximate their "turned as special undead" from PnP
+            level2 = 0
+            level3 = 0
+            resistMagic = 50
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 100
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 16
+            strengthx = 0
+            intelligence = 16
+            wisdom = 16
+            dexterity = 15
+            constitution = 9
+            charisma = 9
+            morale = 13
+            alignment = 51 //CE
             
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#bansh
             script01 = banshe01

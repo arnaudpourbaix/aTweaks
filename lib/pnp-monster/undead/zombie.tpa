@@ -59,42 +59,42 @@ BEGIN
         PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
         REPLACE_CRE_ITEM fl#zomb #0 #0 #0 none weapon1 EQUIP
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 65
-            newhp = 16 //2d8
-            newac = 8
-            newth = 19
-            newapr = 1
-            newsvd = 14
-            newsvw = 16
-            newsvp = 15
-            newsvb = 17
-            newsvs = 17
-            newlvl1 = 2
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 9
-            newstrx = 0
-            newint = 3
-            newwis = 9
-            newdex = 9
-            newcon = 9
-            newchr = 9
-            newmor = 20
-            newalign = 34 //Neutral
-            newclass = 198 //Zombie
-            newgen = 4 //undead
-            newrace = 148 //Zombie
+            xpv = 65
+            hp = 16 //2d8
+            ac = 8
+            thac0 = 19
+            apr = 1
+            saveDeath = 14
+            saveWand = 16
+            savePolymorph = 15
+            saveBreath = 17
+            saveSpell = 17
+            level1 = 2
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 9
+            strengthx = 0
+            intelligence = 3
+            wisdom = 9
+            dexterity = 9
+            constitution = 9
+            charisma = 9
+            morale = 20
+            alignment = 34 //Neutral
+            class = 198 //Zombie
+            general = 4 //undead
+            race = 148 //Zombie
             
             enforce = 1
           STR_VAR
@@ -105,7 +105,7 @@ BEGIN
         PATCH_IF "%SOURCE_RES%" STRING_MATCHES_REGEXP "_?zombie[bw]" = 0 BEGIN
           LPF promote_script STR_VAR script = "_?zombie[bw]" END
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#lowm
             script01 = wtasight
@@ -165,42 +165,42 @@ BEGIN
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
         REPLACE_CRE_ITEM fl#zlord #0 #0 #0 none weapon1 EQUIP
         LPF unturnable END
-        LPF RR#MDCRE
+        LPF patchCreature
 		  INT_VAR
-            newxpv = 650
-            newhp = 48 //6d8
-            newac = 6
-            newth = 15
-            newapr = 2
-            newsvd = 11
-            newsvw = 13
-            newsvp = 12
-            newsvb = 13
-            newsvs = 14
-            newlvl1 = 6
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 18
-            newstrx = 1
-            newint = 10
-            newwis = 10
-            newdex = 10
-            newcon = 10
-            newchr = 10
-            newmor = 18
-            newalign = 35 //Neutral Evil
-            newclass = 198 //Zombie
-            newgen = 4 //undead
-            newrace = 148 //Zombie           
+            xpv = 650
+            hp = 48 //6d8
+            ac = 6
+            thac0 = 15
+            apr = 2
+            saveDeath = 11
+            saveWand = 13
+            savePolymorph = 12
+            saveBreath = 13
+            saveSpell = 14
+            level1 = 6
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 18
+            strengthx = 1
+            intelligence = 10
+            wisdom = 10
+            dexterity = 10
+            constitution = 10
+            charisma = 10
+            morale = 18
+            alignment = 35 //Neutral Evil
+            class = 198 //Zombie
+            general = 4 //undead
+            race = 148 //Zombie           
             enforce = 1
 		  STR_VAR
             notenf01 = dszomblo
@@ -208,7 +208,7 @@ BEGIN
         PATCH_IF "%SOURCE_RES%" STRING_MATCHES_REGEXP "_?zombie[bw]" = 0 BEGIN
           LPF promote_script STR_VAR script = "_?zombie[bw]" END
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#zlord
             script01 = wtasight
@@ -269,46 +269,46 @@ BEGIN
           STR_VAR
             resource = spwi112
         END
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 975
-            newhp = 36 //3d8+12
-            newac = 6
-            newth = 15
-            newapr = 1
-            newsvd = 11
-            newsvw = 13
-            newsvp = 12
-            newsvb = 13
-            newsvs = 14
-            newlvl1 = 3
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 50
-            newcr = 100
-            newer = 100
-            newar = 0
-            newrs = 0
-            newrc = 50
-            newrp = 50
-            newrm = 50
-            newstr = 9
-            newstrx = 0
-            newint = 7
-            newwis = 9
-            newdex = 16
-            newcon = 9
-            newchr = 9
-            newmor = 20
-            newalign = 35 //NE
-            newclass = 198 //Zombie
-            newgen = 4 //undead
-            newrace = 148 //Zombie
+            xpv = 975
+            hp = 36 //3d8+12
+            ac = 6
+            thac0 = 15
+            apr = 1
+            saveDeath = 11
+            saveWand = 13
+            savePolymorph = 12
+            saveBreath = 13
+            saveSpell = 14
+            level1 = 3
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 50
+            resistCold = 100
+            resistElectricity = 100
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 50
+            resistPiercing = 50
+            resistMissile = 50
+            strength = 9
+            strengthx = 0
+            intelligence = 7
+            wisdom = 9
+            dexterity = 16
+            constitution = 9
+            charisma = 9
+            morale = 20
+            alignment = 35 //NE
+            class = 198 //Zombie
+            general = 4 //undead
+            race = 148 //Zombie
             
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#midmc
             script01 = wtasight

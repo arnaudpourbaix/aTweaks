@@ -50,42 +50,42 @@ BEGIN
 
         ADD_MEMORIZED_SPELL sppr719 #6 priest (1) //Symbol, Death //done
         ADD_MEMORIZED_SPELL sppr718 #6 priest (1) //Symbol, Stun //done
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 14000
-            newhp = 91 //11d8+3
-            newac = "-1"
-            newth = 9
-            newapr = 1
-            newsvd = 2
-            newsvw = 6
-            newsvp = 7
-            newsvb = 8
-            newsvs = 7
-            newmr = 15
-            newlvl1 = 19
-            newfr = 100
-            newcr = 100
-            newer = "-50"
-            newar = 0
-            newrs = 50
-            newrc = 50
-            newrp = 50
-            newrm = 50
-            newstr = 18
-            newstrx = 99
-            newint = 18
-            newwis = 21
-            newdex = 9
-            newcon = 14
-            newchr = 9
-            newmor = 18
-            newalign = 51 //CE
-            newclass = 3 //cleric
+            xpv = 14000
+            hp = 91 //11d8+3
+            ac = "-1"
+            thac0 = 9
+            apr = 1
+            saveDeath = 2
+            saveWand = 6
+            savePolymorph = 7
+            saveBreath = 8
+            saveSpell = 7
+            resistMagic = 15
+            level1 = 19
+            resistFire = 100
+            resistCold = 100
+            resistElectricity = "-50"
+            resistAcid = 0
+            resistSlashing = 50
+            resistCrushing = 50
+            resistPiercing = 50
+            resistMissile = 50
+            strength = 18
+            strengthx = 99
+            intelligence = 18
+            wisdom = 21
+            dexterity = 9
+            constitution = 14
+            charisma = 9
+            morale = 18
+            alignment = 51 //CE
+            class = 3 //cleric
 
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#gmum
             script01 = wtasight

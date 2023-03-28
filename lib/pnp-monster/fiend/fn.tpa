@@ -5,7 +5,7 @@
 
 // TODO: do we really need this ? creature function already handles this test !
 DEFINE_PATCH_MACRO update_fiend_xp BEGIN
-  WRITE_LONG 0x14 THIS > newxpv ? THIS : newxpv
+  WRITE_LONG 0x14 THIS > xpv ? THIS : xpv
 END
 
 
@@ -22,44 +22,44 @@ DEFINE_PATCH_FUNCTION make_imp BEGIN
     REPLACE_CRE_ITEM ~RR#DIMP~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                  // replace default weapon with a more PnP accurate weapon
     REPLACE_CRE_ITEM ~RR#DIMP2~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~                  	   // PnP IMP immunities
     REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add Normal weapons
-    newxpv = 1400
+    xpv = 1400
 	PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMIMP25~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMIMP~) BEGIN
-	  newxpv = 0
+	  xpv = 0
       LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode
         INT_VAR opcode_to_delete = "-1" END                                            // all
 	  REPLACE_CRE_ITEM ~FAMMY~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~					   	   // Add Remove fog of war item
 	END
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting                                                   
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "14"                                                            // new movement rate
-          "newhp"    = "18"                                                            // new hit point value
-          "newac"    = "2"                                                             // new Armor Class value
-          "newth"    = "19"                                                            // new THAC0 value
-          "newapr"   = "1"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "25"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "100"                                                           // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "2"                                                             // new level (first class)
-          "newstr"   = "10"                                                            // new Strength value
-          "newint"   = "10"                                                            // new Intelligence value
-          "newwis"   = "12"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "10"                                                            // new Constitution value
-          "newchr"   = "14"                                                            // new Charisma value
-          "newmor"   = "10"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "60"                                                            // new morale recovery value
-          "newrace"  = "141"                                                           // new race (Imp)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+           xpv
+          move  = "14"                                                            // new movement rate
+          hp    = "18"                                                            // new hit point value
+          ac    = "2"                                                             // new Armor Class value
+          thac0    = "19"                                                            // new THAC0 value
+          apr   = "1"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "25"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "100"                                                           // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "2"                                                             // new level (first class)
+          strength   = "10"                                                            // new strength value
+          intelligence   = "10"                                                            // new Intelligence value
+          wisdom   = "12"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "10"                                                            // new Constitution value
+          charisma   = "14"                                                            // new Charisma value
+          morale   = "10"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "60"                                                            // new morale recovery value
+          race  = "141"                                                           // new race (Imp)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DIMP01"                                                        // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORBAT4"                                                       // enforced creature 2 (uses strict PnP values)
@@ -69,7 +69,7 @@ DEFINE_PATCH_FUNCTION make_imp BEGIN
           "enfc06"   = "FAMIMP"                                                       // enforced creature 5 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Creature Script Modification function
+    LPF ~patchCreatureScript~                                                   // Creature Script Modification function
       STR_VAR
         "newscript"  = "RR#HIMP"                                                       // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -125,46 +125,46 @@ DEFINE_PATCH_FUNCTION make_hellcat BEGIN
     REPLACE_CRE_ITEM ~RR#DBAAT~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~                         // PnP Baatezu immunities 
     REPLACE_CRE_ITEM ~RR#DFCAT~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
     ADD_CRE_ITEM ~IPSION~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~                              // add protection from all mind-affecting spells
-    newxpv = 5000
+    xpv = 5000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "11"                                                            // new movement rate
-          "newhp"    = "58"                                                            // new hit point value
-          "newac"    = "6"                                                             // new Armor Class value
-          "newth"    = "13"                                                            // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "20"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "7"                                                             // new level (first class)
-          "newstr"   = "17"                                                            // new Strength value
-          "newint"   = "10"                                                            // new Intelligence value
-          "newwis"   = "10"                                                            // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "14"                                                            // new Constitution value
-          "newchr"   = "16"                                                            // new Charisma value
-          "newmor"   = "14"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+           xpv
+          move  = "11"                                                            // new movement rate
+          hp    = "58"                                                            // new hit point value
+          ac    = "6"                                                             // new Armor Class value
+          thac0    = "13"                                                            // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "20"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "7"                                                             // new level (first class)
+          strength   = "17"                                                            // new strength value
+          intelligence   = "10"                                                            // new Intelligence value
+          wisdom   = "10"                                                            // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "14"                                                            // new Constitution value
+          charisma   = "16"                                                            // new Charisma value
+          morale   = "14"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "GORCAMB6"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORCAMB7"                                                      // enforced creature 2 (uses strict PnP values)
           "enfc03"   = "HGFEL01"                                                       // enforced creature 3 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HFCAT"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -208,45 +208,45 @@ DEFINE_PATCH_FUNCTION make_erinyes BEGIN
 	END
     REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
     REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
-    newxpv = 7000
+    xpv = 7000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "sinv"     = "1"                                                             // See invisible creatures (1 = enable)
-          "newhp"    = "48"                                                            // new hit point value
-          "newac"    = "2"                                                             // new Armor Class value
-          "newth"    = "13"                                                            // new THAC0 value
-          "newapr"   = "1"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "30"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "6"                                                             // new level (first class)
-          "newstr"   = "17"                                                            // new Strength value
-          "newint"   = "14"                                                            // new Intelligence value
-          "newwis"   = "16"                                                            // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "14"                                                            // new Constitution value
-          "newchr"   = "18"                                                            // new Charisma value
-          "newmor"   = "12"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+           xpv
+          seeInvisible     = "1"                                                             // See invisible creatures (1 = enable)
+          hp    = "48"                                                            // new hit point value
+          ac    = "2"                                                             // new Armor Class value
+          thac0    = "13"                                                            // new THAC0 value
+          apr   = "1"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "30"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "6"                                                             // new level (first class)
+          strength   = "17"                                                            // new strength value
+          intelligence   = "14"                                                            // new Intelligence value
+          wisdom   = "16"                                                            // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "14"                                                            // new Constitution value
+          charisma   = "18"                                                            // new Charisma value
+          morale   = "12"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DERINY01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORBAT2"                                                       // enforced creature 2 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HERIN"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -282,47 +282,47 @@ DEFINE_PATCH_FUNCTION make_bone_fiend BEGIN
     REPLACE_CRE_ITEM ~RR#DBAAT~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~                         // PnP Baatezu immunities 
     REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add Normal weapons
     REPLACE_CRE_ITEM ~RR#DBFND~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
-    newxpv = 7000
+    xpv = 7000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "9"                                                             // new movement rate
+           xpv
+          move  = "9"                                                             // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newhp"    = "40"                                                            // new hit point value
-          "newac"    = "3"                                                             // new Armor Class value
-          "newth"    = "15"                                                            // new THAC0 value
-          "newapr"   = "4"                                                             // new number of attacks per round
-          "newsvd"   = "11"                                                            // new Save vs. Death
-          "newsvw"   = "13"                                                            // new Save vs. Wand
-          "newsvp"   = "12"                                                            // new Save vs. Polymorph
-          "newsvb"   = "13"                                                            // new Save vs. Breath
-          "newsvs"   = "14"                                                            // new Save vs. Spell
-          "newmr"    = "30"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "5"                                                             // new level (first class)
-          "newstr"   = "16"                                                            // new Strength value
-          "newstrx"  = "0"                                                             // new Exceptional Strength value
-          "newint"   = "12"                                                            // new Intelligence value
-          "newwis"   = "12"                                                            // new Wisdom value
-          "newdex"   = "14"                                                            // new Dexterity value
-          "newcon"   = "15"                                                            // new Constitution value
-          "newchr"   = "10"                                                            // new Charisma value
-          "newmor"   = "12"                                                            // new morale value
-          "newmorb"  = "4"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+          hp    = "40"                                                            // new hit point value
+          ac    = "3"                                                             // new Armor Class value
+          thac0    = "15"                                                            // new THAC0 value
+          apr   = "4"                                                             // new number of attacks per round
+          saveDeath   = "11"                                                            // new Save vs. Death
+          saveWand   = "13"                                                            // new Save vs. Wand
+          savePolymorph   = "12"                                                            // new Save vs. Polymorph
+          saveBreath   = "13"                                                            // new Save vs. Breath
+          saveSpell   = "14"                                                            // new Save vs. Spell
+          resistMagic    = "30"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "5"                                                             // new level (first class)
+          strength   = "16"                                                            // new strength value
+          strengthx"  = "0"                                                             // new Exceptional strength value
+          intelligence   = "12"                                                            // new Intelligence value
+          wisdom   = "12"                                                            // new Wisdom value
+          dexterity   = "14"                                                            // new Dexterity value
+          constitution   = "15"                                                            // new Constitution value
+          charisma   = "10"                                                            // new Charisma value
+          morale   = "12"                                                            // new morale value
+          moraleBreak  = "4"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DBONEF01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORBAT5"                                                       // enforced creature 2 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HBFND"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -371,46 +371,46 @@ DEFINE_PATCH_FUNCTION make_abishai BEGIN
     REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add Normal weapons
 	REPLACE_CRE_ITEM ~REGHP2R~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~
     REPLACE_CRE_ITEM ~RR#DABIS~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
-    newxpv = 9000
+    xpv = 9000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "9"                                                             // new movement rate
+           xpv
+          move  = "9"                                                             // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newhp"    = "64"                                                            // new hit point value
-          "newac"    = "1"                                                             // new Armor Class value
-          "newth"    = "13"                                                            // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "40"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "6"                                                             // new level (first class)
-          "newstr"   = "15"                                                            // new Strength value
-          "newint"   = "10"                                                            // new Intelligence value
-          "newwis"   = "12"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "15"                                                            // new Constitution value
-          "newchr"   = "16"                                                            // new Charisma value
-          "newmor"   = "12"                                                            // new morale value
-          "newmorb"  = "6"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+          hp    = "64"                                                            // new hit point value
+          ac    = "1"                                                             // new Armor Class value
+          thac0    = "13"                                                            // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "40"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "6"                                                             // new level (first class)
+          strength   = "15"                                                            // new strength value
+          intelligence   = "10"                                                            // new Intelligence value
+          wisdom   = "12"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "15"                                                            // new Constitution value
+          charisma   = "16"                                                            // new Charisma value
+          morale   = "12"                                                            // new morale value
+          moraleBreak  = "6"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMABI01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "abisred1"                                                      // enforced creature 2 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HABIS"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -453,43 +453,43 @@ DEFINE_PATCH_FUNCTION make_cornugon BEGIN
 	REPLACE_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~
  	REPLACE_CRE_ITEM ~REGHP2R~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~
     REPLACE_CRE_ITEM ~RR#DCORN~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
-   newxpv = 10000
+   xpv = 10000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "7"                                                             // new movement rate
+           xpv
+          move  = "7"                                                             // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newhp"    = "80"                                                            // new hit point value
-          "newac"    = "-2"                                                            // new Armor Class value
-          "newth"    = "11"                                                            // new THAC0 value
-          "newapr"   = "2"                                                             // new number of attacks per round
-          "newsvd"   = "8"                                                             // new Save vs. Death
-          "newsvw"   = "10"                                                            // new Save vs. Wand
-          "newsvp"   = "9"                                                             // new Save vs. Polymorph
-          "newsvb"   = "9"                                                             // new Save vs. Breath
-          "newsvs"   = "11"                                                            // new Save vs. Spell
-          "newmr"    = "50"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "10"                                                            // new level (first class)
-          "newstr"   = "18"                                                            // new Strength value
-          "newstrx"  = "100"                                                           // new Exceptional Strength value
-          "newint"   = "16"                                                            // new Intelligence value
-          "newwis"   = "14"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "17"                                                            // new Constitution value
-          "newchr"   = "16"                                                            // new Charisma value
-          "newmor"   = "14"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
-          "newgendr" = "1"                                                             // new gender (Male)
-          "newsex"   = "1"                                                             // new sex (Male)          
+          hp    = "80"                                                            // new hit point value
+          ac    = "-2"                                                            // new Armor Class value
+          thac0    = "11"                                                            // new THAC0 value
+          apr   = "2"                                                             // new number of attacks per round
+          saveDeath   = "8"                                                             // new Save vs. Death
+          saveWand   = "10"                                                            // new Save vs. Wand
+          savePolymorph   = "9"                                                             // new Save vs. Polymorph
+          saveBreath   = "9"                                                             // new Save vs. Breath
+          saveSpell   = "11"                                                            // new Save vs. Spell
+          resistMagic    = "50"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "10"                                                            // new level (first class)
+          strength   = "18"                                                            // new strength value
+          strengthx"  = "100"                                                           // new Exceptional strength value
+          intelligence   = "16"                                                            // new Intelligence value
+          wisdom   = "14"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "17"                                                            // new Constitution value
+          charisma   = "16"                                                            // new Charisma value
+          morale   = "14"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
+          general = "1"                                                             // new gender (Male)
+          sex   = "1"                                                             // new sex (Male)          
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMCOR01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DEADDEM1"                                                      // enforced creature 2 (uses strict PnP values)
@@ -500,7 +500,7 @@ DEFINE_PATCH_FUNCTION make_cornugon BEGIN
           "enfc07"   = "ALBERT"                                                        // enforced creature 7 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HCORN"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -552,44 +552,44 @@ DEFINE_PATCH_FUNCTION make_gelugon BEGIN
     REPLACE_CRE_ITEM ~RR#DGELR~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~                         // PnP Baatezu immunities 
 	REPLACE_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~
 	REPLACE_CRE_ITEM ~REGHP2R~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~
-    newxpv = 19000
+    xpv = 19000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-	LPF ~RR#MDCRE~
+	LPF patchCreature
       INT_VAR
-        newxpv
-          "ptwf"     = "1"                                                             // perfect two weapon fighting
-          "newmove"  = "11"                                                            // new movement rate
-          "newhp"    = "88"                                                            // new hit point value
-          "newac"    = "-3"                                                            // new Armor Class value
-          "newth"    = "9"                                                             // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "7"                                                             // new Save vs. Death
-          "newsvw"   = "9"                                                             // new Save vs. Wand
-          "newsvp"   = "8"                                                             // new Save vs. Polymorph
-          "newsvb"   = "8"                                                             // new Save vs. Breath
-          "newsvs"   = "10"                                                            // new Save vs. Spell
-          "newmr"    = "50"                                                            // new Magic Resistance value
-          "newfr"    = "50"                                                            // new Resist Fire value
-          "newcr"    = "100"                                                           // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newrm"    = "50"                                                            // new Resist Missiles
-          "newlvl1"  = "11"                                                            // new level (first class)
-          "newstr"   = "18"                                                            // new Strength value
-          "newstrx"  = "76"                                                            // new Exceptional Strength value
-          "newint"   = "18"                                                            // new Intelligence value
-          "newwis"   = "18"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "18"                                                            // new Constitution value
-          "newchr"   = "16"                                                            // new Charisma value
-          "newmor"   = "16"                                                            // new morale value
-          "newmorb"  = "4"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+        xpv
+          perfect2weapon     = "1"                                                             // perfect two weapon fighting
+          move  = "11"                                                            // new movement rate
+          hp    = "88"                                                            // new hit point value
+          ac    = "-3"                                                            // new Armor Class value
+          thac0    = "9"                                                             // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "7"                                                             // new Save vs. Death
+          saveWand   = "9"                                                             // new Save vs. Wand
+          savePolymorph   = "8"                                                             // new Save vs. Polymorph
+          saveBreath   = "8"                                                             // new Save vs. Breath
+          saveSpell   = "10"                                                            // new Save vs. Spell
+          resistMagic    = "50"                                                            // new Magic Resistance value
+          resistFire    = "50"                                                            // new Resist Fire value
+          resistCold    = "100"                                                           // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          resistMissile    = "50"                                                            // new Resist Missiles
+          level1  = "11"                                                            // new level (first class)
+          strength   = "18"                                                            // new strength value
+          strengthx"  = "76"                                                            // new Exceptional strength value
+          intelligence   = "18"                                                            // new Intelligence value
+          wisdom   = "18"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "18"                                                            // new Constitution value
+          charisma   = "16"                                                            // new Charisma value
+          morale   = "16"                                                            // new morale value
+          moraleBreak  = "4"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
      END
-   LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+   LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HGELU"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -639,42 +639,42 @@ DEFINE_PATCH_FUNCTION make_pit_fiend INT_VAR enforce = 0 BEGIN
 	REPLACE_CRE_ITEM ~IMMUNE3~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~
  	REPLACE_CRE_ITEM ~REGHP2R~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~
     REPLACE_CRE_ITEM ~RR#DPITF~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace generic attack with a Pit Fiend specific attack
-    newxpv = 21000
+    xpv = 21000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "11"                                                            // new movement rate
+           xpv
+          move  = "11"                                                            // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "sinv"     = "1"                                                             // See invisible creatures (1 = enable)
-          "newhp"    = "104"                                                           // new hit point value
-          "newac"    = "-5"                                                            // new Armor Class value
-          "newth"    = "7"                                                             // new THAC0 value
-          "newapr"   = "5"                                                             // new number of attacks per round
-          "newsvd"   = "5"                                                             // new Save vs. Death
-          "newsvw"   = "7"                                                             // new Save vs. Wand
-          "newsvp"   = "6"                                                             // new Save vs. Polymorph
-          "newsvb"   = "5"                                                             // new Save vs. Breath
-          "newsvs"   = "8"                                                             // new Save vs. Spell
-          "newmr"    = "50"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "0"                                                             // new Resist Electricity value
-          "newlvl1"  = "13"                                                            // new level (first class)
-          "newstr"   = "18"                                                            // new Strength value
-          "newstrx"  = "100"                                                           // new Exceptional Strength value
-          "newint"   = "18"                                                            // new Intelligence value
-          "newwis"   = "19"                                                            // new Wisdom value
-          "newdex"   = "19"                                                            // new Dexterity value
-          "newcon"   = "19"                                                            // new Constitution value
-          "newchr"   = "25"                                                            // new Charisma value
-          "newmor"   = "20"                                                            // new morale value
-          "newmorb"  = "0"                                                             // new morale break value
-          "newmorr"  = "1"                                                             // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "179"                                                           // new class (Imp)
-          "newalign" = "19"                                                            // new alignment (Lawful Evil)
+          seeInvisible     = "1"                                                             // See invisible creatures (1 = enable)
+          hp    = "104"                                                           // new hit point value
+          ac    = "-5"                                                            // new Armor Class value
+          thac0    = "7"                                                             // new THAC0 value
+          apr   = "5"                                                             // new number of attacks per round
+          saveDeath   = "5"                                                             // new Save vs. Death
+          saveWand   = "7"                                                             // new Save vs. Wand
+          savePolymorph   = "6"                                                             // new Save vs. Polymorph
+          saveBreath   = "5"                                                             // new Save vs. Breath
+          saveSpell   = "8"                                                             // new Save vs. Spell
+          resistMagic    = "50"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "0"                                                             // new Resist Electricity value
+          level1  = "13"                                                            // new level (first class)
+          strength   = "18"                                                            // new strength value
+          strengthx"  = "100"                                                           // new Exceptional strength value
+          intelligence   = "18"                                                            // new Intelligence value
+          wisdom   = "19"                                                            // new Wisdom value
+          dexterity   = "19"                                                            // new Dexterity value
+          constitution   = "19"                                                            // new Constitution value
+          charisma   = "25"                                                            // new Charisma value
+          morale   = "20"                                                            // new morale value
+          moraleBreak  = "0"                                                             // new morale break value
+          moraleRecovery  = "1"                                                             // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "179"                                                           // new class (Imp)
+          alignment = "19"                                                            // new alignment (Lawful Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMPIT"                                                        // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DEMPIT01"                                                      // enforced creature 2 (uses strict PnP values)
@@ -695,7 +695,7 @@ DEFINE_PATCH_FUNCTION make_pit_fiend INT_VAR enforce = 0 BEGIN
       END                                                                              // ends FUNCTION call
     END
     PATCH_IF "%file%" STRING_COMPARE_CASE dempitsu BEGIN
-      LPF ~RR#MDCSC~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+      LPF ~patchCreatureScript~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
         STR_VAR                                                                        // Initialize strings
           "newscript"  = "rr#hpitf"                                                    // new AI script
           "script01"   = ""                                                            // first AI script name
@@ -754,45 +754,45 @@ DEFINE_PATCH_FUNCTION make_quasit BEGIN
     REPLACE_CRE_ITEM ~RR#DQUAS~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a more PnP accurate weapon
 	REPLACE_CRE_ITEM ~RR#DIMP2~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~                  	   // PnP IMP immunities
 	REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~						   // Immunity to non-magical weapons
-    newxpv = 2000
+    xpv = 2000
 	PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMQUA25~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~FAMQUAS~) BEGIN
-	  newxpv = 0
+	  xpv = 0
       LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode
         INT_VAR opcode_to_delete = "-1" END                                            // all
 	  REPLACE_CRE_ITEM ~FAMMY~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~					   	   // Add Remove fog of war item
 	END
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "11"                                                            // new movement rate
-          "newhp"    = "24"                                                            // new hit point value
-          "newac"    = "2"                                                             // new Armor Class value
-          "newth"    = "17"                                                            // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "25"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "100"                                                           // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "3"                                                             // new level (first class)
-          "newstr"   = "8"                                                             // new Strength value
-          "newint"   = "7"                                                             // new Intelligence value
-          "newwis"   = "9"                                                             // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "10"                                                            // new Constitution value
-          "newchr"   = "7"                                                             // new Charisma value
-          "newmor"   = "10"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "60"                                                            // new morale recovery value
-          "newrace"  = "141"                                                           // new race (Imp)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+           xpv
+          move  = "11"                                                            // new movement rate
+          hp    = "24"                                                            // new hit point value
+          ac    = "2"                                                             // new Armor Class value
+          thac0    = "17"                                                            // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "25"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "100"                                                           // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "3"                                                             // new level (first class)
+          strength   = "8"                                                             // new strength value
+          intelligence   = "7"                                                             // new Intelligence value
+          wisdom   = "9"                                                             // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "10"                                                            // new Constitution value
+          charisma   = "7"                                                             // new Charisma value
+          morale   = "10"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "60"                                                            // new morale recovery value
+          race  = "141"                                                           // new race (Imp)
+          class = "160"                                                           // new class (Tanari)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEADDEM2"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DQUAS01"                                                       // enforced creature 2 (uses strict PnP values)
@@ -802,7 +802,7 @@ DEFINE_PATCH_FUNCTION make_quasit BEGIN
           "enfc06"   = "TELQUA2"                                                       // enforced creature 6 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HQUAS"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -871,44 +871,44 @@ DEFINE_PATCH_FUNCTION make_cambion BEGIN
     PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~IDEMON01~) BEGIN                       // special case, the trapped Cambion in Irenicus' dungeon
       ADD_CRE_ITEM ~INVULNER~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~               // make the Cambion invulnerable while under the protective sphere
     END
-    newxpv = 6000
+    xpv = 6000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-         "bsimm"     = "1"                                                             // Backstab immunity (1 = enable)
-           newxpv
-          "newmove"  = "11"                                                            // new movement rate
-          "newhp"    = "48"                                                            // new hit point value
-          "newac"    = "2"                                                             // new Armor Class value
-          "newth"    = "15"                                                            // new THAC0 value
-          "newapr"   = "2"                                                             // new number of attacks per round
-          "newsvd"   = "11"                                                            // new Save vs. Death
-          "newsvw"   = "9"                                                             // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "13"                                                            // new Save vs. Breath
-          "newsvs"   = "10"                                                            // new Save vs. Spell
-          "newmr"    = "30"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "6"                                                             // new level (first class)
-          "newlvl2"  = "6"                                                             // new level (second class)
-          "newstr"   = "18"                                                            // new Strength value
-          "newstrx"  = "100"                                                           // new Exceptional Strength value
-          "newint"   = "16"                                                            // new Intelligence value
-          "newwis"   = "13"                                                             // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "16"                                                            // new Constitution value
-          "newchr"   = "19"                                                            // new Charisma value
-          "newmor"   = "14"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "13"                                                            // new class (MAGE_THIEF)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
-          "newhide"  = "80"                                                            // new Hide in Shadows value
-          "newmsil"  = "80"                                                            // new Move Silently value
+         backstabImmunity     = "1"                                                             // Backstab immunity (1 = enable)
+           xpv
+          move  = "11"                                                            // new movement rate
+          hp    = "48"                                                            // new hit point value
+          ac    = "2"                                                             // new Armor Class value
+          thac0    = "15"                                                            // new THAC0 value
+          apr   = "2"                                                             // new number of attacks per round
+          saveDeath   = "11"                                                            // new Save vs. Death
+          saveWand   = "9"                                                             // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "13"                                                            // new Save vs. Breath
+          saveSpell   = "10"                                                            // new Save vs. Spell
+          resistMagic    = "30"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "6"                                                             // new level (first class)
+          level2  = "6"                                                             // new level (second class)
+          strength   = "18"                                                            // new strength value
+          strengthx"  = "100"                                                           // new Exceptional strength value
+          intelligence   = "16"                                                            // new Intelligence value
+          wisdom   = "13"                                                             // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "16"                                                            // new Constitution value
+          charisma   = "19"                                                            // new Charisma value
+          morale   = "14"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "13"                                                            // new class (MAGE_THIEF)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
+          hideShadow  = "80"                                                            // new Hide in Shadows value
+          moveSilent  = "80"                                                            // new Move Silently value
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "CAMBION1"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "CAMBION2"                                                      // enforced creature 2 (uses strict PnP values)
@@ -922,7 +922,7 @@ DEFINE_PATCH_FUNCTION make_cambion BEGIN
           "enfc10"   = "TCCAMBI2"                                                      // enforced creature 10 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HCAMB"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1002,41 +1002,41 @@ DEFINE_PATCH_FUNCTION make_alu-fiend BEGIN
 	PATCH_IF FILE_EXISTS_IN_GAME "RR#WING2.ITM" BEGIN
 	  ADD_CRE_ITEM ~RR#WING2~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~HELMET~             // add wings
 	END
-    newxpv = 6000
+    xpv = 6000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-         "bsimm"     = "1"                                                             // Backstab immunity (1 = enable)
-           newxpv
-          "newhp"    = "48"                                                            // new hit point value
-          "newac"    = "2"                                                             // new Armor Class value
-          "newth"    = "17"                                                            // new THAC0 value
-          "newapr"   = "1"                                                             // new number of attacks per round
-          "newsvd"   = "11"                                                            // new Save vs. Death
-          "newsvw"   = "7"                                                             // new Save vs. Wand
-          "newsvp"   = "9"                                                             // new Save vs. Polymorph
-          "newsvb"   = "11"                                                            // new Save vs. Breath
-          "newsvs"   = "8"                                                             // new Save vs. Spell
-          "newmr"    = "30"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "12"                                                            // new level (first class)
-          "newstr"   = "15"                                                            // new Strength value
-          "newint"   = "18"                                                            // new Intelligence value
-          "newwis"   = "12"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "15"                                                            // new Constitution value
-          "newchr"   = "16"                                                            // new Charisma value
-          "newmor"   = "12"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "1"                                                             // new class (Mage)
-          "newgendr" = "2"                                                             // new gender (Female)
-          "newsex"   = "2"                                                             // new sex (Female)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+         backstabImmunity     = "1"                                                             // Backstab immunity (1 = enable)
+           xpv
+          hp    = "48"                                                            // new hit point value
+          ac    = "2"                                                             // new Armor Class value
+          thac0    = "17"                                                            // new THAC0 value
+          apr   = "1"                                                             // new number of attacks per round
+          saveDeath   = "11"                                                            // new Save vs. Death
+          saveWand   = "7"                                                             // new Save vs. Wand
+          savePolymorph   = "9"                                                             // new Save vs. Polymorph
+          saveBreath   = "11"                                                            // new Save vs. Breath
+          saveSpell   = "8"                                                             // new Save vs. Spell
+          resistMagic    = "30"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "12"                                                            // new level (first class)
+          strength   = "15"                                                            // new strength value
+          intelligence   = "18"                                                            // new Intelligence value
+          wisdom   = "12"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "15"                                                            // new Constitution value
+          charisma   = "16"                                                            // new Charisma value
+          morale   = "12"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "1"                                                             // new class (Mage)
+          general = "2"                                                             // new gender (Female)
+          sex   = "2"                                                             // new sex (Female)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "ALUFIE01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "ALUFIE02"                                                      // enforced creature 2 (uses strict PnP values)
@@ -1046,7 +1046,7 @@ DEFINE_PATCH_FUNCTION make_alu-fiend BEGIN
           "enfc06"   = "nsaluf01"                                                      // enforced creature 8 (uses strict PnP values)
      END                                                                               // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HALUF"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1117,46 +1117,46 @@ DEFINE_PATCH_FUNCTION make_maurezhi BEGIN
 	REPLACE_CRE_ITEM ~RR#DTANA~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~						   // PnP TANARI immunities
     REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~                // add immunity to +1 weapons and below
     REPLACE_CRE_ITEM ~RR#DMAUR~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
-    newxpv = 6000
+    xpv = 6000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "9"                                                             // new movement rate
-          "newhp"    = "45"                                                            // new hit point value
-          "newac"    = "0"                                                             // new Armor Class value
-          "newth"    = "15"                                                            // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "8"                                                             // new Save vs. Death
-          "newsvw"   = "10"                                                            // new Save vs. Wand
-          "newsvp"   = "9"                                                             // new Save vs. Polymorph
-          "newsvb"   = "9"                                                             // new Save vs. Breath
-          "newsvs"   = "11"                                                            // new Save vs. Spell
-          "newmr"    = "34"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "5"                                                             // new level (first class)
-          "newstr"   = "14"                                                            // new Strength value
-          "newint"   = "16"                                                            // new Intelligence value
-          "newwis"   = "8"                                                             // new Wisdom value
-          "newdex"   = "15"                                                            // new Dexterity value
-          "newcon"   = "12"                                                            // new Constitution value
-          "newchr"   = "9"                                                             // new Charisma value
-          "newmor"   = "12"                                                            // new morale value
-          "newmorb"  = "4"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+           xpv
+          move  = "9"                                                             // new movement rate
+          hp    = "45"                                                            // new hit point value
+          ac    = "0"                                                             // new Armor Class value
+          thac0    = "15"                                                            // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "8"                                                             // new Save vs. Death
+          saveWand   = "10"                                                            // new Save vs. Wand
+          savePolymorph   = "9"                                                             // new Save vs. Polymorph
+          saveBreath   = "9"                                                             // new Save vs. Breath
+          saveSpell   = "11"                                                            // new Save vs. Spell
+          resistMagic    = "34"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "5"                                                             // new level (first class)
+          strength   = "14"                                                            // new strength value
+          intelligence   = "16"                                                            // new Intelligence value
+          wisdom   = "8"                                                             // new Wisdom value
+          dexterity   = "15"                                                            // new Dexterity value
+          constitution   = "12"                                                            // new Constitution value
+          charisma   = "9"                                                             // new Charisma value
+          morale   = "12"                                                            // new morale value
+          moraleBreak  = "4"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMMAU01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORTAN6"                                                       // enforced creature 2 (uses strict PnP values)
           "enfc03"   = "OBSDEM04"                                                      // enforced creature 3 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HMAUR"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1203,42 +1203,42 @@ DEFINE_PATCH_FUNCTION make_succubus BEGIN
     REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
 	REPLACE_CRE_ITEM ~RR#DTANA~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~						   // PnP TANARI immunities
     REPLACE_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add immunity to +1 weapons and below
-    newxpv = 11000
+    xpv = 11000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-         "bsimm"     = "1"                                                             // Backstab immunity (1 = enable)
-           newxpv
-          "newmove"  = "9"                                                             // new movement rate
-          "newhp"    = "48"                                                            // new hit point value
-          "newac"    = "0"                                                             // new Armor Class value
-          "newth"    = "15"                                                            // new THAC0 value
-          "newapr"   = "2"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "30"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "6"                                                             // new level (first class)
-          "newstr"   = "15"                                                            // new Strength value
-          "newint"   = "16"                                                            // new Intelligence value
-          "newwis"   = "14"                                                            // new Wisdom value
-          "newdex"   = "17"                                                            // new Dexterity value
-          "newcon"   = "12"                                                            // new Constitution value
-          "newchr"   = "18"                                                            // new Charisma value
-          "newmor"   = "14"                                                            // new morale value
-          "newmorb"  = "5"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newgendr" = "2"                                                             // new gender (Female)
-          "newsex"   = "2"                                                             // new sex (Female)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+         backstabImmunity     = "1"                                                             // Backstab immunity (1 = enable)
+           xpv
+          move  = "9"                                                             // new movement rate
+          hp    = "48"                                                            // new hit point value
+          ac    = "0"                                                             // new Armor Class value
+          thac0    = "15"                                                            // new THAC0 value
+          apr   = "2"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "30"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "6"                                                             // new level (first class)
+          strength   = "15"                                                            // new strength value
+          intelligence   = "16"                                                            // new Intelligence value
+          wisdom   = "14"                                                            // new Wisdom value
+          dexterity   = "17"                                                            // new Dexterity value
+          constitution   = "12"                                                            // new Constitution value
+          charisma   = "18"                                                            // new Charisma value
+          morale   = "14"                                                            // new morale value
+          moraleBreak  = "5"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          general = "2"                                                             // new gender (Female)
+          sex   = "2"                                                             // new sex (Female)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMSUC01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "GORSUC01"                                                      // enforced creature 2 (uses strict PnP values)
@@ -1248,7 +1248,7 @@ DEFINE_PATCH_FUNCTION make_succubus BEGIN
           "enfc06"   = "yugsuc01"                                                      // enforced creature 6 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HSUCC"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1306,40 +1306,40 @@ DEFINE_PATCH_FUNCTION make_nabassu BEGIN
     REPLACE_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add immunity to +1 weapons and below
  	REPLACE_CRE_ITEM ~REGHP2~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~
     REPLACE_CRE_ITEM ~RR#DNABA~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP                 // replace default weapon with a less powerful weapon (closer to PnP damage output)
-    newxpv = 16000
+    xpv = 16000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "9"                                                             // new movement rate
+           xpv
+          move  = "9"                                                             // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newhp"    = "76"                                                            // new hit point value
-          "newac"    = "-5"                                                            // new Armor Class value
-          "newth"    = "13"                                                            // new THAC0 value
-          "newapr"   = "3"                                                             // new number of attacks per round
-          "newsvd"   = "10"                                                            // new Save vs. Death
-          "newsvw"   = "12"                                                            // new Save vs. Wand
-          "newsvp"   = "11"                                                            // new Save vs. Polymorph
-          "newsvb"   = "12"                                                            // new Save vs. Breath
-          "newsvs"   = "13"                                                            // new Save vs. Spell
-          "newmr"    = "50"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "7"                                                             // new level (first class)
-          "newstr"   = "19"                                                            // new Strength value
-          "newint"   = "14"                                                            // new Intelligence value
-          "newwis"   = "15"                                                            // new Wisdom value
-          "newdex"   = "14"                                                            // new Dexterity value
-          "newcon"   = "19"                                                            // new Constitution value
-          "newchr"   = "18"                                                            // new Charisma value
-          "newmor"   = "16"                                                            // new morale value
-          "newmorb"  = "4"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+          hp    = "76"                                                            // new hit point value
+          ac    = "-5"                                                            // new Armor Class value
+          thac0    = "13"                                                            // new THAC0 value
+          apr   = "3"                                                             // new number of attacks per round
+          saveDeath   = "10"                                                            // new Save vs. Death
+          saveWand   = "12"                                                            // new Save vs. Wand
+          savePolymorph   = "11"                                                            // new Save vs. Polymorph
+          saveBreath   = "12"                                                            // new Save vs. Breath
+          saveSpell   = "13"                                                            // new Save vs. Spell
+          resistMagic    = "50"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "7"                                                             // new level (first class)
+          strength   = "19"                                                            // new strength value
+          intelligence   = "14"                                                            // new Intelligence value
+          wisdom   = "15"                                                            // new Wisdom value
+          dexterity   = "14"                                                            // new Dexterity value
+          constitution   = "19"                                                            // new Constitution value
+          charisma   = "18"                                                            // new Charisma value
+          morale   = "16"                                                            // new morale value
+          moraleBreak  = "4"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMNAB01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DEMNAB02"                                                      // enforced creature 2 (uses strict PnP values)
@@ -1356,7 +1356,7 @@ DEFINE_PATCH_FUNCTION make_nabassu BEGIN
       END                                                                              // ends FUNCTION call
     END
     PATCH_IF "%file%" STRING_COMPARE_CASE demnabsu BEGIN
-      LPF ~RR#MDCSC~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+      LPF ~patchCreatureScript~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
         STR_VAR                                                                        // Initialize strings
           "newscript"  = "rr#hnaba"                                                    // new AI script
           "script01"   = ""                                                            // first AI script name
@@ -1448,41 +1448,41 @@ DEFINE_PATCH_FUNCTION make_glabrezu BEGIN
      SAY NAME1 #38955 SAY NAME2 #38955                                                 // change name to Glabrezu (was Tanar'ri)
       // REPLACE_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~                // add immunity to +1 weapons and below
     END
-    newxpv = 12000
+    xpv = 12000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "newmove"  = "11"                                                            // new movement rate
+           xpv
+          move  = "11"                                                            // new movement rate
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newhp"    = "80"                                                            // new hit point value
-          "newac"    = "-7"                                                            // new Armor Class value
-          "newth"    = "11"                                                            // new THAC0 value
-          "newapr"   = "5"                                                             // new number of attacks per round
-          "newsvd"   = "8"                                                             // new Save vs. Death
-          "newsvw"   = "10"                                                            // new Save vs. Wand
-          "newsvp"   = "9"                                                             // new Save vs. Polymorph
-          "newsvb"   = "9"                                                             // new Save vs. Breath
-          "newsvs"   = "11"                                                            // new Save vs. Spell
-          "newmr"    = "50"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newar"    = 0                                                               // new Resist Acid value
-          "newlvl1"  = "10"                                                            // new level (first class)
-          "newstr"   = "20"                                                            // new Strength value
-          "newint"   = "16"                                                            // new Intelligence value
-          "newwis"   = "13"                                                            // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "20"                                                            // new Constitution value
-          "newchr"   = "22"                                                            // new Charisma value
-          "newmor"   = "18"                                                            // new morale value
-          "newmorb"  = "3"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+          hp    = "80"                                                            // new hit point value
+          ac    = "-7"                                                            // new Armor Class value
+          thac0    = "11"                                                            // new THAC0 value
+          apr   = "5"                                                             // new number of attacks per round
+          saveDeath   = "8"                                                             // new Save vs. Death
+          saveWand   = "10"                                                            // new Save vs. Wand
+          savePolymorph   = "9"                                                             // new Save vs. Polymorph
+          saveBreath   = "9"                                                             // new Save vs. Breath
+          saveSpell   = "11"                                                            // new Save vs. Spell
+          resistMagic    = "50"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          resistAcid    = 0                                                               // new Resist Acid value
+          level1  = "10"                                                            // new level (first class)
+          strength   = "20"                                                            // new strength value
+          intelligence   = "16"                                                            // new Intelligence value
+          wisdom   = "13"                                                            // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "20"                                                            // new Constitution value
+          charisma   = "22"                                                            // new Charisma value
+          morale   = "18"                                                            // new morale value
+          moraleBreak  = "3"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMGLA01"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DEMGLAB"                                                       // enforced creature 2 (uses strict PnP values)
@@ -1510,7 +1510,7 @@ DEFINE_PATCH_FUNCTION make_glabrezu BEGIN
       END                                                                              // ends FUNCTION call
     END
     PATCH_IF "%file%" STRING_COMPARE_CASE demglasu BEGIN
-      LPF ~RR#MDCSC~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+      LPF ~patchCreatureScript~                                                 // Starts FUNCTION call (aTweaks' Creature Script Modification function)
         STR_VAR                                                                        // Initialize strings
           "newscript"  = "rr#hglab"                                                    // new AI script
           "script01"   = ""                                                            // 1st AI script name
@@ -1575,44 +1575,44 @@ DEFINE_PATCH_FUNCTION make_marilith BEGIN
     // PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~OBSDEM01~) BEGIN                       // special case for Lea'liyl (named Marilith within the Planar Sphere)
       // REPLACE_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~            // add immunity to +1 weapons and below
     // END
-    newxpv = 23000
+    xpv = 23000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-          "ptwf"     = "1"                                                             // perfect two weapon fighting
-          "bsimm"    = "1"                                                             // Backstab immunity (1 = enable)
+           xpv
+          perfect2weapon     = "1"                                                             // perfect two weapon fighting
+          backstabImmunity    = "1"                                                             // Backstab immunity (1 = enable)
           "bump"     = "1"                                                             // NPC bump (1 = enable)
-          "newmove"  = "11"                                                            // new movement rate
-          "newhp"    = "96"                                                            // new hit point value
-          "newac"    = "-9"                                                            // new Armor Class value
-          "newth"    = "9"                                                             // new THAC0 value
-          "newapr"   = "4"                                                             // new number of attacks per round
-          "newsvd"   = "7"                                                             // new Save vs. Death
-          "newsvw"   = "9"                                                             // new Save vs. Wand
-          "newsvp"   = "8"                                                             // new Save vs. Polymorph
-          "newsvb"   = "8"                                                             // new Save vs. Breath
-          "newsvs"   = "10"                                                            // new Save vs. Spell
-          "newmr"    = "70"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "12"                                                            // new level (first class)
-          "newstr"   = "19"                                                            // new Strength value
-          "newint"   = "18"                                                            // new Intelligence value
-          "newwis"   = "15"                                                            // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "21"                                                            // new Constitution value
-          "newchr"   = "20"                                                            // new Charisma value
-          "newmor"   = "18"                                                            // new morale value
-          "newmorb"  = "3"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newgendr" = "2"                                                             // new gender (Female)
-          "newsex"   = "2"                                                             // new sex (Female)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+          move  = "11"                                                            // new movement rate
+          hp    = "96"                                                            // new hit point value
+          ac    = "-9"                                                            // new Armor Class value
+          thac0    = "9"                                                             // new THAC0 value
+          apr   = "4"                                                             // new number of attacks per round
+          saveDeath   = "7"                                                             // new Save vs. Death
+          saveWand   = "9"                                                             // new Save vs. Wand
+          savePolymorph   = "8"                                                             // new Save vs. Polymorph
+          saveBreath   = "8"                                                             // new Save vs. Breath
+          saveSpell   = "10"                                                            // new Save vs. Spell
+          resistMagic    = "70"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "12"                                                            // new level (first class)
+          strength   = "19"                                                            // new strength value
+          intelligence   = "18"                                                            // new Intelligence value
+          wisdom   = "15"                                                            // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "21"                                                            // new Constitution value
+          charisma   = "20"                                                            // new Charisma value
+          morale   = "18"                                                            // new morale value
+          moraleBreak  = "3"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          general = "2"                                                             // new gender (Female)
+          sex   = "2"                                                             // new sex (Female)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "DEMOSUM1"                                                      // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "ICMARILI"                                                      // enforced creature 2 (uses strict PnP values)
@@ -1628,7 +1628,7 @@ DEFINE_PATCH_FUNCTION make_marilith BEGIN
           "enfc12"   = "MARIL"                                                         // enforced creature 12 (uses strict PnP values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HMARI"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1703,42 +1703,42 @@ DEFINE_PATCH_FUNCTION make_balor BEGIN
         proficiency = IDS_OF_SYMBOL (stats PROFICIENCYFLAILMORNINGSTAR)
     END
     WRITE_BYTE 0x72 0                                                                  // BG1 Proficiency slot (blunt)
-    newxpv = 26000
+    xpv = 26000
     LPM update_fiend_xp
     PATCH_IF FiendsScripts = 0 BEGIN                                                   // Only do this if we're not just adding aTweaks scripting
-      LPF ~RR#MDCRE~                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
+      LPF patchCreature                                                 // Starts FUNCTION call (aTweaks' Creature Modification function)
         INT_VAR                                                                        // Initialize variables
-           newxpv
-         "sinv"     = "1"                                                              // See invisible creatures (1 = enable)
-         "bsimm"    = "1"                                                              // Backstab immunity (1 = enable)
-         "newmove"  = "11"                                                             // new movement rate
+           xpv
+         seeInvisible     = "1"                                                              // See invisible creatures (1 = enable)
+         backstabImmunity    = "1"                                                              // Backstab immunity (1 = enable)
+         move  = "11"                                                             // new movement rate
          "bump"     = "1"                                                              // NPC bump (1 = enable)
-          "newhp"    = "104"                                                           // new hit point value
-          "newac"    = "-8"                                                            // new Armor Class value
-          "newth"    = "7"                                                             // new THAC0 value
-          "newapr"   = "1"                                                             // new number of attacks per round
-          "newsvd"   = "5"                                                             // new Save vs. Death
-          "newsvw"   = "7"                                                             // new Save vs. Wand
-          "newsvp"   = "6"                                                             // new Save vs. Polymorph
-          "newsvb"   = "5"                                                             // new Save vs. Breath
-          "newsvs"   = "8"                                                             // new Save vs. Spell
-          "newmr"    = "70"                                                            // new Magic Resistance value
-          "newfr"    = "100"                                                           // new Resist Fire value
-          "newcr"    = "50"                                                            // new Resist Cold value
-          "newer"    = "100"                                                           // new Resist Electricity value
-          "newlvl1"  = "20"                                                            // new level (first class)
-          "newstr"   = "21"                                                            // new Strength value
-          "newint"   = "20"                                                            // new Intelligence value
-          "newwis"   = "16"                                                            // new Wisdom value
-          "newdex"   = "18"                                                            // new Dexterity value
-          "newcon"   = "20"                                                            // new Constitution value
-          "newchr"   = "25"                                                            // new Charisma value
-          "newmor"   = "18"                                                            // new morale value
-          "newmorb"  = "3"                                                             // new morale break value
-          "newmorr"  = "15"                                                            // new morale recovery value
-          "newrace"  = "121"                                                           // new race (Demonic)
-          "newclass" = "160"                                                           // new class (Tanari)
-          "newalign" = "51"                                                            // new alignment (Chaotic Evil)
+          hp    = "104"                                                           // new hit point value
+          ac    = "-8"                                                            // new Armor Class value
+          thac0    = "7"                                                             // new THAC0 value
+          apr   = "1"                                                             // new number of attacks per round
+          saveDeath   = "5"                                                             // new Save vs. Death
+          saveWand   = "7"                                                             // new Save vs. Wand
+          savePolymorph   = "6"                                                             // new Save vs. Polymorph
+          saveBreath   = "5"                                                             // new Save vs. Breath
+          saveSpell   = "8"                                                             // new Save vs. Spell
+          resistMagic    = "70"                                                            // new Magic Resistance value
+          resistFire    = "100"                                                           // new Resist Fire value
+          resistCold    = "50"                                                            // new Resist Cold value
+          resistElectricity    = "100"                                                           // new Resist Electricity value
+          level1  = "20"                                                            // new level (first class)
+          strength   = "21"                                                            // new strength value
+          intelligence   = "20"                                                            // new Intelligence value
+          wisdom   = "16"                                                            // new Wisdom value
+          dexterity   = "18"                                                            // new Dexterity value
+          constitution   = "20"                                                            // new Constitution value
+          charisma   = "25"                                                            // new Charisma value
+          morale   = "18"                                                            // new morale value
+          moraleBreak  = "3"                                                             // new morale break value
+          moraleRecovery  = "15"                                                            // new morale recovery value
+          race  = "121"                                                           // new race (Demonic)
+          class = "160"                                                           // new class (Tanari)
+          alignment = "51"                                                            // new alignment (Chaotic Evil)
         STR_VAR                                                                        // initialize strings
           "enfc01"   = "BALOR01"                                                       // enforced creature 1 (uses strict PnP values)
           "enfc02"   = "DEMBAL01"                                                      // enforced creature 2 (uses strict PnP values)
@@ -1767,7 +1767,7 @@ DEFINE_PATCH_FUNCTION make_balor BEGIN
           "notenf10" = "holytana"                                                      // non-enforced creature 10 (uses best stat values)
       END                                                                              // ends FUNCTION call
     END
-    LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+    LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR                                                                          // Initialize strings
         "newscript"  = "RR#HBALR"                                                      // new AI script
         "script01"   = ""                                                              // first AI script name
@@ -1855,34 +1855,34 @@ DEFINE_PATCH_FUNCTION make_ultroloth BEGIN
     REPLACE_CRE_ITEM ~IMMUNE3~ #0 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~LRING~              // add immunity to +2 weapons and below
     REPLACE_CRE_ITEM fl#ultr #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
     REPLACE_CRE_ITEM fl#yugro #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~
-    LPF RR#MDCRE
+    LPF patchCreature
       INT_VAR
-        "newhp"        = 130
-        "newac"        = "-8"
-        "newth"        = 7
-        "newapr"       = 2
-        "newsvd"       = 5
-        "newsvw"       = 7
-        "newsvp"       = 6
-        "newsvb"       = 5
-        "newsvs"       = 8
-        "newlvl1"      = 15
-        "newmr"        = 60
-        "newfr"        = 100
-        "newcr"        = "-100"
-        "newer"        = 0
-        "newar"        = 100
-        "newstr"       = 21
-        "newdex"       = 18 
-        "newcon"       = 18
-        "newint"       = 20
-        "newwis"       = 20
-        "newchr"       = 25
-        "newmor"       = 16
-        "newalign"     = 35 //NE
-        "newclass"     = 255                                                           //NO_CLASS
+        hp        = 130
+        ac        = "-8"
+        thac0        = 7
+        apr       = 2
+        saveDeath       = 5
+        saveWand       = 7
+        savePolymorph       = 6
+        saveBreath       = 5
+        saveSpell       = 8
+        level1      = 15
+        resistMagic        = 60
+        resistFire        = 100
+        resistCold        = "-100"
+        resistElectricity        = 0
+        resistAcid        = 100
+        strength       = 21
+        dexterity       = 18 
+        constitution       = 18
+        intelligence       = 20
+        wisdom       = 20
+        charisma       = 25
+        morale       = 16
+        alignment     = 35 //NE
+        class     = 255                                                           //NO_CLASS
         
-        "enforce"      = 1
+        enforce      = 1
     END
     // LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
     // LPF acid_spell_immunities END                                    // grant immunities to acid-based area effect spells
@@ -1927,32 +1927,32 @@ DEFINE_PATCH_FUNCTION make_nycaloth BEGIN
 	    END
 	  END
 	END 						   													   // Infinity Animation Compatibility (IAv5b)
-    LPF RR#MDCRE
+    LPF patchCreature
       INT_VAR
-        newhp        = 110
-        newac        = "-6"
-        newth        = 9
-        newapr       = 1
-        newsvd       = 8
-        newsvw       = 10
-        newsvp       = 9
-        newsvb       = 9
-        newsvs       = 11
-        newlvl1      = 11
-        newmr        = 70
-        newfr        = 100
-        newcr        = "-100"
-        newer        = 0
-        newar        = 100 
-        newstr       = 20
-        newdex       = 18
-        newcon       = 18
-        newint       = 18 
-        newwis       = 18
-        newchr       = 16
-        newmor       = 16
-        newalign     = 35 //NE
-        newclass     = 255 //NO_CLASS 
+        hp        = 110
+        ac        = "-6"
+        thac0        = 9
+        apr       = 1
+        saveDeath       = 8
+        saveWand       = 10
+        savePolymorph       = 9
+        saveBreath       = 9
+        saveSpell       = 11
+        level1      = 11
+        resistMagic        = 70
+        resistFire        = 100
+        resistCold        = "-100"
+        resistElectricity        = 0
+        resistAcid        = 100 
+        strength       = 20
+        dexterity       = 18
+        constitution       = 18
+        intelligence       = 18 
+        wisdom       = 18
+        charisma       = 16
+        morale       = 16
+        alignment     = 35 //NE
+        class     = 255 //NO_CLASS 
         
         enforce      = 1
     END
@@ -1985,32 +1985,32 @@ DEFINE_PATCH_FUNCTION make_arcanaloth BEGIN
     REPLACE_CRE_ITEM ~fl#yugro~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~
     LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 292 END                           //Immunity to backstab
     LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = 193 END                           //Invisibility detection
-    LPF RR#MDCRE
+    LPF patchCreature
       INT_VAR
-        newhp        = 120
-        newac        = "-8"
-        newth        = 9
-        newapr       = 2
-        newsvd       = 10
-        newsvw       = 12
-        newsvp       = 11
-        newsvb       = 12
-        newsvs       = 13
-        newlvl1      = 12
-        newmr        = 60
-        newfr        = 100
-        newcr        = "-100"
-        newer        = 0
-        newar        = 100 
-        newstr       = 17
-        newdex       = 15
-        newcon       = 15
-        newint       = 20
-        newwis       = 18
-        newchr       = 19 
-        newmor       = 16
-        newalign     = 35 //NE
-        newclass     = 1 //Mage
+        hp        = 120
+        ac        = "-8"
+        thac0        = 9
+        apr       = 2
+        saveDeath       = 10
+        saveWand       = 12
+        savePolymorph       = 11
+        saveBreath       = 12
+        saveSpell       = 13
+        level1      = 12
+        resistMagic        = 60
+        resistFire        = 100
+        resistCold        = "-100"
+        resistElectricity        = 0
+        resistAcid        = 100 
+        strength       = 17
+        dexterity       = 15
+        constitution       = 15
+        intelligence       = 20
+        wisdom       = 18
+        charisma       = 19 
+        morale       = 16
+        alignment     = 35 //NE
+        class     = 1 //Mage
         
         enforce      = 1
     END
@@ -2050,40 +2050,40 @@ DEFINE_PATCH_FUNCTION make_shadow_fiend BEGIN
     REPLACE_CRE_ITEM fl#shaf2 #0 #0 #0 UNDROPPABLE shield
     // REMOVE_CRE_ITEM immune1 ring95
     WRITE_BYTE 0x273 255 //NO_CLASS
-    LPF RR#MDCRE
+    LPF patchCreature
       INT_VAR
         newxp        = 2000
-        newhp        = 59
-        newac        = 5
-        newth        = 13
-        newapr       = 2
-        newsvd       = 13
-        newsvw       = 15
-        newsvp       = 14
-        newsvb       = 16
-        newsvs       = 16
-        newlvl1      = 17
-        newmr        = 0
-        newfr        = 100
-        newcr        = 100
-        newer        = 100
-        newar        = 0
-        newrs        = 0
-        newrc        = 0
-        newrp        = 0
-        newrm        = 0
-        newstr       = 13
-        newdex       = 10
-        newcon       = 9
-        newint       = 12 
-        newwis       = 11
-        newchr       = 19
-        newmor       = 16
-        newalign     = 0x33 //CE
-        ptwf         = 1
+        hp        = 59
+        ac        = 5
+        thac0        = 13
+        apr       = 2
+        saveDeath       = 13
+        saveWand       = 15
+        savePolymorph       = 14
+        saveBreath       = 16
+        saveSpell       = 16
+        level1      = 17
+        resistMagic        = 0
+        resistFire        = 100
+        resistCold        = 100
+        resistElectricity        = 100
+        resistAcid        = 0
+        resistSlashing        = 0
+        resistCrushing        = 0
+        resistPiercing        = 0
+        resistMissile        = 0
+        strength       = 13
+        dexterity       = 10
+        constitution       = 9
+        intelligence       = 12 
+        wisdom       = 11
+        charisma       = 19
+        morale       = 16
+        alignment     = 0x33 //CE
+        perfect2weapon         = 1
         enforce      = 1
 	  END
-	LPF ~RR#MDCSC~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
+	LPF ~patchCreatureScript~                                                   // Starts FUNCTION call (aTweaks' Creature Script Modification function)
       STR_VAR
         "newscript" = "fl#shafi"
         "script01" = "wtasight"                                                       // third AI script name

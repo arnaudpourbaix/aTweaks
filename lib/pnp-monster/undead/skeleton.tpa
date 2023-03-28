@@ -30,7 +30,7 @@ BEGIN
       PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~skeletb~ BEGIN
         LPF promote_script STR_VAR script = skeletb END
       END
-      LPF RR#MDCSC
+      LPF patchCreatureScript
         STR_VAR
           newscript = fl#lowr
           script01 = wtasight

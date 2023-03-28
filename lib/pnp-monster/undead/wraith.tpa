@@ -25,40 +25,40 @@ BEGIN
         PATCH_IF !(("%SOURCE_RES%" STRING_EQUAL_CASE ~telslav~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~psqtpa3~)) BEGIN
           REPLACE_CRE_ITEM fl#wrai #0 #0 #0 none weapon1 EQUIP
         END
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 2000
-            newhp = 43 //5d8+3
-            newac = 4
-            newth = 15
-            newapr = 1
-            newsvd = 10
-            newsvw = 12
-            newsvp = 11
-            newsvb = 12
-            newsvs = 13
-            newlvl1 = 6
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 13
-            newstrx = 0
-            newint = 12
-            newwis = 11
-            newdex = 10
-            newcon = 9
-            newchr = 10
-            newmor = 15
-            newalign = 0x13 //LE
-            newgen = 4 //undead
+            xpv = 2000
+            hp = 43 //5d8+3
+            ac = 4
+            thac0 = 15
+            apr = 1
+            saveDeath = 10
+            saveWand = 12
+            savePolymorph = 11
+            saveBreath = 12
+            saveSpell = 13
+            level1 = 6
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 13
+            strengthx = 0
+            intelligence = 12
+            wisdom = 11
+            dexterity = 10
+            constitution = 9
+            charisma = 10
+            morale = 15
+            alignment = 0x13 //LE
+            general = 4 //undead
             
             enforce = 1
           STR_VAR
@@ -71,7 +71,7 @@ BEGIN
 			notenf07 = WRAITHSU
 			notenf08 = wrashi01
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#higmc
             script01 = wtasight
@@ -134,18 +134,18 @@ ACTION_IF GAME_INCLUDES ~tob~ BEGIN
       DEFAULT
         WRITE_ASCII 0x280 sewsha02 #32
     END
-    LPF RR#MDCRE
+    LPF patchCreature
       INT_VAR
-        newhp = 59
-        newapr = 4
-        newac = 1
-        newth = 9
-        newfr = 100
-        newcr = 100
-        newar = 100
-        newrs = 30
-        newrc = 30
-        newrp = 30
-        newrm = 30
+        hp = 59
+        apr = 4
+        ac = 1
+        thac0 = 9
+        resistFire = 100
+        resistCold = 100
+        resistAcid = 100
+        resistSlashing = 30
+        resistCrushing = 30
+        resistPiercing = 30
+        resistMissile = 30
     END
 END

@@ -48,19 +48,20 @@ ADD_PROJECTILE ~atweaks/pro/rr#vrpo.pro~                                        
 ADD_PROJECTILE ~atweaks/pro/rr#cloud.pro~                                          // cloud spell effect with party-friendly
 
 // We forcibly reload all PRO variables, because there's a bug in WeiDU 231
-COPY_EXISTING missile.ids override
-  READ_2DA_ENTRIES_NOW buff 2
-  PATCH_FOR_EACH pro IN RR#SPAIN fl#cnenp fl#sight rr#pyrot rr#fcsng rr#icew rr#vrpo BEGIN
-    FOR (i = buff - 1; i >= 0; --i) BEGIN
-      READ_2DA_ENTRY_FORMER buff i 1 label
-      PATCH_IF "%label%" STRING_EQUAL_CASE "%pro%" BEGIN
-        READ_2DA_ENTRY_FORMER buff i 0 real_value
-        SET EVAL "%pro%" = real_value
-        i = "-1"
-      END
-    END
-  END
-BUT_ONLY
+// TODO: check if it is fixed in WeiDU 249+
+// COPY_EXISTING missile.ids override
+//   READ_2DA_ENTRIES_NOW buff 2
+//   PATCH_FOR_EACH pro IN RR#SPAIN fl#cnenp fl#sight rr#pyrot rr#fcsng rr#icew rr#vrpo BEGIN
+//     FOR (i = buff - 1; i >= 0; --i) BEGIN
+//       READ_2DA_ENTRY_FORMER buff i 1 label
+//       PATCH_IF "%label%" STRING_EQUAL_CASE "%pro%" BEGIN
+//         READ_2DA_ENTRY_FORMER buff i 0 real_value
+//         SET EVAL "%pro%" = real_value
+//         i = "-1"
+//       END
+//     END
+//   END
+// BUT_ONLY
 
 // Add shared VVCs and BAMs
 COPY ~atweaks/bam/elementals/rr#hcold.bam~ ~override~                              // IWD cold damage hit BAM animation
@@ -99,12 +100,12 @@ COPY ~atweaks/bam/rr#shout.bam~ ~override~                              		      
 
 // Assign the Enchantment school to enchantment based spell-like abilities and make them turn the caster visible
 ACTION_IF !GAME_IS ~iwdee~ BEGIN // not on IWD:EE
-  COPY_EXISTING ~SPWI929.SPL~                ~override~                                     // Succubus Charm Female
-                ~SPWI930.SPL~                ~override~                                     // Succubus Charm Male
-    WRITE_ASCII 0x10 CAS_M05 #8                                                             // casting sound: CAS_M05.WAV
-    WRITE_SHORT 0x25 4                                                                      // spell school: 4 (Enchantment)
-    WRITE_SHORT 0x22 11                                                                     // casting graphics: 11 (Enchantment)
-    WRITE_LONG  0x34 1                                                                      // spell level: 1
+  COPY_EXISTING ~SPWI929.SPL~ ~override~     // Succubus Charm Female
+                ~SPWI930.SPL~ ~override~     // Succubus Charm Male
+    WRITE_ASCII 0x10 CAS_M05 #8              // casting sound: CAS_M05.WAV
+    WRITE_SHORT 0x25 4                       // spell school: 4 (Enchantment)
+    WRITE_SHORT 0x22 11                      // casting graphics: 11 (Enchantment)
+    WRITE_LONG  0x34 1                       // spell level: 1
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 136 target = 1 timing = 1 END   // force visible self
     LPF FJ_SPL_ITM_REINDEX END
   BUT_ONLY_IF_IT_CHANGES
@@ -150,7 +151,7 @@ ACTION_IF !GAME_IS ~iwdee~ BEGIN // not on IWD:EE
         COPY_EXISTING ~%rr#itm%.itm~ ~override~
           PATCH_IF SOURCE_SIZE > 0x71 THEN BEGIN
             LPF ITEM_EFFECT_TO_SPELL INT_VAR type=99 STR_VAR new_itm_spl=EVALUATE_BUFFER ~%rr#spl%.spl~ END
-            LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=-1 END   // delete all effects from the item's extended header
+            LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete="-1" END   // delete all effects from the item's extended header
             LPF ADD_ITEM_EFFECT INT_VAR opcode=146   // Cast Spell at Target
                                         target=2     // Preset Target
                                         timing=1     // Permanent
@@ -158,23 +159,23 @@ ACTION_IF !GAME_IS ~iwdee~ BEGIN // not on IWD:EE
                                         type=99
                                 STR_VAR resource=EVALUATE_BUFFER "%rr#spl%"
             END
-          END                                                                                // ends PATCH_IF block
+          END
         BUT_ONLY_IF_IT_CHANGES
-      END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
-    END                                                                                // ends ACTION_PHP_EACH
-  END                                                                                // ends safety check
+      END
+    END
+  END
 END
 
 // Tag celestials, for detectability (mirrors code in SCSII)
 ACTION_FOR_EACH celestial IN
-		devagood
-		devaevil
-		plangood
-		planevil
-		ca#dastr
-		ca#dmond
-		ca#dmova
-		ca#plan
+  devagood
+  devaevil
+  plangood
+  planevil
+  ca#dastr
+  ca#dmond
+  ca#dmova
+  ca#plan
 BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%celestial%.cre" BEGIN
     COPY_EXISTING "%celestial%.cre" override

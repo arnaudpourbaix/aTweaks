@@ -45,7 +45,7 @@ BEGIN
       PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~grskel1~ BEGIN
         LPF promote_script STR_VAR script = initdlg END
       END
-      LPF RR#MDCSC
+      LPF patchCreatureScript
         STR_VAR
           newscript = fl#sklwm
           script01 = gpskel1
@@ -105,7 +105,7 @@ BEGIN
 	  STR_VAR
 	  notenf01 = anscelet
 	  END
-      LPF RR#MDCSC
+      LPF patchCreatureScript
         STR_VAR
           newscript = fl#sklwr
           script01 = gpskel1

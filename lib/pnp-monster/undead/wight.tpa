@@ -22,40 +22,40 @@ BEGIN
     PATCH_IF NOT MOD_IS_INSTALLED ~INFINITYANIMATIONS.TP2~ ~400~ BEGIN // Infinity Animation Compatibility (IAv5b)
         WRITE_LONG 0x28 30464 //animation: ghoul
 	END
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 1400
-            newhp = 35 //4d8+3
-            newac = 5
-            newth = 15
-            newapr = 1
-            newsvd = 12
-            newsvw = 14
-            newsvp = 13
-            newsvb = 15
-            newsvs = 13
-            newlvl1 = 5
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 16
-            newstrx = 0
-            newint = 10
-            newwis = 9
-            newdex = 9
-            newcon = 9
-            newchr = 9
-            newmor = 14
-            newalign = 0x13 //LE
-            newgen = 4 //undead
+            xpv = 1400
+            hp = 35 //4d8+3
+            ac = 5
+            thac0 = 15
+            apr = 1
+            saveDeath = 12
+            saveWand = 14
+            savePolymorph = 13
+            saveBreath = 15
+            saveSpell = 13
+            level1 = 5
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 16
+            strengthx = 0
+            intelligence = 10
+            wisdom = 9
+            dexterity = 9
+            constitution = 9
+            charisma = 9
+            morale = 14
+            alignment = 0x13 //LE
+            general = 4 //undead
             
             enforce = 1
 	       STR_VAR
@@ -65,7 +65,7 @@ BEGIN
 			notenf04 = Knightsk
 			notenf05 = _nightsk
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#midmc
             script01 = wdasight

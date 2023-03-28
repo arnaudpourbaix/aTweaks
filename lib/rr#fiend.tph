@@ -373,7 +373,7 @@ COPY ~atweaks/spl/rr#NATFR.spl~  ~override~										   // Polymorph Self: Large
 
 COPY_EXISTING ~SPWI104.SPL~  ~override/RR#DSUGG.SPL~                               // Change Charm Person into Suggestion (used by Imp)
   SAY NAME1 @708 SAY NAME2 @708                                                    // Suggestion
-  LPF ~RR#SP2IN~ INT_VAR ctime=1 invs=1 END     // Execute the "spell to innate ablity" function
+  LPF spellToInnate INT_VAR ctime=1 invs=1 END
 BUT_ONLY_IF_IT_CHANGES
 
 COPY_EXISTING ~SPWI125.SPL~  ~override/RR#DCFEA.SPL~                               // Change Spook into Cause Fear (used by Cambion)
@@ -393,7 +393,7 @@ WRITE_SHORT 0x22 "13"                                                           
      WRITE_LONG  ("%fx_off%" + 0x28 + (0x30 * ("%abil_fx_idx%" + "%index2%"))) 0  // save bonus: 0
     END
   END
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI205.SPL~  ~override/RR#DSCAR.SPL~                               // Change Horror into Scare (used by Abishai)
   SAY NAME1 @706 SAY NAME2 @706                                                    // Scare
@@ -410,7 +410,7 @@ WRITE_SHORT 0x22 "11"                                                           
      WRITE_LONG  ("%fx_off%" + 0x1c + (0x30 * ("%abil_fx_idx%" + "%index2%"))) "5" // dice rolls: 5 (maximum level affected)
     END
   END
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY ~atweaks/spl/rr#QUBAT.SPL~  ~override~										   // Polymorph Self: Bat (used by Quasits)
 COPY ~atweaks/spl/rr#QUWLF.SPL~  ~override~										   // Polymorph Self: Wolf (used by Quasits)
@@ -436,7 +436,7 @@ WRITE_SHORT 0x22 "13"                                                           
   FOR(i=0; i<abil_num; i+=1) BEGIN
     WRITE_SHORT (abil_off+i*0x28+0x26) %rr#fcsng%                                    // use new projectile
   END 
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 
 COPY_EXISTING ~SPWI104.SPL~  ~override/RR#DCHRM.SPL~                               // Change Charm Person into a Glabrezu specific ability (used only on neutral bystanders)
@@ -501,51 +501,51 @@ COPY ~atweaks/spl/rr#icew.spl~ ~override~                                       
 // Clone spells into innate abilities
 
 COPY_EXISTING ~SPWI103.SPL~  ~override/RR#WI103.SPL~                               // Clone Burning Hands into an innate ability (used by Glabrezu)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI201.SPL~  ~override/RR#WI201.SPL~                               // Clone Blur into an innate ability (used by Maurezhi)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI203.SPL~  ~override/RR#WI203.SPL~                               // Clone Detect Invisibility into an innate ability (used by Pit Fiend)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI206.SPL~  ~override/RR#WI206.SPL~                               // Clone Invisibility into an innate ability (used by Erinyes)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 COPY_EXISTING ~SPWI206.SPL~  ~override/RR#WR206.SPL~                               // Clone Invisibility into an innate ability at will (used by imps and quasits)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 renew=1 END   // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 renew=1 END
 
 COPY_EXISTING ~SPWI212.SPL~  ~override/RR#WI212.SPL~                               // Clone Mirror Image into an innate ability (used by Glabrezu)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI302.SPL~  ~override/RR#WI302.SPL~                               // Clone Remove Magic into an innate ability (used by Glabrezu and Balor in SCSII)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI304.SPL~  ~override/RR#WI304.SPL~                               // Clone Fireball into an innate ability (used by Pit Fiend)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI306.SPL~  ~override/RR#WI306.SPL~                               // Clone Hold Person into an innate ability (used by Pit Fiend)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI308.SPL~  ~override/RR#WI308.SPL~                               // Clone Lightning Bolt into an innate ability (used by Cornugon)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI326.SPL~  ~override/RR#WI326.SPL~                               // Clone Dispel Magic into an innate ability (used by Glabrezu and Balor)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI401.SPL~  ~override/RR#WI401.SPL~                               // Clone Confusion into an innate ability (used by Glabrezu)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 //COPY_EXISTING ~SPWI404.SPL~  ~override/RR#WI404.SPL~                               // Clone Ice Storm into an innate ability (used by Gelugon)
-//LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+//LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI405.SPL~  ~override/RR#WI405.SPL~                               // Clone Improved Invisibility into an innate ability (used by Pit Fiend)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 END                      // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI502.SPL~  ~override/RR#WI502.SPL~                               // Clone Cloudkill into an innate ability (used by Marilith)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPPR211.SPL~  ~override/RR#PR211.SPL~                               // Clone Silence 15' Radius into an innate ability (used by Nabassu)
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI811.SPL~  ~override/RR#WI811.SPL~                               // Clone Symbol, Fear into an innate ability (used by Balor)
   READ_LONG  0x64 ab_off
@@ -553,7 +553,7 @@ COPY_EXISTING ~SPWI811.SPL~  ~override/RR#WI811.SPL~                            
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %RR#SPAIN%                                    // use new projectile (party friendly)
   END 
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI816.SPL~  ~override/RR#WI816.SPL~                               // Clone Symbol, Stun into an innate ability (used by Balor)
   READ_LONG  0x64 ab_off
@@ -561,7 +561,7 @@ COPY_EXISTING ~SPWI816.SPL~  ~override/RR#WI816.SPL~                            
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %RR#SPAIN%                                    // use new projectile (party friendly)
   END 
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI817.SPL~  ~override/RR#WI817.SPL~                               // Clone Symbol, Death into an innate ability (used by Balor)
   READ_LONG  0x64 ab_off
@@ -569,23 +569,23 @@ COPY_EXISTING ~SPWI817.SPL~  ~override/RR#WI817.SPL~                            
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %RR#SPAIN%                                    // use new projectile (party friendly)
   END 
-LPF ~RR#SP2IN~ INT_VAR ctime=1 rinvs=1 END     // Execute the "spell to innate ablity" function
+LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING spwi112.spl "override/RR#WI112.spl"                                  //Magic Missile
-  LPF RR#SP2IN INT_VAR rinvis=1 END 
+  LPF spellToInnate INT_VAR rinvis=1 END 
 LAUNCH_ACTION_FUNCTION magic_missile_shield END                                     // Make the Shield spell and amulet protect against the cloned Magic Missile
   
 COPY_EXISTING spwi104.spl "override/RR#WI104.spl"                                  //Charm Person
-  LPF RR#SP2IN INT_VAR rinvis=1 END
+  LPF spellToInnate INT_VAR rinvis=1 END
   
 COPY_EXISTING sppr102.spl "override/RR#PR102.spl"                                  //Command
-  LPF RR#SP2IN INT_VAR rinvis=1 END
+  LPF spellToInnate INT_VAR rinvis=1 END
   
 COPY_EXISTING sppr302.spl "override/RR#PR302.spl"                                  //Call Lightning
-  LPF RR#SP2IN INT_VAR rinvis=1 END
+  LPF spellToInnate INT_VAR rinvis=1 END
   
 COPY_EXISTING sppr705.spl "override/RR#PR705.spl"                                  //Fire Storm
-  LPF RR#SP2IN INT_VAR rinvis=1 END   
+  LPF spellToInnate INT_VAR rinvis=1 END   
 
 // New items
 
@@ -837,7 +837,7 @@ COPY_EXISTING sppr301.spl  "override/fl#adead.spl"
       END
     END
   END  
-  LPF RR#SP2IN INT_VAR rinvis=1 END
+  LPF spellToInnate INT_VAR rinvis=1 END
 
 COPY_EXISTING spandead.eff "override/fl#skesu.eff"
               spandl15.eff "override/fl#swasu.eff"
@@ -908,7 +908,7 @@ COPY "atweaks/spl/base.spl" "override/fl#cnefr.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target power timing = 4 duration resist_dispel savingthrow header STR_VAR resource = eff_e05 END //Play sound
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 141 target power parameter2 = 18 timing = 1 resist_dispel savingthrow header END //Lighting effect
   END
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //Fear, touch  
 COPY_EXISTING fl#cnefr.spl "override/fl#tchfr.spl"
@@ -933,7 +933,7 @@ COPY "atweaks/spl/base.spl" "override/fl#telki.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 235 target power parameter1 = 20 parameter2 = 2 duration = 1 resist_dispel savingthrow header END //Wing buffet
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target power parameter1 parameter2 = 0x100000 timing = 1 resist_dispel header END //Damage
   END
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //Cause disease
 COPY "atweaks/spl/base.spl" "override/fl#csdis.spl"
@@ -958,7 +958,7 @@ COPY "atweaks/spl/base.spl" "override/fl#csdis.spl"
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target power parameter2 = 7 timing = 1 resist_dispel savingthrow END //Icon: Nauseated
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target power parameter1 = 39752 timing = 1 resist_dispel savingthrow END //Stricken by a foul disease
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target power timing = 1 resist_dispel savingthrow STR_VAR resource = EVAL "%DEST_RES%" END //non-cumulativity
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above) 
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above) 
 
 OUTER_SET $f_AddSecType(fl#csdis.spl) = fl#Disease
     
@@ -984,7 +984,7 @@ COPY "atweaks/spl/base.spl" "override/fl#mssug.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 215 target power parameter2 = 1 resist_dispel duration = 3 savingthrow savebonus header STR_VAR resource = spnwchrm END //Play visial effect
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target power timing = 3 duration resist_dispel savingthrow savebonus header STR_VAR resource = eff_e07 END //play sound
   END
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //PnP Color Spray
 COPY "atweaks/spl/base.spl" "override/fl#clrsp.spl"
@@ -1044,7 +1044,7 @@ COPY "atweaks/spl/base.spl" "override/fl#clrsp.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target power parameter2 = 3 resist_dispel duration dicesize savingthrow header END //confused
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 215 target power parameter2 = 1 resist_dispel duration dicesize savingthrow header STR_VAR resource = spconfus END //visual effect      
   END
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 // Patch immunity to fl#clrsp into spells, items that cause blindness
 // ACTION_DEFINE_ARRAY array_as_argument BEGIN fl#clrsp END  
@@ -1074,7 +1074,7 @@ COPY "atweaks/spl/base.spl" "override/fl#shout.spl"
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target power parameter2 = 0x400000 resist_dispel timing = 1 dicenumber = 1 dicesize = 6 END //1d6 damage, no save
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target power parameter2 = 0x400000 resist_dispel timing = 1 dicenumber = 1 dicesize = 6 savingthrow END //1d6, with save
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target power duration resist_dispel savingthrow STR_VAR resource = EVAL "%DEST_RES%" END //non-cumulativity if you are deafened
-  LPF RR#SP2IN INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //Patch immunity to fl#shout into silencing and deafening spells, items  
 COPY_EXISTING sppr211.spl  override
@@ -1121,7 +1121,7 @@ COPY "atweaks/spl/base.spl" "override/fl#ultgz.spl"
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 175 target parameter1 = 1 parameter2 = 3 duration savingthrow END //Hold creature (humanoid)
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 215 target parameter2 = 1 duration savingthrow STR_VAR resource = spmindat END //Visual effect
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target timing = 4 duration savingthrow STR_VAR resource = eff_e08 END //Play sound
-  LPF RR#SP2IN INT_VAR rinvis=1 END //General "make innate" treatment
+  LPF spellToInnate INT_VAR rinvis=1 END //General "make innate" treatment
 
   
   
@@ -1188,7 +1188,7 @@ COPY_EXISTING b1-6.itm "override/fl#shaf1.itm"
 
 //Shadow Fiend fear spell
 COPY_EXISTING spwi205.spl "override/fl#shafi.spl"
-  LPF RR#SP2IN END
+  LPF spellToInnate END
   SAY NAME1 #2619 //Fear
   SAY NAME2 #2619
 

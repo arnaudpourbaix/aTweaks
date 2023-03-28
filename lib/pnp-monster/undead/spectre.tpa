@@ -13,44 +13,44 @@ BEGIN
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
         REPLACE_CRE_ITEM fl#spect #0 #0 #0 none weapon1 EQUIP
-        LPF RR#MDCRE
+        LPF patchCreature
           INT_VAR
-            newxpv = 3000
-            newhp = 59 //7d8+3
-            newac = 2
-            newth = 13
-            newapr = 1
-            newsvd = 7
-            newsvw = 9
-            newsvp = 8
-            newsvb = 9
-            newsvs = 8
-            newlvl1 = 7
-            newlvl2 = 0
-            newlvl3 = 0
-            newmr = 0
-            newfr = 0
-            newcr = 100
-            newer = 0
-            newar = 0
-            newrs = 0
-            newrc = 0
-            newrp = 0
-            newrm = 0
-            newstr = 13
-            newstrx = 0
-            newint = 14
-            newwis = 11
-            newdex = 10
-            newcon = 9
-            newchr = 10
-            newmor = 15
-            newalign = 0x13 //LE
-            newgen = 4 //undead
+            xpv = 3000
+            hp = 59 //7d8+3
+            ac = 2
+            thac0 = 13
+            apr = 1
+            saveDeath = 7
+            saveWand = 9
+            savePolymorph = 8
+            saveBreath = 9
+            saveSpell = 8
+            level1 = 7
+            level2 = 0
+            level3 = 0
+            resistMagic = 0
+            resistFire = 0
+            resistCold = 100
+            resistElectricity = 0
+            resistAcid = 0
+            resistSlashing = 0
+            resistCrushing = 0
+            resistPiercing = 0
+            resistMissile = 0
+            strength = 13
+            strengthx = 0
+            intelligence = 14
+            wisdom = 11
+            dexterity = 10
+            constitution = 9
+            charisma = 10
+            morale = 15
+            alignment = 0x13 //LE
+            general = 4 //undead
             
             enforce = 1
         END
-        LPF RR#MDCSC
+        LPF patchCreatureScript
           STR_VAR
             newscript = fl#higmc
             script01 = wtasight

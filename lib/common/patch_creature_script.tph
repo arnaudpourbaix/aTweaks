@@ -1,0 +1,84 @@
+// Creature Script modification function
+// Useful for situations where you want to put your custom script at the top tier possible, without deleting other scripts (unless so desired)
+DEFINE_PATCH_FUNCTION ~patchCreatureScript~  
+INT_VAR
+  assigned  = 0   // new script has been assigned or file is skiped                                                          
+  skip  = 0       // file is skipped
+  overrideEmpty = 0
+  classEmpty = 0
+  raceEmpty = 0
+  generalEmpty = 0
+  defaultEmpty = 0
+STR_VAR
+  script        = "" // Script to assign to first available slot in this order: override, class, race, general, default
+  removeScripts = "" // Array of scripts to remove
+  skipFiles     = "" // Array of files to skip
+BEGIN
+  PATCH_IF "%script%" STRING_EQUAL_CASE "" BEGIN             
+    PATCH_FAIL ~Missing new script for %SOURCE_RES%~
+  END
+  PATCH_PHP_EACH EVAL ~%skipFiles%~ AS _ => skipfile BEGIN
+    PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE "%skipfile%" BEGIN             
+      SET skip=1
+    END
+  END
+  PATCH_IF skip = 0 BEGIN
+    READ_ASCII  0x248 overrideScript
+    READ_ASCII  0x250 classScript
+    READ_ASCII  0x258 raceScript
+    READ_ASCII  0x260 generalScript
+    READ_ASCII  0x268 defaultScript
+
+    PATCH_PHP_EACH EVAL ~%removeScripts%~ AS _ => s BEGIN
+      PATCH_IF "%overrideScript%" STRING_EQUAL_CASE "%s%" OR "%overrideScript%" STRING_EQUAL "" OR "%overrideScript%" STRING_EQUAL_CASE none BEGIN             
+        SPRINT overrideScript ""
+        SET overrideEmpty=1
+      END
+      PATCH_IF "%classScript%" STRING_EQUAL_CASE "%s%" OR "%classScript%" STRING_EQUAL "" OR "%classScript%" STRING_EQUAL_CASE none BEGIN
+        SPRINT classScript ""
+        SET classEmpty=1
+      END
+      PATCH_IF "%raceScript%" STRING_EQUAL_CASE "%s%" OR "%raceScript%" STRING_EQUAL "" OR "%raceScript%" STRING_EQUAL_CASE none BEGIN
+        SPRINT raceScript ""
+        SET raceEmpty=1
+      END
+      PATCH_IF "%generalScript%" STRING_EQUAL_CASE "%s%" OR "%generalScript%" STRING_EQUAL "" OR "%generalScript%" STRING_EQUAL_CASE none BEGIN
+        SPRINT generalScript ""
+        SET generalEmpty=1
+      END
+      PATCH_IF "%defaultScript%" STRING_EQUAL_CASE "%s%" OR "%defaultScript%" STRING_EQUAL "" OR "%defaultScript%" STRING_EQUAL_CASE none BEGIN
+        SPRINT defaultScript ""
+        SET defaultEmpty=1
+      END
+    END
+
+    PATCH_IF overrideEmpty = 1 AND assigned = 0 BEGIN
+      SPRINT overrideScript EVALUATE_BUFFER "%script%"
+      SET assigned=1
+    END
+    PATCH_IF classEmpty = 1 AND assigned = 0 BEGIN
+      SPRINT classScript EVALUATE_BUFFER "%script%"
+      SET assigned=1
+    END
+    PATCH_IF raceEmpty = 1 AND assigned = 0 BEGIN
+      SPRINT raceScript EVALUATE_BUFFER "%script%"
+      SET assigned=1
+    END
+    PATCH_IF generalEmpty = 1 AND assigned = 0 BEGIN
+      SPRINT generalScript EVALUATE_BUFFER "%script%"
+      SET assigned=1
+    END
+    PATCH_IF defaultEmpty = 1 AND assigned = 0 BEGIN
+      SPRINT defaultScript EVALUATE_BUFFER "%script%"
+      SET assigned = 1
+    END
+
+    PATCH_IF assigned = 1 BEGIN
+      WRITE_EVALUATED_ASCII 0x248 "%overrideScript%" #8
+      WRITE_EVALUATED_ASCII 0x250 "%classScript%" #8
+      WRITE_EVALUATED_ASCII 0x258 "%raceScript%" #8
+      WRITE_EVALUATED_ASCII 0x260 "%generalScript%" #8
+      WRITE_EVALUATED_ASCII 0x268 "%defaultScript%" #8
+    END ELSE PATCH_FAIL ~No available slot to assign script %script% for %SOURCE_RES%~
+  END
+END
