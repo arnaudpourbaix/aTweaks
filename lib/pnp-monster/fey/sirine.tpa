@@ -26,6 +26,8 @@ BEGIN
       LPF FJ_CRE_VALIDITY END
       REMOVE_KNOWN_SPELLS
       REMOVE_MEMORIZED_SPELLS
+      // TODO: level 11 caster, not properly handled
+      // TODO: polymorph self should not be limited to mustard jelly if SR is installed
       ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)                                     // adds 1x Charming Song
       ADD_MEMORIZED_SPELL ~rr#fcld~ #0 ~innate~ (1)                                      // adds 1x Fog Cloud
       ADD_MEMORIZED_SPELL ~rr#wi405~ #0 ~innate~ (1)                                     // adds 1x Improved Invisibility
@@ -41,8 +43,7 @@ BEGIN
       REPLACE_CRE_ITEM ~AROW05~ #5 #0 #0 ~UNSTEALABLE~ ~quiver1~  EQUIP                  // make the Arrows of Biting unstealable and equip them
       LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "BOW05" flags = UNSTEALABLE END    // make the Shortbow unstealable (BGT)
       LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "_BOW05" flags = UNSTEALABLE END   // make the Shortbow unstealable (Tutu)
-      WRITE_BYTE 0x6f 1                                                                  // BG1 Proficiency slot (small sword)
-      WRITE_BYTE 0x70 1                                                                  // BG1 Proficiency slot (bow)
+      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 105 => 1 END                          // short bow
       DEFINE_ARRAY notEnforceFiles BEGIN ISLSIR MEIALA QSEROMOD END
       LPF patchCreature
         INT_VAR
@@ -53,14 +54,13 @@ BEGIN
           intelligence=18
           wisdom=16
           charisma=17
-          movement=9
           hp=40
           ac=3
           thac0=15
           apr=1
           xpv=3000
           alignment=50        // Chaotic Neutral
-          saveDeath=11
+          saveDeath=9
           saveWand=7
           savePolymorph=9
           saveBreath=11
@@ -76,6 +76,7 @@ BEGIN
           sex=2
           enforce=1
         STR_VAR
+          proficiencies
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 

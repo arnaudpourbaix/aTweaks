@@ -19,9 +19,6 @@ COPY ~atweaks/spl/rr#telwx.spl~ ~override/rr#ddorx.spl~           // Dimension D
 COPY ~atweaks/spl/fey/rr#fafrn.spl~ ~override~                    // Animal Friendship (renewable)
   SAY NAME1 @1900 SAY NAME2 @1900
 
-COPY ~atweaks/spl/fey/rr#nbty.spl~ ~override~                     // Nymph's beauty
-  SAY NAME1 @3000 SAY NAME2 @3000
-
 COPY ~atweaks/spl/fey/rr#fbbea.spl~ ~override~                    // Blinding Beauty (part 1)
   SAY NAME1 @1901 SAY NAME2 @1901
   READ_LONG  0x64 ab_off

@@ -16,7 +16,7 @@ BEGIN
       ADD_MEMORIZED_SPELL ~rr#fdsnr~ #0 ~innate~ (1)  // adds 1x Detect Snares and Pits
       ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)  // adds 1x Speak With Plants
       ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)  // adds 1x Dimension Door
-      /* TODO: create spell Quench Fire
+      /* TODO: create spell Quench Fire:
        * You extinguish all fires in a 30-foot cube centered on a point you choose within range. Any nonmagical fire is put out automatically, as are magical flames created by a spell of 3rd level or lower. For each
        * spell of 4th level or higher which is creating flame within this area, make an ability check using your spellcasting ability. On a successful check, the spell that created the fire ends. Fire created by a magical
        * item is also doused, and the item becomes unable to produce fire for 1d4 hours.
@@ -24,8 +24,7 @@ BEGIN
        * Affected spells: Agannazar’s Scorcher, Melf’s Minute Meteors, Flame Blade
        * Radius and projectile as level 7 Priest Fire Storm
        */
-      WRITE_BYTE 0x6f 1                               // BG1 Proficiency slot (small sword)
-      WRITE_SHORT 0x4c 0                              // remove missile AC modifier (was -5)
+      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 96 => 1 END // dagger      
       DEFINE_ARRAY notEnforceFiles BEGIN wqxhama END
       LPF patchCreature 
         INT_VAR
@@ -42,6 +41,7 @@ BEGIN
           thac0=17
           apr=1
           xpv=1400           // 650 in P&P, but it makes no sense as they clearly superior in every ways to dryads (975xp)
+          missileAC=0        // remove missile AC modifier (was -5)
           alignment=34       // True Neutral
           saveDeath=13
           saveWand=15
@@ -58,7 +58,8 @@ BEGIN
           gender=2
           sex=2
           enforce=1
-        STR_VAR   
+        STR_VAR
+          proficiencies
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 

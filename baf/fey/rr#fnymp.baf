@@ -88,7 +88,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("rr#blind","LOCALS",6)
-                ReallyForceSpellRES("rr#fbbea",Myself) // Blinding Beauty
+    ReallyForceSpellRES("rr#fbbea",Myself) // Blinding Beauty
 END
 
 IF

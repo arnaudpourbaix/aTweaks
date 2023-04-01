@@ -20,7 +20,7 @@ BEGIN
       ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)  // adds 3x Charm Person
       ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)  // adds 1x Speak With Plants
       ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)  // adds 1x Dimension Door
-      WRITE_BYTE 0x6f 1                               // BG1 Proficiency slot (small sword)
+      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 96 => 1 END // dagger      
       DEFINE_ARRAY notEnforceFiles BEGIN dr01mod RE_DRYAD END
       LPF patchCreature   
         INT_VAR 
@@ -54,6 +54,7 @@ BEGIN
           sex=2
           enforce=1
         STR_VAR 
+          proficiencies
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 

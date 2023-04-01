@@ -13,9 +13,9 @@ BEGIN
       LPF FJ_CRE_VALIDITY END
       REMOVE_KNOWN_SPELLS
       REMOVE_MEMORIZED_SPELLS
-      //FIXME: should cast spells as a 7th level Druid, level1 set to 7. But as is 3 HD, it will cause problem with spells based on target level
-      //TODO: new innate rr#nbty: Looking at a nymph will cause permanent blindness unless the onlookers save versus spell.
-      // add it to script RR#FNYMP
+      // FIXME: level1 set to 7 because she cast spells as a 7th level druid. But as is 3 HD, she won't be affected by spells within levels 3-6
+      // one possible fix (through not very pratical) would be to duplicate all her spells and alter them so they work as a level 7 caster.
+      // considering all possible spell mods, this is quite some work for little result.
       ADD_MEMORIZED_SPELL ~rr#ddor2~ #0 ~innate~ (1)                // adds 1x Dimension Door (non-renewable)
       ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (2)                 // adds 2x Bless
       ADD_MEMORIZED_SPELL ~SPPR103~ #0 ~priest~ (2)                 // adds 2x Cure Light Wounds
