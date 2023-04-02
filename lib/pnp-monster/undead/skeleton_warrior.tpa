@@ -146,7 +146,7 @@ ACTION_IF !MOD_IS_INSTALLED spell_rev.tp2 0 BEGIN // Do not touch if spell revis
 	END
 END
 
-COPY "atweaks/spl/undead/fl#skelw.spl" override
+COPY "%MOD_FOLDER%/spl/undead/fl#skelw.spl" override
   FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
     WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
   END

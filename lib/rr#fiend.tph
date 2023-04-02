@@ -4,7 +4,7 @@
 // New spells
 
 ACTION_IF !FILE_EXISTS_IN_GAME rr#spain.spl BEGIN
-  COPY ~aTweaks/SPL/RR#SPAIN.SPL~ ~override~                                         // Symbol Pain
+  COPY ~%MOD_FOLDER%/SPL/RR#SPAIN.SPL~ ~override~                                         // Symbol Pain
     READ_LONG  0x64 ab_off
     READ_SHORT 0x68 ab_num
     FOR(i=0; i<ab_num; i+=1) BEGIN
@@ -12,23 +12,23 @@ ACTION_IF !FILE_EXISTS_IN_GAME rr#spain.spl BEGIN
     END
 END
 
-COPY ~aTweaks/SPL/RR#DLDRN.SPL~ ~override~                                         // Drain Life (Alu-Fiend)
+COPY ~%MOD_FOLDER%/SPL/RR#DLDRN.SPL~ ~override~                                         // Drain Life (Alu-Fiend)
   SAY NAME1 @709 SAY NAME2 @709
-COPY ~aTweaks/SPL/RR#CURSE.SPL~ ~override~                                         // Curse (Marilith)
+COPY ~%MOD_FOLDER%/SPL/RR#CURSE.SPL~ ~override~                                         // Curse (Marilith)
   SAY NAME1 @689 SAY NAME2 @689
-COPY ~aTweaks/VVC/RR#CURSE.VVC~ ~override~                                         // Curse VVC animation
-COPY ~aTweaks/BAM/RR#CURSE.BAM~ ~override~                                         // Curse BAM graphics
-COPY ~aTweaks/SPL/RR#DDETI.SPL~ ~override~                                         // Detect Illusion (Marilith)
-COPY ~aTweaks/SPL/RR#SKISS.SPL~ ~override~                                         // Kiss (Succubus)
+COPY ~%MOD_FOLDER%/VVC/RR#CURSE.VVC~ ~override~                                         // Curse VVC animation
+COPY ~%MOD_FOLDER%/BAM/RR#CURSE.BAM~ ~override~                                         // Curse BAM graphics
+COPY ~%MOD_FOLDER%/SPL/RR#DDETI.SPL~ ~override~                                         // Detect Illusion (Marilith)
+COPY ~%MOD_FOLDER%/SPL/RR#SKISS.SPL~ ~override~                                         // Kiss (Succubus)
   SAY NAME1 @685 SAY NAME2 @685
-COPY ~aTweaks/VVC/RR#SKISS.VVC~ ~override~                                         // Kiss VVC animation
-COPY ~aTweaks/BAM/RR#SKISS.BAM~ ~override~                                         // Kiss BAM graphics
-COPY ~aTweaks/VVC/RR#PSHFT.VVC~ ~override~                                         // Plane Shift/Etherealness VVC animation
-COPY ~aTweaks/BAM/RR#PSHFT.BAM~ ~override~                                         // Plane Shift/Etherealness BAM graphics
-COPY ~aTweaks/WAV/RR#PSHFT.WAV~ ~override~                                         // Plane Shift/Etherealness sound
+COPY ~%MOD_FOLDER%/VVC/RR#SKISS.VVC~ ~override~                                         // Kiss VVC animation
+COPY ~%MOD_FOLDER%/BAM/RR#SKISS.BAM~ ~override~                                         // Kiss BAM graphics
+COPY ~%MOD_FOLDER%/VVC/RR#PSHFT.VVC~ ~override~                                         // Plane Shift/Etherealness VVC animation
+COPY ~%MOD_FOLDER%/BAM/RR#PSHFT.BAM~ ~override~                                         // Plane Shift/Etherealness BAM graphics
+COPY ~%MOD_FOLDER%/WAV/RR#PSHFT.WAV~ ~override~                                         // Plane Shift/Etherealness sound
 
 
-COPY ~aTweaks/SPL/RR#ETHER.SPL~ ~override~                                         // Etherealness (Succubus)
+COPY ~%MOD_FOLDER%/SPL/RR#ETHER.SPL~ ~override~                                         // Etherealness (Succubus)
   SAY NAME1 @671 SAY NAME2 @671
   WRITE_BYTE 0x27 RR#ETHER                                                         // assign new secondary type
   READ_LONG  0x64 "abil_off"
@@ -46,10 +46,10 @@ COPY ~aTweaks/SPL/RR#ETHER.SPL~ ~override~                                      
     END
   END
 
-COPY ~aTweaks/EFF/RR#PFECU.EFF~ ~override~                                         // Etherealness protection from EVILCUTOFF effect
-COPY ~aTweaks/EFF/RR#PFGCU.EFF~ ~override~                                         // Etherealness protection from GOODCUTOFF effect
+COPY ~%MOD_FOLDER%/EFF/RR#PFECU.EFF~ ~override~                                         // Etherealness protection from EVILCUTOFF effect
+COPY ~%MOD_FOLDER%/EFF/RR#PFGCU.EFF~ ~override~                                         // Etherealness protection from GOODCUTOFF effect
 
-COPY    ~aTweaks/SPL/RR#UNETH.SPL~ ~override~                                      // Etherealness removal spell
+COPY    ~%MOD_FOLDER%/SPL/RR#UNETH.SPL~ ~override~                                      // Etherealness removal spell
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
   READ_LONG  0x6a "fx_off"
@@ -105,14 +105,14 @@ END                                                                             
 COPY_EXISTING ~RR#ETHER.SPL~ ~override/RR#PSHFT.SPL~                               // Plane Shift - Ethereal Plane (Glabrezu)
   SAY NAME1 @678 SAY NAME2 @678
 
-COPY ~aTweaks/SPL/RR#DPARL.SPL~ ~override~                                         // Paralysis Aura (Nabassu)
+COPY ~%MOD_FOLDER%/SPL/RR#DPARL.SPL~ ~override~                                         // Paralysis Aura (Nabassu)
   SAY NAME1 @677 SAY NAME2 @677
-COPY ~aTweaks/EFF/RR#DPARL.EFF~ ~override~                                         // Paralysis Aura immunity effect (for Constructs, Undead, Trolls... etc.)
-COPY ~aTweaks/SPL/RR#DGAZE.SPL~ ~override~                                         // Death Gaze (Nabassu)
-COPY ~aTweaks/EFF/RR#DGZ01.EFF~ ~override~                                         // Death Gaze display Dying Icon
-COPY ~aTweaks/EFF/RR#DGZ02.EFF~ ~override~                                         // Death Gaze display Cursed Icon
-COPY ~aTweaks/EFF/RR#DGZ03.EFF~ ~override~                                         // Death Gaze transform into Ghast
-COPY ~aTweaks/SPL/RR#DGZRM.SPL~ ~override~                                         // Death Gaze removal (curse is lifted after the creature dies)
+COPY ~%MOD_FOLDER%/EFF/RR#DPARL.EFF~ ~override~                                         // Paralysis Aura immunity effect (for Constructs, Undead, Trolls... etc.)
+COPY ~%MOD_FOLDER%/SPL/RR#DGAZE.SPL~ ~override~                                         // Death Gaze (Nabassu)
+COPY ~%MOD_FOLDER%/EFF/RR#DGZ01.EFF~ ~override~                                         // Death Gaze display Dying Icon
+COPY ~%MOD_FOLDER%/EFF/RR#DGZ02.EFF~ ~override~                                         // Death Gaze display Cursed Icon
+COPY ~%MOD_FOLDER%/EFF/RR#DGZ03.EFF~ ~override~                                         // Death Gaze transform into Ghast
+COPY ~%MOD_FOLDER%/SPL/RR#DGZRM.SPL~ ~override~                                         // Death Gaze removal (curse is lifted after the creature dies)
 
 //Fix minhp items so the wearer can't be killed by the Nabassu's Death Gaze
 ACTION_FOR_EACH file IN
@@ -160,49 +160,49 @@ BEGIN
   END
 END
 
-COPY ~aTweaks/SPL/RR#DFA1.SPL~  ~override~                                         // Fear Aura (Cornugon, Gelugon and Bone Fiend)
+COPY ~%MOD_FOLDER%/SPL/RR#DFA1.SPL~  ~override~                                         // Fear Aura (Cornugon, Gelugon and Bone Fiend)
   SAY NAME1 @672 SAY NAME2 @672
-COPY ~aTweaks/SPL/RR#DFA2.SPL~  ~override~                                         // Fear Aura (Pit Fiend)
+COPY ~%MOD_FOLDER%/SPL/RR#DFA2.SPL~  ~override~                                         // Fear Aura (Pit Fiend)
   SAY NAME1 @672 SAY NAME2 @672
-COPY ~aTweaks/EFF/RR#DFA1.EFF~ ~override~                                          // Cornugon/Gelugon Fear Aura immunity effect (for Constructs, Undead, Trolls... etc.)
-COPY ~aTweaks/EFF/RR#DFA2.EFF~ ~override~                                          // Pit Fiend Fear Aura immunity effect (for Constructs, Undead, Trolls... etc.)
-COPY ~aTweaks/SPL/RR#DCSW.SPL~  ~override~                                         // Cause Serious Wounds (spell-like ability)
-COPY ~aTweaks/SPL/RR#PFLAM.SPL~ ~override~                                         // Produce Flame (spell-like ability)
+COPY ~%MOD_FOLDER%/EFF/RR#DFA1.EFF~ ~override~                                          // Cornugon/Gelugon Fear Aura immunity effect (for Constructs, Undead, Trolls... etc.)
+COPY ~%MOD_FOLDER%/EFF/RR#DFA2.EFF~ ~override~                                          // Pit Fiend Fear Aura immunity effect (for Constructs, Undead, Trolls... etc.)
+COPY ~%MOD_FOLDER%/SPL/RR#DCSW.SPL~  ~override~                                         // Cause Serious Wounds (spell-like ability)
+COPY ~%MOD_FOLDER%/SPL/RR#PFLAM.SPL~ ~override~                                         // Produce Flame (spell-like ability)
   SAY NAME1 @673 SAY NAME2 @673
-COPY ~aTweaks/SPL/RR#FEAR.SPL~  ~override~                                         // Custom fear spell, used for neutral NPCs and also by RR's Revised Thievery for scaring Familiars
-COPY ~aTweaks/SPL/RR#BLEED.SPL~ ~override~                                         // Bleeding Wound ability (Cornugon)
-COPY ~aTweaks/EFF/RR#BLEED.EFF~ ~override~                                         // Bleeding Wound immunity (for Constructs, Undead, Elementals...)
-COPY ~aTweaks/SPL/RR#DCORN.SPL~ ~override~                                         // Barbed Whip Stun ability (Cornugon)
-COPY ~aTweaks/EFF/RR#DCORN.EFF~ ~override~                                         // Barbed Whip Stun immunity (for Constructs, Undead, Elementals...)
-COPY ~aTweaks/SPL/RR#WISH.SPL~  ~override~                                         // Custom Wish spell (Pit Fiend)
-COPY ~aTweaks/SPL/RR#CNSTR.SPL~ ~override~                                         // Constrict ability (Pit Fiend)
+COPY ~%MOD_FOLDER%/SPL/RR#FEAR.SPL~  ~override~                                         // Custom fear spell, used for neutral NPCs and also by RR's Revised Thievery for scaring Familiars
+COPY ~%MOD_FOLDER%/SPL/RR#BLEED.SPL~ ~override~                                         // Bleeding Wound ability (Cornugon)
+COPY ~%MOD_FOLDER%/EFF/RR#BLEED.EFF~ ~override~                                         // Bleeding Wound immunity (for Constructs, Undead, Elementals...)
+COPY ~%MOD_FOLDER%/SPL/RR#DCORN.SPL~ ~override~                                         // Barbed Whip Stun ability (Cornugon)
+COPY ~%MOD_FOLDER%/EFF/RR#DCORN.EFF~ ~override~                                         // Barbed Whip Stun immunity (for Constructs, Undead, Elementals...)
+COPY ~%MOD_FOLDER%/SPL/RR#WISH.SPL~  ~override~                                         // Custom Wish spell (Pit Fiend)
+COPY ~%MOD_FOLDER%/SPL/RR#CNSTR.SPL~ ~override~                                         // Constrict ability (Pit Fiend)
   SAY NAME1 @674 SAY NAME2 @674                                                    
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 parameter1 = RESOLVE_STR_REF(@674) END // Display the constrict string
-COPY ~aTweaks/EFF/RR#CNSTR.EFF~ ~override~                                         // Constrict ability immunity (for large and incorporeal creatures)
-COPY ~aTweaks/VVC/RR#CNSTR.VVC~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
-COPY ~aTweaks/BAM/RR#CNSTR.BAM~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
-// COPY ~aTweaks/VVC/RR#WHIP.VVC~ ~override~                                          // Whip VVC animation
-// COPY ~aTweaks/BAM/RR#WHIP.BAM~ ~override~                                          // Whip BAM graphics
-// COPY ~aTweaks/WAV/RR#WHIP.WAV~ ~override~                                          // Whip sound
-COPY ~aTweaks/SPL/RR#DPDIS.SPL~ ~override~                                         // Pit Fiend disease (-4 to STR, non-cumulative)
+COPY ~%MOD_FOLDER%/EFF/RR#CNSTR.EFF~ ~override~                                         // Constrict ability immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/VVC/RR#CNSTR.VVC~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
+COPY ~%MOD_FOLDER%/BAM/RR#CNSTR.BAM~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
+// COPY ~%MOD_FOLDER%/VVC/RR#WHIP.VVC~ ~override~                                          // Whip VVC animation
+// COPY ~%MOD_FOLDER%/BAM/RR#WHIP.BAM~ ~override~                                          // Whip BAM graphics
+// COPY ~%MOD_FOLDER%/WAV/RR#WHIP.WAV~ ~override~                                          // Whip sound
+COPY ~%MOD_FOLDER%/SPL/RR#DPDIS.SPL~ ~override~                                         // Pit Fiend disease (-4 to STR, non-cumulative)
   WRITE_BYTE 0x27 fl#Disease                                                       // Custom Disease SecType 
 
 OUTER_SET $f_AddSecType(RR#DPDIS.SPL) = fl#Disease
 
-COPY ~aTweaks/EFF/RR#DPDIS.EFF~ ~override~                                         // Pit Fiend disease immunity effect
+COPY ~%MOD_FOLDER%/EFF/RR#DPDIS.EFF~ ~override~                                         // Pit Fiend disease immunity effect
   SAY 0x1C @676                                                                    // Unaffected by Disease
-COPY ~aTweaks/SPL/RR#DBFLW.SPL~ ~override~                                         // Flaming Whip (Balor)
+COPY ~%MOD_FOLDER%/SPL/RR#DBFLW.SPL~ ~override~                                         // Flaming Whip (Balor)
   SAY NAME1 @679 SAY NAME2 @679
-COPY ~aTweaks/EFF/RR#DBFLW.EFF~ ~override~                                         // Flaming Whip ability immunity (for large and incorporeal creatures)
-COPY ~aTweaks/SPL/RR#DBFLA.SPL~ ~override~                                         // Body Flames (Balor)
+COPY ~%MOD_FOLDER%/EFF/RR#DBFLW.EFF~ ~override~                                         // Flaming Whip ability immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/SPL/RR#DBFLA.SPL~ ~override~                                         // Body Flames (Balor)
   SAY NAME1 @682 SAY NAME2 @682
-COPY ~aTweaks/SPL/RR#DBFLE.SPL~ ~override~                                         // Death Throes (Balor)
+COPY ~%MOD_FOLDER%/SPL/RR#DBFLE.SPL~ ~override~                                         // Death Throes (Balor)
   SAY NAME1 @683 SAY NAME2 @683
-COPY ~aTweaks/SPL/RR#VORPL.SPL~ ~override~                                         // Vorpal Hit (Balor)
+COPY ~%MOD_FOLDER%/SPL/RR#VORPL.SPL~ ~override~                                         // Vorpal Hit (Balor)
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 savingthrow = 4 savebonus = "-2" END // add a saving throw at -2 vs death to avoid some frustration...
   LPF ALTER_EFFECT INT_VAR match_opcode = 141 savingthrow = 4 savebonus = "-2" END
   LPF ALTER_EFFECT INT_VAR match_opcode = 13 savingthrow = 4 savebonus = "-2" END
-COPY ~aTweaks/EFF/RR#VORPL.EFF~ ~override~                                         // Vorpal Hit immunity (for slimes, constructs, incorporeal creatures...)
+COPY ~%MOD_FOLDER%/EFF/RR#VORPL.EFF~ ~override~                                         // Vorpal Hit immunity (for slimes, constructs, incorporeal creatures...)
 
 
 
@@ -213,7 +213,7 @@ LPF add_conditional_immunity INT_VAR f_Condition = 101 STR_VAR f_Spell = RR#VORP
 BUT_ONLY_IF_IT_CHANGES*/
 
 
-COPY ~aTweaks/SPL/RR#CNSTR.SPL~ ~override/RR#DGRAB.SPL~                            // Grab ability (Glabrezu)
+COPY ~%MOD_FOLDER%/SPL/RR#CNSTR.SPL~ ~override/RR#DGRAB.SPL~                            // Grab ability (Glabrezu)
 SAY NAME1 @684 SAY NAME2 @684
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 177 END
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 12 END
@@ -233,16 +233,16 @@ SAY NAME1 @684 SAY NAME2 @684
     LPF ADD_SPELL_EFFECT INT_VAR insert_point opcode target parameter1 parameter2 duration STR_VAR resource END
   END
 
-COPY ~aTweaks/EFF/RR#CNSTR.EFF~ ~override/RR#DGRAB.EFF~                            // Grab ability immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/EFF/RR#CNSTR.EFF~ ~override/RR#DGRAB.EFF~                            // Grab ability immunity (for large and incorporeal creatures)
   WRITE_ASCII 0x30 ~RR#DGRAB~ #8                                                   // resref: RR#DGRAB
 
-COPY ~atweaks/eff/rr#cnstr.eff~ ~override/rr#dgra2.eff~
+COPY ~%MOD_FOLDER%/eff/rr#cnstr.eff~ ~override/rr#dgra2.eff~
   WRITE_LONG  0x10 146 //cast spell
   WRITE_LONG  0x20 1 //cast instantly
   WRITE_LONG  0x24 1 //instant/permanent
   WRITE_ASCII 0x30 rr#dgrab #8
 
-COPY ~aTweaks/SPL/RR#CNSTR.SPL~ ~override/RR#DMCNS.SPL~                            // Constrict ability (Marilith)
+COPY ~%MOD_FOLDER%/SPL/RR#CNSTR.SPL~ ~override/RR#DMCNS.SPL~                            // Constrict ability (Marilith)
   SAY NAME1 @674 SAY NAME2 @674
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
@@ -262,11 +262,11 @@ COPY ~aTweaks/SPL/RR#CNSTR.SPL~ ~override/RR#DMCNS.SPL~                         
       END
     END
   END
-COPY ~aTweaks/EFF/RR#CNSTR.EFF~ ~override/RR#DMCNS.EFF~                            // Grab ability immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/EFF/RR#CNSTR.EFF~ ~override/RR#DMCNS.EFF~                            // Grab ability immunity (for large and incorporeal creatures)
   WRITE_ASCII 0x30 ~RR#DMCNS~ #8                                                   // resref: RR#DMCNS
 
 
-COPY ~aTweaks/SPL/RR#DPARL.SPL~ ~override/RR#DPTOU.SPL~                            // Paralytic Touch (Maurezhi)
+COPY ~%MOD_FOLDER%/SPL/RR#DPARL.SPL~ ~override/RR#DPTOU.SPL~                            // Paralytic Touch (Maurezhi)
 SAY NAME1 @688 SAY NAME2 @688
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
@@ -293,16 +293,16 @@ SAY NAME1 @688 SAY NAME2 @688
   WRITE_SHORT  ("%abil_off%" + 0x0e + (0x28 * "%index%")) "1"                      // range: 1
   WRITE_SHORT  ("%abil_off%" + 0x26 + (0x28 * "%index%")) "1"                      // projectile: 1 (None)
   END
-COPY ~aTweaks/EFF/RR#DPARL.EFF~ ~override/RR#DPTOU.EFF~                            // Paralytic Touch immunity effect (for Constructs, Undead, Trolls...etc)
+COPY ~%MOD_FOLDER%/EFF/RR#DPARL.EFF~ ~override/RR#DPTOU.EFF~                            // Paralytic Touch immunity effect (for Constructs, Undead, Trolls...etc)
   WRITE_ASCII 0x30 ~RR#DPTOU~ #8                                                   // resref: RR#DPTOU
-COPY ~aTweaks/SPL/RR#DENTG.SPL~ ~override~                                         // Rope of Entanglement ability (Erinyes)
+COPY ~%MOD_FOLDER%/SPL/RR#DENTG.SPL~ ~override~                                         // Rope of Entanglement ability (Erinyes)
 SAY NAME1 @687 SAY NAME2 @687                                                    
-COPY ~aTweaks/EFF/RR#CNSTR.EFF~ ~override/RR#DENTG.EFF~                            // Rope of Entanglement immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/EFF/RR#CNSTR.EFF~ ~override/RR#DENTG.EFF~                            // Rope of Entanglement immunity (for large and incorporeal creatures)
   WRITE_ASCII 0x30 ~RR#DENTG~ #8                                                   // resref: RR#DENTG
-COPY ~aTweaks/SPL/RR#TELWE.SPL~ ~override~                                         // Teleport Without Error
-COPY ~aTweaks/SPL/RR#TELWX.SPL~ ~override~                                         // Teleport Without Error (for teleporting off-screen, also makes the caster invisible for 1 second in order to break spell and attack lock on)
-COPY ~aTweaks/SPL/RR#TELAW.SPL~ ~override~                                         // Teleport Away (Noble Djinn)
-COPY ~aTweaks/SPL/RR#TELAW.SPL~ ~override/RR#PSTHA.SPL~                            // Plane Shift - The Abyss (Glabrezu)
+COPY ~%MOD_FOLDER%/SPL/RR#TELWE.SPL~ ~override~                                         // Teleport Without Error
+COPY ~%MOD_FOLDER%/SPL/RR#TELWX.SPL~ ~override~                                         // Teleport Without Error (for teleporting off-screen, also makes the caster invisible for 1 second in order to break spell and attack lock on)
+COPY ~%MOD_FOLDER%/SPL/RR#TELAW.SPL~ ~override~                                         // Teleport Away (Noble Djinn)
+COPY ~%MOD_FOLDER%/SPL/RR#TELAW.SPL~ ~override/RR#PSTHA.SPL~                            // Plane Shift - The Abyss (Glabrezu)
 READ_LONG  0x64 "abil_off"
 READ_SHORT 0x68 "abil_num"
 READ_LONG  0x6a "fx_off"
@@ -319,16 +319,16 @@ SAY NAME1 @714 SAY NAME2 @714
     END
   END
 
-COPY ~aTweaks/SPL/RR#TGAZE.SPL~ ~override~                                         // Terrifying Gaze (Erinyes)
+COPY ~%MOD_FOLDER%/SPL/RR#TGAZE.SPL~ ~override~                                         // Terrifying Gaze (Erinyes)
   SAY NAME1 @686 SAY NAME2 @686
 ACTION_IF NOT FILE_EXISTS_IN_GAME ~RR#DDOOR.BAM~ THEN BEGIN                        // Checks for the Icewind Dale's Dimension Door animation component
-  COPY    ~aTweaks/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
-  COPY    ~aTweaks/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
-  COPY    ~aTweaks/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
+  COPY    ~%MOD_FOLDER%/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
+  COPY    ~%MOD_FOLDER%/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
+  COPY    ~%MOD_FOLDER%/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
 END                                                                                // ends ACTION_IF block
 
-COPY ~atweaks/spl/rr#dvtc1.spl~ ~override~                                          // Nabassu Vampiric Touch, part 1 - damage (note: deals 3d6 points of magical damage)
-COPY ~atweaks/spl/rr#dvtc2.spl~ ~override~                                          // Nabassu Vampiric Touch, part 2 - healing (note: grants 10 temporary hit points and also heals the caster; the hit point amount must be a fixed value otherwise it behaves buggy)
+COPY ~%MOD_FOLDER%/spl/rr#dvtc1.spl~ ~override~                                          // Nabassu Vampiric Touch, part 1 - damage (note: deals 3d6 points of magical damage)
+COPY ~%MOD_FOLDER%/spl/rr#dvtc2.spl~ ~override~                                          // Nabassu Vampiric Touch, part 2 - healing (note: grants 10 temporary hit points and also heals the caster; the hit point amount must be a fixed value otherwise it behaves buggy)
 
 COPY_EXISTING ~SPIN558.SPL~  ~override~                                            // Erinyes Charm
   WRITE_ASCII 0x10 "CAS_M05" #8                                                    // casting sound: CAS_M05.WAV
@@ -348,8 +348,8 @@ COPY_EXISTING ~SPIN558.SPL~  ~override~                                         
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 136 target = 1 timing = 1 END   // force visible self
   LPF FJ_SPL_ITM_REINDEX END
 
-COPY ~atweaks/spl/rr#wsh01.spl~ ~override~                                         // Wish: Restore Full Health (self only)
-COPY ~atweaks/spl/rr#wsh37.spl~ ~override~                                         // Wish: Improved Haste on all party members
+COPY ~%MOD_FOLDER%/spl/rr#wsh01.spl~ ~override~                                         // Wish: Restore Full Health (self only)
+COPY ~%MOD_FOLDER%/spl/rr#wsh37.spl~ ~override~                                         // Wish: Improved Haste on all party members
 
 COPY_EXISTING ~SPWISH38.SPL~  ~override/RR#WSH38.SPL~                              // Wish: Breach on all enemies in the area
   READ_LONG  0x64 "abil_off"
@@ -364,12 +364,12 @@ COPY_EXISTING ~SPWISH38.SPL~  ~override/RR#WSH38.SPL~                           
   WRITE_SHORT  ("%abil_off%" + 0x26 + (0x28 * "%index%")) "254"                    // projectile: 254 (BIGNAREA)
   END
 
-COPY ~atweaks/spl/RR#IMRAT.SPL~  ~override~										   // Polymorph Self: Big rat (used by Imp)
-COPY ~atweaks/spl/RR#IMSPD.SPL~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
-COPY ~atweaks/itm/RR#IMRAT.itm~  ~override~										   // Polymorph Self: Big rat (used by Imp)
-COPY ~atweaks/itm/RR#IMSPD.itm~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
-COPY ~atweaks/itm/RR#IMSP2.itm~  ~override~										   // Polymorph Self: Phase Spider (used by Imp)
-COPY ~atweaks/spl/rr#NATFR.spl~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
+COPY ~%MOD_FOLDER%/spl/RR#IMRAT.SPL~  ~override~										   // Polymorph Self: Big rat (used by Imp)
+COPY ~%MOD_FOLDER%/spl/RR#IMSPD.SPL~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
+COPY ~%MOD_FOLDER%/itm/RR#IMRAT.itm~  ~override~										   // Polymorph Self: Big rat (used by Imp)
+COPY ~%MOD_FOLDER%/itm/RR#IMSPD.itm~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
+COPY ~%MOD_FOLDER%/itm/RR#IMSP2.itm~  ~override~										   // Polymorph Self: Phase Spider (used by Imp)
+COPY ~%MOD_FOLDER%/spl/rr#NATFR.spl~  ~override~										   // Polymorph Self: Large Spider (used by Imp)
 
 COPY_EXISTING ~SPWI104.SPL~  ~override/RR#DSUGG.SPL~                               // Change Charm Person into Suggestion (used by Imp)
   SAY NAME1 @708 SAY NAME2 @708                                                    // Suggestion
@@ -412,11 +412,11 @@ WRITE_SHORT 0x22 "11"                                                           
   END
 LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 
-COPY ~atweaks/spl/rr#QUBAT.SPL~  ~override~										   // Polymorph Self: Bat (used by Quasits)
-COPY ~atweaks/spl/rr#QUWLF.SPL~  ~override~										   // Polymorph Self: Wolf (used by Quasits)
-COPY ~atweaks/itm/rr#QUBAT.ITM~  ~override~										   // Polymorph Self: Bat (used by Quasits)
-COPY ~atweaks/itm/rr#QUWLF.ITM~  ~override~										   // Polymorph Self: Wolf (used by Quasits)
-COPY ~atweaks/itm/rr#QUWL2.ITM~  ~override~										   // Polymorph Self: Winter Wolf (used by Quasits)
+COPY ~%MOD_FOLDER%/spl/rr#QUBAT.SPL~  ~override~										   // Polymorph Self: Bat (used by Quasits)
+COPY ~%MOD_FOLDER%/spl/rr#QUWLF.SPL~  ~override~										   // Polymorph Self: Wolf (used by Quasits)
+COPY ~%MOD_FOLDER%/itm/rr#QUBAT.ITM~  ~override~										   // Polymorph Self: Bat (used by Quasits)
+COPY ~%MOD_FOLDER%/itm/rr#QUWLF.ITM~  ~override~										   // Polymorph Self: Wolf (used by Quasits)
+COPY ~%MOD_FOLDER%/itm/rr#QUWL2.ITM~  ~override~										   // Polymorph Self: Winter Wolf (used by Quasits)
 
 COPY_EXISTING ~SPWI205.SPL~  ~override/rr#dmfea.spl~                               // Change Horror into Blast of Fear (used by Quasits)
   SAY NAME1 @748 SAY NAME2 @748                                                    // Blast of Fear
@@ -477,8 +477,8 @@ BUT_ONLY_IF_IT_CHANGES
 
 // Pyrotechnics (for Balors, Mariliths, Abishai, Cornugons and Pit Fiends)
 
-COPY ~atweaks/bam/rr#pyrot.bam~ ~override~                                         // Pyrotechnics BAM icon
-COPY ~atweaks/spl/rr#pyrot.spl~ ~override~                                         // Pyrotechnics
+COPY ~%MOD_FOLDER%/bam/rr#pyrot.bam~ ~override~                                         // Pyrotechnics BAM icon
+COPY ~%MOD_FOLDER%/spl/rr#pyrot.spl~ ~override~                                         // Pyrotechnics
   SAY NAME1 @747 SAY NAME2 @747
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -486,10 +486,10 @@ COPY ~atweaks/spl/rr#pyrot.spl~ ~override~                                      
     WRITE_SHORT (ab_off+i*0x28+0x26) %rr#pyrot%                                    // use new projectile (party friendly)
   END 
 
-COPY ~atweaks/spl/rr#niinv.spl~ ~override~                                         // Natural Invisibility (for Hellcats)
+COPY ~%MOD_FOLDER%/spl/rr#niinv.spl~ ~override~                                         // Natural Invisibility (for Hellcats)
 
-COPY ~atweaks/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
-COPY ~atweaks/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
+COPY ~%MOD_FOLDER%/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
+COPY ~%MOD_FOLDER%/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
   SAY NAME1 @1024 SAY NAME2 @1024
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -589,14 +589,14 @@ COPY_EXISTING sppr705.spl "override/RR#PR705.spl"                               
 
 // New items
 
-COPY ~atweaks/itm/rr#dinv.itm~  ~override~                                         // item which makes fiends untargetable until the gating animation finishes
-COPY ~aTweaks/ITM/RR#GHAST.ITM~ ~override~                                         // spawned Ghast melee attack
-COPY ~aTweaks/ITM/RR#DQUAS.ITM~ ~override~                                         // Quasit melee attack
+COPY ~%MOD_FOLDER%/itm/rr#dinv.itm~  ~override~                                         // item which makes fiends untargetable until the gating animation finishes
+COPY ~%MOD_FOLDER%/ITM/RR#GHAST.ITM~ ~override~                                         // spawned Ghast melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DQUAS.ITM~ ~override~                                         // Quasit melee attack
   LPF set_enchantment END
-COPY ~aTweaks/ITM/RR#DNABA.ITM~ ~override~                                         // Nabassu melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DNABA.ITM~ ~override~                                         // Nabassu melee attack
   LPF set_enchantment INT_VAR enchantment = 3 END
 
-COPY ~aTweaks/ITM/RR#DGLAB.ITM~ ~override~                                         // Glabrezu melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DGLAB.ITM~ ~override~                                         // Glabrezu melee attack
   LPF set_enchantment INT_VAR enchantment = 4 END
   LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete = 146 END
   opcode = 177
@@ -609,40 +609,40 @@ COPY ~aTweaks/ITM/RR#DGLAB.ITM~ ~override~                                      
     LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode target parameter1 parameter2 probability1 savingthrow STR_VAR resource END
   END
 
-COPY ~aTweaks/ITM/RR#DMARI.ITM~ ~override~                                         // Marilith melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DMARI.ITM~ ~override~                                         // Marilith melee attack
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~aTweaks/ITM/RR#DMARL.ITM~ ~override~                                         // Marilith tail attack
+COPY ~%MOD_FOLDER%/ITM/RR#DMARL.ITM~ ~override~                                         // Marilith tail attack
   LPF set_enchantment INT_VAR enchantment = 4 END
 
-COPY ~atweaks/itm/rr#dbalr.itm~ ~override~                                         // Balor Vorpal Sword (right hand)
+COPY ~%MOD_FOLDER%/itm/rr#dbalr.itm~ ~override~                                         // Balor Vorpal Sword (right hand)
   LPF set_enchantment INT_VAR enchantment = 5 END
   LPF ~entangle_immunities~ END                                    // add immunity to Entangle spells and abilities
   WRITE_BYTE 0x31 90 // PROFICIENCYLONGSWORD
 
-COPY ~atweaks/itm/rr#dbal2.itm~ ~override~                                         // Balor Flaming Whip (left hand)
+COPY ~%MOD_FOLDER%/itm/rr#dbal2.itm~ ~override~                                         // Balor Flaming Whip (left hand)
   LPF set_enchantment INT_VAR enchantment = 5 END
   WRITE_BYTE 0x31 100 // PROFICIENCYFLAILMORNINGSTAR
 
 
-COPY ~aTweaks/ITM/RR#DIMP.ITM~  ~override~                                         // Imp melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DIMP.ITM~  ~override~                                         // Imp melee attack
   LPF set_enchantment END
-COPY ~aTweaks/ITM/RR#DFCAT.ITM~ ~override~                                         // Fell Cat melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DFCAT.ITM~ ~override~                                         // Fell Cat melee attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~aTweaks/ITM/RR#DABIS.ITM~ ~override~                                         // Abishai melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DABIS.ITM~ ~override~                                         // Abishai melee attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~aTweaks/ITM/RR#DBFND.ITM~ ~override~                                         // Bone Fiend melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DBFND.ITM~ ~override~                                         // Bone Fiend melee attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~aTweaks/ITM/RR#DCORN.ITM~ ~override~                                         // Cornugon melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DCORN.ITM~ ~override~                                         // Cornugon melee attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/rr#dmaur.itm~ ~override~                                         // Maurezhi melee attack
+COPY ~%MOD_FOLDER%/itm/rr#dmaur.itm~ ~override~                                         // Maurezhi melee attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/rr#dgelu.itm~ ~override~                                         // Gelugon spear attack (main hand)
+COPY ~%MOD_FOLDER%/itm/rr#dgelu.itm~ ~override~                                         // Gelugon spear attack (main hand)
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/rr#dgel2.itm~ ~override~                                         // Gelugon tail attack (off-hand)
+COPY ~%MOD_FOLDER%/itm/rr#dgel2.itm~ ~override~                                         // Gelugon tail attack (off-hand)
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/rr#clck1.itm~ ~override~                                         // alu-fiend armor +2
-COPY ~atweaks/itm/rr#clck2.itm~ ~override~                                         // alu-fiend armor +4
-COPY ~atweaks/itm/RR#PLAT2.itm~ ~override~                                         // Cambion plate armor +2
+COPY ~%MOD_FOLDER%/itm/rr#clck1.itm~ ~override~                                         // alu-fiend armor +2
+COPY ~%MOD_FOLDER%/itm/rr#clck2.itm~ ~override~                                         // alu-fiend armor +4
+COPY ~%MOD_FOLDER%/itm/RR#PLAT2.itm~ ~override~                                         // Cambion plate armor +2
 COPY_EXISTING ~helm01.ITM~ ~override/RR#HELM1.ITM~
 	WRITE_BYTE 0x18 40															   // not droppable
 	WRITE_BYTE 0x1b 2															   // no critical hit immunity
@@ -661,7 +661,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "WINGS01.ITM" BEGIN
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 7 parameter1 = 30 parameter2 = 54 timing = 2 probability1 = 100 END 
 END
 
-COPY ~aTweaks/ITM/RR#DPITF.ITM~ ~override~                                         // Pit Fiend melee attack
+COPY ~%MOD_FOLDER%/ITM/RR#DPITF.ITM~ ~override~                                         // Pit Fiend melee attack
   LPF set_enchantment INT_VAR enchantment = 5 END
 COPY_EXISTING ~DEMSUC01.ITM~  ~override~                                           // Succubus melee attack
 LPF DELETE_ITEM_EFFECT                                         // delete effect
@@ -780,12 +780,12 @@ LPF hover_immunities END                                         // grant immuni
 
 // New Creatures
 
-COPY ~aTweaks/CRE/RR#WISH.CRE~ ~override~                                          // Noble Djinn (Pit Fiend Wish)
+COPY ~%MOD_FOLDER%/CRE/RR#WISH.CRE~ ~override~                                          // Noble Djinn (Pit Fiend Wish)
 
 ACTION_IF MOD_IS_INSTALLED atweaks.tp2 160 BEGIN //PnP Undead
-  INCLUDE "atweaks/lib/pnp-monster/160-undead-fn.tpa"
+  INCLUDE "%MOD_FOLDER%/lib/pnp-monster/160-undead-fn.tpa"
 END
-COPY ~aTweaks/CRE/RR#GHAST.CRE~ ~override~                                         // Ghast (spawned by a Nabassu's Death Gaze)
+COPY ~%MOD_FOLDER%/CRE/RR#GHAST.CRE~ ~override~                                         // Ghast (spawned by a Nabassu's Death Gaze)
   PATCH_IF MOD_IS_INSTALLED atweaks.tp2 160 BEGIN //PnP Undead
     LPF make_ghast END
   END
@@ -794,20 +794,20 @@ COPY ~aTweaks/CRE/RR#GHAST.CRE~ ~override~                                      
 
 // New AI Scripts
 
-COMPILE ~aTweaks/BAF/fiends/RR#WISH.BAF~                                                  // Noble Djinn Wish script
+COMPILE ~%MOD_FOLDER%/BAF/fiends/RR#WISH.BAF~                                                  // Noble Djinn Wish script
 
-COMPILE ~aTweaks/BAF/fiends/RR#GHAST.BAF~                                                 // Spawned Ghast AI script
+COMPILE ~%MOD_FOLDER%/BAF/fiends/RR#GHAST.BAF~                                                 // Spawned Ghast AI script
 
 ACTION_IF MOD_IS_INSTALLED atweaks.tp2 160 BEGIN //PnP Undead
   COPY_EXISTING rr#ghast.bcs override  
-    REPLACE_BCS_BLOCK "atweaks/baf/undead/fiend_ghast_old.baf" "atweaks/baf/undead/fiend_ghast_new.baf"
+    REPLACE_BCS_BLOCK "%MOD_FOLDER%/baf/undead/fiend_ghast_old.baf" "%MOD_FOLDER%/baf/undead/fiend_ghast_new.baf"
 END
 
 // Kewl upside-down icons for Gate
 COPY
-     "atweaks/bam/flscrl9n.bam" "override/fl#905a.bam"
-     "atweaks/bam/fl#gateb.bam" "override/fl#905b.bam"
-     "atweaks/bam/fl#gatea.bam" "override/fl#905c.bam"
+     "%MOD_FOLDER%/bam/flscrl9n.bam" "override/fl#905a.bam"
+     "%MOD_FOLDER%/bam/fl#gateb.bam" "override/fl#905b.bam"
+     "%MOD_FOLDER%/bam/fl#gatea.bam" "override/fl#905c.bam"
 
 
 ///////////
@@ -884,10 +884,10 @@ COPY_EXISTING skelwasu.itm "override/fl#swasu.itm"
 
      
 
-COMPILE "atweaks/baf/fiends/fl#adead.baf"
+COMPILE "%MOD_FOLDER%/baf/fiends/fl#adead.baf"
 
 //Fear, cone
-COPY "atweaks/spl/base.spl" "override/fl#cnefr.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#cnefr.spl"
   WRITE_LONG NAME1 2619 //Fear
   WRITE_ASCII 0x10 ~CAS_M01~ #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -915,7 +915,7 @@ COPY_EXISTING fl#cnefr.spl "override/fl#tchfr.spl"
   LPF configure_spell_header INT_VAR f_Target = 1 f_Range = 1 END
   
 //Telekinesis
-COPY "atweaks/spl/base.spl" "override/fl#telki.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#telki.spl"
   SAY NAME1 @731 //Telekinesis
   WRITE_ASCII 0x10 ~CAS_M08~ #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -936,7 +936,7 @@ COPY "atweaks/spl/base.spl" "override/fl#telki.spl"
   LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //Cause disease
-COPY "atweaks/spl/base.spl" "override/fl#csdis.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#csdis.spl"
   SAY NAME1 @736
   WRITE_ASCII 0x10 ~CAS_P02~ #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -963,7 +963,7 @@ COPY "atweaks/spl/base.spl" "override/fl#csdis.spl"
 OUTER_SET $f_AddSecType(fl#csdis.spl) = fl#Disease
     
 //Mass suggestion
-COPY "atweaks/spl/base.spl" "override/fl#mssug.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#mssug.spl"
   SAY NAME1 @737
   WRITE_ASCII 0x10 ~CAS_M05~ #8 //casting sound
   WRITE_SHORT 0x22 11 //enchantment (animation)
@@ -987,7 +987,7 @@ COPY "atweaks/spl/base.spl" "override/fl#mssug.spl"
   LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 
 //PnP Color Spray
-COPY "atweaks/spl/base.spl" "override/fl#clrsp.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#clrsp.spl"
   WRITE_LONG NAME1 12075 //Color Spray
   WRITE_ASCII 0x10 CAS_M08 #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -1051,8 +1051,8 @@ COPY "atweaks/spl/base.spl" "override/fl#clrsp.spl"
  LAF add_blindness_immunity STR_VAR f_Spell = "fl#clrsp" END
   
 //Shout
-COPY "atweaks/bam/fl#shout.bam" "override"
-COPY "atweaks/spl/base.spl" "override/fl#shout.spl"
+COPY "%MOD_FOLDER%/bam/fl#shout.bam" "override"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#shout.spl"
   SAY NAME1 @738 //Shout
   WRITE_ASCII 0x10 ~CAS_M06~ #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -1107,7 +1107,7 @@ BUT_ONLY IF_EXISTS
 // END
 
 //Gaze of Fascination
-COPY "atweaks/spl/base.spl" "override/fl#ultgz.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#ultgz.spl"
   SAY NAME1 @745
   WRITE_ASCII 0x10 ~~ #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //hostile

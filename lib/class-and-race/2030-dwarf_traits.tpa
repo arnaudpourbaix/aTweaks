@@ -1,25 +1,25 @@
 
 // Add ToB scripting actions/triggers to SoA (borrowed from the G3 BG2 Fixpack with thanks) 
-INCLUDE ~atweaks/lib/tob2soa.tph~
+INCLUDE ~%MOD_FOLDER%/lib/tob2soa.tph~
 
-COPY ~aTweaks/SPL/RR#DWRT.SPL~ ~override~                                       // spell which grants the additional dwarwen racial traits
-COPY ~aTweaks/EFF/RR#DWGOB.EFF~ ~override~                                      // to hit bonus vs. hobgoblins (and goblins since they use the same race in BG2)
-COPY ~aTweaks/EFF/RR#DWORC.EFF~ ~override~                                      // +1 to hit bonus vs. orcs
-COPY ~aTweaks/EFF/RR#DWHOR.EFF~ ~override~                                      // +1 to hit bonus vs. half-orcs
-COPY ~aTweaks/EFF/RR#DWRT.EFF~  ~override~                                      // -4 to hit penalty vs. dwarves (for trolls, ogres etc.)
-EXTEND_BOTTOM ~dplayer3.bcs~  ~aTweaks/BAF/RR#DWRT.BAF~                         // extend the party script for Player1 with the dwarven racial trait block
-EXTEND_BOTTOM ~dplayer2.bcs~  ~aTweaks/BAF/RR#DWRT.BAF~                         // extend the party script for other party members with the dwarven racial trait block
+COPY ~%MOD_FOLDER%/SPL/RR#DWRT.SPL~ ~override~                                       // spell which grants the additional dwarwen racial traits
+COPY ~%MOD_FOLDER%/EFF/RR#DWGOB.EFF~ ~override~                                      // to hit bonus vs. hobgoblins (and goblins since they use the same race in BG2)
+COPY ~%MOD_FOLDER%/EFF/RR#DWORC.EFF~ ~override~                                      // +1 to hit bonus vs. orcs
+COPY ~%MOD_FOLDER%/EFF/RR#DWHOR.EFF~ ~override~                                      // +1 to hit bonus vs. half-orcs
+COPY ~%MOD_FOLDER%/EFF/RR#DWRT.EFF~  ~override~                                      // -4 to hit penalty vs. dwarves (for trolls, ogres etc.)
+EXTEND_BOTTOM ~dplayer3.bcs~  ~%MOD_FOLDER%/BAF/RR#DWRT.BAF~                         // extend the party script for Player1 with the dwarven racial trait block
+EXTEND_BOTTOM ~dplayer2.bcs~  ~%MOD_FOLDER%/BAF/RR#DWRT.BAF~                         // extend the party script for other party members with the dwarven racial trait block
 
 
 // Ogre attack roll penalty vs. dwarves (implemented through patching all CREs of the Ogre race)
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                               // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                               // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     READ_BYTE 0x272 "race"                                                      // check the creature's race
     PATCH_IF (%race% = 113) BEGIN                                               // if the creature's race is Ogre
-      PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                            // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+      PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                            // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
       LPF ADD_CRE_EFFECT
         INT_VAR
           opcode = 177

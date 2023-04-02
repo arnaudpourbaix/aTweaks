@@ -2,7 +2,7 @@
 // This tweak prevents illusionary Mislead clones from singing Bard songs
 
 
-COPY    ~aTweaks/SPL/RR#MBS0.SPL~ ~override~                                       // Empty battlesong which does nothing
+COPY    ~%MOD_FOLDER%/SPL/RR#MBS0.SPL~ ~override~                                       // Empty battlesong which does nothing
 
 COPY_EXISTING ~MISLEAD.SPL~ ~override~                                             // Mislead spell effects which apply to the clone
   LPF ADD_SPELL_EFFECT

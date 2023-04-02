@@ -1,24 +1,24 @@
 
 // Add ToB scripting actions/triggers to SoA (borrowed from the G3 BG2 Fixpack with thanks) 
-INCLUDE ~atweaks/lib/tob2soa.tph~
+INCLUDE ~%MOD_FOLDER%/lib/tob2soa.tph~
 
-COPY ~aTweaks/SPL/RR#GNRT.SPL~ ~override~                                       // spell which grants the additional gnomish racial traits
-     ~aTweaks/EFF/RR#DWGOB.EFF~ ~override~                                      // to hit bonus vs. hobgoblins (and goblins since they use the same race in BG2)
-     ~aTweaks/EFF/RR#DWKOB.EFF~ ~override~                                      // +1 to hit bonus vs. kobolds
-     ~aTweaks/EFF/RR#GNRT.EFF~  ~override~                                      // -4 to hit penalty vs. gnomes (for trolls, ogres etc.)
+COPY ~%MOD_FOLDER%/SPL/RR#GNRT.SPL~ ~override~                                       // spell which grants the additional gnomish racial traits
+     ~%MOD_FOLDER%/EFF/RR#DWGOB.EFF~ ~override~                                      // to hit bonus vs. hobgoblins (and goblins since they use the same race in BG2)
+     ~%MOD_FOLDER%/EFF/RR#DWKOB.EFF~ ~override~                                      // +1 to hit bonus vs. kobolds
+     ~%MOD_FOLDER%/EFF/RR#GNRT.EFF~  ~override~                                      // -4 to hit penalty vs. gnomes (for trolls, ogres etc.)
 
-EXTEND_BOTTOM ~dplayer3.bcs~  ~aTweaks/BAF/RR#GNRT.BAF~                         // extend the party script for Player1 with the gnomish racial trait block
-EXTEND_BOTTOM ~dplayer2.bcs~  ~aTweaks/BAF/RR#GNRT.BAF~                         // extend the party script for other party members with the gnomish racial trait block
+EXTEND_BOTTOM ~dplayer3.bcs~  ~%MOD_FOLDER%/BAF/RR#GNRT.BAF~                         // extend the party script for Player1 with the gnomish racial trait block
+EXTEND_BOTTOM ~dplayer2.bcs~  ~%MOD_FOLDER%/BAF/RR#GNRT.BAF~                         // extend the party script for other party members with the gnomish racial trait block
 
 // Ogre and Gnoll attack roll penalty vs. gnomes (implemented through patching all CREs of the Ogre and Gnoll race)
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~                               // check all creatures in the game
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     READ_BYTE 0x272 "race"                                                     // check the creature's race
     PATCH_IF (%race% = 113 OR %race% = 110) BEGIN                              // if the creature's race is Ogre or Gnoll
-      PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                           // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+      PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                           // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
       LPF ADD_CRE_EFFECT
         INT_VAR
           opcode = 177                                                         // effect: #177 (use EFF file)
@@ -89,9 +89,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
     COPY_EXISTING ~%file%.cre~ ~override~
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+      PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                              // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                             // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+        PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                             // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
         LPF ADD_CRE_EFFECT
           INT_VAR
             opcode = 177                                                           // effect: #177 (use EFF file)

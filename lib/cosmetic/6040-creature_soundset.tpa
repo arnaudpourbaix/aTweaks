@@ -35,16 +35,16 @@ END
 
 // Give Mariliths their Icewind Dale soundset
 // This gives Mariliths the Yxunomei soundset from Icewind Dale 
-COPY ~aTweaks/WAV/RR#MAR01.WAV~ ~override~                                         // IWD Marilith Initial Meeting and Battle Cry 1
-     ~aTweaks/WAV/RR#MAR02.WAV~ ~override~                                         // IWD Marilith Battle Cry 2
-     ~aTweaks/WAV/RR#MAR03.WAV~ ~override~                                         // IWD Marilith Attack 1
-     ~aTweaks/WAV/RR#MAR04.WAV~ ~override~                                         // IWD Marilith Attack 2
-     ~aTweaks/WAV/RR#MAR05.WAV~ ~override~                                         // IWD Marilith Attack 3
-     ~aTweaks/WAV/RR#MAR06.WAV~ ~override~                                         // IWD Marilith Attack 4
-     ~aTweaks/WAV/RR#MAR07.WAV~ ~override~                                         // IWD Marilith Damage
-     ~aTweaks/WAV/RR#MAR08.WAV~ ~override~                                         // IWD Marilith Dying
-     ~aTweaks/WAV/RR#MAR09.WAV~ ~override~                                         // IWD Marilith Hurt
-     ~aTweaks/WAV/RR#MAR10.WAV~ ~override~                                         // IWD Marilith Select Common 1
+COPY ~%MOD_FOLDER%/WAV/RR#MAR01.WAV~ ~override~                                         // IWD Marilith Initial Meeting and Battle Cry 1
+     ~%MOD_FOLDER%/WAV/RR#MAR02.WAV~ ~override~                                         // IWD Marilith Battle Cry 2
+     ~%MOD_FOLDER%/WAV/RR#MAR03.WAV~ ~override~                                         // IWD Marilith Attack 1
+     ~%MOD_FOLDER%/WAV/RR#MAR04.WAV~ ~override~                                         // IWD Marilith Attack 2
+     ~%MOD_FOLDER%/WAV/RR#MAR05.WAV~ ~override~                                         // IWD Marilith Attack 3
+     ~%MOD_FOLDER%/WAV/RR#MAR06.WAV~ ~override~                                         // IWD Marilith Attack 4
+     ~%MOD_FOLDER%/WAV/RR#MAR07.WAV~ ~override~                                         // IWD Marilith Damage
+     ~%MOD_FOLDER%/WAV/RR#MAR08.WAV~ ~override~                                         // IWD Marilith Dying
+     ~%MOD_FOLDER%/WAV/RR#MAR09.WAV~ ~override~                                         // IWD Marilith Hurt
+     ~%MOD_FOLDER%/WAV/RR#MAR10.WAV~ ~override~                                         // IWD Marilith Select Common 1
 
 
 ACTION_FOR_EACH ~file~ IN
@@ -108,10 +108,10 @@ END
 
 
 // Standardize Dryad soundsets
-COPY ~atweaks/wav/rr#dry01.wav~ ~override~                                         // NWN Dryad Select Common 1 (giggle)
-     ~atweaks/wav/rr#dry02.wav~ ~override~                                         // NWN Dryad Battle Cry 1 (Leave me, foul creature!)
-     ~atweaks/wav/rr#dry03.wav~ ~override~                                         // NWN Dryad Battle Cry 2 (I will not allow this!)
-     ~atweaks/wav/rr#dry04.wav~ ~override~                                         // NWN Dryad Action Acknowledgement 1 (Mmmm, yes!)
+COPY ~%MOD_FOLDER%/wav/rr#dry01.wav~ ~override~                                         // NWN Dryad Select Common 1 (giggle)
+     ~%MOD_FOLDER%/wav/rr#dry02.wav~ ~override~                                         // NWN Dryad Battle Cry 1 (Leave me, foul creature!)
+     ~%MOD_FOLDER%/wav/rr#dry03.wav~ ~override~                                         // NWN Dryad Battle Cry 2 (I will not allow this!)
+     ~%MOD_FOLDER%/wav/rr#dry04.wav~ ~override~                                         // NWN Dryad Action Acknowledgement 1 (Mmmm, yes!)
 
 ACTION_FOR_EACH ~file~ IN
               ~DRYAD~                                                              // Dryad of the Cloudpeaks (BGT)
@@ -223,15 +223,15 @@ END
 
 
 // Standardize Succubi soundsets
-COPY ~atweaks/wav/rr#suc01.wav~ ~override~                                         // NWN Succubus Select Common 1 (Your death shall be beautiful!)
-     ~atweaks/wav/rr#suc02.wav~ ~override~                                         // NWN Succubus Select Common 2 (Your soul shall be mine!)
-     ~atweaks/wav/rr#suc03.wav~ ~override~                                         // NWN Succubus Action Acknowledgement 1 (Hahaha!)
-     ~atweaks/wav/rr#suc04.wav~ ~override~                                         // NWN Succubus Action Acknowledgement 2 (Oh yes!)
-     ~atweaks/wav/rr#suc05.wav~ ~override~                                         // NWN Succubus Attack1
-     ~atweaks/wav/rr#suc06.wav~ ~override~                                         // NWN Succubus Attack2
-     ~atweaks/wav/rr#suc07.wav~ ~override~                                         // NWN Succubus Damage
-     ~atweaks/wav/rr#suc08.wav~ ~override~                                         // NWN Succubus Hurt
-     ~atweaks/wav/rr#suc09.wav~ ~override~                                         // NWN Succubus Dying
+COPY ~%MOD_FOLDER%/wav/rr#suc01.wav~ ~override~                                         // NWN Succubus Select Common 1 (Your death shall be beautiful!)
+     ~%MOD_FOLDER%/wav/rr#suc02.wav~ ~override~                                         // NWN Succubus Select Common 2 (Your soul shall be mine!)
+     ~%MOD_FOLDER%/wav/rr#suc03.wav~ ~override~                                         // NWN Succubus Action Acknowledgement 1 (Hahaha!)
+     ~%MOD_FOLDER%/wav/rr#suc04.wav~ ~override~                                         // NWN Succubus Action Acknowledgement 2 (Oh yes!)
+     ~%MOD_FOLDER%/wav/rr#suc05.wav~ ~override~                                         // NWN Succubus Attack1
+     ~%MOD_FOLDER%/wav/rr#suc06.wav~ ~override~                                         // NWN Succubus Attack2
+     ~%MOD_FOLDER%/wav/rr#suc07.wav~ ~override~                                         // NWN Succubus Damage
+     ~%MOD_FOLDER%/wav/rr#suc08.wav~ ~override~                                         // NWN Succubus Hurt
+     ~%MOD_FOLDER%/wav/rr#suc09.wav~ ~override~                                         // NWN Succubus Dying
 
 ACTION_FOR_EACH ~file~ IN
               ~DEMSUC01~                                                           // Succubus
@@ -341,13 +341,13 @@ END
 
 
 // Give Water Elementals their Icewind Dale soundset
-COPY ~atweaks/wav/rr#ewa01.wav~ ~override~                                         // IWD Water Elemental Select Common 1 and Battle Cry 1
-     ~atweaks/wav/rr#ewa02.wav~ ~override~                                         // IWD Water Elemental Battle Cry 2
-     ~atweaks/wav/rr#ewa03.wav~ ~override~                                         // IWD Water Elemental Attack 1
-     ~atweaks/wav/rr#ewa04.wav~ ~override~                                         // IWD Water Elemental Attack 2
-     ~atweaks/wav/rr#ewa05.wav~ ~override~                                         // IWD Water Elemental Damage
-     ~atweaks/wav/rr#ewa06.wav~ ~override~                                         // IWD Water Elemental Dying
-     ~atweaks/wav/rr#ewa07.wav~ ~override~                                         // IWD Water Elemental Action Acknowledgement 1
+COPY ~%MOD_FOLDER%/wav/rr#ewa01.wav~ ~override~                                         // IWD Water Elemental Select Common 1 and Battle Cry 1
+     ~%MOD_FOLDER%/wav/rr#ewa02.wav~ ~override~                                         // IWD Water Elemental Battle Cry 2
+     ~%MOD_FOLDER%/wav/rr#ewa03.wav~ ~override~                                         // IWD Water Elemental Attack 1
+     ~%MOD_FOLDER%/wav/rr#ewa04.wav~ ~override~                                         // IWD Water Elemental Attack 2
+     ~%MOD_FOLDER%/wav/rr#ewa05.wav~ ~override~                                         // IWD Water Elemental Damage
+     ~%MOD_FOLDER%/wav/rr#ewa06.wav~ ~override~                                         // IWD Water Elemental Dying
+     ~%MOD_FOLDER%/wav/rr#ewa07.wav~ ~override~                                         // IWD Water Elemental Action Acknowledgement 1
 	 
 
 

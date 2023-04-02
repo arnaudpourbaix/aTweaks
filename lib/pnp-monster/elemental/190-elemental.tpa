@@ -3,21 +3,21 @@
 ///////////////////
 
 
-INCLUDE "atweaks/lib/tactical_shared.tpa"
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
 
 //////////////
 // New spells
 //////////////
 
 ACTION_IF NOT FILE_EXISTS_IN_GAME ~RR#DDOOR.BAM~ THEN BEGIN                        // Checks for the Icewind Dale's Dimension Door animation component
-  COPY    ~aTweaks/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
-  COPY    ~aTweaks/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
-  COPY    ~aTweaks/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
+  COPY    ~%MOD_FOLDER%/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
+  COPY    ~%MOD_FOLDER%/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
+  COPY    ~%MOD_FOLDER%/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
 END                                                                                // ends ACTION_IF block
-COPY ~atweaks/spl/rr#telwe.spl~ ~override/rr#telwr.spl~                            // Teleport Without Error (renewable)
+COPY ~%MOD_FOLDER%/spl/rr#telwe.spl~ ~override/rr#telwr.spl~                            // Teleport Without Error (renewable)
 LPF spellToInnate INT_VAR ctime=1 renew=1 END
 
-COPY ~atweaks/spl/rr#niinv.spl~ ~override~                                         // Natural Invisibility
+COPY ~%MOD_FOLDER%/spl/rr#niinv.spl~ ~override~                                         // Natural Invisibility
   SAY NAME1 @2100 SAY NAME2 @2100
   PATCH_IF !GAME_IS ~bgee eet~ BEGIN
 	LPF CLONE_EFFECT INT_VAR match_opcode = 20 match_parameter2 = 1 opcode = 33 parameter2 = 0 parameter1 = 4 timing = 0 END
@@ -27,7 +27,7 @@ COPY ~atweaks/spl/rr#niinv.spl~ ~override~                                      
 	LPF CLONE_EFFECT INT_VAR match_opcode = 33 opcode = 37 END
   END
 
-COPY ~atweaks/spl/elementals/rr#emcbt.spl~ ~override~                              // New Mental Combat spell (used for arcane spellcasters when summoning elementals)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#emcbt.spl~ ~override~                              // New Mental Combat spell (used for arcane spellcasters when summoning elementals)
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
   READ_LONG  0x6a "fx_off"
@@ -43,19 +43,19 @@ COPY ~atweaks/spl/elementals/rr#emcbt.spl~ ~override~                           
     END
   END
 
-COPY ~atweaks/spl/rr#uchrm.spl~ ~override~                                         // Remove Enchantment Spell School (uncharm)
+COPY ~%MOD_FOLDER%/spl/rr#uchrm.spl~ ~override~                                         // Remove Enchantment Spell School (uncharm)
 
-COPY ~atweaks/spl/elementals/rr#track.spl~ ~override~                              // Tracking
-COPY ~atweaks/spl/elementals/rr#ecfir.spl~ ~override~                              // Conjure Fire Elemental
+COPY ~%MOD_FOLDER%/spl/elementals/rr#track.spl~ ~override~                              // Tracking
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ecfir.spl~ ~override~                              // Conjure Fire Elemental
 
-COPY ~atweaks/spl/elementals/rr#endis.spl~ ~override~                              // Displacement (Nereid)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#endis.spl~ ~override~                              // Displacement (Nereid)
 SAY NAME1 @2105 SAY NAME2 @2105
 
-COPY ~atweaks/spl/elementals/rr#ecems.spl~ ~override~                              // Cold Aura (Frost Salamander)
-COPY ~atweaks/spl/elementals/rr#eceic.spl~ ~override~                              // Cold Aura (Ice Paraelemental and Cryonax)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ecems.spl~ ~override~                              // Cold Aura (Frost Salamander)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eceic.spl~ ~override~                              // Cold Aura (Ice Paraelemental and Cryonax)
 
-COPY ~atweaks/eff/elementals/rr#enlfr.eff~ ~override~                              // Lower Fire Resistance immunity EFF (for Fire Elementals, Fire Salamanders, Efreet etc.)
-COPY ~atweaks/spl/elementals/rr#enlfr.spl~ ~override~                              // Lower Fire Resistance
+COPY ~%MOD_FOLDER%/eff/elementals/rr#enlfr.eff~ ~override~                              // Lower Fire Resistance immunity EFF (for Fire Elementals, Fire Salamanders, Efreet etc.)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#enlfr.spl~ ~override~                              // Lower Fire Resistance
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
   READ_LONG  0x6a "fx_off"
@@ -71,9 +71,9 @@ COPY ~atweaks/spl/elementals/rr#enlfr.spl~ ~override~                           
     END
   END
 
-COPY ~atweaks/vvc/rr#cnstr.vvc~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
-COPY ~atweaks/bam/rr#cnstr.bam~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
-COPY ~atweaks/spl/rr#cnstr.spl~ ~override/rr#dgrab.spl~                            // Grab ability (Glabrezu)
+COPY ~%MOD_FOLDER%/vvc/rr#cnstr.vvc~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
+COPY ~%MOD_FOLDER%/bam/rr#cnstr.bam~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
+COPY ~%MOD_FOLDER%/spl/rr#cnstr.spl~ ~override/rr#dgrab.spl~                            // Grab ability (Glabrezu)
 SAY NAME1 @684 SAY NAME2 @684                                                    
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 177 END
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 12 END
@@ -93,17 +93,17 @@ SAY NAME1 @684 SAY NAME2 @684
     LPF ADD_SPELL_EFFECT INT_VAR insert_point opcode target parameter1 parameter1 duration STR_VAR resource END
   END
 
-COPY ~atweaks/eff/rr#cnstr.eff~ ~override/rr#dgrab.eff~                            // Grab ability immunity (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/eff/rr#cnstr.eff~ ~override/rr#dgrab.eff~                            // Grab ability immunity (for large and incorporeal creatures)
   WRITE_ASCII 0x30 ~RR#DGRAB~ #8                                                   // resref: RR#DGRAB
 
-COPY ~atweaks/eff/rr#cnstr.eff~ ~override/rr#dgra2.eff~
+COPY ~%MOD_FOLDER%/eff/rr#cnstr.eff~ ~override/rr#dgra2.eff~
   WRITE_LONG  0x10 146 //cast spell
   WRITE_LONG  0x20 1 //cast instantly
   WRITE_LONG  0x24 1 //instant/permanent
   WRITE_ASCII 0x30 rr#dgrab #8
 
-COPY ~atweaks/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
-COPY ~atweaks/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
+COPY ~%MOD_FOLDER%/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
+COPY ~%MOD_FOLDER%/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
   SAY NAME1 @1024 SAY NAME2 @1024
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -111,7 +111,7 @@ COPY ~atweaks/spl/rr#icew.spl~ ~override~                                       
     WRITE_SHORT (ab_off+i*0x28+0x26) %rr#icew%                                     // use new projectile
   END
 
-COPY ~atweaks/spl/elementals/rr#enbga.spl~ ~override~                              // Beguiling Aura (part 1)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#enbga.spl~ ~override~                              // Beguiling Aura (part 1)
   SAY NAME1 @2104 SAY NAME2 @2104
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -120,7 +120,7 @@ COPY ~atweaks/spl/elementals/rr#enbga.spl~ ~override~                           
   END
 
 
-COPY ~atweaks/spl/elementals/rr#enbg2.spl~ ~override~                              // Beguiling Aura (part 2)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#enbg2.spl~ ~override~                              // Beguiling Aura (part 2)
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
   READ_LONG  0x6a "fx_off"
@@ -136,58 +136,58 @@ COPY ~atweaks/spl/elementals/rr#enbg2.spl~ ~override~                           
     END
   END
 
-COPY ~atweaks/eff/elementals/rr#enbga.eff~ ~override~                              // Beguiling Aura EFF 1 (for targeting only male characters)
-COPY ~atweaks/eff/elementals/rr#enbg2.eff~ ~override~                              // Beguiling Aura EFF 2 (for elven and half-elven charm immunity)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#enbga.eff~ ~override~                              // Beguiling Aura EFF 1 (for targeting only male characters)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#enbg2.eff~ ~override~                              // Beguiling Aura EFF 2 (for elven and half-elven charm immunity)
   SAY 0x1C @1903                                                                   // Resists charm effect
  LAF add_blindness_immunity STR_VAR f_Spell = "rr#enbg2" END
 
-COPY ~aTweaks/VVC/RR#SKISS.VVC~ ~override~                                         // Kiss VVC animation
-COPY ~aTweaks/BAM/RR#SKISS.BAM~ ~override~                                         // Kiss BAM graphics
-COPY ~atweaks/bam/elementals/rr#enkis.bam~ ~override~                              // Drowning Kiss bam
-COPY ~atweaks/spl/elementals/rr#enkis.spl~ ~override~                              // Drowning Kiss (Nereid)
+COPY ~%MOD_FOLDER%/VVC/RR#SKISS.VVC~ ~override~                                         // Kiss VVC animation
+COPY ~%MOD_FOLDER%/BAM/RR#SKISS.BAM~ ~override~                                         // Kiss BAM graphics
+COPY ~%MOD_FOLDER%/bam/elementals/rr#enkis.bam~ ~override~                              // Drowning Kiss bam
+COPY ~%MOD_FOLDER%/spl/elementals/rr#enkis.spl~ ~override~                              // Drowning Kiss (Nereid)
   SAY NAME1 @2107 SAY NAME2 @2107
 
-COPY ~atweaks/spl/elementals/rr#envsp.spl~ ~override~                              // Venom Spit (Nereid)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#envsp.spl~ ~override~                              // Venom Spit (Nereid)
   SAY NAME1 @2108 SAY NAME2 @2108
 
-COPY ~atweaks/spl/elementals/rr#ensww.spl~ ~override~                              // Summon Fake Water Weird (Nereid)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ensww.spl~ ~override~                              // Summon Fake Water Weird (Nereid)
   SAY NAME1 @2109 SAY NAME2 @2109
-COPY ~atweaks/eff/elementals/rr#ensww.eff~ ~override~                              // Summon Fake Water Weird EFF
+COPY ~%MOD_FOLDER%/eff/elementals/rr#ensww.eff~ ~override~                              // Summon Fake Water Weird EFF
   WRITE_ASCII 0x30 "RR#EWWEF"
 
-COPY ~atweaks/spl/elementals/rr#envlp.spl~ ~override~                              // Envelop
+COPY ~%MOD_FOLDER%/spl/elementals/rr#envlp.spl~ ~override~                              // Envelop
   SAY NAME1 @2111 SAY NAME2 @2111
-COPY ~atweaks/eff/elementals/rr#envlp.eff~ ~override~                              // Envelop immunity EFF (for large and incorporeal creatures)
-COPY ~atweaks/bam/elementals/rr#envlp.bam~ ~override~                              // Envelop BAM animation
-COPY ~atweaks/vvc/rr#envlp.vvc~ ~override~                                         // Envelop VVC animation
+COPY ~%MOD_FOLDER%/eff/elementals/rr#envlp.eff~ ~override~                              // Envelop immunity EFF (for large and incorporeal creatures)
+COPY ~%MOD_FOLDER%/bam/elementals/rr#envlp.bam~ ~override~                              // Envelop BAM animation
+COPY ~%MOD_FOLDER%/vvc/rr#envlp.vvc~ ~override~                                         // Envelop VVC animation
 
-COPY ~atweaks/spl/elementals/rr#drown.spl~ ~override~                              // Drown
+COPY ~%MOD_FOLDER%/spl/elementals/rr#drown.spl~ ~override~                              // Drown
 SAY NAME1 @2112 SAY NAME2 @2112
 
-COPY ~atweaks/spl/elementals/rr#ewwde.spl~ ~override~                              // Dominate Elemental
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ewwde.spl~ ~override~                              // Dominate Elemental
 SAY NAME1 @2113 SAY NAME2 @2113
 
-COPY ~atweaks/spl/elementals/rr#ewwsl.spl~ ~override~                              // 1 round Slow (Water Weirds are slowed by cold damage)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ewwsl.spl~ ~override~                              // 1 round Slow (Water Weirds are slowed by cold damage)
 
-COPY ~atweaks/bam/elementals/rr#eairw.bam~ ~override~                              // Whirlwind BAM icon
-COPY ~atweaks/spl/elementals/rr#eairw.spl~ ~override~                              // Whirlwind (Air Elemental)
-COPY ~atweaks/bam/elementals/rr#whirl.bam~ ~override~                      		   // Whirlwind BAM animation
-COPY ~atweaks/vvc/rr#whirl.vvc~ ~override~ 			                     		   // Whirlwind VVC animation
-COPY ~atweaks/wav/rr#whirl.wav~ ~override~ 			                     		   // Whirlwind WAV sound effect
+COPY ~%MOD_FOLDER%/bam/elementals/rr#eairw.bam~ ~override~                              // Whirlwind BAM icon
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eairw.spl~ ~override~                              // Whirlwind (Air Elemental)
+COPY ~%MOD_FOLDER%/bam/elementals/rr#whirl.bam~ ~override~                      		   // Whirlwind BAM animation
+COPY ~%MOD_FOLDER%/vvc/rr#whirl.vvc~ ~override~ 			                     		   // Whirlwind VVC animation
+COPY ~%MOD_FOLDER%/wav/rr#whirl.wav~ ~override~ 			                     		   // Whirlwind WAV sound effect
 
-COPY ~atweaks/spl/elementals/rr#ecncl.spl~ ~override~                              // Elemental Concealment
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ecncl.spl~ ~override~                              // Elemental Concealment
 SAY NAME1 @2123 SAY NAME2 @2123
 LPF DELETE_EFFECT INT_VAR match_opcode = 139 END							   	   // Remove string: invisibile - useless
 
-COPY ~atweaks/spl/elementals/rr#equa.spl~ ~override~                               // Earthquake (note: this filename must be 7 characters or less)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#equa.spl~ ~override~                               // Earthquake (note: this filename must be 7 characters or less)
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %fl#sight%                                    // use new projectile
   END
 
-COPY ~atweaks/eff/elementals/rr#eburn.eff~ ~override~                              // Burn immunity EFF (for noncombustible creatures)
-COPY ~atweaks/spl/elementals/rr#eburn.spl~ ~override~                              // Burn (Fire Elemental on-hit effect)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#eburn.eff~ ~override~                              // Burn immunity EFF (for noncombustible creatures)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eburn.spl~ ~override~                              // Burn (Fire Elemental on-hit effect)
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
   READ_LONG  0x6a "fx_off"
@@ -203,12 +203,12 @@ COPY ~atweaks/spl/elementals/rr#eburn.spl~ ~override~                           
     END
   END
 
-COPY ~atweaks/eff/elementals/rr#efrzn.eff~ ~override~                              // Freeze immunity EFF
-COPY ~atweaks/spl/elementals/rr#efrzn.spl~ ~override~                              // Freeze (Cryonax on-hit effect)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#efrzn.eff~ ~override~                              // Freeze immunity EFF
+COPY ~%MOD_FOLDER%/spl/elementals/rr#efrzn.spl~ ~override~                              // Freeze (Cryonax on-hit effect)
 
 
-COPY ~atweaks/eff/elementals/rr#englf.eff~ ~override~                              // Engulf immunity EFF (for large, incorporeal and noncombustible creatures)
-COPY ~atweaks/spl/elementals/rr#englf.spl~ ~override~                              // Engulf, part 1 (Greater Fire Elemental on-hit effect)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#englf.eff~ ~override~                              // Engulf immunity EFF (for large, incorporeal and noncombustible creatures)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#englf.spl~ ~override~                              // Engulf, part 1 (Greater Fire Elemental on-hit effect)
 SAY NAME1 @2121 SAY NAME2 @2121
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
@@ -224,53 +224,53 @@ SAY NAME1 @2121 SAY NAME2 @2121
         END
     END
   END
-COPY ~atweaks/spl/elementals/rr#engl2.spl~ ~override~                              // Engulf, part 2 (fire damage)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#engl2.spl~ ~override~                              // Engulf, part 2 (fire damage)
 
-COPY ~atweaks/eff/elementals/rr#ecry1.eff~ ~override~                              // Cryonax Summon Allies EFF 1 (Ice Paraelemental)
-COPY ~atweaks/spl/elementals/rr#ecryo.spl~ ~override~                              // Summon Allies (Cryonax)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#ecry1.eff~ ~override~                              // Cryonax Summon Allies EFF 1 (Ice Paraelemental)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ecryo.spl~ ~override~                              // Summon Allies (Cryonax)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/spl/elementals/rr#eimix.spl~ ~override~                              // Summon Allies (Imix)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eimix.spl~ ~override~                              // Summon Allies (Imix)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/spl/elementals/rr#eogre.spl~ ~override~                              // Summon Allies (Ogremoch)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eogre.spl~ ~override~                              // Summon Allies (Ogremoch)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/eff/elementals/rr#ehyd1.eff~ ~override~                              // Olhydra Summon Allies EFF 1 (Water Elemental)
-COPY ~atweaks/spl/elementals/rr#ehydr.spl~ ~override~                              // Summon Allies (Olhydra)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#ehyd1.eff~ ~override~                              // Olhydra Summon Allies EFF 1 (Water Elemental)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ehydr.spl~ ~override~                              // Summon Allies (Olhydra)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/eff/elementals/rr#eyan1.eff~ ~override~                              // Yan-C-Bin and Chan Summon Allies EFF 1 (Air Elemental, non-arcane version)
-COPY ~atweaks/spl/elementals/rr#eyanc.spl~ ~override~                              // Summon Allies (Yan-C-Bin)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#eyan1.eff~ ~override~                              // Yan-C-Bin and Chan Summon Allies EFF 1 (Air Elemental, non-arcane version)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eyanc.spl~ ~override~                              // Summon Allies (Yan-C-Bin)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/spl/elementals/rr#echan.spl~ ~override~                              // Summon Allies (Chan)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#echan.spl~ ~override~                              // Summon Allies (Chan)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/spl/elementals/rr#esunn.spl~ ~override~                              // Summon Allies (Sunnis)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#esunn.spl~ ~override~                              // Summon Allies (Sunnis)
 SAY NAME1 @2127 SAY NAME2 @2127
 
-COPY ~atweaks/spl/elementals/rr#ezaam.spl~ ~override~                              // Summon Allies (Zaaman Rul)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ezaam.spl~ ~override~                              // Summon Allies (Zaaman Rul)
 SAY NAME1 @2127 SAY NAME2 @2127
 
 
 
-COPY ~atweaks/spl/elementals/rr#eimfb.spl~ ~override~                              // Fireball, 20d6 (Imix)
-COPY ~atweaks/spl/elementals/rr#eimhe.spl~ ~override~                              // Heat Emission, 1d20 (Imix)
-COPY ~atweaks/spl/elementals/rr#eimfs.spl~ ~override~                              // Fire Shield: Red, triple strength, Part1 (Imix)
-COPY ~atweaks/spl/elementals/rr#eimfd.spl~ ~override~                              // Fire Shield: Red, triple strength, Part2 (Imix)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eimfb.spl~ ~override~                              // Fireball, 20d6 (Imix)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eimhe.spl~ ~override~                              // Heat Emission, 1d20 (Imix)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eimfs.spl~ ~override~                              // Fire Shield: Red, triple strength, Part1 (Imix)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eimfd.spl~ ~override~                              // Fire Shield: Red, triple strength, Part2 (Imix)
 COPY_EXISTING ~rr#eimhe.spl~ ~override/rr#eiems.spl~                               // Heat Emission, 1d8 (fire salamander) -- compatibility with Stratagems and IWDification
 		WRITE_LONG 0x1aa 8														   // 1d8
 
-COPY ~atweaks/spl/elementals/rr#ezafb.spl~ ~override~                              // Fireball, 12d6 (Zaaman Rul)
-COPY ~atweaks/spl/elementals/rr#ezafa.spl~ ~override~                              // Flame Arrow, double damage (Zaaman Rul)
-COPY ~atweaks/spl/elementals/rr#ezafs.spl~ ~override~                              // Fire Shield: Red, double strength, Part1 (Zaaman Rul)
-COPY ~atweaks/spl/elementals/rr#ezafd.spl~ ~override~                              // Fire Shield: Red, double strength, Part2 (Zaaman Rul)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ezafb.spl~ ~override~                              // Fireball, 12d6 (Zaaman Rul)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ezafa.spl~ ~override~                              // Flame Arrow, double damage (Zaaman Rul)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ezafs.spl~ ~override~                              // Fire Shield: Red, double strength, Part1 (Zaaman Rul)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ezafd.spl~ ~override~                              // Fire Shield: Red, double strength, Part2 (Zaaman Rul)
 
 // Pyrotechnics
 
-COPY ~atweaks/bam/rr#pyrot.bam~ ~override~                                         // Pyrotechnics BAM icon
-COPY ~atweaks/spl/rr#pyrot.spl~ ~override~                                         // Pyrotechnics
+COPY ~%MOD_FOLDER%/bam/rr#pyrot.bam~ ~override~                                         // Pyrotechnics BAM icon
+COPY ~%MOD_FOLDER%/spl/rr#pyrot.spl~ ~override~                                         // Pyrotechnics
   SAY NAME1 @747 SAY NAME2 @747
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -280,8 +280,8 @@ COPY ~atweaks/spl/rr#pyrot.spl~ ~override~                                      
 
 // Wall of Fog
 
-COPY ~atweaks/vvc/rr#mmswf.vvc~ ~override~                                         // Wall of Fog animation
-COPY ~atweaks/spl/mephits/rr#mmswf.spl~ ~override~                                 // Wall of Fog
+COPY ~%MOD_FOLDER%/vvc/rr#mmswf.vvc~ ~override~                                         // Wall of Fog animation
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmswf.spl~ ~override~                                 // Wall of Fog
   SAY NAME1 @1855 SAY NAME2 @1855
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
@@ -292,8 +292,8 @@ COPY ~atweaks/spl/mephits/rr#mmswf.spl~ ~override~                              
 
 // Solid Fog
 
-COPY ~atweaks/vvc/rr#mmswf.vvc~ ~override~                                         // Fog VVC animation
-COPY ~atweaks/spl/elementals/rr#echsf.spl~ ~override~                              // Solid Fog
+COPY ~%MOD_FOLDER%/vvc/rr#mmswf.vvc~ ~override~                                         // Fog VVC animation
+COPY ~%MOD_FOLDER%/spl/elementals/rr#echsf.spl~ ~override~                              // Solid Fog
   SAY NAME1 @2128 SAY NAME2 @2128
   LPF CLONE_EFFECT INT_VAR match_opcode = 158 opcode = 142 parameter2 = 145 END			   // Add Grease icon in character sheets -- it is already there, on protrait thanks to grease overlay...
   READ_LONG  0x64 ab_off
@@ -305,13 +305,13 @@ COPY ~atweaks/spl/elementals/rr#echsf.spl~ ~override~                           
 
 // Stun for 3 rounds (Yan-C-Bin on hit effect)
 
-COPY ~atweaks/eff/elementals/rr#estun.eff~ ~override~                              // Stun immunity EFF (for undead, constructs etc.)
-COPY ~atweaks/spl/elementals/rr#estun.spl~ ~override~                              // Stun (Yan-C-Bin on hit effect)
+COPY ~%MOD_FOLDER%/eff/elementals/rr#estun.eff~ ~override~                              // Stun immunity EFF (for undead, constructs etc.)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#estun.spl~ ~override~                              // Stun (Yan-C-Bin on hit effect)
 
 
 // Wind Wall
 
-COPY ~atweaks/spl/elementals/rr#echww.spl~ ~override~                              // Wind Wall (Chan)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#echww.spl~ ~override~                              // Wind Wall (Chan)
   SAY NAME1 @2209 SAY NAME2 @2209 SAY DESC @2210 SAY UNIDENTIFIED_DESC @2210
   READ_LONG  0x64 "abil_off"
   READ_SHORT 0x68 "abil_num"
@@ -337,16 +337,16 @@ LPF insect_spell_immunities END
 
 // Gust of Wind
 
-COPY ~atweaks/spl/mephits/rr#maigw.spl~ ~override~                                 // Gust of Wind
+COPY ~%MOD_FOLDER%/spl/mephits/rr#maigw.spl~ ~override~                                 // Gust of Wind
   SAY NAME1 @1850 SAY NAME2 @1850
 
 // Know Alignment (custom version, to avoid compatibility issues with Spell Revisions)
 
-COPY ~atweaks/spl/elementals/rr#ekal.spl~ ~override~                               // Know Alignment
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ekal.spl~ ~override~                               // Know Alignment
 
 // Iron Skins (Sunnis' version)
 
-COPY ~atweaks/spl/elementals/rr#esuis.spl~ ~override~                              // Iron Skins
+COPY ~%MOD_FOLDER%/spl/elementals/rr#esuis.spl~ ~override~                              // Iron Skins
 
 // Clone spells into innate abilities
 
@@ -408,7 +408,7 @@ LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 // New items
 //////////////
 
-COPY ~atweaks/itm/elementals/rr#etrai.itm~ ~override~                              // elemental traits "helmet" (shared by all Elementals, needs to be a helmet in order to grant critical hit protection)
+COPY ~%MOD_FOLDER%/itm/elementals/rr#etrai.itm~ ~override~                              // elemental traits "helmet" (shared by all Elementals, needs to be a helmet in order to grant critical hit protection)
 LPF ~extraplanar_traits~ END                                     // add extraplanar traits
 LPF ~bleeding_immunity~ END                                      // add bleeding immunity
 LPF ~disease_immunity~ END                                       // add disease immunity
@@ -481,74 +481,74 @@ COPY_EXISTING "rr#etrai.itm" ~override/rr#etrwe.itm~                            
 LPF add_water_elemental_effects END
 
 
-COPY ~atweaks/itm/rr#dinv.itm~  ~override~                                         // item which makes creatures untargetable until the gating animation finishes
-COPY ~atweaks/itm/elementals/rr#easer.itm~ ~override~                              // Aerial Servant attack
+COPY ~%MOD_FOLDER%/itm/rr#dinv.itm~  ~override~                                         // item which makes creatures untargetable until the gating animation finishes
+COPY ~%MOD_FOLDER%/itm/elementals/rr#easer.itm~ ~override~                              // Aerial Servant attack
   LPF set_enchantment INT_VAR enchantment = 4 END
 	WRITE_BYTE 0x98 0															   // Nerf Aerial Servant atk by removing strength Bonus as the attack is a grabbing attack and should not use strength modifier (Aerial don't accept atk command in PnP)
-COPY ~atweaks/itm/elementals/rr#efsal.itm~ ~override~                              // Fire Salamander spear attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efsal.itm~ ~override~                              // Fire Salamander spear attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#efsa2.itm~ ~override~                              // Fire Salamander tail attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efsa2.itm~ ~override~                              // Fire Salamander tail attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#efrsa.itm~ ~override~                              // Frost Salamander claw attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efrsa.itm~ ~override~                              // Frost Salamander claw attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#efrs2.itm~ ~override~                              // Frost Salamander bite attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efrs2.itm~ ~override~                              // Frost Salamander bite attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#eista.itm~ ~override~                              // Invisible Stalker attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eista.itm~ ~override~                              // Invisible Stalker attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#ensal.itm~ ~override~                              // Salamander Noble spear attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ensal.itm~ ~override~                              // Salamander Noble spear attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#ensa2.itm~ ~override~                              // Salamander Noble tail attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ensa2.itm~ ~override~                              // Salamander Noble tail attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#ewwei.itm~ ~override~                              // Water Weird attack
-COPY ~atweaks/itm/elementals/rr#eairl.itm~ ~override~                              // Lesser Air Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ewwei.itm~ ~override~                              // Water Weird attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eairl.itm~ ~override~                              // Lesser Air Elemental attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#eairr.itm~ ~override~                              // Air Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eairr.itm~ ~override~                              // Air Elemental attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#eairg.itm~ ~override~                              // Greater Air Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eairg.itm~ ~override~                              // Greater Air Elemental attack
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/elementals/rr#eaire.itm~ ~override~                              // Elder Air Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eaire.itm~ ~override~                              // Elder Air Elemental attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#eearl.itm~ ~override~                              // Lesser Earth Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eearl.itm~ ~override~                              // Lesser Earth Elemental attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#eearr.itm~ ~override~                              // Earth Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eearr.itm~ ~override~                              // Earth Elemental attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#eearg.itm~ ~override~                              // Greater Earth Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eearg.itm~ ~override~                              // Greater Earth Elemental attack
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/elementals/rr#eeare.itm~ ~override~                              // Elder Earth Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eeare.itm~ ~override~                              // Elder Earth Elemental attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#efirl.itm~ ~override~                              // Lesser Fire Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efirl.itm~ ~override~                              // Lesser Fire Elemental attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#efirr.itm~ ~override~                              // Fire Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efirr.itm~ ~override~                              // Fire Elemental attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#efirg.itm~ ~override~                              // Greater Fire Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efirg.itm~ ~override~                              // Greater Fire Elemental attack
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/elementals/rr#efire.itm~ ~override~                              // Elder Fire Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#efire.itm~ ~override~                              // Elder Fire Elemental attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#ewatl.itm~ ~override~                              // Lesser Water Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ewatl.itm~ ~override~                              // Lesser Water Elemental attack
   LPF set_enchantment INT_VAR enchantment = 2 END
-COPY ~atweaks/itm/elementals/rr#ewatr.itm~ ~override~                              // Water Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ewatr.itm~ ~override~                              // Water Elemental attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#ewatg.itm~ ~override~                              // Greater Water Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ewatg.itm~ ~override~                              // Greater Water Elemental attack
   LPF set_enchantment INT_VAR enchantment = 4 END
-COPY ~atweaks/itm/elementals/rr#ewate.itm~ ~override~                              // Elder Water Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ewate.itm~ ~override~                              // Elder Water Elemental attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#eicer.itm~ ~override~                              // Ice Paraelemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eicer.itm~ ~override~                              // Ice Paraelemental attack
   LPF set_enchantment INT_VAR enchantment = 3 END
-COPY ~atweaks/itm/elementals/rr#ecryo.itm~ ~override~                              // Cryonax attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ecryo.itm~ ~override~                              // Cryonax attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#eimix.itm~ ~override~                              // Imix attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eimix.itm~ ~override~                              // Imix attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#eogre.itm~ ~override~                              // Ogremoch attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eogre.itm~ ~override~                              // Ogremoch attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#ehydr.itm~ ~override~                              // Olhydra attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ehydr.itm~ ~override~                              // Olhydra attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#eyanc.itm~ ~override~                              // Yan-C-Bin attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eyanc.itm~ ~override~                              // Yan-C-Bin attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#echan.itm~ ~override~                              // Chan attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#echan.itm~ ~override~                              // Chan attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#esunn.itm~ ~override~                              // Sunnis attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#esunn.itm~ ~override~                              // Sunnis attack
   LPF set_enchantment INT_VAR enchantment = 5 END
-COPY ~atweaks/itm/elementals/rr#ezaam.itm~ ~override~                              // Zaaman Rul attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#ezaam.itm~ ~override~                              // Zaaman Rul attack
   LPF set_enchantment INT_VAR enchantment = 5 END
 
 
@@ -995,7 +995,7 @@ END                                                                             
 
 // Nereid
 
-COPY ~atweaks/cre/elementals/rr#enere.cre~ ~override~                              // Nereid (hostile)
+COPY ~%MOD_FOLDER%/cre/elementals/rr#enere.cre~ ~override~                              // Nereid (hostile)
   SAY NAME1 @2103 SAY NAME2 @2103
 ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
                ~shoal~                                                             // Shoal the Nereid (BGT)
@@ -1176,14 +1176,14 @@ END                                                                             
 
 // Give Water Weird a soundset (in case Distinctive Creature Soundsets isn't installed)
 
-COPY    ~atweaks/wav/rr#ewa01.wav~ ~override~                                      // IWD Water Elemental Select Common 1 and Battle Cry 1
-COPY    ~atweaks/wav/rr#ewa02.wav~ ~override~                                      // IWD Water Elemental Battle Cry 2
-COPY    ~atweaks/wav/rr#ewa03.wav~ ~override~                                      // IWD Water Elemental Attack 1
-COPY    ~atweaks/wav/rr#ewa04.wav~ ~override~                                      // IWD Water Elemental Attack 2
-COPY    ~atweaks/wav/rr#ewa05.wav~ ~override~                                      // IWD Water Elemental Damage
-COPY    ~atweaks/wav/rr#ewa06.wav~ ~override~                                      // IWD Water Elemental Dying
-COPY    ~atweaks/wav/rr#ewa07.wav~ ~override~                                      // IWD Water Elemental Action Acknowledgement 1
-COPY    ~atweaks/cre/elementals/rr#ewwei.cre~ ~override~                           // Water Weird (hostile)
+COPY    ~%MOD_FOLDER%/wav/rr#ewa01.wav~ ~override~                                      // IWD Water Elemental Select Common 1 and Battle Cry 1
+COPY    ~%MOD_FOLDER%/wav/rr#ewa02.wav~ ~override~                                      // IWD Water Elemental Battle Cry 2
+COPY    ~%MOD_FOLDER%/wav/rr#ewa03.wav~ ~override~                                      // IWD Water Elemental Attack 1
+COPY    ~%MOD_FOLDER%/wav/rr#ewa04.wav~ ~override~                                      // IWD Water Elemental Attack 2
+COPY    ~%MOD_FOLDER%/wav/rr#ewa05.wav~ ~override~                                      // IWD Water Elemental Damage
+COPY    ~%MOD_FOLDER%/wav/rr#ewa06.wav~ ~override~                                      // IWD Water Elemental Dying
+COPY    ~%MOD_FOLDER%/wav/rr#ewa07.wav~ ~override~                                      // IWD Water Elemental Action Acknowledgement 1
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#ewwei.cre~ ~override~                           // Water Weird (hostile)
   SAY NAME1 @2110 SAY NAME2 @2110 SAY SELECT_COMMON1 @471 SAY BATTLE_CRY1 @471 SAY BATTLE_CRY2 @472 SAY ATTACK1 @473 SAY ATTACK2 @474 SAY DAMAGE @475 SAY DYING @476 SAY SELECT_ACTION1 @477
 
 ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
@@ -2418,10 +2418,10 @@ END                                                                             
 
 // Lesser Water Elemental (8 HD)
 
-COPY    ~atweaks/cre/elementals/rr#ewatl.cre~ ~override~                           // Lesser Water Elemental (hostile)
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#ewatl.cre~ ~override~                           // Lesser Water Elemental (hostile)
 SAY NAME1 @2126 SAY NAME2 @2126 SAY SELECT_COMMON1 @471 SAY BATTLE_CRY1 @471 SAY BATTLE_CRY2 @472 SAY ATTACK1 @473 SAY ATTACK2 @474 SAY DAMAGE @475 SAY DYING @476 SAY SELECT_ACTION1 @477
 
-COPY    ~atweaks/cre/elementals/rr#ewatl.cre~ ~override/rr#ewats.cre~              // Create Lesser Water Elemental for lesser water summon spell
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#ewatl.cre~ ~override/rr#ewats.cre~              // Create Lesser Water Elemental for lesser water summon spell
 // =============================================================================== // the actual work starts from here
   WRITE_BYTE 0x270 128                                                         	   // Alignment : Neutral
   WRITE_BYTE 0x275 6                                                         	   // Gender : Summon
@@ -2503,7 +2503,7 @@ END                                                                             
 
 // Water Elemental (12 HD)
 
-COPY    ~atweaks/cre/elementals/rr#ewatr.cre~ ~override~                           // Water Elemental (hostile)
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#ewatr.cre~ ~override~                           // Water Elemental (hostile)
 SAY NAME1 @2119 SAY NAME2 @2119 SAY SELECT_COMMON1 @471 SAY BATTLE_CRY1 @471 SAY BATTLE_CRY2 @472 SAY ATTACK1 @473 SAY ATTACK2 @474 SAY DAMAGE @475 SAY DYING @476 SAY SELECT_ACTION1 @477
 
 ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
@@ -2664,7 +2664,7 @@ END                                                                             
 
 // Elder Water Elemental (20 HD)
 
-COPY    ~atweaks/cre/elementals/rr#ewate.cre~ ~override~                           // Elder Water Elemental (hostile)
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#ewate.cre~ ~override~                           // Elder Water Elemental (hostile)
 SAY NAME1 @2118 SAY NAME2 @2118 SAY SELECT_COMMON1 @471 SAY BATTLE_CRY1 @471 SAY BATTLE_CRY2 @472 SAY ATTACK1 @473 SAY ATTACK2 @474 SAY DAMAGE @475 SAY DYING @476 SAY SELECT_ACTION1 @477
 
 ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
@@ -2742,7 +2742,7 @@ END                                                                             
 
 // Lesser Ice Paraelemental (8 HD)
 
-COPY    ~atweaks/cre/elementals/rr#eicer.cre~ ~override~                           // Ice Paraelemental (hostile)
+COPY    ~%MOD_FOLDER%/cre/elementals/rr#eicer.cre~ ~override~                           // Ice Paraelemental (hostile)
 SAY NAME1 @2120 SAY NAME2 @2120 SAY SELECT_COMMON1 @481 SAY BATTLE_CRY1 @481 SAY BATTLE_CRY2 @482 SAY ATTACK1 @483 SAY ATTACK2 @484 SAY DAMAGE @487 SAY HURT @488 SAY DYING @489 SAY SELECT_ACTION1 @482
 
 ACTION_FOR_EACH ~file~ IN                                                          // for each of the following files
@@ -3680,30 +3680,30 @@ END
 // New AI Scripts
 //////////////////
 
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#easer.baf~                                      // Aerial Servant AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#efsal.baf~                                      // Fire Salamander AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#efrsa.baf~                                      // Frost Salamander AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#salf.baf~                                       // Summoned Fire Salamander AI script (IWDififcation)
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#salc.baf~                                       // Summoned Frost Salamander AI script (IWDififcation)
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eista.baf~                                      // Invisible Stalker AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#enere.baf~                                      // Nereid AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ensal.baf~                                      // Salamander Noble AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ewwei.baf~                                      // Water Weird AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ewwef.baf~                                      // Fake Water Weird AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eair.baf~                                       // Air Elemental AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eear.baf~                                       // Earth Elemental AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#efir.baf~                                       // Fire Elemental AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ewat.baf~                                       // Water Elemental AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eice.baf~                                       // Ice Paraelemental AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ecryo.baf~                                      // Cryonax AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eimix.baf~                                      // Imix AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eogre.baf~                                      // Ogremoch AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ehydr.baf~                                      // Olhydra AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#eyanc.baf~                                      // Yan-C-Bin AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#echan.baf~                                      // Chan AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#esunn.baf~                                      // Sunnis AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ezaam.baf~                                      // Zaaman Rul AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ewizs.baf~                                      // Mental Combat AI script (for elementals summoned by arcane spellcasters)
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#easer.baf~                                      // Aerial Servant AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#efsal.baf~                                      // Fire Salamander AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#efrsa.baf~                                      // Frost Salamander AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#salf.baf~                                       // Summoned Fire Salamander AI script (IWDififcation)
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#salc.baf~                                       // Summoned Frost Salamander AI script (IWDififcation)
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eista.baf~                                      // Invisible Stalker AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#enere.baf~                                      // Nereid AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ensal.baf~                                      // Salamander Noble AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ewwei.baf~                                      // Water Weird AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ewwef.baf~                                      // Fake Water Weird AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eair.baf~                                       // Air Elemental AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eear.baf~                                       // Earth Elemental AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#efir.baf~                                       // Fire Elemental AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ewat.baf~                                       // Water Elemental AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eice.baf~                                       // Ice Paraelemental AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ecryo.baf~                                      // Cryonax AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eimix.baf~                                      // Imix AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eogre.baf~                                      // Ogremoch AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ehydr.baf~                                      // Olhydra AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#eyanc.baf~                                      // Yan-C-Bin AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#echan.baf~                                      // Chan AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#esunn.baf~                                      // Sunnis AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ezaam.baf~                                      // Zaaman Rul AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/elementals/rr#ewizs.baf~                                      // Mental Combat AI script (for elementals summoned by arcane spellcasters)
 
 
 
@@ -3715,10 +3715,10 @@ COMPILE EVALUATE_BUFFER ~atweaks/baf/elementals/rr#ewizs.baf~                   
 
 // Make shapechange spells grant the proper elemental traits
 
-COPY ~atweaks/itm/elementals/rr#eshfe.itm~ ~override~                              // Druid Fire Elemental transformation attack
-     ~atweaks/itm/elementals/rr#eshfr.itm~ ~override~                              // Shapechange Fire Elemental attack
-     ~atweaks/itm/elementals/rr#eshee.itm~ ~override~                              // Druid Earth Elemental transformation attack
-     ~atweaks/itm/elementals/rr#esher.itm~ ~override~                              // Shapechange Earth Elemental attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eshfe.itm~ ~override~                              // Druid Fire Elemental transformation attack
+     ~%MOD_FOLDER%/itm/elementals/rr#eshfr.itm~ ~override~                              // Shapechange Fire Elemental attack
+     ~%MOD_FOLDER%/itm/elementals/rr#eshee.itm~ ~override~                              // Druid Earth Elemental transformation attack
+     ~%MOD_FOLDER%/itm/elementals/rr#esher.itm~ ~override~                              // Shapechange Earth Elemental attack
 LPF ~extraplanar_traits~ END                                     // add extraplanar traits
 LPF ~bleeding_immunity~ END                                      // add bleeding immunity
 LPF ~disease_immunity~ END                                       // add disease immunity
@@ -3755,7 +3755,7 @@ LPF entangle_immunities END                                      // grant immuni
 LPF web_immunity END                                             // grant immunity to web spells and effects
 
 
-COPY ~atweaks/itm/elementals/rr#eshsa.itm~ ~override~                              // Avenger kit Fire Salamander transformation attack
+COPY ~%MOD_FOLDER%/itm/elementals/rr#eshsa.itm~ ~override~                              // Avenger kit Fire Salamander transformation attack
 LPF ~extraplanar_traits~ END                                     // add extraplanar traits
 LPF fire_salamander_immunities END                               // grant fire salamander immunities
 LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
@@ -4242,8 +4242,8 @@ END                                                                             
 END                                                                                // ends ACTION_PHP_EACH
 
 
-COPY ~atweaks/spl/elementals/rr#eswg.spl~ ~override~                               // Elemental Summoning secondary spell (Summon Greater Elementals)
-COPY ~atweaks/spl/elementals/rr#eswe.spl~ ~override~                               // Elemental Summoning tertiary spell (Summon Elder Elementals)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eswg.spl~ ~override~                               // Elemental Summoning secondary spell (Summon Greater Elementals)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#eswe.spl~ ~override~                               // Elemental Summoning tertiary spell (Summon Elder Elementals)
 
 COPY_EXISTING ~sppr723.spl~  ~override~                                            // Elemental Summoning
 SAY NAME1 #63746 SAY NAME2 #63746  SAY DESC @2206 SAY UNIDENTIFIED_DESC @2206      // retain old name but set new description
@@ -4591,7 +4591,7 @@ BUT_ONLY_IF_IT_CHANGES
 
 // Shoal's kiss should not be forced upon the party
 
-<<<<<<<<atweaks/inlined/baf/elementals/shoal.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/shoal.baf
 IF
     NumTimesTalkedToGT(0)
     Global("rr#intd","LOCALS",0)
@@ -4621,11 +4621,11 @@ DECOMPILE_BCS_TO_BAF
 COMPILE_BAF_TO_BCS
 END                                                                                // ends file size check
 BUT_ONLY_IF_IT_CHANGES
-EXTEND_BOTTOM ~%file%.bcs~  ~atweaks/inlined/baf/elementals/shoal.baf~             // extend Shoal's script
+EXTEND_BOTTOM ~%file%.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/shoal.baf~             // extend Shoal's script
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
 END                                                                                // ends ACTION_FOR_EACH block
 
-<<<<<<<<atweaks/inlined/dlg/elementals/shoal.d
+<<<<<<<<%MOD_FOLDER%/inlined/dlg/elementals/shoal.d
 ALTER_TRANS ~%TUTU_VAR%SHOAL~ BEGIN 3 END BEGIN 0 END BEGIN
   "REPLY" ~#70151~ // Alright...
 END
@@ -4643,7 +4643,7 @@ END
 >>>>>>>>
 
 ACTION_IF GAME_INCLUDES ~bg1~ THEN BEGIN
-  COMPILE EVALUATE_BUFFER ~atweaks/inlined/dlg/elementals/shoal.d~
+  COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/inlined/dlg/elementals/shoal.d~
   COPY_EXISTING ~%TUTU_VAR%shoal.dlg~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY EXACT_MATCH ~ForceSpell(Myself,SHOAL_REVIVE)~ ~ForceSpell(Myself,SHOAL_REVIVE) ReallyForceSpellRES("rr#uchrm",Myself)~ // Shoal should uncharm all party members before they face Droth
@@ -4656,7 +4656,7 @@ END
 
 // Add more Nereids and Water Weirds to the game
 
-<<<<<<<<atweaks/inlined/baf/elementals/bg3600.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/bg3600.baf
 IF
     Global("rr#spw01","MYAREA",0)
 THEN
@@ -4667,7 +4667,7 @@ THEN
 END
 >>>>>>>>
 
-<<<<<<<<atweaks/inlined/baf/elementals/bg1500.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/bg1500.baf
 IF
     Global("rr#spw01","MYAREA",0)
 THEN
@@ -4679,17 +4679,17 @@ END
 >>>>>>>>
 
 ACTION_IF GAME_IS ~tutu_totsc~ THEN BEGIN
-  EXTEND_BOTTOM ~fw1500.bcs~  ~atweaks/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (Tutu)
-  EXTEND_BOTTOM ~fw3600.bcs~  ~atweaks/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (Tutu)
+  EXTEND_BOTTOM ~fw1500.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (Tutu)
+  EXTEND_BOTTOM ~fw3600.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (Tutu)
 END
 
 ACTION_IF GAME_IS ~bgt~ THEN BEGIN
-  EXTEND_BOTTOM ~arw500.bcs~  ~atweaks/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (BGT)
-  EXTEND_BOTTOM ~ar9500.bcs~  ~atweaks/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (BGT)
+  EXTEND_BOTTOM ~arw500.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (BGT)
+  EXTEND_BOTTOM ~ar9500.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (BGT)
 END
 
 ACTION_IF GAME_IS ~bgee~ BEGIN
-  EXTEND_BOTTOM ~ar1500.bcs~ ~atweaks/inlined/baf/elementals/bg1500.baf~
+  EXTEND_BOTTOM ~ar1500.bcs~ ~%MOD_FOLDER%/inlined/baf/elementals/bg1500.baf~
   COPY_EXISTING ~ar3600.are~ override
     READ_ASCII 0x94 script
     PATCH_IF "%script%" STRING_EQUAL_CASE ar3601 BEGIN
@@ -4697,15 +4697,15 @@ ACTION_IF GAME_IS ~bgee~ BEGIN
       WRITE_ASCIIE 0x94 "%script%" #8
     END
   BUT_ONLY
-  EXTEND_BOTTOM "%script%.bcs" ~atweaks/inlined/baf/elementals/bg3600.baf~
+  EXTEND_BOTTOM "%script%.bcs" ~%MOD_FOLDER%/inlined/baf/elementals/bg3600.baf~
 END
 
 ACTION_IF GAME_IS ~eet~ BEGIN
-  EXTEND_BOTTOM ~bg1500.bcs~ ~atweaks/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (EET)
-  EXTEND_BOTTOM ~bg3600.bcs~ ~atweaks/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (EET)
+  EXTEND_BOTTOM ~bg1500.bcs~ ~%MOD_FOLDER%/inlined/baf/elementals/bg1500.baf~          // extend the Balduran's Isle North area script (EET)
+  EXTEND_BOTTOM ~bg3600.bcs~ ~%MOD_FOLDER%/inlined/baf/elementals/bg3600.baf~          // extend the Lighthouse area script (EET)
 END
 
-<<<<<<<<atweaks/inlined/baf/elementals/ar1700.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/ar1700.baf
 IF
     Global("rr#spw01","AR1700",0)
 THEN
@@ -4717,9 +4717,9 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_BOTTOM ~ar1700.bcs~  ~atweaks/inlined/baf/elementals/ar1700.baf~            // extend the Small Teeth Pass area script (BG2)
+EXTEND_BOTTOM ~ar1700.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/ar1700.baf~            // extend the Small Teeth Pass area script (BG2)
 
-<<<<<<<<atweaks/inlined/baf/elementals/ar2300.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/ar2300.baf
 IF
     Global("rr#spw01","AR2300",0)
 THEN
@@ -4731,7 +4731,7 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_BOTTOM ~ar2300.bcs~  ~atweaks/inlined/baf/elementals/ar2300.baf~            // extend the Sahuagin City area script (BG2)
+EXTEND_BOTTOM ~ar2300.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/ar2300.baf~            // extend the Sahuagin City area script (BG2)
 
 
 // Replace regular Fire Salamanders with Salamander Nobles in the Fire Giant temple
@@ -4756,7 +4756,7 @@ BUT_ONLY_IF_IT_CHANGES
 
 // Add an Ice Paraelemental and a Burning Man to the Planar Sphere's ice and fire chambers
 
-<<<<<<<<atweaks/inlined/baf/elementals/ar0412.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/ar0412.baf
 IF
     Global("rr#spw01","AR0412",0)
 THEN
@@ -4775,15 +4775,15 @@ READ_ASCII 0x94 ~areascript~
   END
 BUT_ONLY_IF_IT_CHANGES
 ACTION_IF !FILE_EXISTS_IN_GAME ~%areascript%.bcs~ THEN BEGIN                                          // if the area script doesn't exist
-  COMPILE ~atweaks/inlined/baf/elementals/ar0412.baf~                                                 // compile it from scratch
+  COMPILE ~%MOD_FOLDER%/inlined/baf/elementals/ar0412.baf~                                                 // compile it from scratch
 END ELSE BEGIN
-  EXTEND_BOTTOM ~%areascript%.bcs~ ~atweaks/inlined/baf/elementals/ar0412.baf~                        // otherwise just extend it
+  EXTEND_BOTTOM ~%areascript%.bcs~ ~%MOD_FOLDER%/inlined/baf/elementals/ar0412.baf~                        // otherwise just extend it
 END
 
 
 // Make the Underdark portals spawn 1 Greater Elemental and 2 regular Elementals
 
-<<<<<<<<atweaks/inlined/baf/elementals/ar2100.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/ar2100.baf
 IF
     Global("rr#spw01","AR2100",0)
 THEN
@@ -4798,7 +4798,7 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_BOTTOM ~ar2100.bcs~  ~atweaks/inlined/baf/elementals/ar2100.baf~                               // add more elementals near the portals
+EXTEND_BOTTOM ~ar2100.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/ar2100.baf~                               // add more elementals near the portals
 
 COPY_EXISTING ~dwair.bcs~ ~override~
 DECOMPILE_BCS_TO_BAF
@@ -4865,7 +4865,7 @@ DECOMPILE_BCS_TO_BAF
 COMPILE_BAF_TO_BCS
 BUT_ONLY_IF_IT_CHANGES
 
-<<<<<<<<atweaks/inlined/baf/elementals/dwvith.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/dwvith.baf
 IF
     See([0.0.0.0.10]) // elemental portal guardians
     Global("RR#Seq","LOCALS",0) // Spell Sequencer
@@ -4901,12 +4901,12 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_TOP ~dwvith.bcs~  ~atweaks/inlined/baf/elementals/dwvith.baf~            // extend Vithal's AI script
+EXTEND_TOP ~dwvith.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/dwvith.baf~            // extend Vithal's AI script
 
 
 // Add an Ice Paraelemental to the Ice Island's dungeon in BG1
 
-<<<<<<<<atweaks/inlined/baf/elementals/bg1009.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/bg1009.baf
 IF
     Global("rr#spw01","MYAREA",0)
 THEN
@@ -4917,11 +4917,11 @@ END
 >>>>>>>>
 
 ACTION_IF GAME_IS ~tutu_totsc~ THEN BEGIN
-  EXTEND_BOTTOM ~_ar1009.bcs~  ~atweaks/inlined/baf/elementals/bg1009.baf~         // extend the Ice Island dungeon area script (Tutu)
+  EXTEND_BOTTOM ~_ar1009.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg1009.baf~         // extend the Ice Island dungeon area script (Tutu)
 END
 
 ACTION_IF GAME_IS ~bgt~ THEN BEGIN
-  EXTEND_BOTTOM ~aru009.bcs~  ~atweaks/inlined/baf/elementals/bg1009.baf~          // extend the Ice Island dungeon area script (BGT)
+  EXTEND_BOTTOM ~aru009.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg1009.baf~          // extend the Ice Island dungeon area script (BGT)
 END
 
 ACTION_IF GAME_IS ~bgee~ BEGIN
@@ -4934,11 +4934,11 @@ ACTION_IF GAME_IS ~bgee~ BEGIN
       WRITE_ASCIIE 0x94 "%script%" #8
     END
   BUT_ONLY
-  EXTEND_BOTTOM "%script%.bcs" ~atweaks/inlined/baf/elementals/bg1009.baf~
+  EXTEND_BOTTOM "%script%.bcs" ~%MOD_FOLDER%/inlined/baf/elementals/bg1009.baf~
 END
 
 ACTION_IF GAME_IS ~eet~ THEN BEGIN
-  EXTEND_BOTTOM ~bg1009.bcs~  ~atweaks/inlined/baf/elementals/bg1009.baf~         // extend the Ice Island dungeon area script (EET)
+  EXTEND_BOTTOM ~bg1009.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/bg1009.baf~         // extend the Ice Island dungeon area script (EET)
 END
 
 
@@ -4985,7 +4985,7 @@ BUT_ONLY_IF_IT_CHANGES
 
 // Add two Salamander Nobles near Imix
 
-<<<<<<<<atweaks/inlined/baf/elementals/ar5204.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/ar5204.baf
 IF
     Global("rr#spw01","AR5204",0)
 THEN
@@ -4996,7 +4996,7 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_BOTTOM ~ar5204.bcs~  ~atweaks/inlined/baf/elementals/ar5204.baf~            // extend the area script for Yaga-Shura's lair
+EXTEND_BOTTOM ~ar5204.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/ar5204.baf~            // extend the area script for Yaga-Shura's lair
 
 
 // Replace the Greater Earth Elementals near Ogremoch with Elder Earth Elementals
@@ -5095,16 +5095,16 @@ COPY_EXISTING ~rr#srbk1.spl~  ~override/sppr702.spl~                            
 
 // Allow druids to have Conjure Air and Earth elementals as level 6 spells
 
-COPY ~atweaks/spl/elementals/sr_cmpt/sppr621.spl~ ~override~                       // Conjure Air Elemental (SR)
+COPY ~%MOD_FOLDER%/spl/elementals/sr_cmpt/sppr621.spl~ ~override~                       // Conjure Air Elemental (SR)
 SAY DESC @2205 SAY UNIDENTIFIED_DESC @2205
 
-COPY ~atweaks/spl/elementals/sr_cmpt/sppr622.spl~ ~override~                       // Conjure Earth Elemental (SR)
+COPY ~%MOD_FOLDER%/spl/elementals/sr_cmpt/sppr622.spl~ ~override~                       // Conjure Earth Elemental (SR)
 SAY DESC @2212 SAY UNIDENTIFIED_DESC @2212
 
-COPY ~atweaks/spl/elementals/sr_cmpt/sppr731.spl~ ~override~                       // Fire Elemental Transformation
+COPY ~%MOD_FOLDER%/spl/elementals/sr_cmpt/sppr731.spl~ ~override~                       // Fire Elemental Transformation
 SAY UNIDENTIFIED_DESC @2207 SAY DESC @2207
 
-COPY ~atweaks/spl/elementals/sr_cmpt/sppr732.spl~ ~override~                       // Earth Elemental Transformation
+COPY ~%MOD_FOLDER%/spl/elementals/sr_cmpt/sppr732.spl~ ~override~                       // Earth Elemental Transformation
 SAY UNIDENTIFIED_DESC @2208 SAY DESC @2208
 
 
@@ -5174,7 +5174,7 @@ END                                                                             
 
 // Make sure that elementals are friendly when summoned by druids
 
-<<<<<<<<atweaks/inlined/baf/elementals/wizelsu.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/elementals/wizelsu.baf
 IF
 	Global("Elementalcontrol","LOCALS",0)
     Class(LastSummonerOf(Myself),DRUID_ALL)
@@ -5191,9 +5191,9 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_TOP ~wizelsum.bcs~  ~atweaks/inlined/baf/elementals/wizelsu.baf~
-EXTEND_TOP ~wizelsu2.bcs~  ~atweaks/inlined/baf/elementals/wizelsu.baf~
-EXTEND_TOP ~rr#ewizs.bcs~  ~atweaks/inlined/baf/elementals/wizelsu.baf~
+EXTEND_TOP ~wizelsum.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/wizelsu.baf~
+EXTEND_TOP ~wizelsu2.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/wizelsu.baf~
+EXTEND_TOP ~rr#ewizs.bcs~  ~%MOD_FOLDER%/inlined/baf/elementals/wizelsu.baf~
 
 
 //==================================================================================

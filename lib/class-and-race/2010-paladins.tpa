@@ -12,7 +12,7 @@ COPY_EXISTING ~SPPR317.SPL~ ~override/RR#PALCD.SPL~                             
   END
 BUT_ONLY_IF_IT_CHANGES
 
-COPY ~aTweaks/SPL/RR#PALDI.SPL~ ~override~                                         // spell which grants disease immunity
+COPY ~%MOD_FOLDER%/SPL/RR#PALDI.SPL~ ~override~                                         // spell which grants disease immunity
 
 
 // Add innate disease immunity to various Paladin kits

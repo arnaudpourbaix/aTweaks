@@ -1,15 +1,15 @@
 /////////////////////
 // PnP Fey Creatures
 /////////////////////
-INCLUDE "atweaks/lib/tactical_shared.tpa"
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
 
-INCLUDE "atweaks/lib/pnp-monster/fey/spells.tpa"
-INCLUDE "atweaks/lib/pnp-monster/fey/items.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/spells.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/items.tpa"
 
-INCLUDE "atweaks/lib/pnp-monster/fey/dryad.tpa"      // Dryad
-INCLUDE "atweaks/lib/pnp-monster/fey/hamadryad.tpa"  // Hamadryad
-INCLUDE "atweaks/lib/pnp-monster/fey/sirine.tpa"     // Sirine
-INCLUDE "atweaks/lib/pnp-monster/fey/nymph.tpa"      // Nymph
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"      // Dryad
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/hamadryad.tpa"  // Hamadryad
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/sirine.tpa"     // Sirine
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/nymph.tpa"      // Nymph
 
-INCLUDE "atweaks/lib/pnp-monster/fey/scripts.tpa"
-INCLUDE "atweaks/lib/pnp-monster/fey/compatibility.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/scripts.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/compatibility.tpa"

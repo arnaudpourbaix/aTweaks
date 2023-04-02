@@ -9,17 +9,17 @@ END
 
 // This tweak introduces a simple AI script for Bard PCs which makes them sing the battlesong when idle
 ACTION_IF GAME_IS ~totlm iwd2~ BEGIN
-  COMPILE ~atweaks/baf/iwd/rr#brd01.baf~ EVAL
+  COMPILE ~%MOD_FOLDER%/baf/iwd/rr#brd01.baf~ EVAL
 END ELSE BEGIN
-  COMPILE ~aTweaks/BAF/RR#brd01.BAF~                                              // Simple Bard script
+  COMPILE ~%MOD_FOLDER%/BAF/RR#brd01.BAF~                                              // Simple Bard script
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME ~RR#BSBI1.RR~ THEN BEGIN
-  COMPILE ~aTweaks/BAF/JES/RR#BRD01.BAF~                                          // Simple Bard script (Jesters doesn't sing while invisible)
+  COMPILE ~%MOD_FOLDER%/BAF/JES/RR#BRD01.BAF~                                          // Simple Bard script (Jesters doesn't sing while invisible)
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME ~RR#BSBI2.RR~ THEN BEGIN
-  COMPILE ~aTweaks/BAF/ALT/RR#BRD01.BAF~                                          // Simple Bard script (All bards don't sing while invisible)
+  COMPILE ~%MOD_FOLDER%/BAF/ALT/RR#BRD01.BAF~                                          // Simple Bard script (All bards don't sing while invisible)
 END
 
 COPY_EXISTING ~RR#BRD01.BCS~ ~scripts\RR#BRD01.BS~                                // move the script to the player scripts folder

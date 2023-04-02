@@ -113,9 +113,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_hellcat BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     SAY NAME1 @732 SAY NAME2 @732                                                      // Hellcat
     REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
@@ -194,9 +194,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_erinyes BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -270,9 +270,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_bone_fiend BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~IMMUNE2~                                                          // removes IMMUNE2.ITM (no immunity to +1 weapons in PnP)
@@ -359,9 +359,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_abishai BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
     REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
@@ -441,9 +441,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_cornugon BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -543,7 +543,7 @@ END
 
 DEFINE_PATCH_FUNCTION make_gelugon BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     // =============================================================================== // the actual work starts from here
     SAY NAME1 @670 SAY NAME2 @670
@@ -627,9 +627,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_pit_fiend INT_VAR enforce = 0 BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -737,9 +737,9 @@ END                                                                             
 
 DEFINE_PATCH_FUNCTION make_quasit BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE re-indexer macros (needed for corrupt and v1 CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE re-indexer macros (needed for corrupt and v1 CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~
     // =============================================================================== // the actual work starts from here
 	REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
 	REMOVE_MEMORIZED_SPELLS                                                            // Remove all memorized spells from the current creature
@@ -837,9 +837,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_cambion BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~SEEINVIS~                                                         // removes SEEINVIS.ITM (no detect invisibility in PnP)
@@ -983,9 +983,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_alu-fiend BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     PATCH_IF !(LONG_AT 0x28 = 21059) BEGIN 											   // Infinity Animation Compatibility (IAv5b)
       WRITE_LONG 0x28 "25105"                                                          // Sets avatar to MAGE_FEMALE_ELF
@@ -1105,9 +1105,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_maurezhi BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~SEEINVIS~                                                         // removes SEEINVIS.ITM (no detect invisibility in PnP)
@@ -1192,9 +1192,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_succubus BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -1295,9 +1295,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_nabassu BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_KNOWN_SPELLS                                                                // Remove all known spells from the current creature
@@ -1433,9 +1433,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_glabrezu BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -1558,9 +1558,9 @@ DEFINE_PATCH_FUNCTION make_glabrezu BEGIN
 
 DEFINE_PATCH_FUNCTION make_marilith BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                     // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                     // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -1679,9 +1679,9 @@ END
 
 DEFINE_PATCH_FUNCTION make_balor BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+    PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                     // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~DW#SUMFI~                                                         // removes DW#SUMFI.ITM (SCSII's fiend immunities, prevents conflict)
     REMOVE_CRE_ITEM ~HELMNOAN~                                                         // removes HELMNOAN.ITM (no critical hit immunity in PnP)
@@ -1838,7 +1838,7 @@ END
 
 DEFINE_PATCH_FUNCTION make_ultroloth BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     // =============================================================================== // the actual work starts from here
     SAY NAME1 @733 SAY NAME2 @733                                                      //Ultroloth
@@ -1892,7 +1892,7 @@ END
 
 DEFINE_PATCH_FUNCTION make_nycaloth BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     // =============================================================================== // the actual work starts from here
     SAY NAME1 @734 SAY NAME2 @734                                                      //Nycaloth   
@@ -1964,7 +1964,7 @@ END
 
 DEFINE_PATCH_FUNCTION make_arcanaloth BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     // =============================================================================== // the actual work starts from here
     SAY NAME1 @735 SAY NAME2 @735                                                      //Arcanaloth 
@@ -2039,7 +2039,7 @@ END
 
 DEFINE_PATCH_FUNCTION make_shadow_fiend BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                      // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
   PATCH_IF valid BEGIN
     // =============================================================================== // the actual work starts from here
     REMOVE_CRE_ITEM ~IMMUNE1~                                                          // removes IMMUNE1.ITM (immunity to +1 weapons and below)

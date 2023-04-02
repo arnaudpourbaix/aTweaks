@@ -1,8 +1,8 @@
 
 ACTION_IF NOT FILE_EXISTS_IN_GAME ~RR#DDOOR.BAM~ THEN BEGIN                        // Checks for the Icewind Dale's Dimension Door animation component
-  COPY    ~aTweaks/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
-  COPY    ~aTweaks/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
-  COPY    ~aTweaks/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
+  COPY    ~%MOD_FOLDER%/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~                     // IWD1's Dimension Door animation (custom file name)
+  COPY    ~%MOD_FOLDER%/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~                     // IWD1's Dimension Door sound effect (custom file name)
+  COPY    ~%MOD_FOLDER%/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
 END
 
 LAF handle_old_dd END
@@ -13,7 +13,7 @@ COPY_EXISTING ~spwi402.spl~ ~override~                                          
   SAY UNIDENTIFIED_DESC @1891 SAY DESC @1891
 
 
-COPY ~atweaks/itm/rr#scr1v.itm~ ~override~                                         // Dimension Door scroll
+COPY ~%MOD_FOLDER%/itm/rr#scr1v.itm~ ~override~                                         // Dimension Door scroll
   SAY DESC @1891
 
 ACTION_FOR_EACH ~file~ IN
@@ -41,14 +41,14 @@ END
 ACTION_IF FILE_EXISTS_IN_GAME ~d0scrldd.itm~ BEGIN                                 // Check for D0Tweaks' Dimension Door component
   COPY_EXISTING ~spwi450.spl~ ~override~                                           // Dimension Door (D0 Tweaks)
     SAY DESC @1891
-  COPY ~atweaks/itm/rr#scr1v.itm~ ~override/d0scrldd.itm~                          // Dimension Door scroll (D0 Tweaks)
+  COPY ~%MOD_FOLDER%/itm/rr#scr1v.itm~ ~override/d0scrldd.itm~                          // Dimension Door scroll (D0 Tweaks)
     SAY DESC @1891
 END
 
 ACTION_IF GAME_IS ~tutu tutu_totsc~ THEN BEGIN                                     // Tutu check
   COPY_EXISTING ~spwi450.spl~ ~override~                                           // Dimension Door (Tutu)
     SAY DESC @1891
-  COPY ~atweaks/itm/rr#scr1v.itm~ ~override/_scrl1v.itm~                           // Dimension Door scroll (Tutu)
+  COPY ~%MOD_FOLDER%/itm/rr#scr1v.itm~ ~override/_scrl1v.itm~                           // Dimension Door scroll (Tutu)
     SAY DESC @1891
 END
 

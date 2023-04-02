@@ -19,15 +19,15 @@ END ELSE BEGIN
       REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH spin fl#bp
     END
     COPY_EXISTING "%spell%.spl" "override/%copy%.spl"
-    COPY "atweaks/spl/base.spl" "override/%shell%.spl"
+    COPY "%MOD_FOLDER%/spl/base.spl" "override/%shell%.spl"
       LPF ADD_SPELL_EFFECT INT_VAR opcode = 171 target = 1 timing = 1 STR_VAR resource = EVAL "%copy%" END
   END
 
-  EXTEND_BOTTOM dplayer3.bcs "atweaks/baf/regainbhaalpowers1.baf" EVAL
+  EXTEND_BOTTOM dplayer3.bcs "%MOD_FOLDER%/baf/regainbhaalpowers1.baf" EVAL
 
   OUTER_SPRINT ToBCheck ""
-  EXTEND_BOTTOM ar4000.bcs "atweaks/baf/regainbhaalpowers2.baf" EVAL
+  EXTEND_BOTTOM ar4000.bcs "%MOD_FOLDER%/baf/regainbhaalpowers2.baf" EVAL
   OUTER_SPRINT ToBCheck ~GlobalGT("DefeatedJon","GLOBAL",0)~
-  EXTEND_BOTTOM ar3000.bcs "atweaks/baf/regainbhaalpowers2.baf" EVAL
+  EXTEND_BOTTOM ar3000.bcs "%MOD_FOLDER%/baf/regainbhaalpowers2.baf" EVAL
 
 END

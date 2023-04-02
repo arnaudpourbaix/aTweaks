@@ -1,19 +1,19 @@
 
 ACTION_IF Restrictions BEGIN
-  INCLUDE ~atweaks/lib/fl#bg1pal.tpa~
-  INCLUDE "atweaks/lib/fl_inn.tpa"
+  INCLUDE ~%MOD_FOLDER%/lib/fl#bg1pal.tpa~
+  INCLUDE "%MOD_FOLDER%/lib/fl_inn.tpa"
 
   ACTION_IF !GAME_INCLUDES ~soa~ BEGIN
     OUTER_SPRINT AreaType ~AreaType(FL_INN)~
   END ELSE BEGIN
-    INCLUDE "atweaks/lib/fl_stronghold.tpa"
+    INCLUDE "%MOD_FOLDER%/lib/fl_stronghold.tpa"
     OUTER_SPRINT EVAL AreaType ~OR(2) AreaType(FL_INN) AreaType(FL_STRONGHOLD) %fl#StrongholdKickedOut%~
   END
 END ELSE BEGIN
   OUTER_SPRINT AreaType ~True()~
 END
 
-COPY    ~aTweaks/SPL/RR#MSCRL.SPL~ ~override/fl#mscrl.spl~                                      // Scribe Scrolls (Mage version)
+COPY    ~%MOD_FOLDER%/SPL/RR#MSCRL.SPL~ ~override/fl#mscrl.spl~                                      // Scribe Scrolls (Mage version)
   SAY UNIDENTIFIED_DESC @8200 SAY DESC @8200
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = "-1" END
   target = 1
@@ -194,7 +194,7 @@ END
 
 /*
 ACTION_IF FILE_EXISTS_IN_GAME lclist_spells.2da BEGIN
-<<<<<<<< ...atweaks/inlined/spellpack
+<<<<<<<< ...%MOD_FOLDER%/inlined/spellpack
 + ~HaveSpell(%Spell%)~ + ~%Name%~ DO ~TakePartyGold(%Gold%) DestroyGold(%Gold%) RemoveSpell(%Spell%) GiveItemCreate("%Scroll%",Myself,1,1,1)~ EXIT
 >>>>>>>>
 
@@ -239,25 +239,25 @@ APPEND ~STATE.IDS~ ~0x80101FEF CD_STATE_NOTVALID~ UNLESS ~CD_STATE_NOTVALID~    
 //APPEND action.ids ~147 RemoveSpellRES(S:RES*)~
 
 
-COPY    ~aTweaks/CRE/RR#SCRL.CRE~  ~override/fl#scrl.cre~                          // Scribe Scrolls invisible creature (used for initiating the dialogue)
+COPY    ~%MOD_FOLDER%/CRE/RR#SCRL.CRE~  ~override/fl#scrl.cre~                          // Scribe Scrolls invisible creature (used for initiating the dialogue)
   WRITE_ASCII_LIST 0x248 fl#scrl "" "" "" ""
-COPY    ~aTweaks/EFF/RR#SCRL.EFF~  ~override/fl#scrl.eff~                          // Scribe Scrolls invisible creature summoning EFF
+COPY    ~%MOD_FOLDER%/EFF/RR#SCRL.EFF~  ~override/fl#scrl.eff~                          // Scribe Scrolls invisible creature summoning EFF
   WRITE_ASCII 0x30 fl#scrl #8
-COMPILE ~aTweaks/DLG/fl#SCRL.D~ EVAL                                               // Scribe Scrolls invisible creature dialogue file (used for choosing which spell to scribe)
-COMPILE ~aTweaks/BAF/fl#SCRL.BAF~                                                  // Scribe Scrolls invisible creature AI script (used for initiating the dialogue)
+COMPILE ~%MOD_FOLDER%/DLG/fl#SCRL.D~ EVAL                                               // Scribe Scrolls invisible creature dialogue file (used for choosing which spell to scribe)
+COMPILE ~%MOD_FOLDER%/BAF/fl#SCRL.BAF~                                                  // Scribe Scrolls invisible creature AI script (used for initiating the dialogue)
 
 
-COPY "atweaks/eff/fl#gscrl.eff" override                                           //Give ability eff
+COPY "%MOD_FOLDER%/eff/fl#gscrl.eff" override                                           //Give ability eff
   WRITE_ASCII 0x30 fl#mscrl
   
-COPY "atweaks/spl/fl#nscrl.spl" override                                           //Protection from fl#gscrl
+COPY "%MOD_FOLDER%/spl/fl#nscrl.spl" override                                           //Protection from fl#gscrl
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = "-1" END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 9 STR_VAR resource = fl#gscrl END
      
-COPY "atweaks/eff/fl#sscrl.eff" override                                           //Display string eff
+COPY "%MOD_FOLDER%/eff/fl#sscrl.eff" override                                           //Display string eff
   SAY 0x1c @8270 
                                                                     //Gained Special Ability: Scribe Scrolls
-COPY "atweaks/spl/fl#gscrl.spl" override
+COPY "%MOD_FOLDER%/spl/fl#gscrl.spl" override
   PATCH_FOR_EACH resref IN fl#gscrl fl#sscrl BEGIN
     PATCH_FOR_EACH class IN 1 7 10 13 14 17 BEGIN
       LPF ADD_SPELL_EFFECT INT_VAR opcode = 177 target = 2 parameter1 = class parameter2 = 5 STR_VAR resource = EVAL "%resref%" END //Use EFF
@@ -282,7 +282,7 @@ BUT_ONLY
 
 ACTION_PHP_EACH clabtable AS int => clab BEGIN
   ACTION_IF !FILE_EXISTS_IN_GAME "%clab%.2da" BEGIN
-    COPY "atweaks/2da/clabma01.2da" "override/%clab%.2da"
+    COPY "%MOD_FOLDER%/2da/clabma01.2da" "override/%clab%.2da"
       SET_2DA_ENTRY 1 9 10 AP_fl#gscrl
       PRETTY_PRINT_2DA
   END ELSE BEGIN
@@ -310,8 +310,8 @@ ACTION_PHP_EACH clabtable AS int => clab BEGIN
 END
 
 //For the inevitable "I didn't get my Scribe Scrolls ability"
-EXTEND_BOTTOM dplayer2.bcs "atweaks/baf/mscrl2.baf"
-EXTEND_BOTTOM dplayer3.bcs "atweaks/baf/mscrl2.baf"
+EXTEND_BOTTOM dplayer2.bcs "%MOD_FOLDER%/baf/mscrl2.baf"
+EXTEND_BOTTOM dplayer3.bcs "%MOD_FOLDER%/baf/mscrl2.baf"
 
-//EXTEND_BOTTOM ~dplayer3.bcs~  ~aTweaks/BAF/RR#MSCRL.BAF~                           // extend the party script for Player1
-//EXTEND_BOTTOM ~dplayer2.bcs~  ~aTweaks/BAF/RR#MSCRL.BAF~                           // extend the party script for other party members
+//EXTEND_BOTTOM ~dplayer3.bcs~  ~%MOD_FOLDER%/BAF/RR#MSCRL.BAF~                           // extend the party script for Player1
+//EXTEND_BOTTOM ~dplayer2.bcs~  ~%MOD_FOLDER%/BAF/RR#MSCRL.BAF~                           // extend the party script for other party members

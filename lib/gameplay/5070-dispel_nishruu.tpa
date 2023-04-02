@@ -22,7 +22,7 @@ BEGIN
   END
 END
 
-EXTEND_TOP ~NISHRU01.BCS~ ~aTweaks/BAF/NISHRU01.BAF~                               // Nishruu/Hakeashar AI script
+EXTEND_TOP ~NISHRU01.BCS~ ~%MOD_FOLDER%/BAF/NISHRU01.BAF~                               // Nishruu/Hakeashar AI script
 
 COPY_EXISTING ~NISHRUSU.CRE~ ~override~                                            // Nishruu
                  ~HAKSU.CRE~ ~override~                                            // Hakeashar

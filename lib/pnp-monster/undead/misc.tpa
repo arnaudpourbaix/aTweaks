@@ -1,8 +1,8 @@
 
 // Wall of Ice
 ACTION_IF !FILE_EXISTS_IN_GAME rr#icew.spl BEGIN
-  COPY ~atweaks/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
-  COPY ~atweaks/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
+  COPY ~%MOD_FOLDER%/bam/rr#icew.bam~ ~override~                                          // Wall of Ice BAM
+  COPY ~%MOD_FOLDER%/spl/rr#icew.spl~ ~override~                                          // Wall of Ice
     SAY NAME1 @1024 SAY NAME2 @1024
     READ_LONG  0x64 ab_off
     READ_SHORT 0x68 ab_num
@@ -13,7 +13,7 @@ END
 
 // Symbol, Pain
 ACTION_IF !FILE_EXISTS_IN_GAME rr#spain.spl BEGIN
-  COPY ~aTweaks/SPL/RR#SPAIN.SPL~ ~override~                                         // Symbol Pain
+  COPY ~%MOD_FOLDER%/SPL/RR#SPAIN.SPL~ ~override~                                         // Symbol Pain
     READ_LONG  0x64 ab_off
     READ_SHORT 0x68 ab_num
     FOR(i=0; i<ab_num; i+=1) BEGIN
@@ -22,7 +22,7 @@ ACTION_IF !FILE_EXISTS_IN_GAME rr#spain.spl BEGIN
 END
 
 // Temporary invincibility item for summons
-COPY ~atweaks/itm/rr#dinv.itm~  override
+COPY ~%MOD_FOLDER%/itm/rr#dinv.itm~  override
 
 // Sensible Encounters
 ACTION_IF GAME_INCLUDES ~tob~ BEGIN

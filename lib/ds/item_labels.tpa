@@ -1,4 +1,4 @@
-INCLUDE ~atweaks/lib/ds/ds.tph~
+INCLUDE ~%MOD_FOLDER%/lib/ds/ds.tph~
 
 // borrow and adapted from Stratagems for aTweaks
 DEFINE_PATCH_FUNCTION rr_item_labels

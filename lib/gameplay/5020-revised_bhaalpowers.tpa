@@ -1,31 +1,31 @@
 
-COPY    ~aTweaks/BAM/RR#BP1E.BAM~   ~override~                                     // Drain Life icon
-COPY    ~aTweaks/BAM/RR#BP1G.BAM~   ~override~                                     // Healing Touch icon
-COPY    ~aTweaks/BAM/RR#BP2E.BAM~   ~override~                                     // Cause Affliction icon
-COPY    ~aTweaks/BAM/RR#BP2G.BAM~   ~override~                                     // Cure Affliction icon
-COPY    ~aTweaks/BAM/RR#BP3E.BAM~   ~override~                                     // Divine Wrath icon
-COPY    ~aTweaks/BAM/RR#BP3G.BAM~   ~override~                                     // Divine Might icon
-COPY    ~aTweaks/BAM/RR#BPCA.BAM~   ~override~                                     // Cause Affliction visual effect BAM
-COPY    ~aTweaks/BAM/RR#BPDW.BAM~   ~override~                                     // Divine Wrath visual effect BAM
-COPY    ~aTweaks/VVC/RR#BPRA.VVC~   ~override~                                     // Cure Affliction visual effect animation
-COPY    ~aTweaks/VVC/RR#BPCA.VVC~   ~override~                                     // Cause Affliction visual effect animation
-COPY    ~aTweaks/VVC/RR#BPDW.VVC~   ~override~                                     // Divine Wrath visual effect animation
+COPY    ~%MOD_FOLDER%/BAM/RR#BP1E.BAM~   ~override~                                     // Drain Life icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BP1G.BAM~   ~override~                                     // Healing Touch icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BP2E.BAM~   ~override~                                     // Cause Affliction icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BP2G.BAM~   ~override~                                     // Cure Affliction icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BP3E.BAM~   ~override~                                     // Divine Wrath icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BP3G.BAM~   ~override~                                     // Divine Might icon
+COPY    ~%MOD_FOLDER%/BAM/RR#BPCA.BAM~   ~override~                                     // Cause Affliction visual effect BAM
+COPY    ~%MOD_FOLDER%/BAM/RR#BPDW.BAM~   ~override~                                     // Divine Wrath visual effect BAM
+COPY    ~%MOD_FOLDER%/VVC/RR#BPRA.VVC~   ~override~                                     // Cure Affliction visual effect animation
+COPY    ~%MOD_FOLDER%/VVC/RR#BPCA.VVC~   ~override~                                     // Cause Affliction visual effect animation
+COPY    ~%MOD_FOLDER%/VVC/RR#BPDW.VVC~   ~override~                                     // Divine Wrath visual effect animation
 
 
 // Healing Touch (formerly Cure Light Wounds)
-COPY ~aTweaks/SPL/SPIN101.SPL~ ~override~                                         // Cure Light Wounds Bhaalpower
+COPY ~%MOD_FOLDER%/SPL/SPIN101.SPL~ ~override~                                         // Cure Light Wounds Bhaalpower
   SAY NAME1 @242 SAY NAME2 @242                                                   // change name to Healing Touch
   SAY 0x50 @248
-COPY ~aTweaks/EFF/RR#BP1G.EFF~ ~override~                                         // Healing Touch immunity effect (for constructs, undead, extraplanars etc.)
+COPY ~%MOD_FOLDER%/EFF/RR#BP1G.EFF~ ~override~                                         // Healing Touch immunity effect (for constructs, undead, extraplanars etc.)
 
 
 
 // Drain Life (formerly Larloch's Minor Drain)
-COPY ~aTweaks/SPL/SPIN104.SPL~ ~override~                                         // Larloch's Minor Drain Bhaalpower
+COPY ~%MOD_FOLDER%/SPL/SPIN104.SPL~ ~override~                                         // Larloch's Minor Drain Bhaalpower
   SAY NAME1 @243 SAY NAME2 @243                                                   // change name to Drain Life
   SAY 0x50 @249
-COPY ~aTweaks/SPL/RR#BP1EA.SPL~ ~override~                                        // Drain Life secondary spell (heals the original caster)
-COPY ~aTweaks/EFF/RR#BP1E.EFF~ ~override~                                         // Drain Life immunity effect (for constructs, undead, extraplanars etc.)
+COPY ~%MOD_FOLDER%/SPL/RR#BP1EA.SPL~ ~override~                                        // Drain Life secondary spell (heals the original caster)
+COPY ~%MOD_FOLDER%/EFF/RR#BP1E.EFF~ ~override~                                         // Drain Life immunity effect (for constructs, undead, extraplanars etc.)
 
 
 // Cure Affliction (formerly Slow Poison)
@@ -41,7 +41,7 @@ ACTION_IF FILE_CONTAINS_EVALUATED (msectype.2da fl#Disease) BEGIN
   BUT_ONLY
 END
 
-COPY ~aTweaks/SPL/SPIN102.SPL~ ~override~                                         // Slow Poison Bhaalpower
+COPY ~%MOD_FOLDER%/SPL/SPIN102.SPL~ ~override~                                         // Slow Poison Bhaalpower
  SAY NAME1 @244 SAY NAME2 @244                                                    // change name to Cure Affliction
  SAY 0x50 @250
  PATCH_IF VARIABLE_IS_SET fl#Disease AND IS_AN_INT fl#Disease BEGIN               // Remove the fl#Disease sectype whenever we would cure disease
@@ -71,18 +71,18 @@ COPY ~aTweaks/SPL/SPIN102.SPL~ ~override~                                       
    END
  END
 
-COPY ~aTweaks/EFF/RR#BP2G.EFF~ ~override~                                         // Cure Affliction immunity effect (for constructs, undead, extraplanars etc.)
+COPY ~%MOD_FOLDER%/EFF/RR#BP2G.EFF~ ~override~                                         // Cure Affliction immunity effect (for constructs, undead, extraplanars etc.)
 
 // Cause Affliction (formerly Horror)
-COPY ~aTweaks/SPL/SPIN105.SPL~ ~override~                                         // Horror Bhaalpower
+COPY ~%MOD_FOLDER%/SPL/SPIN105.SPL~ ~override~                                         // Horror Bhaalpower
  SAY NAME1 @245 SAY NAME2 @245                                                    // change name to Cause Affliction
  SAY 0x50 @251
 
-COPY ~aTweaks/EFF/RR#BP2E.EFF~ ~override~                                         // Cause Affliction immunity effect (for constructs, undead, extraplanars etc.)
-     ~aTweaks/SPL/RR#BP2EA.SPL~ ~override~                                        // Cause Affliction secondary spell (-2 disease penalty to STR and CON)
-     ~aTweaks/SPL/RR#BP2EB.SPL~ ~override~                                        // Cause Affliction tertiary spell (blindness and deafness)
-     ~aTweaks/SPL/RR#BP2EC.SPL~ ~override~                                        // Cause Affliction quartiary spell (feeblemind)
-     ~aTweaks/SPL/RR#BP2ED.SPL~ ~override~                                        // Cause Affliction quintiary spell (poison)
+COPY ~%MOD_FOLDER%/EFF/RR#BP2E.EFF~ ~override~                                         // Cause Affliction immunity effect (for constructs, undead, extraplanars etc.)
+     ~%MOD_FOLDER%/SPL/RR#BP2EA.SPL~ ~override~                                        // Cause Affliction secondary spell (-2 disease penalty to STR and CON)
+     ~%MOD_FOLDER%/SPL/RR#BP2EB.SPL~ ~override~                                        // Cause Affliction tertiary spell (blindness and deafness)
+     ~%MOD_FOLDER%/SPL/RR#BP2EC.SPL~ ~override~                                        // Cause Affliction quartiary spell (feeblemind)
+     ~%MOD_FOLDER%/SPL/RR#BP2ED.SPL~ ~override~                                        // Cause Affliction quintiary spell (poison)
 
 
 // Divine Might (formerly Draw Upon Holy Might)
@@ -110,13 +110,13 @@ END
 
 
 // Divine Wrath (formerly Vampiric Touch)
-COPY ~aTweaks/SPL/SPIN106.SPL~ ~override~                                         // Vampiric Touch Bhaalpower
+COPY ~%MOD_FOLDER%/SPL/SPIN106.SPL~ ~override~                                         // Vampiric Touch Bhaalpower
   SAY NAME1 @247 SAY NAME2 @247                                                   // change name to Divine Wrath
   SAY 0x50 @253
 
-COPY ~aTweaks/EFF/RR#BP3E.EFF~ ~override~                                         // Divine Wrath pushback immunity effect (for large creatures)
-     ~aTweaks/SPL/RR#BP3EA.SPL~ ~override~                                        // Divine Wrath secondary spell (pushback, knockdown and panic)
-     ~aTweaks/SPL/RR#BP3EB.SPL~ ~override~                                        // Divine Wrath tertiary spell (unholy red glow visual)
+COPY ~%MOD_FOLDER%/EFF/RR#BP3E.EFF~ ~override~                                         // Divine Wrath pushback immunity effect (for large creatures)
+     ~%MOD_FOLDER%/SPL/RR#BP3EA.SPL~ ~override~                                        // Divine Wrath secondary spell (pushback, knockdown and panic)
+     ~%MOD_FOLDER%/SPL/RR#BP3EB.SPL~ ~override~                                        // Divine Wrath tertiary spell (unholy red glow visual)
 
 
 // Dynaheir shouldn't have the Cure Affliction Bhaalpower at her disposal

@@ -33,9 +33,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-    PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+    PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring //Standard undead immunities
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring //+1 or better only
         REPLACE_CRE_ITEM fl#shad #0 #0 #0 none weapon1 EQUIP

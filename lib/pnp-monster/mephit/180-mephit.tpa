@@ -3,109 +3,109 @@
 ///////////////
 
 
-INCLUDE "atweaks/lib/tactical_shared.tpa"
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
 
 //////////////
 // New spells
 //////////////
 
-COPY ~atweaks/spl/mephits/rr#maigt.spl~ ~override~                                 // Gate (Air Mephit)
-COPY ~atweaks/eff/mephits/rr#maigt.eff~ ~override~                                 // Gate EFF (Air Mephit)
-COPY ~atweaks/spl/mephits/rr#maibg.spl~ ~override~                                 // Breathe Grit (Air Mephit)
-COPY ~atweaks/spl/mephits/rr#maigw.spl~ ~override~                                 // Gust of Wind (Air Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#maigt.spl~ ~override~                                 // Gate (Air Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#maigt.eff~ ~override~                                 // Gate EFF (Air Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#maibg.spl~ ~override~                                 // Breathe Grit (Air Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#maigw.spl~ ~override~                                 // Gust of Wind (Air Mephit)
   SAY NAME1 @1850 SAY NAME2 @1850
 
-COPY ~atweaks/spl/mephits/rr#mdugt.spl~ ~override~                                 // Gate (Dust Mephit)
-COPY ~atweaks/eff/mephits/rr#mdugt.eff~ ~override~                                 // Gate EFF (Dust Mephit)
-COPY ~atweaks/spl/mephits/rr#mdugd.spl~ ~override~                                 // Glass Dust, part 1 (Dust Mephit)
-COPY ~atweaks/spl/mephits/rr#mdug2.spl~ ~override~                                 // Glass Dust, part 2 (Dust Mephit)
-COPY ~atweaks/eff/mephits/rr#mdugd.eff~ ~override~                                 // Glass Dust EFF (Dust Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mdugt.spl~ ~override~                                 // Gate (Dust Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mdugt.eff~ ~override~                                 // Gate EFF (Dust Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mdugd.spl~ ~override~                                 // Glass Dust, part 1 (Dust Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mdug2.spl~ ~override~                                 // Glass Dust, part 2 (Dust Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mdugd.eff~ ~override~                                 // Glass Dust EFF (Dust Mephit)
 
-COPY ~atweaks/spl/mephits/rr#meagt.spl~ ~override~                                 // Gate (Earth Mephit)
-COPY ~atweaks/eff/mephits/rr#meagt.eff~ ~override~                                 // Gate EFF (Earth Mephit)
-COPY ~atweaks/spl/mephits/rr#meass.spl~ ~override~                                 // Stone Spit (Earth Mephit)
-COPY ~atweaks/spl/mephits/rr#meagr.spl~ ~override~                                 // Grow (Earth Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#meagt.spl~ ~override~                                 // Gate (Earth Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#meagt.eff~ ~override~                                 // Gate EFF (Earth Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#meass.spl~ ~override~                                 // Stone Spit (Earth Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#meagr.spl~ ~override~                                 // Grow (Earth Mephit)
   SAY NAME1 @1851 SAY NAME2 @1851
 
-COPY ~atweaks/spl/mephits/rr#mfigt.spl~ ~override~                                 // Gate (Fire Mephit)
-COPY ~atweaks/eff/mephits/rr#mfigt.eff~ ~override~                                 // Gate EFF (Fire Mephit)
-ADD_PROJECTILE ~atweaks/pro/rr#mfiff.pro~                                          // New projectile for Flame Fan (120' arc, Burning Hands style)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mfigt.spl~ ~override~                                 // Gate (Fire Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mfigt.eff~ ~override~                                 // Gate EFF (Fire Mephit)
+ADD_PROJECTILE ~%MOD_FOLDER%/pro/rr#mfiff.pro~                                          // New projectile for Flame Fan (120' arc, Burning Hands style)
 
-COPY ~atweaks/spl/mephits/rr#mfiff.spl~ ~override~                                 // Flame Fan (Fire Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mfiff.spl~ ~override~                                 // Flame Fan (Fire Mephit)
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %rr#mfiff%                                    // use new projectile
   END 
-COPY ~atweaks/spl/mephits/rr#mfifj.spl~ ~override~                                 // Flame Jet (Fire Mephit)
-COPY ~atweaks/spl/mephits/rr#mfiha.spl~ ~override~                                 // Heat Aura (Fire Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mfifj.spl~ ~override~                                 // Flame Jet (Fire Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mfiha.spl~ ~override~                                 // Heat Aura (Fire Mephit)
   SAY NAME1 @1852 SAY NAME2 @1852
 
-COPY ~atweaks/spl/mephits/rr#micgt.spl~ ~override~                                 // Gate (Ice Mephit)
-COPY ~atweaks/eff/mephits/rr#micgt.eff~ ~override~                                 // Gate EFF (Ice Mephit)
-COPY ~atweaks/spl/mephits/rr#micis.spl~ ~override~                                 // Ice Shard (Ice Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#micgt.spl~ ~override~                                 // Gate (Ice Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#micgt.eff~ ~override~                                 // Gate EFF (Ice Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#micis.spl~ ~override~                                 // Ice Shard (Ice Mephit)
 
 
-COPY ~atweaks/spl/mephits/rr#mligt.spl~ ~override~                                 // Gate (Lightning Mephit)
-COPY ~atweaks/eff/mephits/rr#mligt.eff~ ~override~                                 // Gate EFF (Lightning Mephit)
-COPY ~atweaks/bam/rr#mlilb.bam~ ~override~                                         // new Lightning Bolt animation (Icewind Dale style)
-ADD_PROJECTILE ~atweaks/pro/rr#mlilb.pro~                                          // New projectile for Lightning Bolt (no bounce, high speed)
-COPY ~atweaks/spl/mephits/rr#mlilb.spl~ ~override~                                 // Lightning Bolt (Lightning Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mligt.spl~ ~override~                                 // Gate (Lightning Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mligt.eff~ ~override~                                 // Gate EFF (Lightning Mephit)
+COPY ~%MOD_FOLDER%/bam/rr#mlilb.bam~ ~override~                                         // new Lightning Bolt animation (Icewind Dale style)
+ADD_PROJECTILE ~%MOD_FOLDER%/pro/rr#mlilb.pro~                                          // New projectile for Lightning Bolt (no bounce, high speed)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mlilb.spl~ ~override~                                 // Lightning Bolt (Lightning Mephit)
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
   FOR(i=0; i<ab_num; i+=1) BEGIN
     WRITE_SHORT (ab_off+i*0x28+0x26) %rr#mlilb%                                    // use new projectile
   END 
-COPY ~atweaks/spl/mephits/rr#mlild.spl~ ~override~                                 // Lightning Discharge (Lightning Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mlild.spl~ ~override~                                 // Lightning Discharge (Lightning Mephit)
   SAY NAME1 @1854 SAY NAME2 @1854
 
-COPY ~atweaks/spl/mephits/rr#mmagt.spl~ ~override~                                 // Gate (Magma Mephit)
-COPY ~atweaks/eff/mephits/rr#mmagt.eff~ ~override~                                 // Gate EFF (Magma Mephit)
-COPY ~atweaks/spl/mephits/rr#mmamb.spl~ ~override~                                 // Magma Ball (Magma Mephit)
-COPY ~atweaks/spl/mephits/rr#mmahe.spl~ ~override~                                 // Heat Emission (Magma Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmagt.spl~ ~override~                                 // Gate (Magma Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mmagt.eff~ ~override~                                 // Gate EFF (Magma Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmamb.spl~ ~override~                                 // Magma Ball (Magma Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmahe.spl~ ~override~                                 // Heat Emission (Magma Mephit)
 
-COPY ~atweaks/spl/mephits/rr#mmigt.spl~ ~override~                                 // Gate (Mineral Mephit)
-COPY ~atweaks/eff/mephits/rr#mmigt.eff~ ~override~                                 // Gate EFF (Mineral Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmigt.spl~ ~override~                                 // Gate (Mineral Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mmigt.eff~ ~override~                                 // Gate EFF (Mineral Mephit)
 
 
-COPY ~atweaks/spl/mephits/rr#mmsgt.spl~ ~override~                                 // Gate (Mist Mephit)
-COPY ~atweaks/eff/mephits/rr#mmsgt.eff~ ~override~                                 // Gate EFF (Mist Mephit)
-COPY ~atweaks/spl/mephits/rr#mmsmb.spl~ ~override~                                 // Mist Ball (Mist Mephit)
-COPY ~atweaks/spl/mephits/rr#mmsgf.spl~ ~override~                                 // Gaseous Form (Mist Mephit)
-COPY ~atweaks/vvc/rr#mmswf.vvc~ ~override~                                         // Wall of Fog animation (Mist Mephit)
-COPY ~atweaks/spl/mephits/rr#mmswf.spl~ ~override~                                 // Wall of Fog (Mist Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmsgt.spl~ ~override~                                 // Gate (Mist Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mmsgt.eff~ ~override~                                 // Gate EFF (Mist Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmsmb.spl~ ~override~                                 // Mist Ball (Mist Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmsgf.spl~ ~override~                                 // Gaseous Form (Mist Mephit)
+COPY ~%MOD_FOLDER%/vvc/rr#mmswf.vvc~ ~override~                                         // Wall of Fog animation (Mist Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mmswf.spl~ ~override~                                 // Wall of Fog (Mist Mephit)
   SAY NAME1 @1855 SAY NAME2 @1855
 
-COPY ~atweaks/spl/mephits/rr#mozgt.spl~ ~override~                                 // Gate (Ooze Mephit)
-COPY ~atweaks/eff/mephits/rr#mozgt.eff~ ~override~                                 // Gate EFF (Ooze Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mozgt.spl~ ~override~                                 // Gate (Ooze Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mozgt.eff~ ~override~                                 // Gate EFF (Ooze Mephit)
 
 
-COPY ~atweaks/spl/mephits/rr#mragt.spl~ ~override~                                 // Gate (Radiant Mephit)
-COPY ~atweaks/eff/mephits/rr#mragt.eff~ ~override~                                 // Gate EFF (Radiant Mephit)
-// COPY ~atweaks/spl/mephits/rr#mracs.spl~ ~override~                                 // Color Spray (special Radiant Mephit version)
-COPY ~aTweaks/spl/rr#ddeti.spl~ ~override~                                         // Detect Illusion (Radiant Mephit & aTweaks' Marilith)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mragt.spl~ ~override~                                 // Gate (Radiant Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mragt.eff~ ~override~                                 // Gate EFF (Radiant Mephit)
+// COPY ~%MOD_FOLDER%/spl/mephits/rr#mracs.spl~ ~override~                                 // Color Spray (special Radiant Mephit version)
+COPY ~%MOD_FOLDER%/spl/rr#ddeti.spl~ ~override~                                         // Detect Illusion (Radiant Mephit & aTweaks' Marilith)
 
-COPY ~atweaks/spl/mephits/rr#msagt.spl~ ~override~                                 // Gate (Salt Mephit)
-COPY ~atweaks/eff/mephits/rr#msagt.eff~ ~override~                                 // Gate EFF (Salt Mephit)
-COPY ~atweaks/spl/mephits/rr#msasc.spl~ ~override~                                 // Salt Crystals (Salt Mephit)
-COPY ~atweaks/spl/mephits/rr#msata.spl~ ~override~                                 // Taunt (Salt Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msagt.spl~ ~override~                                 // Gate (Salt Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#msagt.eff~ ~override~                                 // Gate EFF (Salt Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msasc.spl~ ~override~                                 // Salt Crystals (Salt Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msata.spl~ ~override~                                 // Taunt (Salt Mephit)
   SAY NAME1 @1856 SAY NAME2 @1856
 
-COPY ~atweaks/spl/mephits/rr#msmgt.spl~ ~override~                                 // Gate (Smoke Mephit)
-COPY ~atweaks/eff/mephits/rr#msmgt.eff~ ~override~                                 // Gate EFF (Smoke Mephit)
-COPY ~atweaks/spl/mephits/rr#msmsb.spl~ ~override~                                 // Sooty Ball (Smoke Mephit)
-COPY ~atweaks/spl/mephits/rr#msmff.spl~ ~override~                                 // Flash of Flame (Smoke Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msmgt.spl~ ~override~                                 // Gate (Smoke Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#msmgt.eff~ ~override~                                 // Gate EFF (Smoke Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msmsb.spl~ ~override~                                 // Sooty Ball (Smoke Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#msmff.spl~ ~override~                                 // Flash of Flame (Smoke Mephit)
   SAY NAME1 @1857 SAY NAME2 @1857
 
-COPY ~atweaks/spl/mephits/rr#mstgt.spl~ ~override~                                 // Gate (Steam Mephit)
-COPY ~atweaks/eff/mephits/rr#mstgt.eff~ ~override~                                 // Gate EFF (Steam Mephit)
-COPY ~atweaks/spl/mephits/rr#mstwj.spl~ ~override~                                 // Water Jet (Steam Mephit)
-COPY ~atweaks/vvc/rr#mstbr.vvc~ ~override~                                         // Boiling Rain Storm animation (Mist Mephit)
-COPY ~atweaks/spl/mephits/rr#mstbr.spl~ ~override~                                 // Boiling Rain Storm (Steam Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mstgt.spl~ ~override~                                 // Gate (Steam Mephit)
+COPY ~%MOD_FOLDER%/eff/mephits/rr#mstgt.eff~ ~override~                                 // Gate EFF (Steam Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mstwj.spl~ ~override~                                 // Water Jet (Steam Mephit)
+COPY ~%MOD_FOLDER%/vvc/rr#mstbr.vvc~ ~override~                                         // Boiling Rain Storm animation (Mist Mephit)
+COPY ~%MOD_FOLDER%/spl/mephits/rr#mstbr.spl~ ~override~                                 // Boiling Rain Storm (Steam Mephit)
 
 //PnP Color Spray
 ACTION_IF !FILE_EXISTS_IN_GAME "fl#clrsp.spl" BEGIN
-COPY "atweaks/spl/base.spl" "override/RR#mracs.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/RR#mracs.spl"
   WRITE_LONG NAME1 12075 //Color Spray
   WRITE_ASCII 0x10 CAS_M08 #8 //casting sound
   WRITE_BYTE  0x19 BIT2 //flags: hostile
@@ -191,8 +191,8 @@ LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
 // New items
 /////////////
 
-COPY ~atweaks/itm/mephits/rr#mrg1t.itm~ ~override~                                 // Mephit regeneration (1hp/turn)
-COPY ~atweaks/itm/mephits/rr#mimun.itm~ ~override~                                 // Mephit immunities amulet (shared by all mephits)
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mrg1t.itm~ ~override~                                 // Mephit regeneration (1hp/turn)
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mimun.itm~ ~override~                                 // Mephit immunities amulet (shared by all mephits)
 LPF ~hover_immunities~ END                                       // grant immunities to ground-based spells
 LPF ~extraplanar_traits~ END                                     // add extraplanar traits
 PATCH_FOR_EACH ~spell~ IN                                                          // for each of the following spells
@@ -214,19 +214,19 @@ END                                                                             
 BUT_ONLY_IF_IT_CHANGES                                                   
 LAF item_labels STR_VAR item = "RR#mimun" END
 
-COPY ~atweaks/itm/mephits/rr#mgasi.itm~ ~override~                                 // gas imunity ring (shared by several mephits)
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mgasi.itm~ ~override~                                 // gas imunity ring (shared by several mephits)
 LPF cloud_spell_immunities END                                   // grant immunities to gas-based area effect spells
 
 
 
-COPY ~atweaks/itm/mephits/rr#maiw1.itm~ ~override~                                 // Air Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#maiw1.itm~ ~override~                                 // Air Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mduw1.itm~ ~override~                                 // Dust Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mduw1.itm~ ~override~                                 // Dust Mephit melee attack and special traits
   LPF set_enchantment END
 LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
-COPY ~atweaks/itm/mephits/rr#meaw1.itm~ ~override~                                 // Earth Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#meaw1.itm~ ~override~                                 // Earth Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#meaw1.itm~ ~override/rr#meaw2.itm~                    // spawn Earth Mephit's second melee attack (Grow ability result)
+COPY ~%MOD_FOLDER%/itm/mephits/rr#meaw1.itm~ ~override/rr#meaw2.itm~                    // spawn Earth Mephit's second melee attack (Grow ability result)
   LPF set_enchantment END
 READ_LONG 0x64 abil_off
 READ_SHORT 0x68 abil_num
@@ -237,27 +237,27 @@ FOR (i = 0; i < "%abil_num%"; i += 1) BEGIN                                     
     WRITE_SHORT ("%abil_off%" + 0x18) 2                                            // dice rolls
   END
 END
-COPY ~atweaks/itm/mephits/rr#mfiw1.itm~ ~override~                                 // Fire Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mfiw1.itm~ ~override~                                 // Fire Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#micw1.itm~ ~override~                                 // Ice Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#micw1.itm~ ~override~                                 // Ice Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mliw1.itm~ ~override~                                 // Lightning Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mliw1.itm~ ~override~                                 // Lightning Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mmaw1.itm~ ~override~                                 // Magma Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mmaw1.itm~ ~override~                                 // Magma Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mmiw1.itm~ ~override~                                 // Mineral Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mmiw1.itm~ ~override~                                 // Mineral Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mmsw1.itm~ ~override~                                 // Mist Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mmsw1.itm~ ~override~                                 // Mist Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mozw1.itm~ ~override~                                 // Ooze Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mozw1.itm~ ~override~                                 // Ooze Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mraw1.itm~ ~override~                                 // Radiant Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mraw1.itm~ ~override~                                 // Radiant Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#msaw1.itm~ ~override~                                 // Salt Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#msaw1.itm~ ~override~                                 // Salt Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#msmw1.itm~ ~override~                                 // Smoke Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#msmw1.itm~ ~override~                                 // Smoke Mephit melee attack and special traits
   LPF set_enchantment END
-COPY ~atweaks/itm/mephits/rr#mstw1.itm~ ~override~                                 // Steam Mephit melee attack and special traits
+COPY ~%MOD_FOLDER%/itm/mephits/rr#mstw1.itm~ ~override~                                 // Steam Mephit melee attack and special traits
 
 
 
@@ -1349,20 +1349,20 @@ WRITE_BYTE 0x275 3                                                              
 // New AI Scripts
 //////////////////
 
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mair.baf~                                          // Air Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mdus.baf~                                          // Dust Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mear.baf~                                          // Earth Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mfir.baf~                                          // Fire Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mice.baf~                                          // Ice Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mlig.baf~                                          // Lightning Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mmag.baf~                                          // Magma Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mmin.baf~                                          // Mineral Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mmst.baf~                                          // Mist Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mooz.baf~                                          // Ooze Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mrad.baf~                                          // Radiant Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#msal.baf~                                          // Salt Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#msmo.baf~                                          // Smoke Mephit AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/mephits/rr#mste.baf~                                          // Steam Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mair.baf~                                          // Air Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mdus.baf~                                          // Dust Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mear.baf~                                          // Earth Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mfir.baf~                                          // Fire Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mice.baf~                                          // Ice Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mlig.baf~                                          // Lightning Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mmag.baf~                                          // Magma Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mmin.baf~                                          // Mineral Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mmst.baf~                                          // Mist Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mooz.baf~                                          // Ooze Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mrad.baf~                                          // Radiant Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#msal.baf~                                          // Salt Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#msmo.baf~                                          // Smoke Mephit AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/mephits/rr#mste.baf~                                          // Steam Mephit AI script
 
 
 
@@ -1442,7 +1442,7 @@ ACTION_IF GAME_INCLUDES ~tob~ BEGIN
     WRITE_BYTE  0x270 128                                                             // set allegiance to NEUTRAL
   BUT_ONLY_IF_IT_CHANGES
 
-  <<<<<<<<atweaks/inlined/baf/mephits/ishthf1.baf
+  <<<<<<<<%MOD_FOLDER%/inlined/baf/mephits/ishthf1.baf
   IF
 	Allegiance(Myself,NEUTRAL)
 	Detect([PC])
@@ -1452,7 +1452,7 @@ ACTION_IF GAME_INCLUDES ~tob~ BEGIN
   END
   >>>>>>>>
 
-  EXTEND_TOP ~ISHTHF01.BCS~  ~atweaks/inlined/baf/mephits/ishthf1.baf~
+  EXTEND_TOP ~ISHTHF01.BCS~  ~%MOD_FOLDER%/inlined/baf/mephits/ishthf1.baf~
 
 
   // Mephit portals in Irenicus' dungeon spawn mephits on game reload even when they've been destroyed

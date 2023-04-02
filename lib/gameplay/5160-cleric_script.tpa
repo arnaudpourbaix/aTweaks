@@ -2,10 +2,10 @@
 // This tweak introduces a simple AI script for Cleric/Paladin PCs which makes them turn undead and heal allies when idle
 
 ACTION_IF GAME_IS ~totlm~ BEGIN
-  COMPILE ~atweaks/baf/iwd/rr#clp01.baf~ EVAL
+  COMPILE ~%MOD_FOLDER%/baf/iwd/rr#clp01.baf~ EVAL
 END ELSE BEGIN
-  INCLUDE ~atweaks/lib/symbols.tpa~
-  COMPILE ~atweaks/baf/rr#clp01.baf~                                              // Simple Cleric/Paladin script
+  INCLUDE ~%MOD_FOLDER%/lib/symbols.tpa~
+  COMPILE ~%MOD_FOLDER%/baf/rr#clp01.baf~                                              // Simple Cleric/Paladin script
 END
 
 COPY_EXISTING ~rr#clp01.bcs~ ~scripts\rr#clp01.bs~                                // move the script to the player scripts folder

@@ -28,9 +28,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
         PATCH_IF "%file%" STRING_MATCHES_REGEXP "_?g?ooddeat$" BEGIN
           SAY 0x8 @1020 //Death Knight
           SAY 0xc @1020
@@ -140,9 +140,9 @@ COPY_EXISTING misc56.itm "override/fl#brsw.itm" //Broken sword
   SAY 0x50 @1032
   SAY 0x54 @1032
 
-COPY ~atweaks/spl/undead/fl#dkfa.spl~ override //Death Knight Fear Aura
+COPY ~%MOD_FOLDER%/spl/undead/fl#dkfa.spl~ override //Death Knight Fear Aura
      
-COPY "atweaks/itm/undead/fl#dksw3.itm" override //Two-handed sword +4
+COPY "%MOD_FOLDER%/itm/undead/fl#dksw3.itm" override //Two-handed sword +4
   LPF set_enchantment INT_VAR enchantment = 4 END
 
 COPY_EXISTING sw1h02.itm "override/fl#dksw4.itm" //Bastard sword +2, +1 APR
@@ -196,7 +196,7 @@ COPY_EXISTING sw1h02.itm "override/fl#dksw4.itm" //Bastard sword +2, +1 APR
     DEFAULT
   END
 
-COPY "atweaks/spl/base.spl" "override/fl#dksw5.spl" 
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#dksw5.spl" 
   LPF ADD_SPELL_EFFECT
     INT_VAR
       opcode = 112 //remove item
@@ -267,7 +267,7 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
         PATCH_IF c <= 80 BEGIN
           SPRINT sword $dksw("%r%")
@@ -307,7 +307,7 @@ ACTION_IF GAME_INCLUDES ~tob~ BEGIN
 				deathkni.cre override
 
     LPF FJ_CRE_VALIDITY END
-    PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+    PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
     PATCH_IF valid BEGIN
       r = RANDOM(1 6)
       SPRINT sword $dksw("%r%")

@@ -1,8 +1,8 @@
 
-COPY ~aTweaks/EFF/RR#IDIM1.EFF~ ~override~                                 // effect file which grants immunity to the inteligence drain opcode
-     ~aTweaks/EFF/RR#IDIM2.EFF~ ~override~                                 // effect file which prevents the inteligence drained icon from showing
+COPY ~%MOD_FOLDER%/EFF/RR#IDIM1.EFF~ ~override~                                 // effect file which grants immunity to the inteligence drain opcode
+     ~%MOD_FOLDER%/EFF/RR#IDIM2.EFF~ ~override~                                 // effect file which prevents the inteligence drained icon from showing
 
-COPY ~atweaks/eff/rr#idim1.eff~ ~override/fl#idim3.eff~                    //Immunity to display string: int drain
+COPY ~%MOD_FOLDER%/eff/rr#idim1.eff~ ~override/fl#idim3.eff~                    //Immunity to display string: int drain
   WRITE_LONG 0x10 267
   WRITE_LONG 0x1c 32089 //devour brain
 

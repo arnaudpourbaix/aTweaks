@@ -4,9 +4,9 @@
 //////////////
 
 
-INCLUDE "atweaks/lib/pnp-monster/150-fiend-fn.tpa"
-INCLUDE "atweaks/lib/tactical_shared.tpa"
-INCLUDE "atweaks/lib/rr#fiend.tph"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/150-fiend-fn.tpa"
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
+INCLUDE "%MOD_FOLDER%/lib/rr#fiend.tph"
 
 ////////////////////////////////////////
 // BAATEZU
@@ -71,7 +71,7 @@ END
 
 // Special case, inlined script addition for Aesgareth's Hellcats (Watcher's Keep Cambion)
 
-<<<<<<<<aTweaks/inlined/rr#fcatx.baf
+<<<<<<<<%MOD_FOLDER%/inlined/rr#fcatx.baf
 IF
         Allegiance(Myself,EVILCUTOFF)
 	!GlobalTimerNotExpired("RR#Cast","LOCALS")
@@ -92,7 +92,7 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_TOP ~GORCAMB6.BCS~  ~aTweaks/inlined/rr#fcatx.baf~
+EXTEND_TOP ~GORCAMB6.BCS~  ~%MOD_FOLDER%/inlined/rr#fcatx.baf~
 
 
 // Erinyes
@@ -273,7 +273,7 @@ END
 
 // Gelugon
 
-COPY ~atweaks/cre/RR#SGELU.CRE~ ~override/RR#HGEL.CRE~ 
+COPY ~%MOD_FOLDER%/cre/RR#SGELU.CRE~ ~override/RR#HGEL.CRE~ 
 
 ACTION_FOR_EACH file IN
 			   ~gelugeon~                                                          // Gelugon (BP): Not Tested
@@ -808,15 +808,15 @@ END
 ////////////////////////////////////////
 
 //Ultroloth
-COPY "atweaks/cre/fiendbase.cre" "override/fl#sultr.cre"
+COPY "%MOD_FOLDER%/cre/fiendbase.cre" "override/fl#sultr.cre"
   LPF make_ultroloth END
 
 //Nycaloth
-COPY "atweaks/cre/fiendbase.cre" "override/fl#snyca.cre"
+COPY "%MOD_FOLDER%/cre/fiendbase.cre" "override/fl#snyca.cre"
   LPF make_nycaloth END
 
 //Arcanaloth
-COPY "atweaks/cre/fiendbase.cre" "override/fl#sarca.cre"
+COPY "%MOD_FOLDER%/cre/fiendbase.cre" "override/fl#sarca.cre"
   LPF make_arcanaloth END
 
 
@@ -899,7 +899,7 @@ END
 
 ACTION_IF GAME_INCLUDES ~soa~ BEGIN
   // revised Planar Sphere Nabassu dialogue (adds mephit/quasit spawning)
-  COMPILE ~atweaks/dlg/obsdem05.d~
+  COMPILE ~%MOD_FOLDER%/dlg/obsdem05.d~
 
   // Revised Planar Sphere Tanar'ri dialogue (removes mephit/quasit spawning)
   COPY_EXISTING abydem01.dlg override
@@ -922,7 +922,7 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
   BUT_ONLY
 
   // Special case, inlined script change for the new Nabassu in the Planar Sphere quest
-  <<<<<<<< .../atweaks/inlined/obsdem05.baf
+  <<<<<<<< .../%MOD_FOLDER%/inlined/obsdem05.baf
   IF
 	Global("RR#Intd","LOCALS",0)
 	NumTimesTalkedTo(0)
@@ -934,7 +934,7 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
 		StartDialogueNoSet([PC])
   END
   >>>>>>>>
-  COMPILE ~.../atweaks/inlined/obsdem05.baf~
+  COMPILE ~.../%MOD_FOLDER%/inlined/obsdem05.baf~
 END
 
 
@@ -942,33 +942,33 @@ END
 // New AI Scripts
 ////////////////////////////////////////////////////////////////////////////////
 
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fiends/rr#hquas.baf~ // Quasit
-						~atweaks/baf/fiends/rr#haluf.baf~ // Alu-Fiend
-						~atweaks/baf/fiends/rr#hcamb.baf~ // Cambion
-						~atweaks/baf/fiends/rr#hmaur.baf~ // Maurezhi
-						~atweaks/baf/fiends/rr#hsucc.baf~ // Succubus
-						~atweaks/baf/fiends/rr#hnaba.baf~ // Nabassu
-						~atweaks/baf/fiends/rr#hglab.baf~ // Glabrezu
-						~atweaks/baf/fiends/rr#hmari.baf~ // Marilith
-						~atweaks/baf/fiends/rr#hbalr.baf~ // Balor
-						~atweaks/baf/fiends/rr#himp.baf~  // Imp
-						~atweaks/baf/fiends/rr#hfcat.baf~ // Hellcat
-						~atweaks/baf/fiends/rr#herin.baf~ // Erinyes
-						~atweaks/baf/fiends/rr#hbfnd.baf~ // Bone Fiend
-						~atweaks/baf/fiends/rr#habis.baf~ // Abishai
-						~atweaks/baf/fiends/rr#hcorn.baf~ // Cornugon
-						~atweaks/baf/fiends/rr#hgelu.baf~ // Gelugon
-						~atweaks/baf/fiends/rr#hpitf.baf~ // Pit Fiend
-						~atweaks/baf/fiends/rr#karas.baf~ // Ka'rashur's reinforcement summoning script
-						~atweaks/baf/fiends/rr#tahaz.baf~ // Tahazzar's reinforcement summoning script
-						~atweaks/baf/fiends/fl#shafi.baf~ // Shadow Fiend
-						~atweaks/baf/fiends/fl#shaf2.baf~ // Devil Shade
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fiends/rr#hquas.baf~ // Quasit
+						~%MOD_FOLDER%/baf/fiends/rr#haluf.baf~ // Alu-Fiend
+						~%MOD_FOLDER%/baf/fiends/rr#hcamb.baf~ // Cambion
+						~%MOD_FOLDER%/baf/fiends/rr#hmaur.baf~ // Maurezhi
+						~%MOD_FOLDER%/baf/fiends/rr#hsucc.baf~ // Succubus
+						~%MOD_FOLDER%/baf/fiends/rr#hnaba.baf~ // Nabassu
+						~%MOD_FOLDER%/baf/fiends/rr#hglab.baf~ // Glabrezu
+						~%MOD_FOLDER%/baf/fiends/rr#hmari.baf~ // Marilith
+						~%MOD_FOLDER%/baf/fiends/rr#hbalr.baf~ // Balor
+						~%MOD_FOLDER%/baf/fiends/rr#himp.baf~  // Imp
+						~%MOD_FOLDER%/baf/fiends/rr#hfcat.baf~ // Hellcat
+						~%MOD_FOLDER%/baf/fiends/rr#herin.baf~ // Erinyes
+						~%MOD_FOLDER%/baf/fiends/rr#hbfnd.baf~ // Bone Fiend
+						~%MOD_FOLDER%/baf/fiends/rr#habis.baf~ // Abishai
+						~%MOD_FOLDER%/baf/fiends/rr#hcorn.baf~ // Cornugon
+						~%MOD_FOLDER%/baf/fiends/rr#hgelu.baf~ // Gelugon
+						~%MOD_FOLDER%/baf/fiends/rr#hpitf.baf~ // Pit Fiend
+						~%MOD_FOLDER%/baf/fiends/rr#karas.baf~ // Ka'rashur's reinforcement summoning script
+						~%MOD_FOLDER%/baf/fiends/rr#tahaz.baf~ // Tahazzar's reinforcement summoning script
+						~%MOD_FOLDER%/baf/fiends/fl#shafi.baf~ // Shadow Fiend
+						~%MOD_FOLDER%/baf/fiends/fl#shaf2.baf~ // Devil Shade
 
 ACTION_IF GAME_INCLUDES ~tob~ BEGIN
   // Make Ka'rashur use aTweaks' Pit Fiend script once he goes hostile
-  EXTEND_TOP karash.bcs ~atweaks/baf/fiends/karash.baf~
+  EXTEND_TOP karash.bcs ~%MOD_FOLDER%/baf/fiends/karash.baf~
   // Make Tahazzar use aTweaks' Balor script once he goes hostile
-  EXTEND_TOP tahazz.bcs ~atweaks/baf/fiends/tahazz.baf~
+  EXTEND_TOP tahazz.bcs ~%MOD_FOLDER%/baf/fiends/tahazz.baf~
 
   // Fix the Glabrezu spawning in the Guarded Compound
   COPY_EXISTING kettaatk.bcs override
@@ -1152,15 +1152,15 @@ BUT_ONLY
 ////////////////////////////////////////
 /*
 // Create scripts and creatures outside the ACTION_IF in case SCSII is installed after -- move to component 154 - revised summoning
-COMPILE ~atweaks/baf/fiends/fl#nabsu.baf~
-        ~atweaks/baf/fiends/fl#corsu.baf~
-        ~atweaks/baf/fiends/fl#glasu.baf~
-        ~atweaks/baf/fiends/fl#gelsu.baf~
-        ~atweaks/baf/fiends/fl#balsu.baf~
-        ~atweaks/baf/fiends/fl#pitsu.baf~
-        ~atweaks/baf/fiends/fl#arcsu.baf~
-        ~atweaks/baf/fiends/fl#nycsu.baf~
-        ~atweaks/baf/fiends/fl#ultsu.baf~
+COMPILE ~%MOD_FOLDER%/baf/fiends/fl#nabsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#corsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#glasu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#gelsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#balsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#pitsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#arcsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#nycsu.baf~
+        ~%MOD_FOLDER%/baf/fiends/fl#ultsu.baf~
 
 COPY_EXISTING demnab01.cre ~override/fl#nabsu.cre~
               telcor1.cre  ~override/fl#corsu.cre~
@@ -1326,7 +1326,7 @@ ACTION_PHP_EACH rr_script_ascension AS file => script BEGIN
 // Create gating spells
 
 //Balor: summon 1-6 (4) lesser (alu-fiend, cambion, succubus), 1-4 (2) greater (nabassu) or 1 true tanar'ri (balor, marilith, glabrezu)
-COPY ~atweaks/spl/base.spl~ "override/fl#gtbal.spl"
+COPY ~%MOD_FOLDER%/spl/base.spl~ "override/fl#gtbal.spl"
   LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability1 = 33 STR_VAR resource = fl#gtba1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability1 = 66 probability2 = 34 STR_VAR resource = fl#gtba2 END
@@ -1428,7 +1428,7 @@ COPY_EXISTING telbal1.cre  "override/rr#hsbal.cre"
     ADD_CRE_ITEM "dw#sumfi" #0 #0 #0 none boots
   END
 
-<<<<<<<< atweaks/fl-inlined/Placeholder4Gating.baf
+<<<<<<<< %MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf
 IF
   False()
   Global("flPlaceholder4Gating","LOCALS",0)
@@ -1438,7 +1438,7 @@ THEN
 END
 >>>>>>>>
 
-<<<<<<<< atweaks/fl-inlined/Placeholder24Gating.baf
+<<<<<<<< %MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf
 IF
   False()
   Global("Placeholder24Gating","LOCALS",0)
@@ -1449,39 +1449,39 @@ END
 >>>>>>>>
 
 COPY_EXISTING rr#hbalr.bcs "override\RR#FIBAL.bcs"
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_balor.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_balor2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hglab.bcs "override\RR#FIGLA.bcs"
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_glabrezu.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_glabrezu2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_glabrezu.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_glabrezu2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hnaba.bcs "override\RR#FINAB.bcs"
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_nabassu.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_nabassu2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_nabassu.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_nabassu2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hmari.bcs "override\RR#FIMAR.bcs"
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_marilith.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_balor2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_marilith.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hsucc.bcs "override\RR#FISUC.bcs"
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_succubus.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_succubus2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_succubus.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_succubus2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790

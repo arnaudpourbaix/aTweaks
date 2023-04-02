@@ -1,9 +1,9 @@
-INCLUDE "atweaks/lib/pnp-monster/fiend/gate/fn.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fiend/gate/fn.tpa"
 
 // Create gating spells
 
 //Balor: summon 1-6 (4) lesser (alu-fiend, cambion, succubus), 1-4 (2) greater (nabassu) or 1 true tanar'ri (balor, marilith, glabrezu)
-COPY ~atweaks/spl/base.spl~ "override/fl#gtbal.spl"
+COPY ~%MOD_FOLDER%/spl/base.spl~ "override/fl#gtbal.spl"
   LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability1 = 33 STR_VAR resource = fl#gtba1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability1 = 66 probability2 = 34 STR_VAR resource = fl#gtba2 END
@@ -74,7 +74,7 @@ COPY_EXISTING spwi905.spl "override/fl#gtsuc.spl"
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 177 target = 1 parameter2 = 2 timing = 1 STR_VAR resource = rr#hsbal END
   
 //Pit Fiend: summon 2 lesser (abishai, erinyes, osyluth) or 1 greater (cornugon, gelugon, pit fiend) baatezu
-COPY ~atweaks/spl/base.spl~ ~override/fl#gtpit.spl~
+COPY ~%MOD_FOLDER%/spl/base.spl~ ~override/fl#gtpit.spl~
   LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability1 = 50 STR_VAR resource = fl#gtpi1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 1 probability2 = 51 STR_VAR resource = fl#gtpi2 END
@@ -205,7 +205,7 @@ COPY_EXISTING telbal1.cre  "override/rr#hsbal.cre"
 //Add gating script blocks
 ///////////////////////////////////////////////////              
 
-<<<<<<<< atweaks/fl-inlined/Placeholder4Gating.baf
+<<<<<<<< %MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf
 IF
   False()
   Global("flPlaceholder4Gating","LOCALS",0)
@@ -215,7 +215,7 @@ THEN
 END
 >>>>>>>>
 
-<<<<<<<< atweaks/fl-inlined/Placeholder24Gating.baf
+<<<<<<<< %MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf
 IF
   False()
   Global("Placeholder24Gating","LOCALS",0)
@@ -226,78 +226,78 @@ END
 >>>>>>>>
 
 COPY_EXISTING rr#habis.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_abishai.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_abishai2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_abishai.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_abishai2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000759 @759
     REPLACE 10000791 @791
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hbalr.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_balor.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_balor2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hbfnd.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_osyluth.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_osyluth2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_osyluth.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_osyluth2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000759 @759
     REPLACE 10000791 @791
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hcorn.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_cornugon.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_cornugon2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_cornugon.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_cornugon2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000759 @759
     REPLACE 10000791 @791
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hgelu.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_gelugon.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_gelugon2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_gelugon.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_gelugon2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000759 @759
     REPLACE 10000791 @791
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hglab.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_glabrezu.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_glabrezu2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_glabrezu.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_glabrezu2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hnaba.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_nabassu.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_nabassu2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_nabassu.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_nabassu2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hmari.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_marilith.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_balor2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_marilith.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_balor2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hpitf.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_pit_fiend.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_pit_fiend2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_pit_fiend.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_pit_fiend2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000759 @759
   COMPILE_BAF_TO_BCS
 
 COPY_EXISTING rr#hsucc.bcs override
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder4Gating.baf~ ~atweaks/baf/fiends/gate_succubus.baf~
-  REPLACE_BCS_BLOCK ~atweaks/fl-inlined/Placeholder24Gating.baf~ ~atweaks/baf/fiends/gate_succubus2.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder4Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_succubus.baf~
+  REPLACE_BCS_BLOCK ~%MOD_FOLDER%/fl-inlined/Placeholder24Gating.baf~ ~%MOD_FOLDER%/baf/fiends/gate_succubus2.baf~
   DECOMPILE_BCS_TO_BAF
     REPLACE 10000758 @758
     REPLACE 10000790 @790

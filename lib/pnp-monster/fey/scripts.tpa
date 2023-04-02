@@ -1,8 +1,8 @@
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#fdrya.baf~  // hostile Dryad AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#fhama.baf~	// hostile Hamadryad AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#fsiri.baf~ 	// hostile Sirine AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#fnymp.baf~	// hostile Nymph AI script
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#snymp.baf~	// summoned Nymph AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fdrya.baf~  // hostile Dryad AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fhama.baf~	// hostile Hamadryad AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fsiri.baf~ 	// hostile Sirine AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fnymp.baf~	// hostile Nymph AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#snymp.baf~	// summoned Nymph AI script
 
 // Wild animals should not attack fey creatures unless provoked
 ACTION_FOR_EACH script IN bear cbear wolf BEGIN
@@ -16,7 +16,7 @@ ACTION_FOR_EACH script IN bear cbear wolf BEGIN
   END
 END
 
-<<<<<<<<atweaks/inlined/baf/fey/wildemp.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/fey/wildemp.baf
 IF
     Race(NearestEnemyOf(Myself),FAIRY)
     DamageTaken(0)
@@ -26,10 +26,10 @@ THEN
 END
 >>>>>>>>
 
-EXTEND_TOP ~HUNTER.BCS~   ~atweaks/inlined/baf/fey/wildemp.baf~
-EXTEND_TOP ~HUNTER2.BCS~  ~atweaks/inlined/baf/fey/wildemp.baf~
-EXTEND_TOP ~WARDOG.BCS~   ~atweaks/inlined/baf/fey/wildemp.baf~
-EXTEND_TOP ~WILDDOG.BCS~  ~atweaks/inlined/baf/fey/wildemp.baf~
-EXTEND_TOP ~WOLF.BCS~     ~atweaks/inlined/baf/fey/wildemp.baf~
+EXTEND_TOP ~HUNTER.BCS~   ~%MOD_FOLDER%/inlined/baf/fey/wildemp.baf~
+EXTEND_TOP ~HUNTER2.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/wildemp.baf~
+EXTEND_TOP ~WARDOG.BCS~   ~%MOD_FOLDER%/inlined/baf/fey/wildemp.baf~
+EXTEND_TOP ~WILDDOG.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/wildemp.baf~
+EXTEND_TOP ~WOLF.BCS~     ~%MOD_FOLDER%/inlined/baf/fey/wildemp.baf~
 
 

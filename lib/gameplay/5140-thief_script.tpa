@@ -7,9 +7,9 @@ END
 
 // This tweak introduces a simple AI script for Thief PCs which makes them search for traps or hide in shadows when idle
 ACTION_IF GAME_IS ~totlm iwd2~ BEGIN
-  COMPILE ~atweaks/baf/iwd/rr#thf01.baf~ EVAL
+  COMPILE ~%MOD_FOLDER%/baf/iwd/rr#thf01.baf~ EVAL
 END ELSE BEGIN
-  COMPILE ~aTweaks/BAF/RR#THF01.BAF~                                                // Simple Thief script
+  COMPILE ~%MOD_FOLDER%/BAF/RR#THF01.BAF~                                                // Simple Thief script
 END
 COPY_EXISTING ~RR#THF01.BCS~ ~scripts\RR#THF01.BS~                                // move the script to the player scripts folder
 

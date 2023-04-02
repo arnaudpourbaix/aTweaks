@@ -1,7 +1,7 @@
 
-COPY    ~aTweaks/BAM/SPDIMNDR.BAM~   ~override~                                    // IWD1's Dimension Door animation
-COPY    ~aTweaks/WAV/EFF_M09.WAV~    ~override~                                    // IWD1's Dimension Door sound effect
-COPY    ~atweaks/bam/rr#ddbg2.bam~   ~override~                                    // Default BG2 Dimension Door animation (needed for a few static animations)
+COPY    ~%MOD_FOLDER%/BAM/SPDIMNDR.BAM~   ~override~                                    // IWD1's Dimension Door animation
+COPY    ~%MOD_FOLDER%/WAV/EFF_M09.WAV~    ~override~                                    // IWD1's Dimension Door sound effect
+COPY    ~%MOD_FOLDER%/bam/rr#ddbg2.bam~   ~override~                                    // Default BG2 Dimension Door animation (needed for a few static animations)
 
 COPY_EXISTING ~SPDIMNDR.VVC~ ~override~                                            // Dimension Door VVC
   WRITE_LONG  0x34 "5"                                                             // Set the frame rate to 5

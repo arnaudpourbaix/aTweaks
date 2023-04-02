@@ -4,18 +4,18 @@
 ////////////////////////////////////////////////
 
 
-COPY    ~aTweaks/EFF/RR#DAGLR.EFF~ ~override~                                      // Red glow (for evil aligned creatures)
-COPY    ~aTweaks/EFF/RR#DAGLG.EFF~ ~override~                                      // Green glow (for good aligned creatures)
-COPY    ~aTweaks/EFF/RR#DAGLB.EFF~ ~override~                                      // Blue glow (for neutral aligned creatures)
-COPY    ~aTweaks/EFF/RR#DASLG.EFF~ ~override~                                      // Display String: Lawful Good
-COPY    ~aTweaks/EFF/RR#DASLE.EFF~ ~override~                                      // Display String: Lawful Evil
-COPY    ~aTweaks/EFF/RR#DASLN.EFF~ ~override~                                      // Display String: Lawful Neutral
-COPY    ~aTweaks/EFF/RR#DASNG.EFF~ ~override~                                      // Display String: Neutral Good
-COPY    ~aTweaks/EFF/RR#DASNE.EFF~ ~override~                                      // Display String: Neutral Evil
-COPY    ~aTweaks/EFF/RR#DASNT.EFF~ ~override~                                      // Display String: True Neutral
-COPY    ~aTweaks/EFF/RR#DASCG.EFF~ ~override~                                      // Display String: Chaotic Good
-COPY    ~aTweaks/EFF/RR#DASCE.EFF~ ~override~                                      // Display String: Chaotic Evil
-COPY    ~aTweaks/EFF/RR#DASCN.EFF~ ~override~                                      // Display String: Chaotic Neutral
+COPY    ~%MOD_FOLDER%/EFF/RR#DAGLR.EFF~ ~override~                                      // Red glow (for evil aligned creatures)
+COPY    ~%MOD_FOLDER%/EFF/RR#DAGLG.EFF~ ~override~                                      // Green glow (for good aligned creatures)
+COPY    ~%MOD_FOLDER%/EFF/RR#DAGLB.EFF~ ~override~                                      // Blue glow (for neutral aligned creatures)
+COPY    ~%MOD_FOLDER%/EFF/RR#DASLG.EFF~ ~override~                                      // Display String: Lawful Good
+COPY    ~%MOD_FOLDER%/EFF/RR#DASLE.EFF~ ~override~                                      // Display String: Lawful Evil
+COPY    ~%MOD_FOLDER%/EFF/RR#DASLN.EFF~ ~override~                                      // Display String: Lawful Neutral
+COPY    ~%MOD_FOLDER%/EFF/RR#DASNG.EFF~ ~override~                                      // Display String: Neutral Good
+COPY    ~%MOD_FOLDER%/EFF/RR#DASNE.EFF~ ~override~                                      // Display String: Neutral Evil
+COPY    ~%MOD_FOLDER%/EFF/RR#DASNT.EFF~ ~override~                                      // Display String: True Neutral
+COPY    ~%MOD_FOLDER%/EFF/RR#DASCG.EFF~ ~override~                                      // Display String: Chaotic Good
+COPY    ~%MOD_FOLDER%/EFF/RR#DASCE.EFF~ ~override~                                      // Display String: Chaotic Evil
+COPY    ~%MOD_FOLDER%/EFF/RR#DASCN.EFF~ ~override~                                      // Display String: Chaotic Neutral
 
 
 // Detect Evil
@@ -407,6 +407,6 @@ COPY_EXISTING ~SPWI202.SPL~  ~override~                                         
       END
     END
   END
-COPY ~atweaks/spl/elementals/rr#ekal2.spl~ ~override/rr#ekal.spl~                  // Know Alignment (aTweaks Elemental Prince version)
+COPY ~%MOD_FOLDER%/spl/elementals/rr#ekal2.spl~ ~override/rr#ekal.spl~                  // Know Alignment (aTweaks Elemental Prince version)
 END                                                                                // ends SR compatibility block
 

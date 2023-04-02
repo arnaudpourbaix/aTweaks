@@ -37,7 +37,7 @@ END
 ACTION_IF ENGINE_IS ~tob bgee bg2ee~ AND
           !MOD_IS_INSTALLED ITEM_REV.TP2 0
 BEGIN
-  COPY ~aTweaks/SPL/RR#BT12.SPL~ ~override~ // Empty Stoneskin spell shell (used for inheriting item effects)
+  COPY ~%MOD_FOLDER%/SPL/RR#BT12.SPL~ ~override~ // Empty Stoneskin spell shell (used for inheriting item effects)
 
   COPY_EXISTING ~boot12.itm~ ~override~
     LPF ITEM_EFFECT_TO_SPELL STR_VAR new_itm_spl = RR#BT12.SPL END

@@ -1,14 +1,14 @@
 
-INCLUDE "atweaks/lib/lib.tpa"
+INCLUDE "%MOD_FOLDER%/lib/lib.tpa"
 
 DEFINE_PATCH_FUNCTION make_ghast
   INT_VAR
     xpv = 650
 BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+  PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+    PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
     REPLACE_CRE_ITEM fl#ghas1 #0 #0 #0 none weapon1 EQUIP
     REPLACE_CRE_ITEM fl#ghas2 #0 #0 #0 none shield
     LPF patchCreature
@@ -67,7 +67,7 @@ DEFINE_PATCH_FUNCTION make_skeleton
     enf_regexp = "^$"
 BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+  PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
   PATCH_IF valid BEGIN
     READ_SHORT 0x28 anim
     PATCH_IF anim = 25603 BEGIN //ring99 gives them a red colour effect that makes their eyes glow, but others are draped wholly in red, so they get ring95
@@ -135,9 +135,9 @@ DEFINE_PATCH_FUNCTION make_skeleton_warrior
     notenf_regexp = "^$"
 BEGIN
   LPF FJ_CRE_VALIDITY END
-  PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+  PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
   PATCH_IF valid BEGIN
-    PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+    PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
     READ_SHORT 0x28 anim
     PATCH_IF anim = 25603 BEGIN //ring99 gives them a red colour effect that makes their eyes glow, but others are draped wholly in red, so they get ring95
       SPRINT ring "%ring99%" //Standard undead immunities, plus red colouring, sans charm immunity

@@ -1,11 +1,11 @@
 
-COPY ~atweaks/spl/fey/sppr410.spl~   ~override~                                    // Call Woodland Beings spell
+COPY ~%MOD_FOLDER%/spl/fey/sppr410.spl~   ~override~                                    // Call Woodland Beings spell
   SAY DESC @1895 SAY UNIDENTIFIED_DESC @1895
 
-COPY ~atweaks/itm/rr#dinv.itm~  ~override~                                         // item which makes creatures untargetable until the gating animation finishes
-     ~atweaks/eff/fey/rr#sdrya.eff~   ~override~                                   // Summon Dryad EFF
-     ~atweaks/eff/fey/rr#shama.eff~   ~override~                                   // Summon Hamadryad EFF
-     ~atweaks/eff/fey/rr#snymp.eff~   ~override~                                   // Summon Nymph EFF
+COPY ~%MOD_FOLDER%/itm/rr#dinv.itm~  ~override~                                         // item which makes creatures untargetable until the gating animation finishes
+     ~%MOD_FOLDER%/eff/fey/rr#sdrya.eff~   ~override~                                   // Summon Dryad EFF
+     ~%MOD_FOLDER%/eff/fey/rr#shama.eff~   ~override~                                   // Summon Hamadryad EFF
+     ~%MOD_FOLDER%/eff/fey/rr#snymp.eff~   ~override~                                   // Summon Nymph EFF
 
 ACTION_IF !GAME_IS ~iwdee~ BEGIN                                                   // not on IWD:EE
 COPY_EXISTING ~dry01.cre~    ~override/rr#sdrya.cre~                               // Summoned Dryad
@@ -31,14 +31,14 @@ COPY_EXISTING ~dry01.cre~    ~override/rr#sdrya.cre~                            
 END                                                                                // ends IWD:EE check
 
 ACTION_IF GAME_IS ~iwdee~ BEGIN                                                    // there are no fey creatures in IWD:EE so we need to create them from scratch
-COPY ~atweaks/cre/fey/rr#sdrya.cre~  ~override~                                    // Summoned Dryad
-     ~atweaks/cre/fey/rr#shama.cre~  ~override~                                    // Summoned Hamadryad
-     ~atweaks/cre/fey/rr#snymp.cre~  ~override~                                    // Summoned Nymph
+COPY ~%MOD_FOLDER%/cre/fey/rr#sdrya.cre~  ~override~                                    // Summoned Dryad
+     ~%MOD_FOLDER%/cre/fey/rr#shama.cre~  ~override~                                    // Summoned Hamadryad
+     ~%MOD_FOLDER%/cre/fey/rr#snymp.cre~  ~override~                                    // Summoned Nymph
 END                                                                                // ends IWD:EE check
 
-COMPILE EVALUATE_BUFFER ~atweaks/baf/fey/rr#sdrya.baf~                                             // Summoned Dryad AI script
-						~atweaks/baf/fey/rr#shama.baf~                                             // Summoned Hamadryad AI script
-						~atweaks/baf/fey/rr#snymp.baf~                                             // Summoned Nymph AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#sdrya.baf~                                             // Summoned Dryad AI script
+						~%MOD_FOLDER%/baf/fey/rr#shama.baf~                                             // Summoned Hamadryad AI script
+						~%MOD_FOLDER%/baf/fey/rr#snymp.baf~                                             // Summoned Nymph AI script
 		
 ////////////////////////////////////////
 // Item Revisions

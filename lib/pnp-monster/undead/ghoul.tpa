@@ -21,9 +21,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM fl#ghou1 #0 #0 #0 none weapon1 EQUIP
         REPLACE_CRE_ITEM fl#ghou2 #0 #0 #0 none shield
         LPF patchCreature
@@ -89,10 +89,10 @@ COPY_EXISTING s1-3.itm "override/fl#ghou1.itm"
   LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 177 target = 2 duration = 1 parameter1 = 2 parameter2 = 4 STR_VAR resource = fl#ghoul END //Protection from fl#ghoul.spl for elves
   LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 146 target = 2 timing = 1 parameter1 = 1 parameter2 = 1 STR_VAR resource = fl#ghoul END //Cast fl#ghoul.spl
 
-COPY "atweaks/eff/base.eff" "override/fl#ghoul.eff"
+COPY "%MOD_FOLDER%/eff/base.eff" "override/fl#ghoul.eff"
   WRITE_LONG 0x10 206
   WRITE_LONG 0x14 2
   WRITE_LONG 0x28 1
   WRITE_ASCII 0x30 fl#ghoul #8
 
-COPY "atweaks/spl/undead/fl#ghoul.spl" override
+COPY "%MOD_FOLDER%/spl/undead/fl#ghoul.spl" override

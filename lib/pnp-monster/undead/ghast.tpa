@@ -77,11 +77,11 @@ END
 
 ACTION_IF FILE_EXISTS_IN_GAME rr#ghast.bcs BEGIN
   COPY_EXISTING rr#ghast.bcs override
-    REPLACE_BCS_BLOCK "atweaks/baf/undead/fiend_ghast_old.baf" "atweaks/baf/undead/fiend_ghast_new.baf"
+    REPLACE_BCS_BLOCK "%MOD_FOLDER%/baf/undead/fiend_ghast_old.baf" "%MOD_FOLDER%/baf/undead/fiend_ghast_new.baf"
   BUT_ONLY
 END
 
-COPY "atweaks/spl/undead/fl#ghaau.spl" override
+COPY "%MOD_FOLDER%/spl/undead/fl#ghaau.spl" override
   WRITE_ASCII 0x10 "" #8 //no casting sound
 
 COPY_EXISTING s1-4.itm "override/fl#ghas1.itm"

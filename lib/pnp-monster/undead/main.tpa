@@ -5,35 +5,35 @@
 ACTION_IF GAME_IS ~tutu tutu_totsc~ BEGIN //The items in EasyTutu lack the necessary immunities; using items copied from a Fixpacked BG2 game is easier
   OUTER_SPRINT ring95 fl#rng95
   OUTER_SPRINT ring99 fl#rng99
-  COPY "atweaks/itm/undead/fl#rng95.itm" override
-       "atweaks/itm/undead/fl#rng99.itm" override
+  COPY "%MOD_FOLDER%/itm/undead/fl#rng95.itm" override
+       "%MOD_FOLDER%/itm/undead/fl#rng99.itm" override
 END ELSE BEGIN
   OUTER_SPRINT ring95 ring95
   OUTER_SPRINT ring99 ring99
 END
 
-INCLUDE "atweaks/lib/tactical_shared.tpa"
-INCLUDE "atweaks/lib/pnp-monster/undead/misc.tpa"
-INCLUDE "atweaks/lib/pnp-monster/undead/fn.tpa"
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/misc.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/fn.tpa"
 
 OUTER_SET DiseaseSecType = fl#Disease
 OUTER_SET FearSecType = fl#Fear
 
-INCLUDE "atweaks/lib/pnp-monster/undead/banshee.tpa"            // Banshee
-INCLUDE "atweaks/lib/pnp-monster/undead/death_knight.tpa"       // Death Knight
-INCLUDE "atweaks/lib/pnp-monster/undead/ghoul.tpa"              // Ghoul and Lacedon
-INCLUDE "atweaks/lib/pnp-monster/undead/ghoul_lord.tpa"         // Ghoul Lord
-INCLUDE "atweaks/lib/pnp-monster/undead/mummy.tpa"              // Mummy
-INCLUDE "atweaks/lib/pnp-monster/undead/mummy_greater.tpa"      // Greater Mummy
-INCLUDE "atweaks/lib/pnp-monster/undead/revenant.tpa"           // Revenant
-INCLUDE "atweaks/lib/pnp-monster/undead/shadow.tpa"             // Shadow
-INCLUDE "atweaks/lib/pnp-monster/undead/skeleton.tpa"           // Skeleton
-INCLUDE "atweaks/lib/pnp-monster/undead/skeleton_warrior.tpa"   // Skeleton Warrior
-INCLUDE "atweaks/lib/pnp-monster/undead/spectre.tpa"            // Spectre
-INCLUDE "atweaks/lib/pnp-monster/undead/wight.tpa"              // Wight
-INCLUDE "atweaks/lib/pnp-monster/undead/wraith.tpa"             // Wraith
-INCLUDE "atweaks/lib/pnp-monster/undead/zombie.tpa"             // Zombie, Zombie Lord
-INCLUDE "atweaks/lib/pnp-monster/undead/zombie_sea.tpa"         // Zombie Sea, Zombie Sea Lord
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/banshee.tpa"            // Banshee
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/death_knight.tpa"       // Death Knight
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/ghoul.tpa"              // Ghoul and Lacedon
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/ghoul_lord.tpa"         // Ghoul Lord
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/mummy.tpa"              // Mummy
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/mummy_greater.tpa"      // Greater Mummy
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/revenant.tpa"           // Revenant
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/shadow.tpa"             // Shadow
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/skeleton.tpa"           // Skeleton
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/skeleton_warrior.tpa"   // Skeleton Warrior
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/spectre.tpa"            // Spectre
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/wight.tpa"              // Wight
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/wraith.tpa"             // Wraith
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/zombie.tpa"             // Zombie, Zombie Lord
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/zombie_sea.tpa"         // Zombie Sea, Zombie Sea Lord
 
 // Fix XP for RIFTCR group
 ACTION_FOR_EACH file IN
@@ -48,7 +48,7 @@ BEGIN
   END
 END
 
-COPY "atweaks/spl/base.spl" "override/fl#zomse.spl" //Aura
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#zomse.spl" //Aura
   READ_LONG 0x64 ao
   FOR (i = 0; i < SHORT_AT 0x68; ++i) BEGIN
     WRITE_BYTE  ao + 0x28*i + 0xc 4 //any point
@@ -100,7 +100,7 @@ COPY_EXISTING fl#zomse.itm "override/fl#zsel.itm"
   WRITE_BYTE 0x88 6
   WRITE_BYTE 0x8a 2
 
-COPY "atweaks/spl/base.spl" "override/fl#zomsd.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#zomsd.spl"
   LPF ADD_SPELL_EFFECT
     INT_VAR
       opcode = 78
@@ -155,7 +155,7 @@ END
 
 ACTION_IF BG1 AND !BGT AND !EET BEGIN
   OUTER_SPRINT DurlagArea fw0516
-<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+<<<<<<<< ...%MOD_FOLDER%/fl-inlined/bg1kn_new.baf
   IF
     Die()
   THEN
@@ -186,7 +186,7 @@ ACTION_IF BG1 AND !BGT AND !EET BEGIN
   OUTER_SPRINT killgood _illgood
   OUTER_SPRINT gooddeat _ooddeat
 END ELSE ACTION_IF BGT BEGIN
-<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+<<<<<<<< ...%MOD_FOLDER%/fl-inlined/bg1kn_new.baf
 >>>>>>>>
   OUTER_SPRINT DurlagArea ard016
   OUTER_SPRINT TutuJournal ""
@@ -196,7 +196,7 @@ END ELSE ACTION_IF BGT BEGIN
   OUTER_SPRINT killgood killgood
   OUTER_SPRINT gooddeat gooddeat
 END ELSE ACTION_IF EET BEGIN
-<<<<<<<< ...atweaks/fl-inlined/bg1kn_new.baf
+<<<<<<<< ...%MOD_FOLDER%/fl-inlined/bg1kn_new.baf
 >>>>>>>>
   OUTER_SPRINT DurlagArea bg0516
   OUTER_SPRINT TutuJournal ""
@@ -208,7 +208,7 @@ END ELSE ACTION_IF EET BEGIN
 END
 
 ACTION_IF BG1 BEGIN
-<<<<<<<< ...atweaks/fl-inlined/bg1kn_old.baf
+<<<<<<<< ...%MOD_FOLDER%/fl-inlined/bg1kn_old.baf
 IF
   False()
   Global("flPlaceholder4Journal","LOCALS",0)
@@ -217,38 +217,38 @@ THEN
     Continue()
 END
 >>>>>>>>
-  COPY - "atweaks/baf/undead/killgood.baf" "...atweaks/fl-inlined/%killgood%.baf"
-         "atweaks/baf/undead/gooddeat.baf" "...atweaks/fl-inlined/%gooddeat%.baf"
-  COMPILE ~atweaks/baf/undead/fl#bg1kn.baf~ "...atweaks/fl-inlined/%killgood%.baf" "...atweaks/fl-inlined/%gooddeat%.baf" EVAL
+  COPY - "%MOD_FOLDER%/baf/undead/killgood.baf" "...%MOD_FOLDER%/fl-inlined/%killgood%.baf"
+         "%MOD_FOLDER%/baf/undead/gooddeat.baf" "...%MOD_FOLDER%/fl-inlined/%gooddeat%.baf"
+  COMPILE ~%MOD_FOLDER%/baf/undead/fl#bg1kn.baf~ "...%MOD_FOLDER%/fl-inlined/%killgood%.baf" "...%MOD_FOLDER%/fl-inlined/%gooddeat%.baf" EVAL
   COPY_EXISTING fl#bg1kn.bcs override
                 "%killgood%.bcs" override
-    REPLACE_BCS_BLOCK "...atweaks/fl-inlined/bg1kn_old.baf" "...atweaks/fl-inlined/bg1kn_new.baf"
+    REPLACE_BCS_BLOCK "...%MOD_FOLDER%/fl-inlined/bg1kn_old.baf" "...%MOD_FOLDER%/fl-inlined/bg1kn_new.baf"
   BUT_ONLY
 END
 
-COMPILE EVALUATE_BUFFER ~atweaks/baf/undead/fl#death.baf~
-						~atweaks/baf/undead/fl#mum.baf~
-						~atweaks/baf/undead/fl#ghoul.baf~
-						~atweaks/baf/undead/fl#ghast.baf~
-						~atweaks/baf/undead/fl#ghasu.baf~
-						"atweaks/baf/undead/fl#dksw5.baf"
-						"atweaks/baf/undead/fl#glord.baf"
-						"atweaks/baf/undead/fl#sklwm.baf"
-						"atweaks/baf/undead/fl#sklwr.baf"
-						"atweaks/baf/undead/fl#bansh.baf"
-						"atweaks/baf/undead/fl#gmum.baf"
-						"atweaks/baf/undead/fl#lowm.baf"
-						"atweaks/baf/undead/fl#zomse.baf"
-						"atweaks/baf/undead/fl#lowr.baf"
-						"atweaks/baf/undead/fl#zlord.baf"
-						"atweaks/baf/undead/fl#zsel.baf"
-						"atweaks/baf/undead/fl#midmc.baf"
-						"atweaks/baf/undead/fl#higmc.baf"
-						"atweaks/baf/undead/fl#saham.baf"
-						"atweaks/baf/undead/fl#skwsu.baf"
-						"atweaks/baf/undead/fl#sklsu.baf"
-						"atweaks/baf/undead/rr#revnt.baf"
-						"atweaks/baf/undead/fl#revnt.baf"
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/undead/fl#death.baf~
+						~%MOD_FOLDER%/baf/undead/fl#mum.baf~
+						~%MOD_FOLDER%/baf/undead/fl#ghoul.baf~
+						~%MOD_FOLDER%/baf/undead/fl#ghast.baf~
+						~%MOD_FOLDER%/baf/undead/fl#ghasu.baf~
+						"%MOD_FOLDER%/baf/undead/fl#dksw5.baf"
+						"%MOD_FOLDER%/baf/undead/fl#glord.baf"
+						"%MOD_FOLDER%/baf/undead/fl#sklwm.baf"
+						"%MOD_FOLDER%/baf/undead/fl#sklwr.baf"
+						"%MOD_FOLDER%/baf/undead/fl#bansh.baf"
+						"%MOD_FOLDER%/baf/undead/fl#gmum.baf"
+						"%MOD_FOLDER%/baf/undead/fl#lowm.baf"
+						"%MOD_FOLDER%/baf/undead/fl#zomse.baf"
+						"%MOD_FOLDER%/baf/undead/fl#lowr.baf"
+						"%MOD_FOLDER%/baf/undead/fl#zlord.baf"
+						"%MOD_FOLDER%/baf/undead/fl#zsel.baf"
+						"%MOD_FOLDER%/baf/undead/fl#midmc.baf"
+						"%MOD_FOLDER%/baf/undead/fl#higmc.baf"
+						"%MOD_FOLDER%/baf/undead/fl#saham.baf"
+						"%MOD_FOLDER%/baf/undead/fl#skwsu.baf"
+						"%MOD_FOLDER%/baf/undead/fl#sklsu.baf"
+						"%MOD_FOLDER%/baf/undead/rr#revnt.baf"
+						"%MOD_FOLDER%/baf/undead/fl#revnt.baf"
 
 
 //Write the queued-up values
@@ -335,7 +335,7 @@ COPY_EXISTING skelwasu.itm "override/fl#swasu.itm"
     LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 233 target = 1 parameter1 = enchantment parameter2 = 109 timing = 2 END //Detectable enchantment
   END
 
-  COMPILE "atweaks/baf/fiends/fl#adead.baf"
+  COMPILE "%MOD_FOLDER%/baf/fiends/fl#adead.baf"
 END
 ////////////////////////////////////////
 // Item Revisions

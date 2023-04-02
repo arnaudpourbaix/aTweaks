@@ -4,9 +4,9 @@
 //////////////
 
 
-INCLUDE "atweaks/lib/pnp-monster/150-fiend-fn.tpa"
-// INCLUDE "atweaks/lib/tactical_shared.tpa"
-// INCLUDE "atweaks/lib/rr#fiend.tph"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/150-fiend-fn.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/rr#fiend.tph"
 
 ////////////////////////////////////////
 // BAATEZU

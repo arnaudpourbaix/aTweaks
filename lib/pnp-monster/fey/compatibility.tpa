@@ -1,6 +1,6 @@
 // Quest Pack compatibility block (for the "New Fate For The Dryads' Acorns" component)
 ACTION_IF FILE_EXISTS_IN_GAME ~sufake.itm~ AND FILE_EXISTS ~questpack/phluafae/appendvae.baf~ BEGIN
-  <<<<<<<<atweaks/inlined/baf/fey/vaelasa.baf
+  <<<<<<<<%MOD_FOLDER%/inlined/baf/fey/vaelasa.baf
   IF
     False()
     Global("rr#ph4qpack","LOCALS",0)
@@ -11,14 +11,14 @@ ACTION_IF FILE_EXISTS_IN_GAME ~sufake.itm~ AND FILE_EXISTS ~questpack/phluafae/a
   >>>>>>>>
 
   COPY_EXISTING ~rr#fhama.bcs~ ~override~
-    REPLACE_BCS_BLOCK ~atweaks/inlined/baf/fey/vaelasa.baf~ ~questpack/phluafae/appendvae.baf~
+    REPLACE_BCS_BLOCK ~%MOD_FOLDER%/inlined/baf/fey/vaelasa.baf~ ~questpack/phluafae/appendvae.baf~
 END
 
 
 
 // The Calling compatibility block : add some black pearls to the game
 ACTION_IF FILE_EXISTS_IN_GAME ~cdbpearl.itm~  BEGIN
-  <<<<<<<<atweaks/inlined/baf/fey/black_peal.baf
+  <<<<<<<<%MOD_FOLDER%/inlined/baf/fey/black_peal.baf
   IF
     HasItem("%TUTU_VAR%misc36",Myself)
     Global("CDPearls","LOCALS",0)
@@ -33,7 +33,7 @@ ACTION_IF FILE_EXISTS_IN_GAME ~cdbpearl.itm~  BEGIN
   END
   >>>>>>>>
 
-  EXTEND_TOP  ~rr#fsiri.bcs~  ~atweaks/inlined/baf/fey/black_peal.baf~ EVALUATE_BUFFER // give sirines a chance to have black pearls
+  EXTEND_TOP  ~rr#fsiri.bcs~  ~%MOD_FOLDER%/inlined/baf/fey/black_peal.baf~ EVALUATE_BUFFER // give sirines a chance to have black pearls
 END
 
 
@@ -91,7 +91,7 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
   BUT_ONLY_IF_IT_CHANGES
 
   // Spawn Sirines instead of Lizardmen and Mists in Spellhold
-  <<<<<<<<atweaks/inlined/baf/fey/rr#1500.baf
+  <<<<<<<<%MOD_FOLDER%/inlined/baf/fey/rr#1500.baf
   IF
 	Global("rr#spwn","AR1500",0)
 	OR(2)
@@ -138,11 +138,11 @@ ACTION_IF GAME_INCLUDES ~soa~ BEGIN
   END
   >>>>>>>>
 
-  EXTEND_BOTTOM ~AR1500.BCS~  ~atweaks/inlined/baf/fey/rr#1500.baf~               // extend the Spellhold area script
+  EXTEND_BOTTOM ~AR1500.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/rr#1500.baf~               // extend the Spellhold area script
 END
 
 // Give the Cloakwood Hamadryad a few allies
-<<<<<<<<atweaks/inlined/baf/fey/rr#chama.baf
+<<<<<<<<%MOD_FOLDER%/inlined/baf/fey/rr#chama.baf
 IF
 	Global("rr#chama","MYAREA",0)
 THEN
@@ -159,15 +159,15 @@ END
 >>>>>>>>
 
 ACTION_IF FILE_EXISTS_IN_GAME ~AR8500.BCS~ BEGIN
-  EXTEND_BOTTOM ~AR8500.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~               // extend the Cloakwood 4 area script (BGT)
+  EXTEND_BOTTOM ~AR8500.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/rr#chama.baf~               // extend the Cloakwood 4 area script (BGT)
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME ~_AR1700.BCS~ BEGIN
-  EXTEND_BOTTOM ~_AR1700.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (Tutu)
+  EXTEND_BOTTOM ~_AR1700.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (Tutu)
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME ~BG1700.BCS~ BEGIN
-  EXTEND_BOTTOM ~BG1700.BCS~  ~atweaks/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (EET)
+  EXTEND_BOTTOM ~BG1700.BCS~  ~%MOD_FOLDER%/inlined/baf/fey/rr#chama.baf~              // extend the Cloakwood 4 area script (EET)
 END
 
 ACTION_IF GAME_IS ~iwdee~ BEGIN                                                   // use the proper dimension door animation on IWD:EE

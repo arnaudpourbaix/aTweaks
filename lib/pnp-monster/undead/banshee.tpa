@@ -8,9 +8,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
         REPLACE_CRE_ITEM b1-8m2 #0 #0 #0 none weapon1 EQUIP
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none lring
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none rring
@@ -70,12 +70,12 @@ BEGIN
   END
 END
 
-COPY "atweaks/spl/undead/fl#banwa.spl" override //Banshee's wail
+COPY "%MOD_FOLDER%/spl/undead/fl#banwa.spl" override //Banshee's wail
   FOR(i=0;i<SHORT_AT 0x68;++i) BEGIN
     WRITE_SHORT LONG_AT 0x64+i*0x28+0x26 fl#sight
   END
 
-COPY "atweaks/spl/base.spl" "override/fl#banfa.spl" //Fear aura
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#banfa.spl" //Fear aura
   WRITE_ASCII 0x10 "" #8 //no casting sound
   WRITE_BYTE 0x27 11 //disabling
   READ_LONG 0x64 ao

@@ -10,9 +10,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
 		REMOVE_CRE_ITEM ~REVENT2~
 		ADD_MEMORIZED_SPELL ~rr#pgaze~ #0 ~innate~ ( 1 )                                   // adds 1x Paralysing Gaze
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring

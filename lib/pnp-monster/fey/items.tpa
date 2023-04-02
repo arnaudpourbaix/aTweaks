@@ -1,4 +1,4 @@
-COPY ~atweaks/itm/fey/rr#ftrnq.itm~ ~override~                                      // Touch of Tranquility (item)
+COPY ~%MOD_FOLDER%/itm/fey/rr#ftrnq.itm~ ~override~                                      // Touch of Tranquility (item)
   SAY NAME1 @1905 SAY NAME2 @1905
 
 COPY_EXISTING ~FIST.ITM~ ~override/rr#nymp.itm~                                     // create a new weapon for the Nymph

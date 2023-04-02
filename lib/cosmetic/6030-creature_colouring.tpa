@@ -41,9 +41,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32516 BEGIN // GOLEM_IRON
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -121,9 +121,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32519 BEGIN // GOLEM_CLAY
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -199,9 +199,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32519 BEGIN // GOLEM_CLAY
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -271,9 +271,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32519 BEGIN // GOLEM_CLAY
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -346,9 +346,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32519 BEGIN // GOLEM_CLAY
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -421,9 +421,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -496,9 +496,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -575,9 +575,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -649,9 +649,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -723,9 +723,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -801,9 +801,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -877,9 +877,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -951,9 +951,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1024,9 +1024,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1098,9 +1098,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1176,9 +1176,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1250,9 +1250,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1324,9 +1324,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1404,9 +1404,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1492,9 +1492,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32515 BEGIN // IMP
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1570,9 +1570,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32512 BEGIN // TROLL
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1630,9 +1630,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32512 BEGIN // TROLL
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1842,9 +1842,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 57472 BEGIN // IC_MUMMY
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -1913,9 +1913,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 32565 BEGIN // MIST_CREATURE
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 LPF DELETE_CRE_EFFECT                                          // delete the EFF with the designated opcode (remove any existent tint)
 INT_VAR opcode_to_delete = "51" END                                                // mark opcode #51 (Colour: Strong/Dark by RGB) for deletion
@@ -2017,9 +2017,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 4352 BEGIN 									   // TANARRI
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   // WRITE_LONG 0x28 "4352"                                                           // Sets avatar to TANARRI (winged demon)
   WRITE_BYTE  0x2E "34"                                                            // major color (Light Green/Dark Blue)
@@ -2150,9 +2150,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND (LONG_AT 0x28 = 32558 OR LONG_AT 0x28 = 4352) BEGIN 			   // RAVER and TANARRI
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   WRITE_LONG 0x28 "4352"                                                           // Sets avatar to TANARRI (winged demon)
   WRITE_BYTE  0x2E "47"                                                            // major color (dark red)
@@ -2328,9 +2328,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 4352 BEGIN 									   // TANARRI
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   // WRITE_LONG 0x28 "4352"                                                           // Sets avatar to TANARRI (winged demon)
   WRITE_BYTE  0x2E "35"                                                            // major color (orange)
@@ -2385,9 +2385,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 30464 BEGIN
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   WRITE_BYTE  0x2E "20"                                                            // major color (dark moldy green)
   LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode (remove any existent tint)
@@ -2444,9 +2444,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 60192 BEGIN 									   // IC_SKELETONB
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   WRITE_BYTE  0x2E "36"                                                            // major color (light dirty yellow)
   LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode (remove any existent tint)
@@ -2509,9 +2509,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid AND LONG_AT 0x28 = 57568 BEGIN 									   // IC_CORNUGONSKI
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
   WRITE_BYTE  0x2E "46"                                                            // major color (red)
   LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode (remove any existent tint)
@@ -2563,9 +2563,9 @@ BEGIN                                                                           
 ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN                                   // if the file exists
 COPY_EXISTING ~%file%.cre~ ~override~
 LPF FJ_CRE_VALIDITY END
-PATCH_INCLUDE ~aTweaks/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
+PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_validity.tpp~                                    // Nythrun's CRE validity macro (detects corrupt and invalid CREs)
 PATCH_IF valid BEGIN
-  PATCH_INCLUDE ~aTweaks/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
+  PATCH_INCLUDE ~%MOD_FOLDER%/lib/fj_cre_reindex.tpp~                                   // Nythrun's CRE reindex macro (this also calls the EFF macro if needed)
 // =============================================================================== // the actual work starts from here
 WRITE_BYTE  0x2E "5"                                                               // major color (light silver)
   LPF DELETE_CRE_EFFECT                                        // delete the EFF with the designated opcode (remove any existent tint)

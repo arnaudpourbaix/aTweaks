@@ -12,9 +12,9 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME "%file%.cre" BEGIN
     COPY_EXISTING "%file%.cre" override
       LPF FJ_CRE_VALIDITY END
-      PATCH_INCLUDE "atweaks/lib/fj_cre_validity.tpp"
+      PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_validity.tpp"
       PATCH_IF valid BEGIN
-        PATCH_INCLUDE "atweaks/lib/fj_cre_reindex.tpp"
+        PATCH_INCLUDE "%MOD_FOLDER%/lib/fj_cre_reindex.tpp"
         REMOVE_CRE_ITEM mage06 _mage06 immune1
         REPLACE_CRE_ITEM "%ring95%" #0 #0 #0 none lring
         REPLACE_CRE_ITEM immune1 #0 #0 #0 none rring
@@ -134,7 +134,7 @@ COPY_EXISTING s1-6.itm "override/fl#glor1.itm"
     END
   END
 
-COPY "atweaks/spl/base.spl" "override/fl#glor2.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#glor2.spl"
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 timing = 1 STR_VAR resource = fl#glor2 END
   FOR (i=1;i<30;++i) BEGIN
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target = 2 parameter1 = 5 parameter2 = 4194304 timing = 4 duration = i*300 END //5 points of damage
@@ -144,7 +144,7 @@ COPY "atweaks/spl/base.spl" "override/fl#glor2.spl"
 
 OUTER_SET $f_AddSecType(fl#glor2.spl) = DiseaseSecType
 
-COPY "atweaks/spl/undead/fl#glord.spl" override
+COPY "%MOD_FOLDER%/spl/undead/fl#glord.spl" override
   WRITE_ASCII 0x10 "" #8 //no casting sound
   FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
     WRITE_SHORT LONG_AT 0x64 + 0x28*i + 0x26 fl#sight
@@ -152,12 +152,12 @@ COPY "atweaks/spl/undead/fl#glord.spl" override
   LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = "-1" END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 177 target = 2 parameter1 = 1 parameter2 = 8 STR_VAR resource = fl#glord.eff END //Use EFF on good people
 
-COPY "atweaks/eff/base.eff" "override/fl#glord.eff"
+COPY "%MOD_FOLDER%/eff/base.eff" "override/fl#glord.eff"
   WRITE_LONG  0x10 146 //cast spell
   WRITE_LONG  0x14 2
   WRITE_ASCII 0x30 fl#glor3
 
-COPY "atweaks/spl/base.spl" "override/fl#glor3.spl"
+COPY "%MOD_FOLDER%/spl/base.spl" "override/fl#glor3.spl"
   glor3_strref = RESOLVE_STR_REF(@1034)
   DEFINE_ARRAY glor3_opcode BEGIN 278 139 142 206 END
   DEFINE_ARRAY glor3_p1 BEGIN "-4" glor3_strref 0 0 END

@@ -904,11 +904,11 @@ DEFINE_PATCH_FUNCTION cold_spell_immunities BEGIN
   // End : Add Spells from IWDification mod or stratagems mods
   DEFINE_ARRAY spells BEGIN  
        ~SPWI404~ // Ice Storm
-      ~RR#WI404~ // aTweaks/RR Ice Storm
+      ~RR#WI404~ // %MOD_FOLDER%/RR Ice Storm
        ~SPWI503~ // Cone of Cold
       ~d1#wi503~ // Cone of Cold (mod)
        ~DVCONEC~ // Cone of Cold (IR)
-      ~RR#WI503~ // Cone of Cold (aTweaks/RR)
+      ~RR#WI503~ // Cone of Cold (%MOD_FOLDER%/RR)
       ~SPCRYO01~ // Cone of Cold (mod)
        ~SPIN133~ // Cone of Cold (mod)
        ~SPIN158~ // Cone of Cold (mod)
@@ -1740,7 +1740,7 @@ STR_VAR
 BEGIN
   ACTION_FOR_EACH spell IN spwi402 spwi450 BEGIN
     ACTION_IF FILE_EXISTS_IN_GAME "%spell%.spl" BEGIN
-      COPY "atweaks/spl/spwi402.spl" "override/%spell%.spl"
+      COPY "%MOD_FOLDER%/spl/spwi402.spl" "override/%spell%.spl"
         FOR (off = LONG_AT 0x6a; off < BUFFER_LENGTH; off += 0x30) BEGIN
           READ_SHORT off opcode
           PATCH_IF opcode = 215 BEGIN // play animation
