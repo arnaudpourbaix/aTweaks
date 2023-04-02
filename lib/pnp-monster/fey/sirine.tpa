@@ -26,7 +26,6 @@ BEGIN
       LPF FJ_CRE_VALIDITY END
       REMOVE_KNOWN_SPELLS
       REMOVE_MEMORIZED_SPELLS
-      // TODO: level 11 caster, not properly handled
       // TODO: polymorph self should not be limited to mustard jelly if SR is installed
       ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)                                     // adds 1x Charming Song
       ADD_MEMORIZED_SPELL ~rr#fcld~ #0 ~innate~ (1)                                      // adds 1x Fog Cloud
@@ -43,11 +42,10 @@ BEGIN
       REPLACE_CRE_ITEM ~AROW05~ #5 #0 #0 ~UNSTEALABLE~ ~quiver1~  EQUIP                  // make the Arrows of Biting unstealable and equip them
       LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "BOW05" flags = UNSTEALABLE END    // make the Shortbow unstealable (BGT)
       LPF ADD_CRE_ITEM_FLAGS STR_VAR item_to_change = "_BOW05" flags = UNSTEALABLE END   // make the Shortbow unstealable (Tutu)
-      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 105 => 1 END                          // short bow
       DEFINE_ARRAY notEnforceFiles BEGIN ISLSIR MEIALA QSEROMOD END
       LPF patchCreature
         INT_VAR
-          level1=5
+          level1=11           // 5 hd, but cast spells as 11th level wizard
           strength=14
           dexterity=18
           constitution=11
@@ -76,7 +74,7 @@ BEGIN
           sex=2
           enforce=1
         STR_VAR
-          proficiencies
+          proficiencies=~105 => 1~ // short bow
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 
@@ -103,16 +101,7 @@ BEGIN
       LPF cloud_spell_immunities END
       PATCH_IF (("%SOURCE_RES%" STRING_EQUAL_CASE ~SIL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~_SIL~)) BEGIN 
         // special case: Sil should be a 7 HD Sirine
-        WRITE_LONG 0x14 5000 // XP value
-        WRITE_SHORT 0x24 56  // current hit points
-        WRITE_SHORT 0x26 56  // maximum hit points
-        WRITE_BYTE 0x52 13   // THAC0
-        WRITE_BYTE 0x54 10   // save vs. death
-        WRITE_BYTE 0x55 12   // save vs. wands
-        WRITE_BYTE 0x56 11   // save vs. polymorph
-        WRITE_BYTE 0x57 12   // save vs. breath
-        WRITE_BYTE 0x58 13   // save vs. spells
-        WRITE_BYTE 0x234 7   // level (first class)
+        LPF patchCreature INT_VAR hp=56 thac0=13 xpv=5000 enforce=1 END
         REMOVE_CRE_ITEM ~BOW05~ // special case, removes Shortbow (BGT)
         REMOVE_CRE_ITEM ~_BOW05~ // special case, removes Shortbow (Tutu)
         READ_LONG  0x2b8 "slot_off" ELSE 0

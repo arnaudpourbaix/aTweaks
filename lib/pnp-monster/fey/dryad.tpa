@@ -20,7 +20,6 @@ BEGIN
       ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)  // adds 3x Charm Person
       ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)  // adds 1x Speak With Plants
       ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)  // adds 1x Dimension Door
-      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 96 => 1 END // dagger      
       DEFINE_ARRAY notEnforceFiles BEGIN dr01mod RE_DRYAD END
       LPF patchCreature   
         INT_VAR 
@@ -38,11 +37,11 @@ BEGIN
           apr=1
           xpv=975
           alignment=34       // True Neutral
-          saveDeath=14
-          saveWand=16
-          savePolymorph=15
-          saveBreath=17
-          saveSpell=17
+          saveDeath=10
+          saveWand=14
+          savePolymorph=13
+          saveBreath=16
+          saveSpell=15
           resistMagic=50
           morale=12
           moraleBreak=4
@@ -54,7 +53,7 @@ BEGIN
           sex=2
           enforce=1
         STR_VAR 
-          proficiencies
+          proficiencies=~96 => 1~ // dagger
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 

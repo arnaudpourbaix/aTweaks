@@ -24,7 +24,6 @@ BEGIN
        * Affected spells: Agannazar’s Scorcher, Melf’s Minute Meteors, Flame Blade
        * Radius and projectile as level 7 Priest Fire Storm
        */
-      DEFINE_ASSOCIATIVE_ARRAY proficiencies BEGIN 96 => 1 END // dagger      
       DEFINE_ARRAY notEnforceFiles BEGIN wqxhama END
       LPF patchCreature 
         INT_VAR
@@ -43,11 +42,11 @@ BEGIN
           xpv=1400           // 650 in P&P, but it makes no sense as they clearly superior in every ways to dryads (975xp)
           missileAC=0        // remove missile AC modifier (was -5)
           alignment=34       // True Neutral
-          saveDeath=13
-          saveWand=15
-          savePolymorph=14
-          saveBreath=16
-          saveSpell=16
+          saveDeath=9
+          saveWand=13
+          savePolymorph=12
+          saveBreath=15
+          saveSpell=14
           resistMagic=75
           morale=12
           moraleBreak=4
@@ -59,7 +58,7 @@ BEGIN
           sex=2
           enforce=1
         STR_VAR
-          proficiencies
+          proficiencies=~96 => 1~ // dagger
           notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 

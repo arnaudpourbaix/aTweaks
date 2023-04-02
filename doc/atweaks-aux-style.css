@@ -47,3 +47,13 @@ span.item-title {
     font-weight: bold;
     font-size: 110%;
 }
+
+.todo {
+  color: darkcyan;
+  font-style: italic;
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
