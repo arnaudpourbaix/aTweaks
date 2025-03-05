@@ -1,6 +1,6 @@
 {
-    "bafFile": "dist/ja#m1.baf",
-    "tphFile": "dist/ankheg.tph",
+    "bafFile": "../ankheg/ja#m1.baf",
+    "tphFile": "../ankheg/main.tpa",
     "smart": false,
     "tracking": true,
     "combatWalk": true,

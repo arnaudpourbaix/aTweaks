@@ -12,7 +12,6 @@
 
 @89 = ~* * * This component requires 'Revised Fiend summoning' * * *~
 @90 = ~* * * The Throne of Bhaal expansion is required for this component * * *~
-@91 = ~* * * This component cannot be installed on Tutu * * *~
 @92 = ~* * * This component cannot be installed on this game * * *~
 @93 = ~This component has been deprecated.~ //Note for translators: In this context "deprecated" means the component is no longer available for installation and will automatically be uninstalled if the player has it installed
 @94 = ~* * * This component requires 'PnP Fiends' * * *~
@@ -33,6 +32,7 @@
 @125 = ~Rangers' Animal Empathy improves with experience~
 @130 = ~Additional racial traits for Dwarves~
 @140 = ~Additional racial traits for Gnomes~
+
 @150 = ~PnP Fiends~
 @151 = ~Mod-added fiends are not affected~
 @152 = ~Mod-added fiends are also affected~
@@ -49,6 +49,7 @@
 @189 = ~PnP Plant and creatures~
 @190 = ~PnP Elementals~
 @191 = ~Increase the Hit Dice of Elemental Princes~
+@1000 = ~Ankhegs~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~
