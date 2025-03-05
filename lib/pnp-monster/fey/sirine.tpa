@@ -75,7 +75,6 @@ BEGIN
           enforce=1
         STR_VAR
           proficiencies=~105 => 1~ // short bow
-          notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 
         SHOUT       // generic shout script
@@ -102,17 +101,17 @@ BEGIN
       PATCH_IF (("%SOURCE_RES%" STRING_EQUAL_CASE ~SIL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~_SIL~)) BEGIN 
         // special case: Sil should be a 7 HD Sirine
         LPF patchCreature INT_VAR hp=56 thac0=13 xpv=5000 enforce=1 END
-        REMOVE_CRE_ITEM ~BOW05~ // special case, removes Shortbow (BGT)
-        REMOVE_CRE_ITEM ~_BOW05~ // special case, removes Shortbow (Tutu)
+        REMOVE_CRE_ITEM ~BOW05~                                                 // special case, removes Shortbow (BGT)
+        REMOVE_CRE_ITEM ~_BOW05~                                                // special case, removes Shortbow (Tutu)
         READ_LONG  0x2b8 "slot_off" ELSE 0
         READ_LONG  0x2bc "itm_off" ELSE 0
         READ_LONG  0x2c0 "itm_num" ELSE 0
-        READ_SHORT (%slot_off% + (9 * 0x02)) weap1 // WEAPON1 slot
-        PATCH_IF %weap1% = 0xffff BEGIN // if the WEAPON1 slot is empty
+        READ_SHORT (%slot_off% + (9 * 0x02)) weap1                              // WEAPON1 slot
+        PATCH_IF %weap1% = 0xffff BEGIN                                         // if the WEAPON1 slot is empty
           ADD_CRE_ITEM ~BOW05~ #0 #0 #0 ~UNSTEALABLE~ ~weapon1~ EQUIP TWOHANDED // add Shortbow
         END
-        REPLACE_CRE_ITEM ~AROW10~ #15 #0 #0 ~UNSTEALABLE~ ~quiver2~ // give Sil 15 Arrows of Piercing
-        REPLACE_CRE_ITEM ~AROW05~ #10 #0 #0 ~UNSTEALABLE~ ~quiver1~ EQUIP // give Sil 10 Arrows of Biting
+        REPLACE_CRE_ITEM ~AROW10~ #15 #0 #0 ~UNSTEALABLE~ ~quiver2~             // give Sil 15 Arrows of Piercing
+        REPLACE_CRE_ITEM ~AROW05~ #10 #0 #0 ~UNSTEALABLE~ ~quiver1~ EQUIP       // give Sil 10 Arrows of Biting
       END
     BUT_ONLY_IF_IT_CHANGES
   END

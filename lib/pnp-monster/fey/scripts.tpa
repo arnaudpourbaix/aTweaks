@@ -1,10 +1,11 @@
-COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fdrya.baf~  // hostile Dryad AI script
-COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fhama.baf~	// hostile Hamadryad AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fdrya.baf~   // hostile Dryad AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fhama.baf~	  // hostile Hamadryad AI script
 COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fsiri.baf~ 	// hostile Sirine AI script
-COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fnymp.baf~	// hostile Nymph AI script
-COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#snymp.baf~	// summoned Nymph AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#fnymp.baf~	  // hostile Nymph AI script
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/baf/fey/rr#snymp.baf~	  // summoned Nymph AI script
 
 // Wild animals should not attack fey creatures unless provoked
+// TODO: extends this list if necessary (along with new PnP monsters)
 ACTION_FOR_EACH script IN bear cbear wolf BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%script%.bcs~ BEGIN
     COPY_EXISTING ~%script%.bcs~ ~override~

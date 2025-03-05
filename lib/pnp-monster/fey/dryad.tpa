@@ -54,7 +54,6 @@ BEGIN
           enforce=1
         STR_VAR 
           proficiencies=~96 => 1~ // dagger
-          notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 
         CDRYAD        // Dryad AI script

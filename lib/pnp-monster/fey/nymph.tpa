@@ -55,8 +55,6 @@ BEGIN
           gender=2
           sex=2
           enforce=1
-        STR_VAR
-          notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 
         WTASIGHT   // generic AI script

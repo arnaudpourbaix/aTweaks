@@ -1,0 +1,115 @@
+{
+    "bafFile": "dist/ja#m1.baf",
+    "tphFile": "dist/ankheg.tph",
+    "smart": false,
+    "tracking": true,
+    "combatWalk": true,
+    "summon": false,
+    "creature": {
+        "data": {
+            "level1": 8,
+            "strength": 21,
+            "dexterity": 10,
+            "constitution": 17,
+            "intelligence": 1,
+            "wisdom": 13,
+            "charisma": 6,
+            "movement": 12,
+            "ac": 2,
+            "apr": 1,
+            "xpv": 975,
+            "alignment": "NEUTRAL",
+            "morale": 9,
+            "moraleBreak": 4,
+            "moraleRecovery": 15,
+            "general": "MONSTER",
+            "race": "ANKHEG",
+            "class": "ANKHEG",
+            "gender": "NIETHER"
+        },
+        "abilities": [
+            {
+                "name": "Acidic Enzymes",
+                "actions": [
+                    {
+                        "name": "ForceSpellRangeRES",
+                        "params": [
+                            "ja#1",
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "range": 30,
+                "timer": {
+                    "name": "AcidicEnzymes",
+                    "value": 1800
+                },
+                "triggers": [
+                    {
+                        "name": "HPPercentLT",
+                        "params": [
+                            "Myself",
+                            50
+                        ]
+                    }
+                ]
+            }
+        ],
+        "files": [
+            "ANKHEG",
+            "ANKHEGF",
+            "ANKHEGG",
+            "ANKHEGQ",
+            "ANKHEG01",
+            "bdankh01",
+            "bdankheg",
+            "bdankhsu",
+            "BDNEO",
+            "BPANKHE1",
+            "wiankhe1"
+        ],
+        "removeScripts": [
+            "ANKHEG"
+        ],
+        "adjustments": [
+            {
+                "files": [
+                    "bdankh01"
+                ],
+                "data": {
+                    "level1": 10,
+                    "xpv": 1400
+                }
+            },
+            {
+                "files": [
+                    "bdankhsu"
+                ],
+                "summon": true
+            }
+        ]
+    },
+    "combatCustomCode": {
+        "before": {
+            "list": [
+                {
+                    "triggers": [],
+                    "responses": [
+                        {
+                            "weight": 100,
+                            "actions": [
+                                {
+                                    "name": "ForceSpellRES",
+                                    "params": [
+                                        "ja#1"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -24,7 +24,7 @@ BEGIN
        * Affected spells: Agannazar’s Scorcher, Melf’s Minute Meteors, Flame Blade
        * Radius and projectile as level 7 Priest Fire Storm
        */
-      DEFINE_ARRAY notEnforceFiles BEGIN wqxhama END
+      DEFINE_ARRAY notEnforceFiles BEGIN WQXHAMA END
       LPF patchCreature 
         INT_VAR
           level1=4
@@ -59,7 +59,6 @@ BEGIN
           enforce=1
         STR_VAR
           proficiencies=~96 => 1~ // dagger
-          notEnforceFiles
       END
       DEFINE_ARRAY removeScripts BEGIN 
         WTASIGHT  // generic AI script
@@ -74,7 +73,7 @@ BEGIN
         DW2MP0GE  // Stratagems Melee script
       END
       DEFINE_ARRAY skipFiles BEGIN 
-        wqxhama	  // White queen special script
+        WQXHAMA	  // White queen special script
       END
       LPF patchCreatureScript STR_VAR script=RR#FHAMA removeScripts skipFiles END
       LPF ~entangle_immunities~ END

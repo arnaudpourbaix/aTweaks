@@ -1,0 +1,9 @@
+INCLUDE "%MOD_FOLDER%/lib/tactical_shared.tpa"
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/spells.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/items.tpa"
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/ankheg.tpa"
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/scripts.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/compatibility.tpa"

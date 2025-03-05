@@ -1,3 +1,7 @@
+body {
+    background-color: bisque;
+}
+
 div.title {
     text-align: center;
     font-family: Cambria, sans-serif;
