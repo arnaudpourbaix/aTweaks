@@ -1,3 +1,11 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "lib/**/*.json"
+            ],
+            "url": "./lib/pnp-monster/data/schema.json"
+        }
+    ]
 }

@@ -1,10 +1,9 @@
 {
-    "bafFile": "../ankheg/ja#m1.baf",
-    "tphFile": "../ankheg/main.tpa",
+    "bafFile": "lib/pnp-monster/ankheg/ja#m1",
+    "tpaFile": "lib/pnp-monster/ankheg/main",
     "smart": false,
     "tracking": true,
     "combatWalk": true,
-    "summon": false,
     "creature": {
         "data": {
             "level1": 8,
@@ -56,6 +55,31 @@
                 ]
             }
         ],
+        "weapon1": {
+            "itemFile": "ja#m1",
+            "baseItem": "ankheg2",
+            "enchantment": 0,
+            "ability": {
+                "type": "Melee",
+                "range": 1,
+                "diceThrown": 3,
+                "diceSize": 6,
+                "damageType": "Crushing",
+                "speed": 3,
+                "flags": [
+                    "AddStrengthBonus"
+                ],
+                "effects": [
+                    {
+                        "type": "Damage",
+                        "target": "PresetTarget",
+                        "damageType": "Acid",
+                        "diceThrown": 1,
+                        "diceSize": 4
+                    }
+                ]
+            }
+        },
         "files": [
             "ANKHEG",
             "ANKHEGF",

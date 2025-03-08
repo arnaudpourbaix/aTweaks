@@ -1,4 +1,30 @@
-COMPILE ~C:\Games\Baldur's Gate Enhanced Edition\aTweaks\lib\pnp-monster\ankheg\ja#m1.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1su.baf~
+
+COPY_EXISTING ~ankheg2.ITM~ ~override/ja#m1.itm~
+	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ALTER_ITMSPL_HEADER
+		INT_VAR
+			header_type        = 1
+			range              = 1
+			speed              = 3
+			thac0_bonus        = 0
+			dicesize           = 6
+			dicenumber         = 3
+			damage_bonus       = 0
+			damage_type        = 2
+			projectile         = 1
+			flag_strength      = 1
+			flag_break         = 0
+			flag_strength_damage = 0
+			flag_strength_thac0 = 0
+			flag_hostile       = 0
+			flag_recharge      = 0
+			flag_bypass        = 0
+	END
+	LPF DELETE_EFFECT END
+BUT_ONLY IF_EXISTS
+
 ACTION_FOR_EACH ~file~ IN
 	ANKHEG
 	ANKHEGF
@@ -17,6 +43,7 @@ BEGIN
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
+			ADD_CRE_ITEM ~ja#m1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~
 			LPF patchCreature
 				INT_VAR
 					level1=8
@@ -56,8 +83,6 @@ BEGIN
 				DW2MP0GE
 				DW2RC2MO
 			END
-			DEFINE_ARRAY skipFiles BEGIN 
-			END
 			LPF patchCreatureScript STR_VAR script=ja#m1 removeScripts skipFiles END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankh01~) BEGIN 
 				LPF patchCreature
@@ -74,6 +99,16 @@ BEGIN
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
+				DEFINE_ARRAY removeScripts BEGIN
+					ja#m1
+					ANKHEG
+					SHOUT
+					WTASIGHT
+					wtrunsgt
+					DW2MP0GE
+					DW2RC2MO
+				END
+				LPF patchCreatureScript STR_VAR script=ja#m1su removeScripts skipFiles END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END
