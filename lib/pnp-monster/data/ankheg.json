@@ -55,9 +55,12 @@
                 ]
             }
         ],
+        "removeItems": [
+            "ANKHEG1",
+            "ANKHEG2"
+        ],
         "weapon1": {
             "itemFile": "ja#m1",
-            "baseItem": "ankheg2",
             "enchantment": 0,
             "ability": {
                 "type": "Melee",
@@ -69,17 +72,137 @@
                 "flags": [
                     "AddStrengthBonus"
                 ],
-                "effects": [
-                    {
-                        "type": "Damage",
-                        "target": "PresetTarget",
-                        "damageType": "Acid",
-                        "diceThrown": 1,
-                        "diceSize": 4
-                    }
-                ]
+                "effects": {
+                    "damage": [
+                        {
+                            "damageType": "Acid",
+                            "diceThrown": 1,
+                            "diceSize": 4
+                        }
+                    ],
+                    "castSpell": [
+                        {
+                            "type": "CastInstantlyAtCasterLevel",
+                            "probability1": 20,
+                            "resource": "ja#grab"
+                        }
+                    ]
+                }
             }
         },
+        "spells": [
+            {
+                "name": "Acidic_Enzymes",
+                "stringRef": 4000,
+                "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
+                "spellFile": "ja#m1",
+                "spellType": "Innate",
+                "secondaryType": "OffensiveDamage",
+                "memorizedCount": 1,
+                "ability": {
+                    "type": "Ranged",
+                    "range": 30,
+                    "speed": 3,
+                    "effects": {
+                        "damage": [
+                            {
+                                "damageType": "Acid",
+                                "diceThrown": 8,
+                                "diceSize": 4,
+                                "saveTypes": [
+                                    "ParalyzePoisonDeath"
+                                ],
+                                "flags": [
+                                    "SaveForHalf"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Grab",
+                "stringRef": 684,
+                "description": "",
+                "spellFile": "ja#grab",
+                "spellType": "Innate",
+                "secondaryType": "Disabling",
+                "memorizedCount": 1,
+                "ability": {
+                    "type": "Melee",
+                    "range": 5,
+                    "speed": 0,
+                    "effects": {
+                        "displayString": [
+                            {
+                                "stringRef": 4001,
+                                "timing": "InstantPermanentUntilDeath"
+                            }
+                        ],
+                        "movementRateBonus2": [
+                            {
+                                "modifierType": "Set",
+                                "value": 0,
+                                "duration": 12
+                            }
+                        ],
+                        "playSound": [
+                            {
+                                "timing": "InstantPermanentUntilDeath",
+                                "resource": "CRE_P01"
+                            },
+                            {
+                                "timing": "DelayPermanent",
+                                "duration": 12,
+                                "resource": "EFF_M22A"
+                            }
+                        ],
+                        "playVisualEffect": [
+                            {
+                                "playWhere": "OverTargetAttached",
+                                "resource": "rr#cnstr",
+                                "duration": 12
+                            }
+                        ],
+                        "displayPortraitIcon": [
+                            {
+                                "icon": "Entangled",
+                                "duration": 12
+                            }
+                        ],
+                        "dexterityBonus": [
+                            {
+                                "value": 8,
+                                "modifierType": "Set",
+                                "duration": 12
+                            }
+                        ],
+                        "damage": [
+                            {
+                                "damageType": "Crushing",
+                                "diceThrown": 2,
+                                "diceSize": 4,
+                                "timing": "DelayPermanent",
+                                "duration": 6
+                            },
+                            {
+                                "damageType": "Crushing",
+                                "diceThrown": 2,
+                                "diceSize": 4,
+                                "timing": "DelayPermanent",
+                                "duration": 12
+                            }
+                        ],
+                        "protectionFromSpell": [
+                            {
+                                "resource": "ja#grab",
+                                "duration": 12
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
         "files": [
             "ANKHEG",
             "ANKHEGF",

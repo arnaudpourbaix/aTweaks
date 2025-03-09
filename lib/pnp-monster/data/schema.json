@@ -1,137 +1,142 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/PartialRawScript",
+    "$ref": "#/definitions/RawScript",
     "definitions": {
-        "PartialRawScript": {
-            "$ref": "#/definitions/DeepPartial%3CRawScript%3E"
-        },
-        "DeepPartial<RawScript>": {
+        "RawScript": {
             "type": "object",
             "properties": {
                 "bafFile": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
                 },
                 "tpaFile": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
                 },
                 "smart": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "help": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "tracking": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "walk": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "combatWalk": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "restHeal": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "meleeAttack": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "rangedAttack": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "hideInShadows": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "creature": {
-                    "$ref": "#/definitions/DeepPartial%3CRawCreature%3E"
+                    "$ref": "#/definitions/RawCreature"
                 },
                 "initActions": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-5276-5349-ts-0-5679%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
                 },
                 "trackingCustomCode": {
-                    "$ref": "#/definitions/DeepPartial%3Cstructure-ts-1333-1401-ts-1306-1401-ts-139-1497-ts-0-5679%3E"
+                    "type": "object",
+                    "properties": {
+                        "before": {
+                            "$ref": "#/definitions/Statements"
+                        },
+                        "replace": {
+                            "$ref": "#/definitions/Statements"
+                        }
+                    },
+                    "additionalProperties": false
                 },
                 "combatCustomCode": {
-                    "$ref": "#/definitions/DeepPartial%3Cstructure-ts-1426-1494-ts-1401-1494-ts-139-1497-ts-0-5679%3E"
+                    "type": "object",
+                    "properties": {
+                        "before": {
+                            "$ref": "#/definitions/Statements"
+                        },
+                        "replace": {
+                            "$ref": "#/definitions/Statements"
+                        }
+                    },
+                    "additionalProperties": false
                 }
             },
+            "required": [
+                "bafFile"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<string>": {
-            "type": "string"
-        },
-        "DeepPartial<boolean>": {
-            "type": "boolean"
-        },
-        "DeepPartial<RawCreature>": {
+        "RawCreature": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/DeepPartial%3CRawCreatureData%3E"
+                    "$ref": "#/definitions/RawCreatureData"
                 },
                 "files": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "adjustments": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-e.ts-1141-1318-e.ts-0-4275%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawCreatureAdjustment"
+                    }
                 },
                 "weapon1": {
-                    "type": "object",
-                    "properties": {
-                        "itemFile": {
-                            "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-                        },
-                        "baseItem": {
-                            "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-                        },
-                        "enchantment": {
-                            "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
-                        },
-                        "ability": {
-                            "$ref": "#/definitions/DeepPartial%3CRawItemAbility%3E"
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/definitions/RawCreatureWeapon"
                 },
                 "weapon2": {
-                    "type": "object",
-                    "properties": {
-                        "itemFile": {
-                            "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-                        },
-                        "baseItem": {
-                            "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-                        },
-                        "enchantment": {
-                            "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
-                        },
-                        "ability": {
-                            "$ref": "#/definitions/DeepPartial%3CRawItemAbility%3E"
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/definitions/RawCreatureWeapon"
                 },
                 "spells": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3CRawCreatureSpell%3E"
+                        "$ref": "#/definitions/RawCreatureSpell"
                     }
                 },
                 "abilities": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-e.ts-3858-4273-e.ts-0-4275%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawCreatureAbility"
+                    }
                 },
                 "removeScripts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                        "type": "string"
+                    }
+                },
+                "removeItems": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
                     }
                 },
                 "autoGenerate": {
-                    "$ref": "#/definitions/DeepPartial%3CRawCreatureAutoGenerate%3E"
+                    "$ref": "#/definitions/RawCreatureAutoGenerate"
                 }
             },
+            "required": [
+                "data",
+                "files",
+                "abilities"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<RawCreatureData>": {
+        "RawCreatureData": {
             "type": "object",
             "properties": {
                 "level1": {
@@ -607,290 +612,330 @@
                 "SUMMONED_DEMON"
             ]
         },
-        "DeepPartial<string[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-            }
-        },
-        "DeepPartial<def-interface-e.ts-1141-1318-e.ts-0-4275[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawCreatureAdjustment%3E"
-            }
-        },
-        "DeepPartial<RawCreatureAdjustment>": {
+        "RawCreatureAdjustment": {
             "type": "object",
             "properties": {
                 "files": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "data": {
-                    "type": "object",
-                    "properties": {
-                        "level1": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "level2": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "level3": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "strength": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "exceptionalStrength": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "dexterity": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "constitution": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "intelligence": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "wisdom": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "charisma": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "movement": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "hp": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "ac": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "crushingAC": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "missileAC": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "piercingAC": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "slashingAC": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistFire": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistCold": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistElectricity": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistAcid": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistMagic": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistSlashing": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistCrushing": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistPiercing": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "resistMissile": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "thac0": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "apr": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "xpv": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "hideShadow": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "moveSilent": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "alignment": {
-                            "$ref": "#/definitions/DeepPartial%3C(AlignIdentifiers%7Cundefined)%3E"
-                        },
-                        "saveDeath": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "saveWand": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "savePolymorph": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "saveBreath": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "saveSpell": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "morale": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "moraleBreak": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "moraleRecovery": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "general": {
-                            "$ref": "#/definitions/DeepPartial%3C(GeneralIdentifiers%7Cundefined)%3E"
-                        },
-                        "race": {
-                            "$ref": "#/definitions/DeepPartial%3C(RaceIdentifiers%7Cundefined)%3E"
-                        },
-                        "class": {
-                            "$ref": "#/definitions/DeepPartial%3C(ClassIdentifiers%7Cundefined)%3E"
-                        },
-                        "gender": {
-                            "$ref": "#/definitions/DeepPartial%3C(GenderIdentifiers%7Cundefined)%3E"
-                        },
-                        "perfect2weapon": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "bump": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "seeInvisible": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "backstabImmunity": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "infravision": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        },
-                        "blur": {
-                            "$ref": "#/definitions/DeepPartial%3C(number%7Cundefined)%3E"
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/definitions/DeepPartial%3CRawCreatureData%3E"
                 },
                 "summon": {
                     "type": "boolean"
                 }
             },
+            "required": [
+                "files"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<(number|undefined)>": {
-            "anyOf": [
-                {
-                    "type": "number"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<(AlignIdentifiers|undefined)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/AlignIdentifiers"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<(GeneralIdentifiers|undefined)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/GeneralIdentifiers"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<(RaceIdentifiers|undefined)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/RaceIdentifiers"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<(ClassIdentifiers|undefined)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/ClassIdentifiers"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<(GenderIdentifiers|undefined)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/GenderIdentifiers"
-                },
-                {
-                    "not": {}
-                }
-            ]
-        },
-        "DeepPartial<number>": {
-            "type": "number"
-        },
-        "DeepPartial<RawItemAbility>": {
+        "DeepPartial<RawCreatureData>": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3CRawItemAbilityType%3E"
+                "level1": {
+                    "type": "number"
                 },
-                "range": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "level2": {
+                    "type": "number"
                 },
-                "speed": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "level3": {
+                    "type": "number"
                 },
-                "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "strength": {
+                    "type": "number"
                 },
-                "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "exceptionalStrength": {
+                    "type": "number"
                 },
-                "bonusToHit": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "dexterity": {
+                    "type": "number"
                 },
-                "damageBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "constitution": {
+                    "type": "number"
                 },
-                "damageType": {
-                    "$ref": "#/definitions/DeepPartial%3CRawAbilityDamageType%3E"
+                "intelligence": {
+                    "type": "number"
                 },
-                "projectile": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                "wisdom": {
+                    "type": "number"
                 },
-                "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--941-1296--0-12716%5B%5D%3E"
+                "charisma": {
+                    "type": "number"
                 },
-                "effects": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffects%3E"
+                "movement": {
+                    "type": "number"
+                },
+                "hp": {
+                    "type": "number"
+                },
+                "ac": {
+                    "type": "number"
+                },
+                "crushingAC": {
+                    "type": "number"
+                },
+                "missileAC": {
+                    "type": "number"
+                },
+                "piercingAC": {
+                    "type": "number"
+                },
+                "slashingAC": {
+                    "type": "number"
+                },
+                "resistFire": {
+                    "type": "number"
+                },
+                "resistCold": {
+                    "type": "number"
+                },
+                "resistElectricity": {
+                    "type": "number"
+                },
+                "resistAcid": {
+                    "type": "number"
+                },
+                "resistMagic": {
+                    "type": "number"
+                },
+                "resistSlashing": {
+                    "type": "number"
+                },
+                "resistCrushing": {
+                    "type": "number"
+                },
+                "resistPiercing": {
+                    "type": "number"
+                },
+                "resistMissile": {
+                    "type": "number"
+                },
+                "thac0": {
+                    "type": "number"
+                },
+                "apr": {
+                    "type": "number"
+                },
+                "xpv": {
+                    "type": "number"
+                },
+                "hideShadow": {
+                    "type": "number"
+                },
+                "moveSilent": {
+                    "type": "number"
+                },
+                "alignment": {
+                    "$ref": "#/definitions/AlignIdentifiers"
+                },
+                "saveDeath": {
+                    "type": "number"
+                },
+                "saveWand": {
+                    "type": "number"
+                },
+                "savePolymorph": {
+                    "type": "number"
+                },
+                "saveBreath": {
+                    "type": "number"
+                },
+                "saveSpell": {
+                    "type": "number"
+                },
+                "morale": {
+                    "type": "number"
+                },
+                "moraleBreak": {
+                    "type": "number"
+                },
+                "moraleRecovery": {
+                    "type": "number"
+                },
+                "general": {
+                    "$ref": "#/definitions/GeneralIdentifiers"
+                },
+                "race": {
+                    "$ref": "#/definitions/RaceIdentifiers"
+                },
+                "class": {
+                    "$ref": "#/definitions/ClassIdentifiers"
+                },
+                "gender": {
+                    "$ref": "#/definitions/GenderIdentifiers"
+                },
+                "perfect2weapon": {
+                    "type": "number"
+                },
+                "bump": {
+                    "type": "number"
+                },
+                "seeInvisible": {
+                    "type": "number"
+                },
+                "backstabImmunity": {
+                    "type": "number"
+                },
+                "infravision": {
+                    "type": "number"
+                },
+                "blur": {
+                    "type": "number"
                 }
             },
             "additionalProperties": false
         },
-        "DeepPartial<RawItemAbilityType>": {
-            "$ref": "#/definitions/RawItemAbilityType"
+        "RawCreatureWeapon": {
+            "type": "object",
+            "properties": {
+                "itemFile": {
+                    "type": "string"
+                },
+                "enchantment": {
+                    "type": "number"
+                },
+                "ability": {
+                    "$ref": "#/definitions/RawItemAbility"
+                }
+            },
+            "required": [
+                "itemFile",
+                "enchantment",
+                "ability"
+            ],
+            "additionalProperties": false
+        },
+        "RawItemAbility": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "#/definitions/RawItemAbilityType"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawItemAbilityTarget"
+                },
+                "location": {
+                    "$ref": "#/definitions/RawItemAbilityLocation"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "bonusToHit": {
+                    "type": "number"
+                },
+                "damageBonus": {
+                    "type": "number"
+                },
+                "damageType": {
+                    "$ref": "#/definitions/RawAbilityDamageType"
+                },
+                "projectile": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemFlag"
+                    }
+                },
+                "effects": {
+                    "type": "object",
+                    "properties": {
+                        "armorClassBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawArmorClassBonusEffect"
+                            }
+                        },
+                        "damage": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDamageEffect"
+                            }
+                        },
+                        "dexterityBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDexterityBonusEffect"
+                            }
+                        },
+                        "displayPortraitIcon": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDisplayPortraitIconEffect"
+                            }
+                        },
+                        "displayString": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDisplayStringEffect"
+                            }
+                        },
+                        "lightingEffects": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawLightingEffectsEffect"
+                            }
+                        },
+                        "movementRateBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawMovementRateBonusEffect"
+                            }
+                        },
+                        "movementRateBonus2": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawMovementRateBonus2Effect"
+                            }
+                        },
+                        "playSound": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawPlaySoundEffect"
+                            }
+                        },
+                        "playVisualEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawPlayVisualEffect"
+                            }
+                        },
+                        "protectionFromSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawProtectionFromSpellEffect"
+                            }
+                        },
+                        "castSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawCastSpellEffect"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "type",
+                "range",
+                "speed"
+            ],
+            "additionalProperties": false
         },
         "RawItemAbilityType": {
             "type": "string",
@@ -900,8 +945,26 @@
                 "Magical"
             ]
         },
-        "DeepPartial<RawAbilityDamageType>": {
-            "$ref": "#/definitions/RawAbilityDamageType"
+        "RawItemAbilityTarget": {
+            "type": "string",
+            "enum": [
+                "None",
+                "LivingActor",
+                "Inventory",
+                "DeadActor",
+                "AnyPointWithinRange",
+                "Caster"
+            ]
+        },
+        "RawItemAbilityLocation": {
+            "type": "string",
+            "enum": [
+                "None",
+                "Weapon",
+                "Spell",
+                "Item",
+                "Ability"
+            ]
         },
         "RawAbilityDamageType": {
             "type": "string",
@@ -918,15 +981,6 @@
                 "BluntMissile"
             ]
         },
-        "DeepPartial<def-enum--941-1296--0-12716[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawItemFlag%3E"
-            }
-        },
-        "DeepPartial<RawItemFlag>": {
-            "$ref": "#/definitions/RawItemFlag"
-        },
         "RawItemFlag": {
             "type": "string",
             "enum": [
@@ -940,110 +994,66 @@
                 "BypassArmor"
             ]
         },
-        "DeepPartial<RawEffects>": {
+        "RawArmorClassBonusEffect": {
             "type": "object",
             "properties": {
-                "armorClassBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1241-1407-ts-0-2212%5B%5D%3E"
-                },
-                "damage": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-701-894-ts-0-2212%5B%5D%3E"
-                },
-                "displaySpecialEffectIcon": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-894-1049-ts-0-2212%5B%5D%3E"
-                },
-                "lightingEffects": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1049-1241-ts-0-2212%5B%5D%3E"
-                },
-                "movementRateBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1532-1712-ts-0-2212%5B%5D%3E"
-                },
-                "playSound": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1407-1532-ts-0-2212%5B%5D%3E"
-                }
-            },
-            "additionalProperties": false
-        },
-        "DeepPartial<def-interface-ts-1241-1407-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawArmorClassBonusEffect%3E"
-            }
-        },
-        "DeepPartial<RawArmorClassBonusEffect>": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--138-179--107-385--0-12716%3E"
-                },
-                "value": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
-                },
-                "bonusTo": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectBonusTo%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
                 },
                 "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "bonusTo": {
+                    "$ref": "#/definitions/RawEffectBonusTo"
                 }
             },
+            "required": [
+                "value",
+                "bonusTo"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<enum--138-179--107-385--0-12716>": {
-            "type": "string",
-            "const": "ArmorClassBonus"
-        },
-        "DeepPartial<RawEffectBonusTo>": {
-            "$ref": "#/definitions/RawEffectBonusTo"
-        },
-        "RawEffectBonusTo": {
-            "type": "string",
-            "enum": [
-                "AllWeapons",
-                "CrushingWeapons",
-                "MissileWeapons",
-                "PiercingWeapons",
-                "SlashingWeapons",
-                "SetBaseArmorClassToValue"
-            ]
-        },
-        "DeepPartial<RawEffectTarget>": {
-            "$ref": "#/definitions/RawEffectTarget"
         },
         "RawEffectTarget": {
             "type": "string",
@@ -1059,9 +1069,6 @@
                 "EveryoneExceptSelf",
                 "OriginalCaster"
             ]
-        },
-        "DeepPartial<RawEffectTiming>": {
-            "$ref": "#/definitions/RawEffectTiming"
         },
         "RawEffectTiming": {
             "type": "string",
@@ -1079,9 +1086,6 @@
                 "InstantLimitedTicks"
             ]
         },
-        "DeepPartial<RawEffectDispelResistance>": {
-            "$ref": "#/definitions/RawEffectDispelResistance"
-        },
         "RawEffectDispelResistance": {
             "type": "string",
             "enum": [
@@ -1090,15 +1094,6 @@
                 "NotDispelBypassResistance",
                 "DispelBypassResistance"
             ]
-        },
-        "DeepPartial<def-enum--3062-3269--0-12716[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawSaveType%3E"
-            }
-        },
-        "DeepPartial<RawSaveType>": {
-            "$ref": "#/definitions/RawSaveType"
         },
         "RawSaveType": {
             "type": "string",
@@ -1109,15 +1104,6 @@
                 "RodStaffWand",
                 "PetrifyPolymorph"
             ]
-        },
-        "DeepPartial<def-enum--3269-3967--0-12716[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawEffectFlags%3E"
-            }
-        },
-        "DeepPartial<RawEffectFlags>": {
-            "$ref": "#/definitions/RawEffectFlags"
         },
         "RawEffectFlags": {
             "type": "string",
@@ -1135,75 +1121,79 @@
                 "DoesNotWakeSlepeers"
             ]
         },
-        "DeepPartial<def-interface-ts-701-894-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawDamageEffect%3E"
-            }
+        "RawEffectBonusTo": {
+            "type": "string",
+            "enum": [
+                "AllWeapons",
+                "CrushingWeapons",
+                "MissileWeapons",
+                "PiercingWeapons",
+                "SlashingWeapons",
+                "SetBaseArmorClassToValue"
+            ]
         },
-        "DeepPartial<RawDamageEffect>": {
+        "RawDamageEffect": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--180-203--107-385--0-12716%3E"
-                },
-                "amount": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
-                },
-                "damageType": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDamageType%3E"
-                },
-                "damageMode": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDamageMode%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
                 },
                 "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "damageType": {
+                    "$ref": "#/definitions/RawEffectDamageType"
+                },
+                "damageMode": {
+                    "$ref": "#/definitions/RawEffectDamageMode"
                 }
             },
+            "required": [
+                "damageType"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<enum--180-203--107-385--0-12716>": {
-            "type": "string",
-            "const": "Damage"
-        },
-        "DeepPartial<RawEffectDamageType>": {
-            "$ref": "#/definitions/RawEffectDamageType"
         },
         "RawEffectDamageType": {
             "type": "string",
@@ -1223,9 +1213,6 @@
                 "Stunning"
             ]
         },
-        "DeepPartial<RawEffectDamageMode>": {
-            "$ref": "#/definitions/RawEffectDamageMode"
-        },
         "RawEffectDamageMode": {
             "type": "string",
             "enum": [
@@ -1235,69 +1222,132 @@
                 "ReduceByPercentage"
             ]
         },
-        "DeepPartial<def-interface-ts-894-1049-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawDisplayPortraitIconEffect%3E"
-            }
-        },
-        "DeepPartial<RawDisplayPortraitIconEffect>": {
+        "RawDexterityBonusEffect": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--204-263--107-385--0-12716%3E"
-                },
-                "icon": {
-                    "$ref": "#/definitions/DeepPartial%3CRawPortraitIcon%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
                 },
                 "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
                 }
             },
+            "required": [
+                "value",
+                "modifierType"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<enum--204-263--107-385--0-12716>": {
+        "RawEffectStatisticModifier": {
             "type": "string",
-            "const": "DisplaySpecialEffectIcon"
+            "enum": [
+                "Increment",
+                "Set",
+                "Percentage",
+                "CatGrace"
+            ]
         },
-        "DeepPartial<RawPortraitIcon>": {
-            "$ref": "#/definitions/RawPortraitIcon"
+        "RawDisplayPortraitIconEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "icon": {
+                    "$ref": "#/definitions/RawPortraitIcon"
+                }
+            },
+            "required": [
+                "icon"
+            ],
+            "additionalProperties": false
         },
         "RawPortraitIcon": {
             "type": "string",
@@ -1489,72 +1539,123 @@
                 "ArmorOfFaith"
             ]
         },
-        "DeepPartial<def-interface-ts-1049-1241-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawLightingEffectsEffect%3E"
-            }
-        },
-        "DeepPartial<RawLightingEffectsEffect>": {
+        "RawDisplayStringEffect": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--264-305--107-385--0-12716%3E"
-                },
-                "lightingTarget": {
-                    "$ref": "#/definitions/DeepPartial%3CRawLightingEffectTarget%3E"
-                },
-                "effect": {
-                    "$ref": "#/definitions/DeepPartial%3CRawLightingEffect%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
                 },
                 "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
+                },
+                "stringRef": {
+                    "type": "number"
                 }
             },
+            "required": [
+                "stringRef"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<enum--264-305--107-385--0-12716>": {
-            "type": "string",
-            "const": "LightingEffects"
-        },
-        "DeepPartial<RawLightingEffectTarget>": {
-            "$ref": "#/definitions/RawLightingEffectTarget"
+        "RawLightingEffectsEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "lightingTarget": {
+                    "$ref": "#/definitions/RawLightingEffectTarget"
+                },
+                "effect": {
+                    "$ref": "#/definitions/RawLightingEffect"
+                }
+            },
+            "required": [
+                "lightingTarget",
+                "effect"
+            ],
+            "additionalProperties": false
         },
         "RawLightingEffectTarget": {
             "type": "string",
@@ -1562,9 +1663,6 @@
                 "SpellTarget",
                 "TargetPoint"
             ]
-        },
-        "DeepPartial<RawLightingEffect>": {
-            "$ref": "#/definitions/RawLightingEffect"
         },
         "RawLightingEffect": {
             "type": "string",
@@ -1603,72 +1701,66 @@
                 "HitFingerOfDeath"
             ]
         },
-        "DeepPartial<def-interface-ts-1532-1712-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawMovementRateBonusEffect%3E"
-            }
-        },
-        "DeepPartial<RawMovementRateBonusEffect>": {
+        "RawMovementRateBonusEffect": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--306-351--107-385--0-12716%3E"
-                },
-                "value": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
-                },
-                "modifierType": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectModifierType%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
                 },
                 "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectModifierType"
                 }
             },
+            "required": [
+                "value",
+                "modifierType"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<enum--306-351--107-385--0-12716>": {
-            "type": "string",
-            "const": "MovementRateBonus"
-        },
-        "DeepPartial<RawEffectModifierType>": {
-            "$ref": "#/definitions/RawEffectModifierType"
         },
         "RawEffectModifierType": {
             "type": "string",
@@ -1679,78 +1771,329 @@
                 "MultiplyPercent"
             ]
         },
-        "DeepPartial<def-interface-ts-1407-1532-ts-0-2212[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawPlaySoundEffect%3E"
-            }
-        },
-        "DeepPartial<RawPlaySoundEffect>": {
+        "RawMovementRateBonus2Effect": {
             "type": "object",
             "properties": {
-                "type": {
-                    "$ref": "#/definitions/DeepPartial%3Cenum--352-381--107-385--0-12716%3E"
-                },
-                "resource": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
-                },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTarget%3E"
+                    "$ref": "#/definitions/RawEffectTarget"
                 },
                 "power": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "timing": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectTiming%3E"
+                    "$ref": "#/definitions/RawEffectTiming"
                 },
                 "dispelResistance": {
-                    "$ref": "#/definitions/DeepPartial%3CRawEffectDispelResistance%3E"
+                    "$ref": "#/definitions/RawEffectDispelResistance"
                 },
                 "duration": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability1": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "probability2": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "saveTypes": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3062-3269--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
                 },
                 "saveBonus": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceThrown": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "diceSize": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "flags": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-enum--3269-3967--0-12716%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectModifierType"
                 }
             },
+            "required": [
+                "value",
+                "modifierType"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<enum--352-381--107-385--0-12716>": {
-            "type": "string",
-            "const": "PlaySound"
+        "RawPlaySoundEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "resource"
+            ],
+            "additionalProperties": false
         },
-        "DeepPartial<RawCreatureSpell>": {
+        "RawPlayVisualEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "playWhere": {
+                    "$ref": "#/definitions/RawEffectVisualEffectLocation"
+                }
+            },
+            "required": [
+                "playWhere",
+                "resource"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectVisualEffectLocation": {
+            "type": "string",
+            "enum": [
+                "OverTargetUnattached",
+                "OverTargetAttached",
+                "AtTargetPoint"
+            ]
+        },
+        "RawProtectionFromSpellEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "resource"
+            ],
+            "additionalProperties": false
+        },
+        "RawCastSpellEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "castingLevel": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectCastSpellType"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectCastSpellType": {
+            "type": "string",
+            "enum": [
+                "NormalCastingNonInterruptible",
+                "CastInstantlyAtCasterLevel",
+                "CastInstantlyAtSpecifiedLevel"
+            ]
+        },
+        "RawCreatureSpell": {
             "type": "object",
             "properties": {
                 "spellFile": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
                 },
-                "baseItem": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                "name": {
+                    "type": "string"
                 },
                 "stringRef": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "memorizedCount": {
+                    "type": "number"
                 },
                 "spellType": {
-                    "$ref": "#/definitions/DeepPartial%3CRawSpellType%3E"
+                    "$ref": "#/definitions/RawSpellType"
                 },
                 "castingSound": {
                     "type": "string"
@@ -1759,19 +2102,25 @@
                     "type": "string"
                 },
                 "secondaryType": {
-                    "type": "number"
+                    "$ref": "#/definitions/RawItemAbilitySecondaryType"
                 },
                 "spellLevel": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "ability": {
-                    "$ref": "#/definitions/DeepPartial%3CRawItemAbility%3E"
+                    "$ref": "#/definitions/RawSpellAbility"
                 }
             },
+            "required": [
+                "spellFile",
+                "name",
+                "stringRef",
+                "description",
+                "memorizedCount",
+                "spellType",
+                "ability"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<RawSpellType>": {
-            "$ref": "#/definitions/RawSpellType"
         },
         "RawSpellType": {
             "type": "string",
@@ -1784,20 +2133,164 @@
                 "BardSong"
             ]
         },
-        "DeepPartial<def-interface-e.ts-3858-4273-e.ts-0-4275[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CRawCreatureAbility%3E"
-            }
+        "RawItemAbilitySecondaryType": {
+            "type": "string",
+            "enum": [
+                "None",
+                "SpellProtections",
+                "SpecificProtections",
+                "IllusionaryProtections",
+                "MagicAttack",
+                "DivinationAttack",
+                "Conjuration",
+                "CombatProtections",
+                "Contingency",
+                "Battleground",
+                "OffensiveDamage",
+                "Disabling",
+                "Combination"
+            ]
         },
-        "DeepPartial<RawCreatureAbility>": {
+        "RawSpellAbility": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "#/definitions/RawItemAbilityType"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawItemAbilityTarget"
+                },
+                "location": {
+                    "$ref": "#/definitions/RawItemAbilityLocation"
+                },
+                "projectile": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSpellFlag"
+                    }
+                },
+                "effects": {
+                    "type": "object",
+                    "properties": {
+                        "armorClassBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawArmorClassBonusEffect"
+                            }
+                        },
+                        "damage": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDamageEffect"
+                            }
+                        },
+                        "dexterityBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDexterityBonusEffect"
+                            }
+                        },
+                        "displayPortraitIcon": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDisplayPortraitIconEffect"
+                            }
+                        },
+                        "displayString": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawDisplayStringEffect"
+                            }
+                        },
+                        "lightingEffects": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawLightingEffectsEffect"
+                            }
+                        },
+                        "movementRateBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawMovementRateBonusEffect"
+                            }
+                        },
+                        "movementRateBonus2": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawMovementRateBonus2Effect"
+                            }
+                        },
+                        "playSound": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawPlaySoundEffect"
+                            }
+                        },
+                        "playVisualEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawPlayVisualEffect"
+                            }
+                        },
+                        "protectionFromSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawProtectionFromSpellEffect"
+                            }
+                        },
+                        "castSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawCastSpellEffect"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "type",
+                "range",
+                "speed"
+            ],
+            "additionalProperties": false
+        },
+        "RawSpellFlag": {
+            "type": "string",
+            "enum": [
+                "BreakSanctuary",
+                "Hostile",
+                "NoLOSRequired",
+                "AllowSpotting",
+                "OutdoorsOnly",
+                "CanTargetInvisible",
+                "CastableWhenSilenced"
+            ]
+        },
+        "RawCreatureAbility": {
             "type": "object",
             "properties": {
                 "name": {
-                    "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                    "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/DeepPartial%3C(ObjectIdentifiers%7CAllegianceIdentifiers)%3E"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ObjectIdentifiers"
+                        },
+                        {
+                            "$ref": "#/definitions/AllegianceIdentifiers"
+                        }
+                    ]
                 },
                 "range": {
                     "type": "number"
@@ -1806,41 +2299,43 @@
                     "type": "object",
                     "properties": {
                         "name": {
-                            "$ref": "#/definitions/DeepPartial%3Cstring%3E"
+                            "type": "string"
                         },
                         "value": {
-                            "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                            "type": "number"
                         }
                     },
+                    "required": [
+                        "name",
+                        "value"
+                    ],
                     "additionalProperties": false
                 },
                 "triggers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3CTrigger%3E"
+                        "$ref": "#/definitions/Trigger"
                     }
                 },
                 "targetTrigger": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3CTrigger%3E"
+                        "$ref": "#/definitions/Trigger"
                     }
                 },
                 "actions": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-5276-5349-ts-0-5679%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
                 }
             },
+            "required": [
+                "name",
+                "target",
+                "actions"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<(ObjectIdentifiers|AllegianceIdentifiers)>": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/ObjectIdentifiers"
-                },
-                {
-                    "$ref": "#/definitions/AllegianceIdentifiers"
-                }
-            ]
         },
         "ObjectIdentifiers": {
             "type": "string",
@@ -1968,26 +2463,29 @@
                 "NOTEVIL"
             ]
         },
-        "DeepPartial<Trigger>": {
+        "Trigger": {
             "type": "object",
             "properties": {
-                "name": {
-                    "$ref": "#/definitions/DeepPartial%3CTriggerType%3E"
-                },
-                "negation": {
-                    "type": "boolean"
-                },
                 "params": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3C(string%7Cnumber)%3E"
+                        "type": [
+                            "string",
+                            "number"
+                        ]
                     }
+                },
+                "name": {
+                    "$ref": "#/definitions/TriggerType"
+                },
+                "negation": {
+                    "type": "boolean"
                 }
             },
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<TriggerType>": {
-            "$ref": "#/definitions/TriggerType"
         },
         "TriggerType": {
             "type": "string",
@@ -2123,35 +2621,26 @@
                 "IsActive"
             ]
         },
-        "DeepPartial<(string|number)>": {
-            "type": [
-                "string",
-                "number"
-            ]
-        },
-        "DeepPartial<def-interface-ts-5276-5349-ts-0-5679[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CAction%3E"
-            }
-        },
-        "DeepPartial<Action>": {
+        "Action": {
             "type": "object",
             "properties": {
-                "name": {
-                    "$ref": "#/definitions/DeepPartial%3CActionType%3E"
-                },
                 "params": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3C(string%7Cnumber)%3E"
+                        "type": [
+                            "string",
+                            "number"
+                        ]
                     }
+                },
+                "name": {
+                    "$ref": "#/definitions/ActionType"
                 }
             },
+            "required": [
+                "name"
+            ],
             "additionalProperties": false
-        },
-        "DeepPartial<ActionType>": {
-            "$ref": "#/definitions/ActionType"
         },
         "ActionType": {
             "type": "string",
@@ -2234,124 +2723,105 @@
                 "SetInterrupt"
             ]
         },
-        "DeepPartial<RawCreatureAutoGenerate>": {
+        "RawCreatureAutoGenerate": {
             "type": "object",
             "properties": {
                 "thac0": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "hitPoints": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 },
                 "savingThrows": {
-                    "$ref": "#/definitions/DeepPartial%3Cboolean%3E"
+                    "type": "boolean"
                 }
             },
+            "required": [
+                "thac0",
+                "hitPoints",
+                "savingThrows"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<structure-ts-1333-1401-ts-1306-1401-ts-139-1497-ts-0-5679>": {
-            "type": "object",
-            "properties": {
-                "before": {
-                    "$ref": "#/definitions/DeepPartial%3CStatements%3E"
-                },
-                "replace": {
-                    "$ref": "#/definitions/DeepPartial%3CStatements%3E"
-                }
-            },
-            "additionalProperties": false
-        },
-        "DeepPartial<Statements>": {
+        "Statements": {
             "type": "object",
             "properties": {
                 "list": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1568-1705-ts-0-5679%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConditionalStatement"
+                    }
                 }
             },
+            "required": [
+                "list"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<def-interface-ts-1568-1705-ts-0-5679[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CConditionalStatement%3E"
-            }
-        },
-        "DeepPartial<ConditionalStatement>": {
+        "ConditionalStatement": {
             "type": "object",
             "properties": {
                 "comment": {
                     "type": "string"
                 },
                 "triggers": {
-                    "$ref": "#/definitions/DeepPartial%3C(def-interface-ts-5349-5449-ts-0-5679%7Cdef-interface-ts-5519-5580-ts-0-5679)%5B%5D%3E"
-                },
-                "responses": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-1705-1784-ts-0-5679%5B%5D%3E"
-                }
-            },
-            "additionalProperties": false
-        },
-        "DeepPartial<(def-interface-ts-5349-5449-ts-0-5679|def-interface-ts-5519-5580-ts-0-5679)[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3C(Trigger%7COrTrigger)%3E"
-            }
-        },
-        "DeepPartial<(Trigger|OrTrigger)>": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "$ref": "#/definitions/DeepPartial%3CTriggerType%3E"
-                },
-                "negation": {
-                    "type": "boolean"
-                },
-                "params": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/DeepPartial%3C(string%7Cnumber)%3E"
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/Trigger"
+                            },
+                            {
+                                "$ref": "#/definitions/OrTrigger"
+                            }
+                        ]
                     }
                 },
-                "triggers": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-5349-5449-ts-0-5679%5B%5D%3E"
+                "responses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Response"
+                    }
                 }
             },
+            "required": [
+                "triggers",
+                "responses"
+            ],
             "additionalProperties": false
         },
-        "DeepPartial<def-interface-ts-5349-5449-ts-0-5679[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CTrigger%3E"
-            }
+        "OrTrigger": {
+            "type": "object",
+            "properties": {
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trigger"
+                    }
+                }
+            },
+            "required": [
+                "triggers"
+            ],
+            "additionalProperties": false
         },
-        "DeepPartial<def-interface-ts-1705-1784-ts-0-5679[]>": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/DeepPartial%3CResponse%3E"
-            }
-        },
-        "DeepPartial<Response>": {
+        "Response": {
             "type": "object",
             "properties": {
                 "weight": {
-                    "$ref": "#/definitions/DeepPartial%3Cnumber%3E"
+                    "type": "number"
                 },
                 "actions": {
-                    "$ref": "#/definitions/DeepPartial%3Cdef-interface-ts-5276-5349-ts-0-5679%5B%5D%3E"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
                 }
             },
-            "additionalProperties": false
-        },
-        "DeepPartial<structure-ts-1426-1494-ts-1401-1494-ts-139-1497-ts-0-5679>": {
-            "type": "object",
-            "properties": {
-                "before": {
-                    "$ref": "#/definitions/DeepPartial%3CStatements%3E"
-                },
-                "replace": {
-                    "$ref": "#/definitions/DeepPartial%3CStatements%3E"
-                }
-            },
+            "required": [
+                "weight",
+                "actions"
+            ],
             "additionalProperties": false
         }
     }

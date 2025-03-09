@@ -198,8 +198,8 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 
 /*
 // PnP Fiends
-BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4000 // PnP Fiends, mod-added fiends are also affected
-GROUP @6
+BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4010 // PnP Fiends, mod-added fiends are also affected
+// GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @90
 COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               //Installation marker
 COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker 
@@ -207,8 +207,8 @@ OUTER_SET FiendsOriginal = 0
 OUTER_SET FiendsScripts = 0
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fiend/main.tpa"
 
-BEGIN @151 SUBCOMPONENT @150 DESIGNATED 4001 // PnP Fiends, Mod-added fiends are not affected
-GROUP @6
+BEGIN @151 SUBCOMPONENT @150 DESIGNATED 4011 // PnP Fiends, Mod-added fiends are not affected
+// GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @90
 COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               // Installation marker 
 OUTER_SET FiendsOriginal = 1
@@ -216,13 +216,12 @@ OUTER_SET FiendsScripts = 0
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fiend/main.tpa"
 
 BEGIN @153 SUBCOMPONENT @150 DESIGNATED 4002 // PnP Fiends, only scripts
-GROUP @6
+// GROUP @6
 COPY_EXISTING sw1h01.itm "override/fl#atfiends1.mrk"                               //Installation marker
 COPY_EXISTING sw1h01.itm "override/fl#atfiends2.mrk"                               //Installation marker
 OUTER_SET FiendsOriginal = 0
 OUTER_SET FiendsScripts = 1
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fiend/main.tpa"
-
 
 // Revised Fiend summoning 
 BEGIN @157 DESIGNATED 4010

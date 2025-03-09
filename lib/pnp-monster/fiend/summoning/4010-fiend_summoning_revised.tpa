@@ -3,7 +3,7 @@
 // Creature changes, summons
 //////////////////////////////////////////////////////////////////////
 
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/150-fiend-fn.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fiend/fn.tpa"
 
 COPY_EXISTING ~demnabsu.cre~ ~override~
   LPF make_nabassu END

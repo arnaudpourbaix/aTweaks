@@ -1,29 +1,195 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1su.baf~
 
-COPY_EXISTING ~ankheg2.ITM~ ~override/ja#m1.itm~
+CREATE ITM "ja#m1"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x8a 3
+	WRITE_SHORT 0x8e 2
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	LPF set_enchantment INT_VAR enchantment = 0 END
-	LPF ALTER_ITMSPL_HEADER
+	LPF ADD_EFFECT
 		INT_VAR
-			header_type        = 1
-			range              = 1
-			speed              = 3
-			thac0_bonus        = 0
-			dicesize           = 6
-			dicenumber         = 3
-			damage_bonus       = 0
-			damage_type        = 2
-			projectile         = 1
-			flag_strength      = 1
-			flag_break         = 0
-			flag_strength_damage = 0
-			flag_strength_thac0 = 0
-			flag_hostile       = 0
-			flag_recharge      = 0
-			flag_bypass        = 0
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			probability1 = 20
+		STR_VAR
+			resource = "ja#grab"
 	END
-	LPF DELETE_EFFECT END
-BUT_ONLY IF_EXISTS
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 65536
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+	END
+
+CREATE SPL "ja#m1"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4000 SAY NAME2 @4000
+	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.~
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 65536
+			probability1 = 100
+			dicenumber = 8
+			dicesize = 4
+			savingthrow = 4
+			special = 256
+	END
+
+CREATE SPL "ja#grab"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 5
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @684 SAY NAME2 @684
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 4
+			duration = 6
+			probability1 = 100
+			dicenumber = 2
+			dicesize = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 4
+			duration = 12
+			probability1 = 100
+			dicenumber = 2
+			dicesize = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 15
+			target = 2
+			parameter1 = 8
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 144
+			duration = 12
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4001)
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "CRE_P01"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M22A"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "rr#cnstr"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#grab"
+	END
 
 ACTION_FOR_EACH ~file~ IN
 	ANKHEG
@@ -43,7 +209,11 @@ BEGIN
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~ANKHEG1~
+			REMOVE_CRE_ITEM ~ANKHEG2~
 			ADD_CRE_ITEM ~ja#m1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~
+			ADD_MEMORIZED_SPELL ~ja#m1~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#grab~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=8

@@ -67,15 +67,217 @@ BEGIN
   END    
 END
 
+DEFINE_PATCH_MACRO dw_internal_initialise_bit BEGIN
+   //  DavidW: once and for all set the variables used by bit checks
+  CLEAR_ARRAY bit_array_binary
+  DEFINE_ASSOCIATIVE_ARRAY bit_array_binary BEGIN
+             save_vs_spell         =>   0b11111110
+             save_vs_breath        =>   0b11111101
+             save_vs_poison        =>   0b11111011
+             save_vs_wand          =>   0b11110111
+             save_vs_polymorph     =>   0b11101111
+             ignore_primary        =>   0b11111011
+             ignore_secondary      =>   0b11110111
+             bypass_mirror_image   =>   0b11111110
+             ignore_difficulty     =>   0b11111101
+             drain_hp_to_caster    =>   0b11111110
+             transfer_hp_to_target =>   0b11111101
+             fist_damage_only      =>   0b11111011
+             drain_to_max_hp       =>   0b11110111
+             suppress_feedback     =>   0b11011111
+             save_for_half         =>   0b11111110
+             made_save             =>   0b11111101
+             does_not_wake         =>   0b11111011
+
+  END
+  CLEAR_ARRAY bit_array
+  DEFINE_ASSOCIATIVE_ARRAY bit_array BEGIN
+            save_vs_spell            =>   0x24
+            save_vs_breath           =>   0x24
+            save_vs_poison           =>   0x24
+            save_vs_wand             =>   0x24
+            save_vs_polymorph        =>   0x24
+            ignore_primary           =>   0x25
+            ignore_secondary         =>   0x25
+            ignore_difficulty        =>   0x27
+            bypass_mirror_image      =>   0x27
+            drain_hp_to_caster       =>   0x2c   
+            transfer_hp_to_target    =>   0x2c
+            fist_damage_only         =>   0x2c
+            drain_to_max_hp          =>   0x2c
+            suppress_feedback        =>   0x2c
+            save_for_half            =>   0x2d
+            made_save                =>   0x2d
+            does_not_wake            =>   0x2d
+
+  END
+END
+
+DEFINE_PATCH_FUNCTION dw_internal_check_bit // not really encapsulated
+    RET bit_test_passed
+BEGIN
+      SET bit_test_passed=1
+      PHP_EACH bit_array AS bit_var=>bit_loc BEGIN
+             SET bit_val=EVAL "match_%bit_var%"
+             PATCH_IF (bit_val>=0 && bit_test_passed=1) BEGIN // if we've already failed, don't bother
+                  SET bit_binary = $bit_array_binary("%bit_var%")
+                  READ_BYTE  (fx_off + bit_loc + (0x14 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) o_bit_value
+                  PATCH_IF bit_val=0 BEGIN
+                     PATCH_IF ! ( ((BNOT bit_binary) BAND o_bit_value) = 0b00000000) BEGIN
+                        SET bit_test_passed=0
+                     END
+                  END ELSE BEGIN
+                     PATCH_IF ! ( (bit_binary BOR o_bit_value) = 0b11111111) BEGIN
+                        SET bit_test_passed=0
+                     END
+                  END
+             END
+      END
+END
+
+DEFINE_PATCH_FUNCTION dw_internal_set_bit // not really encapsulated
+BEGIN
+            PHP_EACH bit_array AS bit_var=>bit_loc BEGIN
+             SET bit_val=EVAL "%bit_var%"
+             PATCH_IF bit_val>=0 BEGIN
+                SET bit_binary =$bit_array_binary("%bit_var%")
+                READ_BYTE (base + bit_loc + (0x14 * fx_type)) bit_value
+                PATCH_IF bit_val=0 BEGIN
+                    SET bit_value = (bit_value BAND bit_binary )
+                END ELSE BEGIN
+                    SET bit_value = (bit_value BOR (BNOT bit_binary) )
+                END
+                WRITE_BYTE (base + bit_loc + (0x14 * fx_type)) bit_value
+             END
+            END
+END
+
+DEFINE_PATCH_FUNCTION dw_internal_evaluate_function // not really encapsulated
+           RET function_test_passed
+BEGIN
+  // initialise
+  SET function_test_passed=1
+
+  // is there a function?
+  PATCH_IF "%match_function%" STRING_COMPARE "" BEGIN
+
+   // get the function and arguments
+   SPRINT arguments ""
+   INNER_PATCH_SAVE match_function "%match_function%" BEGIN
+      REPLACE_EVALUATE "\(.*\)(\([^)]*\))$" BEGIN
+         SPRINT arguments "%MATCH2%"
+      END
+      "%MATCH1%"
+   END
+   // get the data
+   READ_ASCII (fx_off        + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) dw_data (0x30)
+   // apply the function
+   INNER_PATCH "%dw_data%" BEGIN
+      LPF "%match_function%" STR_VAR arguments RET function_test_passed=value END
+   END
+
+  END
+END
+
+DEFINE_PATCH_FUNCTION dw_internal_apply_function // not really encapsulated
+BEGIN
+
+  // is there a function?
+  PATCH_IF "%function%" STRING_COMPARE "" BEGIN
+
+   // get the function and arguments
+   SPRINT arguments ""
+   INNER_PATCH_SAVE function "%function%" BEGIN
+      REPLACE_EVALUATE "\(.*\)(\([^)]*\))$" BEGIN
+         SPRINT arguments "%MATCH2%"
+      END
+      "%MATCH1%"
+   END
+   // get the data
+   READ_ASCII (fx_off        + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) dw_data (0x30)
+   // apply the function
+   INNER_PATCH_SAVE dw_data "%dw_data%" BEGIN
+      LPF "%function%" STR_VAR arguments END
+   END
+   // write the data
+   WRITE_ASCIIE (fx_off        + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%dw_data%" (0x30)
+
+  END
+END
+
+DEFINE_PATCH_FUNCTION ~ADD_SPELL_HEADER~
+  INT_VAR
+    type=1
+    location=4
+    target=1
+    target_count=0
+    range=0
+    required_level=1
+    speed=0
+    projectile=1
+
+    copy_header=0
+    insert_point=~-1~
+  STR_VAR
+    icon=~~
+  RET
+    insert_point
+BEGIN
+  LPF ~FJ_SPL_ITM_REINDEX~ END
+  hs=0x28
+
+  READ_LONG 0x64 ho
+  READ_SHORT 0x68 hc
+  READ_LONG 0x6a eo
+  insert_point = (insert_point>hc || insert_point<0) ? hc : insert_point
+  copy_header = (copy_header<0) ? 0 : copy_header
+
+  PATCH_IF copy_header>hc BEGIN
+    PATCH_WARN ~Unable to copy %copy_header%th header, %SOURCE_FILE% contains only %hc% headers!~
+  END ELSE BEGIN
+    INSERT_BYTES ho+insert_point*hs hs
+    hc+=1
+    eo+=hs
+    PATCH_IF copy_header BEGIN
+      READ_SHORT ho+(copy_header - 1)*hs+0x1e ec
+      READ_SHORT ho+(copy_header - 1)*hs+0x20 ei
+      READ_ASCII eo+ei*0x30 effs (ec*0x30)
+      READ_ASCII ho+(copy_header - 1)*hs copy (hs)
+      WRITE_ASCIIE ho+insert_point*hs ~%copy%~ (hs)
+    END
+    WRITE_SHORT 0x68 hc
+    WRITE_LONG 0x6a eo
+
+    READ_SHORT 0x70 ei // technically, it is a counter
+    FOR (i=ho;i<ho+hc*hs;i+=hs) BEGIN
+      READ_SHORT i+0x1e ec
+      WRITE_SHORT i+0x20 ei
+      ei+=ec
+    END
+
+    PATCH_IF copy_header BEGIN
+      READ_SHORT ho+insert_point*hs+0x1e ec
+      READ_SHORT ho+insert_point*hs+0x20 ei
+      INSERT_BYTES eo+ei*0x30 ec*0x30
+      WRITE_ASCIIE eo+ei*0x30 ~%effs%~ (ec*0x30)
+    END ELSE BEGIN
+      off=ho+insert_point*hs
+      WRITE_BYTE off type
+      WRITE_BYTE off+0x2 location
+      WRITE_ASCIIE off+0x4 ~%icon%~ (8)
+      WRITE_BYTE off+0xc target
+      WRITE_BYTE off+0xd target_count
+      WRITE_SHORT off+0xe range
+      WRITE_SHORT off+0x10 required_level
+      WRITE_LONG off+0x12 speed
+      WRITE_SHORT off+0x26 projectile
+    END
+  END
+END
+
 /*
-document{ALTER_EFFECT}
-{
-Edited version of Cam's ALTER_EFFECT (shipped with WEIDU) that allows for finer control on the savingthrow and special fields, and also to check the value of a function ('match_function') and apply one ('function'). Functions can be anonymous.
-
-}
-
-*/
-
+ * Edited version of Cam's ALTER_EFFECT (shipped with WEIDU) that allows for finer control on the savingthrow and special fields, and also to check the value of a function ('match_function') and apply one ('function'). Functions can be anonymous.
+ */
 DEFINE_PATCH_FUNCTION ALTER_EFFECT
 
   // defines what we're going to check
