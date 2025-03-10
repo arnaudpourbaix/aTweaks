@@ -1,7 +1,7 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1su.baf~
 
-CREATE ITM "ja#m1"
+CREATE ITM "ja#m1w1"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0xaa
@@ -11,13 +11,13 @@ CREATE ITM "ja#m1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x88 2
 	WRITE_BYTE 0x8a 3
 	WRITE_SHORT 0x8e 2
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
+	WRITE_LONG 0x98 0
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -25,10 +25,73 @@ CREATE ITM "ja#m1"
 			target = 2
 			parameter1 = 0
 			parameter2 = 1
-			probability1 = 20
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s1"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			probability1 = 80
 		STR_VAR
 			resource = "ja#grab"
 	END
+
+CREATE ITM "ja#m1w2"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x86 20
+	WRITE_SHORT 0x9c 108
+	WRITE_SHORT 0x38 1
+	WRITE_SHORT 0xa4 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 172
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s2"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s2"
+	END
+
+CREATE SPL "ja#m1s1"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 5
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4001 SAY NAME2 @4001
+	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 3 rounds).~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -39,8 +102,43 @@ CREATE ITM "ja#m1"
 			dicenumber = 1
 			dicesize = 4
 	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 524288
+			timing = 4
+			duration = 6
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 131072
+			timing = 4
+			duration = 12
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			duration = 18
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s1"
+	END
 
-CREATE SPL "ja#m1"
+CREATE SPL "ja#m1s2"
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
@@ -131,7 +229,7 @@ CREATE SPL "ja#grab"
 		INT_VAR
 			opcode = 139
 			target = 2
-			parameter1 = RESOLVE_STR_REF(@4001)
+			parameter1 = RESOLVE_STR_REF(@4002)
 			parameter2 = 0
 			timing = 1
 			probability1 = 100
@@ -211,8 +309,10 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~ANKHEG1~
 			REMOVE_CRE_ITEM ~ANKHEG2~
-			ADD_CRE_ITEM ~ja#m1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~
-			ADD_MEMORIZED_SPELL ~ja#m1~ #0 ~innate~ (1)
+			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
+			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
+			ADD_MEMORIZED_SPELL ~ja#m1s1~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#m1s2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#grab~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR

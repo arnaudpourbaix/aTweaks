@@ -781,8 +781,9 @@ Saving Throw: None
 Upon casting a conjure air elemental spell, the caster opens a special gate to the elemental plane of Air, and an air elemental is summoned to the vicinity of the spellcaster.  One 12 hit dice elemental always answers the summons. Furthermore, there is a 35% chance that an additional 16 HD Greater Elemental appears and a 5% chance than an additional 20 hit dice Elder Elemental is summoned.  All of the commands given to the elemental are done telepathically, so there is no time lost due to miscommunication, and it is not necessary to know the language of the summoned creature. Priests do not have to engage in a battle of the wits to control their summoned elemental (unlike mages).  The elemental will remain under the caster's control until slain or until the spell duration expires.~
 
 
-@4000 = ~Acidic Enzymes~
-@4001 = ~Grabbed~
+@4000 = ~Stream of acidic enzymes~
+@4001 = ~Acidic digestive enzymes~
+@4002 = ~Grabbed~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

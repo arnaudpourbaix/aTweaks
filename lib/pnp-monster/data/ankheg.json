@@ -4,6 +4,12 @@
     "smart": false,
     "tracking": true,
     "combatWalk": true,
+    "attacks": [
+        {
+            "weaponSlot": "SLOT_WEAPON",
+            "duration": 45
+        }
+    ],
     "creature": {
         "data": {
             "level1": 8,
@@ -29,21 +35,7 @@
         "abilities": [
             {
                 "name": "Acidic Enzymes",
-                "actions": [
-                    {
-                        "name": "ForceSpellRangeRES",
-                        "params": [
-                            "ja#1",
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "target": "NearestEnemyOf",
-                "range": 30,
-                "timer": {
-                    "name": "AcidicEnzymes",
-                    "value": 1800
-                },
+                "isTargetSpell": false,
                 "triggers": [
                     {
                         "name": "HPPercentLT",
@@ -51,8 +43,31 @@
                             "Myself",
                             50
                         ]
+                    },
+                    {
+                        "name": "HaveSpellRES",
+                        "params": [
+                            "ja#m1"
+                        ]
                     }
-                ]
+                ],
+                "actions": [
+                    {
+                        "name": "SelectWeaponAbility",
+                        "params": [
+                            "SLOT_WEAPON1",
+                            "0"
+                        ]
+                    },
+                    {
+                        "name": "AttackOneRound",
+                        "params": [
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "range": 30
             }
         ],
         "removeItems": [
@@ -60,31 +75,51 @@
             "ANKHEG2"
         ],
         "weapon1": {
-            "itemFile": "ja#m1",
+            "itemFile": "ja#m1w1",
             "enchantment": 0,
             "ability": {
                 "type": "Melee",
                 "range": 1,
                 "diceThrown": 3,
-                "diceSize": 6,
+                "diceSize": 2,
                 "damageType": "Crushing",
                 "speed": 3,
-                "flags": [
-                    "AddStrengthBonus"
-                ],
+                "flags": [],
                 "effects": {
-                    "damage": [
-                        {
-                            "damageType": "Acid",
-                            "diceThrown": 1,
-                            "diceSize": 4
-                        }
-                    ],
                     "castSpell": [
                         {
                             "type": "CastInstantlyAtCasterLevel",
-                            "probability1": 20,
+                            "resource": "ja#m1s1"
+                        },
+                        {
+                            "type": "CastInstantlyAtCasterLevel",
+                            "probability1": 80,
                             "resource": "ja#grab"
+                        }
+                    ]
+                }
+            }
+        },
+        "weapon2": {
+            "itemFile": "ja#m1w2",
+            "enchantment": 0,
+            "ability": {
+                "type": "Ranged",
+                "range": 30,
+                "speed": 3,
+                "bonusToHit": 20,
+                "projectile": 108,
+                "effects": {
+                    "castSpell": [
+                        {
+                            "type": "CastInstantlyAtCasterLevel",
+                            "resource": "ja#m1s2"
+                        }
+                    ],
+                    "removeSpell": [
+                        {
+                            "target": "Self",
+                            "resource": "ja#m1s2"
                         }
                     ]
                 }
@@ -92,10 +127,60 @@
         },
         "spells": [
             {
-                "name": "Acidic_Enzymes",
+                "name": "Acidic digestive enzymes",
+                "stringRef": 4001,
+                "description": "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 3 rounds).",
+                "spellFile": "ja#m1s1",
+                "spellType": "Innate",
+                "secondaryType": "OffensiveDamage",
+                "memorizedCount": 1,
+                "ability": {
+                    "type": "Melee",
+                    "range": 5,
+                    "speed": 0,
+                    "effects": {
+                        "protectionFromSpell": [
+                            {
+                                "resource": "ja#m1s1",
+                                "duration": 18,
+                                "timing": "InstantLimited"
+                            }
+                        ],
+                        "displayPortraitIcon": [
+                            {
+                                "icon": "Acid",
+                                "duration": 18
+                            }
+                        ],
+                        "damage": [
+                            {
+                                "damageType": "Acid",
+                                "diceThrown": 1,
+                                "diceSize": 4
+                            },
+                            {
+                                "timing": "DelayPermanent",
+                                "duration": 6,
+                                "damageType": "Acid",
+                                "diceThrown": 1,
+                                "diceSize": 4
+                            },
+                            {
+                                "timing": "DelayPermanent",
+                                "duration": 12,
+                                "damageType": "Acid",
+                                "diceThrown": 1,
+                                "diceSize": 4
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Stream of acidic enzymes",
                 "stringRef": 4000,
                 "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
-                "spellFile": "ja#m1",
+                "spellFile": "ja#m1s2",
                 "spellType": "Innate",
                 "secondaryType": "OffensiveDamage",
                 "memorizedCount": 1,
@@ -103,6 +188,7 @@
                     "type": "Ranged",
                     "range": 30,
                     "speed": 3,
+                    "projectile": 108,
                     "effects": {
                         "damage": [
                             {
@@ -135,7 +221,7 @@
                     "effects": {
                         "displayString": [
                             {
-                                "stringRef": 4001,
+                                "stringRef": 4002,
                                 "timing": "InstantPermanentUntilDeath"
                             }
                         ],
@@ -236,27 +322,5 @@
                 "summon": true
             }
         ]
-    },
-    "combatCustomCode": {
-        "before": {
-            "list": [
-                {
-                    "triggers": [],
-                    "responses": [
-                        {
-                            "weight": 100,
-                            "actions": [
-                                {
-                                    "name": "ForceSpellRES",
-                                    "params": [
-                                        "ja#1"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
     }
 }
