@@ -1,0 +1,12 @@
+COPY ~%MOD_FOLDER%/vvc/rr#cnstr.vvc~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
+COPY ~%MOD_FOLDER%/bam/rr#cnstr.bam~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
+COPY ~%MOD_FOLDER%/eff/rr#cnstr.eff~ ~override/rr#dgrab.eff~                            // Grab ability immunity (for large and incorporeal creatures)
+  WRITE_ASCII 0x30 ~RR#DGRAB~ #8                                                        // resref: RR#DGRAB
+
+COPY ~%MOD_FOLDER%/eff/rr#cnstr.eff~ ~override/rr#dgra2.eff~
+  WRITE_LONG  0x10 146 //cast spell
+  WRITE_LONG  0x20 1 //cast instantly
+  WRITE_LONG  0x24 1 //instant/permanent
+  WRITE_ASCII 0x30 rr#dgrab #8
+
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLE" END

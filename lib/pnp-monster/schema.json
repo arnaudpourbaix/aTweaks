@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/RawScript",
+    "$ref": "#/definitions/RawCreature",
     "definitions": {
-        "RawScript": {
+        "RawCreature": {
             "type": "object",
             "properties": {
                 "bafFile": {
@@ -41,11 +41,50 @@
                 "attacks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Attack"
+                        "$ref": "#/definitions/RawCreatureAttack"
                     }
                 },
-                "creature": {
-                    "$ref": "#/definitions/RawCreature"
+                "grab": {
+                    "type": "object",
+                    "properties": {
+                        "file": {
+                            "type": "string"
+                        },
+                        "weapon": {
+                            "type": "string",
+                            "enum": [
+                                "1",
+                                "2"
+                            ]
+                        },
+                        "probability": {
+                            "type": "number"
+                        },
+                        "duration": {
+                            "type": "number"
+                        },
+                        "damagePerRound": {
+                            "type": "object",
+                            "properties": {
+                                "diceThrown": {
+                                    "type": "number"
+                                },
+                                "diceSize": {
+                                    "type": "number"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/EffectDamageTypeEnum"
+                                }
+                            },
+                            "required": [
+                                "diceThrown",
+                                "diceSize",
+                                "type"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
                 },
                 "initActions": {
                     "type": "array",
@@ -76,38 +115,7 @@
                         }
                     },
                     "additionalProperties": false
-                }
-            },
-            "required": [
-                "bafFile"
-            ],
-            "additionalProperties": false
-        },
-        "Attack": {
-            "type": "object",
-            "properties": {
-                "responseWeight": {
-                    "type": "number"
                 },
-                "weaponSlot": {
-                    "type": "string",
-                    "enum": [
-                        "SLOT_WEAPON",
-                        "SLOT_WEAPON1"
-                    ]
-                },
-                "duration": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "weaponSlot"
-            ],
-            "additionalProperties": false
-        },
-        "RawCreature": {
-            "type": "object",
-            "properties": {
                 "data": {
                     "$ref": "#/definitions/RawCreatureData"
                 },
@@ -124,15 +132,15 @@
                     }
                 },
                 "weapon1": {
-                    "$ref": "#/definitions/RawCreatureWeapon"
+                    "$ref": "#/definitions/RawItem"
                 },
                 "weapon2": {
-                    "$ref": "#/definitions/RawCreatureWeapon"
+                    "$ref": "#/definitions/RawItem"
                 },
                 "spells": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/RawCreatureSpell"
+                        "$ref": "#/definitions/RawSpell"
                     }
                 },
                 "abilities": {
@@ -158,9 +166,390 @@
                 }
             },
             "required": [
+                "bafFile",
                 "data",
-                "files",
-                "abilities"
+                "files"
+            ],
+            "additionalProperties": false
+        },
+        "RawCreatureAttack": {
+            "type": "object",
+            "properties": {
+                "responseWeight": {
+                    "type": "number"
+                },
+                "weaponSlot": {
+                    "type": "string",
+                    "enum": [
+                        "SLOT_WEAPON",
+                        "SLOT_WEAPON1"
+                    ]
+                },
+                "duration": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "weaponSlot"
+            ],
+            "additionalProperties": false
+        },
+        "EffectDamageTypeEnum": {
+            "type": "number",
+            "enum": [
+                0,
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64,
+                128,
+                256,
+                512,
+                1024,
+                2048
+            ]
+        },
+        "Action": {
+            "type": "object",
+            "properties": {
+                "params": {
+                    "type": "array",
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ]
+                    }
+                },
+                "name": {
+                    "$ref": "#/definitions/ActionType"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "additionalProperties": false
+        },
+        "ActionType": {
+            "type": "string",
+            "enum": [
+                "Attack",
+                "AttackOneRound",
+                "AttackReevaluate",
+                "Enemy",
+                "Ally",
+                "ChangeEnemyAlly",
+                "MoveToObject",
+                "MoveToObjectFollow",
+                "RunAwayFrom",
+                "RunAwayFromNoInterruptNoLeaveArea",
+                "RunAwayFromNoLeaveArea",
+                "RunAwayFromNoInterrupt",
+                "RandomWalk",
+                "RandomWalkTime",
+                "RandomWalkContinuousTime",
+                "RandomWalkContinuous",
+                "SetGlobal",
+                "AddGlobals",
+                "IncrementGlobal",
+                "StartTimer",
+                "SetGlobalTimer",
+                "Spell",
+                "SpellRES",
+                "SpellPoint",
+                "SpellPointRES",
+                "ForceSpell",
+                "ForceSpellRES",
+                "ForceSpellPoint",
+                "ForceSpellPointRES",
+                "ForceSpellRange",
+                "ForceSpellRangeRES",
+                "ForceSpellPointRange",
+                "ForceSpellPointRangeRES",
+                "SpellNoDec",
+                "SpellNoDecRES",
+                "SpellPointNoDec",
+                "SpellPointNoDecRES",
+                "ReallyForceSpellPoint",
+                "ReallyForceSpellPointRES",
+                "ReallyForceSpell",
+                "ReallyForceSpellRES",
+                "ApplySpell",
+                "ApplySpellRES",
+                "RemoveSpell",
+                "RemoveSpellRES",
+                "ReallyForceSpellDead",
+                "ReallyForceSpellDeadRES",
+                "EquipItem",
+                "UseItem",
+                "SelectWeaponAbility",
+                "EquipMostDamagingMelee",
+                "EquipRanged",
+                "GiveOrder",
+                "Help",
+                "Hide",
+                "Panic",
+                "Turn",
+                "Rest",
+                "Shout",
+                "DestroySelf",
+                "Kill",
+                "DisplayString",
+                "ChangeClass",
+                "ChangeAnimation",
+                "GlobalShout",
+                "Calm",
+                "DisplayStringHead",
+                "AddKit",
+                "ApplyDamage",
+                "ApplyDamagePercent",
+                "NoAction",
+                "ClearActions",
+                "Continue",
+                "Wait",
+                "SmallWait",
+                "SetInterrupt"
+            ]
+        },
+        "Statements": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConditionalStatement"
+                    }
+                }
+            },
+            "required": [
+                "list"
+            ],
+            "additionalProperties": false
+        },
+        "ConditionalStatement": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/Trigger"
+                            },
+                            {
+                                "$ref": "#/definitions/OrTrigger"
+                            }
+                        ]
+                    }
+                },
+                "responses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Response"
+                    }
+                }
+            },
+            "required": [
+                "triggers",
+                "responses"
+            ],
+            "additionalProperties": false
+        },
+        "Trigger": {
+            "type": "object",
+            "properties": {
+                "params": {
+                    "type": "array",
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ]
+                    }
+                },
+                "name": {
+                    "$ref": "#/definitions/TriggerType"
+                },
+                "negation": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "additionalProperties": false
+        },
+        "TriggerType": {
+            "type": "string",
+            "enum": [
+                "HaveSpell",
+                "HaveSpellRES",
+                "HaveAnySpells",
+                "SpellCast",
+                "SpellCastRES",
+                "SpellCastOnMe",
+                "SpellCastOnMeRES",
+                "SpellCastPriest",
+                "SpellCastPriestRES",
+                "SpellCastInnate",
+                "SpellCastInnateRES",
+                "HaveKnownSpell",
+                "HaveKnownSpellRES",
+                "HasWeaponEquiped",
+                "HasItem",
+                "HasItemType",
+                "NumItems",
+                "NumItemsGT",
+                "NumItemsLT",
+                "NumItemsParty",
+                "NumItemsPartyGT",
+                "NumItemsPartyLT",
+                "HasItemEquiped",
+                "HasItemSlot",
+                "CheckItemSlot",
+                "CurrentAmmo",
+                "Global",
+                "GlobalGT",
+                "GlobalLT",
+                "GlobalsEqual",
+                "GlobalsGT",
+                "GlobalsLT",
+                "LocalsEqual",
+                "LocalsGT",
+                "LocalsLT",
+                "GlobalTimerExpired",
+                "GlobalTimerNotExpired",
+                "TimerExpired",
+                "RealGlobalTimerExact",
+                "RealGlobalTimerExpired",
+                "RealGlobalTimerNotExpired",
+                "HP",
+                "HPGT",
+                "HPLT",
+                "HPPercent",
+                "HPPercentLT",
+                "HPPercentGT",
+                "OnCreation",
+                "ActuallyInCombat",
+                "CombatCounter",
+                "CombatCounterLT",
+                "CombatCounterGT",
+                "AttackedBy",
+                "HitBy",
+                "TookDamage",
+                "DamageTaken",
+                "DamageTakenGT",
+                "DamageTakenLT",
+                "Help",
+                "Heard",
+                "InWeaponRange",
+                "CanEquipRanged",
+                "IsWeaponRanged",
+                "WeaponEffectiveVs",
+                "WeaponCanDamage",
+                "Level",
+                "LevelGT",
+                "LevelLT",
+                "ClassLevel",
+                "ClassLevelGT",
+                "ClassLevelLT",
+                "LOS",
+                "Exists",
+                "See",
+                "Detect",
+                "BecameVisible",
+                "Range",
+                "TargetUnreachable",
+                "NumCreature",
+                "NumCreatureLT",
+                "NumCreatureGT",
+                "NumCreatureVsParty",
+                "NumInParty",
+                "NumInPartyGT",
+                "NumInPartyLT",
+                "NumInPartyAlive",
+                "NumInPartyAliveGT",
+                "NumInPartyAliveLT",
+                "Killed",
+                "Die",
+                "Died",
+                "Dead",
+                "CheckStat",
+                "CheckStatGT",
+                "CheckStatLT",
+                "StateCheck",
+                "NotStateCheck",
+                "ExtendedStateCheck",
+                "CheckSpellState",
+                "Alignment",
+                "Allegiance",
+                "General",
+                "Race",
+                "Gender",
+                "Class",
+                "OriginalClass",
+                "Kit",
+                "Morale",
+                "MoraleGT",
+                "MoraleLT",
+                "Name",
+                "HasBounceEffects",
+                "HasImmunityEffects",
+                "ImmuneToSpellLevel",
+                "CanTurn",
+                "TurnedBy",
+                "AreaType",
+                "InMyArea",
+                "InMyGroup",
+                "InParty",
+                "True",
+                "False",
+                "ActionListEmpty",
+                "Delay",
+                "ReceivedOrder",
+                "RandomNum",
+                "RandomNumGT",
+                "RandomNumLT",
+                "IsActive"
+            ]
+        },
+        "OrTrigger": {
+            "type": "object",
+            "properties": {
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trigger"
+                    }
+                }
+            },
+            "required": [
+                "triggers"
+            ],
+            "additionalProperties": false
+        },
+        "Response": {
+            "type": "object",
+            "properties": {
+                "weight": {
+                    "type": "number"
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
+                }
+            },
+            "required": [
+                "weight",
+                "actions"
             ],
             "additionalProperties": false
         },
@@ -817,29 +1206,15 @@
             },
             "additionalProperties": false
         },
-        "RawCreatureWeapon": {
+        "RawItem": {
             "type": "object",
             "properties": {
-                "itemFile": {
+                "file": {
                     "type": "string"
                 },
                 "enchantment": {
                     "type": "number"
                 },
-                "ability": {
-                    "$ref": "#/definitions/RawItemAbility"
-                }
-            },
-            "required": [
-                "itemFile",
-                "enchantment",
-                "ability"
-            ],
-            "additionalProperties": false
-        },
-        "RawItemAbility": {
-            "type": "object",
-            "properties": {
                 "type": {
                     "$ref": "#/definitions/RawItemAbilityType"
                 },
@@ -885,79 +1260,97 @@
                         "armorClassBonus": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawArmorClassBonusEffect"
+                                "$ref": "#/definitions/ArmorClassBonusEffect"
                             }
                         },
                         "castSpell": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawCastSpellEffect"
+                                "$ref": "#/definitions/CastSpellEffect"
                             }
                         },
                         "damage": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawDamageEffect"
+                                "$ref": "#/definitions/DamageEffect"
                             }
                         },
                         "dexterityBonus": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawDexterityBonusEffect"
+                                "$ref": "#/definitions/DexterityBonusEffect"
                             }
                         },
                         "displayPortraitIcon": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawDisplayPortraitIconEffect"
+                                "$ref": "#/definitions/DisplayPortraitIconEffect"
                             }
                         },
                         "displayString": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawDisplayStringEffect"
+                                "$ref": "#/definitions/DisplayStringEffect"
                             }
                         },
                         "lightingEffects": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawLightingEffectsEffect"
+                                "$ref": "#/definitions/LightingEffectsEffect"
                             }
                         },
                         "movementRateBonus": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawMovementRateBonusEffect"
+                                "$ref": "#/definitions/MovementRateBonusEffect"
                             }
                         },
                         "movementRateBonus2": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawMovementRateBonus2Effect"
+                                "$ref": "#/definitions/MovementRateBonus2Effect"
                             }
                         },
                         "playSound": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawPlaySoundEffect"
+                                "$ref": "#/definitions/PlaySoundEffect"
                             }
                         },
                         "playVisualEffect": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawPlayVisualEffect"
+                                "$ref": "#/definitions/PlayVisualEffect"
                             }
                         },
                         "protectionFromSpell": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawProtectionFromSpellEffect"
+                                "$ref": "#/definitions/ProtectionFromSpellEffect"
+                            }
+                        },
+                        "protectionFromDisplaySpecificString": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
                             }
                         },
                         "removeSpell": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/RawRemoveSpellEffect"
+                                "$ref": "#/definitions/RemoveSpellEffect"
+                            }
+                        },
+                        "scriptingStateModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ScriptingStateModifierEffect"
+                            }
+                        },
+                        "setExtendedSpellStateEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         }
                     },
@@ -965,6 +1358,8 @@
                 }
             },
             "required": [
+                "file",
+                "enchantment",
                 "type",
                 "range",
                 "speed"
@@ -1028,7 +1423,7 @@
                 "BypassArmor"
             ]
         },
-        "RawArmorClassBonusEffect": {
+        "ArmorClassBonusEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1166,7 +1561,7 @@
                 "SetBaseArmorClassToValue"
             ]
         },
-        "RawCastSpellEffect": {
+        "CastSpellEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1234,7 +1629,7 @@
                 "CastInstantlyAtSpecifiedLevel"
             ]
         },
-        "RawDamageEffect": {
+        "DamageEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1324,7 +1719,7 @@
                 "ReduceByPercentage"
             ]
         },
-        "RawDexterityBonusEffect": {
+        "DexterityBonusEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1394,7 +1789,7 @@
                 "CatGrace"
             ]
         },
-        "RawDisplayPortraitIconEffect": {
+        "DisplayPortraitIconEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1641,7 +2036,7 @@
                 "ArmorOfFaith"
             ]
         },
-        "RawDisplayStringEffect": {
+        "DisplayStringEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1690,7 +2085,7 @@
                     "type": "string"
                 },
                 "stringRef": {
-                    "type": "number"
+                    "type": "string"
                 }
             },
             "required": [
@@ -1698,7 +2093,7 @@
             ],
             "additionalProperties": false
         },
-        "RawLightingEffectsEffect": {
+        "LightingEffectsEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1803,7 +2198,7 @@
                 "HitFingerOfDeath"
             ]
         },
-        "RawMovementRateBonusEffect": {
+        "MovementRateBonusEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1873,7 +2268,7 @@
                 "MultiplyPercent"
             ]
         },
-        "RawMovementRateBonus2Effect": {
+        "MovementRateBonus2Effect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1934,7 +2329,7 @@
             ],
             "additionalProperties": false
         },
-        "RawPlaySoundEffect": {
+        "PlaySoundEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -1988,7 +2383,7 @@
             ],
             "additionalProperties": false
         },
-        "RawPlayVisualEffect": {
+        "PlayVisualEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -2054,7 +2449,7 @@
                 "AtTargetPoint"
             ]
         },
-        "RawProtectionFromSpellEffect": {
+        "ProtectionFromSpellEffect": {
             "type": "object",
             "properties": {
                 "target": {
@@ -2103,7 +2498,7 @@
                     "type": "string"
                 },
                 "stringRef": {
-                    "type": "number"
+                    "type": "string"
                 }
             },
             "required": [
@@ -2111,7 +2506,61 @@
             ],
             "additionalProperties": false
         },
-        "RawRemoveSpellEffect": {
+        "ProtectionFromDisplaySpecificStringEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "stringRef": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "RemoveSpellEffect": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -2162,13 +2611,394 @@
                 }
             }
         },
-        "RawCreatureSpell": {
+        "ScriptingStateModifierEffect": {
             "type": "object",
             "properties": {
-                "spellFile": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
                     "type": "string"
                 },
+                "value": {
+                    "type": "number"
+                },
+                "state": {
+                    "$ref": "#/definitions/ModifyStatsIdentifiers"
+                }
+            },
+            "required": [
+                "value",
+                "state"
+            ],
+            "additionalProperties": false
+        },
+        "ModifyStatsIdentifiers": {
+            "type": "string",
+            "enum": [
+                "SCRIPTINGSTATE1",
+                "WING_BUFFET",
+                "SCRIPTINGSTATE2",
+                "DEATH_WARD",
+                "SCRIPTINGSTATE3",
+                "LEVEL_DRAIN_IMMUNITY",
+                "SCRIPTINGSTATE4",
+                "OFFENSIVE_MODIFIER",
+                "SCRIPTINGSTATE5",
+                "DEFENSIVE_MODIFIER",
+                "SCRIPTINGSTATE6",
+                "STRENGTH_MODIFIER",
+                "WIZARD_SPELL_IMMUNITY",
+                "WIZARD_PROTECTION_FROM_ENERGY",
+                "WIZARD_SPELL_TRAP",
+                "WIZARD_IMPROVED_ALACRITY",
+                "MELEE_THACO_BONUS",
+                "MELEE_DAMAGE_BONUS",
+                "MISSILE_DAMAGE_BONUS",
+                "DISABLE_CIRCLE",
+                "FIST_THACO_BONUS",
+                "FIST_DAMAGE_BONUS",
+                "CLASS_STRING_OVERRIDE_MIXED",
+                "CLASS_STRING_OVERRIDE_LOWER",
+                "PREVENT_SPELL_PROTECTION_EFFECTS",
+                "IMMUNITY_TO_BACKSTAB",
+                "LOCKPICKINGMTPBONUS",
+                "WIZARD_PROTECTION_FROM_PETRIFICATION",
+                "MOVESILENTLYMTPBONUS",
+                "WIZARD_SPELL_SHIELD",
+                "TRAPSMTPBONUS",
+                "WIZARD_RESIST_FEAR",
+                "PICKPOCKETMTPBONUS",
+                "WIZARD_PROTECTION_FROM_NORMAL_MISSILES",
+                "HIDEINSHADOWSMTPBONUS",
+                "WIZARD_GREATER_MALISON",
+                "DETECTILLUSIONSMTPBONUS",
+                "WIZARD_PROTECTION_FROM_NORMAL_WEAPONS",
+                "SETTRAPSMTPBONUS",
+                "WIZARD_TENSERS_TRANSFORMATION",
+                "PREVENT_AI_SLOWDOWN",
+                "EXISTANCE_DELAY_OVERRIDE",
+                "ANIMATION_ONLY_HASTE",
+                "NO_PERMANENT_DEATH",
+                "IMMUNE_TO_TURN_UNDEAD",
+                "SUMMON_DISABLE_ACTION",
+                "CHAOS_SHIELD",
+                "NPC_BUMP",
+                "USE_ANY_ITEM",
+                "ASSASSINATE",
+                "SEX_CHANGED",
+                "SPELL_FAILURE_INNATE",
+                "IMMUNE_TO_TRACKING",
+                "DEAD_MAGIC",
+                "IMMUNE_TO_TIME_STOP",
+                "IMMUNE_TO_SEQUESTER",
+                "STONESKINSGOLEM",
+                "LEVELDRAIN"
+            ]
+        },
+        "SetExtendedSpellStateEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "state": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/SplStateIdentifiers"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "state"
+            ],
+            "additionalProperties": false
+        },
+        "SplStateIdentifiers": {
+            "type": "string",
+            "enum": [
+                "HOPELESSNESS",
+                "PROTECTION_FROM_EVIL",
+                "ARMOR_OF_FAITH",
+                "NAUSEA",
+                "ENFEEBLED",
+                "RED_FIRESHIELD",
+                "BLUE_FIRESHIELD",
+                "HELD",
+                "DEATH_WARD",
+                "HOLY_POWER",
+                "BENEFICIAL_CHANT",
+                "DETRIMENTAL_CHANT",
+                "BENEFICIAL_PRAYER",
+                "DETRIMENTAL_PRAYER",
+                "BENEFICIAL_RECITATION",
+                "DETRIMENTAL_RECITATION",
+                "ALLIED_RIGHTEOUS_WRATH_OF_THE_FAITHFUL",
+                "ALLIED_AND_SAME_ALIGNMENT_RIGHTEOUS_WRATH_OF_THE_FAITHFUL",
+                "STONESKIN",
+                "IRON_SKINS",
+                "SANCTUARY",
+                "OTILUKES_RESILIENT_SPHERE",
+                "BLESS",
+                "AID",
+                "BARKSKIN",
+                "DRAW_UPON_HOLY_MIGHT",
+                "ENTANGLE",
+                "WEB",
+                "GREASE",
+                "FREE_ACTION",
+                "ENTROPY_SHIELD",
+                "STORM_SHELL",
+                "PROTECTION_FROM_THE_ELEMENTS",
+                "BERSERK_ALWAYS_ACTIVE",
+                "BLOOD_RAGE",
+                "SUPPRESS_HP_INFO",
+                "DOESNT_AWAKEN_ON_DAMAGE",
+                "UNSTUN_ON_DAMAGE",
+                "DEAFENED",
+                "ANIMAL_RAGE",
+                "SNEAK_ATTACK_IMMUNITY",
+                "CHAOTIC_COMMANDS",
+                "MISCAST_MAGIC",
+                "PAIN",
+                "MALISON",
+                "CATS_GRACE",
+                "MOLD_TOUCH",
+                "SHROUD_OF_FLAME",
+                "EYE_OF_THE_MIND",
+                "EYE_OF_THE_SWORD",
+                "EYE_OF_THE_MAGE",
+                "EYE_OF_VENOM",
+                "EYE_OF_THE_SPIRIT",
+                "EYE_OF_FORTITUDE",
+                "EYE_OF_STONE",
+                "DOOM",
+                "SI_ABJURATION",
+                "SI_CONJURATION",
+                "SI_DIVINATION",
+                "SI_ENCHANTMENT",
+                "SI_ILLUSION",
+                "SI_EVOCATION",
+                "SI_NECROMANCY",
+                "SI_TRANSMUTATION",
+                "BUFF_PRO_WEAPONS",
+                "BUFF_PRO_DAMAGE",
+                "BUFF_PRO_SPELLS",
+                "BUFF_PRO_EFFECTS",
+                "BUFF_ENHANCEMENT",
+                "BUFF_ILLUSION",
+                "FAERIE_FIRE",
+                "GLITTERDUST",
+                "CANNOT_TURN_INVISIBLE",
+                "SHAMANIC_DANCE",
+                "LATHANDER_BOON",
+                "BERSERKER_RAGE_FATIGUE",
+                "BARBARIAN_RAGE",
+                "BERSERKER_RAGE",
+                "MINSC_BERSERK",
+                "POISON_WEAPON",
+                "KENSAI_KIA",
+                "DEFENSIVE_STANCE",
+                "ARCHER_CALL_SHOT",
+                "CHAOS_SHIELD",
+                "IMPROVED_CHAOS_SHIELD",
+                "BARD_SONG",
+                "BLADE_SONG",
+                "SKALD_SONG",
+                "JESTER_SONG",
+                "ENHANCED_BARD_SONG",
+                "ENHANCED_SKALD_SONG",
+                "ENHANCED_JESTER_SONG",
+                "SPIRIT_WARD",
+                "ENCHANTED_WEAPON",
+                "SPECTACLES_QUEST",
+                "SPIRIT_FORM",
+                "FAVORED_OF_THE_SPIRITS",
+                "DRAGON_BLADE",
+                "POTION_OF_MAGIC_BLOCKING",
+                "POTION_OF_CLARITY",
+                "SCROLL_OF_PROTECTION_FROM_MAGIC",
+                "SCROLL_OF_PROTECTION_FROM_UNDEAD",
+                "WILD_MAGIC_AREA",
+                "DEAD_MAGIC_AREA",
+                "STATE_ENRAGED",
+                "GASEOUS_FORM",
+                "RESIST_FEAR",
+                "PROTECTION_FROM_PETRIFICATION",
+                "SPELL_SHIELD",
+                "PROTECTION_FROM_NORMAL_MISSILES",
+                "OFFENSIVE_SPIN",
+                "PROTECTION_FROM_NORMAL_WEAPONS",
+                "TENSERS_TRANSFORMATION",
+                "DEFENSIVE_SPIN",
+                "POTION_OF_HEALING",
+                "TASTE_LINK",
+                "STATIC_CHARGE",
+                "FLAMING_FISTS",
+                "PROTECTION_FROM_MAGICAL_WEAPONS",
+                "MANTLE",
+                "IMPROVED_MANTLE",
+                "ABSOLUTE_IMMUNITY",
+                "IMPRISONMENT_DESTROY",
+                "STORY_MODE",
+                "WIZARD_SHIELD",
+                "PRONE",
+                "DISEASED",
+                "CHAIN_LIGHTNING",
+                "EVASION",
+                "ACID_LEVEL_2",
+                "ACID_LEVEL_3",
+                "CYNICISM_EQUIPPED",
+                "EXALTATION",
+                "DETECT_INVISIBILITY",
+                "CIRCLE_OF_BONES",
+                "SHIELD_OF_LATHANDER",
+                "MIND_BLANK",
+                "EMOTION_HOPE",
+                "EMOTION_COURAGE",
+                "CHARM_IMMUNITY",
+                "CHARM_IMMUNITY_SEEN",
+                "PANIC_IMMUNITY",
+                "PANIC_IMMUNITY_SEEN",
+                "ITEM_POISON",
+                "ITEM_POISON_SEEN",
+                "SILENCE_IMMUNITY",
+                "SILENCE_IMMUNITY_SEEN",
+                "SLEEP_IMMUNITY",
+                "SLEEP_IMMUNITY_SEEN",
+                "SLOW_IMMUNITY",
+                "SLOW_IMMUNITY_SEEN",
+                "STUN_IMMUNITY",
+                "STUN_IMMUNITY_SEEN",
+                "DEATH_IMMUNITY",
+                "DEATH_IMMUNITY_SEEN",
+                "CONFUSION_IMMUNITY",
+                "CONFUSION_IMMUNITY_SEEN",
+                "PETRIFY_IMMUNITY",
+                "PETRIFY_IMMUNITY_SEEN",
+                "HOLD_IMMUNITY",
+                "HOLD_IMMUNITY_SEEN",
+                "ITEM_LEVELDRAIN",
+                "ITEM_LEVELDRAIN_SEEN",
+                "DISINTEGRATE_IMMUNITY",
+                "DISINTEGRATE_IMMUNITY_SEEN",
+                "ITEM_MM",
+                "ITEM_MM_SEEN",
+                "ITEM_PSIMAZE",
+                "ITEM_PSIMAZE_SEEN",
+                "ITEM_PSIONIC_SEEN",
+                "ITEM_PSIBLAST",
+                "ITEM_PSIBLAST_SEEN",
+                "ITEM_PSIDOM",
+                "ITEM_PSIDOM_SEEN",
+                "ITEM_EGOWHIP",
+                "ITEM_EGOWHIP_SEEN",
+                "ITEM_ANTIWEB",
+                "ITEM_ANTIWEB_SEEN",
+                "ENCHANTMENT_IMMUNITY",
+                "CONTINGENCY_TRIGGERED",
+                "TIME_STOP",
+                "TURNING_TO_STONE",
+                "TRUE_STRIKE",
+                "PRIORITY_BREACH",
+                "PRIORITY_DISPEL",
+                "PRO_SPELLS_LEVEL_FIVE_MINUS",
+                "PRO_SPELLS_LEVEL_SIX_SEVEN_EIGHT",
+                "SPELL_PROTECTION"
+            ]
+        },
+        "RawSpell": {
+            "type": "object",
+            "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "file": {
                     "type": "string"
                 },
                 "stringRef": {
@@ -2195,18 +3025,143 @@
                 "spellLevel": {
                     "type": "number"
                 },
-                "ability": {
-                    "$ref": "#/definitions/RawSpellAbility"
+                "type": {
+                    "$ref": "#/definitions/RawItemAbilityType"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawItemAbilityTarget"
+                },
+                "location": {
+                    "$ref": "#/definitions/RawItemAbilityLocation"
+                },
+                "projectile": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSpellFlag"
+                    }
+                },
+                "effects": {
+                    "type": "object",
+                    "properties": {
+                        "armorClassBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ArmorClassBonusEffect"
+                            }
+                        },
+                        "castSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CastSpellEffect"
+                            }
+                        },
+                        "damage": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DamageEffect"
+                            }
+                        },
+                        "dexterityBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DexterityBonusEffect"
+                            }
+                        },
+                        "displayPortraitIcon": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DisplayPortraitIconEffect"
+                            }
+                        },
+                        "displayString": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DisplayStringEffect"
+                            }
+                        },
+                        "lightingEffects": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/LightingEffectsEffect"
+                            }
+                        },
+                        "movementRateBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MovementRateBonusEffect"
+                            }
+                        },
+                        "movementRateBonus2": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MovementRateBonus2Effect"
+                            }
+                        },
+                        "playSound": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PlaySoundEffect"
+                            }
+                        },
+                        "playVisualEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PlayVisualEffect"
+                            }
+                        },
+                        "protectionFromSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromSpellEffect"
+                            }
+                        },
+                        "protectionFromDisplaySpecificString": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
+                            }
+                        },
+                        "removeSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RemoveSpellEffect"
+                            }
+                        },
+                        "scriptingStateModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ScriptingStateModifierEffect"
+                            }
+                        },
+                        "setExtendedSpellStateEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SetExtendedSpellStateEffect"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
                 }
             },
             "required": [
-                "spellFile",
                 "name",
+                "file",
                 "stringRef",
                 "description",
                 "memorizedCount",
                 "spellType",
-                "ability"
+                "type",
+                "range",
+                "speed"
             ],
             "additionalProperties": false
         },
@@ -2238,125 +3193,6 @@
                 "Disabling",
                 "Combination"
             ]
-        },
-        "RawSpellAbility": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "$ref": "#/definitions/RawItemAbilityType"
-                },
-                "range": {
-                    "type": "number"
-                },
-                "speed": {
-                    "type": "number"
-                },
-                "target": {
-                    "$ref": "#/definitions/RawItemAbilityTarget"
-                },
-                "location": {
-                    "$ref": "#/definitions/RawItemAbilityLocation"
-                },
-                "projectile": {
-                    "type": "number"
-                },
-                "flags": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawSpellFlag"
-                    }
-                },
-                "effects": {
-                    "type": "object",
-                    "properties": {
-                        "armorClassBonus": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawArmorClassBonusEffect"
-                            }
-                        },
-                        "castSpell": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawCastSpellEffect"
-                            }
-                        },
-                        "damage": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawDamageEffect"
-                            }
-                        },
-                        "dexterityBonus": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawDexterityBonusEffect"
-                            }
-                        },
-                        "displayPortraitIcon": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawDisplayPortraitIconEffect"
-                            }
-                        },
-                        "displayString": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawDisplayStringEffect"
-                            }
-                        },
-                        "lightingEffects": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawLightingEffectsEffect"
-                            }
-                        },
-                        "movementRateBonus": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawMovementRateBonusEffect"
-                            }
-                        },
-                        "movementRateBonus2": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawMovementRateBonus2Effect"
-                            }
-                        },
-                        "playSound": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawPlaySoundEffect"
-                            }
-                        },
-                        "playVisualEffect": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawPlayVisualEffect"
-                            }
-                        },
-                        "protectionFromSpell": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawProtectionFromSpellEffect"
-                            }
-                        },
-                        "removeSpell": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawRemoveSpellEffect"
-                            }
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            },
-            "required": [
-                "type",
-                "range",
-                "speed"
-            ],
-            "additionalProperties": false
         },
         "RawSpellFlag": {
             "type": "string",
@@ -2561,266 +3397,6 @@
                 "NOTEVIL"
             ]
         },
-        "Trigger": {
-            "type": "object",
-            "properties": {
-                "params": {
-                    "type": "array",
-                    "items": {
-                        "type": [
-                            "string",
-                            "number"
-                        ]
-                    }
-                },
-                "name": {
-                    "$ref": "#/definitions/TriggerType"
-                },
-                "negation": {
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "name"
-            ],
-            "additionalProperties": false
-        },
-        "TriggerType": {
-            "type": "string",
-            "enum": [
-                "HaveSpell",
-                "HaveSpellRES",
-                "HaveAnySpells",
-                "SpellCast",
-                "SpellCastRES",
-                "SpellCastOnMe",
-                "SpellCastOnMeRES",
-                "SpellCastPriest",
-                "SpellCastPriestRES",
-                "SpellCastInnate",
-                "SpellCastInnateRES",
-                "HaveKnownSpell",
-                "HaveKnownSpellRES",
-                "HasWeaponEquiped",
-                "HasItem",
-                "HasItemType",
-                "NumItems",
-                "NumItemsGT",
-                "NumItemsLT",
-                "NumItemsParty",
-                "NumItemsPartyGT",
-                "NumItemsPartyLT",
-                "HasItemEquiped",
-                "HasItemSlot",
-                "CheckItemSlot",
-                "CurrentAmmo",
-                "Global",
-                "GlobalGT",
-                "GlobalLT",
-                "GlobalsEqual",
-                "GlobalsGT",
-                "GlobalsLT",
-                "LocalsEqual",
-                "LocalsGT",
-                "LocalsLT",
-                "GlobalTimerExpired",
-                "GlobalTimerNotExpired",
-                "TimerExpired",
-                "RealGlobalTimerExact",
-                "RealGlobalTimerExpired",
-                "RealGlobalTimerNotExpired",
-                "HP",
-                "HPGT",
-                "HPLT",
-                "HPPercent",
-                "HPPercentLT",
-                "HPPercentGT",
-                "OnCreation",
-                "ActuallyInCombat",
-                "CombatCounter",
-                "CombatCounterLT",
-                "CombatCounterGT",
-                "AttackedBy",
-                "HitBy",
-                "TookDamage",
-                "DamageTaken",
-                "DamageTakenGT",
-                "DamageTakenLT",
-                "Help",
-                "Heard",
-                "InWeaponRange",
-                "CanEquipRanged",
-                "IsWeaponRanged",
-                "WeaponEffectiveVs",
-                "WeaponCanDamage",
-                "Level",
-                "LevelGT",
-                "LevelLT",
-                "ClassLevel",
-                "ClassLevelGT",
-                "ClassLevelLT",
-                "LOS",
-                "Exists",
-                "See",
-                "Detect",
-                "BecameVisible",
-                "Range",
-                "TargetUnreachable",
-                "NumCreature",
-                "NumCreatureLT",
-                "NumCreatureGT",
-                "NumCreatureVsParty",
-                "NumInParty",
-                "NumInPartyGT",
-                "NumInPartyLT",
-                "NumInPartyAlive",
-                "NumInPartyAliveGT",
-                "NumInPartyAliveLT",
-                "Killed",
-                "Die",
-                "Died",
-                "Dead",
-                "CheckStat",
-                "CheckStatGT",
-                "CheckStatLT",
-                "StateCheck",
-                "NotStateCheck",
-                "ExtendedStateCheck",
-                "CheckSpellState",
-                "Alignment",
-                "Allegiance",
-                "General",
-                "Race",
-                "Gender",
-                "Class",
-                "OriginalClass",
-                "Kit",
-                "Morale",
-                "MoraleGT",
-                "MoraleLT",
-                "Name",
-                "HasBounceEffects",
-                "HasImmunityEffects",
-                "ImmuneToSpellLevel",
-                "CanTurn",
-                "TurnedBy",
-                "AreaType",
-                "InMyArea",
-                "InMyGroup",
-                "InParty",
-                "True",
-                "False",
-                "ActionListEmpty",
-                "Delay",
-                "ReceivedOrder",
-                "RandomNum",
-                "RandomNumGT",
-                "RandomNumLT",
-                "IsActive"
-            ]
-        },
-        "Action": {
-            "type": "object",
-            "properties": {
-                "params": {
-                    "type": "array",
-                    "items": {
-                        "type": [
-                            "string",
-                            "number"
-                        ]
-                    }
-                },
-                "name": {
-                    "$ref": "#/definitions/ActionType"
-                }
-            },
-            "required": [
-                "name"
-            ],
-            "additionalProperties": false
-        },
-        "ActionType": {
-            "type": "string",
-            "enum": [
-                "Attack",
-                "AttackOneRound",
-                "AttackReevaluate",
-                "Enemy",
-                "Ally",
-                "ChangeEnemyAlly",
-                "MoveToObject",
-                "MoveToObjectFollow",
-                "RunAwayFrom",
-                "RunAwayFromNoInterruptNoLeaveArea",
-                "RunAwayFromNoLeaveArea",
-                "RunAwayFromNoInterrupt",
-                "RandomWalk",
-                "RandomWalkTime",
-                "RandomWalkContinuousTime",
-                "RandomWalkContinuous",
-                "SetGlobal",
-                "AddGlobals",
-                "IncrementGlobal",
-                "StartTimer",
-                "SetGlobalTimer",
-                "Spell",
-                "SpellRES",
-                "SpellPoint",
-                "SpellPointRES",
-                "ForceSpell",
-                "ForceSpellRES",
-                "ForceSpellPoint",
-                "ForceSpellPointRES",
-                "ForceSpellRange",
-                "ForceSpellRangeRES",
-                "ForceSpellPointRange",
-                "ForceSpellPointRangeRES",
-                "SpellNoDec",
-                "SpellNoDecRES",
-                "SpellPointNoDec",
-                "SpellPointNoDecRES",
-                "ReallyForceSpellPoint",
-                "ReallyForceSpellPointRES",
-                "ReallyForceSpell",
-                "ReallyForceSpellRES",
-                "ApplySpell",
-                "ApplySpellRES",
-                "RemoveSpell",
-                "RemoveSpellRES",
-                "ReallyForceSpellDead",
-                "ReallyForceSpellDeadRES",
-                "EquipItem",
-                "UseItem",
-                "SelectWeaponAbility",
-                "EquipMostDamagingMelee",
-                "EquipRanged",
-                "GiveOrder",
-                "Help",
-                "Hide",
-                "Panic",
-                "Turn",
-                "Rest",
-                "Shout",
-                "DestroySelf",
-                "Kill",
-                "DisplayString",
-                "ChangeClass",
-                "ChangeAnimation",
-                "GlobalShout",
-                "Calm",
-                "DisplayStringHead",
-                "AddKit",
-                "ApplyDamage",
-                "ApplyDamagePercent",
-                "NoAction",
-                "ClearActions",
-                "Continue",
-                "Wait",
-                "SmallWait",
-                "SetInterrupt"
-            ]
-        },
         "RawCreatureAutoGenerate": {
             "type": "object",
             "properties": {
@@ -2838,87 +3414,6 @@
                 "thac0",
                 "hitPoints",
                 "savingThrows"
-            ],
-            "additionalProperties": false
-        },
-        "Statements": {
-            "type": "object",
-            "properties": {
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ConditionalStatement"
-                    }
-                }
-            },
-            "required": [
-                "list"
-            ],
-            "additionalProperties": false
-        },
-        "ConditionalStatement": {
-            "type": "object",
-            "properties": {
-                "comment": {
-                    "type": "string"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/Trigger"
-                            },
-                            {
-                                "$ref": "#/definitions/OrTrigger"
-                            }
-                        ]
-                    }
-                },
-                "responses": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Response"
-                    }
-                }
-            },
-            "required": [
-                "triggers",
-                "responses"
-            ],
-            "additionalProperties": false
-        },
-        "OrTrigger": {
-            "type": "object",
-            "properties": {
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Trigger"
-                    }
-                }
-            },
-            "required": [
-                "triggers"
-            ],
-            "additionalProperties": false
-        },
-        "Response": {
-            "type": "object",
-            "properties": {
-                "weight": {
-                    "type": "number"
-                },
-                "actions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Action"
-                    }
-                }
-            },
-            "required": [
-                "weight",
-                "actions"
             ],
             "additionalProperties": false
         }

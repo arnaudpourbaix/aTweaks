@@ -11,7 +11,8 @@ AUTHOR "Wisp, shsforums.net"
 VERSION ~v4.53~
 
 ALWAYS
-    INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common functions used by many mods
+    INCLUDE "%MOD_FOLDER%/lib/common/core_functions.tpa"         // Common functions used by many mods
+    INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common aTweaks functions
     INCLUDE ~%MOD_FOLDER%/lib/common/regexp.tph~                 // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
     INCLUDE ~%MOD_FOLDER%/lib/common/iwd1fix.tpa~                // fix some IDS file issues with IWD1 to ensure proper script compiling
     INCLUDE "%MOD_FOLDER%/lib/common/comp_vars.tpa"              // Game engines stuff
@@ -193,6 +194,8 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 BEGIN @1000 DESIGNATED 4000
 // GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 
 

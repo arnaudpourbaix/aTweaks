@@ -4,323 +4,239 @@
     "smart": false,
     "tracking": true,
     "combatWalk": true,
-    "attacks": [
+    "data": {
+        "level1": 8,
+        "strength": 21,
+        "dexterity": 10,
+        "constitution": 17,
+        "intelligence": 1,
+        "wisdom": 13,
+        "charisma": 6,
+        "movement": 12,
+        "ac": 2,
+        "apr": 1,
+        "xpv": 975,
+        "alignment": "NEUTRAL",
+        "morale": 9,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "ANKHEG",
+        "class": "ANKHEG",
+        "gender": "NIETHER"
+    },
+    "abilities": [
         {
-            "weaponSlot": "SLOT_WEAPON",
-            "duration": 45
+            "name": "Acidic Enzymes",
+            "isTargetSpell": false,
+            "triggers": [
+                {
+                    "name": "HPPercentLT",
+                    "params": [
+                        "Myself",
+                        50
+                    ]
+                },
+                {
+                    "name": "HaveSpellRES",
+                    "params": [
+                        "ja#m1"
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "name": "SelectWeaponAbility",
+                    "params": [
+                        "SLOT_WEAPON1",
+                        "0"
+                    ]
+                },
+                {
+                    "name": "AttackOneRound",
+                    "params": [
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "target": "NearestEnemyOf",
+            "range": 30
         }
     ],
-    "creature": {
-        "data": {
-            "level1": 8,
-            "strength": 21,
-            "dexterity": 10,
-            "constitution": 17,
-            "intelligence": 1,
-            "wisdom": 13,
-            "charisma": 6,
-            "movement": 12,
-            "ac": 2,
-            "apr": 1,
-            "xpv": 975,
-            "alignment": "NEUTRAL",
-            "morale": 9,
-            "moraleBreak": 4,
-            "moraleRecovery": 15,
-            "general": "MONSTER",
-            "race": "ANKHEG",
-            "class": "ANKHEG",
-            "gender": "NIETHER"
-        },
-        "abilities": [
-            {
-                "name": "Acidic Enzymes",
-                "isTargetSpell": false,
-                "triggers": [
+    "removeItems": [
+        "ANKHEG1",
+        "ANKHEG2"
+    ],
+    "weapon1": {
+        "file": "ja#m1w1",
+        "enchantment": 0,
+        "type": "Melee",
+        "range": 1,
+        "diceThrown": 3,
+        "diceSize": 6,
+        "damageType": "Crushing",
+        "speed": 3,
+        "flags": [
+            "AddStrengthBonus"
+        ],
+        "effects": {
+            "castSpell": [
+                {
+                    "type": "CastInstantlyAtCasterLevel",
+                    "resource": "ja#m1s1"
+                }
+            ]
+        }
+    },
+    "weapon2": {
+        "file": "ja#m1w2",
+        "enchantment": 0,
+        "type": "Ranged",
+        "range": 30,
+        "speed": 3,
+        "bonusToHit": 20,
+        "projectile": 108,
+        "effects": {
+            "castSpell": [
+                {
+                    "type": "CastInstantlyAtCasterLevel",
+                    "resource": "ja#m1s2"
+                }
+            ],
+            "removeSpell": [
+                {
+                    "target": "Self",
+                    "resource": "ja#m1s2"
+                }
+            ]
+        }
+    },
+    "attacks": [
+        {
+            "weaponSlot": "SLOT_WEAPON"
+        }
+    ],
+    "grab": {
+        "file": "ja#m1s3",
+        "probability": 90,
+        "weapon": "1"
+    },
+    "spells": [
+        {
+            "name": "Acidic digestive enzymes",
+            "stringRef": 4001,
+            "description": "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
+            "file": "ja#m1s1",
+            "spellType": "Innate",
+            "secondaryType": "OffensiveDamage",
+            "memorizedCount": 1,
+            "type": "Melee",
+            "range": 5,
+            "speed": 0,
+            "effects": {
+                "protectionFromSpell": [
                     {
-                        "name": "HPPercentLT",
-                        "params": [
-                            "Myself",
-                            50
-                        ]
+                        "resource": "ja#m1s1",
+                        "duration": 24,
+                        "timing": "InstantLimited"
+                    }
+                ],
+                "displayPortraitIcon": [
+                    {
+                        "icon": "Acid",
+                        "duration": 24
+                    }
+                ],
+                "damage": [
+                    {
+                        "damageType": "Acid",
+                        "diceThrown": 1,
+                        "diceSize": 4
                     },
                     {
-                        "name": "HaveSpellRES",
-                        "params": [
-                            "ja#m1"
-                        ]
-                    }
-                ],
-                "actions": [
-                    {
-                        "name": "SelectWeaponAbility",
-                        "params": [
-                            "SLOT_WEAPON1",
-                            "0"
-                        ]
+                        "timing": "DelayPermanent",
+                        "duration": 6,
+                        "damageType": "Acid",
+                        "diceThrown": 1,
+                        "diceSize": 4
                     },
                     {
-                        "name": "AttackOneRound",
-                        "params": [
-                            "LastSeenBy"
-                        ]
+                        "timing": "DelayPermanent",
+                        "duration": 12,
+                        "damageType": "Acid",
+                        "diceThrown": 1,
+                        "diceSize": 4
+                    },
+                    {
+                        "timing": "DelayPermanent",
+                        "duration": 18,
+                        "damageType": "Acid",
+                        "diceThrown": 1,
+                        "diceSize": 4
                     }
-                ],
-                "target": "NearestEnemyOf",
-                "range": 30
-            }
-        ],
-        "removeItems": [
-            "ANKHEG1",
-            "ANKHEG2"
-        ],
-        "weapon1": {
-            "itemFile": "ja#m1w1",
-            "enchantment": 0,
-            "ability": {
-                "type": "Melee",
-                "range": 1,
-                "diceThrown": 3,
-                "diceSize": 2,
-                "damageType": "Crushing",
-                "speed": 3,
-                "flags": [],
-                "effects": {
-                    "castSpell": [
-                        {
-                            "type": "CastInstantlyAtCasterLevel",
-                            "resource": "ja#m1s1"
-                        },
-                        {
-                            "type": "CastInstantlyAtCasterLevel",
-                            "probability1": 80,
-                            "resource": "ja#grab"
-                        }
-                    ]
-                }
+                ]
             }
         },
-        "weapon2": {
-            "itemFile": "ja#m1w2",
-            "enchantment": 0,
-            "ability": {
-                "type": "Ranged",
-                "range": 30,
-                "speed": 3,
-                "bonusToHit": 20,
-                "projectile": 108,
-                "effects": {
-                    "castSpell": [
-                        {
-                            "type": "CastInstantlyAtCasterLevel",
-                            "resource": "ja#m1s2"
-                        }
-                    ],
-                    "removeSpell": [
-                        {
-                            "target": "Self",
-                            "resource": "ja#m1s2"
-                        }
-                    ]
-                }
+        {
+            "name": "Stream of acidic enzymes",
+            "stringRef": 4000,
+            "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
+            "file": "ja#m1s2",
+            "spellType": "Innate",
+            "secondaryType": "OffensiveDamage",
+            "memorizedCount": 1,
+            "type": "Ranged",
+            "range": 30,
+            "speed": 3,
+            "projectile": 108,
+            "effects": {
+                "damage": [
+                    {
+                        "damageType": "Acid",
+                        "diceThrown": 8,
+                        "diceSize": 4,
+                        "saveTypes": [
+                            "ParalyzePoisonDeath"
+                        ],
+                        "flags": [
+                            "SaveForHalf"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "files": [
+        "ANKHEG",
+        "ANKHEGF",
+        "ANKHEGG",
+        "ANKHEGQ",
+        "ANKHEG01",
+        "bdankh01",
+        "bdankheg",
+        "bdankhsu",
+        "BDNEO",
+        "BPANKHE1",
+        "wiankhe1"
+    ],
+    "removeScripts": [
+        "ANKHEG"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "bdankh01"
+            ],
+            "data": {
+                "level1": 10,
+                "xpv": 1400
             }
         },
-        "spells": [
-            {
-                "name": "Acidic digestive enzymes",
-                "stringRef": 4001,
-                "description": "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 3 rounds).",
-                "spellFile": "ja#m1s1",
-                "spellType": "Innate",
-                "secondaryType": "OffensiveDamage",
-                "memorizedCount": 1,
-                "ability": {
-                    "type": "Melee",
-                    "range": 5,
-                    "speed": 0,
-                    "effects": {
-                        "protectionFromSpell": [
-                            {
-                                "resource": "ja#m1s1",
-                                "duration": 18,
-                                "timing": "InstantLimited"
-                            }
-                        ],
-                        "displayPortraitIcon": [
-                            {
-                                "icon": "Acid",
-                                "duration": 18
-                            }
-                        ],
-                        "damage": [
-                            {
-                                "damageType": "Acid",
-                                "diceThrown": 1,
-                                "diceSize": 4
-                            },
-                            {
-                                "timing": "DelayPermanent",
-                                "duration": 6,
-                                "damageType": "Acid",
-                                "diceThrown": 1,
-                                "diceSize": 4
-                            },
-                            {
-                                "timing": "DelayPermanent",
-                                "duration": 12,
-                                "damageType": "Acid",
-                                "diceThrown": 1,
-                                "diceSize": 4
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "name": "Stream of acidic enzymes",
-                "stringRef": 4000,
-                "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
-                "spellFile": "ja#m1s2",
-                "spellType": "Innate",
-                "secondaryType": "OffensiveDamage",
-                "memorizedCount": 1,
-                "ability": {
-                    "type": "Ranged",
-                    "range": 30,
-                    "speed": 3,
-                    "projectile": 108,
-                    "effects": {
-                        "damage": [
-                            {
-                                "damageType": "Acid",
-                                "diceThrown": 8,
-                                "diceSize": 4,
-                                "saveTypes": [
-                                    "ParalyzePoisonDeath"
-                                ],
-                                "flags": [
-                                    "SaveForHalf"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "name": "Grab",
-                "stringRef": 684,
-                "description": "",
-                "spellFile": "ja#grab",
-                "spellType": "Innate",
-                "secondaryType": "Disabling",
-                "memorizedCount": 1,
-                "ability": {
-                    "type": "Melee",
-                    "range": 5,
-                    "speed": 0,
-                    "effects": {
-                        "displayString": [
-                            {
-                                "stringRef": 4002,
-                                "timing": "InstantPermanentUntilDeath"
-                            }
-                        ],
-                        "movementRateBonus2": [
-                            {
-                                "modifierType": "Set",
-                                "value": 0,
-                                "duration": 12
-                            }
-                        ],
-                        "playSound": [
-                            {
-                                "timing": "InstantPermanentUntilDeath",
-                                "resource": "CRE_P01"
-                            },
-                            {
-                                "timing": "DelayPermanent",
-                                "duration": 12,
-                                "resource": "EFF_M22A"
-                            }
-                        ],
-                        "playVisualEffect": [
-                            {
-                                "playWhere": "OverTargetAttached",
-                                "resource": "rr#cnstr",
-                                "duration": 12
-                            }
-                        ],
-                        "displayPortraitIcon": [
-                            {
-                                "icon": "Entangled",
-                                "duration": 12
-                            }
-                        ],
-                        "dexterityBonus": [
-                            {
-                                "value": 8,
-                                "modifierType": "Set",
-                                "duration": 12
-                            }
-                        ],
-                        "damage": [
-                            {
-                                "damageType": "Crushing",
-                                "diceThrown": 2,
-                                "diceSize": 4,
-                                "timing": "DelayPermanent",
-                                "duration": 6
-                            },
-                            {
-                                "damageType": "Crushing",
-                                "diceThrown": 2,
-                                "diceSize": 4,
-                                "timing": "DelayPermanent",
-                                "duration": 12
-                            }
-                        ],
-                        "protectionFromSpell": [
-                            {
-                                "resource": "ja#grab",
-                                "duration": 12
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
-        "files": [
-            "ANKHEG",
-            "ANKHEGF",
-            "ANKHEGG",
-            "ANKHEGQ",
-            "ANKHEG01",
-            "bdankh01",
-            "bdankheg",
-            "bdankhsu",
-            "BDNEO",
-            "BPANKHE1",
-            "wiankhe1"
-        ],
-        "removeScripts": [
-            "ANKHEG"
-        ],
-        "adjustments": [
-            {
-                "files": [
-                    "bdankh01"
-                ],
-                "data": {
-                    "level1": 10,
-                    "xpv": 1400
-                }
-            },
-            {
-                "files": [
-                    "bdankhsu"
-                ],
-                "summon": true
-            }
-        ]
-    }
+        {
+            "files": [
+                "bdankhsu"
+            ],
+            "summon": true
+        }
+    ]
 }

@@ -1,0 +1,642 @@
+// Tightly based on Nythrun's ~fj_spl_itm_reindex~ patch 
+DEFINE_PATCH_FUNCTION FJ_SPL_ITM_REINDEX BEGIN
+  PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.spl~) BEGIN
+    hs = 0x28
+    WRITE_LONG 0xc ~-1~   //Identified name
+    WRITE_LONG 0x54 ~-1~  //Identified description
+    PATCH_FOR_EACH tz IN 0x44 0x48 0x58 0x5c BEGIN
+      WRITE_LONG tz 0
+    END
+  END ELSE PATCH_IF !(~%SOURCE_FILE%~ STRING_MATCHES_REGEXP ~^.+\.itm~) BEGIN
+    hs = 0x38
+  END
+  READ_LONG 0x64 hf     //Extended header offset
+  READ_SHORT 0x68 hc    //Extended header count
+  READ_LONG 0x6a fb     //Feature block table offset
+  READ_SHORT 0x70 fc    //Feature block count
+  PATCH_IF ((hf > fb) AND (hc > 0)) BEGIN
+    READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+    PATCH_IF (~%eh%~ STRING_EQUAL ~fail~) BEGIN
+      WHILE ((~%eh%~ STRING_EQUAL ~fail~) AND (hc > 0)) BEGIN
+        READ_ASCII hf ~eh~ ELSE ~fail~ (hs * hc)
+        hc -= 1
+      END
+    END
+    DELETE_BYTES hf (hs * hc)
+    hf = 0x72
+    WRITE_LONG 0x64 hf
+    WRITE_SHORT 0x68 hc
+    fb = (0x72 + (hs * hc))
+    WRITE_LONG 0x6a fb
+    PATCH_IF !(~%eh%~ STRING_EQUAL ~fail~) BEGIN
+      INSERT_BYTES hf (hs * hc)
+      WRITE_ASCIIE hf ~%eh%~
+    END
+  END ELSE PATCH_IF ((hf != 0x72) AND (hc = 0)) BEGIN
+    hf = 0x72
+    WRITE_LONG 0x64 hf
+  END
+  FOR (i1 = 0; i1 < (hs * hc); i1 += hs) BEGIN
+    WRITE_SHORT (hf + i1 + 0x20) fc
+    READ_SHORT (hf + i1 + 0x1e) cx
+    fc += cx
+  END
+  PATCH_IF (SOURCE_SIZE > (0x72 + (hs * hc) + (0x30 * fc))) BEGIN
+    DELETE_BYTES (0x72 + (hs * hc) + (0x30 * fc)) (SOURCE_SIZE - (0x72 + (hs * hc) + (0x30 * fc)))
+  END
+  // added by Ardanis
+  WRITE_SHORT 0x6e 0
+END
+
+/**
+ * Adds a new entry to a specified IDS file and returns its IDS value.
+ * 
+ * INT_VAR minValue       Minimum IDS value to consider. (Default: 0)
+ * INT_VAR maxValue       Maximum IDS value to consider. (Default: 255)
+ * INT_VAR preferredValue Try this IDS value first if available. (Default: unset)
+ * INT_VAR hexadecimal    Set to nonzero to add IDS value in hexadecimal notation. (Default: 0)
+ * STR_VAR idsFile        The IDS file to add the entry to.
+ * STR_VAR identifier     The identifier name for the IDS value. Must not contain whitespace.
+ * RET value              The IDS value if entry has been added successfully. -1 if entry could not be added.
+ */
+DEFINE_ACTION_FUNCTION ADD_IDS_ENTRY
+INT_VAR
+  minValue        = 0
+  maxValue        = 255
+  preferredValue  = "-1"
+  hexadecimal     = 0
+STR_VAR
+  idsFile         = ""
+  identifier      = ""
+RET
+  value
+BEGIN
+  OUTER_SET value = "-1"
+
+  ACTION_IF (minValue < 0) BEGIN OUTER_SET minValue = 0 END
+  ACTION_IF (maxValue < minValue) BEGIN OUTER_SET maxValue = minValue END
+
+  ACTION_IF (~%idsFile%~ STRING_MATCHES_REGEXP ~.+\..+~ = 0) BEGIN
+    OUTER_PATCH_SAVE idsFile ~%idsFile%~ BEGIN REPLACE_TEXTUALLY ~\(.+\)\.[^.]+~ ~\1~ END
+  END
+
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%idsFile%.ids~) BEGIN
+    // Try preferred value first
+    OUTER_PATCH ~~ BEGIN
+      PATCH_IF (preferredValue >= minValue AND preferredValue <= maxValue) BEGIN
+        LOOKUP_IDS_SYMBOL_OF_INT retVal ~%idsFile%~ preferredValue
+        PATCH_IF (~%retVal%~ STRING_EQUAL ~%preferredValue%~) BEGIN
+          SET value = preferredValue
+        END
+      END
+    END
+    
+    // Looking for available IDS slot
+    ACTION_IF (value = "-1") BEGIN
+      OUTER_PATCH ~~ BEGIN
+        FOR (v = minValue; v <= maxValue; v += 1) BEGIN
+          LOOKUP_IDS_SYMBOL_OF_INT retVal ~%idsFile%~ v
+          PATCH_IF (~%retVal%~ STRING_EQUAL ~%v%~) BEGIN
+            SET value = v
+            SET v = maxValue + 1
+          END
+        END
+      END
+    END
+
+    // Falling back to preferred value if no free slot found
+    ACTION_IF (value = "-1" AND preferredValue >= minValue AND preferredValue <= maxValue) BEGIN
+      OUTER_SET value = preferredValue
+    END
+
+    // Adding new entry
+    ACTION_IF (value != "-1") BEGIN
+      ACTION_IF (hexadecimal) BEGIN
+        LAF TO_HEX_NUMBER INT_VAR value = value RET hexNumber END
+        OUTER_TEXT_SPRINT idsValue ~0x%hexNumber%~
+      END ELSE BEGIN
+        OUTER_TEXT_SPRINT idsValue ~%value%~
+      END
+
+      APPEND ~%idsFile%.ids~ ~%idsValue% %identifier%~ UNLESS ~%identifier%~
+      OUTER_SET value = IDS_OF_SYMBOL (~%idsFile%~ ~%identifier%~)
+      ACTION_IF (value < minValue OR value > maxValue) BEGIN
+        OUTER_SET value = "-1"
+      END
+    END
+  END
+END
+
+/**
+ * Converts any decimal number into a hexadecimal number
+ */
+DEFINE_ACTION_FUNCTION TO_HEX_NUMBER
+INT_VAR
+  value     = 0   // the decimal number
+  minDigits = 1   // min. number of digits in return value (not counting sign)
+  prefix    = 0   // whether to return number with "0x" prefix
+RET
+  hexNumber       // returned as string without prefix
+BEGIN
+  ACTION_IF (minDigits < 1) BEGIN OUTER_SET minDigits = 1 END
+  ACTION_IF (minDigits > 8) BEGIN OUTER_SET minDigits = 8 END
+  OUTER_TEXT_SPRINT hexNumber ~~
+  ACTION_DEFINE_ARRAY digit BEGIN ~0~ ~1~ ~2~ ~3~ ~4~ ~5~ ~6~ ~7~ ~8~ ~9~ ~a~ ~b~ ~c~ ~d~ ~e~ ~f~ END
+
+  ACTION_IF (value < 0) BEGIN
+    OUTER_SET signed = 1
+    OUTER_SET value = 0 - value
+  END ELSE BEGIN
+    OUTER_SET signed = 0
+  END
+
+  OUTER_WHILE (value != 0) BEGIN
+    OUTER_SET curDigit = value BAND 0xf
+    OUTER_SET value = value BLSR 4
+    OUTER_TEXT_SPRINT hexDigit $EVAL digit(~%curDigit%~)
+    OUTER_TEXT_SPRINT hexNumber ~%hexDigit%%hexNumber%~
+  END
+
+  OUTER_WHILE (STRING_LENGTH ~%hexNumber%~ < minDigits) BEGIN
+    OUTER_TEXT_SPRINT hexNumber ~0%hexNumber%~
+  END
+
+  ACTION_IF (prefix) BEGIN
+    OUTER_TEXT_SPRINT hexNumber ~0x%hexNumber%~
+  END
+
+  ACTION_IF (signed) BEGIN
+    OUTER_TEXT_SPRINT hexNumber ~-%hexNumber%~
+  END
+END
+
+DEFINE_PATCH_FUNCTION STRING_TO_ARRAY
+STR_VAR
+  string = ""     // string with space separator
+RET_ARRAY array
+BEGIN
+  CLEAR_ARRAY array
+  SET i=0
+  INNER_PATCH ~%string%~ BEGIN
+    REPLACE_EVALUATE ~[^ %TAB%]+~ BEGIN
+      SPRINT $array("%i%") "%MATCH0%"
+      i+=1
+    END ~%MATCH0%~
+  END    
+END
+
+
+DEFINE_PATCH_FUNCTION ADD_EFFECT
+  // insert variables
+  INT_VAR header              = 0
+		  insert_point	      = "-1"
+		  global		  = 0
+  // everything from below here just copied from the CLONE_EFFECT var block
+
+  // variables for the new effect
+          opcode              = 0 // force opcode, so as to change our dummy value to zero
+          target              = "-1"
+          power               = "-1"
+          parameter1          = "-11"
+          parameter2          = "-11"
+          timing              = "-1"
+          resist_dispel       = "-1"
+          duration            = "-1"
+          duration_high       = "-1"
+          probability1        = 100
+          probability2        = "-1"
+          dicenumber          = "-1"
+          dicesize            = "-1"
+          savingthrow         = "-1"
+          savebonus           = "-11"
+          special             = "-1"
+          
+  // DavidW's additional variables for the new effect
+  
+          save_vs_spell       = "-1"
+          save_vs_breath      = "-1"
+          save_vs_poison      = "-1"
+          save_vs_wand        = "-1"
+          save_vs_polymorph   = "-1"
+          ignore_primary      = "-1"
+          ignore_secondary    = "-1"
+          bypass_mirror_image = "-1"
+          ignore_difficulty   = "-1"
+          drain_hp_to_caster  = "-1"
+          transfer_hp_to_target = "-1"
+          fist_damage_only    = "-1"
+          drain_to_max_hp     = "-1"
+          suppress_feedback   = "-1"
+          save_for_half       = "-1"
+          made_save           = "-1"
+          does_not_wake       = "-1"
+
+  // same for match and new STR_VAR
+  STR_VAR resource            = "SAME"
+          
+  // DavidW's additional functional variables
+
+          function            = ""
+
+BEGIN  
+	check_globals=global
+	check_headers=!global
+
+	//  get parameters (from CamDawg's code)
+  SET new_fx = 0
+  READ_ASCII 0 sig ELSE "fail" (4)
+  READ_ASCII 0x04 version (4)
+  PATCH_MATCH "%sig%" WITH
+    "SPL "
+    BEGIN
+      PATCH_IF ("%version%" STRING_COMPARE_CASE "V2.0" = 0) BEGIN // iwd2, spl 2.0
+        SET min_size       = 0x82
+      END ELSE BEGIN
+        SET min_size       = 0x72
+      END
+      READ_LONG   0x6a fx_off   ELSE 0
+      SET counter_offset = 0x70
+      SET abil_length    = 0x28
+      SET fx_type        = 0
+      READ_LONG   0x64 abil_off ELSE 0
+      READ_SHORT  0x68 abil_num ELSE 0
+    END
+
+    "ITM "
+    BEGIN
+      PATCH_IF ("%version%" STRING_COMPARE_CASE "V1.1" = 0) BEGIN // pst, itm v1.1
+        SET min_size       = 0x9a
+      END ELSE BEGIN
+        SET min_size       = 0x72
+      END
+      READ_LONG   0x6a fx_off   ELSE 0
+      SET counter_offset = 0x70
+      SET abil_length    = 0x38
+      SET fx_type        = 0
+      READ_LONG   0x64 abil_off ELSE 0
+      READ_SHORT  0x68 abil_num ELSE 0
+    END
+
+    "CRE "
+    BEGIN
+      PATCH_IF ("%version%" STRING_COMPARE_CASE "V1.2" = 0) BEGIN // pst, cre v1.2
+        SET min_size       = 0x378
+        READ_LONG  0x368 fx_off
+        SET counter_offset = 0x36c
+      END ELSE
+      PATCH_IF ("%version%" STRING_COMPARE_CASE "V2.2" = 0) BEGIN // iwd2, cre v2.2
+        SET min_size       = 0x62e
+        READ_LONG  0x61e fx_off
+        SET counter_offset = 0x622
+      END ELSE
+      PATCH_IF ("%version%" STRING_COMPARE_CASE "V9.0" = 0) BEGIN // iwd, cre v9.0
+        SET min_size       = 0x33c
+        READ_LONG  0x32c fx_off
+        SET counter_offset = 0x330
+      END ELSE BEGIN                                               // everything else, cre v1.0
+        SET min_size = 0x2d4
+        READ_LONG  0x2c4 fx_off
+        SET counter_offset = 0x2c8
+      END
+      SET abil_off = 0 // basically prevents the ability effect loop
+      SET abil_num = 0
+      SET abil_length = 0
+      SET check_globals = 1
+      READ_BYTE 0x33 fx_type ELSE 2
+    END
+    "fail"
+    BEGIN
+      PATCH_FAIL "ERROR: ADD_EFFECT does not think %SOURCE_FILE% appears to be a valid file"
+    END
+    DEFAULT
+      SET min_size = "-1" // kill macro as the file type is not recognized
+      PATCH_FAIL "ERROR: ADD_EFFECT does not support file type %sig%"
+    END
+
+	fx_length=(0x30 + (0xd8 * fx_type))
+	delta=0
+	global_count=SHORT_AT counter_offset
+	// add the effect - global	
+	PATCH_IF check_globals BEGIN
+		PATCH_IF global_count<insert_point || insert_point<0 BEGIN
+			insert_point=global_count
+		END
+		INSERT_BYTES (fx_off + fx_length * insert_point) fx_length
+		WRITE_SHORT (fx_off + fx_length * insert_point) 21731
+		++global_count
+		++delta
+		WRITE_SHORT counter_offset global_count
+	END
+	
+	// add the effect - header
+	FOR (header_number=0;header_number<abil_num;++header_number) BEGIN
+		index=SHORT_AT (0x20 + abil_off + header_number*abil_length)
+		num_here=SHORT_AT (0x1e + abil_off + header_number*abil_length)
+		index +=delta
+		WRITE_SHORT (0x20 + abil_off + header_number*abil_length) index
+		PATCH_IF check_headers && (header = 0 || header_number + 1 = header) BEGIN
+			PATCH_IF num_here<insert_point || insert_point<0 BEGIN
+				insert_point_here=num_here
+			END ELSE BEGIN
+				insert_point_here=insert_point
+			END
+			insert_point_here +=index
+			INSERT_BYTES (fx_off + fx_length * insert_point_here) fx_length
+			WRITE_SHORT (fx_off + fx_length * insert_point_here) 21731
+			++delta
+			++num_here
+			WRITE_BYTE (0x1e + abil_off + header_number*abil_length) num_here
+		
+		
+		END	
+	END
+	// now the payload
+	LPF ALTER_EFFECT
+	INT_VAR
+		  match_opcode=21731
+  // variables for the new effect
+          opcode             
+          target             
+          power               
+          parameter1          
+          parameter2         
+          timing             
+          resist_dispel      
+          duration           
+          duration_high     
+          probability1      
+          probability2      
+          dicenumber        
+          dicesize          
+          savingthrow       
+          savebonus         
+          special           
+          
+  // DavidW's additional variables for the new effect
+  
+          save_vs_spell      
+          save_vs_breath     
+          save_vs_poison      
+          save_vs_wand        
+          save_vs_polymorph   
+          ignore_primary      
+          ignore_secondary   
+          bypass_mirror_image 
+          ignore_difficulty   
+          drain_hp_to_caster  
+          transfer_hp_to_target 
+          fist_damage_only    
+          drain_to_max_hp    
+          suppress_feedback   
+          save_for_half      
+          made_save           
+          does_not_wake     
+
+  // same for match and new STR_VAR
+  STR_VAR resource           
+          
+  // DavidW's additional functional variables
+
+          function           	
+    END
+END
+
+
+// Add an effect to a CRE, ITM, or SPL
+DEFINE_PATCH_FUNCTION ADD_EFFECT_CRE_ITM_SPL
+INT_VAR
+  opcode=0
+  parameter1=0
+  parameter2=0
+  parameter3=0
+  parameter4=0
+  power=0           // only apply to a SPL file
+  resist_dispel=0   // only apply to a SPL file
+  duration=0        // only apply to a SPL file
+STR_VAR
+  resource=""
+BEGIN
+  PATCH_MATCH "%SOURCE_EXT%" WITH
+    ~CRE~ BEGIN
+      LPF ADD_CRE_EFFECT INT_VAR target=1 timing=9 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
+    END
+    ~ITM~ BEGIN
+      LPF ADD_ITEM_EQEFFECT INT_VAR target=1 timing=2 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
+    END
+    ~SPL~ BEGIN
+      LPF ADD_SPELL_EFFECT INT_VAR target=2 opcode parameter1 parameter2 parameter3 parameter4 power resist_dispel duration STR_VAR resource END  
+    END
+  DEFAULT END
+END
+
+
+
+
+// Deletes all effects and extended headers from the source item or spell and inserts a new extended header of type f_Type (defaults to f_Type = 1), provided f_Type >= 0
+// if the source file is an item file and f_Type = 1, the function launches an auxilliary function to set up the basics of the melee header
+// FAILs if the source file is too small or doesn't have an ITM or SPL file extension
+DEFINE_PATCH_FUNCTION prep_itm_spl INT_VAR f_Type = 1 BEGIN
+  PATCH_IF SOURCE_SIZE > 0x71 AND ("%SOURCE_EXT%" STRING_EQUAL_CASE itm OR "%SOURCE_EXT%" STRING_EQUAL_CASE spl) BEGIN
+    al = "%SOURCE_EXT%" STRING_EQUAL_CASE spl ? 0x28 : 0x38
+    READ_LONG  0x64 ao
+    READ_SHORT 0x68 na
+    READ_LONG  0x6a eo
+    FOR (i = na - 1; i >= 0; --i) BEGIN
+      READ_SHORT ao + al*i + 0x1e ne
+      READ_SHORT ao + al*i + 0x20 ei
+      FOR (j = ne - 1; j >= 0; --j) BEGIN
+        DELETE_BYTES eo + 0x30*(ei + j) 0x30
+      END
+      DELETE_BYTES ao + al*i al
+      --na
+      eo -= al
+    END
+    READ_SHORT 0x70 ne
+    FOR (i=0;i<ne;++i) BEGIN
+      DELETE_BYTES eo + 0x30*i 0x30
+      --ne
+      --i
+    END
+    WRITE_SHORT 0x70 ne
+    PATCH_IF f_Type >= 0 BEGIN
+      INSERT_BYTES ao al
+      WRITE_BYTE ao f_Type
+      ++na
+      eo+=al
+    END
+    WRITE_SHORT 0x68 na
+    WRITE_LONG  0x6a eo
+    READ_ASCII 0x3a f_Icon
+    PATCH_IF f_Type = 1 AND al = 0x38 BEGIN
+      LPF configure_weapon_header STR_VAR f_Icon END
+    END
+  END ELSE BEGIN
+    PATCH_FAIL ~File %SOURCE_FILE% is below required size or of unrecognised type.~
+  END
+END
+
+
+DEFINE_PATCH_FUNCTION configure_header
+INT_VAR
+  f_Header = "-1"
+  f_TargetType = "-1"
+  f_Type = "-1"
+  f_Identify = "-1"
+  f_Slot = "-1"
+  f_Target = "-1"
+  f_Range = "-1"
+  f_Launcher = "-1"
+  f_Speed = "-1"
+  f_ToHit = "-1"
+  f_Damage = "-1"
+  f_NumDice = "-1"
+  f_DieSize = "-1"
+  f_DamageType = "-1"
+  f_Flags = "-1"
+  f_Charges = "-1"
+  f_Drained = "-1"
+  f_Projectile = "-1"
+  f_Overhand = "-1"
+  f_Backhand = "-1"
+  f_Thrust = "-1"
+  f_Arrow = "-1"
+  f_Bolt = "-1"
+  f_Bullet = "-1"
+STR_VAR
+  f_Icon = flEmpty
+BEGIN
+  READ_LONG  0x64 ao
+  FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+    READ_BYTE ao + 0x38*i type
+    PATCH_IF type = f_TargetType OR i = f_Header OR (f_Header < 0 AND f_TargetType < 0) BEGIN
+      WRITE_BYTE   ao + 0x38*i        f_Type < 0 ? THIS : f_Type
+      WRITE_BYTE   ao + 0x38*i + 0x2  f_Slot < 0 ? THIS : f_Slot
+      PATCH_IF "%f_Icon%" STRING_COMPARE flEmpty BEGIN
+        WRITE_ASCIIE ao + 0x38*i + 0x4  "%f_Icon%"
+      END
+      WRITE_BYTE   ao + 0x38*i + 0xc  f_Target < 0 ? THIS : f_Target
+      WRITE_SHORT  ao + 0x38*i + 0xe  f_Range < 0 ? THIS : f_Range
+      WRITE_BYTE   ao + 0x38*i + 0x12 f_Speed < 0 ? THIS : f_Speed
+      WRITE_SHORT  ao + 0x38*i + 0x14 f_ToHit < 0 ? THIS : f_ToHit
+      WRITE_BYTE   ao + 0x38*i + 0x16 f_DieSize < 0 ? THIS : f_DieSize
+      WRITE_BYTE   ao + 0x38*i + 0x18 f_NumDice < 0 ? THIS : f_NumDice
+      WRITE_SHORT  ao + 0x38*i + 0x1a f_Damage < 0 ? THIS : f_Damage
+      WRITE_SHORT  ao + 0x38*i + 0x1c f_DamageType < 0 ? THIS : f_DamageType
+      WRITE_SHORT  ao + 0x38*i + 0x22 f_Charges < 0 ? THIS : f_Charges
+      WRITE_SHORT  ao + 0x38*i + 0x24 f_Drained < 0 ? THIS : f_Drained
+      WRITE_LONG   ao + 0x38*i + 0x26 f_Flags < 0 ? THIS : f_Flags
+      WRITE_SHORT  ao + 0x38*i + 0x2a f_Projectile < 0 ? THIS : f_Projectile
+      WRITE_SHORT  ao + 0x38*i + 0x2c f_Overhand < 0 ? THIS : f_Overhand
+      WRITE_SHORT  ao + 0x38*i + 0x2e f_Backhand < 0 ? THIS : f_Backhand
+      WRITE_SHORT  ao + 0x38*i + 0x30 f_Thrust < 0 ? THIS : f_Thrust
+      WRITE_SHORT  ao + 0x38*i + 0x32 f_Arrow < 0 ? THIS : f_Arrow
+      WRITE_SHORT  ao + 0x38*i + 0x34 f_Bolt < 0 ? THIS : f_Bolt
+      WRITE_SHORT  ao + 0x38*i + 0x36 f_Bullet < 0 ? THIS : f_Bullet
+    END
+  END
+END
+
+
+// Writes to the more and less common fields of the item melee header
+DEFINE_PATCH_FUNCTION configure_weapon_header
+INT_VAR
+  f_Slot = 1
+  f_Target = 1
+  f_Range = 1
+  f_Speed = 0
+  f_ToHit = 0
+  f_Damage = 0
+  f_NumDice = 0
+  f_DieSize = 0
+  f_DamageType = 0
+  f_Flags = 1
+  f_Charges = 0
+  f_Drained = 1
+  f_Projectile = 1
+  f_Overhand = 34
+  f_Backhand = 33
+  f_Thrust = 33
+  f_Arrow = 0
+  f_Bolt = 0
+  f_Bullet = 0
+STR_VAR
+  f_Icon = ~~
+BEGIN
+  LPF configure_header
+    INT_VAR
+      f_TargetType = 1
+      f_Slot
+      f_Target
+      f_Range
+      f_Speed
+      f_ToHit
+      f_Damage
+      f_NumDice
+      f_DieSize
+      f_DamageType
+      f_Flags
+      f_Charges
+      f_Drained
+      f_Projectile
+      f_Overhand
+      f_Backhand
+      f_Thrust
+      f_Arrow
+      f_Bolt
+      f_Bullet
+    STR_VAR
+      f_Icon
+  END
+END
+
+
+// Creates copies of the first header up to f_FillLimit (default is 20 headers)
+DEFINE_PATCH_FUNCTION fill_headers INT_VAR f_FillLimit = 20 BEGIN
+  al = "%SOURCE_EXT%" STRING_EQUAL_CASE spl ? 0x28 : 0x38
+  READ_LONG   0x64 ao
+  READ_SHORT  0x68 na
+  READ_LONG   0x6a eo
+  READ_ASCII  ao ab_copy (al)
+  number = f_FillLimit - na
+  FOR (i=0;i<number;++i) BEGIN
+    INSERT_BYTES   ao + al*na al
+      WRITE_ASCIIE ao + al*na "%ab_copy%"
+    ++na
+    eo += al
+  END
+  WRITE_SHORT 0x68 na
+  WRITE_LONG  0x6a eo
+END
+
+
+// Writes to the more and less usual fields of the spell header (count starts at 1)
+// writes to all headers if f_Header < 0 (default)
+// Minimum level defaults to header number (starting from 1)
+DEFINE_PATCH_FUNCTION configure_spell_header 
+INT_VAR
+  f_Header = "-1"
+  f_Type = 1
+  f_Location = 2
+  f_Target = 1
+  f_Range = 30
+  f_Level = "-1"
+  f_CastTime = 1
+  f_Projectile = 1
+STR_VAR
+  f_Icon = ~~
+BEGIN
+  READ_LONG  0x64 ao
+  READ_SHORT 0x68 na
+  FOR (i=0;i<na;++i) BEGIN
+    PATCH_IF (i+1) = f_Header OR f_Header < 0 BEGIN
+     WRITE_ASCIIE ao + 0x28*i + 0x4  "%f_Icon%" #8
+      WRITE_BYTE  ao + 0x28*i + 0x0  f_Type
+      WRITE_SHORT ao + 0x28*i + 0x2  f_Location
+      WRITE_BYTE  ao + 0x28*i + 0xc  f_Target
+      WRITE_SHORT ao + 0x28*i + 0xe  f_Range
+      WRITE_SHORT ao + 0x28*i + 0x10 f_Level < 0 ? i + 1 : f_Level
+      WRITE_SHORT ao + 0x28*i + 0x12 f_CastTime
+      WRITE_SHORT ao + 0x28*i + 0x26 f_Projectile
+    END
+  END
+END
