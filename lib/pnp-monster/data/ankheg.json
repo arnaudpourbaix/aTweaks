@@ -40,7 +40,7 @@
                 {
                     "name": "HaveSpellRES",
                     "params": [
-                        "ja#m1"
+                        "ja#m1s2"
                     ]
                 }
             ],
@@ -129,7 +129,7 @@
             "file": "ja#m1s1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
-            "memorizedCount": 1,
+            "memorizedCount": 0,
             "type": "Melee",
             "range": 5,
             "speed": 0,
