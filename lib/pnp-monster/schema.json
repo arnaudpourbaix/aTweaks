@@ -1299,7 +1299,7 @@
                     "$ref": "#/definitions/RawAbilityDamageType"
                 },
                 "projectile": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "flags": {
                     "type": "array",
@@ -1320,6 +1320,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CastSpellEffect"
+                            }
+                        },
+                        "creatureRGBColorFade": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CreatureRGBColorFadeEffect"
                             }
                         },
                         "damage": {
@@ -1364,6 +1370,18 @@
                                 "$ref": "#/definitions/MovementRateBonus2Effect"
                             }
                         },
+                        "paralyze": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ParalyzeEffect"
+                            }
+                        },
+                        "petrification": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PetrificationEffect"
+                            }
+                        },
                         "playSound": {
                             "type": "array",
                             "items": {
@@ -1388,13 +1406,13 @@
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
                             }
                         },
-                        "protectionFromResourceEffect": {
+                        "protectionFromResource": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceEffect"
                             }
                         },
-                        "protectionFromResourceAndMessageEffect": {
+                        "protectionFromResourceAndMessage": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
@@ -1412,13 +1430,19 @@
                                 "$ref": "#/definitions/ScriptingStateModifierEffect"
                             }
                         },
-                        "setExtendedSpellStateEffect": {
+                        "setExtendedSpellState": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
-                        "useEFFFileEffect": {
+                        "slow": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
@@ -1695,6 +1719,78 @@
                 "CastInstantlyAtCasterLevel",
                 "CastInstantlyAtSpecifiedLevel"
             ]
+        },
+        "CreatureRGBColorFadeEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "red": {
+                    "type": "number"
+                },
+                "green": {
+                    "type": "number"
+                },
+                "blue": {
+                    "type": "number"
+                },
+                "fadeSpeed": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "red",
+                "green",
+                "blue",
+                "fadeSpeed"
+            ],
+            "additionalProperties": false
         },
         "DamageEffect": {
             "type": "object",
@@ -2416,6 +2512,137 @@
                 "modifierType"
             ],
             "additionalProperties": false
+        },
+        "ParalyzeEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "idsEntry": {
+                    "type": "string"
+                },
+                "idsFile": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                }
+            },
+            "required": [
+                "idsEntry",
+                "idsFile"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectIDSFile": {
+            "type": "string",
+            "enum": [
+                "EA",
+                "GENERAL",
+                "RACE",
+                "CLASS",
+                "SPECIFIC",
+                "GENDER",
+                "ALIGN",
+                "KIT"
+            ]
+        },
+        "PetrificationEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
         },
         "PlaySoundEffect": {
             "type": "object",
@@ -3229,6 +3456,60 @@
                 "SPELL_PROTECTION"
             ]
         },
+        "SlowEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
+        },
         "UseEFFFileEffect": {
             "type": "object",
             "properties": {
@@ -3293,19 +3574,6 @@
             ],
             "additionalProperties": false
         },
-        "RawEffectIDSFile": {
-            "type": "string",
-            "enum": [
-                "EA",
-                "GENERAL",
-                "RACE",
-                "CLASS",
-                "SPECIFIC",
-                "GENDER",
-                "ALIGN",
-                "KIT"
-            ]
-        },
         "RawSpell": {
             "type": "object",
             "properties": {
@@ -3355,7 +3623,7 @@
                     "$ref": "#/definitions/RawItemAbilityLocation"
                 },
                 "projectile": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "flags": {
                     "type": "array",
@@ -3376,6 +3644,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CastSpellEffect"
+                            }
+                        },
+                        "creatureRGBColorFade": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CreatureRGBColorFadeEffect"
                             }
                         },
                         "damage": {
@@ -3420,6 +3694,18 @@
                                 "$ref": "#/definitions/MovementRateBonus2Effect"
                             }
                         },
+                        "paralyze": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ParalyzeEffect"
+                            }
+                        },
+                        "petrification": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PetrificationEffect"
+                            }
+                        },
                         "playSound": {
                             "type": "array",
                             "items": {
@@ -3444,13 +3730,13 @@
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
                             }
                         },
-                        "protectionFromResourceEffect": {
+                        "protectionFromResource": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceEffect"
                             }
                         },
-                        "protectionFromResourceAndMessageEffect": {
+                        "protectionFromResourceAndMessage": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
@@ -3468,13 +3754,19 @@
                                 "$ref": "#/definitions/ScriptingStateModifierEffect"
                             }
                         },
-                        "setExtendedSpellStateEffect": {
+                        "setExtendedSpellState": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
-                        "useEFFFileEffect": {
+                        "slow": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
@@ -3488,12 +3780,8 @@
                 "name",
                 "file",
                 "stringRef",
-                "description",
-                "memorizedCount",
                 "spellType",
-                "type",
-                "range",
-                "speed"
+                "type"
             ],
             "additionalProperties": false
         },
@@ -3593,6 +3881,9 @@
                     "items": {
                         "$ref": "#/definitions/Action"
                     }
+                },
+                "random": {
+                    "type": "boolean"
                 }
             },
             "required": [

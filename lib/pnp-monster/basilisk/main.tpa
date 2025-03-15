@@ -1,0 +1,239 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m2.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m2su.baf~
+
+CREATE SPL "ja#m2s1"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4002 SAY NAME2 @4002
+	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
+	WRITE_SHORT 0x98 65
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			timing = 3
+			duration = 12
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+		STR_VAR
+			resource = "ja#m2s2"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 41
+			duration = 12
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4003)
+			parameter2 = 0
+			duration = 12
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 141
+			target = 2
+			parameter1 = 0
+			parameter2 = 13
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 109
+			target = 2
+			parameter1 = (IDS_OF_SYMBOL (~EA~ ~INANIMATE~))
+			parameter2 = 2
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+
+CREATE SPL "ja#m2s2"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4002 SAY NAME2 @4002
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 61
+			target = 2
+			parameter1 = 2021160960
+			parameter2 = 1638400
+			timing = 9
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 134
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 9
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 9
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "4"
+		STR_VAR
+			resource = "MISC_06B"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 9
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "4"
+		STR_VAR
+			resource = "SPFLESHS.VVC"
+	END
+
+CREATE ITM "ja#m2w1"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 10
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+
+ACTION_FOR_EACH ~file~ IN
+	BASILL
+	BASILLSU
+	BPBASL01
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~BASILL1~
+			REMOVE_CRE_ITEM ~BASILL2~
+			ADD_CRE_ITEM ~ja#m2w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
+			ADD_MEMORIZED_SPELL ~ja#m2s1~ #0 ~innate~ (1)
+			LPF patchCreature
+				INT_VAR
+					level1=6
+					strength=15
+					dexterity=8
+					constitution=15
+					intelligence=2
+					wisdom=12
+					charisma=11
+					movement=6
+					hp=48
+					ac=4
+					thac0=15
+					apr=1
+					xpv=1400
+					alignment=34
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					morale=12
+					moraleBreak=4
+					moraleRecovery=15
+					general=255
+					race=102
+					class=102
+					gender=4
+					sex=4
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN
+				LBASILSK
+				SHOUT
+				WTASIGHT
+				wtrunsgt
+				DW2MP0GE
+				DW2RC2MO
+			END
+			LPF patchCreatureScript STR_VAR script=ja#m2 removeScripts skipFiles END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILLSU~) BEGIN 
+				DEFINE_ARRAY removeScripts BEGIN
+					ja#m2
+					LBASILSK
+					SHOUT
+					WTASIGHT
+					wtrunsgt
+					DW2MP0GE
+					DW2RC2MO
+				END
+				LPF patchCreatureScript STR_VAR script=ja#m2su removeScripts skipFiles END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

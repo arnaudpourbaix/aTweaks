@@ -101,6 +101,7 @@ CREATE SPL "ja#m1s2"
 	WRITE_SHORT 0x94 1
 	SAY NAME1 @4000 SAY NAME2 @4000
 	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.~
+	WRITE_SHORT 0x98 65
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -132,7 +133,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 146
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~146~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -143,7 +144,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 140
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~140~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -154,7 +155,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 136
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~136~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -165,7 +166,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 132
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~132~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -176,7 +177,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 119
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~119~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -187,7 +188,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 175
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~175~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -198,7 +199,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 133
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~133~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -209,7 +210,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 181
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~181~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -220,7 +221,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 134
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~134~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -231,7 +232,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 118
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~118~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -242,7 +243,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 101
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~101~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -253,7 +254,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 145
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~145~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -264,7 +265,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 199
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~199~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -275,7 +276,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 142
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~142~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -286,7 +287,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 162
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~162~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -297,7 +298,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 184
+			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~184~))
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -308,7 +309,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 221
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~221~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -319,7 +320,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 222
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~222~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -330,7 +331,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 141
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~141~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -341,7 +342,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 106
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~106~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -352,7 +353,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 107
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~107~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -363,7 +364,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 139
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~139~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -374,7 +375,7 @@ CREATE SPL "ja#m1s3"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = 140
+			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~140~))
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -532,7 +533,6 @@ CREATE ITM "ja#m1w2"
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 3
 	WRITE_SHORT 0x86 20
-	WRITE_SHORT 0x9c 108
 	WRITE_SHORT 0x38 1
 	WRITE_SHORT 0xa4 1
 	LPF set_enchantment INT_VAR enchantment = 0 END
@@ -591,10 +591,17 @@ BEGIN
 					wisdom=13
 					charisma=6
 					movement=12
+					hp=64
 					ac=2
+					thac0=13
 					apr=1
 					xpv=975
 					alignment=34
+					saveDeath=10
+					saveWand=12
+					savePolymorph=11
+					saveBreath=12
+					saveSpell=13
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
@@ -618,8 +625,14 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						level1=10
-						constitution=25
+						hp=80
+						thac0=11
 						xpv=1400
+						saveDeath=8
+						saveWand=10
+						savePolymorph=9
+						saveBreath=9
+						saveSpell=11
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 

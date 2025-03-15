@@ -786,6 +786,8 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 
 @4000 = ~Stream of acidic enzymes~
 @4001 = ~Acidic digestive enzymes~
+@4002 = ~Petrifying Gaze~
+@4003 = ~Restrained~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

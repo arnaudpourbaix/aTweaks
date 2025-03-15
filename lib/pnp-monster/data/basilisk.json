@@ -1,0 +1,231 @@
+{
+    "bafFile": "lib/pnp-monster/basilisk/ja#m2",
+    "tpaFile": "lib/pnp-monster/basilisk/main",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "GRABBED",
+        "NEAREST"
+    ],
+    "data": {
+        "level1": 6,
+        "strength": 15,
+        "dexterity": 8,
+        "constitution": 15,
+        "intelligence": 2,
+        "wisdom": 12,
+        "charisma": 11,
+        "movement": 6,
+        "ac": 4,
+        "apr": 1,
+        "xpv": 1400,
+        "alignment": "NEUTRAL",
+        "morale": 12,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "BASILISK",
+        "class": "BASILISK",
+        "gender": "NIETHER",
+        "size": "Medium"
+    },
+    "abilities": [
+        {
+            "name": "Petrification",
+            "isTargetSpell": false,
+            "targetTrigger": [
+                {
+                    "name": "CheckStatGT",
+                    "params": [
+                        "{Target}",
+                        "0",
+                        "HELD"
+                    ],
+                    "negation": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#m2s1",
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "target": "NearestEnemyOf",
+            "random": true,
+            "range": 30
+        }
+    ],
+    "removeItems": [
+        "BASILL1",
+        "BASILL2"
+    ],
+    "weapon1": {
+        "file": "ja#m2w1",
+        "enchantment": 0,
+        "type": "Melee",
+        "range": 1,
+        "diceThrown": 1,
+        "diceSize": 10,
+        "damageType": "Slashing",
+        "speed": 3,
+        "flags": [
+            "AddStrengthBonus"
+        ]
+    },
+    "spells": [
+        {
+            "name": "Petrification",
+            "stringRef": 4002,
+            "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
+            "file": "ja#m2s1",
+            "spellType": "Innate",
+            "secondaryType": "Disabling",
+            "memorizedCount": 1,
+            "type": "Ranged",
+            "projectile": "gaze",
+            "range": 30,
+            "speed": 0,
+            "effects": {
+                "displayPortraitIcon": [
+                    {
+                        "icon": "Slow",
+                        "duration": 12,
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ],
+                "displayString": [
+                    {
+                        "stringRef": "4003",
+                        "timing": "InstantLimited",
+                        "duration": 12,
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ],
+                "movementRateBonus2": [
+                    {
+                        "modifierType": "Set",
+                        "value": 0,
+                        "duration": 12,
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ],
+                "lightingEffects": [
+                    {
+                        "lightingTarget": "SpellTarget",
+                        "effect": "AbjurationEarth",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ],
+                "paralyze": [
+                    {
+                        "idsFile": "EA",
+                        "idsEntry": "INANIMATE",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ],
+                "castSpell": [
+                    {
+                        "timing": "DelayLimited",
+                        "duration": 12,
+                        "type": "CastInstantlyAtCasterLevel",
+                        "resource": "ja#m2s2",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": -4
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Petrification (technical)",
+            "stringRef": 4002,
+            "file": "ja#m2s2",
+            "spellType": "Innate",
+            "secondaryType": "Disabling",
+            "memorizedCount": 0,
+            "type": "Ranged",
+            "range": 0,
+            "speed": 0,
+            "effects": {
+                "petrification": [
+                    {
+                        "timing": "InstantPermanent",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": 4
+                    }
+                ],
+                "playSound": [
+                    {
+                        "timing": "InstantPermanent",
+                        "resource": "MISC_06B",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": 4
+                    }
+                ],
+                "playVisualEffect": [
+                    {
+                        "timing": "InstantPermanent",
+                        "playWhere": "OverTargetUnattached",
+                        "resource": "SPFLESHS.VVC",
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": 4
+                    }
+                ],
+                "creatureRGBColorFade": [
+                    {
+                        "timing": "InstantPermanent",
+                        "blue": 120,
+                        "red": 120,
+                        "green": 120,
+                        "fadeSpeed": 25,
+                        "saveTypes": [
+                            "PetrifyPolymorph"
+                        ],
+                        "saveBonus": 4
+                    }
+                ]
+            }
+        }
+    ],
+    "files": [
+        "BASILL",
+        "BASILLSU",
+        "BPBASL01"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "BASILLSU"
+            ],
+            "summon": true
+        }
+    ],
+    "removeScripts": [
+        "LBASILSK"
+    ]
+}

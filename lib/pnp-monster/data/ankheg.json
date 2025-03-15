@@ -99,7 +99,7 @@
         "range": 30,
         "speed": 3,
         "bonusToHit": 20,
-        "projectile": 108,
+        "projectile": "acidblob",
         "effects": {
             "castSpell": [
                 {
@@ -194,7 +194,7 @@
             "type": "Ranged",
             "range": 30,
             "speed": 3,
-            "projectile": 108,
+            "projectile": "acidblob",
             "effects": {
                 "damage": [
                     {
