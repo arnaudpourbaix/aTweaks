@@ -6,7 +6,7 @@
 
 
 
-BACKUP ~%MOD_FOLDER%/backup~
+BACKUP ~weidu_external/backup/aTweaks~
 AUTHOR "Wisp, shsforums.net"
 VERSION ~v4.53~
 

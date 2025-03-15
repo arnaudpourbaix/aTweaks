@@ -11,8 +11,11 @@
                 "tpaFile": {
                     "type": "string"
                 },
-                "smart": {
-                    "type": "boolean"
+                "targetPriorities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TargetStatusEnum"
+                    }
                 },
                 "help": {
                     "type": "boolean"
@@ -58,6 +61,15 @@
                             ]
                         },
                         "probability": {
+                            "type": "number"
+                        },
+                        "saveTypes": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawSaveType"
+                            }
+                        },
+                        "saveBonus": {
                             "type": "number"
                         },
                         "duration": {
@@ -172,6 +184,19 @@
             ],
             "additionalProperties": false
         },
+        "TargetStatusEnum": {
+            "type": "string",
+            "enum": [
+                "GRABBED",
+                "HELD",
+                "STUNNED",
+                "SLOWED",
+                "PANIC_CONFUSED",
+                "SLEEP",
+                "NORMAL",
+                "NEAREST"
+            ]
+        },
         "RawCreatureAttack": {
             "type": "object",
             "properties": {
@@ -193,6 +218,16 @@
                 "weaponSlot"
             ],
             "additionalProperties": false
+        },
+        "RawSaveType": {
+            "type": "string",
+            "enum": [
+                "Spell",
+                "Breath",
+                "ParalyzePoisonDeath",
+                "RodStaffWand",
+                "PetrifyPolymorph"
+            ]
         },
         "EffectDamageTypeEnum": {
             "type": "number",
@@ -244,6 +279,7 @@
                 "ChangeEnemyAlly",
                 "MoveToObject",
                 "MoveToObjectFollow",
+                "MoveToObjectNoInterrupt",
                 "RunAwayFrom",
                 "RunAwayFromNoInterruptNoLeaveArea",
                 "RunAwayFromNoLeaveArea",
@@ -705,6 +741,9 @@
                 },
                 "blur": {
                     "type": "number"
+                },
+                "size": {
+                    "$ref": "#/definitions/SizeEnum"
                 }
             },
             "additionalProperties": false
@@ -1029,6 +1068,17 @@
                 "SUMMONED_DEMON"
             ]
         },
+        "SizeEnum": {
+            "type": "string",
+            "enum": [
+                "Tiny",
+                "Small",
+                "Medium",
+                "Large",
+                "Huge",
+                "Gargantuan"
+            ]
+        },
         "RawCreatureAdjustment": {
             "type": "object",
             "properties": {
@@ -1202,6 +1252,9 @@
                 },
                 "blur": {
                     "type": "number"
+                },
+                "size": {
+                    "$ref": "#/definitions/SizeEnum"
                 }
             },
             "additionalProperties": false
@@ -1335,6 +1388,18 @@
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
                             }
                         },
+                        "protectionFromResourceEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromResourceEffect"
+                            }
+                        },
+                        "protectionFromResourceAndMessageEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
                         "removeSpell": {
                             "type": "array",
                             "items": {
@@ -1351,6 +1416,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
+                            }
+                        },
+                        "useEFFFileEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UseEFFFileEffect"
                             }
                         }
                     },
@@ -1426,6 +1497,9 @@
         "ArmorClassBonusEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -1524,16 +1598,6 @@
                 "DispelBypassResistance"
             ]
         },
-        "RawSaveType": {
-            "type": "string",
-            "enum": [
-                "Spell",
-                "Breath",
-                "ParalyzePoisonDeath",
-                "RodStaffWand",
-                "PetrifyPolymorph"
-            ]
-        },
         "RawEffectFlags": {
             "type": "string",
             "enum": [
@@ -1564,6 +1628,9 @@
         "CastSpellEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -1632,6 +1699,9 @@
         "DamageEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -1722,6 +1792,9 @@
         "DexterityBonusEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -1792,6 +1865,9 @@
         "DisplayPortraitIconEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2039,6 +2115,9 @@
         "DisplayStringEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2096,6 +2175,9 @@
         "LightingEffectsEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2201,6 +2283,9 @@
         "MovementRateBonusEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2271,6 +2356,9 @@
         "MovementRateBonus2Effect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2332,6 +2420,9 @@
         "PlaySoundEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2386,6 +2477,9 @@
         "PlayVisualEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2452,6 +2546,9 @@
         "ProtectionFromSpellEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2509,6 +2606,9 @@
         "ProtectionFromDisplaySpecificStringEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2560,10 +2660,141 @@
             },
             "additionalProperties": false
         },
+        "ProtectionFromResourceEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "statType": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value",
+                "statType"
+            ],
+            "additionalProperties": false
+        },
+        "ProtectionFromResourceAndMessageEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "statType": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value",
+                "statType"
+            ],
+            "additionalProperties": false
+        },
         "RemoveSpellEffect": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2614,6 +2845,9 @@
         "ScriptingStateModifierEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2738,6 +2972,9 @@
         "SetExtendedSpellStateEffect": {
             "type": "object",
             "properties": {
+                "index": {
+                    "type": "number"
+                },
                 "target": {
                     "$ref": "#/definitions/RawEffectTarget"
                 },
@@ -2992,6 +3229,83 @@
                 "SPELL_PROTECTION"
             ]
         },
+        "UseEFFFileEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "idsEntry": {
+                    "type": "string"
+                },
+                "idsFile": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                }
+            },
+            "required": [
+                "idsEntry",
+                "idsFile"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectIDSFile": {
+            "type": "string",
+            "enum": [
+                "EA",
+                "GENERAL",
+                "RACE",
+                "CLASS",
+                "SPECIFIC",
+                "GENDER",
+                "ALIGN",
+                "KIT"
+            ]
+        },
         "RawSpell": {
             "type": "object",
             "properties": {
@@ -3130,6 +3444,18 @@
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
                             }
                         },
+                        "protectionFromResourceEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromResourceEffect"
+                            }
+                        },
+                        "protectionFromResourceAndMessageEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
                         "removeSpell": {
                             "type": "array",
                             "items": {
@@ -3146,6 +3472,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
+                            }
+                        },
+                        "useEFFFileEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UseEFFFileEffect"
                             }
                         }
                     },

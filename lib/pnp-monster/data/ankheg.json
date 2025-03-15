@@ -1,9 +1,12 @@
 {
     "bafFile": "lib/pnp-monster/ankheg/ja#m1",
     "tpaFile": "lib/pnp-monster/ankheg/main",
-    "smart": false,
     "tracking": true,
     "combatWalk": true,
+    "targetPriorities": [
+        "GRABBED",
+        "NEAREST"
+    ],
     "data": {
         "level1": 8,
         "strength": 21,
@@ -23,7 +26,8 @@
         "general": "MONSTER",
         "race": "ANKHEG",
         "class": "ANKHEG",
-        "gender": "NIETHER"
+        "gender": "NIETHER",
+        "size": "Huge"
     },
     "abilities": [
         {
@@ -118,8 +122,10 @@
     ],
     "grab": {
         "file": "ja#m1s3",
-        "probability": 90,
-        "weapon": "1"
+        "probability": 100,
+        "saveBonus": -4,
+        "weapon": "1",
+        "duration": 18
     },
     "spells": [
         {

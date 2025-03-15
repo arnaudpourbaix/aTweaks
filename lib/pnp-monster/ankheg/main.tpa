@@ -130,21 +130,266 @@ CREATE SPL "ja#m1s3"
 	SAY NAME1 @3000 SAY NAME2 @3000
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 15
+			opcode = 177
 			target = 2
-			parameter1 = 8
-			parameter2 = 1
-			duration = 12
+			parameter1 = 146
+			parameter2 = 4
+			duration = 1
 			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 142
+			opcode = 177
+			target = 2
+			parameter1 = 140
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 136
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 132
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 119
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 175
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 133
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 181
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 134
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 118
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 101
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 145
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 199
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 142
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 162
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 184
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 221
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 222
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 141
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 106
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 107
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 139
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = 140
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#m1s3"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 328
 			target = 2
 			parameter1 = 0
-			parameter2 = 144
-			duration = 12
+			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLE~))
+			duration = 18
 			probability1 = 100
+			special = 1
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -161,7 +406,7 @@ CREATE SPL "ja#m1s3"
 			target = 2
 			parameter1 = 0
 			parameter2 = 1
-			duration = 12
+			duration = 18
 			probability1 = 100
 	END
 	LPF ADD_EFFECT
@@ -182,7 +427,7 @@ CREATE SPL "ja#m1s3"
 			parameter1 = 0
 			parameter2 = 0
 			timing = 4
-			duration = 12
+			duration = 18
 			probability1 = 100
 		STR_VAR
 			resource = "EFF_M22A"
@@ -193,10 +438,28 @@ CREATE SPL "ja#m1s3"
 			target = 2
 			parameter1 = 0
 			parameter2 = 1
-			duration = 12
+			duration = 18
 			probability1 = 100
 		STR_VAR
 			resource = "rr#cnstr"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 144
+			duration = 18
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 15
+			target = 2
+			parameter1 = 8
+			parameter2 = 1
+			duration = 18
+			probability1 = 100
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -204,20 +467,18 @@ CREATE SPL "ja#m1s3"
 			target = 2
 			parameter1 = 0
 			parameter2 = 0
-			duration = 12
 			probability1 = 100
 		STR_VAR
 			resource = "ja#m1s3"
 	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 328
-			target = 2
-			parameter1 = 0
-			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLE~))
-			probability1 = 100
-			special = 1
-	END
+
+CREATE EFF "ja#m1s3"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 0
+	WRITE_LONG 0x28 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~ja#m1s3~ #8
 
 CREATE ITM "ja#m1w1"
 	WRITE_LONG 0x64 0x72
@@ -253,7 +514,9 @@ CREATE ITM "ja#m1w1"
 			target = 2
 			parameter1 = 0
 			parameter2 = 1
-			probability1 = 90
+			probability1 = 100
+			savingthrow = 2
+			savebonus = "-4"
 		STR_VAR
 			resource = "ja#m1s3"
 	END
@@ -316,8 +579,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANKHEG2~
 			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
 			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
-			ADD_MEMORIZED_SPELL ~ja#m1s1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#m1s2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#m1s3~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=8
@@ -328,17 +591,10 @@ BEGIN
 					wisdom=13
 					charisma=6
 					movement=12
-					hp=64
 					ac=2
-					thac0=13
 					apr=1
 					xpv=975
 					alignment=34
-					saveDeath=10
-					saveWand=12
-					savePolymorph=11
-					saveBreath=12
-					saveSpell=13
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
@@ -362,14 +618,8 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						level1=10
-						hp=80
-						thac0=11
+						constitution=25
 						xpv=1400
-						saveDeath=8
-						saveWand=10
-						savePolymorph=9
-						saveBreath=9
-						saveSpell=11
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
