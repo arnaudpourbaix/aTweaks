@@ -102,7 +102,6 @@ CREATE SPL "ja#m1s2"
 	SAY NAME1 @4000 SAY NAME2 @4000
 	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
-	WRITE_SHORT 0x98 65
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12

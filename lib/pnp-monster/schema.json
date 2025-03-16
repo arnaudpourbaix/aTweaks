@@ -4602,6 +4602,9 @@
                 "copyFromFile": {
                     "type": "string"
                 },
+                "description": {
+                    "type": "string"
+                },
                 "type": {
                     "$ref": "#/definitions/RawProjectileType"
                 },
@@ -4676,16 +4679,116 @@
                 "successSpell": {
                     "type": "string"
                 },
-                "infoFlags": {
+                "bamProjectileFlags": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/RawProjectileInfoFlags"
+                        "$ref": "#/definitions/RawBamProjectileFlags"
                     }
+                },
+                "travelingProjectileAnimation": {
+                    "type": "string"
+                },
+                "shadowAnimation": {
+                    "type": "string"
+                },
+                "lightSpotIntensity": {
+                    "type": "number"
+                },
+                "lightSpotWidth": {
+                    "type": "number"
+                },
+                "lightSpotHeight": {
+                    "type": "number"
+                },
+                "palette": {
+                    "type": "string"
+                },
+                "projectileColours": {
+                    "type": "string"
+                },
+                "smokePuffDelay": {
+                    "type": "number"
+                },
+                "smokeColours": {
+                    "type": "string"
+                },
+                "faceTargetGranularity": {
+                    "type": "number"
+                },
+                "projectileSmokeAnimation": {
+                    "type": "number"
+                },
+                "trailingAnimation1": {
+                    "type": "string"
+                },
+                "trailingAnimation2": {
+                    "type": "string"
+                },
+                "trailingAnimation3": {
+                    "type": "string"
+                },
+                "trailingNumber1": {
+                    "type": "number"
+                },
+                "trailingNumber2": {
+                    "type": "number"
+                },
+                "trailingNumber3": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "number"
+                },
+                "areaProjectileFlags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawAreaProjectile"
+                    }
+                },
+                "rayCount": {
+                    "type": "number"
+                },
+                "triggerRadius": {
+                    "type": "number"
+                },
+                "areaOfEffect": {
+                    "type": "number"
+                },
+                "explosionSound": {
+                    "type": "string"
+                },
+                "explosionDelay": {
+                    "type": "number"
+                },
+                "fragmentAnimation": {
+                    "type": "number"
+                },
+                "secondaryProjectile": {
+                    "type": "number"
+                },
+                "triggerCount": {
+                    "type": "number"
+                },
+                "explosionEffect": {
+                    "type": "number"
+                },
+                "explosionColor": {
+                    "type": "number"
+                },
+                "explosionProjectile": {
+                    "type": "number"
+                },
+                "explosionAnimation": {
+                    "type": "number"
+                },
+                "coneWidth": {
+                    "type": "number"
                 }
             },
             "required": [
                 "file",
-                "copyFromFile"
+                "copyFromFile",
+                "description"
             ],
             "additionalProperties": false
         },
@@ -4765,7 +4868,7 @@
                 "CasterAffected"
             ]
         },
-        "RawProjectileInfoFlags": {
+        "RawBamProjectileFlags": {
             "type": "string",
             "enum": [
                 "EnableBamColouring",
@@ -4778,6 +4881,27 @@
                 "EnableBrightenFlags",
                 "LowLevelBrighten",
                 "HighLevelBrighten"
+            ]
+        },
+        "RawAreaProjectile": {
+            "type": "string",
+            "enum": [
+                "TrapVisible",
+                "TriggeredByInanimateObjects",
+                "TriggeredByCondition",
+                "DelayedTrigger",
+                "UseSecondaryProjectile",
+                "UseFragmentGraphics",
+                "AffectOnlyEnemies",
+                "AffectOnlyAllies",
+                "MageLevelDuration",
+                "ClericLevelDuration",
+                "DrawAnimation",
+                "Coneshaped",
+                "IgnoreLOS",
+                "DelayedExplosion",
+                "SkipFirstCondition",
+                "SingleTarget"
             ]
         },
         "RawCreatureAutoGenerate": {

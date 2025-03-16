@@ -303,7 +303,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#m2s2",LastSeenBy(Myself))
+		ForceSpellRES("ja#m2s1",LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 

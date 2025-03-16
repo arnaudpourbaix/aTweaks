@@ -87,7 +87,15 @@
         {
             "file": "ja#1m2",
             "copyFromFile": "gaze",
-            "type": "AreaOfEffect"
+            "description": "Basilisk petrifying gaze",
+            "type": "AreaOfEffect",
+            "triggerRadius": 310,
+            "areaOfEffect": 310,
+            "coneWidth": 60,
+            "areaProjectileFlags": [
+                "AffectOnlyEnemies",
+                "Coneshaped"
+            ]
         }
     ],
     "spells": [
