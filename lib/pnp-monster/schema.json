@@ -161,6 +161,12 @@
                         "$ref": "#/definitions/RawCreatureAbility"
                     }
                 },
+                "projectiles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawProjectile"
+                    }
+                },
                 "removeScripts": {
                     "type": "array",
                     "items": {
@@ -1310,6 +1316,9 @@
                 "effects": {
                     "type": "object",
                     "properties": {
+                        "shared": {
+                            "$ref": "#/definitions/RawCommonEffect"
+                        },
                         "armorClassBonus": {
                             "type": "array",
                             "items": {
@@ -1424,6 +1433,36 @@
                                 "$ref": "#/definitions/RemoveSpellEffect"
                             }
                         },
+                        "saveVsDeathModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsDeathModifierEffect"
+                            }
+                        },
+                        "saveVsWandModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsWandModifierEffect"
+                            }
+                        },
+                        "saveVsPetrificationModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsPetrificationModifierEffect"
+                            }
+                        },
+                        "saveVsBreathModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsBreathModifierEffect"
+                            }
+                        },
+                        "saveVsSpellModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsSpellModifierEffect"
+                            }
+                        },
                         "scriptingStateModifier": {
                             "type": "array",
                             "items": {
@@ -1442,11 +1481,20 @@
                                 "$ref": "#/definitions/SlowEffect"
                             }
                         },
+                        "thac0Bonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thac0BonusEffect"
+                            }
+                        },
                         "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
                             }
+                        },
+                        "restrained": {
+                            "$ref": "#/definitions/RestrainedEffect"
                         }
                     },
                     "additionalProperties": false
@@ -1518,6 +1566,82 @@
                 "BypassArmor"
             ]
         },
+        "RawCommonEffect": {
+            "type": "object",
+            "properties": {
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                }
+            },
+            "additionalProperties": false
+        },
+        "RawEffectTarget": {
+            "type": "string",
+            "enum": [
+                "None",
+                "Self",
+                "PresetTarget",
+                "Party",
+                "Everyone",
+                "EveryoneExceptParty",
+                "CasterGroup",
+                "TargetGroup",
+                "EveryoneExceptSelf",
+                "OriginalCaster"
+            ]
+        },
+        "RawEffectTiming": {
+            "type": "string",
+            "enum": [
+                "InstantLimited",
+                "InstantPermanentUntilDeath",
+                "InstantWhileEquipped",
+                "DelayLimited",
+                "DelayPermanent",
+                "DelayWhileEquipped",
+                "LimitedAfterDuration",
+                "PermanentAfterDuration",
+                "EquippedAfterDuration",
+                "InstantPermanent",
+                "InstantLimitedTicks"
+            ]
+        },
+        "RawEffectDispelResistance": {
+            "type": "string",
+            "enum": [
+                "NaturalNonMagical",
+                "DispelNotBypassResistance",
+                "NotDispelBypassResistance",
+                "DispelBypassResistance"
+            ]
+        },
         "ArmorClassBonusEffect": {
             "type": "object",
             "properties": {
@@ -1581,46 +1705,6 @@
                 "bonusTo"
             ],
             "additionalProperties": false
-        },
-        "RawEffectTarget": {
-            "type": "string",
-            "enum": [
-                "None",
-                "Self",
-                "PresetTarget",
-                "Party",
-                "Everyone",
-                "EveryoneExceptParty",
-                "CasterGroup",
-                "TargetGroup",
-                "EveryoneExceptSelf",
-                "OriginalCaster"
-            ]
-        },
-        "RawEffectTiming": {
-            "type": "string",
-            "enum": [
-                "InstantLimited",
-                "InstantPermanentUntilDeath",
-                "InstantWhileEquipped",
-                "DelayLimited",
-                "DelayPermanent",
-                "DelayWhileEquipped",
-                "LimitedAfterDuration",
-                "PermanentAfterDuration",
-                "EquippedAfterDuration",
-                "InstantPermanent",
-                "InstantLimitedTicks"
-            ]
-        },
-        "RawEffectDispelResistance": {
-            "type": "string",
-            "enum": [
-                "NaturalNonMagical",
-                "DispelNotBypassResistance",
-                "NotDispelBypassResistance",
-                "DispelBypassResistance"
-            ]
         },
         "RawEffectFlags": {
             "type": "string",
@@ -1771,23 +1855,32 @@
                 "resource": {
                     "type": "string"
                 },
-                "red": {
-                    "type": "number"
-                },
-                "green": {
-                    "type": "number"
-                },
-                "blue": {
-                    "type": "number"
+                "color": {
+                    "type": "object",
+                    "properties": {
+                        "red": {
+                            "type": "number"
+                        },
+                        "green": {
+                            "type": "number"
+                        },
+                        "blue": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "red",
+                        "green",
+                        "blue"
+                    ],
+                    "additionalProperties": false
                 },
                 "fadeSpeed": {
                     "type": "number"
                 }
             },
             "required": [
-                "red",
-                "green",
-                "blue",
+                "color",
                 "fadeSpeed"
             ],
             "additionalProperties": false
@@ -3069,6 +3162,326 @@
                 }
             }
         },
+        "SaveVsDeathModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "SaveVsWandModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "SaveVsPetrificationModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "SaveVsBreathModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "SaveVsSpellModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
         "ScriptingStateModifierEffect": {
             "type": "object",
             "properties": {
@@ -3510,6 +3923,70 @@
                 }
             }
         },
+        "Thac0BonusEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectModifierType"
+                }
+            },
+            "required": [
+                "value",
+                "type"
+            ],
+            "additionalProperties": false
+        },
         "UseEFFFileEffect": {
             "type": "object",
             "properties": {
@@ -3574,6 +4051,60 @@
             ],
             "additionalProperties": false
         },
+        "RestrainedEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
+        },
         "RawSpell": {
             "type": "object",
             "properties": {
@@ -3634,6 +4165,9 @@
                 "effects": {
                     "type": "object",
                     "properties": {
+                        "shared": {
+                            "$ref": "#/definitions/RawCommonEffect"
+                        },
                         "armorClassBonus": {
                             "type": "array",
                             "items": {
@@ -3748,6 +4282,36 @@
                                 "$ref": "#/definitions/RemoveSpellEffect"
                             }
                         },
+                        "saveVsDeathModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsDeathModifierEffect"
+                            }
+                        },
+                        "saveVsWandModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsWandModifierEffect"
+                            }
+                        },
+                        "saveVsPetrificationModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsPetrificationModifierEffect"
+                            }
+                        },
+                        "saveVsBreathModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsBreathModifierEffect"
+                            }
+                        },
+                        "saveVsSpellModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SaveVsSpellModifierEffect"
+                            }
+                        },
                         "scriptingStateModifier": {
                             "type": "array",
                             "items": {
@@ -3766,11 +4330,20 @@
                                 "$ref": "#/definitions/SlowEffect"
                             }
                         },
+                        "thac0Bonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thac0BonusEffect"
+                            }
+                        },
                         "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
                             }
+                        },
+                        "restrained": {
+                            "$ref": "#/definitions/RestrainedEffect"
                         }
                     },
                     "additionalProperties": false
@@ -4018,6 +4591,193 @@
                 "NEUTRAL",
                 "NOTNEUTRAL",
                 "NOTEVIL"
+            ]
+        },
+        "RawProjectile": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "copyFromFile": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawProjectileType"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "behaviorFlags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawProjectileBehavior"
+                    }
+                },
+                "fireSound": {
+                    "type": "string"
+                },
+                "impactSound": {
+                    "type": "string"
+                },
+                "sourceAnimation": {
+                    "type": "string"
+                },
+                "particleColor": {
+                    "$ref": "#/definitions/RawParticleColor"
+                },
+                "projectileWidth": {
+                    "type": "number"
+                },
+                "extendedFlags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawProjectileExtendedFlags"
+                    }
+                },
+                "stringRef": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "object",
+                    "properties": {
+                        "red": {
+                            "type": "number"
+                        },
+                        "green": {
+                            "type": "number"
+                        },
+                        "blue": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "red",
+                        "green",
+                        "blue"
+                    ],
+                    "additionalProperties": false
+                },
+                "colorSpeed": {
+                    "type": "number"
+                },
+                "screenShakeAmount": {
+                    "type": "number"
+                },
+                "idsTarget1": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                },
+                "idsTarget2": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                },
+                "defaultSpell": {
+                    "type": "string"
+                },
+                "successSpell": {
+                    "type": "string"
+                },
+                "infoFlags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawProjectileInfoFlags"
+                    }
+                }
+            },
+            "required": [
+                "file",
+                "copyFromFile"
+            ],
+            "additionalProperties": false
+        },
+        "RawProjectileType": {
+            "type": "string",
+            "enum": [
+                "AreaOfEffect",
+                "NoBAM",
+                "SingleTarget"
+            ]
+        },
+        "RawProjectileBehavior": {
+            "type": "string",
+            "enum": [
+                "ShowSparkle",
+                "UseHeight",
+                "LoopFireSound",
+                "LoopImpactSound",
+                "IgnoreCenter",
+                "DrawAsBackground",
+                "AllowSavingGame",
+                "LoopSpreadAnimation"
+            ]
+        },
+        "RawParticleColor": {
+            "type": "string",
+            "enum": [
+                "None",
+                "Black",
+                "Blue",
+                "Chromatic",
+                "Gold",
+                "Green",
+                "Purple",
+                "Red",
+                "White",
+                "Ice",
+                "Stone",
+                "Magenta",
+                "Orange"
+            ]
+        },
+        "RawProjectileExtendedFlags": {
+            "type": "string",
+            "enum": [
+                "BounceFromWalls",
+                "PassTarget",
+                "DrawCenterVvcOnce",
+                "HitImmediately",
+                "FaceTarget",
+                "CurvedPathUnknownStillNotImplementedOnEeGames",
+                "StartRandomFrame",
+                "Pillar",
+                "SemiTransparentTrailPuffVef",
+                "TintedTrailPuffVef",
+                "MultipleProjectiles",
+                "DefaultSpellOnMissed",
+                "FallingPath",
+                "Comet",
+                "LinedUpAreaOfEffect",
+                "RectangularAreaOfEffect",
+                "DrawBehindTarget",
+                "CastingGlowEffect",
+                "TravelDoor",
+                "StopFadeAfterHit",
+                "DisplayMessage",
+                "RandomPath",
+                "StartRandomSequence",
+                "ColourPulseOnHit",
+                "TouchProjectile",
+                "NegateFirstCreatureTarget",
+                "NegateSecondCreatureTarget",
+                "UseEitherIds",
+                "DelayedPayload",
+                "LimitedPathCount",
+                "IwdStyleCheck",
+                "CasterAffected"
+            ]
+        },
+        "RawProjectileInfoFlags": {
+            "type": "string",
+            "enum": [
+                "EnableBamColouring",
+                "EnableSmoke",
+                "ColoredSmoke",
+                "EnableAreaLightingUsage",
+                "EnableAreaHeightUsage",
+                "EnableShadow",
+                "EnableLightSpot",
+                "EnableBrightenFlags",
+                "LowLevelBrighten",
+                "HighLevelBrighten"
             ]
         },
         "RawCreatureAutoGenerate": {

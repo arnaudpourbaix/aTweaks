@@ -42,6 +42,14 @@
                         "HELD"
                     ],
                     "negation": true
+                },
+                {
+                    "name": "StateCheck",
+                    "params": [
+                        "{Target}",
+                        "STATE_SLOWED"
+                    ],
+                    "negation": true
                 }
             ],
             "actions": [
@@ -75,6 +83,13 @@
             "AddStrengthBonus"
         ]
     },
+    "projectiles": [
+        {
+            "file": "ja#1m2",
+            "copyFromFile": "gaze",
+            "type": "AreaOfEffect"
+        }
+    ],
     "spells": [
         {
             "name": "Petrification",
@@ -85,72 +100,35 @@
             "secondaryType": "Disabling",
             "memorizedCount": 1,
             "type": "Ranged",
-            "projectile": "gaze",
+            "projectile": "ja#1m2",
             "range": 30,
             "speed": 0,
             "effects": {
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Slow",
-                        "duration": 12,
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
-                    }
-                ],
-                "displayString": [
-                    {
-                        "stringRef": "4003",
-                        "timing": "InstantLimited",
-                        "duration": 12,
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
-                    }
-                ],
-                "movementRateBonus2": [
-                    {
-                        "modifierType": "Set",
-                        "value": 0,
-                        "duration": 12,
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
-                    }
-                ],
-                "lightingEffects": [
-                    {
-                        "lightingTarget": "SpellTarget",
-                        "effect": "AbjurationEarth",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
-                    }
-                ],
-                "paralyze": [
-                    {
-                        "idsFile": "EA",
-                        "idsEntry": "INANIMATE",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
-                    }
-                ],
+                "shared": {
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                "restrained": {
+                    "index": 1,
+                    "duration": 12
+                },
                 "castSpell": [
                     {
+                        "index": 2,
                         "timing": "DelayLimited",
                         "duration": 12,
                         "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#m2s2",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": -4
+                        "resource": "ja#m2s2"
+                    }
+                ],
+                "protectionFromSpell": [
+                    {
+                        "index": 3,
+                        "timing": "DelayLimited",
+                        "duration": 12,
+                        "resource": "ja#m2s1"
                     }
                 ]
             }
@@ -161,52 +139,45 @@
             "file": "ja#m2s2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
-            "memorizedCount": 0,
+            "memorizedCount": 1,
             "type": "Ranged",
             "range": 0,
             "speed": 0,
             "effects": {
+                "shared": {
+                    "timing": "InstantPermanent",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
                 "petrification": [
+                    {}
+                ],
+                "displayString": [
                     {
-                        "timing": "InstantPermanent",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": 4
+                        "stringRef": "4004"
                     }
                 ],
                 "playSound": [
                     {
-                        "timing": "InstantPermanent",
-                        "resource": "MISC_06B",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": 4
+                        "resource": "MISC_06B"
                     }
                 ],
                 "playVisualEffect": [
                     {
-                        "timing": "InstantPermanent",
                         "playWhere": "OverTargetUnattached",
-                        "resource": "SPFLESHS.VVC",
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": 4
+                        "resource": "SPFLESHS.VVC"
                     }
                 ],
                 "creatureRGBColorFade": [
                     {
-                        "timing": "InstantPermanent",
-                        "blue": 120,
-                        "red": 120,
-                        "green": 120,
-                        "fadeSpeed": 25,
-                        "saveTypes": [
-                            "PetrifyPolymorph"
-                        ],
-                        "saveBonus": 4
+                        "color": {
+                            "blue": 120,
+                            "red": 120,
+                            "green": 120
+                        },
+                        "fadeSpeed": 25
                     }
                 ]
             }

@@ -12,6 +12,7 @@ VERSION ~v4.53~
 
 ALWAYS
     INCLUDE "%MOD_FOLDER%/lib/common/core_functions.tpa"         // Common functions used by many mods
+    INCLUDE "%MOD_FOLDER%/lib/common/alter_effect.tph"          // David W. improved effect functions
     INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common aTweaks functions
     INCLUDE ~%MOD_FOLDER%/lib/common/regexp.tph~                 // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
     INCLUDE ~%MOD_FOLDER%/lib/common/iwd1fix.tpa~                // fix some IDS file issues with IWD1 to ensure proper script compiling
