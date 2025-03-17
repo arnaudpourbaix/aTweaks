@@ -4,19 +4,93 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m2su.baf~
 COPY_EXISTING "gaze.pro" ~override/ja#1m2.pro~
 	READ_SHORT 0x08 type
 	PATCH_IF (%type% = 1) BEGIN
-		INSERT_BYTES 0x100 0x256
+		INSERT_BYTES 0x100 0x100
 	END
 	PATCH_IF (%type% != 3) BEGIN
-		INSERT_BYTES 0x200 0x256
+		INSERT_BYTES 0x200 0x100
 	END
 	WRITE_SHORT 0x08 3
 	WRITE_LONG 0x200 2112
-	WRITE_SHORT 0x204 310
-	WRITE_SHORT 0x206 310
+	WRITE_SHORT 0x204 255
+	WRITE_SHORT 0x206 255
+	WRITE_SHORT 0x212 0x4001
+	WRITE_BYTE 0x217 255
 	WRITE_SHORT 0x224 60
 ADD_PROJECTILE ~override/ja#1m2.pro~ ~Basilisk petrifying gaze~
 
-CREATE SPL "ja#m2s1"
+CREATE SPL "ja#1m2"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4002 SAY NAME2 @4002
+	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.~
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 61
+			target = 2
+			parameter1 = 2021160960
+			parameter2 = 1638400
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4004)
+			parameter2 = 0
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 134
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+		STR_VAR
+			resource = "MISC_06B"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+		STR_VAR
+			resource = "SPFLESHS.VVC"
+	END
+
+CREATE SPL "ja#2m2"
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
@@ -32,7 +106,17 @@ CREATE SPL "ja#m2s1"
 	WRITE_SHORT 0x94 1
 	SAY NAME1 @4002 SAY NAME2 @4002
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
-	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#2m2~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4005)
+			parameter2 = 0
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
+	END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 139
@@ -122,7 +206,7 @@ CREATE SPL "ja#m2s1"
 			savingthrow = 16
 			savebonus = "-4"
 		STR_VAR
-			resource = "ja#m2s2"
+			resource = "ja#3m2"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -136,10 +220,10 @@ CREATE SPL "ja#m2s1"
 			savingthrow = 16
 			savebonus = "-4"
 		STR_VAR
-			resource = "ja#m2s1"
+			resource = "ja#2m2"
 	END
 
-CREATE SPL "ja#m2s2"
+CREATE SPL "ja#3m2"
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
@@ -245,8 +329,9 @@ BEGIN
 			REMOVE_CRE_ITEM ~BASILL1~
 			REMOVE_CRE_ITEM ~BASILL2~
 			ADD_CRE_ITEM ~ja#m2w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
-			ADD_MEMORIZED_SPELL ~ja#m2s1~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#m2s2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#3m2~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=6

@@ -1,7 +1,7 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ankheg/ja#m1su.baf~
 
-CREATE SPL "ja#m1s1"
+CREATE SPL "ja#1m1"
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
@@ -81,10 +81,10 @@ CREATE SPL "ja#m1s1"
 			duration = 24
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s1"
+			resource = "ja#1m1"
 	END
 
-CREATE SPL "ja#m1s2"
+CREATE SPL "ja#2m1"
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
@@ -115,7 +115,7 @@ CREATE SPL "ja#m1s2"
 			special = 256
 	END
 
-CREATE SPL "ja#m1s3"
+CREATE SPL "ja#3m1"
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_LONG 0x64 0x72
@@ -138,7 +138,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -149,7 +149,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -160,7 +160,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -171,7 +171,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -182,7 +182,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -193,7 +193,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -204,7 +204,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -215,7 +215,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -226,7 +226,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -237,7 +237,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -248,7 +248,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -259,7 +259,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -270,7 +270,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -281,7 +281,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -292,7 +292,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -303,7 +303,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -314,7 +314,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -325,7 +325,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -336,7 +336,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -347,7 +347,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -358,7 +358,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -369,7 +369,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -380,7 +380,7 @@ CREATE SPL "ja#m1s3"
 			duration = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -470,16 +470,16 @@ CREATE SPL "ja#m1s3"
 			parameter2 = 0
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 
-CREATE EFF "ja#m1s3"
+CREATE EFF "ja#3m1"
 	WRITE_LONG 0x10 206
 	WRITE_LONG 0x14 2
 	WRITE_LONG 0x24 0
 	WRITE_LONG 0x28 1
 	WRITE_SHORT 0x2c 100
-	WRITE_ASCII 0x30 ~ja#m1s3~ #8
+	WRITE_ASCII 0x30 ~ja#3m1~ #8
 
 CREATE ITM "ja#m1w1"
 	WRITE_LONG 0x64 0x72
@@ -507,7 +507,7 @@ CREATE ITM "ja#m1w1"
 			parameter2 = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s1"
+			resource = "ja#1m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -519,7 +519,7 @@ CREATE ITM "ja#m1w1"
 			savingthrow = 2
 			savebonus = "-4"
 		STR_VAR
-			resource = "ja#m1s3"
+			resource = "ja#3m1"
 	END
 
 CREATE ITM "ja#m1w2"
@@ -545,7 +545,7 @@ CREATE ITM "ja#m1w2"
 			parameter2 = 0
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s2"
+			resource = "ja#2m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -555,7 +555,7 @@ CREATE ITM "ja#m1w2"
 			parameter2 = 1
 			probability1 = 100
 		STR_VAR
-			resource = "ja#m1s2"
+			resource = "ja#2m1"
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -580,8 +580,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANKHEG2~
 			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
 			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
-			ADD_MEMORIZED_SPELL ~ja#m1s2~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#m1s3~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=8

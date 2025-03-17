@@ -218,11 +218,11 @@
                 },
                 "duration": {
                     "type": "number"
+                },
+                "disableInterrupt": {
+                    "type": "boolean"
                 }
             },
-            "required": [
-                "weaponSlot"
-            ],
             "additionalProperties": false
         },
         "RawSaveType": {
@@ -4455,6 +4455,9 @@
                         "$ref": "#/definitions/Action"
                     }
                 },
+                "disableInterrupt": {
+                    "type": "boolean"
+                },
                 "random": {
                     "type": "boolean"
                 }
@@ -4716,7 +4719,7 @@
                     "type": "number"
                 },
                 "projectileSmokeAnimation": {
-                    "type": "number"
+                    "$ref": "#/definitions/RawProjectileAnimation"
                 },
                 "trailingAnimation1": {
                     "type": "string"
@@ -4761,7 +4764,7 @@
                     "type": "number"
                 },
                 "fragmentAnimation": {
-                    "type": "number"
+                    "$ref": "#/definitions/RawProjectileAnimation"
                 },
                 "secondaryProjectile": {
                     "type": "number"
@@ -4770,7 +4773,7 @@
                     "type": "number"
                 },
                 "explosionEffect": {
-                    "type": "number"
+                    "$ref": "#/definitions/RawProjectileExplosionEffectEnum"
                 },
                 "explosionColor": {
                     "type": "number"
@@ -4883,6 +4886,32 @@
                 "HighLevelBrighten"
             ]
         },
+        "RawProjectileAnimation": {
+            "type": "string",
+            "enum": [
+                "FIRE_RING",
+                "FIRE_RING_BRIGHT",
+                "CHUNKS",
+                "EXPLODING_ARM",
+                "EXPLODING_HEAD",
+                "EXPLODING_FOOT",
+                "EXPLODING_TORSO",
+                "EXPLODING_LEG",
+                "SMOKE_PUFF_LARGE",
+                "SMOKE_PUFF_SMALL",
+                "TRAP_SKULL",
+                "TRAP_GLYPH",
+                "CLOUD_TRAVEL",
+                "CLOUD_STATIC",
+                "STORM_TRAVEL",
+                "STORM_STATIC",
+                "GREASE_TRAVEL",
+                "GREASE_STATIC",
+                "WEB_TRAVEL",
+                "WEB_STATIC",
+                "NULL_ANIMATION"
+            ]
+        },
         "RawAreaProjectile": {
             "type": "string",
             "enum": [
@@ -4902,6 +4931,32 @@
                 "DelayedExplosion",
                 "SkipFirstCondition",
                 "SingleTarget"
+            ]
+        },
+        "RawProjectileExplosionEffectEnum": {
+            "type": "string",
+            "enum": [
+                "FIRE",
+                "CLOUD",
+                "CLOUDKILL",
+                "STORM",
+                "GREASE",
+                "WEB",
+                "METEOR",
+                "WILTING",
+                "WEIRD",
+                "ENTANGLE",
+                "COLORSPRAY",
+                "CONECOLD",
+                "HOLYSMITE",
+                "UNHOLYSMITE",
+                "PRISMATICSPRAY",
+                "DRAGONFIRE",
+                "STORMOFVENGEANCE",
+                "DRAGONPURPLEFIRE",
+                "DRAGONACID",
+                "CUSTOM",
+                "NONE"
             ]
         },
         "RawCreatureAutoGenerate": {

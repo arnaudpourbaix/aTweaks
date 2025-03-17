@@ -192,19 +192,20 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Ankheg
-// BEGIN @5000 DESIGNATED 5000
+BEGIN @5000 DESIGNATED 5000
 // GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 
 // Basilisk
 BEGIN @5001 DESIGNATED 5001
 //GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/lesser.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/greater.tpa"
 
 
 /*

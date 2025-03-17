@@ -1,0 +1,108 @@
+{
+    "bafFile": "lib/pnp-monster/basilisk/ja#m3",
+    "tpaFile": "lib/pnp-monster/basilisk/greater",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "NEAREST"
+    ],
+    "data": {
+        "level1": 6,
+        "strength": 15,
+        "dexterity": 8,
+        "constitution": 15,
+        "intelligence": 2,
+        "wisdom": 12,
+        "charisma": 11,
+        "movement": 6,
+        "ac": 4,
+        "apr": 1,
+        "xpv": 1400,
+        "alignment": "NEUTRAL",
+        "morale": 12,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "BASILISK",
+        "class": "BASILISK",
+        "gender": "NIETHER",
+        "size": "Medium"
+    },
+    "abilities": [
+        {
+            "name": "Petrification",
+            "isTargetSpell": false,
+            "targetTrigger": [
+                {
+                    "name": "CheckStatGT",
+                    "params": [
+                        "{Target}",
+                        "0",
+                        "HELD"
+                    ],
+                    "negation": true
+                },
+                {
+                    "name": "StateCheck",
+                    "params": [
+                        "{Target}",
+                        "STATE_SLOWED"
+                    ],
+                    "negation": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#1m2",
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "target": "NearestEnemyOf",
+            "random": true,
+            "range": 30
+        }
+    ],
+    "removeItems": [
+        "BASILG1",
+        "BASILG2",
+        "BASILG3"
+    ],
+    "weapon1": {
+        "file": "ja#m3w1",
+        "enchantment": 0,
+        "type": "Melee",
+        "range": 1,
+        "diceThrown": 1,
+        "diceSize": 10,
+        "damageType": "Slashing",
+        "speed": 3,
+        "flags": [
+            "AddStrengthBonus"
+        ]
+    },
+    "projectiles": [],
+    "spells": [],
+    "files": [
+        "AC#BASGR",
+        "BASILG",
+        "BASILGSU",
+        "BASILMUT",
+        "BASILNAD",
+        "BD302BAS",
+        "BPBASG01"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "BASILGSU"
+            ],
+            "summon": true
+        }
+    ],
+    "removeScripts": [
+        "GBASILSK"
+    ]
+}

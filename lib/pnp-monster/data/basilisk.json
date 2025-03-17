@@ -1,10 +1,9 @@
 {
     "bafFile": "lib/pnp-monster/basilisk/ja#m2",
-    "tpaFile": "lib/pnp-monster/basilisk/main",
+    "tpaFile": "lib/pnp-monster/basilisk/lesser",
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
-        "GRABBED",
         "NEAREST"
     ],
     "data": {
@@ -56,7 +55,7 @@
                 {
                     "name": "ForceSpellRES",
                     "params": [
-                        "ja#m2s1",
+                        "ja#1m2",
                         "LastSeenBy"
                     ]
                 }
@@ -89,21 +88,23 @@
             "copyFromFile": "gaze",
             "description": "Basilisk petrifying gaze",
             "type": "AreaOfEffect",
-            "triggerRadius": 310,
-            "areaOfEffect": 310,
+            "triggerRadius": 255,
+            "areaOfEffect": 255,
             "coneWidth": 60,
             "areaProjectileFlags": [
                 "AffectOnlyEnemies",
                 "Coneshaped"
-            ]
+            ],
+            "fragmentAnimation": "NULL_ANIMATION",
+            "explosionEffect": "NONE"
         }
     ],
     "spells": [
         {
-            "name": "Petrification",
+            "name": "Petrification (2e)",
             "stringRef": 4002,
-            "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
-            "file": "ja#m2s1",
+            "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
+            "file": "ja#1m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
             "memorizedCount": 1,
@@ -118,6 +119,62 @@
                     ],
                     "saveBonus": -4
                 },
+                "petrification": [
+                    {}
+                ],
+                "displayString": [
+                    {
+                        "stringRef": "4004"
+                    }
+                ],
+                "playSound": [
+                    {
+                        "resource": "MISC_06B"
+                    }
+                ],
+                "playVisualEffect": [
+                    {
+                        "playWhere": "OverTargetUnattached",
+                        "resource": "SPFLESHS.VVC"
+                    }
+                ],
+                "creatureRGBColorFade": [
+                    {
+                        "color": {
+                            "blue": 120,
+                            "red": 120,
+                            "green": 120
+                        },
+                        "fadeSpeed": 25
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Petrification (5e)",
+            "stringRef": 4002,
+            "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
+            "file": "ja#2m2",
+            "spellType": "Innate",
+            "secondaryType": "Disabling",
+            "memorizedCount": 1,
+            "type": "Ranged",
+            "projectile": "ja#2m2",
+            "range": 30,
+            "speed": 0,
+            "effects": {
+                "shared": {
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                "displayString": [
+                    {
+                        "index": 0,
+                        "stringRef": "4005"
+                    }
+                ],
                 "restrained": {
                     "index": 1,
                     "duration": 12
@@ -128,7 +185,7 @@
                         "timing": "DelayLimited",
                         "duration": 12,
                         "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#m2s2"
+                        "resource": "ja#3m2"
                     }
                 ],
                 "protectionFromSpell": [
@@ -136,15 +193,15 @@
                         "index": 3,
                         "timing": "DelayLimited",
                         "duration": 12,
-                        "resource": "ja#m2s1"
+                        "resource": "ja#2m2"
                     }
                 ]
             }
         },
         {
-            "name": "Petrification (technical)",
+            "name": "Petrification (5e, technical)",
             "stringRef": 4002,
-            "file": "ja#m2s2",
+            "file": "ja#3m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
             "memorizedCount": 1,

@@ -33,6 +33,7 @@
         {
             "name": "Acidic Enzymes",
             "isTargetSpell": false,
+            "disableInterrupt": true,
             "triggers": [
                 {
                     "name": "HPPercentLT",
@@ -44,7 +45,7 @@
                 {
                     "name": "HaveSpellRES",
                     "params": [
-                        "ja#m1s2"
+                        "ja#2m1"
                     ]
                 }
             ],
@@ -87,7 +88,7 @@
             "castSpell": [
                 {
                     "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#m1s1"
+                    "resource": "ja#1m1"
                 }
             ]
         }
@@ -104,24 +105,25 @@
             "castSpell": [
                 {
                     "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#m1s2"
+                    "resource": "ja#2m1"
                 }
             ],
             "removeSpell": [
                 {
                     "target": "Self",
-                    "resource": "ja#m1s2"
+                    "resource": "ja#2m1"
                 }
             ]
         }
     },
     "attacks": [
         {
-            "weaponSlot": "SLOT_WEAPON"
+            "weaponSlot": "SLOT_WEAPON",
+            "disableInterrupt": true
         }
     ],
     "grab": {
-        "file": "ja#m1s3",
+        "file": "ja#3m1",
         "probability": 100,
         "saveBonus": -4,
         "weapon": "1",
@@ -132,7 +134,7 @@
             "name": "Acidic digestive enzymes",
             "stringRef": 4001,
             "description": "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
-            "file": "ja#m1s1",
+            "file": "ja#1m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
             "memorizedCount": 0,
@@ -142,7 +144,7 @@
             "effects": {
                 "protectionFromSpell": [
                     {
-                        "resource": "ja#m1s1",
+                        "resource": "ja#1m1",
                         "duration": 24,
                         "timing": "InstantLimited"
                     }
@@ -187,7 +189,7 @@
             "name": "Stream of acidic enzymes",
             "stringRef": 4000,
             "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
-            "file": "ja#m1s2",
+            "file": "ja#2m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
             "memorizedCount": 1,
