@@ -580,6 +580,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANKHEG2~
 			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
 			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
+			ADD_MEMORIZED_SPELL ~ja#1m1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature

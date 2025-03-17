@@ -11,9 +11,38 @@ CREATE ITM "ja#m3w1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_BYTE 0x88 10
+	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 25
+			target = 2
+			parameter1 = 6
+			parameter2 = 3
+			probability1 = 100
+			savingthrow = 4
+			savebonus = "4"
+	END
+
+CREATE ITM "ja#m3w2"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 8
+	WRITE_BYTE 0x8a 2
+	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
@@ -38,33 +67,36 @@ BEGIN
 			REMOVE_CRE_ITEM ~BASILG2~
 			REMOVE_CRE_ITEM ~BASILG3~
 			ADD_CRE_ITEM ~ja#m3w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
+			ADD_CRE_ITEM ~ja#m3w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
+			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
-					level1=6
-					strength=15
+					level1=10
+					strength=20
 					dexterity=8
-					constitution=15
-					intelligence=2
+					constitution=19
+					intelligence=7
 					wisdom=12
 					charisma=11
 					movement=6
-					hp=48
-					ac=4
-					thac0=15
-					apr=1
-					xpv=1400
+					hp=80
+					ac=2
+					thac0=11
+					apr=3
+					xpv=7000
 					alignment=34
-					saveDeath=11
-					saveWand=13
-					savePolymorph=12
-					saveBreath=13
-					saveSpell=14
-					morale=12
+					saveDeath=8
+					saveWand=10
+					savePolymorph=9
+					saveBreath=9
+					saveSpell=11
+					morale=16
 					moraleBreak=4
 					moraleRecovery=15
 					general=255
 					race=102
-					class=102
+					class=103
 					gender=4
 					sex=4
 					enforce=1

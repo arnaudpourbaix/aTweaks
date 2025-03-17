@@ -137,7 +137,6 @@
             "file": "ja#1m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
-            "memorizedCount": 0,
             "type": "Melee",
             "range": 5,
             "speed": 0,
@@ -192,7 +191,6 @@
             "file": "ja#2m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
-            "memorizedCount": 1,
             "type": "Ranged",
             "range": 30,
             "speed": 3,
@@ -212,6 +210,16 @@
                     }
                 ]
             }
+        }
+    ],
+    "memorizedSpells": [
+        {
+            "file": "ja#1m1",
+            "memorizedCount": 1
+        },
+        {
+            "file": "ja#2m1",
+            "memorizedCount": 1
         }
     ],
     "files": [

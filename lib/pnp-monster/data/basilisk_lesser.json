@@ -107,7 +107,6 @@
             "file": "ja#1m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
-            "memorizedCount": 1,
             "type": "Ranged",
             "projectile": "ja#1m2",
             "range": 30,
@@ -157,7 +156,6 @@
             "file": "ja#2m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
-            "memorizedCount": 1,
             "type": "Ranged",
             "projectile": "ja#2m2",
             "range": 30,
@@ -204,7 +202,6 @@
             "file": "ja#3m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
-            "memorizedCount": 1,
             "type": "Ranged",
             "range": 0,
             "speed": 0,
@@ -246,6 +243,16 @@
                     }
                 ]
             }
+        }
+    ],
+    "memorizedSpells": [
+        {
+            "file": "ja#1m2",
+            "memorizedCount": 1
+        },
+        {
+            "file": "ja#2m2",
+            "memorizedCount": 1
         }
     ],
     "files": [

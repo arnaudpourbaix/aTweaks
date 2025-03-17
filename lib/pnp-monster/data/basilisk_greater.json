@@ -7,26 +7,26 @@
         "NEAREST"
     ],
     "data": {
-        "level1": 6,
-        "strength": 15,
+        "level1": 10,
+        "strength": 20,
         "dexterity": 8,
-        "constitution": 15,
-        "intelligence": 2,
+        "constitution": 19,
+        "intelligence": 7,
         "wisdom": 12,
         "charisma": 11,
         "movement": 6,
-        "ac": 4,
-        "apr": 1,
-        "xpv": 1400,
+        "ac": 2,
+        "apr": 3,
+        "xpv": 7000,
         "alignment": "NEUTRAL",
-        "morale": 12,
+        "morale": 16,
         "moraleBreak": 4,
         "moraleRecovery": 15,
         "general": "MONSTER",
         "race": "BASILISK",
-        "class": "BASILISK",
+        "class": "BASILISK_GREATER",
         "gender": "NIETHER",
-        "size": "Medium"
+        "size": "Large"
     },
     "abilities": [
         {
@@ -76,8 +76,35 @@
         "type": "Melee",
         "range": 1,
         "diceThrown": 1,
-        "diceSize": 10,
+        "diceSize": 6,
         "damageType": "Slashing",
+        "speed": 3,
+        "flags": [
+            "AddStrengthBonus"
+        ],
+        "effects": {
+            "shared": {
+                "saveTypes": [
+                    "ParalyzePoisonDeath"
+                ],
+                "saveBonus": 4
+            },
+            "poison": [
+                {
+                    "type": "OneDamagePerAmountSecond",
+                    "amount": 6
+                }
+            ]
+        }
+    },
+    "weapon2": {
+        "file": "ja#m3w2",
+        "enchantment": 0,
+        "type": "Melee",
+        "range": 1,
+        "diceThrown": 2,
+        "diceSize": 8,
+        "damageType": "Piercing",
         "speed": 3,
         "flags": [
             "AddStrengthBonus"
@@ -85,6 +112,16 @@
     },
     "projectiles": [],
     "spells": [],
+    "memorizedSpells": [
+        {
+            "file": "ja#1m2",
+            "memorizedCount": 1
+        },
+        {
+            "file": "ja#2m2",
+            "memorizedCount": 1
+        }
+    ],
     "files": [
         "AC#BASGR",
         "BASILG",

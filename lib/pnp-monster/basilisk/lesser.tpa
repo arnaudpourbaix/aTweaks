@@ -331,7 +331,6 @@ BEGIN
 			ADD_CRE_ITEM ~ja#m2w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#3m2~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=6
