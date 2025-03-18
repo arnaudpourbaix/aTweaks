@@ -69,19 +69,22 @@
         "BASILL1",
         "BASILL2"
     ],
-    "weapon1": {
-        "file": "ja#m2w1",
-        "enchantment": 0,
-        "type": "Melee",
-        "range": 1,
-        "diceThrown": 1,
-        "diceSize": 10,
-        "damageType": "Slashing",
-        "speed": 3,
-        "flags": [
-            "AddStrengthBonus"
-        ]
-    },
+    "items": [
+        {
+            "file": "ja#m2w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 10,
+            "damageType": "Slashing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ]
+        }
+    ],
     "projectiles": [
         {
             "file": "ja#1m2",
@@ -102,9 +105,10 @@
     "spells": [
         {
             "name": "Petrification (2e)",
+            "file": "ja#1m2",
+            "memorizedCount": 1,
             "stringRef": 4002,
             "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
-            "file": "ja#1m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
             "type": "Ranged",
@@ -151,9 +155,10 @@
         },
         {
             "name": "Petrification (5e)",
+            "file": "ja#2m2",
+            "memorizedCount": 1,
             "stringRef": 4002,
             "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
-            "file": "ja#2m2",
             "spellType": "Innate",
             "secondaryType": "Disabling",
             "type": "Ranged",
@@ -243,16 +248,6 @@
                     }
                 ]
             }
-        }
-    ],
-    "memorizedSpells": [
-        {
-            "file": "ja#1m2",
-            "memorizedCount": 1
-        },
-        {
-            "file": "ja#2m2",
-            "memorizedCount": 1
         }
     ],
     "files": [

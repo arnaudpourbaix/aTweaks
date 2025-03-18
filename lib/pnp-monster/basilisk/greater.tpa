@@ -1,6 +1,71 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3su.baf~
 
+COPY_EXISTING "cloudkil.pro" ~override/ja#1m3.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_LONG 0x200 64
+	WRITE_SHORT 0x204 42
+	WRITE_SHORT 0x206 42
+ADD_PROJECTILE ~override/ja#1m3.pro~ ~Basilisk foul breath~
+
+CREATE SPL "ja#1m3"
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 4
+	WRITE_SHORT 0x80 5
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @4006 SAY NAME2 @4006
+	SAY UNIDENTIFIED_DESC ~Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m3~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 1
+			savingthrow = 4
+			savebonus = "2"
+		STR_VAR
+			resource = "EFF_P88"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 1
+			savingthrow = 4
+			savebonus = "2"
+		STR_VAR
+			resource = "SPFINGER"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 55
+			target = 2
+			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
+			parameter2 = 2
+			timing = 1
+			probability1 = 1
+			savingthrow = 4
+			savebonus = "2"
+	END
+
 CREATE ITM "ja#m3w1"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x68 1
@@ -11,21 +76,33 @@ CREATE ITM "ja#m3w1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x86 4
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 6
+			duration = 30
+			probability1 = 1
+			savingthrow = 4
+			savebonus = "4"
+	END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 25
 			target = 2
 			parameter1 = 6
 			parameter2 = 3
-			probability1 = 100
+			duration = 30
+			probability1 = 1
 			savingthrow = 4
 			savebonus = "4"
 	END
@@ -40,14 +117,25 @@ CREATE ITM "ja#m3w2"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x86 8
 	WRITE_BYTE 0x88 8
 	WRITE_BYTE 0x8a 2
 	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
+	WRITE_LONG 0x98 0
 	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m3"
+	END
 
 ACTION_FOR_EACH ~file~ IN
 	AC#BASGR
@@ -66,8 +154,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~BASILG1~
 			REMOVE_CRE_ITEM ~BASILG2~
 			REMOVE_CRE_ITEM ~BASILG3~
-			ADD_CRE_ITEM ~ja#m3w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
-			ADD_CRE_ITEM ~ja#m3w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
+			ADD_CRE_ITEM ~ja#m3w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#m3w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			LPF patchCreature
@@ -83,7 +171,7 @@ BEGIN
 					hp=80
 					ac=2
 					thac0=11
-					apr=3
+					apr=2
 					xpv=7000
 					alignment=34
 					saveDeath=8

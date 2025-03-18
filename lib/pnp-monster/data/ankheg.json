@@ -72,50 +72,54 @@
         "ANKHEG1",
         "ANKHEG2"
     ],
-    "weapon1": {
-        "file": "ja#m1w1",
-        "enchantment": 0,
-        "type": "Melee",
-        "range": 1,
-        "diceThrown": 3,
-        "diceSize": 6,
-        "damageType": "Crushing",
-        "speed": 3,
-        "flags": [
-            "AddStrengthBonus"
-        ],
-        "effects": {
-            "castSpell": [
-                {
-                    "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#1m1"
-                }
-            ]
-        }
-    },
-    "weapon2": {
-        "file": "ja#m1w2",
-        "enchantment": 0,
-        "type": "Ranged",
-        "range": 30,
-        "speed": 3,
-        "bonusToHit": 20,
-        "projectile": "acidblob",
-        "effects": {
-            "castSpell": [
-                {
-                    "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#2m1"
-                }
+    "items": [
+        {
+            "file": "ja#m1w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 3,
+            "diceSize": 6,
+            "damageType": "Crushing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
             ],
-            "removeSpell": [
-                {
-                    "target": "Self",
-                    "resource": "ja#2m1"
-                }
-            ]
+            "effects": {
+                "castSpell": [
+                    {
+                        "type": "CastInstantlyAtCasterLevel",
+                        "resource": "ja#1m1"
+                    }
+                ]
+            }
+        },
+        {
+            "file": "ja#m1w2",
+            "equippedSlot": "WEAPON2",
+            "enchantment": 0,
+            "type": "Ranged",
+            "range": 30,
+            "speed": 3,
+            "bonusToHit": 20,
+            "projectile": "acidblob",
+            "effects": {
+                "castSpell": [
+                    {
+                        "type": "CastInstantlyAtCasterLevel",
+                        "resource": "ja#2m1"
+                    }
+                ],
+                "removeSpell": [
+                    {
+                        "target": "Self",
+                        "resource": "ja#2m1"
+                    }
+                ]
+            }
         }
-    },
+    ],
     "attacks": [
         {
             "weaponSlot": "SLOT_WEAPON",
@@ -132,9 +136,10 @@
     "spells": [
         {
             "name": "Acidic digestive enzymes",
+            "file": "ja#1m1",
+            "memorizedCount": 1,
             "stringRef": 4001,
             "description": "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
-            "file": "ja#1m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
             "type": "Melee",
@@ -186,9 +191,10 @@
         },
         {
             "name": "Stream of acidic enzymes",
+            "file": "ja#2m1",
+            "memorizedCount": 1,
             "stringRef": 4000,
             "description": "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.",
-            "file": "ja#2m1",
             "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
             "type": "Ranged",
@@ -210,16 +216,6 @@
                     }
                 ]
             }
-        }
-    ],
-    "memorizedSpells": [
-        {
-            "file": "ja#1m1",
-            "memorizedCount": 1
-        },
-        {
-            "file": "ja#2m1",
-            "memorizedCount": 1
         }
     ],
     "files": [

@@ -509,18 +509,6 @@ CREATE ITM "ja#m1w1"
 		STR_VAR
 			resource = "ja#1m1"
 	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 146
-			target = 2
-			parameter1 = 0
-			parameter2 = 1
-			probability1 = 100
-			savingthrow = 2
-			savebonus = "-4"
-		STR_VAR
-			resource = "ja#3m1"
-	END
 
 CREATE ITM "ja#m1w2"
 	WRITE_LONG 0x64 0x72
@@ -578,10 +566,8 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~ANKHEG1~
 			REMOVE_CRE_ITEM ~ANKHEG2~
-			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~weapon1~ EQUIP
-			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~weapon2~
-			ADD_MEMORIZED_SPELL ~ja#1m1~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
+			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR

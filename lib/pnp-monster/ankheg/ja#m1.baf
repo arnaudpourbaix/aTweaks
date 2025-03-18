@@ -183,116 +183,6 @@ THEN
 		Wait(2)
 END
 
-// Acidic Enzymes
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	OR(7)
-		!Range(NearestEnemyOf(Myself),30)
-		General(NearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(NearestEnemyOf(Myself))
-	OR(7)
-		!Range(SecondNearestEnemyOf(Myself),30)
-		General(SecondNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(SecondNearestEnemyOf(Myself))
-	OR(7)
-		!Range(ThirdNearestEnemyOf(Myself),30)
-		General(ThirdNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(ThirdNearestEnemyOf(Myself))
-	OR(7)
-		!Range(FourthNearestEnemyOf(Myself),30)
-		General(FourthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(FourthNearestEnemyOf(Myself))
-	OR(7)
-		!Range(FifthNearestEnemyOf(Myself),30)
-		General(FifthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(FifthNearestEnemyOf(Myself))
-	OR(7)
-		!Range(SixthNearestEnemyOf(Myself),30)
-		General(SixthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(SixthNearestEnemyOf(Myself))
-	OR(7)
-		!Range(SeventhNearestEnemyOf(Myself),30)
-		General(SeventhNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(SeventhNearestEnemyOf(Myself))
-	OR(7)
-		!Range(EighthNearestEnemyOf(Myself),30)
-		General(EighthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(EighthNearestEnemyOf(Myself))
-	OR(7)
-		!Range(NinthNearestEnemyOf(Myself),30)
-		General(NinthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(NinthNearestEnemyOf(Myself))
-	OR(7)
-		!Range(TenthNearestEnemyOf(Myself),30)
-		General(TenthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
-		!See(TenthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		Continue()
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(LastSeenBy(Myself),30)
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
 // Attack GRABBED enemy
 IF
 	OR(7)
@@ -381,6 +271,7 @@ THEN
 END
 
 IF
+	!GlobalTimerNotExpired("JA#ATCK_ROUND","LOCALS")
 	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLE)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -391,6 +282,23 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
+END
+
+IF
+	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLE)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+	See(LastSeenBy(Myself))
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON,0)
 		AttackOneRound(LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
@@ -473,6 +381,7 @@ THEN
 END
 
 IF
+	!GlobalTimerNotExpired("JA#ATCK_ROUND","LOCALS")
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
@@ -482,6 +391,22 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
+END
+
+IF
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+	See(LastSeenBy(Myself))
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON,0)
 		AttackOneRound(LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END

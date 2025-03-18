@@ -143,16 +143,28 @@
                         "$ref": "#/definitions/RawCreatureAdjustment"
                     }
                 },
-                "weapon1": {
-                    "$ref": "#/definitions/RawItem"
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItem"
+                    }
                 },
-                "weapon2": {
-                    "$ref": "#/definitions/RawItem"
+                "itemSlots": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemSlot"
+                    }
                 },
                 "spells": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/RawSpell"
+                    }
+                },
+                "memorizedSpells": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawMemorizedSpell"
                     }
                 },
                 "abilities": {
@@ -165,12 +177,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/RawProjectile"
-                    }
-                },
-                "memorizedSpells": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawMemorizedSpell"
                     }
                 },
                 "removeScripts": {
@@ -1277,6 +1283,9 @@
                 "file": {
                     "type": "string"
                 },
+                "equippedSlot": {
+                    "$ref": "#/definitions/ItemSlotEnum"
+                },
                 "enchantment": {
                     "type": "number"
                 },
@@ -1487,6 +1496,12 @@
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
+                        "slay": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlayEffect"
+                            }
+                        },
                         "slow": {
                             "type": "array",
                             "items": {
@@ -1520,6 +1535,32 @@
                 "speed"
             ],
             "additionalProperties": false
+        },
+        "ItemSlotEnum": {
+            "type": "string",
+            "enum": [
+                "HELMET",
+                "ARMOR",
+                "SHIELD",
+                "GLOVES",
+                "LRING",
+                "RRING",
+                "AMULET",
+                "BELT",
+                "BOOTS",
+                "WEAPON1",
+                "WEAPON2",
+                "WEAPON3",
+                "WEAPON4",
+                "QUIVER1",
+                "QUIVER2",
+                "QUIVER3",
+                "QUIVER4",
+                "CLOAK",
+                "QITEM1",
+                "QITEM2",
+                "QITEM3"
+            ]
         },
         "RawItemAbilityType": {
             "type": "string",
@@ -3954,6 +3995,70 @@
                 "SPELL_PROTECTION"
             ]
         },
+        "SlayEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "idsEntry": {
+                    "type": "string"
+                },
+                "idsFile": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                }
+            },
+            "required": [
+                "idsEntry",
+                "idsFile"
+            ],
+            "additionalProperties": false
+        },
         "SlowEffect": {
             "type": "object",
             "additionalProperties": false,
@@ -4190,6 +4295,22 @@
                 }
             }
         },
+        "RawItemSlot": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "slot": {
+                    "$ref": "#/definitions/ItemSlotEnum"
+                }
+            },
+            "required": [
+                "file",
+                "slot"
+            ],
+            "additionalProperties": false
+        },
         "RawSpell": {
             "type": "object",
             "properties": {
@@ -4198,6 +4319,9 @@
                 },
                 "file": {
                     "type": "string"
+                },
+                "memorizedCount": {
+                    "type": "number"
                 },
                 "stringRef": {
                     "type": "number"
@@ -4412,6 +4536,12 @@
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
+                        "slay": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlayEffect"
+                            }
+                        },
                         "slow": {
                             "type": "array",
                             "items": {
@@ -4486,6 +4616,21 @@
                 "CanTargetInvisible",
                 "CastableWhenSilenced"
             ]
+        },
+        "RawMemorizedSpell": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "memorizedCount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "file"
+            ],
+            "additionalProperties": false
         },
         "RawCreatureAbility": {
             "type": "object",
@@ -5046,21 +5191,6 @@
                 "CUSTOM",
                 "NONE"
             ]
-        },
-        "RawMemorizedSpell": {
-            "type": "object",
-            "properties": {
-                "file": {
-                    "type": "string"
-                },
-                "memorizedCount": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "file"
-            ],
-            "additionalProperties": false
         },
         "RawCreatureAutoGenerate": {
             "type": "object",

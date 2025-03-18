@@ -16,7 +16,7 @@
         "charisma": 11,
         "movement": 6,
         "ac": 2,
-        "apr": 3,
+        "apr": 2,
         "xpv": 7000,
         "alignment": "NEUTRAL",
         "morale": 16,
@@ -70,48 +70,121 @@
         "BASILG2",
         "BASILG3"
     ],
-    "weapon1": {
-        "file": "ja#m3w1",
-        "enchantment": 0,
-        "type": "Melee",
-        "range": 1,
-        "diceThrown": 1,
-        "diceSize": 6,
-        "damageType": "Slashing",
-        "speed": 3,
-        "flags": [
-            "AddStrengthBonus"
-        ],
-        "effects": {
-            "shared": {
-                "saveTypes": [
-                    "ParalyzePoisonDeath"
+    "items": [
+        {
+            "file": "ja#m3w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 6,
+            "bonusToHit": 4,
+            "damageType": "Slashing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ],
+            "effects": {
+                "shared": {
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 4,
+                    "duration": 30
+                },
+                "poison": [
+                    {
+                        "type": "OneDamagePerAmountSecond",
+                        "amount": 6
+                    }
                 ],
-                "saveBonus": 4
-            },
-            "poison": [
-                {
-                    "type": "OneDamagePerAmountSecond",
-                    "amount": 6
-                }
+                "displayPortraitIcon": [
+                    {
+                        "icon": "Poisoned"
+                    }
+                ]
+            }
+        },
+        {
+            "file": "ja#m3w2",
+            "equippedSlot": "SHIELD",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 2,
+            "diceSize": 8,
+            "bonusToHit": 8,
+            "damageType": "Piercing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ],
+            "effects": {
+                "castSpell": [
+                    {
+                        "type": "CastInstantlyAtCasterLevel",
+                        "resource": "ja#1m3"
+                    }
+                ]
+            }
+        }
+    ],
+    "projectiles": [
+        {
+            "file": "ja#1m3",
+            "copyFromFile": "cloudkil",
+            "description": "Basilisk foul breath",
+            "triggerRadius": 42,
+            "areaOfEffect": 42,
+            "triggerCount": 0,
+            "areaProjectileFlags": [
+                "AffectOnlyEnemies"
             ]
         }
-    },
-    "weapon2": {
-        "file": "ja#m3w2",
-        "enchantment": 0,
-        "type": "Melee",
-        "range": 1,
-        "diceThrown": 2,
-        "diceSize": 8,
-        "damageType": "Piercing",
-        "speed": 3,
-        "flags": [
-            "AddStrengthBonus"
-        ]
-    },
-    "projectiles": [],
-    "spells": [],
+    ],
+    "spells": [
+        {
+            "name": "Foul breath",
+            "file": "ja#1m3",
+            "memorizedCount": 1,
+            "stringRef": 4006,
+            "description": "Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
+            "target": "AnyPointWithinRange",
+            "spellType": "Innate",
+            "secondaryType": "OffensiveDamage",
+            "type": "Ranged",
+            "projectile": "ja#1m3",
+            "range": 5,
+            "speed": 0,
+            "effects": {
+                "shared": {
+                    "timing": "InstantPermanentUntilDeath",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 2
+                },
+                "slay": [
+                    {
+                        "idsFile": "EA",
+                        "idsEntry": "ANYONE"
+                    }
+                ],
+                "playSound": [
+                    {
+                        "resource": "EFF_P88"
+                    }
+                ],
+                "playVisualEffect": [
+                    {
+                        "playWhere": "OverTargetUnattached",
+                        "resource": "SPFINGER"
+                    }
+                ]
+            }
+        }
+    ],
     "memorizedSpells": [
         {
             "file": "ja#1m2",
