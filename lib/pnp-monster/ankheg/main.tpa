@@ -527,20 +527,20 @@ CREATE ITM "ja#m1w2"
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 172
-			target = 1
+			opcode = 146
+			target = 2
 			parameter1 = 0
-			parameter2 = 0
+			parameter2 = 1
 			probability1 = 100
 		STR_VAR
 			resource = "ja#2m1"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 146
-			target = 2
+			opcode = 172
+			target = 1
 			parameter1 = 0
-			parameter2 = 1
+			parameter2 = 0
 			probability1 = 100
 		STR_VAR
 			resource = "ja#2m1"
@@ -568,6 +568,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANKHEG2~
 			ADD_CRE_ITEM ~ja#m1w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
+			ADD_MEMORIZED_SPELL ~ja#1m1~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR

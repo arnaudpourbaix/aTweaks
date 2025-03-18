@@ -53,12 +53,8 @@
                         "file": {
                             "type": "string"
                         },
-                        "weapon": {
-                            "type": "string",
-                            "enum": [
-                                "1",
-                                "2"
-                            ]
+                        "weaponFile": {
+                            "type": "string"
                         },
                         "probability": {
                             "type": "number"
@@ -1446,6 +1442,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
+                        "removeSpecificAreaEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RemoveSpecificAreaEffect"
                             }
                         },
                         "removeSpell": {
@@ -3234,6 +3236,60 @@
             ],
             "additionalProperties": false
         },
+        "RemoveSpecificAreaEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                }
+            }
+        },
         "RemoveSpellEffect": {
             "type": "object",
             "additionalProperties": false,
@@ -4486,6 +4542,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
+                        "removeSpecificAreaEffect": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RemoveSpecificAreaEffect"
                             }
                         },
                         "removeSpell": {

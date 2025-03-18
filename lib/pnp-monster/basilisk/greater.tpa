@@ -1,7 +1,7 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3su.baf~
 
-COPY_EXISTING "cloudkil.pro" ~override/ja#1m3.pro~
+COPY_EXISTING "ja#1m2.pro" ~override/ja#1m3.pro~
 	READ_SHORT 0x08 type
 	PATCH_IF (%type% = 1) BEGIN
 		INSERT_BYTES 0x100 0x100
@@ -35,7 +35,7 @@ CREATE SPL "ja#1m3"
 			parameter1 = 0
 			parameter2 = 0
 			timing = 1
-			probability1 = 1
+			probability1 = 100
 			savingthrow = 4
 			savebonus = "2"
 		STR_VAR
@@ -48,11 +48,22 @@ CREATE SPL "ja#1m3"
 			parameter1 = 0
 			parameter2 = 0
 			timing = 1
-			probability1 = 1
+			probability1 = 100
 			savingthrow = 4
 			savebonus = "2"
 		STR_VAR
 			resource = "SPFINGER"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 273
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+			savingthrow = 4
+			savebonus = "2"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -61,7 +72,7 @@ CREATE SPL "ja#1m3"
 			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
 			parameter2 = 2
 			timing = 1
-			probability1 = 1
+			probability1 = 100
 			savingthrow = 4
 			savebonus = "2"
 	END
@@ -83,6 +94,7 @@ CREATE ITM "ja#m3w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -91,7 +103,7 @@ CREATE ITM "ja#m3w1"
 			parameter1 = 0
 			parameter2 = 6
 			duration = 30
-			probability1 = 1
+			probability1 = 100
 			savingthrow = 4
 			savebonus = "4"
 	END
@@ -102,7 +114,7 @@ CREATE ITM "ja#m3w1"
 			parameter1 = 6
 			parameter2 = 3
 			duration = 30
-			probability1 = 1
+			probability1 = 100
 			savingthrow = 4
 			savebonus = "4"
 	END
@@ -124,7 +136,7 @@ CREATE ITM "ja#m3w2"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 0
+	WRITE_LONG 0x98 1
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -158,6 +170,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#m3w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=10

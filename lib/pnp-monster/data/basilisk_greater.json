@@ -133,7 +133,7 @@
     "projectiles": [
         {
             "file": "ja#1m3",
-            "copyFromFile": "cloudkil",
+            "copyFromFile": "ja#1m2",
             "description": "Basilisk foul breath",
             "triggerRadius": 42,
             "areaOfEffect": 42,
