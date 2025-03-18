@@ -1,0 +1,97 @@
+{
+    "bafFile": "lib/pnp-monster/bear/ja#m4",
+    "tpaFile": "lib/pnp-monster/bear/black",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "NEAREST"
+    ],
+    "data": {
+        "level1": 3,
+        "strength": 19,
+        "dexterity": 13,
+        "constitution": 15,
+        "intelligence": 4,
+        "wisdom": 12,
+        "charisma": 6,
+        "movement": 12,
+        "ac": 7,
+        "apr": 3,
+        "xpv": 175,
+        "alignment": "NEUTRAL",
+        "morale": 9,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "BEAR",
+        "class": "BEAR_BLACK",
+        "gender": "NIETHER",
+        "size": "Medium"
+    },
+    "removeItems": [
+        "B1-6"
+    ],
+    "items": [
+        {
+            "file": "ja#m4w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 3,
+            "bonusToHit": 4,
+            "damageType": "Slashing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ],
+            "effects": {
+                "damage": [
+                    {
+                        "damageMode": "Normal",
+                        "damageType": "Crushing",
+                        "amount": 0,
+                        "diceSize": 4,
+                        "diceThrown": 2,
+                        "probability1": 10
+                    }
+                ]
+            }
+        },
+        {
+            "file": "ja#m4w2",
+            "equippedSlot": "SHIELD",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 6,
+            "bonusToHit": 8,
+            "damageType": "Piercing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ]
+        }
+    ],
+    "files": [
+        "BDBEARBL",
+        "BEARBL",
+        "BEARBLSU",
+        "PLYBEAR2",
+        "RSBEARBL",
+        "UBDBEAR"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "BEARBLSU"
+            ],
+            "summon": true
+        }
+    ],
+    "removeScripts": [
+        "BEAR"
+    ]
+}

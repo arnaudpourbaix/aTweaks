@@ -200,12 +200,19 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 
 // Basilisk
-BEGIN @5001 DESIGNATED 5001
+// BEGIN @5001 DESIGNATED 5001
+// //GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/lesser.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/greater.tpa"
+
+// Bear
+BEGIN @5002 DESIGNATED 5002
 //GROUP @6
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/lesser.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/greater.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/black.tpa"
 
 
 /*
