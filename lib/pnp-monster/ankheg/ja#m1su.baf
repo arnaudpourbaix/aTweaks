@@ -261,23 +261,6 @@ THEN
 END
 
 IF
-	!GlobalTimerNotExpired("JA#ATCK_ROUND","LOCALS")
-	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLE)
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
-END
-
-IF
 	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLE)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -368,22 +351,6 @@ IF
 THEN
 	RESPONSE #100
 		Continue()
-END
-
-IF
-	!GlobalTimerNotExpired("JA#ATCK_ROUND","LOCALS")
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 IF

@@ -334,14 +334,14 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					level1=6
-					strength=15
+					strength=16
 					dexterity=8
 					constitution=15
 					intelligence=2
-					wisdom=12
-					charisma=11
-					movement=6
-					hp=48
+					wisdom=8
+					charisma=7
+					movement=5
+					hp=54
 					ac=4
 					thac0=15
 					apr=1
@@ -366,22 +366,23 @@ BEGIN
 				LBASILSK
 				SHOUT
 				WTASIGHT
+				WDASIGHT
 				wtrunsgt
 				DW2MP0GE
 				DW2RC2MO
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m2 removeScripts skipFiles END
+			LPF patchCreatureScript STR_VAR script=ja#m2  removeScripts skipFiles END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILLSU~) BEGIN 
 				DEFINE_ARRAY removeScripts BEGIN
 					ja#m2
-					LBASILSK
 					SHOUT
 					WTASIGHT
+					WDASIGHT
 					wtrunsgt
 					DW2MP0GE
 					DW2RC2MO
 				END
-				LPF patchCreatureScript STR_VAR script=ja#m2su removeScripts skipFiles END
+				LPF patchCreatureScript STR_VAR script=ja#m2su  removeScripts skipFiles END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

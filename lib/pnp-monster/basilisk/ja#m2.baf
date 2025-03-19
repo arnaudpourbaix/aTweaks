@@ -261,19 +261,6 @@ THEN
 END
 
 IF
-	!GlobalTimerNotExpired("JA#ATCK_ROUND","LOCALS")
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		AttackOneRound(LastSeenBy(Myself))
-END
-
-IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)

@@ -509,6 +509,18 @@ CREATE ITM "ja#m1w1"
 		STR_VAR
 			resource = "ja#1m1"
 	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			probability1 = 100
+			savingthrow = 2
+			savebonus = "-4"
+		STR_VAR
+			resource = "ja#3m1"
+	END
 
 CREATE ITM "ja#m1w2"
 	WRITE_LONG 0x64 0x72
@@ -574,13 +586,13 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					level1=8
-					strength=21
-					dexterity=10
-					constitution=17
+					strength=17
+					dexterity=11
+					constitution=13
 					intelligence=1
 					wisdom=13
 					charisma=6
-					movement=12
+					movement=10
 					hp=64
 					ac=2
 					thac0=13
@@ -606,11 +618,12 @@ BEGIN
 				ANKHEG
 				SHOUT
 				WTASIGHT
+				WDASIGHT
 				wtrunsgt
 				DW2MP0GE
 				DW2RC2MO
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m1 removeScripts skipFiles END
+			LPF patchCreatureScript STR_VAR script=ja#m1  removeScripts skipFiles END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankh01~) BEGIN 
 				LPF patchCreature
 					INT_VAR
@@ -628,14 +641,14 @@ BEGIN
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
 				DEFINE_ARRAY removeScripts BEGIN
 					ja#m1
-					ANKHEG
 					SHOUT
 					WTASIGHT
+					WDASIGHT
 					wtrunsgt
 					DW2MP0GE
 					DW2RC2MO
 				END
-				LPF patchCreatureScript STR_VAR script=ja#m1su removeScripts skipFiles END
+				LPF patchCreatureScript STR_VAR script=ja#m1su  removeScripts skipFiles END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

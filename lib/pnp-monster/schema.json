@@ -47,6 +47,9 @@
                         "$ref": "#/definitions/RawCreatureAttack"
                     }
                 },
+                "dualWielding": {
+                    "type": "boolean"
+                },
                 "grab": {
                     "type": "object",
                     "properties": {
@@ -127,6 +130,9 @@
                 "data": {
                     "$ref": "#/definitions/RawCreatureData"
                 },
+                "additionalData": {
+                    "$ref": "#/definitions/RawCreatureAdditionalData"
+                },
                 "files": {
                     "type": "array",
                     "items": {
@@ -145,46 +151,16 @@
                         "$ref": "#/definitions/RawItem"
                     }
                 },
-                "itemSlots": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawItemSlot"
-                    }
-                },
                 "spells": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/RawSpell"
                     }
                 },
-                "memorizedSpells": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawMemorizedSpell"
-                    }
-                },
-                "abilities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawCreatureAbility"
-                    }
-                },
                 "projectiles": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/RawProjectile"
-                    }
-                },
-                "removeScripts": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "removeItems": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
                     }
                 },
                 "autoGenerate": {
@@ -194,6 +170,7 @@
             "required": [
                 "bafFile",
                 "data",
+                "additionalData",
                 "files"
             ],
             "additionalProperties": false
@@ -640,6 +617,9 @@
                     "type": "number"
                 },
                 "hp": {
+                    "type": "number"
+                },
+                "bonusHp": {
                     "type": "number"
                 },
                 "ac": {
@@ -1093,6 +1073,315 @@
                 "Gargantuan"
             ]
         },
+        "RawCreatureAdditionalData": {
+            "type": "object",
+            "properties": {
+                "removeScripts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scriptLocation": {
+                    "$ref": "#/definitions/RawScriptLocationEnum"
+                },
+                "removeItems": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "itemSlots": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemSlot"
+                    }
+                },
+                "removeKnownSpells": {
+                    "type": "boolean"
+                },
+                "removeMemorizedSpells": {
+                    "type": "boolean"
+                },
+                "memorizedSpells": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawMemorizedSpell"
+                    }
+                },
+                "abilities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawCreatureAbility"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "RawScriptLocationEnum": {
+            "type": "string",
+            "enum": [
+                "Override",
+                "Class",
+                "Race",
+                "General",
+                "Default"
+            ]
+        },
+        "RawItemSlot": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "slot": {
+                    "$ref": "#/definitions/ItemSlotEnum"
+                }
+            },
+            "required": [
+                "file",
+                "slot"
+            ],
+            "additionalProperties": false
+        },
+        "ItemSlotEnum": {
+            "type": "string",
+            "enum": [
+                "HELMET",
+                "ARMOR",
+                "SHIELD",
+                "GLOVES",
+                "LRING",
+                "RRING",
+                "AMULET",
+                "BELT",
+                "BOOTS",
+                "WEAPON1",
+                "WEAPON2",
+                "WEAPON3",
+                "WEAPON4",
+                "QUIVER1",
+                "QUIVER2",
+                "QUIVER3",
+                "QUIVER4",
+                "CLOAK",
+                "QITEM1",
+                "QITEM2",
+                "QITEM3"
+            ]
+        },
+        "RawMemorizedSpell": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "memorizedCount": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "file"
+            ],
+            "additionalProperties": false
+        },
+        "RawCreatureAbility": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "target": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ObjectIdentifiers"
+                        },
+                        {
+                            "$ref": "#/definitions/AllegianceIdentifiers"
+                        }
+                    ]
+                },
+                "isTargetSpell": {
+                    "type": "boolean"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "timer": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "value"
+                    ],
+                    "additionalProperties": false
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trigger"
+                    }
+                },
+                "targetTrigger": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trigger"
+                    }
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Action"
+                    }
+                },
+                "disableInterrupt": {
+                    "type": "boolean"
+                },
+                "random": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name",
+                "target",
+                "isTargetSpell",
+                "actions"
+            ],
+            "additionalProperties": false
+        },
+        "ObjectIdentifiers": {
+            "type": "string",
+            "enum": [
+                "Nothing",
+                "Myself",
+                "LeaderOf",
+                "GroupOf",
+                "WeakestOf",
+                "StrongestOf",
+                "MostDamagedOf",
+                "LeastDamagedOf",
+                "ProtectedBy",
+                "ProtectorOf",
+                "LastAttackerOf",
+                "LastTargetedBy",
+                "LastCommandedBy",
+                "Nearest",
+                "LastHitter",
+                "LastHelp",
+                "LastTrigger",
+                "LastSeenBy",
+                "LastTalkedToBy",
+                "LastHeardBy",
+                "Player1",
+                "Player2",
+                "Player3",
+                "Player4",
+                "Player5",
+                "Player6",
+                "Protagonist",
+                "StrongestOfMale",
+                "NearestEnemyOf",
+                "SecondNearestEnemyOf",
+                "ThirdNearestEnemyOf",
+                "FourthNearestEnemyOf",
+                "FifthNearestEnemyOf",
+                "SixthNearestEnemyOf",
+                "SeventhNearestEnemyOf",
+                "EighthNearestEnemyOf",
+                "NinthNearestEnemyOf",
+                "TenthNearestEnemyOf",
+                "SecondNearest",
+                "ThirdNearest",
+                "FourthNearest",
+                "FifthNearest",
+                "SixthNearest",
+                "SeventhNearest",
+                "EighthNearest",
+                "NinthNearest",
+                "TenthNearest",
+                "WorstAC",
+                "BestAC",
+                "LastSummonerOf",
+                "NearestEnemyOfType",
+                "SecondNearestEnemyOfType",
+                "ThirdNearestEnemyOfType",
+                "FourthNearestEnemyOfType",
+                "FifthNearestEnemyOfType",
+                "SixthNearestEnemyOfType",
+                "SeventhNearestEnemyOfType",
+                "EigthNearestEnemyOfType",
+                "EighthNearestEnemyOfType",
+                "NinthNearestEnemyOfType",
+                "TenthNearestEnemyOfType",
+                "NearestMyGroupOfType",
+                "SecondNearestMyGroupOfType",
+                "ThirdNearestMyGroupOfType",
+                "FourthNearestMyGroupOfType",
+                "FifthNearestMyGroupOfType",
+                "SixthNearestMyGroupOfType",
+                "SeventhNearestMyGroupOfType",
+                "EigthNearestMyGroupOfType",
+                "EighthNearestMyGroupOfType",
+                "NinthNearestMyGroupOfType",
+                "TenthNearestMyGroupOfType",
+                "Familiar",
+                "FamiliarSummoner",
+                "LastKilled",
+                "NearestAllyOf",
+                "SecondNearestAllyOf",
+                "ThirdNearestAllyOf",
+                "FourthNearestAllyOf",
+                "FifthNearestAllyOf",
+                "SixthNearestAllyOf",
+                "SeventhNearestAllyOf",
+                "EighthNearestAllyOf",
+                "NinthNearestAllyOf",
+                "TenthNearestAllyOf",
+                "FarthestEnemyOf",
+                "SecondFarthestEnemyOf",
+                "ThirdFarthestEnemyOf",
+                "FourthFarthestEnemyOf",
+                "FifthFarthestEnemyOf",
+                "SixthFarthestEnemyOf",
+                "SeventhFarthestEnemyOf",
+                "EighthFarthestEnemyOf",
+                "NinthFarthestEnemyOf",
+                "TenthFarthestEnemyOf"
+            ]
+        },
+        "AllegianceIdentifiers": {
+            "type": "string",
+            "enum": [
+                "GOODCUTOFF",
+                "GOODBUTRED",
+                "GOODBUTBLUE",
+                "EVILCUTOFF",
+                "EVILBUTGREEN",
+                "EVILBUTBLUE",
+                "ENEMY",
+                "ANYONE",
+                "INANIMATE",
+                "PC",
+                "FAMILIAR",
+                "ALLY",
+                "CONTROLLED",
+                "CHARMED",
+                "REALLYCHARMED",
+                "CHARMED_PC",
+                "NOTGOOD",
+                "ANYTHING",
+                "NEUTRAL",
+                "NOTNEUTRAL",
+                "NOTEVIL"
+            ]
+        },
         "RawCreatureAdjustment": {
             "type": "object",
             "properties": {
@@ -1103,7 +1392,10 @@
                     }
                 },
                 "data": {
-                    "$ref": "#/definitions/DeepPartial%3CRawCreatureData%3E"
+                    "$ref": "#/definitions/RawCreatureData"
+                },
+                "additionalData": {
+                    "$ref": "#/definitions/RawCreatureAdditionalData"
                 },
                 "summon": {
                     "type": "boolean"
@@ -1112,165 +1404,6 @@
             "required": [
                 "files"
             ],
-            "additionalProperties": false
-        },
-        "DeepPartial<RawCreatureData>": {
-            "type": "object",
-            "properties": {
-                "level1": {
-                    "type": "number"
-                },
-                "level2": {
-                    "type": "number"
-                },
-                "level3": {
-                    "type": "number"
-                },
-                "strength": {
-                    "type": "number"
-                },
-                "exceptionalStrength": {
-                    "type": "number"
-                },
-                "dexterity": {
-                    "type": "number"
-                },
-                "constitution": {
-                    "type": "number"
-                },
-                "intelligence": {
-                    "type": "number"
-                },
-                "wisdom": {
-                    "type": "number"
-                },
-                "charisma": {
-                    "type": "number"
-                },
-                "movement": {
-                    "type": "number"
-                },
-                "hp": {
-                    "type": "number"
-                },
-                "ac": {
-                    "type": "number"
-                },
-                "crushingAC": {
-                    "type": "number"
-                },
-                "missileAC": {
-                    "type": "number"
-                },
-                "piercingAC": {
-                    "type": "number"
-                },
-                "slashingAC": {
-                    "type": "number"
-                },
-                "resistFire": {
-                    "type": "number"
-                },
-                "resistCold": {
-                    "type": "number"
-                },
-                "resistElectricity": {
-                    "type": "number"
-                },
-                "resistAcid": {
-                    "type": "number"
-                },
-                "resistMagic": {
-                    "type": "number"
-                },
-                "resistSlashing": {
-                    "type": "number"
-                },
-                "resistCrushing": {
-                    "type": "number"
-                },
-                "resistPiercing": {
-                    "type": "number"
-                },
-                "resistMissile": {
-                    "type": "number"
-                },
-                "thac0": {
-                    "type": "number"
-                },
-                "apr": {
-                    "type": "number"
-                },
-                "xpv": {
-                    "type": "number"
-                },
-                "hideShadow": {
-                    "type": "number"
-                },
-                "moveSilent": {
-                    "type": "number"
-                },
-                "alignment": {
-                    "$ref": "#/definitions/AlignIdentifiers"
-                },
-                "saveDeath": {
-                    "type": "number"
-                },
-                "saveWand": {
-                    "type": "number"
-                },
-                "savePolymorph": {
-                    "type": "number"
-                },
-                "saveBreath": {
-                    "type": "number"
-                },
-                "saveSpell": {
-                    "type": "number"
-                },
-                "morale": {
-                    "type": "number"
-                },
-                "moraleBreak": {
-                    "type": "number"
-                },
-                "moraleRecovery": {
-                    "type": "number"
-                },
-                "general": {
-                    "$ref": "#/definitions/GeneralIdentifiers"
-                },
-                "race": {
-                    "$ref": "#/definitions/RaceIdentifiers"
-                },
-                "class": {
-                    "$ref": "#/definitions/ClassIdentifiers"
-                },
-                "gender": {
-                    "$ref": "#/definitions/GenderIdentifiers"
-                },
-                "perfect2weapon": {
-                    "type": "number"
-                },
-                "bump": {
-                    "type": "number"
-                },
-                "seeInvisible": {
-                    "type": "number"
-                },
-                "backstabImmunity": {
-                    "type": "number"
-                },
-                "infravision": {
-                    "type": "number"
-                },
-                "blur": {
-                    "type": "number"
-                },
-                "size": {
-                    "$ref": "#/definitions/SizeEnum"
-                }
-            },
             "additionalProperties": false
         },
         "RawItem": {
@@ -1537,32 +1670,6 @@
                 "speed"
             ],
             "additionalProperties": false
-        },
-        "ItemSlotEnum": {
-            "type": "string",
-            "enum": [
-                "HELMET",
-                "ARMOR",
-                "SHIELD",
-                "GLOVES",
-                "LRING",
-                "RRING",
-                "AMULET",
-                "BELT",
-                "BOOTS",
-                "WEAPON1",
-                "WEAPON2",
-                "WEAPON3",
-                "WEAPON4",
-                "QUIVER1",
-                "QUIVER2",
-                "QUIVER3",
-                "QUIVER4",
-                "CLOAK",
-                "QITEM1",
-                "QITEM2",
-                "QITEM3"
-            ]
         },
         "RawItemAbilityType": {
             "type": "string",
@@ -4351,22 +4458,6 @@
                 }
             }
         },
-        "RawItemSlot": {
-            "type": "object",
-            "properties": {
-                "file": {
-                    "type": "string"
-                },
-                "slot": {
-                    "$ref": "#/definitions/ItemSlotEnum"
-                }
-            },
-            "required": [
-                "file",
-                "slot"
-            ],
-            "additionalProperties": false
-        },
         "RawSpell": {
             "type": "object",
             "properties": {
@@ -4677,218 +4768,6 @@
                 "OutdoorsOnly",
                 "CanTargetInvisible",
                 "CastableWhenSilenced"
-            ]
-        },
-        "RawMemorizedSpell": {
-            "type": "object",
-            "properties": {
-                "file": {
-                    "type": "string"
-                },
-                "memorizedCount": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "file"
-            ],
-            "additionalProperties": false
-        },
-        "RawCreatureAbility": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "target": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ObjectIdentifiers"
-                        },
-                        {
-                            "$ref": "#/definitions/AllegianceIdentifiers"
-                        }
-                    ]
-                },
-                "isTargetSpell": {
-                    "type": "boolean"
-                },
-                "range": {
-                    "type": "number"
-                },
-                "timer": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "name",
-                        "value"
-                    ],
-                    "additionalProperties": false
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Trigger"
-                    }
-                },
-                "targetTrigger": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Trigger"
-                    }
-                },
-                "actions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Action"
-                    }
-                },
-                "disableInterrupt": {
-                    "type": "boolean"
-                },
-                "random": {
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "name",
-                "target",
-                "isTargetSpell",
-                "actions"
-            ],
-            "additionalProperties": false
-        },
-        "ObjectIdentifiers": {
-            "type": "string",
-            "enum": [
-                "Nothing",
-                "Myself",
-                "LeaderOf",
-                "GroupOf",
-                "WeakestOf",
-                "StrongestOf",
-                "MostDamagedOf",
-                "LeastDamagedOf",
-                "ProtectedBy",
-                "ProtectorOf",
-                "LastAttackerOf",
-                "LastTargetedBy",
-                "LastCommandedBy",
-                "Nearest",
-                "LastHitter",
-                "LastHelp",
-                "LastTrigger",
-                "LastSeenBy",
-                "LastTalkedToBy",
-                "LastHeardBy",
-                "Player1",
-                "Player2",
-                "Player3",
-                "Player4",
-                "Player5",
-                "Player6",
-                "Protagonist",
-                "StrongestOfMale",
-                "NearestEnemyOf",
-                "SecondNearestEnemyOf",
-                "ThirdNearestEnemyOf",
-                "FourthNearestEnemyOf",
-                "FifthNearestEnemyOf",
-                "SixthNearestEnemyOf",
-                "SeventhNearestEnemyOf",
-                "EighthNearestEnemyOf",
-                "NinthNearestEnemyOf",
-                "TenthNearestEnemyOf",
-                "SecondNearest",
-                "ThirdNearest",
-                "FourthNearest",
-                "FifthNearest",
-                "SixthNearest",
-                "SeventhNearest",
-                "EighthNearest",
-                "NinthNearest",
-                "TenthNearest",
-                "WorstAC",
-                "BestAC",
-                "LastSummonerOf",
-                "NearestEnemyOfType",
-                "SecondNearestEnemyOfType",
-                "ThirdNearestEnemyOfType",
-                "FourthNearestEnemyOfType",
-                "FifthNearestEnemyOfType",
-                "SixthNearestEnemyOfType",
-                "SeventhNearestEnemyOfType",
-                "EigthNearestEnemyOfType",
-                "EighthNearestEnemyOfType",
-                "NinthNearestEnemyOfType",
-                "TenthNearestEnemyOfType",
-                "NearestMyGroupOfType",
-                "SecondNearestMyGroupOfType",
-                "ThirdNearestMyGroupOfType",
-                "FourthNearestMyGroupOfType",
-                "FifthNearestMyGroupOfType",
-                "SixthNearestMyGroupOfType",
-                "SeventhNearestMyGroupOfType",
-                "EigthNearestMyGroupOfType",
-                "EighthNearestMyGroupOfType",
-                "NinthNearestMyGroupOfType",
-                "TenthNearestMyGroupOfType",
-                "Familiar",
-                "FamiliarSummoner",
-                "LastKilled",
-                "NearestAllyOf",
-                "SecondNearestAllyOf",
-                "ThirdNearestAllyOf",
-                "FourthNearestAllyOf",
-                "FifthNearestAllyOf",
-                "SixthNearestAllyOf",
-                "SeventhNearestAllyOf",
-                "EighthNearestAllyOf",
-                "NinthNearestAllyOf",
-                "TenthNearestAllyOf",
-                "FarthestEnemyOf",
-                "SecondFarthestEnemyOf",
-                "ThirdFarthestEnemyOf",
-                "FourthFarthestEnemyOf",
-                "FifthFarthestEnemyOf",
-                "SixthFarthestEnemyOf",
-                "SeventhFarthestEnemyOf",
-                "EighthFarthestEnemyOf",
-                "NinthFarthestEnemyOf",
-                "TenthFarthestEnemyOf"
-            ]
-        },
-        "AllegianceIdentifiers": {
-            "type": "string",
-            "enum": [
-                "GOODCUTOFF",
-                "GOODBUTRED",
-                "GOODBUTBLUE",
-                "EVILCUTOFF",
-                "EVILBUTGREEN",
-                "EVILBUTBLUE",
-                "ENEMY",
-                "ANYONE",
-                "INANIMATE",
-                "PC",
-                "FAMILIAR",
-                "ALLY",
-                "CONTROLLED",
-                "CHARMED",
-                "REALLYCHARMED",
-                "CHARMED_PC",
-                "NOTGOOD",
-                "ANYTHING",
-                "NEUTRAL",
-                "NOTNEUTRAL",
-                "NOTEVIL"
             ]
         },
         "RawProjectile": {

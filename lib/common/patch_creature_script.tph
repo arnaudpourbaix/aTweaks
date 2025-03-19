@@ -11,6 +11,7 @@ INT_VAR
   defaultEmpty = 0
 STR_VAR
   script        = "" // Script to assign to first available slot in this order: override, class, race, general, default
+  slot          = "" // Slot, will fail if not empty
   removeScripts = "" // Array of scripts to remove
   skipFiles     = "" // Array of files to skip
 BEGIN
@@ -51,24 +52,24 @@ BEGIN
         SET defaultEmpty=1
       END
     END
-
-    PATCH_IF overrideEmpty = 1 AND assigned = 0 BEGIN
+    
+    PATCH_IF overrideEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "Override") BEGIN
       SPRINT overrideScript EVALUATE_BUFFER "%script%"
       SET assigned=1
     END
-    PATCH_IF classEmpty = 1 AND assigned = 0 BEGIN
+    PATCH_IF classEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "Class") BEGIN
       SPRINT classScript EVALUATE_BUFFER "%script%"
       SET assigned=1
     END
-    PATCH_IF raceEmpty = 1 AND assigned = 0 BEGIN
+    PATCH_IF raceEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "Race") BEGIN
       SPRINT raceScript EVALUATE_BUFFER "%script%"
       SET assigned=1
     END
-    PATCH_IF generalEmpty = 1 AND assigned = 0 BEGIN
+    PATCH_IF generalEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "General") BEGIN
       SPRINT generalScript EVALUATE_BUFFER "%script%"
       SET assigned=1
     END
-    PATCH_IF defaultEmpty = 1 AND assigned = 0 BEGIN
+    PATCH_IF defaultEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "Default") BEGIN
       SPRINT defaultScript EVALUATE_BUFFER "%script%"
       SET assigned = 1
     END

@@ -1,0 +1,126 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4su.baf~
+
+CREATE ITM "ja#m4w1"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x86 4
+	WRITE_BYTE 0x88 3
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			probability1 = 10
+			dicenumber = 2
+			dicesize = 4
+	END
+
+CREATE ITM "ja#m4w2"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_SHORT 0x86 8
+	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+
+ACTION_FOR_EACH ~file~ IN
+	BDBEARBL
+	BEARBL
+	BEARBLSU
+	PLYBEAR2
+	RSBEARBL
+	UBDBEAR
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~B1-6~
+			ADD_CRE_ITEM ~ja#m4w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#m4w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			LPF patchCreature
+				INT_VAR
+					level1=3
+					strength=15
+					dexterity=10
+					constitution=15
+					intelligence=4
+					wisdom=12
+					charisma=7
+					movement=10
+					hp=27
+					ac=7
+					thac0=18
+					apr=2
+					xpv=175
+					alignment=34
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
+					morale=9
+					moraleBreak=4
+					moraleRecovery=15
+					general=255
+					race=103
+					class=104
+					gender=4
+					sex=4
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN
+				CBEAR
+				BEAR
+				SHOUT
+				WTASIGHT
+				WDASIGHT
+				wtrunsgt
+				DW2MP0GE
+				DW2RC2MO
+			END
+			LPF patchCreatureScript STR_VAR script=ja#m4  removeScripts skipFiles END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBLSU~) BEGIN 
+				DEFINE_ARRAY removeScripts BEGIN
+					ja#m4
+					SHOUT
+					WTASIGHT
+					WDASIGHT
+					wtrunsgt
+					DW2MP0GE
+					DW2RC2MO
+				END
+				LPF patchCreatureScript STR_VAR script=ja#m4su  removeScripts skipFiles END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

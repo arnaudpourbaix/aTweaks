@@ -56,17 +56,6 @@ CREATE SPL "ja#1m3"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 273
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-			savingthrow = 4
-			savebonus = "2"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
 			opcode = 55
 			target = 2
 			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
@@ -180,8 +169,8 @@ BEGIN
 					intelligence=7
 					wisdom=12
 					charisma=11
-					movement=6
-					hp=80
+					movement=5
+					hp=125
 					ac=2
 					thac0=11
 					apr=2
@@ -206,22 +195,23 @@ BEGIN
 				GBASILSK
 				SHOUT
 				WTASIGHT
+				WDASIGHT
 				wtrunsgt
 				DW2MP0GE
 				DW2RC2MO
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m3 removeScripts skipFiles END
+			LPF patchCreatureScript STR_VAR script=ja#m3  removeScripts skipFiles END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILGSU~) BEGIN 
 				DEFINE_ARRAY removeScripts BEGIN
 					ja#m3
-					GBASILSK
 					SHOUT
 					WTASIGHT
+					WDASIGHT
 					wtrunsgt
 					DW2MP0GE
 					DW2RC2MO
 				END
-				LPF patchCreatureScript STR_VAR script=ja#m3su removeScripts skipFiles END
+				LPF patchCreatureScript STR_VAR script=ja#m3su  removeScripts skipFiles END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

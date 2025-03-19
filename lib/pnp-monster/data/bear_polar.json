@@ -1,0 +1,188 @@
+{
+    "bafFile": "lib/pnp-monster/bear/ja#m7",
+    "tpaFile": "lib/pnp-monster/bear/polar",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "NEAREST"
+    ],
+    "dualWielding": true,
+    "data": {
+        "level1": 8,
+        "bonusHp": 12,
+        "strength": 20,
+        "dexterity": 10,
+        "constitution": 16,
+        "intelligence": 4,
+        "wisdom": 13,
+        "charisma": 7,
+        "movement": 12,
+        "ac": 6,
+        "apr": 3,
+        "xpv": 1400,
+        "alignment": "NEUTRAL",
+        "morale": 9,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "BEAR",
+        "class": "BEAR_POLAR",
+        "gender": "NIETHER",
+        "size": "Huge"
+    },
+    "additionalData": {
+        "removeItems": [
+            "B1-12",
+            "BEARPOSU"
+        ],
+        "removeScripts": [
+            "CBEAR",
+            "BEAR"
+        ]
+    },
+    "items": [
+        {
+            "file": "ja#m7w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 10,
+            "bonusToHit": 0,
+            "damageType": "Slashing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ],
+            "effects": {
+                "damage": [
+                    {
+                        "damageMode": "Normal",
+                        "damageType": "Crushing",
+                        "amount": 0,
+                        "diceSize": 6,
+                        "diceThrown": 3,
+                        "probability1": 10
+                    }
+                ]
+            }
+        },
+        {
+            "file": "ja#m7w2",
+            "equippedSlot": "SHIELD",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 2,
+            "diceSize": 6,
+            "bonusToHit": 0,
+            "damageType": "Piercing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ]
+        }
+    ],
+    "spells": [
+        {
+            "name": "Stream of frost",
+            "file": "ja#1m7",
+            "memorizedCount": 1,
+            "stringRef": 4007,
+            "description": "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.",
+            "target": "AnyPointWithinRange",
+            "spellType": "Innate",
+            "secondaryType": "OffensiveDamage",
+            "type": "Ranged",
+            "projectile": "ja#1m7",
+            "range": 10,
+            "speed": 0,
+            "effects": {
+                "shared": {
+                    "timing": "InstantPermanentUntilDeath"
+                },
+                "damage": [
+                    {
+                        "amount": 0,
+                        "damageMode": "Normal",
+                        "damageType": "Cold",
+                        "diceSize": 4,
+                        "diceThrown": 6,
+                        "saveTypes": [
+                            "Breath"
+                        ],
+                        "flags": [
+                            "SaveForHalf"
+                        ]
+                    }
+                ],
+                "paralyze": [
+                    {
+                        "idsFile": "EA",
+                        "idsEntry": "ANYONE",
+                        "duration": 60,
+                        "saveTypes": [
+                            "ParalyzePoisonDeath"
+                        ],
+                        "saveBonus": -2
+                    }
+                ],
+                "displayPortraitIcon": [
+                    {
+                        "icon": "Held",
+                        "duration": 60,
+                        "saveTypes": [
+                            "ParalyzePoisonDeath"
+                        ],
+                        "saveBonus": -2
+                    }
+                ],
+                "playSound": [
+                    {
+                        "resource": "MISC_04A",
+                        "saveTypes": [
+                            "ParalyzePoisonDeath"
+                        ],
+                        "saveBonus": -2
+                    },
+                    {
+                        "resource": "EFF_E03",
+                        "timing": "DelayPermanent",
+                        "duration": 60,
+                        "saveTypes": [
+                            "ParalyzePoisonDeath"
+                        ],
+                        "saveBonus": -2
+                    }
+                ]
+            }
+        }
+    ],
+    "files": [
+        "BEARPO",
+        "BEARPO1",
+        "BEARPO2",
+        "BEARPO3",
+        "BEARPOSU",
+        "KALDRAN"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "BEARPOSU"
+            ],
+            "summon": true
+        },
+        {
+            "files": [
+                "KALDRAN"
+            ],
+            "data": {
+                "morale": 15,
+                "level1": 12,
+                "resistCold": 100
+            }
+        }
+    ]
+}

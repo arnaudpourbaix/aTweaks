@@ -213,6 +213,9 @@ BEGIN @5002 DESIGNATED 5002
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/black.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/brown.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/cave.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/polar.tpa"
 
 
 /*

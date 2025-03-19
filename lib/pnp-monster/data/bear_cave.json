@@ -1,6 +1,6 @@
 {
-    "bafFile": "lib/pnp-monster/bear/ja#m4",
-    "tpaFile": "lib/pnp-monster/bear/black",
+    "bafFile": "lib/pnp-monster/bear/ja#m6",
+    "tpaFile": "lib/pnp-monster/bear/cave",
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
@@ -8,30 +8,32 @@
     ],
     "dualWielding": true,
     "data": {
-        "level1": 3,
-        "strength": 15,
+        "level1": 6,
+        "bonusHp": 8,
+        "strength": 20,
         "dexterity": 10,
-        "constitution": 15,
+        "constitution": 16,
         "intelligence": 4,
-        "wisdom": 12,
+        "wisdom": 13,
         "charisma": 7,
         "movement": 12,
-        "ac": 7,
+        "ac": 6,
         "apr": 3,
-        "xpv": 175,
+        "xpv": 650,
         "alignment": "NEUTRAL",
         "morale": 9,
         "moraleBreak": 4,
         "moraleRecovery": 15,
         "general": "MONSTER",
         "race": "BEAR",
-        "class": "BEAR_BLACK",
+        "class": "BEAR_CAVE",
         "gender": "NIETHER",
-        "size": "Medium"
+        "size": "Huge"
     },
     "additionalData": {
         "removeItems": [
-            "B1-6"
+            "B1-10",
+            "BEARCASU"
         ],
         "removeScripts": [
             "CBEAR",
@@ -40,13 +42,13 @@
     },
     "items": [
         {
-            "file": "ja#m4w1",
+            "file": "ja#m6w1",
             "equippedSlot": "WEAPON1",
             "enchantment": 0,
             "type": "Melee",
             "range": 1,
             "diceThrown": 1,
-            "diceSize": 3,
+            "diceSize": 8,
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
@@ -59,7 +61,7 @@
                         "damageMode": "Normal",
                         "damageType": "Crushing",
                         "amount": 0,
-                        "diceSize": 4,
+                        "diceSize": 6,
                         "diceThrown": 2,
                         "probability1": 10
                     }
@@ -67,13 +69,13 @@
             }
         },
         {
-            "file": "ja#m4w2",
+            "file": "ja#m6w2",
             "equippedSlot": "SHIELD",
             "enchantment": 0,
             "type": "Melee",
             "range": 1,
             "diceThrown": 1,
-            "diceSize": 6,
+            "diceSize": 12,
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
@@ -83,19 +85,28 @@
         }
     ],
     "files": [
-        "BDBEARBL",
-        "BEARBL",
-        "BEARBLSU",
-        "PLYBEAR2",
-        "RSBEARBL",
-        "UBDBEAR"
+        "BD328OSO",
+        "BDBEARCA",
+        "BEARCA",
+        "BEARCASU",
+        "CAVENE",
+        "URSA"
     ],
     "adjustments": [
         {
             "files": [
-                "BEARBLSU"
+                "BEARCASU"
             ],
             "summon": true
+        },
+        {
+            "files": [
+                "BDBEARCA"
+            ],
+            "additionalData": {
+                "removeMemorizedSpells": false,
+                "scriptLocation": "General"
+            }
         }
     ]
 }

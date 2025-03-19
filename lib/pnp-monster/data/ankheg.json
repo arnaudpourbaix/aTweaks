@@ -9,9 +9,9 @@
     ],
     "data": {
         "level1": 8,
-        "strength": 21,
-        "dexterity": 10,
-        "constitution": 17,
+        "strength": 17,
+        "dexterity": 11,
+        "constitution": 13,
         "intelligence": 1,
         "wisdom": 13,
         "charisma": 6,
@@ -29,49 +29,54 @@
         "gender": "NIETHER",
         "size": "Huge"
     },
-    "abilities": [
-        {
-            "name": "Acidic Enzymes",
-            "isTargetSpell": false,
-            "disableInterrupt": true,
-            "triggers": [
-                {
-                    "name": "HPPercentLT",
-                    "params": [
-                        "Myself",
-                        50
-                    ]
-                },
-                {
-                    "name": "HaveSpellRES",
-                    "params": [
-                        "ja#2m1"
-                    ]
-                }
-            ],
-            "actions": [
-                {
-                    "name": "SelectWeaponAbility",
-                    "params": [
-                        "SLOT_WEAPON1",
-                        "0"
-                    ]
-                },
-                {
-                    "name": "AttackOneRound",
-                    "params": [
-                        "LastSeenBy"
-                    ]
-                }
-            ],
-            "target": "NearestEnemyOf",
-            "range": 30
-        }
-    ],
-    "removeItems": [
-        "ANKHEG1",
-        "ANKHEG2"
-    ],
+    "additionalData": {
+        "abilities": [
+            {
+                "name": "Acidic Enzymes",
+                "isTargetSpell": false,
+                "disableInterrupt": true,
+                "triggers": [
+                    {
+                        "name": "HPPercentLT",
+                        "params": [
+                            "Myself",
+                            50
+                        ]
+                    },
+                    {
+                        "name": "HaveSpellRES",
+                        "params": [
+                            "ja#2m1"
+                        ]
+                    }
+                ],
+                "actions": [
+                    {
+                        "name": "SelectWeaponAbility",
+                        "params": [
+                            "SLOT_WEAPON1",
+                            "0"
+                        ]
+                    },
+                    {
+                        "name": "AttackOneRound",
+                        "params": [
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "range": 30
+            }
+        ],
+        "removeScripts": [
+            "ANKHEG"
+        ],
+        "removeItems": [
+            "ANKHEG1",
+            "ANKHEG2"
+        ]
+    },
     "items": [
         {
             "file": "ja#m1w1",
@@ -130,7 +135,7 @@
         "file": "ja#3m1",
         "probability": 100,
         "saveBonus": -4,
-        "weapon": "1",
+        "weaponFile": "ja#m1w1",
         "duration": 18
     },
     "spells": [
@@ -230,9 +235,6 @@
         "BDNEO",
         "BPANKHE1",
         "wiankhe1"
-    ],
-    "removeScripts": [
-        "ANKHEG"
     ],
     "adjustments": [
         {

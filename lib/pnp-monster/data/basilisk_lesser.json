@@ -8,12 +8,12 @@
     ],
     "data": {
         "level1": 6,
-        "strength": 15,
+        "strength": 16,
         "dexterity": 8,
         "constitution": 15,
         "intelligence": 2,
-        "wisdom": 12,
-        "charisma": 11,
+        "wisdom": 8,
+        "charisma": 7,
         "movement": 6,
         "ac": 4,
         "apr": 1,
@@ -28,47 +28,52 @@
         "gender": "NIETHER",
         "size": "Medium"
     },
-    "abilities": [
-        {
-            "name": "Petrification",
-            "isTargetSpell": false,
-            "targetTrigger": [
-                {
-                    "name": "CheckStatGT",
-                    "params": [
-                        "{Target}",
-                        "0",
-                        "HELD"
-                    ],
-                    "negation": true
-                },
-                {
-                    "name": "StateCheck",
-                    "params": [
-                        "{Target}",
-                        "STATE_SLOWED"
-                    ],
-                    "negation": true
-                }
-            ],
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m2",
-                        "LastSeenBy"
-                    ]
-                }
-            ],
-            "target": "NearestEnemyOf",
-            "random": true,
-            "range": 30
-        }
-    ],
-    "removeItems": [
-        "BASILL1",
-        "BASILL2"
-    ],
+    "additionalData": {
+        "abilities": [
+            {
+                "name": "Petrification",
+                "isTargetSpell": false,
+                "targetTrigger": [
+                    {
+                        "name": "CheckStatGT",
+                        "params": [
+                            "{Target}",
+                            "0",
+                            "HELD"
+                        ],
+                        "negation": true
+                    },
+                    {
+                        "name": "StateCheck",
+                        "params": [
+                            "{Target}",
+                            "STATE_SLOWED"
+                        ],
+                        "negation": true
+                    }
+                ],
+                "actions": [
+                    {
+                        "name": "ForceSpellRES",
+                        "params": [
+                            "ja#1m2",
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "random": true,
+                "range": 30
+            }
+        ],
+        "removeItems": [
+            "BASILL1",
+            "BASILL2"
+        ],
+        "removeScripts": [
+            "LBASILSK"
+        ]
+    },
     "items": [
         {
             "file": "ja#m2w1",
@@ -262,8 +267,5 @@
             ],
             "summon": true
         }
-    ],
-    "removeScripts": [
-        "LBASILSK"
     ]
 }

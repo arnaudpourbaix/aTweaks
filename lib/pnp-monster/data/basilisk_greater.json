@@ -6,6 +6,7 @@
     "targetPriorities": [
         "NEAREST"
     ],
+    "dualWielding": true,
     "data": {
         "level1": 10,
         "strength": 20,
@@ -16,7 +17,7 @@
         "charisma": 11,
         "movement": 6,
         "ac": 2,
-        "apr": 2,
+        "apr": 3,
         "xpv": 7000,
         "alignment": "NEUTRAL",
         "morale": 16,
@@ -28,48 +29,63 @@
         "gender": "NIETHER",
         "size": "Large"
     },
-    "abilities": [
-        {
-            "name": "Petrification",
-            "isTargetSpell": false,
-            "targetTrigger": [
-                {
-                    "name": "CheckStatGT",
-                    "params": [
-                        "{Target}",
-                        "0",
-                        "HELD"
-                    ],
-                    "negation": true
-                },
-                {
-                    "name": "StateCheck",
-                    "params": [
-                        "{Target}",
-                        "STATE_SLOWED"
-                    ],
-                    "negation": true
-                }
-            ],
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m2",
-                        "LastSeenBy"
-                    ]
-                }
-            ],
-            "target": "NearestEnemyOf",
-            "random": true,
-            "range": 30
-        }
-    ],
-    "removeItems": [
-        "BASILG1",
-        "BASILG2",
-        "BASILG3"
-    ],
+    "additionalData": {
+        "removeScripts": [
+            "GBASILSK"
+        ],
+        "removeItems": [
+            "BASILG1",
+            "BASILG2",
+            "BASILG3"
+        ],
+        "abilities": [
+            {
+                "name": "Petrification",
+                "isTargetSpell": false,
+                "targetTrigger": [
+                    {
+                        "name": "CheckStatGT",
+                        "params": [
+                            "{Target}",
+                            "0",
+                            "HELD"
+                        ],
+                        "negation": true
+                    },
+                    {
+                        "name": "StateCheck",
+                        "params": [
+                            "{Target}",
+                            "STATE_SLOWED"
+                        ],
+                        "negation": true
+                    }
+                ],
+                "actions": [
+                    {
+                        "name": "ForceSpellRES",
+                        "params": [
+                            "ja#1m2",
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "random": true,
+                "range": 30
+            }
+        ],
+        "memorizedSpells": [
+            {
+                "file": "ja#1m2",
+                "memorizedCount": 1
+            },
+            {
+                "file": "ja#2m2",
+                "memorizedCount": 1
+            }
+        ]
+    },
     "items": [
         {
             "file": "ja#m3w1",
@@ -79,7 +95,7 @@
             "range": 1,
             "diceThrown": 1,
             "diceSize": 6,
-            "bonusToHit": 4,
+            "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
             "flags": [
@@ -114,7 +130,7 @@
             "range": 1,
             "diceThrown": 2,
             "diceSize": 8,
-            "bonusToHit": 8,
+            "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
             "flags": [
@@ -185,16 +201,6 @@
             }
         }
     ],
-    "memorizedSpells": [
-        {
-            "file": "ja#1m2",
-            "memorizedCount": 1
-        },
-        {
-            "file": "ja#2m2",
-            "memorizedCount": 1
-        }
-    ],
     "files": [
         "AC#BASGR",
         "BASILG",
@@ -211,8 +217,5 @@
             ],
             "summon": true
         }
-    ],
-    "removeScripts": [
-        "GBASILSK"
     ]
 }
