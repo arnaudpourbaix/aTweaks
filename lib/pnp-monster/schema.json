@@ -103,29 +103,11 @@
                         "$ref": "#/definitions/Action"
                     }
                 },
-                "trackingCustomCode": {
-                    "type": "object",
-                    "properties": {
-                        "before": {
-                            "$ref": "#/definitions/Statements"
-                        },
-                        "replace": {
-                            "$ref": "#/definitions/Statements"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                "combatCustomCode": {
-                    "type": "object",
-                    "properties": {
-                        "before": {
-                            "$ref": "#/definitions/Statements"
-                        },
-                        "replace": {
-                            "$ref": "#/definitions/Statements"
-                        }
-                    },
-                    "additionalProperties": false
+                "customCode": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CustomCode"
+                    }
                 },
                 "data": {
                     "$ref": "#/definitions/RawCreatureData"
@@ -339,6 +321,53 @@
                 "Wait",
                 "SmallWait",
                 "SetInterrupt"
+            ]
+        },
+        "CustomCode": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "$ref": "#/definitions/CustomCodeLocation"
+                },
+                "type": {
+                    "$ref": "#/definitions/CustomCodeType"
+                },
+                "statements": {
+                    "$ref": "#/definitions/Statements"
+                }
+            },
+            "required": [
+                "location",
+                "type",
+                "statements"
+            ],
+            "additionalProperties": false
+        },
+        "CustomCodeLocation": {
+            "type": "string",
+            "enum": [
+                "destroyUponDeath",
+                "init",
+                "rest",
+                "turnHostile",
+                "detectCombat",
+                "listenToShouts",
+                "trackTargets",
+                "attack",
+                "handlePanic",
+                "followSummoner",
+                "randomWalk",
+                "creatureAbilities",
+                "combatRandomWalk",
+                "noActionOutsideOfCombat"
+            ]
+        },
+        "CustomCodeType": {
+            "type": "string",
+            "enum": [
+                "insertBefore",
+                "insertAfter",
+                "replace"
             ]
         },
         "Statements": {
@@ -1469,6 +1498,12 @@
                                 "$ref": "#/definitions/ArmorClassBonusEffect"
                             }
                         },
+                        "characterColorPulse": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharacterColorPulseEffect"
+                            }
+                        },
                         "castSpell": {
                             "type": "array",
                             "items": {
@@ -1893,6 +1928,121 @@
                 "PiercingWeapons",
                 "SlashingWeapons",
                 "SetBaseArmorClassToValue"
+            ]
+        },
+        "CharacterColorPulseEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "object",
+                    "properties": {
+                        "red": {
+                            "type": "number"
+                        },
+                        "green": {
+                            "type": "number"
+                        },
+                        "blue": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "red",
+                        "green",
+                        "blue"
+                    ],
+                    "additionalProperties": false
+                },
+                "location": {
+                    "$ref": "#/definitions/RawEffectColorPulseLocation"
+                }
+            },
+            "required": [
+                "color",
+                "location"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectColorPulseLocation": {
+            "type": "string",
+            "enum": [
+                "AvatarArmorGrey",
+                "AvatarArmorMinorColor",
+                "AvatarArmorMajorColor",
+                "AvatarArmorSkinColor",
+                "AvatarArmorStrapColor",
+                "AvatarArmorArmorTrimming",
+                "AvatarArmorHair",
+                "WeaponQuillonsCrossguard",
+                "WeaponStaffMinor",
+                "WeaponPink",
+                "WeaponYellow",
+                "WeaponGripStaffMinor",
+                "WeaponHeadBladeMinor",
+                "WeaponGreen",
+                "ShieldHub",
+                "ShieldInterior",
+                "ShieldPanel",
+                "ShieldYellow",
+                "ShieldGrip",
+                "ShieldBodyTrim",
+                "ShieldGreen",
+                "HelmetWings",
+                "HelmetDetail",
+                "HelmetPlume",
+                "HelmetYellow",
+                "HelmetFace",
+                "HelmetExterior",
+                "HelmetGreen",
+                "WholeBody"
             ]
         },
         "CastSpellEffect": {
@@ -4525,6 +4675,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ArmorClassBonusEffect"
+                            }
+                        },
+                        "characterColorPulse": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharacterColorPulseEffect"
                             }
                         },
                         "castSpell": {

@@ -56,8 +56,16 @@
                 "AddStrengthBonus"
             ],
             "effects": {
+                "displayString": [
+                    {
+                        "index": 0,
+                        "stringRef": "4007",
+                        "probability1": 10
+                    }
+                ],
                 "damage": [
                     {
+                        "index": 1,
                         "damageMode": "Normal",
                         "damageType": "Crushing",
                         "amount": 0,
@@ -84,88 +92,12 @@
             ]
         }
     ],
-    "spells": [
-        {
-            "name": "Stream of frost",
-            "file": "ja#1m7",
-            "memorizedCount": 1,
-            "stringRef": 4007,
-            "description": "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.",
-            "target": "AnyPointWithinRange",
-            "spellType": "Innate",
-            "secondaryType": "OffensiveDamage",
-            "type": "Ranged",
-            "projectile": "ja#1m7",
-            "range": 10,
-            "speed": 0,
-            "effects": {
-                "shared": {
-                    "timing": "InstantPermanentUntilDeath"
-                },
-                "damage": [
-                    {
-                        "amount": 0,
-                        "damageMode": "Normal",
-                        "damageType": "Cold",
-                        "diceSize": 4,
-                        "diceThrown": 6,
-                        "saveTypes": [
-                            "Breath"
-                        ],
-                        "flags": [
-                            "SaveForHalf"
-                        ]
-                    }
-                ],
-                "paralyze": [
-                    {
-                        "idsFile": "EA",
-                        "idsEntry": "ANYONE",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ],
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Held",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ],
-                "playSound": [
-                    {
-                        "resource": "MISC_04A",
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    },
-                    {
-                        "resource": "EFF_E03",
-                        "timing": "DelayPermanent",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ]
-            }
-        }
-    ],
     "files": [
         "BEARPO",
         "BEARPO1",
         "BEARPO2",
         "BEARPO3",
-        "BEARPOSU",
-        "KALDRAN"
+        "BEARPOSU"
     ],
     "adjustments": [
         {
@@ -173,16 +105,6 @@
                 "BEARPOSU"
             ],
             "summon": true
-        },
-        {
-            "files": [
-                "KALDRAN"
-            ],
-            "data": {
-                "morale": 15,
-                "level1": 12,
-                "resistCold": 100
-            }
         }
     ]
 }

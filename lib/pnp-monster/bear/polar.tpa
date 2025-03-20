@@ -22,6 +22,14 @@ CREATE ITM "ja#m7w1"
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4007)
+			parameter2 = 0
+			probability1 = 10
+	END
+	LPF ADD_EFFECT
+		INT_VAR
 			opcode = 12
 			target = 2
 			parameter1 = 0
@@ -57,7 +65,6 @@ ACTION_FOR_EACH ~file~ IN
 	BEARPO2
 	BEARPO3
 	BEARPOSU
-	KALDRAN
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -121,22 +128,6 @@ BEGIN
 					DW2RC2MO
 				END
 				LPF patchCreatureScript STR_VAR script=ja#m7su  removeScripts skipFiles END
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~KALDRAN~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=12
-						hp=114
-						resistCold=100
-						thac0=9
-						saveDeath=7
-						saveWand=9
-						savePolymorph=8
-						saveBreath=8
-						saveSpell=10
-						morale=15
-						moraleRecovery=30
-				END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

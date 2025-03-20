@@ -7,8 +7,8 @@ COPY_EXISTING "ja#1m2.pro" ~override/ja#1m3.pro~
 		INSERT_BYTES 0x100 0x100
 	END
 	WRITE_LONG 0x200 64
-	WRITE_SHORT 0x204 42
-	WRITE_SHORT 0x206 42
+	WRITE_SHORT 0x204 85
+	WRITE_SHORT 0x206 85
 ADD_PROJECTILE ~override/ja#1m3.pro~ ~Basilisk foul breath~
 
 CREATE SPL "ja#1m3"

@@ -55,8 +55,16 @@
                 "AddStrengthBonus"
             ],
             "effects": {
+                "displayString": [
+                    {
+                        "index": 0,
+                        "stringRef": "4007",
+                        "probability1": 10
+                    }
+                ],
                 "damage": [
                     {
+                        "index": 1,
                         "damageMode": "Normal",
                         "damageType": "Crushing",
                         "amount": 0,

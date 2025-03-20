@@ -49,9 +49,13 @@
 @189 = ~PnP Plant and creatures~
 @190 = ~PnP Elementals~
 @191 = ~Increase the Hit Dice of Elemental Princes~
-@5000 = ~Ankhegs~
-@5001 = ~Basilisks~
-@5002 = ~Bears~
+
+@5000 = ~Core monsters (required)~
+@5001  = ~Core monsters component is not installed.~
+@5010 = ~Ankhegs~
+@5020 = ~Basilisks~
+@5030 = ~Bears~
+@5040 = ~Carrion Crawlers~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

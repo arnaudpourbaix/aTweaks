@@ -43,6 +43,14 @@ THEN
 		Enemy()
 END
 
+// Random walk on panic
+IF
+	StateCheck(Myself,STATE_PANIC)
+THEN
+	RESPONSE #100
+		RandomWalkContinuous()
+END
+
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)

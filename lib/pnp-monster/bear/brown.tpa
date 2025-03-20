@@ -22,6 +22,14 @@ CREATE ITM "ja#m5w1"
 	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4007)
+			parameter2 = 0
+			probability1 = 10
+	END
+	LPF ADD_EFFECT
+		INT_VAR
 			opcode = 12
 			target = 2
 			parameter1 = 0

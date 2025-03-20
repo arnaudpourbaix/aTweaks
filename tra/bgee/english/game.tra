@@ -790,7 +790,8 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4004 = ~Petrified~
 @4005 = ~Turning to stone~
 @4006 = ~Foul breath~
-@4007 = ~Stream of frost~
+@4007 = ~Hug~
+@4008 = ~Improved stream of frost~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

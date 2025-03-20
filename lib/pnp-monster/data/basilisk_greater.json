@@ -151,8 +151,8 @@
             "file": "ja#1m3",
             "copyFromFile": "ja#1m2",
             "description": "Basilisk foul breath",
-            "triggerRadius": 42,
-            "areaOfEffect": 42,
+            "triggerRadius": 85,
+            "areaOfEffect": 85,
             "triggerCount": 0,
             "areaProjectileFlags": [
                 "AffectOnlyEnemies"

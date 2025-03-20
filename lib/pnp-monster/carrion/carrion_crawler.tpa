@@ -1,0 +1,142 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/carrion/ja#m9.baf~
+
+CREATE ITM "ja#m9w1"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0xaa
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 2
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF set_enchantment INT_VAR enchantment = 0 END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			parameter1 = 3757824
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+			savingthrow = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 13
+			duration = 42
+			probability1 = 100
+			savingthrow = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 141
+			target = 2
+			parameter1 = 0
+			parameter2 = 1
+			timing = 1
+			probability1 = 100
+			savingthrow = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 109
+			target = 2
+			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
+			parameter2 = 2
+			duration = 42
+			probability1 = 100
+			savingthrow = 4
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+			savingthrow = 4
+		STR_VAR
+			resource = "EFF_P11"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			timing = 4
+			duration = 42
+			probability1 = 100
+			savingthrow = 4
+		STR_VAR
+			resource = "EFF_E05"
+	END
+
+ACTION_FOR_EACH ~file~ IN
+	BPCCRAW1
+	BPCRCW01
+	CARRIO
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~CARRIO1~
+			ADD_CRE_ITEM ~ja#m9w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			LPF patchCreature
+				INT_VAR
+					level1=3
+					strength=14
+					dexterity=13
+					constitution=16
+					intelligence=1
+					wisdom=12
+					charisma=5
+					movement=10
+					hp=30
+					ac=3
+					thac0=18
+					apr=8
+					xpv=420
+					alignment=34
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
+					morale=15
+					moraleBreak=4
+					moraleRecovery=15
+					general=255
+					race=104
+					class=108
+					gender=4
+					sex=4
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN
+				ccrawler
+				SHOUT
+				WTASIGHT
+				WDASIGHT
+				wtrunsgt
+				DW2MP0GE
+				DW2RC2MO
+			END
+			LPF patchCreatureScript STR_VAR script=ja#m9  removeScripts skipFiles END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

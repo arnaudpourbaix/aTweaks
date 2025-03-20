@@ -1,0 +1,114 @@
+{
+    "bafFile": "lib/pnp-monster/carrion/ja#m9",
+    "tpaFile": "lib/pnp-monster/carrion/carrion_crawler",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "NORMAL",
+        "HELD",
+        "NEAREST"
+    ],
+    "items": [
+        {
+            "file": "ja#m9w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 2,
+            "bonusToHit": 0,
+            "damageType": "Piercing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ],
+            "effects": {
+                "shared": {
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                },
+                "paralyze": [
+                    {
+                        "idsFile": "EA",
+                        "idsEntry": "ANYONE",
+                        "timing": "InstantLimited",
+                        "duration": 42
+                    }
+                ],
+                "displayPortraitIcon": [
+                    {
+                        "icon": "Held",
+                        "timing": "InstantLimited",
+                        "duration": 42
+                    }
+                ],
+                "playSound": [
+                    {
+                        "timing": "InstantPermanentUntilDeath",
+                        "resource": "EFF_P11"
+                    },
+                    {
+                        "timing": "DelayPermanent",
+                        "resource": "EFF_E05",
+                        "duration": 42
+                    }
+                ],
+                "characterColorPulse": [
+                    {
+                        "timing": "InstantPermanentUntilDeath",
+                        "color": {
+                            "blue": 0,
+                            "green": 57,
+                            "red": 87
+                        },
+                        "location": "AvatarArmorGrey"
+                    }
+                ],
+                "lightingEffects": [
+                    {
+                        "timing": "InstantPermanentUntilDeath",
+                        "lightingTarget": "SpellTarget",
+                        "effect": "NecromancyEarth"
+                    }
+                ]
+            }
+        }
+    ],
+    "data": {
+        "level1": 3,
+        "strength": 14,
+        "dexterity": 13,
+        "constitution": 16,
+        "intelligence": 1,
+        "wisdom": 12,
+        "charisma": 5,
+        "movement": 12,
+        "ac": 3,
+        "apr": 8,
+        "alignment": "NEUTRAL",
+        "morale": 15,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "CARRIONCRAWLER",
+        "class": "CARRIONCRAWLER",
+        "gender": "NIETHER",
+        "size": "Large",
+        "xpv": 420
+    },
+    "additionalData": {
+        "removeItems": [
+            "CARRIO1"
+        ],
+        "removeScripts": [
+            "ccrawler"
+        ]
+    },
+    "files": [
+        "BPCCRAW1",
+        "BPCRCW01",
+        "CARRIO"
+    ]
+}
