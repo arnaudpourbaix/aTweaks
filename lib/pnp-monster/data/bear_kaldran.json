@@ -20,6 +20,7 @@
         "charisma": 7,
         "movement": 12,
         "ac": 6,
+        "thac0": 7,
         "apr": 3,
         "resistCold": 100,
         "alignment": "NEUTRAL",
@@ -179,8 +180,8 @@
                         "amount": 0,
                         "damageMode": "Normal",
                         "damageType": "Cold",
-                        "diceSize": 4,
                         "diceThrown": 6,
+                        "diceSize": 4,
                         "saveTypes": [
                             "Breath"
                         ],
@@ -196,7 +197,8 @@
                             "green": 213,
                             "red": 123
                         },
-                        "location": "AvatarArmorGrey"
+                        "location": "AvatarArmorGrey",
+                        "cycleSpeed": 20
                     }
                 ],
                 "paralyze": [

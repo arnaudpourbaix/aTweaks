@@ -9,3 +9,5 @@
 | 7      | Bear (polar)          |
 | 8      | Bear (polar: Kaldran) |
 | 9      | Carrion Crawler       |
+| 10     | Lion                  |
+| 11     | Mountain Lion         |

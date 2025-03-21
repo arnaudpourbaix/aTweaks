@@ -90,7 +90,7 @@ BEGIN
 					movement=10
 					hp=68
 					ac=6
-					thac0=15
+					thac0=13
 					apr=2
 					xpv=650
 					alignment=34
@@ -109,41 +109,14 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				CBEAR
-				BEAR
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m6  removeScripts skipFiles END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARCASU~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m6
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m6su  removeScripts skipFiles END
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDBEARCA~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m6
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m6 slot=General removeScripts skipFiles END
-			END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY skipFiles BEGIN BEARCASU BDBEARCA END
+			LPF patchCreatureScript STR_VAR script=ja#m6 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY files BEGIN BEARCASU END
+			LPF patchCreatureScript STR_VAR script=ja#m6su files removeScripts END
+			DEFINE_ARRAY files BEGIN BDBEARCA END
+			LPF patchCreatureScript STR_VAR script=ja#m6 slot=General files END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

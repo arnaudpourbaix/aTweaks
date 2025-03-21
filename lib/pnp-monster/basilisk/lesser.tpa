@@ -362,28 +362,12 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				LBASILSK
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m2  removeScripts skipFiles END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILLSU~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m2
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m2su  removeScripts skipFiles END
-			END
+			DEFINE_ARRAY removeScripts BEGIN LBASILSK END
+			DEFINE_ARRAY skipFiles BEGIN BASILLSU END
+			LPF patchCreatureScript STR_VAR script=ja#m2 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN LBASILSK END
+			DEFINE_ARRAY files BEGIN BASILLSU END
+			LPF patchCreatureScript STR_VAR script=ja#m2su files removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

@@ -792,6 +792,7 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4006 = ~Foul breath~
 @4007 = ~Hug~
 @4008 = ~Improved stream of frost~
+@4009 = ~Rear claws attack~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

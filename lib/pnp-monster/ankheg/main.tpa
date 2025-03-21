@@ -614,16 +614,12 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				ANKHEG
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m1  removeScripts skipFiles END
+			DEFINE_ARRAY removeScripts BEGIN ANKHEG END
+			DEFINE_ARRAY skipFiles BEGIN bdankhsu END
+			LPF patchCreatureScript STR_VAR script=ja#m1 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN ANKHEG END
+			DEFINE_ARRAY files BEGIN bdankhsu END
+			LPF patchCreatureScript STR_VAR script=ja#m1su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankh01~) BEGIN 
 				LPF patchCreature
 					INT_VAR
@@ -637,18 +633,6 @@ BEGIN
 						saveBreath=9
 						saveSpell=11
 				END
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m1
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m1su  removeScripts skipFiles END
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

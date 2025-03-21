@@ -1,4 +1,5 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/carrion/ja#m9.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/carrion/ja#m9su.baf~
 
 CREATE ITM "ja#m9w1"
 	WRITE_LONG 0x64 0x72
@@ -23,7 +24,7 @@ CREATE ITM "ja#m9w1"
 			opcode = 50
 			target = 2
 			parameter1 = 3757824
-			parameter2 = 0
+			parameter2 = 1638400
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -85,9 +86,13 @@ CREATE ITM "ja#m9w1"
 	END
 
 ACTION_FOR_EACH ~file~ IN
-	BPCCRAW1
+	BDCCRAW1
 	BPCRCW01
 	CARRIO
+	CRYPTCRA
+	BDCRAWMU
+	BDMCARRI
+	CARRIOSU
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -105,11 +110,12 @@ BEGIN
 					intelligence=1
 					wisdom=12
 					charisma=5
-					movement=10
+					movement=5
 					hp=30
 					ac=3
-					thac0=18
-					apr=8
+					thac0=17
+					apr=4
+					doubleApr=1
 					xpv=420
 					alignment=34
 					saveDeath=13
@@ -117,7 +123,7 @@ BEGIN
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
-					morale=15
+					morale=10
 					moraleBreak=4
 					moraleRecovery=15
 					general=255
@@ -127,16 +133,26 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				ccrawler
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
+			DEFINE_ARRAY removeScripts BEGIN ccrawler END
+			DEFINE_ARRAY skipFiles BEGIN CARRIOSU BDCCRAW1 END
+			LPF patchCreatureScript STR_VAR script=ja#m9 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN ccrawler END
+			DEFINE_ARRAY files BEGIN CARRIOSU END
+			LPF patchCreatureScript STR_VAR script=ja#m9su files removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CRYPTCRA~) BEGIN 
+				LPF patchCreature
+					INT_VAR
+						level1=6
+						hp=60
+						thac0=9
+						xpv=650
+						saveDeath=11
+						saveWand=13
+						savePolymorph=12
+						saveBreath=13
+						saveSpell=14
+				END
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m9  removeScripts skipFiles END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

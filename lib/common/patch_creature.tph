@@ -14,6 +14,7 @@ INT_VAR
   slashingAC=99         // Armor Class value vs slashing attack
   thac0=99              // THAC0 value
   apr=99                // number of attacks per round
+  doubleApr=0           // double attacks per round
   saveDeath=20          // Save vs. Death
   saveWand=20           // Save vs. Wand
   savePolymorph=20      // Save vs. Polymorph
@@ -286,6 +287,11 @@ BEGIN
 
   PATCH_IF bump = 1 BEGIN // NPC bump (allows the creature to move others out of its way)
     LPF ADD_CRE_EFFECT INT_VAR opcode=300 target=1 timing=9 parameter2=1 END
+  END
+
+  PATCH_IF doubleApr = 1 BEGIN // Double Attack per round
+    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=16 END
+    LPF ADD_CRE_EFFECT INT_VAR opcode=16 target=1 timing=9 parameter2=1 END
   END
 
   PATCH_IF seeInvisible = 1 BEGIN // See Invisible creatures

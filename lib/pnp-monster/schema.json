@@ -1428,6 +1428,9 @@
                 },
                 "summon": {
                     "type": "boolean"
+                },
+                "noScript": {
+                    "type": "boolean"
                 }
             },
             "required": [
@@ -1538,6 +1541,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/DisplayStringEffect"
+                            }
+                        },
+                        "haste": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/HasteEffect"
                             }
                         },
                         "lightingEffects": {
@@ -2003,11 +2012,15 @@
                 },
                 "location": {
                     "$ref": "#/definitions/RawEffectColorPulseLocation"
+                },
+                "cycleSpeed": {
+                    "type": "number"
                 }
             },
             "required": [
                 "color",
-                "location"
+                "location",
+                "cycleSpeed"
             ],
             "additionalProperties": false
         },
@@ -2672,6 +2685,74 @@
                 "stringRef"
             ],
             "additionalProperties": false
+        },
+        "HasteEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectHasteType"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectHasteType": {
+            "type": "string",
+            "enum": [
+                "NormalHaste",
+                "ImprovedHaste",
+                "WeakHaste"
+            ]
         },
         "LightingEffectsEffect": {
             "type": "object",
@@ -4717,6 +4798,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/DisplayStringEffect"
+                            }
+                        },
+                        "haste": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/HasteEffect"
                             }
                         },
                         "lightingEffects": {

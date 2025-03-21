@@ -18,6 +18,7 @@
         "charisma": 7,
         "movement": 12,
         "ac": 6,
+        "thac0": 13,
         "apr": 3,
         "xpv": 650,
         "alignment": "NEUTRAL",
@@ -69,8 +70,8 @@
                         "damageMode": "Normal",
                         "damageType": "Crushing",
                         "amount": 0,
-                        "diceSize": 6,
                         "diceThrown": 2,
+                        "diceSize": 6,
                         "probability1": 10
                     }
                 ]

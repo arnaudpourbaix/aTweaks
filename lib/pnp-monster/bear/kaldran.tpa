@@ -46,7 +46,7 @@ CREATE SPL "ja#1m8"
 			opcode = 50
 			target = 2
 			parameter1 = "-2786560"
-			parameter2 = 0
+			parameter2 = 1310720
 			timing = 1
 			probability1 = 100
 	END
@@ -139,7 +139,7 @@ BEGIN
 					hp=126
 					ac=6
 					resistCold=100
-					thac0=9
+					thac0=7
 					apr=2
 					alignment=34
 					saveDeath=7
@@ -157,17 +157,8 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				kaldran
-				dw1ranmo
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m8  removeScripts skipFiles END
+			DEFINE_ARRAY removeScripts BEGIN kaldran dw1ranmo END
+			LPF patchCreatureScript STR_VAR script=ja#m8 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

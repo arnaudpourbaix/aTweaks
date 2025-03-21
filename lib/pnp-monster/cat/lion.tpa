@@ -1,7 +1,7 @@
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4.baf~
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4su.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/cat/ja#m10.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/cat/ja#m10su.baf~
 
-CREATE ITM "ja#m4w1"
+CREATE ITM "ja#m10w1"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0xaa
@@ -12,7 +12,7 @@ CREATE ITM "ja#m4w1"
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
 	WRITE_SHORT 0x86 4
-	WRITE_BYTE 0x88 3
+	WRITE_BYTE 0x88 4
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
 	WRITE_SHORT 0x9e 34
@@ -24,7 +24,7 @@ CREATE ITM "ja#m4w1"
 		INT_VAR
 			opcode = 139
 			target = 2
-			parameter1 = RESOLVE_STR_REF(@4007)
+			parameter1 = RESOLVE_STR_REF(@4009)
 			parameter2 = 0
 			probability1 = 10
 	END
@@ -32,14 +32,24 @@ CREATE ITM "ja#m4w1"
 		INT_VAR
 			opcode = 12
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
+			parameter1 = 1
+			parameter2 = 16777216
 			probability1 = 10
-			dicenumber = 2
-			dicesize = 4
+			dicenumber = 1
+			dicesize = 6
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 1
+			parameter2 = 16777216
+			probability1 = 10
+			dicenumber = 1
+			dicesize = 6
 	END
 
-CREATE ITM "ja#m4w2"
+CREATE ITM "ja#m10w2"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0xaa
@@ -50,7 +60,7 @@ CREATE ITM "ja#m4w2"
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
 	WRITE_SHORT 0x86 8
-	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
@@ -60,58 +70,52 @@ CREATE ITM "ja#m4w2"
 	LPF set_enchantment INT_VAR enchantment = 0 END
 
 ACTION_FOR_EACH ~file~ IN
-	BDBEARBL
-	BEARBL
-	BEARBLSU
-	PLYBEAR2
-	RSBEARBL
-	UBDBEAR
+	BDHELP02
+	CATLIOSU
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~B1-6~
-			ADD_CRE_ITEM ~ja#m4w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#m4w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			REMOVE_CRE_ITEM ~CATLIO~
+			ADD_CRE_ITEM ~ja#m10w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#m10w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF patchCreature
 				INT_VAR
-					level1=3
-					strength=15
-					dexterity=10
-					constitution=15
+					level1=5
+					strength=17
+					dexterity=15
+					constitution=13
 					intelligence=4
 					wisdom=12
-					charisma=7
+					charisma=8
 					movement=10
-					hp=27
-					ac=7
-					thac0=17
+					hp=40
+					ac=5
+					thac0=15
 					apr=2
-					xpv=175
+					xpv=650
 					alignment=34
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
 					general=255
-					race=103
-					class=104
+					race=137
+					class=175
 					gender=4
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY skipFiles BEGIN BEARBLSU END
-			LPF patchCreatureScript STR_VAR script=ja#m4 skipFiles removeScripts END
-			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY files BEGIN BEARBLSU END
-			LPF patchCreatureScript STR_VAR script=ja#m4su files removeScripts END
+			DEFINE_ARRAY skipFiles BEGIN CATLIOSU END
+			LPF patchCreatureScript STR_VAR script=ja#m10 skipFiles END
+			DEFINE_ARRAY files BEGIN CATLIOSU END
+			LPF patchCreatureScript STR_VAR script=ja#m10su files END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

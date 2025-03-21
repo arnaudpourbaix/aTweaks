@@ -1,6 +1,6 @@
 {
-    "bafFile": "lib/pnp-monster/bear/ja#m7",
-    "tpaFile": "lib/pnp-monster/bear/polar",
+    "bafFile": "lib/pnp-monster/cat/ja#m10",
+    "tpaFile": "lib/pnp-monster/cat/lion",
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
@@ -8,48 +8,42 @@
     ],
     "dualWielding": true,
     "data": {
-        "level1": 8,
-        "bonusHp": 12,
-        "strength": 20,
-        "dexterity": 10,
-        "constitution": 16,
+        "level1": 5,
+        "strength": 17,
+        "dexterity": 15,
+        "constitution": 13,
         "intelligence": 4,
-        "wisdom": 13,
-        "charisma": 7,
+        "wisdom": 12,
+        "charisma": 8,
         "movement": 12,
-        "ac": 6,
-        "thac0": 11,
+        "ac": 5,
+        "thac0": 15,
         "apr": 3,
-        "xpv": 1400,
+        "xpv": 650,
         "alignment": "NEUTRAL",
         "morale": 9,
         "moraleBreak": 4,
         "moraleRecovery": 15,
         "general": "MONSTER",
-        "race": "BEAR",
-        "class": "BEAR_POLAR",
+        "race": "CAT",
+        "class": "CAT",
         "gender": "NIETHER",
-        "size": "Huge"
+        "size": "Medium"
     },
     "additionalData": {
         "removeItems": [
-            "B1-12",
-            "BEARPOSU"
-        ],
-        "removeScripts": [
-            "CBEAR",
-            "BEAR"
+            "CATLIO"
         ]
     },
     "items": [
         {
-            "file": "ja#m7w1",
+            "file": "ja#m10w1",
             "equippedSlot": "WEAPON1",
             "enchantment": 0,
             "type": "Melee",
             "range": 1,
             "diceThrown": 1,
-            "diceSize": 10,
+            "diceSize": 4,
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
@@ -60,7 +54,7 @@
                 "displayString": [
                     {
                         "index": 0,
-                        "stringRef": "4007",
+                        "stringRef": "4009",
                         "probability1": 10
                     }
                 ],
@@ -68,9 +62,18 @@
                     {
                         "index": 1,
                         "damageMode": "Normal",
-                        "damageType": "Crushing",
-                        "amount": 0,
-                        "diceThrown": 3,
+                        "damageType": "Slashing",
+                        "amount": 1,
+                        "diceThrown": 1,
+                        "diceSize": 6,
+                        "probability1": 10
+                    },
+                    {
+                        "index": 2,
+                        "damageMode": "Normal",
+                        "damageType": "Slashing",
+                        "amount": 1,
+                        "diceThrown": 1,
                         "diceSize": 6,
                         "probability1": 10
                     }
@@ -78,13 +81,13 @@
             }
         },
         {
-            "file": "ja#m7w2",
+            "file": "ja#m10w2",
             "equippedSlot": "SHIELD",
             "enchantment": 0,
             "type": "Melee",
             "range": 1,
-            "diceThrown": 2,
-            "diceSize": 6,
+            "diceThrown": 1,
+            "diceSize": 10,
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
@@ -94,17 +97,13 @@
         }
     ],
     "files": [
-        "BEARPO",
-        "BEARPO1",
-        "BEARPO2",
-        "BEARPO3",
-        "BEARPOSU",
-        "NTBEARPO"
+        "BDHELP02",
+        "CATLIOSU"
     ],
     "adjustments": [
         {
             "files": [
-                "BEARPOSU"
+                "CATLIOSU"
             ],
             "summon": true
         }

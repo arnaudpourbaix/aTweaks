@@ -61,6 +61,7 @@ CREATE ITM "ja#m5w2"
 
 ACTION_FOR_EACH ~file~ IN
 	BDBEARBN
+	BDGRIZHU
 	BEARBR
 	BEARBRSU
 	PLYBEAR1
@@ -85,7 +86,7 @@ BEGIN
 					movement=10
 					hp=58
 					ac=6
-					thac0=16
+					thac0=15
 					apr=2
 					xpv=420
 					alignment=34
@@ -104,29 +105,12 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				CBEAR
-				BEAR
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m5  removeScripts skipFiles END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBRSU~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m5
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m5su  removeScripts skipFiles END
-			END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY skipFiles BEGIN BEARBRSU END
+			LPF patchCreatureScript STR_VAR script=ja#m5 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY files BEGIN BEARBRSU END
+			LPF patchCreatureScript STR_VAR script=ja#m5su files removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

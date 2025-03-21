@@ -65,6 +65,7 @@ ACTION_FOR_EACH ~file~ IN
 	BEARPO2
 	BEARPO3
 	BEARPOSU
+	NTBEARPO
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -87,7 +88,7 @@ BEGIN
 					movement=10
 					hp=92
 					ac=6
-					thac0=13
+					thac0=11
 					apr=2
 					xpv=1400
 					alignment=34
@@ -106,29 +107,12 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				CBEAR
-				BEAR
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m7  removeScripts skipFiles END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARPOSU~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m7
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m7su  removeScripts skipFiles END
-			END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY skipFiles BEGIN BEARPOSU END
+			LPF patchCreatureScript STR_VAR script=ja#m7 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
+			DEFINE_ARRAY files BEGIN BEARPOSU END
+			LPF patchCreatureScript STR_VAR script=ja#m7su files removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

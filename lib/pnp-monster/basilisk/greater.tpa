@@ -191,28 +191,12 @@ BEGIN
 					sex=4
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN
-				GBASILSK
-				SHOUT
-				WTASIGHT
-				WDASIGHT
-				wtrunsgt
-				DW2MP0GE
-				DW2RC2MO
-			END
-			LPF patchCreatureScript STR_VAR script=ja#m3  removeScripts skipFiles END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILGSU~) BEGIN 
-				DEFINE_ARRAY removeScripts BEGIN
-					ja#m3
-					SHOUT
-					WTASIGHT
-					WDASIGHT
-					wtrunsgt
-					DW2MP0GE
-					DW2RC2MO
-				END
-				LPF patchCreatureScript STR_VAR script=ja#m3su  removeScripts skipFiles END
-			END
+			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
+			DEFINE_ARRAY skipFiles BEGIN BASILGSU END
+			LPF patchCreatureScript STR_VAR script=ja#m3 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
+			DEFINE_ARRAY files BEGIN BASILGSU END
+			LPF patchCreatureScript STR_VAR script=ja#m3su files removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END
