@@ -145,6 +145,18 @@
                         "$ref": "#/definitions/RawProjectile"
                     }
                 },
+                "traits": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CreatureTrait"
+                    }
+                },
+                "spellImmunityRessources": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "autoGenerate": {
                     "$ref": "#/definitions/RawCreatureAutoGenerate"
                 }
@@ -1450,6 +1462,35 @@
                 "enchantment": {
                     "type": "number"
                 },
+                "animation": {
+                    "$ref": "#/definitions/RawItemAnimation"
+                },
+                "animationSwing": {
+                    "type": "object",
+                    "properties": {
+                        "overhand": {
+                            "type": "number"
+                        },
+                        "backhand": {
+                            "type": "number"
+                        },
+                        "thrust": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "overhand",
+                        "backhand",
+                        "thrust"
+                    ],
+                    "additionalProperties": false
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemFlag"
+                    }
+                },
                 "type": {
                     "$ref": "#/definitions/RawItemAbilityType"
                 },
@@ -1483,10 +1524,10 @@
                 "projectile": {
                     "type": "string"
                 },
-                "flags": {
+                "abilityFlags": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/RawItemFlag"
+                        "$ref": "#/definitions/RawItemAbilityFlag"
                     }
                 },
                 "effects": {
@@ -1721,6 +1762,97 @@
             ],
             "additionalProperties": false
         },
+        "RawItemAnimation": {
+            "type": "string",
+            "enum": [
+                "LeatherArmor",
+                "Chainmail",
+                "PlateMail",
+                "Robe1",
+                "Robe2",
+                "Robe3",
+                "Axe",
+                "Shortbow",
+                "Bow",
+                "Crossbow",
+                "SmallShield1",
+                "MediumShield1",
+                "LargeShield1",
+                "MediumShield2",
+                "SmallShield2",
+                "LargeShield2",
+                "LargeShield3",
+                "MediumShield3",
+                "Club",
+                "Buckler",
+                "SmallShield",
+                "MediumShield",
+                "LargeShield",
+                "Dagger",
+                "Flail1",
+                "Flail2",
+                "FlamingSwordBlue",
+                "Flail3",
+                "Flail",
+                "FlamingSword",
+                "GlowingStaff",
+                "HelmetSmallVerticalHorns",
+                "HelmetLargeHorizontalHorns",
+                "HelmetFeatherWings",
+                "HelmetTopPlume",
+                "HelmetDragonWings",
+                "HelmetFeatherSideburns",
+                "HelmetLargeCurvedHorns",
+                "Helmet8",
+                "Halberd",
+                "Helmet9",
+                "Helmet10",
+                "Helmet11",
+                "Helmet12",
+                "Helmet13",
+                "Helmet14",
+                "Helmet15",
+                "Helmet16",
+                "Helmet17",
+                "Helmet18",
+                "Helmet19",
+                "Circlet",
+                "Helmet20",
+                "Mace",
+                "MorningStar",
+                "QuarterStaff1",
+                "QuarterStaff2",
+                "QuarterStaff3",
+                "QuarterStaffMetal",
+                "BastardSword",
+                "LongSword",
+                "TwoHandedSword",
+                "Katana",
+                "Scimitar",
+                "Sling",
+                "Spear",
+                "ShortSword",
+                "WarHammer",
+                "Wings"
+            ]
+        },
+        "RawItemFlag": {
+            "type": "string",
+            "enum": [
+                "CriticalItem",
+                "TwoHanded",
+                "Droppable",
+                "Displayable",
+                "Cursed",
+                "NotCopyable",
+                "Magical",
+                "LeftHanded",
+                "Silver",
+                "ColdIron",
+                "OffHanded",
+                "Conversable"
+            ]
+        },
         "RawItemAbilityType": {
             "type": "string",
             "enum": [
@@ -1765,7 +1897,7 @@
                 "BluntMissile"
             ]
         },
-        "RawItemFlag": {
+        "RawItemAbilityFlag": {
             "type": "string",
             "enum": [
                 "AddStrengthBonus",
@@ -5455,6 +5587,14 @@
                 "DRAGONACID",
                 "CUSTOM",
                 "NONE"
+            ]
+        },
+        "CreatureTrait": {
+            "type": "string",
+            "enum": [
+                "undead",
+                "construct",
+                "hover"
             ]
         },
         "RawCreatureAutoGenerate": {

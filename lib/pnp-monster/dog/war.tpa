@@ -24,6 +24,7 @@ ACTION_FOR_EACH ~file~ IN
 	DOGWASU
 	DOGWASU
 	dw#rndwa
+	UBNIMDOG
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~

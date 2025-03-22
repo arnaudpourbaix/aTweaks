@@ -74,7 +74,7 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "flags": [
+            "abilityFlags": [
                 "AddStrengthBonus"
             ]
         }

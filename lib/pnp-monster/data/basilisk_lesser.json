@@ -77,7 +77,7 @@
             "diceSize": 10,
             "damageType": "Slashing",
             "speed": 3,
-            "flags": [
+            "abilityFlags": [
                 "AddStrengthBonus"
             ]
         }

@@ -39,7 +39,7 @@ BEGIN
     READ_ASCII  0x258 raceScript
     READ_ASCII  0x260 generalScript
     READ_ASCII  0x268 defaultScript
-    PATCH_PRINT ~%SOURCE_RES% => overrideScript:%overrideScript% classScript:%classScript% raceScript:%raceScript% generalScript:%generalScript% defaultScript:%defaultScript% removeScripts:%removeScripts%~
+    // PATCH_PRINT ~%SOURCE_RES% => overrideScript:%overrideScript% classScript:%classScript% raceScript:%raceScript% generalScript:%generalScript% defaultScript:%defaultScript% removeScripts:%removeScripts%~
     PATCH_PHP_EACH EVAL ~%removeScripts%~ AS _ => s BEGIN
       PATCH_IF "%overrideScript%" STRING_EQUAL_CASE "%s%" BEGIN             
         SPRINT overrideScript ""
@@ -74,7 +74,7 @@ BEGIN
       SET defaultEmpty=1
     END
 
-    PATCH_PRINT ~%SOURCE_RES% => overrideEmpty:%overrideEmpty% classEmpty:%classEmpty% raceEmpty:%raceEmpty% generalEmpty:%generalEmpty% defaultEmpty:%defaultEmpty%~
+    // PATCH_PRINT ~%SOURCE_RES% => overrideEmpty:%overrideEmpty% classEmpty:%classEmpty% raceEmpty:%raceEmpty% generalEmpty:%generalEmpty% defaultEmpty:%defaultEmpty%~
     PATCH_IF overrideEmpty = 1 AND assigned = 0 AND ("%slot%" STRING_EQUAL_CASE "" OR "%slot%" STRING_EQUAL_CASE "Override") BEGIN
       SPRINT overrideScript EVALUATE_BUFFER "%script%"
       SET assigned=1

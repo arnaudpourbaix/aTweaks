@@ -52,7 +52,7 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "flags": [
+            "abilityFlags": [
                 "AddStrengthBonus"
             ],
             "effects": {
@@ -87,7 +87,7 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "flags": [
+            "abilityFlags": [
                 "AddStrengthBonus"
             ]
         }

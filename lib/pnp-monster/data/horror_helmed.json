@@ -1,33 +1,33 @@
 {
-    "bafFile": "lib/pnp-monster/ankheg/ja#m1",
-    "tpaFile": "lib/pnp-monster/ankheg/main",
+    "bafFile": "lib/pnp-monster/horror/ja#m15",
+    "tpaFile": "lib/pnp-monster/horror/helmed",
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
-        "GRABBED",
         "NEAREST"
     ],
     "data": {
-        "level1": 8,
-        "strength": 17,
-        "dexterity": 11,
-        "constitution": 13,
-        "intelligence": 1,
-        "wisdom": 13,
-        "charisma": 6,
-        "movement": 6,
+        "level1": 6,
+        "strength": 18,
+        "dexterity": 13,
+        "constitution": 16,
+        "intelligence": 14,
+        "wisdom": 10,
+        "charisma": 10,
+        "movement": 12,
         "ac": 2,
+        "thac0": 12,
         "apr": 1,
-        "xpv": 975,
+        "xpv": 2000,
         "alignment": "NEUTRAL",
-        "morale": 9,
+        "morale": 20,
         "moraleBreak": 4,
         "moraleRecovery": 15,
         "general": "MONSTER",
-        "race": "ANKHEG",
-        "class": "ANKHEG",
+        "race": "GOLEM",
+        "class": "GOLEM_IRON",
         "gender": "NIETHER",
-        "size": "Huge"
+        "size": "Medium"
     },
     "additionalData": {
         "abilities": [
@@ -69,75 +69,49 @@
                 "range": 30
             }
         ],
-        "removeScripts": [
-            "ANKHEG"
-        ],
+        "removeScripts": [],
         "removeItems": [
-            "ANKHEG1",
-            "ANKHEG2"
+            "HELM08",
+            "SHLD18",
+            "RING95",
+            "BLUN08"
         ]
     },
+    "traits": [
+        "construct",
+        "hover"
+    ],
+    "spellImmunityRessources": [
+        "",
+        "",
+        ""
+    ],
     "items": [
         {
-            "file": "ja#m1w1",
+            "file": "ja#m15w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
+            "enchantment": 1,
             "type": "Melee",
-            "range": 1,
-            "diceThrown": 3,
+            "flags": [
+                "TwoHanded",
+                "Magical"
+            ],
+            "animation": "TwoHandedSword",
+            "animationSwing": {
+                "backhand": 40,
+                "overhand": 40,
+                "thrust": 20
+            },
+            "range": 2,
+            "diceThrown": 2,
             "diceSize": 6,
-            "damageType": "Crushing",
-            "speed": 3,
+            "damageType": "Slashing",
+            "speed": 10,
             "abilityFlags": [
                 "AddStrengthBonus"
-            ],
-            "effects": {
-                "castSpell": [
-                    {
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#1m1"
-                    }
-                ]
-            }
-        },
-        {
-            "file": "ja#m1w2",
-            "equippedSlot": "WEAPON2",
-            "enchantment": 0,
-            "type": "Ranged",
-            "range": 30,
-            "speed": 3,
-            "bonusToHit": 20,
-            "projectile": "acidblob",
-            "effects": {
-                "castSpell": [
-                    {
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#2m1"
-                    }
-                ],
-                "removeSpell": [
-                    {
-                        "target": "Self",
-                        "resource": "ja#2m1"
-                    }
-                ]
-            }
+            ]
         }
     ],
-    "attacks": [
-        {
-            "weaponSlot": "SLOT_WEAPON",
-            "disableInterrupt": true
-        }
-    ],
-    "grab": {
-        "file": "ja#3m1",
-        "probability": 100,
-        "saveBonus": -4,
-        "weaponFile": "ja#m1w1",
-        "duration": 18
-    },
     "spells": [
         {
             "name": "Acidic digestive enzymes",
@@ -224,33 +198,7 @@
         }
     ],
     "files": [
-        "ANKHEG",
-        "ANKHEGF",
-        "ANKHEGG",
-        "ANKHEGQ",
-        "ANKHEG01",
-        "bdankh01",
-        "bdankheg",
-        "bdankhsu",
-        "BDNEO",
-        "BPANKHE1",
-        "wiankhe1"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "bdankh01"
-            ],
-            "data": {
-                "level1": 10,
-                "xpv": 1400
-            }
-        },
-        {
-            "files": [
-                "bdankhsu"
-            ],
-            "summon": true
-        }
+        "HELMHO",
+        "GLOWTEST"
     ]
 }

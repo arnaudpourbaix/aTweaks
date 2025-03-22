@@ -592,7 +592,7 @@ BEGIN
 					intelligence=1
 					wisdom=13
 					charisma=6
-					movement=10
+					movement=5
 					hp=64
 					ac=2
 					thac0=13
