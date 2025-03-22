@@ -18,8 +18,8 @@ CREATE ITM "ja#m5w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x60 0
 	WRITE_LONG 0x98 1
-	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 139
@@ -56,8 +56,8 @@ CREATE ITM "ja#m5w2"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x60 0
 	WRITE_LONG 0x98 1
-	LPF set_enchantment INT_VAR enchantment = 0 END
 
 ACTION_FOR_EACH ~file~ IN
 	BDBEARBN
@@ -111,6 +111,19 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
 			DEFINE_ARRAY files BEGIN BEARBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m5su files removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBRSU~) BEGIN 
+				LPF patchCreature
+					INT_VAR
+						hp=50
+						xpv=0
+						saveDeath=11
+						saveWand=13
+						savePolymorph=12
+						saveBreath=13
+						saveSpell=14
+						summon=1
+				END
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END

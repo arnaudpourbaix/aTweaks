@@ -57,6 +57,7 @@ INT_VAR
   backstabImmunity=0    // Backstab immunity
   infravision=0         // Infravision
   blur=0                // Blur
+  summon=0              // is it a summon ?
   enforce=0             // values are not enforced by default
 STR_VAR
   enforceFiles=""            // Array of files to enforce
@@ -125,7 +126,7 @@ BEGIN
   END
   // PATCH_PRINT ~Enforce for %SOURCE_RES%: %enforce%~
 
-  PATCH_IF oldXpv < xpv OR (enforce = 1 AND xpv != 0) BEGIN
+  PATCH_IF oldXpv < xpv OR (enforce = 1 AND xpv != 0) OR summon = 1 BEGIN
     WRITE_LONG 0x14 xpv // XP value
   END
   PATCH_IF currentHP < hp OR (enforce = 1 AND hp != 0) BEGIN

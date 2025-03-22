@@ -1,5 +1,4 @@
 {
-    "bafFile": "lib/pnp-monster/cat/ja#m11",
     "tpaFile": "lib/pnp-monster/cat/mountain_lion",
     "tracking": true,
     "combatWalk": true,
@@ -98,13 +97,5 @@
     ],
     "files": [
         "CATLIM01"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "CATLIM01"
-            ],
-            "noScript": true
-        }
     ]
 }

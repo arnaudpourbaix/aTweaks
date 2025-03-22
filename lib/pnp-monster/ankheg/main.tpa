@@ -497,8 +497,8 @@ CREATE ITM "ja#m1w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x60 0
 	WRITE_LONG 0x98 1
-	LPF set_enchantment INT_VAR enchantment = 0 END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146
@@ -536,7 +536,7 @@ CREATE ITM "ja#m1w2"
 	WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
 	WRITE_SHORT 0x38 1
 	WRITE_SHORT 0xa4 1
-	LPF set_enchantment INT_VAR enchantment = 0 END
+	WRITE_LONG 0x60 0
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146
@@ -632,6 +632,20 @@ BEGIN
 						savePolymorph=9
 						saveBreath=9
 						saveSpell=11
+				END
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
+				LPF patchCreature
+					INT_VAR
+						hp=64
+						thac0=13
+						xpv=0
+						saveDeath=10
+						saveWand=12
+						savePolymorph=11
+						saveBreath=12
+						saveSpell=13
+						summon=1
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

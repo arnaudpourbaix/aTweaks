@@ -1,0 +1,117 @@
+{
+    "tpaFile": "lib/pnp-monster/dog/blink",
+    "bafFile": "lib/pnp-monster/dog/ja#14",
+    "tracking": true,
+    "combatWalk": true,
+    "targetPriorities": [
+        "NEAREST"
+    ],
+    "data": {
+        "level1": 4,
+        "strength": 12,
+        "dexterity": 17,
+        "constitution": 15,
+        "intelligence": 9,
+        "wisdom": 13,
+        "charisma": 11,
+        "movement": 12,
+        "ac": 5,
+        "thac0": 17,
+        "apr": 1,
+        "xpv": 270,
+        "alignment": "NEUTRAL",
+        "morale": 12,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "MONSTER",
+        "race": "DOG",
+        "class": "DOG_WILD",
+        "gender": "MALE",
+        "size": "Medium"
+    },
+    "additionalData": {
+        "removeItems": [
+            "P1-6"
+        ],
+        "removeScripts": [
+            "PSPIDER"
+        ],
+        "abilities": [
+            {
+                "name": "Blink",
+                "isTargetSpell": false,
+                "targetTrigger": [],
+                "actions": [
+                    {
+                        "name": "ForceSpellRES",
+                        "params": [
+                            "ja#1m14",
+                            "LastSeenBy"
+                        ]
+                    },
+                    {
+                        "name": "AttackOneRound",
+                        "params": [
+                            "LastSeenBy"
+                        ]
+                    }
+                ],
+                "target": "NearestEnemyOf",
+                "random": true,
+                "range": 30
+            }
+        ]
+    },
+    "items": [
+        {
+            "file": "ja#m14w1",
+            "equippedSlot": "WEAPON1",
+            "enchantment": 0,
+            "type": "Melee",
+            "range": 1,
+            "diceThrown": 1,
+            "diceSize": 6,
+            "bonusToHit": 0,
+            "damageType": "Piercing",
+            "speed": 3,
+            "flags": [
+                "AddStrengthBonus"
+            ]
+        }
+    ],
+    "spells": [
+        {
+            "name": "Blink",
+            "file": "ja#1m14",
+            "memorizedCount": 1,
+            "stringRef": 4010,
+            "spellType": "Innate",
+            "secondaryType": "None",
+            "type": "Melee",
+            "range": 30,
+            "speed": 0,
+            "effects": {
+                "shared": {
+                    "target": "Self"
+                },
+                "teleport": [
+                    {
+                        "type": "Default"
+                    }
+                ],
+                "thac0Bonus": [
+                    {
+                        "timing": "InstantLimited",
+                        "duration": 6,
+                        "type": "Increment",
+                        "probability1": 75,
+                        "value": 2
+                    }
+                ]
+            }
+        }
+    ],
+    "files": [
+        "DOGBLINK"
+    ]
+}

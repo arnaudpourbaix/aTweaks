@@ -150,7 +150,7 @@
                 }
             },
             "required": [
-                "bafFile",
+                "tpaFile",
                 "data",
                 "additionalData",
                 "files"
@@ -1685,6 +1685,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "teleport": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/TeleportEffect"
                             }
                         },
                         "thac0Bonus": {
@@ -4507,6 +4513,75 @@
                 }
             }
         },
+        "TeleportEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectTeleportType"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectTeleportType": {
+            "type": "string",
+            "enum": [
+                "Default",
+                "SourceToTarget",
+                "ReturnToSavedLocation",
+                "ExchangedSourceAndTarget"
+            ]
+        },
         "Thac0BonusEffect": {
             "type": "object",
             "properties": {
@@ -4942,6 +5017,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "teleport": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/TeleportEffect"
                             }
                         },
                         "thac0Bonus": {

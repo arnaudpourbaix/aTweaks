@@ -42,14 +42,6 @@
                             "HELD"
                         ],
                         "negation": true
-                    },
-                    {
-                        "name": "StateCheck",
-                        "params": [
-                            "{Target}",
-                            "STATE_SLOWED"
-                        ],
-                        "negation": true
                     }
                 ],
                 "actions": [
