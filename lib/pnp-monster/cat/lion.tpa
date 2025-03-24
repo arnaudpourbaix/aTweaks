@@ -8,7 +8,6 @@ CREATE ITM "ja#m10w1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 4
 	WRITE_BYTE 0x88 4
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -56,7 +55,6 @@ CREATE ITM "ja#m10w2"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 8
 	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
@@ -91,7 +89,7 @@ BEGIN
 					hp=40
 					ac=5
 					thac0=15
-					apr=2
+					apr=3
 					xpv=650
 					alignment=34
 					saveDeath=11
@@ -108,6 +106,7 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
+					perfect2weapon=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CATLIOSU~) BEGIN 
 				LPF patchCreature

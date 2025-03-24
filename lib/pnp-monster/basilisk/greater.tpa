@@ -76,7 +76,6 @@ CREATE ITM "ja#m3w1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 4
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -118,7 +117,6 @@ CREATE ITM "ja#m3w2"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 8
 	WRITE_BYTE 0x88 8
 	WRITE_BYTE 0x8a 2
 	WRITE_SHORT 0x8e 1
@@ -173,7 +171,7 @@ BEGIN
 					hp=125
 					ac=2
 					thac0=11
-					apr=2
+					apr=3
 					xpv=7000
 					alignment=34
 					saveDeath=8
@@ -190,6 +188,7 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
+					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILGSU END

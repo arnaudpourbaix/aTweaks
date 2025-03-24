@@ -151,6 +151,12 @@
                         "$ref": "#/definitions/CreatureTrait"
                     }
                 },
+                "immunities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CreatureImmunity"
+                    }
+                },
                 "spellImmunityRessources": {
                     "type": "array",
                     "items": {
@@ -758,24 +764,6 @@
                 },
                 "gender": {
                     "$ref": "#/definitions/GenderIdentifiers"
-                },
-                "perfect2weapon": {
-                    "type": "number"
-                },
-                "bump": {
-                    "type": "number"
-                },
-                "seeInvisible": {
-                    "type": "number"
-                },
-                "backstabImmunity": {
-                    "type": "number"
-                },
-                "infravision": {
-                    "type": "number"
-                },
-                "blur": {
-                    "type": "number"
                 },
                 "size": {
                     "$ref": "#/definitions/SizeEnum"
@@ -1542,16 +1530,52 @@
                                 "$ref": "#/definitions/ArmorClassBonusEffect"
                             }
                         },
+                        "blindness": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/BlindnessEffect"
+                            }
+                        },
                         "characterColorPulse": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CharacterColorPulseEffect"
                             }
                         },
+                        "charmCreature": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharmCreatureEffect"
+                            }
+                        },
+                        "charmControlCreature": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharmControlCreatureEffect"
+                            }
+                        },
                         "castSpell": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CastSpellEffect"
+                            }
+                        },
+                        "coldResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ColdResistanceModifierEffect"
+                            }
+                        },
+                        "confusion": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ConfusionEffect"
+                            }
+                        },
+                        "crushingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CrushingResistanceModifierEffect"
                             }
                         },
                         "creatureRGBColorFade": {
@@ -1566,10 +1590,22 @@
                                 "$ref": "#/definitions/DamageEffect"
                             }
                         },
+                        "damageVsCreatureTypeModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DamageVsCreatureTypeModifierEffect"
+                            }
+                        },
                         "dexterityBonus": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/DexterityBonusEffect"
+                            }
+                        },
+                        "disease": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DiseaseEffect"
                             }
                         },
                         "displayPortraitIcon": {
@@ -1584,16 +1620,88 @@
                                 "$ref": "#/definitions/DisplayStringEffect"
                             }
                         },
+                        "fireResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/FireResistanceModifierEffect"
+                            }
+                        },
                         "haste": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/HasteEffect"
                             }
                         },
+                        "immunityToTurnUndead": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ImmunityToTurnUndeadEffect"
+                            }
+                        },
+                        "infravision": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InfravisionEffect"
+                            }
+                        },
+                        "intelligenceBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IntelligenceBonusEffect"
+                            }
+                        },
+                        "invisibilityDetection": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvisibilityDetectionEffect"
+                            }
+                        },
+                        "killTarget": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/KillTargetEffect"
+                            }
+                        },
                         "lightingEffects": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/LightingEffectsEffect"
+                            }
+                        },
+                        "magicalColdResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MagicalColdResistanceModifierEffect"
+                            }
+                        },
+                        "magicalFireResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MagicalFireResistanceModifierEffect"
+                            }
+                        },
+                        "missilesResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MissilesResistanceModifierEffect"
+                            }
+                        },
+                        "modifyCollisionBehavior": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ModifyCollisionBehaviorEffect"
+                            }
+                        },
+                        "moraleModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MoraleModifierEffect"
+                            }
+                        },
+                        "moraleBreakModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MoraleBreakModifierEffect"
                             }
                         },
                         "movementRateBonus": {
@@ -1608,6 +1716,18 @@
                                 "$ref": "#/definitions/MovementRateBonus2Effect"
                             }
                         },
+                        "offhandThac0Bonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OffhandThac0BonusEffect"
+                            }
+                        },
+                        "panic": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PanicEffect"
+                            }
+                        },
                         "paralyze": {
                             "type": "array",
                             "items": {
@@ -1618,6 +1738,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/PetrificationEffect"
+                            }
+                        },
+                        "piercingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PiercingResistanceModifierEffect"
                             }
                         },
                         "playSound": {
@@ -1638,16 +1764,52 @@
                                 "$ref": "#/definitions/PoisonEffect"
                             }
                         },
-                        "protectionFromSpell": {
+                        "poisonResistanceModifier": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ProtectionFromSpellEffect"
+                                "$ref": "#/definitions/PoisonResistanceModifierEffect"
+                            }
+                        },
+                        "polymorphIntoSpecific": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PolymorphIntoSpecificEffect"
+                            }
+                        },
+                        "preventPortraitIcon": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PreventPortraitIconEffect"
+                            }
+                        },
+                        "protectionFromAnimation": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromAnimationEffect"
+                            }
+                        },
+                        "protectionFromBackstab": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromBackstabEffect"
                             }
                         },
                         "protectionFromDisplaySpecificString": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
+                            }
+                        },
+                        "protectionFromOpcode": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromOpcodeEffect"
+                            }
+                        },
+                        "protectionFromProjectile": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromProjectileEffect"
                             }
                         },
                         "protectionFromResource": {
@@ -1660,6 +1822,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
+                        "protectionFromSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromSpellEffect"
                             }
                         },
                         "removeSpecificAreaEffect": {
@@ -1716,16 +1884,46 @@
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
+                        "slashingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlashingResistanceModifierEffect"
+                            }
+                        },
                         "slay": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlayEffect"
                             }
                         },
+                        "sleep": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SleepEffect"
+                            }
+                        },
+                        "sleep20HP": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Sleep20HPEffect"
+                            }
+                        },
                         "slow": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "stun": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/StunEffect"
+                            }
+                        },
+                        "stun90HP": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Stun90HPEffect"
                             }
                         },
                         "teleport": {
@@ -1740,10 +1938,22 @@
                                 "$ref": "#/definitions/Thac0BonusEffect"
                             }
                         },
+                        "thac0VsCreatureTypeModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thac0VsCreatureTypeModifierEffect"
+                            }
+                        },
                         "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
+                            }
+                        },
+                        "web": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/WebEffect"
                             }
                         },
                         "restrained": {
@@ -2037,6 +2247,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -2076,6 +2289,63 @@
                 "SlashingWeapons",
                 "SetBaseArmorClassToValue"
             ]
+        },
+        "BlindnessEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
         },
         "CharacterColorPulseEffect": {
             "type": "object",
@@ -2127,6 +2397,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "color": {
                     "type": "object",
@@ -2196,6 +2469,157 @@
                 "WholeBody"
             ]
         },
+        "CharmCreatureEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "generalType": {
+                    "$ref": "#/definitions/GeneralIdentifiers"
+                },
+                "charmType": {
+                    "$ref": "#/definitions/RawCharmType"
+                }
+            },
+            "required": [
+                "generalType",
+                "charmType"
+            ],
+            "additionalProperties": false
+        },
+        "RawCharmType": {
+            "type": "string",
+            "enum": [
+                "NeutralCharm",
+                "HostileCharm",
+                "NeutralDireCharm",
+                "HostileDireCharm",
+                "Controlled",
+                "ThrullCharm",
+                "NeutralCharmNoFeedback",
+                "HostileCharmNoFeedback",
+                "NeutralDomination",
+                "HostileDomination",
+                "ControlledNoFeedback",
+                "ThrullCharmNoFeedback"
+            ]
+        },
+        "CharmControlCreatureEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "generalType": {
+                    "$ref": "#/definitions/GeneralIdentifiers"
+                },
+                "charmType": {
+                    "$ref": "#/definitions/RawCharmType"
+                }
+            },
+            "required": [
+                "generalType",
+                "charmType"
+            ],
+            "additionalProperties": false
+        },
         "CastSpellEffect": {
             "type": "object",
             "properties": {
@@ -2247,6 +2671,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "castingLevel": {
                     "type": "number"
                 },
@@ -2266,6 +2693,206 @@
                 "CastInstantlyAtCasterLevel",
                 "CastInstantlyAtSpecifiedLevel"
             ]
+        },
+        "ColdResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectStatisticModifier": {
+            "type": "string",
+            "enum": [
+                "Increment",
+                "Set",
+                "Percentage",
+                "CatGrace"
+            ]
+        },
+        "ConfusionEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "CrushingResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
         },
         "CreatureRGBColorFadeEffect": {
             "type": "object",
@@ -2317,6 +2944,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "color": {
                     "type": "object",
@@ -2399,6 +3029,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "amount": {
                     "type": "number"
                 },
@@ -2439,6 +3072,87 @@
                 "SetToValue",
                 "SetToPercent",
                 "ReduceByPercentage"
+            ]
+        },
+        "DamageVsCreatureTypeModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "idsEntry": {
+                    "type": "string"
+                },
+                "idsFile": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                }
+            },
+            "required": [
+                "idsEntry",
+                "idsFile",
+                "special"
+            ],
+            "additionalProperties": false
+        },
+        "RawEffectIDSFile": {
+            "type": "string",
+            "enum": [
+                "EA",
+                "GENERAL",
+                "RACE",
+                "CLASS",
+                "SPECIFIC",
+                "GENDER",
+                "ALIGN",
+                "KIT"
             ]
         },
         "DexterityBonusEffect": {
@@ -2492,6 +3206,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -2505,13 +3222,94 @@
             ],
             "additionalProperties": false
         },
-        "RawEffectStatisticModifier": {
+        "DiseaseEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawDiseaseType"
+                },
+                "frequencyMultiplier": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "amount",
+                "type",
+                "frequencyMultiplier"
+            ],
+            "additionalProperties": false
+        },
+        "RawDiseaseType": {
             "type": "string",
             "enum": [
-                "Increment",
-                "Set",
-                "Percentage",
-                "CatGrace"
+                "InflictOneHPperSecond",
+                "InflictOneHPperSecondBis",
+                "DealAmountDamageEveryFrequencyMultiplierSecond",
+                "DealOneDamageEveryAmountFrequencyMultiplierSecond",
+                "ReduceStrengthByAmount",
+                "ReduceDexterityByAmount",
+                "ReduceConstitutionByAmount",
+                "ReduceIntelligenceByAmount",
+                "ReduceWisdomByAmount",
+                "ReduceCharismaByAmount",
+                "SlowEffect",
+                "MoldTouchSingle",
+                "MoldTouchDecrement",
+                "Contagion"
             ]
         },
         "DisplayPortraitIconEffect": {
@@ -2564,6 +3362,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "icon": {
                     "$ref": "#/definitions/RawPortraitIcon"
@@ -2815,12 +3616,82 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "stringRef": {
                     "type": "string"
                 }
             },
             "required": [
                 "stringRef"
+            ],
+            "additionalProperties": false
+        },
+        "FireResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
             ],
             "additionalProperties": false
         },
@@ -2875,6 +3746,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "type": {
                     "$ref": "#/definitions/RawEffectHasteType"
                 }
@@ -2890,6 +3764,330 @@
                 "NormalHaste",
                 "ImprovedHaste",
                 "WeakHaste"
+            ]
+        },
+        "ImmunityToTurnUndeadEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "InfravisionEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "IntelligenceBonusEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "InvisibilityDetectionEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "KillTargetEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "displayText": {
+                    "type": "boolean"
+                },
+                "deathType": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawKillTargetDeathType"
+                    }
+                }
+            },
+            "required": [
+                "displayText",
+                "deathType"
+            ],
+            "additionalProperties": false
+        },
+        "RawKillTargetDeathType": {
+            "type": "string",
+            "enum": [
+                "Burning",
+                "Crushed",
+                "Normal",
+                "Exploding",
+                "Stoned",
+                "Freezing",
+                "ExplodingStoned",
+                "ExplodingFreezing",
+                "Electrified",
+                "Disintegration",
+                "ExplodingNoDrop"
             ]
         },
         "LightingEffectsEffect": {
@@ -2942,6 +4140,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "lightingTarget": {
                     "$ref": "#/definitions/RawLightingEffectTarget"
@@ -3000,6 +4201,398 @@
                 "HitFingerOfDeath"
             ]
         },
+        "MagicalColdResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "MagicalFireResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "MissilesResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "ModifyCollisionBehaviorEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "MoraleModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
+        "MoraleBreakModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
         "MovementRateBonusEffect": {
             "type": "object",
             "properties": {
@@ -3050,6 +4643,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "value": {
                     "type": "number"
@@ -3124,6 +4720,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -3136,6 +4735,130 @@
                 "modifierType"
             ],
             "additionalProperties": false
+        },
+        "OffhandThac0BonusEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectModifierType"
+                }
+            },
+            "required": [
+                "value",
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "PanicEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
         },
         "ParalyzeEffect": {
             "type": "object",
@@ -3188,6 +4911,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "idsEntry": {
                     "type": "string"
                 },
@@ -3200,19 +4926,6 @@
                 "idsFile"
             ],
             "additionalProperties": false
-        },
-        "RawEffectIDSFile": {
-            "type": "string",
-            "enum": [
-                "EA",
-                "GENERAL",
-                "RACE",
-                "CLASS",
-                "SPECIFIC",
-                "GENDER",
-                "ALIGN",
-                "KIT"
-            ]
         },
         "PetrificationEffect": {
             "type": "object",
@@ -3265,8 +4978,78 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             }
+        },
+        "PiercingResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
         },
         "PlaySoundEffect": {
             "type": "object",
@@ -3318,6 +5101,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             },
             "required": [
@@ -3375,6 +5161,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "playWhere": {
                     "$ref": "#/definitions/RawEffectVisualEffectLocation"
@@ -3445,6 +5234,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "amount": {
                     "type": "number"
                 },
@@ -3467,7 +5259,7 @@
                 "OneDamagePerAmountSecond"
             ]
         },
-        "ProtectionFromSpellEffect": {
+        "PoisonResistanceModifierEffect": {
             "type": "object",
             "properties": {
                 "index": {
@@ -3518,14 +5310,257 @@
                 "resource": {
                     "type": "string"
                 },
-                "stringRef": {
-                    "type": "string"
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
                 }
             },
             "required": [
-                "resource"
+                "value"
             ],
             "additionalProperties": false
+        },
+        "PolymorphIntoSpecificEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "PreventPortraitIconEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "icon": {
+                    "$ref": "#/definitions/RawPortraitIcon"
+                }
+            },
+            "required": [
+                "icon"
+            ],
+            "additionalProperties": false
+        },
+        "ProtectionFromAnimationEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "ProtectionFromBackstabEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
         },
         "ProtectionFromDisplaySpecificStringEffect": {
             "type": "object",
@@ -3578,10 +5613,217 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "stringRef": {
                     "type": "string"
                 }
             },
+            "additionalProperties": false
+        },
+        "ProtectionFromOpcodeEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/EffectTypeEnum"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "EffectTypeEnum": {
+            "type": "number",
+            "enum": [
+                0,
+                74,
+                146,
+                50,
+                5,
+                241,
+                28,
+                128,
+                61,
+                87,
+                12,
+                179,
+                15,
+                78,
+                142,
+                139,
+                30,
+                16,
+                175,
+                297,
+                63,
+                19,
+                193,
+                13,
+                141,
+                85,
+                84,
+                89,
+                300,
+                23,
+                106,
+                126,
+                176,
+                305,
+                24,
+                109,
+                134,
+                88,
+                174,
+                215,
+                25,
+                173,
+                135,
+                169,
+                296,
+                292,
+                101,
+                83,
+                206,
+                267,
+                318,
+                324,
+                273,
+                172,
+                33,
+                34,
+                35,
+                36,
+                37,
+                282,
+                328,
+                86,
+                55,
+                39,
+                217,
+                40,
+                45,
+                210,
+                178,
+                124,
+                278,
+                177,
+                157
+            ]
+        },
+        "ProtectionFromProjectileEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "projectile": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "projectile"
+            ],
             "additionalProperties": false
         },
         "ProtectionFromResourceEffect": {
@@ -3634,6 +5876,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "value": {
                     "type": "string"
@@ -3699,6 +5944,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "string"
                 },
@@ -3709,6 +5957,69 @@
             "required": [
                 "value",
                 "statType"
+            ],
+            "additionalProperties": false
+        },
+        "ProtectionFromSpellEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "stringRef": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "resource"
             ],
             "additionalProperties": false
         },
@@ -3763,6 +6074,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             }
         },
@@ -3817,6 +6131,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             }
         },
@@ -3870,6 +6187,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "value": {
                     "type": "number"
@@ -3935,6 +6255,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -3998,6 +6321,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "value": {
                     "type": "number"
@@ -4063,6 +6389,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -4127,6 +6456,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -4190,6 +6522,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "value": {
                     "type": "number"
@@ -4317,6 +6652,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "state": {
                     "anyOf": [
@@ -4527,6 +6865,73 @@
                 "SPELL_PROTECTION"
             ]
         },
+        "SlashingResistanceModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "modifierType": {
+                    "$ref": "#/definitions/RawEffectStatisticModifier"
+                }
+            },
+            "required": [
+                "value",
+                "modifierType"
+            ],
+            "additionalProperties": false
+        },
         "SlayEffect": {
             "type": "object",
             "properties": {
@@ -4578,6 +6983,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "idsEntry": {
                     "type": "string"
                 },
@@ -4588,6 +6996,132 @@
             "required": [
                 "idsEntry",
                 "idsFile"
+            ],
+            "additionalProperties": false
+        },
+        "SleepEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "wakeOnDamage": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "wakeOnDamage"
+            ],
+            "additionalProperties": false
+        },
+        "Sleep20HPEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "wakeOnDamage": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "wakeOnDamage"
             ],
             "additionalProperties": false
         },
@@ -4642,6 +7176,123 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "StunEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
+        },
+        "Stun90HPEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             }
         },
@@ -4695,6 +7346,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 },
                 "type": {
                     "$ref": "#/definitions/RawEffectTeleportType"
@@ -4765,6 +7419,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "value": {
                     "type": "number"
                 },
@@ -4775,6 +7432,74 @@
             "required": [
                 "value",
                 "type"
+            ],
+            "additionalProperties": false
+        },
+        "Thac0VsCreatureTypeModifierEffect": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "idsEntry": {
+                    "type": "string"
+                },
+                "idsFile": {
+                    "$ref": "#/definitions/RawEffectIDSFile"
+                }
+            },
+            "required": [
+                "idsEntry",
+                "idsFile",
+                "special"
             ],
             "additionalProperties": false
         },
@@ -4829,6 +7554,9 @@
                 "resource": {
                     "type": "string"
                 },
+                "special": {
+                    "type": "number"
+                },
                 "idsEntry": {
                     "type": "string"
                 },
@@ -4841,6 +7569,63 @@
                 "idsFile"
             ],
             "additionalProperties": false
+        },
+        "WebEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "index": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTarget"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTiming"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistance"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveType"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlags"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                }
+            }
         },
         "RestrainedEffect": {
             "type": "object",
@@ -4893,6 +7678,9 @@
                 },
                 "resource": {
                     "type": "string"
+                },
+                "special": {
+                    "type": "number"
                 }
             }
         },
@@ -4965,16 +7753,52 @@
                                 "$ref": "#/definitions/ArmorClassBonusEffect"
                             }
                         },
+                        "blindness": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/BlindnessEffect"
+                            }
+                        },
                         "characterColorPulse": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CharacterColorPulseEffect"
                             }
                         },
+                        "charmCreature": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharmCreatureEffect"
+                            }
+                        },
+                        "charmControlCreature": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CharmControlCreatureEffect"
+                            }
+                        },
                         "castSpell": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/CastSpellEffect"
+                            }
+                        },
+                        "coldResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ColdResistanceModifierEffect"
+                            }
+                        },
+                        "confusion": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ConfusionEffect"
+                            }
+                        },
+                        "crushingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CrushingResistanceModifierEffect"
                             }
                         },
                         "creatureRGBColorFade": {
@@ -4989,10 +7813,22 @@
                                 "$ref": "#/definitions/DamageEffect"
                             }
                         },
+                        "damageVsCreatureTypeModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DamageVsCreatureTypeModifierEffect"
+                            }
+                        },
                         "dexterityBonus": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/DexterityBonusEffect"
+                            }
+                        },
+                        "disease": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DiseaseEffect"
                             }
                         },
                         "displayPortraitIcon": {
@@ -5007,16 +7843,88 @@
                                 "$ref": "#/definitions/DisplayStringEffect"
                             }
                         },
+                        "fireResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/FireResistanceModifierEffect"
+                            }
+                        },
                         "haste": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/HasteEffect"
                             }
                         },
+                        "immunityToTurnUndead": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ImmunityToTurnUndeadEffect"
+                            }
+                        },
+                        "infravision": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InfravisionEffect"
+                            }
+                        },
+                        "intelligenceBonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IntelligenceBonusEffect"
+                            }
+                        },
+                        "invisibilityDetection": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvisibilityDetectionEffect"
+                            }
+                        },
+                        "killTarget": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/KillTargetEffect"
+                            }
+                        },
                         "lightingEffects": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/LightingEffectsEffect"
+                            }
+                        },
+                        "magicalColdResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MagicalColdResistanceModifierEffect"
+                            }
+                        },
+                        "magicalFireResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MagicalFireResistanceModifierEffect"
+                            }
+                        },
+                        "missilesResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MissilesResistanceModifierEffect"
+                            }
+                        },
+                        "modifyCollisionBehavior": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ModifyCollisionBehaviorEffect"
+                            }
+                        },
+                        "moraleModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MoraleModifierEffect"
+                            }
+                        },
+                        "moraleBreakModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MoraleBreakModifierEffect"
                             }
                         },
                         "movementRateBonus": {
@@ -5031,6 +7939,18 @@
                                 "$ref": "#/definitions/MovementRateBonus2Effect"
                             }
                         },
+                        "offhandThac0Bonus": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OffhandThac0BonusEffect"
+                            }
+                        },
+                        "panic": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PanicEffect"
+                            }
+                        },
                         "paralyze": {
                             "type": "array",
                             "items": {
@@ -5041,6 +7961,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/PetrificationEffect"
+                            }
+                        },
+                        "piercingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PiercingResistanceModifierEffect"
                             }
                         },
                         "playSound": {
@@ -5061,16 +7987,52 @@
                                 "$ref": "#/definitions/PoisonEffect"
                             }
                         },
-                        "protectionFromSpell": {
+                        "poisonResistanceModifier": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/ProtectionFromSpellEffect"
+                                "$ref": "#/definitions/PoisonResistanceModifierEffect"
+                            }
+                        },
+                        "polymorphIntoSpecific": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PolymorphIntoSpecificEffect"
+                            }
+                        },
+                        "preventPortraitIcon": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PreventPortraitIconEffect"
+                            }
+                        },
+                        "protectionFromAnimation": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromAnimationEffect"
+                            }
+                        },
+                        "protectionFromBackstab": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromBackstabEffect"
                             }
                         },
                         "protectionFromDisplaySpecificString": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromDisplaySpecificStringEffect"
+                            }
+                        },
+                        "protectionFromOpcode": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromOpcodeEffect"
+                            }
+                        },
+                        "protectionFromProjectile": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromProjectileEffect"
                             }
                         },
                         "protectionFromResource": {
@@ -5083,6 +8045,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/ProtectionFromResourceAndMessageEffect"
+                            }
+                        },
+                        "protectionFromSpell": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProtectionFromSpellEffect"
                             }
                         },
                         "removeSpecificAreaEffect": {
@@ -5139,16 +8107,46 @@
                                 "$ref": "#/definitions/SetExtendedSpellStateEffect"
                             }
                         },
+                        "slashingResistanceModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SlashingResistanceModifierEffect"
+                            }
+                        },
                         "slay": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlayEffect"
                             }
                         },
+                        "sleep": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SleepEffect"
+                            }
+                        },
+                        "sleep20HP": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Sleep20HPEffect"
+                            }
+                        },
                         "slow": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/SlowEffect"
+                            }
+                        },
+                        "stun": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/StunEffect"
+                            }
+                        },
+                        "stun90HP": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Stun90HPEffect"
                             }
                         },
                         "teleport": {
@@ -5163,10 +8161,22 @@
                                 "$ref": "#/definitions/Thac0BonusEffect"
                             }
                         },
+                        "thac0VsCreatureTypeModifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Thac0VsCreatureTypeModifierEffect"
+                            }
+                        },
                         "useEFFFile": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/UseEFFFileEffect"
+                            }
+                        },
+                        "web": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/WebEffect"
                             }
                         },
                         "restrained": {
@@ -5592,9 +8602,56 @@
         "CreatureTrait": {
             "type": "string",
             "enum": [
-                "undead",
+                "airAffinity",
                 "construct",
-                "hover"
+                "earthAffinity",
+                "elemental",
+                "extraplanar",
+                "hover",
+                "infravision",
+                "plant",
+                "seeInvisible",
+                "skeletal",
+                "undead"
+            ]
+        },
+        "CreatureImmunity": {
+            "type": "string",
+            "enum": [
+                "acidSpells",
+                "backstab",
+                "bleeding",
+                "blindness",
+                "charm",
+                "cloudSpells",
+                "cold",
+                "coldSpells",
+                "confusion",
+                "criticalHit",
+                "cureSpells",
+                "deathSpell",
+                "devourBrain",
+                "disease",
+                "electricalSpells",
+                "earthquake",
+                "entangle",
+                "fear",
+                "fireSpells",
+                "hold",
+                "hover",
+                "illusion",
+                "insectSpells",
+                "missileWeapons",
+                "magicMissile",
+                "petrification",
+                "polymorph",
+                "poison",
+                "poisonSpells",
+                "stun",
+                "sleep",
+                "unturnable",
+                "vorpal",
+                "web"
             ]
         },
         "RawCreatureAutoGenerate": {

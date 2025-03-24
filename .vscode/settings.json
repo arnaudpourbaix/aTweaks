@@ -5,7 +5,13 @@
             "fileMatch": [
                 "lib/pnp-monster/data/*.json",
             ],
-            "url": "./lib/pnp-monster/schema.json"
+            "url": "./lib/schemas/creature.schema.json"
+        },
+        {
+            "fileMatch": [
+                "generate.json",
+            ],
+            "url": "./lib/schemas/generate.schema.json"
         }
     ]
 }

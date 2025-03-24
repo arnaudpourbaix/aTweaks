@@ -11,7 +11,6 @@ CREATE ITM "ja#m4w1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 4
 	WRITE_BYTE 0x88 3
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -49,7 +48,6 @@ CREATE ITM "ja#m4w2"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
-	WRITE_SHORT 0x86 8
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
@@ -88,7 +86,7 @@ BEGIN
 					hp=27
 					ac=7
 					thac0=17
-					apr=2
+					apr=3
 					xpv=175
 					alignment=34
 					saveDeath=13
@@ -105,6 +103,7 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
+					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
 			DEFINE_ARRAY skipFiles BEGIN BEARBLSU END
