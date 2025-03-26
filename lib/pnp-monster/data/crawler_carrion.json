@@ -23,58 +23,67 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "Paralyze",
+                    "idsFile": "EA",
+                    "idsEntry": "ANYONE",
+                    "timing": "InstantLimited",
+                    "duration": 42,
                     "saveTypes": [
                         "ParalyzePoisonDeath"
                     ]
                 },
-                "paralyze": [
-                    {
-                        "idsFile": "EA",
-                        "idsEntry": "ANYONE",
-                        "timing": "InstantLimited",
-                        "duration": 42
-                    }
-                ],
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Held",
-                        "timing": "InstantLimited",
-                        "duration": 42
-                    }
-                ],
-                "playSound": [
-                    {
-                        "timing": "InstantPermanentUntilDeath",
-                        "resource": "EFF_P11"
+                {
+                    "opcode": "DisplayPortraitIcon",
+                    "icon": "Held",
+                    "timing": "InstantLimited",
+                    "duration": 42,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                },
+                {
+                    "opcode": "PlaySound",
+                    "timing": "InstantPermanentUntilDeath",
+                    "resource": "EFF_P11",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                },
+                {
+                    "opcode": "PlaySound",
+                    "timing": "DelayPermanent",
+                    "resource": "EFF_E05",
+                    "duration": 42,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                },
+                {
+                    "opcode": "CharacterColorPulse",
+                    "timing": "InstantPermanentUntilDeath",
+                    "color": {
+                        "blue": 0,
+                        "green": 57,
+                        "red": 87
                     },
-                    {
-                        "timing": "DelayPermanent",
-                        "resource": "EFF_E05",
-                        "duration": 42
-                    }
-                ],
-                "characterColorPulse": [
-                    {
-                        "timing": "InstantPermanentUntilDeath",
-                        "color": {
-                            "blue": 0,
-                            "green": 57,
-                            "red": 87
-                        },
-                        "location": "AvatarArmorGrey",
-                        "cycleSpeed": 25
-                    }
-                ],
-                "lightingEffects": [
-                    {
-                        "timing": "InstantPermanentUntilDeath",
-                        "lightingTarget": "SpellTarget",
-                        "effect": "NecromancyEarth"
-                    }
-                ]
-            }
+                    "location": "AvatarArmorGrey",
+                    "cycleSpeed": 25,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                },
+                {
+                    "opcode": "LightingEffects",
+                    "timing": "InstantPermanentUntilDeath",
+                    "lightingTarget": "SpellTarget",
+                    "effect": "NecromancyEarth",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ]
+                }
+            ]
         }
     ],
     "data": {

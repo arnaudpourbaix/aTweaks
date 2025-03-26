@@ -112,43 +112,53 @@
             "projectile": "ja#1m2",
             "range": 30,
             "speed": 0,
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "Petrification",
                     "saveTypes": [
                         "PetrifyPolymorph"
                     ],
                     "saveBonus": -4
                 },
-                "petrification": [
-                    {}
-                ],
-                "displayString": [
-                    {
-                        "stringRef": "4004"
-                    }
-                ],
-                "playSound": [
-                    {
-                        "resource": "MISC_06B"
-                    }
-                ],
-                "playVisualEffect": [
-                    {
-                        "playWhere": "OverTargetUnattached",
-                        "resource": "SPFLESHS.VVC"
-                    }
-                ],
-                "creatureRGBColorFade": [
-                    {
-                        "color": {
-                            "blue": 120,
-                            "red": 120,
-                            "green": 120
-                        },
-                        "fadeSpeed": 25
-                    }
-                ]
-            }
+                {
+                    "opcode": "DisplayString",
+                    "stringRef": 4004,
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "PlaySound",
+                    "resource": "MISC_06B",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "PlayVisualEffect",
+                    "playWhere": "OverTargetUnattached",
+                    "resource": "SPFLESHS.VVC",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "CreatureRGBColorFade",
+                    "color": {
+                        "blue": 120,
+                        "red": 120,
+                        "green": 120
+                    },
+                    "fadeSpeed": 25,
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                }
+            ]
         },
         {
             "name": "Petrification (5e)",
@@ -162,41 +172,45 @@
             "projectile": "ja#2m2",
             "range": 30,
             "speed": 0,
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "DisplayString",
+                    "stringRef": 4005,
                     "saveTypes": [
                         "PetrifyPolymorph"
                     ],
                     "saveBonus": -4
                 },
-                "displayString": [
-                    {
-                        "index": 0,
-                        "stringRef": "4005"
-                    }
-                ],
-                "restrained": {
-                    "index": 1,
-                    "duration": 12
+                {
+                    "opcode": "RestrainedEffects",
+                    "duration": 12,
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
                 },
-                "castSpell": [
-                    {
-                        "index": 2,
-                        "timing": "DelayLimited",
-                        "duration": 12,
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#3m2"
-                    }
-                ],
-                "protectionFromSpell": [
-                    {
-                        "index": 3,
-                        "timing": "DelayLimited",
-                        "duration": 12,
-                        "resource": "ja#2m2"
-                    }
-                ]
-            }
+                {
+                    "opcode": "CastSpell",
+                    "timing": "DelayLimited",
+                    "duration": 12,
+                    "type": "CastInstantlyAtCasterLevel",
+                    "resource": "ja#3m2",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "ProtectionFromSpell",
+                    "timing": "DelayLimited",
+                    "duration": 12,
+                    "resource": "ja#2m2",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                }
+            ]
         },
         {
             "name": "Petrification (5e, technical)",
@@ -207,44 +221,58 @@
             "type": "Ranged",
             "range": 0,
             "speed": 0,
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "Petrification",
                     "timing": "InstantPermanent",
                     "saveTypes": [
                         "PetrifyPolymorph"
                     ],
                     "saveBonus": -4
                 },
-                "petrification": [
-                    {}
-                ],
-                "displayString": [
-                    {
-                        "stringRef": "4004"
-                    }
-                ],
-                "playSound": [
-                    {
-                        "resource": "MISC_06B"
-                    }
-                ],
-                "playVisualEffect": [
-                    {
-                        "playWhere": "OverTargetUnattached",
-                        "resource": "SPFLESHS.VVC"
-                    }
-                ],
-                "creatureRGBColorFade": [
-                    {
-                        "color": {
-                            "blue": 120,
-                            "red": 120,
-                            "green": 120
-                        },
-                        "fadeSpeed": 25
-                    }
-                ]
-            }
+                {
+                    "opcode": "DisplayString",
+                    "stringRef": 4004,
+                    "timing": "InstantPermanent",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "PlaySound",
+                    "resource": "MISC_06B",
+                    "timing": "InstantPermanent",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "PlayVisualEffect",
+                    "playWhere": "OverTargetUnattached",
+                    "resource": "SPFLESHS.VVC",
+                    "timing": "InstantPermanent",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                },
+                {
+                    "opcode": "CreatureRGBColorFade",
+                    "color": {
+                        "blue": 120,
+                        "red": 120,
+                        "green": 120
+                    },
+                    "fadeSpeed": 25,
+                    "timing": "InstantPermanent",
+                    "saveTypes": [
+                        "PetrifyPolymorph"
+                    ],
+                    "saveBonus": -4
+                }
+            ]
         }
     ],
     "files": [

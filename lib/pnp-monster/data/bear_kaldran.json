@@ -171,78 +171,74 @@
             "projectile": "ja#1m8",
             "range": 10,
             "speed": 0,
-            "effects": {
-                "shared": {
-                    "timing": "InstantPermanentUntilDeath"
+            "effects": [
+                {
+                    "opcode": "Damage",
+                    "timing": "InstantPermanentUntilDeath",
+                    "amount": 0,
+                    "damageMode": "Normal",
+                    "type": "Cold",
+                    "diceThrown": 6,
+                    "diceSize": 4,
+                    "saveTypes": [
+                        "Breath"
+                    ],
+                    "flags": [
+                        "SaveForHalf"
+                    ]
                 },
-                "damage": [
-                    {
-                        "amount": 0,
-                        "damageMode": "Normal",
-                        "damageType": "Cold",
-                        "diceThrown": 6,
-                        "diceSize": 4,
-                        "saveTypes": [
-                            "Breath"
-                        ],
-                        "flags": [
-                            "SaveForHalf"
-                        ]
-                    }
-                ],
-                "characterColorPulse": [
-                    {
-                        "color": {
-                            "blue": 255,
-                            "green": 213,
-                            "red": 123
-                        },
-                        "location": "AvatarArmorGrey",
-                        "cycleSpeed": 20
-                    }
-                ],
-                "paralyze": [
-                    {
-                        "idsFile": "EA",
-                        "idsEntry": "ANYONE",
-                        "timing": "InstantLimited",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ],
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Held",
-                        "timing": "InstantLimited",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ],
-                "playSound": [
-                    {
-                        "resource": "MISC_04A",
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
+                {
+                    "opcode": "CharacterColorPulse",
+                    "timing": "InstantPermanentUntilDeath",
+                    "color": {
+                        "blue": 255,
+                        "green": 213,
+                        "red": 123
                     },
-                    {
-                        "resource": "EFF_E03",
-                        "timing": "DelayPermanent",
-                        "duration": 60,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "saveBonus": -2
-                    }
-                ]
-            }
+                    "location": "AvatarArmorGrey",
+                    "cycleSpeed": 20
+                },
+                {
+                    "opcode": "Paralyze",
+                    "timing": "InstantLimited",
+                    "idsFile": "EA",
+                    "idsEntry": "ANYONE",
+                    "duration": 60,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": -2
+                },
+                {
+                    "opcode": "DisplayPortraitIcon",
+                    "timing": "InstantLimited",
+                    "icon": "Held",
+                    "duration": 60,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": -2
+                },
+                {
+                    "opcode": "PlaySound",
+                    "timing": "InstantPermanentUntilDeath",
+                    "resource": "MISC_04A",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": -2
+                },
+                {
+                    "opcode": "PlaySound",
+                    "timing": "DelayPermanent",
+                    "resource": "EFF_E03",
+                    "duration": 60,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": -2
+                }
+            ]
         }
     ],
     "files": [

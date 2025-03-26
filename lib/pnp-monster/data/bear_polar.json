@@ -56,26 +56,22 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "displayString": [
-                    {
-                        "index": 0,
-                        "stringRef": "4007",
-                        "probability1": 10
-                    }
-                ],
-                "damage": [
-                    {
-                        "index": 1,
-                        "damageMode": "Normal",
-                        "damageType": "Crushing",
-                        "amount": 0,
-                        "diceThrown": 3,
-                        "diceSize": 6,
-                        "probability1": 10
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "DisplayString",
+                    "stringRef": 4007,
+                    "probability1": 10
+                },
+                {
+                    "opcode": "Damage",
+                    "damageMode": "Normal",
+                    "type": "Crushing",
+                    "amount": 0,
+                    "diceThrown": 3,
+                    "diceSize": 6,
+                    "probability1": 10
+                }
+            ]
         },
         {
             "file": "ja#m7w2",

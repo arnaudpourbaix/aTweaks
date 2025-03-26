@@ -90,25 +90,22 @@
             "type": "Melee",
             "range": 30,
             "speed": 0,
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "Teleport",
+                    "type": "Default",
                     "target": "Self"
                 },
-                "teleport": [
-                    {
-                        "type": "Default"
-                    }
-                ],
-                "thac0Bonus": [
-                    {
-                        "timing": "InstantLimited",
-                        "duration": 6,
-                        "type": "Increment",
-                        "probability1": 75,
-                        "value": 2
-                    }
-                ]
-            }
+                {
+                    "opcode": "Thac0Bonus",
+                    "timing": "InstantLimited",
+                    "duration": 6,
+                    "type": "Increment",
+                    "probability1": 75,
+                    "value": 2,
+                    "target": "Self"
+                }
+            ]
         }
     ],
     "files": [

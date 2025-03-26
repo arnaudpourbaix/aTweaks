@@ -87,7 +87,7 @@ BEGIN
 					hp=92
 					ac=6
 					thac0=11
-					apr=3
+					apr=2
 					xpv=1400
 					alignment=34
 					saveDeath=10

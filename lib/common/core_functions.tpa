@@ -186,35 +186,6 @@ BEGIN
 END
 
 
-// Add an effect to a CRE, ITM, or SPL
-DEFINE_PATCH_FUNCTION ADD_EFFECT_CRE_ITM_SPL
-INT_VAR
-  opcode=0
-  parameter1=0
-  parameter2=0
-  parameter3=0
-  parameter4=0
-  power=0           // only apply to a SPL file
-  resist_dispel=0   // only apply to a SPL file
-  duration=0        // only apply to a SPL file
-STR_VAR
-  resource=""
-BEGIN
-  PATCH_MATCH "%SOURCE_EXT%" WITH
-    ~CRE~ BEGIN
-      LPF ADD_CRE_EFFECT INT_VAR target=1 timing=9 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
-    END
-    ~ITM~ BEGIN
-      LPF ADD_ITEM_EQEFFECT INT_VAR target=1 timing=2 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
-    END
-    ~SPL~ BEGIN
-      LPF ADD_SPELL_EFFECT INT_VAR target=2 opcode parameter1 parameter2 parameter3 parameter4 power resist_dispel duration STR_VAR resource END  
-    END
-  DEFAULT END
-END
-
-
-
 
 // Deletes all effects and extended headers from the source item or spell and inserts a new extended header of type f_Type (defaults to f_Type = 1), provided f_Type >= 0
 // if the source file is an item file and f_Type = 1, the function launches an auxilliary function to set up the basics of the melee header
@@ -425,3 +396,22 @@ BEGIN
   END
 END
 
+DEFINE_PATCH_FUNCTION getResourceFromSpellIds
+INT_VAR
+  value = 0
+STR_VAR
+  ids = ""
+RET
+  result
+BEGIN
+  SET value=IDS_OF_SYMBOL("spell" "%ids%")
+  SPRINT result ""
+  PATCH_IF value > 0 BEGIN
+		INNER_PATCH_SAVE result "%value%" BEGIN
+			REPLACE_TEXTUALLY "^1" "SPPR"
+			REPLACE_TEXTUALLY "^2" "SPWI"
+			REPLACE_TEXTUALLY "^3" "SPIN"
+			REPLACE_TEXTUALLY "^4" "SPCL"
+		END
+  END
+END

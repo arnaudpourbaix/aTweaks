@@ -19,6 +19,26 @@ CREATE SPL "ja#1m1"
 	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).~
 	LPF ADD_EFFECT
 		INT_VAR
+			opcode = 206
+			target = 2
+			parameter1 = 0
+			parameter2 = 0
+			duration = 24
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m1"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter1 = 0
+			parameter2 = 102
+			duration = 24
+			probability1 = 100
+	END
+	LPF ADD_EFFECT
+		INT_VAR
 			opcode = 12
 			target = 2
 			parameter1 = 0
@@ -62,26 +82,6 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 4
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 142
-			target = 2
-			parameter1 = 0
-			parameter2 = 102
-			duration = 24
-			probability1 = 100
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 206
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			duration = 24
-			probability1 = 100
-		STR_VAR
-			resource = "ja#1m1"
 	END
 
 CREATE SPL "ja#2m1"
@@ -406,7 +406,7 @@ CREATE SPL "ja#3m1"
 			opcode = 176
 			target = 2
 			parameter1 = 0
-			parameter2 = 1
+			parameter2 = undefined
 			duration = 18
 			probability1 = 100
 	END

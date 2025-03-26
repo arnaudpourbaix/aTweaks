@@ -37,10 +37,10 @@ CREATE SPL "ja#1m2"
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 61
+			opcode = 134
 			target = 2
-			parameter1 = 2021160960
-			parameter2 = 1638400
+			parameter1 = 0
+			parameter2 = 0
 			probability1 = 100
 			savingthrow = 16
 			savebonus = "-4"
@@ -50,16 +50,6 @@ CREATE SPL "ja#1m2"
 			opcode = 139
 			target = 2
 			parameter1 = RESOLVE_STR_REF(@4004)
-			parameter2 = 0
-			probability1 = 100
-			savingthrow = 16
-			savebonus = "-4"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 134
-			target = 2
-			parameter1 = 0
 			parameter2 = 0
 			probability1 = 100
 			savingthrow = 16
@@ -88,6 +78,16 @@ CREATE SPL "ja#1m2"
 			savebonus = "-4"
 		STR_VAR
 			resource = "SPFLESHS.VVC"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 61
+			target = 2
+			parameter1 = 2021160960
+			parameter2 = 1638400
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
 	END
 
 CREATE SPL "ja#2m2"
@@ -155,7 +155,7 @@ CREATE SPL "ja#2m2"
 			opcode = 176
 			target = 2
 			parameter1 = 0
-			parameter2 = 1
+			parameter2 = undefined
 			duration = 12
 			probability1 = 100
 			savingthrow = 16
@@ -166,7 +166,7 @@ CREATE SPL "ja#2m2"
 			opcode = 278
 			target = 2
 			parameter1 = "-4"
-			parameter2 = 0
+			parameter2 = undefined
 			duration = 12
 			probability1 = 100
 			savingthrow = 16
@@ -239,10 +239,10 @@ CREATE SPL "ja#3m2"
 	SAY NAME1 @4002 SAY NAME2 @4002
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 61
+			opcode = 134
 			target = 2
-			parameter1 = 2021160960
-			parameter2 = 1638400
+			parameter1 = 0
+			parameter2 = 0
 			timing = 9
 			probability1 = 100
 			savingthrow = 16
@@ -253,17 +253,6 @@ CREATE SPL "ja#3m2"
 			opcode = 139
 			target = 2
 			parameter1 = RESOLVE_STR_REF(@4004)
-			parameter2 = 0
-			timing = 9
-			probability1 = 100
-			savingthrow = 16
-			savebonus = "-4"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 134
-			target = 2
-			parameter1 = 0
 			parameter2 = 0
 			timing = 9
 			probability1 = 100
@@ -295,6 +284,17 @@ CREATE SPL "ja#3m2"
 			savebonus = "-4"
 		STR_VAR
 			resource = "SPFLESHS.VVC"
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 61
+			target = 2
+			parameter1 = 2021160960
+			parameter2 = 1638400
+			timing = 9
+			probability1 = 100
+			savingthrow = 16
+			savebonus = "-4"
 	END
 
 CREATE ITM "ja#m2w1"

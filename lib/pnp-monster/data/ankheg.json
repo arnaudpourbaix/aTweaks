@@ -91,14 +91,13 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "castSpell": [
-                    {
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#1m1"
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "CastSpell",
+                    "resource": "ja#1m1",
+                    "type": "CastInstantlyAtCasterLevel"
+                }
+            ]
         },
         {
             "file": "ja#m1w2",
@@ -109,20 +108,18 @@
             "speed": 3,
             "bonusToHit": 20,
             "projectile": "acidblob",
-            "effects": {
-                "castSpell": [
-                    {
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#2m1"
-                    }
-                ],
-                "removeSpell": [
-                    {
-                        "target": "Self",
-                        "resource": "ja#2m1"
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "CastSpell",
+                    "type": "CastInstantlyAtCasterLevel",
+                    "resource": "ja#2m1"
+                },
+                {
+                    "opcode": "RemoveSpell",
+                    "target": "Self",
+                    "resource": "ja#2m1"
+                }
+            ]
         }
     ],
     "attacks": [
@@ -150,49 +147,49 @@
             "type": "Melee",
             "range": 5,
             "speed": 0,
-            "effects": {
-                "protectionFromSpell": [
-                    {
-                        "resource": "ja#1m1",
-                        "duration": 24,
-                        "timing": "InstantLimited"
-                    }
-                ],
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Acid",
-                        "duration": 24
-                    }
-                ],
-                "damage": [
-                    {
-                        "damageType": "Acid",
-                        "diceThrown": 1,
-                        "diceSize": 4
-                    },
-                    {
-                        "timing": "DelayPermanent",
-                        "duration": 6,
-                        "damageType": "Acid",
-                        "diceThrown": 1,
-                        "diceSize": 4
-                    },
-                    {
-                        "timing": "DelayPermanent",
-                        "duration": 12,
-                        "damageType": "Acid",
-                        "diceThrown": 1,
-                        "diceSize": 4
-                    },
-                    {
-                        "timing": "DelayPermanent",
-                        "duration": 18,
-                        "damageType": "Acid",
-                        "diceThrown": 1,
-                        "diceSize": 4
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "ProtectionFromSpell",
+                    "resource": "ja#1m1",
+                    "duration": 24,
+                    "timing": "InstantLimited"
+                },
+                {
+                    "opcode": "DisplayPortraitIcon",
+                    "icon": "Acid",
+                    "duration": 24
+                },
+                {
+                    "opcode": "Damage",
+                    "type": "Acid",
+                    "diceThrown": 1,
+                    "diceSize": 4
+                },
+                {
+                    "opcode": "Damage",
+                    "timing": "DelayPermanent",
+                    "duration": 6,
+                    "type": "Acid",
+                    "diceThrown": 1,
+                    "diceSize": 4
+                },
+                {
+                    "opcode": "Damage",
+                    "timing": "DelayPermanent",
+                    "duration": 12,
+                    "type": "Acid",
+                    "diceThrown": 1,
+                    "diceSize": 4
+                },
+                {
+                    "opcode": "Damage",
+                    "timing": "DelayPermanent",
+                    "duration": 18,
+                    "type": "Acid",
+                    "diceThrown": 1,
+                    "diceSize": 4
+                }
+            ]
         },
         {
             "name": "Stream of acidic enzymes",
@@ -206,21 +203,20 @@
             "range": 30,
             "speed": 3,
             "projectile": "acidblob",
-            "effects": {
-                "damage": [
-                    {
-                        "damageType": "Acid",
-                        "diceThrown": 8,
-                        "diceSize": 4,
-                        "saveTypes": [
-                            "ParalyzePoisonDeath"
-                        ],
-                        "flags": [
-                            "SaveForHalf"
-                        ]
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "Damage",
+                    "type": "Acid",
+                    "diceThrown": 8,
+                    "diceSize": 4,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "flags": [
+                        "SaveForHalf"
+                    ]
+                }
+            ]
         }
     ],
     "files": [

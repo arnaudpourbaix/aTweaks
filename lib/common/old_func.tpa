@@ -222,7 +222,6 @@ DEFINE_PATCH_FUNCTION cold_spell_immunities BEGIN
   LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
 
-
 // Electrical spell immunities, area effect spell immunities (prevents friendly fire and such)
 DEFINE_PATCH_FUNCTION electrical_spell_immunities BEGIN
   PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
@@ -298,7 +297,6 @@ DEFINE_PATCH_FUNCTION acid_spell_immunities BEGIN
   END
   LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
-
 
 // Poison spell immunities, area effect spell immunities (prevents friendly fire and such)
 DEFINE_PATCH_FUNCTION poison_spell_immunities BEGIN

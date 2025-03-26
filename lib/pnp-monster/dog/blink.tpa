@@ -27,7 +27,7 @@ CREATE SPL "ja#1m14"
 			opcode = 278
 			target = 1
 			parameter1 = 2
-			parameter2 = 0
+			parameter2 = undefined
 			duration = 6
 			probability1 = 75
 	END

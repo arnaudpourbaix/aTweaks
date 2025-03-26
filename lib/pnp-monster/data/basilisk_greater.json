@@ -101,26 +101,17 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "shared": {
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
-                    "saveBonus": 4,
-                    "duration": 30
+            "effects": [
+                {
+                    "opcode": "Poison",
+                    "type": "OneDamagePerAmountSecond",
+                    "amount": 6
                 },
-                "poison": [
-                    {
-                        "type": "OneDamagePerAmountSecond",
-                        "amount": 6
-                    }
-                ],
-                "displayPortraitIcon": [
-                    {
-                        "icon": "Poisoned"
-                    }
-                ]
-            }
+                {
+                    "opcode": "DisplayPortraitIcon",
+                    "icon": "Poisoned"
+                }
+            ]
         },
         {
             "file": "ja#m3w2",
@@ -136,14 +127,13 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "castSpell": [
-                    {
-                        "type": "CastInstantlyAtCasterLevel",
-                        "resource": "ja#1m3"
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "CastSpell",
+                    "type": "CastInstantlyAtCasterLevel",
+                    "resource": "ja#1m3"
+                }
+            ]
         }
     ],
     "projectiles": [
@@ -173,32 +163,37 @@
             "projectile": "ja#1m3",
             "range": 5,
             "speed": 0,
-            "effects": {
-                "shared": {
+            "effects": [
+                {
+                    "opcode": "Slay",
+                    "idsFile": "EA",
+                    "idsEntry": "ANYONE",
                     "timing": "InstantPermanentUntilDeath",
                     "saveTypes": [
                         "ParalyzePoisonDeath"
                     ],
                     "saveBonus": 2
                 },
-                "slay": [
-                    {
-                        "idsFile": "EA",
-                        "idsEntry": "ANYONE"
-                    }
-                ],
-                "playSound": [
-                    {
-                        "resource": "EFF_P88"
-                    }
-                ],
-                "playVisualEffect": [
-                    {
-                        "playWhere": "OverTargetUnattached",
-                        "resource": "SPFINGER"
-                    }
-                ]
-            }
+                {
+                    "opcode": "PlaySound",
+                    "resource": "EFF_P88",
+                    "timing": "InstantPermanentUntilDeath",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 2
+                },
+                {
+                    "opcode": "PlayVisualEffect",
+                    "playWhere": "OverTargetUnattached",
+                    "resource": "SPFINGER",
+                    "timing": "InstantPermanentUntilDeath",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 2
+                }
+            ]
         }
     ],
     "files": [

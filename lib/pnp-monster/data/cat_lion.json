@@ -49,35 +49,31 @@
             "abilityFlags": [
                 "AddStrengthBonus"
             ],
-            "effects": {
-                "displayString": [
-                    {
-                        "index": 0,
-                        "stringRef": "4009",
-                        "probability1": 10
-                    }
-                ],
-                "damage": [
-                    {
-                        "index": 1,
-                        "damageMode": "Normal",
-                        "damageType": "Slashing",
-                        "amount": 1,
-                        "diceThrown": 1,
-                        "diceSize": 6,
-                        "probability1": 10
-                    },
-                    {
-                        "index": 2,
-                        "damageMode": "Normal",
-                        "damageType": "Slashing",
-                        "amount": 1,
-                        "diceThrown": 1,
-                        "diceSize": 6,
-                        "probability1": 10
-                    }
-                ]
-            }
+            "effects": [
+                {
+                    "opcode": "DisplayString",
+                    "stringRef": 4009,
+                    "probability1": 10
+                },
+                {
+                    "opcode": "Damage",
+                    "damageMode": "Normal",
+                    "type": "Slashing",
+                    "amount": 1,
+                    "diceThrown": 1,
+                    "diceSize": 6,
+                    "probability1": 10
+                },
+                {
+                    "opcode": "Damage",
+                    "damageMode": "Normal",
+                    "type": "Slashing",
+                    "amount": 1,
+                    "diceThrown": 1,
+                    "diceSize": 6,
+                    "probability1": 10
+                }
+            ]
         },
         {
             "file": "ja#m10w2",
