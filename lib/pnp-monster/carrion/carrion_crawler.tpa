@@ -23,7 +23,7 @@ CREATE ITM "ja#m9w1"
 		INT_VAR
 			opcode = 109
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
+			parameter1 = IDS_OF_SYMBOL (~EA~ ~ANYONE~)
 			parameter2 = 2
 			duration = 42
 			probability1 = 100

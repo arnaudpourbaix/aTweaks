@@ -67,7 +67,7 @@ CREATE SPL "ja#1m8"
 		INT_VAR
 			opcode = 109
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
+			parameter1 = IDS_OF_SYMBOL (~EA~ ~ANYONE~)
 			parameter2 = 2
 			duration = 60
 			probability1 = 100

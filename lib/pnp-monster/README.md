@@ -1,3 +1,8 @@
+| Index | Item  | Description     |
+| ----- | ----- | --------------- |
+| 1     | ja#i1 | Construct trait |
+
+
 | Index | Monster               |
 | ----- | --------------------- |
 | 1     | Ankeg                 |

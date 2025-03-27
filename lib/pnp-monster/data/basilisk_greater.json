@@ -105,11 +105,21 @@
                 {
                     "opcode": "Poison",
                     "type": "OneDamagePerAmountSecond",
-                    "amount": 6
+                    "amount": 6,
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 4,
+                    "duration": 30
                 },
                 {
                     "opcode": "DisplayPortraitIcon",
-                    "icon": "Poisoned"
+                    "icon": "Poisoned",
+                    "saveTypes": [
+                        "ParalyzePoisonDeath"
+                    ],
+                    "saveBonus": 4,
+                    "duration": 30
                 }
             ]
         },

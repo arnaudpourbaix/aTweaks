@@ -133,7 +133,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~146~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~146~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -144,7 +144,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~140~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~140~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -155,7 +155,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~136~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~136~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -166,7 +166,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~132~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~132~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -177,7 +177,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~119~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~119~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -188,7 +188,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~175~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~175~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -199,7 +199,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~133~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~133~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -210,7 +210,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~181~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~181~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -221,7 +221,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~134~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~134~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -232,7 +232,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~118~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~118~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -243,7 +243,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~101~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~101~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -254,7 +254,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~145~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~145~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -265,7 +265,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~199~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~199~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -276,7 +276,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~142~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~142~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -287,7 +287,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~162~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~162~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -298,7 +298,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~RACE~ ~184~))
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~184~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -309,7 +309,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~221~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~221~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -320,7 +320,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~222~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~222~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -331,7 +331,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~141~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~141~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -342,7 +342,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~106~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~106~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -353,7 +353,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~107~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~107~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -364,7 +364,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~139~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~139~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -375,7 +375,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~CLASS~ ~140~))
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~140~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100

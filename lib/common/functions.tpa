@@ -74,6 +74,7 @@ BEGIN
       LPF ADD_CRE_EFFECT INT_VAR target=1 timing=9 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
     END
     ~ITM~ BEGIN
+      PATCH_PRINT ~ADD_EFFECT_CRE_ITM_SPL %SOURCE_EXT% opcode=%opcode% p1=%parameter1% p2=%parameter2% p3=%parameter3% p4=%parameter4%~
       LPF ADD_ITEM_EQEFFECT INT_VAR target=1 timing=2 opcode parameter1 parameter2 parameter3 parameter4 STR_VAR resource END  
     END
     ~SPL~ BEGIN

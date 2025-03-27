@@ -32,7 +32,7 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 55
 			target = 2
-			parameter1 = (IDS_OF_SYMBOL (~EA~ ~ANYONE~))
+			parameter1 = IDS_OF_SYMBOL (~EA~ ~ANYONE~)
 			parameter2 = 2
 			timing = 1
 			probability1 = 100
@@ -90,7 +90,10 @@ CREATE ITM "ja#m3w1"
 			target = 2
 			parameter1 = 6
 			parameter2 = 3
+			duration = 30
 			probability1 = 100
+			savingthrow = 4
+			savebonus = "4"
 	END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -98,7 +101,10 @@ CREATE ITM "ja#m3w1"
 			target = 2
 			parameter1 = 0
 			parameter2 = 6
+			duration = 30
 			probability1 = 100
+			savingthrow = 4
+			savebonus = "4"
 	END
 
 CREATE ITM "ja#m3w2"
