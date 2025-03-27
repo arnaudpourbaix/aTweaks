@@ -9,7 +9,7 @@ CREATE ITM "ja#m9w1"
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x80 2
 	WRITE_SHORT 0x84 3
 	WRITE_BYTE 0x88 2
 	WRITE_BYTE 0x8a 1
@@ -17,7 +17,7 @@ CREATE ITM "ja#m9w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x60 0
+	WRITE_LONG 0x60 undefined
 	WRITE_LONG 0x98 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -143,6 +143,7 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						hp=30
+						thac0=17
 						xpv=0
 						saveDeath=13
 						saveWand=15

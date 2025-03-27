@@ -16,7 +16,6 @@
         "charisma": 11,
         "movement": 12,
         "ac": 5,
-        "thac0": 17,
         "apr": 1,
         "xpv": 270,
         "alignment": "NEUTRAL",
@@ -66,9 +65,7 @@
         {
             "file": "ja#m14w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 1,
             "diceSize": 6,
             "bonusToHit": 0,

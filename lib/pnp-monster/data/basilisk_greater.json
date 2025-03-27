@@ -90,9 +90,7 @@
         {
             "file": "ja#m3w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 1,
             "diceSize": 6,
             "bonusToHit": 0,
@@ -126,9 +124,7 @@
         {
             "file": "ja#m3w2",
             "equippedSlot": "SHIELD",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 2,
             "diceSize": 8,
             "bonusToHit": 0,

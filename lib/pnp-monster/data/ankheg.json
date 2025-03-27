@@ -81,9 +81,7 @@
         {
             "file": "ja#m1w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 3,
             "diceSize": 6,
             "damageType": "Crushing",
@@ -102,7 +100,6 @@
         {
             "file": "ja#m1w2",
             "equippedSlot": "WEAPON2",
-            "enchantment": 0,
             "type": "Ranged",
             "range": 30,
             "speed": 3,

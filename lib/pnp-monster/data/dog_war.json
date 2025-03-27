@@ -7,6 +7,7 @@
     ],
     "data": {
         "level1": 2,
+        "bonusHp": 2,
         "strength": 12,
         "dexterity": 17,
         "constitution": 15,
@@ -15,7 +16,6 @@
         "charisma": 11,
         "movement": 12,
         "ac": 6,
-        "thac0": 19,
         "apr": 1,
         "xpv": 65,
         "alignment": "NEUTRAL",
@@ -37,9 +37,7 @@
         {
             "file": "ja#m13w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 2,
             "diceSize": 4,
             "bonusToHit": 0,

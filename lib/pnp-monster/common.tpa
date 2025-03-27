@@ -1,7 +1,24 @@
-CREATE ITM "ja#i1"
+CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	SAY NAME1 ~hover trait~ SAY NAME2 ~hover trait~
+	SAY UNIDENTIFIED_DESC ~Hover (flight) spell immunities~
+COPY_EXISTING ~ja#i3.itm~ ~override~
+	LPF hover_immunity END
+
+CREATE ITM "ja#i1"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 33554464
+	WRITE_SHORT 0x1c 72
 	SAY NAME1 ~construct trait~ SAY NAME2 ~construct trait~
 	SAY UNIDENTIFIED_DESC ~Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects). Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells. Darkvision out to 60 feet.~
 COPY_EXISTING ~ja#i1.itm~ ~override~
-	LPF construct_trait END
+	LPF construct_immunity END
+
+CREATE ITM "ja#i2"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
+	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
+COPY_EXISTING ~ja#i2.itm~ ~override~
+	LPF skeletal_immunity END

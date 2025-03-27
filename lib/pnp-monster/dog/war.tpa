@@ -14,7 +14,7 @@ CREATE ITM "ja#m13w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x60 0
+	WRITE_LONG 0x60 undefined
 	WRITE_LONG 0x98 1
 
 ACTION_FOR_EACH ~file~ IN
@@ -68,6 +68,7 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						hp=18
+						thac0=19
 						xpv=0
 						saveDeath=14
 						saveWand=16

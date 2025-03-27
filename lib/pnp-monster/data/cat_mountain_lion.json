@@ -8,6 +8,7 @@
     "dualWielding": true,
     "data": {
         "level1": 3,
+        "bonusHp": 1,
         "strength": 17,
         "dexterity": 15,
         "constitution": 13,
@@ -16,7 +17,6 @@
         "charisma": 8,
         "movement": 12,
         "ac": 6,
-        "thac0": 17,
         "apr": 3,
         "xpv": 270,
         "alignment": "NEUTRAL",
@@ -38,9 +38,7 @@
         {
             "file": "ja#m11w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 1,
             "diceSize": 3,
             "bonusToHit": 0,
@@ -78,9 +76,7 @@
         {
             "file": "ja#m11w2",
             "equippedSlot": "SHIELD",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 1,
             "diceSize": 6,
             "bonusToHit": 0,

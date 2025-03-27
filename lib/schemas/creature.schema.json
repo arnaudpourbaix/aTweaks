@@ -145,16 +145,10 @@
                         "$ref": "#/definitions/RawProjectile"
                     }
                 },
-                "traits": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CreatureTrait"
-                    }
-                },
                 "immunities": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CreatureImmunity"
+                        "$ref": "#/definitions/ImmunityName"
                     }
                 },
                 "spellImmunityRessources": {
@@ -667,6 +661,9 @@
                     "type": "number"
                 },
                 "bonusHp": {
+                    "type": "number"
+                },
+                "specialBonusHp": {
                     "type": "number"
                 },
                 "ac": {
@@ -1527,9 +1524,7 @@
             },
             "required": [
                 "file",
-                "enchantment",
                 "type",
-                "range",
                 "speed"
             ],
             "additionalProperties": false
@@ -1772,7 +1767,7 @@
                     "$ref": "#/definitions/TeleportEffect"
                 },
                 {
-                    "$ref": "#/definitions/RestrainedEffects"
+                    "$ref": "#/definitions/RestrainedEffect"
                 }
             ]
         },
@@ -3778,6 +3773,7 @@
                 "LightingEffects",
                 "MagicalColdResistanceModifier",
                 "MagicalFireResistanceModifier",
+                "MaximumHPModifier",
                 "MissilesResistanceModifier",
                 "ModifyCollisionBehavior",
                 "MoraleModifier",
@@ -4448,6 +4444,7 @@
                         "ColdResistanceModifier",
                         "MagicalColdResistanceModifier",
                         "MagicalFireResistanceModifier",
+                        "MaximumHPModifier",
                         "MoraleModifier",
                         "MoraleBreakModifier",
                         "FatigueBonus",
@@ -4670,7 +4667,7 @@
                 "ExchangedSourceAndTarget"
             ]
         },
-        "RestrainedEffects": {
+        "RestrainedEffect": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -5208,23 +5205,7 @@
                 "NONE"
             ]
         },
-        "CreatureTrait": {
-            "type": "string",
-            "enum": [
-                "airAffinity",
-                "construct",
-                "earthAffinity",
-                "elemental",
-                "extraplanar",
-                "hover",
-                "infravision",
-                "plant",
-                "seeInvisible",
-                "skeletal",
-                "undead"
-            ]
-        },
-        "CreatureImmunity": {
+        "ImmunityName": {
             "type": "string",
             "enum": [
                 "abilityDrain",
@@ -5266,7 +5247,17 @@
                 "sleep",
                 "unturnable",
                 "vorpal",
-                "web"
+                "web",
+                "airAffinity",
+                "construct",
+                "earthAffinity",
+                "elemental",
+                "extraplanar",
+                "infravision",
+                "plant",
+                "seeInvisible",
+                "skeletal",
+                "undead"
             ]
         },
         "RawCreatureAutoGenerate": {
@@ -5280,12 +5271,20 @@
                 },
                 "savingThrows": {
                     "type": "boolean"
+                },
+                "enchantment": {
+                    "type": "boolean"
+                },
+                "meleeRange": {
+                    "type": "boolean"
                 }
             },
             "required": [
                 "thac0",
                 "hitPoints",
-                "savingThrows"
+                "savingThrows",
+                "enchantment",
+                "meleeRange"
             ],
             "additionalProperties": false
         }

@@ -8,6 +8,7 @@
     ],
     "data": {
         "level1": 6,
+        "bonusHp": 1,
         "strength": 16,
         "dexterity": 8,
         "constitution": 15,
@@ -70,9 +71,7 @@
         {
             "file": "ja#m2w1",
             "equippedSlot": "WEAPON1",
-            "enchantment": 0,
             "type": "Melee",
-            "range": 1,
             "diceThrown": 1,
             "diceSize": 10,
             "damageType": "Slashing",

@@ -77,7 +77,7 @@
             "BLUN08"
         ]
     },
-    "traits": [
+    "immunities": [
         "construct",
         "hover"
     ],
