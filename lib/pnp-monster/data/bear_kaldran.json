@@ -3,11 +3,6 @@
     "tpaFile": "lib/pnp-monster/bear/kaldran",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NORMAL",
-        "HELD",
-        "NEAREST"
-    ],
     "dualWielding": true,
     "data": {
         "level1": 12,
@@ -195,7 +190,7 @@
                         "green": 213,
                         "red": 123
                     },
-                    "location": "AvatarArmorGrey",
+                    "location": "ArmorGreyBeltAmulet",
                     "cycleSpeed": 20
                 },
                 {

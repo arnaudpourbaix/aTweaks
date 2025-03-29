@@ -3,9 +3,6 @@
     "tpaFile": "lib/pnp-monster/basilisk/lesser",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "data": {
         "level1": 6,
         "bonusHp": 1,

@@ -1,8 +1,8 @@
-| Item  | Description     | Slot   |
-| ----- | --------------- | ------ |
-| ja#i1 | Construct trait | Helmet |
-| ja#i2 | Sketetal trait  | Ring   |
-| ja#i3 | Hover trait     | Boots  |
+| Item  | Description     | Slot      |
+| ----- | --------------- | --------- |
+| ja#i1 | Construct trait | Helmet    |
+| ja#i2 | Sketetal trait  | Left Ring |
+| ja#i3 | Hover trait     | Boots     |
 
 
 | Index | Monster               |

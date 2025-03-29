@@ -24,7 +24,13 @@ END
 // Turn hostile if attacked
 IF
 	!Allegiance(Myself,ENEMY)
-	AttackedBy([GOODCUTOFF],DEFAULT)
+	OR(6)
+		AttackedBy([GOODCUTOFF],DEFAULT)
+		AttackedBy([CONTROLLED],DEFAULT)
+		AttackedBy([CHARMED],DEFAULT)
+		SpellCastOnMe([GOODCUTOFF],0)
+		SpellCastOnMe([CONTROLLED],0)
+		SpellCastOnMe([CHARMED],0)
 THEN
 	RESPONSE #100
 		Enemy()
@@ -393,6 +399,74 @@ END
 
 IF
 	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+	See(LastSeenBy(Myself))
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+// Attack SLEEP enemy
+IF
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player1,STATE_SLEEPING)
+		CheckStatGT(Player1,0,SANCTUARY)
+		StateCheck(Player1,STATE_CHARMED)
+		StateCheck(Player1,STATE_REALLY_DEAD)
+		StateCheck(Player1,STATE_INVISIBLE)
+		!See(Player1)
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player2,STATE_SLEEPING)
+		CheckStatGT(Player2,0,SANCTUARY)
+		StateCheck(Player2,STATE_CHARMED)
+		StateCheck(Player2,STATE_REALLY_DEAD)
+		StateCheck(Player2,STATE_INVISIBLE)
+		!See(Player2)
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player3,STATE_SLEEPING)
+		CheckStatGT(Player3,0,SANCTUARY)
+		StateCheck(Player3,STATE_CHARMED)
+		StateCheck(Player3,STATE_REALLY_DEAD)
+		StateCheck(Player3,STATE_INVISIBLE)
+		!See(Player3)
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player4,STATE_SLEEPING)
+		CheckStatGT(Player4,0,SANCTUARY)
+		StateCheck(Player4,STATE_CHARMED)
+		StateCheck(Player4,STATE_REALLY_DEAD)
+		StateCheck(Player4,STATE_INVISIBLE)
+		!See(Player4)
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player5,STATE_SLEEPING)
+		CheckStatGT(Player5,0,SANCTUARY)
+		StateCheck(Player5,STATE_CHARMED)
+		StateCheck(Player5,STATE_REALLY_DEAD)
+		StateCheck(Player5,STATE_INVISIBLE)
+		!See(Player5)
+	OR(7)
+		!Allegiance(Myself,ENEMY)
+		!StateCheck(Player6,STATE_SLEEPING)
+		CheckStatGT(Player6,0,SANCTUARY)
+		StateCheck(Player6,STATE_CHARMED)
+		StateCheck(Player6,STATE_REALLY_DEAD)
+		StateCheck(Player6,STATE_INVISIBLE)
+		!See(Player6)
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)

@@ -6,7 +6,8 @@
     "targetPriorities": [
         "NORMAL",
         "HELD",
-        "NEAREST"
+        "NEAREST",
+        "SLEEP"
     ],
     "items": [
         {
@@ -66,7 +67,7 @@
                         "green": 57,
                         "red": 87
                     },
-                    "location": "AvatarArmorGrey",
+                    "location": "ArmorGreyBeltAmulet",
                     "cycleSpeed": 25,
                     "saveTypes": [
                         "ParalyzePoisonDeath"

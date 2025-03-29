@@ -3,14 +3,12 @@
     "tpaFile": "lib/pnp-monster/horror/helmed",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
+    "restHeal": true,
     "data": {
-        "level1": 6,
+        "level1": 4,
         "strength": 18,
         "dexterity": 13,
-        "constitution": 16,
+        "constitution": 9,
         "intelligence": 14,
         "wisdom": 10,
         "charisma": 10,
@@ -27,46 +25,43 @@
         "race": "GOLEM",
         "class": "GOLEM_IRON",
         "gender": "NIETHER",
-        "size": "Medium"
+        "size": "Medium",
+        "animation": "FIGHTER_MALE_HUMAN",
+        "hairColor": 63,
+        "armorColor": 63,
+        "skinColor": 63,
+        "majorColor": 63,
+        "metalColor": 63,
+        "minorColor": 63,
+        "leatherColor": 63
     },
     "additionalData": {
         "abilities": [
             {
-                "name": "Acidic Enzymes",
-                "isTargetSpell": false,
-                "disableInterrupt": true,
+                "name": "Magic Missiles",
+                "isTargetSpell": true,
                 "triggers": [
-                    {
-                        "name": "HPPercentLT",
-                        "params": [
-                            "Myself",
-                            50
-                        ]
-                    },
                     {
                         "name": "HaveSpellRES",
                         "params": [
-                            "ja#2m1"
+                            "SPWI112"
                         ]
                     }
                 ],
                 "actions": [
                     {
-                        "name": "SelectWeaponAbility",
+                        "name": "ForceSpellRES",
                         "params": [
-                            "SLOT_WEAPON1",
-                            "0"
-                        ]
-                    },
-                    {
-                        "name": "AttackOneRound",
-                        "params": [
+                            "SPWI112",
                             "LastSeenBy"
                         ]
                     }
                 ],
-                "target": "NearestEnemyOf",
-                "range": 30
+                "timer": {
+                    "name": "MagicMissiles",
+                    "value": 18
+                },
+                "target": "NearestEnemyOf"
             }
         ],
         "removeScripts": [],
@@ -79,9 +74,13 @@
     },
     "immunities": [
         "construct",
-        "hover"
+        "hover",
+        "seeInvisible",
+        "fireballSpell",
+        "lightningBoltSpell",
+        "flameArrowSpell",
+        "magicMissile"
     ],
-    "spellImmunityRessources": [],
     "items": [
         {
             "file": "ja#m15w1",
@@ -90,9 +89,11 @@
             "type": "Melee",
             "flags": [
                 "TwoHanded",
-                "Magical"
+                "Magical",
+                "Displayable"
             ],
             "animation": "TwoHandedSword",
+            "category": "Greatswords",
             "animationSwing": {
                 "backhand": 40,
                 "overhand": 40,
@@ -105,11 +106,171 @@
             "speed": 10,
             "abilityFlags": [
                 "AddStrengthBonus"
+            ],
+            "effects": [
+                {
+                    "opcode": "Damage",
+                    "diceSize": 6,
+                    "diceThrown": 1,
+                    "type": "Fire"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "ShinyGold",
+                    "location": "WeaponBlueHeadBladeMinor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "ShinyGold",
+                    "location": "WeaponRedGripStaffMinor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "LightCarnationPink",
+                    "location": "WeaponGreyHeadBladeStaffMajor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColorGlowSolid",
+                    "color": {
+                        "red": 64,
+                        "green": 0,
+                        "blue": 0
+                    },
+                    "location": "WeaponGreyHeadBladeStaffMajor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped",
+                    "duration": 3
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColorGlowSolid",
+                    "color": {
+                        "red": 64,
+                        "green": 0,
+                        "blue": 0
+                    },
+                    "location": "WeaponBlueHeadBladeMinor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped",
+                    "duration": 3
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColorGlowSolid",
+                    "color": {
+                        "red": 0,
+                        "green": 0,
+                        "blue": 0
+                    },
+                    "location": "WeaponRedGripStaffMinor",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped",
+                    "duration": 3
+                }
+            ]
+        },
+        {
+            "file": "ja#m15a1",
+            "equippedSlot": "ARMOR",
+            "animation": "PlateMail",
+            "category": "ArmorSlot",
+            "effects": [
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "LeafGreen",
+                    "location": "ArmorBlueArmorTrimming",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "RedTintedBlack",
+                    "location": "ArmorRedStrapLeather",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "DarkPoopyBrown",
+                    "location": "ArmorGreyBeltAmulet",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                }
+            ]
+        },
+        {
+            "file": "ja#m15a2",
+            "copyFrom": "construct",
+            "equippedSlot": "HELMET",
+            "animation": "HelmetFeatherSideburns",
+            "category": "Headgear",
+            "effects": [
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "Silver",
+                    "location": "HelmetBlueExterior",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "Silver",
+                    "location": "HelmetRedFace",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                },
+                {
+                    "global": true,
+                    "opcode": "SetColor",
+                    "color": "Silver",
+                    "location": "HelmetGreyWings",
+                    "target": "Self",
+                    "timing": "InstantWhileEquipped"
+                }
             ]
         }
     ],
     "files": [
         "HELMHO",
-        "GLOWTEST"
+        "GLOWTEST",
+        "BATTHO",
+        "dw#davho"
+    ],
+    "adjustments": [
+        {
+            "files": [
+                "BATTHO",
+                "dw#davho"
+            ],
+            "data": {
+                "level1": 8,
+                "level2": 3,
+                "class": "CLERIC_MAGE",
+                "xpv": 4000
+            },
+            "additionalData": {
+                "memorizedSpells": [
+                    {
+                        "file": "SPWI112",
+                        "memorizedCount": 1
+                    }
+                ]
+            }
+        }
     ]
 }

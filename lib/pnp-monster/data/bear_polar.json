@@ -3,9 +3,6 @@
     "tpaFile": "lib/pnp-monster/bear/polar",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "dualWielding": true,
     "data": {
         "level1": 8,

@@ -2,9 +2,6 @@
     "tpaFile": "lib/pnp-monster/dog/war",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "data": {
         "level1": 2,
         "bonusHp": 2,

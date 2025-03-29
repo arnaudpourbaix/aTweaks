@@ -2,9 +2,6 @@
     "tpaFile": "lib/pnp-monster/dog/wild",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "data": {
         "level1": 1,
         "bonusHp": 1,

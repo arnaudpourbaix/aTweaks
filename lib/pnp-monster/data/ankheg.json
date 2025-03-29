@@ -3,10 +3,6 @@
     "tpaFile": "lib/pnp-monster/ankheg/main",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "GRABBED",
-        "NEAREST"
-    ],
     "data": {
         "level1": 8,
         "strength": 17,

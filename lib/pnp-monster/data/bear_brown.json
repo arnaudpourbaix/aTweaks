@@ -3,9 +3,6 @@
     "tpaFile": "lib/pnp-monster/bear/brown",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "dualWielding": true,
     "data": {
         "level1": 5,

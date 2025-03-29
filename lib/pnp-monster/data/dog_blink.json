@@ -3,9 +3,6 @@
     "bafFile": "lib/pnp-monster/dog/ja#14",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "data": {
         "level1": 4,
         "strength": 12,

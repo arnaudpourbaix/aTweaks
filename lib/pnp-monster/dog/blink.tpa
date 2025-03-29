@@ -27,17 +27,17 @@ CREATE SPL "ja#1m14"
 			opcode = 278
 			target = 1
 			parameter1 = 2
-			parameter2 = undefined
+			parameter2 = 0
 			duration = 6
 			probability1 = 75
 	END
 
 CREATE ITM "ja#m14w1"
 	WRITE_LONG 0x64 0x72
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0xaa
 	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
@@ -48,7 +48,6 @@ CREATE ITM "ja#m14w1"
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x60 undefined
 	WRITE_LONG 0x98 1
 
 ACTION_FOR_EACH ~file~ IN

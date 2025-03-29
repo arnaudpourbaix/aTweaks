@@ -3,9 +3,6 @@
     "tpaFile": "lib/pnp-monster/basilisk/greater",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "dualWielding": true,
     "data": {
         "level1": 10,

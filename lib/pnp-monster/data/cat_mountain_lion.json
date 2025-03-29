@@ -2,9 +2,6 @@
     "tpaFile": "lib/pnp-monster/cat/mountain_lion",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "NEAREST"
-    ],
     "dualWielding": true,
     "data": {
         "level1": 3,
