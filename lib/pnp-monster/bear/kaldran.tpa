@@ -25,19 +25,16 @@ COPY_EXISTING "FIREBALL.pro" ~override/ja#2m8.pro~
 ADD_PROJECTILE ~override/ja#2m8.pro~ ~Improved stream of frost~
 
 CREATE SPL "ja#1m8"
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 1
 	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
-	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x72 2
-	WRITE_SHORT 0x74 4
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 10
-	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x94 1
 	SAY NAME1 @4008 SAY NAME2 @4008
 	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m8~)) + 1

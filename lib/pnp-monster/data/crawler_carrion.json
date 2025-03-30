@@ -4,7 +4,7 @@
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
-        "NORMAL",
+        "ABLE",
         "HELD",
         "NEAREST",
         "SLEEP"

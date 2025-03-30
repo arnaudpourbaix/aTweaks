@@ -27,35 +27,6 @@
         "size": "Medium"
     },
     "additionalData": {
-        "abilities": [
-            {
-                "name": "Petrification",
-                "isTargetSpell": false,
-                "targetTrigger": [
-                    {
-                        "name": "CheckStatGT",
-                        "params": [
-                            "{Target}",
-                            "0",
-                            "HELD"
-                        ],
-                        "negation": true
-                    }
-                ],
-                "actions": [
-                    {
-                        "name": "ForceSpellRES",
-                        "params": [
-                            "ja#1m2",
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "target": "NearestEnemyOf",
-                "random": true,
-                "range": 30
-            }
-        ],
         "removeItems": [
             "BASILL1",
             "BASILL2"
@@ -64,6 +35,44 @@
             "LBASILSK"
         ]
     },
+    "abilities": [
+        {
+            "name": "Petrification",
+            "target": {
+                "name": "NearestEnemies",
+                "random": true,
+                "triggers": [
+                    {
+                        "name": "CheckStatGT",
+                        "params": [
+                            "{Target}",
+                            "0",
+                            "HELD"
+                        ],
+                        "negation": true
+                    },
+                    {
+                        "name": "StateCheck",
+                        "params": [
+                            "{Target}",
+                            "STATE_SLOWED"
+                        ],
+                        "negation": true
+                    }
+                ]
+            },
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#1m2",
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "range": 30
+        }
+    ],
     "items": [
         {
             "file": "ja#m2w1",

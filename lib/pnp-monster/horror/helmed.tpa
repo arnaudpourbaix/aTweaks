@@ -215,7 +215,8 @@ BEGIN
 					hairColor=63
 					enforce=1
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m15 END
+			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
+			LPF patchCreatureScript STR_VAR script=ja#m15 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BATTHO~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~dw#davho~) BEGIN 
 				LPF patchCreature
 					INT_VAR
@@ -231,6 +232,7 @@ BEGIN
 						class=14
 				END
 				ADD_MEMORIZED_SPELL ~SPWI112~ #0 ~wizard~ (1)
+				ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

@@ -31,33 +31,33 @@
         ],
         "removeScripts": [
             "PSPIDER"
-        ],
-        "abilities": [
-            {
-                "name": "Blink",
-                "isTargetSpell": false,
-                "targetTrigger": [],
-                "actions": [
-                    {
-                        "name": "ForceSpellRES",
-                        "params": [
-                            "ja#1m14",
-                            "LastSeenBy"
-                        ]
-                    },
-                    {
-                        "name": "AttackOneRound",
-                        "params": [
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "target": "NearestEnemyOf",
-                "random": true,
-                "range": 30
-            }
         ]
     },
+    "abilities": [
+        {
+            "name": "Blink",
+            "target": {
+                "name": "FarthestEnemies",
+                "random": true
+            },
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#1m14",
+                        "LastSeenBy"
+                    ]
+                },
+                {
+                    "name": "AttackOneRound",
+                    "params": [
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "range": 30
+        }
+    ],
     "items": [
         {
             "file": "ja#m14w1",

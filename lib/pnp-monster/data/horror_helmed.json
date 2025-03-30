@@ -36,35 +36,9 @@
         "leatherColor": 63
     },
     "additionalData": {
-        "abilities": [
-            {
-                "name": "Magic Missiles",
-                "isTargetSpell": true,
-                "triggers": [
-                    {
-                        "name": "HaveSpellRES",
-                        "params": [
-                            "SPWI112"
-                        ]
-                    }
-                ],
-                "actions": [
-                    {
-                        "name": "ForceSpellRES",
-                        "params": [
-                            "SPWI112",
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "timer": {
-                    "name": "MagicMissiles",
-                    "value": 18
-                },
-                "target": "NearestEnemyOf"
-            }
+        "removeScripts": [
+            "dw1melmo"
         ],
-        "removeScripts": [],
         "removeItems": [
             "HELM08",
             "SHLD18",
@@ -80,6 +54,93 @@
         "lightningBoltSpell",
         "flameArrowSpell",
         "magicMissile"
+    ],
+    "abilities": [
+        {
+            "name": "Magic Missiles",
+            "target": {
+                "name": "PCSpellcasters",
+                "includeStatus": [
+                    "ABLE"
+                ],
+                "random": true
+            },
+            "triggers": [
+                {
+                    "name": "HaveSpellRES",
+                    "params": [
+                        "SPWI112"
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "SPWI112",
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "timer": {
+                "name": "MagicMissiles",
+                "value": 18
+            }
+        },
+        {
+            "name": "Dimension Door",
+            "target": {
+                "name": "FarthestEnemies",
+                "triggers": [
+                    {
+                        "name": "Range",
+                        "params": [
+                            "LastSeenBy",
+                            20
+                        ],
+                        "negation": true
+                    }
+                ]
+            },
+            "triggers": [
+                {
+                    "name": "Range",
+                    "params": [
+                        "NearestEnemyOf",
+                        10
+                    ],
+                    "negation": true
+                },
+                {
+                    "name": "HaveSpellRES",
+                    "params": [
+                        "SPWI402"
+                    ]
+                },
+                {
+                    "name": "RandomNum",
+                    "params": [
+                        20,
+                        1
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "SPWI402",
+                        "LastSeenBy"
+                    ]
+                },
+                {
+                    "name": "RemoveSpellRES",
+                    "params": [
+                        "SPWI402"
+                    ]
+                }
+            ]
+        }
     ],
     "items": [
         {
@@ -267,6 +328,10 @@
                 "memorizedSpells": [
                     {
                         "file": "SPWI112",
+                        "memorizedCount": 1
+                    },
+                    {
+                        "file": "SPWI402",
                         "memorizedCount": 1
                     }
                 ]

@@ -12,19 +12,16 @@ COPY_EXISTING "ja#1m2.pro" ~override/ja#1m3.pro~
 ADD_PROJECTILE ~override/ja#1m3.pro~ ~Basilisk foul breath~
 
 CREATE SPL "ja#1m3"
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 1
 	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
-	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x72 2
-	WRITE_SHORT 0x74 4
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 5
-	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x94 1
 	SAY NAME1 @4006 SAY NAME2 @4006
 	SAY UNIDENTIFIED_DESC ~Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m3~)) + 1

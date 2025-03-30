@@ -26,45 +26,6 @@
         "size": "Huge"
     },
     "additionalData": {
-        "abilities": [
-            {
-                "name": "Acidic Enzymes",
-                "isTargetSpell": false,
-                "disableInterrupt": true,
-                "triggers": [
-                    {
-                        "name": "HPPercentLT",
-                        "params": [
-                            "Myself",
-                            50
-                        ]
-                    },
-                    {
-                        "name": "HaveSpellRES",
-                        "params": [
-                            "ja#2m1"
-                        ]
-                    }
-                ],
-                "actions": [
-                    {
-                        "name": "SelectWeaponAbility",
-                        "params": [
-                            "SLOT_WEAPON1",
-                            "0"
-                        ]
-                    },
-                    {
-                        "name": "AttackOneRound",
-                        "params": [
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "target": "NearestEnemyOf",
-                "range": 30
-            }
-        ],
         "removeScripts": [
             "ANKHEG"
         ],
@@ -73,6 +34,46 @@
             "ANKHEG2"
         ]
     },
+    "abilities": [
+        {
+            "name": "Acidic Enzymes",
+            "disableInterrupt": true,
+            "target": {
+                "name": "PCsPreferringWeak"
+            },
+            "triggers": [
+                {
+                    "name": "HPPercentLT",
+                    "params": [
+                        "Myself",
+                        50
+                    ]
+                },
+                {
+                    "name": "HaveSpellRES",
+                    "params": [
+                        "ja#2m1"
+                    ]
+                }
+            ],
+            "actions": [
+                {
+                    "name": "SelectWeaponAbility",
+                    "params": [
+                        "SLOT_WEAPON1",
+                        "0"
+                    ]
+                },
+                {
+                    "name": "AttackOneRound",
+                    "params": [
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "range": 30
+        }
+    ],
     "items": [
         {
             "file": "ja#m1w1",

@@ -35,11 +35,24 @@
             "BASILG2",
             "BASILG3"
         ],
-        "abilities": [
+        "memorizedSpells": [
             {
-                "name": "Petrification",
-                "isTargetSpell": false,
-                "targetTrigger": [
+                "file": "ja#1m2",
+                "memorizedCount": 1
+            },
+            {
+                "file": "ja#2m2",
+                "memorizedCount": 1
+            }
+        ]
+    },
+    "abilities": [
+        {
+            "name": "Petrification",
+            "target": {
+                "name": "NearestEnemies",
+                "random": true,
+                "triggers": [
                     {
                         "name": "CheckStatGT",
                         "params": [
@@ -57,32 +70,20 @@
                         ],
                         "negation": true
                     }
-                ],
-                "actions": [
-                    {
-                        "name": "ForceSpellRES",
-                        "params": [
-                            "ja#1m2",
-                            "LastSeenBy"
-                        ]
-                    }
-                ],
-                "target": "NearestEnemyOf",
-                "random": true,
-                "range": 30
-            }
-        ],
-        "memorizedSpells": [
-            {
-                "file": "ja#1m2",
-                "memorizedCount": 1
+                ]
             },
-            {
-                "file": "ja#2m2",
-                "memorizedCount": 1
-            }
-        ]
-    },
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#1m2",
+                        "LastSeenBy"
+                    ]
+                }
+            ],
+            "range": 30
+        }
+    ],
     "items": [
         {
             "file": "ja#m3w1",

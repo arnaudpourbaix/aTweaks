@@ -37,35 +37,6 @@
             "kaldran",
             "dw1ranmo"
         ],
-        "abilities": [
-            {
-                "name": "Improved stream of frost",
-                "triggers": [
-                    {
-                        "name": "HaveSpellRES",
-                        "params": [
-                            "ja#1m8"
-                        ]
-                    }
-                ],
-                "timer": {
-                    "name": "StreamOfFrost",
-                    "value": 18
-                },
-                "isTargetSpell": false,
-                "target": "NearestEnemyOf",
-                "actions": [
-                    {
-                        "name": "ForceSpellRES",
-                        "params": [
-                            "ja#1m8",
-                            "Myself"
-                        ]
-                    }
-                ],
-                "range": 10
-            }
-        ],
         "itemSlots": [
             {
                 "file": "ja#m7w1",
@@ -150,6 +121,36 @@
                 "AffectOnlyEnemies"
             ],
             "coneWidth": 0
+        }
+    ],
+    "abilities": [
+        {
+            "name": "Improved stream of frost",
+            "target": {
+                "name": "NearestEnemies"
+            },
+            "range": 10,
+            "triggers": [
+                {
+                    "name": "HaveSpellRES",
+                    "params": [
+                        "ja#1m8"
+                    ]
+                }
+            ],
+            "timer": {
+                "name": "StreamOfFrost",
+                "value": 18
+            },
+            "actions": [
+                {
+                    "name": "ForceSpellRES",
+                    "params": [
+                        "ja#1m8",
+                        "Myself"
+                    ]
+                }
+            ]
         }
     ],
     "spells": [

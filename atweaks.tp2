@@ -199,6 +199,7 @@ REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/helmed.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/carrion_crawler.tpa"
 // ------------------------------------------------------
 
 // // Core monsters (required)

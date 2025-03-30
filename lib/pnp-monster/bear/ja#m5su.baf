@@ -56,131 +56,6 @@ THEN
 		NoAction()
 END
 
-// Track players if allegiance is not GOODCUTOFF
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player1,150)
-	!CheckStatGT(Player1,0,SANCTUARY)
-	!StateCheck(Player1,STATE_CHARMED)
-	!StateCheck(Player1,STATE_REALLY_DEAD)
-	!StateCheck(Player1,STATE_INVISIBLE)
-	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
-	See(Player1)
-THEN
-	RESPONSE #100
-		MoveToObject(Player1)
-END
-
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player2,150)
-	!CheckStatGT(Player2,0,SANCTUARY)
-	!StateCheck(Player2,STATE_CHARMED)
-	!StateCheck(Player2,STATE_REALLY_DEAD)
-	!StateCheck(Player2,STATE_INVISIBLE)
-	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
-	See(Player2)
-THEN
-	RESPONSE #100
-		MoveToObject(Player2)
-END
-
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player3,150)
-	!CheckStatGT(Player3,0,SANCTUARY)
-	!StateCheck(Player3,STATE_CHARMED)
-	!StateCheck(Player3,STATE_REALLY_DEAD)
-	!StateCheck(Player3,STATE_INVISIBLE)
-	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
-	See(Player3)
-THEN
-	RESPONSE #100
-		MoveToObject(Player3)
-END
-
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player4,150)
-	!CheckStatGT(Player4,0,SANCTUARY)
-	!StateCheck(Player4,STATE_CHARMED)
-	!StateCheck(Player4,STATE_REALLY_DEAD)
-	!StateCheck(Player4,STATE_INVISIBLE)
-	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
-	See(Player4)
-THEN
-	RESPONSE #100
-		MoveToObject(Player4)
-END
-
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player5,150)
-	!CheckStatGT(Player5,0,SANCTUARY)
-	!StateCheck(Player5,STATE_CHARMED)
-	!StateCheck(Player5,STATE_REALLY_DEAD)
-	!StateCheck(Player5,STATE_INVISIBLE)
-	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
-	See(Player5)
-THEN
-	RESPONSE #100
-		MoveToObject(Player5)
-END
-
-IF
-	!Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(Player6,150)
-	!CheckStatGT(Player6,0,SANCTUARY)
-	!StateCheck(Player6,STATE_CHARMED)
-	!StateCheck(Player6,STATE_REALLY_DEAD)
-	!StateCheck(Player6,STATE_INVISIBLE)
-	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
-	See(Player6)
-THEN
-	RESPONSE #100
-		MoveToObject(Player6)
-END
-
-// Track last seen enemy if allegiance is GOODCUTOFF
-IF
-	Allegiance(Myself,GOODCUTOFF)
-	!StateCheck(Myself,STATE_BLIND)
-	!See(NearestEnemyOf(Myself))
-	Range(LastSeenBy(Myself),150)
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		MoveToObject(LastSeenBy(Myself))
-END
-
-// Random walking outside of combat
-IF
-	ActionListEmpty()
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		RandomWalk()
-		Wait(2)
-END
-
 // Attack NEAREST enemy
 IF
 	OR(6)
@@ -188,71 +63,71 @@ IF
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(NearestEnemyOf(Myself))
+		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(SecondNearestEnemyOf(Myself))
+		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(ThirdNearestEnemyOf(Myself))
+		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(FourthNearestEnemyOf(Myself))
+		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(FifthNearestEnemyOf(Myself))
+		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(SixthNearestEnemyOf(Myself))
+		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(SeventhNearestEnemyOf(Myself))
+		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(EighthNearestEnemyOf(Myself))
+		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(NinthNearestEnemyOf(Myself))
+		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	OR(6)
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		!See(TenthNearestEnemyOf(Myself))
+		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
 		Continue()
@@ -263,8 +138,8 @@ IF
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	See(LastSeenBy(Myself))
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
 		AttackOneRound(LastSeenBy(Myself))
@@ -278,48 +153,48 @@ IF
 		CheckStatGT(Player1,0,SANCTUARY)
 		StateCheck(Player1,STATE_CHARMED)
 		StateCheck(Player1,STATE_REALLY_DEAD)
-		StateCheck(Player1,STATE_INVISIBLE)
 		!See(Player1)
+		StateCheck(Player1,STATE_INVISIBLE)
 	OR(7)
 		!Allegiance(Myself,ENEMY)
 		!StateCheck(Player2,STATE_SLEEPING)
 		CheckStatGT(Player2,0,SANCTUARY)
 		StateCheck(Player2,STATE_CHARMED)
 		StateCheck(Player2,STATE_REALLY_DEAD)
-		StateCheck(Player2,STATE_INVISIBLE)
 		!See(Player2)
+		StateCheck(Player2,STATE_INVISIBLE)
 	OR(7)
 		!Allegiance(Myself,ENEMY)
 		!StateCheck(Player3,STATE_SLEEPING)
 		CheckStatGT(Player3,0,SANCTUARY)
 		StateCheck(Player3,STATE_CHARMED)
 		StateCheck(Player3,STATE_REALLY_DEAD)
-		StateCheck(Player3,STATE_INVISIBLE)
 		!See(Player3)
+		StateCheck(Player3,STATE_INVISIBLE)
 	OR(7)
 		!Allegiance(Myself,ENEMY)
 		!StateCheck(Player4,STATE_SLEEPING)
 		CheckStatGT(Player4,0,SANCTUARY)
 		StateCheck(Player4,STATE_CHARMED)
 		StateCheck(Player4,STATE_REALLY_DEAD)
-		StateCheck(Player4,STATE_INVISIBLE)
 		!See(Player4)
+		StateCheck(Player4,STATE_INVISIBLE)
 	OR(7)
 		!Allegiance(Myself,ENEMY)
 		!StateCheck(Player5,STATE_SLEEPING)
 		CheckStatGT(Player5,0,SANCTUARY)
 		StateCheck(Player5,STATE_CHARMED)
 		StateCheck(Player5,STATE_REALLY_DEAD)
-		StateCheck(Player5,STATE_INVISIBLE)
 		!See(Player5)
+		StateCheck(Player5,STATE_INVISIBLE)
 	OR(7)
 		!Allegiance(Myself,ENEMY)
 		!StateCheck(Player6,STATE_SLEEPING)
 		CheckStatGT(Player6,0,SANCTUARY)
 		StateCheck(Player6,STATE_CHARMED)
 		StateCheck(Player6,STATE_REALLY_DEAD)
-		StateCheck(Player6,STATE_INVISIBLE)
 		!See(Player6)
+		StateCheck(Player6,STATE_INVISIBLE)
 THEN
 	RESPONSE #100
 		Continue()
@@ -331,10 +206,111 @@ IF
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	See(LastSeenBy(Myself))
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
 		AttackOneRound(LastSeenBy(Myself))
+END
+
+// Track players if allegiance is not GOODCUTOFF
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player1,150)
+	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player1,STATE_INVISIBLE)
+	!CheckStatGT(Player1,0,SANCTUARY)
+	!StateCheck(Player1,STATE_CHARMED)
+	!StateCheck(Player1,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player1)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player2,150)
+	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player2,STATE_INVISIBLE)
+	!CheckStatGT(Player2,0,SANCTUARY)
+	!StateCheck(Player2,STATE_CHARMED)
+	!StateCheck(Player2,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player2)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player3,150)
+	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player3,STATE_INVISIBLE)
+	!CheckStatGT(Player3,0,SANCTUARY)
+	!StateCheck(Player3,STATE_CHARMED)
+	!StateCheck(Player3,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player3)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player4,150)
+	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player4,STATE_INVISIBLE)
+	!CheckStatGT(Player4,0,SANCTUARY)
+	!StateCheck(Player4,STATE_CHARMED)
+	!StateCheck(Player4,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player4)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player5,150)
+	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player5,STATE_INVISIBLE)
+	!CheckStatGT(Player5,0,SANCTUARY)
+	!StateCheck(Player5,STATE_CHARMED)
+	!StateCheck(Player5,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player5)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player6,150)
+	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Player6,STATE_INVISIBLE)
+	!CheckStatGT(Player6,0,SANCTUARY)
+	!StateCheck(Player6,STATE_CHARMED)
+	!StateCheck(Player6,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(Player6)
+END
+
+// Track last seen enemy if allegiance is GOODCUTOFF
+IF
+	Allegiance(Myself,GOODCUTOFF)
+	!StateCheck(Myself,STATE_BLIND)
+	Range(LastSeenBy(Myself),150)
+	!General(LastSeenBy(Myself),WEAPON)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		MoveToObject(LastSeenBy(Myself))
 END
 

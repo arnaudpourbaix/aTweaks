@@ -1,3 +1,8 @@
+| Spell   | Description      |
+| ------- | ---------------- |
+| ja#heal | Full Heal (rest) |
+
+
 | Item  | Description     | Slot      |
 | ----- | --------------- | --------- |
 | ja#i1 | Construct trait | Helmet    |
