@@ -69,48 +69,21 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpellRES("SPWI112")
+	!Range(NearestEnemyOf(Myself),10)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	OR(6)
-		General([PC.0.0.MAGE_ALL],WEAPON)
-		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
-		!See([PC.0.0.MAGE_ALL])
-		RandomNumGT(1000,250)
-	OR(6)
-		General([PC.0.0.CLERIC_ALL],WEAPON)
-		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
-		!See([PC.0.0.CLERIC_ALL])
-		RandomNumGT(1000,333)
-	OR(6)
-		General([PC.0.0.DRUID_ALL],WEAPON)
-		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
-		!See([PC.0.0.DRUID_ALL])
-		RandomNumGT(1000,500)
-	OR(5)
-		General([PC.0.0.BARD],WEAPON)
-		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
-		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
-		!See([PC.0.0.BARD])
-THEN
-	RESPONSE #100
-		Continue()
-END
-
-IF
-	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpellRES("SPWI112")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(LastSeenBy(Myself))
+	!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_PANIC)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_CONFUSED)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_SLEEPING)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_HELPLESS)
+	!General([PC.0.0.MAGE_ALL],WEAPON)
+	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
+	See([PC.0.0.MAGE_ALL])
+	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		ForceSpellRES("SPWI112",LastSeenBy(Myself))
@@ -118,57 +91,81 @@ THEN
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
-// Dimension Door
 IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
-	HaveSpellRES("SPWI402")
-	RandomNum(20,1)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	OR(6)
-		Range(LastSeenBy(Myself),20)
-		General(FarthestEnemyOf(Myself),WEAPON)
-		CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FarthestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(FarthestEnemyOf(Myself))
-	OR(6)
-		Range(LastSeenBy(Myself),20)
-		General(SecondFarthestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondFarthestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(SecondFarthestEnemyOf(Myself))
-	OR(6)
-		Range(LastSeenBy(Myself),20)
-		General(ThirdFarthestEnemyOf(Myself),WEAPON)
-		CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdFarthestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(ThirdFarthestEnemyOf(Myself))
+	!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_PANIC)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_CONFUSED)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_SLEEPING)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_HELPLESS)
+	!General([PC.0.0.CLERIC_ALL],WEAPON)
+	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
+	!StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
+	See([PC.0.0.CLERIC_ALL])
+	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		Continue()
-END
-
-IF
-	!Range(NearestEnemyOf(Myself),10)
-	HaveSpellRES("SPWI402")
-	RandomNum(20,1)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(LastSeenBy(Myself),20)
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(LastSeenBy(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("SPWI402",LastSeenBy(Myself))
-		RemoveSpellRES("SPWI402")
+		ForceSpellRES("SPWI112",LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
-// Attack SLOWED enemy
+IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpellRES("SPWI112")
+	!Range(NearestEnemyOf(Myself),10)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_PANIC)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_CONFUSED)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_SLEEPING)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_HELPLESS)
+	!General([PC.0.0.DRUID_ALL],WEAPON)
+	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
+	!StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
+	See([PC.0.0.DRUID_ALL])
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+END
+
+IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpellRES("SPWI112")
+	!Range(NearestEnemyOf(Myself),10)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.BARD],0,HELD)
+	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
+	!StateCheck([PC.0.0.BARD],STATE_PANIC)
+	!StateCheck([PC.0.0.BARD],STATE_CONFUSED)
+	!StateCheck([PC.0.0.BARD],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.BARD],STATE_SLEEPING)
+	!StateCheck([PC.0.0.BARD],STATE_HELPLESS)
+	!General([PC.0.0.BARD],WEAPON)
+	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
+	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
+	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
+	See([PC.0.0.BARD])
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+END
+
+// Attack Slowed enemy
 IF
 	OR(6)
 		!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
@@ -257,7 +254,7 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Attack ABLE enemy
+// Attack Able enemy
 IF
 	OR(12)
 		CheckStatGT(NearestEnemyOf(Myself),0,HELD)
@@ -412,7 +409,7 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Attack HELD enemy
+// Attack Held enemy
 IF
 	OR(6)
 		!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
@@ -501,7 +498,7 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Attack STUNNED enemy
+// Attack Stunned enemy
 IF
 	OR(6)
 		!StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
@@ -590,7 +587,7 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Attack NEAREST enemy
+// Attack NoCheck enemy
 IF
 	OR(5)
 		General(NearestEnemyOf(Myself),WEAPON)
@@ -668,45 +665,39 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Attack SLEEP enemy
+// Attack Sleep enemy
 IF
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player1,STATE_SLEEPING)
 		CheckStatGT(Player1,0,SANCTUARY)
 		StateCheck(Player1,STATE_CHARMED)
 		StateCheck(Player1,STATE_REALLY_DEAD)
 		!See(Player1)
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player2,STATE_SLEEPING)
 		CheckStatGT(Player2,0,SANCTUARY)
 		StateCheck(Player2,STATE_CHARMED)
 		StateCheck(Player2,STATE_REALLY_DEAD)
 		!See(Player2)
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player3,STATE_SLEEPING)
 		CheckStatGT(Player3,0,SANCTUARY)
 		StateCheck(Player3,STATE_CHARMED)
 		StateCheck(Player3,STATE_REALLY_DEAD)
 		!See(Player3)
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player4,STATE_SLEEPING)
 		CheckStatGT(Player4,0,SANCTUARY)
 		StateCheck(Player4,STATE_CHARMED)
 		StateCheck(Player4,STATE_REALLY_DEAD)
 		!See(Player4)
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player5,STATE_SLEEPING)
 		CheckStatGT(Player5,0,SANCTUARY)
 		StateCheck(Player5,STATE_CHARMED)
 		StateCheck(Player5,STATE_REALLY_DEAD)
 		!See(Player5)
-	OR(6)
-		!Allegiance(Myself,ENEMY)
+	OR(5)
 		!StateCheck(Player6,STATE_SLEEPING)
 		CheckStatGT(Player6,0,SANCTUARY)
 		StateCheck(Player6,STATE_CHARMED)
@@ -718,7 +709,6 @@ THEN
 END
 
 IF
-	Allegiance(Myself,ENEMY)
 	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
@@ -727,6 +717,67 @@ IF
 THEN
 	RESPONSE #100
 		AttackOneRound(LastSeenBy(Myself))
+END
+
+// Dimension Door
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player1,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player1)
+		RemoveSpellRES("SPWI402")
+END
+
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player2,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player2)
+		RemoveSpellRES("SPWI402")
+END
+
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player3,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player3)
+		RemoveSpellRES("SPWI402")
+END
+
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player4,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player4)
+		RemoveSpellRES("SPWI402")
+END
+
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player5,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player5)
+		RemoveSpellRES("SPWI402")
+END
+
+IF
+	HaveSpellRES("SPWI402")
+	!StateCheck(Myself,STATE_BLIND)
+	Range(Player6,180)
+THEN
+	RESPONSE #100
+		ForceSpellRES("SPWI402",Player6)
+		RemoveSpellRES("SPWI402")
 END
 
 // Track players if allegiance is not GOODCUTOFF

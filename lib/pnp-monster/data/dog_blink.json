@@ -79,11 +79,8 @@
             "file": "ja#1m14",
             "memorizedCount": 1,
             "stringRef": 4010,
-            "spellType": "Innate",
-            "secondaryType": "None",
             "type": "Melee",
             "range": 30,
-            "speed": 0,
             "effects": [
                 {
                     "opcode": "Teleport",

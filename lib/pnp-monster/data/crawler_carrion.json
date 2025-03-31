@@ -4,10 +4,10 @@
     "tracking": true,
     "combatWalk": true,
     "targetPriorities": [
-        "ABLE",
-        "HELD",
-        "NEAREST",
-        "SLEEP"
+        "Able",
+        "Held",
+        "NoCheck",
+        "Sleep"
     ],
     "items": [
         {

@@ -10,6 +10,9 @@ CREATE SPL "ja#1m1"
 	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 5
 	SAY NAME1 @4001 SAY NAME2 @4001
 	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).~
@@ -89,6 +92,9 @@ CREATE SPL "ja#2m1"
 	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 3
 	SAY NAME1 @4000 SAY NAME2 @4000

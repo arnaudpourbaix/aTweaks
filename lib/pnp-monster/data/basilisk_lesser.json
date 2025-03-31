@@ -111,12 +111,10 @@
             "memorizedCount": 1,
             "stringRef": 4002,
             "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
-            "spellType": "Innate",
             "secondaryType": "Disabling",
             "type": "Ranged",
             "projectile": "ja#1m2",
             "range": 30,
-            "speed": 0,
             "effects": [
                 {
                     "opcode": "Petrification",
@@ -171,12 +169,10 @@
             "memorizedCount": 1,
             "stringRef": 4002,
             "description": "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
-            "spellType": "Innate",
             "secondaryType": "Disabling",
             "type": "Ranged",
             "projectile": "ja#2m2",
             "range": 30,
-            "speed": 0,
             "effects": [
                 {
                     "opcode": "DisplayString",
@@ -221,11 +217,8 @@
             "name": "Petrification (5e, technical)",
             "stringRef": 4002,
             "file": "ja#3m2",
-            "spellType": "Innate",
             "secondaryType": "Disabling",
             "type": "Ranged",
-            "range": 0,
-            "speed": 0,
             "effects": [
                 {
                     "opcode": "Petrification",

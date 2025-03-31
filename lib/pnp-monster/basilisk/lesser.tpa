@@ -27,6 +27,9 @@ CREATE SPL "ja#1m2"
 	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
 	SAY NAME1 @4002 SAY NAME2 @4002
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.~
@@ -95,6 +98,9 @@ CREATE SPL "ja#2m2"
 	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
 	SAY NAME1 @4002 SAY NAME2 @4002
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
@@ -224,6 +230,9 @@ CREATE SPL "ja#3m2"
 	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
 	SAY NAME1 @4002 SAY NAME2 @4002
 	LPF ADD_EFFECT
 		INT_VAR

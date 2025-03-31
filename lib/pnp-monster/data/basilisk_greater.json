@@ -160,13 +160,11 @@
             "memorizedCount": 1,
             "stringRef": 4006,
             "description": "Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
-            "target": "AnyPointWithinRange",
-            "spellType": "Innate",
             "secondaryType": "OffensiveDamage",
             "type": "Ranged",
             "projectile": "ja#1m3",
             "range": 5,
-            "speed": 0,
+            "target": "AnyPointWithinRange",
             "effects": [
                 {
                     "opcode": "Slay",

@@ -172,14 +172,14 @@
         "TargetStatusEnum": {
             "type": "string",
             "enum": [
-                "GRABBED",
-                "HELD",
-                "STUNNED",
-                "SLOWED",
-                "PANIC_CONFUSED",
-                "SLEEP",
-                "ABLE",
-                "NEAREST"
+                "Grabbed",
+                "Held",
+                "Stunned",
+                "Slowed",
+                "PanicConfused",
+                "Sleep",
+                "Able",
+                "NoCheck"
             ]
         },
         "RawCreatureAttack": {
@@ -403,6 +403,9 @@
                 "comment": {
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/RawTargetList"
+                },
                 "triggers": {
                     "type": "array",
                     "items": {
@@ -428,6 +431,194 @@
                 "responses"
             ],
             "additionalProperties": false
+        },
+        "RawTargetList": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ObjectIdentifiers"
+                        },
+                        {
+                            "$ref": "#/definitions/AllegianceIdentifiers"
+                        },
+                        {
+                            "$ref": "#/definitions/TargetListName"
+                        }
+                    ]
+                },
+                "reverse": {
+                    "type": "boolean"
+                },
+                "random": {
+                    "type": "boolean"
+                },
+                "limit": {
+                    "type": "number"
+                },
+                "includeStatus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TargetStatusEnum"
+                    }
+                },
+                "excludeStatus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TargetStatusEnum"
+                    }
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trigger"
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "additionalProperties": false
+        },
+        "ObjectIdentifiers": {
+            "type": "string",
+            "enum": [
+                "Nothing",
+                "Myself",
+                "LeaderOf",
+                "GroupOf",
+                "WeakestOf",
+                "StrongestOf",
+                "MostDamagedOf",
+                "LeastDamagedOf",
+                "ProtectedBy",
+                "ProtectorOf",
+                "LastAttackerOf",
+                "LastTargetedBy",
+                "LastCommandedBy",
+                "Nearest",
+                "LastHitter",
+                "LastHelp",
+                "LastTrigger",
+                "LastSeenBy",
+                "LastTalkedToBy",
+                "LastHeardBy",
+                "Player1",
+                "Player2",
+                "Player3",
+                "Player4",
+                "Player5",
+                "Player6",
+                "Protagonist",
+                "StrongestOfMale",
+                "NearestEnemyOf",
+                "SecondNearestEnemyOf",
+                "ThirdNearestEnemyOf",
+                "FourthNearestEnemyOf",
+                "FifthNearestEnemyOf",
+                "SixthNearestEnemyOf",
+                "SeventhNearestEnemyOf",
+                "EighthNearestEnemyOf",
+                "NinthNearestEnemyOf",
+                "TenthNearestEnemyOf",
+                "SecondNearest",
+                "ThirdNearest",
+                "FourthNearest",
+                "FifthNearest",
+                "SixthNearest",
+                "SeventhNearest",
+                "EighthNearest",
+                "NinthNearest",
+                "TenthNearest",
+                "WorstAC",
+                "BestAC",
+                "LastSummonerOf",
+                "NearestEnemyOfType",
+                "SecondNearestEnemyOfType",
+                "ThirdNearestEnemyOfType",
+                "FourthNearestEnemyOfType",
+                "FifthNearestEnemyOfType",
+                "SixthNearestEnemyOfType",
+                "SeventhNearestEnemyOfType",
+                "EigthNearestEnemyOfType",
+                "EighthNearestEnemyOfType",
+                "NinthNearestEnemyOfType",
+                "TenthNearestEnemyOfType",
+                "NearestMyGroupOfType",
+                "SecondNearestMyGroupOfType",
+                "ThirdNearestMyGroupOfType",
+                "FourthNearestMyGroupOfType",
+                "FifthNearestMyGroupOfType",
+                "SixthNearestMyGroupOfType",
+                "SeventhNearestMyGroupOfType",
+                "EigthNearestMyGroupOfType",
+                "EighthNearestMyGroupOfType",
+                "NinthNearestMyGroupOfType",
+                "TenthNearestMyGroupOfType",
+                "Familiar",
+                "FamiliarSummoner",
+                "LastKilled",
+                "NearestAllyOf",
+                "SecondNearestAllyOf",
+                "ThirdNearestAllyOf",
+                "FourthNearestAllyOf",
+                "FifthNearestAllyOf",
+                "SixthNearestAllyOf",
+                "SeventhNearestAllyOf",
+                "EighthNearestAllyOf",
+                "NinthNearestAllyOf",
+                "TenthNearestAllyOf",
+                "FarthestEnemyOf",
+                "SecondFarthestEnemyOf",
+                "ThirdFarthestEnemyOf",
+                "FourthFarthestEnemyOf",
+                "FifthFarthestEnemyOf",
+                "SixthFarthestEnemyOf",
+                "SeventhFarthestEnemyOf",
+                "EighthFarthestEnemyOf",
+                "NinthFarthestEnemyOf",
+                "TenthFarthestEnemyOf"
+            ]
+        },
+        "AllegianceIdentifiers": {
+            "type": "string",
+            "enum": [
+                "GOODCUTOFF",
+                "GOODBUTRED",
+                "GOODBUTBLUE",
+                "EVILCUTOFF",
+                "EVILBUTGREEN",
+                "EVILBUTBLUE",
+                "ENEMY",
+                "ANYONE",
+                "INANIMATE",
+                "PC",
+                "FAMILIAR",
+                "ALLY",
+                "CONTROLLED",
+                "CHARMED",
+                "REALLYCHARMED",
+                "CHARMED_PC",
+                "NOTGOOD",
+                "ANYTHING",
+                "NEUTRAL",
+                "NOTNEUTRAL",
+                "NOTEVIL"
+            ]
+        },
+        "TargetListName": {
+            "type": "string",
+            "enum": [
+                "Players",
+                "NearestEnemies",
+                "PCsInOrder",
+                "PCsPreferringStrong",
+                "PCsPreferringWeak",
+                "PCSpellcasters",
+                "FarthestEnemies",
+                "CloseEnemies"
+            ]
         },
         "Trigger": {
             "type": "object",
@@ -1772,53 +1963,7 @@
                     "type": "string"
                 },
                 "target": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/definitions/ObjectIdentifiers"
-                                },
-                                {
-                                    "$ref": "#/definitions/AllegianceIdentifiers"
-                                },
-                                {
-                                    "$ref": "#/definitions/TargetList"
-                                }
-                            ]
-                        },
-                        "reverse": {
-                            "type": "boolean"
-                        },
-                        "random": {
-                            "type": "boolean"
-                        },
-                        "limit": {
-                            "type": "number"
-                        },
-                        "includeStatus": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/TargetStatusEnum"
-                            }
-                        },
-                        "excludeStatus": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/TargetStatusEnum"
-                            }
-                        },
-                        "triggers": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Trigger"
-                            }
-                        }
-                    },
-                    "required": [
-                        "name"
-                    ],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/RawTargetList"
                 },
                 "isTargetSpell": {
                     "type": "boolean"
@@ -1865,146 +2010,17 @@
             ],
             "additionalProperties": false
         },
-        "ObjectIdentifiers": {
-            "type": "string",
-            "enum": [
-                "Nothing",
-                "Myself",
-                "LeaderOf",
-                "GroupOf",
-                "WeakestOf",
-                "StrongestOf",
-                "MostDamagedOf",
-                "LeastDamagedOf",
-                "ProtectedBy",
-                "ProtectorOf",
-                "LastAttackerOf",
-                "LastTargetedBy",
-                "LastCommandedBy",
-                "Nearest",
-                "LastHitter",
-                "LastHelp",
-                "LastTrigger",
-                "LastSeenBy",
-                "LastTalkedToBy",
-                "LastHeardBy",
-                "Player1",
-                "Player2",
-                "Player3",
-                "Player4",
-                "Player5",
-                "Player6",
-                "Protagonist",
-                "StrongestOfMale",
-                "NearestEnemyOf",
-                "SecondNearestEnemyOf",
-                "ThirdNearestEnemyOf",
-                "FourthNearestEnemyOf",
-                "FifthNearestEnemyOf",
-                "SixthNearestEnemyOf",
-                "SeventhNearestEnemyOf",
-                "EighthNearestEnemyOf",
-                "NinthNearestEnemyOf",
-                "TenthNearestEnemyOf",
-                "SecondNearest",
-                "ThirdNearest",
-                "FourthNearest",
-                "FifthNearest",
-                "SixthNearest",
-                "SeventhNearest",
-                "EighthNearest",
-                "NinthNearest",
-                "TenthNearest",
-                "WorstAC",
-                "BestAC",
-                "LastSummonerOf",
-                "NearestEnemyOfType",
-                "SecondNearestEnemyOfType",
-                "ThirdNearestEnemyOfType",
-                "FourthNearestEnemyOfType",
-                "FifthNearestEnemyOfType",
-                "SixthNearestEnemyOfType",
-                "SeventhNearestEnemyOfType",
-                "EigthNearestEnemyOfType",
-                "EighthNearestEnemyOfType",
-                "NinthNearestEnemyOfType",
-                "TenthNearestEnemyOfType",
-                "NearestMyGroupOfType",
-                "SecondNearestMyGroupOfType",
-                "ThirdNearestMyGroupOfType",
-                "FourthNearestMyGroupOfType",
-                "FifthNearestMyGroupOfType",
-                "SixthNearestMyGroupOfType",
-                "SeventhNearestMyGroupOfType",
-                "EigthNearestMyGroupOfType",
-                "EighthNearestMyGroupOfType",
-                "NinthNearestMyGroupOfType",
-                "TenthNearestMyGroupOfType",
-                "Familiar",
-                "FamiliarSummoner",
-                "LastKilled",
-                "NearestAllyOf",
-                "SecondNearestAllyOf",
-                "ThirdNearestAllyOf",
-                "FourthNearestAllyOf",
-                "FifthNearestAllyOf",
-                "SixthNearestAllyOf",
-                "SeventhNearestAllyOf",
-                "EighthNearestAllyOf",
-                "NinthNearestAllyOf",
-                "TenthNearestAllyOf",
-                "FarthestEnemyOf",
-                "SecondFarthestEnemyOf",
-                "ThirdFarthestEnemyOf",
-                "FourthFarthestEnemyOf",
-                "FifthFarthestEnemyOf",
-                "SixthFarthestEnemyOf",
-                "SeventhFarthestEnemyOf",
-                "EighthFarthestEnemyOf",
-                "NinthFarthestEnemyOf",
-                "TenthFarthestEnemyOf"
-            ]
-        },
-        "AllegianceIdentifiers": {
-            "type": "string",
-            "enum": [
-                "GOODCUTOFF",
-                "GOODBUTRED",
-                "GOODBUTBLUE",
-                "EVILCUTOFF",
-                "EVILBUTGREEN",
-                "EVILBUTBLUE",
-                "ENEMY",
-                "ANYONE",
-                "INANIMATE",
-                "PC",
-                "FAMILIAR",
-                "ALLY",
-                "CONTROLLED",
-                "CHARMED",
-                "REALLYCHARMED",
-                "CHARMED_PC",
-                "NOTGOOD",
-                "ANYTHING",
-                "NEUTRAL",
-                "NOTNEUTRAL",
-                "NOTEVIL"
-            ]
-        },
-        "TargetList": {
-            "type": "string",
-            "enum": [
-                "Players",
-                "NearestEnemies",
-                "PCsInOrder",
-                "PCsPreferringStrong",
-                "PCsPreferringWeak",
-                "PCSpellcasters",
-                "FarthestEnemies",
-                "CloseEnemies"
-            ]
-        },
         "RawItem": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/RawAlterItem"
+                },
+                {
+                    "$ref": "#/definitions/RawCreateItem"
+                }
+            ]
+        },
+        "RawAlterItem": {
             "type": "object",
             "properties": {
                 "file": {
@@ -2105,7 +2121,8 @@
                 }
             },
             "required": [
-                "file"
+                "file",
+                "copyFrom"
             ],
             "additionalProperties": false
         },
@@ -5809,7 +5826,112 @@
                 "opcode"
             ]
         },
+        "RawCreateItem": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string"
+                },
+                "equippedSlot": {
+                    "$ref": "#/definitions/ItemSlotEnum"
+                },
+                "enchantment": {
+                    "type": "number"
+                },
+                "animation": {
+                    "$ref": "#/definitions/RawItemAnimationEnum"
+                },
+                "category": {
+                    "$ref": "#/definitions/RawItemCategoryEnum"
+                },
+                "animationSwing": {
+                    "type": "object",
+                    "properties": {
+                        "overhand": {
+                            "type": "number"
+                        },
+                        "backhand": {
+                            "type": "number"
+                        },
+                        "thrust": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "overhand",
+                        "backhand",
+                        "thrust"
+                    ],
+                    "additionalProperties": false
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemFlagEnum"
+                    }
+                },
+                "type": {
+                    "$ref": "#/definitions/RawItemAbilityTypeEnum"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawItemAbilityTargetEnum"
+                },
+                "location": {
+                    "$ref": "#/definitions/RawItemAbilityLocationEnum"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "bonusToHit": {
+                    "type": "number"
+                },
+                "damageBonus": {
+                    "type": "number"
+                },
+                "damageType": {
+                    "$ref": "#/definitions/RawAbilityDamageTypeEnum"
+                },
+                "projectile": {
+                    "type": "string"
+                },
+                "abilityFlags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawItemAbilityFlagEnum"
+                    }
+                },
+                "effects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffect"
+                    }
+                }
+            },
+            "required": [
+                "file"
+            ],
+            "additionalProperties": false
+        },
         "RawSpell": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/RawAlterSpell"
+                },
+                {
+                    "$ref": "#/definitions/RawCreateSpell"
+                }
+            ]
+        },
+        "RawAlterSpell": {
             "type": "object",
             "properties": {
                 "name": {
@@ -5891,7 +6013,8 @@
             },
             "required": [
                 "name",
-                "file"
+                "file",
+                "copyFrom"
             ],
             "additionalProperties": false
         },
@@ -7196,6 +7319,83 @@
                 "CanTargetInvisible",
                 "CastableWhenSilenced"
             ]
+        },
+        "RawCreateSpell": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "file": {
+                    "type": "string"
+                },
+                "memorizedCount": {
+                    "type": "number"
+                },
+                "stringRef": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "spellType": {
+                    "$ref": "#/definitions/RawSpellTypeEnum"
+                },
+                "castingSound": {
+                    "type": "string"
+                },
+                "castingAnimation": {
+                    "type": "string"
+                },
+                "secondaryType": {
+                    "$ref": "#/definitions/RawItemAbilitySecondaryTypeEnum"
+                },
+                "spellLevel": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawItemAbilityTypeEnum"
+                },
+                "range": {
+                    "type": "number"
+                },
+                "speed": {
+                    "type": "number"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawItemAbilityTargetEnum"
+                },
+                "location": {
+                    "$ref": "#/definitions/RawItemAbilityLocationEnum"
+                },
+                "projectile": {
+                    "type": "string"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSpellFlagEnum"
+                    }
+                },
+                "effects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffect"
+                    }
+                },
+                "removeOpcodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectTypeEnum"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "file",
+                "stringRef"
+            ],
+            "additionalProperties": false
         },
         "RawProjectile": {
             "type": "object",

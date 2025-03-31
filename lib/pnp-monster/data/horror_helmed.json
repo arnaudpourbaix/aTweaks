@@ -61,7 +61,7 @@
             "target": {
                 "name": "PCSpellcasters",
                 "includeStatus": [
-                    "ABLE"
+                    "Able"
                 ],
                 "random": true
             },
@@ -71,6 +71,14 @@
                     "params": [
                         "SPWI112"
                     ]
+                },
+                {
+                    "name": "Range",
+                    "params": [
+                        "NearestEnemyOf",
+                        10
+                    ],
+                    "negation": true
                 }
             ],
             "actions": [
@@ -86,60 +94,67 @@
                 "name": "MagicMissiles",
                 "value": 18
             }
-        },
+        }
+    ],
+    "customCode": [
         {
-            "name": "Dimension Door",
-            "target": {
-                "name": "FarthestEnemies",
-                "triggers": [
+            "location": "trackTargets",
+            "type": "insertBefore",
+            "statements": {
+                "list": [
                     {
-                        "name": "Range",
-                        "params": [
-                            "LastSeenBy",
-                            20
+                        "comment": "Dimension Door",
+                        "target": {
+                            "name": "Players",
+                            "triggers": [
+                                {
+                                    "name": "Range",
+                                    "params": [
+                                        "{Target}",
+                                        180
+                                    ]
+                                }
+                            ]
+                        },
+                        "triggers": [
+                            {
+                                "name": "HaveSpellRES",
+                                "params": [
+                                    "SPWI402"
+                                ]
+                            },
+                            {
+                                "name": "StateCheck",
+                                "params": [
+                                    "Myself",
+                                    "STATE_BLIND"
+                                ],
+                                "negation": true
+                            }
                         ],
-                        "negation": true
+                        "responses": [
+                            {
+                                "weight": 100,
+                                "actions": [
+                                    {
+                                        "name": "ForceSpellRES",
+                                        "params": [
+                                            "SPWI402",
+                                            "{Target}"
+                                        ]
+                                    },
+                                    {
+                                        "name": "RemoveSpellRES",
+                                        "params": [
+                                            "SPWI402"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
-            },
-            "triggers": [
-                {
-                    "name": "Range",
-                    "params": [
-                        "NearestEnemyOf",
-                        10
-                    ],
-                    "negation": true
-                },
-                {
-                    "name": "HaveSpellRES",
-                    "params": [
-                        "SPWI402"
-                    ]
-                },
-                {
-                    "name": "RandomNum",
-                    "params": [
-                        20,
-                        1
-                    ]
-                }
-            ],
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "SPWI402",
-                        "LastSeenBy"
-                    ]
-                },
-                {
-                    "name": "RemoveSpellRES",
-                    "params": [
-                        "SPWI402"
-                    ]
-                }
-            ]
+            }
         }
     ],
     "items": [
@@ -321,6 +336,8 @@
             "data": {
                 "level1": 8,
                 "level2": 3,
+                "strength": 20,
+                "thac0": 8,
                 "class": "CLERIC_MAGE",
                 "xpv": 4000
             },
