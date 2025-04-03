@@ -12,6 +12,12 @@
                 "generate.json",
             ],
             "url": "./lib/schemas/generate.schema.json"
+        },
+        {
+            "fileMatch": [
+                "lib/pnp-monster/immunities.json",
+            ],
+            "url": "./lib/schemas/immunity.schema.json"
         }
     ]
 }

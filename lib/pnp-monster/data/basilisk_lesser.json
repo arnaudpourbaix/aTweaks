@@ -26,15 +26,7 @@
         "gender": "NIETHER",
         "size": "Medium"
     },
-    "additionalData": {
-        "removeItems": [
-            "BASILL1",
-            "BASILL2"
-        ],
-        "removeScripts": [
-            "LBASILSK"
-        ]
-    },
+    "additionalData": { "removeItems": [ "BASILL1", "BASILL2" ], "removeScripts": [ "LBASILSK" ]},
     "abilities": [
         {
             "name": "Petrification",
@@ -42,34 +34,11 @@
                 "name": "NearestEnemies",
                 "random": true,
                 "triggers": [
-                    {
-                        "name": "CheckStatGT",
-                        "params": [
-                            "{Target}",
-                            "0",
-                            "HELD"
-                        ],
-                        "negation": true
-                    },
-                    {
-                        "name": "StateCheck",
-                        "params": [
-                            "{Target}",
-                            "STATE_SLOWED"
-                        ],
-                        "negation": true
-                    }
+                    { "name": "CheckStatGT", "params": [ "{Target}", "0", "HELD" ], "negation": true },
+                    { "name": "StateCheck", "params": [ "{Target}", "STATE_SLOWED" ], "negation": true }
                 ]
             },
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m2",
-                        "LastSeenBy"
-                    ]
-                }
-            ],
+            "actions": [{ "name": "ForceSpellRES", "params": [ "ja#1m2", "LastSeenBy" ]}],
             "range": 30
         }
     ],
@@ -82,9 +51,7 @@
             "diceSize": 10,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
     "projectiles": [
@@ -96,10 +63,7 @@
             "triggerRadius": 255,
             "areaOfEffect": 255,
             "coneWidth": 60,
-            "areaProjectileFlags": [
-                "AffectOnlyEnemies",
-                "Coneshaped"
-            ],
+            "areaProjectileFlags": [ "AffectOnlyEnemies", "Coneshaped" ],
             "fragmentAnimation": "NULL_ANIMATION",
             "explosionEffect": "NONE"
         }
@@ -116,49 +80,21 @@
             "projectile": "ja#1m2",
             "range": 30,
             "effects": [
-                {
-                    "opcode": "Petrification",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
-                    "saveBonus": -4
-                },
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4004,
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
-                    "saveBonus": -4
-                },
-                {
-                    "opcode": "PlaySound",
-                    "resource": "MISC_06B",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
-                    "saveBonus": -4
-                },
+                { "opcode": "Petrification", "saveTypes": [ "PetrifyPolymorph" ], "saveBonus": -4 },
+                { "opcode": "DisplayString", "stringRef": 4004, "saveTypes": [ "PetrifyPolymorph" ], "saveBonus": -4 },
+                { "opcode": "PlaySound", "resource": "MISC_06B", "saveTypes": [ "PetrifyPolymorph" ], "saveBonus": -4 },
                 {
                     "opcode": "PlayVisualEffect",
                     "playWhere": "OverTargetUnattached",
                     "resource": "SPFLESHS.VVC",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
                     "opcode": "CreatureRGBColorFade",
-                    "color": {
-                        "blue": 120,
-                        "red": 120,
-                        "green": 120
-                    },
+                    "color": { "blue": 120, "red": 120, "green": 120 },
                     "fadeSpeed": 25,
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 }
             ]
@@ -174,31 +110,15 @@
             "projectile": "ja#2m2",
             "range": 30,
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4005,
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
-                    "saveBonus": -4
-                },
-                {
-                    "opcode": "RestrainedEffects",
-                    "duration": 12,
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
-                    "saveBonus": -4
-                },
+                { "opcode": "DisplayString", "stringRef": 4005, "saveTypes": [ "PetrifyPolymorph" ], "saveBonus": -4 },
+                { "opcode": "RestrainedEffects", "duration": 12, "saveTypes": [ "PetrifyPolymorph" ], "saveBonus": -4 },
                 {
                     "opcode": "CastSpell",
                     "timing": "DelayLimited",
                     "duration": 12,
                     "type": "CastInstantlyAtCasterLevel",
                     "resource": "ja#3m2",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
@@ -206,9 +126,7 @@
                     "timing": "DelayLimited",
                     "duration": 12,
                     "resource": "ja#2m2",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 }
             ]
@@ -223,27 +141,21 @@
                 {
                     "opcode": "Petrification",
                     "timing": "InstantPermanent",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
                     "opcode": "DisplayString",
                     "stringRef": 4004,
                     "timing": "InstantPermanent",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
                     "opcode": "PlaySound",
                     "resource": "MISC_06B",
                     "timing": "InstantPermanent",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
@@ -251,39 +163,20 @@
                     "playWhere": "OverTargetUnattached",
                     "resource": "SPFLESHS.VVC",
                     "timing": "InstantPermanent",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 },
                 {
                     "opcode": "CreatureRGBColorFade",
-                    "color": {
-                        "blue": 120,
-                        "red": 120,
-                        "green": 120
-                    },
+                    "color": { "blue": 120, "red": 120, "green": 120 },
                     "fadeSpeed": 25,
                     "timing": "InstantPermanent",
-                    "saveTypes": [
-                        "PetrifyPolymorph"
-                    ],
+                    "saveTypes": [ "PetrifyPolymorph" ],
                     "saveBonus": -4
                 }
             ]
         }
     ],
-    "files": [
-        "BASILL",
-        "BASILLSU",
-        "BPBASL01"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "BASILLSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BASILL", "BASILLSU", "BPBASL01" ],
+    "adjustments": [{ "files": [ "BASILLSU" ], "summon": true }]
 }

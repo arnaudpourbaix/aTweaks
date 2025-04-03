@@ -25,11 +25,7 @@
         "gender": "MALE",
         "size": "Medium"
     },
-    "additionalData": {
-        "removeItems": [
-            "P2-8"
-        ]
-    },
+    "additionalData": { "removeItems": [ "P2-8" ]},
     "items": [
         {
             "file": "ja#m13w1",
@@ -40,26 +36,9 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BDPRISD1",
-        "BDPRISD2",
-        "DOGWA",
-        "DOGWASU",
-        "DOGWASU",
-        "dw#rndwa",
-        "UBNIMDOG"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "DOGWASU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BDPRISD1", "BDPRISD2", "DOGWA", "DOGWASU", "DOGWASU", "dw#rndwa", "UBNIMDOG" ],
+    "adjustments": [{ "files": [ "DOGWASU" ], "summon": true }]
 }

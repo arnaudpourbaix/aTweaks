@@ -3,12 +3,14 @@
     "tpaFile": "lib/pnp-monster/carrion/carrion_crawler",
     "tracking": true,
     "combatWalk": true,
-    "targetPriorities": [
-        "Able",
-        "Held",
-        "NoCheck",
-        "Sleep"
-    ],
+    "attack": {
+        "targetPriorities": [
+            "Able",
+            "Held",
+            "NoCheck",
+            "Sleep"
+        ]
+    },
     "items": [
         {
             "file": "ja#m9w1",

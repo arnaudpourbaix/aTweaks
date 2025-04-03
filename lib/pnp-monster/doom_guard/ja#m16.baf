@@ -19,6 +19,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpellRES("JA#HEAL",Myself)
 END
 
 // Turn hostile if attacked
@@ -36,14 +37,6 @@ THEN
 		Enemy()
 END
 
-// Random walk on panic
-IF
-	StateCheck(Myself,STATE_PANIC)
-THEN
-	RESPONSE #100
-		RandomWalkContinuous()
-END
-
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)
@@ -57,7 +50,7 @@ END
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.ANKHEG],95)
+	Heard([EVILCUTOFF.0.GOLEM],95)
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -70,235 +63,6 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
-END
-
-// Acidic Enzymes
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.MAGE],30)
-	!General([PC.0.0.MAGE],WEAPON)
-	!CheckStatGT([PC.0.0.MAGE],0,SANCTUARY)
-	!StateCheck([PC.0.0.MAGE],STATE_CHARMED)
-	!StateCheck([PC.0.0.MAGE],STATE_REALLY_DEAD)
-	See([PC.0.0.MAGE])
-	!StateCheck([PC.0.0.MAGE],STATE_INVISIBLE)
-	RandomNumGT(1000,167)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.MAGE_THIEF],30)
-	!General([PC.0.0.MAGE_THIEF],WEAPON)
-	!CheckStatGT([PC.0.0.MAGE_THIEF],0,SANCTUARY)
-	!StateCheck([PC.0.0.MAGE_THIEF],STATE_CHARMED)
-	!StateCheck([PC.0.0.MAGE_THIEF],STATE_REALLY_DEAD)
-	See([PC.0.0.MAGE_THIEF])
-	!StateCheck([PC.0.0.MAGE_THIEF],STATE_INVISIBLE)
-	RandomNumGT(1000,200)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.MAGE_ALL],30)
-	!General([PC.0.0.MAGE_ALL],WEAPON)
-	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
-	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
-	See([PC.0.0.MAGE_ALL])
-	!StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
-	RandomNumGT(1000,250)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.THIEF],30)
-	!General([PC.0.0.THIEF],WEAPON)
-	!CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-	!StateCheck([PC.0.0.THIEF],STATE_CHARMED)
-	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
-	See([PC.0.0.THIEF])
-	!StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
-	RandomNumGT(1000,333)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.BARD],30)
-	!General([PC.0.0.BARD],WEAPON)
-	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
-	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
-	See([PC.0.0.BARD])
-	!StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
-	RandomNumGT(1000,500)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HPPercentLT(Myself,50)
-	HaveSpellRES("ja#2m1")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC.0.0.THIEF_ALL],30)
-	!General([PC.0.0.THIEF_ALL],WEAPON)
-	!CheckStatGT([PC.0.0.THIEF_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.THIEF_ALL],STATE_CHARMED)
-	!StateCheck([PC.0.0.THIEF_ALL],STATE_REALLY_DEAD)
-	See([PC.0.0.THIEF_ALL])
-	!StateCheck([PC.0.0.THIEF_ALL],STATE_INVISIBLE)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-// Attack Grabbed enemy
-IF
-	OR(7)
-		!CheckSpellState(NearestEnemyOf(Myself),)
-		General(NearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(NearestEnemyOf(Myself))
-		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(SecondNearestEnemyOf(Myself),)
-		General(SecondNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(SecondNearestEnemyOf(Myself))
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(ThirdNearestEnemyOf(Myself),)
-		General(ThirdNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(ThirdNearestEnemyOf(Myself))
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(FourthNearestEnemyOf(Myself),)
-		General(FourthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(FourthNearestEnemyOf(Myself))
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(FifthNearestEnemyOf(Myself),)
-		General(FifthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(FifthNearestEnemyOf(Myself))
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(SixthNearestEnemyOf(Myself),)
-		General(SixthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(SixthNearestEnemyOf(Myself))
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(SeventhNearestEnemyOf(Myself),)
-		General(SeventhNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(SeventhNearestEnemyOf(Myself))
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(EighthNearestEnemyOf(Myself),)
-		General(EighthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(EighthNearestEnemyOf(Myself))
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(NinthNearestEnemyOf(Myself),)
-		General(NinthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(NinthNearestEnemyOf(Myself))
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	OR(7)
-		!CheckSpellState(TenthNearestEnemyOf(Myself),)
-		General(TenthNearestEnemyOf(Myself),WEAPON)
-		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-		!See(TenthNearestEnemyOf(Myself))
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
-THEN
-	RESPONSE #100
-		Continue()
-END
-
-IF
-	CheckSpellState(LastSeenBy(Myself),)
-	!General(LastSeenBy(Myself),WEAPON)
-	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
-	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(LastSeenBy(Myself))
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Attack NoCheck enemy
@@ -387,10 +151,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON,0)
 		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Attack Sleep enemy
@@ -451,10 +212,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON,0)
 		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Track players if allegiance is not GOODCUTOFF

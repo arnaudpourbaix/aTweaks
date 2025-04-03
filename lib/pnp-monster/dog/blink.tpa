@@ -20,7 +20,7 @@ CREATE SPL "ja#1m14"
 			parameter1 = 0
 			parameter2 = 0
 			probability1 = 100
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 278
@@ -29,7 +29,7 @@ CREATE SPL "ja#1m14"
 			parameter2 = 0
 			duration = 6
 			probability1 = 75
-	END
+		END
 
 CREATE ITM "ja#m14w1"
 	WRITE_LONG 0x64 0x72
@@ -60,6 +60,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~P1-6~
 			ADD_CRE_ITEM ~ja#m14w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m14~ #0 ~innate~ (1)
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=4

@@ -199,7 +199,8 @@ REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/helmed.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/carrion_crawler.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
+
 // ------------------------------------------------------
 
 // // Core monsters (required)
@@ -259,13 +260,19 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/carrion_crawler.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/war.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/blink.tpa"
 
-// // Helmed Horrors, Battle Horrors
+// // Helmed Horrors, Battle Horrors, Doom Sayer
 // BEGIN @5070 DESIGNATED 5070
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/helmed.tpa"
 
+// // Doom Guards, Dwarven Doom Guards~
+// BEGIN @5080 DESIGNATED 5080
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
 
 /*
 // PnP Fiends

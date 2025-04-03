@@ -23,7 +23,7 @@ CREATE ITM "ja#m10w1"
 			parameter1 = RESOLVE_STR_REF(@4009)
 			parameter2 = 0
 			probability1 = 10
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -33,7 +33,7 @@ CREATE ITM "ja#m10w1"
 			probability1 = 10
 			dicenumber = 1
 			dicesize = 6
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -43,7 +43,7 @@ CREATE ITM "ja#m10w1"
 			probability1 = 10
 			dicenumber = 1
 			dicesize = 6
-	END
+		END
 
 CREATE ITM "ja#m10w2"
 	WRITE_LONG 0x64 0x72
@@ -76,6 +76,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~CATLIO~
 			ADD_CRE_ITEM ~ja#m10w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#m10w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=5
@@ -86,10 +87,10 @@ BEGIN
 					wisdom=12
 					charisma=8
 					movement=10
-					hp=40
+					hp=42
 					ac=5
 					thac0=15
-					apr=2
+					apr=3
 					xpv=650
 					alignment=34
 					saveDeath=11
@@ -106,12 +107,11 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
-					perfect2weapon=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CATLIOSU~) BEGIN 
 				LPF patchCreature
 					INT_VAR
-						hp=40
+						hp=42
 						thac0=15
 						xpv=0
 						saveDeath=11

@@ -2,120 +2,124 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/GenerateConfig",
   "definitions": {
-    "GenerateConfig": {
-      "type": "object",
-      "properties": {
-        "creaturesFolder": {
-          "type": "string"
-        },
-        "commonFunctionsFile": {
-          "type": "string"
-        },
-        "commonCreatureFile": {
-          "type": "string"
-        },
-        "bafConstants": {
-          "$ref": "#/definitions/BafConstants"
-        },
-        "tpaConstants": {
-          "$ref": "#/definitions/WeiduConstants"
-        },
-        "tokens": {
-          "$ref": "#/definitions/TokenConfig"
-        },
-        "constitutionAffectHitPoint": {
-          "type": "boolean"
-        }
+      "GenerateConfig": {
+          "type": "object",
+          "properties": {
+              "creaturesFolder": {
+                  "type": "string"
+              },
+              "commonFunctionsFile": {
+                  "type": "string"
+              },
+              "commonCreatureFile": {
+                  "type": "string"
+              },
+              "immunitiesFile": {
+                  "type": "string"
+              },
+              "bafConstants": {
+                  "$ref": "#/definitions/BafConstants"
+              },
+              "tpaConstants": {
+                  "$ref": "#/definitions/WeiduConstants"
+              },
+              "tokens": {
+                  "$ref": "#/definitions/TokenConfig"
+              },
+              "constitutionAffectHitPoint": {
+                  "type": "boolean"
+              }
+          },
+          "required": [
+              "creaturesFolder",
+              "commonFunctionsFile",
+              "commonCreatureFile",
+              "immunitiesFile",
+              "bafConstants",
+              "tpaConstants",
+              "tokens",
+              "constitutionAffectHitPoint"
+          ],
+          "additionalProperties": false
       },
-      "required": [
-        "creaturesFolder",
-        "commonFunctionsFile",
-        "commonCreatureFile",
-        "bafConstants",
-        "tpaConstants",
-        "tokens",
-        "constitutionAffectHitPoint"
-      ],
-      "additionalProperties": false
-    },
-    "BafConstants": {
-      "type": "object",
-      "properties": {
-        "initGlobal": {
-          "type": "string"
-        },
-        "restTimer": {
-          "type": "string"
-        },
-        "combatStarted": {
-          "type": "string"
-        },
-        "disableSpellcasting": {
-          "type": "string"
-        },
-        "roundTimer": {
-          "type": "string"
-        },
-        "allowMelee": {
-          "type": "string"
-        },
-        "fullHealSpellResource": {
-          "type": "string"
-        },
-        "monsterShoutId": {
-          "type": "number"
-        },
-        "summonerShoutId": {
-          "type": "number"
-        },
-        "trackingRange": {
-          "type": "number"
-        }
+      "BafConstants": {
+          "type": "object",
+          "properties": {
+              "initGlobal": {
+                  "type": "string"
+              },
+              "restTimer": {
+                  "type": "string"
+              },
+              "combatStarted": {
+                  "type": "string"
+              },
+              "disableSpellcasting": {
+                  "type": "string"
+              },
+              "roundTimer": {
+                  "type": "string"
+              },
+              "allowMelee": {
+                  "type": "string"
+              },
+              "fullHealSpellResource": {
+                  "type": "string"
+              },
+              "monsterShoutId": {
+                  "type": "number"
+              },
+              "summonerShoutId": {
+                  "type": "number"
+              },
+              "trackingRange": {
+                  "type": "number"
+              }
+          },
+          "required": [
+              "initGlobal",
+              "restTimer",
+              "combatStarted",
+              "disableSpellcasting",
+              "roundTimer",
+              "allowMelee",
+              "fullHealSpellResource",
+              "monsterShoutId",
+              "summonerShoutId",
+              "trackingRange"
+          ],
+          "additionalProperties": false
       },
-      "required": [
-        "initGlobal",
-        "restTimer",
-        "combatStarted",
-        "disableSpellcasting",
-        "roundTimer",
-        "allowMelee",
-        "fullHealSpellResource",
-        "monsterShoutId",
-        "summonerShoutId",
-        "trackingRange"
-      ],
-      "additionalProperties": false
-    },
-    "WeiduConstants": {
-      "type": "object",
-      "properties": {
-        "genericScriptsToRemove": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
+      "WeiduConstants": {
+          "type": "object",
+          "properties": {
+              "genericScriptsToRemove": {
+                  "type": "array",
+                  "items": {
+                      "type": "string"
+                  }
+              }
+          },
+          "required": [
+              "genericScriptsToRemove"
+          ],
+          "additionalProperties": false
       },
-      "required": [
-        "genericScriptsToRemove"
-      ],
-      "additionalProperties": false
-    },
-    "TokenConfig": {
-      "type": "object",
-      "properties": {
-        "target": {
-          "type": "string"
-        },
-        "grabState": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "target",
-        "grabState"
-      ],
-      "additionalProperties": false
-    }
+      "TokenConfig": {
+          "type": "object",
+          "properties": {
+              "target": {
+                  "type": "string"
+              },
+              "grabState": {
+                  "type": "string"
+              }
+          },
+          "required": [
+              "target",
+              "grabState"
+          ],
+          "additionalProperties": false
+      }
   }
 }

@@ -6,9 +6,10 @@ CREATE ITM "ja#m15w1"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x18 74
-	WRITE_ASCII 0x22 ~S2~ #2
+	WRITE_LONG 0x18 66
 	WRITE_SHORT 0x1c 57
+	WRITE_ASCII 0x22 ~S2~ #2
+	WRITE_BYTE 0x31 93
 	WRITE_LONG 0x60 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -30,7 +31,7 @@ CREATE ITM "ja#m15w1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 6
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -39,7 +40,7 @@ CREATE ITM "ja#m15w1"
 			parameter2 = 21
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -48,7 +49,7 @@ CREATE ITM "ja#m15w1"
 			parameter2 = 20
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -57,7 +58,7 @@ CREATE ITM "ja#m15w1"
 			parameter2 = 16
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 8
@@ -67,7 +68,7 @@ CREATE ITM "ja#m15w1"
 			timing = 2
 			duration = 3
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 8
@@ -77,7 +78,7 @@ CREATE ITM "ja#m15w1"
 			timing = 2
 			duration = 3
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 8
@@ -87,12 +88,13 @@ CREATE ITM "ja#m15w1"
 			timing = 2
 			duration = 3
 			probability1 = 100
-	END
+		END
 
 CREATE ITM "ja#m15a1"
 	WRITE_LONG 0x64 0x72
-	WRITE_ASCII 0x22 ~4A~ #2
 	WRITE_SHORT 0x1c 2
+	WRITE_ASCII 0x22 ~4A~ #2
+	WRITE_LONG 0x60 1
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -101,7 +103,7 @@ CREATE ITM "ja#m15a1"
 			parameter2 = 5
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -110,7 +112,7 @@ CREATE ITM "ja#m15a1"
 			parameter2 = 4
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -119,11 +121,12 @@ CREATE ITM "ja#m15a1"
 			parameter2 = 0
 			timing = 2
 			probability1 = 100
-	END
+		END
 
 COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
-	WRITE_ASCII 0x22 ~H5~ #2
 	WRITE_SHORT 0x1c 7
+	WRITE_ASCII 0x22 ~H5~ #2
+	WRITE_LONG 0x60 1
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -132,7 +135,7 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
 			parameter2 = 53
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -141,7 +144,7 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
 			parameter2 = 52
 			timing = 2
 			probability1 = 100
-	END
+		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -150,13 +153,23 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
 			parameter2 = 48
 			timing = 2
 			probability1 = 100
-	END
+		END
+
+CREATE ITM "ja#m15a3"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x1c 10
+	WRITE_LONG 0x60 1
+	LPF fireballSpell_immunity END
+	LPF lightningBoltSpell_immunity END
+	LPF flameArrowSpell_immunity END
+	LPF magicMissile_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	HELMHO
 	GLOWTEST
 	BATTHO
 	dw#davho
+	DOOMSA
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -167,15 +180,17 @@ BEGIN
 			REMOVE_CRE_ITEM ~SHLD18~
 			REMOVE_CRE_ITEM ~RING95~
 			REMOVE_CRE_ITEM ~BLUN08~
+			REMOVE_CRE_ITEM ~FBLADE~
+			REMOVE_CRE_ITEM ~PLAT07~
+			REMOVE_CRE_ITEM ~HELM13~
 			ADD_CRE_ITEM ~ja#m15w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#m15a1~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
 			ADD_CRE_ITEM ~ja#m15a2~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_CRE_ITEM ~ja#m15a3~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
+			LPF clearProficiencies END
+			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
 			LPF seeInvisible_immunity END
-			LPF fireballSpell_immunity END
-			LPF lightningBoltSpell_immunity END
-			LPF flameArrowSpell_immunity END
-			LPF magicMissile_immunity END
 			LPF patchCreature
 				INT_VAR
 					level1=4
@@ -188,7 +203,7 @@ BEGIN
 					movement=10
 					hp=52
 					ac=2
-					thac0=12
+					thac0=15
 					apr=1
 					xpv=2000
 					alignment=34
@@ -202,7 +217,7 @@ BEGIN
 					moraleRecovery=15
 					general=255
 					race=144
-					class=182
+					class=2
 					gender=4
 					sex=4
 					animation=24832
@@ -217,24 +232,28 @@ BEGIN
 			END
 			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
 			LPF patchCreatureScript STR_VAR script=ja#m15 removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BATTHO~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~dw#davho~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BATTHO~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~dw#davho~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
 				LPF patchCreature
 					INT_VAR
 						level1=8
 						level2=3
 						strength=20
 						hp=84
-						thac0=8
+						thac0=11
 						xpv=4000
+						alignment=19
 						saveDeath=10
 						saveWand=12
 						savePolymorph=11
 						saveBreath=12
 						saveSpell=13
-						class=14
+						class=7
 				END
 				ADD_MEMORIZED_SPELL ~SPWI112~ #0 ~wizard~ (1)
 				ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
+				ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

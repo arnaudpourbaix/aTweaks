@@ -2,7 +2,9 @@
     "tpaFile": "lib/pnp-monster/cat/mountain_lion",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": {
+        "dualWielding": true
+    },
     "data": {
         "level1": 3,
         "bonusHp": 1,

@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/bear/black",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 3,
         "bonusHp": 3,
@@ -27,15 +27,7 @@
         "gender": "NIETHER",
         "size": "Medium"
     },
-    "additionalData": {
-        "removeItems": [
-            "B1-6"
-        ],
-        "removeScripts": [
-            "CBEAR",
-            "BEAR"
-        ]
-    },
+    "additionalData": { "removeItems": [ "B1-6" ], "removeScripts": [ "CBEAR", "BEAR" ]},
     "items": [
         {
             "file": "ja#m4w1",
@@ -46,15 +38,9 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4007,
-                    "probability1": 10
-                },
+                { "opcode": "DisplayString", "stringRef": 4007, "probability1": 10 },
                 {
                     "opcode": "Damage",
                     "damageMode": "Normal",
@@ -75,25 +61,9 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BDBEARBL",
-        "BEARBL",
-        "BEARBLSU",
-        "PLYBEAR2",
-        "RSBEARBL",
-        "UBDBEAR"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "BEARBLSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BDBEARBL", "BEARBL", "BEARBLSU", "PLYBEAR2", "RSBEARBL", "UBDBEAR" ],
+    "adjustments": [{ "files": [ "BEARBLSU" ], "summon": true }]
 }

@@ -25,35 +25,14 @@
         "gender": "MALE",
         "size": "Medium"
     },
-    "additionalData": {
-        "removeItems": [
-            "P1-6"
-        ],
-        "removeScripts": [
-            "PSPIDER"
-        ]
-    },
+    "additionalData": { "removeItems": [ "P1-6" ], "removeScripts": [ "PSPIDER" ]},
     "abilities": [
         {
             "name": "Blink",
-            "target": {
-                "name": "FarthestEnemies",
-                "random": true
-            },
+            "target": { "name": "FarthestEnemies", "random": true },
             "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m14",
-                        "LastSeenBy"
-                    ]
-                },
-                {
-                    "name": "AttackOneRound",
-                    "params": [
-                        "LastSeenBy"
-                    ]
-                }
+                { "name": "ForceSpellRES", "params": [ "ja#1m14", "LastSeenBy" ]},
+                { "name": "AttackOneRound", "params": [ "LastSeenBy" ]}
             ],
             "range": 30
         }
@@ -68,9 +47,7 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
     "spells": [
@@ -82,11 +59,7 @@
             "type": "Melee",
             "range": 30,
             "effects": [
-                {
-                    "opcode": "Teleport",
-                    "type": "Default",
-                    "target": "Self"
-                },
+                { "opcode": "Teleport", "type": "Default", "target": "Self" },
                 {
                     "opcode": "Thac0Bonus",
                     "timing": "InstantLimited",
@@ -99,7 +72,5 @@
             ]
         }
     ],
-    "files": [
-        "DOGBLINK"
-    ]
+    "files": [ "DOGBLINK" ]
 }

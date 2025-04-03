@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/bear/kaldran",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 12,
         "bonusHp": 8,
@@ -29,24 +29,9 @@
         "size": "Huge"
     },
     "additionalData": {
-        "removeItems": [
-            "KALDW1",
-            "B1-12"
-        ],
-        "removeScripts": [
-            "kaldran",
-            "dw1ranmo"
-        ],
-        "itemSlots": [
-            {
-                "file": "ja#m7w1",
-                "slot": "WEAPON1"
-            },
-            {
-                "file": "ja#m7w2",
-                "slot": "SHIELD"
-            }
-        ]
+        "removeItems": [ "KALDW1", "B1-12" ],
+        "removeScripts": [ "kaldran", "dw1ranmo" ],
+        "itemSlots": [{ "file": "ja#m7w1", "slot": "WEAPON1" }, { "file": "ja#m7w2", "slot": "SHIELD" }]
     },
     "customCode": [
         {
@@ -56,41 +41,12 @@
                 "list": [
                     {
                         "triggers": [
-                            {
-                                "name": "Global",
-                                "params": [
-                                    "Kaldran",
-                                    "GLOBAL",
-                                    0
-                                ]
-                            },
-                            {
-                                "name": "See",
-                                "params": [
-                                    "NearestEnemyOf"
-                                ]
-                            },
-                            {
-                                "name": "See",
-                                "params": [
-                                    "PC"
-                                ]
-                            }
+                            { "name": "Global", "params": [ "Kaldran", "GLOBAL", 0 ]},
+                            { "name": "See", "params": [ "NearestEnemyOf" ]},
+                            { "name": "See", "params": [ "PC" ]}
                         ],
                         "responses": [
-                            {
-                                "weight": 100,
-                                "actions": [
-                                    {
-                                        "name": "SetGlobal",
-                                        "params": [
-                                            "Kaldran",
-                                            "GLOBAL",
-                                            1
-                                        ]
-                                    }
-                                ]
-                            }
+                            { "weight": 100, "actions": [{ "name": "SetGlobal", "params": [ "Kaldran", "GLOBAL", 1 ]}]}
                         ]
                     }
                 ]
@@ -104,10 +60,7 @@
             "description": "Improved stream of frost",
             "triggerRadius": 180,
             "areaOfEffect": 180,
-            "areaProjectileFlags": [
-                "AffectOnlyEnemies",
-                "UseSecondaryProjectile"
-            ],
+            "areaProjectileFlags": [ "AffectOnlyEnemies", "UseSecondaryProjectile" ],
             "coneWidth": 0
         },
         {
@@ -117,41 +70,18 @@
             "type": "AreaOfEffect",
             "triggerRadius": 180,
             "areaOfEffect": 180,
-            "areaProjectileFlags": [
-                "AffectOnlyEnemies"
-            ],
+            "areaProjectileFlags": [ "AffectOnlyEnemies" ],
             "coneWidth": 0
         }
     ],
     "abilities": [
         {
             "name": "Improved stream of frost",
-            "target": {
-                "name": "NearestEnemies",
-                "limit": 3
-            },
+            "target": { "name": "NearestEnemies", "limit": 3 },
             "range": 10,
-            "triggers": [
-                {
-                    "name": "HaveSpellRES",
-                    "params": [
-                        "ja#1m8"
-                    ]
-                }
-            ],
-            "timer": {
-                "name": "StreamOfFrost",
-                "value": 18
-            },
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m8",
-                        "Myself"
-                    ]
-                }
-            ]
+            "triggers": [{ "name": "HaveSpellRES", "params": [ "ja#1m8" ]}],
+            "timer": { "name": "StreamOfFrost", "value": 18 },
+            "actions": [{ "name": "ForceSpellRES", "params": [ "ja#1m8", "Myself" ]}]
         }
     ],
     "spells": [
@@ -175,21 +105,13 @@
                     "type": "Cold",
                     "diceThrown": 6,
                     "diceSize": 4,
-                    "saveTypes": [
-                        "Breath"
-                    ],
-                    "flags": [
-                        "SaveForHalf"
-                    ]
+                    "saveTypes": [ "Breath" ],
+                    "flags": [ "SaveForHalf" ]
                 },
                 {
                     "opcode": "CharacterColorPulse",
                     "timing": "InstantPermanentUntilDeath",
-                    "color": {
-                        "blue": 255,
-                        "green": 213,
-                        "red": 123
-                    },
+                    "color": { "blue": 255, "green": 213, "red": 123 },
                     "location": "ArmorGreyBeltAmulet",
                     "cycleSpeed": 20
                 },
@@ -199,9 +121,7 @@
                     "idsFile": "EA",
                     "idsEntry": "ANYONE",
                     "duration": 60,
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": -2
                 },
                 {
@@ -209,18 +129,14 @@
                     "timing": "InstantLimited",
                     "icon": "Held",
                     "duration": 60,
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": -2
                 },
                 {
                     "opcode": "PlaySound",
                     "timing": "InstantPermanentUntilDeath",
                     "resource": "MISC_04A",
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": -2
                 },
                 {
@@ -228,15 +144,11 @@
                     "timing": "DelayPermanent",
                     "resource": "EFF_E03",
                     "duration": 60,
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": -2
                 }
             ]
         }
     ],
-    "files": [
-        "KALDRAN"
-    ]
+    "files": [ "KALDRAN" ]
 }

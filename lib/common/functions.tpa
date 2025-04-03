@@ -386,18 +386,6 @@ DEFINE_ACTION_FUNCTION magic_missile_shield BEGIN
   END
 END
 
-// Clear BG1 weapon proficiencies
-DEFINE_PATCH_FUNCTION clear_bg1_profs BEGIN
-  READ_ASCII 0 sig (3)
-  PATCH_MATCH "%sig%" WITH
-    ~CRE~ BEGIN
-      PATCH_FOR_EACH ~bg1_prof~ IN ~0x6e~ ~0x6f~ ~0x70~ ~0x71~ ~0x72~ ~0x73~ ~0x74~ ~0x75~ BEGIN
-        WRITE_BYTE %bg1_prof% 0
-      END
-    END
-  DEFAULT END
-END
-
 // Fire Salamander immunities (these apply for the noble variety too, but not for Frost Salamanders)
 DEFINE_PATCH_FUNCTION fire_salamander_immunities BEGIN
   LPF charm_immunity END
@@ -605,6 +593,18 @@ BEGIN
 END
 
 
+// Clear BG1 weapon proficiencies
+DEFINE_PATCH_FUNCTION clear_bg1_profs BEGIN
+  READ_ASCII 0 sig (3)
+  PATCH_MATCH "%sig%" WITH
+    ~CRE~ BEGIN
+      PATCH_FOR_EACH ~bg1_prof~ IN ~0x6e~ ~0x6f~ ~0x70~ ~0x71~ ~0x72~ ~0x73~ ~0x74~ ~0x75~ BEGIN
+        WRITE_BYTE %bg1_prof% 0
+      END
+    END
+  DEFAULT END
+END
+
 DEFINE_PATCH_FUNCTION minimum_proficiency
 INT_VAR
   value = 1
@@ -629,3 +629,26 @@ BEGIN
   END
 END
 
+DEFINE_PATCH_FUNCTION clearProficiencies BEGIN
+  LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
+  READ_ASCII 0 sig (3)
+  PATCH_MATCH "%sig%" WITH
+    ~CRE~ BEGIN
+      PATCH_FOR_EACH ~bg1_prof~ IN ~0x6e~ ~0x6f~ ~0x70~ ~0x71~ ~0x72~ ~0x73~ ~0x74~ ~0x75~ BEGIN
+        WRITE_BYTE %bg1_prof% 0
+      END
+    END
+  DEFAULT END
+END
+
+DEFINE_PATCH_FUNCTION setProficiencies
+STR_VAR
+  proficiencies=""           // Associative array
+BEGIN
+  LPF clear_bg1_profs END
+  LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
+  PATCH_PHP_EACH proficiencies AS parameter2 => parameter1 BEGIN
+    //  Proficiency Modifier
+    LPF ADD_CRE_EFFECT INT_VAR opcode=233 target=1 timing=9 parameter1 parameter2 END
+  END
+END

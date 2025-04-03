@@ -1,0 +1,187 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/doom_guard/ja#m16.baf~
+
+CREATE ITM "ja#m16w1"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
+	WRITE_SHORT 0x1c 20
+	WRITE_ASCII 0x22 ~S1~ #2
+	WRITE_BYTE 0x31 90
+	WRITE_LONG 0x60 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 5
+	WRITE_BYTE 0x88 8
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 50
+	WRITE_SHORT 0xa0 50
+	WRITE_SHORT 0xa2 0
+	WRITE_LONG 0x98 1
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 27
+			parameter2 = 21
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 94
+			parameter2 = 20
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 6
+			parameter2 = 16
+			timing = 2
+			probability1 = 100
+		END
+
+CREATE ITM "ja#m16a1"
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x1c 2
+	WRITE_ASCII 0x22 ~4A~ #2
+	WRITE_LONG 0x60 1
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 98
+			parameter2 = 5
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 29
+			parameter2 = 4
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 87
+			parameter2 = 0
+			timing = 2
+			probability1 = 100
+		END
+
+COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m16a2.ITM~
+	WRITE_SHORT 0x1c 7
+	WRITE_ASCII 0x22 ~H5~ #2
+	WRITE_LONG 0x60 1
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 27
+			parameter2 = 53
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 27
+			parameter2 = 52
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 7
+			target = 1
+			parameter1 = 27
+			parameter2 = 48
+			timing = 2
+			probability1 = 100
+		END
+
+ACTION_FOR_EACH ~file~ IN
+	DOOMGU
+	DOOMDUR
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~HELM13~
+			REMOVE_CRE_ITEM ~PLAT07~
+			REMOVE_CRE_ITEM ~SW1H11~
+			REMOVE_CRE_ITEM ~RING95~
+			ADD_CRE_ITEM ~ja#m16w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#m16a1~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
+			ADD_CRE_ITEM ~ja#m16a2~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			LPF clearProficiencies END
+			SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
+			LPF patchCreature
+				INT_VAR
+					level1=5
+					strength=20
+					dexterity=10
+					constitution=9
+					intelligence=7
+					wisdom=11
+					charisma=1
+					movement=10
+					hp=60
+					ac=2
+					resistFire=50
+					resistCold=50
+					thac0=15
+					apr=1
+					xpv=2000
+					alignment=34
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					morale=20
+					moraleBreak=4
+					moraleRecovery=15
+					general=255
+					race=144
+					class=2
+					gender=4
+					sex=4
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
+			LPF patchCreatureScript STR_VAR script=ja#m16 removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMDUR~) BEGIN 
+				LPF patchCreature
+					INT_VAR
+						level1=8
+						hp=84
+						thac0=13
+						saveDeath=10
+						saveWand=12
+						savePolymorph=11
+						saveBreath=12
+						saveSpell=13
+				END
+				SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

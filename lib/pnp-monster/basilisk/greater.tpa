@@ -37,7 +37,7 @@ CREATE SPL "ja#1m3"
 			probability1 = 100
 			savingthrow = 4
 			savebonus = "2"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 174
@@ -50,7 +50,7 @@ CREATE SPL "ja#1m3"
 			savebonus = "2"
 		STR_VAR
 			resource = "EFF_P88"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 215
@@ -63,7 +63,7 @@ CREATE SPL "ja#1m3"
 			savebonus = "2"
 		STR_VAR
 			resource = "SPFINGER"
-	END
+		END
 
 CREATE ITM "ja#m3w1"
 	WRITE_LONG 0x64 0x72
@@ -93,7 +93,7 @@ CREATE ITM "ja#m3w1"
 			probability1 = 100
 			savingthrow = 4
 			savebonus = "4"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 142
@@ -104,7 +104,7 @@ CREATE ITM "ja#m3w1"
 			probability1 = 100
 			savingthrow = 4
 			savebonus = "4"
-	END
+		END
 
 CREATE ITM "ja#m3w2"
 	WRITE_LONG 0x64 0x72
@@ -133,7 +133,7 @@ CREATE ITM "ja#m3w2"
 			probability1 = 100
 		STR_VAR
 			resource = "ja#1m3"
-	END
+		END
 
 ACTION_FOR_EACH ~file~ IN
 	AC#BASGR
@@ -157,6 +157,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=10
@@ -170,7 +171,7 @@ BEGIN
 					hp=125
 					ac=2
 					thac0=11
-					apr=2
+					apr=3
 					xpv=7000
 					alignment=34
 					saveDeath=8
@@ -187,7 +188,6 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
-					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILGSU END

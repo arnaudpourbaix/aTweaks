@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/bear/cave",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 6,
         "bonusHp": 6,
@@ -28,16 +28,7 @@
         "gender": "NIETHER",
         "size": "Huge"
     },
-    "additionalData": {
-        "removeItems": [
-            "B1-10",
-            "BEARCASU"
-        ],
-        "removeScripts": [
-            "CBEAR",
-            "BEAR"
-        ]
-    },
+    "additionalData": { "removeItems": [ "B1-10", "BEARCASU" ], "removeScripts": [ "CBEAR", "BEAR" ]},
     "items": [
         {
             "file": "ja#m6w1",
@@ -48,15 +39,9 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4007,
-                    "probability1": 10
-                },
+                { "opcode": "DisplayString", "stringRef": 4007, "probability1": 10 },
                 {
                     "opcode": "Damage",
                     "damageMode": "Normal",
@@ -77,34 +62,12 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BD328OSO",
-        "BDBEARCA",
-        "BEARCA",
-        "BEARCASU",
-        "CAVENE",
-        "URSA"
-    ],
+    "files": [ "BD328OSO", "BDBEARCA", "BEARCA", "BEARCASU", "CAVENE", "URSA" ],
     "adjustments": [
-        {
-            "files": [
-                "BEARCASU"
-            ],
-            "summon": true
-        },
-        {
-            "files": [
-                "BDBEARCA"
-            ],
-            "additionalData": {
-                "removeMemorizedSpells": false,
-                "scriptLocation": "General"
-            }
-        }
+        { "files": [ "BEARCASU" ], "summon": true },
+        { "files": [ "BDBEARCA" ], "additionalData": { "removeMemorizedSpells": false, "scriptLocation": "General" }}
     ]
 }

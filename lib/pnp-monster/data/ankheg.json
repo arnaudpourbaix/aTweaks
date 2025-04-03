@@ -25,52 +25,19 @@
         "gender": "NIETHER",
         "size": "Huge"
     },
-    "additionalData": {
-        "removeScripts": [
-            "ANKHEG"
-        ],
-        "removeItems": [
-            "ANKHEG1",
-            "ANKHEG2"
-        ]
-    },
+    "additionalData": { "removeScripts": [ "ANKHEG" ], "removeItems": [ "ANKHEG1", "ANKHEG2" ]},
     "abilities": [
         {
             "name": "Acidic Enzymes",
             "disableInterrupt": true,
-            "target": {
-                "name": "PCsPreferringWeak",
-                "random": true
-            },
+            "target": { "name": "PCsPreferringWeak", "random": true },
             "triggers": [
-                {
-                    "name": "HPPercentLT",
-                    "params": [
-                        "Myself",
-                        50
-                    ]
-                },
-                {
-                    "name": "HaveSpellRES",
-                    "params": [
-                        "ja#2m1"
-                    ]
-                }
+                { "name": "HPPercentLT", "params": [ "Myself", 50 ]},
+                { "name": "HaveSpellRES", "params": [ "ja#2m1" ]}
             ],
             "actions": [
-                {
-                    "name": "SelectWeaponAbility",
-                    "params": [
-                        "SLOT_WEAPON1",
-                        "0"
-                    ]
-                },
-                {
-                    "name": "AttackOneRound",
-                    "params": [
-                        "LastSeenBy"
-                    ]
-                }
+                { "name": "SelectWeaponAbility", "params": [ "SLOT_WEAPON1", "0" ]},
+                { "name": "AttackOneRound", "params": [ "LastSeenBy" ]}
             ],
             "range": 30
         }
@@ -84,16 +51,8 @@
             "diceSize": 6,
             "damageType": "Crushing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
-            "effects": [
-                {
-                    "opcode": "CastSpell",
-                    "resource": "ja#1m1",
-                    "type": "CastInstantlyAtCasterLevel"
-                }
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ],
+            "effects": [{ "opcode": "CastSpell", "resource": "ja#1m1", "type": "CastInstantlyAtCasterLevel" }]
         },
         {
             "file": "ja#m1w2",
@@ -104,31 +63,14 @@
             "bonusToHit": 20,
             "projectile": "acidblob",
             "effects": [
-                {
-                    "opcode": "CastSpell",
-                    "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#2m1"
-                },
-                {
-                    "opcode": "RemoveSpell",
-                    "target": "Self",
-                    "resource": "ja#2m1"
-                }
+                { "opcode": "CastSpell", "type": "CastInstantlyAtCasterLevel", "resource": "ja#2m1" },
+                { "opcode": "RemoveSpell", "target": "Self", "resource": "ja#2m1" }
             ]
         }
     ],
-    "attacks": [
-        {
-            "weaponSlot": "SLOT_WEAPON",
-            "disableInterrupt": true
-        }
-    ],
-    "grab": {
-        "file": "ja#3m1",
-        "probability": 100,
-        "saveBonus": -4,
-        "weaponFile": "ja#m1w1",
-        "duration": 18
+    "attack": {
+        "actions": [{ "weaponSlot": "SLOT_WEAPON", "disableInterrupt": true }],
+        "grab": { "file": "ja#3m1", "probability": 100, "saveBonus": -4, "weaponFile": "ja#m1w1", "duration": 18 }
     },
     "spells": [
         {
@@ -141,23 +83,9 @@
             "type": "Melee",
             "range": 5,
             "effects": [
-                {
-                    "opcode": "ProtectionFromSpell",
-                    "resource": "ja#1m1",
-                    "duration": 24,
-                    "timing": "InstantLimited"
-                },
-                {
-                    "opcode": "DisplayPortraitIcon",
-                    "icon": "Acid",
-                    "duration": 24
-                },
-                {
-                    "opcode": "Damage",
-                    "type": "Acid",
-                    "diceThrown": 1,
-                    "diceSize": 4
-                },
+                { "opcode": "ProtectionFromSpell", "resource": "ja#1m1", "duration": 24, "timing": "InstantLimited" },
+                { "opcode": "DisplayPortraitIcon", "icon": "Acid", "duration": 24 },
+                { "opcode": "Damage", "type": "Acid", "diceThrown": 1, "diceSize": 4 },
                 {
                     "opcode": "Damage",
                     "timing": "DelayPermanent",
@@ -201,12 +129,8 @@
                     "type": "Acid",
                     "diceThrown": 8,
                     "diceSize": 4,
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
-                    "flags": [
-                        "SaveForHalf"
-                    ]
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
+                    "flags": [ "SaveForHalf" ]
                 }
             ]
         }
@@ -225,20 +149,7 @@
         "wiankhe1"
     ],
     "adjustments": [
-        {
-            "files": [
-                "bdankh01"
-            ],
-            "data": {
-                "level1": 10,
-                "xpv": 1400
-            }
-        },
-        {
-            "files": [
-                "bdankhsu"
-            ],
-            "summon": true
-        }
+        { "files": [ "bdankh01" ], "data": { "level1": 10, "xpv": 1400 }},
+        { "files": [ "bdankhsu" ], "summon": true }
     ]
 }

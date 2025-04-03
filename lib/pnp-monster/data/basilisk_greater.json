@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/basilisk/greater",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 10,
         "strength": 20,
@@ -27,24 +27,9 @@
         "size": "Large"
     },
     "additionalData": {
-        "removeScripts": [
-            "GBASILSK"
-        ],
-        "removeItems": [
-            "BASILG1",
-            "BASILG2",
-            "BASILG3"
-        ],
-        "memorizedSpells": [
-            {
-                "file": "ja#1m2",
-                "memorizedCount": 1
-            },
-            {
-                "file": "ja#2m2",
-                "memorizedCount": 1
-            }
-        ]
+        "removeScripts": [ "GBASILSK" ],
+        "removeItems": [ "BASILG1", "BASILG2", "BASILG3" ],
+        "memorizedSpells": [{ "file": "ja#1m2", "memorizedCount": 1 }, { "file": "ja#2m2", "memorizedCount": 1 }]
     },
     "abilities": [
         {
@@ -53,34 +38,11 @@
                 "name": "NearestEnemies",
                 "random": true,
                 "triggers": [
-                    {
-                        "name": "CheckStatGT",
-                        "params": [
-                            "{Target}",
-                            "0",
-                            "HELD"
-                        ],
-                        "negation": true
-                    },
-                    {
-                        "name": "StateCheck",
-                        "params": [
-                            "{Target}",
-                            "STATE_SLOWED"
-                        ],
-                        "negation": true
-                    }
+                    { "name": "CheckStatGT", "params": [ "{Target}", "0", "HELD" ], "negation": true },
+                    { "name": "StateCheck", "params": [ "{Target}", "STATE_SLOWED" ], "negation": true }
                 ]
             },
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "ja#1m2",
-                        "LastSeenBy"
-                    ]
-                }
-            ],
+            "actions": [{ "name": "ForceSpellRES", "params": [ "ja#1m2", "LastSeenBy" ]}],
             "range": 30
         }
     ],
@@ -94,26 +56,20 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
                 {
                     "opcode": "Poison",
                     "type": "OneDamagePerAmountSecond",
                     "amount": 6,
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": 4,
                     "duration": 30
                 },
                 {
                     "opcode": "DisplayPortraitIcon",
                     "icon": "Poisoned",
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": 4,
                     "duration": 30
                 }
@@ -128,16 +84,8 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
-            "effects": [
-                {
-                    "opcode": "CastSpell",
-                    "type": "CastInstantlyAtCasterLevel",
-                    "resource": "ja#1m3"
-                }
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ],
+            "effects": [{ "opcode": "CastSpell", "type": "CastInstantlyAtCasterLevel", "resource": "ja#1m3" }]
         }
     ],
     "projectiles": [
@@ -148,9 +96,7 @@
             "triggerRadius": 85,
             "areaOfEffect": 85,
             "triggerCount": 0,
-            "areaProjectileFlags": [
-                "AffectOnlyEnemies"
-            ]
+            "areaProjectileFlags": [ "AffectOnlyEnemies" ]
         }
     ],
     "spells": [
@@ -171,18 +117,14 @@
                     "idsFile": "EA",
                     "idsEntry": "ANYONE",
                     "timing": "InstantPermanentUntilDeath",
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": 2
                 },
                 {
                     "opcode": "PlaySound",
                     "resource": "EFF_P88",
                     "timing": "InstantPermanentUntilDeath",
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": 2
                 },
                 {
@@ -190,29 +132,12 @@
                     "playWhere": "OverTargetUnattached",
                     "resource": "SPFINGER",
                     "timing": "InstantPermanentUntilDeath",
-                    "saveTypes": [
-                        "ParalyzePoisonDeath"
-                    ],
+                    "saveTypes": [ "ParalyzePoisonDeath" ],
                     "saveBonus": 2
                 }
             ]
         }
     ],
-    "files": [
-        "AC#BASGR",
-        "BASILG",
-        "BASILGSU",
-        "BASILMUT",
-        "BASILNAD",
-        "BD302BAS",
-        "BPBASG01"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "BASILGSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "AC#BASGR", "BASILG", "BASILGSU", "BASILMUT", "BASILNAD", "BD302BAS", "BPBASG01" ],
+    "adjustments": [{ "files": [ "BASILGSU" ], "summon": true }]
 }

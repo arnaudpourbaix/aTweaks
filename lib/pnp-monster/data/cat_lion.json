@@ -2,7 +2,7 @@
     "tpaFile": "lib/pnp-monster/cat/lion",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 5,
         "bonusHp": 2,
@@ -26,11 +26,7 @@
         "gender": "NIETHER",
         "size": "Medium"
     },
-    "additionalData": {
-        "removeItems": [
-            "CATLIO"
-        ]
-    },
+    "additionalData": { "removeItems": [ "CATLIO" ]},
     "items": [
         {
             "file": "ja#m10w1",
@@ -41,15 +37,9 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4009,
-                    "probability1": 10
-                },
+                { "opcode": "DisplayString", "stringRef": 4009, "probability1": 10 },
                 {
                     "opcode": "Damage",
                     "damageMode": "Normal",
@@ -79,21 +69,9 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BDHELP02",
-        "CATLIOSU"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "CATLIOSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BDHELP02", "CATLIOSU" ],
+    "adjustments": [{ "files": [ "CATLIOSU" ], "summon": true }]
 }

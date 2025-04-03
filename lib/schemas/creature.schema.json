@@ -11,12 +11,6 @@
                 "tpaFile": {
                     "type": "string"
                 },
-                "targetPriorities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/TargetStatusEnum"
-                    }
-                },
                 "help": {
                     "type": "boolean"
                 },
@@ -32,70 +26,11 @@
                 "restHeal": {
                     "type": "boolean"
                 },
-                "meleeAttack": {
-                    "type": "boolean"
-                },
-                "rangedAttack": {
-                    "type": "boolean"
-                },
                 "hideInShadows": {
                     "type": "boolean"
                 },
-                "attacks": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RawCreatureAttack"
-                    }
-                },
-                "dualWielding": {
-                    "type": "boolean"
-                },
-                "grab": {
-                    "type": "object",
-                    "properties": {
-                        "file": {
-                            "type": "string"
-                        },
-                        "weaponFile": {
-                            "type": "string"
-                        },
-                        "probability": {
-                            "type": "number"
-                        },
-                        "saveTypes": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/RawSaveTypeEnum"
-                            }
-                        },
-                        "saveBonus": {
-                            "type": "number"
-                        },
-                        "duration": {
-                            "type": "number"
-                        },
-                        "damagePerRound": {
-                            "type": "object",
-                            "properties": {
-                                "diceThrown": {
-                                    "type": "number"
-                                },
-                                "diceSize": {
-                                    "type": "number"
-                                },
-                                "type": {
-                                    "$ref": "#/definitions/EffectDamageTypeEnum"
-                                }
-                            },
-                            "required": [
-                                "diceThrown",
-                                "diceSize",
-                                "type"
-                            ],
-                            "additionalProperties": false
-                        }
-                    },
-                    "additionalProperties": false
+                "attack": {
+                    "$ref": "#/definitions/RawCreatureAttack"
                 },
                 "initActions": {
                     "type": "array",
@@ -151,12 +86,6 @@
                         "$ref": "#/definitions/RawProjectile"
                     }
                 },
-                "immunities": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ImmunityName"
-                    }
-                },
                 "autoGenerate": {
                     "$ref": "#/definitions/RawCreatureAutoGenerate"
                 }
@@ -167,6 +96,80 @@
                 "additionalData",
                 "files"
             ],
+            "additionalProperties": false
+        },
+        "RawCreatureAttack": {
+            "type": "object",
+            "properties": {
+                "melee": {
+                    "type": "boolean"
+                },
+                "ranged": {
+                    "type": "boolean"
+                },
+                "targetPriorities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TargetStatusEnum"
+                    }
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawCreatureAttackAction"
+                    }
+                },
+                "dualWielding": {
+                    "type": "boolean"
+                },
+                "grab": {
+                    "type": "object",
+                    "properties": {
+                        "file": {
+                            "type": "string"
+                        },
+                        "weaponFile": {
+                            "type": "string"
+                        },
+                        "probability": {
+                            "type": "number"
+                        },
+                        "saveTypes": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/RawSaveTypeEnum"
+                            }
+                        },
+                        "saveBonus": {
+                            "type": "number"
+                        },
+                        "duration": {
+                            "type": "number"
+                        },
+                        "damagePerRound": {
+                            "type": "object",
+                            "properties": {
+                                "diceThrown": {
+                                    "type": "number"
+                                },
+                                "diceSize": {
+                                    "type": "number"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/EffectDamageTypeEnum"
+                                }
+                            },
+                            "required": [
+                                "diceThrown",
+                                "diceSize",
+                                "type"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
             "additionalProperties": false
         },
         "TargetStatusEnum": {
@@ -182,7 +185,7 @@
                 "NoCheck"
             ]
         },
-        "RawCreatureAttack": {
+        "RawCreatureAttackAction": {
             "type": "object",
             "properties": {
                 "responseWeight": {
@@ -1835,6 +1838,25 @@
                 "scriptLocation": {
                     "$ref": "#/definitions/RawScriptLocationEnum"
                 },
+                "proficiencies": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "$ref": "#/definitions/RawProficiencyTypeEnum"
+                            },
+                            "value": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "value"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
                 "removeItems": {
                     "type": "array",
                     "items": {
@@ -1845,6 +1867,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/RawItemSlot"
+                    }
+                },
+                "immunities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ImmunityName"
                     }
                 },
                 "removeKnownSpells": {
@@ -1870,6 +1898,36 @@
                 "Race",
                 "General",
                 "Default"
+            ]
+        },
+        "RawProficiencyTypeEnum": {
+            "type": "string",
+            "enum": [
+                "PROFICIENCYBASTARDSWORD",
+                "PROFICIENCYLONGSWORD",
+                "PROFICIENCYSHORTSWORD",
+                "PROFICIENCYAXE",
+                "PROFICIENCYTWOHANDEDSWORD",
+                "PROFICIENCYKATANA",
+                "PROFICIENCYSCIMITARWAKISASHININJATO",
+                "PROFICIENCYDAGGER",
+                "PROFICIENCYWARHAMMER",
+                "PROFICIENCYSPEAR",
+                "PROFICIENCYHALBERD",
+                "PROFICIENCYFLAILMORNINGSTAR",
+                "PROFICIENCYMACE",
+                "PROFICIENCYQUARTERSTAFF",
+                "PROFICIENCYCROSSBOW",
+                "PROFICIENCYLONGBOW",
+                "PROFICIENCYSHORTBOW",
+                "PROFICIENCYDART",
+                "PROFICIENCYSLING",
+                "PROFICIENCYBLACKJACK",
+                "PROFICIENCY2HANDED",
+                "PROFICIENCYSWORDANDSHIELD",
+                "PROFICIENCYSINGLEWEAPON",
+                "PROFICIENCY2WEAPON",
+                "PROFICIENCYCLUB"
             ]
         },
         "RawItemSlot": {
@@ -1912,6 +1970,65 @@
                 "QITEM1",
                 "QITEM2",
                 "QITEM3"
+            ]
+        },
+        "ImmunityName": {
+            "type": "string",
+            "enum": [
+                "abilityDrain",
+                "acidSpells",
+                "backstab",
+                "bleeding",
+                "blindness",
+                "charm",
+                "cloudSpells",
+                "cold",
+                "coldSpells",
+                "confusion",
+                "criticalHit",
+                "cureSpells",
+                "deathEffects",
+                "deathSpell",
+                "devourBrain",
+                "disease",
+                "electricalSpells",
+                "energyDrain",
+                "earthquake",
+                "entangle",
+                "fatigue",
+                "fear",
+                "fireSpells",
+                "fireballSpell",
+                "flameArrowSpell",
+                "hold",
+                "hover",
+                "incorporeal",
+                "illusion",
+                "insectSpells",
+                "lightningBoltSpell",
+                "missileWeapons",
+                "magicMissile",
+                "mindSpells",
+                "necromancyEffects",
+                "petrification",
+                "polymorph",
+                "poison",
+                "poisonSpells",
+                "stun",
+                "sleep",
+                "unturnable",
+                "vorpal",
+                "web",
+                "airAffinity",
+                "construct",
+                "earthAffinity",
+                "elemental",
+                "extraplanar",
+                "infravision",
+                "plant",
+                "seeInvisible",
+                "skeletal",
+                "undead"
             ]
         },
         "RawMemorizedSpell": {
@@ -2036,6 +2153,12 @@
                         }
                     ]
                 },
+                "immunities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ImmunityName"
+                    }
+                },
                 "equippedSlot": {
                     "$ref": "#/definitions/ItemSlotEnum"
                 },
@@ -2047,6 +2170,12 @@
                 },
                 "category": {
                     "$ref": "#/definitions/RawItemCategoryEnum"
+                },
+                "proficiency": {
+                    "$ref": "#/definitions/RawProficiencyTypeEnum"
+                },
+                "icon": {
+                    "type": "string"
                 },
                 "animationSwing": {
                     "type": "object",
@@ -2125,64 +2254,6 @@
                 "copyFrom"
             ],
             "additionalProperties": false
-        },
-        "ImmunityName": {
-            "type": "string",
-            "enum": [
-                "abilityDrain",
-                "acidSpells",
-                "backstab",
-                "bleeding",
-                "blindness",
-                "charm",
-                "cloudSpells",
-                "cold",
-                "coldSpells",
-                "confusion",
-                "criticalHit",
-                "cureSpells",
-                "deathEffects",
-                "deathSpell",
-                "devourBrain",
-                "disease",
-                "electricalSpells",
-                "energyDrain",
-                "earthquake",
-                "entangle",
-                "fatigue",
-                "fear",
-                "fireSpells",
-                "fireballSpell",
-                "flameArrowSpell",
-                "hold",
-                "hover",
-                "illusion",
-                "insectSpells",
-                "lightningBoltSpell",
-                "missileWeapons",
-                "magicMissile",
-                "mindSpells",
-                "necromancyEffects",
-                "petrification",
-                "polymorph",
-                "poison",
-                "poisonSpells",
-                "stun",
-                "sleep",
-                "unturnable",
-                "vorpal",
-                "web",
-                "airAffinity",
-                "construct",
-                "earthAffinity",
-                "elemental",
-                "extraplanar",
-                "infravision",
-                "plant",
-                "seeInvisible",
-                "skeletal",
-                "undead"
-            ]
         },
         "RawItemAnimationEnum": {
             "type": "string",
@@ -2400,7 +2471,7 @@
                     "$ref": "#/definitions/CastSpellEffect"
                 },
                 {
-                    "$ref": "#/definitions/CharacterColorPulseEffect"
+                    "$ref": "#/definitions/ColorPulseEffect"
                 },
                 {
                     "$ref": "#/definitions/CharmCreatureEffect"
@@ -2448,6 +2519,9 @@
                     "$ref": "#/definitions/PolymorphIntoSpecificEffect"
                 },
                 {
+                    "$ref": "#/definitions/ProficiencyModifierEffect"
+                },
+                {
                     "$ref": "#/definitions/ProtectionFromOpcodeEffect"
                 },
                 {
@@ -2457,13 +2531,16 @@
                     "$ref": "#/definitions/ProtectionFromResourceEffect"
                 },
                 {
+                    "$ref": "#/definitions/ProtectionFromWeaponsEffect"
+                },
+                {
                     "$ref": "#/definitions/ScriptingStateModifierEffect"
                 },
                 {
                     "$ref": "#/definitions/SetColorEffect"
                 },
                 {
-                    "$ref": "#/definitions/SetColorGlowSolidEffect"
+                    "$ref": "#/definitions/SetColorGlowEffect"
                 },
                 {
                     "$ref": "#/definitions/SetExtendedSpellStateEffect"
@@ -2481,6 +2558,9 @@
                     "$ref": "#/definitions/TeleportEffect"
                 },
                 {
+                    "$ref": "#/definitions/TranslucencyEffect"
+                },
+                {
                     "$ref": "#/definitions/RestrainedEffect"
                 }
             ]
@@ -2494,6 +2574,7 @@
                     "enum": [
                         "Blindness",
                         "Confusion",
+                        "Blur",
                         "DeathKill60HP",
                         "ImmunityToTurnUndead",
                         "Infravision",
@@ -2563,6 +2644,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -2689,6 +2773,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -2769,6 +2856,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -2847,6 +2937,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -2862,13 +2955,16 @@
                 "CastInstantlyAtSpecifiedLevel"
             ]
         },
-        "CharacterColorPulseEffect": {
+        "ColorPulseEffect": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "opcode": {
                     "type": "string",
-                    "const": "CharacterColorPulse"
+                    "enum": [
+                        "CharacterColorPulse",
+                        "SetColorGlowPulse"
+                    ]
                 },
                 "color": {
                     "type": "object",
@@ -2946,6 +3042,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3056,6 +3155,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3162,6 +3264,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3237,6 +3342,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3338,6 +3446,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3427,6 +3538,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3506,6 +3620,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3774,6 +3891,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3859,6 +3979,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -3944,6 +4067,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4015,6 +4141,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4136,6 +4265,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4214,6 +4346,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4294,6 +4429,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4372,6 +4510,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4440,9 +4581,87 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
+                "opcode",
+                "type"
+            ]
+        },
+        "ProficiencyModifierEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "ProficiencyModifier"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawProficiencyTypeEnum"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "amount",
                 "opcode",
                 "type"
             ]
@@ -4508,6 +4727,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4518,9 +4740,11 @@
         "RawEffectTypeEnum": {
             "type": "string",
             "enum": [
+                "AcidResistanceModifier",
                 "ArmorClassBonus",
                 "Berserk",
                 "Blindness",
+                "Blur",
                 "CastSpell",
                 "CharacterColorPulse",
                 "CharmCreature",
@@ -4537,6 +4761,7 @@
                 "Disease",
                 "DisplayPortraitIcon",
                 "DisplayString",
+                "ElectricityResistanceModifier",
                 "FatigueBonus",
                 "FireResistanceModifier",
                 "Haste",
@@ -4550,6 +4775,7 @@
                 "LightingEffects",
                 "MagicalColdResistanceModifier",
                 "MagicalFireResistanceModifier",
+                "MagicDamageResistanceModifier",
                 "MaximumHPModifier",
                 "MissilesResistanceModifier",
                 "ModifyCollisionBehavior",
@@ -4568,14 +4794,16 @@
                 "PoisonResistanceModifier",
                 "PolymorphIntoSpecific",
                 "PreventPortraitIcon",
+                "ProficiencyModifier",
                 "ProtectionFromAnimation",
                 "ProtectionFromBackstab",
+                "ProtectionFromDisplaySpecificString",
                 "ProtectionFromOpcode",
                 "ProtectionFromProjectile",
                 "ProtectionFromSpell",
-                "ProtectionFromDisplaySpecificString",
                 "ProtectionFromResource",
                 "ProtectionFromResourceAndMessage",
+                "ProtectionFromWeapons",
                 "RemoveSpecificAreaEffect",
                 "RemoveSpell",
                 "SaveVsDeathModifier",
@@ -4586,6 +4814,7 @@
                 "ScriptingStateModifier",
                 "SetColor",
                 "SetColorGlowSolid",
+                "SetColorGlowPulse",
                 "SetExtendedSpellState",
                 "SlashingResistanceModifier",
                 "Slay",
@@ -4598,6 +4827,7 @@
                 "Thac0VsCreatureTypeModifier",
                 "Teleport",
                 "Thac0Bonus",
+                "Translucency",
                 "UseEFFFile",
                 "Web"
             ]
@@ -4663,6 +4893,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4737,12 +4970,107 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
                 "opcode",
                 "type",
                 "value"
+            ]
+        },
+        "ProtectionFromWeaponsEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "ProtectionFromWeapons"
+                },
+                "enchantment": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawProtectionFromWeaponsTypeEnum"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "enchantment",
+                "opcode",
+                "type"
+            ]
+        },
+        "RawProtectionFromWeaponsTypeEnum": {
+            "type": "string",
+            "enum": [
+                "Enchanted",
+                "Magical",
+                "NonMagical",
+                "Silver",
+                "NonSilver",
+                "NonSilverNonMagical",
+                "TwoHanded",
+                "OneHanded",
+                "Cursed",
+                "NonCursed",
+                "ColdIron",
+                "NonColdIron"
             ]
         },
         "ScriptingStateModifierEffect": {
@@ -4809,6 +5137,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -4944,6 +5275,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5083,7 +5417,7 @@
                 "DarkNavyBlue"
             ]
         },
-        "SetColorGlowSolidEffect": {
+        "SetColorGlowEffect": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -5164,6 +5498,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5240,6 +5577,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5504,6 +5844,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5530,6 +5873,9 @@
                         "ColdResistanceModifier",
                         "MagicalColdResistanceModifier",
                         "MagicalFireResistanceModifier",
+                        "AcidResistanceModifier",
+                        "ElectricityResistanceModifier",
+                        "MagicDamageResistanceModifier",
                         "MaximumHPModifier",
                         "MoraleModifier",
                         "MoraleBreakModifier",
@@ -5597,6 +5943,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5679,6 +6028,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5746,6 +6098,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5760,6 +6115,89 @@
                 "SourceToTarget",
                 "ReturnToSavedLocation",
                 "ExchangedSourceAndTarget"
+            ]
+        },
+        "TranslucencyEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "Translucency"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawTranslucencyTypeEnum"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "amount",
+                "opcode",
+                "type"
+            ]
+        },
+        "RawTranslucencyTypeEnum": {
+            "type": "string",
+            "enum": [
+                "DrawInstantly",
+                "FadeIn",
+                "FadeOut"
             ]
         },
         "RestrainedEffect": {
@@ -5820,6 +6258,9 @@
                 },
                 "global": {
                     "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -5832,6 +6273,12 @@
                 "file": {
                     "type": "string"
                 },
+                "immunities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ImmunityName"
+                    }
+                },
                 "equippedSlot": {
                     "$ref": "#/definitions/ItemSlotEnum"
                 },
@@ -5843,6 +6290,12 @@
                 },
                 "category": {
                     "$ref": "#/definitions/RawItemCategoryEnum"
+                },
+                "proficiency": {
+                    "$ref": "#/definitions/RawProficiencyTypeEnum"
+                },
+                "icon": {
+                    "type": "string"
                 },
                 "animationSwing": {
                     "type": "object",

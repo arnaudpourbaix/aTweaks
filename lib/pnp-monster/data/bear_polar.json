@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/bear/polar",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 8,
         "bonusHp": 8,
@@ -28,16 +28,7 @@
         "gender": "NIETHER",
         "size": "Huge"
     },
-    "additionalData": {
-        "removeItems": [
-            "B1-12",
-            "BEARPOSU"
-        ],
-        "removeScripts": [
-            "CBEAR",
-            "BEAR"
-        ]
-    },
+    "additionalData": { "removeItems": [ "B1-12", "BEARPOSU" ], "removeScripts": [ "CBEAR", "BEAR" ]},
     "items": [
         {
             "file": "ja#m7w1",
@@ -48,15 +39,9 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4007,
-                    "probability1": 10
-                },
+                { "opcode": "DisplayString", "stringRef": 4007, "probability1": 10 },
                 {
                     "opcode": "Damage",
                     "damageMode": "Normal",
@@ -77,25 +62,9 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BEARPO",
-        "BEARPO1",
-        "BEARPO2",
-        "BEARPO3",
-        "BEARPOSU",
-        "NTBEARPO"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "BEARPOSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BEARPO", "BEARPO1", "BEARPO2", "BEARPO3", "BEARPOSU", "NTBEARPO" ],
+    "adjustments": [{ "files": [ "BEARPOSU" ], "summon": true }]
 }

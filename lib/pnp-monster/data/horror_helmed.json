@@ -6,6 +6,7 @@
     "restHeal": true,
     "data": {
         "level1": 4,
+        "bonusHp": 10,
         "strength": 18,
         "dexterity": 13,
         "constitution": 9,
@@ -14,7 +15,6 @@
         "charisma": 10,
         "movement": 12,
         "ac": 2,
-        "thac0": 12,
         "apr": 1,
         "xpv": 2000,
         "alignment": "NEUTRAL",
@@ -23,7 +23,7 @@
         "moraleRecovery": 15,
         "general": "MONSTER",
         "race": "GOLEM",
-        "class": "GOLEM_IRON",
+        "class": "FIGHTER",
         "gender": "NIETHER",
         "size": "Medium",
         "animation": "FIGHTER_MALE_HUMAN",
@@ -36,64 +36,21 @@
         "leatherColor": 63
     },
     "additionalData": {
-        "removeScripts": [
-            "dw1melmo"
-        ],
-        "removeItems": [
-            "HELM08",
-            "SHLD18",
-            "RING95",
-            "BLUN08"
-        ]
+        "immunities": [ "construct", "hover", "seeInvisible" ],
+        "removeScripts": [ "dw1melmo" ],
+        "removeItems": [ "HELM08", "SHLD18", "RING95", "BLUN08", "FBLADE", "PLAT07", "HELM13" ],
+        "proficiencies": [{ "type": "PROFICIENCYTWOHANDEDSWORD", "value": 2 }]
     },
-    "immunities": [
-        "construct",
-        "hover",
-        "seeInvisible",
-        "fireballSpell",
-        "lightningBoltSpell",
-        "flameArrowSpell",
-        "magicMissile"
-    ],
     "abilities": [
         {
             "name": "Magic Missiles",
-            "target": {
-                "name": "PCSpellcasters",
-                "includeStatus": [
-                    "Able"
-                ],
-                "random": true
-            },
+            "target": { "name": "PCSpellcasters", "includeStatus": [ "Able" ], "random": true },
             "triggers": [
-                {
-                    "name": "HaveSpellRES",
-                    "params": [
-                        "SPWI112"
-                    ]
-                },
-                {
-                    "name": "Range",
-                    "params": [
-                        "NearestEnemyOf",
-                        10
-                    ],
-                    "negation": true
-                }
+                { "name": "HaveSpellRES", "params": [ "SPWI112" ]},
+                { "name": "Range", "params": [ "NearestEnemyOf", 10 ], "negation": true }
             ],
-            "actions": [
-                {
-                    "name": "ForceSpellRES",
-                    "params": [
-                        "SPWI112",
-                        "LastSeenBy"
-                    ]
-                }
-            ],
-            "timer": {
-                "name": "MagicMissiles",
-                "value": 18
-            }
+            "actions": [{ "name": "ForceSpellRES", "params": [ "SPWI112", "LastSeenBy" ]}],
+            "timer": { "name": "MagicMissiles", "value": 18 }
         }
     ],
     "customCode": [
@@ -104,51 +61,17 @@
                 "list": [
                     {
                         "comment": "Dimension Door",
-                        "target": {
-                            "name": "Players",
-                            "triggers": [
-                                {
-                                    "name": "Range",
-                                    "params": [
-                                        "{Target}",
-                                        180
-                                    ]
-                                }
-                            ]
-                        },
+                        "target": { "name": "Players", "triggers": [{ "name": "Range", "params": [ "{Target}", 180 ]}]},
                         "triggers": [
-                            {
-                                "name": "HaveSpellRES",
-                                "params": [
-                                    "SPWI402"
-                                ]
-                            },
-                            {
-                                "name": "StateCheck",
-                                "params": [
-                                    "Myself",
-                                    "STATE_BLIND"
-                                ],
-                                "negation": true
-                            }
+                            { "name": "HaveSpellRES", "params": [ "SPWI402" ]},
+                            { "name": "StateCheck", "params": [ "Myself", "STATE_BLIND" ], "negation": true }
                         ],
                         "responses": [
                             {
                                 "weight": 100,
                                 "actions": [
-                                    {
-                                        "name": "ForceSpellRES",
-                                        "params": [
-                                            "SPWI402",
-                                            "{Target}"
-                                        ]
-                                    },
-                                    {
-                                        "name": "RemoveSpellRES",
-                                        "params": [
-                                            "SPWI402"
-                                        ]
-                                    }
+                                    { "name": "ForceSpellRES", "params": [ "SPWI402", "{Target}" ]},
+                                    { "name": "RemoveSpellRES", "params": [ "SPWI402" ]}
                                 ]
                             }
                         ]
@@ -163,33 +86,19 @@
             "equippedSlot": "WEAPON1",
             "enchantment": 1,
             "type": "Melee",
-            "flags": [
-                "TwoHanded",
-                "Magical",
-                "Displayable"
-            ],
+            "flags": [ "TwoHanded", "Magical" ],
             "animation": "TwoHandedSword",
             "category": "Greatswords",
-            "animationSwing": {
-                "backhand": 40,
-                "overhand": 40,
-                "thrust": 20
-            },
+            "proficiency": "PROFICIENCYTWOHANDEDSWORD",
+            "animationSwing": { "backhand": 40, "overhand": 40, "thrust": 20 },
             "range": 2,
             "diceThrown": 2,
             "diceSize": 6,
             "damageType": "Slashing",
             "speed": 10,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "Damage",
-                    "diceSize": 6,
-                    "diceThrown": 1,
-                    "type": "Fire"
-                },
+                { "opcode": "Damage", "diceSize": 6, "diceThrown": 1, "type": "Fire" },
                 {
                     "global": true,
                     "opcode": "SetColor",
@@ -217,11 +126,7 @@
                 {
                     "global": true,
                     "opcode": "SetColorGlowSolid",
-                    "color": {
-                        "red": 64,
-                        "green": 0,
-                        "blue": 0
-                    },
+                    "color": { "red": 64, "green": 0, "blue": 0 },
                     "location": "WeaponGreyHeadBladeStaffMajor",
                     "target": "Self",
                     "timing": "InstantWhileEquipped",
@@ -230,11 +135,7 @@
                 {
                     "global": true,
                     "opcode": "SetColorGlowSolid",
-                    "color": {
-                        "red": 64,
-                        "green": 0,
-                        "blue": 0
-                    },
+                    "color": { "red": 64, "green": 0, "blue": 0 },
                     "location": "WeaponBlueHeadBladeMinor",
                     "target": "Self",
                     "timing": "InstantWhileEquipped",
@@ -243,11 +144,7 @@
                 {
                     "global": true,
                     "opcode": "SetColorGlowSolid",
-                    "color": {
-                        "red": 0,
-                        "green": 0,
-                        "blue": 0
-                    },
+                    "color": { "red": 0, "green": 0, "blue": 0 },
                     "location": "WeaponRedGripStaffMinor",
                     "target": "Self",
                     "timing": "InstantWhileEquipped",
@@ -319,39 +216,35 @@
                     "timing": "InstantWhileEquipped"
                 }
             ]
+        },
+        {
+            "file": "ja#m15a3",
+            "immunities": [ "fireballSpell", "lightningBoltSpell", "flameArrowSpell", "magicMissile" ],
+            "equippedSlot": "RRING",
+            "category": "Rings"
         }
     ],
-    "files": [
-        "HELMHO",
-        "GLOWTEST",
-        "BATTHO",
-        "dw#davho"
-    ],
+    "files": [ "HELMHO", "GLOWTEST", "BATTHO", "dw#davho", "DOOMSA" ],
     "adjustments": [
         {
-            "files": [
-                "BATTHO",
-                "dw#davho"
-            ],
+            "files": [ "BATTHO", "dw#davho", "DOOMSA" ],
             "data": {
                 "level1": 8,
                 "level2": 3,
+                "bonusHp": 11,
                 "strength": 20,
-                "thac0": 8,
-                "class": "CLERIC_MAGE",
+                "class": "FIGHTER_MAGE",
+                "alignment": "LAWFUL_EVIL",
                 "xpv": 4000
             },
             "additionalData": {
-                "memorizedSpells": [
-                    {
-                        "file": "SPWI112",
-                        "memorizedCount": 1
-                    },
-                    {
-                        "file": "SPWI402",
-                        "memorizedCount": 1
-                    }
-                ]
+                "memorizedSpells": [{ "file": "SPWI112", "memorizedCount": 1 }, { "file": "SPWI402", "memorizedCount": 1 }]
+            }
+        },
+        {
+            "files": [ "DOOMSA" ],
+            "additionalData": {
+                "immunities": ["incorporeal"]
             }
         }
     ]

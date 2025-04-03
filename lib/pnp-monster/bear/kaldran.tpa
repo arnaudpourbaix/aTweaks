@@ -52,7 +52,7 @@ CREATE SPL "ja#1m8"
 			dicesize = 4
 			savingthrow = 2
 			special = 256
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 50
@@ -61,7 +61,7 @@ CREATE SPL "ja#1m8"
 			parameter2 = 1310720
 			timing = 1
 			probability1 = 100
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 109
@@ -72,7 +72,7 @@ CREATE SPL "ja#1m8"
 			probability1 = 100
 			savingthrow = 4
 			savebonus = "-2"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 142
@@ -83,7 +83,7 @@ CREATE SPL "ja#1m8"
 			probability1 = 100
 			savingthrow = 4
 			savebonus = "-2"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 174
@@ -96,7 +96,7 @@ CREATE SPL "ja#1m8"
 			savebonus = "-2"
 		STR_VAR
 			resource = "MISC_04A"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 174
@@ -110,7 +110,7 @@ CREATE SPL "ja#1m8"
 			savebonus = "-2"
 		STR_VAR
 			resource = "EFF_E03"
-	END
+		END
 
 ACTION_FOR_EACH ~file~ IN
 	KALDRAN
@@ -125,6 +125,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#m7w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#m7w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m8~ #0 ~innate~ (1)
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=12
@@ -139,7 +140,7 @@ BEGIN
 					ac=6
 					resistCold=100
 					thac0=7
-					apr=2
+					apr=3
 					alignment=34
 					saveDeath=7
 					saveWand=9
@@ -155,7 +156,6 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
-					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN kaldran dw1ranmo END
 			LPF patchCreatureScript STR_VAR script=ja#m8 removeScripts END

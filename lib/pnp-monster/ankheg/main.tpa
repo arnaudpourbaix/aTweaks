@@ -26,7 +26,7 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 		STR_VAR
 			resource = "ja#1m1"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 142
@@ -35,7 +35,7 @@ CREATE SPL "ja#1m1"
 			parameter2 = 102
 			duration = 24
 			probability1 = 100
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -45,7 +45,7 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 4
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -57,7 +57,7 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 4
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -69,7 +69,7 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 4
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -81,7 +81,7 @@ CREATE SPL "ja#1m1"
 			probability1 = 100
 			dicenumber = 1
 			dicesize = 4
-	END
+		END
 
 CREATE SPL "ja#2m1"
 	WRITE_LONG 0x64 0x72
@@ -111,373 +111,7 @@ CREATE SPL "ja#2m1"
 			dicesize = 4
 			savingthrow = 4
 			special = 256
-	END
-
-CREATE SPL "ja#3m1"
-	WRITE_SHORT 0x1c 4
-	WRITE_LONG 0x34 1
-	WRITE_LONG 0x64 0x72
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 5
-	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x94 1
-	SAY NAME1 @3000 SAY NAME2 @3000
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~146~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~140~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~136~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~132~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~119~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~175~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~133~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~181~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~134~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~118~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~101~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~145~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~199~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~142~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~162~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~184~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~221~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~222~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~141~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~106~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~107~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~139~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~140~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 328
-			target = 2
-			parameter1 = 0
-			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLE~))
-			duration = 18
-			probability1 = 100
-			special = 1
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 139
-			target = 2
-			parameter1 = RESOLVE_STR_REF(@3001)
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 176
-			target = 2
-			parameter1 = 0
-			parameter2 = 1
-			duration = 18
-			probability1 = 100
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 174
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		STR_VAR
-			resource = "CRE_P01"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 174
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			timing = 4
-			duration = 18
-			probability1 = 100
-		STR_VAR
-			resource = "EFF_M22A"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 215
-			target = 2
-			parameter1 = 0
-			parameter2 = 1
-			duration = 18
-			probability1 = 100
-		STR_VAR
-			resource = "rr#cnstr"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 142
-			target = 2
-			parameter1 = 0
-			parameter2 = 144
-			duration = 18
-			probability1 = 100
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 15
-			target = 2
-			parameter1 = 8
-			parameter2 = 1
-			duration = 18
-			probability1 = 100
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 206
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-	END
-
-CREATE EFF "ja#3m1"
-	WRITE_LONG 0x10 206
-	WRITE_LONG 0x14 2
-	WRITE_LONG 0x24 0
-	WRITE_LONG 0x28 1
-	WRITE_SHORT 0x2c 100
-	WRITE_ASCII 0x30 ~ja#3m1~ #8
+		END
 
 CREATE ITM "ja#m1w1"
 	WRITE_LONG 0x64 0x72
@@ -506,19 +140,7 @@ CREATE ITM "ja#m1w1"
 			probability1 = 100
 		STR_VAR
 			resource = "ja#1m1"
-	END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 146
-			target = 2
-			parameter1 = 0
-			parameter2 = 1
-			probability1 = 100
-			savingthrow = 2
-			savebonus = "-4"
-		STR_VAR
-			resource = "ja#3m1"
-	END
+		END
 
 CREATE ITM "ja#m1w2"
 	WRITE_LONG 0x64 0x72
@@ -544,7 +166,7 @@ CREATE ITM "ja#m1w2"
 			probability1 = 100
 		STR_VAR
 			resource = "ja#2m1"
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 172
@@ -554,7 +176,7 @@ CREATE ITM "ja#m1w2"
 			probability1 = 100
 		STR_VAR
 			resource = "ja#2m1"
-	END
+		END
 
 ACTION_FOR_EACH ~file~ IN
 	ANKHEG
@@ -580,7 +202,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#m1w2~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_MEMORIZED_SPELL ~ja#1m1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=8

@@ -2,6 +2,7 @@
   "creaturesFolder": "lib/pnp-monster/data",
   "commonCreatureFile": "lib/pnp-monster/common.tpa",
   "commonFunctionsFile": "lib/common/immune-trait.tpa",
+  "immunitiesFile": "lib/pnp-monster/immunities.json",
   "constitutionAffectHitPoint": true,
   "bafConstants": {
     "allowMelee": "JA#MELEE",

@@ -1,8 +1,11 @@
 CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IBOOT01~ #8
 	SAY NAME1 ~hover trait~ SAY NAME2 ~hover trait~
-	SAY UNIDENTIFIED_DESC ~Hover (flight) spell immunities~
+	SAY UNIDENTIFIED_DESC ~Hover (flight)
+This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them~
 COPY_EXISTING ~ja#i3.itm~ ~override~
 	LPF hover_immunity END
 
@@ -10,15 +13,36 @@ CREATE ITM "ja#i1"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_SHORT 0x1c 72
+	WRITE_ASCII 0x3a ~IHELM01~ #8
 	SAY NAME1 ~construct trait~ SAY NAME2 ~construct trait~
-	SAY UNIDENTIFIED_DESC ~Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects). Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells. Darkvision out to 60 feet.~
+	SAY UNIDENTIFIED_DESC ~Construct trait.
+Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
+Darkvision out to 60 feet.~
 COPY_EXISTING ~ja#i1.itm~ ~override~
 	LPF construct_immunity END
 
 CREATE ITM "ja#i2"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING01~ #8
 	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
 	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
 COPY_EXISTING ~ja#i2.itm~ ~override~
 	LPF skeletal_immunity END
+
+CREATE ITM "ja#i4"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
+	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.
+It can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.
+
+Immune to all nonmagical attacks.
+Has a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).
+Deflection bonus (+3 AC).
+Attacks pass through armor (+4 THAC0).
+Do not set off traps that are triggered by weight.~
+COPY_EXISTING ~ja#i4.itm~ ~override~
+	LPF incorporeal_immunity END

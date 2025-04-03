@@ -25,7 +25,7 @@ CREATE ITM "ja#m4w1"
 			parameter1 = RESOLVE_STR_REF(@4007)
 			parameter2 = 0
 			probability1 = 10
-	END
+		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -35,7 +35,7 @@ CREATE ITM "ja#m4w1"
 			probability1 = 10
 			dicenumber = 2
 			dicesize = 4
-	END
+		END
 
 CREATE ITM "ja#m4w2"
 	WRITE_LONG 0x64 0x72
@@ -71,6 +71,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~B1-6~
 			ADD_CRE_ITEM ~ja#m4w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#m4w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=3
@@ -84,7 +85,7 @@ BEGIN
 					hp=27
 					ac=7
 					thac0=17
-					apr=2
+					apr=3
 					xpv=175
 					alignment=34
 					saveDeath=13
@@ -101,7 +102,6 @@ BEGIN
 					gender=4
 					sex=4
 					enforce=1
-					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
 			DEFINE_ARRAY skipFiles BEGIN BEARBLSU END

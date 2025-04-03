@@ -3,7 +3,7 @@
     "tpaFile": "lib/pnp-monster/bear/brown",
     "tracking": true,
     "combatWalk": true,
-    "dualWielding": true,
+    "attack": { "dualWielding": true },
     "data": {
         "level1": 5,
         "bonusHp": 5,
@@ -28,15 +28,7 @@
         "gender": "NIETHER",
         "size": "Large"
     },
-    "additionalData": {
-        "removeItems": [
-            "B1-8"
-        ],
-        "removeScripts": [
-            "CBEAR",
-            "BEAR"
-        ]
-    },
+    "additionalData": { "removeItems": [ "B1-8" ], "removeScripts": [ "CBEAR", "BEAR" ]},
     "items": [
         {
             "file": "ja#m5w1",
@@ -47,15 +39,9 @@
             "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ],
+            "abilityFlags": [ "AddStrengthBonus" ],
             "effects": [
-                {
-                    "opcode": "DisplayString",
-                    "stringRef": 4007,
-                    "probability1": 10
-                },
+                { "opcode": "DisplayString", "stringRef": 4007, "probability1": 10 },
                 {
                     "opcode": "Damage",
                     "damageMode": "Normal",
@@ -76,24 +62,9 @@
             "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
-            "abilityFlags": [
-                "AddStrengthBonus"
-            ]
+            "abilityFlags": [ "AddStrengthBonus" ]
         }
     ],
-    "files": [
-        "BDBEARBN",
-        "BDGRIZHU",
-        "BEARBR",
-        "BEARBRSU",
-        "PLYBEAR1"
-    ],
-    "adjustments": [
-        {
-            "files": [
-                "BEARBRSU"
-            ],
-            "summon": true
-        }
-    ]
+    "files": [ "BDBEARBN", "BDGRIZHU", "BEARBR", "BEARBRSU", "PLYBEAR1" ],
+    "adjustments": [{ "files": [ "BEARBRSU" ], "summon": true }]
 }

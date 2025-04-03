@@ -32,6 +32,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~P2-8~
 			ADD_CRE_ITEM ~ja#m13w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=2

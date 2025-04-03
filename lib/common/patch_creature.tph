@@ -308,11 +308,14 @@ BEGIN
     LPF ADD_CRE_EFFECT INT_VAR opcode=176 target=1 timing=9 parameter1=%movement% parameter2=1 END
   END
 
-  LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
-  PATCH_PHP_EACH proficiencies AS parameter2 => parameter1 BEGIN
-    //  Proficiency Modifier
-    LPF ADD_CRE_EFFECT INT_VAR opcode=233 target=1 timing=9 parameter1 parameter2 END
+  PATCH_IF ~%proficiencies%~ STRING_COMPARE ~~ BEGIN
+    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
+    PATCH_PHP_EACH proficiencies AS parameter2 => parameter1 BEGIN
+      //  Proficiency Modifier
+      LPF ADD_CRE_EFFECT INT_VAR opcode=233 target=1 timing=9 parameter1 parameter2 END
+    END
   END
+
   PATCH_IF perfect2weapon = 1 BEGIN // perfect two weapon fighting (for creatures with multiple weapons)
     SET_BG2_PROFICIENCY ~PROFICIENCY2WEAPON~ 3
     LPF ADD_CRE_EFFECT INT_VAR opcode=305 target=1 timing=9 parameter1=2 END
