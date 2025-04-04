@@ -2,7 +2,7 @@
     {
         "name": "poison",
         "type": "immunity",
-        "description": "Poison immunity",
+        "description": [ "Poison immunity" ],
         "preventEffects": [ "Poison" ],
         "preventIcons": [ "Poisoned" ],
         "displayIcons": [ "ProtectionFromPoison" ],
@@ -25,7 +25,7 @@
     {
         "name": "disease",
         "type": "immunity",
-        "description": "Disease immunity",
+        "description": [ "Disease immunity" ],
         "preventEffects": [ "Disease" ],
         "preventIcons": [ "Diseased" ],
         "strings": [[ 31238, "Diseased" ]],
@@ -45,7 +45,7 @@
     {
         "name": "bleeding",
         "type": "immunity",
-        "description": "Bleeding immunity",
+        "description": [ "Bleeding immunity" ],
         "preventIcons": [ "Bleeding" ],
         "strings": [[ 25137, "Bleeding" ]],
         "spells": [[ "RR#BLEED", "RR Bleeding" ]]
@@ -53,14 +53,14 @@
     {
         "name": "abilityDrain",
         "type": "immunity",
-        "description": "Ability drain immunity",
+        "description": [ "Ability drain immunity" ],
         "preventEffects": [ "IntelligenceBonus", "DexterityBonus", "StrengthBonus", "ConstitutionBonus" ],
         "strings": [[ 26184, "Rigid Thinking" ]]
     },
     {
         "name": "hold",
         "type": "immunity",
-        "description": "Hold immunity",
+        "description": [ "Hold immunity" ],
         "preventEffects": [ "Paralyze", "Hold" ],
         "preventIcons": [ "Held" ],
         "spells": [[ "SPPR208", "Hold Person" ], [ "SPWI306", "Hold Person" ]],
@@ -71,7 +71,7 @@
     {
         "name": "stun",
         "type": "immunity",
-        "description": "Stun immunity",
+        "description": [ "Stun immunity" ],
         "preventEffects": [ "Stun", "Stun90HP" ],
         "preventIcons": [ "Stun" ],
         "strings": [[ 14043, "Stun" ], [ 25862, "Stun" ], [ 26050, "Stunned" ]],
@@ -80,7 +80,7 @@
     {
         "name": "energyDrain",
         "type": "immunity",
-        "description": "Energy drain immunity",
+        "description": [ "Energy drain immunity" ],
         "preventEffects": [ "LevelDrain" ],
         "strings": [
             [ 25802, "One Level Drained" ],
@@ -94,7 +94,7 @@
     {
         "name": "sleep",
         "type": "immunity",
-        "description": "Sleep immunity",
+        "description": [ "Sleep immunity" ],
         "preventEffects": [ "Sleep", "Sleep20HP" ],
         "preventIcons": [ "Sleep", "Unconscious" ],
         "strings": [
@@ -113,7 +113,7 @@
     {
         "name": "charm",
         "type": "immunity",
-        "description": "Charm immunity",
+        "description": [ "Charm immunity" ],
         "preventEffects": [ "CharmCreature", "CharmControlCreature" ],
         "preventIcons": [ "Charm", "DireCharm", "Domination" ],
         "strings": [
@@ -129,7 +129,7 @@
     {
         "name": "fear",
         "type": "immunity",
-        "description": "Fear immunity",
+        "description": [ "Fear immunity" ],
         "preventEffects": [ "Panic", "MoraleModifier", "MoraleBreakModifier" ],
         "preventIcons": [ "Panic" ],
         "strings": [[ 14007, "Panic" ], [ 17427, "Panic" ], [ 20568, "Morale Failure: Panic" ], [ 25818, "Panic" ]],
@@ -175,7 +175,7 @@
     {
         "name": "fatigue",
         "type": "immunity",
-        "description": "Fatigue immunity",
+        "description": [ "Fatigue immunity" ],
         "preventEffects": [ "FatigueBonus" ],
         "preventIcons": [],
         "strings": [],
@@ -185,7 +185,7 @@
     {
         "name": "confusion",
         "type": "immunity",
-        "description": "Confusion immunity",
+        "description": [ "Confusion immunity" ],
         "preventEffects": [ "Confusion" ],
         "preventIcons": [ "Confused" ],
         "strings": [[ 14791, "Rigid Thinking" ], [ 14782, "Confused" ], [ 25807, "Confused" ]],
@@ -208,7 +208,7 @@
     {
         "name": "magicMissile",
         "type": "immunity",
-        "description": "Magic missiles immunity",
+        "description": [ "Magic missiles immunity" ],
         "idsSpells": [
             {
                 "id": "WIZARD_MORDENKAINENS_FORCE_MISSILES",
@@ -222,7 +222,7 @@
     {
         "name": "blindness",
         "type": "immunity",
-        "description": "Blindness immunity",
+        "description": [ "Blindness immunity" ],
         "preventEffects": [ "Blindness" ],
         "preventIcons": [ "Blind" ],
         "idsSpells": [
@@ -256,7 +256,7 @@
     {
         "name": "fireSpells",
         "type": "immunity",
-        "description": "Fire spells immunity",
+        "description": [ "Fire spells immunity" ],
         "idsSpells": [
             { "id": "WIZARD_BELTYNS_BURNING_BLOOD", "source": "Beltyn's Burning Blood (IWDification)" },
             { "id": "WIZARD_SHROUD_OF_FLAME", "source": "Shroud of Flame (IWDification)" },
@@ -312,7 +312,7 @@
     {
         "name": "coldSpells",
         "type": "immunity",
-        "description": "Cold spells immunity",
+        "description": [ "Cold spells immunity" ],
         "idsSpells": [
             { "id": "WIZARD_OTILUKES_FREEZING_SPHERE", "source": "Otiluke's Freezing Sphere (IWDification)" },
             { "id": "WIZARD_SNILLOCS_SNOWBALL_SWARM", "source": "Snilloc's Snowball Swarm (IWDification)" },
@@ -339,7 +339,7 @@
     {
         "name": "electricalSpells",
         "type": "immunity",
-        "description": "Electrical spells immunity",
+        "description": [ "Electrical spells immunity" ],
         "idsSpells": [{ "id": "CLERIC_STATIC_CHARGE", "source": "Static Charge (IWDification)" }],
         "spells": [
             [ "CDSTAF12", "Lightning Bolt" ],
@@ -369,7 +369,7 @@
     {
         "name": "acidSpells",
         "type": "immunity",
-        "description": "Acid spells immunity",
+        "description": [ "Acid spells immunity" ],
         "idsSpells": [
             { "id": "WIZARD_VITRIOLIC_SPHERE", "source": "Vitriolic Sphere (IWDification)" },
             { "id": "WIZARD_ACID_STORM", "source": "Acid Storm (IWDification)" }
@@ -386,7 +386,7 @@
     {
         "name": "cureSpells",
         "type": "immunity",
-        "description": "Cure spells immunity",
+        "description": [ "Cure spells immunity" ],
         "idsSpells": [
             { "id": "CLERIC_CAUSE_MODERATE_WOUNDS", "source": "Cause moderate Wounds (IWDification)" },
             { "id": "CLERIC_CURE_MODERATE_WOUNDS", "source": "Cure moderate Wounds (IWDification)" },
@@ -441,7 +441,7 @@
     {
         "name": "cloudSpells",
         "type": "immunity",
-        "description": "Cloud spells immunity",
+        "description": [ "Cloud spells immunity" ],
         "idsSpells": [{ "id": "CLERIC_CLOUD_OF_PESTILENCE", "source": "Cloud of Pestilence (IWDification)" }],
         "spells": [
             [ "SPWI004", "Stinking Cloud (trap)" ],
@@ -470,7 +470,7 @@
     {
         "name": "web",
         "type": "immunity",
-        "description": "Web immunity",
+        "description": [ "Web immunity" ],
         "preventEffects": [ "Web" ],
         "preventIcons": [ "Webbed" ],
         "spells": [
@@ -493,7 +493,7 @@
     {
         "name": "entangle",
         "type": "immunity",
-        "description": "Entangle immunity",
+        "description": [ "Entangle immunity" ],
         "idsSpells": [{ "id": "WIZARD_CHARM_PLANTS", "source": "Charm plants (SpellPack)" }],
         "spells": [
             [ "SPPR105", "Entangle (Priest)" ],
@@ -507,7 +507,7 @@
     {
         "name": "insectSpells",
         "type": "immunity",
-        "description": "Insect spells immunity",
+        "description": [ "Insect spells immunity" ],
         "spells": [
             [ "SPPR319", "Summon Insects" ],
             [ "SPPR517", "Insect Plague" ],
@@ -523,7 +523,7 @@
     {
         "name": "petrification",
         "type": "immunity",
-        "description": "Petrification immunity",
+        "description": [ "Petrification immunity" ],
         "preventEffects": [ "Petrification" ],
         "strings": [[ 14665, "Petrified" ], [ 25863, "Petrified" ]],
         "spells": [[ "SPWI604", "Flesh to Stone" ], [ "SPWI604D", "Flesh to Stone" ]],
@@ -533,7 +533,7 @@
     {
         "name": "polymorph",
         "type": "immunity",
-        "description": "Polymorph immunity",
+        "description": [ "Polymorph immunity" ],
         "preventIcons": [ "Polymorphed" ],
         "strings": [
             [ 14128, "Polymorph" ],
@@ -552,14 +552,14 @@
     {
         "name": "vorpal",
         "type": "immunity",
-        "description": "Vorpal immunity",
+        "description": [ "Vorpal immunity" ],
         "preventEffects": [ "KillTarget", "Slay" ],
         "strings": [[ 14026, "Death" ]]
     },
     {
         "name": "earthquake",
         "type": "immunity",
-        "description": "Earthquake spells immunity",
+        "description": [ "Earthquake spells immunity" ],
         "spells": [
             [ "SPOGRE01", "Earthquake (Ogremoch)" ],
             [ "SPPR720", "Earthquake (Priest version)" ],
@@ -573,7 +573,7 @@
     {
         "name": "cold",
         "type": "immunity",
-        "description": "Cold and magical cold immunity",
+        "description": [ "Cold and magical cold immunity" ],
         "effects": [
             { "opcode": "ColdResistanceModifier", "value": 100, "type": "Set" },
             { "opcode": "MagicalColdResistanceModifier", "value": 100, "type": "Set" }
@@ -582,13 +582,13 @@
     {
         "name": "unturnable",
         "type": "immunity",
-        "description": "Turn undead immunity",
+        "description": [ "Turn undead immunity" ],
         "effects": [{ "opcode": "ImmunityToTurnUndead" }]
     },
     {
         "name": "illusion",
         "type": "immunity",
-        "description": "Illusion spells immunity",
+        "description": [ "Illusion spells immunity" ],
         "spells": [
             [ "sppr704", "Nature's beauty" ],
             [ "spwi106", "Blindness" ],
@@ -602,7 +602,7 @@
     {
         "name": "necromancyEffects",
         "type": "immunity",
-        "description": "Necromancy effects immunity",
+        "description": [ "Necromancy effects immunity" ],
         "immunities": [ "cureSpells" ],
         "spells": [
             [ "sppr313", "Holy Smite" ],
@@ -622,21 +622,23 @@
     {
         "name": "deathEffects",
         "type": "immunity",
-        "description": "Death effects immunity",
+        "description": [ "Death effects immunity" ],
         "preventEffects": [ "DeathKill60HP", "KillTarget", "Slay" ],
         "effects": [{ "opcode": "SetExtendedSpellState", "state": "DEATH_IMMUNITY" }]
     },
     {
         "name": "deathSpell",
         "type": "immunity",
-        "description": "Death spell immunity",
+        "description": [ "Death spell immunity" ],
         "spells": [[ "SPWI605", "Death Spell" ], [ "cdxvdth", "Death Spell (mod)" ]],
         "displaySpellIneffective": true
     },
     {
         "name": "mindSpells",
         "type": "immunity",
-        "description": "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
+        "description": [
+            "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)"
+        ],
         "preventEffects": [ "Berserk" ],
         "immunities": [ "charm", "fear", "confusion", "illusion" ]
     },
@@ -644,7 +646,11 @@
         "name": "hover",
         "type": "trait",
         "itemSlot": { "file": "ja#i3", "slot": "BOOTS" },
-        "description": "Hover (flight)\nThis effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.\nFurthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them",
+        "description": [
+            "Hover (flight)",
+            "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
+            "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them"
+        ],
         "immunities": [ "entangle", "web" ],
         "spells": [
             [ "SPIN561", "Fire Giant Lava Pit (FIRE_GIANT_LAVA)" ],
@@ -665,21 +671,25 @@
     {
         "name": "backstab",
         "type": "immunity",
-        "description": "Immunity to backstab",
+        "description": [ "Immunity to backstab" ],
         "effects": [{ "opcode": "ProtectionFromBackstab" }]
     },
-    { "name": "criticalHit", "type": "immunity", "description": "Immunity to critical hits" },
+    { "name": "criticalHit", "type": "immunity", "description": [ "Immunity to critical hits" ]},
     {
         "name": "devourBrain",
         "type": "immunity",
-        "description": "Immunity to Devour Brain ability (Mind Flayer)",
+        "description": [ "Immunity to Devour Brain ability (Mind Flayer)" ],
         "preventEffects": [ "IntelligenceBonus" ]
     },
     {
         "name": "construct",
         "type": "trait",
         "itemSlot": { "file": "ja#i1", "slot": "HELMET" },
-        "description": "Construct trait.\nImmunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).\nNot subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\nDarkvision out to 60 feet.",
+        "description": [
+            "Construct trait.",
+            "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
+            "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\nDarkvision out to 60 feet."
+        ],
         "immunities": [
             "poison",
             "sleep",
@@ -704,7 +714,11 @@
     {
         "name": "elemental",
         "type": "trait",
-        "description": "Immunity to poison, sleep effects, paralysis, bleeding, and stunning. Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack. They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet.",
+        "description": [
+            "Immunity to poison, sleep effects, paralysis, bleeding, and stunning.",
+            "Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack.",
+            "They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet."
+        ],
         "immunities": [
             "poison",
             "sleep",
@@ -723,7 +737,9 @@
         "name": "skeletal",
         "type": "trait",
         "itemSlot": { "file": "ja#i2", "slot": "LRING" },
-        "description": "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
+        "description": [
+            "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage."
+        ],
         "immunities": [ "cold", "coldSpells" ],
         "effects": [
             { "opcode": "SlashingResistanceModifier", "value": 50, "type": "Set" },
@@ -734,13 +750,15 @@
     {
         "name": "extraplanar",
         "type": "trait",
-        "description": "Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.",
+        "description": [
+            "Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm."
+        ],
         "immunities": [ "cureSpells", "deathSpell" ]
     },
     {
         "name": "plant",
         "type": "trait",
-        "description": "Plants' traits",
+        "description": [ "Plants' traits" ],
         "immunities": [
             "disease",
             "bleeding",
@@ -758,17 +776,17 @@
             "entangle"
         ]
     },
-    { "name": "infravision", "type": "trait", "description": "Infravision", "effects": [{ "opcode": "Infravision" }]},
+    { "name": "infravision", "type": "trait", "description": [ "Infravision" ], "effects": [{ "opcode": "Infravision" }]},
     {
         "name": "seeInvisible",
         "type": "trait",
-        "description": "See invisible creatures",
+        "description": [ "See invisible creatures" ],
         "effects": [{ "opcode": "InvisibilityDetection" }]
     },
     {
         "name": "fireballSpell",
         "type": "immunity",
-        "description": "Fireball spell immunity",
+        "description": [ "Fireball spell immunity" ],
         "spells": [
             [ "BDBLOWUP", "" ],
             [ "BDDAUSTO", "" ],
@@ -785,7 +803,7 @@
     {
         "name": "lightningBoltSpell",
         "type": "immunity",
-        "description": "Lightning Bolt spell immunity",
+        "description": [ "Lightning Bolt spell immunity" ],
         "spells": [
             [ "b_tal10", "" ],
             [ "c0dm302", "" ],
@@ -807,7 +825,7 @@
     {
         "name": "flameArrowSpell",
         "type": "immunity",
-        "description": "Flame Arrow spell immunity",
+        "description": [ "Flame Arrow spell immunity" ],
         "spells": [
             [ "d5f2303", "" ],
             [ "d5p2303", "" ],
@@ -822,7 +840,16 @@
         "name": "incorporeal",
         "itemSlot": { "file": "ja#i4", "slot": "LRING" },
         "type": "trait",
-        "description": "An incorporeal creature has no physical body.\nIt can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.\n\nImmune to all nonmagical attacks.\nHas a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).\nDeflection bonus (+3 AC).\nAttacks pass through armor (+4 THAC0).\nDo not set off traps that are triggered by weight.",
+        "description": [
+            "An incorporeal creature has no physical body.",
+            "It can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.",
+            "",
+            "Immune to all nonmagical attacks.",
+            "Has a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).",
+            "Deflection bonus (+3 AC).",
+            "Attacks pass through armor (+4 THAC0).",
+            "Do not set off traps that are triggered by weight."
+        ],
         "immunities": [],
         "effects": [
             { "opcode": "ProtectionFromWeapons", "enchantment": 0, "type": "NonMagical" },
@@ -852,59 +879,62 @@
         ]
     },
     {
-      "name": "missileWeapons",
-      "type": "immunity",
-      "description": "Missile weapons immunity",
-      "effects": [
-        { "opcode": "ProtectionFromProjectile", "projectile": 1, "comment": "Arrow of Slaying" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 2, "comment": "Exploding Arrow" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 3, "comment": "Acid Arrow" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 4, "comment": "Arrow/Arrow +1" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 6, "comment": "Throwing Axe" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 7, "comment": "Throwing Axe" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 8, "comment": "Bolt" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 9, "comment": "Throwing Axe" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 10, "comment": "Throwing Axe" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 11, "comment": "Bolt+1, Bolt of Biting/Polymorph" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 12, "comment": "Exploding Bolt" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 13, "comment": "Bolt (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 14, "comment": "Bolt" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 15, "comment": "Bolt of Lightning" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 16, "comment": "Bullet" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 17, "comment": "Bullet +1, Sunstone Bullet" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 18, "comment": "Bullet" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 19, "comment": "Bullet" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 26, "comment": "Throwing Dagger" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 27, "comment": "Throwing Dagger (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 28, "comment": "Throwing Dagger (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 29, "comment": "Fire Tooth +3" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 30, "comment": "Throwing Dagger (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 31, "comment": "Asp's Nest, Dart of Stunning" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 32, "comment": "Dart" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 33, "comment": "Dart (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 34, "comment": "Dart (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 35, "comment": "Dart (?)" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 55, "comment": "Spear" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 56, "comment": "Spear" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 57, "comment": "Spear" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 58, "comment": "Spear" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 59, "comment": "Spear" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 102, "comment": "Flame Arrow Blue" },
-        { "opcode": "ProtectionFromProjectile", "projectile": 232, "comment": "Energy Spear (Gesen's Bow)" }
-      ]
+        "name": "missileWeapons",
+        "type": "immunity",
+        "description": [ "Missile weapons immunity" ],
+        "effects": [
+            { "opcode": "ProtectionFromProjectile", "projectile": 1, "comment": "Arrow of Slaying" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 2, "comment": "Exploding Arrow" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 3, "comment": "Acid Arrow" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 4, "comment": "Arrow/Arrow +1" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 6, "comment": "Throwing Axe" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 7, "comment": "Throwing Axe" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 8, "comment": "Bolt" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 9, "comment": "Throwing Axe" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 10, "comment": "Throwing Axe" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 11, "comment": "Bolt+1, Bolt of Biting/Polymorph" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 12, "comment": "Exploding Bolt" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 13, "comment": "Bolt (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 14, "comment": "Bolt" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 15, "comment": "Bolt of Lightning" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 16, "comment": "Bullet" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 17, "comment": "Bullet +1, Sunstone Bullet" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 18, "comment": "Bullet" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 19, "comment": "Bullet" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 26, "comment": "Throwing Dagger" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 27, "comment": "Throwing Dagger (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 28, "comment": "Throwing Dagger (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 29, "comment": "Fire Tooth +3" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 30, "comment": "Throwing Dagger (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 31, "comment": "Asp's Nest, Dart of Stunning" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 32, "comment": "Dart" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 33, "comment": "Dart (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 34, "comment": "Dart (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 35, "comment": "Dart (?)" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 55, "comment": "Spear" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 56, "comment": "Spear" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 57, "comment": "Spear" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 58, "comment": "Spear" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 59, "comment": "Spear" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 102, "comment": "Flame Arrow Blue" },
+            { "opcode": "ProtectionFromProjectile", "projectile": 232, "comment": "Energy Spear (Gesen's Bow)" }
+        ]
     },
     {
-      "name": "airAffinity",
-      "type": "trait",
-      "description": "Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents.",
-      "effects": []
+        "name": "airAffinity",
+        "type": "trait",
+        "description": [
+            "Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents."
+        ],
+        "effects": []
     },
     {
-      "name": "earthAffinity",
-      "type": "trait",
-      "description": "Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell.",
-      "immunities": [
-        "earthquake"
-      ],
-      "effects": []
-    }]
+        "name": "earthAffinity",
+        "type": "trait",
+        "description": [
+            "Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell."
+        ],
+        "immunities": [ "earthquake" ],
+        "effects": []
+    }
+]

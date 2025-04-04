@@ -36,7 +36,6 @@
             "type": "Melee",
             "diceThrown": 1,
             "diceSize": 10,
-            "bonusToHit": 0,
             "damageType": "Slashing",
             "speed": 3,
             "abilityFlags": [ "AddStrengthBonus" ],
@@ -59,7 +58,6 @@
             "type": "Melee",
             "diceThrown": 2,
             "diceSize": 6,
-            "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
             "abilityFlags": [ "AddStrengthBonus" ]

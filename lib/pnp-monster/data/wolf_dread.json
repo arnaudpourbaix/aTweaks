@@ -1,0 +1,86 @@
+{
+    "tpaFile": "lib/pnp-monster/wolf/dread",
+    "bafFile": "lib/pnp-monster/wolf/ja#22",
+    "tracking": true,
+    "combatWalk": true,
+    "data": {
+        "level1": 4,
+        "hp": 20,
+        "bonusHp": 4,
+        "specialBonusHp": 10,
+        "strength": 18,
+        "dexterity": 13,
+        "constitution": 14,
+        "intelligence": 9,
+        "wisdom": 12,
+        "charisma": 8,
+        "movement": 18,
+        "ac": 6,
+        "apr": 1,
+        "xpv": 650,
+        "alignment": "NEUTRAL_EVIL",
+        "morale": 18,
+        "moraleBreak": 4,
+        "moraleRecovery": 15,
+        "general": "ANIMAL",
+        "race": "WOLF",
+        "class": "WOLF_DREAD",
+        "gender": "MALE",
+        "size": "Small",
+        "resistCold": 100,
+        "resistElectricity": 50
+    },
+    "additionalData": { "removeItems": [ "P1-10", "RING95", "TROLLIMM", "BDWOLFD1", "BDWOLFDR" ], "itemSlots": [{ "slot": "AMULET", "file": "MONHP1" },{ "slot": "LRING", "file": "TROLLREG" }]},
+    "items": [
+        {
+            "file": "ja#m22w1",
+            "equippedSlot": "WEAPON1",
+            "type": "Melee",
+            "diceThrown": 1,
+            "diceSize": 10,
+            "damageType": "Piercing",
+            "speed": 3,
+            "abilityFlags": [ "AddStrengthBonus" ],
+            "effects": [
+                {
+                    "opcode": "Disease",
+                    "amount": 300,
+                    "type": "OneDamagePerAmountSeconds",
+                    "duration": 90000,
+                    "icon": "Diseased"
+                }
+            ]
+        },
+        {
+            "file": "ja#m22a1",
+            "name": "Dread wolf resistances",
+            "description": [
+                "A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.",
+                "Only acid, fire, or total dismemberment will inflict permanent damage.",
+                "It is immune to charm, hold, and cold-based spells.",
+                "Electricity-based spells cause only half damage."
+            ],
+            "immunities": [ "coldSpells", "charm", "hold", "sleep", "fear" ],
+            "effects": [
+                {
+                    "opcode": "Regeneration",
+                    "amount": 2,
+                    "type": "OneHPperAmountSeconds",
+                    "icon": "Regenerating",
+                    "global": true
+                },
+                {
+                    "opcode": "CastSpellOnCondition",
+                    "conditionTarget": "Myself",
+                    "condition": "HPPercentLT(Myself,Extra)",
+                    "special": 2,
+                    "resource": "TROLLREG",
+                    "global": true
+                }
+            ],
+            "category": "Rings",
+            "icon": "IRING01"
+        }
+    ],
+    "files": [ "BDWOLFDR", "D5WOLFD1", "dw#rewo", "P#WOLF03", "P#WOLF05", "PLYWOLF", "WOLFD1", "WOLFDR" ]
+}

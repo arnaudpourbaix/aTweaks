@@ -98,7 +98,9 @@ CREATE SPL "ja#2m1"
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 3
 	SAY NAME1 @4000 SAY NAME2 @4000
-	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet. A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison). It uses this attack technique only when desperate.~
+	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
+A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
+It uses this attack technique only when desperate.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -131,6 +133,7 @@ CREATE ITM "ja#m1w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m1w1.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146
@@ -157,6 +160,7 @@ CREATE ITM "ja#m1w2"
 	WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
 	WRITE_SHORT 0x38 1
 	WRITE_SHORT 0xa4 1
+COPY_EXISTING ~ja#m1w2.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146

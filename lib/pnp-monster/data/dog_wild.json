@@ -34,7 +34,6 @@
             "type": "Melee",
             "diceThrown": 1,
             "diceSize": 4,
-            "bonusToHit": 0,
             "damageType": "Piercing",
             "speed": 3,
             "abilityFlags": [ "AddStrengthBonus" ]

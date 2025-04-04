@@ -1,0 +1,64 @@
+CREATE ITM "ja#m18w1"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 4
+	WRITE_BYTE 0x8a 2
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m18w1.itm~ ~override~
+
+ACTION_FOR_EACH ~file~ IN
+	WOLFCH
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~P1-6~
+			ADD_CRE_ITEM ~ja#m18w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			LPF clearProficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=3
+					strength=16
+					dexterity=13
+					constitution=13
+					intelligence=7
+					wisdom=11
+					charisma=8
+					movement=15
+					hp=27
+					ac=6
+					thac0=17
+					apr=1
+					xpv=120
+					alignment=35
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
+					morale=11
+					moraleBreak=4
+					moraleRecovery=15
+					general=2
+					race=117
+					class=144
+					gender=1
+					sex=1
+					enforce=1
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

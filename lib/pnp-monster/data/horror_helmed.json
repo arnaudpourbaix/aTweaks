@@ -221,7 +221,8 @@
             "file": "ja#m15a3",
             "immunities": [ "fireballSpell", "lightningBoltSpell", "flameArrowSpell", "magicMissile" ],
             "equippedSlot": "RRING",
-            "category": "Rings"
+            "category": "Rings",
+            "icon": "IRING01"
         }
     ],
     "files": [ "HELMHO", "GLOWTEST", "BATTHO", "dw#davho", "DOOMSA" ],

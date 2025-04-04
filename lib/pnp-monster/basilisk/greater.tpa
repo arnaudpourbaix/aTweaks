@@ -83,6 +83,7 @@ CREATE ITM "ja#m3w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m3w1.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 25
@@ -124,6 +125,7 @@ CREATE ITM "ja#m3w2"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m3w2.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146

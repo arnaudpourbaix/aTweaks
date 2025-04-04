@@ -1,0 +1,125 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#20.baf~
+
+COPY_EXISTING "CONECOLD.pro" ~override/ja#1m20.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_LONG 0x200 80
+	WRITE_SHORT 0x204 180
+	WRITE_SHORT 0x206 180
+ADD_PROJECTILE ~override/ja#1m20.pro~ ~Stream of frost~
+
+CREATE SPL "ja#1m20"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 2
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 4
+	WRITE_SHORT 0x80 10
+	SAY NAME1 @4011 SAY NAME2 @4011
+	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.~
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m20~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter1 = 0
+			parameter2 = 131072
+			timing = 1
+			probability1 = 100
+			dicenumber = 6
+			dicesize = 4
+			savingthrow = 2
+			special = 256
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			parameter1 = "-2786560"
+			parameter2 = 1310720
+			timing = 1
+			probability1 = 100
+		END
+
+CREATE ITM "ja#m20w1"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x60 1
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_SHORT 0x84 3
+	WRITE_BYTE 0x88 4
+	WRITE_BYTE 0x8a 2
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m20w1.itm~ ~override~
+
+ACTION_FOR_EACH ~file~ IN
+	P#WOLF01
+	WOLFWI
+	WOLFWISU
+	WOLFWWSU
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~WOLFWI1~
+			REMOVE_CRE_ITEM ~WOLFWI2~
+			ADD_CRE_ITEM ~ja#m20w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_MEMORIZED_SPELL ~ja#1m20~ #0 ~innate~ (1)
+			LPF clearProficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=6
+					strength=18
+					dexterity=13
+					constitution=14
+					intelligence=9
+					wisdom=12
+					charisma=8
+					movement=15
+					hp=48
+					ac=5
+					resistFire="-10"
+					resistCold=100
+					thac0=15
+					apr=1
+					xpv=975
+					alignment=35
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					morale=13
+					moraleBreak=4
+					moraleRecovery=15
+					general=2
+					race=117
+					class=146
+					gender=1
+					sex=1
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN WNTRWOLF BDSUM00 END
+			LPF patchCreatureScript STR_VAR script=ja#20 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

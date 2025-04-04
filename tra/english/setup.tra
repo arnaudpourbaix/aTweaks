@@ -58,8 +58,9 @@
 @5040 = ~Carrion Crawlers~
 @5050 = ~Greater Cats~
 @5060 = ~Dogs~
-@5070 = ~Helmed Horrors, Battle Horrors~
+@5070 = ~Helmed Horrors, Battle Horrors, Doom Sayer~
 @5080 = ~Doom Guards, Dwarven Doom Guards~
+@5090 = ~Wolves~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

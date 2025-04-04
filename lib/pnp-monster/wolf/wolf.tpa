@@ -1,4 +1,4 @@
-CREATE ITM "ja#m13w1"
+CREATE ITM "ja#m17w1"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -9,73 +9,74 @@ CREATE ITM "ja#m13w1"
 	WRITE_SHORT 0x80 1
 	WRITE_SHORT 0x84 3
 	WRITE_BYTE 0x88 4
-	WRITE_BYTE 0x8a 2
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8c 1
 	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m13w1.itm~ ~override~
+COPY_EXISTING ~ja#m17w1.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
-	BDPRISD1
-	BDPRISD2
-	DOGWA
-	DOGWASU
-	DOGWASU
-	dw#rndwa
-	UBNIMDOG
+	BDURE6D
+	BDWOLF
+	BDWOLF02
+	dw#rnwlf
+	RSWOLF
+	WOLF
+	WOLFSU
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~P2-8~
-			ADD_CRE_ITEM ~ja#m13w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REMOVE_CRE_ITEM ~P1-6~
+			ADD_CRE_ITEM ~ja#m17w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=2
+					level1=3
 					strength=12
-					dexterity=17
-					constitution=15
+					dexterity=15
+					constitution=12
 					intelligence=4
-					wisdom=13
-					charisma=11
-					movement=10
-					hp=18
-					ac=6
-					thac0=19
+					wisdom=12
+					charisma=6
+					movement=15
+					hp=24
+					ac=7
+					thac0=17
 					apr=1
 					xpv=65
 					alignment=34
-					saveDeath=14
-					saveWand=16
-					savePolymorph=15
-					saveBreath=17
-					saveSpell=17
-					morale=9
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
+					morale=10
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=105
-					class=110
+					general=2
+					race=117
+					class=143
 					gender=1
 					sex=1
 					enforce=1
 			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWASU~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WOLFSU~) BEGIN 
 				LPF patchCreature
 					INT_VAR
-						hp=18
-						thac0=19
+						hp=24
+						thac0=17
 						xpv=0
-						saveDeath=14
-						saveWand=16
-						savePolymorph=15
-						saveBreath=17
-						saveSpell=17
+						saveDeath=13
+						saveWand=15
+						savePolymorph=14
+						saveBreath=16
+						saveSpell=16
 						summon=1
 				END
 			END

@@ -640,15 +640,3 @@ DEFINE_PATCH_FUNCTION clearProficiencies BEGIN
     END
   DEFAULT END
 END
-
-DEFINE_PATCH_FUNCTION setProficiencies
-STR_VAR
-  proficiencies=""           // Associative array
-BEGIN
-  LPF clear_bg1_profs END
-  LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
-  PATCH_PHP_EACH proficiencies AS parameter2 => parameter1 BEGIN
-    //  Proficiency Modifier
-    LPF ADD_CRE_EFFECT INT_VAR opcode=233 target=1 timing=9 parameter1 parameter2 END
-  END
-END
