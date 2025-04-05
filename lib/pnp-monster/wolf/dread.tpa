@@ -1,5 +1,198 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#22.baf~
 
+CREATE SPL "ja#1m22"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	SAY NAME1 ~Dread wolf down state~ SAY NAME2 ~Dread wolf down state~
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 112
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m22"
+		END
+	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#DISPEL~ RET row col END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 221
+			target = 1
+			parameter1 = 9
+			parameter2 = row
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 58
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 11
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 2
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 4
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 46
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 75
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 77
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 81
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 242
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 79
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 161
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 162
+			target = 1
+			parameter1 = 0
+			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 1
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
+			parameter2 = 0
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#2m22"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 39
+			target = 1
+			parameter1 = 0
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 17
+			target = 1
+			parameter1 = 1
+			parameter2 = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 1
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
+			parameter2 = 0
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m22"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 17
+			target = 1
+			parameter1 = 6
+			parameter2 = 1
+			timing = 4
+			duration = 12
+			probability1 = 100
+		END
+
 CREATE ITM "ja#m22w1"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -30,7 +223,7 @@ COPY_EXISTING ~ja#m22w1.itm~ ~override~
 			special = 7
 		END
 
-CREATE ITM "ja#m22a1"
+CREATE ITM "ja#1m22"
 	WRITE_LONG 0x64 0x72
 	SAY NAME1 ~Dread wolf resistances~ SAY NAME2 ~Dread wolf resistances~
 	SAY UNIDENTIFIED_DESC ~A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.
@@ -40,7 +233,7 @@ Electricity-based spells cause only half damage.~
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	WRITE_LONG 0x60 1
-COPY_EXISTING ~ja#m22a1.itm~ ~override~
+COPY_EXISTING ~ja#1m22.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 98
@@ -53,21 +246,61 @@ COPY_EXISTING ~ja#m22a1.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			opcode = 208
+			target = 1
+			parameter1 = 1
+			parameter2 = 0
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
 			opcode = 232
 			target = 1
 			parameter1 = 0
-			parameter2 = 20
+			parameter2 = 19
 			timing = 2
 			probability1 = 100
-			special = 12
+			special = 5
 		STR_VAR
-			resource = "TROLLREG"
+			resource = "ja#1m22"
 		END
 	LPF coldSpells_immunity END
 	LPF charm_immunity END
 	LPF hold_immunity END
 	LPF sleep_immunity END
 	LPF fear_immunity END
+
+CREATE ITM "ja#2m22"
+	WRITE_LONG 0x64 0x72
+	SAY NAME1 ~Dread wolf down resistances~ SAY NAME2 ~Dread wolf down resistances~
+	SAY UNIDENTIFIED_DESC ~A down dread wolf is immune to everything but fire and acid.~
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#2m22.itm~ ~override~
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 29
+			target = 1
+			parameter1 = 100
+			parameter2 = 1
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 31
+			target = 1
+			parameter1 = 100
+			parameter2 = 1
+			timing = 2
+			probability1 = 100
+		END
+	LPF poison_immunity END
+	LPF disease_immunity END
+	LPF cold_immunity END
+	LPF physical_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDWOLFDR
@@ -89,9 +322,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~TROLLIMM~
 			REMOVE_CRE_ITEM ~BDWOLFD1~
 			REMOVE_CRE_ITEM ~BDWOLFDR~
-			ADD_CRE_ITEM ~MONHP1~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
-			ADD_CRE_ITEM ~TROLLREG~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			ADD_CRE_ITEM ~ja#m22w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#1m22~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR

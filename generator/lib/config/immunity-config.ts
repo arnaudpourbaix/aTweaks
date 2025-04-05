@@ -1,0 +1,1194 @@
+import { EffectTypeEnum } from "../src/model/final/effect.type";
+import { PortraitIconEnum } from "../src/model/final/enums";
+import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
+import { SpellIdentifiers } from "../src/model/ids/spell";
+import { SplStateIdentifiers } from "../src/model/ids/splstate";
+import { RawEffect } from "../src/model/raw/effect";
+import { RawEffectTypeEnum } from "../src/model/raw/effect.type";
+import { RawImmunityConfig } from "../src/model/raw/immunity";
+import { ItemSlotEnum } from "../src/model/raw/item";
+import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
+
+export const IMMUNITIES: RawImmunityConfig[] = [
+  {
+    name: "poison",
+    type: "immunity",
+    description: ["Poison immunity"],
+    preventEffects: [EffectTypeEnum.Poison],
+    preventIcons: [PortraitIconEnum.Poisoned],
+    displayIcons: [PortraitIconEnum.ProtectionFromPoison],
+    strings: [
+      14017, // Poison
+      14662, // Poisoned
+      26215, // Poison
+      25425, // Poisoned
+    ],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.PoisonResistanceModifier,
+        value: 100,
+      },
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.ITEM_POISON,
+      },
+    ],
+    spells: [
+      "SPWI016", // Cloudkill (trap)
+      "SPWI502", // Cloudkill
+      "dvckill", // Cloudkill (IR/SR)
+      "RR#WI502", // RR/aTweaks Cloudkill
+      "SPIN979", // Golem Gas Cloud
+      "SPIN642", // Poisonous Cloud
+      "RR#SPOI1", // Spiders Class F poison
+      "RR#spwrt", // Wraith Spiders Class F poison
+    ],
+  },
+  {
+    name: "disease",
+    type: "immunity",
+    description: ["Disease immunity"],
+    preventEffects: [EffectTypeEnum.Disease],
+    preventIcons: [PortraitIconEnum.Diseased],
+    strings: [
+      31238, // Diseased
+    ],
+    idsSpells: [
+      { id: SpellIdentifiers.CLERIC_CAUSE_DISEASE }, // Cause Disease (IWDification)
+    ],
+    spells: [
+      "SPWI409", // Contagion
+      "FL#CSDIS", // aTweaks' Cause Disease
+      "RR#DPDIS", // aTweaks' Pit Fiend disease
+      "fl#glor2", // aTweaks' Ghoul Lord disease
+      "fl#mum", // aTweaks' Mummy disease
+      "fl#gmum", // aTweaks' Greater Mummy disease
+      "fl#zomsd", // aTweaks' Zombie Sea disease
+      "rr#gassp", // aTweaks' (plant) Spore Explosion disease
+      "rr#bogaz", // aTweaks' Boalisk disease
+    ],
+  },
+  {
+    name: "bleeding",
+    type: "immunity",
+    description: ["Bleeding immunity"],
+    preventIcons: [PortraitIconEnum.Bleeding],
+    strings: [
+      25137, // Bleeding
+    ],
+    spells: ["RR#BLEED"],
+  },
+  {
+    name: "abilityDrain",
+    type: "immunity",
+    description: ["Ability drain immunity"],
+    preventEffects: [
+      EffectTypeEnum.IntelligenceBonus,
+      EffectTypeEnum.DexterityBonus,
+      EffectTypeEnum.StrengthBonus,
+      EffectTypeEnum.ConstitutionBonus,
+    ],
+    strings: [
+      26184, // Rigid Thinking
+    ],
+  },
+  {
+    name: "hold",
+    type: "immunity",
+    description: ["Hold immunity"],
+    preventEffects: [EffectTypeEnum.Paralyze, EffectTypeEnum.Hold],
+    preventIcons: [PortraitIconEnum.Held],
+    spells: [
+      "SPPR208", // Hold Person
+      "SPWI306", // Hold Person
+    ],
+    strings: [
+      14102, // Held
+      14650, // Paralyzed
+      25866, // Held
+      31799, // Held
+    ],
+    animations: ["SPFLAYER", "SPMINDAT"],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.HOLD_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "stun",
+    type: "immunity",
+    description: ["Stun immunity"],
+    preventEffects: [EffectTypeEnum.Stun, EffectTypeEnum.Stun90HP],
+    preventIcons: [PortraitIconEnum.Stun],
+    strings: [
+      14043, // Stun
+      25862, // Stun
+      26050, // Stunned
+    ],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.STUN_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "energyDrain",
+    type: "immunity",
+    description: ["Energy drain immunity"],
+    preventEffects: [EffectTypeEnum.LevelDrain],
+    strings: [
+      25802, // One Level Drained
+      25803, // Two Levels Drained
+      25804, // Three Levels Drained
+      25805, // Four Levels Drained
+      25806, // Five Levels Drained
+    ],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.ITEM_LEVELDRAIN,
+      },
+    ],
+  },
+  {
+    name: "sleep",
+    type: "immunity",
+    description: ["Sleep immunity"],
+    preventEffects: [EffectTypeEnum.Sleep, EffectTypeEnum.Sleep20HP],
+    preventIcons: [PortraitIconEnum.Sleep, PortraitIconEnum.Unconscious],
+    strings: [
+      12047, // Sleep
+      12958, // Sleep
+      13027, // Sleep
+      14001, // Sleep
+      17405, // Sleep
+      20438, // Unconscious
+      25130, // Unconscious
+      26040, // Sleep
+      26371, // Sleep
+    ],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.SLEEP_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "charm",
+    type: "immunity",
+    description: ["Charm immunity"],
+    preventEffects: [
+      EffectTypeEnum.CharmCreature,
+      EffectTypeEnum.CharmControlCreature,
+    ],
+    preventIcons: [
+      PortraitIconEnum.Charm,
+      PortraitIconEnum.DireCharm,
+      PortraitIconEnum.Domination,
+    ],
+    strings: [
+      26206, // Dominated
+      14672, // Charmed
+      31787, // Charmed
+      14780, // Dire charmed
+      158915, // Dire Charmed
+    ],
+    animations: ["SPNWCHRM"],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.CHARM_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "fear",
+    type: "immunity",
+    description: ["Fear immunity"],
+    preventEffects: [
+      EffectTypeEnum.Panic,
+      EffectTypeEnum.MoraleModifier,
+      EffectTypeEnum.MoraleBreakModifier,
+    ],
+    preventIcons: [PortraitIconEnum.Panic],
+    strings: [
+      14007, // Panic
+      17427, // Panic
+      20568, // Morale Failure: Panic
+      25818, // Panic
+    ],
+    animations: ["CDHORROR"],
+    idsSpells: [
+      { id: SpellIdentifiers.WIZARD_EMOTION_FEAR }, // SpellPack Charm plants
+    ],
+    spells: [
+      "SPIN203", // Cloak of Fear
+      "SPIN536", // Fear
+      "SPIN807", // Salyer Fear
+      "SPIN882", // Vampire Fear
+      "SPIN890", // Demon Fear
+      "SPIN895", // Dragon Fear
+      "SPIN981", // Fear
+      "SPPR416", // Cloak of Fear
+      "SPPR706", // Symbol, Fear
+      "SPWI125", // Spook
+      "SPWI205", // Horror
+      "SPWI811", // Symbol, Fear
+      "SPWI899", // Symbol, Fear
+      "SPWI956", // Symbol, Fear
+      "SPWM123", // Symbol, Fear
+      "fl#cnefr", // Fear
+      "fl#shafi", // Fear
+      "fl#tchfr", // Fear
+      "dw#licfi", // Fear Aura
+      "ca#sfear", // Symbol, Fear
+      "A^causfr", // Cause Fear
+      "rr#dcfea", // Cause Fear
+      "rr#dcfa1", // Aura of Fear
+      "rr#dcfa2", // Aura of Fear
+      "rr#dmfea", // Blast of Fear
+      "rr#scare", // Cloak of Fear
+      "rr#wi811", // Symbol, Fear
+      "DVFEARSM", // Panic
+      "DVHORRO", // Panic
+    ],
+    displaySpellIneffective: true,
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.RESIST_FEAR,
+      },
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.PANIC_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "fatigue",
+    type: "immunity",
+    description: ["Fatigue immunity"],
+    preventEffects: [EffectTypeEnum.FatigueBonus],
+    preventIcons: [],
+    strings: [],
+    spells: [
+      "SPWI508", // Waves of Fatigue
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "confusion",
+    type: "immunity",
+    description: ["Confusion immunity"],
+    preventEffects: [EffectTypeEnum.Confusion],
+    preventIcons: [PortraitIconEnum.Confused],
+    strings: [
+      14791, // Rigid Thinking
+      14782, // Confused
+      25807, // Confused
+    ],
+    animations: ["SPCONFUS"],
+    spells: [
+      "SPPR709", // Confusion (priest version)
+      "SPWI401", // Confusion (wizard version)
+      "SPIN582", // Confusion
+      "SPIN704", // Confusion
+      "SPIN839", // Confusion
+      "SPIN976", // Confusion
+      "SPPR983", // Confusion
+      "MISC3M", // Confusion (Divine Remix)
+      "A#SHA07", // Confusion (Divine Remix)
+      "RR#WI401", // Confusion (atweaks)
+    ],
+    displaySpellIneffective: true,
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.CONFUSION_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "magicMissile",
+    type: "immunity",
+    description: ["Magic missiles immunity"],
+    idsSpells: [
+      {
+        id: SpellIdentifiers.WIZARD_MORDENKAINENS_FORCE_MISSILES,
+        suffixes: ["", "B"],
+      }, // Mordenkainen's Force Missiles (IWDification)
+    ],
+    spells: [
+      "SPWI003", // Magic Missile
+      "SPWI112", // Magic Missile
+      "RR#WI112", // aTweaks' Magic Missile
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "blindness",
+    type: "immunity",
+    description: ["Blindness immunity"],
+    preventEffects: [EffectTypeEnum.Blindness],
+    preventIcons: [PortraitIconEnum.Blind],
+    idsSpells: [
+      { id: SpellIdentifiers.CLERIC_CLOUD_OF_PESTILENCE }, // Sunscorch (IWDification)
+      { id: SpellIdentifiers.CLERIC_SUNSCORCH }, // Cloud of Pestilence (IWDification)
+    ],
+    spells: [
+      "spdr101.spl", // Chromatic Orb
+      "spin595.spl", // Yellow Dragon Scorching Sand
+      "spin878.spl", // Level Drain
+      "spin893.spl", // Shadow Dragon Breath
+      "spin929.spl", // Mist Ball
+      "spin931.spl", // Sooty Ball
+      "sppr704.spl", // Nature's Beauty
+      "sppr707.spl", // Sunray
+      "spwi106.spl", // Blindness
+      "spwi118.spl", // Chromatic Orb
+      "spwi224.spl", // Glitterdust
+      "spwi714.spl", // Prismatic Spray
+      "spwi815.spl", // Power Word, Blind
+      "spwi958.spl", // Power Word, Blind
+      "spwm178.spl", // Blindness
+      "chalcy2.itm", // The Shadow's Blade +3
+      "gorwom4.itm", // Drow Flail +3
+      "halb06.itm", // Blackmist +4
+      "sorb.itm", // Searing Orb
+      "sw1h51.itm", // Celestial Fury +3
+      "wand19.itm", // Wand of Cursing
+    ],
+  },
+  {
+    name: "fireSpells",
+    type: "immunity",
+    description: ["Fire spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.WIZARD_BELTYNS_BURNING_BLOOD }, // Beltyn's Burning Blood (IWDification)
+      { id: SpellIdentifiers.WIZARD_SHROUD_OF_FLAME }, // Shroud of Flame (IWDification)
+      { id: SpellIdentifiers.CLERIC_SUNSCORCH }, // Sunscorch (IWDification)
+      { id: SpellIdentifiers.CLERIC_PRODUCE_FIRE }, // Produe Fire (IWDification)
+      { id: "CLERIC_WALL_OF_FIRE" }, // Wall of Fire (SpellPack)
+    ],
+    spells: [
+      "SPIN561", // Fire Giant Lava Pit (FIRE_GIANT_LAVA)
+      "SPIN819", // Lava Burst (LAVA_BURST)
+      "SPWI022", // Lava Pit (TRAP_MUCK)
+      "SPWI103", // Burning Hands
+      "SPIN131", // Burning Hands
+      "SPWI217", // Agannazar's Scorcher
+      "SPWI940", // Agannazar's Scorcher
+      "SPWI304", // Fireball
+      "DVFBALL", // Fireball (IRR + SRR)
+      "SPIN160", // Breath Fireball
+      "SPWI001", // Fireball
+      "SPWI957", // Fireball
+      "WAND05", // Fireball (IRR)
+      "RR#WI304", // Pit Fiend Fireball
+      "SPWI523", // Sunfire
+      "CDSLSUN", // Sunfire (mod)
+      "A#KOS09", // Sunfire (Divine Remix)
+      "RR#WI103", // RR's burning hand
+      "RR#WI523", // RR's Sunfire (Blazing Glory buckler)
+      "SPWI712", // Delayed Blast Fireball
+      "A#KOS14", // Delayed Blast Fireball (Divine Remix)
+      "SPWI810", // Incendiary Cloud
+      "DW#TRPIN", // Incendiary Cloud (Stratagems)
+      "SPWI911", // Meteor Swarm
+      "SPWI922", // Dragon's Breath
+      "SPIN719", // Meteor Swarm
+      "SPWISH24", // Meteor Swarm
+      "DW#TRPMS", // Meteor Swarm (Stratagems)
+      "SPPR705", // Fire Storm
+      "CA#FSTOM", // Fire Storm (PnP Deva)
+      "RR#PR705", // Fire Storm (atweaks)
+      "RR#MFIFF", // Flame Fan (Fire Mephit)
+      "RR#MFIFJ", // Flame Jet (Fire Mephit)
+      "RR#MFIHA", // Heat Aura (Fire Mephit)
+      "RR#MMAHE", // Heat Emission (Magma Mephit)
+      "rr#eimhe", // Heat Emission (Imix)
+      "rr#eimfb", // Fireball, 20d6 (Imix)
+      "rr#ezafb", // Fireball, 12d6 (Zaaman Rul)
+      "rr#eburn", // Burn (Fire Elemental on-hit effect)
+      "rr#englf", // Engulf, part 1 (Greater Fire Elemental on-hit effect)
+      "RR#GWOF1", // Wall of Fire (Efreet)
+      "rr#gfbth", // Fire breath (Guardian Genie)
+    ],
+  },
+  {
+    name: "coldSpells",
+    type: "immunity",
+    description: ["Cold spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.WIZARD_OTILUKES_FREEZING_SPHERE }, // Otiluke's Freezing Sphere (IWDification)
+      { id: SpellIdentifiers.WIZARD_SNILLOCS_SNOWBALL_SWARM }, // Snilloc's Snowball Swarm (IWDification)
+      { id: SpellIdentifiers.WIZARD_ICELANCE }, // Icelance (IWDification)
+    ],
+    spells: [
+      "SPWI404", // Ice Storm
+      "RR#WI404", // %MOD_FOLDER%/RR Ice Storm
+      "SPWI503", // Cone of Cold
+      "d1#wi503", // Cone of Cold (mod)
+      "DVCONEC", // Cone of Cold (IR)
+      "RR#WI503", // Cone of Cold (%MOD_FOLDER%/RR)
+      "SPCRYO01", // Cone of Cold (mod)
+      "SPIN133", // Cone of Cold (mod)
+      "SPIN158", // Cone of Cold (mod)
+      "SPIN162", // Cone of Cold (mod)
+      "SPIN833", // Dragon Cone of Cold
+      "WAND06", // Cone of Cold (IR)
+      "rr#icew", // aTweaks' Wall of Ice
+      "rr#efrzn", // aTweaks' Freeze (Cryonax)
+      "rr#ehyis", // aTweaks' Ice Storn (Olhydra's version)
+    ],
+  },
+  {
+    name: "electricalSpells",
+    type: "immunity",
+    description: ["Electrical spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.CLERIC_STATIC_CHARGE }, // Static Charge (IWDification)
+    ],
+    spells: [
+      "CDSTAF12", // Lightning Bolt
+      "SPCL722", // Lightning Bolt
+      "SPIN579", // Lightning Bolt
+      "SPIN714", // Lightning Bolt
+      "SPIN932", // Lightning Bolt
+      "SPIN933", // Lightning Bolt
+      "SIN989", // Lightning Bolt
+      "SPWI002", // Lightning Bolt
+      "SPWI017", // Minor Lightning Bolt
+      "SPWI025", // Minor Lightning Bolt
+      "SPWI026", // Minor Lightning Bolt
+      "SPWI027", // Minor Lightning Bolt
+      "SPWI308", // Lightning Bolt
+      "SPWI399", // Lightning Bolt
+      "SPWI997", // Lightning Bolt
+      "RR#WI308", // RR/aTweaks Lightning Bolt
+      "SPDR601", // Chain Lightning
+      "SPWI615", // Chain Lightning
+      "SPBLUN29", // Chain Lightning
+      "SPPR302", // Call Lightning
+      "SPPR987", // Call Lightning
+      "SPIN597", // Blue Dragon Lightning Breath
+    ],
+  },
+  {
+    name: "acidSpells",
+    type: "immunity",
+    description: ["Acid spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.WIZARD_VITRIOLIC_SPHERE }, // Vitriolic Sphere (IWDification)
+      { id: SpellIdentifiers.WIZARD_ACID_STORM }, // Acid Storm (IWDification)
+    ],
+    spells: [
+      "SPIN994", // Acid Pools in Durlag's Tower (ACID_DAMAGE_1)
+      "SPWI614", // Death Fog
+      "A#CYR11", // Death Fog (Divine Remix)
+      "SPIN596", // Brown Dragon Acid Breath
+      "SPIN691", // Black Dragon Breath
+      "SPIN913", // Mimic Acid
+    ],
+  },
+  {
+    name: "cureSpells",
+    type: "immunity",
+    description: ["Cure spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.CLERIC_CAUSE_MODERATE_WOUNDS }, // Cause moderate Wounds (IWDification)
+      { id: SpellIdentifiers.CLERIC_CURE_MODERATE_WOUNDS }, // Cure moderate Wounds  (IWDification)
+      { id: SpellIdentifiers.CLERIC_CAUSE_LIGHT_WOUNDS }, // Cause Light Wounds (IWDification)
+      { id: SpellIdentifiers.CLERIC_CAUSE_MEDIUM_WOUNDS }, // Cause medium Wounds (IWDification)
+      { id: SpellIdentifiers.CLERIC_MASS_CAUSE_LIGHT_WOUNDS }, // Mass Cause Light Wounds (IWDification)
+      { id: SpellIdentifiers.CLERIC_CURE_MEDIUM_WOUNDS }, // Cure Medium Wounds  (Spell Revisions)
+    ],
+    spells: [
+      "SPPR103", // Cure Light Wounds
+      "A#JUSTCL", // Cure Light Wounds (Divine Remix)
+      "ca#culw", // Cure Light Wounds (PnP Deva)
+      "L#KORIEP", // Cure Light Wounds (mod)
+      "A7Q6CURE", // Cure Light Wounds (afaaq)
+      "SPPR401", // Cure Serious Wounds
+      "CA#CURSW", // Cure Serious Wounds (PnP Deva)
+      "SPIN200", // Cure Serious Wounds
+      "SPIN958", // Cure Serious Wounds
+      "SPPR404", // Neutralize Poison
+      "cdilnps", // Neutralize Poison (mod)
+      "scrl08", // Neutralize Poison (IR)
+      "SPIN201", // Neutralize Poison
+      "SPPR502", // Cure Critical Wounds
+      "SPPR514", // Mass Cure
+      "A#RE11", // Mass Cure (Divine Remix)
+      "DVMCURE", // Mass Cure (IR/SR)
+      "RR#PR514", // Mass Cure (atweaks temple)
+      "SPPR607", // Heal
+      "SPWM168", // Heal (Wild Mage)
+      "SPWISH39", // Heal
+      "spin711", // Heal
+      "spin679", // Heal
+      "SPIN101", // Cure Light Wounds (Bhaalpower)
+      "FINP101", // Cure Light Wounds (TOB Bhaalpower Ascension)
+      "fl#bp101", // Cure Light Wounds (TOB Bhaalpower atweal)
+      "SPIN202", // Cause Serious Wounds
+      "SPIN551", // Cause Serious Wounds (Hive Mother)
+      "SPIN986", // Cause Serious Wounds (Beholder)
+      "SPPR414", // Cause Serious Wounds
+      "SPPR510", // Cause critical Wounds
+      "SPCL211", // Paladin Lay On Hands
+      "BHAAL1A", // Mass Healing (Bhaalpower restored by Ascension/UB)
+      "RR#DCSW", // RR/aTweaks Cause Serious Wounds (Marilith)
+      "rr#csw", // aTweaks Cause Serious Wounds (externalized)
+      "rr#ccw", // aTweaks Cause Critical Wounds (externalized)
+      "rr#harm", // aTweaks Harm (externalized)
+      "sppr608", // Harm
+      "sppr699", // Harm
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "cloudSpells",
+    type: "immunity",
+    description: ["Cloud spells immunity"],
+    idsSpells: [
+      { id: SpellIdentifiers.CLERIC_CLOUD_OF_PESTILENCE }, // Cloud of Pestilence (IWDification)
+    ],
+    spells: [
+      "SPWI004", // Stinking Cloud (trap)
+      "SPWI016", // Cloudkill (trap)
+      "SPWI213", // Stinking Cloud
+      "SPWI502", // Cloudkill
+      "SPWI614", // Death Fog
+      "A#CYR11", // Death Fog (Divine Remix)
+      "SPWI810", // Incendiary Cloud
+      "DW#TRPIN", // Incendiary Cloud (Stratagems)
+      "SPIN673", // Cloudkill
+      "dvckill", // Cloudkill (IR/SR)
+      "SPIN940", // Stinking Cloud (mephit)
+      "SPIN979", // Golem Gas Cloud
+      "SPIN642", // Poisonous Cloud
+      "RR#WI502", // aTweaks' Cloudkill (used by Marilith)
+      "RR#MMSWF", // Wall of Fog (aTweaks' Mist Mephit)
+      "RR#FCLD", // Fog Cloud (aTweaks' Sirine)
+      "RR#FTVAP", // Toxic Vapors (aTweaks' Mustard Jelly)
+      "RR#MOZSC", // Stinking Cloud (aTweaks' Ooze Mephit)
+      "RR#ECHSF", // Solid Fog (aTweaks)
+      "RR#WI213", // Stinking Cloud (aTweaks)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "web",
+    type: "immunity",
+    description: ["Web immunity"],
+    preventEffects: [EffectTypeEnum.Web],
+    preventIcons: [PortraitIconEnum.Webbed],
+    spells: [
+      "SPDR201", // Web (druid version)
+      "SPIN566", // Mimic Web
+      "SPIN575", // Vortex web
+      "SPIN683", // Web Tangle
+      "SPWI215", // Web (wizard version)
+      "D0SPIWEB", // Web (D0QUESTPACK)
+      "ETTERWEB", // Web (heartwood)
+      "spletter", // Web (heartwood)
+      "wand14", // Web (IR/IRR)
+      "wtpin05", // Web (wtp familiar)
+      "rr#spweb", // aTweaks web tangle
+      "rr#spwr2", // Wraith web
+      "rr#wi215", // web (aTweaks)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "entangle",
+    type: "immunity",
+    description: ["Entangle immunity"],
+    idsSpells: [
+      { id: "WIZARD_CHARM_PLANTS" }, // Charm plants (SpellPack)
+    ],
+    spells: [
+      "SPPR105", // Entangle (Priest)
+      "SPWM111", // Entangle (Wild Mage)
+      "SPIN688", // Plant Growth (Black Dragon)
+      "RR#SMENT", // Shambler Entangle (RR)
+      "RR#FENTG", // Hamadryad Entangle (aTweaks)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "insectSpells",
+    type: "immunity",
+    description: ["Insect spells immunity"],
+    spells: [
+      "SPPR319", // Summon Insects
+      "SPPR517", // Insect Plague
+      "SPPR717", // Creeping Doom
+      "SPIN689", // Summon Insects (Black Dragon)
+      "DW#VBAT1", // Bat Cloud (SCSII)
+      "DW#VBAT2", // Bat Cloud (SCSII)
+      "CA#IPLAG", // Insect Plague (PnP Deva)
+      "U#HFDTPD", // Insect Plague (Ruad)
+    ],
+    //TODO: why: LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells duration=120 resist_dispel=3 power=3 displaySpellIneffective=1 END
+    displaySpellIneffective: true,
+  },
+  {
+    name: "petrification",
+    type: "immunity",
+    description: ["Petrification immunity"],
+    preventEffects: [EffectTypeEnum.Petrification],
+    strings: [
+      14665, // Petrified
+      25863, // Petrified
+    ],
+    spells: [
+      "SPWI604", // Flesh to Stone
+      "SPWI604D", // Flesh to Stone
+    ],
+    displaySpellIneffective: true,
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.PETRIFY_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "missileWeapons",
+    type: "immunity",
+    description: ["Missile weapons immunity"],
+    effects: MISSILE_WEAPONS.map((w) => ({
+      opcode: RawEffectTypeEnum.ProtectionFromProjectile,
+      projectile: w,
+    })),
+  },
+  {
+    name: "polymorph",
+    type: "immunity",
+    description: ["Polymorph immunity"],
+    //preventEffects: [EffectTypeEnum.PolymorphIntoSpecific], // not used anymore
+    preventIcons: [PortraitIconEnum.Polymorphed],
+    strings: [
+      14128, // Polymorph
+      25124, // Polymorphed
+      31729, // Polymorphed
+      31732, // Polymorphed
+      31757, // Polymorphed
+    ],
+    spells: [
+      "SPIN538", // Polymorph Other
+      "SPWI415", // Polymorph Other
+      "CA#PAOO", // Polymorph Other (Pnp Celestial)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "vorpal",
+    type: "immunity",
+    description: ["Vorpal immunity"],
+    preventEffects: [EffectTypeEnum.KillTarget, EffectTypeEnum.Slay],
+    strings: [
+      14026, // Death
+    ],
+  },
+  {
+    name: "earthquake",
+    type: "immunity",
+    description: ["Earthquake spells immunity"],
+    spells: [
+      "SPOGRE01", // Earthquake (Ogremoch)
+      "SPPR720", // Earthquake (Priest version)
+      "rr#equa", // Earthquake (aTweaks)
+      "CA#EQ", // Earthquake (PnP Deva)
+      "CDTLQAK", // Earthquake (mod)
+      "rr#r2mud", // Rock to mud spell (Dao)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "cold",
+    type: "immunity",
+    description: ["Cold and magical cold immunity"],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.ColdResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MagicalColdResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "physical",
+    type: "immunity",
+    description: ["All physical damage"],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.CrushingResistanceModifier,
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "unturnable",
+    type: "immunity",
+    description: ["Turn undead immunity"],
+    effects: [{ opcode: RawEffectTypeEnum.ImmunityToTurnUndead }],
+  },
+  {
+    name: "illusion",
+    type: "immunity",
+    description: ["Illusion spells immunity"],
+    spells: [
+      "sppr704", //Nature's beauty
+      "spwi106", //Blindness
+      "IKDB2", //Spook (mod)
+      "spwi125", //Spook
+      "spwi223", //Deafness
+      "spwm178", //Blindness (Wild mage)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "necromancyEffects",
+    type: "immunity",
+    description: ["Necromancy effects immunity"],
+    immunities: ["cureSpells"],
+    spells: [
+      "sppr313", // Holy Smite
+      "sppr314", // Unholy Blight
+      "spwi117", // Chill Touch
+      "spwi117d", // Chill Touch
+      "spwi119", // Larloch's Minor Drain
+      "spwi221", // Ray of Enfeeblement
+      "spwi313", // Skull Trap
+      "spwi314", // Vampiric Touch
+      "spwi812", // Abi-Dalzim's Horrid Wilting
+      "spwi812d", // Abi-Dalzim's Horrid Wilting
+      "spwi914", // Larloch's Energy Drain
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "deathEffects",
+    type: "immunity",
+    description: ["Death effects immunity"],
+    preventEffects: [
+      EffectTypeEnum.DeathKill60HP,
+      EffectTypeEnum.KillTarget,
+      EffectTypeEnum.Slay,
+    ],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SetExtendedSpellState,
+        state: SplStateIdentifiers.DEATH_IMMUNITY,
+      },
+    ],
+  },
+  {
+    name: "deathSpell",
+    type: "immunity",
+    description: ["Death spell immunity"],
+    spells: [
+      "SPWI605", // Death Spell
+      "cdxvdth", // Death Spell (mod)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "mindSpells",
+    type: "immunity",
+    description: [
+      "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
+    ],
+    preventEffects: [EffectTypeEnum.Berserk],
+    immunities: ["charm", "fear", "confusion", "illusion"],
+  },
+  {
+    name: "hover",
+    type: "trait",
+    itemSlot: { file: "ja#i3", slot: ItemSlotEnum.BOOTS },
+    description: [
+      "Hover (flight)",
+      "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
+      "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them",
+    ],
+    immunities: ["entangle", "web"],
+    spells: [
+      "SPIN561", // Fire Giant Lava Pit (FIRE_GIANT_LAVA)
+      "SPIN819", // Lava Burst (LAVA_BURST)
+      "SPIN994", // Acid Pools in Durlag's Tower (ACID_DAMAGE_1)
+      "SPWI022", // Lava Pit (TRAP_MUCK)
+      "SPIN914", // Mimic Glue
+      "SPOGRE01", // Earthquake (Ogremoch)
+      "SPPR720", // Earthquake (Priest version)
+      "rr#equa", // Earthquake (aTweaks)
+      "CA#EQ", // Earthquake (PnP Deva)
+      "CDTLQAK", // Earthquake (mod)
+      "SPWI101", // Grease
+      "rr#r2mud", // Rock to mud spell (Dao)
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "backstab",
+    type: "immunity",
+    description: ["Immunity to backstab"],
+    effects: [{ opcode: RawEffectTypeEnum.ProtectionFromBackstab }],
+  },
+  {
+    name: "criticalHit",
+    type: "immunity",
+    description: ["Immunity to critical hits"],
+  },
+  {
+    name: "devourBrain",
+    type: "immunity",
+    description: ["Immunity to Devour Brain ability (Mind Flayer)"],
+    preventEffects: [EffectTypeEnum.IntelligenceBonus],
+  },
+  {
+    name: "construct",
+    type: "trait",
+    itemSlot: { file: "ja#i1", slot: ItemSlotEnum.HELMET },
+    description: [
+      "Construct trait.",
+      "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
+      "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\nDarkvision out to 60 feet.",
+    ],
+    immunities: [
+      "poison",
+      "sleep",
+      "hold",
+      "bleeding",
+      "stun",
+      "disease",
+      "deathEffects",
+      "necromancyEffects",
+      "mindSpells",
+      "backstab",
+      "criticalHit",
+      "backstab",
+      "abilityDrain",
+      "energyDrain",
+      "fatigue",
+      "petrification",
+      "insectSpells",
+      "infravision",
+    ],
+  },
+  {
+    name: "elemental",
+    type: "trait",
+    description: [
+      "Immunity to poison, sleep effects, paralysis, bleeding, and stunning.",
+      "Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack.",
+      "They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet.",
+    ],
+    immunities: [
+      "poison",
+      "sleep",
+      "hold",
+      "bleeding",
+      "stun",
+      "criticalHit",
+      "backstab",
+      "devourBrain",
+      "petrification",
+      "insectSpells",
+      "infravision",
+    ],
+  },
+  {
+    name: "airAffinity",
+    type: "trait",
+    description: [
+      "Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents.",
+    ],
+    effects: AIR_CREATURES.map(([f, e]): RawEffect[] => [
+      {
+        opcode: RawEffectTypeEnum.DamageVsCreatureTypeModifier,
+        idsFile: f,
+        idsEntry: e,
+        special: 4,
+      },
+      {
+        opcode: RawEffectTypeEnum.Thac0VsCreatureTypeModifier,
+        idsFile: f,
+        idsEntry: e,
+        special: 1,
+      },
+    ]).flat(),
+  },
+  {
+    name: "earthAffinity",
+    type: "trait",
+    description: [
+      "Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell.",
+    ],
+    immunities: ["earthquake"],
+    effects: [...AIR_CREATURES, ...WATER_CREATURES]
+      .map(([f, e]): RawEffect[] => [
+        {
+          opcode: RawEffectTypeEnum.DamageVsCreatureTypeModifier,
+          idsFile: f,
+          idsEntry: e,
+          special: -2,
+        },
+        {
+          opcode: RawEffectTypeEnum.Thac0VsCreatureTypeModifier,
+          idsFile: f,
+          idsEntry: e,
+          special: -2,
+        },
+      ])
+      .flat(),
+  },
+  {
+    name: "skeletal",
+    type: "trait",
+    itemSlot: { file: "ja#i2", slot: ItemSlotEnum.LRING },
+    description: [
+      "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
+    ],
+    immunities: ["cold", "coldSpells"],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "extraplanar",
+    type: "trait",
+    description: [
+      "Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.",
+    ],
+    immunities: ["cureSpells", "deathSpell"],
+  },
+  {
+    name: "plant",
+    type: "trait",
+    description: ["Plants' traits"],
+    immunities: [
+      "disease",
+      "bleeding",
+      "petrification",
+      "stun",
+      "hold",
+      "polymorph",
+      "confusion",
+      "charm",
+      "fear",
+      "sleep",
+      "illusion",
+      "poison",
+      "insectSpells",
+      "entangle",
+    ],
+  },
+  {
+    name: "infravision",
+    type: "trait",
+    description: ["Infravision"],
+    effects: [{ opcode: RawEffectTypeEnum.Infravision }],
+  },
+  {
+    name: "seeInvisible",
+    type: "trait",
+    description: ["See invisible creatures"],
+    effects: [{ opcode: RawEffectTypeEnum.InvisibilityDetection }],
+  },
+  {
+    name: "fireballSpell",
+    type: "immunity",
+    description: ["Fireball spell immunity"],
+    spells: [
+      "BDBLOWUP",
+      "BDDAUSTO",
+      "BDKORLAS",
+      "BDMORLIS",
+      "c0ausp03",
+      "SPWI001",
+      "SPWI304",
+      "SPIN957",
+      "wand05a",
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "lightningBoltSpell",
+    type: "immunity",
+    description: ["Lightning Bolt spell immunity"],
+    spells: [
+      "b_tal10",
+      "c0dm302",
+      "spcl722",
+      "spdr301",
+      "spin714",
+      "spin933",
+      "spin989",
+      "SPWI002",
+      "SPWI017",
+      "SPWI231",
+      "SPWI308",
+      "SPWI399",
+      "SPWI997",
+      "wand07",
+    ],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "flameArrowSpell",
+    type: "immunity",
+    description: ["Flame Arrow spell immunity"],
+    spells: ["d5f2303", "d5p2303", "d5p2303W", "d5y391i", "SPWI303", "SPWI888"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "incorporeal",
+    itemSlot: { file: "ja#i4", slot: ItemSlotEnum.LRING },
+    type: "trait",
+    description: [
+      "An incorporeal creature has no physical body.",
+      "It can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.",
+      "",
+      "Immune to all nonmagical attacks.",
+      "Has a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).",
+      "Deflection bonus (+3 AC).",
+      "Attacks pass through armor (+4 THAC0).",
+      "Do not set off traps that are triggered by weight.",
+    ],
+    immunities: [],
+    effects: [
+      {
+        opcode: RawEffectTypeEnum.ProtectionFromWeapons,
+        enchantment: 0,
+        type: "NonMagical",
+      },
+      {
+        opcode: RawEffectTypeEnum.Translucency,
+        amount: 99,
+        type: "DrawInstantly",
+      },
+      {
+        opcode: RawEffectTypeEnum.SetColorGlowPulse,
+        color: { red: 125, green: 125, blue: 125 },
+        location: "CharacterColor",
+        cycleSpeed: 30,
+      },
+      {
+        opcode: RawEffectTypeEnum.CreatureRGBColorFade,
+        color: { red: 90, green: 30, blue: 90 },
+        fadeSpeed: 25,
+      },
+      {
+        opcode: RawEffectTypeEnum.DisplayPortraitIcon,
+        icon: "Invulnerable",
+      },
+      {
+        opcode: RawEffectTypeEnum.ArmorClassBonus,
+        value: 3,
+        bonusTo: "AllWeapons",
+      },
+      {
+        opcode: RawEffectTypeEnum.Thac0Bonus,
+        value: 4,
+        type: "Increment",
+      },
+      {
+        opcode: RawEffectTypeEnum.FireResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MagicalFireResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.ColdResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MagicalColdResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.ElectricityResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.AcidResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MagicDamageResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.CrushingResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        value: 50,
+        type: "Set",
+      },
+      { opcode: RawEffectTypeEnum.PoisonResistanceModifier, value: 50 },
+    ],
+  },
+];

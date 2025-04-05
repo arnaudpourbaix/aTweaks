@@ -188,6 +188,7 @@
                 "mindSpells",
                 "necromancyEffects",
                 "petrification",
+                "physical",
                 "polymorph",
                 "poison",
                 "poisonSpells",
@@ -212,6 +213,7 @@
             "type": "string",
             "enum": [
                 "AcidResistanceModifier",
+                "AllSavingThrowsBonus",
                 "ArmorClassBonus",
                 "Berserk",
                 "Blindness",
@@ -224,13 +226,25 @@
                 "ColdResistanceModifier",
                 "Confusion",
                 "ConstitutionBonus",
+                "CreateItemInSlot",
                 "CreatureRGBColorFade",
                 "CrushingResistanceModifier",
+                "CureBerserk",
+                "CureBlindness",
+                "CureConfusion",
+                "CureDeafness",
+                "CureDisease",
+                "CureFeeblemindedness",
+                "CurePoison",
+                "CureSleep",
+                "CureStun",
+                "CurrentHPbonus",
                 "Damage",
                 "DamageVsCreatureTypeModifier",
                 "DeathKill60HP",
                 "DexterityBonus",
                 "Disease",
+                "DispelEffects",
                 "DisplayPortraitIcon",
                 "DisplayString",
                 "ElectricityResistanceModifier",
@@ -278,8 +292,12 @@
                 "ProtectionFromResourceAndMessage",
                 "ProtectionFromWeapons",
                 "Regeneration",
+                "RemoveFear",
+                "RemoveItem",
+                "RemoveParalysis",
                 "RemoveSpecificAreaEffect",
                 "RemoveSpell",
+                "RemoveSpellTypeProtections",
                 "SaveVsDeathModifier",
                 "SaveVsWandModifier",
                 "SaveVsPetrificationModifier",
@@ -1781,13 +1799,22 @@
                     "$ref": "#/definitions/CharmCreatureEffect"
                 },
                 {
+                    "$ref": "#/definitions/CreateItemInSlotEffect"
+                },
+                {
                     "$ref": "#/definitions/CreatureRGBColorFadeEffect"
+                },
+                {
+                    "$ref": "#/definitions/CurrentHPbonusEffect"
                 },
                 {
                     "$ref": "#/definitions/DamageEffect"
                 },
                 {
                     "$ref": "#/definitions/DiseaseEffect"
+                },
+                {
+                    "$ref": "#/definitions/DispelEffectsEffect"
                 },
                 {
                     "$ref": "#/definitions/HasteEffect"
@@ -1844,6 +1871,9 @@
                     "$ref": "#/definitions/RegenerationEffect"
                 },
                 {
+                    "$ref": "#/definitions/RemoveSpellTypeProtectionsEffect"
+                },
+                {
                     "$ref": "#/definitions/ScriptingStateModifierEffect"
                 },
                 {
@@ -1884,6 +1914,15 @@
                     "enum": [
                         "Blindness",
                         "Confusion",
+                        "CureBerserk",
+                        "CureBlindness",
+                        "CureConfusion",
+                        "CureDeafness",
+                        "CureDisease",
+                        "CureFeeblemindedness",
+                        "CurePoison",
+                        "CureSleep",
+                        "CureStun",
                         "Blur",
                         "DeathKill60HP",
                         "ImmunityToTurnUndead",
@@ -1896,6 +1935,9 @@
                         "ProtectionFromAnimation",
                         "ProtectionFromBackstab",
                         "ProtectionFromProjectile",
+                        "RemoveFear",
+                        "RemoveItem",
+                        "RemoveParalysis",
                         "RemoveSpecificAreaEffect",
                         "RemoveSpell",
                         "Slow",
@@ -2641,6 +2683,124 @@
                 "ThrullCharmNoFeedback"
             ]
         },
+        "CreateItemInSlotEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "CreateItemInSlot"
+                },
+                "slot": {
+                    "$ref": "#/definitions/SlotIdentifiers"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "opcode",
+                "slot"
+            ]
+        },
+        "SlotIdentifiers": {
+            "type": "string",
+            "enum": [
+                "SLOT_AMULET",
+                "SLOT_ARMOR",
+                "SLOT_BELT",
+                "SLOT_BOOTS",
+                "SLOT_CLOAK",
+                "SLOT_GAUNTLETS",
+                "SLOT_HELMET",
+                "SLOT_RING_LEFT",
+                "SLOT_RING_RIGHT",
+                "SLOT_SHIELD",
+                "SLOT_FIST",
+                "SLOT_AMMO",
+                "SLOT_MISC",
+                "SLOT_WEAPON",
+                "SLOT_AMMO0",
+                "SLOT_AMMO1",
+                "SLOT_AMMO2",
+                "SLOT_AMMO3",
+                "SLOT_MISC0",
+                "SLOT_MISC1",
+                "SLOT_MISC2",
+                "SLOT_MISC3",
+                "SLOT_MISC4",
+                "SLOT_MISC5",
+                "SLOT_MISC6",
+                "SLOT_MISC7",
+                "SLOT_MISC8",
+                "SLOT_MISC9",
+                "SLOT_MISC10",
+                "SLOT_MISC11",
+                "SLOT_MISC12",
+                "SLOT_MISC13",
+                "SLOT_MISC14",
+                "SLOT_MISC15",
+                "SLOT_MISC16",
+                "SLOT_MISC17",
+                "SLOT_MISC18",
+                "SLOT_MISC19",
+                "SLOT_WEAPON0",
+                "SLOT_WEAPON1",
+                "SLOT_WEAPON2",
+                "SLOT_WEAPON3"
+            ]
+        },
         "CreatureRGBColorFadeEffect": {
             "type": "object",
             "additionalProperties": false,
@@ -2731,6 +2891,100 @@
                 "color",
                 "fadeSpeed",
                 "opcode"
+            ]
+        },
+        "CurrentHPbonusEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "CurrentHPbonus"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "type": {
+                    "$ref": "#/definitions/RawEffectModifierTypeEnum"
+                },
+                "healFlags": {
+                    "$ref": "#/definitions/RawBonusHPHealFlagEnum"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "opcode",
+                "type",
+                "value"
+            ]
+        },
+        "RawEffectModifierTypeEnum": {
+            "type": "string",
+            "enum": [
+                "Increment",
+                "Set",
+                "SetPercentOf",
+                "MultiplyPercent"
+            ]
+        },
+        "RawBonusHPHealFlagEnum": {
+            "type": "number",
+            "enum": [
+                0,
+                1
             ]
         },
         "DamageEffect": {
@@ -2932,6 +3186,99 @@
                 "MoldTouchSingle",
                 "MoldTouchDecrement",
                 "Contagion"
+            ]
+        },
+        "DispelEffectsEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "DispelEffects"
+                },
+                "level": {
+                    "type": "number"
+                },
+                "dispelType": {
+                    "$ref": "#/definitions/RawDispelEffectTypeEnum"
+                },
+                "magicWeaponDispelType": {
+                    "$ref": "#/definitions/RawDispelEffectWeaponTypeEnum"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "level",
+                "opcode"
+            ]
+        },
+        "RawDispelEffectTypeEnum": {
+            "type": "string",
+            "enum": [
+                "AlwaysDispel",
+                "UseCasterLevel",
+                "UseSpecificLevel"
+            ]
+        },
+        "RawDispelEffectWeaponTypeEnum": {
+            "type": "string",
+            "enum": [
+                "AlwaysDispel",
+                "DoNotDispel",
+                "ChanceOfDispel"
             ]
         },
         "HasteEffect": {
@@ -3612,15 +3959,6 @@
                 "opcode",
                 "type",
                 "value"
-            ]
-        },
-        "RawEffectModifierTypeEnum": {
-            "type": "string",
-            "enum": [
-                "Increment",
-                "Set",
-                "SetPercentOf",
-                "MultiplyPercent"
             ]
         },
         "PlayVisualEffect": {
@@ -4433,6 +4771,81 @@
                 "OneHPperAmountSeconds"
             ]
         },
+        "RemoveSpellTypeProtectionsEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "RemoveSpellTypeProtections"
+                },
+                "maximumLevel": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "maximumLevel",
+                "opcode",
+                "type"
+            ]
+        },
         "ScriptingStateModifierEffect": {
             "type": "object",
             "additionalProperties": false,
@@ -5240,6 +5653,7 @@
                         "MoraleModifier",
                         "MoraleBreakModifier",
                         "FatigueBonus",
+                        "AllSavingThrowsBonus",
                         "SaveVsBreathModifier",
                         "SaveVsDeathModifier",
                         "SaveVsPetrificationModifier",

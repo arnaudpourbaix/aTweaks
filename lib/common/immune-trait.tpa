@@ -625,6 +625,14 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION physical_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=100 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION unturnable_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=297 parameter2=1 END

@@ -580,6 +580,17 @@
         ]
     },
     {
+        "name": "physical",
+        "type": "immunity",
+        "description": [ "All physical damage" ],
+        "effects": [
+            { "opcode": "SlashingResistanceModifier", "value": 100, "type": "Set" },
+            { "opcode": "PiercingResistanceModifier", "value": 100, "type": "Set" },
+            { "opcode": "MissilesResistanceModifier", "value": 100, "type": "Set" },
+            { "opcode": "CrushingResistanceModifier", "value": 100, "type": "Set" }
+        ]
+    },
+    {
         "name": "unturnable",
         "type": "immunity",
         "description": [ "Turn undead immunity" ],

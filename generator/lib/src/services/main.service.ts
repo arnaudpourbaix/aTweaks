@@ -1,0 +1,345 @@
+import chalk from "chalk";
+import * as fs from "fs";
+import { grabDefaultConfig } from "../../config/grab";
+import { CreatureAbility } from "../model/final/ability";
+import { CreatureAttack, CreatureAttackAction } from "../model/final/attack";
+import { Creature, CreatureAdditionalData, CreatureAdjustment, CreatureData } from "../model/final/creature";
+import { Effect } from "../model/final/effect";
+import { EffectTypeEnum } from "../model/final/effect.type";
+import { AbilityDamageTypeEnum, EffectIDSFileEnum, ItemAbilityFlagEnum, ItemAbilityLocationEnum, ItemAbilitySecondaryTypeEnum, ItemAbilityTargetEnum, ItemAbilityTypeEnum, ItemAnimationEnum, ItemCategoryEnum, ItemFlagEnum, ProficiencyTypeEnum, SpellFlagEnum, SpellTypeEnum } from "../model/final/enums";
+import { Item } from "../model/final/item";
+import { AreaProjectileEnum, BamProjectileFlagsEnum, ParticleColorEnum, Projectile, ProjectileAnimationEnum, ProjectileBehaviorEnum, ProjectileExplosionEffectEnum, ProjectileExtendedFlagsEnum, ProjectileTypeEnum } from "../model/final/projectile";
+import { Spell } from "../model/final/spell";
+import { RawCreatureAbility } from "../model/raw/ability";
+import { RawCreature, RawCreatureAdditionalData } from "../model/raw/creature";
+import { RawEffect } from "../model/raw/effect";
+import { RawAlterItem, RawCreateItem, RawItem, RawItemSlot } from "../model/raw/item";
+import { RawProjectile } from "../model/raw/projectile";
+import { RawAlterSpell, RawCreateSpell, RawMemorizedSpell, RawSpell } from "../model/raw/spell";
+import { BafGeneratorService } from "./baf-generator.service";
+import { CreatureService } from "./creature.service";
+import { EffectService } from "./effect.service";
+import { ImmunityService } from "./immunity.service";
+import { TargetService } from "./target.service";
+import { UtilsService } from "./utils.service";
+import { WeiduCoreService } from "./weidu-core.service";
+import { WeiduCreatureService } from "./weidu-creature.service";
+import { WeiduFunctionService } from "./weidu-function.service";
+
+export class MainService {
+  private effectService = EffectService.instance;
+  private bafService = BafGeneratorService.instance;
+  private weiduCreatureService = WeiduCreatureService.instance;
+  private weiduFunctionService = WeiduFunctionService.instance;
+  private weiduCoreService = WeiduCoreService.instance;
+  private immunityService = ImmunityService.instance;
+  private creatureService = CreatureService.instance;
+  private targerService = TargetService.instance;
+  private utils = UtilsService.instance;
+
+  generateCommonCode(): Promise<void> {
+    this.weiduFunctionService.generateFunctions();
+    this.weiduCoreService.writeFile();
+    return Promise.resolve();
+  }
+
+  processFile(filename: string): Promise<void> {
+    console.log(chalk.bold(`Processing ${this.utils.getFile(filename).name}...`));
+    const creature = this.getCreature(filename);
+    if (creature.bafFile) {
+      this.bafService.generateBafScript(creature);
+    }
+    this.weiduCreatureService.generateWeiduScript(creature);
+    return Promise.resolve();
+  }
+
+  private getCreature(filename: string): Creature {
+    try {
+      const file = fs.readFileSync(filename, { encoding: "utf8", flag: "r" });
+      const rawCreature: RawCreature = JSON.parse(file);
+      const creature: Creature = {
+        tracking: true,
+        help: true,
+        walk: false,
+        combatWalk: true,
+        restHeal: false,
+        hideInShadows: false,
+        initActions: [],
+        dualWielding: false,
+        autoGenerate: {
+          hitPoints: true,
+          savingThrows: true,
+          thac0: true,
+          enchantment: true,
+          meleeRange: true
+        },
+        ...rawCreature,
+        data: { ...rawCreature.data },
+        abilities: this.mapAbilities(rawCreature.abilities),
+        customCode: rawCreature.customCode ?? [],
+        adjustments: this.mapAdjustments(rawCreature),
+        additionalData: this.mapAdditionalData({ additionalData: rawCreature.additionalData, spells: rawCreature.spells, items: rawCreature.items }),
+        items: this.mapItems(rawCreature.items),
+        spells: this.mapSpells(rawCreature.spells),
+        attack: this.mapAttack(rawCreature),
+        projectiles: this.mapProjectiles(rawCreature.projectiles)
+      };
+      if (creature.dualWielding) {
+        this.dualWielding(creature);
+      }
+      if (creature.data.movement) {
+        creature.data.movement = this.creatureService.convertMovement(creature.data.movement);
+      }
+      this.transformAttackPerRound(creature.data);
+      for (const a of creature.adjustments) {
+        this.transformAttackPerRound(a.data);
+      }
+      if (rawCreature.autoGenerate?.hitPoints === undefined) creature.autoGenerate.hitPoints = creature.data.hp === undefined;
+      if (rawCreature.autoGenerate?.savingThrows === undefined) creature.autoGenerate.savingThrows = creature.data.saveBreath === undefined;
+      if (rawCreature.autoGenerate?.thac0 === undefined) creature.autoGenerate.thac0 = creature.data.thac0 === undefined;
+      this.immunityService.handleImmunities(creature);
+      return creature;
+    } catch (error: unknown) {
+      console.error(chalk.red(`${filename} is not a valid json file!`));
+      throw error;
+    }
+  }
+
+  private transformAttackPerRound(creature?: CreatureData) {
+    if (!creature || !creature.apr) return;
+    else if (creature.apr === 0.5) { return creature.apr = 6; }
+    else if (creature.apr === 1.5) { return creature.apr = 7; }
+    else if (creature.apr === 2.5) { return creature.apr = 8; }
+    else if (creature.apr === 3.5) { return creature.apr = 9; }
+    else if (creature.apr === 4.5) { return creature.apr = 10; }
+    else if (creature.apr < 6) return;
+    creature.doubleApr = true;
+    if (creature.movement) {
+      creature.movement = Math.round(creature.movement / 2);
+    }
+    switch (creature.apr) {
+      case 6:
+        creature.apr = 3;
+        break;
+      case 7:
+        creature.apr = 9;
+        break;
+      case 8:
+        creature.apr = 4;
+        break;
+      case 9:
+        creature.apr = 10;
+        break;
+      case 10:
+        creature.apr = 5;
+        break;
+    }
+  }
+
+  private mapAdjustments(creature: RawCreature): CreatureAdjustment[] {
+    if (!creature.adjustments) return [];
+    const results: CreatureAdjustment[] = creature.adjustments.map(a => ({
+      ...a,
+      additionalData: this.mapAdditionalData({ additionalData: a.additionalData }),
+    }));
+    return results;
+  }
+
+  private mapAdditionalData(p: { additionalData?: RawCreatureAdditionalData; items?: RawItem[]; spells?: RawSpell[]; }): CreatureAdditionalData {
+    p.additionalData = p.additionalData ?? {};
+    const result: CreatureAdditionalData = {
+      removeScripts: p.additionalData.removeScripts ?? [],
+      removeItems: p.additionalData.removeItems ?? [],
+      removeKnownSpells: p.additionalData.removeKnownSpells ?? true,
+      removeMemorizedSpells: p.additionalData.removeMemorizedSpells ?? true,
+      immunities: p.additionalData.immunities ?? [],
+      itemSlots: this.mapItemSlots(p.additionalData.itemSlots, p.items),
+      memorizedSpells: this.mapMemorizedSpells(p.additionalData.memorizedSpells, p.spells),
+      scriptLocation: p.additionalData.scriptLocation,
+      proficiencies: p.additionalData.proficiencies ?? [],
+      // proficiencies: (p.additionalData.proficiencies ?? []).map(pr => ({
+      //   type: ProficiencyTypeEnum[pr.type],
+      //   value: pr.value
+      // }))
+    };
+    return result;
+  }
+
+  private dualWielding(creature: Creature) {
+    if (!creature.data.apr) throw new Error('Attacks per round need to be set for dual wielding flag');
+    creature.data.apr -= 1;
+    // const mainhand = creature.items.find(i => i.equippedSlot === ItemSlotEnum.WEAPON1);
+    // if (mainhand) {
+    //   mainhand.bonusToHit = (mainhand.bonusToHit ?? 0) + 4;
+    // }
+    // const offhand = creature.items.find(i => i.equippedSlot === ItemSlotEnum.SHIELD);
+    // if (offhand) {
+    //   offhand.bonusToHit = (offhand.bonusToHit ?? 0) + 8;
+    // }
+  }
+
+  private mapAttack(creature: RawCreature): CreatureAttack {
+    creature.attack = creature.attack ?? {};
+    const defaultAction: CreatureAttackAction = {
+      duration: 6,
+      disableInterrupt: false,
+      responseWeight: 100,
+    };
+    const actions: CreatureAttackAction[] = (creature.attack.actions ?? []).map(a => ({
+      duration: a.duration ?? defaultAction.duration,
+      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
+      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
+      weaponSlot: a.weaponSlot,
+    }));
+    const result: CreatureAttack = {
+      ...creature.attack,
+      actions: actions.length ? actions : [defaultAction],
+      melee: creature.attack.melee ?? true,
+      ranged: creature.attack.ranged ?? false,
+      dualWielding: creature.attack.dualWielding ?? false,
+      grab: creature.attack.grab ? { ...grabDefaultConfig, ...creature.attack.grab } : undefined,
+      targetPriorities: this.targerService.getTargetPriorities(creature)
+    };
+    return result;
+  }
+
+  private mapItems(items: RawItem[] | undefined): Item[] {
+    if (!items) return [];
+    const results: Item[] = items.map(i => 'copyFrom' in i ? this.mapAlterItem(i) : this.mapCreateItem(i));
+    return results;
+  }
+
+  private mapAlterItem(item: RawAlterItem): Item {
+    return {
+      ...item,
+      immunities: item.immunities ?? [],
+      diceSize: item.diceSize ?? 0,
+      diceThrown: item.diceThrown ?? 0,
+      type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
+      flags: item.flags ? item.flags.map(f => ItemFlagEnum[f]) : undefined,
+      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
+      category: item.category ? ItemCategoryEnum[item.category] : undefined,
+      proficiency: item.proficiency ? ProficiencyTypeEnum[item.proficiency] : undefined,
+      location: item.location ? ItemAbilityLocationEnum[item.location] : ItemAbilityLocationEnum.Weapon,
+      target: item.target ? ItemAbilityTargetEnum[item.target] : ItemAbilityTargetEnum.LivingActor,
+      damageType: item.damageType ? AbilityDamageTypeEnum[item.damageType] : AbilityDamageTypeEnum.None,
+      abilityflags: item.abilityFlags ? item.abilityFlags.map(f => ItemAbilityFlagEnum[f]) : undefined,
+      effects: item.effects ? this.mapEffects(item.effects) : [],
+    };
+  }
+
+  private mapCreateItem(item: RawCreateItem): Item {
+    return {
+      ...item,
+      immunities: item.immunities ?? [],
+      diceSize: item.diceSize ?? 0,
+      diceThrown: item.diceThrown ?? 0,
+      type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
+      flags: item.flags ? item.flags.map(f => ItemFlagEnum[f]) : undefined,
+      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
+      category: item.category ? ItemCategoryEnum[item.category] : undefined,
+      proficiency: item.proficiency ? ProficiencyTypeEnum[item.proficiency] : undefined,
+      location: item.location ? ItemAbilityLocationEnum[item.location] : ItemAbilityLocationEnum.Weapon,
+      target: item.target ? ItemAbilityTargetEnum[item.target] : ItemAbilityTargetEnum.LivingActor,
+      damageType: item.damageType ? AbilityDamageTypeEnum[item.damageType] : AbilityDamageTypeEnum.None,
+      abilityflags: item.abilityFlags ? item.abilityFlags.map(f => ItemAbilityFlagEnum[f]) : undefined,
+      effects: item.effects ? this.mapEffects(item.effects) : [],
+    };
+  }
+
+  private mapItemSlots(itemSlots: RawItemSlot[] | undefined, items: RawItem[] | undefined): RawItemSlot[] {
+    const results: RawItemSlot[] = itemSlots ?? [];
+    if (!items) return results;
+    for (const item of items) {
+      if (item.equippedSlot) {
+        results.push({ file: item.file, slot: item.equippedSlot });
+      }
+    }
+    return results;
+  }
+
+  private mapSpells(spells: RawSpell[] | undefined): Spell[] {
+    if (!spells) return [];
+    const results: Spell[] = spells.map(s => 'copyFrom' in s ? this.mapAlterSpell(s) : this.mapCreateSpell(s));
+    return results;
+  }
+
+  private mapAlterSpell(spell: RawAlterSpell): Spell {
+    return {
+      ...spell,
+      copyFrom: this.utils.getSpellResource(spell.copyFrom),
+      spellType: spell.spellType ? SpellTypeEnum[spell.spellType] : undefined,
+      secondaryType: spell.secondaryType ? ItemAbilitySecondaryTypeEnum[spell.secondaryType] : undefined,
+      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
+      location: spell.location ? ItemAbilityLocationEnum[spell.location] : undefined,
+      target: spell.target ? ItemAbilityTargetEnum[spell.target] : undefined,
+      flags: spell.flags ? spell.flags.map(f => SpellFlagEnum[f]) : undefined,
+      effects: spell.effects ? this.mapEffects(spell.effects) : [],
+      removeOpcodes: (spell.removeOpcodes ?? []).map(o => EffectTypeEnum[o])
+    };
+  }
+
+  private mapCreateSpell(spell: RawCreateSpell): Spell {
+    return {
+      ...spell,
+      range: spell.range ?? 0,
+      speed: spell.speed ?? 0,
+      spellType: spell.spellType ? SpellTypeEnum[spell.spellType] : SpellTypeEnum.Innate,
+      spellLevel: spell.spellLevel ?? 1,
+      secondaryType: spell.secondaryType ? ItemAbilitySecondaryTypeEnum[spell.secondaryType] : undefined,
+      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
+      location: spell.location ? ItemAbilityLocationEnum[spell.location] : ItemAbilityLocationEnum.Ability,
+      target: spell.target ? ItemAbilityTargetEnum[spell.target] : ItemAbilityTargetEnum.LivingActor,
+      flags: spell.flags ? spell.flags.map(f => SpellFlagEnum[f]) : undefined,
+      effects: spell.effects ? this.mapEffects(spell.effects) : [],
+      removeOpcodes: (spell.removeOpcodes ?? []).map(o => EffectTypeEnum[o])
+    };
+  }
+
+  private mapMemorizedSpells(memorizedSpells: RawMemorizedSpell[] | undefined, spells: RawSpell[] | undefined): RawMemorizedSpell[] {
+    const results: RawMemorizedSpell[] = memorizedSpells ?? [];
+    if (!spells) return results;
+    for (const spell of spells) {
+      if (spell.memorizedCount) {
+        results.push({ file: spell.file, memorizedCount: spell.memorizedCount });
+      }
+    }
+    return results;
+  }
+
+  private mapEffects(effects: RawEffect[]): Effect[] {
+    const results = this.effectService.getEffects(effects);
+    return results;
+  }
+
+  private mapProjectiles(projectiles: RawProjectile[] | undefined): Projectile[] {
+    if (!projectiles) return [];
+    const results: Projectile[] = projectiles.map(p => ({
+      ...p,
+      type: p.type ? ProjectileTypeEnum[p.type] : undefined,
+      behaviorFlags: (p.behaviorFlags ?? []).map(f => ProjectileBehaviorEnum[f]),
+      particleColor: p.particleColor ? ParticleColorEnum[p.particleColor] : undefined,
+      extendedFlags: (p.extendedFlags ?? []).map(f => ProjectileExtendedFlagsEnum[f]),
+      idsTarget1: p.idsTarget1 ? EffectIDSFileEnum[p.idsTarget1] : undefined,
+      idsTarget2: p.idsTarget2 ? EffectIDSFileEnum[p.idsTarget2] : undefined,
+      bamProjectileFlags: (p.bamProjectileFlags ?? []).map(f => BamProjectileFlagsEnum[f]),
+      projectileSmokeAnimation: p.projectileSmokeAnimation ? ProjectileAnimationEnum[p.projectileSmokeAnimation] : undefined,
+      fragmentAnimation: p.fragmentAnimation ? ProjectileAnimationEnum[p.fragmentAnimation] : undefined,
+      areaProjectileFlags: (p.areaProjectileFlags ?? []).map(f => AreaProjectileEnum[f]),
+      explosionEffect: p.explosionEffect ? ProjectileExplosionEffectEnum[p.explosionEffect] : undefined
+    }));
+    return results;
+  }
+
+  private mapAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
+    if (!abilities) return [];
+    return abilities.map(a => ({
+      ...a,
+      triggers: a.triggers ?? [],
+      isTargetSpell: a.isTargetSpell ?? false
+    }))
+  }
+
+}
+
+

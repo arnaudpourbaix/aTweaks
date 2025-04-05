@@ -2011,6 +2011,7 @@
                 "mindSpells",
                 "necromancyEffects",
                 "petrification",
+                "physical",
                 "polymorph",
                 "poison",
                 "poisonSpells",
@@ -2489,6 +2490,9 @@
                     "$ref": "#/definitions/CharmCreatureEffect"
                 },
                 {
+                    "$ref": "#/definitions/CreateItemInSlotEffect"
+                },
+                {
                     "$ref": "#/definitions/CreatureRGBColorFadeEffect"
                 },
                 {
@@ -2589,6 +2593,9 @@
                 },
                 {
                     "$ref": "#/definitions/RestrainedEffect"
+                },
+                {
+                    "$ref": "#/definitions/CureAllEffectsEffect"
                 }
             ]
         },
@@ -3333,6 +3340,124 @@
                 "ThrullCharmNoFeedback"
             ]
         },
+        "CreateItemInSlotEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "CreateItemInSlot"
+                },
+                "slot": {
+                    "$ref": "#/definitions/SlotIdentifiers"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "opcode",
+                "slot"
+            ]
+        },
+        "SlotIdentifiers": {
+            "type": "string",
+            "enum": [
+                "SLOT_AMULET",
+                "SLOT_ARMOR",
+                "SLOT_BELT",
+                "SLOT_BOOTS",
+                "SLOT_CLOAK",
+                "SLOT_GAUNTLETS",
+                "SLOT_HELMET",
+                "SLOT_RING_LEFT",
+                "SLOT_RING_RIGHT",
+                "SLOT_SHIELD",
+                "SLOT_FIST",
+                "SLOT_AMMO",
+                "SLOT_MISC",
+                "SLOT_WEAPON",
+                "SLOT_AMMO0",
+                "SLOT_AMMO1",
+                "SLOT_AMMO2",
+                "SLOT_AMMO3",
+                "SLOT_MISC0",
+                "SLOT_MISC1",
+                "SLOT_MISC2",
+                "SLOT_MISC3",
+                "SLOT_MISC4",
+                "SLOT_MISC5",
+                "SLOT_MISC6",
+                "SLOT_MISC7",
+                "SLOT_MISC8",
+                "SLOT_MISC9",
+                "SLOT_MISC10",
+                "SLOT_MISC11",
+                "SLOT_MISC12",
+                "SLOT_MISC13",
+                "SLOT_MISC14",
+                "SLOT_MISC15",
+                "SLOT_MISC16",
+                "SLOT_MISC17",
+                "SLOT_MISC18",
+                "SLOT_MISC19",
+                "SLOT_WEAPON0",
+                "SLOT_WEAPON1",
+                "SLOT_WEAPON2",
+                "SLOT_WEAPON3"
+            ]
+        },
         "CreatureRGBColorFadeEffect": {
             "type": "object",
             "additionalProperties": false,
@@ -3983,9 +4108,7 @@
                 }
             },
             "required": [
-                "dispelType",
                 "level",
-                "magicWeaponDispelType",
                 "opcode"
             ]
         },
@@ -6850,6 +6973,73 @@
                 "opcode"
             ]
         },
+        "CureAllEffectsEffect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "opcode": {
+                    "type": "string",
+                    "const": "CureAllEffects"
+                },
+                "target": {
+                    "$ref": "#/definitions/RawEffectTargetEnum"
+                },
+                "power": {
+                    "type": "number"
+                },
+                "timing": {
+                    "$ref": "#/definitions/RawEffectTimingEnum"
+                },
+                "dispelResistance": {
+                    "$ref": "#/definitions/RawEffectDispelResistanceEnum"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "probability1": {
+                    "type": "number"
+                },
+                "probability2": {
+                    "type": "number"
+                },
+                "saveTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawSaveTypeEnum"
+                    }
+                },
+                "saveBonus": {
+                    "type": "number"
+                },
+                "diceThrown": {
+                    "type": "number"
+                },
+                "diceSize": {
+                    "type": "number"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RawEffectFlagsEnum"
+                    }
+                },
+                "resource": {
+                    "type": "string"
+                },
+                "special": {
+                    "type": "number"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "opcode"
+            ]
+        },
         "RawCreateItem": {
             "type": "object",
             "properties": {
@@ -6999,7 +7189,10 @@
                     "type": "number"
                 },
                 "stringRef": {
-                    "type": "number"
+                    "type": [
+                        "number",
+                        "string"
+                    ]
                 },
                 "description": {
                     "type": "array",
@@ -8381,7 +8574,10 @@
                     "type": "number"
                 },
                 "stringRef": {
-                    "type": "number"
+                    "type": [
+                        "number",
+                        "string"
+                    ]
                 },
                 "description": {
                     "type": "array",

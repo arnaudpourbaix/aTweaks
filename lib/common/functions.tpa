@@ -16,31 +16,26 @@ BEGIN
   LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%effects%" RET_ARRAY array1=array END
   PATCH_PHP_EACH array1 AS _ => v BEGIN
     // Immunity to effect
-    // PATCH_PRINT ~Immunity to effect p2=%v%~
     LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=101 parameter2=v power resist_dispel duration END  
   END
   LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%prevent_icons%" RET_ARRAY array2=array END
   PATCH_PHP_EACH array2 AS _ => v BEGIN
     // Prevent portrait icon
-    // PATCH_PRINT ~Prevent portrait icon p2=%v%~
     LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=169 parameter2=v power resist_dispel duration END  
   END
   LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%display_icons%" RET_ARRAY array3=array END
   PATCH_PHP_EACH array3 AS _ => v BEGIN
     // Display portrait icon
-    // PATCH_PRINT ~Display portrait icon p2=%v%~
     LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=v power resist_dispel duration END  
   END
   LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%strings%" RET_ARRAY array4=array END
   PATCH_PHP_EACH array4 AS _ => v BEGIN
     // Disable display string
-    // PATCH_PRINT ~Disable display string p1=%v%~
     LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=267 parameter1=v power resist_dispel duration END  
   END
   LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%animations%" RET_ARRAY array5=array END
   PATCH_PHP_EACH array5 AS _ => v BEGIN
     // Protection from Specific Animation
-    // PATCH_PRINT ~Protection from Specific Animation resource=%v%~
     LPF ADD_CRE_EFFECT INT_VAR opcode=296 STR_VAR resource=EVALUATE_BUFFER "%v%" END
   END
   PATCH_PHP_EACH EVAL ~%spells%~ AS _ => v BEGIN

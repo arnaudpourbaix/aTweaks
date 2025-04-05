@@ -1,0 +1,77 @@
+import { RawCreature } from "../src/model/raw/creature";
+
+export const DOG_BLINK: RawCreature = {
+  tpaFile: "lib/pnp-monster/dog/blink",
+  bafFile: "lib/pnp-monster/dog/ja#14",
+  tracking: true,
+  combatWalk: true,
+  data: {
+    level1: 4,
+    strength: 12,
+    dexterity: 17,
+    constitution: 15,
+    intelligence: 9,
+    wisdom: 13,
+    charisma: 11,
+    movement: 12,
+    ac: 5,
+    apr: 1,
+    xpv: 270,
+    alignment: "NEUTRAL",
+    morale: 12,
+    moraleBreak: 4,
+    moraleRecovery: 15,
+    general: "MONSTER",
+    race: "DOG",
+    class: "DOG_WILD",
+    gender: "MALE",
+    size: "Medium",
+  },
+  additionalData: { removeItems: ["P1-6"], removeScripts: ["PSPIDER"] },
+  abilities: [
+    {
+      name: "Blink",
+      target: { name: "FarthestEnemies", random: true },
+      actions: [
+        { name: "ForceSpellRES", params: ["ja#1m14", "LastSeenBy"] },
+        { name: "AttackOneRound", params: ["LastSeenBy"] },
+      ],
+      range: 30,
+    },
+  ],
+  items: [
+    {
+      file: "ja#m14w1",
+      equippedSlot: "WEAPON1",
+      type: "Melee",
+      diceThrown: 1,
+      diceSize: 6,
+      damageType: "Piercing",
+      speed: 3,
+      abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  spells: [
+    {
+      name: "Blink",
+      file: "ja#1m14",
+      memorizedCount: 1,
+      stringRef: 4010,
+      type: "Melee",
+      range: 30,
+      effects: [
+        { opcode: "Teleport", type: "Default", target: "Self" },
+        {
+          opcode: "Thac0Bonus",
+          timing: "InstantLimited",
+          duration: 6,
+          type: "Increment",
+          probability1: 75,
+          value: 2,
+          target: "Self",
+        },
+      ],
+    },
+  ],
+  files: ["DOGBLINK"],
+};
