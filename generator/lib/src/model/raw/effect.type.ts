@@ -1,120 +1,114 @@
-export enum RawSpecialEffectTypeEnum {
-    RestrainedEffects = "RestrainedEffects",
-    CureAllEffects = "CureAllEffects"
-}
-
-export enum RawEffectTypeEnum {
-    AcidResistanceModifier = "AcidResistanceModifier",
-    AllSavingThrowsBonus = "AllSavingThrowsBonus",
-    ArmorClassBonus = "ArmorClassBonus",
-    Berserk = "Berserk",
-    Blindness = "Blindness",
-    Blur = "Blur",
-    CastSpell = "CastSpell",
-    CastSpellOnCondition = "CastSpellOnCondition",
-    CharacterColorPulse = "CharacterColorPulse",
-    CharmCreature = "CharmCreature",
-    CharmControlCreature = "CharmControlCreature",
-    ColdResistanceModifier = "ColdResistanceModifier",
-    Confusion = "Confusion",
-    ConstitutionBonus = "ConstitutionBonus",
-    CreateItemInSlot = "CreateItemInSlot",
-    CreatureRGBColorFade = "CreatureRGBColorFade",
-    CrushingResistanceModifier = "CrushingResistanceModifier",
-    CureBerserk = "CureBerserk",
-    CureBlindness = "CureBlindness",
-    CureConfusion = "CureConfusion",
-    CureDeafness = "CureDeafness",
-    CureDisease = "CureDisease",
-    CureFeeblemindedness = "CureFeeblemindedness",
-    CurePoison = "CurePoison",
-    CureSleep = "CureSleep",
-    CureStun = "CureStun",
-    CurrentHPbonus = "CurrentHPbonus",
-    Damage = "Damage",
-    DamageVsCreatureTypeModifier = "DamageVsCreatureTypeModifier",
-    DeathKill60HP = "DeathKill60HP",
-    DexterityBonus = "DexterityBonus",
-    Disease = "Disease",
-    DispelEffects = "DispelEffects",
-    DisplayPortraitIcon = "DisplayPortraitIcon",
-    DisplayString = "DisplayString",
-    ElectricityResistanceModifier = "ElectricityResistanceModifier",
-    FatigueBonus = "FatigueBonus",
-    FireResistanceModifier = "FireResistanceModifier",
-    Haste = "Haste",
-    Hold = "Hold",
-    ImmunityToTurnUndead = "ImmunityToTurnUndead",
-    Infravision = "Infravision",
-    IntelligenceBonus = "IntelligenceBonus",
-    InvisibilityDetection = "InvisibilityDetection",
-    KillTarget = "KillTarget",
-    LevelDrain = "LevelDrain",
-    LightingEffects = "LightingEffects",
-    MagicalColdResistanceModifier = "MagicalColdResistanceModifier",
-    MagicalFireResistanceModifier = "MagicalFireResistanceModifier",
-    MagicDamageResistanceModifier = "MagicDamageResistanceModifier",
-    MaximumHPModifier = "MaximumHPModifier",
-    MinimumHP = "MinimumHP",
-    MissilesResistanceModifier = "MissilesResistanceModifier",
-    ModifyCollisionBehavior = "ModifyCollisionBehavior",
-    MoraleModifier = "MoraleModifier",
-    MoraleBreakModifier = "MoraleBreakModifier",
-    MovementRateBonus = "MovementRateBonus",
-    /**
-     * As opcode 126, but unaffected by Free Action
-     */
-    MovementRateBonus2 = "MovementRateBonus2",
-    OffhandThac0Bonus = "OffhandThac0Bonus",
-    Panic = "Panic",
-    Paralyze = "Paralyze",
-    Petrification = "Petrification",
-    PiercingResistanceModifier = "PiercingResistanceModifier",
-    PlaySound = "PlaySound",
-    PlayVisualEffect = "PlayVisualEffect",
-    Poison = "Poison",
-    PoisonResistanceModifier = "PoisonResistanceModifier",
-    PolymorphIntoSpecific = "PolymorphIntoSpecific",
-    PreventPortraitIcon = "PreventPortraitIcon",
-    ProficiencyModifier = "ProficiencyModifier",
-    ProtectionFromAnimation = "ProtectionFromAnimation",
-    ProtectionFromBackstab = "ProtectionFromBackstab",
-    ProtectionFromDisplaySpecificString = "ProtectionFromDisplaySpecificString",
-    ProtectionFromOpcode = "ProtectionFromOpcode",
-    ProtectionFromProjectile = "ProtectionFromProjectile",
-    ProtectionFromSpell = "ProtectionFromSpell",
-    ProtectionFromResource = "ProtectionFromResource",
-    ProtectionFromResourceAndMessage = "ProtectionFromResourceAndMessage",
-    ProtectionFromWeapons = "ProtectionFromWeapons",
-    Regeneration = "Regeneration",
-    RemoveFear = "RemoveFear",
-    RemoveItem = "RemoveItem",
-    RemoveParalysis = "RemoveParalysis",
-    RemoveSpecificAreaEffect = "RemoveSpecificAreaEffect",
-    RemoveSpell = "RemoveSpell",
-    RemoveSpellTypeProtections = "RemoveSpellTypeProtections",
-    SaveVsDeathModifier = "SaveVsDeathModifier",
-    SaveVsWandModifier = "SaveVsWandModifier",
-    SaveVsPetrificationModifier = "SaveVsPetrificationModifier",
-    SaveVsBreathModifier = "SaveVsBreathModifier",
-    SaveVsSpellModifier = "SaveVsSpellModifier",
-    ScriptingStateModifier = "ScriptingStateModifier",
-    SetColor = "SetColor",
-    SetColorGlowSolid = "SetColorGlowSolid",
-    SetColorGlowPulse = "SetColorGlowPulse",
-    SetExtendedSpellState = "SetExtendedSpellState",
-    SlashingResistanceModifier = "SlashingResistanceModifier",
-    Slay = "Slay",
-    Sleep = "Sleep",
-    Sleep20HP = "Sleep20HP",
-    Slow = "Slow",
-    Stun = "Stun",
-    StrengthBonus = "StrengthBonus",
-    Stun90HP = "Stun90HP",
-    Thac0VsCreatureTypeModifier = "Thac0VsCreatureTypeModifier",
-    Teleport = "Teleport",
-    Thac0Bonus = "Thac0Bonus",
-    Translucency = "Translucency",
-    UseEFFFile = "UseEFFFile",
-    Web = "Web",
-}
+export type RawEffectOpcode =
+  | "AcidResistanceModifier"
+  | "AllSavingThrowsBonus"
+  | "ArmorClassBonus"
+  | "Berserk"
+  | "Blindness"
+  | "Blur"
+  | "CastSpell"
+  | "CastSpellOnCondition"
+  | "CharacterColorPulse"
+  | "CharmCreature"
+  | "CharmControlCreature"
+  | "ColdResistanceModifier"
+  | "Confusion"
+  | "ConstitutionBonus"
+  | "CreateItemInSlot"
+  | "CreatureRGBColorFade"
+  | "CrushingResistanceModifier"
+  | "CureBerserk"
+  | "CureBlindness"
+  | "CureConfusion"
+  | "CureDeafness"
+  | "CureDisease"
+  | "CureFeeblemindedness"
+  | "CurePoison"
+  | "CureSleep"
+  | "CureStun"
+  | "CurrentHPbonus"
+  | "Damage"
+  | "DamageVsCreatureTypeModifier"
+  | "DeathKill60HP"
+  | "DexterityBonus"
+  | "Disease"
+  | "DispelEffects"
+  | "DisplayPortraitIcon"
+  | "DisplayString"
+  | "ElectricityResistanceModifier"
+  | "FatigueBonus"
+  | "FireResistanceModifier"
+  | "Haste"
+  | "Hold"
+  | "ImmunityToTurnUndead"
+  | "Infravision"
+  | "IntelligenceBonus"
+  | "InvisibilityDetection"
+  | "KillTarget"
+  | "LevelDrain"
+  | "LightingEffects"
+  | "MagicalColdResistanceModifier"
+  | "MagicalFireResistanceModifier"
+  | "MagicDamageResistanceModifier"
+  | "MaximumHPModifier"
+  | "MinimumHP"
+  | "MissilesResistanceModifier"
+  | "ModifyCollisionBehavior"
+  | "MoraleModifier"
+  | "MoraleBreakModifier"
+  | "MovementRateBonus"
+  /**
+   * As opcode 126, but unaffected by Free Action
+   */
+  | "MovementRateBonus2"
+  | "OffhandThac0Bonus"
+  | "Panic"
+  | "Paralyze"
+  | "Petrification"
+  | "PiercingResistanceModifier"
+  | "PlaySound"
+  | "PlayVisualEffect"
+  | "Poison"
+  | "PoisonResistanceModifier"
+  | "PolymorphIntoSpecific"
+  | "PreventPortraitIcon"
+  | "ProficiencyModifier"
+  | "ProtectionFromAnimation"
+  | "ProtectionFromBackstab"
+  | "ProtectionFromDisplaySpecificString"
+  | "ProtectionFromOpcode"
+  | "ProtectionFromProjectile"
+  | "ProtectionFromSpell"
+  | "ProtectionFromResource"
+  | "ProtectionFromResourceAndMessage"
+  | "ProtectionFromWeapons"
+  | "Regeneration"
+  | "RemoveFear"
+  | "RemoveItem"
+  | "RemoveParalysis"
+  | "RemoveSpecificAreaEffect"
+  | "RemoveSpell"
+  | "RemoveSpellTypeProtections"
+  | "SaveVsDeathModifier"
+  | "SaveVsWandModifier"
+  | "SaveVsPetrificationModifier"
+  | "SaveVsBreathModifier"
+  | "SaveVsSpellModifier"
+  | "ScriptingStateModifier"
+  | "SetColor"
+  | "SetColorGlowSolid"
+  | "SetColorGlowPulse"
+  | "SetExtendedSpellState"
+  | "SlashingResistanceModifier"
+  | "Slay"
+  | "Sleep"
+  | "Sleep20HP"
+  | "Slow"
+  | "Stun"
+  | "StrengthBonus"
+  | "Stun90HP"
+  | "Thac0VsCreatureTypeModifier"
+  | "Teleport"
+  | "Thac0Bonus"
+  | "Translucency"
+  | "UseEFFFile"
+  | "Web";

@@ -1,97 +1,194 @@
-export enum ObjectIdentifiers {
-    Nothing = 'Nothing',
-    Myself = 'Myself',
-    LeaderOf = 'LeaderOf',
-    GroupOf = 'GroupOf',
-    WeakestOf = 'WeakestOf',
-    StrongestOf = 'StrongestOf',
-    MostDamagedOf = 'MostDamagedOf',
-    LeastDamagedOf = 'LeastDamagedOf',
-    ProtectedBy = 'ProtectedBy',
-    ProtectorOf = 'ProtectorOf',
-    LastAttackerOf = 'LastAttackerOf',
-    LastTargetedBy = 'LastTargetedBy',
-    LastCommandedBy = 'LastCommandedBy',
-    Nearest = 'Nearest',
-    LastHitter = 'LastHitter',
-    LastHelp = 'LastHelp',
-    LastTrigger = 'LastTrigger',
-    LastSeenBy = 'LastSeenBy',
-    LastTalkedToBy = 'LastTalkedToBy',
-    LastHeardBy = 'LastHeardBy',
-    Player1 = 'Player1',
-    Player2 = 'Player2',
-    Player3 = 'Player3',
-    Player4 = 'Player4',
-    Player5 = 'Player5',
-    Player6 = 'Player6',
-    Protagonist = 'Protagonist',
-    StrongestOfMale = 'StrongestOfMale',
-    NearestEnemyOf = 'NearestEnemyOf',
-    SecondNearestEnemyOf = 'SecondNearestEnemyOf',
-    ThirdNearestEnemyOf = 'ThirdNearestEnemyOf',
-    FourthNearestEnemyOf = 'FourthNearestEnemyOf',
-    FifthNearestEnemyOf = 'FifthNearestEnemyOf',
-    SixthNearestEnemyOf = 'SixthNearestEnemyOf',
-    SeventhNearestEnemyOf = 'SeventhNearestEnemyOf',
-    EighthNearestEnemyOf = 'EighthNearestEnemyOf',
-    NinthNearestEnemyOf = 'NinthNearestEnemyOf',
-    TenthNearestEnemyOf = 'TenthNearestEnemyOf',
-    SecondNearest = 'SecondNearest',
-    ThirdNearest = 'ThirdNearest',
-    FourthNearest = 'FourthNearest',
-    FifthNearest = 'FifthNearest',
-    SixthNearest = 'SixthNearest',
-    SeventhNearest = 'SeventhNearest',
-    EighthNearest = 'EighthNearest',
-    NinthNearest = 'NinthNearest',
-    TenthNearest = 'TenthNearest',
-    WorstAC = 'WorstAC',
-    BestAC = 'BestAC',
-    LastSummonerOf = 'LastSummonerOf',
-    NearestEnemyOfType = 'NearestEnemyOfType',
-    SecondNearestEnemyOfType = 'SecondNearestEnemyOfType',
-    ThirdNearestEnemyOfType = 'ThirdNearestEnemyOfType',
-    FourthNearestEnemyOfType = 'FourthNearestEnemyOfType',
-    FifthNearestEnemyOfType = 'FifthNearestEnemyOfType',
-    SixthNearestEnemyOfType = 'SixthNearestEnemyOfType',
-    SeventhNearestEnemyOfType = 'SeventhNearestEnemyOfType',
-    EigthNearestEnemyOfType = 'EigthNearestEnemyOfType',
-    EighthNearestEnemyOfType = 'EighthNearestEnemyOfType',
-    NinthNearestEnemyOfType = 'NinthNearestEnemyOfType',
-    TenthNearestEnemyOfType = 'TenthNearestEnemyOfType',
-    NearestMyGroupOfType = 'NearestMyGroupOfType',
-    SecondNearestMyGroupOfType = 'SecondNearestMyGroupOfType',
-    ThirdNearestMyGroupOfType = 'ThirdNearestMyGroupOfType',
-    FourthNearestMyGroupOfType = 'FourthNearestMyGroupOfType',
-    FifthNearestMyGroupOfType = 'FifthNearestMyGroupOfType',
-    SixthNearestMyGroupOfType = 'SixthNearestMyGroupOfType',
-    SeventhNearestMyGroupOfType = 'SeventhNearestMyGroupOfType',
-    EigthNearestMyGroupOfType = 'EigthNearestMyGroupOfType',
-    EighthNearestMyGroupOfType = 'EighthNearestMyGroupOfType',
-    NinthNearestMyGroupOfType = 'NinthNearestMyGroupOfType',
-    TenthNearestMyGroupOfType = 'TenthNearestMyGroupOfType',
-    Familiar = 'Familiar',
-    FamiliarSummoner = 'FamiliarSummoner',
-    LastKilled = 'LastKilled',
-    NearestAllyOf = 'NearestAllyOf',
-    SecondNearestAllyOf = 'SecondNearestAllyOf',
-    ThirdNearestAllyOf = 'ThirdNearestAllyOf',
-    FourthNearestAllyOf = 'FourthNearestAllyOf',
-    FifthNearestAllyOf = 'FifthNearestAllyOf',
-    SixthNearestAllyOf = 'SixthNearestAllyOf',
-    SeventhNearestAllyOf = 'SeventhNearestAllyOf',
-    EighthNearestAllyOf = 'EighthNearestAllyOf',
-    NinthNearestAllyOf = 'NinthNearestAllyOf',
-    TenthNearestAllyOf = 'TenthNearestAllyOf',
-    FarthestEnemyOf = 'FarthestEnemyOf',
-    SecondFarthestEnemyOf = 'SecondFarthestEnemyOf',
-    ThirdFarthestEnemyOf = 'ThirdFarthestEnemyOf',
-    FourthFarthestEnemyOf = 'FourthFarthestEnemyOf',
-    FifthFarthestEnemyOf = 'FifthFarthestEnemyOf',
-    SixthFarthestEnemyOf = 'SixthFarthestEnemyOf',
-    SeventhFarthestEnemyOf = 'SeventhFarthestEnemyOf',
-    EighthFarthestEnemyOf = 'EighthFarthestEnemyOf',
-    NinthFarthestEnemyOf = 'NinthFarthestEnemyOf',
-    TenthFarthestEnemyOf = 'TenthFarthestEnemyOf',
-}
+export type ObjectIdentifier =
+  | "Nothing"
+  | "Myself"
+  | "LeaderOf"
+  | "GroupOf"
+  | "WeakestOf"
+  | "StrongestOf"
+  | "MostDamagedOf"
+  | "LeastDamagedOf"
+  | "ProtectedBy"
+  | "ProtectorOf"
+  | "LastAttackerOf"
+  | "LastTargetedBy"
+  | "LastCommandedBy"
+  | "Nearest"
+  | "LastHitter"
+  | "LastHelp"
+  | "LastTrigger"
+  | "LastSeenBy"
+  | "LastTalkedToBy"
+  | "LastHeardBy"
+  | "Player1"
+  | "Player2"
+  | "Player3"
+  | "Player4"
+  | "Player5"
+  | "Player6"
+  | "Protagonist"
+  | "StrongestOfMale"
+  | "NearestEnemyOf"
+  | "SecondNearestEnemyOf"
+  | "ThirdNearestEnemyOf"
+  | "FourthNearestEnemyOf"
+  | "FifthNearestEnemyOf"
+  | "SixthNearestEnemyOf"
+  | "SeventhNearestEnemyOf"
+  | "EighthNearestEnemyOf"
+  | "NinthNearestEnemyOf"
+  | "TenthNearestEnemyOf"
+  | "SecondNearest"
+  | "ThirdNearest"
+  | "FourthNearest"
+  | "FifthNearest"
+  | "SixthNearest"
+  | "SeventhNearest"
+  | "EighthNearest"
+  | "NinthNearest"
+  | "TenthNearest"
+  | "WorstAC"
+  | "BestAC"
+  | "LastSummonerOf"
+  | "NearestEnemyOfType"
+  | "SecondNearestEnemyOfType"
+  | "ThirdNearestEnemyOfType"
+  | "FourthNearestEnemyOfType"
+  | "FifthNearestEnemyOfType"
+  | "SixthNearestEnemyOfType"
+  | "SeventhNearestEnemyOfType"
+  | "EigthNearestEnemyOfType"
+  | "EighthNearestEnemyOfType"
+  | "NinthNearestEnemyOfType"
+  | "TenthNearestEnemyOfType"
+  | "NearestMyGroupOfType"
+  | "SecondNearestMyGroupOfType"
+  | "ThirdNearestMyGroupOfType"
+  | "FourthNearestMyGroupOfType"
+  | "FifthNearestMyGroupOfType"
+  | "SixthNearestMyGroupOfType"
+  | "SeventhNearestMyGroupOfType"
+  | "EigthNearestMyGroupOfType"
+  | "EighthNearestMyGroupOfType"
+  | "NinthNearestMyGroupOfType"
+  | "TenthNearestMyGroupOfType"
+  | "Familiar"
+  | "FamiliarSummoner"
+  | "LastKilled"
+  | "NearestAllyOf"
+  | "SecondNearestAllyOf"
+  | "ThirdNearestAllyOf"
+  | "FourthNearestAllyOf"
+  | "FifthNearestAllyOf"
+  | "SixthNearestAllyOf"
+  | "SeventhNearestAllyOf"
+  | "EighthNearestAllyOf"
+  | "NinthNearestAllyOf"
+  | "TenthNearestAllyOf"
+  | "FarthestEnemyOf"
+  | "SecondFarthestEnemyOf"
+  | "ThirdFarthestEnemyOf"
+  | "FourthFarthestEnemyOf"
+  | "FifthFarthestEnemyOf"
+  | "SixthFarthestEnemyOf"
+  | "SeventhFarthestEnemyOf"
+  | "EighthFarthestEnemyOf"
+  | "NinthFarthestEnemyOf"
+  | "TenthFarthestEnemyOf";
+
+export const OBJECT_IDENTIFIERS = [
+  "Nothing",
+  "Myself",
+  "LeaderOf",
+  "GroupOf",
+  "WeakestOf",
+  "StrongestOf",
+  "MostDamagedOf",
+  "LeastDamagedOf",
+  "ProtectedBy",
+  "ProtectorOf",
+  "LastAttackerOf",
+  "LastTargetedBy",
+  "LastCommandedBy",
+  "Nearest",
+  "LastHitter",
+  "LastHelp",
+  "LastTrigger",
+  "LastSeenBy",
+  "LastTalkedToBy",
+  "LastHeardBy",
+  "Player1",
+  "Player2",
+  "Player3",
+  "Player4",
+  "Player5",
+  "Player6",
+  "Protagonist",
+  "StrongestOfMale",
+  "NearestEnemyOf",
+  "SecondNearestEnemyOf",
+  "ThirdNearestEnemyOf",
+  "FourthNearestEnemyOf",
+  "FifthNearestEnemyOf",
+  "SixthNearestEnemyOf",
+  "SeventhNearestEnemyOf",
+  "EighthNearestEnemyOf",
+  "NinthNearestEnemyOf",
+  "TenthNearestEnemyOf",
+  "SecondNearest",
+  "ThirdNearest",
+  "FourthNearest",
+  "FifthNearest",
+  "SixthNearest",
+  "SeventhNearest",
+  "EighthNearest",
+  "NinthNearest",
+  "TenthNearest",
+  "WorstAC",
+  "BestAC",
+  "LastSummonerOf",
+  "NearestEnemyOfType",
+  "SecondNearestEnemyOfType",
+  "ThirdNearestEnemyOfType",
+  "FourthNearestEnemyOfType",
+  "FifthNearestEnemyOfType",
+  "SixthNearestEnemyOfType",
+  "SeventhNearestEnemyOfType",
+  "EigthNearestEnemyOfType",
+  "EighthNearestEnemyOfType",
+  "NinthNearestEnemyOfType",
+  "TenthNearestEnemyOfType",
+  "NearestMyGroupOfType",
+  "SecondNearestMyGroupOfType",
+  "ThirdNearestMyGroupOfType",
+  "FourthNearestMyGroupOfType",
+  "FifthNearestMyGroupOfType",
+  "SixthNearestMyGroupOfType",
+  "SeventhNearestMyGroupOfType",
+  "EigthNearestMyGroupOfType",
+  "EighthNearestMyGroupOfType",
+  "NinthNearestMyGroupOfType",
+  "TenthNearestMyGroupOfType",
+  "Familiar",
+  "FamiliarSummoner",
+  "LastKilled",
+  "NearestAllyOf",
+  "SecondNearestAllyOf",
+  "ThirdNearestAllyOf",
+  "FourthNearestAllyOf",
+  "FifthNearestAllyOf",
+  "SixthNearestAllyOf",
+  "SeventhNearestAllyOf",
+  "EighthNearestAllyOf",
+  "NinthNearestAllyOf",
+  "TenthNearestAllyOf",
+  "FarthestEnemyOf",
+  "SecondFarthestEnemyOf",
+  "ThirdFarthestEnemyOf",
+  "FourthFarthestEnemyOf",
+  "FifthFarthestEnemyOf",
+  "SixthFarthestEnemyOf",
+  "SeventhFarthestEnemyOf",
+  "EighthFarthestEnemyOf",
+  "NinthFarthestEnemyOf",
+  "TenthFarthestEnemyOf",
+];

@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const ANKHEG: RawCreature = {
+  name: "Ankheg",
   bafFile: "lib/pnp-monster/ankheg/ja#m1",
   tpaFile: "lib/pnp-monster/ankheg/main",
   tracking: true,

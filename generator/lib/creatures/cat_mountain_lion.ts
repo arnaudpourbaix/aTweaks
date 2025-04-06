@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
-export const LION_MOUNTAIN: RawCreature = {
+export const CAT_LION_MOUNTAIN: RawCreature = {
+  name: "Mountain Lion",
   tpaFile: "lib/pnp-monster/cat/mountain_lion",
   tracking: true,
   combatWalk: true,

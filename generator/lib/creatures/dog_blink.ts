@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const DOG_BLINK: RawCreature = {
+  name: "Blink Dog",
   tpaFile: "lib/pnp-monster/dog/blink",
   bafFile: "lib/pnp-monster/dog/ja#14",
   tracking: true,

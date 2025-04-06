@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const HORROR_HELMED: RawCreature = {
+  name: "Helmed Horror",
   bafFile: "lib/pnp-monster/horror/ja#m15",
   tpaFile: "lib/pnp-monster/horror/helmed",
   tracking: true,

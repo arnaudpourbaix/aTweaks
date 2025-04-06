@@ -1,8 +1,9 @@
-import { GeneralIdentifiers } from "../ids/general";
+import { RawEffectGroupName } from "../../../config/effect-group-name";
+import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifiers } from "../ids/slot";
 import { SplStateIdentifiers } from "../ids/splstate";
-import { ModifyStatsIdentifiers } from "../ids/stats";
-import { RawEffectTypeEnum, RawSpecialEffectTypeEnum } from "./effect.type";
+import { StatsIdentifiers } from "../ids/stats";
+import { RawEffectOpcode } from "./effect.type";
 import {
   RawBerserkType,
   RawBonusHPHealFlag,
@@ -13,56 +14,56 @@ import {
   RawDiseaseType,
   RawDispelEffectType,
   RawDispelEffectWeaponType,
-  RawEffectBonusToEnum,
+  RawEffectBonusTo,
   RawEffectCastSpellType,
   RawEffectColorLocation,
-  RawEffectDamageModeEnum,
-  RawEffectDamageTypeEnum,
-  RawEffectDispelResistanceEnum,
-  RawEffectFlagsEnum,
+  RawEffectDamageMode,
+  RawEffectDamageType,
+  RawEffectDispelResistance,
+  RawEffectFlags,
   RawEffectHasteType,
   RawEffectIDSFile,
-  RawEffectModifierTypeEnum,
-  RawEffectStatisticModifierEnum,
-  RawEffectTargetEnum,
+  RawEffectModifierType,
+  RawEffectStatisticModifier,
+  RawEffectTarget,
   RawEffectTeleportType,
-  RawEffectTimingEnum,
-  RawEffectVisualEffectLocationEnum,
+  RawEffectTiming,
+  RawEffectVisualEffectLocation,
   RawKillTargetDeathType,
-  RawLightingEffectEnum,
-  RawLightingEffectTargetEnum,
-  RawPoisonTypeEnum,
-  RawPortraitIconEnum,
+  RawLightingEffect,
+  RawLightingEffectTarget,
+  RawPoisonType,
+  RawPortraitIcon,
   RawProficiencyType,
   RawProtectionFromWeaponsType,
   RawRegenerationType,
-  RawSaveTypeEnum,
+  RawSaveType,
   RawTranslucencyType,
 } from "./enum";
 
 export interface RawBaseEffect {
   // opcode: RawEffectTypeEnum;
-  target?: RawEffectTargetEnum;
+  target?: RawEffectTarget;
   power?: number;
   /**
    * default: InstantLimited
    */
-  timing?: RawEffectTimingEnum;
+  timing?: RawEffectTiming;
   /**
    * default: NaturalNonMagical
    */
-  dispelResistance?: RawEffectDispelResistanceEnum;
+  dispelResistance?: RawEffectDispelResistance;
   duration?: number;
   /**
    * default 100
    */
   probability1?: number;
   probability2?: number;
-  saveTypes?: RawSaveTypeEnum[];
+  saveTypes?: RawSaveType[];
   saveBonus?: number;
   diceThrown?: number;
   diceSize?: number;
-  flags?: RawEffectFlagsEnum[];
+  flags?: RawEffectFlags[];
   resource?: string;
   special?: number;
   /**
@@ -73,46 +74,44 @@ export interface RawBaseEffect {
 }
 
 export interface RawSharedEffect {
-  target?: RawEffectTargetEnum;
+  target?: RawEffectTarget;
   power?: number;
-  timing?: RawEffectTimingEnum;
-  dispelResistance?: RawEffectDispelResistanceEnum;
+  timing?: RawEffectTiming;
+  dispelResistance?: RawEffectDispelResistance;
   duration?: number;
   probability1?: number;
   probability2?: number;
-  saveTypes?: RawSaveTypeEnum[];
+  saveTypes?: RawSaveType[];
   saveBonus?: number;
 }
 
 export type ArmorClassBonusEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ArmorClassBonus;
+  opcode: "ArmorClassBonus";
   value: number;
-  bonusTo: RawEffectBonusToEnum;
+  bonusTo: RawEffectBonusTo;
 };
 
 export type CastSpellEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.CastSpell;
+  opcode: "CastSpell";
   castingLevel?: number;
   type: RawEffectCastSpellType;
 };
 
 export type DamageEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Damage;
+  opcode: "Damage";
   amount?: number;
-  type: RawEffectDamageTypeEnum;
-  damageMode?: RawEffectDamageModeEnum;
+  type: RawEffectDamageType;
+  damageMode?: RawEffectDamageMode;
 };
 
 export type SetColorEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.SetColor;
+  opcode: "SetColor";
   color: RawColor;
   location: RawEffectColorLocation;
 };
 
 export type ColorPulseEffect = RawBaseEffect & {
-  opcode:
-    | RawEffectTypeEnum.CharacterColorPulse
-    | RawEffectTypeEnum.SetColorGlowPulse;
+  opcode: "CharacterColorPulse" | "SetColorGlowPulse";
   color: {
     red: number;
     green: number;
@@ -123,7 +122,7 @@ export type ColorPulseEffect = RawBaseEffect & {
 };
 
 export type SetColorGlowEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.SetColorGlowSolid;
+  opcode: "SetColorGlowSolid";
   color: {
     red: number;
     green: number;
@@ -134,126 +133,122 @@ export type SetColorGlowEffect = RawBaseEffect & {
 
 export type StatisticModifierEffect = RawBaseEffect & {
   opcode:
-    | RawEffectTypeEnum.DexterityBonus
-    | RawEffectTypeEnum.IntelligenceBonus
-    | RawEffectTypeEnum.StrengthBonus
-    | RawEffectTypeEnum.ConstitutionBonus
-    | RawEffectTypeEnum.SlashingResistanceModifier
-    | RawEffectTypeEnum.CrushingResistanceModifier
-    | RawEffectTypeEnum.PiercingResistanceModifier
-    | RawEffectTypeEnum.MissilesResistanceModifier
-    | RawEffectTypeEnum.FireResistanceModifier
-    | RawEffectTypeEnum.ColdResistanceModifier
-    | RawEffectTypeEnum.MagicalColdResistanceModifier
-    | RawEffectTypeEnum.MagicalFireResistanceModifier
-    | RawEffectTypeEnum.AcidResistanceModifier
-    | RawEffectTypeEnum.ElectricityResistanceModifier
-    | RawEffectTypeEnum.MagicDamageResistanceModifier
-    | RawEffectTypeEnum.MaximumHPModifier
-    | RawEffectTypeEnum.MoraleModifier
-    | RawEffectTypeEnum.MoraleBreakModifier
-    | RawEffectTypeEnum.FatigueBonus
-    | RawEffectTypeEnum.AllSavingThrowsBonus
-    | RawEffectTypeEnum.SaveVsBreathModifier
-    | RawEffectTypeEnum.SaveVsDeathModifier
-    | RawEffectTypeEnum.SaveVsPetrificationModifier
-    | RawEffectTypeEnum.SaveVsSpellModifier
-    | RawEffectTypeEnum.SaveVsWandModifier;
+    | "DexterityBonus"
+    | "IntelligenceBonus"
+    | "StrengthBonus"
+    | "ConstitutionBonus"
+    | "SlashingResistanceModifier"
+    | "CrushingResistanceModifier"
+    | "PiercingResistanceModifier"
+    | "MissilesResistanceModifier"
+    | "FireResistanceModifier"
+    | "ColdResistanceModifier"
+    | "MagicalColdResistanceModifier"
+    | "MagicalFireResistanceModifier"
+    | "AcidResistanceModifier"
+    | "ElectricityResistanceModifier"
+    | "MagicDamageResistanceModifier"
+    | "MaximumHPModifier"
+    | "MoraleModifier"
+    | "MoraleBreakModifier"
+    | "FatigueBonus"
+    | "AllSavingThrowsBonus"
+    | "SaveVsBreathModifier"
+    | "SaveVsDeathModifier"
+    | "SaveVsPetrificationModifier"
+    | "SaveVsSpellModifier"
+    | "SaveVsWandModifier";
   value: number;
-  type: RawEffectStatisticModifierEnum;
+  type: RawEffectStatisticModifier;
 };
 
 export type ModifierTypeEffect = RawBaseEffect & {
   opcode:
-    | RawEffectTypeEnum.MovementRateBonus
-    | RawEffectTypeEnum.MovementRateBonus2
-    | RawEffectTypeEnum.Thac0Bonus
-    | RawEffectTypeEnum.OffhandThac0Bonus;
+    | "MovementRateBonus"
+    | "MovementRateBonus2"
+    | "Thac0Bonus"
+    | "OffhandThac0Bonus";
   value: number;
-  type: RawEffectModifierTypeEnum;
+  type: RawEffectModifierType;
 };
 
 export type IconEffect = RawBaseEffect & {
-  opcode:
-    | RawEffectTypeEnum.DisplayPortraitIcon
-    | RawEffectTypeEnum.PreventPortraitIcon;
-  icon: RawPortraitIconEnum;
+  opcode: "DisplayPortraitIcon" | "PreventPortraitIcon";
+  icon: RawPortraitIcon;
 };
 
 export type StringRefEffect = RawBaseEffect & {
   opcode:
-    | RawEffectTypeEnum.DisplayString
-    | RawEffectTypeEnum.ProtectionFromSpell
-    | RawEffectTypeEnum.ProtectionFromDisplaySpecificString;
+    | "DisplayString"
+    | "ProtectionFromSpell"
+    | "ProtectionFromDisplaySpecificString";
   stringRef?: number;
 };
 
 export type LightingEffectsEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.LightingEffects;
-  lightingTarget: RawLightingEffectTargetEnum;
-  effect: RawLightingEffectEnum;
+  opcode: "LightingEffects";
+  lightingTarget: RawLightingEffectTarget;
+  effect: RawLightingEffect;
 };
 
 export type PlayVisualEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.PlayVisualEffect;
-  playWhere: RawEffectVisualEffectLocationEnum;
+  opcode: "PlayVisualEffect";
+  playWhere: RawEffectVisualEffectLocation;
   resource: string;
 };
 
 export type IdsEffect = RawBaseEffect & {
   opcode:
-    | RawEffectTypeEnum.Slay
-    | RawEffectTypeEnum.UseEFFFile
-    | RawEffectTypeEnum.Paralyze
-    | RawEffectTypeEnum.Hold
-    | RawEffectTypeEnum.DamageVsCreatureTypeModifier
-    | RawEffectTypeEnum.Thac0VsCreatureTypeModifier;
+    | "Slay"
+    | "UseEFFFile"
+    | "Paralyze"
+    | "Hold"
+    | "DamageVsCreatureTypeModifier"
+    | "Thac0VsCreatureTypeModifier";
   idsEntry: string;
   idsFile: RawEffectIDSFile;
 };
 
 export type HasteEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Haste;
+  opcode: "Haste";
   type: RawEffectHasteType;
 };
 
 export type ProtectionFromOpcodeEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ProtectionFromOpcode;
-  type: RawEffectTypeEnum;
+  opcode: "ProtectionFromOpcode";
+  type: RawEffectOpcode;
 };
 
 export type PoisonEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Poison;
+  opcode: "Poison";
   amount: number;
-  type: RawPoisonTypeEnum;
+  type: RawPoisonType;
 };
 
 export type PoisonResistanceModifierEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.PoisonResistanceModifier;
+  opcode: "PoisonResistanceModifier";
   value: number;
 };
 
 export type ProtectionFromResourceEffect = RawBaseEffect & {
-  opcode:
-    | RawEffectTypeEnum.ProtectionFromResource
-    | RawEffectTypeEnum.ProtectionFromResourceAndMessage;
+  opcode: "ProtectionFromResource" | "ProtectionFromResourceAndMessage";
   value: string;
   type: string;
 };
 
 export type ScriptingStateModifierEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ScriptingStateModifier;
+  opcode: "ScriptingStateModifier";
   value: number;
-  state: ModifyStatsIdentifiers;
+  state: StatsIdentifiers;
 };
 
 export type SetExtendedSpellStateEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.SetExtendedSpellState;
+  opcode: "SetExtendedSpellState";
   state: SplStateIdentifiers | string;
 };
 
 export type CreatureRGBColorFadeEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.CreatureRGBColorFade;
+  opcode: "CreatureRGBColorFade";
   color: {
     red: number;
     green: number;
@@ -263,163 +258,158 @@ export type CreatureRGBColorFadeEffect = RawBaseEffect & {
 };
 
 export type TeleportEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Teleport;
+  opcode: "Teleport";
   type: RawEffectTeleportType;
 };
 
 export type DiseaseEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Disease;
+  opcode: "Disease";
   amount: number;
   type: RawDiseaseType;
-  icon?: RawPortraitIconEnum;
+  icon?: RawPortraitIcon;
 };
 
 export type RegenerationEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Regeneration;
+  opcode: "Regeneration";
   amount: number;
   type: RawRegenerationType;
-  icon?: RawPortraitIconEnum;
+  icon?: RawPortraitIcon;
 };
 
 export type SleepEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Sleep | RawEffectTypeEnum.Sleep20HP;
+  opcode: "Sleep" | "Sleep20HP";
   wakeOnDamage: boolean;
 };
 
 export type CharmCreatureEffect = RawBaseEffect & {
-  opcode:
-    | RawEffectTypeEnum.CharmCreature
-    | RawEffectTypeEnum.CharmControlCreature;
-  generalType: GeneralIdentifiers;
+  opcode: "CharmCreature" | "CharmControlCreature";
+  generalType: GeneralIdentifier;
   charmType: RawCharmType;
 };
 
 export type ProtectionFromProjectileEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ProtectionFromProjectile;
+  opcode: "ProtectionFromProjectile";
   projectile: number;
 };
 
 export type PolymorphIntoSpecificEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.PolymorphIntoSpecific;
+  opcode: "PolymorphIntoSpecific";
   type: number;
 };
 
 export type KillTargetEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.KillTarget;
+  opcode: "KillTarget";
   displayText: boolean;
   type: RawKillTargetDeathType;
 };
 
 export type LevelDrainEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.LevelDrain;
+  opcode: "LevelDrain";
   amount: number;
 };
 
 export type BerserkEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Berserk;
+  opcode: "Berserk";
   type: RawBerserkType;
 };
 
 export type ProficiencyModifierEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ProficiencyModifier;
+  opcode: "ProficiencyModifier";
   amount: number;
   type: RawProficiencyType;
 };
 
 export type ProtectionFromWeaponsEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.ProtectionFromWeapons;
+  opcode: "ProtectionFromWeapons";
   enchantment: number;
   type: RawProtectionFromWeaponsType;
 };
 
 export type TranslucencyEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.Translucency;
+  opcode: "Translucency";
   amount: number;
   type: RawTranslucencyType;
 };
 
 export type MinimumHPEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.MinimumHP;
+  opcode: "MinimumHP";
   value: number;
 };
 
 export type CastSpellOnConditionEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.CastSpellOnCondition;
+  opcode: "CastSpellOnCondition";
   conditionTarget: RawCastSpellOnConditionTarget;
   condition: RawCastSpellOnConditionType;
 };
 
 export type RemoveSpellTypeProtectionsEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.RemoveSpellTypeProtections;
+  opcode: "RemoveSpellTypeProtections";
   maximumLevel: number;
   type: string;
 };
 
 export type DispelEffectsEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.DispelEffects;
+  opcode: "DispelEffects";
   level: number;
   dispelType?: RawDispelEffectType;
   magicWeaponDispelType?: RawDispelEffectWeaponType;
 };
 
 export type CurrentHPbonusEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.CurrentHPbonus;
+  opcode: "CurrentHPbonus";
   value: number;
-  type: RawEffectModifierTypeEnum;
+  type: RawEffectModifierType;
   healFlags?: RawBonusHPHealFlag;
 };
 
 export type CreateItemInSlotEffect = RawBaseEffect & {
-  opcode: RawEffectTypeEnum.CreateItemInSlot;
+  opcode: "CreateItemInSlot";
   slot: SlotIdentifiers;
 };
 
-export type RestrainedEffect = RawBaseEffect & {
-  opcode: RawSpecialEffectTypeEnum.RestrainedEffects;
-};
-
-export type CureAllEffectsEffect = RawBaseEffect & {
-  opcode: RawSpecialEffectTypeEnum.CureAllEffects;
+export type RawEffectGroup = RawBaseEffect & {
+  opcode: RawEffectGroupName;
 };
 
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
-    | RawEffectTypeEnum.Blindness
-    | RawEffectTypeEnum.Confusion
-    | RawEffectTypeEnum.CureBerserk
-    | RawEffectTypeEnum.CureBlindness
-    | RawEffectTypeEnum.CureConfusion
-    | RawEffectTypeEnum.CureDeafness
-    | RawEffectTypeEnum.CureDisease
-    | RawEffectTypeEnum.CureFeeblemindedness
-    | RawEffectTypeEnum.CurePoison
-    | RawEffectTypeEnum.CureSleep
-    | RawEffectTypeEnum.CureStun
-    | RawEffectTypeEnum.Blur
-    | RawEffectTypeEnum.DeathKill60HP
-    | RawEffectTypeEnum.ImmunityToTurnUndead
-    | RawEffectTypeEnum.Infravision
-    | RawEffectTypeEnum.InvisibilityDetection
-    | RawEffectTypeEnum.ModifyCollisionBehavior
-    | RawEffectTypeEnum.Panic
-    | RawEffectTypeEnum.Petrification
-    | RawEffectTypeEnum.PlaySound
-    | RawEffectTypeEnum.ProtectionFromAnimation
-    | RawEffectTypeEnum.ProtectionFromBackstab
-    | RawEffectTypeEnum.ProtectionFromProjectile
-    | RawEffectTypeEnum.RemoveFear
-    | RawEffectTypeEnum.RemoveItem
-    | RawEffectTypeEnum.RemoveParalysis
-    | RawEffectTypeEnum.RemoveSpecificAreaEffect
-    | RawEffectTypeEnum.RemoveSpell
-    | RawEffectTypeEnum.Slow
-    | RawEffectTypeEnum.Stun
-    | RawEffectTypeEnum.Stun90HP
-    | RawEffectTypeEnum.Web;
+    | "Blindness"
+    | "Confusion"
+    | "CureBerserk"
+    | "CureBlindness"
+    | "CureConfusion"
+    | "CureDeafness"
+    | "CureDisease"
+    | "CureFeeblemindedness"
+    | "CurePoison"
+    | "CureSleep"
+    | "CureStun"
+    | "Blur"
+    | "DeathKill60HP"
+    | "ImmunityToTurnUndead"
+    | "Infravision"
+    | "InvisibilityDetection"
+    | "ModifyCollisionBehavior"
+    | "Panic"
+    | "Petrification"
+    | "PlaySound"
+    | "ProtectionFromAnimation"
+    | "ProtectionFromBackstab"
+    | "ProtectionFromProjectile"
+    | "RemoveFear"
+    | "RemoveItem"
+    | "RemoveParalysis"
+    | "RemoveSpecificAreaEffect"
+    | "RemoveSpell"
+    | "Slow"
+    | "Stun"
+    | "Stun90HP"
+    | "Web";
 };
 
 export type RawEffect =
   | ParamLessEffect
+  | RawEffectGroup
   | ArmorClassBonusEffect
   | BerserkEffect
   | CastSpellEffect
@@ -459,6 +449,4 @@ export type RawEffect =
   | StatisticModifierEffect
   | StringRefEffect
   | TeleportEffect
-  | TranslucencyEffect
-  | RestrainedEffect
-  | CureAllEffectsEffect;
+  | TranslucencyEffect;

@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const BEAR_BROWN: RawCreature = {
+  name: "Brown Bear",
   bafFile: "lib/pnp-monster/bear/ja#m5",
   tpaFile: "lib/pnp-monster/bear/brown",
   tracking: true,

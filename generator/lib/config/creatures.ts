@@ -1,5 +1,5 @@
-import { ClassIdentifiers } from "../src/model/ids/class";
-import { RaceIdentifiers } from "../src/model/ids/race";
+import { ClassIdentifier } from "../src/model/ids/class";
+import { RaceIdentifier } from "../src/model/ids/race";
 import { RawEffectIDSFile } from "../src/model/raw/enum";
 
 export const EARTH_CREATURES: [RawEffectIDSFile, string][] = [

@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
-export const LION: RawCreature = {
+export const CAT_LION: RawCreature = {
+  name: "Lion",
   tpaFile: "lib/pnp-monster/cat/lion",
   tracking: true,
   combatWalk: true,

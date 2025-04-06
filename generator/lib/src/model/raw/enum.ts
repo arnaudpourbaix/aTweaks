@@ -682,7 +682,7 @@ export type RawItemAbilityFlag =
   | "RechargeAfterResting"
   | "BypassArmor";
 
-export type RawSpellFlagEnum =
+export type RawSpellFlag =
   | "BreakSanctuary"
   | "Hostile"
   | "NoLOSRequired"
@@ -691,7 +691,7 @@ export type RawSpellFlagEnum =
   | "CanTargetInvisible"
   | "CastableWhenSilenced";
 
-export type RawEffectTargetEnum =
+export type RawEffectTarget =
   | "None"
   | "Self"
   | "PresetTarget"
@@ -703,7 +703,7 @@ export type RawEffectTargetEnum =
   | "EveryoneExceptSelf"
   | "OriginalCaster";
 
-export type RawEffectTimingEnum =
+export type RawEffectTiming =
   | "InstantLimited"
   | "InstantPermanentUntilDeath"
   | "InstantWhileEquipped"
@@ -716,13 +716,13 @@ export type RawEffectTimingEnum =
   | "InstantPermanent"
   | "InstantLimitedTicks";
 
-export type RawEffectDispelResistanceEnum =
+export type RawEffectDispelResistance =
   | "NaturalNonMagical"
   | "DispelNotBypassResistance"
   | "NotDispelBypassResistance"
   | "DispelBypassResistance";
 
-export type RawEffectDamageTypeEnum =
+export type RawEffectDamageType =
   | "Crushing"
   | "Acid"
   | "Cold"
@@ -737,20 +737,20 @@ export type RawEffectDamageTypeEnum =
   | "MagicCold"
   | "Stunning";
 
-export type RawEffectDamageModeEnum =
+export type RawEffectDamageMode =
   | "Normal"
   | "SetToValue"
   | "SetToPercent"
   | "ReduceByPercentage";
 
-export type RawSaveTypeEnum =
+export type RawSaveType =
   | "Spell"
   | "Breath"
   | "ParalyzePoisonDeath"
   | "RodStaffWand"
   | "PetrifyPolymorph";
 
-export type RawEffectFlagsEnum =
+export type RawEffectFlags =
   | "TransferHPToCasterCumulative"
   | "TransferHPToTargetCumulative"
   | "FistDamageOnly"
@@ -763,26 +763,26 @@ export type RawEffectFlagsEnum =
   | "FailForHalf"
   | "DoesNotWakeSlepeers";
 
-export type RawEffectVisualEffectLocationEnum =
+export type RawEffectVisualEffectLocation =
   | "OverTargetUnattached"
   | "OverTargetAttached"
   | "AtTargetPoint";
 
-export type RawEffectStatisticModifierEnum =
+export type RawEffectStatisticModifier =
   | "Increment"
   | "Set"
   | "Percentage"
   | "Special";
 
-export type RawEffectModifierTypeEnum =
+export type RawEffectModifierType =
   | "Increment"
   | "Set"
   | "SetPercentOf"
   | "MultiplyPercent";
 
-export type RawLightingEffectTargetEnum = "SpellTarget" | "TargetPoint";
+export type RawLightingEffectTarget = "SpellTarget" | "TargetPoint";
 
-export type RawLightingEffectEnum =
+export type RawLightingEffect =
   | "NecromancyAir"
   | "NecromancyEarth"
   | "NecromancyWater"
@@ -816,7 +816,7 @@ export type RawLightingEffectEnum =
   | "HitDoor"
   | "HitFingerOfDeath";
 
-export type RawEffectBonusToEnum =
+export type RawEffectBonusTo =
   | "AllWeapons"
   | "CrushingWeapons"
   | "MissileWeapons"
@@ -824,7 +824,7 @@ export type RawEffectBonusToEnum =
   | "SlashingWeapons"
   | "SetBaseArmorClassToValue";
 
-export type RawPortraitIconEnum =
+export type RawPortraitIcon =
   | "Charm"
   | "DireCharm"
   | "RigidThinking"
@@ -1011,7 +1011,7 @@ export type RawPortraitIconEnum =
   | "FrozenFist"
   | "ArmorOfFaith";
 
-export type RawPoisonTypeEnum =
+export type RawPoisonType =
   | "OneDamagePerSecond"
   | "OneDamagePerSecondBis"
   | "AmountDamagePerSecond"

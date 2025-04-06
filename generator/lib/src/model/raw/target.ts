@@ -1,6 +1,6 @@
 import { TargetListName } from "../../../config/target";
-import { AllegianceIdentifiers } from "../ids/allegiance";
-import { ObjectIdentifiers } from "../ids/object";
+import { AllegianceIdentifier } from "../ids/allegiance";
+import { ObjectIdentifier } from "../ids/object";
 import { OrTrigger, Trigger } from "./script";
 
 export interface TargetPriority {
@@ -27,7 +27,7 @@ export type TargetStatus =
   | "NoCheck";
 
 export interface RawTargetList {
-  name: ObjectIdentifiers | AllegianceIdentifiers | TargetListName;
+  name: ObjectIdentifier | AllegianceIdentifier | TargetListName;
   /**
    * Reverse target list
    */

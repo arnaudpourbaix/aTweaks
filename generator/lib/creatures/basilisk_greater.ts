@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const BASILISK_GREATER: RawCreature = {
+  name: "Greater Basilisk",
   bafFile: "lib/pnp-monster/basilisk/ja#m3",
   tpaFile: "lib/pnp-monster/basilisk/greater",
   tracking: true,

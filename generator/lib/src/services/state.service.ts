@@ -1,7 +1,5 @@
 import chalk from "chalk";
 import * as fs from "fs";
-import path from "path";
-import { GLOBAL_CONFIG } from "../../config/generate";
 import { IMMUNITIES } from "../../config/immunity-config";
 import {
   GenericScriptParameterData,
@@ -18,7 +16,6 @@ export class StateService {
       State.modFolder = "../..";
       this.loadActions();
       this.loadTriggers();
-      this.loadGeneratorConfig();
       this.loadImmunities();
       return Promise.resolve();
     } catch (error) {
@@ -66,19 +63,6 @@ export class StateService {
     });
   }
 
-  private loadGeneratorConfig(): void {
-    const config = GLOBAL_CONFIG;
-    config.commonCreatureFile = path.join(
-      State.modFolder,
-      config.commonCreatureFile
-    );
-    config.commonFunctionsFile = path.join(
-      State.modFolder,
-      config.commonFunctionsFile
-    );
-    State.config = config;
-  }
-
   private loadImmunities(): void {
     State.immunities = IMMUNITIES.map((i) => {
       const result: ImmunityConfig = {
@@ -87,10 +71,10 @@ export class StateService {
         preventEffects: i.preventEffects ?? [],
         preventIcons: i.preventIcons ?? [],
         displayIcons: i.displayIcons ?? [],
-        strings: (i.strings ?? []).map((s) => s[0]),
+        strings: i.strings ?? [],
         animations: i.animations ?? [],
         idsSpells: i.idsSpells ?? [],
-        spells: (i.spells ?? []).map((s) => s[0]),
+        spells: i.spells ?? [],
         displaySpellIneffective: !!i.displaySpellIneffective,
         effects: i.effects ?? [],
       };

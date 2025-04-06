@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const DOG_WILD: RawCreature = {
+  name: "Wild Dog",
   tpaFile: "lib/pnp-monster/dog/wild",
   tracking: true,
   combatWalk: true,

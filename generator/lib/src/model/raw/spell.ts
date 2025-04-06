@@ -1,12 +1,12 @@
 import { SpellIdentifiers } from "../ids/spell";
 import { RawEffect } from "./effect";
-import { RawEffectTypeEnum } from "./effect.type";
+import { RawEffectOpcode } from "./effect.type";
 import {
   RawItemAbilityLocation,
   RawItemAbilitySecondaryType,
   RawItemAbilityTarget,
   RawItemAbilityType,
-  RawSpellFlagEnum,
+  RawSpellFlag,
   RawSpellType,
 } from "./enum";
 
@@ -65,9 +65,9 @@ export interface RawBaseSpell {
   target?: RawItemAbilityTarget;
   location?: RawItemAbilityLocation;
   projectile?: string;
-  flags?: RawSpellFlagEnum[];
+  flags?: RawSpellFlag[];
   effects?: RawEffect[];
-  removeOpcodes?: RawEffectTypeEnum[];
+  removeOpcodes?: RawEffectOpcode[];
 }
 
 export interface RawMemorizedSpell {

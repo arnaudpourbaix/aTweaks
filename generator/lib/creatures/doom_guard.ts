@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const DOOM_GUARD: RawCreature = {
+  name: "Doom Guard",
   bafFile: "lib/pnp-monster/doom_guard/ja#m16",
   tpaFile: "lib/pnp-monster/doom_guard/main",
   tracking: true,

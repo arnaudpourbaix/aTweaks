@@ -4,7 +4,7 @@ import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
 import { SpellIdentifiers } from "../src/model/ids/spell";
 import { SplStateIdentifiers } from "../src/model/ids/splstate";
 import { RawEffect } from "../src/model/raw/effect";
-import { RawEffectTypeEnum } from "../src/model/raw/effect.type";
+import { RawEffectOpcode } from "../src/model/raw/effect.type";
 import { RawImmunityConfig } from "../src/model/raw/immunity";
 import { ItemSlotEnum } from "../src/model/raw/item";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";

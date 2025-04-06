@@ -1,6 +1,7 @@
 import { RawCreature } from "../src/model/raw/creature";
 
 export const CARRION_CRAWLER: RawCreature = {
+  name: "Carrion Crawler",
   bafFile: "lib/pnp-monster/carrion/ja#m9",
   tpaFile: "lib/pnp-monster/carrion/carrion_crawler",
   tracking: true,

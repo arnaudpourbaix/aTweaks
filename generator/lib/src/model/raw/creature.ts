@@ -1,10 +1,10 @@
 import { ImmunityName } from "../../../config/immunity-name";
-import { AlignIdentifiers } from "../ids/align";
+import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
-import { ClassIdentifiers } from "../ids/class";
-import { GenderIdentifiers } from "../ids/gender";
-import { GeneralIdentifiers } from "../ids/general";
-import { RaceIdentifiers } from "../ids/race";
+import { ClassIdentifier } from "../ids/class";
+import { GenderIdentifier } from "../ids/gender";
+import { GeneralIdentifier } from "../ids/general";
+import { RaceIdentifier } from "../ids/race";
 import { RawCreatureAbility } from "./ability";
 import { RawCreatureAttack } from "./attack";
 import { CreatureSize, RawProficiencyType } from "./enum";
@@ -14,6 +14,7 @@ import { Action, CustomCode } from "./script";
 import { RawMemorizedSpell, RawSpell } from "./spell";
 
 export interface RawCreature {
+  name: string;
   /**
    * Filename for BAF file (without extension)
    */
@@ -139,7 +140,7 @@ export interface RawCreatureData {
   xpv?: number;
   hideShadow?: number;
   moveSilent?: number;
-  alignment?: AlignIdentifiers;
+  alignment?: AlignIdentifier;
   saveDeath?: number;
   saveWand?: number;
   savePolymorph?: number;
@@ -148,10 +149,10 @@ export interface RawCreatureData {
   morale?: number;
   moraleBreak?: number;
   moraleRecovery?: number;
-  general?: GeneralIdentifiers;
-  race?: RaceIdentifiers;
-  class?: ClassIdentifiers;
-  gender?: GenderIdentifiers;
+  general?: GeneralIdentifier;
+  race?: RaceIdentifier;
+  class?: ClassIdentifier;
+  gender?: GenderIdentifier;
   size?: CreatureSize;
   animation?: AnimationIdentifiers;
   metalColor?: number;

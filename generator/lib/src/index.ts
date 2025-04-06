@@ -6,6 +6,7 @@ import { StateService } from "./services/state.service";
 import * as fs from "fs";
 import path from "path";
 import { State } from "./state";
+import { CREATURES } from "../creatures";
 
 const clear = require("clear");
 const figlet = require("figlet");
@@ -30,26 +31,19 @@ if (!options.mod) {
 
 async function main() {
   const stateService = new StateService();
-  return stateService
-    .init()
-    .then(() =>
-      glob(
-        path.join(State.config.creaturesFolder, "*.json").replace(/\\/g, "/")
-      )
-    )
-    .then((files) => {
-      const mainService = new MainService();
-      let chain: Promise<any> = Promise.resolve();
-      files.forEach((file) => {
-        chain = chain.then(() => mainService.processFile(file));
-      });
-      return chain
-        .then(() => mainService.generateCommonCode())
-        .then(() => {
-          console.log(chalk.green(`Finished!`));
-        });
-      //.catch(error => { console.trace(chalk.red(error)); });
+  return stateService.init().then(() => {
+    const mainService = new MainService();
+    let chain: Promise<any> = Promise.resolve();
+    CREATURES.forEach((creature) => {
+      chain = chain.then(() => mainService.processCreature(creature));
     });
+    return chain
+      .then(() => mainService.generateCommonCode())
+      .then(() => {
+        console.log(chalk.green(`Finished!`));
+      });
+    //.catch(error => { console.trace(chalk.red(error)); });
+  });
 }
 
 main();
