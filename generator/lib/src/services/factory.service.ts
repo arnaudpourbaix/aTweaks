@@ -1,5 +1,6 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/final/attack";
+import { ObjectIdentifier } from "../model/ids/object";
 import {
   Action,
   BasicStatement,
@@ -337,16 +338,17 @@ export class FactoryService {
         responses: this.response([{ name: "Continue" }]),
       });
     }
+    const lastSeenBy: ObjectIdentifier = "LastSeenBy";
     for (const response of p.responses) {
       response.actions = response.actions.map((a) =>
-        this.utils.replaceTargetTokens(a, ObjectIdentifiers.LastSeenBy)
+        this.utils.replaceTargetTokens(a, lastSeenBy)
       );
     }
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     if (!p.noResponse) {
       p.statements.list.push({
         triggers: finalTriggers.map((t) =>
-          this.utils.replaceTargetTokens(t, ObjectIdentifiers.LastSeenBy)
+          this.utils.replaceTargetTokens(t, lastSeenBy)
         ),
         responses: p.responses,
       });

@@ -1,3 +1,5 @@
+import { GrabFullConfig } from "../src/model/grab";
+import { RawEffect } from "../src/model/raw/effect";
 import { RawGrabGlobalConfig } from "../src/model/raw/grab";
 
 export const GRAB_DEFAULT_CONFIG: RawGrabGlobalConfig = {
@@ -12,3 +14,54 @@ export const GRAB_DEFAULT_CONFIG: RawGrabGlobalConfig = {
   endSound: "EFF_M22A",
   visualEffect: "rr#cnstr",
 };
+
+export const RAW_EFFECTS_FUNCTION = (grab: GrabFullConfig): RawEffect[] => [
+  {
+    opcode: "SetExtendedSpellState",
+    state: grab.grabState,
+    duration: grab.duration,
+  },
+  {
+    opcode: "DisplayString",
+    stringRef: grab.grabbedDisplayStringRef,
+    timing: "InstantPermanentUntilDeath",
+  },
+  {
+    opcode: "MovementRateBonus2",
+    type: "Set",
+    value: 0,
+    duration: grab.duration,
+  },
+  {
+    opcode: "PlaySound",
+    timing: "InstantPermanentUntilDeath",
+    resource: grab.startSound,
+  },
+  {
+    opcode: "PlaySound",
+    timing: "DelayPermanent",
+    duration: grab.duration,
+    resource: grab.endSound,
+  },
+  {
+    opcode: "PlayVisualEffect",
+    playWhere: "OverTargetAttached",
+    resource: grab.visualEffect,
+    duration: grab.duration,
+  },
+  {
+    opcode: "DisplayPortraitIcon",
+    icon: "Entangled",
+    duration: grab.duration,
+  },
+  {
+    opcode: "DexterityBonus",
+    value: 8,
+    type: "Set",
+    duration: grab.duration,
+  },
+  {
+    opcode: "ProtectionFromSpell",
+    resource: grab.file,
+  },
+];
