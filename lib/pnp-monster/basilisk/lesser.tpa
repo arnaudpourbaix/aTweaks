@@ -347,7 +347,7 @@ BEGIN
 					thac0=15
 					apr=1
 					xpv=1400
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
@@ -356,11 +356,11 @@ BEGIN
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=102
-					class=102
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~BASILISK~)
+					class=IDS_OF_SYMBOL (~class~ ~BASILISK~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN LBASILSK END

@@ -91,7 +91,7 @@ BEGIN
 					thac0=17
 					apr=3
 					xpv=270
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -100,11 +100,11 @@ BEGIN
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=137
-					class=175
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~CAT~)
+					class=IDS_OF_SYMBOL (~class~ ~CAT~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 		BUT_ONLY_IF_IT_CHANGES

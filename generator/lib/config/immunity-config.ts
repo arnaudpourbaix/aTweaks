@@ -1,12 +1,8 @@
 import { EffectTypeEnum } from "../src/model/final/effect.type";
 import { PortraitIconEnum } from "../src/model/final/enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
-import { SpellIdentifier } from "../src/model/ids/spell";
-import { SplStateIdentifier } from "../src/model/ids/splstate";
 import { RawEffect } from "../src/model/raw/effect";
-import { RawEffectOpcode } from "../src/model/raw/effect.type";
 import { RawImmunityConfig } from "../src/model/raw/immunity";
-import { ItemSlotEnum } from "../src/model/raw/item";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 
 export const IMMUNITIES: RawImmunityConfig[] = [
@@ -25,12 +21,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: RawEffectTypeEnum.PoisonResistanceModifier,
+        opcode: "PoisonResistanceModifier",
         value: 100,
       },
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.ITEM_POISON,
+        opcode: "SetExtendedSpellState",
+        state: "ITEM_POISON",
       },
     ],
     spells: [
@@ -54,7 +50,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       31238, // Diseased
     ],
     idsSpells: [
-      { id: SpellIdentifiers.CLERIC_CAUSE_DISEASE }, // Cause Disease (IWDification)
+      { id: "CLERIC_CAUSE_DISEASE" }, // Cause Disease (IWDification)
     ],
     spells: [
       "SPWI409", // Contagion
@@ -111,8 +107,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     animations: ["SPFLAYER", "SPMINDAT"],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.HOLD_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "HOLD_IMMUNITY",
       },
     ],
   },
@@ -129,8 +125,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.STUN_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "STUN_IMMUNITY",
       },
     ],
   },
@@ -148,8 +144,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.ITEM_LEVELDRAIN,
+        opcode: "SetExtendedSpellState",
+        state: "ITEM_LEVELDRAIN",
       },
     ],
   },
@@ -172,8 +168,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.SLEEP_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "SLEEP_IMMUNITY",
       },
     ],
   },
@@ -200,8 +196,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     animations: ["SPNWCHRM"],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.CHARM_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "CHARM_IMMUNITY",
       },
     ],
   },
@@ -223,7 +219,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     animations: ["CDHORROR"],
     idsSpells: [
-      { id: SpellIdentifiers.WIZARD_EMOTION_FEAR }, // SpellPack Charm plants
+      { id: "WIZARD_EMOTION_FEAR" }, // SpellPack Charm plants
     ],
     spells: [
       "SPIN203", // Cloak of Fear
@@ -259,12 +255,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     displaySpellIneffective: true,
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.RESIST_FEAR,
+        opcode: "SetExtendedSpellState",
+        state: "RESIST_FEAR",
       },
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.PANIC_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "PANIC_IMMUNITY",
       },
     ],
   },
@@ -307,8 +303,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     displaySpellIneffective: true,
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.CONFUSION_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "CONFUSION_IMMUNITY",
       },
     ],
   },
@@ -318,7 +314,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Magic missiles immunity"],
     idsSpells: [
       {
-        id: SpellIdentifiers.WIZARD_MORDENKAINENS_FORCE_MISSILES,
+        id: "WIZARD_MORDENKAINENS_FORCE_MISSILES",
         suffixes: ["", "B"],
       }, // Mordenkainen's Force Missiles (IWDification)
     ],
@@ -336,8 +332,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     preventEffects: [EffectTypeEnum.Blindness],
     preventIcons: [PortraitIconEnum.Blind],
     idsSpells: [
-      { id: SpellIdentifiers.CLERIC_CLOUD_OF_PESTILENCE }, // Sunscorch (IWDification)
-      { id: SpellIdentifiers.CLERIC_SUNSCORCH }, // Cloud of Pestilence (IWDification)
+      { id: "CLERIC_CLOUD_OF_PESTILENCE" }, // Sunscorch (IWDification)
+      { id: "CLERIC_SUNSCORCH" }, // Cloud of Pestilence (IWDification)
     ],
     spells: [
       "spdr101.spl", // Chromatic Orb
@@ -368,10 +364,10 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Fire spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.WIZARD_BELTYNS_BURNING_BLOOD }, // Beltyn's Burning Blood (IWDification)
-      { id: SpellIdentifiers.WIZARD_SHROUD_OF_FLAME }, // Shroud of Flame (IWDification)
-      { id: SpellIdentifiers.CLERIC_SUNSCORCH }, // Sunscorch (IWDification)
-      { id: SpellIdentifiers.CLERIC_PRODUCE_FIRE }, // Produe Fire (IWDification)
+      { id: "WIZARD_BELTYNS_BURNING_BLOOD" }, // Beltyn's Burning Blood (IWDification)
+      { id: "WIZARD_SHROUD_OF_FLAME" }, // Shroud of Flame (IWDification)
+      { id: "CLERIC_SUNSCORCH" }, // Sunscorch (IWDification)
+      { id: "CLERIC_PRODUCE_FIRE" }, // Produe Fire (IWDification)
       { id: "CLERIC_WALL_OF_FIRE" }, // Wall of Fire (SpellPack)
     ],
     spells: [
@@ -424,9 +420,9 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Cold spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.WIZARD_OTILUKES_FREEZING_SPHERE }, // Otiluke's Freezing Sphere (IWDification)
-      { id: SpellIdentifiers.WIZARD_SNILLOCS_SNOWBALL_SWARM }, // Snilloc's Snowball Swarm (IWDification)
-      { id: SpellIdentifiers.WIZARD_ICELANCE }, // Icelance (IWDification)
+      { id: "WIZARD_OTILUKES_FREEZING_SPHERE" }, // Otiluke's Freezing Sphere (IWDification)
+      { id: "WIZARD_SNILLOCS_SNOWBALL_SWARM" }, // Snilloc's Snowball Swarm (IWDification)
+      { id: "WIZARD_ICELANCE" }, // Icelance (IWDification)
     ],
     spells: [
       "SPWI404", // Ice Storm
@@ -451,7 +447,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Electrical spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.CLERIC_STATIC_CHARGE }, // Static Charge (IWDification)
+      { id: "CLERIC_STATIC_CHARGE" }, // Static Charge (IWDification)
     ],
     spells: [
       "CDSTAF12", // Lightning Bolt
@@ -483,8 +479,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Acid spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.WIZARD_VITRIOLIC_SPHERE }, // Vitriolic Sphere (IWDification)
-      { id: SpellIdentifiers.WIZARD_ACID_STORM }, // Acid Storm (IWDification)
+      { id: "WIZARD_VITRIOLIC_SPHERE" }, // Vitriolic Sphere (IWDification)
+      { id: "WIZARD_ACID_STORM" }, // Acid Storm (IWDification)
     ],
     spells: [
       "SPIN994", // Acid Pools in Durlag's Tower (ACID_DAMAGE_1)
@@ -500,12 +496,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Cure spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.CLERIC_CAUSE_MODERATE_WOUNDS }, // Cause moderate Wounds (IWDification)
-      { id: SpellIdentifiers.CLERIC_CURE_MODERATE_WOUNDS }, // Cure moderate Wounds  (IWDification)
-      { id: SpellIdentifiers.CLERIC_CAUSE_LIGHT_WOUNDS }, // Cause Light Wounds (IWDification)
-      { id: SpellIdentifiers.CLERIC_CAUSE_MEDIUM_WOUNDS }, // Cause medium Wounds (IWDification)
-      { id: SpellIdentifiers.CLERIC_MASS_CAUSE_LIGHT_WOUNDS }, // Mass Cause Light Wounds (IWDification)
-      { id: SpellIdentifiers.CLERIC_CURE_MEDIUM_WOUNDS }, // Cure Medium Wounds  (Spell Revisions)
+      { id: "CLERIC_CAUSE_MODERATE_WOUNDS" }, // Cause moderate Wounds (IWDification)
+      { id: "CLERIC_CURE_MODERATE_WOUNDS" }, // Cure moderate Wounds  (IWDification)
+      { id: "CLERIC_CAUSE_LIGHT_WOUNDS" }, // Cause Light Wounds (IWDification)
+      { id: "CLERIC_CAUSE_MEDIUM_WOUNDS" }, // Cause medium Wounds (IWDification)
+      { id: "CLERIC_MASS_CAUSE_LIGHT_WOUNDS" }, // Mass Cause Light Wounds (IWDification)
+      { id: "CLERIC_CURE_MEDIUM_WOUNDS" }, // Cure Medium Wounds  (Spell Revisions)
     ],
     spells: [
       "SPPR103", // Cure Light Wounds
@@ -555,7 +551,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Cloud spells immunity"],
     idsSpells: [
-      { id: SpellIdentifiers.CLERIC_CLOUD_OF_PESTILENCE }, // Cloud of Pestilence (IWDification)
+      { id: "CLERIC_CLOUD_OF_PESTILENCE" }, // Cloud of Pestilence (IWDification)
     ],
     spells: [
       "SPWI004", // Stinking Cloud (trap)
@@ -653,8 +649,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     displaySpellIneffective: true,
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.PETRIFY_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "PETRIFY_IMMUNITY",
       },
     ],
   },
@@ -663,7 +659,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Missile weapons immunity"],
     effects: MISSILE_WEAPONS.map((w) => ({
-      opcode: RawEffectTypeEnum.ProtectionFromProjectile,
+      opcode: "ProtectionFromProjectile",
       projectile: w,
     })),
   },
@@ -716,12 +712,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Cold and magical cold immunity"],
     effects: [
       {
-        opcode: RawEffectTypeEnum.ColdResistanceModifier,
+        opcode: "ColdResistanceModifier",
         value: 100,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MagicalColdResistanceModifier,
+        opcode: "MagicalColdResistanceModifier",
         value: 100,
         type: "Set",
       },
@@ -733,22 +729,22 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["All physical damage"],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        opcode: "SlashingResistanceModifier",
         value: 100,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        opcode: "PiercingResistanceModifier",
         value: 100,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        opcode: "MissilesResistanceModifier",
         value: 100,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.CrushingResistanceModifier,
+        opcode: "CrushingResistanceModifier",
         value: 100,
         type: "Set",
       },
@@ -758,7 +754,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "unturnable",
     type: "immunity",
     description: ["Turn undead immunity"],
-    effects: [{ opcode: RawEffectTypeEnum.ImmunityToTurnUndead }],
+    effects: [{ opcode: "ImmunityToTurnUndead" }],
   },
   {
     name: "illusion",
@@ -805,8 +801,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SetExtendedSpellState,
-        state: SplStateIdentifiers.DEATH_IMMUNITY,
+        opcode: "SetExtendedSpellState",
+        state: "DEATH_IMMUNITY",
       },
     ],
   },
@@ -832,7 +828,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "hover",
     type: "trait",
-    itemSlot: { file: "ja#i3", slot: ItemSlotEnum.BOOTS },
+    itemSlot: { file: "ja#i3", slot: "BOOTS" },
     description: [
       "Hover (flight)",
       "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
@@ -859,7 +855,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "backstab",
     type: "immunity",
     description: ["Immunity to backstab"],
-    effects: [{ opcode: RawEffectTypeEnum.ProtectionFromBackstab }],
+    effects: [{ opcode: "ProtectionFromBackstab" }],
   },
   {
     name: "criticalHit",
@@ -875,7 +871,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "construct",
     type: "trait",
-    itemSlot: { file: "ja#i1", slot: ItemSlotEnum.HELMET },
+    itemSlot: { file: "ja#i1", slot: "HELMET" },
     description: [
       "Construct trait.",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
@@ -932,13 +928,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: AIR_CREATURES.map(([f, e]): RawEffect[] => [
       {
-        opcode: RawEffectTypeEnum.DamageVsCreatureTypeModifier,
+        opcode: "DamageVsCreatureTypeModifier",
         idsFile: f,
         idsEntry: e,
         special: 4,
       },
       {
-        opcode: RawEffectTypeEnum.Thac0VsCreatureTypeModifier,
+        opcode: "Thac0VsCreatureTypeModifier",
         idsFile: f,
         idsEntry: e,
         special: 1,
@@ -955,13 +951,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     effects: [...AIR_CREATURES, ...WATER_CREATURES]
       .map(([f, e]): RawEffect[] => [
         {
-          opcode: RawEffectTypeEnum.DamageVsCreatureTypeModifier,
+          opcode: "DamageVsCreatureTypeModifier",
           idsFile: f,
           idsEntry: e,
           special: -2,
         },
         {
-          opcode: RawEffectTypeEnum.Thac0VsCreatureTypeModifier,
+          opcode: "Thac0VsCreatureTypeModifier",
           idsFile: f,
           idsEntry: e,
           special: -2,
@@ -972,24 +968,24 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "skeletal",
     type: "trait",
-    itemSlot: { file: "ja#i2", slot: ItemSlotEnum.LRING },
+    itemSlot: { file: "ja#i2", slot: "LRING" },
     description: [
       "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
     ],
     immunities: ["cold", "coldSpells"],
     effects: [
       {
-        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        opcode: "SlashingResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        opcode: "MissilesResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        opcode: "PiercingResistanceModifier",
         value: 50,
         type: "Set",
       },
@@ -1028,13 +1024,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "infravision",
     type: "trait",
     description: ["Infravision"],
-    effects: [{ opcode: RawEffectTypeEnum.Infravision }],
+    effects: [{ opcode: "Infravision" }],
   },
   {
     name: "seeInvisible",
     type: "trait",
     description: ["See invisible creatures"],
-    effects: [{ opcode: RawEffectTypeEnum.InvisibilityDetection }],
+    effects: [{ opcode: "InvisibilityDetection" }],
   },
   {
     name: "fireballSpell",
@@ -1084,7 +1080,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   },
   {
     name: "incorporeal",
-    itemSlot: { file: "ja#i4", slot: ItemSlotEnum.LRING },
+    itemSlot: { file: "ja#i4", slot: "LRING" },
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
@@ -1099,96 +1095,96 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     immunities: [],
     effects: [
       {
-        opcode: RawEffectTypeEnum.ProtectionFromWeapons,
+        opcode: "ProtectionFromWeapons",
         enchantment: 0,
         type: "NonMagical",
       },
       {
-        opcode: RawEffectTypeEnum.Translucency,
+        opcode: "Translucency",
         amount: 99,
         type: "DrawInstantly",
       },
       {
-        opcode: RawEffectTypeEnum.SetColorGlowPulse,
+        opcode: "SetColorGlowPulse",
         color: { red: 125, green: 125, blue: 125 },
         location: "CharacterColor",
         cycleSpeed: 30,
       },
       {
-        opcode: RawEffectTypeEnum.CreatureRGBColorFade,
+        opcode: "CreatureRGBColorFade",
         color: { red: 90, green: 30, blue: 90 },
         fadeSpeed: 25,
       },
       {
-        opcode: RawEffectTypeEnum.DisplayPortraitIcon,
+        opcode: "DisplayPortraitIcon",
         icon: "Invulnerable",
       },
       {
-        opcode: RawEffectTypeEnum.ArmorClassBonus,
+        opcode: "ArmorClassBonus",
         value: 3,
         bonusTo: "AllWeapons",
       },
       {
-        opcode: RawEffectTypeEnum.Thac0Bonus,
+        opcode: "Thac0Bonus",
         value: 4,
         type: "Increment",
       },
       {
-        opcode: RawEffectTypeEnum.FireResistanceModifier,
+        opcode: "FireResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MagicalFireResistanceModifier,
+        opcode: "MagicalFireResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.ColdResistanceModifier,
+        opcode: "ColdResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MagicalColdResistanceModifier,
+        opcode: "MagicalColdResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.ElectricityResistanceModifier,
+        opcode: "ElectricityResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.AcidResistanceModifier,
+        opcode: "AcidResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MagicDamageResistanceModifier,
+        opcode: "MagicDamageResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.SlashingResistanceModifier,
+        opcode: "SlashingResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.CrushingResistanceModifier,
+        opcode: "CrushingResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.PiercingResistanceModifier,
+        opcode: "PiercingResistanceModifier",
         value: 50,
         type: "Set",
       },
       {
-        opcode: RawEffectTypeEnum.MissilesResistanceModifier,
+        opcode: "MissilesResistanceModifier",
         value: 50,
         type: "Set",
       },
-      { opcode: RawEffectTypeEnum.PoisonResistanceModifier, value: 50 },
+      { opcode: "PoisonResistanceModifier", value: 50 },
     ],
   },
 ];

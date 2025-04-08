@@ -261,10 +261,10 @@ export class EffectService {
         );
         break;
       case EffectTypeEnum.SetExtendedSpellState:
-        this.setExtendedSpellState(
-          result,
-          effect as SetExtendedSpellStateEffect
-        );
+        result.parameter2 = `(IDS_OF_SYMBOL (~splstate~ ~${
+          (effect as SetExtendedSpellStateEffect).state
+        }~))`;
+        result.special = 1;
         break;
       case EffectTypeEnum.CreatureRGBColorFade:
         result.parameter1 = `${
@@ -427,20 +427,6 @@ export class EffectService {
       );
     result.parameter1 = `${effect.value}`;
     result.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
-  }
-
-  private setExtendedSpellState(
-    result: Effect,
-    effect: SetExtendedSpellStateEffect
-  ): void {
-    let ids = "";
-    try {
-      ids = this.utils.getIdsValue("splstat", effect.state) as string;
-    } catch {
-      ids = `(IDS_OF_SYMBOL (~splstate~ ~${effect.state}~))`;
-    }
-    result.parameter2 = `${ids}`;
-    result.special = 1;
   }
 
   getGroupEffects(effect: RawEffectGroup) {

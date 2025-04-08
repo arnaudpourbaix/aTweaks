@@ -42,7 +42,7 @@ export const ANKHEG: RawCreature = {
         { name: "HaveSpellRES", params: ["ja#2m1"] },
       ],
       actions: [
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", "0"] },
+        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
         { name: "AttackOneRound", params: ["LastSeenBy"] },
       ],
       range: 30,

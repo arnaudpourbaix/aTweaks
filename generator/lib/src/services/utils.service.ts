@@ -2,65 +2,61 @@ import { GLOBAL_CONFIG } from "../../config/generate";
 import { ImmunityName } from "../../config/immunity-name";
 import { ImmunityConfig } from "../model/final/immunity";
 import { SpellIdentifier } from "../model/ids/spell";
+import { Actions } from "../model/raw/actions";
+import { Response } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
 export class UtilsService {
   static instance = new UtilsService();
 
-  // replaceParamsToken(
-  //   params: unknown[] | undefined,
-  //   token: string,
-  //   value: string
-  // ): unknown[] {
-  //   return (params ?? []).map((p) =>
-  //     typeof p === "string" ? p.replace(token, value) : p
-  //   );
-  // }
-  replaceParamsToken(
-    token: string,
-    value: string,
-    ...params: unknown[]
-  ): unknown[] {
-    return (params ?? []).map((p) =>
-      typeof p === "string" ? p.replace(token, value) : p
-    );
+  replaceParamTokens(
+    params: (string | number)[],
+    tokens: { key: string; value: string }[]
+  ): void {
+    for (let i = 0; i < params.length; i++) {
+      const p = params[i];
+      if (typeof p === "string") {
+        for (const token of tokens)
+          params[i] = p.replace(token.key, token.value);
+      }
+    }
   }
 
-  replaceTargetTokens<T extends { params: (string | number)[] }>(
-    item: T,
-    target: string
-  ): T {
-    return {
-      ...item,
-      params: this.replaceParamsToken(
-        GLOBAL_CONFIG.tokens.target,
-        target
-        item.params,
-      ),
-    };
+  replaceResponseTokens(
+    responses: Response[],
+    tokens: { key: string; value: string }[]
+  ): Response[] {
+    const results = structuredClone(responses);
+    for (const response of results)
+      this.replaceActionTokens(response.actions, tokens);
+    return results;
   }
 
-  replaceTriggerToken(
+  replaceActionTokens(
+    actions: Actions.Action[],
+    tokens: { key: string; value: string }[]
+  ): Actions.Action[] {
+    const results = structuredClone(actions);
+    for (const action of results) {
+      if ("params" in action) this.replaceParamTokens(action.params, tokens);
+    }
+    return results;
+  }
+
+  replaceTriggerTokens(
     triggers: Triggers.Trigger[],
-    token: string,
-    value: string
+    tokens: { key: string; value: string }[]
   ): Triggers.Trigger[] {
-    return triggers.map((t) => {
-      if ("triggers" in t) {
-        const res: Triggers.Trigger = {
-          ...t,
-          triggers: this.replaceTriggerToken(t.triggers, token, value),
-        };
-        return res;
-      } else if ("params" in t) {
-        const res: Triggers.Trigger = {
-          ...t,
-          params: this.replaceParamsToken(token, value, ...t.params),
-        };
-        return res;
-      } else return t;
-    });
+    const results = structuredClone(triggers);
+    for (const trigger of results) {
+      if ("triggers" in trigger) {
+        this.replaceTriggerTokens(trigger.triggers, tokens);
+      } else if ("params" in trigger) {
+        this.replaceParamTokens(trigger.params, tokens);
+      }
+    }
+    return results;
   }
 
   inverseNegation(trigger: Triggers.Trigger): Triggers.Trigger {
@@ -165,7 +161,8 @@ export class UtilsService {
   getSpellResource(file?: SpellIdentifier | string): string | undefined {
     if (!file) return;
     try {
-      const ids = this.getIdsValue("spell", file) as string;
+      // const ids = this.getIdsValue("spell", file) as string; //TODO:
+      const ids = "toto";
       return this.getSpellResourceFromIds(ids);
     } catch {
       return file;

@@ -141,7 +141,7 @@ BEGIN
 					resistCold=100
 					thac0=7
 					apr=3
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=7
 					saveWand=9
 					savePolymorph=8
@@ -150,11 +150,11 @@ BEGIN
 					morale=15
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=103
-					class=107
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
+					class=IDS_OF_SYMBOL (~class~ ~BEAR_POLAR~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN kaldran dw1ranmo END

@@ -575,7 +575,7 @@ export class StatementService {
       const targets: string[] = target.canOnlyTargetPlayer
         ? this.targetService.getList("Players")
         : this.targetService.getList("NearestEnemies");
-      const targetTriggers = this.utils.replaceTriggerToken(
+      const targetTriggers = this.utils.replaceTriggerTokens(
         [
           ...(target.targetTriggers as Triggers.Trigger[]),
           ...this.factory.validAttackTarget({
@@ -586,9 +586,13 @@ export class StatementService {
             ),
           }),
         ],
-        GLOBAL_CONFIG.tokens.grabState,
-        creature.grab?.grabState ?? ""
-      ) as Triggers.Trigger[];
+        [
+          {
+            key: GLOBAL_CONFIG.tokens.grabState,
+            value: creature.grab?.grabState ?? "",
+          },
+        ]
+      );
       this.factory.addOneBlockTargetList({
         statements,
         comment: `Attack ${target.status} enemy`,

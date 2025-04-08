@@ -10,7 +10,7 @@ export class StateService {
 
   init(): Promise<void> {
     try {
-      State.modFolder = "../..";
+      State.modFolder = "..";
       this.loadActions();
       this.loadTriggers();
       this.loadImmunities();

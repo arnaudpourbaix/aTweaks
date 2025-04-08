@@ -11,19 +11,9 @@ export interface ConditionalStatement {
   responses: Response[];
 }
 
-export interface BasicStatement {
-  triggers: Triggers.Trigger[];
-  actions: Actions.Action[];
-}
-
 export interface Response {
   weight: number;
   actions: Actions.Action[];
-}
-
-export interface MultipleStatementTrigger {
-  comment: string;
-  triggers: Triggers.Trigger[];
 }
 
 export interface CustomCode {

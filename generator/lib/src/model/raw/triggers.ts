@@ -216,17 +216,17 @@ export namespace Triggers {
 
   export interface Global extends BaseTrigger {
     name: "Global";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface GlobalGT extends BaseTrigger {
     name: "GlobalGT";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface GlobalLT extends BaseTrigger {
     name: "GlobalLT";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface GlobalsEqual extends BaseTrigger {

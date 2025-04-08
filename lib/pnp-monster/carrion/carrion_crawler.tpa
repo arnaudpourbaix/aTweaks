@@ -118,7 +118,7 @@ BEGIN
 					apr=4
 					doubleApr=1
 					xpv=420
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -127,11 +127,11 @@ BEGIN
 					morale=10
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=104
-					class=108
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~CARRIONCRAWLER~)
+					class=IDS_OF_SYMBOL (~class~ ~CARRIONCRAWLER~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN ccrawler END

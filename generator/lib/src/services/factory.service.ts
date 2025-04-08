@@ -2,7 +2,7 @@ import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/final/attack";
 import { ObjectIdentifier } from "../model/ids/object";
 import { Actions } from "../model/raw/actions";
-import { BasicStatement, Response, Statements } from "../model/raw/script";
+import { Response, Statements } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
 
@@ -94,22 +94,6 @@ export class FactoryService {
       };
     });
     return responses;
-  };
-
-  moveToTarget = (): BasicStatement => {
-    const result: BasicStatement = {
-      triggers: [
-        {
-          name: "Range",
-          params: [GLOBAL_CONFIG.tokens.target, 5],
-          negation: true,
-        },
-      ],
-      actions: [
-        { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
-      ],
-    };
-    return result;
   };
 
   validTrackTarget = ({
@@ -258,11 +242,9 @@ export class FactoryService {
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
     const max = 1000;
     for (const [index, target] of targets.entries()) {
-      const triggers: Triggers.Trigger[] = this.utils.replaceTriggerToken(
-        p.triggers,
-        GLOBAL_CONFIG.tokens.target,
-        target
-      );
+      const triggers = this.utils.replaceTriggerTokens(p.triggers, [
+        { key: GLOBAL_CONFIG.tokens.target, value: target },
+      ]);
       if (p.random && index < targets.length - 1)
         triggers.push({
           name: "RandomNumGT",
@@ -271,12 +253,9 @@ export class FactoryService {
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
-        responses: p.responses.map((r) => ({
-          weight: r.weight,
-          actions: r.actions.map((a) =>
-            this.utils.replaceTargetTokens(a, target)
-          ),
-        })),
+        responses: this.utils.replaceResponseTokens(p.responses, [
+          { key: GLOBAL_CONFIG.tokens.target, value: target },
+        ]),
       });
     }
   };
@@ -303,8 +282,10 @@ export class FactoryService {
     for (const [index, target] of targets.entries()) {
       const orTrigger: Triggers.Trigger = {
         name: "Or",
-        triggers: p.targetTriggers
-          .map((t) => this.utils.replaceTargetTokens(t, target))
+        triggers: this.utils
+          .replaceTriggerTokens(p.targetTriggers, [
+            { key: GLOBAL_CONFIG.tokens.target, value: target },
+          ])
           .map(this.utils.inverseNegation),
       };
       if (p.random && index < targets.length - 1)
@@ -322,18 +303,16 @@ export class FactoryService {
       });
     }
     const lastSeenBy: ObjectIdentifier = "LastSeenBy";
-    for (const response of p.responses) {
-      response.actions = response.actions.map((a) =>
-        this.utils.replaceTargetTokens(a, lastSeenBy)
-      );
-    }
+    const responses = this.utils.replaceResponseTokens(p.responses, [
+      { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
+    ]);
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     if (!p.noResponse) {
       p.statements.push({
-        triggers: finalTriggers.map((t) =>
-          this.utils.replaceTargetTokens(t, lastSeenBy)
-        ),
-        responses: p.responses,
+        triggers: this.utils.replaceTriggerTokens(finalTriggers, [
+          { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
+        ]),
+        responses,
       });
     }
   };

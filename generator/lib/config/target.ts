@@ -1,9 +1,5 @@
-import { AllegianceIdentifier } from "../src/model/ids/allegiance";
-import { ObjectIdentifier } from "../src/model/ids/object";
-import { StateIdentifier } from "../src/model/ids/state";
-import { StatsIdentifier } from "../src/model/ids/stats";
-import { TargetPriority, TargetStatusEnum } from "../src/model/raw/target";
-import { State } from "../src/state";
+import { TargetPriority } from "../src/model/raw/target";
+import { GLOBAL_CONFIG } from "./generate";
 
 export type TargetListName =
   | "Players"
@@ -19,28 +15,21 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
   {
     name: "NearestEnemies",
     value: [
-      ObjectIdentifiers.NearestEnemyOf,
-      ObjectIdentifiers.SecondNearestEnemyOf,
-      ObjectIdentifiers.ThirdNearestEnemyOf,
-      ObjectIdentifiers.FourthNearestEnemyOf,
-      ObjectIdentifiers.FifthNearestEnemyOf,
-      ObjectIdentifiers.SixthNearestEnemyOf,
-      ObjectIdentifiers.SeventhNearestEnemyOf,
-      ObjectIdentifiers.EighthNearestEnemyOf,
-      ObjectIdentifiers.NinthNearestEnemyOf,
-      ObjectIdentifiers.TenthNearestEnemyOf,
+      "NearestEnemyOf",
+      "SecondNearestEnemyOf",
+      "ThirdNearestEnemyOf",
+      "FourthNearestEnemyOf",
+      "FifthNearestEnemyOf",
+      "SixthNearestEnemyOf",
+      "SeventhNearestEnemyOf",
+      "EighthNearestEnemyOf",
+      "NinthNearestEnemyOf",
+      "TenthNearestEnemyOf",
     ],
   },
   {
     name: "Players",
-    value: [
-      ObjectIdentifiers.Player1,
-      ObjectIdentifiers.Player2,
-      ObjectIdentifiers.Player3,
-      ObjectIdentifiers.Player4,
-      ObjectIdentifiers.Player5,
-      ObjectIdentifiers.Player6,
-    ],
+    value: ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6"],
   },
   {
     name: "PCsInOrder",
@@ -103,141 +92,133 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
 
 export const getTargetPriorityDetails: () => TargetPriority[] = () => [
   {
-    status: TargetStatusEnum.Grabbed,
+    status: "Grabbed",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [
       {
         name: "CheckSpellState",
-        params: [State.config.tokens.target, State.config.tokens.grabState],
+        params: [GLOBAL_CONFIG.tokens.target, GLOBAL_CONFIG.tokens.grabState],
       },
     ],
   },
   {
-    status: TargetStatusEnum.Slowed,
+    status: "Slowed",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_SLOWED],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
       },
     ],
   },
   {
-    status: TargetStatusEnum.Able,
-    canOnlyTargetPlayer: false,
-    triggers: [],
-    targetTriggers: [
-      {
-        name: "CheckStatGT",
-        params: [State.config.tokens.target, 0, StatsIdentifiers.HELD],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_STUNNED],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_PANIC],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_CONFUSED],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [
-          State.config.tokens.target,
-          StateIdentifiers.STATE_FEEBLEMINDED,
-        ],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_SLEEPING],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_HELPLESS],
-        negation: true,
-      },
-    ],
-  },
-  {
-    status: TargetStatusEnum.Held,
+    status: "Able",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [
       {
         name: "CheckStatGT",
-        params: [State.config.tokens.target, 0, StatsIdentifiers.HELD],
+        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_HELPLESS"],
+        negation: true,
       },
     ],
   },
   {
-    status: TargetStatusEnum.Stunned,
+    status: "Held",
+    canOnlyTargetPlayer: false,
+    triggers: [],
+    targetTriggers: [
+      {
+        name: "CheckStatGT",
+        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+      },
+    ],
+  },
+  {
+    status: "Stunned",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_STUNNED],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
       },
     ],
   },
   {
-    status: TargetStatusEnum.PanicConfused,
+    status: "PanicConfused",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [
       {
+        name: "Or",
         triggers: [
           {
             name: "StateCheck",
-            params: [State.config.tokens.target, StateIdentifiers.STATE_PANIC],
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
           },
           {
             name: "StateCheck",
-            params: [
-              State.config.tokens.target,
-              StateIdentifiers.STATE_CONFUSED,
-            ],
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
           },
           {
             name: "StateCheck",
-            params: [
-              State.config.tokens.target,
-              StateIdentifiers.STATE_FEEBLEMINDED,
-            ],
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
           },
         ],
       },
     ],
   },
   {
-    status: TargetStatusEnum.Sleep,
+    status: "Sleep",
     canOnlyTargetPlayer: true,
     triggers: [
       {
         name: "Allegiance",
-        params: [ObjectIdentifiers.Myself, AllegianceIdentifiers.ENEMY],
+        params: ["Myself", "ENEMY"],
       },
     ],
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [State.config.tokens.target, StateIdentifiers.STATE_SLEEPING],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
       },
     ],
   },
   {
-    status: TargetStatusEnum.NoCheck,
+    status: "NoCheck",
     canOnlyTargetPlayer: false,
     triggers: [],
     targetTriggers: [],

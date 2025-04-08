@@ -43,25 +43,23 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
     {
       location: "init",
       type: "insertAfter",
-      statements: {
-        list: [
-          {
-            triggers: [
-              { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
-              { name: "See", params: ["NearestEnemyOf"] },
-              { name: "See", params: ["PC"] },
-            ],
-            responses: [
-              {
-                weight: 100,
-                actions: [
-                  { name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] },
-                ],
-              },
-            ],
-          },
-        ],
-      },
+      statements: [
+        {
+          triggers: [
+            { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
+            { name: "See", params: ["NearestEnemyOf"] },
+            { name: "See", params: ["PC"] },
+          ],
+          responses: [
+            {
+              weight: 100,
+              actions: [
+                { name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
   projectiles: [

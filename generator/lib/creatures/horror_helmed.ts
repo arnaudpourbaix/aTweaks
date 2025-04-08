@@ -68,34 +68,32 @@ export const HORROR_HELMED: RawCreature = {
     {
       location: "trackTargets",
       type: "insertBefore",
-      statements: {
-        list: [
-          {
-            comment: "Dimension Door",
-            target: {
-              name: "Players",
-              triggers: [{ name: "Range", params: ["{Target}", 180] }],
-            },
-            triggers: [
-              { name: "HaveSpellRES", params: ["SPWI402"] },
-              {
-                name: "StateCheck",
-                params: ["Myself", "STATE_BLIND"],
-                negation: true,
-              },
-            ],
-            responses: [
-              {
-                weight: 100,
-                actions: [
-                  { name: "ForceSpellRES", params: ["SPWI402", "{Target}"] },
-                  { name: "RemoveSpellRES", params: ["SPWI402"] },
-                ],
-              },
-            ],
+      statements: [
+        {
+          comment: "Dimension Door",
+          target: {
+            name: "Players",
+            triggers: [{ name: "Range", params: ["{Target}", 180] }],
           },
-        ],
-      },
+          triggers: [
+            { name: "HaveSpellRES", params: ["SPWI402"] },
+            {
+              name: "StateCheck",
+              params: ["Myself", "STATE_BLIND"],
+              negation: true,
+            },
+          ],
+          responses: [
+            {
+              weight: 100,
+              actions: [
+                { name: "ForceSpellRES", params: ["SPWI402", "{Target}"] },
+                { name: "RemoveSpellRES", params: ["SPWI402"] },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
   items: [

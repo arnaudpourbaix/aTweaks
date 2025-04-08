@@ -1,0 +1,16 @@
+export const STRING_REFERENCES: Record<number, string> = {
+  3000: `Grab`,
+  3001: `Grabbed`,
+  4000: `Stream of acidic enzymes`,
+  4001: `Acidic digestive enzymes`,
+  4002: `Petrifying Gaze`,
+  4003: `Restrained`,
+  4004: `Petrified`,
+  4005: `Turning to stone`,
+  4006: `Foul breath`,
+  4007: `Hug`,
+  4008: `Improved stream of frost`,
+  4009: `Rear claws attack`,
+  4010: `Blink`,
+  4011: `Stream of frost`,
+};

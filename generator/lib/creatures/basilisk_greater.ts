@@ -46,7 +46,7 @@ export const BASILISK_GREATER: RawCreature = {
         triggers: [
           {
             name: "CheckStatGT",
-            params: ["{Target}", "0", "HELD"],
+            params: ["{Target}", 0, "HELD"],
             negation: true,
           },
           {

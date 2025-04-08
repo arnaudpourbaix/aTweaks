@@ -90,7 +90,7 @@ BEGIN
 					thac0=15
 					apr=3
 					xpv=420
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
@@ -99,11 +99,11 @@ BEGIN
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=103
-					class=105
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
+					class=IDS_OF_SYMBOL (~class~ ~BEAR_BROWN~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END

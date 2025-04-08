@@ -165,7 +165,7 @@ export namespace Actions {
 
   export interface SetGlobal {
     name: "SetGlobal";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface AddGlobals {
@@ -175,12 +175,12 @@ export namespace Actions {
 
   export interface IncrementGlobal {
     name: "IncrementGlobal";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface SetGlobalTimer {
     name: "SetGlobalTimer";
-    params: [string, "LOCALS", number];
+    params: [string, "LOCALS" | "GLOBAL", number];
   }
 
   export interface Spell {

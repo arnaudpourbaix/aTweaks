@@ -49,7 +49,7 @@ BEGIN
 					thac0=19
 					apr=1
 					xpv=65
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=14
 					saveWand=16
 					savePolymorph=15
@@ -58,11 +58,11 @@ BEGIN
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=105
-					class=110
-					gender=1
-					sex=1
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~DOG~)
+					class=IDS_OF_SYMBOL (~class~ ~DOG_WAR~)
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWASU~) BEGIN 

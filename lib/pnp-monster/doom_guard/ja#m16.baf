@@ -151,7 +151,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
-		AttackOneRound(LastSeenBy(Myself))
+		AttackOneRound({Target}(Myself))
 END
 
 // Attack Sleep enemy
@@ -212,7 +212,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 THEN
 	RESPONSE #100
-		AttackOneRound(LastSeenBy(Myself))
+		AttackOneRound({Target}(Myself))
 END
 
 // Track players if allegiance is not GOODCUTOFF
@@ -227,7 +227,7 @@ IF
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player1)
+		MoveToObject({Target}(Myself))
 END
 
 IF
@@ -241,7 +241,7 @@ IF
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player2)
+		MoveToObject({Target}(Myself))
 END
 
 IF
@@ -255,7 +255,7 @@ IF
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player3)
+		MoveToObject({Target}(Myself))
 END
 
 IF
@@ -269,7 +269,7 @@ IF
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player4)
+		MoveToObject({Target}(Myself))
 END
 
 IF
@@ -283,7 +283,7 @@ IF
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player5)
+		MoveToObject({Target}(Myself))
 END
 
 IF
@@ -297,7 +297,7 @@ IF
 	!StateCheck(Player6,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player6)
+		MoveToObject({Target}(Myself))
 END
 
 // Track last seen enemy if allegiance is GOODCUTOFF
@@ -313,6 +313,6 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(LastSeenBy(Myself))
+		MoveToObject({Target}(Myself))
 END
 

@@ -152,7 +152,7 @@ BEGIN
 					thac0=15
 					apr=1
 					xpv=2000
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
@@ -161,11 +161,11 @@ BEGIN
 					morale=20
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=144
-					class=2
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
