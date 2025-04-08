@@ -1,4 +1,4 @@
-export type KitIdentifiers =
+export type KitIdentifier =
   | "TRUECLASS"
   | "BERSERKER"
   | "WIZARDSLAYER"

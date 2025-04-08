@@ -1,8 +1,8 @@
 import { EffectTypeEnum } from "../src/model/final/effect.type";
 import { PortraitIconEnum } from "../src/model/final/enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
-import { SpellIdentifiers } from "../src/model/ids/spell";
-import { SplStateIdentifiers } from "../src/model/ids/splstate";
+import { SpellIdentifier } from "../src/model/ids/spell";
+import { SplStateIdentifier } from "../src/model/ids/splstate";
 import { RawEffect } from "../src/model/raw/effect";
 import { RawEffectOpcode } from "../src/model/raw/effect.type";
 import { RawImmunityConfig } from "../src/model/raw/immunity";

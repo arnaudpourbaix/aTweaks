@@ -1,4 +1,4 @@
-export type SplStateIdentifiers =
+export type SplStateIdentifier =
   | "HOPELESSNESS"
   | "PROTECTION_FROM_EVIL"
   | "ARMOR_OF_FAITH"

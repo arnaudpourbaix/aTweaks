@@ -1,4 +1,4 @@
-export type StateIdentifiers =
+export type StateIdentifier =
   | "STATE_NORMAL"
   | "STATE_SLEEPING"
   | "STATE_BERSERK"

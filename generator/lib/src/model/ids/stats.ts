@@ -1,4 +1,4 @@
-export type StatsIdentifiers =
+export type StatsIdentifier =
   | "MAXHITPOINTS"
   | "ARMORCLASS"
   | "ACCRUSHINGMOD"

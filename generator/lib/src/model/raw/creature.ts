@@ -6,11 +6,12 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { RaceIdentifier } from "../ids/race";
 import { RawCreatureAbility } from "./ability";
+import { Actions } from "./actions";
 import { RawCreatureAttack } from "./attack";
 import { CreatureSize, RawProficiencyType } from "./enum";
 import { RawItem, RawItemSlot } from "./item";
 import { RawProjectile } from "./projectile";
-import { Action, CustomCode } from "./script";
+import { CustomCode } from "./script";
 import { RawMemorizedSpell, RawSpell } from "./spell";
 
 export interface RawCreature {
@@ -57,7 +58,7 @@ export interface RawCreature {
 
   attack?: RawCreatureAttack;
 
-  initActions?: Action[];
+  initActions?: Actions.Action[];
 
   customCode?: CustomCode[];
 

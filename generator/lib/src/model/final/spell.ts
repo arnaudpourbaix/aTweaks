@@ -1,51 +1,58 @@
-import { SpellIdentifiers } from "../ids/spell";
+import { SpellIdentifier } from "../ids/spell";
 import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
-import { ItemAbilityLocationEnum, ItemAbilitySecondaryTypeEnum, ItemAbilityTargetEnum, ItemAbilityTypeEnum, SpellFlagEnum, SpellTypeEnum } from "./enums";
+import {
+  ItemAbilityLocationEnum,
+  ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTargetEnum,
+  ItemAbilityTypeEnum,
+  SpellFlagEnum,
+  SpellTypeEnum,
+} from "./enums";
 
 export interface Spell {
-    /**
-     * Only for TPA readibility
-     */
-    name: string;
+  /**
+   * Only for TPA readibility
+   */
+  name: string;
 
-    /**
-     * Filename for SPL file (without extension)
-     */
-    file: string;
+  /**
+   * Filename for SPL file (without extension)
+   */
+  file: string;
 
-    /**
-     * Create a spell from another one
-     */
-    copyFrom?: SpellIdentifiers | string;
+  /**
+   * Create a spell from another one
+   */
+  copyFrom?: SpellIdentifier | string;
 
-    /**
-     * String reference, must be referenced in TRA files
-     */
-    stringRef?: number | string;
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: number | string;
 
-    description?: string[];
+  description?: string[];
 
-    spellType?: SpellTypeEnum;
+  spellType?: SpellTypeEnum;
 
-    castingSound?: string;
+  castingSound?: string;
 
-    castingAnimation?: string;
+  castingAnimation?: string;
 
-    secondaryType?: ItemAbilitySecondaryTypeEnum;
+  secondaryType?: ItemAbilitySecondaryTypeEnum;
 
-    spellLevel?: number;
+  spellLevel?: number;
 
-    type?: ItemAbilityTypeEnum;
-    /**
-     * Range (feet)
-     */
-    range?: number;
-    speed?: number;
-    target?: ItemAbilityTargetEnum;
-    location?: ItemAbilityLocationEnum;
-    projectile?: string;
-    flags?: SpellFlagEnum[];
-    effects: Effect[];
-    removeOpcodes: EffectTypeEnum[];
+  type?: ItemAbilityTypeEnum;
+  /**
+   * Range (feet)
+   */
+  range?: number;
+  speed?: number;
+  target?: ItemAbilityTargetEnum;
+  location?: ItemAbilityLocationEnum;
+  projectile?: string;
+  flags?: SpellFlagEnum[];
+  effects: Effect[];
+  removeOpcodes: EffectTypeEnum[];
 }

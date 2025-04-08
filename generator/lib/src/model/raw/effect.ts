@@ -1,8 +1,8 @@
 import { RawEffectGroupName } from "../../../config/effect-group-name";
 import { GeneralIdentifier } from "../ids/general";
-import { SlotIdentifiers } from "../ids/slot";
-import { SplStateIdentifiers } from "../ids/splstate";
-import { StatsIdentifiers } from "../ids/stats";
+import { SlotIdentifier } from "../ids/slot";
+import { SplStateIdentifier } from "../ids/splstate";
+import { StatsIdentifier } from "../ids/stats";
 import { RawEffectOpcode } from "./effect.type";
 import {
   RawBerserkType,
@@ -71,18 +71,6 @@ export interface RawBaseEffect {
    */
   global?: boolean;
   comment?: string;
-}
-
-export interface RawSharedEffect {
-  target?: RawEffectTarget;
-  power?: number;
-  timing?: RawEffectTiming;
-  dispelResistance?: RawEffectDispelResistance;
-  duration?: number;
-  probability1?: number;
-  probability2?: number;
-  saveTypes?: RawSaveType[];
-  saveBonus?: number;
 }
 
 export type ArmorClassBonusEffect = RawBaseEffect & {
@@ -239,12 +227,12 @@ export type ProtectionFromResourceEffect = RawBaseEffect & {
 export type ScriptingStateModifierEffect = RawBaseEffect & {
   opcode: "ScriptingStateModifier";
   value: number;
-  state: StatsIdentifiers;
+  state: StatsIdentifier;
 };
 
 export type SetExtendedSpellStateEffect = RawBaseEffect & {
   opcode: "SetExtendedSpellState";
-  state: SplStateIdentifiers | string;
+  state: SplStateIdentifier | string;
 };
 
 export type CreatureRGBColorFadeEffect = RawBaseEffect & {
@@ -364,7 +352,7 @@ export type CurrentHPbonusEffect = RawBaseEffect & {
 
 export type CreateItemInSlotEffect = RawBaseEffect & {
   opcode: "CreateItemInSlot";
-  slot: SlotIdentifiers;
+  slot: SlotIdentifier;
 };
 
 export type RawEffectGroup = RawBaseEffect & {

@@ -1,4 +1,4 @@
-export type SlotIdentifiers =
+export type SlotIdentifier =
   | "SLOT_AMULET"
   | "SLOT_ARMOR"
   | "SLOT_BELT"

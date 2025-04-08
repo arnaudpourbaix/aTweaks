@@ -1,56 +1,55 @@
 import { GrabConfig } from "../grab";
-import { TargetStatusEnum } from "../raw/target";
+import { TargetStatus } from "../raw/target";
 
 export interface CreatureAttack {
-    /**
-     * Allow melee attack (default: true)
-     */
-    melee: boolean;
+  /**
+   * Allow melee attack (default: true)
+   */
+  melee: boolean;
 
-    /**
-     * Allow range attack (default: false)
-     */
-    ranged: boolean;
+  /**
+   * Allow range attack (default: false)
+   */
+  ranged: boolean;
 
-    /**
-     * Target priorities in combat
-     */
-    targetPriorities: TargetStatusEnum[];
+  /**
+   * Target priorities in combat
+   */
+  targetPriorities: TargetStatus[];
 
-    /**
-     * Not needed if creature has only one weapon (melee or ranged).
-     * If omitted, creature won't use SelectWeaponAbility to select a weapon.
-     */
-    actions: CreatureAttackAction[];
+  /**
+   * Not needed if creature has only one weapon (melee or ranged).
+   * If omitted, creature won't use SelectWeaponAbility to select a weapon.
+   */
+  actions: CreatureAttackAction[];
 
-    /**
-     * Uses this when a monster have several attacks per round with 2 different weapons.
-     * It makes sure that both weapons are properly used.
-     * It will:
-     * - remove one attack per round (because offhand gives one)
-     * - gives 3 points in two weapons fighting
-     * - add a bonus to hit of +2 to offhand.
-     * - (add a bonus to hit of +4 to mainhand and +8 to offhand.)
-     * 
-     */
-    dualWielding?: boolean;
+  /**
+   * Uses this when a monster have several attacks per round with 2 different weapons.
+   * It makes sure that both weapons are properly used.
+   * It will:
+   * - remove one attack per round (because offhand gives one)
+   * - gives 3 points in two weapons fighting
+   * - add a bonus to hit of +2 to offhand.
+   * - (add a bonus to hit of +4 to mainhand and +8 to offhand.)
+   *
+   */
+  dualWielding?: boolean;
 
-    /**
-     * If it can grab, you need to set up this property
-     */
-    grab?: Partial<GrabConfig>;
+  /**
+   * If it can grab, you need to set up this property
+   */
+  grab?: Partial<GrabConfig>;
 }
 
 export interface CreatureAttackAction {
-    responseWeight: number;
-    weaponSlot?: 'SLOT_WEAPON' | 'SLOT_WEAPON1';
-    /**
-     * Default is one round
-     */
-    duration: number;
-    /**
-     * If true, disable interrupt while attacking (false by default)
-     */
-    disableInterrupt: boolean;
+  responseWeight: number;
+  weaponSlot?: "SLOT_WEAPON" | "SLOT_WEAPON1";
+  /**
+   * Default is one round
+   */
+  duration: number;
+  /**
+   * If true, disable interrupt while attacking (false by default)
+   */
+  disableInterrupt: boolean;
 }
-

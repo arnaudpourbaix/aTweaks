@@ -1,70 +1,83 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { ImmunityName } from "../../config/immunity-name";
 import { ImmunityConfig } from "../model/final/immunity";
-import { SpellIdentifiers } from "../model/ids/spell";
-import { OrTrigger, Parameter, Trigger } from "../model/raw/script";
+import { SpellIdentifier } from "../model/ids/spell";
+import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
 export class UtilsService {
   static instance = new UtilsService();
 
+  // replaceParamsToken(
+  //   params: unknown[] | undefined,
+  //   token: string,
+  //   value: string
+  // ): unknown[] {
+  //   return (params ?? []).map((p) =>
+  //     typeof p === "string" ? p.replace(token, value) : p
+  //   );
+  // }
   replaceParamsToken(
-    params: (string | number)[] | undefined,
     token: string,
-    value: string
-  ): (string | number)[] {
+    value: string,
+    ...params: unknown[]
+  ): unknown[] {
     return (params ?? []).map((p) =>
-      typeof p === "number" ? p : p.replace(token, value)
+      typeof p === "string" ? p.replace(token, value) : p
     );
   }
 
-  replaceTargetTokens<T extends Parameter>(item: T, target: string): T {
+  replaceTargetTokens<T extends { params: (string | number)[] }>(
+    item: T,
+    target: string
+  ): T {
     return {
       ...item,
       params: this.replaceParamsToken(
-        item.params,
         GLOBAL_CONFIG.tokens.target,
         target
+        item.params,
       ),
     };
   }
 
   replaceTriggerToken(
-    triggers: (Trigger | OrTrigger)[],
+    triggers: Triggers.Trigger[],
     token: string,
     value: string
-  ): (Trigger | OrTrigger)[] {
+  ): Triggers.Trigger[] {
     return triggers.map((t) => {
       if ("triggers" in t) {
-        return {
-          triggers: this.replaceTriggerToken(
-            t.triggers,
-            token,
-            value
-          ) as Trigger[],
-        };
-      } else {
-        return {
+        const res: Triggers.Trigger = {
           ...t,
-          params: this.replaceParamsToken(t.params, token, value),
+          triggers: this.replaceTriggerToken(t.triggers, token, value),
         };
-      }
+        return res;
+      } else if ("params" in t) {
+        const res: Triggers.Trigger = {
+          ...t,
+          params: this.replaceParamsToken(token, value, ...t.params),
+        };
+        return res;
+      } else return t;
     });
   }
 
-  inverseNegation(trigger: Trigger): Trigger {
+  inverseNegation(trigger: Triggers.Trigger): Triggers.Trigger {
     return { ...trigger, negation: !trigger.negation };
   }
 
-  inverseNegations(triggers: (Trigger | OrTrigger)[]): (Trigger | OrTrigger)[] {
+  inverseNegations(triggers: Triggers.Trigger[]): Triggers.Trigger[] {
     return triggers.reduce((acc, trigger) => {
       if ("triggers" in trigger) {
-        acc.push(...(this.inverseNegations(trigger.triggers) as Trigger[]));
+        acc.push(
+          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[])
+        );
       } else {
         acc.push(this.inverseNegation(trigger));
       }
       return acc;
-    }, [] as (Trigger | OrTrigger)[]);
+    }, [] as Triggers.Trigger[]);
   }
 
   //   getIdsValue(ids: string, value: string) {
@@ -149,7 +162,7 @@ export class UtilsService {
     return { type: "innate", level: 1 };
   }
 
-  getSpellResource(file?: SpellIdentifiers | string): string | undefined {
+  getSpellResource(file?: SpellIdentifier | string): string | undefined {
     if (!file) return;
     try {
       const ids = this.getIdsValue("spell", file) as string;

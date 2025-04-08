@@ -1,3 +1,4 @@
+import { ImmunityName } from "../../../config/immunity-name";
 import { GrabFullConfig } from "../grab";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
@@ -5,14 +6,11 @@ import { ClassIdentifier } from "../ids/class";
 import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { RaceIdentifier } from "../ids/race";
-import {
-  RawCreatureAutoGenerate,
-  RawScriptLocationEnum,
-} from "../raw/creature";
-import { RawProficiencyTypeEnum, SizeEnum } from "../raw/enum";
-import { ImmunityName } from "../raw/immunity";
+import { Actions } from "../raw/actions";
+import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
+import { CreatureSize, RawProficiencyType } from "../raw/enum";
 import { RawItemSlot } from "../raw/item";
-import { Action, CustomCode } from "../raw/script";
+import { CustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
@@ -77,7 +75,7 @@ export interface Creature {
 
   grab?: GrabFullConfig;
 
-  initActions: Action[];
+  initActions: Actions.Action[];
 
   customCode: CustomCode[];
 
@@ -166,7 +164,7 @@ export interface CreatureData {
   race?: RaceIdentifier;
   class?: ClassIdentifier;
   gender?: GenderIdentifier;
-  size?: SizeEnum;
+  size?: CreatureSize;
   animation?: AnimationIdentifiers;
   metalColor?: number;
   minorColor?: number;
@@ -186,9 +184,9 @@ export interface CreatureAdditionalData {
    * BAF Script location. Auto if empty, at the top tier possible.
    * Will raise an error at install if location was not empty (safety measure)
    */
-  scriptLocation?: RawScriptLocationEnum;
+  scriptLocation?: RawScriptLocation;
 
-  proficiencies: { type: RawProficiencyTypeEnum; value: number }[];
+  proficiencies: { type: RawProficiencyType; value: number }[];
 
   removeItems: string[];
   itemSlots: RawItemSlot[];

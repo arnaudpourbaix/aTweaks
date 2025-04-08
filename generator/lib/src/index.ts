@@ -1,12 +1,8 @@
 import chalk from "chalk";
 import { program } from "commander";
-import glob from "glob";
+import { CREATURES } from "../creatures";
 import { MainService } from "./services/main.service";
 import { StateService } from "./services/state.service";
-import * as fs from "fs";
-import path from "path";
-import { State } from "./state";
-import { CREATURES } from "../creatures";
 
 const clear = require("clear");
 const figlet = require("figlet");
@@ -19,15 +15,7 @@ console.log(
 program
   .version("0.0.1")
   .description("Generate script BAF files for IE games")
-  .option("-m, --mod <folder>", "Mod folder (fullpath)")
   .parse(process.argv);
-
-const options = program.opts();
-
-if (!options.mod) {
-  program.outputHelp();
-  process.exit();
-}
 
 async function main() {
   const stateService = new StateService();

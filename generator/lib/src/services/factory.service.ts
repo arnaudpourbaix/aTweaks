@@ -1,15 +1,9 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/final/attack";
 import { ObjectIdentifier } from "../model/ids/object";
-import {
-  Action,
-  BasicStatement,
-  OrTrigger,
-  Response,
-  Statements,
-  Trigger,
-} from "../model/raw/script";
-import { State } from "../state";
+import { Actions } from "../model/raw/actions";
+import { BasicStatement, Response, Statements } from "../model/raw/script";
+import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
 
 export class FactoryService {
@@ -17,61 +11,64 @@ export class FactoryService {
 
   private utils = UtilsService.instance;
 
-  response = (actions: Action[], weight = 100): Response[] => [
+  response = (actions: Actions.Action[], weight = 100): Response[] => [
     { weight, actions },
   ];
 
-  global = (name: string, value: number): Trigger => ({
+  global = (name: string, value: number): Triggers.Trigger => ({
     name: "Global",
     params: [name, "LOCALS", value],
   });
 
-  setGlobal = (name: string, value: number): Action => ({
+  setGlobal = (name: string, value: number): Actions.Action => ({
     name: "SetGlobal",
     params: [name, "LOCALS", value],
   });
 
-  setGlobalTimer = (name: string, value: number): Action => ({
+  setGlobalTimer = (name: string, value: number): Actions.Action => ({
     name: "SetGlobalTimer",
     params: [name, "LOCALS", value],
   });
 
-  globalTimerExpired = (name: string): Trigger => ({
+  globalTimerExpired = (name: string): Triggers.Trigger => ({
     name: "GlobalTimerExpired",
     params: [name, "LOCALS"],
   });
 
-  globalTimerNotExpired = (name: string): Trigger => ({
+  globalTimerNotExpired = (name: string): Triggers.Trigger => ({
     name: "GlobalTimerNotExpired",
     params: [name, "LOCALS"],
     negation: true,
   });
 
-  globalRoundTimerNotExpired = (): Trigger => ({
+  globalRoundTimerNotExpired = (): Triggers.Trigger => ({
     name: "GlobalTimerNotExpired",
     params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS"],
     negation: true,
   });
 
-  setGlobalRoundTimer = (): Action => ({
+  setGlobalRoundTimer = (): Actions.Action => ({
     name: "SetGlobalTimer",
     params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS", 6],
   });
 
-  enableInterrupt = (): Action => ({ name: "SetInterrupt", params: ["TRUE"] });
+  enableInterrupt = (): Actions.Action => ({
+    name: "SetInterrupt",
+    params: ["TRUE"],
+  });
 
-  disableInterrupt = (): Action => ({
+  disableInterrupt = (): Actions.Action => ({
     name: "SetInterrupt",
     params: ["FALSE"],
   });
 
   attackResponses = (p: {
     attacks: CreatureAttackAction[];
-    optActions?: Action[];
+    optActions?: Actions.Action[];
     oncePerRound: boolean;
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
-      const actions: Action[] = [...(p.optActions ?? [])];
+      const actions: Actions.Action[] = [...(p.optActions ?? [])];
       if (a.weaponSlot)
         actions.push({
           name: "SelectWeaponAbility",
@@ -121,46 +118,40 @@ export class FactoryService {
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
-  }): Trigger[] => {
-    const results: Trigger[] = [
+  }): Triggers.Trigger[] => {
+    const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, StatsIdentifiers.SANCTUARY],
+        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_CHARMED],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          StateIdentifiers.STATE_REALLY_DEAD,
-        ],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
         negation: true,
       },
     ];
     if (!seeInvisible) {
       results.unshift({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_INVISIBLE],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
         negation: true,
       });
       results.unshift({
         name: "StateCheck",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          StateIdentifiers.STATE_IMPROVEDINVISIBILITY,
-        ],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_IMPROVEDINVISIBILITY"],
         negation: true,
       });
     }
     if (!isTargetPlayer)
       results.unshift({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, GeneralIdentifiers.WEAPON],
+        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
         negation: true,
       });
     return results;
@@ -172,24 +163,21 @@ export class FactoryService {
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
-  }): Trigger[] => {
-    const results: Trigger[] = [
+  }): Triggers.Trigger[] => {
+    const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, StatsIdentifiers.SANCTUARY],
+        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_CHARMED],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          StateIdentifiers.STATE_REALLY_DEAD,
-        ],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
         negation: true,
       },
       { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
@@ -197,22 +185,19 @@ export class FactoryService {
     if (!seeInvisible) {
       results.unshift({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_INVISIBLE],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
         negation: true,
       });
       results.unshift({
         name: "StateCheck",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          StateIdentifiers.STATE_IMPROVEDINVISIBILITY,
-        ],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_IMPROVEDINVISIBILITY"],
         negation: true,
       });
     }
     if (!isTargetPlayer)
       results.unshift({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, GeneralIdentifiers.WEAPON],
+        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
         negation: true,
       });
     return results;
@@ -224,24 +209,21 @@ export class FactoryService {
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
-  }): Trigger[] => {
-    const results: Trigger[] = [
+  }): Triggers.Trigger[] => {
+    const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, StatsIdentifiers.SANCTUARY],
+        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_CHARMED],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          StateIdentifiers.STATE_REALLY_DEAD,
-        ],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
         negation: true,
       },
       { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
@@ -249,14 +231,14 @@ export class FactoryService {
     if (!seeInvisible) {
       results.push({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, StateIdentifiers.STATE_INVISIBLE],
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
         negation: true,
       });
     }
     if (!isTargetPlayer)
       results.unshift({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, GeneralIdentifiers.WEAPON],
+        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
         negation: true,
       });
     return results;
@@ -264,7 +246,7 @@ export class FactoryService {
 
   addStatementsFromTargetList = (p: {
     statements: Statements;
-    triggers: (Trigger | OrTrigger)[];
+    triggers: Triggers.Trigger[];
     targets: string[];
     responses: Response[];
     reverse?: boolean;
@@ -276,7 +258,7 @@ export class FactoryService {
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
     const max = 1000;
     for (const [index, target] of targets.entries()) {
-      const triggers: (Trigger | OrTrigger)[] = this.utils.replaceTriggerToken(
+      const triggers: Triggers.Trigger[] = this.utils.replaceTriggerToken(
         p.triggers,
         GLOBAL_CONFIG.tokens.target,
         target
@@ -286,7 +268,7 @@ export class FactoryService {
           name: "RandomNumGT",
           params: [max, Math.round(max / (targets.length - index))],
         });
-      p.statements.list.push({
+      p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
         responses: p.responses.map((r) => ({
@@ -301,9 +283,9 @@ export class FactoryService {
 
   addOneBlockTargetList = (p: {
     statements: Statements;
-    triggers?: Trigger[];
+    triggers?: Triggers.Trigger[];
     targets: string[];
-    targetTriggers: Trigger[];
+    targetTriggers: Triggers.Trigger[];
     responses: Response[];
     reverse?: boolean;
     random?: boolean;
@@ -317,9 +299,10 @@ export class FactoryService {
     p.random = p.random ?? false;
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
     const max = 1000;
-    const triggers: (Trigger | OrTrigger)[] = [...(p.triggers ?? [])];
+    const triggers: Triggers.Trigger[] = [...(p.triggers ?? [])];
     for (const [index, target] of targets.entries()) {
-      const orTrigger: OrTrigger = {
+      const orTrigger: Triggers.Trigger = {
+        name: "Or",
         triggers: p.targetTriggers
           .map((t) => this.utils.replaceTargetTokens(t, target))
           .map(this.utils.inverseNegation),
@@ -332,7 +315,7 @@ export class FactoryService {
       triggers.push(orTrigger);
     }
     if (!p.noTargetSelect) {
-      p.statements.list.push({
+      p.statements.push({
         comment: p.comment,
         triggers,
         responses: this.response([{ name: "Continue" }]),
@@ -346,7 +329,7 @@ export class FactoryService {
     }
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     if (!p.noResponse) {
-      p.statements.list.push({
+      p.statements.push({
         triggers: finalTriggers.map((t) =>
           this.utils.replaceTargetTokens(t, lastSeenBy)
         ),

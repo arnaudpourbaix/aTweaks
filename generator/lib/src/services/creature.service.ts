@@ -1,13 +1,12 @@
 import chalk from "chalk";
+import figureSet from "figures";
+import { CONSTRUCT_BONUS_HIT_POINT } from "../../config/creatures";
+import { GLOBAL_CONFIG } from "../../config/generate";
 import { Creature, CreatureData } from "../model/final/creature";
 import { ItemAbilityLocationEnum } from "../model/final/enums";
 import { Item } from "../model/final/item";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
-import { State } from "../state";
-import figureSet from "figures";
 import { CreatureSize } from "../model/raw/enum";
-import { CONSTRUCT_BONUS_HIT_POINT } from "../../config/creatures";
-import { GLOBAL_CONFIG } from "../../config/generate";
 
 export class CreatureService {
   static instance = new CreatureService();

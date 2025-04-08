@@ -7,13 +7,7 @@ import { ALLEGIANCE_IDENTIFIERS } from "../model/ids/allegiance";
 import { GENERAL_IDENTIFIERS } from "../model/ids/general";
 import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
 import { RACE_IDENTIFIERS } from "../model/ids/race";
-import {
-  Action,
-  ConditionalStatement,
-  OrTrigger,
-  Statements,
-  Trigger,
-} from "../model/raw/script";
+import { ConditionalStatement, Statements } from "../model/raw/script";
 import { TARGET_FINAL_OBJECTS } from "../model/raw/target";
 import { State } from "../state";
 import { StatementService } from "./statement-builder.service";
@@ -21,6 +15,8 @@ import { CLASS_IDENTIFIERS } from "../model/ids/class";
 import { SPECIFIC_IDENTIFIERS } from "../model/ids/specific";
 import { GENDER_IDENTIFIER } from "../model/ids/gender";
 import { ALIGN_IDENTIFIERS } from "../model/ids/align";
+import { Triggers } from "../model/raw/triggers";
+import { Actions } from "../model/raw/actions";
 
 export class BafGeneratorService {
   static instance = new BafGeneratorService();
@@ -32,7 +28,7 @@ export class BafGeneratorService {
       creature,
       { summon: false }
     );
-    const content = statements.list
+    const content = statements
       .map((statement) => this.generateStatement(statement))
       .join("");
     fs.writeFileSync(
@@ -44,7 +40,7 @@ export class BafGeneratorService {
         creature,
         { summon: true }
       );
-      const content = statements.list
+      const content = statements
         .map((statement) => this.generateStatement(statement))
         .join("");
       fs.writeFileSync(
@@ -69,7 +65,7 @@ export class BafGeneratorService {
     return lines.join(CR);
   }
 
-  generateTriggers(triggers: (Trigger | OrTrigger)[], isOr: boolean): string[] {
+  generateTriggers(triggers: Triggers.Trigger[], isOr: boolean): string[] {
     const lines: string[] = [];
     for (const t of triggers) {
       if ("triggers" in t) {
@@ -88,10 +84,10 @@ export class BafGeneratorService {
     return lines;
   }
 
-  generateTrigger(trigger: Trigger, isOr: boolean): string {
+  generateTrigger(trigger: Triggers.Trigger, isOr: boolean): string {
     const params: string[] = [];
     const paramsRef = this.getTriggerParameters(trigger.name);
-    const triggerParams = trigger.params ?? [];
+    const triggerParams = "params" in trigger ? trigger.params : [];
     if (triggerParams.length !== paramsRef.length)
       throw new Error(
         `Not enough parameters for trigger\n ${JSON.stringify(
@@ -117,7 +113,7 @@ export class BafGeneratorService {
     }(${params.join(",")})`;
   }
 
-  generateActions(actions: Action[]): string[] {
+  generateActions(actions: Actions.Action[]): string[] {
     const lines: string[] = [];
     for (const a of actions) {
       lines.push(this.generateAction(a));
@@ -125,10 +121,10 @@ export class BafGeneratorService {
     return lines;
   }
 
-  generateAction(action: Action): string {
+  generateAction(action: Actions.Action): string {
     const params: string[] = [];
     const paramsRef = this.getActionParameters(action.name);
-    const actionParams = action.params ?? [];
+    const actionParams = "params" in action ? action.params : [];
     if (actionParams.length !== paramsRef.length)
       throw new Error(
         `Not enough parameters for action\n ${JSON.stringify(

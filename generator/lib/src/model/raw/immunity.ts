@@ -1,7 +1,7 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { EffectTypeEnum } from "../final/effect.type";
 import { PortraitIconEnum } from "../final/enums";
-import { SpellIdentifiers } from "../ids/spell";
+import { SpellIdentifier } from "../ids/spell";
 import { RawEffect } from "./effect";
 import { RawItemSlot } from "./item";
 
@@ -16,7 +16,7 @@ export interface RawImmunityConfig {
   strings?: number[];
   animations?: string[];
   idsSpells?: {
-    id: SpellIdentifiers | string;
+    id: SpellIdentifier | string;
     suffixes?: string[];
     source?: string;
   }[];

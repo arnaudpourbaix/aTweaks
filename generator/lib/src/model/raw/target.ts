@@ -1,13 +1,13 @@
 import { TargetListName } from "../../../config/target";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { ObjectIdentifier } from "../ids/object";
-import { OrTrigger, Trigger } from "./script";
+import { Triggers } from "./triggers";
 
 export interface TargetPriority {
   status: TargetStatus;
   canOnlyTargetPlayer: boolean;
-  targetTriggers: (Trigger | OrTrigger)[];
-  triggers: (Trigger | OrTrigger)[];
+  targetTriggers: Triggers.Trigger[];
+  triggers: Triggers.Trigger[];
 }
 
 export type TargetStatus =
@@ -45,24 +45,24 @@ export interface RawTargetList {
    */
   includeStatus?: TargetStatus[];
   excludeStatus?: TargetStatus[];
-  triggers?: Trigger[];
+  triggers?: Triggers.Trigger[];
 }
 
 /**
  * These objects can't have any parameter
  */
-export const TARGET_FINAL_OBJECTS = [
-  ObjectIdentifiers.Nothing,
-  ObjectIdentifiers.Myself,
-  ObjectIdentifiers.Player1,
-  ObjectIdentifiers.Player2,
-  ObjectIdentifiers.Player3,
-  ObjectIdentifiers.Player4,
-  ObjectIdentifiers.Player5,
-  ObjectIdentifiers.Player6,
-  ObjectIdentifiers.Protagonist,
-  ObjectIdentifiers.StrongestOfMale,
-  ObjectIdentifiers.Familiar,
-  ObjectIdentifiers.FamiliarSummoner,
-  ObjectIdentifiers.LastKilled,
+export const TARGET_FINAL_OBJECTS: ObjectIdentifier[] = [
+  "Nothing",
+  "Myself",
+  "Player1",
+  "Player2",
+  "Player3",
+  "Player4",
+  "Player5",
+  "Player6",
+  "Protagonist",
+  "StrongestOfMale",
+  "Familiar",
+  "FamiliarSummoner",
+  "LastKilled",
 ];

@@ -1,5 +1,13 @@
 import { EffectDamageTypeEnum } from "./final/enums";
 import { RawEffect } from "./raw/effect";
+import {
+  RawItemAbilityLocation,
+  RawItemAbilitySecondaryType,
+  RawItemAbilityTarget,
+  RawItemAbilityType,
+  RawSaveType,
+  RawSpellType,
+} from "./raw/enum";
 
 export interface GrabFullConfig extends GrabConfig {
   grabState: string;
@@ -26,7 +34,7 @@ export interface GrabConfig {
    */
   probability: number;
 
-  saveTypes: RawSaveTypeEnum[];
+  saveTypes: RawSaveType[];
   saveBonus: number;
 
   /**
@@ -50,20 +58,20 @@ export interface GrabSpellConfig {
    */
   stringRefSpellName: number;
 
-  spellType: RawSpellTypeEnum;
+  spellType: RawSpellType;
 
-  secondaryType: RawItemAbilitySecondaryTypeEnum;
+  secondaryType: RawItemAbilitySecondaryType;
 
   spellLevel: number;
 
-  type: RawItemAbilityTypeEnum;
+  type: RawItemAbilityType;
 
   /**
    * Range (feet)
    */
   range: number;
-  target: RawItemAbilityTargetEnum;
-  location: RawItemAbilityLocationEnum;
+  target: RawItemAbilityTarget;
+  location: RawItemAbilityLocation;
   effects: RawEffect[];
   /**
    * Damage per round

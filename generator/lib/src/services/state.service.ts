@@ -1,11 +1,8 @@
-import chalk from "chalk";
-import * as fs from "fs";
 import { IMMUNITIES } from "../../config/immunity-config";
-import {
-  GenericScriptParameterData,
-  GenericScriptRawData,
-} from "../model/final/data";
+import { GenericScriptParameterData } from "../model/final/data";
 import { ImmunityConfig } from "../model/final/immunity";
+import { Actions } from "../model/raw/actions";
+import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
 export class StateService {
@@ -24,33 +21,17 @@ export class StateService {
   }
 
   private loadActions(): void {
-    const filename = "assets/actions.json";
-    const file = fs.readFileSync(filename, { encoding: "utf8", flag: "r" });
-    try {
-      const content = JSON.parse(file) as GenericScriptRawData[];
-      State.actions = content.map((c) => ({
-        ...c,
-        parameters: this.buildParameters(c.parameters),
-      }));
-    } catch (error: unknown) {
-      console.error(chalk.red(`${filename} is not a valid json file!`));
-      throw error;
-    }
+    State.actions = Actions.ACTIONS.map((c) => ({
+      ...c,
+      parameters: this.buildParameters(c.parameters),
+    }));
   }
 
   private loadTriggers(): void {
-    const filename = "assets/triggers.json";
-    const file = fs.readFileSync(filename, { encoding: "utf8", flag: "r" });
-    try {
-      const content = JSON.parse(file) as GenericScriptRawData[];
-      State.triggers = content.map((c) => ({
-        ...c,
-        parameters: this.buildParameters(c.parameters),
-      }));
-    } catch (error: unknown) {
-      console.error(chalk.red(`${filename} is not a valid json file!`));
-      throw error;
-    }
+    State.triggers = Triggers.TRIGGERS.map((c) => ({
+      ...c,
+      parameters: this.buildParameters(c.parameters),
+    }));
   }
 
   private buildParameters(params: string): GenericScriptParameterData[] {

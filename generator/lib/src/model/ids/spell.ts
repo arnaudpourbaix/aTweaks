@@ -1,4 +1,4 @@
-export type SpellIdentifiers =
+export type SpellIdentifier =
   | "CLERIC_BLESS"
   | "CLERIC_COMMAND"
   | "CLERIC_CURE_LIGHT_WOUNDS"

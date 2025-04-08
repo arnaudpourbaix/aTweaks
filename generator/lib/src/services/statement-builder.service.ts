@@ -1,20 +1,11 @@
-import { stat } from "fs";
+import { GLOBAL_CONFIG } from "../../config/generate";
 import { getTargetPriorityDetails } from "../../config/target";
 import { Creature } from "../model/final/creature";
-import { AllegianceIdentifier } from "../model/ids/allegiance";
-import { AStylesIdentifiers } from "../model/ids/astyles";
-import { ClassIdentifier } from "../model/ids/class";
-import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
-import { StateIdentifiers } from "../model/ids/state";
 import { BuilderOptions } from "../model/misc";
-import {
-  Action,
-  CustomCodeLocation,
-  Statements,
-  Trigger,
-} from "../model/raw/script";
-import { State } from "../state";
+import { Actions } from "../model/raw/actions";
+import { CustomCodeLocation, Statements } from "../model/raw/script";
+import { Triggers } from "../model/raw/triggers";
 import { FactoryService } from "./factory.service";
 import { TargetService } from "./target.service";
 import { UtilsService } from "./utils.service";
@@ -27,9 +18,7 @@ export class StatementService {
   private targetService = TargetService.instance;
 
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
-    const statements: Statements = {
-      list: [],
-    };
+    const statements: Statements = [];
     this.execute(
       this.destroyUponDeath,
       "destroyUponDeath",
@@ -137,8 +126,8 @@ export class StatementService {
   }
 
   private processStatements(statements: Statements, newStatements: Statements) {
-    for (const statement of newStatements.list) {
-      if (!statement.target) statements.list.push(statement);
+    for (const statement of newStatements) {
+      if (!statement.target) statements.push(statement);
       else {
         const { triggers, targetTriggers } =
           this.targetService.getTriggersFromTargetList(statement.target);
@@ -166,12 +155,12 @@ export class StatementService {
   ): void {
     if (this.utils.hasImmunity(creature.additionalData.immunities, "fear"))
       return;
-    statements.list.push({
+    statements.push({
       comment: "Random walk on panic",
       triggers: [
         {
           name: "StateCheck",
-          params: [ObjectIdentifiers.Myself, StateIdentifiers.STATE_PANIC],
+          params: ["Myself", "STATE_PANIC"],
         },
       ],
       responses: this.factory.response([{ name: "RandomWalkContinuous" }]),
@@ -184,7 +173,7 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!options.summon) return;
-    statements.list.push({
+    statements.push({
       comment: "Summons are destroyed on death",
       triggers: [{ name: "Die" }],
       responses: this.factory.response([{ name: "DestroySelf" }]),
@@ -197,19 +186,19 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (options.summon) return;
-    const actions: Action[] = [
-      this.factory.setGlobal(State.config.bafConstants.initGlobal, 1),
-      this.factory.setGlobal(State.config.bafConstants.combatStarted, 0),
-      this.factory.setGlobal(State.config.bafConstants.allowMelee, 0),
-      this.factory.setGlobal(State.config.bafConstants.disableSpellcasting, 0),
-      this.factory.setGlobalTimer(State.config.bafConstants.restTimer, 2400), // EIGHT_HOURS
+    const actions: Actions.Action[] = [
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.allowMelee, 0),
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
+      this.factory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
     ];
     for (const action of creature.initActions) {
       actions.push(action);
     }
-    statements.list.push({
+    statements.push({
       comment: "Init",
-      triggers: [this.factory.global(State.config.bafConstants.initGlobal, 0)],
+      triggers: [this.factory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0)],
       responses: this.factory.response(actions),
     });
   }
@@ -220,23 +209,23 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (options.summon) return;
-    const actions: Action[] = [
-      this.factory.setGlobal(State.config.bafConstants.initGlobal, 0),
+    const actions: Actions.Action[] = [
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
       { name: "Rest" },
     ];
     if (creature.restHeal)
       actions.push({
         name: "ApplySpellRES",
-        params: [State.config.bafConstants.fullHealSpellResource, "Myself"],
+        params: [GLOBAL_CONFIG.bafConstants.fullHealSpellResource, "Myself"],
       });
-    statements.list.push({
+    statements.push({
       comment: "Rest (reset everything and heal if applicable)",
       triggers: [
-        this.factory.global(State.config.bafConstants.initGlobal, 1),
-        this.factory.globalTimerExpired(State.config.bafConstants.restTimer),
+        this.factory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
+        this.factory.globalTimerExpired(GLOBAL_CONFIG.bafConstants.restTimer),
         {
           name: "Detect",
-          params: [AllegianceIdentifiers.GOODCUTOFF],
+          params: ["GOODCUTOFF"],
           negation: true,
         },
       ],
@@ -250,65 +239,57 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (options.summon) return;
-    statements.list.push({
+    statements.push({
       comment: "Turn hostile if attacked",
       triggers: [
         {
           name: "Allegiance",
-          params: [ObjectIdentifiers.Myself, AllegianceIdentifiers.ENEMY],
+          params: ["Myself", "ENEMY"],
           negation: true,
         },
         {
+          name: "Or",
           triggers: [
             {
               name: "AttackedBy",
-              params: [
-                AllegianceIdentifiers.GOODCUTOFF,
-                AStylesIdentifiers.DEFAULT,
-              ],
+              params: ["GOODCUTOFF", "DEFAULT"],
             },
             {
               name: "AttackedBy",
-              params: [
-                AllegianceIdentifiers.CONTROLLED,
-                AStylesIdentifiers.DEFAULT,
-              ],
+              params: ["CONTROLLED", "DEFAULT"],
             },
             {
               name: "AttackedBy",
-              params: [
-                AllegianceIdentifiers.CHARMED,
-                AStylesIdentifiers.DEFAULT,
-              ],
+              params: ["CHARMED", "DEFAULT"],
             },
             {
               name: "SpellCastOnMe",
-              params: [AllegianceIdentifiers.GOODCUTOFF, 0],
+              params: ["GOODCUTOFF", 0],
             },
             {
               name: "SpellCastOnMe",
-              params: [AllegianceIdentifiers.CONTROLLED, 0],
+              params: ["CONTROLLED", 0],
             },
             {
               name: "SpellCastOnMe",
-              params: [AllegianceIdentifiers.CHARMED, 0],
+              params: ["CHARMED", 0],
             },
           ],
         },
       ],
       responses: this.factory.response([{ name: "Enemy" }]),
     });
-    if ([RaceIdentifiers.BEAR].includes(creature.data.race as RaceIdentifier)) {
-      statements.list.push({
+    if (["BEAR"].includes(creature.data.race as RaceIdentifier)) {
+      statements.push({
         comment: "Turn hostile if too close and not druid/ranger",
         triggers: [
-          { name: "Range", params: [AllegianceIdentifiers.GOODCUTOFF, 7] },
+          { name: "Range", params: ["GOODCUTOFF", 7] },
           {
             name: "See",
             params: [
               this.targetService.targetObject({
-                ea: AllegianceIdentifiers.PC,
-                clazz: ClassIdentifiers.DRUID,
+                ea: "PC",
+                clazz: "DRUID",
               }),
             ],
             negation: true,
@@ -317,8 +298,8 @@ export class StatementService {
             name: "See",
             params: [
               this.targetService.targetObject({
-                ea: AllegianceIdentifiers.PC,
-                clazz: ClassIdentifiers.RANGER,
+                ea: "PC",
+                clazz: "RANGER",
               }),
             ],
             negation: true,
@@ -327,8 +308,8 @@ export class StatementService {
             name: "See",
             params: [
               this.targetService.targetObject({
-                ea: AllegianceIdentifiers.PC,
-                clazz: ClassIdentifiers.FIGHTER_DRUID,
+                ea: "PC",
+                clazz: "FIGHTER_DRUID",
               }),
             ],
             negation: true,
@@ -337,15 +318,15 @@ export class StatementService {
             name: "See",
             params: [
               this.targetService.targetObject({
-                ea: AllegianceIdentifiers.PC,
-                clazz: ClassIdentifiers.CLERIC_RANGER,
+                ea: "PC",
+                clazz: "CLERIC_RANGER",
               }),
             ],
             negation: true,
           },
           {
             name: "Allegiance",
-            params: [ObjectIdentifiers.Myself, AllegianceIdentifiers.NEUTRAL],
+            params: ["Myself", "NEUTRAL"],
           },
         ],
         responses: this.factory.response([{ name: "Enemy" }]),
@@ -358,24 +339,24 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    const actions: Action[] = [
-      this.factory.setGlobal(State.config.bafConstants.combatStarted, 1),
+    const actions: Actions.Action[] = [
+      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
     if (creature.help) {
       actions.push({
         name: "Shout",
         params: [
           options.summon
-            ? State.config.bafConstants.summonerShoutId
-            : State.config.bafConstants.monsterShoutId,
+            ? GLOBAL_CONFIG.bafConstants.summonerShoutId
+            : GLOBAL_CONFIG.bafConstants.monsterShoutId,
         ],
       });
     }
-    statements.list.push({
+    statements.push({
       comment: "Detect combat",
       triggers: [
-        this.factory.global(State.config.bafConstants.combatStarted, 0),
-        { name: "See", params: [ObjectIdentifiers.NearestEnemyOf] },
+        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+        { name: "See", params: ["NearestEnemyOf"] },
       ],
       responses: this.factory.response(actions),
     });
@@ -388,25 +369,22 @@ export class StatementService {
   ): void {
     if (!creature.help) return;
     const shoutId = options.summon
-      ? State.config.bafConstants.summonerShoutId
-      : State.config.bafConstants.monsterShoutId;
-    const trigger: Trigger = options.summon
-      ? { name: "Heard", params: [ObjectIdentifiers.LastSummonerOf, shoutId] }
+      ? GLOBAL_CONFIG.bafConstants.summonerShoutId
+      : GLOBAL_CONFIG.bafConstants.monsterShoutId;
+    const trigger: Triggers.Trigger = options.summon
+      ? { name: "Heard", params: ["LastSummonerOf", shoutId] }
       : {
           name: "Heard",
-          params: [
-            `${AllegianceIdentifiers.EVILCUTOFF}.0.${creature.data.race}`,
-            shoutId,
-          ],
+          params: [`${"EVILCUTOFF"}.0.${creature.data.race}`, shoutId],
         };
-    statements.list.push({
+    statements.push({
       comment: "React to shouts",
       triggers: [
-        this.factory.global(State.config.bafConstants.combatStarted, 0),
+        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
         trigger,
       ],
       responses: this.factory.response([
-        this.factory.setGlobal(State.config.bafConstants.combatStarted, 1),
+        this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
       ]),
     });
   }
@@ -416,10 +394,10 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    statements.list.push({
+    statements.push({
       comment: "Do nothing if combat is not started",
       triggers: [
-        this.factory.global(State.config.bafConstants.combatStarted, 0),
+        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
         { name: "ActionListEmpty" },
       ],
       responses: this.factory.response([{ name: "NoAction" }]),
@@ -432,38 +410,35 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!options.summon) return;
-    const triggers: Trigger[] = [
-      this.factory.global(State.config.bafConstants.combatStarted, 0),
+    const triggers: Triggers.Trigger[] = [
+      this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
       {
         name: "StateCheck",
-        params: [ObjectIdentifiers.Myself, StateIdentifiers.STATE_BLIND],
+        params: ["Myself", "STATE_BLIND"],
         negation: true,
       },
       { name: "ActionListEmpty" },
       {
         name: "See",
-        params: [ObjectIdentifiers.NearestEnemyOf],
+        params: ["NearestEnemyOf"],
         negation: true,
       },
       {
         name: "See",
-        params: [ObjectIdentifiers.LastSummonerOf],
+        params: ["LastSummonerOf"],
         negation: true,
       },
-      { name: "HPGT", params: [ObjectIdentifiers.LastSummonerOf, 0] },
+      { name: "HPGT", params: ["LastSummonerOf", 0] },
       {
         name: "Range",
-        params: [
-          ObjectIdentifiers.LastSummonerOf,
-          State.config.bafConstants.trackingRange,
-        ],
+        params: ["LastSummonerOf", GLOBAL_CONFIG.bafConstants.trackingRange],
       },
     ];
-    statements.list.push({
+    statements.push({
       comment: "Summon follow summoner",
       triggers,
       responses: this.factory.response([
-        { name: "MoveToObject", params: [ObjectIdentifiers.LastSummonerOf] },
+        { name: "MoveToObject", params: ["LastSummonerOf"] },
       ]),
     });
   }
@@ -474,27 +449,27 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!creature.tracking) return;
-    const allegiance: Trigger = {
+    const allegiance: Triggers.Trigger = {
       name: "Allegiance",
-      params: [ObjectIdentifiers.Myself, AllegianceIdentifiers.GOODCUTOFF],
+      params: ["Myself", "GOODCUTOFF"],
       negation: true,
     };
-    const triggers: Trigger[] = [
+    const triggers: Triggers.Trigger[] = [
       {
         name: "StateCheck",
-        params: [ObjectIdentifiers.Myself, StateIdentifiers.STATE_BLIND],
+        params: ["Myself", "STATE_BLIND"],
         negation: true,
       },
       {
         name: "Range",
         params: [
-          State.config.tokens.target,
-          State.config.bafConstants.trackingRange,
+          GLOBAL_CONFIG.tokens.target,
+          GLOBAL_CONFIG.bafConstants.trackingRange,
         ],
       },
     ];
-    const actions: Action[] = [
-      { name: "MoveToObject", params: [State.config.tokens.target] },
+    const actions: Actions.Action[] = [
+      { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
     ];
     this.factory.addStatementsFromTargetList({
       statements,
@@ -528,7 +503,7 @@ export class StatementService {
         }),
       ],
       responses: this.factory.response(actions),
-      targets: [ObjectIdentifiers.LastSeenBy],
+      targets: ["LastSeenBy"],
       random: false,
     });
   }
@@ -558,19 +533,19 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!creature.walk) return;
-    const triggers: Trigger[] = [
+    const triggers: Triggers.Trigger[] = [
       this.factory.global(
-        State.config.bafConstants.combatStarted,
+        GLOBAL_CONFIG.bafConstants.combatStarted,
         combat ? 1 : 0
       ),
       { name: "ActionListEmpty" },
       {
         name: "See",
-        params: [AllegianceIdentifiers.GOODCUTOFF],
+        params: ["GOODCUTOFF"],
         negation: true,
       },
     ];
-    statements.list.push({
+    statements.push({
       comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       triggers,
       responses: this.factory.response([
@@ -602,7 +577,7 @@ export class StatementService {
         : this.targetService.getList("NearestEnemies");
       const targetTriggers = this.utils.replaceTriggerToken(
         [
-          ...(target.targetTriggers as Trigger[]),
+          ...(target.targetTriggers as Triggers.Trigger[]),
           ...this.factory.validAttackTarget({
             isTargetPlayer: target.canOnlyTargetPlayer,
             seeInvisible: this.utils.hasImmunity(
@@ -611,9 +586,9 @@ export class StatementService {
             ),
           }),
         ],
-        State.config.tokens.grabState,
+        GLOBAL_CONFIG.tokens.grabState,
         creature.grab?.grabState ?? ""
-      ) as Trigger[];
+      ) as Triggers.Trigger[];
       this.factory.addOneBlockTargetList({
         statements,
         comment: `Attack ${target.status} enemy`,
@@ -666,7 +641,7 @@ export class StatementService {
             ),
           })
         );
-      const actions: Action[] = [
+      const actions: Actions.Action[] = [
         ...ability.actions,
         this.factory.setGlobalRoundTimer(),
       ];
@@ -681,7 +656,7 @@ export class StatementService {
       if (ability.range) {
         targetTriggers.unshift({
           name: "Range",
-          params: [State.config.tokens.target, ability.range],
+          params: [GLOBAL_CONFIG.tokens.target, ability.range],
         });
       }
       if (ability.disableInterrupt) {

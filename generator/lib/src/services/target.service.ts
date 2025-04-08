@@ -3,8 +3,6 @@ import {
   TARGET_LISTS,
   TargetListName,
 } from "../../config/target";
-import { CreatureAbility } from "../model/final/ability";
-import { TargetList } from "../model/final/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";
@@ -14,12 +12,12 @@ import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
 import { RawCreature } from "../model/raw/creature";
-import { OrTrigger, Trigger } from "../model/raw/script";
 import {
   RawTargetList,
   TargetPriority,
-  TargetStatusEnum,
+  TargetStatus,
 } from "../model/raw/target";
+import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
 
 export class TargetService {
@@ -64,11 +62,11 @@ export class TargetService {
   }
 
   getTriggersFromTargetList(target: RawTargetList): {
-    triggers: (Trigger | OrTrigger)[];
-    targetTriggers: (Trigger | OrTrigger)[];
+    triggers: Triggers.Trigger[];
+    targetTriggers: Triggers.Trigger[];
   } {
-    const targetTriggers: (Trigger | OrTrigger)[] = target.triggers ?? [];
-    const triggers: (Trigger | OrTrigger)[] = [];
+    const targetTriggers: Triggers.Trigger[] = target.triggers ?? [];
+    const triggers: Triggers.Trigger[] = [];
     const statuses = getTargetPriorityDetails();
     for (const name of target.includeStatus ?? []) {
       const status = statuses.find((s) => s.status === name) as TargetPriority;
@@ -85,23 +83,17 @@ export class TargetService {
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(creature: RawCreature): TargetStatusEnum[] {
+  getTargetPriorities(creature: RawCreature): TargetStatus[] {
     if (creature.attack?.targetPriorities)
       return creature.attack.targetPriorities;
-    const results: TargetStatusEnum[] = [];
-    if (creature.attack?.grab) results.push(TargetStatusEnum.Grabbed);
+    const results: TargetStatus[] = [];
+    if (creature.attack?.grab) results.push("Grabbed");
     if (!!creature.data.intelligence && creature.data.intelligence >= 8) {
       results.push(
-        ...[
-          TargetStatusEnum.Slowed,
-          TargetStatusEnum.Able,
-          TargetStatusEnum.Held,
-          TargetStatusEnum.Stunned,
-        ]
+        ...(["Slowed", "Able", "Held", "Stunned"] as TargetStatus[])
       );
     }
-    results.push(...[TargetStatusEnum.NoCheck, TargetStatusEnum.Sleep]);
-    // console.log(results);
+    results.push(...(["NoCheck", "Sleep"] as TargetStatus[]));
     return results;
   }
 

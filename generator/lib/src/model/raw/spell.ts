@@ -1,4 +1,4 @@
-import { SpellIdentifiers } from "../ids/spell";
+import { SpellIdentifier } from "../ids/spell";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
 import {
@@ -16,7 +16,7 @@ export interface RawAlterSpell extends RawBaseSpell {
   /**
    * Create a spell from another one
    */
-  copyFrom: SpellIdentifiers | string;
+  copyFrom: SpellIdentifier | string;
 
   /**
    * String reference, must be referenced in TRA files

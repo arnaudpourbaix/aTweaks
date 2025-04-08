@@ -1,7 +1,7 @@
 import { AllegianceIdentifier } from "../src/model/ids/allegiance";
 import { ObjectIdentifier } from "../src/model/ids/object";
-import { StateIdentifiers } from "../src/model/ids/state";
-import { StatsIdentifiers } from "../src/model/ids/stats";
+import { StateIdentifier } from "../src/model/ids/state";
+import { StatsIdentifier } from "../src/model/ids/stats";
 import { TargetPriority, TargetStatusEnum } from "../src/model/raw/target";
 import { State } from "../src/state";
 
