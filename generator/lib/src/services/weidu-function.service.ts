@@ -8,6 +8,7 @@ import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { EffectService } from "./effect.service";
 import { WeiduCoreService } from "./weidu-core.service";
+import path from "path";
 
 export class WeiduFunctionService extends AbstractWeiduService {
   static instance = new WeiduFunctionService();
@@ -21,7 +22,10 @@ export class WeiduFunctionService extends AbstractWeiduService {
       this.generateImmunityFunction(lines, immunity, 0);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
-    fs.writeFileSync(GLOBAL_CONFIG.commonFunctionsFile, content);
+    fs.writeFileSync(
+      path.join(State.modFolder, GLOBAL_CONFIG.commonFunctionsFile),
+      content
+    );
   }
 
   generateImmunityFunction(

@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const BASILISK_LESSER: RawCreature = {
@@ -87,7 +88,7 @@ export const BASILISK_LESSER: RawCreature = {
       name: "Petrification (2e)",
       file: "ja#1m2",
       memorizedCount: 1,
-      stringRef: 4002,
+      stringRef: StringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
       ],
@@ -103,7 +104,7 @@ export const BASILISK_LESSER: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: 4004,
+          stringRef: StringReferenceEnum.Petrified,
           saveTypes: ["PetrifyPolymorph"],
           saveBonus: -4,
         },
@@ -133,7 +134,7 @@ export const BASILISK_LESSER: RawCreature = {
       name: "Petrification (5e)",
       file: "ja#2m2",
       memorizedCount: 1,
-      stringRef: 4002,
+      stringRef: StringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.",
         "On a failed save, the creature magically begins to turn to stone and is restrained.",
@@ -146,7 +147,7 @@ export const BASILISK_LESSER: RawCreature = {
       effects: [
         {
           opcode: "DisplayString",
-          stringRef: 4005,
+          stringRef: StringReferenceEnum.TurningToStone,
           saveTypes: ["PetrifyPolymorph"],
           saveBonus: -4,
         },
@@ -177,7 +178,7 @@ export const BASILISK_LESSER: RawCreature = {
     },
     {
       name: "Petrification (5e, technical)",
-      stringRef: 4002,
+      stringRef: StringReferenceEnum.PetrifyingGaze,
       file: "ja#3m2",
       secondaryType: "Disabling",
       type: "Ranged",
@@ -190,7 +191,7 @@ export const BASILISK_LESSER: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: 4004,
+          stringRef: StringReferenceEnum.Petrified,
           timing: "InstantPermanent",
           saveTypes: ["PetrifyPolymorph"],
           saveBonus: -4,

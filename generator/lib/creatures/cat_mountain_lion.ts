@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const CAT_LION_MOUNTAIN: RawCreature = {
@@ -47,7 +48,7 @@ export const CAT_LION_MOUNTAIN: RawCreature = {
       effects: [
         {
           opcode: "DisplayString",
-          stringRef: 4009,
+          stringRef: StringReferenceEnum.RearClawsAttack,
           probability1: 10,
         },
         {

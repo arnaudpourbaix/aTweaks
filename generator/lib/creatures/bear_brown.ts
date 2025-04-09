@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const BEAR_BROWN: RawCreature = {
@@ -43,7 +44,11 @@ export const BEAR_BROWN: RawCreature = {
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
-        { opcode: "DisplayString", stringRef: 4007, probability1: 10 },
+        {
+          opcode: "DisplayString",
+          stringRef: StringReferenceEnum.Hug,
+          probability1: 10,
+        },
         {
           opcode: "Damage",
           damageMode: "Normal",

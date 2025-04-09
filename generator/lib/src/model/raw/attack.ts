@@ -1,4 +1,4 @@
-import { GrabConfig } from "../grab";
+import { RawGrabConfig } from "./grab";
 import { TargetStatus } from "./target";
 
 export interface RawCreatureAttack {
@@ -38,7 +38,7 @@ export interface RawCreatureAttack {
   /**
    * If it can grab, you need to set up this property
    */
-  grab?: Partial<GrabConfig>;
+  grab?: RawGrabConfig;
 }
 
 export interface RawCreatureAttackAction {

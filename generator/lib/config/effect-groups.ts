@@ -1,7 +1,7 @@
-import { RawEffect } from "../src/model/raw/effect";
+import { RawBaseEffect, RawEffect } from "../src/model/raw/effect";
 import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
 import { RawEffectGroupName } from "./effect-group-name";
-import { STRING_REFERENCES } from "./stringRef";
+import { StringReferenceEnum } from "./stringRef";
 
 export const EFFECT_GROUPS: {
   group: RawEffectGroupName;
@@ -21,8 +21,7 @@ export const EFFECT_GROUPS: {
       const rawEffects: RawEffect[] = [
         {
           opcode: "DisplayString",
-          stringRef: 4003,
-          //stringRef: STRING_REFERENCES[3005], // 4003, //FIXME:
+          stringRef: StringReferenceEnum.Restrained,
           timing: "InstantPermanentUntilDeath",
           ...base,
         },
@@ -64,6 +63,62 @@ export const EFFECT_GROUPS: {
           value: -4,
           type: "Increment",
           ...duration,
+          ...base,
+        },
+      ];
+      return rawEffects;
+    },
+  },
+  {
+    group: "CureAllEffects",
+    effectsFn: (effect: RawEffect) => {
+      const base: RawBaseEffect = {
+        timing: "InstantPermanentUntilDeath",
+        target: "Self",
+      };
+      const rawEffects: RawEffect[] = [
+        {
+          opcode: "CureBerserk",
+          ...base,
+        },
+        {
+          opcode: "CureBlindness",
+          ...base,
+        },
+        {
+          opcode: "CureConfusion",
+          ...base,
+        },
+        {
+          opcode: "CureDeafness",
+          ...base,
+        },
+        {
+          opcode: "CureDisease",
+          ...base,
+        },
+        {
+          opcode: "CureFeeblemindedness",
+          ...base,
+        },
+        {
+          opcode: "CurePoison",
+          ...base,
+        },
+        {
+          opcode: "CureSleep",
+          ...base,
+        },
+        {
+          opcode: "CureStun",
+          ...base,
+        },
+        {
+          opcode: "RemoveParalysis",
+          ...base,
+        },
+        {
+          opcode: "RemoveFear",
           ...base,
         },
       ];

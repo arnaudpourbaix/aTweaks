@@ -1,21 +1,21 @@
-import { GrabFullConfig } from "../src/model/grab";
 import { RawEffect } from "../src/model/raw/effect";
-import { RawGrabGlobalConfig } from "../src/model/raw/grab";
+import { GrabConfig, GrabGlobalConfig } from "../src/model/raw/grab";
+import { StringReferenceEnum } from "./stringRef";
 
-export const GRAB_DEFAULT_CONFIG: RawGrabGlobalConfig = {
+export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   probability: 100,
   grabState: "JA_GRAPPLE",
   duration: 12,
   saveTypes: ["Breath"],
   saveBonus: -2,
-  grabDisplayStringRef: 3000,
-  grabbedDisplayStringRef: 3001,
+  grabStringRef: StringReferenceEnum.Grab,
+  grabbedStringRef: StringReferenceEnum.Grabbed,
   startSound: "CRE_P01",
   endSound: "EFF_M22A",
   visualEffect: "rr#cnstr",
 };
 
-export const RAW_EFFECTS_FUNCTION = (grab: GrabFullConfig): RawEffect[] => [
+export const RAW_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
   {
     opcode: "SetExtendedSpellState",
     state: grab.grabState,
@@ -23,7 +23,7 @@ export const RAW_EFFECTS_FUNCTION = (grab: GrabFullConfig): RawEffect[] => [
   },
   {
     opcode: "DisplayString",
-    stringRef: grab.grabbedDisplayStringRef,
+    stringRef: grab.grabbedStringRef,
     timing: "InstantPermanentUntilDeath",
   },
   {

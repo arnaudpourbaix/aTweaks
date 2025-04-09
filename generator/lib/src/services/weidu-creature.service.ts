@@ -19,13 +19,13 @@ import {
 import { ImmunityConfig } from "../model/final/immunity";
 import { ProjectileTypeEnum } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
-import { GrabFullConfig } from "../model/grab";
 import { CodeLine } from "../model/misc";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
 import { GrabService } from "./grab.service";
+import { GrabConfig } from "../model/raw/grab";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
@@ -359,7 +359,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
   private createGrabSpell(
     lines: CodeLine[],
     creature: Creature,
-    grab: GrabFullConfig
+    grab: GrabConfig
   ) {
     this.add(lines, `CREATE SPL "${grab.file}"`, 0);
     this.add(lines, `WRITE_SHORT 0x1c ${SpellTypeEnum.Innate}`, 1);
@@ -376,7 +376,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `WRITE_SHORT 0x94 1`, 1);
     this.add(
       lines,
-      `SAY NAME1 @${grab.grabDisplayStringRef} SAY NAME2 @${grab.grabDisplayStringRef}`,
+      `SAY NAME1 @${grab.grabStringRef} SAY NAME2 @${grab.grabStringRef}`,
       1
     );
     const effects = this.grabService.getGrabbedEffects(creature, grab);
@@ -384,7 +384,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "", 0);
   }
 
-  private createGrabProtectionEffect(lines: CodeLine[], grab: GrabFullConfig) {
+  private createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
     const effect = this.grabService.getGrabProtectionEffect(grab);
     this.add(lines, `CREATE EFF "${grab.file}"`, 0);
     this.add(lines, `WRITE_LONG 0x10 ${effect.opcode}`, 1);
@@ -399,10 +399,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
   private addGrabEffect(
     lines: CodeLine[],
     tab: number,
-    grab: GrabFullConfig,
+    grab: GrabConfig,
     type: "SPL" | "ITM"
   ) {
-    const effect = this.grabService.getCastSpellGrabEffect(grab);
+    const effect = this.grabService.getGrabEffect(grab);
     this.addEffect(lines, tab, effect, type);
   }
 
@@ -428,13 +428,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `opcode = ${effect.opcode}`, tab + 2);
     if (effect.target) this.add(lines, `target = ${effect.target}`, tab + 2);
     if (effect.power) this.add(lines, `power = ${effect.power}`, tab + 2);
-    if (effect.parameter1)
+    if (effect.parameter1 && effect.parameter1 !== "0")
       this.add(
         lines,
         `parameter1 = ${this.getIntegerValue(effect.parameter1)}`,
         tab + 2
       );
-    if (effect.parameter2)
+    if (effect.parameter2 && effect.parameter2 !== "0")
       this.add(
         lines,
         `parameter2 = ${this.getIntegerValue(effect.parameter2)}`,

@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const DOG_BLINK: RawCreature = {
@@ -57,7 +58,7 @@ export const DOG_BLINK: RawCreature = {
       name: "Blink",
       file: "ja#1m14",
       memorizedCount: 1,
-      stringRef: 4010,
+      stringRef: StringReferenceEnum.Blink,
       type: "Melee",
       range: 30,
       effects: [

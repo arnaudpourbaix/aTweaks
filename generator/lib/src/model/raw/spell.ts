@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../../../config/stringRef";
 import { SpellIdentifier } from "../ids/spell";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
@@ -28,7 +29,7 @@ export interface RawCreateSpell extends RawBaseSpell {
   /**
    * String reference, must be referenced in TRA files
    */
-  stringRef: number | string;
+  stringRef: StringReferenceEnum | string;
 }
 
 export interface RawBaseSpell {

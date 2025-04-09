@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const BASILISK_GREATER: RawCreature = {
@@ -122,7 +123,7 @@ export const BASILISK_GREATER: RawCreature = {
       name: "Foul breath",
       file: "ja#1m3",
       memorizedCount: 1,
-      stringRef: 4006,
+      stringRef: StringReferenceEnum.FoulBreath,
       description: [
         "Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
       ],

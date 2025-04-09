@@ -1,5 +1,4 @@
 import { ImmunityName } from "../../../config/immunity-name";
-import { GrabFullConfig } from "../grab";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -9,6 +8,7 @@ import { RaceIdentifier } from "../ids/race";
 import { Actions } from "../raw/actions";
 import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
 import { CreatureSize, RawProficiencyType } from "../raw/enum";
+import { GrabConfig } from "../raw/grab";
 import { RawItemSlot } from "../raw/item";
 import { CustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
@@ -73,7 +73,7 @@ export interface Creature {
    */
   dualWielding: boolean;
 
-  grab?: GrabFullConfig;
+  grab?: GrabConfig;
 
   initActions: Actions.Action[];
 

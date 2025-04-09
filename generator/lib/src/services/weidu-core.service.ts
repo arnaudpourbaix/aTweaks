@@ -7,6 +7,7 @@ import { CodeLine } from "../model/misc";
 import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
+import path from "path";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -17,7 +18,10 @@ export class WeiduCoreService extends AbstractWeiduService {
     const content = this.lines
       .map((l) => `${TAB.repeat(l.tab)}${l.code}`)
       .join(CR);
-    fs.writeFileSync(GLOBAL_CONFIG.commonCreatureFile, content);
+    fs.writeFileSync(
+      path.join(State.modFolder, GLOBAL_CONFIG.commonCreatureFile),
+      content
+    );
   }
 
   generateItem(itemSlot: RawItemSlot, immunity: ImmunityConfig) {

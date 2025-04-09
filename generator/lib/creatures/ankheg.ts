@@ -1,3 +1,4 @@
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 
 export const ANKHEG: RawCreature = {
@@ -99,7 +100,7 @@ export const ANKHEG: RawCreature = {
       name: "Acidic digestive enzymes",
       file: "ja#1m1",
       memorizedCount: 1,
-      stringRef: 4001,
+      stringRef: StringReferenceEnum.AcidicDigestiveEnzymes,
       description: [
         "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
       ],
@@ -145,7 +146,7 @@ export const ANKHEG: RawCreature = {
       name: "Stream of acidic enzymes",
       file: "ja#2m1",
       memorizedCount: 1,
-      stringRef: 4000,
+      stringRef: StringReferenceEnum.StreamOfAcidicEnzymes,
       description: [
         "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.",
         "A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).",
