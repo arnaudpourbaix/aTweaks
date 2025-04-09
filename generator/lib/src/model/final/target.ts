@@ -1,7 +1,7 @@
 import { TargetListName } from "../../../config/target";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { ObjectIdentifier } from "../ids/object";
-import { TargetStatus } from "../raw/target";
+import { TargetStatusName } from "../raw/target";
 import { Triggers } from "../raw/triggers";
 
 export interface TargetList {
@@ -21,7 +21,7 @@ export interface TargetList {
   /**
    * Target must have one these status
    */
-  includeStatus: TargetStatus[];
-  excludeStatus: TargetStatus[];
+  includeStatus: TargetStatusName[];
+  excludeStatus: TargetStatusName[];
   triggers: Triggers.Trigger[];
 }

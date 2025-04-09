@@ -1,6 +1,6 @@
 import {
-  getTargetPriorityDetails,
   TARGET_LISTS,
+  TARGET_STATUS,
   TargetListName,
 } from "../../config/target";
 import { AlignIdentifier } from "../model/ids/align";
@@ -14,8 +14,8 @@ import { SpecificIdentifier } from "../model/ids/specific";
 import { RawCreature } from "../model/raw/creature";
 import {
   RawTargetList,
-  TargetPriority,
   TargetStatus,
+  TargetStatusName,
 } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
@@ -25,7 +25,7 @@ export class TargetService {
 
   utils = UtilsService.instance;
 
-  targetObject = (p: {
+  targetObject(p: {
     ea?: AllegianceIdentifier;
     general?: GeneralIdentifier;
     race?: RaceIdentifier;
@@ -33,7 +33,7 @@ export class TargetService {
     specific?: SpecificIdentifier;
     gender?: GenderIdentifier;
     align?: AlignIdentifier;
-  }): string => {
+  }): string {
     const list = [
       p.ea ?? 0,
       p.general ?? 0,
@@ -47,7 +47,7 @@ export class TargetService {
       list.pop();
     }
     return `${list.join(".")}`;
-  };
+  }
 
   getTargetFromAbility(
     target: ObjectIdentifier | AllegianceIdentifier | TargetListName,
@@ -67,14 +67,14 @@ export class TargetService {
   } {
     const targetTriggers: Triggers.Trigger[] = target.triggers ?? [];
     const triggers: Triggers.Trigger[] = [];
-    const statuses = getTargetPriorityDetails();
+    const statuses = TARGET_STATUS;
     for (const name of target.includeStatus ?? []) {
-      const status = statuses.find((s) => s.status === name) as TargetPriority;
+      const status = statuses.find((s) => s.status === name) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(...status.targetTriggers);
     }
     for (const name of target.excludeStatus ?? []) {
-      const status = statuses.find((s) => s.status === name) as TargetPriority;
+      const status = statuses.find((s) => s.status === name) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(
         ...this.utils.inverseNegations(status.targetTriggers)
@@ -83,17 +83,17 @@ export class TargetService {
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(creature: RawCreature): TargetStatus[] {
+  getTargetPriorities(creature: RawCreature): TargetStatusName[] {
     if (creature.attack?.targetPriorities)
       return creature.attack.targetPriorities;
-    const results: TargetStatus[] = [];
+    const results: TargetStatusName[] = [];
     if (creature.attack?.grab) results.push("Grabbed");
     if (!!creature.data.intelligence && creature.data.intelligence >= 8) {
       results.push(
-        ...(["Slowed", "Able", "Held", "Stunned"] as TargetStatus[])
+        ...(["Slowed", "Able", "Held", "Stunned"] as TargetStatusName[])
       );
     }
-    results.push(...(["NoCheck", "Sleep"] as TargetStatus[]));
+    results.push(...(["NoCheck", "Sleep"] as TargetStatusName[]));
     return results;
   }
 

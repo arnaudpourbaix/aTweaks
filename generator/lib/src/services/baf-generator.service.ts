@@ -8,7 +8,7 @@ import { GENERAL_IDENTIFIERS } from "../model/ids/general";
 import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
 import { RACE_IDENTIFIERS } from "../model/ids/race";
 import { ConditionalStatement, Statements } from "../model/raw/script";
-import { TARGET_FINAL_OBJECTS } from "../model/raw/target";
+import { TARGET_PARAMLESS_OBJECTS } from "../model/raw/target";
 import { State } from "../state";
 import { StatementService } from "./statement-builder.service";
 import { CLASS_IDENTIFIERS } from "../model/ids/class";
@@ -176,7 +176,7 @@ export class BafGeneratorService {
       ALIGN_IDENTIFIERS.some((v) => value.indexOf(v) !== -1);
     if (!startsWithObject && containsObjectTypes) return `[${value}]`;
     else if (
-      !TARGET_FINAL_OBJECTS.includes(value as ObjectIdentifier) &&
+      !TARGET_PARAMLESS_OBJECTS.includes(value as ObjectIdentifier) &&
       !containsObjectTypes
     )
       return `${value}(Myself)`;

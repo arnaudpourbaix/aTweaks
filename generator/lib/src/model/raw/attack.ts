@@ -1,5 +1,5 @@
 import { RawGrabConfig } from "./grab";
-import { TargetStatus } from "./target";
+import { TargetStatusName } from "./target";
 
 export interface RawCreatureAttack {
   /**
@@ -15,7 +15,7 @@ export interface RawCreatureAttack {
   /**
    * Target priorities
    */
-  targetPriorities?: TargetStatus[];
+  targetPriorities?: TargetStatusName[];
 
   /**
    * Not needed if creature has only one weapon (melee or ranged).

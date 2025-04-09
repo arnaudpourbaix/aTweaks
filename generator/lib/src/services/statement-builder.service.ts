@@ -1,5 +1,5 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { getTargetPriorityDetails } from "../../config/target";
+import { TARGET_STATUS } from "../../config/target";
 import { Creature } from "../model/final/creature";
 import { RaceIdentifier } from "../model/ids/race";
 import { BuilderOptions } from "../model/misc";
@@ -565,9 +565,7 @@ export class StatementService {
       oncePerRound: false,
     });
     for (const status of creature.attack.targetPriorities) {
-      const target = getTargetPriorityDetails().find(
-        (t) => t.status === status
-      );
+      const target = TARGET_STATUS.find((t) => t.status === status);
       if (!target)
         throw new Error(`Target priority details ${status} not found!`);
       if (target.targetTriggers.some((t) => "triggers" in t))

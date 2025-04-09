@@ -3,29 +3,6 @@ import { AllegianceIdentifier } from "../ids/allegiance";
 import { ObjectIdentifier } from "../ids/object";
 import { Triggers } from "./triggers";
 
-export interface TargetPriority {
-  status: TargetStatus;
-  canOnlyTargetPlayer: boolean;
-  targetTriggers: Triggers.Trigger[];
-  triggers: Triggers.Trigger[];
-}
-
-export type TargetStatus =
-  | "Grabbed"
-  | "Held"
-  | "Stunned"
-  | "Slowed"
-  /**
-   * panic, confused, feebleminded
-   */
-  | "PanicConfused"
-  | "Sleep"
-  /**
-   * Not affected by any disabling status
-   */
-  | "Able"
-  | "NoCheck";
-
 export interface RawTargetList {
   name: ObjectIdentifier | AllegianceIdentifier | TargetListName;
   /**
@@ -43,15 +20,38 @@ export interface RawTargetList {
   /**
    * Target must have one these status
    */
-  includeStatus?: TargetStatus[];
-  excludeStatus?: TargetStatus[];
+  includeStatus?: TargetStatusName[];
+  excludeStatus?: TargetStatusName[];
   triggers?: Triggers.Trigger[];
 }
+
+export interface TargetStatus {
+  status: TargetStatusName;
+  canOnlyTargetPlayer: boolean;
+  targetTriggers: Triggers.Trigger[];
+  triggers: Triggers.Trigger[];
+}
+
+export type TargetStatusName =
+  | "Grabbed"
+  | "Held"
+  | "Stunned"
+  | "Slowed"
+  /**
+   * panic, confused, feebleminded
+   */
+  | "PanicConfused"
+  | "Sleep"
+  /**
+   * Not affected by any disabling status
+   */
+  | "Able"
+  | "NoCheck";
 
 /**
  * These objects can't have any parameter
  */
-export const TARGET_FINAL_OBJECTS: ObjectIdentifier[] = [
+export const TARGET_PARAMLESS_OBJECTS: ObjectIdentifier[] = [
   "Nothing",
   "Myself",
   "Player1",

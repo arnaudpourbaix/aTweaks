@@ -1,4 +1,4 @@
-import { TargetPriority } from "../src/model/raw/target";
+import { TargetStatus } from "../src/model/raw/target";
 import { GLOBAL_CONFIG } from "./generate";
 
 export type TargetListName =
@@ -90,7 +90,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
   },
 ];
 
-export const getTargetPriorityDetails: () => TargetPriority[] = () => [
+export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Grabbed",
     canOnlyTargetPlayer: false,
