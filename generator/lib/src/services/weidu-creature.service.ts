@@ -39,9 +39,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.creatureService.checkWeapons(creature);
     this.createProjectiles(lines, creature);
     this.createSpells(lines, creature);
-    if (creature.grab) {
-      this.createGrabSpell(lines, creature, creature.grab);
-      this.createGrabProtectionEffect(lines, creature.grab);
+    if (creature.attack.grab) {
+      this.createGrabSpell(lines, creature, creature.attack.grab);
+      this.createGrabProtectionEffect(lines, creature.attack.grab);
     }
     this.createItems(lines, creature);
     this.patchCreatures(lines, creature);
@@ -162,8 +162,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
       for (const effect of item.effects) {
         this.addEffect(lines, 1, effect, "ITM");
       }
-      if (creature.grab?.weaponFile === item.file) {
-        this.addGrabEffect(lines, 1, creature.grab, "ITM");
+      if (creature.attack.grab?.weaponFile === item.file) {
+        this.addGrabEffect(lines, 1, creature.attack.grab, "ITM");
       }
       for (const name of item.immunities) {
         this.add(
@@ -496,10 +496,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
     this.add(lines, `LPF clearProficiencies END`, 3);
     this.addProficiencies(lines, 3, creature.additionalData);
-    if (creature.grab)
+    if (creature.attack.grab)
       this.add(
         lines,
-        `ADD_MEMORIZED_SPELL ~${creature.grab.file}~ #0 ~innate~ (1)`
+        `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}~ #0 ~innate~ (1)`
       );
     for (const name of creature.additionalData.immunities) {
       const immunity = State.immunities.find(
@@ -653,7 +653,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     }
     if (p.enforce) this.add(p.lines, `enforce=1`, p.tab + 2);
     if (p.summon) this.add(p.lines, `summon=1`, p.tab + 2);
-    if (p.creature.dualWielding && !p.parent)
+    if (p.creature.attack.dualWielding && !p.parent)
       this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
     this.add(p.lines, "END", p.tab);
   }

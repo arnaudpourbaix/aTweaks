@@ -89,7 +89,7 @@ BEGIN
 					hp=68
 					ac=6
 					thac0=13
-					apr=3
+					apr=2
 					xpv=650
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=11
@@ -106,6 +106,7 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
+					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
 			DEFINE_ARRAY skipFiles BEGIN BEARCASU BDBEARCA END

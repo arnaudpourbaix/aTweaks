@@ -91,7 +91,7 @@ BEGIN
 					hp=42
 					ac=5
 					thac0=15
-					apr=3
+					apr=2
 					xpv=650
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=11
@@ -108,6 +108,7 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
+					perfect2weapon=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CATLIOSU~) BEGIN 
 				LPF patchCreature

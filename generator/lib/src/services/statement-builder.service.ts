@@ -587,7 +587,7 @@ export class StatementService {
         [
           {
             key: GLOBAL_CONFIG.tokens.grabState,
-            value: creature.grab?.grabState ?? "",
+            value: creature.attack.grab?.grabState ?? "",
           },
         ]
       );

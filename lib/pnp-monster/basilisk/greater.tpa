@@ -167,7 +167,7 @@ BEGIN
 					hp=125
 					ac=2
 					thac0=11
-					apr=3
+					apr=2
 					xpv=7000
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=8
@@ -184,6 +184,7 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
+					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILGSU END

@@ -58,7 +58,7 @@ export class GrabService {
     const rawEffects: RawEffect[] = list.map((i) => ({
       opcode: "UseEFFFile",
       idsFile: i[0],
-      idsEntry: `IDS_OF_SYMBOL (~${i[0]}~ ~${i[1]}~)`,
+      idsEntry: i[1],
       duration: 1,
       target: "PresetTarget",
       resource: grab.file,

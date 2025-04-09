@@ -108,12 +108,6 @@ export const ANKHEG: RawCreature = {
       type: "Melee",
       range: 5,
       effects: [
-        {
-          opcode: "ProtectionFromSpell",
-          resource: "ja#1m1",
-          duration: 24,
-          timing: "InstantLimited",
-        },
         { opcode: "DisplayPortraitIcon", icon: "Acid", duration: 24 },
         { opcode: "Damage", type: "Acid", diceThrown: 1, diceSize: 4 },
         {
@@ -139,6 +133,12 @@ export const ANKHEG: RawCreature = {
           type: "Acid",
           diceThrown: 1,
           diceSize: 4,
+        },
+        {
+          opcode: "ProtectionFromSpell",
+          resource: "ja#1m1",
+          duration: 24,
+          timing: "InstantLimited",
         },
       ],
     },

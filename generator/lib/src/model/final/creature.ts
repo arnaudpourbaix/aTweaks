@@ -61,20 +61,6 @@ export interface Creature {
 
   attack: CreatureAttack;
 
-  /**
-   * Uses this when a monster have several attacks per round with 2 different weapons.
-   * It makes sure that both weapons are properly used.
-   * It will:
-   * - remove one attack per round (because offhand gives one)
-   * - gives 3 points in two weapons fighting
-   * - add a bonus to hit of +2 to offhand.
-   * - (add a bonus to hit of +4 to mainhand and +8 to offhand.)
-   *
-   */
-  dualWielding: boolean;
-
-  grab?: GrabConfig;
-
   initActions: Actions.Action[];
 
   customCode: CustomCode[];

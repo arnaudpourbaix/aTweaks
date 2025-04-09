@@ -36,11 +36,30 @@ export const BASILISK_LESSER: RawCreature = {
   },
   abilities: [
     {
-      name: "Petrification",
+      name: "Petrification (2e)",
       target: {
         name: "NearestEnemies",
         random: true,
         triggers: [
+          {
+            name: "HaveSpellRES",
+            params: ["ja#1m2"],
+          },
+        ],
+      },
+      actions: [{ name: "ForceSpellRES", params: ["ja#1m2", "LastSeenBy"] }],
+      range: 30,
+    },
+    {
+      name: "Petrification (5e)",
+      target: {
+        name: "NearestEnemies",
+        random: true,
+        triggers: [
+          {
+            name: "HaveSpellRES",
+            params: ["ja#2m2"],
+          },
           {
             name: "CheckStatGT",
             params: ["{Target}", 0, "HELD"],
@@ -53,7 +72,7 @@ export const BASILISK_LESSER: RawCreature = {
           },
         ],
       },
-      actions: [{ name: "ForceSpellRES", params: ["ja#1m2", "LastSeenBy"] }],
+      actions: [{ name: "ForceSpellRES", params: ["ja#2m2", "LastSeenBy"] }],
       range: 30,
     },
   ],
@@ -133,7 +152,7 @@ export const BASILISK_LESSER: RawCreature = {
     {
       name: "Petrification (5e)",
       file: "ja#2m2",
-      memorizedCount: 1,
+      //memorizedCount: 1,
       stringRef: StringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.",
@@ -142,7 +161,7 @@ export const BASILISK_LESSER: RawCreature = {
       ],
       secondaryType: "Disabling",
       type: "Ranged",
-      projectile: "ja#2m2",
+      projectile: "ja#1m2",
       range: 30,
       effects: [
         {

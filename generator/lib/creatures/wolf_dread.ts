@@ -8,7 +8,6 @@ export const WOLF_DREAD: RawCreature = {
   combatWalk: true,
   data: {
     level1: 4,
-    hp: 20,
     bonusHp: 4,
     specialBonusHp: 10,
     strength: 18,
@@ -66,7 +65,7 @@ export const WOLF_DREAD: RawCreature = {
         "It is immune to charm, hold, and cold-based spells.",
         "Electricity-based spells cause only half damage.",
       ],
-      immunities: ["coldSpells", "charm", "hold", "sleep", "fear"],
+      immunities: ["coldSpells", "charm", "hold"],
       effects: [
         {
           opcode: "Regeneration",
@@ -80,7 +79,7 @@ export const WOLF_DREAD: RawCreature = {
           opcode: "CastSpellOnCondition",
           conditionTarget: "Myself",
           condition: "HPLT(Myself,Extra)",
-          special: 5,
+          special: 6,
           resource: "ja#1m22",
           global: true,
         },

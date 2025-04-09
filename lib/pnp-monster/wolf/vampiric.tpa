@@ -1,0 +1,349 @@
+CREATE SPL "ja#1m21"
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 5
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x94 1
+	SAY NAME1 @3000 SAY NAME2 @3000
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~DRAGON~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIMIC~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIST~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SHADOW~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SLIME~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRAL_UNDEAD~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRE~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WILL-O-WISP~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WRAITH~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WYVERN~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~)
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPECTRAL_TROLL~)
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPIDER_WRAITH~)
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 328
+			target = 2
+			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLE~))
+			duration = 18
+			probability1 = 100
+			special = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@3001)
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter2 = 1
+			duration = 18
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "CRE_P01"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 4
+			duration = 18
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M22A"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter2 = 1
+			duration = 18
+			probability1 = 100
+		STR_VAR
+			resource = "rr#cnstr"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter2 = 144
+			duration = 18
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 15
+			target = 2
+			parameter1 = 8
+			parameter2 = 1
+			duration = 18
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m21"
+		END
+
+CREATE EFF "ja#1m21"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 0
+	WRITE_LONG 0x28 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~ja#1m21~ #8
+
+CREATE ITM "ja#m21w1"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x60 2
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_SHORT 0x84 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#m21w1.itm~ ~override~
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter2 = 1048576
+			probability1 = 100
+			dicenumber = 3
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 17
+			target = 1
+			timing = 1
+			probability1 = 100
+			dicenumber = 3
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 1
+			parameter1 = "-1082313472"
+			parameter2 = 1310720
+			duration = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 146
+			target = 2
+			parameter2 = 1
+			probability1 = 100
+			savingthrow = 2
+			savebonus = "2"
+		STR_VAR
+			resource = "ja#1m21"
+		END
+
+ACTION_FOR_EACH ~file~ IN
+	BDWOLFVA
+	P#WOLF04
+	WOLFVA
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~WOLFVA1~
+			REMOVE_CRE_ITEM ~BDWOLFVA~
+			ADD_CRE_ITEM ~ja#m21w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			LPF clearProficiencies END
+			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
+			LPF patchCreature
+				INT_VAR
+					level1=6
+					strength=18
+					dexterity=13
+					constitution=9
+					intelligence=6
+					wisdom=12
+					charisma=7
+					movement=20
+					hp=52
+					ac=2
+					thac0=13
+					apr=1
+					xpv=2000
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					morale=14
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
+					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
+					class=IDS_OF_SYMBOL (~class~ ~WOLF_VAMPIRIC~)
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					enforce=1
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

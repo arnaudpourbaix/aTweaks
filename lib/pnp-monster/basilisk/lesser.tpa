@@ -99,7 +99,7 @@ CREATE SPL "ja#2m2"
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.
 On a failed save, the creature magically begins to turn to stone and is restrained.
 It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
-	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#2m2~)) + 1
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 139
@@ -304,7 +304,6 @@ BEGIN
 			REMOVE_CRE_ITEM ~BASILL2~
 			ADD_CRE_ITEM ~ja#m2w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR

@@ -213,15 +213,13 @@ COPY_EXISTING ~ja#1m22.itm~ ~override~
 			parameter2 = 19
 			timing = 2
 			probability1 = 100
-			special = 5
+			special = 6
 		STR_VAR
 			resource = "ja#1m22"
 		END
 	LPF coldSpells_immunity END
 	LPF charm_immunity END
 	LPF hold_immunity END
-	LPF sleep_immunity END
-	LPF fear_immunity END
 
 CREATE ITM "ja#2m22"
 	WRITE_LONG 0x64 0x72
@@ -287,7 +285,7 @@ BEGIN
 					wisdom=12
 					charisma=8
 					movement=15
-					hp=20
+					hp=46
 					ac=6
 					resistCold=100
 					resistElectricity=50

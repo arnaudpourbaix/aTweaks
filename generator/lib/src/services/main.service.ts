@@ -100,7 +100,6 @@ export class MainService {
       restHeal: false,
       hideInShadows: false,
       initActions: [],
-      dualWielding: false,
       autoGenerate: {
         hitPoints: true,
         savingThrows: true,
@@ -123,7 +122,7 @@ export class MainService {
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
     };
-    if (creature.dualWielding) {
+    if (creature.attack.dualWielding) {
       this.dualWielding(creature);
     }
     if (creature.data.movement) {
