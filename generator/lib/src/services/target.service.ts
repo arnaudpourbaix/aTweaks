@@ -1,8 +1,5 @@
-import {
-  TARGET_LISTS,
-  TARGET_STATUS,
-  TargetListName,
-} from "../../config/target";
+import { TARGET_LISTS, TARGET_STATUS } from "../../config/target-config";
+import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";
@@ -12,11 +9,7 @@ import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
 import { RawCreature } from "../model/raw/creature";
-import {
-  RawTargetList,
-  TargetStatus,
-  TargetStatusName,
-} from "../model/raw/target";
+import { RawTargetList, TargetStatus } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
 

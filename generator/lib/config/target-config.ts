@@ -1,15 +1,6 @@
 import { TargetStatus } from "../src/model/raw/target";
 import { GLOBAL_CONFIG } from "./generate";
-
-export type TargetListName =
-  | "Players"
-  | "NearestEnemies"
-  | "PCsInOrder"
-  | "PCsPreferringStrong"
-  | "PCsPreferringWeak"
-  | "PCSpellcasters"
-  | "FarthestEnemies"
-  | "CloseEnemies";
+import { TargetListName } from "./target-name";
 
 export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
   {

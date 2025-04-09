@@ -24,15 +24,12 @@ COPY_EXISTING ~ja#m4w1.itm~ ~override~
 			opcode = 139
 			target = 2
 			parameter1 = RESOLVE_STR_REF(@4007)
-			parameter2 = 0
 			probability1 = 10
 		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			probability1 = 10
 			dicenumber = 2
 			dicesize = 4
@@ -89,7 +86,7 @@ BEGIN
 					thac0=17
 					apr=3
 					xpv=175
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14

@@ -1,7 +1,6 @@
-import { TargetListName } from "../../../config/target";
+import { TargetListName, TargetStatusName } from "../../../config/target-name";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { ObjectIdentifier } from "../ids/object";
-import { TargetStatusName } from "../raw/target";
 import { Triggers } from "../raw/triggers";
 
 export interface TargetList {

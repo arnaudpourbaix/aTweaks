@@ -17,8 +17,6 @@ CREATE SPL "ja#1m14"
 		INT_VAR
 			opcode = 124
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
 			probability1 = 100
 		END
 	LPF ADD_EFFECT
@@ -26,7 +24,6 @@ CREATE SPL "ja#1m14"
 			opcode = 278
 			target = 1
 			parameter1 = 2
-			parameter2 = 0
 			duration = 6
 			probability1 = 75
 		END
@@ -77,7 +74,7 @@ BEGIN
 					thac0=17
 					apr=1
 					xpv=270
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14

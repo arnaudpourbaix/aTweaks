@@ -33,7 +33,6 @@ COPY_EXISTING ~ja#m9w1.itm~ ~override~
 		INT_VAR
 			opcode = 142
 			target = 2
-			parameter1 = 0
 			parameter2 = 13
 			duration = 42
 			probability1 = 100
@@ -43,8 +42,6 @@ COPY_EXISTING ~ja#m9w1.itm~ ~override~
 		INT_VAR
 			opcode = 174
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -55,8 +52,6 @@ COPY_EXISTING ~ja#m9w1.itm~ ~override~
 		INT_VAR
 			opcode = 174
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 4
 			duration = 42
 			probability1 = 100
@@ -78,7 +73,6 @@ COPY_EXISTING ~ja#m9w1.itm~ ~override~
 		INT_VAR
 			opcode = 141
 			target = 2
-			parameter1 = 0
 			parameter2 = 1
 			timing = 1
 			probability1 = 100
@@ -118,7 +112,7 @@ BEGIN
 					apr=4
 					doubleApr=1
 					xpv=420
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14

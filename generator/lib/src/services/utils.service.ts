@@ -27,10 +27,10 @@ export class UtilsService {
     responses: Response[],
     tokens: { key: string; value: string }[]
   ): Response[] {
-    const results = structuredClone(responses);
-    for (const response of results)
-      this.replaceActionTokens(response.actions, tokens);
-    return results;
+    return responses.map((r) => ({
+      ...r,
+      actions: this.replaceActionTokens(r.actions, tokens),
+    }));
   }
 
   replaceActionTokens(

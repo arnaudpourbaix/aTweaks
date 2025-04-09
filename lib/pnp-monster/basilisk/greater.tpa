@@ -42,8 +42,6 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 174
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -55,8 +53,6 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 215
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -99,7 +95,6 @@ COPY_EXISTING ~ja#m3w1.itm~ ~override~
 		INT_VAR
 			opcode = 142
 			target = 2
-			parameter1 = 0
 			parameter2 = 6
 			duration = 30
 			probability1 = 100
@@ -130,7 +125,6 @@ COPY_EXISTING ~ja#m3w2.itm~ ~override~
 		INT_VAR
 			opcode = 146
 			target = 2
-			parameter1 = 0
 			parameter2 = 1
 			probability1 = 100
 		STR_VAR
@@ -175,7 +169,7 @@ BEGIN
 					thac0=11
 					apr=3
 					xpv=7000
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=8
 					saveWand=10
 					savePolymorph=9

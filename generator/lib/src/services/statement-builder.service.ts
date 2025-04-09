@@ -1,5 +1,5 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { TARGET_STATUS } from "../../config/target";
+import { TARGET_STATUS } from "../../config/target-config";
 import { Creature } from "../model/final/creature";
 import { RaceIdentifier } from "../model/ids/race";
 import { BuilderOptions } from "../model/misc";

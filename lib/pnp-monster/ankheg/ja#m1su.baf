@@ -281,7 +281,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -373,7 +373,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -437,7 +437,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SelectWeaponAbility(SLOT_WEAPON,0)
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -453,7 +453,7 @@ IF
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player1)
 END
 
 IF
@@ -467,7 +467,7 @@ IF
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player2)
 END
 
 IF
@@ -481,7 +481,7 @@ IF
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player3)
 END
 
 IF
@@ -495,7 +495,7 @@ IF
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player4)
 END
 
 IF
@@ -509,7 +509,7 @@ IF
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player5)
 END
 
 IF
@@ -523,7 +523,7 @@ IF
 	!StateCheck(Player6,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player6)
 END
 
 // Track last seen enemy if allegiance is GOODCUTOFF
@@ -539,6 +539,6 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(LastSeenBy(Myself))
 END
 

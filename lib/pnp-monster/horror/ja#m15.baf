@@ -251,7 +251,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack Able enemy
@@ -406,7 +406,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack Held enemy
@@ -495,7 +495,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack Stunned enemy
@@ -584,7 +584,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack NoCheck enemy
@@ -662,7 +662,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack Sleep enemy
@@ -716,7 +716,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		AttackOneRound({Target}(Myself))
+		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Dimension Door
@@ -726,7 +726,7 @@ IF
 	Range(Player1,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player1)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -736,7 +736,7 @@ IF
 	Range(Player2,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player2)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -746,7 +746,7 @@ IF
 	Range(Player3,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player3)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -756,7 +756,7 @@ IF
 	Range(Player4,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player4)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -766,7 +766,7 @@ IF
 	Range(Player5,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player5)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -776,7 +776,7 @@ IF
 	Range(Player6,180)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",{Target}(Myself))
+		ForceSpellRES("SPWI402",Player6)
 		RemoveSpellRES("SPWI402")
 END
 
@@ -790,7 +790,7 @@ IF
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player1)
 END
 
 IF
@@ -802,7 +802,7 @@ IF
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player2)
 END
 
 IF
@@ -814,7 +814,7 @@ IF
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player3)
 END
 
 IF
@@ -826,7 +826,7 @@ IF
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player4)
 END
 
 IF
@@ -838,7 +838,7 @@ IF
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player5)
 END
 
 IF
@@ -850,7 +850,7 @@ IF
 	!StateCheck(Player6,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(Player6)
 END
 
 // Track last seen enemy if allegiance is GOODCUTOFF
@@ -864,6 +864,6 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject({Target}(Myself))
+		MoveToObject(LastSeenBy(Myself))
 END
 

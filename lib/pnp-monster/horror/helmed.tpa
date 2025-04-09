@@ -27,7 +27,6 @@ COPY_EXISTING ~ja#m15w1.itm~ ~override~
 		INT_VAR
 			opcode = 12
 			target = 2
-			parameter1 = 0
 			parameter2 = 524288
 			probability1 = 100
 			dicenumber = 1
@@ -84,7 +83,6 @@ COPY_EXISTING ~ja#m15w1.itm~ ~override~
 		INT_VAR
 			opcode = 8
 			target = 1
-			parameter1 = 0
 			parameter2 = 20
 			timing = 2
 			duration = 3
@@ -120,7 +118,6 @@ COPY_EXISTING ~ja#m15a1.itm~ ~override~
 			opcode = 7
 			target = 1
 			parameter1 = 87
-			parameter2 = 0
 			timing = 2
 			probability1 = 100
 		END
@@ -210,7 +207,7 @@ BEGIN
 					thac0=15
 					apr=1
 					xpv=2000
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -245,7 +242,7 @@ BEGIN
 						hp=84
 						thac0=11
 						xpv=4000
-						alignment=IDS_OF_SYMBOL (~alignment~ ~LAWFUL_EVIL~)
+						alignment=IDS_OF_SYMBOL (~align~ ~LAWFUL_EVIL~)
 						saveDeath=10
 						saveWand=12
 						savePolymorph=11

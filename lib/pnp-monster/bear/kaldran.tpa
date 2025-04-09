@@ -44,7 +44,6 @@ CREATE SPL "ja#1m8"
 		INT_VAR
 			opcode = 12
 			target = 2
-			parameter1 = 0
 			parameter2 = 131072
 			timing = 1
 			probability1 = 100
@@ -77,7 +76,6 @@ CREATE SPL "ja#1m8"
 		INT_VAR
 			opcode = 142
 			target = 2
-			parameter1 = 0
 			parameter2 = 13
 			duration = 60
 			probability1 = 100
@@ -88,8 +86,6 @@ CREATE SPL "ja#1m8"
 		INT_VAR
 			opcode = 174
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -101,8 +97,6 @@ CREATE SPL "ja#1m8"
 		INT_VAR
 			opcode = 174
 			target = 2
-			parameter1 = 0
-			parameter2 = 0
 			timing = 4
 			duration = 60
 			probability1 = 100
@@ -141,7 +135,7 @@ BEGIN
 					resistCold=100
 					thac0=7
 					apr=3
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=7
 					saveWand=9
 					savePolymorph=8

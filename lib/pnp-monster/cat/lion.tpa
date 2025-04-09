@@ -22,7 +22,6 @@ COPY_EXISTING ~ja#m10w1.itm~ ~override~
 			opcode = 139
 			target = 2
 			parameter1 = RESOLVE_STR_REF(@4009)
-			parameter2 = 0
 			probability1 = 10
 		END
 	LPF ADD_EFFECT
@@ -94,7 +93,7 @@ BEGIN
 					thac0=15
 					apr=3
 					xpv=650
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12

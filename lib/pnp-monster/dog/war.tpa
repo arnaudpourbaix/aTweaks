@@ -49,7 +49,7 @@ BEGIN
 					thac0=19
 					apr=1
 					xpv=65
-					alignment=IDS_OF_SYMBOL (~alignment~ ~NEUTRAL~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=14
 					saveWand=16
 					savePolymorph=15

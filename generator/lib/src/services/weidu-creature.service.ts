@@ -834,9 +834,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
       ["alignment", "animation", "general", "race", "class", "gender"].includes(
         key
       )
-    )
-      return `IDS_OF_SYMBOL (~${key}~ ~${creature[key]}~)`;
-    else if (typeof creature[key] === "boolean")
+    ) {
+      const file = key === "alignment" ? "align" : key;
+      return `IDS_OF_SYMBOL (~${file}~ ~${creature[key]}~)`;
+    } else if (typeof creature[key] === "boolean")
       return creature[key] ? "1" : "0";
     return creature[key];
   }

@@ -50,7 +50,7 @@ BEGIN
 					thac0=17
 					apr=1
 					xpv=65
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -59,11 +59,11 @@ BEGIN
 					morale=10
 					moraleBreak=4
 					moraleRecovery=15
-					general=2
-					race=117
-					class=143
-					gender=1
-					sex=1
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
+					class=IDS_OF_SYMBOL (~class~ ~WOLF~)
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WOLFSU~) BEGIN 

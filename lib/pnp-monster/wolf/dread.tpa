@@ -16,65 +16,15 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 112
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 		STR_VAR
 			resource = "ja#1m22"
 		END
-	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#DISPEL~ RET row col END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 221
-			target = 1
-			parameter1 = 9
-			parameter2 = row
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 58
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 11
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 2
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 4
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 46
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 		END
@@ -82,26 +32,6 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 75
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 77
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
-			timing = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 81
-			target = 1
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 		END
@@ -109,8 +39,13 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 242
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 81
+			target = 1
 			timing = 1
 			probability1 = 100
 		END
@@ -118,17 +53,34 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 79
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
 			timing = 1
 			probability1 = 100
 		END
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 161
+			opcode = 77
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 11
+			target = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 2
+			target = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 46
+			target = 1
 			timing = 1
 			probability1 = 100
 		END
@@ -136,8 +88,13 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 162
 			target = 1
-			parameter1 = 0
-			parameter2 = 0
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 161
+			target = 1
 			timing = 1
 			probability1 = 100
 		END
@@ -146,7 +103,6 @@ CREATE SPL "ja#1m22"
 			opcode = 143
 			target = 1
 			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
-			parameter2 = 0
 			duration = 12
 			probability1 = 100
 		STR_VAR
@@ -156,7 +112,6 @@ CREATE SPL "ja#1m22"
 		INT_VAR
 			opcode = 39
 			target = 1
-			parameter1 = 0
 			parameter2 = 1
 			duration = 12
 			probability1 = 100
@@ -175,7 +130,6 @@ CREATE SPL "ja#1m22"
 			opcode = 143
 			target = 1
 			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
-			parameter2 = 0
 			timing = 4
 			duration = 12
 			probability1 = 100
@@ -249,7 +203,6 @@ COPY_EXISTING ~ja#1m22.itm~ ~override~
 			opcode = 208
 			target = 1
 			parameter1 = 1
-			parameter2 = 0
 			timing = 2
 			probability1 = 100
 		END
@@ -257,7 +210,6 @@ COPY_EXISTING ~ja#1m22.itm~ ~override~
 		INT_VAR
 			opcode = 232
 			target = 1
-			parameter1 = 0
 			parameter2 = 19
 			timing = 2
 			probability1 = 100
@@ -342,7 +294,7 @@ BEGIN
 					thac0=15
 					apr=1
 					xpv=650
-					alignment=35
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -351,11 +303,11 @@ BEGIN
 					morale=18
 					moraleBreak=4
 					moraleRecovery=15
-					general=2
-					race=117
-					class=148
-					gender=1
-					sex=1
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
+					class=IDS_OF_SYMBOL (~class~ ~WOLF_DREAD~)
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
 			END
 			LPF patchCreatureScript STR_VAR script=ja#22 END
