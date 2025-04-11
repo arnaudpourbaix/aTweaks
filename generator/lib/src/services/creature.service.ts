@@ -303,4 +303,30 @@ export class CreatureService {
     data.saveBreath = saves.saveBreath;
     data.saveSpell = saves.saveSpell;
   }
+
+  getStrengthModifier(data: CreatureData): number {
+    if (!data.strength || data.strength < 17) return 0;
+    const table = [
+      { str: 17, modifier: 1 },
+      { str: 18, strEx: [0, 50], modifier: 1 },
+      { str: 18, strEx: [51, 99], modifier: 2 },
+      { str: 18, strEx: [100, 100], modifier: 3 },
+      { str: 19, modifier: 3 },
+      { str: 20, modifier: 3 },
+      { str: 21, modifier: 4 },
+      { str: 22, modifier: 4 },
+      { str: 23, modifier: 5 },
+      { str: 24, modifier: 6 },
+      { str: 25, modifier: 7 },
+    ];
+    const item = table.find((t) => {
+      const exStrength = data.exceptionalStrength ?? 0;
+      const checkStr = t.str === data.strength;
+      const checkStrEx =
+        t.strEx === undefined ||
+        (exStrength >= t.strEx[0] && exStrength <= t.strEx[1]);
+      return checkStr && checkStrEx;
+    }) as { modifier: number };
+    return item.modifier;
+  }
 }

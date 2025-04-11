@@ -1,5 +1,6 @@
+import { TargetStatusName } from "../../../config/target-name";
+import { WeaponSlot } from "../ids/slot";
 import { GrabConfig } from "../raw/grab";
-import { TargetStatusName } from "../raw/target";
 
 export interface CreatureAttack {
   /**
@@ -15,7 +16,17 @@ export interface CreatureAttack {
   /**
    * Target priorities in combat
    */
-  targetPriorities: TargetStatusName[];
+  targetStatusPriorities: TargetStatusName[];
+
+  /**
+   * Allow to select a specific weapon slot when target is affected by a list of status
+   */
+  targetStatusWeaponSlot: { status: TargetStatusName[]; slot: WeaponSlot }[];
+
+  /**
+   * Default weapon slot, when no specific configuration exists
+   */
+  defaultWeaponSlot?: WeaponSlot;
 
   /**
    * Not needed if creature has only one weapon (melee or ranged).
@@ -43,7 +54,7 @@ export interface CreatureAttack {
 
 export interface CreatureAttackAction {
   responseWeight: number;
-  weaponSlot?: "SLOT_WEAPON" | "SLOT_WEAPON1";
+  weaponSlot?: WeaponSlot;
   /**
    * Default is one round
    */

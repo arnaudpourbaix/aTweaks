@@ -25,7 +25,6 @@ export const GLOBAL_CONFIG = {
     ],
   },
   tokens: {
-    grabState: "{GrabState}",
     target: "{Target}",
   },
 };

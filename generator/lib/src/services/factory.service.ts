@@ -1,6 +1,7 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/final/attack";
 import { ObjectIdentifier } from "../model/ids/object";
+import { SlotIdentifier, WeaponSlot } from "../model/ids/slot";
 import { Actions } from "../model/raw/actions";
 import { Response, Statements } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
@@ -64,15 +65,16 @@ export class FactoryService {
 
   attackResponses = (p: {
     attacks: CreatureAttackAction[];
-    optActions?: Actions.Action[];
     oncePerRound: boolean;
+    optActions?: Actions.Action[];
+    weaponAttackSlot?: WeaponSlot;
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];
-      if (a.weaponSlot)
+      if (a.weaponSlot || p.weaponAttackSlot)
         actions.push({
           name: "SelectWeaponAbility",
-          params: [a.weaponSlot, 0],
+          params: [a.weaponSlot || (p.weaponAttackSlot as SlotIdentifier), 0],
         });
       if (a.duration === 6)
         actions.push({
@@ -213,7 +215,7 @@ export class FactoryService {
       { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
     ];
     if (!seeInvisible) {
-      results.push({
+      results.unshift({
         name: "StateCheck",
         params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
         negation: true,
@@ -269,11 +271,7 @@ export class FactoryService {
     reverse?: boolean;
     random?: boolean;
     comment?: string;
-    noTargetSelect?: boolean;
-    noResponse?: boolean;
   }): void => {
-    p.noTargetSelect = p.noTargetSelect ?? false;
-    p.noResponse = p.noResponse ?? false;
     p.reverse = p.reverse ?? false;
     p.random = p.random ?? false;
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
@@ -295,25 +293,21 @@ export class FactoryService {
         });
       triggers.push(orTrigger);
     }
-    if (!p.noTargetSelect) {
-      p.statements.push({
-        comment: p.comment,
-        triggers,
-        responses: this.response([{ name: "Continue" }]),
-      });
-    }
+    p.statements.push({
+      comment: p.comment,
+      triggers,
+      responses: this.response([{ name: "Continue" }]),
+    });
     const lastSeenBy: ObjectIdentifier = "LastSeenBy";
     const responses = this.utils.replaceResponseTokens(p.responses, [
       { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
     ]);
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
-    if (!p.noResponse) {
-      p.statements.push({
-        triggers: this.utils.replaceTriggerTokens(finalTriggers, [
-          { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
-        ]),
-        responses,
-      });
-    }
+    p.statements.push({
+      triggers: this.utils.replaceTriggerTokens(finalTriggers, [
+        { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
+      ]),
+      responses,
+    });
   };
 }

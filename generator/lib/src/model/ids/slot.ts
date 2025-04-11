@@ -41,3 +41,5 @@ export type SlotIdentifier =
   | "SLOT_WEAPON1"
   | "SLOT_WEAPON2"
   | "SLOT_WEAPON3";
+
+export type WeaponSlot = "SLOT_WEAPON" | "SLOT_WEAPON1" | "SLOT_WEAPON2";

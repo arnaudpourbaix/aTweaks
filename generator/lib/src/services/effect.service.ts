@@ -69,6 +69,7 @@ import {
   RawEffect,
   RawEffectGroup,
   RegenerationEffect,
+  RemoveOpcodeEffect,
   RemoveSpellTypeProtectionsEffect,
   ScriptingStateModifierEffect,
   SetColorEffect,
@@ -397,6 +398,12 @@ export class EffectService {
         result.parameter1 = `IDS_OF_SYMBOL (~slots~ ~${
           (<CreateItemInSlotEffect>effect).slot
         }~)`;
+        break;
+      case EffectTypeEnum.RemoveOpcode:
+        result.parameter1 = (<RemoveOpcodeEffect>effect).param;
+        result.parameter2 = `${
+          EffectTypeEnum[(<RemoveOpcodeEffect>effect).opcodeToRemove]
+        }`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:
       case EffectTypeEnum.ProtectionFromBackstab:

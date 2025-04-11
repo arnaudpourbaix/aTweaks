@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { GRAB_DEFAULT_CONFIG } from "../../config/grab";
 import { TARGET_STATUS } from "../../config/target-config";
 import { Creature } from "../model/final/creature";
 import { RaceIdentifier } from "../model/ids/race";
@@ -560,12 +561,12 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    const responses = this.factory.attackResponses({
-      attacks: creature.attack.actions,
-      oncePerRound: false,
-    });
-    for (const status of creature.attack.targetPriorities) {
+    for (const status of creature.attack.targetStatusPriorities) {
       const target = TARGET_STATUS.find((t) => t.status === status);
+      const weaponAttackSlot =
+        creature.attack.targetStatusWeaponSlot.find((t) =>
+          t.status.includes(status)
+        )?.slot ?? creature.attack.defaultWeaponSlot;
       if (!target)
         throw new Error(`Target priority details ${status} not found!`);
       if (target.targetTriggers.some((t) => "triggers" in t))
@@ -573,41 +574,51 @@ export class StatementService {
       const targets: string[] = target.canOnlyTargetPlayer
         ? this.targetService.getList("Players")
         : this.targetService.getList("NearestEnemies");
-      const targetTriggers = this.utils.replaceTriggerTokens(
-        [
-          ...(target.targetTriggers as Triggers.Trigger[]),
-          ...this.factory.validAttackTarget({
-            isTargetPlayer: target.canOnlyTargetPlayer,
-            seeInvisible: this.utils.hasImmunity(
-              creature.additionalData.immunities,
-              "seeInvisible"
-            ),
-          }),
-        ],
-        [
-          {
-            key: GLOBAL_CONFIG.tokens.grabState,
-            value: creature.attack.grab?.grabState ?? "",
-          },
-        ]
-      );
+      const targetTriggers = [
+        ...(target.targetTriggers as Triggers.Trigger[]),
+        ...this.factory.validAttackTarget({
+          isTargetPlayer: target.canOnlyTargetPlayer,
+          seeInvisible: this.utils.hasImmunity(
+            creature.additionalData.immunities,
+            "seeInvisible"
+          ),
+        }),
+      ];
+      const responses = this.factory.attackResponses({
+        attacks: creature.attack.actions,
+        oncePerRound: false,
+        weaponAttackSlot,
+      });
       this.factory.addOneBlockTargetList({
         statements,
         comment: `Attack ${target.status} enemy`,
         targetTriggers,
-        responses: [],
+        responses,
         targets,
-        noResponse: true,
       });
-      if (responses.length) {
-        this.factory.addOneBlockTargetList({
-          statements,
-          targetTriggers,
-          responses,
-          targets,
-          noTargetSelect: true,
-        });
-      }
+      // if (creature.attack.grab && status == "Grabbed") {
+      //   statements.push({
+      //     triggers: [
+      //       {
+      //         name: "CheckSpellState",
+      //         params: ["Myself", GRAB_DEFAULT_CONFIG.grabblingState],
+      //       },
+      //     ],
+      //     responses: [
+      //       {
+      //         weight: 100,
+      //         actions: [
+      //           { name: "DisplayStringHead", params: ["Myself", 50198] },
+      //           {
+      //             name: "ReallyForceSpellRES",
+      //             params: [`${creature.attack.grab.file}r`, "Myself"],
+      //           },
+      //           { name: "Continue" },
+      //         ],
+      //       },
+      //     ],
+      //   });
+      // }
     }
   }
 

@@ -39,13 +39,13 @@ export interface Item {
    */
   range?: number;
   speed?: number;
-  target: ItemAbilityTargetEnum;
-  location: ItemAbilityLocationEnum;
-  diceSize: number;
-  diceThrown: number;
+  target?: ItemAbilityTargetEnum;
+  location?: ItemAbilityLocationEnum;
+  diceSize?: number;
+  diceThrown?: number;
   bonusToHit?: number;
   damageBonus?: number;
-  damageType: AbilityDamageTypeEnum;
+  damageType?: AbilityDamageTypeEnum;
   projectile?: string;
   abilityflags?: ItemAbilityFlagEnum[];
   effects: Effect[];

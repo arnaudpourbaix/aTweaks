@@ -18,7 +18,8 @@ export interface GrabSharedConfig {
 }
 
 export interface GrabGlobalConfig extends GrabSharedConfig {
-  grabState: string;
+  grabbedState: string;
+  grabblingState: string;
   grabStringRef: StringReferenceEnum;
   grabbedStringRef: StringReferenceEnum;
   startSound: string;
@@ -36,6 +37,11 @@ export interface RawGrabConfig extends Partial<GrabSharedConfig> {
    * Weapon file that is able to grab
    */
   weaponFile: string;
+
+  /**
+   * Grabbing a prone target gives +4 attack roll modifier
+   */
+  onlyGrabProneTarget?: boolean;
 
   /**
    * Damage per round

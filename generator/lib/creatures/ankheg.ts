@@ -89,9 +89,8 @@ export const ANKHEG: RawCreature = {
     actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
     grab: {
       file: "ja#3m1",
-      probability: 100,
-      saveBonus: -4,
       weaponFile: "ja#m1w1",
+      // saveBonus: -4,
       duration: 18,
     },
   },

@@ -3,6 +3,7 @@ import { RawCreature } from "../src/model/raw/creature";
 export const WOLF_VAMPIRIC: RawCreature = {
   name: "Vampiric Wolf",
   tpaFile: "lib/pnp-monster/wolf/vampiric",
+  bafFile: "lib/pnp-monster/wolf/ja#m21",
   tracking: true,
   combatWalk: true,
   data: {
@@ -28,29 +29,34 @@ export const WOLF_VAMPIRIC: RawCreature = {
     gender: "MALE",
     size: "Small",
   },
-  additionalData: { removeItems: ["WOLFVA1", "BDWOLFVA"] },
+  additionalData: {
+    removeItems: ["WOLFVA1", "BDWOLFVA"],
+    removeScripts: ["DW#GPSHM", "VAMPWOLF"],
+  },
   // In game terms, a bite attack will cause a running or standing victim to fall if the victim fails a saving throw vs. paralysis.
   // Once the prey falls, the wolves continue to attack, shifting to the victim's arms so that he can no longer use a weapon.
   // This involves a called-shot attack in which a vampiric wolf has a -4 penalty to hit;
   // success means the wolf has grasped an arm in its mouth, and the victim cannot get free unless he makes a successful Strength check (one attempt per round).
   // Once a grasping bite is made, damage is continually inflicted each round as the wolf gnaws on the limb.
-
-  // Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.
-  // Only silver weapons or magical weapons of +1 value or better can do actual damage in melee. They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent.
   attack: {
+    targetStatusPriorities: ["Grabbed", "Sleep", "NoCheck"],
+    defaultWeaponSlot: "SLOT_WEAPON",
+    targetStatusWeaponSlot: [
+      { status: ["Sleep"], slot: "SLOT_WEAPON1" },
+      { status: ["Grabbed"], slot: "SLOT_WEAPON2" },
+    ],
     grab: {
       file: "ja#1m21",
-      probability: 100,
-      saveBonus: 2,
-      weaponFile: "ja#m21w1",
-      duration: 18,
+      weaponFile: "ja#m21w2",
+      onlyGrabProneTarget: true,
+      duration: 30,
     },
   },
   items: [
     {
       file: "ja#m21w1",
-      equippedSlot: "WEAPON1",
       type: "Melee",
+      equippedSlot: "WEAPON1",
       speed: 1,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
@@ -79,7 +85,25 @@ export const WOLF_VAMPIRIC: RawCreature = {
           cycleSpeed: 20,
           duration: 1,
         },
+        {
+          opcode: "Sleep",
+          wakeOnDamage: true,
+          timing: "InstantLimited",
+          duration: 12,
+          saveTypes: ["ParalyzePoisonDeath"],
+        },
       ],
+    },
+    {
+      file: "ja#m21w2",
+      equippedSlot: "WEAPON2",
+      copyFrom: "ja#m21w1",
+    },
+    {
+      file: "ja#m21w3",
+      equippedSlot: "WEAPON3",
+      copyFrom: "ja#m21w1",
+      bonusToHit: 30,
     },
   ],
   files: ["BDWOLFVA", "P#WOLF04", "WOLFVA"],

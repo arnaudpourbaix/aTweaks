@@ -77,8 +77,8 @@ export class TargetService {
   }
 
   getTargetPriorities(creature: RawCreature): TargetStatusName[] {
-    if (creature.attack?.targetPriorities)
-      return creature.attack.targetPriorities;
+    if (creature.attack?.targetStatusPriorities)
+      return creature.attack.targetStatusPriorities;
     const results: TargetStatusName[] = [];
     if (creature.attack?.grab) results.push("Grabbed");
     if (!!creature.data.intelligence && creature.data.intelligence >= 8) {

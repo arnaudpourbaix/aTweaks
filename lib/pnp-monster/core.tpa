@@ -6,4 +6,7 @@ COPY_EXISTING ~SPPR607.SPL~  ~override/ja#heal.SPL~
 	LPF DELETE_EFFECT INT_VAR match_opcode = 139 END
 
 // Grapple identifier for script detection
-LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLE" END
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLED" END
+
+// Grapple identifier for script detection
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLING" END

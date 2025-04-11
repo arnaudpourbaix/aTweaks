@@ -84,6 +84,7 @@ export type RawEffectOpcode =
   | "Regeneration"
   | "RemoveFear"
   | "RemoveItem"
+  | "RemoveOpcode"
   | "RemoveParalysis"
   | "RemoveSpecificAreaEffect"
   | "RemoveSpell"

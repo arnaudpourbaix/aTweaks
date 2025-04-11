@@ -1,13 +1,31 @@
 import { RawEffect } from "../src/model/raw/effect";
+import { CreatureSize } from "../src/model/raw/enum";
 import { GrabConfig, GrabGlobalConfig } from "../src/model/raw/grab";
 import { StringReferenceEnum } from "./stringRef";
 
+/**
+ * Grab attack:
+ * A character's opponent's AC against a touch attack does not include any armor bonus, shield bonus, or natural armor bonus
+ * d20 + Base Attack Bonus + Strenth Modifier + *Special Size Modifier*
+ *
+ * You lose your Dexterity Bonus to AC against opponents you are not grappling. That is to say, you keep it against the one you are grappling.
+ * You are unable to move unlesss you succeed an opposed grapple check
+ * You may attack your grappled opponent with an unarmed strike, natural or light weapon, at a -4 modifier to the attack.
+ * You may cast a spell when grappled or pinned, providing the cast time is 1 standard action or less.
+ * You may damage your opponent without the use of an actual attack by succeeding an opposed grapple check. This special attack deals damage equal to an unarmed strike, and functions the same way, including negatives to strike lethally and Monk class abilities.
+ * You may escape from being grappled by succeeding an opposed grapple check.
+ * You can move at half your speed (bringing the entire brawl with you, no matter how big) by succeeding an opposed grapple check. This requires a standard action, and you must beat each opponent.
+ * You can hold your opponent immobile by pinning them. This is done by using an attack to enact an opposed grapple check.
+ * If an opponent is holding a light weapon, you can turn that sumbitch around on them and shank them with it by making an attack roll with the weapon at a -4 penalty. They retain the weapon, but part of it will be in their liver.
+ *
+ */
 export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   probability: 100,
-  grabState: "JA_GRAPPLE",
+  grabbedState: "JA_GRAPPLED",
+  grabblingState: "JA_GRAPPLING",
   duration: 12,
-  saveTypes: ["Breath"],
-  saveBonus: -2,
+  saveTypes: ["ParalyzePoisonDeath"],
+  saveBonus: 99, // will be calculated
   grabStringRef: StringReferenceEnum.Grab,
   grabbedStringRef: StringReferenceEnum.Grabbed,
   startSound: "CRE_P01",
@@ -15,10 +33,21 @@ export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   visualEffect: "rr#cnstr",
 };
 
-export const RAW_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
+export const GRAB_CHECK_CREATURE_SIZE: { size: CreatureSize; bonus: number }[] =
+  [
+    { size: "Tiny", bonus: -8 },
+    { size: "Small", bonus: -4 },
+    { size: "Medium", bonus: 0 },
+    { size: "Large", bonus: 4 },
+    { size: "Huge", bonus: 8 },
+    { size: "Gargantuan", bonus: 12 },
+    { size: "Colossal", bonus: 16 },
+  ];
+
+export const GRAB_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
   {
     opcode: "SetExtendedSpellState",
-    state: grab.grabState,
+    state: grab.grabbedState,
     duration: grab.duration,
   },
   {
@@ -30,6 +59,29 @@ export const RAW_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
     opcode: "MovementRateBonus2",
     type: "Set",
     value: 0,
+    duration: grab.duration,
+  },
+  {
+    opcode: "DexterityBonus",
+    value: 8, // Grabbed creature loose AC from their dexterity bonus
+    type: "Set",
+    duration: grab.duration,
+  },
+  {
+    opcode: "ArmorClassBonus",
+    bonusTo: "AllWeapons",
+    value: -4, // Opponents get +4 bonus on their attack rolls against grabbed target
+    duration: grab.duration,
+  },
+  {
+    opcode: "Thac0Bonus",
+    type: "Increment",
+    value: -4,
+    duration: grab.duration,
+  },
+  {
+    opcode: "DisplayPortraitIcon",
+    icon: "Entangled",
     duration: grab.duration,
   },
   {
@@ -50,18 +102,26 @@ export const RAW_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
     duration: grab.duration,
   },
   {
-    opcode: "DisplayPortraitIcon",
-    icon: "Entangled",
-    duration: grab.duration,
-  },
-  {
-    opcode: "DexterityBonus",
-    value: 8,
-    type: "Set",
-    duration: grab.duration,
-  },
-  {
     opcode: "ProtectionFromSpell",
     resource: grab.file,
+    duration: grab.duration,
+  },
+];
+
+export const RELEASE_GRAB_EFFECTS_FUNCTION = (
+  grab: GrabConfig
+): RawEffect[] => [
+  {
+    opcode: "RemoveOpcode",
+    opcodeToRemove: "MovementRateBonus2",
+    param: "1",
+    target: "Self",
+  },
+  {
+    opcode: "RemoveOpcode",
+    opcodeToRemove: "SetExtendedSpellState",
+    param: `(IDS_OF_SYMBOL (~splstate~ ~${grab.grabblingState}~))`,
+    special: 1,
+    target: "Self",
   },
 ];

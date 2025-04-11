@@ -41,6 +41,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.createSpells(lines, creature);
     if (creature.attack.grab) {
       this.createGrabSpell(lines, creature, creature.attack.grab);
+      this.createReleaseGrabSpell(lines, creature, creature.attack.grab);
       this.createGrabProtectionEffect(lines, creature.attack.grab);
     }
     this.createItems(lines, creature);
@@ -107,55 +108,52 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (item.enchantment)
         this.add(lines, `WRITE_LONG 0x60 ${item.enchantment}`, 1);
       //this.add(lines, `LPF set_enchantment INT_VAR enchantment = ${item.enchantment} END`, 1);
-      if (item.type) {
-        if (item.location)
-          this.add(lines, `WRITE_SHORT 0x74 ${item.location}`, 1);
-        if (item.target) this.add(lines, `WRITE_BYTE 0x7e ${item.target}`, 1);
-        if (item.range) this.add(lines, `WRITE_SHORT 0x80 ${item.range}`, 1);
-        if (item.speed) this.add(lines, `WRITE_SHORT 0x84 ${item.speed}`, 1);
-        if (item.bonusToHit)
-          this.add(lines, `WRITE_SHORT 0x86 ${item.bonusToHit}`, 1);
-        if (item.diceSize)
-          this.add(lines, `WRITE_BYTE 0x88 ${item.diceSize}`, 1);
-        if (item.diceThrown)
-          this.add(lines, `WRITE_BYTE 0x8a ${item.diceThrown}`, 1);
-        if (item.damageBonus)
-          this.add(lines, `WRITE_SHORT 0x8c ${item.damageBonus}`, 1);
-        if (item.damageType)
-          this.add(lines, `WRITE_SHORT 0x8e ${item.damageType}`, 1);
-        if (item.projectile)
-          this.add(
-            lines,
-            `WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~${item.projectile}~)) + 1`,
-            1
-          );
-        if (item.type === ItemAbilityTypeEnum.Melee) {
-          this.add(
-            lines,
-            `WRITE_SHORT 0x9e ${item.animationSwing?.overhand ?? "34"}`,
-            1
-          );
-          this.add(
-            lines,
-            `WRITE_SHORT 0xa0 ${item.animationSwing?.backhand ?? "33"}`,
-            1
-          );
-          this.add(
-            lines,
-            `WRITE_SHORT 0xa2 ${item.animationSwing?.thrust ?? "33"}`,
-            1
-          );
-        } else if (item.type === ItemAbilityTypeEnum.Ranged) {
-          this.add(lines, `WRITE_SHORT 0x38 1`, 1);
-          this.add(lines, `WRITE_SHORT 0xa4 1`, 1);
-        }
-        if (item.abilityflags) {
-          const flags = item.abilityflags.reduce((sum, save) => {
-            sum += 2 ** save;
-            return sum;
-          }, 0);
-          this.add(lines, `WRITE_LONG 0x98 ${flags}`, 1);
-        }
+      if (item.location)
+        this.add(lines, `WRITE_SHORT 0x74 ${item.location}`, 1);
+      if (item.target) this.add(lines, `WRITE_BYTE 0x7e ${item.target}`, 1);
+      if (item.range) this.add(lines, `WRITE_SHORT 0x80 ${item.range}`, 1);
+      if (item.speed) this.add(lines, `WRITE_SHORT 0x84 ${item.speed}`, 1);
+      if (item.bonusToHit)
+        this.add(lines, `WRITE_SHORT 0x86 ${item.bonusToHit}`, 1);
+      if (item.diceSize) this.add(lines, `WRITE_BYTE 0x88 ${item.diceSize}`, 1);
+      if (item.diceThrown)
+        this.add(lines, `WRITE_BYTE 0x8a ${item.diceThrown}`, 1);
+      if (item.damageBonus)
+        this.add(lines, `WRITE_SHORT 0x8c ${item.damageBonus}`, 1);
+      if (item.damageType)
+        this.add(lines, `WRITE_SHORT 0x8e ${item.damageType}`, 1);
+      if (item.projectile)
+        this.add(
+          lines,
+          `WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~${item.projectile}~)) + 1`,
+          1
+        );
+      if (item.type === ItemAbilityTypeEnum.Melee) {
+        this.add(
+          lines,
+          `WRITE_SHORT 0x9e ${item.animationSwing?.overhand ?? "34"}`,
+          1
+        );
+        this.add(
+          lines,
+          `WRITE_SHORT 0xa0 ${item.animationSwing?.backhand ?? "33"}`,
+          1
+        );
+        this.add(
+          lines,
+          `WRITE_SHORT 0xa2 ${item.animationSwing?.thrust ?? "33"}`,
+          1
+        );
+      } else if (item.type === ItemAbilityTypeEnum.Ranged) {
+        this.add(lines, `WRITE_SHORT 0x38 1`, 1);
+        this.add(lines, `WRITE_SHORT 0xa4 1`, 1);
+      }
+      if (item.abilityflags) {
+        const flags = item.abilityflags.reduce((sum, save) => {
+          sum += 2 ** save;
+          return sum;
+        }, 0);
+        this.add(lines, `WRITE_LONG 0x98 ${flags}`, 1);
       }
       if (!item.copyFrom)
         this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
@@ -163,7 +161,11 @@ export class WeiduCreatureService extends AbstractWeiduService {
         this.addEffect(lines, 1, effect, "ITM");
       }
       if (creature.attack.grab?.weaponFile === item.file) {
-        this.addGrabEffect(lines, 1, creature.attack.grab, "ITM");
+        const effect = this.grabService.getGrabEffect(
+          creature,
+          creature.attack.grab
+        );
+        this.addEffect(lines, 1, effect, "ITM");
       }
       for (const name of item.immunities) {
         this.add(
@@ -384,6 +386,30 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "", 0);
   }
 
+  private createReleaseGrabSpell(
+    lines: CodeLine[],
+    creature: Creature,
+    grab: GrabConfig
+  ) {
+    this.add(lines, `CREATE SPL "${grab.file}r"`, 0);
+    this.add(lines, `WRITE_SHORT 0x1c ${SpellTypeEnum.Innate}`, 1);
+    this.add(lines, `WRITE_LONG 0x34 1`, 1);
+    this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
+    this.add(lines, `WRITE_SHORT 0x68 1`, 1);
+    this.add(lines, `WRITE_LONG 0x6a 0x9a`, 1);
+    this.add(lines, `INSERT_BYTES 0x72 0x28`, 1);
+    this.add(lines, `WRITE_SHORT 0x72 ${ItemAbilityTypeEnum.Melee}`, 1);
+    this.add(lines, `WRITE_SHORT 0x74 ${ItemAbilityLocationEnum.Ability}`, 1);
+    this.add(lines, `WRITE_BYTE 0x7e ${ItemAbilityTargetEnum.LivingActor}`, 1);
+    this.add(lines, `WRITE_SHORT 0x80 5`, 1);
+    this.add(lines, `WRITE_SHORT 0x82 1`, 1);
+    this.add(lines, `WRITE_SHORT 0x94 1`, 1);
+    this.add(lines, `SAY NAME1 ~Release grabbed target~`, 1);
+    const effects = this.grabService.getReleaseGrabbedEffects(grab);
+    for (const effect of effects) this.addEffect(lines, 1, effect, "SPL");
+    this.add(lines, "", 0);
+  }
+
   private createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
     const effect = this.grabService.getGrabProtectionEffect(grab);
     this.add(lines, `CREATE EFF "${grab.file}"`, 0);
@@ -394,16 +420,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `WRITE_SHORT 0x2c ${effect.probability1}`, 1);
     this.add(lines, `WRITE_ASCII 0x30 ~${effect.resource}~ #8`, 1);
     this.add(lines, "", 0);
-  }
-
-  private addGrabEffect(
-    lines: CodeLine[],
-    tab: number,
-    grab: GrabConfig,
-    type: "SPL" | "ITM"
-  ) {
-    const effect = this.grabService.getGrabEffect(grab);
-    this.addEffect(lines, tab, effect, type);
   }
 
   private addEffect(
@@ -496,11 +512,16 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
     this.add(lines, `LPF clearProficiencies END`, 3);
     this.addProficiencies(lines, 3, creature.additionalData);
-    if (creature.attack.grab)
+    if (creature.attack.grab) {
       this.add(
         lines,
         `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}~ #0 ~innate~ (1)`
       );
+      this.add(
+        lines,
+        `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}r~ #0 ~innate~ (1)`
+      );
+    }
     for (const name of creature.additionalData.immunities) {
       const immunity = State.immunities.find(
         (i) => i.name === name
@@ -593,13 +614,16 @@ export class WeiduCreatureService extends AbstractWeiduService {
     tab: number,
     additionalData: CreatureAdditionalData
   ) {
+    let equip = false;
     for (const item of additionalData.itemSlots) {
-      const equip = item.slot === "WEAPON1" ? "EQUIP" : "";
       this.add(
         lines,
-        `ADD_CRE_ITEM ~${item.file}~ #0 #0 #0 ~UNDROPPABLE~ ~${item.slot}~ ${equip}`,
+        `ADD_CRE_ITEM ~${item.file}~ #0 #0 #0 ~UNDROPPABLE~ ~${item.slot}~ ${
+          !equip ? "EQUIP" : ""
+        }`,
         tab
       );
+      equip = true;
     }
   }
 

@@ -1,5 +1,6 @@
 import { TargetStatus } from "../src/model/raw/target";
 import { GLOBAL_CONFIG } from "./generate";
+import { GRAB_DEFAULT_CONFIG } from "./grab";
 import { TargetListName } from "./target-name";
 
 export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
@@ -89,7 +90,7 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "CheckSpellState",
-        params: [GLOBAL_CONFIG.tokens.target, GLOBAL_CONFIG.tokens.grabState],
+        params: [GLOBAL_CONFIG.tokens.target, GRAB_DEFAULT_CONFIG.grabbedState],
       },
     ],
   },

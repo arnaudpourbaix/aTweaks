@@ -1,6 +1,6 @@
 import { ClassIdentifier } from "../src/model/ids/class";
 import { RaceIdentifier } from "../src/model/ids/race";
-import { RawEffectIDSFile } from "../src/model/raw/enum";
+import { CreatureSize, RawEffectIDSFile } from "../src/model/raw/enum";
 
 export const EARTH_CREATURES: [
   RawEffectIDSFile,
@@ -102,7 +102,7 @@ export const LARGE_CREATURES: [
 
 // Because its body is a mass of unliving matter, a construct is hard to destroy.
 // It gains bonus hit points based on size, as shown on the following table.
-export const CONSTRUCT_BONUS_HIT_POINT = [
+export const CONSTRUCT_BONUS_HIT_POINT: { size: CreatureSize; hp: number }[] = [
   { size: "Tiny", hp: 0 },
   { size: "Small", hp: 10 },
   { size: "Medium", hp: 20 },

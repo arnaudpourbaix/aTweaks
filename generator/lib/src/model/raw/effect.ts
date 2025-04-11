@@ -359,6 +359,12 @@ export type RawEffectGroup = RawBaseEffect & {
   opcode: RawEffectGroupName;
 };
 
+export type RemoveOpcodeEffect = RawBaseEffect & {
+  opcode: "RemoveOpcode";
+  opcodeToRemove: RawEffectOpcode;
+  param: string;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -428,6 +434,7 @@ export type RawEffect =
   | ProtectionFromResourceEffect
   | ProtectionFromWeaponsEffect
   | RegenerationEffect
+  | RemoveOpcodeEffect
   | RemoveSpellTypeProtectionsEffect
   | ScriptingStateModifierEffect
   | SetColorEffect

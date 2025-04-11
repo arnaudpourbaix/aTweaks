@@ -13,13 +13,7 @@ export type TargetStatusName =
   | "Held"
   | "Stunned"
   | "Slowed"
-  /**
-   * panic, confused, feebleminded
-   */
-  | "PanicConfused"
+  | "PanicConfused" // panic, confused, feebleminded
   | "Sleep"
-  /**
-   * Not affected by any disabling status
-   */
-  | "Able"
+  | "Able" // Not affected by any disabling status
   | "NoCheck";

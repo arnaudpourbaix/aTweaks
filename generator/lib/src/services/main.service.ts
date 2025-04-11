@@ -211,10 +211,6 @@ export class MainService {
       ),
       scriptLocation: p.additionalData.scriptLocation,
       proficiencies: p.additionalData.proficiencies ?? [],
-      // proficiencies: (p.additionalData.proficiencies ?? []).map(pr => ({
-      //   type: ProficiencyTypeEnum[pr.type],
-      //   value: pr.value
-      // }))
     };
     return result;
   }
@@ -225,14 +221,6 @@ export class MainService {
         "Attacks per round need to be set for dual wielding flag"
       );
     creature.data.apr -= 1;
-    // const mainhand = creature.items.find(i => i.equippedSlot === ItemSlotEnum.WEAPON1);
-    // if (mainhand) {
-    //   mainhand.bonusToHit = (mainhand.bonusToHit ?? 0) + 4;
-    // }
-    // const offhand = creature.items.find(i => i.equippedSlot === ItemSlotEnum.SHIELD);
-    // if (offhand) {
-    //   offhand.bonusToHit = (offhand.bonusToHit ?? 0) + 8;
-    // }
   }
 
   private mapAttack(creature: RawCreature): CreatureAttack {
@@ -259,7 +247,8 @@ export class MainService {
       grab: creature.attack.grab
         ? { ...GRAB_DEFAULT_CONFIG, ...creature.attack.grab }
         : undefined,
-      targetPriorities: this.targerService.getTargetPriorities(creature),
+      targetStatusPriorities: this.targerService.getTargetPriorities(creature),
+      targetStatusWeaponSlot: creature.attack.targetStatusWeaponSlot ?? [],
     };
     return result;
   }
@@ -287,13 +276,11 @@ export class MainService {
         : undefined,
       location: item.location
         ? ItemAbilityLocationEnum[item.location]
-        : ItemAbilityLocationEnum.Weapon,
-      target: item.target
-        ? ItemAbilityTargetEnum[item.target]
-        : ItemAbilityTargetEnum.LivingActor,
+        : undefined,
+      target: item.target ? ItemAbilityTargetEnum[item.target] : undefined,
       damageType: item.damageType
         ? AbilityDamageTypeEnum[item.damageType]
-        : AbilityDamageTypeEnum.None,
+        : undefined,
       abilityflags: item.abilityFlags
         ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
         : undefined,
@@ -302,32 +289,41 @@ export class MainService {
   }
 
   private mapCreateItem(item: RawCreateItem): Item {
-    return {
-      ...item,
+    const result: Item = {
+      file: item.file,
+      name: item.name,
+      description: item.description,
+      equippedSlot: item.equippedSlot,
+      icon: item.icon,
       immunities: item.immunities ?? [],
-      diceSize: item.diceSize ?? 0,
-      diceThrown: item.diceThrown ?? 0,
-      type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
       flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
       animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
       category: item.category ? ItemCategoryEnum[item.category] : undefined,
       proficiency: item.proficiency
         ? ProficiencyTypeEnum[item.proficiency]
         : undefined,
-      location: item.location
-        ? ItemAbilityLocationEnum[item.location]
-        : ItemAbilityLocationEnum.Weapon,
-      target: item.target
-        ? ItemAbilityTargetEnum[item.target]
-        : ItemAbilityTargetEnum.LivingActor,
-      damageType: item.damageType
-        ? AbilityDamageTypeEnum[item.damageType]
-        : AbilityDamageTypeEnum.None,
       abilityflags: item.abilityFlags
         ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
         : undefined,
       effects: item.effects ? this.mapEffects(item.effects) : [],
     };
+    if (item.type) {
+      result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
+      result.diceSize = item.diceSize ?? 0;
+      result.diceThrown = item.diceThrown ?? 0;
+      result.animationSwing = item.animationSwing;
+      result.enchantment = item.enchantment;
+      result.location = item.location
+        ? ItemAbilityLocationEnum[item.location]
+        : ItemAbilityLocationEnum.Weapon;
+      result.target = item.target
+        ? ItemAbilityTargetEnum[item.target]
+        : ItemAbilityTargetEnum.LivingActor;
+      result.damageType = item.damageType
+        ? AbilityDamageTypeEnum[item.damageType]
+        : AbilityDamageTypeEnum.None;
+    }
+    return result;
   }
 
   private mapItemSlots(
