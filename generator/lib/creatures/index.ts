@@ -15,7 +15,13 @@ import { DOG_WILD } from "./dog_wild";
 import { DOOM_GUARD } from "./doom_guard";
 import { GOLEM_CLAY } from "./golem_clay";
 import { GOLEM_FLESH } from "./golem_flesh";
+import { GOLEM_IRON } from "./golem_iron";
+import { GOLEM_STONE } from "./golem_stone";
 import { HORROR_HELMED } from "./horror_helmed";
+import { OGRE } from "./ogre";
+import { OGRE_HALF } from "./ogre_half";
+import { OGRE_MAGE } from "./ogre_mage";
+import { OGRE_OGRILLON } from "./ogre_ogrillon";
 import { WOLF } from "./wolf";
 import { WOLF_DIRE } from "./wolf_dire";
 import { WOLF_DREAD } from "./wolf_dread";
@@ -48,4 +54,10 @@ export const CREATURES: RawCreature[] = [
   // WOLF,
   GOLEM_FLESH,
   GOLEM_CLAY,
+  GOLEM_STONE,
+  GOLEM_IRON,
+  OGRE_OGRILLON,
+  OGRE_HALF,
+  OGRE,
+  OGRE_MAGE
 ];

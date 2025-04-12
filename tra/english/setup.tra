@@ -62,6 +62,7 @@
 @5080 = ~Doom Guards, Dwarven Doom Guards~
 @5090 = ~Wolves~
 @5100 = ~Golems~
+@5110 = ~Ogres~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

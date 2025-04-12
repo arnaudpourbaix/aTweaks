@@ -26,6 +26,7 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
 import { GrabService } from "./grab.service";
 import { GrabConfig } from "../model/raw/grab";
+import { UtilsService } from "./utils.service";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
@@ -208,18 +209,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (spell.target) this.add(lines, `WRITE_BYTE 0x7e ${spell.target}`, 1);
       if (spell.range) this.add(lines, `WRITE_SHORT 0x80 ${spell.range}`, 1);
       if (spell.speed) this.add(lines, `WRITE_SHORT 0x84 ${spell.speed}`, 1);
-      if (typeof spell.stringRef === "number")
+      if (spell.stringRef) {
         this.add(
           lines,
-          `SAY NAME1 @${spell.stringRef} SAY NAME2 @${spell.stringRef}`,
+          `SAY NAME1 ${this.utils.getStringReference(spell.stringRef)} SAY NAME2 ${this.utils.getStringReference(spell.stringRef)}`,
           1
         );
-      else if (typeof spell.stringRef === "string")
-        this.add(
-          lines,
-          `SAY NAME1 ~${spell.stringRef}~ SAY NAME2 ~${spell.stringRef}~`,
-          1
-        );
+      }
       if (spell.description)
         this.add(
           lines,
@@ -297,7 +293,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (projectile.stringRef)
         this.add(
           lines,
-          `WRITE_LONG 0x30 RESOLVE_STR_REF(@${projectile.stringRef})`,
+          `WRITE_LONG 0x30 ${this.utils.resolveStringRef(projectile.stringRef)})`,
           1
         );
       if (projectile.color) {

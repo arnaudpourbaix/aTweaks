@@ -222,6 +222,14 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/flesh.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/stone.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/iron.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/bone.tpa"
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 // ------------------------------------------------------
 
@@ -315,6 +323,19 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/flesh.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/stone.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/iron.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/bone.tpa"
+
+// // Ogres
+// BEGIN @5110 DESIGNATED 5110
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 /*
 // PnP Fiends

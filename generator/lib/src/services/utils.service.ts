@@ -79,9 +79,17 @@ export class UtilsService {
 
   getStringReference(value: StringReference): string {
     if (typeof value === "string") {
-      return "";
+      return `~${value}~`;
     } else {
-      return "";
+      return `@${value}`;
+    }
+  }
+
+  resolveStringRef(value: StringReference): string {
+    if (typeof value === "string") {
+      return `RESOLVE_STR_REF(~${value}~)`;
+    } else {
+      return `RESOLVE_STR_REF(@${value})`;
     }
   }
 

@@ -36,6 +36,7 @@ import {
   SaveTypeEnum,
   TranslucencyTypeEnum,
 } from "../model/final/enums";
+import { StringReference } from "../model/misc";
 import {
   ArmorClassBonusEffect,
   BerserkEffect,
@@ -174,10 +175,9 @@ export class EffectService {
       case EffectTypeEnum.DisplayString:
       case EffectTypeEnum.ProtectionFromSpell:
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
-        if ((<StringRefEffect>effect).stringRef)
-          result.parameter1 = `RESOLVE_STR_REF(@${
-            (<StringRefEffect>effect).stringRef
-          })`;
+        if ((<StringRefEffect>effect).stringRef) {
+          result.parameter1 = `${this.utils.resolveStringRef((<StringRefEffect>effect).stringRef as StringReference)}`;
+        }
         break;
       case EffectTypeEnum.LightingEffects:
         result.parameter1 = `${

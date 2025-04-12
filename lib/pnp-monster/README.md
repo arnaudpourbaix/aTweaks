@@ -37,3 +37,11 @@
 | 22    | Dread Wolf                                 |
 | 23    | Flesh Golem                                |
 | 24    | Clay Golem                                 |
+| 25    | Stone Golem                                 |
+| 26    | Iron Golem                                 |
+| 27    | Bone Golem                                 |
+| 28    | Ogrillon                                 |
+| 29    | Half-Ogre                                 |
+| 30    | Ogre                                 |
+| 31    | Berserker Ogre                                 |
+| 32    | Mage Ogre                                 |
