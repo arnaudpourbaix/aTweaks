@@ -3,6 +3,7 @@ import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifier } from "../ids/slot";
 import { SplStateIdentifier } from "../ids/splstate";
 import { StatsIdentifier } from "../ids/stats";
+import { StringReference } from "../misc";
 import { RawEffectOpcode } from "./effect.type";
 import {
   RawBerserkType,
@@ -170,7 +171,7 @@ export type StringRefEffect = RawBaseEffect & {
     | "DisplayString"
     | "ProtectionFromSpell"
     | "ProtectionFromDisplaySpecificString";
-  stringRef?: number;
+  stringRef?: StringReference;
 };
 
 export type LightingEffectsEffect = RawBaseEffect & {

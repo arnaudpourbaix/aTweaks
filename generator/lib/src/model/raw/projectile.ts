@@ -1,3 +1,4 @@
+import { StringReference } from "../misc";
 import {
   RawAreaProjectile,
   RawBamProjectileFlags,
@@ -23,7 +24,7 @@ export interface RawProjectile {
   particleColor?: RawParticleColor;
   projectileWidth?: number;
   extendedFlags?: RawProjectileExtendedFlags[];
-  stringRef?: string;
+  stringRef?: StringReference;
   color?: {
     red: number;
     green: number;

@@ -217,9 +217,11 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/wolf.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/worg.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dire.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/flesh.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
 
 // ------------------------------------------------------
 
@@ -305,6 +307,14 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
+
+// // Golems
+// BEGIN @5100 DESIGNATED 5100
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/flesh.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
 
 /*
 // PnP Fiends

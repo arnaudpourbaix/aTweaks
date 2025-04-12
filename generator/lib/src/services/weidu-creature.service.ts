@@ -855,11 +855,19 @@ export class WeiduCreatureService extends AbstractWeiduService {
 
   private extractDataValue(key: keyof CreatureData, creature: CreatureData) {
     if (
-      ["alignment", "animation", "general", "race", "class", "gender"].includes(
-        key
-      )
+      [
+        "alignment",
+        "animation",
+        "modAnimation",
+        "general",
+        "race",
+        "class",
+        "gender",
+      ].includes(key)
     ) {
-      const file = key === "alignment" ? "align" : key;
+      let file = key as string;
+      if (key === "alignment") file = "align";
+      else if (["modAnimation", "animation"].includes(key)) file = "animate";
       return `IDS_OF_SYMBOL (~${file}~ ~${creature[key]}~)`;
     } else if (typeof creature[key] === "boolean")
       return creature[key] ? "1" : "0";

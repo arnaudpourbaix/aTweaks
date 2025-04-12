@@ -8,7 +8,6 @@ import { RaceIdentifier } from "../ids/race";
 import { Actions } from "../raw/actions";
 import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
 import { CreatureSize, RawProficiencyType } from "../raw/enum";
-import { GrabConfig } from "../raw/grab";
 import { RawItemSlot } from "../raw/item";
 import { CustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
@@ -152,6 +151,7 @@ export interface CreatureData {
   gender?: GenderIdentifier;
   size?: CreatureSize;
   animation?: AnimationIdentifiers;
+  modAnimation?: string;
   metalColor?: number;
   minorColor?: number;
   majorColor?: number;
@@ -230,6 +230,7 @@ export const CREATURE_DATA_KEYS: (keyof CreatureData)[] = [
   "class",
   "gender",
   "animation",
+  "modAnimation",
   "metalColor",
   "minorColor",
   "majorColor",

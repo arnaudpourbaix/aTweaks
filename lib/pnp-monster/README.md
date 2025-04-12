@@ -35,4 +35,5 @@
 | 20    | Winter Wolf                                |
 | 21    | Vampiric Wolf                              |
 | 22    | Dread Wolf                                 |
- 
+| 23    | Flesh Golem                                |
+| 24    | Clay Golem                                 |

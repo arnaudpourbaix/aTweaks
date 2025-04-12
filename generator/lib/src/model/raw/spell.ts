@@ -1,5 +1,5 @@
-import { StringReferenceEnum } from "../../../config/stringRef";
 import { SpellIdentifier } from "../ids/spell";
+import { StringReference } from "../misc";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
 import {
@@ -22,14 +22,14 @@ export interface RawAlterSpell extends RawBaseSpell {
   /**
    * String reference, must be referenced in TRA files
    */
-  stringRef?: number | string;
+  stringRef?: StringReference;
 }
 
 export interface RawCreateSpell extends RawBaseSpell {
   /**
    * String reference, must be referenced in TRA files
    */
-  stringRef: StringReferenceEnum | string;
+  stringRef: StringReference;
 }
 
 export interface RawBaseSpell {

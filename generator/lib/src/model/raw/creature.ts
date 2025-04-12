@@ -156,6 +156,7 @@ export interface RawCreatureData {
   gender?: GenderIdentifier;
   size?: CreatureSize;
   animation?: AnimationIdentifiers;
+  modAnimation?: string;
   metalColor?: number;
   minorColor?: number;
   majorColor?: number;

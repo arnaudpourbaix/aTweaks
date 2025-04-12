@@ -1,0 +1,137 @@
+import { StringReferenceEnum } from "../config/stringRef";
+import { RawCreature } from "../src/model/raw/creature";
+
+export const GOLEM_CLAY: RawCreature = {
+  name: "Clay Golem",
+  bafFile: "lib/pnp-monster/golem/ja#m24",
+  tpaFile: "lib/pnp-monster/golem/clay",
+  tracking: true,
+  combatWalk: true,
+  restHeal: true,
+  data: {
+    level1: 11,
+    bonusHp: 0,
+    strength: 20,
+    dexterity: 9,
+    constitution: 18,
+    intelligence: 3,
+    wisdom: 8,
+    charisma: 1,
+    movement: 7,
+    ac: 7,
+    apr: 1,
+    xpv: 5000,
+    alignment: "NEUTRAL",
+    morale: 20,
+    moraleBreak: 4,
+    moraleRecovery: 15,
+    general: "GIANTHUMANOID",
+    race: "GOLEM",
+    class: "GOLEM_CLAY",
+    gender: "NIETHER",
+    size: "Large",
+    resistMissile: 100,
+    resistPiercing: 100,
+    resistSlashing: 100,
+    resistMagic: 100,
+  },
+  additionalData: {
+    immunities: ["construct"],
+    removeScripts: ["GOLCLY01", "BPFHT"],
+    removeItems: ["GOLCLA", "RING95"],
+    // memorizedSpells: [{ file: "spin978", memorizedCount: 1 }],
+  },
+  items: [
+    {
+      file: "ja#m24w1",
+      equippedSlot: "WEAPON1",
+      type: "Melee",
+      diceThrown: 3,
+      diceSize: 10,
+      damageType: "Crushing",
+      speed: 3,
+      abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  spells: [
+    {
+      name: "Haste",
+      file: "ja#1m24",
+      memorizedCount: 1,
+      type: "Melee",
+      stringRef: StringReferenceEnum.Haste,
+      effects: [
+        {
+          opcode: "RemoveSpellTypeProtections",
+          maximumLevel: 9,
+          type: "K1#SLOW",
+          timing: "InstantLimited",
+          duration: 18,
+        },
+        {
+          opcode: "Haste",
+          type: "NormalHaste",
+          timing: "InstantLimited",
+          duration: 18,
+        },
+        {
+          opcode: "DisplayPortraitIcon",
+          icon: "Haste",
+          timing: "InstantLimited",
+          duration: 18,
+        },
+        {
+          opcode: "LightingEffects",
+          effect: "AlterationAir",
+          lightingTarget: "SpellTarget",
+          timing: "InstantPermanentUntilDeath",
+        },
+        {
+          opcode: "CreatureRGBColorFade",
+          color: {
+            red: 60,
+            green: 60,
+            blue: 120,
+          },
+          fadeSpeed: 25,
+          timing: "InstantPermanentUntilDeath",
+        },
+        {
+          opcode: "DisplayString",
+          stringRef: "14023",
+          timing: "InstantPermanentUntilDeath",
+        },
+        {
+          opcode: "PlaySound",
+          timing: "InstantPermanentUntilDeath",
+          resource: "EFF_M28",
+        },
+        {
+          opcode: "PlaySound",
+          timing: "DelayPermanent",
+          duration: 18,
+          resource: "EFF_M29",
+        },
+      ],
+    },
+  ],
+  abilities: [
+    {
+      name: "Golem Haste",
+      triggers: [
+        { name: "Delay", params: [6] },
+        { name: "HaveSpellRES", params: ["ja#1m24"] },
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_HASTED"],
+          negation: true,
+        },
+      ],
+      actions: [
+        { name: "ReallyForceSpellRES", params: ["ja#1m24", "Myself"] },
+        { name: "RemoveSpellRES", params: ["ja#1m24"] },
+      ],
+    },
+  ],
+  files: ["AC#FPCLG", "AC#FPCLY", "BPCLAY", "TOMEGOL2", "WICLAYGO"],
+};

@@ -4,7 +4,7 @@ import { Triggers } from "../raw/triggers";
 
 export interface CreatureAbility {
   name: string;
-  target: RawTargetList;
+  target?: RawTargetList;
   /**
    * Is it a targetted spell ? (which requires specific triggers)
    */

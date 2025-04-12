@@ -1084,13 +1084,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
-      "It can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.",
       "",
       "Immune to all nonmagical attacks.",
-      "Has a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).",
+      "Has a 50% resistance to every damages.",
       "Deflection bonus (+3 AC).",
       "Attacks pass through armor (+4 THAC0).",
-      "Do not set off traps that are triggered by weight.",
+      "Do not set off traps that are triggered by weight. (not implemented)",
     ],
     immunities: [],
     effects: [

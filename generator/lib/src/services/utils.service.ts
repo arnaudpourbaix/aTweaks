@@ -2,6 +2,7 @@ import { GLOBAL_CONFIG } from "../../config/generate";
 import { ImmunityName } from "../../config/immunity-name";
 import { ImmunityConfig } from "../model/final/immunity";
 import { SpellIdentifier } from "../model/ids/spell";
+import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { Response } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
@@ -76,35 +77,13 @@ export class UtilsService {
     }, [] as Triggers.Trigger[]);
   }
 
-  //   getIdsValue(ids: string, value: string) {
-  //     const getId = (items: { id: string; value: string }[], value: string) => {
-  //       const item = items.find((i) => i.value === value);
-  //       if (!item) throw new Error(`Value ${value} not found in IDS`);
-  //       return item.id;
-  //     };
-  //     switch (ids) {
-  //       case "alignment":
-  //         return Number(getId(alignIds, value));
-  //       case "animation":
-  //         return Number(getId(animationIds, value));
-  //       case "general":
-  //         return getId(generalIds, value);
-  //       case "race":
-  //         return getId(raceIds, value);
-  //       case "class":
-  //         return getId(classIds, value);
-  //       case "gender":
-  //         return getId(genderIds, value);
-  //       case "spell":
-  //         return getId(spellIds, value);
-  //       case "stat":
-  //         return getId(statIds, value);
-  //       case "splstat":
-  //         return getId(SplStateIds, value);
-  //       default:
-  //         throw new Error(`unhandled IDS: ${ids}`);
-  //     }
-  //   }
+  getStringReference(value: StringReference): string {
+    if (typeof value === "string") {
+      return "";
+    } else {
+      return "";
+    }
+  }
 
   getSpellResourceFromIds(ids: string): string {
     const type = ids.substring(0, 1);

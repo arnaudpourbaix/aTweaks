@@ -13,4 +13,5 @@ export enum StringReferenceEnum {
   RearClawsAttack = 4009,
   Blink = 4010,
   StreamOfFrost = 4011,
+  Haste = 4012,
 }

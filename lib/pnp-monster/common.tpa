@@ -32,6 +32,6 @@ CREATE ITM "ja#i4"
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
-	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.,It can be harmed only by other incorporeal creatures, magic weapons or creatures that strike as magic weapons, and spells, spell-like abilities, or supernatural abilities.,,Immune to all nonmagical attacks.,Has a 50% chance to ignore any damage when hit by spells or magic weapons (except for magic damage or attacks made with ghost touch weapons).,Deflection bonus (+3 AC).,Attacks pass through armor (+4 THAC0).,Do not set off traps that are triggered by weight.~
+	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.,,Immune to all nonmagical attacks.,Has a 50% resistance to every damages.,Deflection bonus (+3 AC).,Attacks pass through armor (+4 THAC0).,Do not set off traps that are triggered by weight. (not implemented)~
 COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF incorporeal_immunity END

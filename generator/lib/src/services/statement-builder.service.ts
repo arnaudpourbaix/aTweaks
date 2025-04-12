@@ -1,11 +1,12 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { GRAB_DEFAULT_CONFIG } from "../../config/grab";
 import { TARGET_STATUS } from "../../config/target-config";
+import { CreatureAbility } from "../model/final/ability";
 import { Creature } from "../model/final/creature";
 import { RaceIdentifier } from "../model/ids/race";
 import { BuilderOptions } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { CustomCodeLocation, Statements } from "../model/raw/script";
+import { RawTargetList } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
 import { FactoryService } from "./factory.service";
 import { TargetService } from "./target.service";
@@ -628,67 +629,114 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     for (const ability of creature.abilities) {
-      const { triggers, targetTriggers } =
-        this.targetService.getTriggersFromTargetList(ability.target);
-      triggers.unshift(
-        ...ability.triggers,
-        this.factory.globalRoundTimerNotExpired()
+      if (ability.target)
+        this.creatureTargetAbility(
+          statements,
+          creature,
+          ability,
+          ability.target,
+          options
+        );
+      else this.creatureSelfAbility(statements, creature, ability, options);
+    }
+  }
+
+  private creatureTargetAbility(
+    statements: Statements,
+    creature: Creature,
+    ability: CreatureAbility,
+    target: RawTargetList,
+    options: BuilderOptions
+  ): void {
+    const { triggers, targetTriggers } =
+      this.targetService.getTriggersFromTargetList(target);
+    triggers.unshift(
+      ...ability.triggers,
+      this.factory.globalRoundTimerNotExpired()
+    );
+    if (ability.isTargetSpell)
+      targetTriggers.push(
+        ...this.factory.validSpellTarget({
+          isTargetPlayer: false,
+          seeInvisible: this.utils.hasImmunity(
+            creature.additionalData.immunities,
+            "seeInvisible"
+          ),
+        })
       );
-      if (ability.isTargetSpell)
-        targetTriggers.push(
-          ...this.factory.validSpellTarget({
-            isTargetPlayer: false,
-            seeInvisible: this.utils.hasImmunity(
-              creature.additionalData.immunities,
-              "seeInvisible"
-            ),
-          })
-        );
-      else
-        targetTriggers.push(
-          ...this.factory.validAttackTarget({
-            isTargetPlayer: false,
-            seeInvisible: this.utils.hasImmunity(
-              creature.additionalData.immunities,
-              "seeInvisible"
-            ),
-          })
-        );
-      const actions: Actions.Action[] = [
-        ...ability.actions,
-        this.factory.setGlobalRoundTimer(),
-      ];
-      if (ability.timer) {
-        triggers.unshift(
-          this.factory.globalTimerNotExpired(ability.timer.name)
-        );
-        actions.push(
-          this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
-        );
-      }
-      if (ability.range) {
-        targetTriggers.unshift({
-          name: "Range",
-          params: [GLOBAL_CONFIG.tokens.target, ability.range],
-        });
-      }
-      if (ability.disableInterrupt) {
-        actions.unshift(this.factory.disableInterrupt());
-        actions.push(this.factory.enableInterrupt());
-      }
-      const targets = this.targetService.getTargetFromAbility(
-        ability.target.name,
-        ability.target.limit
-      ) as string[];
-      this.factory.addStatementsFromTargetList({
-        statements,
-        comment: ability.name,
-        triggers: [...triggers, ...targetTriggers],
-        responses: this.factory.response(actions),
-        targets,
-        random: ability.target.random,
-        reverse: ability.target.reverse,
+    else
+      targetTriggers.push(
+        ...this.factory.validAttackTarget({
+          isTargetPlayer: false,
+          seeInvisible: this.utils.hasImmunity(
+            creature.additionalData.immunities,
+            "seeInvisible"
+          ),
+        })
+      );
+    const actions: Actions.Action[] = [
+      ...ability.actions,
+      this.factory.setGlobalRoundTimer(),
+    ];
+    if (ability.timer) {
+      triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
+      actions.push(
+        this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
+      );
+    }
+    if (ability.range) {
+      targetTriggers.unshift({
+        name: "Range",
+        params: [GLOBAL_CONFIG.tokens.target, ability.range],
       });
     }
+    if (ability.disableInterrupt) {
+      actions.unshift(this.factory.disableInterrupt());
+      actions.push(this.factory.enableInterrupt());
+    }
+    const targets = this.targetService.getTargetFromAbility(
+      target.name,
+      target.limit
+    ) as string[];
+    this.factory.addStatementsFromTargetList({
+      statements,
+      comment: ability.name,
+      triggers: [...triggers, ...targetTriggers],
+      responses: this.factory.response(actions),
+      targets,
+      random: target.random,
+      reverse: target.reverse,
+    });
+  }
+
+  private creatureSelfAbility(
+    statements: Statements,
+    creature: Creature,
+    ability: CreatureAbility,
+    options: BuilderOptions
+  ): void {
+    const triggers = [
+      ...ability.triggers,
+      this.factory.globalRoundTimerNotExpired(),
+    ];
+    const actions: Actions.Action[] = [
+      ...ability.actions,
+      this.factory.setGlobalRoundTimer(),
+    ];
+    if (ability.timer) {
+      triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
+      actions.push(
+        this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
+      );
+    }
+    if (ability.disableInterrupt) {
+      actions.unshift(this.factory.disableInterrupt());
+      actions.push(this.factory.enableInterrupt());
+    }
+    statements.push({
+      comment: ability.name,
+      triggers,
+      responses: this.factory.response(actions),
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { SpellIdentifier } from "../ids/spell";
+import { StringReference } from "../misc";
 import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import {
@@ -29,7 +30,7 @@ export interface Spell {
   /**
    * String reference, must be referenced in TRA files
    */
-  stringRef?: number | string;
+  stringRef?: StringReference;
 
   description?: string[];
 

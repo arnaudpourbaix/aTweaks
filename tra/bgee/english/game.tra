@@ -795,6 +795,7 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4009 = ~Rear claws attack~
 @4010 = ~Blink~
 @4011 = ~Stream of frost~
+@4012 = ~Haste~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

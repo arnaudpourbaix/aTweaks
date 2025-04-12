@@ -3,7 +3,7 @@ import figureSet from "figures";
 import { CONSTRUCT_BONUS_HIT_POINT } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { Creature, CreatureData } from "../model/final/creature";
-import { ItemAbilityLocationEnum } from "../model/final/enums";
+import { ItemAbilityLocationEnum, ItemFlagEnum } from "../model/final/enums";
 import { Item } from "../model/final/item";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { CreatureSize } from "../model/raw/enum";
@@ -67,6 +67,13 @@ export class CreatureService {
       if (enchant) {
         // console.log(creature.data.class, 'enchant:', enchant.enchant);
         item.enchantment = enchant.enchant;
+        if (
+          enchant.enchant &&
+          (!item.flags || !item.flags.includes(ItemFlagEnum.Magical))
+        ) {
+          item.flags = item.flags ?? [];
+          item.flags.push(ItemFlagEnum.Magical);
+        }
       }
     }
     if (
@@ -117,24 +124,27 @@ export class CreatureService {
         ).hp
       : 0;
     const constitution = p.data.constitution ?? p.parent?.constitution ?? 10;
-    const hpPerLevel = GLOBAL_CONFIG.constitutionAffectHitPoint
+    const conHPPerLevel = GLOBAL_CONFIG.constitutionAffectHitPoint
       ? constitutionTable[constitution] ?? 0
       : 0;
-    if (hpPerLevel > 0 || constructBonusHP > 0) {
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.arrowRight} bonus hit points is disabled`
-        )
-      );
+    const baseHP = level * 8;
+    const constitutionHP =
+      constructBonusHP === 0 ? Math.min(level, 9) * conHPPerLevel : 0;
+    const specialBonusHp = p.data.specialBonusHp ?? 0;
+    if (constitutionHP > 0 || constructBonusHP > 0) {
       bonusHitPoints = 0;
     }
+    let log = `${figureSet.arrowRight} Hit points: ${baseHP} (base)`;
+    if (constitutionHP > 0) log = `${log} + ${constitutionHP} (con)`;
+    if (specialBonusHp > 0) log = `${log} + ${specialBonusHp} (special)`;
+    if (constructBonusHP > 0) log = `${log} + ${constructBonusHP} (construct)`;
     p.data.hp =
-      level * 8 +
-      Math.min(level, 9) * hpPerLevel +
+      baseHP +
+      constitutionHP +
       bonusHitPoints +
-      (p.data.specialBonusHp ?? 0) +
+      specialBonusHp +
       constructBonusHP;
-    // console.log(constitution, hpPerLevel, Math.min(level, 9), '=>', creature.hp);
+    console.log(`${log} = ${p.data.hp}`);
   }
 
   private autogenerateThac0(data: CreatureData, parent?: CreatureData) {

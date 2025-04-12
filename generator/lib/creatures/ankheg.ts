@@ -90,7 +90,6 @@ export const ANKHEG: RawCreature = {
     grab: {
       file: "ja#3m1",
       weaponFile: "ja#m1w1",
-      // saveBonus: -4,
       duration: 18,
     },
   },
