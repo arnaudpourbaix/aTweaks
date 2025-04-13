@@ -1,4 +1,4 @@
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#14.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m14.baf~
 
 CREATE SPL "ja#1m14"
 	WRITE_LONG 0x64 0x72
@@ -28,7 +28,7 @@ CREATE SPL "ja#1m14"
 			probability1 = 75
 		END
 
-CREATE ITM "ja#m14w1"
+CREATE ITM "ja#1m14"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -44,7 +44,7 @@ CREATE ITM "ja#m14w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m14w1.itm~ ~override~
+COPY_EXISTING ~ja#1m14.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	DOGBLINK
@@ -55,7 +55,7 @@ BEGIN
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~P1-6~
-			ADD_CRE_ITEM ~ja#m14w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#1m14~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m14~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			LPF patchCreature
@@ -90,7 +90,9 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN PSPIDER END
-			LPF patchCreatureScript STR_VAR script=ja#14 removeScripts END
+			LPF patchCreatureScript STR_VAR script=ja#m14 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

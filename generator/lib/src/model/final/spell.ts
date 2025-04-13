@@ -25,7 +25,7 @@ export interface Spell {
   /**
    * Create a spell from another one
    */
-  copyFrom?: SpellIdentifier | string;
+  copyFrom?: string;
 
   /**
    * String reference, must be referenced in TRA files

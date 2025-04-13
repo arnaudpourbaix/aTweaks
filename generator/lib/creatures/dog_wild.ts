@@ -1,4 +1,11 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.WildDog;
+// Items
+const mainWeapon = file(1, id);
 
 export const DOG_WILD: RawCreature = {
   name: "Wild Dog",
@@ -32,7 +39,7 @@ export const DOG_WILD: RawCreature = {
   additionalData: { removeItems: ["P1-4"] },
   items: [
     {
-      file: "ja#m12w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,

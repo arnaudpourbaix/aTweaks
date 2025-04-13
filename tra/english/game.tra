@@ -797,6 +797,8 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4010 = ~Blink~
 @4011 = ~Stream of frost~
 @4012 = ~Haste~
+@4013 = ~Charge~
+@4014 = ~End charge~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

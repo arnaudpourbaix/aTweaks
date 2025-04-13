@@ -294,12 +294,13 @@ CREATE EFF "ja#1m21"
 	WRITE_SHORT 0x2c 100
 	WRITE_ASCII 0x30 ~ja#1m21~ #8
 
-CREATE ITM "ja#m21w1"
+CREATE ITM "ja#1m21"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
 	WRITE_LONG 0x60 2
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -308,7 +309,7 @@ CREATE ITM "ja#m21w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m21w1.itm~ ~override~
+COPY_EXISTING ~ja#1m21.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -345,7 +346,7 @@ COPY_EXISTING ~ja#m21w1.itm~ ~override~
 			savingthrow = 4
 		END
 
-COPY_EXISTING ~ja#m21w1.ITM~  ~override/ja#m21w2.ITM~
+COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#2m21.ITM~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 146
@@ -358,7 +359,7 @@ COPY_EXISTING ~ja#m21w1.ITM~  ~override/ja#m21w2.ITM~
 			resource = "ja#1m21"
 		END
 
-COPY_EXISTING ~ja#m21w1.ITM~  ~override/ja#m21w3.ITM~
+COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#3m21.ITM~
 	WRITE_SHORT 0x86 30
 
 ACTION_FOR_EACH ~file~ IN
@@ -373,9 +374,9 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~WOLFVA1~
 			REMOVE_CRE_ITEM ~BDWOLFVA~
-			ADD_CRE_ITEM ~ja#m21w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#m21w2~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
-			ADD_CRE_ITEM ~ja#m21w3~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
+			ADD_CRE_ITEM ~ja#1m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#2m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
+			ADD_CRE_ITEM ~ja#3m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
 			LPF clearProficiencies END
 			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m21r~ #0 ~innate~ (1)
@@ -413,5 +414,7 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN DW#GPSHM VAMPWOLF END
 			LPF patchCreatureScript STR_VAR script=ja#m21 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

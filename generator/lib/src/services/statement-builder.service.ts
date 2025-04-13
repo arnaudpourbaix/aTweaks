@@ -650,10 +650,7 @@ export class StatementService {
   ): void {
     const { triggers, targetTriggers } =
       this.targetService.getTriggersFromTargetList(target);
-    triggers.unshift(
-      ...ability.triggers,
-      this.factory.globalRoundTimerNotExpired()
-    );
+    triggers.unshift(...ability.triggers);
     if (ability.isTargetSpell)
       targetTriggers.push(
         ...this.factory.validSpellTarget({
@@ -674,15 +671,15 @@ export class StatementService {
           ),
         })
       );
-    const actions: Actions.Action[] = [
-      ...ability.actions,
-      this.factory.setGlobalRoundTimer(),
-    ];
+    const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
+    } else {
+      triggers.push(this.factory.globalRoundTimerNotExpired());
+      actions.push(this.factory.setGlobalRoundTimer());
     }
     if (ability.range) {
       targetTriggers.unshift({
@@ -715,19 +712,16 @@ export class StatementService {
     ability: CreatureAbility,
     options: BuilderOptions
   ): void {
-    const triggers = [
-      ...ability.triggers,
-      this.factory.globalRoundTimerNotExpired(),
-    ];
-    const actions: Actions.Action[] = [
-      ...ability.actions,
-      this.factory.setGlobalRoundTimer(),
-    ];
+    const triggers = [...ability.triggers];
+    const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
+    } else {
+      triggers.push(this.factory.globalRoundTimerNotExpired());
+      actions.push(this.factory.setGlobalRoundTimer());
     }
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());

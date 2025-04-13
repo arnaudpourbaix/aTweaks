@@ -7,6 +7,7 @@ import { ItemAbilityLocationEnum, ItemFlagEnum } from "../model/final/enums";
 import { Item } from "../model/final/item";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { CreatureSize } from "../model/raw/enum";
+import { convertMovement } from "./misc.func";
 
 export class CreatureService {
   static instance = new CreatureService();
@@ -199,26 +200,7 @@ export class CreatureService {
   }
 
   convertMovement(movement: number): number {
-    const result = Math.round(movement * 0.85);
-    const movements: { [key: number]: number } = {
-      6: 5,
-      9: 7,
-      12: 9,
-      14: 10,
-      15: 11,
-      18: 14,
-      24: 18,
-      36: 36,
-      48: 48,
-    };
-    const match = movements[movement];
-    if (result !== match)
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.warning} movement ${movement} => result:${result}, table:${match}`
-        )
-      );
-    return result;
+    return convertMovement(movement, false);
   }
 
   private autogenerateSavingThrows(data: CreatureData, parent?: CreatureData) {

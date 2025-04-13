@@ -1,9 +1,20 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.ClayGolem;
+// Script
+const script = bafFile(id);
+// Spells
+const haste = file(1, id);
+// Items
+const mainWeapon = file(1, id);
 
 export const GOLEM_CLAY: RawCreature = {
   name: "Clay Golem",
-  bafFile: "lib/pnp-monster/golem/ja#m24",
+  bafFile: `lib/pnp-monster/golem/${script}`,
   tpaFile: "lib/pnp-monster/golem/clay",
   tracking: true,
   combatWalk: true,
@@ -39,11 +50,10 @@ export const GOLEM_CLAY: RawCreature = {
     immunities: ["construct"],
     removeScripts: ["GOLCLY01", "BPFHT"],
     removeItems: ["GOLCLA", "RING95"],
-    // memorizedSpells: [{ file: "spin978", memorizedCount: 1 }],
   },
   items: [
     {
-      file: "ja#m24w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,
@@ -56,7 +66,7 @@ export const GOLEM_CLAY: RawCreature = {
   spells: [
     {
       name: "Haste",
-      file: "ja#1m24",
+      file: haste,
       memorizedCount: 1,
       type: "Melee",
       stringRef: StringReferenceEnum.Haste,
@@ -117,10 +127,10 @@ export const GOLEM_CLAY: RawCreature = {
   ],
   abilities: [
     {
-      name: "Golem Haste",
+      name: "Haste",
       triggers: [
         { name: "Delay", params: [6] },
-        { name: "HaveSpellRES", params: ["ja#1m24"] },
+        { name: "HaveSpellRES", params: [haste] },
         {
           name: "StateCheck",
           params: ["Myself", "STATE_HASTED"],
@@ -128,8 +138,8 @@ export const GOLEM_CLAY: RawCreature = {
         },
       ],
       actions: [
-        { name: "ReallyForceSpellRES", params: ["ja#1m24", "Myself"] },
-        { name: "RemoveSpellRES", params: ["ja#1m24"] },
+        { name: "ReallyForceSpellRES", params: [haste, "Myself"] },
+        { name: "RemoveSpellRES", params: [haste] },
       ],
     },
   ],

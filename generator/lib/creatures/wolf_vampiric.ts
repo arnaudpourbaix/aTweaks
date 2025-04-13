@@ -1,9 +1,22 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.VampiricWolf;
+// Script
+const script = bafFile(id);
+// Spells
+const grab = file(1, id);
+// Items
+const mainWeapon = file(1, id);
+const proneBiteWeapon = file(2, id);
+const autoHitWeapon = file(3, id);
 
 export const WOLF_VAMPIRIC: RawCreature = {
   name: "Vampiric Wolf",
   tpaFile: "lib/pnp-monster/wolf/vampiric",
-  bafFile: "lib/pnp-monster/wolf/ja#m21",
+  bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
   combatWalk: true,
   data: {
@@ -46,15 +59,15 @@ export const WOLF_VAMPIRIC: RawCreature = {
       { status: ["Grabbed"], slot: "SLOT_WEAPON2" },
     ],
     grab: {
-      file: "ja#1m21",
-      weaponFile: "ja#m21w2",
+      file: grab,
+      weaponFile: proneBiteWeapon,
       onlyGrabProneTarget: true,
       duration: 30,
     },
   },
   items: [
     {
-      file: "ja#m21w1",
+      file: mainWeapon,
       type: "Melee",
       equippedSlot: "WEAPON1",
       speed: 1,
@@ -95,14 +108,14 @@ export const WOLF_VAMPIRIC: RawCreature = {
       ],
     },
     {
-      file: "ja#m21w2",
+      file: proneBiteWeapon,
       equippedSlot: "WEAPON2",
-      copyFrom: "ja#m21w1",
+      copyFrom: mainWeapon,
     },
     {
-      file: "ja#m21w3",
+      file: autoHitWeapon,
       equippedSlot: "WEAPON3",
-      copyFrom: "ja#m21w1",
+      copyFrom: mainWeapon,
       bonusToHit: 30,
     },
   ],

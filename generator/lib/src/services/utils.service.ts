@@ -1,7 +1,5 @@
-import { GLOBAL_CONFIG } from "../../config/generate";
 import { ImmunityName } from "../../config/immunity-name";
 import { ImmunityConfig } from "../model/final/immunity";
-import { SpellIdentifier } from "../model/ids/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { Response } from "../model/raw/script";
@@ -78,19 +76,15 @@ export class UtilsService {
   }
 
   getStringReference(value: StringReference): string {
-    if (typeof value === "string") {
-      return `~${value}~`;
-    } else {
-      return `@${value}`;
-    }
+    if (typeof value === "string" && /^\d+$/.test(value)) return value;
+    else if (typeof value === "string") return `~${value}~`;
+    else return `@${value}`;
   }
 
   resolveStringRef(value: StringReference): string {
-    if (typeof value === "string") {
-      return `RESOLVE_STR_REF(~${value}~)`;
-    } else {
-      return `RESOLVE_STR_REF(@${value})`;
-    }
+    if (typeof value === "string" && /^\d+$/.test(value)) return value;
+    else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
+    else return `RESOLVE_STR_REF(@${value})`;
   }
 
   getSpellResourceFromIds(ids: string): string {
@@ -143,16 +137,5 @@ export class UtilsService {
     else if (file.toUpperCase().includes("SPPR"))
       return { type: "priest", level: +(file.at(4) as string) };
     return { type: "innate", level: 1 };
-  }
-
-  getSpellResource(file?: SpellIdentifier | string): string | undefined {
-    if (!file) return;
-    try {
-      // const ids = this.getIdsValue("spell", file) as string; //TODO:
-      const ids = "toto";
-      return this.getSpellResourceFromIds(ids);
-    } catch {
-      return file;
-    }
   }
 }

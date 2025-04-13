@@ -152,7 +152,6 @@ export class BafGeneratorService {
     param: GenericScriptParameterData
   ): string {
     const val = typeof value === "string" ? value : value.toString();
-
     if (param.isNumber) return val;
     else if (param.isObject) return this.getObjectParamValue(val, param);
     return `"${val}"`;

@@ -1,9 +1,28 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import {
+  basiliskGazeProjectile,
+  petrification2e,
+  petrification5e,
+} from "./basilisk_lesser";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.GreaterBasilisk;
+// Script
+const script = bafFile(id);
+// Spells
+const foulBreath = file(1, id);
+// Items
+const mainWeapon = file(1, id);
+const offhandWeapon = file(2, id);
+// Projectiles
+const breathProjectile = file(1, id);
 
 export const BASILISK_GREATER: RawCreature = {
   name: "Greater Basilisk",
-  bafFile: "lib/pnp-monster/basilisk/ja#m3",
+  bafFile: `lib/pnp-monster/basilisk/${script}`,
   tpaFile: "lib/pnp-monster/basilisk/greater",
   tracking: true,
   combatWalk: true,
@@ -34,8 +53,8 @@ export const BASILISK_GREATER: RawCreature = {
     removeScripts: ["GBASILSK"],
     removeItems: ["BASILG1", "BASILG2", "BASILG3"],
     memorizedSpells: [
-      { file: "ja#1m2", memorizedCount: 1 },
-      { file: "ja#2m2", memorizedCount: 1 },
+      { file: petrification2e, memorizedCount: 1 },
+      { file: petrification5e, memorizedCount: 1 },
     ],
   },
   abilities: [
@@ -57,13 +76,15 @@ export const BASILISK_GREATER: RawCreature = {
           },
         ],
       },
-      actions: [{ name: "ForceSpellRES", params: ["ja#1m2", "LastSeenBy"] }],
+      actions: [
+        { name: "ForceSpellRES", params: [petrification2e, "LastSeenBy"] },
+      ],
       range: 30,
     },
   ],
   items: [
     {
-      file: "ja#m3w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -90,7 +111,7 @@ export const BASILISK_GREATER: RawCreature = {
       ],
     },
     {
-      file: "ja#m3w2",
+      file: offhandWeapon,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 2,
@@ -102,15 +123,15 @@ export const BASILISK_GREATER: RawCreature = {
         {
           opcode: "CastSpell",
           type: "CastInstantlyAtCasterLevel",
-          resource: "ja#1m3",
+          resource: foulBreath,
         },
       ],
     },
   ],
   projectiles: [
     {
-      file: "ja#1m3",
-      copyFromFile: "ja#1m2",
+      file: breathProjectile,
+      copyFromFile: basiliskGazeProjectile,
       description: "Basilisk foul breath",
       triggerRadius: 85,
       areaOfEffect: 85,
@@ -121,7 +142,7 @@ export const BASILISK_GREATER: RawCreature = {
   spells: [
     {
       name: "Foul breath",
-      file: "ja#1m3",
+      file: foulBreath,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.FoulBreath,
       description: [
@@ -129,7 +150,7 @@ export const BASILISK_GREATER: RawCreature = {
       ],
       secondaryType: "OffensiveDamage",
       type: "Ranged",
-      projectile: "ja#1m3",
+      projectile: breathProjectile,
       range: 5,
       target: "AnyPointWithinRange",
       effects: [

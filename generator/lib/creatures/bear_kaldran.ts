@@ -1,9 +1,21 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { polarBearMainWeapon, polarBearOffhandWeapon } from "./bear_polar";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.PolarBearKaldran;
+// Script
+const script = bafFile(id);
+// Spells
+const improvedStreamOfFrost = file(1, id);
+// Projectile
+const improvedStreamOfFrostProjectile = file(1, id);
 
 export const BEAR_POLAR_KALDRAN: RawCreature = {
   name: "Polar Bear Kaldran",
-  bafFile: "lib/pnp-monster/bear/ja#m8",
+  bafFile: `lib/pnp-monster/bear/${script}`,
   tpaFile: "lib/pnp-monster/bear/kaldran",
   tracking: true,
   combatWalk: true,
@@ -36,8 +48,8 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
     removeItems: ["KALDW1", "B1-12"],
     removeScripts: ["kaldran", "dw1ranmo"],
     itemSlots: [
-      { file: "ja#m7w1", slot: "WEAPON1" },
-      { file: "ja#m7w2", slot: "SHIELD" },
+      { file: polarBearMainWeapon, slot: "WEAPON1" },
+      { file: polarBearOffhandWeapon, slot: "SHIELD" },
     ],
   },
   customCode: [
@@ -65,22 +77,12 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
   ],
   projectiles: [
     {
-      file: "ja#1m8",
+      file: improvedStreamOfFrostProjectile,
       copyFromFile: "CONECOLD",
       description: "Improved stream of frost",
       triggerRadius: 180,
       areaOfEffect: 180,
       areaProjectileFlags: ["AffectOnlyEnemies", "UseSecondaryProjectile"],
-      coneWidth: 0,
-    },
-    {
-      file: "ja#2m8",
-      copyFromFile: "FIREBALL",
-      description: "Improved stream of frost",
-      type: "AreaOfEffect",
-      triggerRadius: 180,
-      areaOfEffect: 180,
-      areaProjectileFlags: ["AffectOnlyEnemies"],
       coneWidth: 0,
     },
   ],
@@ -89,15 +91,17 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
       name: "Improved stream of frost",
       target: { name: "NearestEnemies", limit: 3 },
       range: 10,
-      triggers: [{ name: "HaveSpellRES", params: ["ja#1m8"] }],
+      triggers: [{ name: "HaveSpellRES", params: [improvedStreamOfFrost] }],
       timer: { name: "StreamOfFrost", value: 18 },
-      actions: [{ name: "ForceSpellRES", params: ["ja#1m8", "Myself"] }],
+      actions: [
+        { name: "ForceSpellRES", params: [improvedStreamOfFrost, "Myself"] },
+      ],
     },
   ],
   spells: [
     {
       name: "Improved stream of frost",
-      file: "ja#1m8",
+      file: improvedStreamOfFrost,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.ImprovedStreamOfFrost,
       description: [
@@ -106,7 +110,7 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
       target: "AnyPointWithinRange",
       secondaryType: "OffensiveDamage",
       type: "Ranged",
-      projectile: "ja#1m8",
+      projectile: improvedStreamOfFrost,
       range: 10,
       effects: [
         {

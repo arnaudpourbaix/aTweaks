@@ -1,4 +1,11 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.DireWolf;
+// Items
+const mainWeapon = file(1, id);
 
 export const WOLF_DIRE: RawCreature = {
   name: "Dire Wolf",
@@ -31,7 +38,7 @@ export const WOLF_DIRE: RawCreature = {
   additionalData: { removeItems: ["P1-8", "P2-8"] },
   items: [
     {
-      file: "ja#m19w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 2,

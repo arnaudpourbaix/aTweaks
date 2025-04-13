@@ -38,8 +38,8 @@ export class StateService {
     if (!params.length) return [];
     return params.split(",").map((p) => {
       const name = p.substring(p.indexOf(":") + 1, p.indexOf("*"));
-      const isNumber = p.includes("I:");
-      const isObject = p.includes("O:");
+      const isNumber = p.includes("I:") && p !== "I:Object*";
+      const isObject = p.includes("O:") || p === "I:Object*";
       return { raw: p, name, isNumber, isObject };
     });
   }

@@ -1,6 +1,6 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/golem/ja#m23.baf~
 
-CREATE ITM "ja#m23w1"
+CREATE ITM "ja#1m23"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -18,7 +18,7 @@ CREATE ITM "ja#m23w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m23w1.itm~ ~override~
+COPY_EXISTING ~ja#1m23.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	BPGOFL01
@@ -33,7 +33,7 @@ BEGIN
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~GOLFLE~
-			ADD_CRE_ITEM ~ja#m23w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#1m23~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clearProficiencies END
 			LPF patchCreature
@@ -75,5 +75,7 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
 			LPF patchCreatureScript STR_VAR script=ja#m23 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

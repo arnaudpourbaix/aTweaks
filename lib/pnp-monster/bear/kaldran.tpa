@@ -10,20 +10,6 @@ COPY_EXISTING "CONECOLD.pro" ~override/ja#1m8.pro~
 	WRITE_SHORT 0x206 180
 ADD_PROJECTILE ~override/ja#1m8.pro~ ~Improved stream of frost~
 
-COPY_EXISTING "FIREBALL.pro" ~override/ja#2m8.pro~
-	READ_SHORT 0x08 type
-	PATCH_IF (%type% = 1) BEGIN
-		INSERT_BYTES 0x100 0x100
-	END
-	PATCH_IF (%type% != 3) BEGIN
-		INSERT_BYTES 0x200 0x100
-	END
-	WRITE_SHORT 0x08 3
-	WRITE_LONG 0x200 64
-	WRITE_SHORT 0x204 180
-	WRITE_SHORT 0x206 180
-ADD_PROJECTILE ~override/ja#2m8.pro~ ~Improved stream of frost~
-
 CREATE SPL "ja#1m8"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -116,8 +102,8 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~KALDW1~
 			REMOVE_CRE_ITEM ~B1-12~
-			ADD_CRE_ITEM ~ja#m7w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#m7w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			ADD_CRE_ITEM ~ja#1m7~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#2m7~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m8~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			LPF patchCreature
@@ -155,5 +141,7 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN kaldran dw1ranmo END
 			LPF patchCreatureScript STR_VAR script=ja#m8 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

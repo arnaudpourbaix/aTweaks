@@ -14,5 +14,6 @@ export enum StringReferenceEnum {
   Blink = 4010,
   StreamOfFrost = 4011,
   Haste = 4012,
-  Slow = 4013,
+  Charge = 4013,
+  EndCharge = 4014,
 }

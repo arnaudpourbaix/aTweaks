@@ -1,4 +1,4 @@
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#20.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#m20.baf~
 
 COPY_EXISTING "CONECOLD.pro" ~override/ja#1m20.pro~
 	READ_SHORT 0x08 type
@@ -48,12 +48,13 @@ CREATE SPL "ja#1m20"
 			probability1 = 100
 		END
 
-CREATE ITM "ja#m20w1"
+CREATE ITM "ja#1m20"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
 	WRITE_LONG 0x60 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -65,7 +66,7 @@ CREATE ITM "ja#m20w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m20w1.itm~ ~override~
+COPY_EXISTING ~ja#1m20.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	P#WOLF01
@@ -80,7 +81,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~WOLFWI1~
 			REMOVE_CRE_ITEM ~WOLFWI2~
-			ADD_CRE_ITEM ~ja#m20w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#1m20~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m20~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			LPF patchCreature
@@ -117,7 +118,9 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN WNTRWOLF BDSUM00 END
-			LPF patchCreatureScript STR_VAR script=ja#20 removeScripts END
+			LPF patchCreatureScript STR_VAR script=ja#m20 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

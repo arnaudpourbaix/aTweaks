@@ -70,7 +70,6 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_PANIC)
@@ -87,7 +86,6 @@ IF
 THEN
 	RESPONSE #100
 		ForceSpellRES("SPWI112",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -95,7 +93,6 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_PANIC)
@@ -112,7 +109,6 @@ IF
 THEN
 	RESPONSE #100
 		ForceSpellRES("SPWI112",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -120,7 +116,6 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_PANIC)
@@ -137,7 +132,6 @@ IF
 THEN
 	RESPONSE #100
 		ForceSpellRES("SPWI112",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -145,7 +139,6 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.BARD],0,HELD)
 	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
 	!StateCheck([PC.0.0.BARD],STATE_PANIC)
@@ -161,7 +154,6 @@ IF
 THEN
 	RESPONSE #100
 		ForceSpellRES("SPWI112",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 

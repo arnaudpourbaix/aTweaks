@@ -351,7 +351,6 @@ export class MainService {
   private mapAlterSpell(spell: RawAlterSpell): Spell {
     return {
       ...spell,
-      copyFrom: this.utils.getSpellResource(spell.copyFrom),
       spellType: spell.spellType ? SpellTypeEnum[spell.spellType] : undefined,
       secondaryType: spell.secondaryType
         ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]

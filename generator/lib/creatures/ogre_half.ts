@@ -1,8 +1,17 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.HalfOgre;
+// Script
+const script = bafFile(id);
+// Items
+const mainWeapon = file(1, id);
 
 export const OGRE_HALF: RawCreature = {
   name: "Half Ogre",
-  bafFile: "lib/pnp-monster/ogre/ja#m29",
+  bafFile: `lib/pnp-monster/ogre/${script}`,
   tpaFile: "lib/pnp-monster/ogre/half",
   tracking: true,
   combatWalk: true,
@@ -29,9 +38,9 @@ export const OGRE_HALF: RawCreature = {
     gender: "MALE",
     size: "Large",
   },
-  additionalData: { 
-    proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    removeItems: ["P2-8"] 
+  additionalData: {
+    proficiencies: [{ type: "PROFICIENCYBASTARDSWORD", value: 2 }],
+    removeItems: ["P2-8"],
   },
   items: [
     {
@@ -43,21 +52,14 @@ export const OGRE_HALF: RawCreature = {
       category: "BastardSwords",
       proficiency: "PROFICIENCYBASTARDSWORD",
       animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
-      range: 2,
-      diceThrown: 2,
-      diceSize: 6,
+      range: 1,
+      diceThrown: 1,
+      diceSize: 10,
+      damageBonus: 2,
       damageType: "Slashing",
-      speed: 10,
+      speed: 7,
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]
+  files: ["", "", "", "", "", "", ""],
 };

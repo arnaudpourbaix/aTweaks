@@ -21,12 +21,11 @@ import { ProjectileTypeEnum } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
 import { CodeLine } from "../model/misc";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
+import { GrabConfig } from "../model/raw/grab";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
 import { GrabService } from "./grab.service";
-import { GrabConfig } from "../model/raw/grab";
-import { UtilsService } from "./utils.service";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
@@ -212,7 +211,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (spell.stringRef) {
         this.add(
           lines,
-          `SAY NAME1 ${this.utils.getStringReference(spell.stringRef)} SAY NAME2 ${this.utils.getStringReference(spell.stringRef)}`,
+          `SAY NAME1 ${this.utils.getStringReference(
+            spell.stringRef
+          )} SAY NAME2 ${this.utils.getStringReference(spell.stringRef)}`,
           1
         );
       }
@@ -293,7 +294,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (projectile.stringRef)
         this.add(
           lines,
-          `WRITE_LONG 0x30 ${this.utils.resolveStringRef(projectile.stringRef)})`,
+          `WRITE_LONG 0x30 ${this.utils.resolveStringRef(
+            projectile.stringRef
+          )})`,
           1
         );
       if (projectile.color) {
@@ -431,6 +434,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
         1
       );
       effect.parameter2 = "row";
+      this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab++);
     }
     let fn = "ADD_EFFECT";
     if (effect.global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
@@ -492,6 +496,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
       this.add(lines, `resource = "${effect.resource}"`, tab + 2);
     }
     this.add(lines, `END`, tab + 1);
+    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
+      this.add(lines, `END`, --tab);
+    }
   }
 
   private patchCreatures(lines: CodeLine[], creature: Creature) {
@@ -544,6 +551,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
     }
     this.handleAdjustments(lines, 3, creature);
     this.add(lines, "BUT_ONLY_IF_IT_CHANGES", 2);
+    this.add(lines, "END ELSE BEGIN", 1);
+    this.add(lines, "PRINT ~====> CRE %file% not found!~", 2);
     this.add(lines, "END", 1);
     this.add(lines, "END", 0);
   }

@@ -1,8 +1,19 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.DoomGuard;
+// Script
+const script = bafFile(id);
+// Items
+const mainWeapon = file(1, id);
+const armor = file(2, id);
+const helmet = file(3, id);
 
 export const DOOM_GUARD: RawCreature = {
   name: "Doom Guard",
-  bafFile: "lib/pnp-monster/doom_guard/ja#m16",
+  bafFile: `lib/pnp-monster/doom_guard/${script}`,
   tpaFile: "lib/pnp-monster/doom_guard/main",
   tracking: true,
   combatWalk: true,
@@ -39,7 +50,7 @@ export const DOOM_GUARD: RawCreature = {
   },
   items: [
     {
-      file: "ja#m16w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       enchantment: 1,
       type: "Melee",
@@ -82,7 +93,7 @@ export const DOOM_GUARD: RawCreature = {
       ],
     },
     {
-      file: "ja#m16a1",
+      file: armor,
       equippedSlot: "ARMOR",
       animation: "PlateMail",
       category: "ArmorSlot",
@@ -114,7 +125,7 @@ export const DOOM_GUARD: RawCreature = {
       ],
     },
     {
-      file: "ja#m16a2",
+      file: helmet,
       copyFrom: "construct",
       equippedSlot: "HELMET",
       animation: "HelmetFeatherSideburns",

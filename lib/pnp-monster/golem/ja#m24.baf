@@ -65,7 +65,7 @@ THEN
 		NoAction()
 END
 
-// Golem Haste
+// Haste
 IF
 	Delay(6)
 	HaveSpellRES("ja#1m24")

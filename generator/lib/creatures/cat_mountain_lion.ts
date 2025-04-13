@@ -1,5 +1,13 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.MountainLion;
+// Items
+const mainWeapon = file(1, id);
+const offhandWeapon = file(2, id);
 
 export const CAT_LION_MOUNTAIN: RawCreature = {
   name: "Mountain Lion",
@@ -37,7 +45,7 @@ export const CAT_LION_MOUNTAIN: RawCreature = {
   },
   items: [
     {
-      file: "ja#m11w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -72,7 +80,7 @@ export const CAT_LION_MOUNTAIN: RawCreature = {
       ],
     },
     {
-      file: "ja#m11w2",
+      file: offhandWeapon,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 1,

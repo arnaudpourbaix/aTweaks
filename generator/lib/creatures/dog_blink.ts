@@ -1,10 +1,21 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.BlinkDog;
+// Script
+const script = bafFile(id);
+// Spells
+const blink = file(1, id);
+// Items
+const mainWeapon = file(1, id);
 
 export const DOG_BLINK: RawCreature = {
   name: "Blink Dog",
   tpaFile: "lib/pnp-monster/dog/blink",
-  bafFile: "lib/pnp-monster/dog/ja#14",
+  bafFile: `lib/pnp-monster/dog/${script}`,
   tracking: true,
   combatWalk: true,
   data: {
@@ -35,7 +46,7 @@ export const DOG_BLINK: RawCreature = {
       name: "Blink",
       target: { name: "FarthestEnemies", random: true },
       actions: [
-        { name: "ForceSpellRES", params: ["ja#1m14", "LastSeenBy"] },
+        { name: "ForceSpellRES", params: [blink, "LastSeenBy"] },
         { name: "AttackOneRound", params: ["LastSeenBy"] },
       ],
       range: 30,
@@ -43,7 +54,7 @@ export const DOG_BLINK: RawCreature = {
   ],
   items: [
     {
-      file: "ja#m14w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -56,7 +67,7 @@ export const DOG_BLINK: RawCreature = {
   spells: [
     {
       name: "Blink",
-      file: "ja#1m14",
+      file: blink,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.Blink,
       type: "Melee",

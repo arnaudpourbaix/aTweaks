@@ -1,9 +1,23 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.Ankheg;
+// Script
+const script = bafFile(id);
+// Spells
+const digestiveEnzyme = file(1, id);
+const acidicEnzyme = file(2, id);
+const grab = file(3, id);
+// Items
+const mainWeapon = file(1, id);
+const rangedWeapon = file(2, id);
 
 export const ANKHEG: RawCreature = {
   name: "Ankheg",
-  bafFile: "lib/pnp-monster/ankheg/ja#m1",
+  bafFile: `lib/pnp-monster/ankheg/${script}`,
   tpaFile: "lib/pnp-monster/ankheg/main",
   tracking: true,
   combatWalk: true,
@@ -33,6 +47,14 @@ export const ANKHEG: RawCreature = {
     removeScripts: ["ANKHEG"],
     removeItems: ["ANKHEG1", "ANKHEG2"],
   },
+  attack: {
+    actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
+    grab: {
+      file: grab,
+      weaponFile: mainWeapon,
+      duration: 18,
+    },
+  },
   abilities: [
     {
       name: "Acidic Enzymes",
@@ -40,7 +62,7 @@ export const ANKHEG: RawCreature = {
       target: { name: "PCsPreferringWeak", random: true },
       triggers: [
         { name: "HPPercentLT", params: ["Myself", 50] },
-        { name: "HaveSpellRES", params: ["ja#2m1"] },
+        { name: "HaveSpellRES", params: [acidicEnzyme] },
       ],
       actions: [
         { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
@@ -51,7 +73,7 @@ export const ANKHEG: RawCreature = {
   ],
   items: [
     {
-      file: "ja#m1w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,
@@ -62,13 +84,13 @@ export const ANKHEG: RawCreature = {
       effects: [
         {
           opcode: "CastSpell",
-          resource: "ja#1m1",
+          resource: digestiveEnzyme,
           type: "CastInstantlyAtCasterLevel",
         },
       ],
     },
     {
-      file: "ja#m1w2",
+      file: rangedWeapon,
       equippedSlot: "WEAPON2",
       type: "Ranged",
       range: 30,
@@ -79,24 +101,16 @@ export const ANKHEG: RawCreature = {
         {
           opcode: "CastSpell",
           type: "CastInstantlyAtCasterLevel",
-          resource: "ja#2m1",
+          resource: acidicEnzyme,
         },
-        { opcode: "RemoveSpell", target: "Self", resource: "ja#2m1" },
+        { opcode: "RemoveSpell", target: "Self", resource: acidicEnzyme },
       ],
     },
   ],
-  attack: {
-    actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
-    grab: {
-      file: "ja#3m1",
-      weaponFile: "ja#m1w1",
-      duration: 18,
-    },
-  },
   spells: [
     {
       name: "Acidic digestive enzymes",
-      file: "ja#1m1",
+      file: digestiveEnzyme,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.AcidicDigestiveEnzymes,
       description: [
@@ -134,7 +148,7 @@ export const ANKHEG: RawCreature = {
         },
         {
           opcode: "ProtectionFromSpell",
-          resource: "ja#1m1",
+          resource: digestiveEnzyme,
           duration: 24,
           timing: "InstantLimited",
         },
@@ -142,7 +156,7 @@ export const ANKHEG: RawCreature = {
     },
     {
       name: "Stream of acidic enzymes",
-      file: "ja#2m1",
+      file: acidicEnzyme,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.StreamOfAcidicEnzymes,
       description: [

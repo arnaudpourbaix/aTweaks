@@ -1,10 +1,23 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.WinterWolf;
+// Script
+const script = bafFile(id);
+// Spells
+const streamOfFrost = file(1, id);
+// Projectile
+const streamOfFrostProjectile = file(1, id);
+// Items
+const mainWeapon = file(1, id);
 
 export const WOLF_WINTER: RawCreature = {
   name: "Winter Wolf",
   tpaFile: "lib/pnp-monster/wolf/winter",
-  bafFile: "lib/pnp-monster/wolf/ja#20",
+  bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
   combatWalk: true,
   data: {
@@ -38,7 +51,7 @@ export const WOLF_WINTER: RawCreature = {
   },
   projectiles: [
     {
-      file: "ja#1m20",
+      file: streamOfFrostProjectile,
       copyFromFile: "CONECOLD",
       description: "Stream of frost",
       triggerRadius: 180,
@@ -53,17 +66,17 @@ export const WOLF_WINTER: RawCreature = {
       target: { name: "NearestEnemies", limit: 3 },
       range: 10,
       triggers: [
-        { name: "HaveSpellRES", params: ["ja#1m20"] },
+        { name: "HaveSpellRES", params: [streamOfFrost] },
         { name: "RandomNum", params: [10, 1] },
       ],
       timer: { name: "StreamOfFrost", value: 60 },
-      actions: [{ name: "ForceSpellRES", params: ["ja#1m20", "Myself"] }],
+      actions: [{ name: "ForceSpellRES", params: [streamOfFrost, "Myself"] }],
     },
   ],
   spells: [
     {
       name: "Stream of frost",
-      file: "ja#1m20",
+      file: streamOfFrost,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.StreamOfFrost,
       description: [
@@ -72,7 +85,7 @@ export const WOLF_WINTER: RawCreature = {
       target: "AnyPointWithinRange",
       secondaryType: "OffensiveDamage",
       type: "Ranged",
-      projectile: "ja#1m20",
+      projectile: streamOfFrost,
       range: 10,
       effects: [
         {
@@ -98,7 +111,7 @@ export const WOLF_WINTER: RawCreature = {
   ],
   items: [
     {
-      file: "ja#m20w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 2,

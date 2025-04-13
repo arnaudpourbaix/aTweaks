@@ -13,15 +13,17 @@ CREATE SPL "ja#1m24"
 	WRITE_BYTE 0x7e 1
 	SAY NAME1 @4012 SAY NAME2 @4012
 	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#SLOW~ RET row col END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 221
-			target = 2
-			parameter1 = 9
-			parameter2 = row
-			duration = 18
-			probability1 = 100
-		END
+	PATCH_IF row != "-1" BEGIN
+		LPF ADD_EFFECT
+			INT_VAR
+				opcode = 221
+				target = 2
+				parameter1 = 9
+				parameter2 = row
+				duration = 18
+				probability1 = 100
+			END
+	END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 16
@@ -58,7 +60,7 @@ CREATE SPL "ja#1m24"
 		INT_VAR
 			opcode = 139
 			target = 2
-			parameter1 = RESOLVE_STR_REF(@14023)
+			parameter1 = 14023
 			timing = 1
 			probability1 = 100
 		END
@@ -82,7 +84,7 @@ CREATE SPL "ja#1m24"
 			resource = "EFF_M29"
 		END
 
-CREATE ITM "ja#m24w1"
+CREATE ITM "ja#1m24"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -100,7 +102,7 @@ CREATE ITM "ja#m24w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m24w1.itm~ ~override~
+COPY_EXISTING ~ja#1m24.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	AC#FPCLG
@@ -116,7 +118,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~GOLCLA~
 			REMOVE_CRE_ITEM ~RING95~
-			ADD_CRE_ITEM ~ja#m24w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#1m24~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			ADD_MEMORIZED_SPELL ~ja#1m24~ #0 ~innate~ (1)
 			LPF clearProficiencies END
@@ -158,5 +160,7 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN GOLCLY01 BPFHT END
 			LPF patchCreatureScript STR_VAR script=ja#m24 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

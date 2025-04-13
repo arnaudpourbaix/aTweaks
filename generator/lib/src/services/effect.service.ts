@@ -176,7 +176,9 @@ export class EffectService {
       case EffectTypeEnum.ProtectionFromSpell:
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
         if ((<StringRefEffect>effect).stringRef) {
-          result.parameter1 = `${this.utils.resolveStringRef((<StringRefEffect>effect).stringRef as StringReference)}`;
+          result.parameter1 = `${this.utils.resolveStringRef(
+            (<StringRefEffect>effect).stringRef as StringReference
+          )}`;
         }
         break;
       case EffectTypeEnum.LightingEffects:
@@ -386,7 +388,7 @@ export class EffectService {
         }`;
         result.parameter2 = `${
           (<RemoveSpellTypeProtectionsEffect>effect).type
-        }`; //TODO: will not work
+        }`;
         break;
       case EffectTypeEnum.CurrentHPbonus:
         result.parameter1 = `${(<CurrentHPbonusEffect>effect).value}`;

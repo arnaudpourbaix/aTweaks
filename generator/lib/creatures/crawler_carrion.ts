@@ -1,15 +1,24 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.CarrionCrawler;
+// Script
+const script = bafFile(id);
+// Items
+const mainWeapon = file(1, id);
 
 export const CARRION_CRAWLER: RawCreature = {
   name: "Carrion Crawler",
-  bafFile: "lib/pnp-monster/carrion/ja#m9",
+  bafFile: `lib/pnp-monster/carrion/${script}`,
   tpaFile: "lib/pnp-monster/carrion/carrion_crawler",
   tracking: true,
   combatWalk: true,
   attack: { targetStatusPriorities: ["Able", "Held", "NoCheck", "Sleep"] },
   items: [
     {
-      file: "ja#m9w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,

@@ -1,20 +1,29 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.Ogrillon;
+// Script
+const script = bafFile(id);
+// Items
+const mainWeapon = file(1, id);
 
 export const OGRE_OGRILLON: RawCreature = {
   name: "Ogrillon",
-  bafFile: "lib/pnp-monster/ogre/ja#m28",
+  bafFile: `lib/pnp-monster/ogre/ja#m${id}`,
   tpaFile: "lib/pnp-monster/ogre/ogrillon",
   tracking: true,
   combatWalk: true,
   data: {
     level1: 2,
     bonusHp: 4,
-    strength: 17,
-    dexterity: 10,
+    strength: 18,
+    dexterity: 9,
     constitution: 14,
     intelligence: 6,
-    wisdom: 9,
-    charisma: 10,
+    wisdom: 7,
+    charisma: 7,
     movement: 12,
     ac: 6,
     apr: 2,
@@ -29,12 +38,12 @@ export const OGRE_OGRILLON: RawCreature = {
     gender: "MALE",
     size: "Medium",
   },
-  additionalData: { 
-    removeItems: ["P2-8"] 
+  additionalData: {
+    removeItems: ["P2-8"],
   },
   items: [
     {
-      file: "ja#m29w1",
+      file: `ja#m${id}w1`,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -46,12 +55,17 @@ export const OGRE_OGRILLON: RawCreature = {
     },
   ],
   files: [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]
+    "BDKORDEO",
+    "OGREGR",
+    "OGREGR1",
+    "OGREGR2",
+    "OGREGR3",
+    "OGREGR4",
+    "OGREGR_A",
+    "OGREGR_B",
+    "OGREGR_C",
+    "OGREGR_D",
+    "OGRELESU",
+    "OGREMIRI",
+  ],
 };

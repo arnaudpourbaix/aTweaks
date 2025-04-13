@@ -1,6 +1,6 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/horror/ja#m15.baf~
 
-CREATE ITM "ja#m15w1"
+CREATE ITM "ja#1m15"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -21,7 +21,7 @@ CREATE ITM "ja#m15w1"
 	WRITE_SHORT 0xa0 40
 	WRITE_SHORT 0xa2 20
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m15w1.itm~ ~override~
+COPY_EXISTING ~ja#1m15.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 12
@@ -88,11 +88,11 @@ COPY_EXISTING ~ja#m15w1.itm~ ~override~
 			probability1 = 100
 		END
 
-CREATE ITM "ja#m15a1"
+CREATE ITM "ja#2m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 2
 	WRITE_ASCII 0x22 ~4A~ #2
-COPY_EXISTING ~ja#m15a1.itm~ ~override~
+COPY_EXISTING ~ja#2m15.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
 			opcode = 7
@@ -120,7 +120,7 @@ COPY_EXISTING ~ja#m15a1.itm~ ~override~
 			probability1 = 100
 		END
 
-COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
+COPY_EXISTING ~ja#i1.ITM~  ~override/ja#3m15.ITM~
 	WRITE_SHORT 0x1c 7
 	WRITE_ASCII 0x22 ~H5~ #2
 	LPF ADD_ITEM_EQEFFECT
@@ -151,11 +151,11 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#m15a2.ITM~
 			probability1 = 100
 		END
 
-CREATE ITM "ja#m15a3"
+CREATE ITM "ja#3m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
-COPY_EXISTING ~ja#m15a3.itm~ ~override~
+COPY_EXISTING ~ja#3m15.itm~ ~override~
 	LPF fireballSpell_immunity END
 	LPF lightningBoltSpell_immunity END
 	LPF flameArrowSpell_immunity END
@@ -180,10 +180,10 @@ BEGIN
 			REMOVE_CRE_ITEM ~FBLADE~
 			REMOVE_CRE_ITEM ~PLAT07~
 			REMOVE_CRE_ITEM ~HELM13~
-			ADD_CRE_ITEM ~ja#m15w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#m15a1~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
-			ADD_CRE_ITEM ~ja#m15a2~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			ADD_CRE_ITEM ~ja#m15a3~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
+			ADD_CRE_ITEM ~ja#1m15~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#2m15~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
+			ADD_CRE_ITEM ~ja#3m15~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_CRE_ITEM ~ja#3m15~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
@@ -217,7 +217,7 @@ BEGIN
 					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					animation=IDS_OF_SYMBOL (~animation~ ~FIGHTER_MALE_HUMAN~)
+					animation=IDS_OF_SYMBOL (~animate~ ~FIGHTER_MALE_HUMAN~)
 					metalColor=63
 					minorColor=63
 					majorColor=63
@@ -253,5 +253,7 @@ BEGIN
 				ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ EQUIP
 			END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

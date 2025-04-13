@@ -1,10 +1,20 @@
 import { GLOBAL_CONFIG } from "../config/generate";
-import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.StoneGolem;
+// Script
+const script = bafFile(id);
+// Spells
+const slow = "spwi312";
+// Items
+const mainWeapon = file(1, id);
 
 export const GOLEM_STONE: RawCreature = {
   name: "Stone Golem",
-  bafFile: "lib/pnp-monster/golem/ja#m25",
+  bafFile: `lib/pnp-monster/golem/${script}`,
   tpaFile: "lib/pnp-monster/golem/stone",
   tracking: true,
   combatWalk: true,
@@ -35,12 +45,13 @@ export const GOLEM_STONE: RawCreature = {
   },
   additionalData: {
     immunities: ["construct"],
-    removeScripts: [""],
-    removeItems: [""],
+    removeScripts: ["GOLSTO01", "DW1MELMO", "BDSUM00"],
+    removeItems: ["GOLSTO", "GOLSTONE"],
+    memorizedSpells: [{ file: slow, memorizedCount: 1 }],
   },
   items: [
     {
-      file: "ja#m25w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,
@@ -50,85 +61,22 @@ export const GOLEM_STONE: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  spells: [
-    {
-      name: "Slow",
-      file: "ja#1m25",
-      memorizedCount: 1,
-      type: "Melee",
-      stringRef: StringReferenceEnum.Slow,
-      effects: [
-        {
-          opcode: "RemoveSpellTypeProtections",
-          maximumLevel: 9,
-          type: "K1#SLOW",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "Slow",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "DisplayPortraitIcon",
-          icon: "Haste",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "LightingEffects",
-          effect: "AlterationAir",
-          lightingTarget: "SpellTarget",
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "CreatureRGBColorFade",
-          color: {
-            red: 60,
-            green: 60,
-            blue: 120,
-          },
-          fadeSpeed: 25,
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "DisplayString",
-          stringRef: "14023",
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "PlaySound",
-          timing: "InstantPermanentUntilDeath",
-          resource: "EFF_M28",
-        },
-        {
-          opcode: "PlaySound",
-          timing: "DelayPermanent",
-          duration: 18,
-          resource: "EFF_M29",
-        },
-      ],
-    },
-  ],
   abilities: [
     {
-      name: "Golem Slow",
-      target: { name: "NearestEnemies", limit: 3 },
+      name: "Slow",
+      target: { name: "NearestEnemies", limit: 5 },
       range: 10,
       triggers: [
-      {
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-        negation: true
-      },
-        { name: "HaveSpellRES", params: ["ja#1m25"] },
+        {
+          name: "StateCheck",
+          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+          negation: true,
+        },
+        { name: "HaveSpellRES", params: [slow] },
       ],
       timer: { name: "Slow", value: 12 },
-      actions: [
-        { name: "ReallyForceSpellRES", params: ["ja#1m25", "Myself"] },
-      ],
+      actions: [{ name: "ReallyForceSpellRES", params: [slow, "Myself"] }],
     },
   ],
-  files: ["","","","","","",""],
+  files: ["BDGOLSTO", "BDMENGO", "NTGOLSTO", "TOMEGOL3", "WISTOGOL"],
 };

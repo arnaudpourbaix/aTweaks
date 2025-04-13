@@ -1,8 +1,23 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.HelmedHorror;
+// Script
+const script = bafFile(id);
+// Spells
+const magicMissile = "SPWI112";
+const teleport = "SPWI402";
+// Items
+const mainWeapon = file(1, id);
+const armor = file(2, id);
+const helmet = file(3, id);
+const ring = file(3, id);
 
 export const HORROR_HELMED: RawCreature = {
   name: "Helmed Horror",
-  bafFile: "lib/pnp-monster/horror/ja#m15",
+  bafFile: `lib/pnp-monster/horror/${script}`,
   tpaFile: "lib/pnp-monster/horror/helmed",
   tracking: true,
   combatWalk: true,
@@ -57,10 +72,12 @@ export const HORROR_HELMED: RawCreature = {
       name: "Magic Missiles",
       target: { name: "PCSpellcasters", includeStatus: ["Able"], random: true },
       triggers: [
-        { name: "HaveSpellRES", params: ["SPWI112"] },
+        { name: "HaveSpellRES", params: [magicMissile] },
         { name: "Range", params: ["NearestEnemyOf", 10], negation: true },
       ],
-      actions: [{ name: "ForceSpellRES", params: ["SPWI112", "LastSeenBy"] }],
+      actions: [
+        { name: "ForceSpellRES", params: [magicMissile, "LastSeenBy"] },
+      ],
       timer: { name: "MagicMissiles", value: 18 },
     },
   ],
@@ -76,7 +93,7 @@ export const HORROR_HELMED: RawCreature = {
             triggers: [{ name: "Range", params: ["{Target}", 180] }],
           },
           triggers: [
-            { name: "HaveSpellRES", params: ["SPWI402"] },
+            { name: "HaveSpellRES", params: [teleport] },
             {
               name: "StateCheck",
               params: ["Myself", "STATE_BLIND"],
@@ -87,8 +104,8 @@ export const HORROR_HELMED: RawCreature = {
             {
               weight: 100,
               actions: [
-                { name: "ForceSpellRES", params: ["SPWI402", "{Target}"] },
-                { name: "RemoveSpellRES", params: ["SPWI402"] },
+                { name: "ForceSpellRES", params: [teleport, "{Target}"] },
+                { name: "RemoveSpellRES", params: [teleport] },
               ],
             },
           ],
@@ -98,7 +115,7 @@ export const HORROR_HELMED: RawCreature = {
   ],
   items: [
     {
-      file: "ja#m15w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       enchantment: 1,
       type: "Melee",
@@ -169,7 +186,7 @@ export const HORROR_HELMED: RawCreature = {
       ],
     },
     {
-      file: "ja#m15a1",
+      file: armor,
       equippedSlot: "ARMOR",
       animation: "PlateMail",
       category: "ArmorSlot",
@@ -201,7 +218,7 @@ export const HORROR_HELMED: RawCreature = {
       ],
     },
     {
-      file: "ja#m15a2",
+      file: helmet,
       copyFrom: "construct",
       equippedSlot: "HELMET",
       animation: "HelmetFeatherSideburns",
@@ -234,7 +251,7 @@ export const HORROR_HELMED: RawCreature = {
       ],
     },
     {
-      file: "ja#m15a3",
+      file: ring,
       immunities: [
         "fireballSpell",
         "lightningBoltSpell",
@@ -261,8 +278,8 @@ export const HORROR_HELMED: RawCreature = {
       },
       additionalData: {
         memorizedSpells: [
-          { file: "SPWI112", memorizedCount: 1 },
-          { file: "SPWI402", memorizedCount: 1 },
+          { file: magicMissile, memorizedCount: 1 },
+          { file: teleport, memorizedCount: 1 },
         ],
       },
     },

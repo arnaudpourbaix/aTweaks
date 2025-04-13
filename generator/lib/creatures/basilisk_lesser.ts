@@ -1,9 +1,30 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { RawSaveType } from "../src/model/raw/enum";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.LesserBasilisk;
+// Script
+const script = bafFile(id);
+// Spells
+export const petrification2e = file(1, id);
+export const petrification5e = file(2, id);
+const petrification5eTechnical = file(3, id);
+// Items
+const mainWeapon = file(1, id);
+// Projectiles
+export const basiliskGazeProjectile = file(1, id);
+
+const petrificationSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
+  saveTypes: ["PetrifyPolymorph"],
+  saveBonus: -4,
+};
 
 export const BASILISK_LESSER: RawCreature = {
   name: "Lesser Basilisk",
-  bafFile: "lib/pnp-monster/basilisk/ja#m2",
+  bafFile: `lib/pnp-monster/basilisk/${script}`,
   tpaFile: "lib/pnp-monster/basilisk/lesser",
   tracking: true,
   combatWalk: true,
@@ -43,11 +64,13 @@ export const BASILISK_LESSER: RawCreature = {
         triggers: [
           {
             name: "HaveSpellRES",
-            params: ["ja#1m2"],
+            params: [petrification2e],
           },
         ],
       },
-      actions: [{ name: "ForceSpellRES", params: ["ja#1m2", "LastSeenBy"] }],
+      actions: [
+        { name: "ForceSpellRES", params: [petrification2e, "LastSeenBy"] },
+      ],
       range: 30,
     },
     {
@@ -58,7 +81,7 @@ export const BASILISK_LESSER: RawCreature = {
         triggers: [
           {
             name: "HaveSpellRES",
-            params: ["ja#2m2"],
+            params: [petrification5e],
           },
           {
             name: "CheckStatGT",
@@ -72,13 +95,15 @@ export const BASILISK_LESSER: RawCreature = {
           },
         ],
       },
-      actions: [{ name: "ForceSpellRES", params: ["ja#2m2", "LastSeenBy"] }],
+      actions: [
+        { name: "ForceSpellRES", params: [petrification5e, "LastSeenBy"] },
+      ],
       range: 30,
     },
   ],
   items: [
     {
-      file: "ja#m2w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -90,7 +115,7 @@ export const BASILISK_LESSER: RawCreature = {
   ],
   projectiles: [
     {
-      file: "ja#1m2",
+      file: basiliskGazeProjectile,
       copyFromFile: "gaze",
       description: "Basilisk petrifying gaze",
       type: "AreaOfEffect",
@@ -105,7 +130,7 @@ export const BASILISK_LESSER: RawCreature = {
   spells: [
     {
       name: "Petrification (2e)",
-      file: "ja#1m2",
+      file: petrification2e,
       memorizedCount: 1,
       stringRef: StringReferenceEnum.PetrifyingGaze,
       description: [
@@ -113,45 +138,40 @@ export const BASILISK_LESSER: RawCreature = {
       ],
       secondaryType: "Disabling",
       type: "Ranged",
-      projectile: "ja#1m2",
+      projectile: basiliskGazeProjectile,
       range: 30,
       effects: [
         {
           opcode: "Petrification",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "DisplayString",
           stringRef: StringReferenceEnum.Petrified,
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "PlaySound",
           resource: "MISC_06B",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "PlayVisualEffect",
           playWhere: "OverTargetUnattached",
           resource: "SPFLESHS.VVC",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "CreatureRGBColorFade",
           color: { blue: 120, red: 120, green: 120 },
           fadeSpeed: 25,
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
       ],
     },
     {
       name: "Petrification (5e)",
-      file: "ja#2m2",
+      file: petrification5e,
       //memorizedCount: 1,
       stringRef: StringReferenceEnum.PetrifyingGaze,
       description: [
@@ -161,82 +181,73 @@ export const BASILISK_LESSER: RawCreature = {
       ],
       secondaryType: "Disabling",
       type: "Ranged",
-      projectile: "ja#1m2",
+      projectile: basiliskGazeProjectile,
       range: 30,
       effects: [
         {
           opcode: "DisplayString",
           stringRef: StringReferenceEnum.TurningToStone,
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "RestrainedEffects",
           duration: 12,
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "CastSpell",
           timing: "DelayLimited",
           duration: 12,
           type: "CastInstantlyAtCasterLevel",
-          resource: "ja#3m2",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          resource: petrification5eTechnical,
+          ...petrificationSave,
         },
         {
           opcode: "ProtectionFromSpell",
           timing: "DelayLimited",
           duration: 12,
-          resource: "ja#2m2",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          resource: petrification5e,
+          ...petrificationSave,
         },
       ],
     },
     {
       name: "Petrification (5e, technical)",
       stringRef: StringReferenceEnum.PetrifyingGaze,
-      file: "ja#3m2",
+      file: petrification5eTechnical,
       secondaryType: "Disabling",
       type: "Ranged",
       effects: [
         {
           opcode: "Petrification",
           timing: "InstantPermanent",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "DisplayString",
           stringRef: StringReferenceEnum.Petrified,
           timing: "InstantPermanent",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "PlaySound",
           resource: "MISC_06B",
           timing: "InstantPermanent",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "PlayVisualEffect",
           playWhere: "OverTargetUnattached",
           resource: "SPFLESHS.VVC",
           timing: "InstantPermanent",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
         {
           opcode: "CreatureRGBColorFade",
           color: { blue: 120, red: 120, green: 120 },
           fadeSpeed: 25,
           timing: "InstantPermanent",
-          saveTypes: ["PetrifyPolymorph"],
-          saveBonus: -4,
+          ...petrificationSave,
         },
       ],
     },

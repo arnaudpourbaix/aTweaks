@@ -1,8 +1,20 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.OgreMage;
+// Script
+const script = bafFile(id);
+// Spells
+const digestiveEnzyme = file(1, id);
+const acidicEnzyme = file(2, id);
+// Items
+const mainWeapon = file(1, id);
 
 export const OGRE_MAGE: RawCreature = {
   name: "Ogre Mage",
-  bafFile: "lib/pnp-monster/ogre/ja#m32",
+  bafFile: `lib/pnp-monster/ogre/${script}`,
   tpaFile: "lib/pnp-monster/ogre/mage",
   tracking: true,
   combatWalk: true,
@@ -29,9 +41,9 @@ export const OGRE_MAGE: RawCreature = {
     gender: "MALE",
     size: "Large",
   },
-  additionalData: { 
+  additionalData: {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    removeItems: ["P2-8"] 
+    removeItems: ["P2-8"],
   },
   items: [
     {
@@ -51,13 +63,5 @@ export const OGRE_MAGE: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]
+  files: ["", "", "", "", "", "", ""],
 };

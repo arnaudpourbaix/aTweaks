@@ -1,4 +1,11 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.WarDog;
+// Items
+const mainWeapon = file(1, id);
 
 export const DOG_WAR: RawCreature = {
   name: "War Dog",
@@ -31,7 +38,7 @@ export const DOG_WAR: RawCreature = {
   additionalData: { removeItems: ["P2-8"] },
   items: [
     {
-      file: "ja#m13w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 2,

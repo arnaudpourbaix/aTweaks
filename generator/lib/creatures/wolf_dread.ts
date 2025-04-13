@@ -1,9 +1,22 @@
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.DreadWolf;
+// Script
+const script = bafFile(id);
+// Spells
+const downState = file(1, id);
+// Items
+const mainWeapon = file(1, id);
+const aliveResistances = file(2, id);
+const downResistances = file(3, id);
 
 export const WOLF_DREAD: RawCreature = {
   name: "Dread Wolf",
   tpaFile: "lib/pnp-monster/wolf/dread",
-  bafFile: "lib/pnp-monster/wolf/ja#m22",
+  bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
   combatWalk: true,
   data: {
@@ -37,7 +50,7 @@ export const WOLF_DREAD: RawCreature = {
   },
   items: [
     {
-      file: "ja#m22w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -56,7 +69,7 @@ export const WOLF_DREAD: RawCreature = {
       ],
     },
     {
-      file: "ja#1m22",
+      file: aliveResistances,
       name: "Dread wolf resistances",
       equippedSlot: "LRING",
       description: [
@@ -80,7 +93,7 @@ export const WOLF_DREAD: RawCreature = {
           conditionTarget: "Myself",
           condition: "HPLT(Myself,Extra)",
           special: 6,
-          resource: "ja#1m22",
+          resource: downState,
           global: true,
         },
       ],
@@ -88,7 +101,7 @@ export const WOLF_DREAD: RawCreature = {
       icon: "IRING01",
     },
     {
-      file: "ja#2m22",
+      file: downResistances,
       name: "Dread wolf down resistances",
       description: [
         "A down dread wolf is immune to everything but fire and acid.",
@@ -115,13 +128,13 @@ export const WOLF_DREAD: RawCreature = {
   spells: [
     {
       name: "Dread wolf down state",
-      file: "ja#1m22",
+      file: downState,
       stringRef: "Dread wolf down state",
       type: "Melee",
       effects: [
         {
           opcode: "RemoveItem",
-          resource: "ja#1m22",
+          resource: aliveResistances,
           timing: "InstantPermanentUntilDeath",
           target: "Self",
         },
@@ -132,7 +145,7 @@ export const WOLF_DREAD: RawCreature = {
         },
         {
           opcode: "CreateItemInSlot",
-          resource: "ja#2m22",
+          resource: downResistances,
           slot: "SLOT_RING_LEFT",
           duration: 12,
           timing: "InstantLimited",
@@ -154,7 +167,7 @@ export const WOLF_DREAD: RawCreature = {
         },
         {
           opcode: "CreateItemInSlot",
-          resource: "ja#1m22",
+          resource: aliveResistances,
           slot: "SLOT_RING_LEFT",
           duration: 12,
           timing: "DelayPermanent",

@@ -1,9 +1,19 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.BrownBear;
+// Script
+const script = bafFile(id);
+// Items
+const mainWeapon = file(1, id);
+const offhandWeapon = file(2, id);
 
 export const BEAR_BROWN: RawCreature = {
   name: "Brown Bear",
-  bafFile: "lib/pnp-monster/bear/ja#m5",
+  bafFile: `lib/pnp-monster/bear/${script}`,
   tpaFile: "lib/pnp-monster/bear/brown",
   tracking: true,
   combatWalk: true,
@@ -35,7 +45,7 @@ export const BEAR_BROWN: RawCreature = {
   additionalData: { removeItems: ["B1-8"], removeScripts: ["CBEAR", "BEAR"] },
   items: [
     {
-      file: "ja#m5w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -61,7 +71,7 @@ export const BEAR_BROWN: RawCreature = {
       ],
     },
     {
-      file: "ja#m5w2",
+      file: offhandWeapon,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 1,

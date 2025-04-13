@@ -13,9 +13,11 @@ import { DOG_BLINK } from "./dog_blink";
 import { DOG_WAR } from "./dog_war";
 import { DOG_WILD } from "./dog_wild";
 import { DOOM_GUARD } from "./doom_guard";
+import { GOLEM_BONE } from "./golem_bone";
 import { GOLEM_CLAY } from "./golem_clay";
 import { GOLEM_FLESH } from "./golem_flesh";
 import { GOLEM_IRON } from "./golem_iron";
+import { GOLEM_JUGGERNAUT } from "./golem_juggernaut";
 import { GOLEM_STONE } from "./golem_stone";
 import { HORROR_HELMED } from "./horror_helmed";
 import { OGRE } from "./ogre";
@@ -30,34 +32,36 @@ import { WOLF_WINTER } from "./wolf_winter";
 import { WOLF_WORG } from "./wolf_worg";
 
 export const CREATURES: RawCreature[] = [
-  // ANKHEG,
-  // BASILISK_GREATER,
-  // BASILISK_LESSER,
-  // BEAR_BLACK,
-  // BEAR_BROWN,
-  // BEAR_CAVE,
-  // BEAR_CAVE,
-  // BEAR_POLAR_KALDRAN,
-  // CAT_LION,
-  // CAT_LION_MOUNTAIN,
-  // CARRION_CRAWLER,
-  // DOG_BLINK,
-  // DOG_WAR,
-  // DOG_WILD,
-  // DOOM_GUARD,
-  // HORROR_HELMED,
-  // WOLF_DIRE,
-  // WOLF_DREAD,
-  // WOLF_VAMPIRIC,
-  // WOLF_WINTER,
-  // WOLF_WORG,
-  // WOLF,
+  ANKHEG,
+  BASILISK_GREATER,
+  BASILISK_LESSER,
+  BEAR_BLACK,
+  BEAR_BROWN,
+  BEAR_CAVE,
+  BEAR_CAVE,
+  BEAR_POLAR_KALDRAN,
+  CAT_LION,
+  CAT_LION_MOUNTAIN,
+  CARRION_CRAWLER,
+  DOG_BLINK,
+  DOG_WAR,
+  DOG_WILD,
+  DOOM_GUARD,
+  HORROR_HELMED,
+  WOLF_DIRE,
+  WOLF_DREAD,
+  WOLF_VAMPIRIC,
+  WOLF_WINTER,
+  WOLF_WORG,
+  WOLF,
   GOLEM_FLESH,
   GOLEM_CLAY,
   GOLEM_STONE,
-  GOLEM_IRON,
+  // GOLEM_IRON, // None in BG1 (unfinished work)
+  GOLEM_BONE,
+  GOLEM_JUGGERNAUT,
   OGRE_OGRILLON,
   OGRE_HALF,
   OGRE,
-  OGRE_MAGE
+  OGRE_MAGE,
 ];

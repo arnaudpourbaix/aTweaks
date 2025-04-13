@@ -1,0 +1,127 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/golem/ja#m33.baf~
+
+CREATE SPL "ja#1m33"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	SAY NAME1 @4013 SAY NAME2 @4013
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 5
+			parameter2 = 1
+			duration = 6
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 8
+			parameter2 = 1
+			timing = 3
+			duration = 6
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 10
+			parameter2 = 1
+			timing = 3
+			duration = 12
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = RESOLVE_STR_REF(@4014)
+			timing = 4
+			duration = 24
+			probability1 = 100
+		END
+
+CREATE ITM "ja#1m33"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
+	WRITE_LONG 0x60 4
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x8a 2
+	WRITE_SHORT 0x8e 2
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#1m33.itm~ ~override~
+
+ACTION_FOR_EACH ~file~ IN
+	TOMEGOL4
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~IRONGOL~
+			ADD_CRE_ITEM ~ja#1m33~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_MEMORIZED_SPELL ~ja#1m33~ #0 ~innate~ (1)
+			LPF clearProficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=18
+					strength=22
+					dexterity=9
+					constitution=20
+					intelligence=3
+					wisdom=11
+					charisma=1
+					movement=3
+					hp=174
+					ac=2
+					resistFire=100
+					resistMagic=100
+					thac0=3
+					apr=2
+					xpv=11000
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=3
+					saveWand=5
+					savePolymorph=4
+					saveBreath=4
+					saveSpell=6
+					morale=16
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~GOLEM_STONE~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					animation=IDS_OF_SYMBOL (~animate~ ~GOLEM_CLAY~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN GOLSTO01 END
+			LPF patchCreatureScript STR_VAR script=ja#m33 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

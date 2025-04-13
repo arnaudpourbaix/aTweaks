@@ -1,0 +1,79 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/golem/ja#m25.baf~
+
+CREATE ITM "ja#1m25"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
+	WRITE_LONG 0x60 4
+	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x88 8
+	WRITE_BYTE 0x8a 3
+	WRITE_SHORT 0x8e 2
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#1m25.itm~ ~override~
+
+ACTION_FOR_EACH ~file~ IN
+	BDGOLSTO
+	BDMENGO
+	NTGOLSTO
+	TOMEGOL3
+	WISTOGOL
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~GOLSTO~
+			REMOVE_CRE_ITEM ~GOLSTONE~
+			ADD_CRE_ITEM ~ja#1m25~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_MEMORIZED_SPELL ~spwi312~ #2 ~wizard~ (1)
+			LPF clearProficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=14
+					strength=22
+					dexterity=9
+					constitution=20
+					intelligence=3
+					wisdom=11
+					charisma=1
+					movement=5
+					hp=142
+					ac=5
+					resistMagic=100
+					thac0=7
+					apr=1
+					xpv=8000
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=5
+					saveWand=7
+					savePolymorph=6
+					saveBreath=5
+					saveSpell=8
+					morale=20
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~GOLEM_STONE~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN GOLSTO01 DW1MELMO BDSUM00 END
+			LPF patchCreatureScript STR_VAR script=ja#m25 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

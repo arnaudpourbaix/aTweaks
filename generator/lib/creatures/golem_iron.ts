@@ -1,10 +1,20 @@
 import { GLOBAL_CONFIG } from "../config/generate";
-import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { bafFile, file } from "../src/services/misc.func";
+import { MonsterEnum } from "./monster-id";
+
+// Creature Id
+const id = MonsterEnum.IronGolem;
+// Script
+const script = bafFile(id);
+// Spells
+const cloudOfPoisonousGas = file(1, id);
+// Items
+const mainWeapon = file(1, id);
 
 export const GOLEM_IRON: RawCreature = {
   name: "Iron Golem",
-  bafFile: "lib/pnp-monster/golem/ja#m26",
+  bafFile: `lib/pnp-monster/golem/${script}`,
   tpaFile: "lib/pnp-monster/golem/iron",
   tracking: true,
   combatWalk: true,
@@ -32,7 +42,7 @@ export const GOLEM_IRON: RawCreature = {
     gender: "NIETHER",
     size: "Large",
     resistMagic: 100,
-    resistFire: 125
+    resistFire: 125,
   },
   additionalData: {
     immunities: ["construct"],
@@ -41,7 +51,7 @@ export const GOLEM_IRON: RawCreature = {
   },
   items: [
     {
-      file: "ja#m26w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 4,
@@ -51,85 +61,30 @@ export const GOLEM_IRON: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  spells: [
-    {
-      name: "Slow",
-      file: "ja#1m25",
-      memorizedCount: 1,
-      type: "Melee",
-      stringRef: StringReferenceEnum.Slow,
-      effects: [
-        {
-          opcode: "RemoveSpellTypeProtections",
-          maximumLevel: 9,
-          type: "K1#SLOW",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "Slow",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "DisplayPortraitIcon",
-          icon: "Haste",
-          timing: "InstantLimited",
-          duration: 18,
-        },
-        {
-          opcode: "LightingEffects",
-          effect: "AlterationAir",
-          lightingTarget: "SpellTarget",
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "CreatureRGBColorFade",
-          color: {
-            red: 60,
-            green: 60,
-            blue: 120,
-          },
-          fadeSpeed: 25,
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "DisplayString",
-          stringRef: "14023",
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "PlaySound",
-          timing: "InstantPermanentUntilDeath",
-          resource: "EFF_M28",
-        },
-        {
-          opcode: "PlaySound",
-          timing: "DelayPermanent",
-          duration: 18,
-          resource: "EFF_M29",
-        },
-      ],
-    },
-  ],
   abilities: [
     {
-      name: "Golem Slow",
+      // Once every 7 rounds, beginning either the first or second round of combat, the iron golem breathes out a cloud of poisonous gas.
+      // It does this automatically, with no regard to the effects it might have.
+      // The gas cloud fills a 10-foot cube directly in front of it, which dissipates by the following round, assuming there is somewhere for the gas to go.
+      name: "Cloud of poisonous gas",
       target: { name: "NearestEnemies", limit: 3 },
       range: 10,
       triggers: [
-      {
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-        negation: true
-      },
-        { name: "HaveSpellRES", params: ["ja#1m25"] },
+        {
+          name: "StateCheck",
+          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+          negation: true,
+        },
+        { name: "HaveSpellRES", params: [cloudOfPoisonousGas] },
       ],
       timer: { name: "Slow", value: 12 },
       actions: [
-        { name: "ReallyForceSpellRES", params: ["ja#1m25", "Myself"] },
+        {
+          name: "ReallyForceSpellRES",
+          params: [cloudOfPoisonousGas, "Myself"],
+        },
       ],
     },
   ],
-  files: ["","","","","","",""],
+  files: ["", "", "", "", "", "", ""],
 };
