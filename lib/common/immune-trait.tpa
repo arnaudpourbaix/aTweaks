@@ -755,6 +755,8 @@ BEGIN
 	LPF fear_immunity END
 	LPF confusion_immunity END
 	LPF illusion_immunity END
+	LPF hold_immunity END
+	LPF stun_immunity END
 END
 
 DEFINE_PATCH_FUNCTION hover_immunity
@@ -784,6 +786,11 @@ BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 	LPF entangle_immunity END
 	LPF web_immunity END
+END
+
+DEFINE_PATCH_FUNCTION normalWeapons_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter2=2 END
 END
 
 DEFINE_PATCH_FUNCTION backstab_immunity

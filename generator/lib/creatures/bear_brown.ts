@@ -83,7 +83,7 @@ export const BEAR_BROWN: RawCreature = {
     "BDBEARBN",
     "BDBEARBR",
     "BDGRIZHU",
-    "BDSHA06A", //TODO: Summon bear spirit
+    // "BDSHA06A", //TODO: Summon bear spirit
     "BEARBR",
     "BEARBRSU",
     "PLYBEAR1",

@@ -1,4 +1,4 @@
-CREATE ITM "ja#1m10"
+CREATE ITM "ja#1m34"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -8,15 +8,15 @@ CREATE ITM "ja#1m10"
 	WRITE_LONG 0x60 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x88 4
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x88 3
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#1m10.itm~ ~override~
+COPY_EXISTING ~ja#1m34.itm~ ~override~
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 139
@@ -32,7 +32,7 @@ COPY_EXISTING ~ja#1m10.itm~ ~override~
 			parameter2 = 16777216
 			probability1 = 10
 			dicenumber = 1
-			dicesize = 6
+			dicesize = 4
 		END
 	LPF ADD_EFFECT
 		INT_VAR
@@ -42,10 +42,10 @@ COPY_EXISTING ~ja#1m10.itm~ ~override~
 			parameter2 = 16777216
 			probability1 = 10
 			dicenumber = 1
-			dicesize = 6
+			dicesize = 4
 		END
 
-CREATE ITM "ja#2m10"
+CREATE ITM "ja#2m34"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -55,51 +55,50 @@ CREATE ITM "ja#2m10"
 	WRITE_LONG 0x60 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x88 10
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x88 8
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#2m10.itm~ ~override~
+COPY_EXISTING ~ja#2m34.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
-	BDHELP02
-	CATLIOSU
-	CATLIOWP
+	BDHELP04
+	CATJAG01
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~CATLIO~
-			ADD_CRE_ITEM ~ja#1m10~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#2m10~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			REMOVE_CRE_ITEM ~CATJAG~
+			ADD_CRE_ITEM ~ja#1m34~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#2m34~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=5
-					strength=17
+					level1=4
+					strength=14
 					dexterity=15
-					constitution=13
+					constitution=10
 					intelligence=4
-					wisdom=12
-					charisma=8
-					movement=10
-					hp=42
-					ac=5
-					thac0=15
+					wisdom=14
+					charisma=7
+					movement=13
+					hp=33
+					ac=6
+					thac0=17
 					apr=2
-					xpv=650
+					xpv=420
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=11
-					saveWand=13
-					savePolymorph=12
-					saveBreath=13
-					saveSpell=14
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
@@ -111,17 +110,17 @@ BEGIN
 					enforce=1
 					perfect2weapon=1
 			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CATLIOSU~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP04~) BEGIN 
 				LPF patchCreature
 					INT_VAR
-						hp=42
-						thac0=15
+						hp=33
+						thac0=17
 						xpv=0
-						saveDeath=11
-						saveWand=13
-						savePolymorph=12
-						saveBreath=13
-						saveSpell=14
+						saveDeath=13
+						saveWand=15
+						savePolymorph=14
+						saveBreath=16
+						saveSpell=16
 						summon=1
 				END
 			END

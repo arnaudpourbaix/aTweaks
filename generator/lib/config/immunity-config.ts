@@ -823,7 +823,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
     ],
     preventEffects: [EffectTypeEnum.Berserk],
-    immunities: ["charm", "fear", "confusion", "illusion"],
+    immunities: ["charm", "fear", "confusion", "illusion", "hold", "stun"],
   },
   {
     name: "hover",
@@ -850,6 +850,14 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "rr#r2mud", // Rock to mud spell (Dao)
     ],
     displaySpellIneffective: true,
+  },
+  {
+    name: "normalWeapons",
+    type: "immunity",
+    description: ["Immunity to normal weapons"],
+    effects: [
+      { opcode: "ProtectionFromWeapons", type: "NonMagical", enchantment: 0 },
+    ],
   },
   {
     name: "backstab",

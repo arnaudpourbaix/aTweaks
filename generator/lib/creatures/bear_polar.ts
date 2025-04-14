@@ -10,7 +10,6 @@ const script = bafFile(id);
 // Items
 export const polarBearMainWeapon = file(1, id);
 export const polarBearOffhandWeapon = file(2, id);
-
 export const BEAR_POLAR: RawCreature = {
   name: "Polar Bear",
   bafFile: `lib/pnp-monster/bear/${script}`,
@@ -84,6 +83,23 @@ export const BEAR_POLAR: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["BEARPO", "BEARPO1", "BEARPO2", "BEARPO3", "BEARPOSU", "NTBEARPO"],
-  adjustments: [{ files: ["BEARPOSU"], summon: true }],
+  files: [
+    "BEARPO",
+    "BEARPO1",
+    "BEARPO2",
+    "BEARPO3",
+    "BEARPOSU",
+    "NTBEARPO",
+    "BDGHBRSU", // Ghost Polar Bear
+    // "SPBEAR1", //TODO: Spirit Bear
+    // "SPBEAR2", //TODO: Spirit Bear
+    // "SPBEAR3", //TODO: Spirit Bear
+    // "SPBEAR4", //TODO: Spirit Bear
+    // "SPBEAR5", //TODO: Spirit Bear
+    "SPIRBEAR",
+  ],
+  adjustments: [
+    { files: ["BEARPOSU", "BDGHBRSU"], summon: true },
+    { files: ["BDGHBRSU"], data: { level1: 9 } },
+  ],
 };

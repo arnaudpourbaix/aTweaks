@@ -130,6 +130,20 @@ BEGIN
 						summon=1
 				END
 			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~) BEGIN 
+				LPF patchCreature
+					INT_VAR
+						level1=8
+						hp=80
+						thac0=13
+						xpv=900
+						saveDeath=10
+						saveWand=12
+						savePolymorph=11
+						saveBreath=12
+						saveSpell=13
+				END
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

@@ -114,7 +114,8 @@ export class UtilsService {
       else {
         const immunity = State.immunities.find(
           (im) => im.name === immunities[i]
-        ) as ImmunityConfig;
+        );
+        if (!immunity) throw new Error(`Immunity ${immunities[i]} not found !`);
         found = this.hasImmunity(immunity.immunities, name);
       }
     }

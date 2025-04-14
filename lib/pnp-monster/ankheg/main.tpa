@@ -584,17 +584,16 @@ COPY_EXISTING ~ja#2m1.itm~ ~override~
 		END
 
 ACTION_FOR_EACH ~file~ IN
+	BDNEO
 	ANKHEG
 	ANKHEGF
 	ANKHEGG
 	ANKHEGQ
-	ANKHEG01
-	bdankh01
-	bdankheg
-	bdankhsu
-	BDNEO
+	BDANKH01
+	BDANKHEG
+	BDANKHSU
 	BPANKHE1
-	wiankhe1
+	WIANKHE1
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -642,12 +641,12 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN ANKHEG END
-			DEFINE_ARRAY skipFiles BEGIN bdankhsu END
+			DEFINE_ARRAY skipFiles BEGIN BDANKHSU END
 			LPF patchCreatureScript STR_VAR script=ja#m1 skipFiles removeScripts END
 			DEFINE_ARRAY removeScripts BEGIN ANKHEG END
-			DEFINE_ARRAY files BEGIN bdankhsu END
+			DEFINE_ARRAY files BEGIN BDANKHSU END
 			LPF patchCreatureScript STR_VAR script=ja#m1su files removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankh01~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDANKH01~) BEGIN 
 				LPF patchCreature
 					INT_VAR
 						level1=10
@@ -661,7 +660,7 @@ BEGIN
 						saveSpell=11
 				END
 			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~bdankhsu~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDANKHSU~) BEGIN 
 				LPF patchCreature
 					INT_VAR
 						hp=64

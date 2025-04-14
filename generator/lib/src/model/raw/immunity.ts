@@ -6,10 +6,10 @@ import { RawEffect } from "./effect";
 import { RawItemSlot } from "./item";
 
 export interface RawImmunityConfig {
-  name: ImmunityName | string;
+  name: ImmunityName;
   type: "trait" | "immunity";
   description: string[];
-  immunities?: (ImmunityName | string)[];
+  immunities?: ImmunityName[];
   preventEffects?: EffectTypeEnum[];
   preventIcons?: PortraitIconEnum[];
   displayIcons?: PortraitIconEnum[];

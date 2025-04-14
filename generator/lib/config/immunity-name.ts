@@ -34,6 +34,7 @@ export type ImmunityName =
   | "magicMissile"
   | "mindSpells"
   | "necromancyEffects"
+  | "normalWeapons"
   | "petrification"
   | "physical"
   | "polymorph"

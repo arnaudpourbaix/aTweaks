@@ -192,7 +192,7 @@ export const ANKHEG: RawCreature = {
     "WIANKHE1",
   ],
   adjustments: [
-    { files: ["bdankh01"], data: { level1: 10, xpv: 1400 } },
-    { files: ["bdankhsu"], summon: true },
+    { files: ["BDANKH01"], data: { level1: 10, xpv: 1400 } },
+    { files: ["BDANKHSU"], summon: true },
   ],
 };

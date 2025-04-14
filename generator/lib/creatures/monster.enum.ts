@@ -32,4 +32,9 @@ export enum MonsterEnum {
   BerserkerOgre = 31,
   OgreMage = 32,
   JuggernautGolem = 33,
+  Jaguar = 34,
+  Tiger = 35,
+  Leopard = 36,
+  Hellcat = 37,
+  DisplacerBeast = 38,
 }

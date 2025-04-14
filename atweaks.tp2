@@ -200,11 +200,11 @@ BEGIN ~Extraction~ DESIGNATED 9999
             READ_BYTE 0x272 race
             READ_BYTE 0x273 class
             READ_LONG 0x28 animation
-            READ_LONG 0x08 name ELSE 0
-            PATCH_IF class = 105 OR animation = 0x7201 BEGIN
-            // PATCH_IF animation = 0x7101 BEGIN
-                PATCH_PRINT ~"%SOURCE_RES%",~
-                // PATCH_PRINT ~"%SOURCE_RES%" (%name%),~
+            READ_STRREF 0x08 name
+            // PATCH_IF class = 175 OR animation = 0x7F0B BEGIN
+            PATCH_IF animation = 0x7F0A BEGIN
+                //PATCH_PRINT ~"%SOURCE_RES%",~
+                PATCH_PRINT ~"%SOURCE_RES%", // %name%~
             END
         END
     BUT_ONLY
@@ -222,8 +222,12 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/cave.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/polar.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/kaldran.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/carrion_crawler.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/jaguar.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/leopard.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/lion.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/mountain_lion.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/hellcat.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/displacer.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/wild.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/war.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/blink.tpa"
@@ -294,8 +298,12 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/jaguar.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/leopard.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/lion.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/mountain_lion.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/hellcat.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/displacer.tpa"
 
 // // Dogs
 // BEGIN @5060 DESIGNATED 5060

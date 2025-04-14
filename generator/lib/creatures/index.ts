@@ -6,8 +6,11 @@ import { BEAR_BLACK } from "./bear_black";
 import { BEAR_BROWN } from "./bear_brown";
 import { BEAR_CAVE } from "./bear_cave";
 import { BEAR_POLAR_KALDRAN } from "./bear_kaldran";
+import { CAT_LEOPARD } from "./cat_leopard";
 import { CAT_LION } from "./cat_lion";
 import { CAT_LION_MOUNTAIN } from "./cat_mountain_lion";
+import { CAT_JAGUAR } from "./cat_jaguar";
+import { CAT_TIGER } from "./cat_tiger";
 import { CARRION_CRAWLER } from "./crawler_carrion";
 import { DOG_BLINK } from "./dog_blink";
 import { DOG_WAR } from "./dog_war";
@@ -30,6 +33,8 @@ import { WOLF_DREAD } from "./wolf_dread";
 import { WOLF_VAMPIRIC } from "./wolf_vampiric";
 import { WOLF_WINTER } from "./wolf_winter";
 import { WOLF_WORG } from "./wolf_worg";
+import { HELLCAT } from "./cat_hell";
+import { DISPLACER_BEAST } from "./displacer_beast";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -40,8 +45,13 @@ export const CREATURES: RawCreature[] = [
   BEAR_CAVE,
   BEAR_CAVE,
   BEAR_POLAR_KALDRAN,
+  CAT_JAGUAR,
+  CAT_LEOPARD,
   CAT_LION,
   CAT_LION_MOUNTAIN,
+  // CAT_TIGER,
+  HELLCAT,
+  DISPLACER_BEAST,
   CARRION_CRAWLER,
   DOG_BLINK,
   DOG_WAR,
