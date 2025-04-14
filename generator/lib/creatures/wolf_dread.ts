@@ -1,6 +1,6 @@
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster-id";
+import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
 const id = MonsterEnum.DreadWolf;

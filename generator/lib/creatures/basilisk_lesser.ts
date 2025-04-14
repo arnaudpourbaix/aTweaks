@@ -2,7 +2,7 @@ import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawSaveType } from "../src/model/raw/enum";
 import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster-id";
+import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
 const id = MonsterEnum.LesserBasilisk;

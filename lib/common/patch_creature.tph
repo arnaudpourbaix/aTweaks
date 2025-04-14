@@ -267,7 +267,7 @@ BEGIN
     WRITE_BYTE 0x273 class // set new class value
   END
   PATCH_IF gender != 999 BEGIN
-    WRITE_BYTE 0x275 gender // set new class value
+    WRITE_BYTE 0x275 gender // set new gender value
   END
   PATCH_IF alignment != 99 BEGIN
     WRITE_BYTE 0x27b alignment // set new alignment value

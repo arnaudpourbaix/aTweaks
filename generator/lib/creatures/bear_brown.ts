@@ -1,8 +1,7 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster-id";
-
+import { MonsterEnum } from "./monster.enum";
 // Creature Id
 const id = MonsterEnum.BrownBear;
 // Script
@@ -10,7 +9,6 @@ const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
-
 export const BEAR_BROWN: RawCreature = {
   name: "Brown Bear",
   bafFile: `lib/pnp-monster/bear/${script}`,
@@ -81,6 +79,14 @@ export const BEAR_BROWN: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["BDBEARBN", "BDGRIZHU", "BEARBR", "BEARBRSU", "PLYBEAR1"],
+  files: [
+    "BDBEARBN",
+    "BDBEARBR",
+    "BDGRIZHU",
+    "BDSHA06A", //TODO: Summon bear spirit
+    "BEARBR",
+    "BEARBRSU",
+    "PLYBEAR1",
+  ],
   adjustments: [{ files: ["BEARBRSU"], summon: true }],
 };

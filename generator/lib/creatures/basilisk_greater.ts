@@ -6,8 +6,7 @@ import {
   petrification2e,
   petrification5e,
 } from "./basilisk_lesser";
-import { MonsterEnum } from "./monster-id";
-
+import { MonsterEnum } from "./monster.enum";
 // Creature Id
 const id = MonsterEnum.GreaterBasilisk;
 // Script
@@ -19,7 +18,6 @@ const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
 // Projectiles
 const breathProjectile = file(1, id);
-
 export const BASILISK_GREATER: RawCreature = {
   name: "Greater Basilisk",
   bafFile: `lib/pnp-monster/basilisk/${script}`,

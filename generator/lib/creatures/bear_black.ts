@@ -1,8 +1,7 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster-id";
-
+import { MonsterEnum } from "./monster.enum";
 // Creature Id
 const id = MonsterEnum.BlackBear;
 // Script
@@ -10,7 +9,6 @@ const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
-
 export const BEAR_BLACK: RawCreature = {
   name: "Black Bear",
   bafFile: `lib/pnp-monster/bear/${script}`,

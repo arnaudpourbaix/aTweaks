@@ -1,8 +1,7 @@
 import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster-id";
-
+import { MonsterEnum } from "./monster.enum";
 // Creature Id
 const id = MonsterEnum.Ankheg;
 // Script
@@ -14,7 +13,6 @@ const grab = file(3, id);
 // Items
 const mainWeapon = file(1, id);
 const rangedWeapon = file(2, id);
-
 export const ANKHEG: RawCreature = {
   name: "Ankheg",
   bafFile: `lib/pnp-monster/ankheg/${script}`,
@@ -182,17 +180,16 @@ export const ANKHEG: RawCreature = {
     },
   ],
   files: [
+    "BDNEO",
     "ANKHEG",
     "ANKHEGF",
     "ANKHEGG",
     "ANKHEGQ",
-    "ANKHEG01",
-    "bdankh01",
-    "bdankheg",
-    "bdankhsu",
-    "BDNEO",
+    "BDANKH01",
+    "BDANKHEG",
+    "BDANKHSU",
     "BPANKHE1",
-    "wiankhe1",
+    "WIANKHE1",
   ],
   adjustments: [
     { files: ["bdankh01"], data: { level1: 10, xpv: 1400 } },
