@@ -13,6 +13,7 @@ import { CustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
+import { EffectTypeEnum } from "./effect.type";
 import { Item } from "./item";
 import { Projectile } from "./projectile";
 import { Spell } from "./spell";
@@ -181,6 +182,7 @@ export interface CreatureAdditionalData {
   removeKnownSpells: boolean;
   removeMemorizedSpells: boolean;
   memorizedSpells: RawMemorizedSpell[];
+  deleteEffectOpcodes: EffectTypeEnum[];
 }
 
 export const CREATURE_DATA_KEYS: (keyof CreatureData)[] = [

@@ -68,6 +68,7 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						hp=9
+						thac0=20
 						xpv=0
 						saveDeath=14
 						saveWand=16
@@ -81,6 +82,7 @@ BEGIN
 				LPF patchCreature
 					INT_VAR
 						hp=9
+						thac0=20
 						saveDeath=14
 						saveWand=16
 						savePolymorph=15

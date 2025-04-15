@@ -102,7 +102,7 @@ BEGIN
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
 					race=IDS_OF_SYMBOL (~race~ ~CAT~)
 					class=IDS_OF_SYMBOL (~class~ ~CAT~)
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)

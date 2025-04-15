@@ -1,5 +1,11 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum InvisibilityTypeEnum {
+  Normal = 0,
+  Improved = 1,
+  Weak = 2,
+}
+
 export enum BonusHPHealFlagEnum {
   RaiseDead = 0,
   RemoveAllEffects = 1,

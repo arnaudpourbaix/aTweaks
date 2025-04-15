@@ -18,14 +18,15 @@ export class CreatureService {
     creature: Creature;
     parent?: CreatureData;
   }) {
-    if (p.autoGenerate.hitPoints)
+    if (p.autoGenerate.hitPoints && p.data.hp === undefined)
       this.autogenerateHitPoints({
         data: p.data,
         creature: p.creature,
         parent: p.parent,
       });
-    if (p.autoGenerate.thac0) this.autogenerateThac0(p.data, p.parent);
-    if (p.autoGenerate.savingThrows)
+    if (p.autoGenerate.thac0 && p.data.thac0 === undefined)
+      this.autogenerateThac0(p.data, p.parent);
+    if (p.autoGenerate.savingThrows && p.data.saveBreath === undefined)
       this.autogenerateSavingThrows(p.data, p.parent);
   }
 

@@ -25,6 +25,7 @@ import {
   EffectTimingEnum,
   EffectVisualEffectLocationEnum,
   getCastSpellOnConditionValue,
+  InvisibilityTypeEnum,
   KillTargetDeathTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
@@ -53,6 +54,7 @@ import {
   HasteEffect,
   IconEffect,
   IdsEffect,
+  InvisibilityEffect,
   KillTargetEffect,
   LevelDrainEffect,
   LightingEffectsEffect,
@@ -405,6 +407,11 @@ export class EffectService {
         result.parameter1 = (<RemoveOpcodeEffect>effect).param;
         result.parameter2 = `${
           EffectTypeEnum[(<RemoveOpcodeEffect>effect).opcodeToRemove]
+        }`;
+        break;
+      case EffectTypeEnum.Invisibility:
+        result.parameter2 = `${
+          InvisibilityTypeEnum[(<InvisibilityEffect>effect).type]
         }`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:

@@ -34,7 +34,7 @@ export const CAT_LION_MOUNTAIN: RawCreature = {
     morale: 9,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "ANIMAL",
     race: "CAT",
     class: "CAT",
     gender: "NIETHER",

@@ -34,7 +34,7 @@ export const HELLCAT: RawCreature = {
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "MONSTER",
-    race: "CAT",
+    race: "DEMONIC",
     class: "CAT",
     gender: "NIETHER",
     size: "Large",
@@ -42,7 +42,7 @@ export const HELLCAT: RawCreature = {
   },
   additionalData: {
     removeItems: ["BDHELCAT", "RINGDEMN", "IPSION"],
-    immunities: ["mindSpells"],
+    deleteEffectOpcodes: ["Blur", "ProtectionFromBackstab"],
   },
   items: [
     {
@@ -93,7 +93,14 @@ export const HELLCAT: RawCreature = {
     },
     {
       file: ring,
-      immunities: ["mindSpells", "normalWeapons"],
+      immunities: ["mindSpells", "normalWeapons", "extraplanar"],
+      effects: [
+        {
+          opcode: "Invisibility",
+          type: "Improved",
+          global: true,
+        },
+      ],
       equippedSlot: "RRING",
       category: "Rings",
       icon: "IRING01",

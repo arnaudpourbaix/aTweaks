@@ -33,7 +33,7 @@ export const BEAR_BLACK: RawCreature = {
     morale: 9,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "ANIMAL",
     race: "BEAR",
     class: "BEAR_BLACK",
     gender: "NIETHER",

@@ -514,6 +514,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.addItemSlots(lines, 3, creature.additionalData);
     this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
     this.add(lines, `LPF clearProficiencies END`, 3);
+    for (const opcode of creature.additionalData.deleteEffectOpcodes) {
+      this.add(
+        lines,
+        `LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=${opcode} END`,
+        3
+      );
+    }
     this.addProficiencies(lines, 3, creature.additionalData);
     if (creature.attack.grab) {
       this.add(

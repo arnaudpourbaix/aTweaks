@@ -30,6 +30,7 @@ import {
   RawEffectTeleportType,
   RawEffectTiming,
   RawEffectVisualEffectLocation,
+  RawInvisibilityType,
   RawKillTargetDeathType,
   RawLightingEffect,
   RawLightingEffectTarget,
@@ -366,6 +367,11 @@ export type RemoveOpcodeEffect = RawBaseEffect & {
   param: string;
 };
 
+export type InvisibilityEffect = RawBaseEffect & {
+  opcode: "Invisibility";
+  type: RawInvisibilityType;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -420,6 +426,7 @@ export type RawEffect =
   | HasteEffect
   | IconEffect
   | IdsEffect
+  | InvisibilityEffect
   | KillTargetEffect
   | LevelDrainEffect
   | LightingEffectsEffect

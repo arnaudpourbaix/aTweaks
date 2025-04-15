@@ -42,6 +42,7 @@ export enum EffectTypeEnum {
   ImmunityToTurnUndead = 297,
   Infravision = 63,
   IntelligenceBonus = 19,
+  Invisibility = 20,
   InvisibilityDetection = 193,
   KillTarget = 13,
   LevelDrain = 216,

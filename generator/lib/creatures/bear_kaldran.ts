@@ -38,7 +38,7 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
     morale: 15,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "ANIMAL",
     race: "BEAR",
     class: "BEAR_POLAR",
     gender: "NIETHER",

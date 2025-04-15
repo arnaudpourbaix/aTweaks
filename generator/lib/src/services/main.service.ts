@@ -134,13 +134,6 @@ export class MainService {
     for (const a of creature.adjustments) {
       this.transformAttackPerRound(a.data);
     }
-    if (rawCreature.autoGenerate?.hitPoints === undefined)
-      creature.autoGenerate.hitPoints = creature.data.hp === undefined;
-    if (rawCreature.autoGenerate?.savingThrows === undefined)
-      creature.autoGenerate.savingThrows =
-        creature.data.saveBreath === undefined;
-    if (rawCreature.autoGenerate?.thac0 === undefined)
-      creature.autoGenerate.thac0 = creature.data.thac0 === undefined;
     this.immunityService.handleImmunities(creature);
     return creature;
   }
@@ -211,6 +204,9 @@ export class MainService {
       ),
       scriptLocation: p.additionalData.scriptLocation,
       proficiencies: p.additionalData.proficiencies ?? [],
+      deleteEffectOpcodes: p.additionalData.deleteEffectOpcodes
+        ? p.additionalData.deleteEffectOpcodes.map((o) => EffectTypeEnum[o])
+        : [],
     };
     return result;
   }

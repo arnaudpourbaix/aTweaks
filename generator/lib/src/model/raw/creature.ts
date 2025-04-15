@@ -8,6 +8,7 @@ import { RaceIdentifier } from "../ids/race";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
 import { RawCreatureAttack } from "./attack";
+import { RawEffectOpcode } from "./effect.type";
 import { CreatureSize, RawProficiencyType } from "./enum";
 import { RawItem, RawItemSlot } from "./item";
 import { RawProjectile } from "./projectile";
@@ -186,6 +187,7 @@ export interface RawCreatureAdditionalData {
   removeKnownSpells?: boolean;
   removeMemorizedSpells?: boolean;
   memorizedSpells?: RawMemorizedSpell[];
+  deleteEffectOpcodes?: RawEffectOpcode[];
 }
 
 export type RawScriptLocation =

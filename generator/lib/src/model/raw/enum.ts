@@ -1,5 +1,7 @@
 export type RawBonusHPHealFlag = "RaiseDead" | "RemoveAllEffects";
 
+export type RawInvisibilityType = "Normal" | "Improved" | "Weak";
+
 export type ItemSlot =
   | "HELMET"
   | "ARMOR"

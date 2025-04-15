@@ -42,6 +42,7 @@ export type RawEffectOpcode =
   | "ImmunityToTurnUndead"
   | "Infravision"
   | "IntelligenceBonus"
+  | "Invisibility"
   | "InvisibilityDetection"
   | "KillTarget"
   | "LevelDrain"
