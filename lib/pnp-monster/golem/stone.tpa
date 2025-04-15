@@ -35,7 +35,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~GOLSTO~
 			REMOVE_CRE_ITEM ~GOLSTONE~
 			ADD_CRE_ITEM ~ja#1m25~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			ADD_MEMORIZED_SPELL ~spwi312~ #2 ~wizard~ (1)
 			LPF clearProficiencies END
 			LPF patchCreature

@@ -24,6 +24,8 @@ export class ImmunityService {
       const immunity = State.immunities.find(
         (i) => i.name === name
       ) as ImmunityConfig;
+      //TODO: when an immunity has an itemSlot defined and is not helmet, we need to check if it contains immunity to critical hits (current or children).
+      // if it does, we need to make sure that a helmet is equipped (don't forget adjustments). If no helmet is equipped, add ja#i5 (invisible helmet)
       if (!immunity) throw new Error(`Immunity ${name} not configured !`);
       if (immunity.itemSlot) {
         const overwrittingItem = creature.items.find(

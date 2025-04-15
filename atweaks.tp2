@@ -201,8 +201,8 @@ BEGIN ~Extraction~ DESIGNATED 9999
             READ_BYTE 0x273 class
             READ_LONG 0x28 animation
             READ_STRREF 0x08 name
-            // PATCH_IF class = 175 OR animation = 0x7F0B BEGIN
-            PATCH_IF animation = 0x7F0A BEGIN
+            PATCH_IF class = 110 OR animation = 0x7401 BEGIN
+            //PATCH_IF animation = 0x7F0A BEGIN
                 //PATCH_PRINT ~"%SOURCE_RES%",~
                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
             END
@@ -231,6 +231,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/wild.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/war.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/blink.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/spectral_hound.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/helmed.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/wolf.tpa"

@@ -868,6 +868,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "criticalHit",
     type: "immunity",
+    itemSlot: { file: "ja#i5", slot: "HELMET" },
     description: ["Immunity to critical hits"],
   },
   {
@@ -879,7 +880,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "construct",
     type: "trait",
-    itemSlot: { file: "ja#i1", slot: "HELMET" },
+    itemSlot: { file: "ja#i1", slot: "LRING" },
     description: [
       "Construct trait.",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
@@ -976,7 +977,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "skeletal",
     type: "trait",
-    itemSlot: { file: "ja#i2", slot: "LRING" },
+    itemSlot: { file: "ja#i2", slot: "RRING" },
     description: [
       "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
     ],
@@ -1088,18 +1089,19 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   },
   {
     name: "incorporeal",
-    itemSlot: { file: "ja#i4", slot: "LRING" },
+    itemSlot: { file: "ja#i4", slot: "RRING" },
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
       "",
+      "Immune to backstab and critical hits",
       "Immune to all nonmagical attacks.",
       "Has a 50% resistance to every damages.",
       "Deflection bonus (+3 AC).",
       "Attacks pass through armor (+4 THAC0).",
       "Do not set off traps that are triggered by weight. (not implemented)",
     ],
-    immunities: [],
+    immunities: ["backstab", "criticalHit"],
     effects: [
       {
         opcode: "ProtectionFromWeapons",

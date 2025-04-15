@@ -13,7 +13,7 @@ const teleport = "SPWI402";
 const mainWeapon = file(1, id);
 const armor = file(2, id);
 const helmet = file(3, id);
-const ring = file(3, id);
+const amulet = file(4, id);
 
 export const HORROR_HELMED: RawCreature = {
   name: "Helmed Horror",
@@ -219,7 +219,6 @@ export const HORROR_HELMED: RawCreature = {
     },
     {
       file: helmet,
-      copyFrom: "construct",
       equippedSlot: "HELMET",
       animation: "HelmetFeatherSideburns",
       category: "Headgear",
@@ -251,15 +250,15 @@ export const HORROR_HELMED: RawCreature = {
       ],
     },
     {
-      file: ring,
+      file: amulet,
       immunities: [
         "fireballSpell",
         "lightningBoltSpell",
         "flameArrowSpell",
         "magicMissile",
       ],
-      equippedSlot: "RRING",
-      category: "Rings",
+      equippedSlot: "AMULET",
+      category: "Amulets",
       icon: "IRING01",
     },
   ],

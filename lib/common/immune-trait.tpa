@@ -1047,4 +1047,6 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=50 parameter2=1 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=50 parameter2=1 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=50 END
+	LPF backstab_immunity END
+	LPF criticalHit_immunity END
 END

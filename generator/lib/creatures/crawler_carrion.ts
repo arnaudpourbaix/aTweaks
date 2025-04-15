@@ -8,7 +8,6 @@ const id = MonsterEnum.CarrionCrawler;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
-
 export const CARRION_CRAWLER: RawCreature = {
   name: "Carrion Crawler",
   bafFile: `lib/pnp-monster/carrion/${script}`,

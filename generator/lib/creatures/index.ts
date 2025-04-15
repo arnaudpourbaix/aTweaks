@@ -35,6 +35,7 @@ import { WOLF_WINTER } from "./wolf_winter";
 import { WOLF_WORG } from "./wolf_worg";
 import { HELLCAT } from "./cat_hell";
 import { DISPLACER_BEAST } from "./displacer_beast";
+import { SPECTRAL_HOUND } from "./dog_spectral_hound";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -56,6 +57,7 @@ export const CREATURES: RawCreature[] = [
   DOG_BLINK,
   DOG_WAR,
   DOG_WILD,
+  SPECTRAL_HOUND,
   DOOM_GUARD,
   HORROR_HELMED,
   WOLF_DIRE,

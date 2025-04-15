@@ -6,7 +6,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.WildDog;
 // Items
 const mainWeapon = file(1, id);
-
 export const DOG_WILD: RawCreature = {
   name: "Wild Dog",
   tpaFile: "lib/pnp-monster/dog/wild",
@@ -51,12 +50,13 @@ export const DOG_WILD: RawCreature = {
   ],
   files: [
     "BDBDOG",
-    "BDEADOG",
+    "BDDEADOG",
     "DOGWI",
     "DOGWISU",
     "BDCRUDOG",
     "BDDOG",
-    "dw#rndwi",
+    "DW#RNDWI",
+    "BDDOGW01", // Little Wanderer
   ],
   adjustments: [
     { files: ["DOGWISU"], summon: true },

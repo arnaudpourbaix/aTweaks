@@ -6,7 +6,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.WarDog;
 // Items
 const mainWeapon = file(1, id);
-
 export const DOG_WAR: RawCreature = {
   name: "War Dog",
   tpaFile: "lib/pnp-monster/dog/war",
@@ -53,9 +52,9 @@ export const DOG_WAR: RawCreature = {
     "BDPRISD2",
     "DOGWA",
     "DOGWASU",
-    "DOGWASU",
-    "dw#rndwa",
+    "DW#RNDWA",
     "UBNIMDOG",
+    "NTPOOCH", // Pooch
   ],
   adjustments: [{ files: ["DOGWASU"], summon: true }],
 };
