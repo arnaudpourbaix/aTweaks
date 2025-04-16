@@ -2,6 +2,7 @@ export type RawEffectOpcode =
   | "AcidResistanceModifier"
   | "AllSavingThrowsBonus"
   | "ArmorClassBonus"
+  | "AttackDamageBonus"
   | "Berserk"
   | "Blindness"
   | "Blur"

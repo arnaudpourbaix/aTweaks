@@ -2,6 +2,7 @@ export enum EffectTypeEnum {
   AcidResistanceModifier = 27,
   AllSavingThrowsBonus = 325,
   ArmorClassBonus = 0,
+  AttackDamageBonus = 73,
   Berserk = 3,
   Blindness = 74,
   Blur = 65,

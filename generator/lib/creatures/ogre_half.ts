@@ -32,34 +32,80 @@ export const OGRE_HALF: RawCreature = {
     morale: 12,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE_HALFOGRE",
-    gender: "MALE",
     size: "Large",
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYBASTARDSWORD", value: 2 }],
-    removeItems: ["P2-8"],
+    effects: [
+      {
+        opcode: "AttackDamageBonus",
+        type: "Increment",
+        value: 2,
+        global: true,
+      },
+    ],
+    removeItems: [],
+    removeScripts: ["HALFOGRE", "BDFIG00"],
   },
-  items: [
+  // items: [
+  //   {
+  //     file: mainWeapon,
+  //     equippedSlot: "WEAPON1",
+  //     type: "Melee",
+  //     flags: ["TwoHanded"],
+  //     animation: "BastardSword",
+  //     category: "BastardSwords",
+  //     proficiency: "PROFICIENCYBASTARDSWORD",
+  //     animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
+  //     range: 2,
+  //     diceThrown: 1,
+  //     diceSize: 10,
+  //     damageBonus: 2,
+  //     damageType: "Slashing",
+  //     speed: 7,
+  //     abilityFlags: ["AddStrengthBonus"],
+  //   },
+  // ],
+  attack: {
+    // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters,
+    // and teaming up against skilled fighters.
+    //
+    // use potions!
+    // use kit abilities
+  },
+  files: [
+    "OGREBJOR",
+    "OGREHA",
+    "OGREHA1",
+    "OGREHA2",
+    "OGREHA3",
+    "OGREHA4",
+    "OGREHA5",
+    "OGREHA_A",
+    "OGREHA_B",
+    "OGREHA_C",
+    "OGREHA_D",
+    "OGREHA_E",
+    "BDOGRE04", // Half-Ogre Veteran
+    "ARGHAI", // Arghain
+    "L#CHIEN", // Eglarh
+    "TAZOK", // Tazok
+    "TAZOK2", // Tazok
+    "X#CHOP", // Chop The Lady Ogre
+    "X#CRU11", // Cru The Lady Ogre
+  ],
+  notEnforceFiles: ["L#CHIEN"],
+  adjustments: [
     {
-      file: "ja#m29w1",
-      equippedSlot: "WEAPON1",
-      type: "Melee",
-      flags: ["TwoHanded"],
-      animation: "BastardSword",
-      category: "BastardSwords",
-      proficiency: "PROFICIENCYBASTARDSWORD",
-      animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
-      range: 1,
-      diceThrown: 1,
-      diceSize: 10,
-      damageBonus: 2,
-      damageType: "Slashing",
-      speed: 7,
-      abilityFlags: ["AddStrengthBonus"],
+      files: ["BDOGRE04"],
+      data: { level1: 5, xpv: 520, strength: 18, exceptionalStrength: 100 },
+    },
+    {
+      files: ["L#CHIEN"],
+      data: { level1: 8 },
     },
   ],
-  files: ["", "", "", "", "", "", ""],
 };

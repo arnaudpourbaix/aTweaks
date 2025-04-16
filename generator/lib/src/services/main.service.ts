@@ -208,6 +208,7 @@ export class MainService {
       deleteEffectOpcodes: p.additionalData.deleteEffectOpcodes
         ? p.additionalData.deleteEffectOpcodes.map((o) => EffectTypeEnum[o])
         : [],
+      effects: this.effectService.getEffects(p.additionalData.effects ?? []),
     };
     return result;
   }

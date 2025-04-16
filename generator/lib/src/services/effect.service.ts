@@ -162,6 +162,7 @@ export class EffectService {
           EffectStatisticModifierEnum[(<StatisticModifierEffect>effect).type]
         }`;
         break;
+      case EffectTypeEnum.AttackDamageBonus:
       case EffectTypeEnum.MovementRateBonus:
       case EffectTypeEnum.MovementRateBonus2:
       case EffectTypeEnum.Thac0Bonus:

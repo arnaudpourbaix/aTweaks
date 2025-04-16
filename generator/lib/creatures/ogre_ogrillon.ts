@@ -19,6 +19,7 @@ export const OGRE_OGRILLON: RawCreature = {
     level1: 2,
     bonusHp: 4,
     strength: 18,
+    exceptionalStrength: 50,
     dexterity: 9,
     constitution: 14,
     intelligence: 6,
@@ -32,15 +33,14 @@ export const OGRE_OGRILLON: RawCreature = {
     morale: 10,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE_OGRILLON",
-    gender: "MALE",
     size: "Medium",
   },
   additionalData: {
-    removeItems: ["P1-8", "SW1H01"],
-    removeScripts: ["ORGRILLON", "DW1MELGE"],
+    removeItems: ["B1-8", "SW1H01"],
+    removeScripts: ["ORGRILLON", "DW1MELGE", "BDSUM00"],
   },
   items: [
     {
@@ -57,8 +57,8 @@ export const OGRE_OGRILLON: RawCreature = {
   ],
   files: [
     "BDKORDEO",
-    "GNARL", // 5hd
-    "HAIRTO", // 5hd
+    "GNARL",
+    "HAIRTO",
     "OGREGR",
     "OGREGR1",
     "OGREGR2",
@@ -68,9 +68,16 @@ export const OGRE_OGRILLON: RawCreature = {
     "OGREGR_B",
     "OGREGR_C",
     "OGREGR_D",
-    "OGRELESU", // summon, 3hd
+    "OGRELESU",
     "OGREMIRI",
     "SEWERF1",
     "UBSNOGOL",
+  ],
+  adjustments: [
+    { files: ["OGRELESU"], summon: true, data: { level1: 3 } },
+    {
+      files: ["GNARL", "HAIRTO"],
+      data: { level1: 5, exceptionalStrength: 95, constitution: 15, xpv: 420 },
+    },
   ],
 };

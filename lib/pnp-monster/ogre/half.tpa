@@ -1,46 +1,42 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ogre/ja#m29.baf~
 
-CREATE ITM "ja#m29w1"
-	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x38
-	WRITE_SHORT 0x68 1
-	WRITE_SHORT 0x72 1
-	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x18 2
-	WRITE_SHORT 0x1c 69
-	WRITE_ASCII 0x22 ~S0~ #2
-	WRITE_BYTE 0x31 89
-	WRITE_SHORT 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_BYTE 0x88 10
-	WRITE_BYTE 0x8a 1
-	WRITE_SHORT 0x8e 3
-	WRITE_SHORT 0x9e 40
-	WRITE_SHORT 0xa0 40
-	WRITE_SHORT 0xa2 20
-	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m29w1.itm~ ~override~
-
 ACTION_FOR_EACH ~file~ IN
-	
-	
-	
-	
-	
-	
-	
+	OGREBJOR
+	OGREHA
+	OGREHA1
+	OGREHA2
+	OGREHA3
+	OGREHA4
+	OGREHA5
+	OGREHA_A
+	OGREHA_B
+	OGREHA_C
+	OGREHA_D
+	OGREHA_E
+	BDOGRE04
+	ARGHAI
+	L#CHIEN
+	TAZOK
+	TAZOK2
+	X#CHOP
+	X#CRU11
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~P2-8~
-			ADD_CRE_ITEM ~ja#m29w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYBASTARDSWORD~ 2
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
+	LPF ADD_CRE_EFFECT
+		INT_VAR
+			opcode = 73
+			target = 1
+			parameter1 = 2
+			timing = 2
+			probability1 = 100
+		END
+		DEFINE_ARRAY notEnforceFiles BEGIN L#CHIEN END
 			LPF patchCreature
 				INT_VAR
 					level1=2
@@ -65,16 +61,50 @@ BEGIN
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
 					race=IDS_OF_SYMBOL (~race~ ~OGRE~)
 					class=IDS_OF_SYMBOL (~class~ ~OGRE_HALFOGRE~)
-					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
 				STR_VAR
 					notEnforceFiles
 			END
-			LPF patchCreatureScript STR_VAR script=ja#m29 END
+			DEFINE_ARRAY removeScripts BEGIN HALFOGRE BDFIG00 END
+			LPF patchCreatureScript STR_VAR script=ja#m29 removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDOGRE04~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN L#CHIEN END
+				LPF patchCreature
+					INT_VAR
+						level1=5
+						strength=18
+						exceptionalStrength=100
+						hp=46
+						thac0=15
+						xpv=520
+						saveDeath=11
+						saveWand=13
+						savePolymorph=12
+						saveBreath=13
+						saveSpell=14
+					STR_VAR
+						notEnforceFiles
+				END
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~L#CHIEN~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN L#CHIEN END
+				LPF patchCreature
+					INT_VAR
+						level1=8
+						hp=70
+						thac0=13
+						saveDeath=10
+						saveWand=12
+						savePolymorph=11
+						saveBreath=12
+						saveSpell=13
+					STR_VAR
+						notEnforceFiles
+				END
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

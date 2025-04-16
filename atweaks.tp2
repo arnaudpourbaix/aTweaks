@@ -202,7 +202,7 @@ BEGIN ~Extraction~ DESIGNATED 9999
             READ_LONG 0x28 animation
             READ_STRREF 0x08 name
             // PATCH_IF class = 183 BEGIN
-            PATCH_IF class = 147 OR animation = 0x7B04 BEGIN
+            PATCH_IF class = 127 OR animation = 0x7000 BEGIN
             //PATCH_IF animation = 0x7F0A BEGIN
                 //PATCH_PRINT ~"%SOURCE_RES%",~
                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
@@ -235,12 +235,12 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/spectral_hound.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/helmed.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/wolf.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/worg.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dire.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/wolf.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/worg.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dire.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/flesh.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/stone.tpa"
@@ -248,9 +248,9 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/bone.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/juggernaut.tpa"
 
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 // ------------------------------------------------------

@@ -544,6 +544,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
         );
       }
     }
+    for (const effect of creature.additionalData.effects) {
+      this.addEffect(lines, 1, effect, "CRE");
+    }
     this.patchCreature({
       lines,
       tab: 3,
@@ -824,6 +827,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
         adjustment.additionalData.removeItems.length ||
         adjustment.additionalData.memorizedSpells.length ||
         adjustment.additionalData.proficiencies.length ||
+        adjustment.additionalData.effects.length ||
         adjustment.summon
       ) {
         this.handleAdjustment(lines, tab, creature, adjustment);
@@ -869,6 +873,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
         creature.spells
       );
       this.addProficiencies(lines, tab, adjustment.additionalData);
+      for (const effect of adjustment.additionalData.effects) {
+        this.addEffect(lines, 1, effect, "CRE");
+      }
     }
     this.add(lines, "END", --tab);
   }

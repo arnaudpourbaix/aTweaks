@@ -154,6 +154,7 @@ export type StatisticModifierEffect = RawBaseEffect & {
 
 export type ModifierTypeEffect = RawBaseEffect & {
   opcode:
+    | "AttackDamageBonus"
     | "MovementRateBonus"
     | "MovementRateBonus2"
     | "Thac0Bonus"
