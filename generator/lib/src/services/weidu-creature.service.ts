@@ -674,9 +674,15 @@ export class WeiduCreatureService extends AbstractWeiduService {
       parent: p.parent,
       creature: p.creature,
     });
-    // this.add(lines, `DEFINE_ARRAY notEnforceFiles BEGIN END`);
+    this.add(
+      p.lines,
+      `DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(
+        " "
+      )} END`
+    );
     this.add(p.lines, `LPF patchCreature`, p.tab);
     this.add(p.lines, `INT_VAR`, p.tab + 1);
+    if (p.summon) p.data.xpv = 0;
     for (const key of CREATURE_DATA_KEYS) {
       if (p.data[key] !== undefined) {
         const value = this.extractDataValue(key, p.data);
@@ -691,6 +697,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (p.summon) this.add(p.lines, `summon=1`, p.tab + 2);
     if (p.creature.attack.dualWielding && !p.parent)
       this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
+    this.add(p.lines, "STR_VAR", p.tab + 1);
+    this.add(p.lines, "notEnforceFiles", p.tab + 2);
     this.add(p.lines, "END", p.tab);
   }
 

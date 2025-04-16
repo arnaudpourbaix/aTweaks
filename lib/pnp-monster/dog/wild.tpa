@@ -10,9 +10,9 @@ CREATE ITM "ja#1m12"
 	WRITE_BYTE 0x88 4
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
+	WRITE_SHORT 0x9e 50
+	WRITE_SHORT 0xa0 50
+	WRITE_SHORT 0xa2 0
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m12.itm~ ~override~
 
@@ -34,6 +34,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~P1-4~
 			ADD_CRE_ITEM ~ja#1m12~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=1
@@ -64,8 +65,11 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
+				STR_VAR
+					notEnforceFiles
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWISU~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=9
@@ -77,9 +81,12 @@ BEGIN
 						saveBreath=17
 						saveSpell=17
 						summon=1
+					STR_VAR
+						notEnforceFiles
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOG~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=9
@@ -90,6 +97,8 @@ BEGIN
 						saveBreath=17
 						saveSpell=17
 						class=IDS_OF_SYMBOL (~class~ ~INNOCENT~)
+					STR_VAR
+						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

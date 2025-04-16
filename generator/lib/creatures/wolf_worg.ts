@@ -6,7 +6,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.Worg;
 // Items
 const mainWeapon = file(1, id);
-
 export const WOLF_WORG: RawCreature = {
   name: "Worg",
   tpaFile: "lib/pnp-monster/wolf/worg",
@@ -48,5 +47,6 @@ export const WOLF_WORG: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["WOLFCH"],
+  files: ["WOLFCH", "BDWORG", "WORG", "WORGAR", "WORGSU"],
+  adjustments: [{ files: ["WORGSU"], summon: true }],
 };

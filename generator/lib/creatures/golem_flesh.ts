@@ -8,7 +8,6 @@ const id = MonsterEnum.FleshGolem;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
-
 export const GOLEM_FLESH: RawCreature = {
   name: "Flesh Golem",
   bafFile: `lib/pnp-monster/golem/${script}`,

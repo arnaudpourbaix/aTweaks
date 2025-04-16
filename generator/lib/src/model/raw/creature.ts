@@ -67,6 +67,10 @@ export interface RawCreature {
   additionalData: RawCreatureAdditionalData;
 
   files: string[];
+  /**
+   * For these files, keep existing creature values if they are better
+   */
+  notEnforceFiles?: string[];
   adjustments?: RawCreatureAdjustment[];
 
   abilities?: RawCreatureAbility[];

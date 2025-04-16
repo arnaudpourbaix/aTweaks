@@ -1,12 +1,11 @@
 import { RawCreature } from "../src/model/raw/creature";
-import { bafFile, file } from "../src/services/misc.func";
+import { file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
 const id = MonsterEnum.DireWolf;
 // Items
 const mainWeapon = file(1, id);
-
 export const WOLF_DIRE: RawCreature = {
   name: "Dire Wolf",
   tpaFile: "lib/pnp-monster/wolf/dire",
@@ -35,7 +34,7 @@ export const WOLF_DIRE: RawCreature = {
     gender: "MALE",
     size: "Large",
   },
-  additionalData: { removeItems: ["P1-8", "P2-8"] },
+  additionalData: { removeItems: ["P1-8", "P2-8", "IMMUNE1", "RING95"] },
   items: [
     {
       file: mainWeapon,
@@ -48,6 +47,22 @@ export const WOLF_DIRE: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["BDWOLFDI", "P#WOLF02", "WOLFDI", "WOLFDISU", "UBNIMWLF"],
-  adjustments: [{ files: ["WOLFDISU"], summon: true }],
+  files: [
+    "BDWOLFDI",
+    "P#WOLF02",
+    "WOLFDI",
+    "WOLFDISU",
+    "UBNIMWLF",
+    "SHAWOL01", // Shade Wolf
+    "RUFIE", // Rufie
+    "L#FAIEN3", // Apsu
+  ],
+  adjustments: [
+    { files: ["WOLFDISU"], summon: true },
+    {
+      files: ["SHAWOL01"],
+      data: { strength: 18, xpv: 450 },
+      additionalData: { immunities: ["incorporeal"] },
+    },
+  ],
 };

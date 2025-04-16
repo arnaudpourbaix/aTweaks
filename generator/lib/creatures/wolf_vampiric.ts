@@ -12,7 +12,6 @@ const grab = file(1, id);
 const mainWeapon = file(1, id);
 const proneBiteWeapon = file(2, id);
 const autoHitWeapon = file(3, id);
-
 export const WOLF_VAMPIRIC: RawCreature = {
   name: "Vampiric Wolf",
   tpaFile: "lib/pnp-monster/wolf/vampiric",
@@ -119,5 +118,11 @@ export const WOLF_VAMPIRIC: RawCreature = {
       bonusToHit: 30,
     },
   ],
-  files: ["BDWOLFVA", "P#WOLF04", "WOLFVA"],
+  files: [
+    "BDWOLFVA",
+    "P#WOLF04",
+    "WOLFVA",
+    "DW#ULCWO", // Wolf of Ulcaster
+  ],
+  notEnforceFiles: ["DW#ULCWO"],
 };

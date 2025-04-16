@@ -117,6 +117,7 @@ export class MainService {
         spells: rawCreature.spells,
         items: rawCreature.items,
       }),
+      notEnforceFiles: rawCreature.notEnforceFiles ?? [],
       items: this.mapItems(rawCreature.items),
       spells: this.mapSpells(rawCreature.spells),
       attack: this.mapAttack(rawCreature),

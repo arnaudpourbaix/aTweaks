@@ -366,6 +366,7 @@ ACTION_FOR_EACH ~file~ IN
 	BDWOLFVA
 	P#WOLF04
 	WOLFVA
+	DW#ULCWO
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -380,6 +381,7 @@ BEGIN
 			LPF clearProficiencies END
 			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m21r~ #0 ~innate~ (1)
+			DEFINE_ARRAY notEnforceFiles BEGIN DW#ULCWO END
 			LPF patchCreature
 				INT_VAR
 					level1=6
@@ -410,6 +412,8 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
+				STR_VAR
+					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN DW#GPSHM VAMPWOLF END
 			LPF patchCreatureScript STR_VAR script=ja#m21 removeScripts END

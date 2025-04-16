@@ -2,7 +2,7 @@ import { CodeLine } from "../model/misc";
 import { UtilsService } from "./utils.service";
 
 export class AbstractWeiduService {
-  protected utils = new UtilsService();
+  protected utils = UtilsService.instance;
 
   protected add(lines: CodeLine[], code: string, tab?: number) {
     if (tab === undefined) {

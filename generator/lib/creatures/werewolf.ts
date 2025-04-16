@@ -7,8 +7,8 @@ const id = MonsterEnum.Wolf;
 // Items
 const mainWeapon = file(1, id);
 export const WOLF: RawCreature = {
-  name: "Wolf",
-  tpaFile: "lib/pnp-monster/wolf/wolf",
+  name: "WereWolf",
+  tpaFile: "lib/pnp-monster/werewolf/were",
   tracking: true,
   combatWalk: true,
   data: {
@@ -49,13 +49,10 @@ export const WOLF: RawCreature = {
     },
   ],
   files: [
-    "BDURE6D",
-    "BDWOLF",
-    "BDWOLF02",
-    "DW#RNWLF",
-    "RSWOLF",
-    "WOLF",
-    "WOLFSU",
+    "GATEKE", // Gatekeeper
+    "MEMNIS", // Meym
+    "WOLFW2", // Kryla
+    "WOLFW3", // Palin
   ],
   adjustments: [{ files: ["WOLFSU"], summon: true }],
 };

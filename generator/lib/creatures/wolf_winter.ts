@@ -13,7 +13,6 @@ const streamOfFrost = file(1, id);
 const streamOfFrostProjectile = file(1, id);
 // Items
 const mainWeapon = file(1, id);
-
 export const WOLF_WINTER: RawCreature = {
   name: "Winter Wolf",
   tpaFile: "lib/pnp-monster/wolf/winter",
@@ -121,5 +120,17 @@ export const WOLF_WINTER: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["P#WOLF01", "WOLFWI", "WOLFWISU", "WOLFWWSU"],
+  files: [
+    "P#WOLF01",
+    "WOLFWI",
+    "WOLFWISU",
+    "WOLFWWSU",
+    "L#WOLST", // Pregnant Wolf
+    // "SPIRWOLF", //TODO: Spirit Wolf
+    // "SPWOLF1", //TODO: Spirit Wolf
+    // "SPWOLF2", //TODO: Spirit Wolf
+    // "SPWOLF3", //TODO: Spirit Wolf
+    // "SPWOLF4", //TODO: Spirit Wolf
+    // "SPWOLF5", //TODO: Spirit Wolf
+  ],
 };

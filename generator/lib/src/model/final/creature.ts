@@ -69,6 +69,10 @@ export interface Creature {
   additionalData: CreatureAdditionalData;
 
   files: string[];
+  /**
+   * For these files, keep existing creature values if they are better
+   */
+  notEnforceFiles: string[];
   adjustments: CreatureAdjustment[];
 
   abilities: CreatureAbility[];

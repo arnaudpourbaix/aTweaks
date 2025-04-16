@@ -45,6 +45,7 @@ export const DOG_WILD: RawCreature = {
       diceSize: 4,
       damageType: "Piercing",
       speed: 3,
+      animationSwing: { overhand: 50, backhand: 50, thrust: 0 },
       abilityFlags: ["AddStrengthBonus"],
     },
   ],

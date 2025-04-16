@@ -58,6 +58,7 @@ import {
   KillTargetEffect,
   LevelDrainEffect,
   LightingEffectsEffect,
+  MakeUnselectableEffect,
   MinimumHPEffect,
   ModifierTypeEffect,
   PlayVisualEffect,
@@ -413,6 +414,11 @@ export class EffectService {
         result.parameter2 = `${
           InvisibilityTypeEnum[(<InvisibilityEffect>effect).type]
         }`;
+        break;
+      case EffectTypeEnum.MakeUnselectable:
+        if (!(<MakeUnselectableEffect>effect).disableDialog)
+          result.parameter1 = `1`;
+        result.parameter2 = `1`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:
       case EffectTypeEnum.ProtectionFromBackstab:

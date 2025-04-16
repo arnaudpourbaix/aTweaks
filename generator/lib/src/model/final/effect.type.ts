@@ -50,6 +50,7 @@ export enum EffectTypeEnum {
   MagicalColdResistanceModifier = 85,
   MagicalFireResistanceModifier = 84,
   MagicDamageResistanceModifier = 31,
+  MakeUnselectable = 365,
   MaximumHPModifier = 18,
   MinimumHP = 208,
   MissilesResistanceModifier = 89,

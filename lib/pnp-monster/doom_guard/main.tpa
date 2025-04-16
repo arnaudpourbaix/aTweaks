@@ -131,6 +131,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#3m16~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=5
@@ -163,10 +164,13 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
+				STR_VAR
+					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
 			LPF patchCreatureScript STR_VAR script=ja#m16 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMDUR~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						level1=8
@@ -177,6 +181,8 @@ BEGIN
 						savePolymorph=11
 						saveBreath=12
 						saveSpell=13
+					STR_VAR
+						notEnforceFiles
 				END
 				SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			END

@@ -122,6 +122,18 @@ export class UtilsService {
     return found;
   }
 
+  hasCriticalHitImmunity(immunity: ImmunityConfig): boolean {
+    let result =
+      immunity.name === "criticalHit" ||
+      immunity.immunities.some((i) => i === "criticalHit");
+    if (result) return true;
+    for (const t of immunity.immunities) {
+      const tr = State.immunities.find((i) => i.name === t) as ImmunityConfig;
+      result = result || this.hasCriticalHitImmunity(tr);
+    }
+    return result;
+  }
+
   getFile(path: string): { file: string; name: string; ext: string } {
     path = path.replace(/\\/g, "/");
     const file = path.substring(path.lastIndexOf("/") + 1);

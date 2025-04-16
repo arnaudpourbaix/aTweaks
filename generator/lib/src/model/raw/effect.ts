@@ -372,6 +372,11 @@ export type InvisibilityEffect = RawBaseEffect & {
   type: RawInvisibilityType;
 };
 
+export type MakeUnselectableEffect = RawBaseEffect & {
+  opcode: "MakeUnselectable";
+  disableDialog: boolean;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -430,6 +435,7 @@ export type RawEffect =
   | KillTargetEffect
   | LevelDrainEffect
   | LightingEffectsEffect
+  | MakeUnselectableEffect
   | MinimumHPEffect
   | ModifierTypeEffect
   | PlayVisualEffect

@@ -50,6 +50,7 @@ export type RawEffectOpcode =
   | "MagicalColdResistanceModifier"
   | "MagicalFireResistanceModifier"
   | "MagicDamageResistanceModifier"
+  | "MakeUnselectable"
   | "MaximumHPModifier"
   | "MinimumHP"
   | "MissilesResistanceModifier"

@@ -58,6 +58,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m14~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m14~ #0 ~innate~ (1)
 			LPF clearProficiencies END
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=4
@@ -88,6 +89,8 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
+				STR_VAR
+					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN PSPIDER END
 			LPF patchCreatureScript STR_VAR script=ja#m14 removeScripts END

@@ -78,6 +78,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m34~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m34~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF clearProficiencies END
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=4
@@ -109,8 +110,11 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 					perfect2weapon=1
+				STR_VAR
+					notEnforceFiles
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP04~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=33
@@ -122,6 +126,8 @@ BEGIN
 						saveBreath=16
 						saveSpell=16
 						summon=1
+					STR_VAR
+						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

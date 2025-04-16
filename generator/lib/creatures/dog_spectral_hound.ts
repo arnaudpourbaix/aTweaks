@@ -9,8 +9,8 @@ const mainWeapon = file(1, id);
 const ring = file(2, id);
 
 export const SPECTRAL_HOUND: RawCreature = {
-  name: "spectral hound",
-  tpaFile: "lib/pnp-monster/dog/hound",
+  name: "Spectral Hound",
+  tpaFile: "lib/pnp-monster/dog/spectral_hound",
   tracking: true,
   combatWalk: true,
   data: {
@@ -36,52 +36,53 @@ export const SPECTRAL_HOUND: RawCreature = {
     gender: "MALE",
     size: "Medium",
   },
-  additionalData: { removeItems: ["FIGRING3", "IPSION"] },
+  additionalData: {
+    removeItems: [
+      "FIGRING3",
+      "IPSION",
+      "BDSPIRIM",
+      // keep their current weapons until a true weapon is done below
+      // "DOGWAWP",
+      // "BDSHA01C"
+    ],
+    immunities: ["incorporeal"],
+  },
   items: [
-    {
-      file: mainWeapon,
-      equippedSlot: "WEAPON1",
-      type: "Melee",
-      diceThrown: 2,
-      diceSize: 6,
-      damageType: "Piercing",
-      speed: 3,
-      abilityFlags: ["AddStrengthBonus"],
-    },
+    //TODO:
+    // {
+    //   // roll a saving throw vs. spell. If the saving throw fails, the victim begins to fade, slowly assuming the same translucent appearance as the spectral hound itself.
+    //   // The entire process takes 24 hours. After 12 hours, a fading character cannot hear or speak to any unfaded characters from the victim's point of view, it is the rest of the world that is becoming translucent, not himself or herself).
+    //   // The character's equipment – weapons, armor, spell components, and the like – is unaffected and drops away.
+    //   // Because of their inability to handle objects, faded creatures cannot eat or drink.
+    //   // Mental and energy-based attacks work normally when used against a faded character, but the character is immune to physical attacks.
+    //   // After 12 more hours, the character fades completely from sight and slips into the Astral Plane.
+    //   // Once on the Astral Plane, the victim can handle objects (but isn't likely to find any lying about, waiting to be picked up) and can seek any normal means to exit the plane and return to the Prime Material.
+    //   file: mainWeapon,
+    //   equippedSlot: "WEAPON1",
+    //   type: "Melee",
+    //   diceThrown: 2,
+    //   diceSize: 6,
+    //   damageType: "Piercing",
+    //   speed: 3,
+    //   abilityFlags: ["AddStrengthBonus"],
+    //   effects: [],
+    // },
     {
       file: ring,
-      immunities: ["extraplanar", "incorporeal"],
+      immunities: ["extraplanar"],
       effects: [
         {
           opcode: "InvisibilityDetection",
           global: true,
         },
-        // {
-        //   opcode: "Translucency",
-        //   amount: 45,
-        //   type: "DrawInstantly",
-        //   global: true,
-        // },
-        // {
-        //   opcode: "Blur",
-        //   global: true,
-        // },
-        // {
-        //   opcode: "SetColorGlowSolid",
-        //   color: { red: 40, green: 195, blue: 162 },
-        //   location: "ArmorGreenHair",
-        //   global: true,
-        // },
-        // {
-        //   opcode: "SetColorGlowPulse",
-        //   color: { red: 0, green: 136, blue: 0 },
-        //   location: "ArmorBlueArmorTrimming",
-        //   cycleSpeed: 80,
-        //   global: true,
-        // },
+        {
+          opcode: "MakeUnselectable",
+          disableDialog: true,
+          global: true,
+        },
       ],
-      equippedSlot: "RRING",
-      category: "Rings",
+      equippedSlot: "AMULET",
+      category: "Amulets",
       icon: "IRING01",
     },
   ],

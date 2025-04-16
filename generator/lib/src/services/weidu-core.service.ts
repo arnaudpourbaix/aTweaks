@@ -25,7 +25,7 @@ export class WeiduCoreService extends AbstractWeiduService {
   }
 
   generateItem(itemSlot: RawItemSlot, immunity: ImmunityConfig) {
-    const criticalHitImmunity = this.hasCriticalHitImmunity(immunity);
+    const criticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
     this.add(this.lines, `WRITE_LONG 0x64 0x72`, 1);
     const criticalHit = criticalHitImmunity
@@ -52,18 +52,6 @@ export class WeiduCoreService extends AbstractWeiduService {
       1
     );
     this.add(this.lines, "", 0);
-  }
-
-  hasCriticalHitImmunity(immunity: ImmunityConfig): boolean {
-    let result =
-      immunity.name === "criticalHit" ||
-      immunity.immunities.some((i) => i === "criticalHit");
-    if (result) return true;
-    for (const t of immunity.immunities) {
-      const tr = State.immunities.find((i) => i.name === t) as ImmunityConfig;
-      result = result || this.hasCriticalHitImmunity(tr);
-    }
-    return result;
   }
 
   getIcon(itemSlot: RawItemSlot) {

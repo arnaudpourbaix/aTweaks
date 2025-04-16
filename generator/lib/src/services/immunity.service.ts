@@ -3,9 +3,12 @@ import figureSet from "figures";
 import { Creature, CreatureAdditionalData } from "../model/final/creature";
 import { ImmunityConfig } from "../model/final/immunity";
 import { State } from "../state";
+import { RawItemSlot } from "../model/raw/item";
+import { UtilsService } from "./utils.service";
 
 export class ImmunityService {
   static instance = new ImmunityService();
+  private utils = UtilsService.instance;
 
   handleImmunities(creature: Creature): void {
     this.checkImmunities(creature.additionalData, creature);
@@ -24,25 +27,59 @@ export class ImmunityService {
       const immunity = State.immunities.find(
         (i) => i.name === name
       ) as ImmunityConfig;
-      //TODO: when an immunity has an itemSlot defined and is not helmet, we need to check if it contains immunity to critical hits (current or children).
-      // if it does, we need to make sure that a helmet is equipped (don't forget adjustments). If no helmet is equipped, add ja#i5 (invisible helmet)
-      if (!immunity) throw new Error(`Immunity ${name} not configured !`);
       if (immunity.itemSlot) {
-        const overwrittingItem = creature.items.find(
-          (i) => i.copyFrom === immunity.name
+        this.checkImmunity(
+          immunity.itemSlot,
+          immunity,
+          additionalData,
+          creature
         );
-        if (overwrittingItem)
-          console.log(
-            chalk.yellowBright(
-              `${figureSet.arrowRight} skipping ${immunity.itemSlot.file} because ${overwrittingItem.file} overwrites it`
-            )
-          );
-        else
-          additionalData.itemSlots.push({
-            file: immunity.itemSlot.file,
-            slot: immunity.itemSlot.slot,
-          });
       }
     }
+  }
+
+  private checkImmunity(
+    itemSlot: RawItemSlot,
+    immunity: ImmunityConfig,
+    additionalData: CreatureAdditionalData,
+    creature: Creature
+  ): void {
+    const hasCriticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
+    const hasHelmet = [
+      ...additionalData.itemSlots,
+      ...creature.additionalData.itemSlots,
+    ].some((i) => i.slot === "HELMET");
+    if (hasCriticalHitImmunity && itemSlot.slot !== "HELMET" && !hasHelmet) {
+      console.log(
+        chalk.yellowBright(
+          `${figureSet.arrowRight} ${immunity.name} needs a helmet to cover immunity from critical hits. Adding a helmet to cover it.`
+        )
+      );
+      additionalData.immunities.push("criticalHit");
+    }
+    const overwrittingItem = creature.items.find(
+      (i) => i.copyFrom === immunity.name
+    );
+    const overwrittingSlot = [
+      ...additionalData.itemSlots,
+      ...creature.additionalData.itemSlots,
+    ].some((i) => i.slot === itemSlot.slot);
+    if (overwrittingItem)
+      console.log(
+        chalk.yellowBright(
+          `${figureSet.arrowRight} skipping ${itemSlot.file} because ${overwrittingItem.file} overwrites it`
+        )
+      );
+    else if (overwrittingSlot)
+      console.log(
+        chalk.redBright(
+          `${figureSet.arrowRight} skipping ${immunity.name} (${itemSlot.file}) because slot ${itemSlot.slot} is already assigned`
+        )
+      );
+    else
+      additionalData.itemSlots.push({
+        file: itemSlot.file,
+        slot: itemSlot.slot,
+      });
   }
 }

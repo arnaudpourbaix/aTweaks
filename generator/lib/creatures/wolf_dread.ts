@@ -12,7 +12,6 @@ const downState = file(1, id);
 const mainWeapon = file(1, id);
 const aliveResistances = file(2, id);
 const downResistances = file(3, id);
-
 export const WOLF_DREAD: RawCreature = {
   name: "Dread Wolf",
   tpaFile: "lib/pnp-monster/wolf/dread",
@@ -187,11 +186,12 @@ export const WOLF_DREAD: RawCreature = {
   files: [
     "BDWOLFDR",
     "D5WOLFD1",
-    "dw#rewo",
+    "DW#REWO",
     "P#WOLF03",
     "P#WOLF05",
     "PLYWOLF",
     "WOLFD1",
     "WOLFDR",
+    "L#HALWO", // Cu-sith
   ],
 };

@@ -76,6 +76,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m6~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m6~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF clearProficiencies END
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=6
@@ -107,6 +108,8 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 					perfect2weapon=1
+				STR_VAR
+					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
 			DEFINE_ARRAY skipFiles BEGIN BEARCASU BDBEARCA END
@@ -117,6 +120,7 @@ BEGIN
 			DEFINE_ARRAY files BEGIN BDBEARCA END
 			LPF patchCreatureScript STR_VAR script=ja#m6 slot=General files END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARCASU~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=60
@@ -128,9 +132,12 @@ BEGIN
 						saveBreath=13
 						saveSpell=14
 						summon=1
+					STR_VAR
+						notEnforceFiles
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~) BEGIN 
+			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						level1=8
@@ -142,6 +149,8 @@ BEGIN
 						savePolymorph=11
 						saveBreath=12
 						saveSpell=13
+					STR_VAR
+						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES
