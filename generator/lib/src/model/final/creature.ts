@@ -94,11 +94,15 @@ export interface CreatureAdjustment {
   /**
    * Is it a summon ?
    */
-  summon?: boolean;
+  summon: boolean;
   /**
    * Don't assign a script
    */
-  noScript?: boolean;
+  noScript: boolean;
+  /**
+   * Don't assign a weapon
+   */
+  noWeapon: boolean;
 }
 
 export interface CreatureData {

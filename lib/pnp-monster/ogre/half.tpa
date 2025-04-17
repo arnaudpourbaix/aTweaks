@@ -28,15 +28,16 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYBASTARDSWORD~ 2
-	LPF ADD_CRE_EFFECT
-		INT_VAR
-			opcode = 73
-			target = 1
-			parameter1 = 2
-			timing = 2
-			probability1 = 100
-		END
-		DEFINE_ARRAY notEnforceFiles BEGIN L#CHIEN END
+			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
+			LPF ADD_CRE_EFFECT
+				INT_VAR
+					opcode = 73
+					target = 1
+					parameter1 = 2
+					timing = 2
+					probability1 = 100
+				END
+				DEFINE_ARRAY notEnforceFiles BEGIN L#CHIEN END
 			LPF patchCreature
 				INT_VAR
 					level1=2

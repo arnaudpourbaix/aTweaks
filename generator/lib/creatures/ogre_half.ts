@@ -38,7 +38,10 @@ export const OGRE_HALF: RawCreature = {
     size: "Large",
   },
   additionalData: {
-    proficiencies: [{ type: "PROFICIENCYBASTARDSWORD", value: 2 }],
+    proficiencies: [
+      { type: "PROFICIENCYBASTARDSWORD", value: 2 },
+      { type: "PROFICIENCYTWOHANDEDSWORD", value: 2 },
+    ],
     effects: [
       {
         opcode: "AttackDamageBonus",
@@ -101,7 +104,13 @@ export const OGRE_HALF: RawCreature = {
   adjustments: [
     {
       files: ["BDOGRE04"],
-      data: { level1: 5, xpv: 520, strength: 18, exceptionalStrength: 100 },
+      data: {
+        level1: 5,
+        bonusHp: 3,
+        xpv: 520,
+        strength: 18,
+        exceptionalStrength: 100,
+      },
     },
     {
       files: ["L#CHIEN"],

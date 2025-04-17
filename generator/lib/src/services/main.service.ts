@@ -179,6 +179,9 @@ export class MainService {
     if (!creature.adjustments) return [];
     const results: CreatureAdjustment[] = creature.adjustments.map((a) => ({
       ...a,
+      noScript: a.noScript ?? false,
+      noWeapon: a.noWeapon ?? false,
+      summon: a.summon ?? false,
       additionalData: this.mapAdditionalData({
         additionalData: a.additionalData,
       }),

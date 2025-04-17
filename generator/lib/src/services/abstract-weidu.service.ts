@@ -4,6 +4,26 @@ import { UtilsService } from "./utils.service";
 export class AbstractWeiduService {
   protected utils = UtilsService.instance;
 
+  protected addConditionalSourceRes(
+    lines: CodeLine[],
+    code: string,
+    tab: number,
+    files: string[],
+    exclude: boolean
+  ) {
+    if (!files.length) return this.add(lines, code, tab);
+    const fileEquals = files.map(
+      (f) => `(${exclude ? "NOT" : ""} "%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~)`
+    );
+    this.add(
+      lines,
+      `PATCH_IF ${fileEquals.join(exclude ? " AND" : " OR")} BEGIN `,
+      tab
+    );
+    this.add(lines, code, tab + 1);
+    this.add(lines, "END", tab);
+  }
+
   protected add(lines: CodeLine[], code: string, tab?: number) {
     if (tab === undefined) {
       tab = lines.length ? (lines.at(-1) as CodeLine).tab : 0;

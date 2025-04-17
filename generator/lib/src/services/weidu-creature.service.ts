@@ -26,6 +26,7 @@ import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
 import { GrabService } from "./grab.service";
+import { WEAPON_SLOTS } from "../model/raw/enum";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
@@ -511,7 +512,12 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.removeKnownSpells(lines, 3, creature);
     this.removeMemorizedSpells(lines, 3, creature);
     this.removeItems(lines, 3, creature.additionalData);
-    this.addItemSlots(lines, 3, creature.additionalData);
+    this.addItemSlots({
+      lines,
+      tab: 3,
+      additionalData: creature.additionalData,
+      creature,
+    });
     this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
     this.add(lines, `LPF clearProficiencies END`, 3);
     for (const opcode of creature.additionalData.deleteEffectOpcodes) {
@@ -545,7 +551,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     for (const effect of creature.additionalData.effects) {
-      this.addEffect(lines, 1, effect, "CRE");
+      this.addEffect(lines, 3, effect, "CRE");
     }
     this.patchCreature({
       lines,
@@ -624,21 +630,27 @@ export class WeiduCreatureService extends AbstractWeiduService {
       this.add(lines, `SET_BG2_PROFICIENCY ~${prof.type}~ ${prof.value}`, tab);
   }
 
-  private addItemSlots(
-    lines: CodeLine[],
-    tab: number,
-    additionalData: CreatureAdditionalData
-  ) {
+  private addItemSlots(p: {
+    lines: CodeLine[];
+    tab: number;
+    additionalData: CreatureAdditionalData;
+    creature?: Creature;
+  }) {
     let equip = false;
-    for (const item of additionalData.itemSlots) {
-      this.add(
-        lines,
-        `ADD_CRE_ITEM ~${item.file}~ #0 #0 #0 ~UNDROPPABLE~ ~${item.slot}~ ${
-          !equip ? "EQUIP" : ""
-        }`,
-        tab
+    for (const item of p.additionalData.itemSlots) {
+      const noWeaponFiles = (p.creature ? p.creature.adjustments : []).reduce(
+        (acc, a) => {
+          if (a.noWeapon) acc.push(...a.files);
+          return acc;
+        },
+        [] as string[]
       );
-      equip = true;
+      const isWeapon = WEAPON_SLOTS.includes(item.slot);
+      const code = `ADD_CRE_ITEM ~${item.file}~ #0 #0 #0 ~UNDROPPABLE~ ~${
+        item.slot
+      }~ ${isWeapon && !equip ? "EQUIP" : ""}`;
+      this.addConditionalSourceRes(p.lines, code, p.tab, noWeaponFiles, true);
+      if (isWeapon) equip = true;
     }
   }
 
@@ -865,7 +877,11 @@ export class WeiduCreatureService extends AbstractWeiduService {
       });
     if (adjustment.additionalData) {
       this.removeItems(lines, tab, adjustment.additionalData);
-      this.addItemSlots(lines, tab, adjustment.additionalData);
+      this.addItemSlots({
+        lines,
+        tab,
+        additionalData: adjustment.additionalData,
+      });
       this.addMemorizedSpells(
         lines,
         tab,
@@ -874,7 +890,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
       this.addProficiencies(lines, tab, adjustment.additionalData);
       for (const effect of adjustment.additionalData.effects) {
-        this.addEffect(lines, 1, effect, "CRE");
+        this.addEffect(lines, tab, effect, "CRE");
       }
     }
     this.add(lines, "END", --tab);

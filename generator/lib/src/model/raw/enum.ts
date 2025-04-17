@@ -25,6 +25,13 @@ export type ItemSlot =
   | "QITEM2"
   | "QITEM3";
 
+export const WEAPON_SLOTS: ItemSlot[] = [
+  "WEAPON1",
+  "WEAPON2",
+  "WEAPON3",
+  "WEAPON4",
+];
+
 export type RawProjectileExplosionEffect =
   | "FIRE"
   | "CLOUD"

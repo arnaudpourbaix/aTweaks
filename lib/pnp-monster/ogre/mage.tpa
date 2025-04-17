@@ -66,7 +66,7 @@ BEGIN
 					morale=14
 					moraleBreak=4
 					moraleRecovery=15
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
 					race=IDS_OF_SYMBOL (~race~ ~OGRE~)
 					class=IDS_OF_SYMBOL (~class~ ~OGRE_MAGE~)
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)

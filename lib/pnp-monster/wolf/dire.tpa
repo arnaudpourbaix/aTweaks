@@ -106,7 +106,7 @@ BEGIN
 					STR_VAR
 						notEnforceFiles
 				END
-				ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ EQUIP
+				ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 				ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES

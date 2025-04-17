@@ -105,6 +105,10 @@ export interface RawCreatureAdjustment {
    * Don't assign a script
    */
   noScript?: boolean;
+  /**
+   * Don't assign a weapon
+   */
+  noWeapon?: boolean;
 }
 
 export interface RawCreatureData {

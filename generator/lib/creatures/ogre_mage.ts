@@ -35,7 +35,7 @@ export const OGRE_MAGE: RawCreature = {
     morale: 14,
     moraleBreak: 4,
     moraleRecovery: 15,
-    general: "MONSTER",
+    general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE_MAGE",
     gender: "MALE",
