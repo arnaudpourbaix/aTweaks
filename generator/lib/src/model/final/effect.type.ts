@@ -63,7 +63,9 @@ export enum EffectTypeEnum {
    * As opcode 126, but unaffected by Free Action
    */
   MovementRateBonus2 = 176,
+  NoCollisionDetection = 184,
   OffhandThac0Bonus = 305,
+  OverrideCreatureData = 342,
   Panic = 24,
   Paralyze = 109,
   Petrification = 134,
@@ -98,6 +100,7 @@ export enum EffectTypeEnum {
   SaveVsBreathModifier = 36,
   SaveVsSpellModifier = 37,
   ScriptingStateModifier = 282,
+  SelectionCircleRemoval = 287,
   SetColor = 7,
   SetColorGlowSolid = 8,
   SetColorGlowPulse = 9,

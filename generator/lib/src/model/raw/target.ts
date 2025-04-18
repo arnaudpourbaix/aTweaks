@@ -27,9 +27,10 @@ export interface RawTargetList {
 
 export interface TargetStatus {
   status: TargetStatusName;
-  canOnlyTargetPlayer: boolean;
   targetTriggers: Triggers.Trigger[];
   triggers: Triggers.Trigger[];
+  canOnlyTargetPlayer: boolean;
+  requireIntelligence: boolean;
 }
 
 /**
@@ -50,3 +51,14 @@ export const TARGET_PARAMLESS_OBJECTS: ObjectIdentifier[] = [
   "FamiliarSummoner",
   "LastKilled",
 ];
+
+/**
+ * Target Priority
+ * For each target list, go through all status
+ * If status is not set, it will auto generated based on creature intelligence and if it has a grabbing ability
+ * If targets is not set, it will use NearestEnemy for most status except Sleep that requires a Player
+ */
+export interface RawTargetPriority {
+  targets?: TargetListName[];
+  status?: TargetStatusName[];
+}

@@ -63,7 +63,9 @@ export type RawEffectOpcode =
    * As opcode 126, but unaffected by Free Action
    */
   | "MovementRateBonus2"
+  | "NoCollisionDetection"
   | "OffhandThac0Bonus"
+  | "OverrideCreatureData"
   | "Panic"
   | "Paralyze"
   | "Petrification"
@@ -98,6 +100,7 @@ export type RawEffectOpcode =
   | "SaveVsBreathModifier"
   | "SaveVsSpellModifier"
   | "ScriptingStateModifier"
+  | "SelectionCircleRemoval"
   | "SetColor"
   | "SetColorGlowSolid"
   | "SetColorGlowPulse"

@@ -1,6 +1,8 @@
-import { TargetStatusName } from "../../../config/target-name";
+import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import { TargetPriority } from "../final/target";
 import { WeaponSlot } from "../ids/slot";
 import { RawGrabConfig } from "./grab";
+import { RawTargetPriority } from "./target";
 
 export interface RawCreatureAttack {
   /**
@@ -14,9 +16,9 @@ export interface RawCreatureAttack {
   ranged?: boolean;
 
   /**
-   * Target priorities
+   * Target priorities, will focus first on these defined priorities and then complete with default priorities
    */
-  targetStatusPriorities?: TargetStatusName[];
+  targetPriorities?: RawTargetPriority[];
 
   /**
    * Allow to select a specific weapon slot when target is affected by a list of status

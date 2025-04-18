@@ -14,7 +14,13 @@ export const CARRION_CRAWLER: RawCreature = {
   tpaFile: "lib/pnp-monster/carrion/carrion_crawler",
   tracking: true,
   combatWalk: true,
-  attack: { targetStatusPriorities: ["Able", "Held", "NoCheck", "Sleep"] },
+  attack: {
+    targetPriorities: [
+      {
+        status: ["Able"],
+      },
+    ],
+  },
   items: [
     {
       file: mainWeapon,

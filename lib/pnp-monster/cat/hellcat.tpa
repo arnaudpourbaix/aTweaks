@@ -99,7 +99,6 @@ BEGIN
 			LPF clearProficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=65 END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=292 END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=7
@@ -132,8 +131,6 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 					perfect2weapon=1
-				STR_VAR
-					notEnforceFiles
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

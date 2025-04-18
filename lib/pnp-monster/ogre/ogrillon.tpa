@@ -46,12 +46,10 @@ BEGIN
 			REMOVE_CRE_ITEM ~SW1H01~
 			ADD_CRE_ITEM ~ja#1m28~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=2
-					strength=18
-					exceptionalStrength=50
+					strength=17
 					dexterity=9
 					constitution=14
 					intelligence=6
@@ -76,8 +74,6 @@ BEGIN
 					race=IDS_OF_SYMBOL (~race~ ~OGRE~)
 					class=IDS_OF_SYMBOL (~class~ ~OGRE_OGRILLON~)
 					enforce=1
-				STR_VAR
-					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN ORGRILLON DW1MELGE BDSUM00 END
 			DEFINE_ARRAY skipFiles BEGIN OGRELESU END
@@ -86,7 +82,6 @@ BEGIN
 			DEFINE_ARRAY files BEGIN OGRELESU END
 			LPF patchCreatureScript STR_VAR script=ja#m28su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~OGRELESU~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						level1=3
@@ -99,15 +94,13 @@ BEGIN
 						saveBreath=16
 						saveSpell=16
 						summon=1
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~GNARL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~HAIRTO~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						level1=5
+						strength=18
 						exceptionalStrength=95
 						constitution=15
 						hp=45
@@ -118,8 +111,6 @@ BEGIN
 						savePolymorph=12
 						saveBreath=13
 						saveSpell=14
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

@@ -45,13 +45,13 @@ export const WOLF_VAMPIRIC: RawCreature = {
     removeItems: ["WOLFVA1", "BDWOLFVA"],
     removeScripts: ["DW#GPSHM", "VAMPWOLF"],
   },
-  // In game terms, a bite attack will cause a running or standing victim to fall if the victim fails a saving throw vs. paralysis.
+  // A bite attack will cause a running or standing victim to fall if the victim fails a saving throw vs. paralysis.
   // Once the prey falls, the wolves continue to attack, shifting to the victim's arms so that he can no longer use a weapon.
   // This involves a called-shot attack in which a vampiric wolf has a -4 penalty to hit;
   // success means the wolf has grasped an arm in its mouth, and the victim cannot get free unless he makes a successful Strength check (one attempt per round).
   // Once a grasping bite is made, damage is continually inflicted each round as the wolf gnaws on the limb.
   attack: {
-    targetStatusPriorities: ["Grabbed", "Sleep", "NoCheck"],
+    targetPriorities: [{ status: ["Grabbed", "Sleep"] }],
     defaultWeaponSlot: "SLOT_WEAPON",
     targetStatusWeaponSlot: [
       { status: ["Sleep"], slot: "SLOT_WEAPON1" },

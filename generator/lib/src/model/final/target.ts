@@ -24,3 +24,12 @@ export interface TargetList {
   excludeStatus: TargetStatusName[];
   triggers: Triggers.Trigger[];
 }
+
+/**
+ * Target Priority
+ * For each target list, go through all status
+ */
+export interface TargetPriority {
+  targets: TargetListName[];
+  status: TargetStatusName[];
+}

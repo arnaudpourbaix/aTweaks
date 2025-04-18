@@ -248,7 +248,7 @@ export class MainService {
       grab: creature.attack.grab
         ? { ...GRAB_DEFAULT_CONFIG, ...creature.attack.grab }
         : undefined,
-      targetStatusPriorities: this.targerService.getTargetPriorities(creature),
+      targetPriorities: this.targerService.getTargetPriorities(creature),
       targetStatusWeaponSlot: creature.attack.targetStatusWeaponSlot ?? [],
     };
     return result;

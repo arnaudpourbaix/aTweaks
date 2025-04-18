@@ -48,7 +48,6 @@ BEGIN
 			REMOVE_CRE_ITEM ~BDDISPBE~
 			ADD_CRE_ITEM ~ja#1m38~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=6
@@ -79,11 +78,8 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
-				STR_VAR
-					notEnforceFiles
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDISPBP~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						level1=9
@@ -98,8 +94,6 @@ BEGIN
 						savePolymorph=8
 						saveBreath=8
 						saveSpell=10
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

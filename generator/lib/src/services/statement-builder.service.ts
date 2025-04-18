@@ -1,5 +1,6 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { TARGET_STATUS } from "../../config/target-config";
+import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { CreatureAbility } from "../model/final/ability";
 import { Creature } from "../model/final/creature";
 import { RaceIdentifier } from "../model/ids/race";
@@ -562,23 +563,43 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    for (const status of creature.attack.targetStatusPriorities) {
-      const target = TARGET_STATUS.find((t) => t.status === status);
+    for (const targetPriority of creature.attack.targetPriorities) {
+      for (const targetList of targetPriority.targets) {
+        this.attackTargetWithStatuses(
+          statements,
+          creature,
+          options,
+          targetList,
+          targetPriority.status
+        );
+      }
+    }
+  }
+
+  private attackTargetWithStatuses(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+    targetListName: TargetListName,
+    statusNameList: TargetStatusName[]
+  ): void {
+    for (const status of statusNameList) {
+      const statusDetails = TARGET_STATUS.find((t) => t.status === status);
       const weaponAttackSlot =
         creature.attack.targetStatusWeaponSlot.find((t) =>
           t.status.includes(status)
         )?.slot ?? creature.attack.defaultWeaponSlot;
-      if (!target)
-        throw new Error(`Target priority details ${status} not found!`);
-      if (target.targetTriggers.some((t) => "triggers" in t))
+      if (!statusDetails)
+        throw new Error(`Target status details ${status} not found!`);
+      if (statusDetails.targetTriggers.some((t) => "triggers" in t))
         throw new Error(`OR triggers not handled currently: ${status}`);
-      const targets: string[] = target.canOnlyTargetPlayer
-        ? this.targetService.getList("Players")
-        : this.targetService.getList("NearestEnemies");
+      if (statusDetails.canOnlyTargetPlayer && targetListName !== "Players")
+        throw new Error(`Status ${status} must target party`);
+      const targets = this.targetService.getList(targetListName);
       const targetTriggers = [
-        ...(target.targetTriggers as Triggers.Trigger[]),
+        ...(statusDetails.targetTriggers as Triggers.Trigger[]),
         ...this.factory.validAttackTarget({
-          isTargetPlayer: target.canOnlyTargetPlayer,
+          isTargetPlayer: statusDetails.canOnlyTargetPlayer,
           seeInvisible: this.utils.hasImmunity(
             creature.additionalData.immunities,
             "seeInvisible"
@@ -592,34 +613,11 @@ export class StatementService {
       });
       this.factory.addOneBlockTargetList({
         statements,
-        comment: `Attack ${target.status} enemy`,
+        comment: `Attack ${statusDetails.status} enemy`,
         targetTriggers,
         responses,
         targets,
       });
-      // if (creature.attack.grab && status == "Grabbed") {
-      //   statements.push({
-      //     triggers: [
-      //       {
-      //         name: "CheckSpellState",
-      //         params: ["Myself", GRAB_DEFAULT_CONFIG.grabblingState],
-      //       },
-      //     ],
-      //     responses: [
-      //       {
-      //         weight: 100,
-      //         actions: [
-      //           { name: "DisplayStringHead", params: ["Myself", 50198] },
-      //           {
-      //             name: "ReallyForceSpellRES",
-      //             params: [`${creature.attack.grab.file}r`, "Myself"],
-      //           },
-      //           { name: "Continue" },
-      //         ],
-      //       },
-      //     ],
-      //   });
-      // }
     }
   }
 

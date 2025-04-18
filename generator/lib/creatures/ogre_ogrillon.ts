@@ -18,8 +18,7 @@ export const OGRE_OGRILLON: RawCreature = {
   data: {
     level1: 2,
     bonusHp: 4,
-    strength: 18,
-    exceptionalStrength: 50,
+    strength: 17,
     dexterity: 9,
     constitution: 14,
     intelligence: 6,
@@ -49,7 +48,6 @@ export const OGRE_OGRILLON: RawCreature = {
       type: "Melee",
       diceThrown: 1,
       diceSize: 6,
-      damageBonus: 1,
       damageType: "Crushing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
@@ -76,8 +74,16 @@ export const OGRE_OGRILLON: RawCreature = {
   adjustments: [
     { files: ["OGRELESU"], summon: true, data: { level1: 3 } },
     {
+      // veteran with 5+3 Hit Dice
       files: ["GNARL", "HAIRTO"],
-      data: { level1: 5, exceptionalStrength: 95, constitution: 15, xpv: 420 },
+      data: {
+        level1: 5,
+        bonusHp: 3,
+        strength: 18,
+        exceptionalStrength: 95,
+        constitution: 15,
+        xpv: 420,
+      },
     },
   ],
 };

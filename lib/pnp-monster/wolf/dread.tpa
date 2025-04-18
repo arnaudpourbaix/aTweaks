@@ -274,7 +274,6 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m22~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m22~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clearProficiencies END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=4
@@ -307,8 +306,6 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
-				STR_VAR
-					notEnforceFiles
 			END
 			LPF patchCreatureScript STR_VAR script=ja#m22 END
 		BUT_ONLY_IF_IT_CHANGES

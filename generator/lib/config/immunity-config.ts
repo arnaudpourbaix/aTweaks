@@ -1104,11 +1104,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     immunities: ["backstab", "criticalHit"],
     effects: [
       {
-        opcode: "ProtectionFromWeapons",
-        enchantment: 0,
-        type: "NonMagical",
-      },
-      {
         opcode: "Translucency",
         amount: 99,
         type: "DrawInstantly",
@@ -1123,6 +1118,16 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         opcode: "CreatureRGBColorFade",
         color: { red: 90, green: 30, blue: 90 },
         fadeSpeed: 25,
+      },
+      { opcode: "NoCollisionDetection", passWalls: true },
+      { opcode: "ModifyCollisionBehavior" },
+      { opcode: "OverrideCreatureData", field: "PersonalSpace", value: 0 },
+      { opcode: "MakeUnselectable", disableDialog: false },
+      // { opcode: "SelectionCircleRemoval" },
+      {
+        opcode: "ProtectionFromWeapons",
+        enchantment: 0,
+        type: "NonMagical",
       },
       {
         opcode: "DisplayPortraitIcon",

@@ -6,8 +6,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.HalfOgre;
 // Script
 const script = bafFile(id);
-// Items
-const mainWeapon = file(1, id);
 
 export const OGRE_HALF: RawCreature = {
   name: "Half Ogre",
@@ -27,7 +25,7 @@ export const OGRE_HALF: RawCreature = {
     movement: 12,
     ac: 5,
     apr: 1,
-    xpv: 270,
+    xpv: 175,
     alignment: "CHAOTIC_EVIL",
     morale: 12,
     moraleBreak: 4,
@@ -53,28 +51,14 @@ export const OGRE_HALF: RawCreature = {
     removeItems: [],
     removeScripts: ["HALFOGRE", "BDFIG00"],
   },
-  // items: [
-  //   {
-  //     file: mainWeapon,
-  //     equippedSlot: "WEAPON1",
-  //     type: "Melee",
-  //     flags: ["TwoHanded"],
-  //     animation: "BastardSword",
-  //     category: "BastardSwords",
-  //     proficiency: "PROFICIENCYBASTARDSWORD",
-  //     animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
-  //     range: 2,
-  //     diceThrown: 1,
-  //     diceSize: 10,
-  //     damageBonus: 2,
-  //     damageType: "Slashing",
-  //     speed: 7,
-  //     abilityFlags: ["AddStrengthBonus"],
-  //   },
-  // ],
   attack: {
-    // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters,
-    // and teaming up against skilled fighters.
+    targetPriorities: [
+      {
+        // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters,
+        // and teaming up against skilled fighters.
+        targets: ["PCSpellcasters", "PCsPreferringStrong"],
+      },
+    ],
     //
     // use potions!
     // use kit abilities
@@ -100,21 +84,38 @@ export const OGRE_HALF: RawCreature = {
     "X#CHOP", // Chop The Lady Ogre
     "X#CRU11", // Cru The Lady Ogre
   ],
-  notEnforceFiles: ["L#CHIEN"],
+  // notEnforceFiles: ["L#CHIEN"],
   adjustments: [
     {
+      // Veteran with 5+3 Hit Dice.
       files: ["BDOGRE04"],
       data: {
         level1: 5,
         bonusHp: 3,
-        xpv: 520,
         strength: 18,
         exceptionalStrength: 100,
+        xpv: 420,
       },
     },
+    // Kader with 6 Hit Dice.
     {
+      // Boss, level 9 fighter
       files: ["L#CHIEN"],
-      data: { level1: 8 },
+      data: {
+        level1: 9,
+        strength: 18,
+        exceptionalStrength: 100,
+        class: "FIGHTER",
+        resistFire: 50,
+        resistCold: 50,
+        resistMissile: 100,
+        xpv: 4000,
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYLONGSWORD", value: 4 }],
+      },
     },
+    // Shaman, a fighter/priest with 5+3 Hit Dice and the spells of a 4th-level priest
+    // Acolyte shamans, with 4+6 Hit Dice and the spells of a 2nd-level priest.
   ],
 };

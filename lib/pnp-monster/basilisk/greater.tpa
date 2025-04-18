@@ -154,7 +154,6 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)
 			LPF clearProficiencies END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=10
@@ -186,8 +185,6 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 					perfect2weapon=1
-				STR_VAR
-					notEnforceFiles
 			END
 			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILGSU END
@@ -196,7 +193,6 @@ BEGIN
 			DEFINE_ARRAY files BEGIN BASILGSU END
 			LPF patchCreatureScript STR_VAR script=ja#m3su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILGSU~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=125
@@ -208,8 +204,6 @@ BEGIN
 						saveBreath=9
 						saveSpell=11
 						summon=1
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

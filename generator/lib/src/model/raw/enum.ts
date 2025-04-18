@@ -1,3 +1,8 @@
+export type RawOverrideCreatureDataField =
+  | "BodyHeat"
+  | "BloodColor"
+  | "PersonalSpace";
+
 export type RawBonusHPHealFlag = "RaiseDead" | "RemoveAllEffects";
 
 export type RawInvisibilityType = "Normal" | "Improved" | "Weak";

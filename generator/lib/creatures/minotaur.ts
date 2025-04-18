@@ -3,11 +3,13 @@ import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
-const id = MonsterEnum.Ogre;
+const id = MonsterEnum.Ogre; //TODO:
 // Script
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
+const leaderWeapon = file(2, id);
+const chiefWeapon = file(3, id);
 
 export const OGRE: RawCreature = {
   name: "Ogre",
@@ -35,13 +37,20 @@ export const OGRE: RawCreature = {
     general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE",
-    gender: "MALE",
     size: "Large",
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    removeItems: ["OGRE1"],
-    removeScripts: ["BDSUM00"],
+    effects: [
+      {
+        opcode: "AttackDamageBonus",
+        type: "Increment",
+        value: 2,
+        global: true,
+      },
+    ],
+    removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16"],
+    removeScripts: ["BDSUM00", "OGRE"],
   },
   items: [
     {
@@ -54,24 +63,28 @@ export const OGRE: RawCreature = {
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
+    {
+      file: leaderWeapon,
+      type: "Melee",
+      diceThrown: 2,
+      diceSize: 6,
+      damageBonus: 3,
+      damageType: "Crushing",
+      speed: 3,
+      abilityFlags: ["AddStrengthBonus"],
+    },
+    {
+      file: chiefWeapon,
+      type: "Melee",
+      diceThrown: 2,
+      diceSize: 6,
+      damageBonus: 6,
+      damageType: "Crushing",
+      speed: 3,
+      abilityFlags: ["AddStrengthBonus"],
+    },
   ],
   files: [
-    "BDOGRE02",
-    "BDOGREDS",
-    "NEOGRE",
-    "OGREBERZ",
-    "OGREGRSU",
-    "X3HOGREC", // Ogre Champion
-    "X3HOGREL", // Ogre King
-    "BDOGRE06", // Ogre Chieftain
-    "BDARBING", // Arbinge
-    "BDBERTOR", // Betror
-    "BDCHESKI", // Cheski
-    "BDEINER", // Einer
-    "BDSLUG", // Slug
-    "BDSLUG2", // Slug
-    "BDWAVE13", // Ogre Crusader
-    "BDYAROK", // Yarok
+    "L#MCMIN", // Minotaur
   ],
-  adjustments: [{ files: ["OGREGRSU"], summon: true }],
 };

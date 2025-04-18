@@ -1,6 +1,7 @@
 import { TargetStatusName } from "../../../config/target-name";
 import { WeaponSlot } from "../ids/slot";
 import { GrabConfig } from "../raw/grab";
+import { TargetPriority } from "./target";
 
 export interface CreatureAttack {
   /**
@@ -16,7 +17,7 @@ export interface CreatureAttack {
   /**
    * Target priorities in combat
    */
-  targetStatusPriorities: TargetStatusName[];
+  targetPriorities: TargetPriority[];
 
   /**
    * Allow to select a specific weapon slot when target is affected by a list of status

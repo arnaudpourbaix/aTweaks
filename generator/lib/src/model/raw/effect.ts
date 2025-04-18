@@ -34,6 +34,7 @@ import {
   RawKillTargetDeathType,
   RawLightingEffect,
   RawLightingEffectTarget,
+  RawOverrideCreatureDataField,
   RawPoisonType,
   RawPortraitIcon,
   RawProficiencyType,
@@ -378,6 +379,17 @@ export type MakeUnselectableEffect = RawBaseEffect & {
   disableDialog: boolean;
 };
 
+export type NoCollisionDetectionEffect = RawBaseEffect & {
+  opcode: "NoCollisionDetection";
+  passWalls: boolean;
+};
+
+export type OverrideCreatureDataEffect = RawBaseEffect & {
+  opcode: "OverrideCreatureData";
+  field: RawOverrideCreatureDataField;
+  value: number;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -408,6 +420,7 @@ export type ParamLessEffect = RawBaseEffect & {
     | "RemoveParalysis"
     | "RemoveSpecificAreaEffect"
     | "RemoveSpell"
+    | "SelectionCircleRemoval"
     | "Slow"
     | "Stun"
     | "Stun90HP"
@@ -439,6 +452,8 @@ export type RawEffect =
   | MakeUnselectableEffect
   | MinimumHPEffect
   | ModifierTypeEffect
+  | NoCollisionDetectionEffect
+  | OverrideCreatureDataEffect
   | PlayVisualEffect
   | PoisonEffect
   | PoisonResistanceModifierEffect

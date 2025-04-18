@@ -34,7 +34,6 @@ BEGIN
 			REMOVE_CRE_ITEM ~P1-4~
 			ADD_CRE_ITEM ~ja#1m12~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clearProficiencies END
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 			LPF patchCreature
 				INT_VAR
 					level1=1
@@ -65,11 +64,8 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					enforce=1
-				STR_VAR
-					notEnforceFiles
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWISU~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=9
@@ -81,12 +77,9 @@ BEGIN
 						saveBreath=17
 						saveSpell=17
 						summon=1
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOG~) BEGIN 
-			DEFINE_ARRAY notEnforceFiles BEGIN  END
 				LPF patchCreature
 					INT_VAR
 						hp=9
@@ -97,8 +90,6 @@ BEGIN
 						saveBreath=17
 						saveSpell=17
 						class=IDS_OF_SYMBOL (~class~ ~INNOCENT~)
-					STR_VAR
-						notEnforceFiles
 				END
 			END
 		BUT_ONLY_IF_IT_CHANGES

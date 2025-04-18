@@ -29,6 +29,7 @@ import {
   KillTargetDeathTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
+  OverrideCreatureDataFieldEnum,
   PoisonTypeEnum,
   PortraitIconEnum,
   ProficiencyTypeEnum,
@@ -61,6 +62,8 @@ import {
   MakeUnselectableEffect,
   MinimumHPEffect,
   ModifierTypeEffect,
+  NoCollisionDetectionEffect,
+  OverrideCreatureDataEffect,
   PlayVisualEffect,
   PoisonEffect,
   PolymorphIntoSpecificEffect,
@@ -420,6 +423,18 @@ export class EffectService {
         if (!(<MakeUnselectableEffect>effect).disableDialog)
           result.parameter1 = `1`;
         result.parameter2 = `1`;
+        break;
+      case EffectTypeEnum.NoCollisionDetection:
+        if (!(<NoCollisionDetectionEffect>effect).passWalls)
+          result.parameter2 = `1`;
+        break;
+      case EffectTypeEnum.OverrideCreatureData:
+        result.parameter1 = `${(<OverrideCreatureDataEffect>effect).value}`;
+        result.parameter2 = `${
+          OverrideCreatureDataFieldEnum[
+            (<OverrideCreatureDataEffect>effect).field
+          ]
+        }`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:
       case EffectTypeEnum.ProtectionFromBackstab:

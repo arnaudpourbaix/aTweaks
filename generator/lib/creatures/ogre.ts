@@ -20,7 +20,7 @@ export const OGRE: RawCreature = {
   data: {
     level1: 4,
     bonusHp: 1,
-    strength: 19,
+    strength: 18,
     dexterity: 8,
     constitution: 16,
     intelligence: 8,
@@ -37,7 +37,6 @@ export const OGRE: RawCreature = {
     general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE",
-    gender: "MALE",
     size: "Large",
   },
   additionalData: {
@@ -50,7 +49,7 @@ export const OGRE: RawCreature = {
         global: true,
       },
     ],
-    removeItems: ["OGRE1", "B1-2", "B2-16"],
+    removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16"],
     removeScripts: ["BDSUM00", "OGRE"],
   },
   items: [
@@ -88,35 +87,30 @@ export const OGRE: RawCreature = {
   files: [
     "AC#FP2O1",
     "AC#FP2O2",
+    "BDOGRE01",
+    "BDOGRE1D",
+    "BDOGREF",
+    "BDOGREM",
+    "BPOGRE01",
+    "BSOGRED",
     "AC#FP2OT", // Thrall
     "AC#FPOG4", // Bagut
     "AC#WRIM1", // Wrimbog
     "ACQ13002", // Ugh
-    "BDARBING", // Arbinge
-    "BDBERTOR", // Betror
     "BDCCOGR1", // Ogre Crusader
-    "BDCHESKI", // Cheski
-    "BDEINER", // Einer
-    "BDOGRE01",
-    "BDOGRE1D",
-    "BDOGREF",
-    "BDOGREM", // Ogre Leader
-    "BDSLUG", // Slug
-    "BDSLUG2", // Slug
     "BDSOGR1", //TODO:
     "BDSOGR2", //TODO:
-    "BDWAVE13", // Ogre Crusader
-    "BDYAROK", // Yarok
-    "BPOGRE01",
-    "BSOGRED",
-    "GORF", // Gorf
-    "HACK", // Hack
-    "KROTAN", // Krotan
-    "L#MCMIN", // Minotaur
-    "LARZE", // Larze
-    "NTKROTAN", // Krotan
+    "GORF", //TODO: Gorf
+    "HACK", //TODO: Hack
+    "LARZE", //TODO: Larze
+    "KROTAN", //TODO: Krotan
+    "NTKROTAN", //TODO: Krotan
     "NTOGREDA", // Daddy
     "NTWELT", // Welt
+    "WELT", // Welt
+    "OOPAH", // The Amazing Oopah
+    "OOPAH2", // The Amazing Oopah
+    "SEWERF4", // Ogre Leader
     "OGRE",
     "OGRE02",
     "OGRE03",
@@ -132,29 +126,46 @@ export const OGRE: RawCreature = {
     "OGRE_C",
     "OGRE_D",
     "OGRE_E",
-    "OOPAH", // The Amazing Oopah
-    "OOPAH2", // The Amazing Oopah
     "PLYOGRE",
-    "SEWERF4", // Ogre Leader
-    "WELT", // Welt
     "WIOGRE01",
     "X3HOGRE",
     "X3HOGRE2",
     "X3HOGRED",
   ],
-  // leader is a 7 Hit Dice monster with Armor Class 3. XP 650
-  // He inflicts 2d6+3 points of damage per attack.
-  //
-  // chieftain is a 7+4 Hit Dice monster with Armor Class 2. XP 975
-  // He inflicts 2d6+6 points of damage per attack.
+  notEnforceFiles: ["AC#FP2OT"],
   adjustments: [
     { files: ["X3HOGRE2"], noScript: true },
     { files: ["OOPAH", "WELT"], data: { class: "INNOCENT" } },
     { files: ["OOPAH", "OOPAH2"], data: { level1: 5 } },
     {
-      files: ["SEWERF4", "BDOGREM"],
-      data: { level1: 7, ac: 3, xpv: 650 },
+      // leader is a 7 Hit Dice monster with Armor Class 3. XP 650
+      // He inflicts 2d6+3 points of damage per attack.
+      files: ["SEWERF4", "BDOGREM", "ACQ13002", "BDCCOGR1", "NTOGREDA"],
+      data: {
+        level1: 7,
+        ac: 3,
+        strength: 18,
+        exceptionalStrength: 100,
+        xpv: 650,
+      },
       additionalData: { itemSlots: [{ file: leaderWeapon, slot: "WEAPON1" }] },
+    },
+    {
+      // chieftain is a 7+4 Hit Dice monster with Armor Class 2. XP 975
+      // He inflicts 2d6+6 points of damage per attack.
+      files: ["AC#WRIM1"],
+      data: {
+        level1: 7,
+        ac: 2,
+        strength: 18,
+        exceptionalStrength: 100,
+        xpv: 975,
+      },
+      additionalData: { itemSlots: [{ file: chiefWeapon, slot: "WEAPON1" }] },
+    },
+    {
+      files: ["AC#WRIM1"],
+      data: { level1: 10 },
     },
     { files: ["AC#FP2OT"], noWeapon: true },
   ],

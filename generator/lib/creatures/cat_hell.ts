@@ -51,7 +51,6 @@ export const HELLCAT: RawCreature = {
       type: "Melee",
       diceThrown: 1,
       diceSize: 4,
-      damageBonus: 1,
       damageType: "Slashing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],

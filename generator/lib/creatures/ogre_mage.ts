@@ -11,7 +11,6 @@ const digestiveEnzyme = file(1, id);
 const acidicEnzyme = file(2, id);
 // Items
 const mainWeapon = file(1, id);
-
 export const OGRE_MAGE: RawCreature = {
   name: "Ogre Mage",
   bafFile: `lib/pnp-monster/ogre/${script}`,
@@ -63,5 +62,32 @@ export const OGRE_MAGE: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
-  files: ["", "", "", "", "", "", ""],
+  files: [
+    "BDMURS", // Murs
+    "BDMURS2", // Murs
+    "BDOGRE03", // Ogre Mage
+    "BDOGRE05", // Ogre Shaman
+    "BDWAVE16", // Ogre Mage
+    "BPOGMA01", // Ogre Mage
+    "DROTH", // Droth
+    "DWSST2", // <Invalid Strref -1>
+    "KAHRK", // Kahrk
+    "KROTAN", // Krotan
+    "NTFOREOG", // Ogre Mage
+    "NTKROTAN", // Krotan
+    "OGREMA", // Ogre Mage
+    "OGREMA02", // Ogre Mage
+    "OGREMA03", // Ogre Mage
+    "OGREMASU", // Ogre Mage
+    "OGREMA_A", // Ogre Mage
+    "OGREMA_B", // Ogre Mage
+    "OGREMA_C", // Ogre Mage
+    "OGREMA_D", // Ogre Mage
+    "OGREMBA", // Ogre Mage
+    "OGRMBA", // Ogre Mage
+    "UBOGMA01", // Ogre Mage
+    "UBOGMA02", // Ogre Mage
+    "WIGENTLE", // The Gentleman
+    "WIOGMA01", // Yondak Master of Portals
+  ],
 };

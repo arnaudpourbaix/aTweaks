@@ -1,5 +1,10 @@
-import { TARGET_LISTS, TARGET_STATUS } from "../../config/target-config";
+import {
+  DEFAULT_STATUS_ORDER,
+  TARGET_LISTS,
+  TARGET_STATUS,
+} from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
+import { TargetList, TargetPriority } from "../model/final/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";
@@ -76,17 +81,62 @@ export class TargetService {
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(creature: RawCreature): TargetStatusName[] {
-    if (creature.attack?.targetStatusPriorities)
-      return creature.attack.targetStatusPriorities;
-    const results: TargetStatusName[] = [];
-    if (creature.attack?.grab) results.push("Grabbed");
-    if (!!creature.data.intelligence && creature.data.intelligence >= 8) {
-      results.push(
-        ...(["Slowed", "Able", "Held", "Stunned"] as TargetStatusName[])
-      );
+  getTargetPriorities(creature: RawCreature): TargetPriority[] {
+    const defaults = this.getDefaultStatus(creature);
+    const targetPriorities = creature.attack?.targetPriorities ?? [];
+    const results: TargetPriority[] = [];
+    for (const t of targetPriorities) {
+      if (!t.status && !t.targets)
+        throw new Error(`Empty targetPriority is not allowed !`);
+      else if (!t.targets) {
+        results.push(...this.getTargetPrioritiesFromStatusList(t.status!));
+      } else if (!t.status) {
+        results.push({
+          targets: t.targets,
+          status: t.targets.every((i) => i === "Players")
+            ? defaults.allStatus
+            : defaults.targetStatus,
+        });
+      } else {
+        results.push({
+          status: t.status,
+          targets: t.targets,
+        });
+      }
     }
-    results.push(...(["NoCheck", "Sleep"] as TargetStatusName[]));
+    const defaultTargetStatus = this.getLeftoversStatusList(
+      defaults.targetStatus,
+      "NearestEnemies",
+      results
+    );
+    if (defaultTargetStatus.length) {
+      results.push({
+        targets: ["NearestEnemies"],
+        status: defaultTargetStatus,
+      });
+    }
+    const defaultPlayerStatus = this.getLeftoversStatusList(
+      defaults.playerStatus,
+      "Players",
+      results
+    );
+    if (defaultPlayerStatus.length) {
+      results.push({ targets: ["Players"], status: defaultPlayerStatus });
+    }
+    return results;
+  }
+
+  private getLeftoversStatusList(
+    list: TargetStatusName[],
+    target: TargetListName,
+    priorities: TargetPriority[]
+  ): TargetStatusName[] {
+    const results = list.filter(
+      (s) =>
+        !priorities.some(
+          (p) => p.targets.includes(target) && p.status.includes(s)
+        )
+    );
     return results;
   }
 
@@ -94,5 +144,55 @@ export class TargetService {
     const list = TARGET_LISTS.find((l) => l.name === name);
     if (!list) throw new Error(`Target list ${name} is not defined !`);
     return list.value;
+  }
+
+  private getDefaultStatus(creature: RawCreature): {
+    allStatus: TargetStatusName[];
+    targetStatus: TargetStatusName[];
+    playerStatus: TargetStatusName[];
+  } {
+    const allStatus = DEFAULT_STATUS_ORDER.filter((status) => {
+      const statusDetails = TARGET_STATUS.find(
+        (t) => t.status === status
+      ) as TargetStatus;
+      const grab = status !== "Grabbed" || !!creature.attack?.grab;
+      const intelligence =
+        !statusDetails.requireIntelligence ||
+        (!!creature.data.intelligence && creature.data.intelligence >= 8);
+      return grab && intelligence;
+    });
+    const targetStatus = this.getFilteredStatusNameList(allStatus, false);
+    const playerStatus = this.getFilteredStatusNameList(allStatus, true);
+    return { targetStatus, playerStatus, allStatus };
+  }
+
+  private getTargetPrioritiesFromStatusList(
+    status: TargetStatusName[]
+  ): TargetPriority[] {
+    const results: TargetPriority[] = [];
+    const targetStatus = this.getFilteredStatusNameList(status, false);
+    const playerStatus = this.getFilteredStatusNameList(status, true);
+    if (targetStatus.length) {
+      results.push({
+        targets: ["NearestEnemies"],
+        status: targetStatus,
+      });
+    }
+    if (playerStatus.length) {
+      results.push({ targets: ["Players"], status: playerStatus });
+    }
+    return results;
+  }
+
+  private getFilteredStatusNameList(
+    list: TargetStatusName[],
+    canOnlyTargetPlayer: boolean
+  ): TargetStatusName[] {
+    return list.filter((status) => {
+      const statusDetails = TARGET_STATUS.find(
+        (t) => t.status === status
+      ) as TargetStatus;
+      return statusDetails.canOnlyTargetPlayer === canOnlyTargetPlayer;
+    });
   }
 }

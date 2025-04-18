@@ -1,5 +1,11 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum OverrideCreatureDataFieldEnum {
+  BodyHeat = 1,
+  BloodColor = 2,
+  PersonalSpace = 4,
+}
+
 export enum InvisibilityTypeEnum {
   Normal = 0,
   Improved = 1,

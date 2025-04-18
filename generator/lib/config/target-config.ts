@@ -1,7 +1,7 @@
 import { TargetStatus } from "../src/model/raw/target";
 import { GLOBAL_CONFIG } from "./generate";
 import { GRAB_DEFAULT_CONFIG } from "./grab";
-import { TargetListName } from "./target-name";
+import { TargetListName, TargetStatusName } from "./target-name";
 
 export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
   {
@@ -82,10 +82,21 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
   },
 ];
 
+export const DEFAULT_STATUS_ORDER: TargetStatusName[] = [
+  "Grabbed",
+  "Slowed",
+  "Able",
+  "Held",
+  "Stunned",
+  "NoCheck",
+  "Sleep",
+];
+
 export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Grabbed",
     canOnlyTargetPlayer: false,
+    requireIntelligence: false,
     triggers: [],
     targetTriggers: [
       {
@@ -97,6 +108,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Slowed",
     canOnlyTargetPlayer: false,
+    requireIntelligence: true,
     triggers: [],
     targetTriggers: [
       {
@@ -108,6 +120,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Able",
     canOnlyTargetPlayer: false,
+    requireIntelligence: true,
     triggers: [],
     targetTriggers: [
       {
@@ -150,6 +163,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Held",
     canOnlyTargetPlayer: false,
+    requireIntelligence: true,
     triggers: [],
     targetTriggers: [
       {
@@ -161,6 +175,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Stunned",
     canOnlyTargetPlayer: false,
+    requireIntelligence: true,
     triggers: [],
     targetTriggers: [
       {
@@ -172,6 +187,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "PanicConfused",
     canOnlyTargetPlayer: false,
+    requireIntelligence: true,
     triggers: [],
     targetTriggers: [
       {
@@ -196,6 +212,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "Sleep",
     canOnlyTargetPlayer: true,
+    requireIntelligence: false,
     triggers: [
       {
         name: "Allegiance",
@@ -212,6 +229,7 @@ export const TARGET_STATUS: TargetStatus[] = [
   {
     status: "NoCheck",
     canOnlyTargetPlayer: false,
+    requireIntelligence: false,
     triggers: [],
     targetTriggers: [],
   },

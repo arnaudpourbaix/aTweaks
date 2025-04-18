@@ -689,12 +689,15 @@ export class WeiduCreatureService extends AbstractWeiduService {
       parent: p.parent,
       creature: p.creature,
     });
-    this.add(
-      p.lines,
-      `DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(
-        " "
-      )} END`
-    );
+    if (p.creature.notEnforceFiles.length) {
+      this.add(
+        p.lines,
+        `DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(
+          " "
+        )} END`,
+        p.tab
+      );
+    }
     this.add(p.lines, `LPF patchCreature`, p.tab);
     this.add(p.lines, `INT_VAR`, p.tab + 1);
     if (p.summon) p.data.xpv = 0;
@@ -712,8 +715,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (p.summon) this.add(p.lines, `summon=1`, p.tab + 2);
     if (p.creature.attack.dualWielding && !p.parent)
       this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
-    this.add(p.lines, "STR_VAR", p.tab + 1);
-    this.add(p.lines, "notEnforceFiles", p.tab + 2);
+    if (p.creature.notEnforceFiles.length) {
+      this.add(p.lines, "STR_VAR", p.tab + 1);
+      this.add(p.lines, "notEnforceFiles", p.tab + 2);
+    }
     this.add(p.lines, "END", p.tab);
   }
 
@@ -856,10 +861,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     for (const f of adjustment.files)
       if (!creature.files.includes(f))
         throw new Error(`Unknown adjustment file ${f}`);
-    const fileEquals = adjustment.files.map(
-      (f) => `("%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~)`
-    );
-    this.add(lines, `PATCH_IF ${fileEquals.join(" OR ")} BEGIN `, tab++);
+    this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
     if (adjustment.summon) {
       adjustment.data = adjustment.data ?? {};
       adjustment.data.xpv = 0;

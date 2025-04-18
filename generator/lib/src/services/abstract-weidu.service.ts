@@ -12,16 +12,25 @@ export class AbstractWeiduService {
     exclude: boolean
   ) {
     if (!files.length) return this.add(lines, code, tab);
+    this.startConditionalSourceRes(lines, tab, files, exclude);
+    this.add(lines, code, tab + 1);
+    this.add(lines, "END", tab);
+  }
+
+  protected startConditionalSourceRes(
+    lines: CodeLine[],
+    tab: number,
+    files: string[],
+    exclude: boolean
+  ) {
     const fileEquals = files.map(
-      (f) => `(${exclude ? "NOT" : ""} "%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~)`
+      (f) => `(${exclude ? "NOT " : ""}"%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~)`
     );
     this.add(
       lines,
-      `PATCH_IF ${fileEquals.join(exclude ? " AND" : " OR")} BEGIN `,
+      `PATCH_IF ${fileEquals.join(exclude ? " AND " : " OR ")} BEGIN `,
       tab
     );
-    this.add(lines, code, tab + 1);
-    this.add(lines, "END", tab);
   }
 
   protected add(lines: CodeLine[], code: string, tab?: number) {

@@ -202,7 +202,7 @@ BEGIN ~Extraction~ DESIGNATED 9999
             READ_LONG 0x28 animation
             READ_STRREF 0x08 name
             // PATCH_IF class = 183 BEGIN
-            PATCH_IF class = 125 OR animation = 0x9000 BEGIN
+            PATCH_IF class = 126 OR animation = 0x2200 BEGIN
             //PATCH_IF animation = 0x7F0A BEGIN
                 //PATCH_PRINT ~"%SOURCE_RES%",~
                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
@@ -237,7 +237,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/wolf.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/worg.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dire.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dire.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/dread.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/winter.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/vampiric.tpa"
