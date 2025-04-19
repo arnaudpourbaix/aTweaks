@@ -42,14 +42,14 @@ export const OGRE: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    effects: [
-      {
-        opcode: "AttackDamageBonus",
-        type: "Increment",
-        value: 2,
-        global: true,
-      },
-    ],
+    // effects: [
+    //   {
+    //     opcode: "AttackDamageBonus",
+    //     type: "Increment",
+    //     value: 2,
+    //     global: true,
+    //   },
+    // ],
     removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16"],
     removeScripts: ["BDSUM00", "OGRE"],
   },
@@ -77,7 +77,6 @@ export const OGRE: RawCreature = {
       type: "Melee",
       diceThrown: 2,
       diceSize: 6,
-      damageBonus: 3,
       damageType: "Crushing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
@@ -87,7 +86,6 @@ export const OGRE: RawCreature = {
       type: "Melee",
       diceThrown: 2,
       diceSize: 6,
-      damageBonus: 6,
       damageType: "Crushing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
@@ -147,13 +145,13 @@ export const OGRE: RawCreature = {
     { files: ["OOPAH", "WELT"], data: { class: "INNOCENT" } },
     { files: ["OOPAH", "OOPAH2"], data: { level1: 5 } },
     {
-      // leader is a 7 Hit Dice monster with Armor Class 3, Strenth 18/100, XP 650
+      // leader is a 7 Hit Dice monster with Armor Class 3, Strenth 18/50, XP 650
       // He inflicts 2d6+3 points of damage per attack.
       files: ["SEWERF4", "BDOGREM", "ACQ13002", "BDCCOGR1", "NTOGREDA"],
       data: {
         level1: 7,
         ac: 3,
-        exceptionalStrength: 100,
+        exceptionalStrength: 50,
         xpv: 650,
       },
       additionalData: { itemSlots: [{ file: leaderWeapon, slot: "WEAPON1" }] },
