@@ -1,4 +1,7 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { KIT_ABILITIES } from "../../config/kit-ability";
+import { POTIONS } from "../../config/potion";
+import { StringReferenceEnum } from "../../config/stringRef";
 import { TARGET_STATUS } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { CreatureAbility } from "../model/final/ability";
@@ -83,6 +86,14 @@ export class StatementService {
     this.execute(
       this.creatureAbilities,
       "creatureAbilities",
+      statements,
+      creature,
+      options
+    );
+    this.execute(this.potions, "potions", statements, creature, options);
+    this.execute(
+      this.kitAbilities,
+      "kitAbilities",
       statements,
       creature,
       options
@@ -618,6 +629,64 @@ export class StatementService {
         responses,
         targets,
       });
+    }
+  }
+
+  private potions(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    if (!creature.usePotions) return;
+    for (const potion of POTIONS) {
+      for (const file of potion.files) {
+        const triggers: Triggers.Trigger[] = [
+          { name: "HasItem", params: [file, "Myself"] },
+          this.factory.globalRoundTimerNotExpired(),
+          ...(potion.triggers ?? []),
+        ];
+        const actions: Actions.Action[] = [
+          ...(potion.actions ?? []),
+          {
+            name: "DisplayStringHead",
+            params: ["Myself", `@${StringReferenceEnum.QuaffPotion}`],
+          },
+          { name: "UseItem", params: [file, "Myself"] },
+          this.factory.setGlobalRoundTimer(),
+        ];
+        statements.push({
+          comment: potion.name,
+          triggers,
+          responses: this.factory.response(actions),
+        });
+      }
+    }
+  }
+
+  private kitAbilities(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    if (!creature.useKitAbilities) return;
+    for (const ability of KIT_ABILITIES) {
+      for (const file of ability.files) {
+        const triggers: Triggers.Trigger[] = [
+          { name: "HaveSpellRES", params: [file] },
+          this.factory.globalRoundTimerNotExpired(),
+          ...(ability.triggers ?? []),
+        ];
+        const actions: Actions.Action[] = [
+          ...(ability.actions ?? []),
+          { name: "SpellRES", params: [file, "Myself"] },
+          this.factory.setGlobalRoundTimer(),
+        ];
+        statements.push({
+          comment: ability.name,
+          triggers,
+          responses: this.factory.response(actions),
+        });
+      }
     }
   }
 

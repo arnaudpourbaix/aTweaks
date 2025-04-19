@@ -80,21 +80,20 @@ BEGIN
 					enforce=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDISPBP~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=9
-						strength=19
-						constitution=19
-						hp=117
-						ac=2
-						thac0=11
-						xpv=1200
-						saveDeath=7
-						saveWand=9
-						savePolymorph=8
-						saveBreath=8
-						saveSpell=10
-				END
+				WRITE_LONG 0x14 1200 // xpv
+				WRITE_SHORT 0x24 117 // hp
+				WRITE_SHORT 0x26 117 // hp
+				WRITE_SHORT 0x46 2 // ac
+				WRITE_SHORT 0x48 2 // ac
+				WRITE_BYTE 0x52 11 // thac0
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 9 // saveWand
+				WRITE_BYTE 0x56 8 // savePolymorph
+				WRITE_BYTE 0x57 8 // saveBreath
+				WRITE_BYTE 0x58 10 // saveSpell
+				WRITE_BYTE 0x234 9 // level1
+				WRITE_BYTE 0x238 19 // strength
+				WRITE_BYTE 0x23d 19 // constitution
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

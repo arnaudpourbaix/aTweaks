@@ -167,17 +167,15 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
 			LPF patchCreatureScript STR_VAR script=ja#m16 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMDUR~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=8
-						hp=84
-						thac0=13
-						saveDeath=10
-						saveWand=12
-						savePolymorph=11
-						saveBreath=12
-						saveSpell=13
-				END
+				WRITE_SHORT 0x24 84 // hp
+				WRITE_SHORT 0x26 84 // hp
+				WRITE_BYTE 0x52 13 // thac0
+				WRITE_BYTE 0x54 10 // saveDeath
+				WRITE_BYTE 0x55 12 // saveWand
+				WRITE_BYTE 0x56 11 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x234 8 // level1
 				SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			END
 		BUT_ONLY_IF_IT_CHANGES

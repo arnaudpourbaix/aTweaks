@@ -71,32 +71,13 @@ BEGIN
 					enforce=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WOLFDISU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						hp=36
-						thac0=17
-						xpv=0
-						saveDeath=13
-						saveWand=15
-						savePolymorph=14
-						saveBreath=16
-						saveSpell=16
-						summon=1
-				END
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~SHAWOL01~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						strength=18
-						hp=36
-						thac0=17
-						xpv=450
-						saveDeath=13
-						saveWand=15
-						savePolymorph=14
-						saveBreath=16
-						saveSpell=16
-				END
+				WRITE_LONG 0x14 450 // xpv
+				WRITE_BYTE 0x238 18 // strength
 				ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 				ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			END

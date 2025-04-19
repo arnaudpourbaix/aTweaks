@@ -62,4 +62,10 @@ export class AbstractWeiduService {
     this.add(lines, code, tab + 1);
     this.add(lines, "END", tab);
   }
+
+  protected getWrite(size: number) {
+    if (size === 1) return "WRITE_BYTE";
+    else if (size === 2) return "WRITE_SHORT";
+    else return "WRITE_LONG";
+  }
 }

@@ -1,5 +1,6 @@
+import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
@@ -13,6 +14,8 @@ export const OGRE_HALF: RawCreature = {
   tpaFile: "lib/pnp-monster/ogre/half",
   tracking: true,
   combatWalk: true,
+  usePotions: true,
+  useKitAbilities: true,
   data: {
     level1: 2,
     bonusHp: 6,
@@ -54,14 +57,10 @@ export const OGRE_HALF: RawCreature = {
   attack: {
     targetPriorities: [
       {
-        // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters,
-        // and teaming up against skilled fighters.
+        // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters and teaming up against skilled fighters.
         targets: ["PCSpellcasters", "PCsPreferringStrong"],
       },
     ],
-    //
-    // use potions!
-    // use kit abilities
   },
   files: [
     "OGREBJOR",
@@ -79,43 +78,83 @@ export const OGRE_HALF: RawCreature = {
     "BDOGRE04", // Half-Ogre Veteran
     "ARGHAI", // Arghain
     "L#CHIEN", // Eglarh
-    "TAZOK", // Tazok
-    "TAZOK2", // Tazok
+    "TAZOK", // Tazok (bandit camp)
+    "TAZOK2", // Tazok (finale fight)
     "X#CHOP", // Chop The Lady Ogre
     "X#CRU11", // Cru The Lady Ogre
   ],
-  // notEnforceFiles: ["L#CHIEN"],
   adjustments: [
     {
       // Veteran with 5+3 Hit Dice.
-      files: ["BDOGRE04"],
+      files: ["BDOGRE04", "ARGHAI", "X#CHOP", "X#CRU11"],
       data: {
         level1: 5,
         bonusHp: 3,
         strength: 18,
-        exceptionalStrength: 100,
-        xpv: 420,
+        ac: 3,
+        xpv: 520,
       },
     },
-    // Kader with 6 Hit Dice.
+    {
+      files: ["ARGHAI"],
+      data: {
+        exceptionalStrength: 100,
+      },
+    },
+    {
+      files: ["BDOGRE04"],
+      data: {
+        exceptionalStrength: 83,
+      },
+    },
+    {
+      files: ["X#CHOP", "X#CRU11"],
+      data: {
+        strength: 19,
+      },
+    },
     {
       // Boss, level 9 fighter
-      files: ["L#CHIEN"],
+      files: ["TAZOK", "TAZOK2", "L#CHIEN"],
       data: {
         level1: 9,
         strength: 18,
-        exceptionalStrength: 100,
+        ac: 10,
         class: "FIGHTER",
+        morale: 20,
+        xpv: 4000,
+      },
+    },
+    {
+      // Tazok, level 9 berserker
+      files: ["TAZOK", "TAZOK2"],
+      data: {
+        kit: "BERSERKER",
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 5 }],
+        memorizedSpells: [{ file: SPELLS.Enrage, memorizedCount: 1 }],
+      },
+    },
+    {
+      // Tazok, level 11 berserker
+      files: ["TAZOK2"],
+      data: {
+        level1: 11,
+        resistFire: 70,
+      },
+    },
+    {
+      // Eglarh, level 9 fighter
+      files: ["L#CHIEN"],
+      data: {
         resistFire: 50,
         resistCold: 50,
         resistMissile: 100,
-        xpv: 4000,
       },
       additionalData: {
-        proficiencies: [{ type: "PROFICIENCYLONGSWORD", value: 4 }],
+        proficiencies: [{ type: "PROFICIENCYLONGSWORD", value: 5 }],
       },
     },
-    // Shaman, a fighter/priest with 5+3 Hit Dice and the spells of a 4th-level priest
-    // Acolyte shamans, with 4+6 Hit Dice and the spells of a 2nd-level priest.
   ],
 };

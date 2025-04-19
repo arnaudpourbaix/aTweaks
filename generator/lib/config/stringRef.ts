@@ -1,6 +1,7 @@
 export enum StringReferenceEnum {
   Grab = 3000,
   Grabbed = 3001,
+  QuaffPotion = 3002,
   StreamOfAcidicEnzymes = 4000,
   AcidicDigestiveEnzymes = 4001,
   PetrifyingGaze = 4002,

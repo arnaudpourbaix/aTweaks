@@ -17,6 +17,7 @@ export const OGRE: RawCreature = {
   tpaFile: "lib/pnp-monster/ogre/ogre",
   tracking: true,
   combatWalk: true,
+  usePotions: true,
   data: {
     level1: 4,
     bonusHp: 1,
@@ -51,6 +52,14 @@ export const OGRE: RawCreature = {
     ],
     removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16"],
     removeScripts: ["BDSUM00", "OGRE"],
+  },
+  attack: {
+    targetPriorities: [
+      {
+        // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters and teaming up against skilled fighters.
+        targets: ["PCSpellcasters", "PCsPreferringStrong"],
+      },
+    ],
   },
   items: [
     {
@@ -138,26 +147,25 @@ export const OGRE: RawCreature = {
     { files: ["OOPAH", "WELT"], data: { class: "INNOCENT" } },
     { files: ["OOPAH", "OOPAH2"], data: { level1: 5 } },
     {
-      // leader is a 7 Hit Dice monster with Armor Class 3. XP 650
+      // leader is a 7 Hit Dice monster with Armor Class 3, Strenth 18/100, XP 650
       // He inflicts 2d6+3 points of damage per attack.
       files: ["SEWERF4", "BDOGREM", "ACQ13002", "BDCCOGR1", "NTOGREDA"],
       data: {
         level1: 7,
         ac: 3,
-        strength: 18,
         exceptionalStrength: 100,
         xpv: 650,
       },
       additionalData: { itemSlots: [{ file: leaderWeapon, slot: "WEAPON1" }] },
     },
     {
-      // chieftain is a 7+4 Hit Dice monster with Armor Class 2. XP 975
+      // chieftain is a 7+4 Hit Dice monster with Armor Class 2, Strenth 18/100, XP 975
       // He inflicts 2d6+6 points of damage per attack.
       files: ["AC#WRIM1"],
       data: {
         level1: 7,
+        bonusHp: 4,
         ac: 2,
-        strength: 18,
         exceptionalStrength: 100,
         xpv: 975,
       },

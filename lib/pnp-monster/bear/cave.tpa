@@ -117,32 +117,21 @@ BEGIN
 			DEFINE_ARRAY files BEGIN BDBEARCA END
 			LPF patchCreatureScript STR_VAR script=ja#m6 slot=General files END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARCASU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						hp=60
-						thac0=15
-						xpv=0
-						saveDeath=11
-						saveWand=13
-						savePolymorph=12
-						saveBreath=13
-						saveSpell=14
-						summon=1
-				END
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=8
-						hp=80
-						thac0=13
-						xpv=900
-						saveDeath=10
-						saveWand=12
-						savePolymorph=11
-						saveBreath=12
-						saveSpell=13
-				END
+				WRITE_LONG 0x14 900 // xpv
+				WRITE_SHORT 0x24 80 // hp
+				WRITE_SHORT 0x26 80 // hp
+				WRITE_BYTE 0x52 13 // thac0
+				WRITE_BYTE 0x54 10 // saveDeath
+				WRITE_BYTE 0x55 12 // saveWand
+				WRITE_BYTE 0x56 11 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x234 8 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

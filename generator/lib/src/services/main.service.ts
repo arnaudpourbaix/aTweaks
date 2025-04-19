@@ -98,6 +98,8 @@ export class MainService {
       walk: false,
       combatWalk: true,
       restHeal: false,
+      usePotions: false,
+      useKitAbilities: false,
       hideInShadows: false,
       initActions: [],
       autoGenerate: {

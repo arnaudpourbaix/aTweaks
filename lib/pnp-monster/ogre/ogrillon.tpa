@@ -82,36 +82,33 @@ BEGIN
 			DEFINE_ARRAY files BEGIN OGRELESU END
 			LPF patchCreatureScript STR_VAR script=ja#m28su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~OGRELESU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=3
-						hp=28
-						thac0=17
-						xpv=0
-						saveDeath=13
-						saveWand=15
-						savePolymorph=14
-						saveBreath=16
-						saveSpell=16
-						summon=1
-				END
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_SHORT 0x24 28 // hp
+				WRITE_SHORT 0x26 28 // hp
+				WRITE_BYTE 0x52 17 // thac0
+				WRITE_BYTE 0x54 13 // saveDeath
+				WRITE_BYTE 0x55 15 // saveWand
+				WRITE_BYTE 0x56 14 // savePolymorph
+				WRITE_BYTE 0x57 16 // saveBreath
+				WRITE_BYTE 0x58 16 // saveSpell
+				WRITE_BYTE 0x234 3 // level1
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~GNARL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~HAIRTO~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=5
-						strength=18
-						exceptionalStrength=95
-						constitution=15
-						hp=45
-						thac0=15
-						xpv=420
-						saveDeath=11
-						saveWand=13
-						savePolymorph=12
-						saveBreath=13
-						saveSpell=14
-				END
+				WRITE_LONG 0x14 420 // xpv
+				WRITE_SHORT 0x24 45 // hp
+				WRITE_SHORT 0x26 45 // hp
+				WRITE_BYTE 0x52 15 // thac0
+				WRITE_BYTE 0x54 11 // saveDeath
+				WRITE_BYTE 0x55 13 // saveWand
+				WRITE_BYTE 0x56 12 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 14 // saveSpell
+				WRITE_BYTE 0x234 5 // level1
+				WRITE_BYTE 0x238 18 // strength
+				WRITE_BYTE 0x239 95 // exceptionalStrength
+				WRITE_BYTE 0x23d 15 // constitution
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

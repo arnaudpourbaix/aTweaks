@@ -4,6 +4,7 @@ import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
 import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
+import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
@@ -52,6 +53,16 @@ export interface RawCreature {
    * Fully heal while resting (default: false)
    */
   restHeal?: boolean;
+
+  /**
+   * Can use potions (default: false)
+   */
+  usePotions?: boolean;
+
+  /**
+   * Can use kit abilities (default: false)
+   */
+  useKitAbilities?: boolean;
 
   /**
    * Able to hide in shadows (default: false)
@@ -163,6 +174,7 @@ export interface RawCreatureData {
   general?: GeneralIdentifier;
   race?: RaceIdentifier;
   class?: ClassIdentifier;
+  kit?: KitIdentifier;
   gender?: GenderIdentifier;
   size?: CreatureSize;
   animation?: AnimationIdentifiers;

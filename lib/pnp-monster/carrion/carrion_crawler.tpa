@@ -134,32 +134,21 @@ BEGIN
 			DEFINE_ARRAY files BEGIN CARRIOSU END
 			LPF patchCreatureScript STR_VAR script=ja#m9su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CARRIOSU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						hp=30
-						thac0=17
-						xpv=0
-						saveDeath=13
-						saveWand=15
-						savePolymorph=14
-						saveBreath=16
-						saveSpell=16
-						summon=1
-				END
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CRYPTCRA~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						level1=6
-						hp=60
-						thac0=9
-						xpv=650
-						saveDeath=11
-						saveWand=13
-						savePolymorph=12
-						saveBreath=13
-						saveSpell=14
-				END
+				WRITE_LONG 0x14 650 // xpv
+				WRITE_SHORT 0x24 60 // hp
+				WRITE_SHORT 0x26 60 // hp
+				WRITE_BYTE 0x52 9 // thac0
+				WRITE_BYTE 0x54 11 // saveDeath
+				WRITE_BYTE 0x55 13 // saveWand
+				WRITE_BYTE 0x56 12 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 14 // saveSpell
+				WRITE_BYTE 0x234 6 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

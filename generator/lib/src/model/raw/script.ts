@@ -34,6 +34,8 @@ export type CustomCodeLocation =
   | "handlePanic"
   | "followSummoner"
   | "creatureAbilities"
+  | "potions"
+  | "kitAbilities"
   | "randomWalkNoCombat"
   | "randomWalkCombat"
   | "noActionOutsideOfCombat";

@@ -15,6 +15,7 @@ export const OGRE: RawCreature = {
   tpaFile: "lib/pnp-monster/ogre/ogre",
   tracking: true,
   combatWalk: true,
+  usePotions: true,
   data: {
     level1: 4,
     bonusHp: 1,
@@ -42,6 +43,14 @@ export const OGRE: RawCreature = {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
     removeItems: ["OGRE1"],
     removeScripts: ["BDSUM00"],
+  },
+  attack: {
+    targetPriorities: [
+      {
+        // The ogres fight more wisely when led by a half-ogre that concentrates assaults on characters it recognizes as spellcasters and teaming up against skilled fighters.
+        targets: ["PCSpellcasters", "PCsPreferringStrong"],
+      },
+    ],
   },
   items: [
     {

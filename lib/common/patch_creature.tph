@@ -46,6 +46,7 @@ INT_VAR
   general=999           // general value
   race=999              // race
   class=999             // class
+  kit=999               // kit
   gender=999            // gender
   sex=99                // sex
   alignment=99          // alignment
@@ -265,6 +266,9 @@ BEGIN
   END
   PATCH_IF class != 999 BEGIN
     WRITE_BYTE 0x273 class // set new class value
+  END
+  PATCH_IF kit != 999 BEGIN
+    WRITE_LONG 0x244 kit // set new kit value
   END
   PATCH_IF gender != 999 BEGIN
     WRITE_BYTE 0x275 gender // set new gender value

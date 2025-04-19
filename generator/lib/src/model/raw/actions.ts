@@ -302,7 +302,7 @@ export namespace Actions {
 
   export interface DisplayString {
     name: "DisplayString";
-    params: [ParamObject, number];
+    params: [ParamObject, number | string];
   }
 
   export interface ChangeClass {
@@ -317,7 +317,7 @@ export namespace Actions {
 
   export interface DisplayStringHead {
     name: "DisplayStringHead";
-    params: [ParamObject, number];
+    params: [ParamObject, number | string];
   }
 
   export interface ApplyDamage {

@@ -65,18 +65,9 @@ BEGIN
 					enforce=1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWASU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						hp=18
-						thac0=19
-						xpv=0
-						saveDeath=14
-						saveWand=16
-						savePolymorph=15
-						saveBreath=17
-						saveSpell=17
-						summon=1
-				END
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

@@ -783,6 +783,7 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 
 @3000 = ~Grab~
 @3001 = ~Grabbed~
+@3002 = ~*quaffs a potion*~
 
 @4000 = ~Stream of acidic enzymes~
 @4001 = ~Acidic digestive enzymes~
