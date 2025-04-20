@@ -268,7 +268,7 @@ BEGIN
     WRITE_BYTE 0x273 class // set new class value
   END
   PATCH_IF kit != 999 BEGIN
-    WRITE_LONG 0x244 kit // set new kit value
+    WRITE_SHORT 0x246 kit // set new kit value
   END
   PATCH_IF gender != 999 BEGIN
     WRITE_BYTE 0x275 gender // set new gender value

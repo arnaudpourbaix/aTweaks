@@ -1,8 +1,21 @@
+import { EffectTypeEnum } from "../model/final/effect.type";
 import { CodeLine } from "../model/misc";
 import { UtilsService } from "./utils.service";
 
 export class AbstractWeiduService {
   protected utils = UtilsService.instance;
+
+  protected deleteEffect(
+    lines: CodeLine[],
+    tab: number,
+    opcode: EffectTypeEnum
+  ) {
+    this.add(
+      lines,
+      `LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=${opcode} END`,
+      tab
+    );
+  }
 
   protected addConditionalSourceRes(
     lines: CodeLine[],

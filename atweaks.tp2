@@ -194,21 +194,21 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 
 // ------------------------------------------------------
 // Test purpose only
-BEGIN ~Extraction~ DESIGNATED 9999
-    COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
-        PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
-            READ_BYTE 0x272 race
-            READ_BYTE 0x273 class
-            READ_LONG 0x28 animation
-            READ_STRREF 0x08 name
-            // PATCH_IF class = 183 BEGIN
-            PATCH_IF class = 126 OR animation = 0x2200 BEGIN
-            //PATCH_IF animation = 0x7F0A BEGIN
-                //PATCH_PRINT ~"%SOURCE_RES%",~
-                PATCH_PRINT ~"%SOURCE_RES%", // %name%~
-            END
-        END
-    BUT_ONLY
+// BEGIN ~Extraction~ DESIGNATED 9999
+//     COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+//         PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
+//             READ_BYTE 0x272 race
+//             READ_BYTE 0x273 class
+//             READ_LONG 0x28 animation
+//             READ_STRREF 0x08 name
+//             // PATCH_IF class = 183 BEGIN
+//             PATCH_IF class = 126 OR animation = 0x2200 BEGIN
+//             //PATCH_IF animation = 0x7F0A BEGIN
+//                 //PATCH_PRINT ~"%SOURCE_RES%",~
+//                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
+//             END
+//         END
+//     BUT_ONLY
 
 BEGIN @5000 DESIGNATED 5000
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
@@ -249,8 +249,9 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/juggernaut.tpa"
 
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 // ------------------------------------------------------
@@ -359,9 +360,10 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogrillon.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 /*

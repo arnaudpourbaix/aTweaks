@@ -1,3 +1,4 @@
 export const SPELLS = {
-  Enrage: "SPCL321",
+  BerserkerRage: "SPCL321",
+  BarbarianRage: "SPCL152",
 };

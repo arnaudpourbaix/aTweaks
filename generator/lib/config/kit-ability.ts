@@ -4,7 +4,7 @@ import { SPELLS } from "./spell";
 export const KIT_ABILITIES: KitAbilityConfig[] = [
   {
     name: "Enrage",
-    files: [SPELLS.Enrage],
+    files: [SPELLS.BerserkerRage],
     triggers: [
       {
         name: "CheckSpellState",

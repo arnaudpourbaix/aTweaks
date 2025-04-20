@@ -50,7 +50,7 @@ export const OGRE: RawCreature = {
     //     global: true,
     //   },
     // ],
-    removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16"],
+    removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
     removeScripts: ["BDSUM00", "OGRE"],
   },
   attack: {
@@ -78,6 +78,7 @@ export const OGRE: RawCreature = {
       diceThrown: 2,
       diceSize: 6,
       damageType: "Crushing",
+      proficiency: "PROFICIENCYTWOHANDEDSWORD",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
@@ -87,6 +88,7 @@ export const OGRE: RawCreature = {
       diceThrown: 2,
       diceSize: 6,
       damageType: "Crushing",
+      proficiency: "PROFICIENCYTWOHANDEDSWORD",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
@@ -100,24 +102,6 @@ export const OGRE: RawCreature = {
     "BDOGREM",
     "BPOGRE01",
     "BSOGRED",
-    "AC#FP2OT", // Thrall
-    "AC#FPOG4", // Bagut
-    "AC#WRIM1", // Wrimbog
-    "ACQ13002", // Ugh
-    "BDCCOGR1", // Ogre Crusader
-    "BDSOGR1", //TODO:
-    "BDSOGR2", //TODO:
-    "GORF", //TODO: Gorf
-    "HACK", //TODO: Hack
-    "LARZE", //TODO: Larze
-    "KROTAN", //TODO: Krotan
-    "NTKROTAN", //TODO: Krotan
-    "NTOGREDA", // Daddy
-    "NTWELT", // Welt
-    "WELT", // Welt
-    "OOPAH", // The Amazing Oopah
-    "OOPAH2", // The Amazing Oopah
-    "SEWERF4", // Ogre Leader
     "OGRE",
     "OGRE02",
     "OGRE03",
@@ -138,16 +122,34 @@ export const OGRE: RawCreature = {
     "X3HOGRE",
     "X3HOGRE2",
     "X3HOGRED",
+    "BDSOGR1",
+    "BDSOGR2",
+    "AC#FP2OT", // Thrall
+    "AC#FPOG4", // Bagut
+    "AC#WRIM1", // Wrimbog
+    "ACQ13002", // Ugh
+    //"BDCCOGR1", // Ogre Crusader (doesn't seem to be used because no script)
+    "GORF", // Gorf
+    "HACK", // Hack
+    "LARZE", // Larze
+    "KROTAN", // Krotan
+    "NTKROTAN", // Krotan
+    "NTOGREDA", // Daddy
+    "NTWELT", // Welt
+    "WELT", // Welt
+    "OOPAH", // The Amazing Oopah
+    "OOPAH2", // The Amazing Oopah
+    "SEWERF4", // Ogre Leader
   ],
-  notEnforceFiles: ["AC#FP2OT"],
   adjustments: [
-    { files: ["X3HOGRE2"], noScript: true },
+    { files: ["OGRESU"], summon: true },
+    { files: ["X3HOGRE", "X3HOGRE2", "X3HOGRED"], noScript: true },
     { files: ["OOPAH", "WELT"], data: { class: "INNOCENT" } },
     { files: ["OOPAH", "OOPAH2"], data: { level1: 5 } },
     {
       // leader is a 7 Hit Dice monster with Armor Class 3, Strenth 18/50, XP 650
       // He inflicts 2d6+3 points of damage per attack.
-      files: ["SEWERF4", "BDOGREM", "ACQ13002", "BDCCOGR1", "NTOGREDA"],
+      files: ["SEWERF4", "BDOGREM", "NTOGREDA"],
       data: {
         level1: 7,
         ac: 3,
@@ -159,7 +161,16 @@ export const OGRE: RawCreature = {
     {
       // chieftain is a 7+4 Hit Dice monster with Armor Class 2, Strenth 18/100, XP 975
       // He inflicts 2d6+6 points of damage per attack.
-      files: ["AC#WRIM1"],
+      files: [
+        "AC#WRIM1",
+        "AC#FP2O2",
+        "BDSOGR1",
+        "BDSOGR2",
+        "ACQ13002",
+        "GORF",
+        "HACK",
+        "LARZE",
+      ],
       data: {
         level1: 7,
         bonusHp: 4,
@@ -170,9 +181,63 @@ export const OGRE: RawCreature = {
       additionalData: { itemSlots: [{ file: chiefWeapon, slot: "WEAPON1" }] },
     },
     {
+      files: ["NTOGREDA"],
+      data: {
+        class: "FIGHTER",
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 4 }],
+      },
+    },
+    {
+      // will have morning star +1
+      files: ["AC#FP2OT", "BDSOGR1", "BDSOGR2"],
+      noWeapon: true,
+      additionalData: {
+        itemSlots: [{ file: "BLUN07", slot: "WEAPON1" }],
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 2 }],
+      },
+    },
+    {
+      files: ["BDSOGR1", "BDSOGR2"],
+      data: { class: "FIGHTER" },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 4 }],
+      },
+    },
+    {
+      files: ["GORF", "AC#WRIM1", "HACK", "LARZE", "KROTAN", "NTKROTAN"],
+      data: {
+        level1: 9,
+        strength: 19,
+        exceptionalStrength: 0,
+        morale: 18,
+        class: "FIGHTER",
+        xpv: 2000,
+      },
+      additionalData: {
+        proficiencies: [
+          { type: "PROFICIENCYTWOHANDEDSWORD", value: 5 },
+          { type: "PROFICIENCYLONGSWORD", value: 5 },
+        ],
+      },
+    },
+    {
       files: ["AC#WRIM1"],
       data: { level1: 10 },
     },
-    { files: ["AC#FP2OT"], noWeapon: true },
+    {
+      files: ["HACK"],
+      data: { level1: 11 },
+    },
+    {
+      files: ["LARZE", "KROTAN", "NTKROTAN"],
+      data: { level1: 13 },
+    },
+    {
+      files: ["KROTAN", "NTKROTAN"],
+      data: { level1: 15, ac: 10 },
+      noWeapon: true,
+    },
   ],
 };

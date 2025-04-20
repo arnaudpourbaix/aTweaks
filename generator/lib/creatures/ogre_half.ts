@@ -133,7 +133,7 @@ export const OGRE_HALF: RawCreature = {
       },
       additionalData: {
         proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 5 }],
-        memorizedSpells: [{ file: SPELLS.Enrage, memorizedCount: 1 }],
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
       },
     },
     {

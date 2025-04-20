@@ -22,19 +22,20 @@ import { ProjectileTypeEnum } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
 import { CodeLine } from "../model/misc";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
+import { WEAPON_SLOTS } from "../model/raw/enum";
 import { GrabConfig } from "../model/raw/grab";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
 import { GrabService } from "./grab.service";
-import { WEAPON_SLOTS } from "../model/raw/enum";
-import chalk from "chalk";
+import { EffectService } from "./effect.service";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
 
   private creatureService = CreatureService.instance;
   private grabService = GrabService.instance;
+  private effectService = EffectService.instance;
 
   generateWeiduScript(creature: Creature): void {
     const lines: CodeLine[] = [];
@@ -664,13 +665,11 @@ export class WeiduCreatureService extends AbstractWeiduService {
     for (const m of additionalData.memorizedSpells) {
       const spell = spells.find((s) => s.file === m.file);
       const infos = this.utils.getSpellInfos(m.file);
-      this.add(
-        lines,
-        `ADD_MEMORIZED_SPELL ~${m.file}~ #${
-          spell ? (spell.spellLevel ?? 1) - 1 : infos.level - 1
-        } ~${infos.type}~ (${m.memorizedCount})`,
-        tab
-      );
+      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${
+        spell ? (spell.spellLevel ?? 1) - 1 : infos.level - 1
+      } ~${infos.type}~ (${m.memorizedCount})`;
+      if (m.memorizedCount === 0) code = `REMOVE_MEMORIZED_SPELL ~${m.file}~`;
+      this.add(lines, code, tab);
     }
   }
 
@@ -897,13 +896,28 @@ export class WeiduCreatureService extends AbstractWeiduService {
     creature: Creature,
     adjustment: CreatureAdjustment
   ) {
-    for (const f of adjustment.files)
-      if (!creature.files.includes(f))
-        throw new Error(`Unknown adjustment file ${f}`);
     this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
     if (adjustment.summon) {
       adjustment.data = adjustment.data ?? {};
       adjustment.data.xpv = 0;
+    }
+    if (adjustment.data?.kit === "BARBARIAN" || adjustment.data?.movement) {
+      this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus);
+      this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus2);
+      const movement =
+        adjustment.data.movement ?? (creature.data.movement as number) + 2;
+      const effect = this.effectService.getEffect({
+        opcode: "MovementRateBonus2",
+        type: "Set",
+        value: movement,
+      });
+      this.addEffect(lines, tab, effect, "CRE");
+    }
+    if (adjustment.data?.kit === "BARBARIAN") {
+      const effect = this.effectService.getEffect({
+        opcode: "ProtectionFromBackstab",
+      });
+      this.addEffect(lines, tab, effect, "CRE");
     }
     if (adjustment.data)
       this.patchCreatureAdjustement({

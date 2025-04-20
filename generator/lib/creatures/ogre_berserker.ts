@@ -1,47 +1,58 @@
+import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
-const id = MonsterEnum.Ogre;
+const id = MonsterEnum.BerserkerOgre;
 // Script
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
 
-export const OGRE: RawCreature = {
+export const OGRE_BERSERKER: RawCreature = {
   name: "Ogre",
   bafFile: `lib/pnp-monster/ogre/${script}`,
-  tpaFile: "lib/pnp-monster/ogre/ogre",
+  tpaFile: "lib/pnp-monster/ogre/berserker",
   tracking: true,
   combatWalk: true,
   usePotions: true,
   data: {
     level1: 4,
     bonusHp: 1,
-    strength: 19,
+    strength: 18,
+    exceptionalStrength: 100,
     dexterity: 8,
-    constitution: 16,
+    constitution: 17,
     intelligence: 8,
     wisdom: 7,
     charisma: 7,
     movement: 9,
-    ac: 5,
+    ac: 3,
     apr: 1,
-    xpv: 270,
+    xpv: 650,
     alignment: "CHAOTIC_EVIL",
     morale: 12,
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "GIANTHUMANOID",
     race: "OGRE",
-    class: "OGRE",
-    gender: "MALE",
+    class: "FIGHTER",
+    kit: "BERSERKER",
     size: "Large",
   },
   additionalData: {
-    proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    removeItems: ["OGRE1"],
+    proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 3 }],
+    memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+    removeItems: [
+      "BDOGRE02",
+      "BDOGRE06",
+      "BLUN06",
+      "SW2H01",
+      "OGREGRSU",
+      "OGRE1",
+      "BDSLUG",
+    ],
     removeScripts: ["BDSUM00"],
   },
   attack: {
@@ -54,14 +65,19 @@ export const OGRE: RawCreature = {
   },
   items: [
     {
+      // Giant flail 2d8 crushing
       file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      diceThrown: 1,
-      diceSize: 10,
+      category: "Flails",
+      animation: "Flail",
+      diceThrown: 2,
+      diceSize: 8,
       damageType: "Crushing",
-      speed: 3,
+      speed: 8,
       abilityFlags: ["AddStrengthBonus"],
+      proficiency: "PROFICIENCYFLAILMORNINGSTAR",
+      animationSwing: { overhand: 50, backhand: 50, thrust: 0 },
     },
   ],
   files: [
@@ -82,5 +98,85 @@ export const OGRE: RawCreature = {
     "BDWAVE13", // Ogre Crusader
     "BDYAROK", // Yarok
   ],
-  adjustments: [{ files: ["OGREGRSU"], summon: true }],
+  adjustments: [
+    { files: ["OGREGRSU"], summon: true },
+    {
+      // chieftain
+      files: [
+        "BDOGREDS",
+        "X3HOGREC",
+        "X3HOGREL",
+        "BDOGRE06",
+        "BDARBING",
+        "BDCHESKI",
+        "BDSLUG",
+        "BDSLUG2",
+        "BDBERTOR",
+        "BDEINER",
+        "BDWAVE13",
+        "BDYAROK",
+      ],
+      data: {
+        level1: 7,
+        xpv: 1400,
+        strength: 19,
+        exceptionalStrength: 0,
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 4 }],
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+      },
+    },
+    {
+      files: ["BDSLUG", "BDSLUG2"],
+      noScript: true,
+      data: {
+        level1: 9,
+        xpv: 2000,
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 5 }],
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 2 }],
+      },
+    },
+    {
+      files: ["BDBERTOR", "BDEINER", "BDYAROK"],
+      noScript: true,
+      data: {
+        level1: 11,
+        xpv: 2000,
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 5 }],
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+      },
+    },
+    {
+      files: ["BDYAROK"],
+      data: {
+        ac: 10,
+      },
+    },
+    {
+      // barbarian chieftain
+      files: ["BDOGRE06", "X3HOGREL"],
+      data: {
+        kit: "BARBARIAN",
+      },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 2 }],
+        memorizedSpells: [
+          { file: SPELLS.BerserkerRage, memorizedCount: 0 },
+          { file: SPELLS.BarbarianRage, memorizedCount: 2 },
+        ],
+      },
+    },
+    {
+      files: ["X3HOGREL"],
+      noScript: true,
+      data: {
+        level1: 8,
+      },
+    },
+  ],
 };

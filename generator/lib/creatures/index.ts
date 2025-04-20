@@ -36,6 +36,7 @@ import { WOLF_WORG } from "./wolf_worg";
 import { HELLCAT } from "./cat_hell";
 import { DISPLACER_BEAST } from "./displacer_beast";
 import { SPECTRAL_HOUND } from "./dog_spectral_hound";
+import { OGRE_BERSERKER } from "./ogre_berserker";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -75,5 +76,6 @@ export const CREATURES: RawCreature[] = [
   OGRE_OGRILLON,
   OGRE_HALF,
   OGRE,
+  OGRE_BERSERKER,
   OGRE_MAGE,
 ];
