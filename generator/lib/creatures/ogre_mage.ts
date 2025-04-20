@@ -21,13 +21,14 @@ export const OGRE_MAGE: RawCreature = {
   data: {
     level1: 5,
     bonusHp: 2,
-    strength: 17,
+    strength: 18,
+    exceptionalStrength: 100,
     dexterity: 10,
-    constitution: 14,
+    constitution: 17,
     intelligence: 16,
-    wisdom: 9,
-    charisma: 10,
-    movement: 9,
+    wisdom: 14,
+    charisma: 17,
+    movement: 15,
     ac: 4,
     apr: 1,
     xpv: 650,
@@ -42,8 +43,16 @@ export const OGRE_MAGE: RawCreature = {
     size: "Large",
   },
   additionalData: {
-    proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    removeItems: ["P2-8"],
+    proficiencies: [{ type: "PROFICIENCYKATANA", value: 2 }],
+    removeItems: ["REGHP1", "BDOGRE03"],
+    immunities: ["hover"],
+    effects: [
+      {
+        opcode: "Regeneration",
+        type: "OneHPperAmountSeconds",
+        amount: 6,
+      },
+    ],
   },
   attack: {
     targetPriorities: [
@@ -55,47 +64,47 @@ export const OGRE_MAGE: RawCreature = {
   },
   items: [
     {
-      file: "ja#m29w1",
+      file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
       flags: ["TwoHanded"],
-      animation: "BastardSword",
-      category: "BastardSwords",
-      proficiency: "PROFICIENCYBASTARDSWORD",
-      animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
+      animation: "Katana",
+      category: "Halberds",
+      proficiency: "PROFICIENCYKATANA",
+      animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
       range: 2,
-      diceThrown: 2,
-      diceSize: 6,
+      diceThrown: 1,
+      diceSize: 12,
       damageType: "Slashing",
-      speed: 10,
+      speed: 5,
       abilityFlags: ["AddStrengthBonus"],
     },
   ],
   files: [
+    "BDOGRE03",
+    "BDWAVE16",
+    "BPOGMA01",
+    "OGREMA",
+    "OGREMA02",
+    "OGREMA03",
+    "OGREMASU",
+    "OGREMA_A",
+    "OGREMA_B",
+    "OGREMA_C",
+    "OGREMA_D",
+    "OGREMBA",
+    "OGRMBA",
+    "UBOGMA01",
+    "UBOGMA02",
+    "NTFOREOG",
+    "BDOGRE05", // Ogre Shaman
     "BDMURS", // Murs
     "BDMURS2", // Murs
-    "BDOGRE03", // Ogre Mage
-    "BDOGRE05", // Ogre Shaman
-    "BDWAVE16", // Ogre Mage
-    "BPOGMA01", // Ogre Mage
     "DROTH", // Droth
-    "DWSST2", // <Invalid Strref -1>
+    "DWSST2", //
     "KAHRK", // Kahrk
     "KROTAN", // Krotan
-    "NTFOREOG", // Ogre Mage
     "NTKROTAN", // Krotan
-    "OGREMA", // Ogre Mage
-    "OGREMA02", // Ogre Mage
-    "OGREMA03", // Ogre Mage
-    "OGREMASU", // Ogre Mage
-    "OGREMA_A", // Ogre Mage
-    "OGREMA_B", // Ogre Mage
-    "OGREMA_C", // Ogre Mage
-    "OGREMA_D", // Ogre Mage
-    "OGREMBA", // Ogre Mage
-    "OGRMBA", // Ogre Mage
-    "UBOGMA01", // Ogre Mage
-    "UBOGMA02", // Ogre Mage
     "WIGENTLE", // The Gentleman
     "WIOGMA01", // Yondak Master of Portals
   ],
