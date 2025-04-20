@@ -1,3 +1,4 @@
+import { GLOBAL_CONFIG } from "../config/generate";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -90,7 +91,9 @@ export const HORROR_HELMED: RawCreature = {
           comment: "Dimension Door",
           target: {
             name: "Players",
-            triggers: [{ name: "Range", params: ["{Target}", 180] }],
+            triggers: [
+              { name: "Range", params: [GLOBAL_CONFIG.tokens.target, 180] },
+            ],
           },
           triggers: [
             { name: "HaveSpellRES", params: [teleport] },
@@ -104,7 +107,10 @@ export const HORROR_HELMED: RawCreature = {
             {
               weight: 100,
               actions: [
-                { name: "ForceSpellRES", params: [teleport, "{Target}"] },
+                {
+                  name: "ForceSpellRES",
+                  params: [teleport, GLOBAL_CONFIG.tokens.target],
+                },
                 { name: "RemoveSpellRES", params: [teleport] },
               ],
             },

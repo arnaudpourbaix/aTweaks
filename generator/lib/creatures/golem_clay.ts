@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -69,7 +69,7 @@ export const GOLEM_CLAY: RawCreature = {
       file: haste,
       memorizedCount: 1,
       type: "Melee",
-      stringRef: StringReferenceEnum.Haste,
+      stringRef: TraStringReferenceEnum.Haste,
       effects: [
         {
           opcode: "RemoveSpellTypeProtections",

@@ -1,5 +1,50 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ogre/ja#m32.baf~
 
+COPY_EXISTING "CONECOLD.pro" ~override/ja#1m32.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_SHORT 0x204 620
+	WRITE_SHORT 0x206 620
+ADD_PROJECTILE ~override/ja#1m32.pro~ ~Ogre-Mage Cone of Cold~
+
+CREATE SPL "ja#1m32"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x1c 1
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 5
+	WRITE_SHORT 0x74 2
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 10
+	WRITE_SHORT 0x84 1
+	SAY NAME1 26492 SAY NAME2 26492
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			parameter2 = 131072
+			probability1 = 100
+			dicenumber = 8
+			dicesize = 8
+			savingthrow = 16777217
+			savebonus = "-4"
+			special = 256
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 165
+			target = 2
+			duration = 1
+			probability1 = 100
+		END
+
 CREATE ITM "ja#1m32"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -60,6 +105,11 @@ BEGIN
 			REMOVE_CRE_ITEM ~BDOGRE03~
 			ADD_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
+			ADD_MEMORIZED_SPELL ~SPWI206~ #1 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~SPWI228~ #1 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~SPWI104~ #0 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~SPWI116~ #0 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~innate~ (1)
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYKATANA~ 2
 			LPF ADD_CRE_EFFECT

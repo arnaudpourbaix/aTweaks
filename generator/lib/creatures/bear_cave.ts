@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -57,7 +57,7 @@ export const BEAR_CAVE: RawCreature = {
       effects: [
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.Hug,
+          stringRef: TraStringReferenceEnum.Hug,
           probability1: 10,
         },
         {

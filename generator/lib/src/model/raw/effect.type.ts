@@ -68,6 +68,7 @@ export type RawEffectOpcode =
   | "OverrideCreatureData"
   | "Panic"
   | "Paralyze"
+  | "PauseTarget"
   | "Petrification"
   | "PiercingResistanceModifier"
   | "PlaySound"

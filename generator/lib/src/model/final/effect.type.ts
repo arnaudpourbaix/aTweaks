@@ -68,6 +68,7 @@ export enum EffectTypeEnum {
   OverrideCreatureData = 342,
   Panic = 24,
   Paralyze = 109,
+  PauseTarget = 165,
   Petrification = 134,
   PiercingResistanceModifier = 88,
   PlaySound = 174,

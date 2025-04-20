@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -77,7 +77,7 @@ export const WOLF_WINTER: RawCreature = {
       name: "Stream of frost",
       file: streamOfFrost,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.StreamOfFrost,
+      stringRef: TraStringReferenceEnum.StreamOfFrost,
       description: [
         "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.",
       ],

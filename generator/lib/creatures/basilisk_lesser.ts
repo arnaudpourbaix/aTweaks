@@ -1,4 +1,5 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { GLOBAL_CONFIG } from "../config/generate";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawSaveType } from "../src/model/raw/enum";
 import { bafFile, file } from "../src/services/misc.func";
@@ -85,12 +86,12 @@ export const BASILISK_LESSER: RawCreature = {
           },
           {
             name: "CheckStatGT",
-            params: ["{Target}", 0, "HELD"],
+            params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
             negation: true,
           },
           {
             name: "StateCheck",
-            params: ["{Target}", "STATE_SLOWED"],
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
             negation: true,
           },
         ],
@@ -132,7 +133,7 @@ export const BASILISK_LESSER: RawCreature = {
       name: "Petrification (2e)",
       file: petrification2e,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.PetrifyingGaze,
+      stringRef: TraStringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
       ],
@@ -147,7 +148,7 @@ export const BASILISK_LESSER: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.Petrified,
+          stringRef: TraStringReferenceEnum.Petrified,
           ...petrificationSave,
         },
         {
@@ -173,7 +174,7 @@ export const BASILISK_LESSER: RawCreature = {
       name: "Petrification (5e)",
       file: petrification5e,
       //memorizedCount: 1,
-      stringRef: StringReferenceEnum.PetrifyingGaze,
+      stringRef: TraStringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.",
         "On a failed save, the creature magically begins to turn to stone and is restrained.",
@@ -186,7 +187,7 @@ export const BASILISK_LESSER: RawCreature = {
       effects: [
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.TurningToStone,
+          stringRef: TraStringReferenceEnum.TurningToStone,
           ...petrificationSave,
         },
         {
@@ -213,7 +214,7 @@ export const BASILISK_LESSER: RawCreature = {
     },
     {
       name: "Petrification (5e, technical)",
-      stringRef: StringReferenceEnum.PetrifyingGaze,
+      stringRef: TraStringReferenceEnum.PetrifyingGaze,
       file: petrification5eTechnical,
       secondaryType: "Disabling",
       type: "Ranged",
@@ -225,7 +226,7 @@ export const BASILISK_LESSER: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.Petrified,
+          stringRef: TraStringReferenceEnum.Petrified,
           timing: "InstantPermanent",
           ...petrificationSave,
         },

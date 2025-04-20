@@ -1,7 +1,7 @@
 import { RawBaseEffect, RawEffect } from "../src/model/raw/effect";
 import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
 import { RawEffectGroupName } from "./effect-group-name";
-import { StringReferenceEnum } from "./stringRef";
+import { TraStringReferenceEnum } from "./stringRef";
 
 export const EFFECT_GROUPS: {
   group: RawEffectGroupName;
@@ -21,7 +21,7 @@ export const EFFECT_GROUPS: {
       const rawEffects: RawEffect[] = [
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.Restrained,
+          stringRef: TraStringReferenceEnum.Restrained,
           timing: "InstantPermanentUntilDeath",
           ...base,
         },

@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -75,7 +75,7 @@ export const GOLEM_JUGGERNAUT: RawCreature = {
       // To make a better movement implementation: create several boots items and create/remove them (this is especially important for ending charge)
       name: "Juggernaut charge",
       file: charge,
-      stringRef: StringReferenceEnum.Charge,
+      stringRef: TraStringReferenceEnum.Charge,
       memorizedCount: 1,
       type: "Melee",
       effects: [
@@ -102,7 +102,7 @@ export const GOLEM_JUGGERNAUT: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.EndCharge,
+          stringRef: TraStringReferenceEnum.EndCharge,
           timing: "DelayPermanent",
           duration: 24,
         },

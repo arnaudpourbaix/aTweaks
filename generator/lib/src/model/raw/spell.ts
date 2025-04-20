@@ -1,9 +1,10 @@
-import { SpellIdentifier } from "../ids/spell";
 import { StringReference } from "../misc";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
 import {
+  RawItemAbilityCastingAnimation,
   RawItemAbilityLocation,
+  RawItemAbilityPrimaryType,
   RawItemAbilitySecondaryType,
   RawItemAbilityTarget,
   RawItemAbilityType,
@@ -23,6 +24,13 @@ export interface RawAlterSpell extends RawBaseSpell {
    * String reference, must be referenced in TRA files
    */
   stringRef?: StringReference;
+
+  /**
+   * Array of min levels
+   */
+  deleteHeaders?: number[];
+
+  deleteOpcodes?: RawEffectOpcode[];
 }
 
 export interface RawCreateSpell extends RawBaseSpell {
@@ -51,7 +59,9 @@ export interface RawBaseSpell {
 
   castingSound?: string;
 
-  castingAnimation?: string;
+  castingAnimation?: RawItemAbilityCastingAnimation;
+
+  primaryType?: RawItemAbilityPrimaryType;
 
   secondaryType?: RawItemAbilitySecondaryType;
 
@@ -68,7 +78,6 @@ export interface RawBaseSpell {
   projectile?: string;
   flags?: RawSpellFlag[];
   effects?: RawEffect[];
-  removeOpcodes?: RawEffectOpcode[];
 }
 
 export interface RawMemorizedSpell {

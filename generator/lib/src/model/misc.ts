@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../../config/stringRef";
+import { TraStringReferenceEnum } from "../../config/stringRef";
 
 export type DeepPartial<T> = T extends object
   ? { [K in keyof T]?: DeepPartial<T[K]> }
@@ -13,4 +13,4 @@ export interface CodeLine {
   code: string;
 }
 
-export type StringReference = StringReferenceEnum | string;
+export type StringReference = TraStringReferenceEnum | string;

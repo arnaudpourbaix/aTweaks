@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -110,7 +110,7 @@ export const ANKHEG: RawCreature = {
       name: "Acidic digestive enzymes",
       file: digestiveEnzyme,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.AcidicDigestiveEnzymes,
+      stringRef: TraStringReferenceEnum.AcidicDigestiveEnzymes,
       description: [
         "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
       ],
@@ -156,7 +156,7 @@ export const ANKHEG: RawCreature = {
       name: "Stream of acidic enzymes",
       file: acidicEnzyme,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.StreamOfAcidicEnzymes,
+      stringRef: TraStringReferenceEnum.StreamOfAcidicEnzymes,
       description: [
         "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.",
         "A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).",

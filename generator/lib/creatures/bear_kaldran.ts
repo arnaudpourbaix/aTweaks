@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { polarBearMainWeapon, polarBearOffhandWeapon } from "./bear_polar";
@@ -103,7 +103,7 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
       name: "Improved stream of frost",
       file: improvedStreamOfFrost,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.ImprovedStreamOfFrost,
+      stringRef: TraStringReferenceEnum.ImprovedStreamOfFrost,
       description: [
         "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)",
       ],

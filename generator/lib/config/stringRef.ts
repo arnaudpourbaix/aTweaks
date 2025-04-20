@@ -1,4 +1,4 @@
-export enum StringReferenceEnum {
+export enum TraStringReferenceEnum {
   Grab = 3000,
   Grabbed = 3001,
   QuaffPotion = 3002,
@@ -17,4 +17,8 @@ export enum StringReferenceEnum {
   Haste = 4012,
   Charge = 4013,
   EndCharge = 4014,
+}
+
+export enum StringReferenceEnum {
+  ConeOfCold = "26492",
 }

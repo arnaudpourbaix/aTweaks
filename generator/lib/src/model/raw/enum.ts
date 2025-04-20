@@ -637,6 +637,55 @@ export type RawItemAbilityTarget =
   | "AnyPointWithinRange"
   | "Caster";
 
+export type RawItemAbilityCastingAnimation =
+  | "None"
+  | "FireAqua"
+  | "FireBlue"
+  | "FireGold"
+  | "FireGreen"
+  | "FireMagenta"
+  | "FirePurple"
+  | "FireRed"
+  | "FireWhite"
+  | "Necromancy"
+  | "Alteration"
+  | "Enchantment"
+  | "Abjuration"
+  | "Illusion"
+  | "Conjuration"
+  | "Invocation"
+  | "Divination"
+  | "FountainAqua"
+  | "FountainBlack"
+  | "FountainBlue"
+  | "FountainGold"
+  | "FountainGreen"
+  | "FountainMagenta"
+  | "FountainPurple"
+  | "FountainRed"
+  | "FountainWhite"
+  | "SwirlAqua"
+  | "SwirlBlack"
+  | "SwirlBlue"
+  | "SwirlGold"
+  | "SwirlGreen"
+  | "SwirlMagenta"
+  | "SwirlPurple"
+  | "SwirlRed"
+  | "SwirlWhite";
+
+export type RawItemAbilityPrimaryType =
+  | "None"
+  | "Abjurer"
+  | "Conjurer"
+  | "Diviner"
+  | "Enchanter"
+  | "Illusionist"
+  | "Invoker"
+  | "Necromancer"
+  | "Transmuter"
+  | "Generalist";
+
 export type RawItemAbilitySecondaryType =
   | "None"
   | "SpellProtections"
@@ -762,7 +811,11 @@ export type RawSaveType =
   | "Breath"
   | "ParalyzePoisonDeath"
   | "RodStaffWand"
-  | "PetrifyPolymorph";
+  | "PetrifyPolymorph"
+  | "IgnorePrimaryTarget"
+  | "IgnoreSecondaryTarget"
+  | "BypassMirrorImage"
+  | "IgnoreDifficulty";
 
 export type RawEffectFlags =
   | "TransferHPToCasterCumulative"

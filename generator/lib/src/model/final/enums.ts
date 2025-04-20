@@ -683,6 +683,57 @@ export enum ItemAbilityTargetEnum {
   Caster = 5,
 }
 
+export enum ItemAbilityCastingAnimationEnum {
+  None = 0,
+  FireAqua = 1,
+  FireBlue = 2,
+  FireGold = 3,
+  FireGreen = 4,
+  FireMagenta = 5,
+  FirePurple = 6,
+  FireRed = 7,
+  FireWhite = 8,
+  Necromancy = 9,
+  Alteration = 10,
+  Enchantment = 11,
+  Abjuration = 12,
+  Illusion = 13,
+  Conjuration = 14,
+  Invocation = 15,
+  Divination = 16,
+  FountainAqua = 17,
+  FountainBlack = 18,
+  FountainBlue = 19,
+  FountainGold = 20,
+  FountainGreen = 21,
+  FountainMagenta = 22,
+  FountainPurple = 23,
+  FountainRed = 24,
+  FountainWhite = 25,
+  SwirlAqua = 26,
+  SwirlBlack = 27,
+  SwirlBlue = 28,
+  SwirlGold = 29,
+  SwirlGreen = 30,
+  SwirlMagenta = 31,
+  SwirlPurple = 32,
+  SwirlRed = 33,
+  SwirlWhite = 34,
+}
+
+export enum ItemAbilityPrimaryTypeEnum {
+  None = 4294967296,
+  Abjurer = 25263,
+  Conjurer = 25264,
+  Diviner = 25265,
+  Enchanter = 25266,
+  Illusionist = 25267,
+  Invoker = 25268,
+  Necromancer = 25269,
+  Transmuter = 25270,
+  Generalist = 25271,
+}
+
 export enum ItemAbilitySecondaryTypeEnum {
   None = 0,
   SpellProtections = 1,
@@ -821,6 +872,10 @@ export enum SaveTypeEnum {
   ParalyzePoisonDeath = 2,
   RodStaffWand = 3,
   PetrifyPolymorph = 4,
+  IgnorePrimaryTarget = 10,
+  IgnoreSecondaryTarget = 11,
+  BypassMirrorImage = 24,
+  IgnoreDifficulty = 25,
 }
 
 export enum EffectFlagsEnum {

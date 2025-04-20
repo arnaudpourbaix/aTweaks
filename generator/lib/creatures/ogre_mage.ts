@@ -1,3 +1,6 @@
+import { GLOBAL_CONFIG } from "../config/generate";
+import { SPELLS } from "../config/spell";
+import { StringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -7,8 +10,8 @@ const id = MonsterEnum.OgreMage;
 // Script
 const script = bafFile(id);
 // Spells
-const digestiveEnzyme = file(1, id);
-const acidicEnzyme = file(2, id);
+const coneOfCold = file(1, id);
+const gaseousForm = file(2, id);
 // Items
 const mainWeapon = file(1, id);
 export const OGRE_MAGE: RawCreature = {
@@ -46,6 +49,12 @@ export const OGRE_MAGE: RawCreature = {
     proficiencies: [{ type: "PROFICIENCYKATANA", value: 2 }],
     removeItems: ["REGHP1", "BDOGRE03"],
     immunities: ["hover"],
+    memorizedSpells: [
+      { file: SPELLS.Invisibility, memorizedCount: 1 },
+      { file: SPELLS.Darkness15Radius, memorizedCount: 1 },
+      { file: SPELLS.CharmPerson, memorizedCount: 1 },
+      { file: SPELLS.Sleep, memorizedCount: 1 },
+    ],
     effects: [
       {
         opcode: "Regeneration",
@@ -78,6 +87,68 @@ export const OGRE_MAGE: RawCreature = {
       damageType: "Slashing",
       speed: 5,
       abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  projectiles: [
+    {
+      file: coneOfCold,
+      copyFromFile: "CONECOLD",
+      description: "Ogre-Mage Cone of Cold",
+      areaOfEffect: 620,
+      triggerRadius: 620,
+    },
+  ],
+  spells: [
+    {
+      name: "Cone of Cold",
+      file: coneOfCold,
+      stringRef: StringReferenceEnum.ConeOfCold,
+      memorizedCount: 1,
+      type: "Melee",
+      projectile: coneOfCold,
+      castingSound: "CAS_M06",
+      flags: ["Hostile", "BreakSanctuary"],
+      spellType: "Wizard",
+      castingAnimation: "Invocation",
+      primaryType: "Invoker",
+      secondaryType: "OffensiveDamage",
+      spellLevel: 5,
+      location: "Spell",
+      //target: "AnyPointWithinRange",
+      target: "LivingActor",
+      range: 10,
+      speed: 1,
+      effects: [
+        // {opcode:"ProtectionFromResourceAndMessage",
+        //   resource: coneOfCold
+        // }
+        {
+          opcode: "Damage",
+          type: "Cold",
+          amount: 0,
+          diceSize: 8,
+          diceThrown: 8,
+          saveTypes: ["Spell", "BypassMirrorImage"],
+          saveBonus: -4,
+          flags: ["SaveForHalf"],
+        },
+        {
+          opcode: "PauseTarget",
+          duration: 1,
+        },
+      ],
+    },
+  ],
+  abilities: [
+    {
+      name: "Cone of Cold",
+      target: { name: "NearestEnemies", random: true },
+      isTargetSpell: true,
+      triggers: [{ name: "Range", params: [GLOBAL_CONFIG.tokens.target, 10] }],
+      actions: [
+        //{ name:"SpellRES", params: [coneOfCold, "LastSeenBy"]}
+        { name: "SpellNoDecRES", params: [coneOfCold, "LastSeenBy"] },
+      ],
     },
   ],
   files: [

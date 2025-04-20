@@ -1,7 +1,7 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { KIT_ABILITIES } from "../../config/kit-ability";
 import { POTIONS } from "../../config/potion";
-import { StringReferenceEnum } from "../../config/stringRef";
+import { TraStringReferenceEnum } from "../../config/stringRef";
 import { TARGET_STATUS } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { CreatureAbility } from "../model/final/ability";
@@ -649,7 +649,7 @@ export class StatementService {
           ...(potion.actions ?? []),
           {
             name: "DisplayStringHead",
-            params: ["Myself", `@${StringReferenceEnum.QuaffPotion}`],
+            params: ["Myself", `@${TraStringReferenceEnum.QuaffPotion}`],
           },
           { name: "UseItem", params: [file, "Myself"] },
           this.factory.setGlobalRoundTimer(),

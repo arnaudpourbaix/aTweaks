@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../../../config/stringRef";
+import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { EffectDamageTypeEnum } from "../final/enums";
 import { RawSaveType } from "./enum";
 
@@ -20,8 +20,8 @@ export interface GrabSharedConfig {
 export interface GrabGlobalConfig extends GrabSharedConfig {
   grabbedState: string;
   grabblingState: string;
-  grabStringRef: StringReferenceEnum;
-  grabbedStringRef: StringReferenceEnum;
+  grabStringRef: TraStringReferenceEnum;
+  grabbedStringRef: TraStringReferenceEnum;
   startSound: string;
   endSound: string;
   visualEffect: string;

@@ -13,8 +13,10 @@ import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AbilityDamageTypeEnum,
   EffectIDSFileEnum,
+  ItemAbilityCastingAnimationEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
+  ItemAbilityPrimaryTypeEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
@@ -355,8 +357,14 @@ export class MainService {
     return {
       ...spell,
       spellType: spell.spellType ? SpellTypeEnum[spell.spellType] : undefined,
+      primaryType: spell.primaryType
+        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
+        : undefined,
       secondaryType: spell.secondaryType
         ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
+        : undefined,
+      castingAnimation: spell.castingAnimation
+        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
         : undefined,
       type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
       location: spell.location
@@ -365,7 +373,8 @@ export class MainService {
       target: spell.target ? ItemAbilityTargetEnum[spell.target] : undefined,
       flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
       effects: spell.effects ? this.mapEffects(spell.effects) : [],
-      removeOpcodes: (spell.removeOpcodes ?? []).map((o) => EffectTypeEnum[o]),
+      removeOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
+      deleteHeaders: spell.deleteHeaders ?? [],
     };
   }
 
@@ -378,8 +387,14 @@ export class MainService {
         ? SpellTypeEnum[spell.spellType]
         : SpellTypeEnum.Innate,
       spellLevel: spell.spellLevel ?? 1,
+      primaryType: spell.primaryType
+        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
+        : undefined,
       secondaryType: spell.secondaryType
         ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
+        : undefined,
+      castingAnimation: spell.castingAnimation
+        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
         : undefined,
       type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
       location: spell.location
@@ -390,7 +405,8 @@ export class MainService {
         : ItemAbilityTargetEnum.LivingActor,
       flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
       effects: spell.effects ? this.mapEffects(spell.effects) : [],
-      removeOpcodes: (spell.removeOpcodes ?? []).map((o) => EffectTypeEnum[o]),
+      removeOpcodes: [],
+      deleteHeaders: [],
     };
   }
 

@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -69,7 +69,7 @@ export const DOG_BLINK: RawCreature = {
       name: "Blink",
       file: blink,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.Blink,
+      stringRef: TraStringReferenceEnum.Blink,
       type: "Melee",
       range: 30,
       effects: [

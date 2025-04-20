@@ -1,4 +1,4 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -57,7 +57,7 @@ export const HELLCAT: RawCreature = {
       effects: [
         {
           opcode: "DisplayString",
-          stringRef: StringReferenceEnum.RearClawsAttack,
+          stringRef: TraStringReferenceEnum.RearClawsAttack,
           probability1: 10,
         },
         {

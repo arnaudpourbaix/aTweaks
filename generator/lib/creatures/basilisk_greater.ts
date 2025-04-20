@@ -1,4 +1,5 @@
-import { StringReferenceEnum } from "../config/stringRef";
+import { GLOBAL_CONFIG } from "../config/generate";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import {
@@ -64,12 +65,12 @@ export const BASILISK_GREATER: RawCreature = {
         triggers: [
           {
             name: "CheckStatGT",
-            params: ["{Target}", 0, "HELD"],
+            params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
             negation: true,
           },
           {
             name: "StateCheck",
-            params: ["{Target}", "STATE_SLOWED"],
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
             negation: true,
           },
         ],
@@ -142,7 +143,7 @@ export const BASILISK_GREATER: RawCreature = {
       name: "Foul breath",
       file: foulBreath,
       memorizedCount: 1,
-      stringRef: StringReferenceEnum.FoulBreath,
+      stringRef: TraStringReferenceEnum.FoulBreath,
       description: [
         "Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
       ],

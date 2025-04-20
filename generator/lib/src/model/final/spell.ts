@@ -3,7 +3,9 @@ import { StringReference } from "../misc";
 import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import {
+  ItemAbilityCastingAnimationEnum,
   ItemAbilityLocationEnum,
+  ItemAbilityPrimaryTypeEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
@@ -28,6 +30,11 @@ export interface Spell {
   copyFrom?: string;
 
   /**
+   * Array of min levels
+   */
+  deleteHeaders: number[];
+
+  /**
    * String reference, must be referenced in TRA files
    */
   stringRef?: StringReference;
@@ -38,7 +45,9 @@ export interface Spell {
 
   castingSound?: string;
 
-  castingAnimation?: string;
+  castingAnimation?: ItemAbilityCastingAnimationEnum;
+
+  primaryType?: ItemAbilityPrimaryTypeEnum;
 
   secondaryType?: ItemAbilitySecondaryTypeEnum;
 

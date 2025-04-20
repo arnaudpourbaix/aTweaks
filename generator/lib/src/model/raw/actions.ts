@@ -31,6 +31,8 @@ export namespace Actions {
     | "SetGlobalTimer"
     | "Spell"
     | "SpellRES"
+    | "SpellNoDec"
+    | "SpellNoDecRES"
     | "SpellPoint"
     | "SpellPointRES"
     | "ForceSpell"
@@ -190,6 +192,16 @@ export namespace Actions {
 
   export interface SpellRES {
     name: "SpellRES";
+    params: [string, ParamObject];
+  }
+
+  export interface SpellNoDec {
+    name: "SpellNoDec";
+    params: [ParamObject, SpellIdentifier];
+  }
+
+  export interface SpellNoDecRES {
+    name: "SpellNoDecRES";
     params: [string, ParamObject];
   }
 
@@ -376,6 +388,8 @@ export namespace Actions {
     | SetGlobalTimer
     | Spell
     | SpellRES
+    | SpellNoDec
+    | SpellNoDecRES
     | ForceSpell
     | ForceSpellRES
     | SpellNoDec
@@ -575,6 +589,19 @@ export namespace Actions {
     },
     {
       name: "SpellRES",
+      parameters: "S:RES*,O:Target*",
+      description: "See Spell.",
+      section: "Spell",
+    },
+    {
+      name: "SpellNoDec",
+      parameters: "O:Target*,I:Spell*Spell",
+      description:
+        "This action causes the active creature to cast the specified spell at the target object. The spell must currently be memorised by the caster, and may be interrupted while being cast. The caster must meet the level requirements of the spell. For the RES version of the action, the spell name can not consist of only numbers, should be written in upper case and should be no more than 7 characters long.",
+      section: "Spell",
+    },
+    {
+      name: "SpellNoDecRES",
       parameters: "S:RES*,O:Target*",
       description: "See Spell.",
       section: "Spell",

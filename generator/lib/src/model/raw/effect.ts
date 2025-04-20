@@ -410,6 +410,7 @@ export type ParamLessEffect = RawBaseEffect & {
     | "InvisibilityDetection"
     | "ModifyCollisionBehavior"
     | "Panic"
+    | "PauseTarget"
     | "Petrification"
     | "PlaySound"
     | "ProtectionFromAnimation"
