@@ -5,10 +5,12 @@ COPY_EXISTING "CONECOLD.pro" ~override/ja#1m32.pro~
 	PATCH_IF (%type% = 1) BEGIN
 		INSERT_BYTES 0x100 0x100
 	END
+	WRITE_LONG 0x200 2048
 	WRITE_SHORT 0x204 620
 	WRITE_SHORT 0x206 620
 ADD_PROJECTILE ~override/ja#1m32.pro~ ~Ogre-Mage Cone of Cold~
 
+	// Cone of Cold
 CREATE SPL "ja#1m32"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -16,14 +18,20 @@ CREATE SPL "ja#1m32"
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPWI503C~ #8
+	WRITE_ASCII 0x76 ~SPWI503B~ #8
+	WRITE_SHORT 0x22 15
 	WRITE_SHORT 0x1c 1
+	WRITE_BYTE 0x25 6
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 5
+	WRITE_ASCII 0x10 ~CAS_M06~ #8
 	WRITE_SHORT 0x74 2
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 10
 	WRITE_SHORT 0x84 1
-	SAY NAME1 26492 SAY NAME2 26492
+	WRITE_LONG 0x8 26492
+	WRITE_LONG 0xc 26492
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -45,16 +53,200 @@ CREATE SPL "ja#1m32"
 			probability1 = 100
 		END
 
+	// Fly
+CREATE SPL "ja#2m32"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPWI305C~ #8
+	WRITE_ASCII 0x76 ~SPWI305B~ #8
+	WRITE_SHORT 0x22 10
+	WRITE_SHORT 0x1c 1
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 13
+	WRITE_LONG 0x34 3
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
+	WRITE_SHORT 0x74 2
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x84 3
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4015)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4015)
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 13
+			parameter2 = 1
+			duration = 72
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~)
+			duration = 72
+			probability1 = 100
+		STR_VAR
+			resource = "ja#i3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 328
+			target = 2
+			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~))
+			duration = 72
+			probability1 = 100
+			special = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			parameter2 = 38
+			duration = 72
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M28"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 4
+			duration = 72
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M29"
+		END
+
+	// Gaseous form
+CREATE SPL "ja#3m32"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPWI416C~ #8
+	WRITE_ASCII 0x76 ~SPWI416B~ #8
+	WRITE_SHORT 0x22 10
+	WRITE_SHORT 0x1c 1
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 13
+	WRITE_LONG 0x34 4
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
+	WRITE_SHORT 0x74 2
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x84 4
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4016)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4016)
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			parameter1 = 3
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 135
+			target = 2
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "GASFORM4"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_AMULET~)
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#2m32"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 328
+			target = 2
+			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_GASEOUSFORM~))
+			duration = 12
+			probability1 = 100
+			special = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 1
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "SPDISPM3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			probability1 = 100
+		STR_VAR
+			resource = "MSTCHNG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 1
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "SPDISPM3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "MSTCHNG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "MSTCHNG"
+		END
+
 CREATE ITM "ja#1m32"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x18 66
+	WRITE_LONG 0x18 72
 	WRITE_SHORT 0x1c 30
-	WRITE_ASCII 0x22 ~S3~ #2
+	WRITE_ASCII 0x22 ~S1~ #2
 	WRITE_BYTE 0x31 94
+	WRITE_ASCII 0x3a ~ISW1H44~ #8
 	WRITE_LONG 0x60 1
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -67,6 +259,44 @@ CREATE ITM "ja#1m32"
 	WRITE_SHORT 0xa2 0
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m32.itm~ ~override~
+
+CREATE ITM "ja#2m32"
+	WRITE_LONG 0x64 0x72
+	SAY NAME1 ~Gaseous form immunities~ SAY NAME2 ~Gaseous form immunities~
+	SAY UNIDENTIFIED_DESC ~Gaseous form to everything but magical fire, lightning and mind spells.~
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING01~ #8
+COPY_EXISTING ~ja#2m32.itm~ ~override~
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 30
+			target = 1
+			parameter1 = 100
+			parameter2 = 1
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 27
+			target = 1
+			parameter1 = 100
+			parameter2 = 1
+			timing = 2
+			probability1 = 100
+		END
+	LPF ADD_ITEM_EQEFFECT
+		INT_VAR
+			opcode = 31
+			target = 1
+			parameter1 = 100
+			parameter2 = 1
+			timing = 2
+			probability1 = 100
+		END
+	LPF poison_immunity END
+	LPF cold_immunity END
+	LPF physical_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDOGRE03
@@ -104,12 +334,13 @@ BEGIN
 			REMOVE_CRE_ITEM ~REGHP1~
 			REMOVE_CRE_ITEM ~BDOGRE03~
 			ADD_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
 			ADD_MEMORIZED_SPELL ~SPWI206~ #1 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~SPWI228~ #1 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~SPWI104~ #0 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~SPWI116~ #0 ~wizard~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m32~ #2 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~ja#3m32~ #3 ~wizard~ (1)
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYKATANA~ 2
 			LPF ADD_CRE_EFFECT
@@ -130,7 +361,7 @@ BEGIN
 					intelligence=16
 					wisdom=14
 					charisma=17
-					movement=13
+					movement=8
 					hp=55
 					ac=4
 					thac0=15

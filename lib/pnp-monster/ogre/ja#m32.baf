@@ -72,105 +72,14 @@ THEN
 		NoAction()
 END
 
-// Cone of Cold
+// Gaseous form
 IF
-	Range(NearestEnemyOf(Myself),10)
+	HaveSpellRES("ja#3m32")
+	Detect(NearestEnemyOf(Myself))
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(NearestEnemyOf(Myself),WEAPON)
-	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(NearestEnemyOf(Myself))
-	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	Range(SecondNearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SecondNearestEnemyOf(Myself))
-	RandomNumGT(1000,200)
-THEN
-	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	Range(ThirdNearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(ThirdNearestEnemyOf(Myself))
-	RandomNumGT(1000,250)
-THEN
-	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	Range(FourthNearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FourthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FourthNearestEnemyOf(Myself))
-	RandomNumGT(1000,333)
-THEN
-	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	Range(FifthNearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FifthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FifthNearestEnemyOf(Myself))
-	RandomNumGT(1000,500)
-THEN
-	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	Range(SixthNearestEnemyOf(Myself),10)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SixthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SixthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SpellNoDecRES("ja#1m32",LastSeenBy(Myself))
+		SpellRES("ja#3m32",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 

@@ -17,6 +17,8 @@ export enum TraStringReferenceEnum {
   Haste = 4012,
   Charge = 4013,
   EndCharge = 4014,
+  Fly = 4015,
+  GaseousForm = 4016,
 }
 
 export enum StringReferenceEnum {

@@ -1,3 +1,10 @@
+export type RawPolymorphType = "GainResistancesStatistics" | "AppearanceOnly";
+
+export type RawAnimationChangeType =
+  | "TemporaryChange"
+  | "RemoveTemporaryChange"
+  | "PermanentChange";
+
 export type RawOverrideCreatureDataField =
   | "BodyHeat"
   | "BloodColor"
@@ -684,7 +691,8 @@ export type RawItemAbilityPrimaryType =
   | "Invoker"
   | "Necromancer"
   | "Transmuter"
-  | "Generalist";
+  | "Generalist"
+  | "Wildmage";
 
 export type RawItemAbilitySecondaryType =
   | "None"
@@ -695,6 +703,7 @@ export type RawItemAbilitySecondaryType =
   | "DivinationAttack"
   | "Conjuration"
   | "CombatProtections"
+  | "NonCombat"
   | "Contingency"
   | "Battleground"
   | "OffensiveDamage"

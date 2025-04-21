@@ -3,6 +3,7 @@ import { EFFECT_GROUPS } from "../../config/effect-groups";
 import { BaseEffect, Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
+  AnimationChangeTypeEnum,
   CastSpellOnConditionTargetEnum,
   CharmTypeEnum,
   ColorEnum,
@@ -31,6 +32,7 @@ import {
   LightingEffectTargetEnum,
   OverrideCreatureDataFieldEnum,
   PoisonTypeEnum,
+  PolymorphTypeEnum,
   PortraitIconEnum,
   ProficiencyTypeEnum,
   ProtectionFromWeaponsTypeEnum,
@@ -40,6 +42,7 @@ import {
 } from "../model/final/enums";
 import { StringReference } from "../model/misc";
 import {
+  AnimationChangeEffect,
   ArmorClassBonusEffect,
   BerserkEffect,
   CastSpellEffect,
@@ -331,7 +334,9 @@ export class EffectService {
         }`;
         break;
       case EffectTypeEnum.PolymorphIntoSpecific:
-        result.parameter2 = `${(<PolymorphIntoSpecificEffect>effect).type}`;
+        result.parameter2 = `${
+          PolymorphTypeEnum[(<PolymorphIntoSpecificEffect>effect).type]
+        }`;
         break;
       case EffectTypeEnum.KillTarget:
         result.parameter1 = `${(<KillTargetEffect>effect).displayText ? 0 : 1}`;
@@ -434,6 +439,14 @@ export class EffectService {
           OverrideCreatureDataFieldEnum[
             (<OverrideCreatureDataEffect>effect).field
           ]
+        }`;
+        break;
+      case EffectTypeEnum.AnimationChange:
+        result.parameter1 = `IDS_OF_SYMBOL (~anim~ ~${
+          (<AnimationChangeEffect>effect).animationId
+        }~)`;
+        result.parameter2 = `${
+          AnimationChangeTypeEnum[(<AnimationChangeEffect>effect).animationType]
         }`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:

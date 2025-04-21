@@ -39,18 +39,14 @@ export interface Spell {
    */
   stringRef?: StringReference;
 
+  spellbookIcon?: string;
+  memorizedIcon?: string;
   description?: string[];
-
   spellType?: SpellTypeEnum;
-
   castingSound?: string;
-
   castingAnimation?: ItemAbilityCastingAnimationEnum;
-
   primaryType?: ItemAbilityPrimaryTypeEnum;
-
   secondaryType?: ItemAbilitySecondaryTypeEnum;
-
   spellLevel?: number;
 
   type?: ItemAbilityTypeEnum;

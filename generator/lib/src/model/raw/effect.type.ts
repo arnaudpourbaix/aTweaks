@@ -1,6 +1,7 @@
 export type RawEffectOpcode =
   | "AcidResistanceModifier"
   | "AllSavingThrowsBonus"
+  | "AnimationChange"
   | "ArmorClassBonus"
   | "AttackDamageBonus"
   | "Berserk"
@@ -95,6 +96,7 @@ export type RawEffectOpcode =
   | "RemoveSpecificAreaEffect"
   | "RemoveSpell"
   | "RemoveSpellTypeProtections"
+  | "ReplaceSelf"
   | "SaveVsDeathModifier"
   | "SaveVsWandModifier"
   | "SaveVsPetrificationModifier"

@@ -52,19 +52,18 @@ export interface RawBaseSpell {
   file: string;
 
   memorizedCount?: number;
-
+  /**
+   * Shortcut for spellbook (suffix C) and memorized icon (suffix B)
+   */
+  icon?: string;
+  spellbookIcon?: string;
+  memorizedIcon?: string;
   description?: string[];
-
   spellType?: RawSpellType;
-
   castingSound?: string;
-
   castingAnimation?: RawItemAbilityCastingAnimation;
-
   primaryType?: RawItemAbilityPrimaryType;
-
   secondaryType?: RawItemAbilitySecondaryType;
-
   spellLevel?: number;
 
   type?: RawItemAbilityType;

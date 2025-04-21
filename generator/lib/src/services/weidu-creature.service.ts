@@ -45,7 +45,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.createSpells(lines, creature);
     if (creature.attack.grab) {
       this.createGrabSpell(lines, creature, creature.attack.grab);
-      this.createReleaseGrabSpell(lines, creature, creature.attack.grab);
       this.createGrabProtectionEffect(lines, creature.attack.grab);
     }
     this.createItems(lines, creature);
@@ -193,6 +192,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
   }
 
   private createSpell(lines: CodeLine[], creature: Creature, spell: Spell) {
+    this.add(lines, `// ${spell.name}`, 1);
     this.add(lines, `CREATE SPL "${spell.file}"`, 0);
     this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
     this.createSpellCommon(lines, creature, spell);
@@ -231,12 +231,24 @@ export class WeiduCreatureService extends AbstractWeiduService {
       this.add(lines, `WRITE_SHORT 0x72 ${spell.type}`, 1);
       this.add(lines, `WRITE_SHORT 0x82 1`, 1);
     }
+    if (spell.spellbookIcon) {
+      this.add(lines, `WRITE_ASCII 0x3a ~${spell.spellbookIcon}~ #8`, 1);
+    }
+    if (spell.memorizedIcon) {
+      this.add(lines, `WRITE_ASCII 0x76 ~${spell.memorizedIcon}~ #8`, 1);
+    }
+    if (spell.castingAnimation)
+      this.add(lines, `WRITE_SHORT 0x22 ${spell.castingAnimation}`, 1);
     if (spell.spellType)
       this.add(lines, `WRITE_SHORT 0x1c ${spell.spellType}`, 1);
+    if (spell.primaryType)
+      this.add(lines, `WRITE_BYTE 0x25 ${spell.primaryType}`, 1);
     if (spell.secondaryType)
       this.add(lines, `WRITE_BYTE 0x27 ${spell.secondaryType}`, 1);
     if (spell.spellLevel)
       this.add(lines, `WRITE_LONG 0x34 ${spell.spellLevel}`, 1);
+    if (spell.castingSound)
+      this.add(lines, `WRITE_ASCII 0x10 ~${spell.castingSound}~ #8`, 1);
     if (spell.location)
       this.add(lines, `WRITE_SHORT 0x74 ${spell.location}`, 1);
     if (spell.target) this.add(lines, `WRITE_BYTE 0x7e ${spell.target}`, 1);
@@ -245,9 +257,12 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (spell.stringRef) {
       this.add(
         lines,
-        `SAY NAME1 ${this.utils.getStringReference(
-          spell.stringRef
-        )} SAY NAME2 ${this.utils.getStringReference(spell.stringRef)}`,
+        `WRITE_LONG 0x8 ${this.utils.resolveStringRef(spell.stringRef)}`,
+        1
+      );
+      this.add(
+        lines,
+        `WRITE_LONG 0xc ${this.utils.resolveStringRef(spell.stringRef)}`,
         1
       );
     }
@@ -411,30 +426,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "", 0);
   }
 
-  private createReleaseGrabSpell(
-    lines: CodeLine[],
-    creature: Creature,
-    grab: GrabConfig
-  ) {
-    this.add(lines, `CREATE SPL "${grab.file}r"`, 0);
-    this.add(lines, `WRITE_SHORT 0x1c ${SpellTypeEnum.Innate}`, 1);
-    this.add(lines, `WRITE_LONG 0x34 1`, 1);
-    this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
-    this.add(lines, `WRITE_SHORT 0x68 1`, 1);
-    this.add(lines, `WRITE_LONG 0x6a 0x9a`, 1);
-    this.add(lines, `INSERT_BYTES 0x72 0x28`, 1);
-    this.add(lines, `WRITE_SHORT 0x72 ${ItemAbilityTypeEnum.Melee}`, 1);
-    this.add(lines, `WRITE_SHORT 0x74 ${ItemAbilityLocationEnum.Ability}`, 1);
-    this.add(lines, `WRITE_BYTE 0x7e ${ItemAbilityTargetEnum.LivingActor}`, 1);
-    this.add(lines, `WRITE_SHORT 0x80 5`, 1);
-    this.add(lines, `WRITE_SHORT 0x82 1`, 1);
-    this.add(lines, `WRITE_SHORT 0x94 1`, 1);
-    this.add(lines, `SAY NAME1 ~Release grabbed target~`, 1);
-    const effects = this.grabService.getReleaseGrabbedEffects(grab);
-    for (const effect of effects) this.addEffect(lines, 1, effect, "SPL");
-    this.add(lines, "", 0);
-  }
-
   private createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
     const effect = this.grabService.getGrabProtectionEffect(grab);
     this.add(lines, `CREATE EFF "${grab.file}"`, 0);
@@ -557,10 +548,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         lines,
         `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}~ #0 ~innate~ (1)`
-      );
-      this.add(
-        lines,
-        `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}r~ #0 ~innate~ (1)`
       );
     }
     for (const name of creature.additionalData.immunities) {
@@ -686,7 +673,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
   ) {
     for (const m of additionalData.memorizedSpells) {
       const spell = spells.find((s) => s.file === m.file);
-      const infos = this.utils.getSpellInfos(m.file);
+      const infos = this.utils.getSpellInfos(m.file, spells);
       let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${
         spell ? (spell.spellLevel ?? 1) - 1 : infos.level - 1
       } ~${infos.type}~ (${m.memorizedCount})`;

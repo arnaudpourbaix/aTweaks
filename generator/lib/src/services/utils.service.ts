@@ -1,5 +1,7 @@
 import { ImmunityName } from "../../config/immunity-name";
+import { SpellTypeEnum } from "../model/final/enums";
 import { ImmunityConfig } from "../model/final/immunity";
+import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { Response } from "../model/raw/script";
@@ -144,11 +146,25 @@ export class UtilsService {
     };
   }
 
-  getSpellInfos(file: string): { type: string; level: number } {
+  getSpellInfos(
+    file: string,
+    spells: Spell[]
+  ): { type: string; level: number } {
+    const spell = spells.find((s) => s.file === file);
     if (file.toUpperCase().includes("SPWI"))
       return { type: "wizard", level: +(file.at(4) as string) };
     else if (file.toUpperCase().includes("SPPR"))
       return { type: "priest", level: +(file.at(4) as string) };
-    return { type: "innate", level: 1 };
+    else if (!spell) return { type: "innate", level: 1 };
+    let type = "innate";
+    switch (spell.spellType) {
+      case SpellTypeEnum.Wizard:
+        type = "wizard";
+        break;
+      case SpellTypeEnum.Priest:
+        type = "priest";
+        break;
+    }
+    return { type, level: spell.spellLevel ?? 1 };
   }
 }

@@ -254,38 +254,6 @@ CREATE SPL "ja#1m21"
 			resource = "ja#1m21"
 		END
 
-CREATE SPL "ja#1m21r"
-	WRITE_SHORT 0x1c 4
-	WRITE_LONG 0x34 1
-	WRITE_LONG 0x64 0x72
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 5
-	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x94 1
-	SAY NAME1 ~Release grabbed target~
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 337
-			target = 1
-			parameter1 = 1
-			parameter2 = 176
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 337
-			target = 1
-			parameter1 = (IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLING~))
-			parameter2 = 328
-			probability1 = 100
-			special = 1
-		END
-
 CREATE EFF "ja#1m21"
 	WRITE_LONG 0x10 206
 	WRITE_LONG 0x14 2
@@ -380,7 +348,6 @@ BEGIN
 			ADD_CRE_ITEM ~ja#3m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
 			LPF clearProficiencies END
 			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m21r~ #0 ~innate~ (1)
 			DEFINE_ARRAY notEnforceFiles BEGIN DW#ULCWO END
 			LPF patchCreature
 				INT_VAR

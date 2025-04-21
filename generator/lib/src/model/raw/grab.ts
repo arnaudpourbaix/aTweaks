@@ -19,7 +19,7 @@ export interface GrabSharedConfig {
 
 export interface GrabGlobalConfig extends GrabSharedConfig {
   grabbedState: string;
-  grabblingState: string;
+  grabbingState: string;
   grabStringRef: TraStringReferenceEnum;
   grabbedStringRef: TraStringReferenceEnum;
   startSound: string;

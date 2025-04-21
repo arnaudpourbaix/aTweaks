@@ -1,4 +1,5 @@
 import { RawEffectGroupName } from "../../../config/effect-group-name";
+import { AnimationIdentifiers } from "../ids/animate";
 import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifier } from "../ids/slot";
 import { SplStateIdentifier } from "../ids/splstate";
@@ -6,6 +7,7 @@ import { StatsIdentifier } from "../ids/stats";
 import { StringReference } from "../misc";
 import { RawEffectOpcode } from "./effect.type";
 import {
+  RawAnimationChangeType,
   RawBerserkType,
   RawBonusHPHealFlag,
   RawCastSpellOnConditionTarget,
@@ -36,6 +38,7 @@ import {
   RawLightingEffectTarget,
   RawOverrideCreatureDataField,
   RawPoisonType,
+  RawPolymorphType,
   RawPortraitIcon,
   RawProficiencyType,
   RawProtectionFromWeaponsType,
@@ -286,7 +289,7 @@ export type ProtectionFromProjectileEffect = RawBaseEffect & {
 
 export type PolymorphIntoSpecificEffect = RawBaseEffect & {
   opcode: "PolymorphIntoSpecific";
-  type: number;
+  type: RawPolymorphType;
 };
 
 export type KillTargetEffect = RawBaseEffect & {
@@ -390,6 +393,12 @@ export type OverrideCreatureDataEffect = RawBaseEffect & {
   value: number;
 };
 
+export type AnimationChangeEffect = RawBaseEffect & {
+  opcode: "AnimationChange";
+  animationId: AnimationIdentifiers;
+  animationType: RawAnimationChangeType;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -431,6 +440,7 @@ export type ParamLessEffect = RawBaseEffect & {
 export type RawEffect =
   | ParamLessEffect
   | RawEffectGroup
+  | AnimationChangeEffect
   | ArmorClassBonusEffect
   | BerserkEffect
   | CastSpellEffect

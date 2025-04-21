@@ -52,6 +52,7 @@ import {
 import { RawProjectile } from "../model/raw/projectile";
 import {
   RawAlterSpell,
+  RawBaseSpell,
   RawCreateSpell,
   RawMemorizedSpell,
   RawSpell,
@@ -78,6 +79,7 @@ export class MainService {
   private utils = UtilsService.instance;
 
   generateCommonCode(): Promise<void> {
+    this.weiduCoreService.generateSpellStates();
     this.weiduFunctionService.generateFunctions();
     this.weiduCoreService.writeFile();
     return Promise.resolve();
@@ -347,9 +349,15 @@ export class MainService {
 
   private mapSpells(spells: RawSpell[] | undefined): Spell[] {
     if (!spells) return [];
-    const results: Spell[] = spells.map((s) =>
-      "copyFrom" in s ? this.mapAlterSpell(s) : this.mapCreateSpell(s)
-    );
+    const results: Spell[] = spells.map((s) => {
+      const result =
+        "copyFrom" in s ? this.mapAlterSpell(s) : this.mapCreateSpell(s);
+      if (s.icon) {
+        result.spellbookIcon = `${s.icon}C`;
+        result.memorizedIcon = `${s.icon}B`;
+      }
+      return result;
+    });
     return results;
   }
 
@@ -407,6 +415,36 @@ export class MainService {
       effects: spell.effects ? this.mapEffects(spell.effects) : [],
       removeOpcodes: [],
       deleteHeaders: [],
+    };
+  }
+
+  private mapBaseSpell(spell: RawBaseSpell) {
+    return {
+      ...spell,
+      range: spell.range ?? 0,
+      speed: spell.speed ?? 0,
+      spellType: spell.spellType
+        ? SpellTypeEnum[spell.spellType]
+        : SpellTypeEnum.Innate,
+      spellLevel: spell.spellLevel ?? 1,
+      primaryType: spell.primaryType
+        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
+        : undefined,
+      secondaryType: spell.secondaryType
+        ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
+        : undefined,
+      castingAnimation: spell.castingAnimation
+        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
+        : undefined,
+      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
+      location: spell.location
+        ? ItemAbilityLocationEnum[spell.location]
+        : ItemAbilityLocationEnum.Ability,
+      target: spell.target
+        ? ItemAbilityTargetEnum[spell.target]
+        : ItemAbilityTargetEnum.LivingActor,
+      flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
+      effects: spell.effects ? this.mapEffects(spell.effects) : [],
     };
   }
 

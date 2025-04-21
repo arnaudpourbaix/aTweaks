@@ -1,5 +1,6 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#m22.baf~
 
+	// Dread wolf down state
 CREATE SPL "ja#1m22"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -11,7 +12,8 @@ CREATE SPL "ja#1m22"
 	WRITE_LONG 0x34 1
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
-	SAY NAME1 ~Dread wolf down state~ SAY NAME2 ~Dread wolf down state~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf down state~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Dread wolf down state~)
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 112

@@ -6,7 +6,6 @@ import {
 import {
   GRAB_CHECK_CREATURE_SIZE,
   GRAB_EFFECTS_FUNCTION,
-  RELEASE_GRAB_EFFECTS_FUNCTION,
 } from "../../config/grab";
 import { Creature } from "../model/final/creature";
 import { Effect } from "../model/final/effect";
@@ -57,12 +56,6 @@ export class GrabService {
     const effects = this.effectService.getEffects(rawEffects);
     const immunityEffects = this.getGrabImmuneEffects(creature, grab);
     return [...immunityEffects, ...effects];
-  }
-
-  getReleaseGrabbedEffects(grab: GrabConfig): Effect[] {
-    const rawEffects: RawEffect[] = RELEASE_GRAB_EFFECTS_FUNCTION(grab);
-    const effects = this.effectService.getEffects(rawEffects);
-    return effects;
   }
 
   private getGrabImmuneEffects(creature: Creature, grab: GrabConfig): Effect[] {

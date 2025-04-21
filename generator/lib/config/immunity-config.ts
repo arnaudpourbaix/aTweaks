@@ -4,6 +4,7 @@ import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
 import { RawEffect } from "../src/model/raw/effect";
 import { RawImmunityConfig } from "../src/model/raw/immunity";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
+import { ITEMS } from "./item";
 
 export const IMMUNITIES: RawImmunityConfig[] = [
   {
@@ -828,7 +829,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "hover",
     type: "trait",
-    itemSlot: { file: "ja#i3", slot: "BOOTS" },
+    itemSlot: { file: ITEMS.Hover, slot: "BOOTS" },
     description: [
       "Hover (flight)",
       "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
@@ -868,7 +869,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "criticalHit",
     type: "immunity",
-    itemSlot: { file: "ja#i5", slot: "HELMET" },
+    itemSlot: { file: ITEMS.CriticalHit, slot: "HELMET" },
     description: ["Immunity to critical hits"],
   },
   {
@@ -880,7 +881,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "construct",
     type: "trait",
-    itemSlot: { file: "ja#i1", slot: "LRING" },
+    itemSlot: { file: ITEMS.Construct, slot: "LRING" },
     description: [
       "Construct trait.",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
@@ -977,7 +978,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "skeletal",
     type: "trait",
-    itemSlot: { file: "ja#i2", slot: "RRING" },
+    itemSlot: { file: ITEMS.Sketetal, slot: "RRING" },
     description: [
       "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
     ],
@@ -1089,7 +1090,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   },
   {
     name: "incorporeal",
-    itemSlot: { file: "ja#i4", slot: "RRING" },
+    itemSlot: { file: ITEMS.Incorporeal, slot: "RRING" },
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",

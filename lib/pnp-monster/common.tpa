@@ -1,3 +1,8 @@
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLED" END
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLING" END
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_FLYING" END
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM" END
+
 CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32

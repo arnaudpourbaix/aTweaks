@@ -1,6 +1,7 @@
 import { RawEffect } from "../src/model/raw/effect";
 import { CreatureSize } from "../src/model/raw/enum";
 import { GrabConfig, GrabGlobalConfig } from "../src/model/raw/grab";
+import { SPELL_STATES } from "./spell";
 import { TraStringReferenceEnum } from "./stringRef";
 
 /**
@@ -21,8 +22,8 @@ import { TraStringReferenceEnum } from "./stringRef";
  */
 export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   probability: 100,
-  grabbedState: "JA_GRAPPLED",
-  grabblingState: "JA_GRAPPLING",
+  grabbedState: SPELL_STATES.grabbed,
+  grabbingState: SPELL_STATES.grabbing,
   duration: 12,
   saveTypes: ["ParalyzePoisonDeath"],
   saveBonus: 99, // will be calculated
@@ -105,23 +106,5 @@ export const GRAB_EFFECTS_FUNCTION = (grab: GrabConfig): RawEffect[] => [
     opcode: "ProtectionFromSpell",
     resource: grab.file,
     duration: grab.duration,
-  },
-];
-
-export const RELEASE_GRAB_EFFECTS_FUNCTION = (
-  grab: GrabConfig
-): RawEffect[] => [
-  {
-    opcode: "RemoveOpcode",
-    opcodeToRemove: "MovementRateBonus2",
-    param: "1",
-    target: "Self",
-  },
-  {
-    opcode: "RemoveOpcode",
-    opcodeToRemove: "SetExtendedSpellState",
-    param: `(IDS_OF_SYMBOL (~splstate~ ~${grab.grabblingState}~))`,
-    special: 1,
-    target: "Self",
   },
 ];

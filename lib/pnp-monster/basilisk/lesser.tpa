@@ -18,6 +18,7 @@ COPY_EXISTING "gaze.pro" ~override/ja#1m2.pro~
 	WRITE_SHORT 0x224 60
 ADD_PROJECTILE ~override/ja#1m2.pro~ ~Basilisk petrifying gaze~
 
+	// Petrification (2e)
 CREATE SPL "ja#1m2"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -31,7 +32,8 @@ CREATE SPL "ja#1m2"
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
-	SAY NAME1 @4002 SAY NAME2 @4002
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4002)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4002)
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1
 	LPF ADD_EFFECT
@@ -82,6 +84,7 @@ CREATE SPL "ja#1m2"
 			savebonus = "-4"
 		END
 
+	// Petrification (5e)
 CREATE SPL "ja#2m2"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -95,7 +98,8 @@ CREATE SPL "ja#2m2"
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
-	SAY NAME1 @4002 SAY NAME2 @4002
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4002)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4002)
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.
 On a failed save, the creature magically begins to turn to stone and is restrained.
 It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
@@ -204,6 +208,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 			resource = "ja#2m2"
 		END
 
+	// Petrification (5e, technical)
 CREATE SPL "ja#3m2"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
@@ -216,7 +221,8 @@ CREATE SPL "ja#3m2"
 	WRITE_LONG 0x34 1
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
-	SAY NAME1 @4002 SAY NAME2 @4002
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4002)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4002)
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 134

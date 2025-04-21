@@ -8,6 +8,7 @@ import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import path from "path";
+import { SPELL_STATES } from "../../config/spell";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -22,6 +23,17 @@ export class WeiduCoreService extends AbstractWeiduService {
       path.join(State.modFolder, GLOBAL_CONFIG.commonCreatureFile),
       content
     );
+  }
+
+  generateSpellStates() {
+    for (const state of Object.values(SPELL_STATES)) {
+      this.add(
+        this.lines,
+        `LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "${state}" END`,
+        0
+      );
+    }
+    this.add(this.lines, ``, 0);
   }
 
   generateItem(itemSlot: RawItemSlot, immunity: ImmunityConfig) {

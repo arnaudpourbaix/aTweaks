@@ -1,5 +1,16 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum PolymorphTypeEnum {
+  GainResistancesStatistics = 0,
+  AppearanceOnly = 1,
+}
+
+export enum AnimationChangeTypeEnum {
+  TemporaryChange = 0,
+  RemoveTemporaryChange = 1,
+  PermanentChange = 2,
+}
+
 export enum OverrideCreatureDataFieldEnum {
   BodyHeat = 1,
   BloodColor = 2,
@@ -722,16 +733,17 @@ export enum ItemAbilityCastingAnimationEnum {
 }
 
 export enum ItemAbilityPrimaryTypeEnum {
-  None = 4294967296,
-  Abjurer = 25263,
-  Conjurer = 25264,
-  Diviner = 25265,
-  Enchanter = 25266,
-  Illusionist = 25267,
-  Invoker = 25268,
-  Necromancer = 25269,
-  Transmuter = 25270,
-  Generalist = 25271,
+  None = 0,
+  Abjurer = 1,
+  Conjurer = 2,
+  Diviner = 3,
+  Enchanter = 4,
+  Illusionist = 5,
+  Invoker = 6,
+  Necromancer = 7,
+  Transmuter = 8,
+  Generalist = 9,
+  Wildmage = 10,
 }
 
 export enum ItemAbilitySecondaryTypeEnum {
@@ -748,6 +760,7 @@ export enum ItemAbilitySecondaryTypeEnum {
   OffensiveDamage = 10,
   Disabling = 11,
   Combination = 12,
+  NonCombat = 13,
 }
 
 export enum AbilityDamageTypeEnum {

@@ -1,6 +1,7 @@
 export enum EffectTypeEnum {
   AcidResistanceModifier = 27,
   AllSavingThrowsBonus = 325,
+  AnimationChange = 53,
   ArmorClassBonus = 0,
   AttackDamageBonus = 73,
   Berserk = 3,
@@ -95,6 +96,7 @@ export enum EffectTypeEnum {
   RemoveSpecificAreaEffect = 273,
   RemoveSpell = 172,
   RemoveSpellTypeProtections = 221,
+  ReplaceSelf = 151,
   SaveVsDeathModifier = 33,
   SaveVsWandModifier = 34,
   SaveVsPetrificationModifier = 35,

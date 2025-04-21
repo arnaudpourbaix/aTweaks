@@ -799,6 +799,8 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4012 = ~Haste~
 @4013 = ~Charge~
 @4014 = ~End charge~
+@4015 = ~Fly~
+@4016 = ~Gaseous form~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod
