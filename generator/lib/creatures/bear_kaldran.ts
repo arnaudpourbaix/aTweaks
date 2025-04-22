@@ -89,13 +89,18 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
   abilities: [
     {
       name: "Improved stream of frost",
-      target: { name: "NearestEnemies", limit: 3 },
+      target: {
+        name: "NearestEnemies",
+        limit: 3,
+      },
+      spell: {
+        resource: improvedStreamOfFrost,
+        type: "force",
+        probability: 20,
+        selfTarget: true,
+      },
       range: 10,
-      triggers: [{ name: "HaveSpellRES", params: [improvedStreamOfFrost] }],
       timer: { name: "StreamOfFrost", value: 18 },
-      actions: [
-        { name: "ForceSpellRES", params: [improvedStreamOfFrost, "Myself"] },
-      ],
     },
   ],
   spells: [

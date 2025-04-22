@@ -1,9 +1,9 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/final/attack";
+import { Response, Statements } from "../model/final/script";
 import { ObjectIdentifier } from "../model/ids/object";
 import { SlotIdentifier, WeaponSlot } from "../model/ids/slot";
 import { Actions } from "../model/raw/actions";
-import { Response, Statements } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
 

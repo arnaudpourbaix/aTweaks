@@ -1,10 +1,10 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { SpellTypeEnum } from "../model/final/enums";
 import { ImmunityConfig } from "../model/final/immunity";
+import { Response } from "../model/final/script";
 import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
-import { Response } from "../model/raw/script";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 

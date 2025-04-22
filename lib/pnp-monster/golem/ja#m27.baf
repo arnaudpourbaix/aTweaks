@@ -68,10 +68,10 @@ END
 // Hideous laugh
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(NearestEnemyOf(Myself),30)
+	!StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
 	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
@@ -85,10 +85,10 @@ END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(SecondNearestEnemyOf(Myself),30)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
@@ -102,10 +102,10 @@ END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(ThirdNearestEnemyOf(Myself),30)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
@@ -119,10 +119,10 @@ END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(FourthNearestEnemyOf(Myself),30)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -136,10 +136,10 @@ END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(FifthNearestEnemyOf(Myself),30)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -153,10 +153,10 @@ END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
 	HaveSpellRES("spin890")
-	Range(SixthNearestEnemyOf(Myself),30)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)

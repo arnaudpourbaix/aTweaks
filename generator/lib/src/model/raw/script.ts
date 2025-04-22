@@ -1,43 +1,13 @@
-import { Actions } from "./actions";
-import { RawTargetList } from "./target";
-import { Triggers } from "./triggers";
+import {
+  ConditionalStatement,
+  CustomCodeLocation,
+  CustomCodeType,
+} from "../final/script";
+import { RawCreatureAbility } from "./ability";
 
-export type Statements = ConditionalStatement[];
-
-export interface ConditionalStatement {
-  comment?: string;
-  target?: RawTargetList;
-  triggers: Triggers.Trigger[];
-  responses: Response[];
-}
-
-export interface Response {
-  weight: number;
-  actions: Actions.Action[];
-}
-
-export interface CustomCode {
+export interface RawCustomCode {
   location: CustomCodeLocation;
   type: CustomCodeType;
-  statements: ConditionalStatement[];
+  statements?: ConditionalStatement[];
+  abilities?: RawCreatureAbility[];
 }
-
-export type CustomCodeLocation =
-  | "destroyUponDeath"
-  | "init"
-  | "rest"
-  | "turnHostile"
-  | "detectCombat"
-  | "listenToShouts"
-  | "trackTargets"
-  | "attack"
-  | "handlePanic"
-  | "followSummoner"
-  | "creatureAbilities"
-  | "potions"
-  | "kitAbilities"
-  | "randomWalkNoCombat"
-  | "randomWalkCombat"
-  | "noActionOutsideOfCombat";
-
-export type CustomCodeType = "insertBefore" | "insertAfter" | "replace";

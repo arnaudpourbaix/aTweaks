@@ -24,7 +24,7 @@ const gaseousFormDuration = 12;
 
 // Items
 const mainWeapon = file(1, id);
-const gaseousFormImmunities = file(2, id);
+const gaseousFormWeapon = file(2, id);
 
 export const OGRE_MAGE: RawCreature = {
   name: "Ogre Mage",
@@ -43,7 +43,7 @@ export const OGRE_MAGE: RawCreature = {
     intelligence: 16,
     wisdom: 14,
     charisma: 17,
-    movement: 9,
+    // movement: 9, // moved to main weapon because it can polymorph in a slower form
     ac: 4,
     apr: 1,
     xpv: 650,
@@ -90,6 +90,7 @@ export const OGRE_MAGE: RawCreature = {
       type: "Melee",
       flags: ["Displayable"],
       animation: "LongSword",
+      name: "Naganata",
       category: "Halberds",
       icon: "ISW1H44",
       proficiency: "PROFICIENCYKATANA",
@@ -100,15 +101,34 @@ export const OGRE_MAGE: RawCreature = {
       damageType: "Slashing",
       speed: 5,
       abilityFlags: ["AddStrengthBonus"],
+      effects: [
+        {
+          opcode: "MovementRateBonus2",
+          type: "Set",
+          value: 8, // 9 in PnP
+          global: true,
+        },
+      ],
     },
     {
-      file: gaseousFormImmunities,
-      name: "Gaseous form immunities",
+      file: gaseousFormWeapon,
+      name: "Gaseous form",
       description: [
-        "Gaseous form to everything but magical fire, lightning and mind spells.",
+        "Gaseous form is immuned to everything but magical fire, lightning and mind spells.",
       ],
+      type: "Melee",
+      flags: ["Displayable"],
+      icon: "ISPER01",
       immunities: ["poison", "cold", "physical"],
       effects: [
+        { opcode: "NoCollisionDetection", passWalls: true, global: true },
+        { opcode: "ModifyCollisionBehavior", global: true },
+        {
+          opcode: "OverrideCreatureData",
+          field: "PersonalSpace",
+          value: 0,
+          global: true,
+        },
         {
           opcode: "FireResistanceModifier",
           value: 100,
@@ -127,9 +147,36 @@ export const OGRE_MAGE: RawCreature = {
           type: "Set",
           global: true,
         },
+        {
+          opcode: "MovementRateBonus2",
+          type: "Set",
+          value: 3, // 3 in PnP
+          global: true,
+        },
+        {
+          opcode: "ModifyAttacksPerRound",
+          type: "Final",
+          value: 0,
+          global: true,
+        },
+        {
+          opcode: "DisableSpellcasting",
+          type: "Wizard",
+          global: true,
+        },
+        { opcode: "DisableButton", button: "SpellSelect", global: true },
+        {
+          opcode: "AnimationChange",
+          animationId: "BLOB_MIST_CREATURE",
+          animationType: "TemporaryChange",
+          global: true,
+        },
+        {
+          opcode: "SetExtendedSpellState",
+          state: SPELL_STATES.gaseousForm,
+          global: true,
+        },
       ],
-      category: "Rings",
-      icon: "IRING01",
     },
   ],
   projectiles: [
@@ -150,7 +197,7 @@ export const OGRE_MAGE: RawCreature = {
       memorizedCount: 1,
       type: "Melee",
       projectile: coneOfCold,
-      icon: "SPWI503",
+      icon: SPELLS.ConeOfCold,
       castingSound: "CAS_M06",
       flags: ["Hostile", "BreakSanctuary"],
       spellType: "Wizard",
@@ -185,7 +232,7 @@ export const OGRE_MAGE: RawCreature = {
       stringRef: TraStringReferenceEnum.Fly,
       type: "Melee",
       memorizedCount: 1,
-      icon: "SPWI305",
+      icon: SPELLS.Haste,
       castingSound: "CAS_M08",
       spellType: "Wizard",
       castingAnimation: "Alteration",
@@ -240,7 +287,7 @@ export const OGRE_MAGE: RawCreature = {
       stringRef: TraStringReferenceEnum.GaseousForm,
       type: "Melee",
       memorizedCount: 1,
-      icon: "SPWI416",
+      icon: SPELLS.PolymorphSelf,
       castingSound: "CAS_M08",
       spellType: "Wizard",
       castingAnimation: "Alteration",
@@ -252,29 +299,9 @@ export const OGRE_MAGE: RawCreature = {
       speed: 4,
       effects: [
         {
-          opcode: "MovementRateBonus2",
-          type: "Set",
-          value: 3, // 3 in PnP
-          timing: "InstantLimited",
-          duration: gaseousFormDuration,
-        },
-        {
-          opcode: "PolymorphIntoSpecific",
-          type: "AppearanceOnly",
-          resource: "GASFORM4",
-          timing: "InstantLimited",
-          duration: gaseousFormDuration,
-        },
-        {
-          opcode: "CreateItemInSlot",
-          slot: "SLOT_AMULET",
-          resource: gaseousFormImmunities,
-          timing: "InstantLimited",
-          duration: gaseousFormDuration,
-        },
-        {
-          opcode: "SetExtendedSpellState",
-          state: SPELL_STATES.gaseousForm,
+          opcode: "CreateWeapon",
+          amount: 0,
+          resource: gaseousFormWeapon,
           timing: "InstantLimited",
           duration: gaseousFormDuration,
         },
@@ -284,11 +311,7 @@ export const OGRE_MAGE: RawCreature = {
           playWhere: "OverTargetUnattached",
           resource: "SPDISPM3",
           timing: "InstantLimited",
-          duration: gaseousFormDuration,
-        },
-        {
-          opcode: "PlaySound",
-          resource: "MSTCHNG",
+          duration: 3,
         },
         {
           opcode: "PlayVisualEffect",
@@ -301,8 +324,6 @@ export const OGRE_MAGE: RawCreature = {
         {
           opcode: "PlaySound",
           resource: "MSTCHNG",
-          timing: "DelayPermanent",
-          duration: gaseousFormDuration,
         },
         {
           opcode: "PlaySound",
@@ -314,116 +335,91 @@ export const OGRE_MAGE: RawCreature = {
     },
   ],
   abilities: [
-    // {
-    //   name: "Invisibility",
-    //   timer: {
-    //     name: "invisible",
-    //     value: 18,
-    //   },
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [SPELLS.Invisibility] },
-    //     { name: "Detect", params: ["NearestEnemyOf"] },
-    //     {
-    //       name: "RandomNumGT",
-    //       params: [869, 100],
-    //     },
-    //     {
-    //       name: "StateCheck",
-    //       params: ["Myself", "STATE_INVISIBLE"],
-    //       negation: true,
-    //     },
-    //   ],
-    //   actions: [
-    //     { name: "SpellNoDecRES", params: [SPELLS.Invisibility, "Myself"] },
-    //   ],
-    // },
-    // {
-    //   name: "Fly",
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [fly] },
-    //     { name: "Detect", params: ["NearestEnemyOf"] },
-    //     {
-    //       name: "CheckSpellState",
-    //       params: ["Myself", SPELL_STATES.flying],
-    //       negation: true,
-    //     },
-    //   ],
-    //   actions: [{ name: "SpellNoDecRES", params: [fly, "Myself"] }],
-    // },
-    // {
-    //   name: "Charm Person",
-    //   target: {
-    //     name: "PCsPreferringStrong",
-    //     random: true,
-    //   },
-    //   isTargetSpell: true,
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [SPELLS.CharmPerson] },
-    //     {
-    //       name: "RandomNumGT",
-    //       params: [870, 100],
-    //     },
-    //   ],
-    //   actions: [
-    //     { name: "SpellRES", params: [SPELLS.CharmPerson, "LastSeenBy"] },
-    //   ],
-    // },
-    // {
-    //   name: "Sleep",
-    //   target: {
-    //     name: "PCsPreferringStrong",
-    //     random: true,
-    //   },
-    //   isTargetSpell: true,
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [SPELLS.Sleep] },
-    //     {
-    //       name: "RandomNumGT",
-    //       params: [871, 100],
-    //     },
-    //   ],
-    //   actions: [{ name: "SpellRES", params: [SPELLS.Sleep, "LastSeenBy"] }],
-    // },
-    // {
-    //   name: "Cone of Cold",
-    //   target: { name: "NearestEnemies", random: true },
-    //   isTargetSpell: true,
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [coneOfCold] },
-    //     {
-    //       name: "RandomNumGT",
-    //       params: [872, 100],
-    //     },
-    //   ],
-    //   actions: [{ name: "SpellRES", params: [coneOfCold, "LastSeenBy"] }],
-    // },
-    // {
-    //   name: "Darkness 15' Radius",
-    //   timer: { name: "darkness", value: 60 },
-    //   target: {
-    //     name: "NearestEnemies",
-    //     random: true,
-    //     limit: 6,
-    //   },
-    //   isTargetSpell: true,
-    //   triggers: [
-    //     { name: "HaveSpellRES", params: [SPELLS.Darkness15Radius] },
-    //     {
-    //       name: "RandomNumGT",
-    //       params: [873, 100],
-    //     },
-    //   ],
-    //   actions: [
-    //     { name: "SpellNoDecRES", params: [SPELLS.Darkness15Radius, "Myself"] },
-    //   ],
-    // },
+    {
+      name: "Invisibility",
+      timer: {
+        name: "invisible",
+        value: 18,
+      },
+      spell: {
+        id: "WIZARD_INVISIBILITY",
+        type: "noDec",
+        excludeStateChecks: ["STATE_INVISIBLE"],
+        probability: 80,
+      },
+      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
+    },
+    {
+      name: "Fly",
+      spell: {
+        resource: fly,
+        type: "noDec",
+        excludeSpellStates: [SPELL_STATES.flying],
+        probability: 80,
+      },
+      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
+    },
+    {
+      name: "Charm Person",
+      target: {
+        name: "PCsPreferringStrong",
+        random: true,
+      },
+      spell: {
+        id: "WIZARD_CHARM_PERSON",
+        excludeStateChecks: ["STATE_HELPLESS"],
+        probability: 80,
+      },
+    },
+    {
+      name: "Sleep",
+      target: {
+        name: "PCsPreferringStrong",
+        random: true,
+      },
+      spell: {
+        id: "WIZARD_SLEEP",
+        excludeStateChecks: ["STATE_HELPLESS"],
+        probability: 80,
+      },
+    },
+    {
+      name: "Cone of Cold",
+      target: { name: "NearestEnemies", random: true },
+      spell: {
+        resource: coneOfCold,
+        excludeStateChecks: ["STATE_HELPLESS"],
+        probability: 80,
+      },
+    },
+    {
+      name: "Darkness 15' Radius",
+      timer: { name: "darkness", value: 60 },
+      target: {
+        name: "NearestEnemies",
+        random: true,
+        limit: 6,
+      },
+      spell: {
+        id: "WIZARD_DARKNESS_15_FOOT",
+        type: "noDec",
+        excludeStateChecks: ["STATE_HELPLESS"],
+        probability: 80,
+      },
+    },
     {
       name: "Gaseous form",
+      spell: {
+        resource: gaseousForm,
+        probability: 80,
+      },
       triggers: [
-        { name: "HaveSpellRES", params: [gaseousForm] },
         { name: "Detect", params: ["NearestEnemyOf"] },
+        { name: "HaveSpellRES", params: [coneOfCold], negation: true },
+        { name: "HaveSpellRES", params: [SPELLS.Sleep], negation: true },
+        { name: "HaveSpellRES", params: [SPELLS.CharmPerson], negation: true },
+        { name: "HPPercentLT", params: ["Myself", 25] },
       ],
-      actions: [{ name: "SpellRES", params: [gaseousForm, "Myself"] }],
     },
   ],
   files: [

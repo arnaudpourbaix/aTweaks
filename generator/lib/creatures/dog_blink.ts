@@ -45,11 +45,11 @@ export const DOG_BLINK: RawCreature = {
     {
       name: "Blink",
       target: { name: "FarthestEnemies", random: true },
-      actions: [
-        { name: "ForceSpellRES", params: [blink, "LastSeenBy"] },
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
-      ],
-      range: 30,
+      spell: {
+        resource: blink,
+        type: "force",
+      },
+      actions: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
     },
   ],
   items: [

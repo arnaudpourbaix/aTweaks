@@ -10,7 +10,7 @@ import { Actions } from "../raw/actions";
 import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
 import { CreatureSize, RawProficiencyType } from "../raw/enum";
 import { RawItemSlot } from "../raw/item";
-import { CustomCode } from "../raw/script";
+import { RawCustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
@@ -18,6 +18,7 @@ import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import { Item } from "./item";
 import { Projectile } from "./projectile";
+import { CustomCode } from "./script";
 import { Spell } from "./spell";
 
 export interface Creature {

@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../config/generate";
+import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -7,9 +8,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.HelmedHorror;
 // Script
 const script = bafFile(id);
-// Spells
-const magicMissile = "SPWI112";
-const teleport = "SPWI402";
 // Items
 const mainWeapon = file(1, id);
 const armor = file(2, id);
@@ -72,12 +70,12 @@ export const HORROR_HELMED: RawCreature = {
     {
       name: "Magic Missiles",
       target: { name: "PCSpellcasters", includeStatus: ["Able"], random: true },
+      spell: {
+        id: "WIZARD_MAGIC_MISSILE",
+        type: "force",
+      },
       triggers: [
-        { name: "HaveSpellRES", params: [magicMissile] },
         { name: "Range", params: ["NearestEnemyOf", 10], negation: true },
-      ],
-      actions: [
-        { name: "ForceSpellRES", params: [magicMissile, "LastSeenBy"] },
       ],
       timer: { name: "MagicMissiles", value: 18 },
     },
@@ -86,33 +84,23 @@ export const HORROR_HELMED: RawCreature = {
     {
       location: "trackTargets",
       type: "insertBefore",
-      statements: [
+      abilities: [
         {
-          comment: "Dimension Door",
+          name: "Dimension Door",
           target: {
             name: "Players",
             triggers: [
               { name: "Range", params: [GLOBAL_CONFIG.tokens.target, 180] },
             ],
           },
+          spell: {
+            id: "WIZARD_DIMENSION_DOOR",
+          },
           triggers: [
-            { name: "HaveSpellRES", params: [teleport] },
             {
               name: "StateCheck",
               params: ["Myself", "STATE_BLIND"],
               negation: true,
-            },
-          ],
-          responses: [
-            {
-              weight: 100,
-              actions: [
-                {
-                  name: "ForceSpellRES",
-                  params: [teleport, GLOBAL_CONFIG.tokens.target],
-                },
-                { name: "RemoveSpellRES", params: [teleport] },
-              ],
             },
           ],
         },
@@ -283,8 +271,8 @@ export const HORROR_HELMED: RawCreature = {
       },
       additionalData: {
         memorizedSpells: [
-          { file: magicMissile, memorizedCount: 1 },
-          { file: teleport, memorizedCount: 1 },
+          { file: SPELLS.MagicMissiles, memorizedCount: 1 },
+          { file: SPELLS.DimensionDoor, memorizedCount: 1 },
         ],
       },
     },

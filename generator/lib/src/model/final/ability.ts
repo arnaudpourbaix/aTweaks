@@ -5,10 +5,7 @@ import { Triggers } from "../raw/triggers";
 export interface CreatureAbility {
   name: string;
   target?: RawTargetList;
-  /**
-   * Is it a targetted spell ? (which requires specific triggers)
-   */
-  isTargetSpell: boolean;
+  isSpell: boolean;
   /**
    * Ability range (if applicable)
    */

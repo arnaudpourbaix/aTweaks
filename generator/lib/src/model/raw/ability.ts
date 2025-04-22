@@ -1,3 +1,5 @@
+import { SpellIdentifier } from "../ids/spell";
+import { StateIdentifier } from "../ids/state";
 import { Actions } from "./actions";
 import { RawTargetList } from "./target";
 import { Triggers } from "./triggers";
@@ -5,10 +7,7 @@ import { Triggers } from "./triggers";
 export interface RawCreatureAbility {
   name: string;
   target?: RawTargetList;
-  /**
-   * Is it a targetted spell ? (which requires specific triggers)
-   */
-  isTargetSpell?: boolean;
+  spell?: RawCreatureAbilitySpell;
   /**
    * Ability range (if applicable)
    */
@@ -18,9 +17,29 @@ export interface RawCreatureAbility {
    */
   timer?: { name: string; value: number };
   triggers?: Triggers.Trigger[];
-  actions: Actions.Action[];
+  actions?: Actions.Action[];
   /**
    * If true, disable interrupt (false by default)
    */
   disableInterrupt?: boolean;
+}
+
+export interface RawCreatureAbilitySpell {
+  id?: SpellIdentifier;
+  resource?: string;
+  type?: "normal" | "noDec" | "force" | "reallyForce";
+  excludeStateChecks?: StateIdentifier[];
+  excludeSpellStates?: string[];
+  /**
+   * Probability (0-100)
+   */
+  probability?: number;
+  /**
+   * Target self with spell even if target is set
+   */
+  selfTarget?: boolean;
+  /**
+   * Remove spell after use, only relevant is type is different than normal
+   */
+  remove?: boolean;
 }

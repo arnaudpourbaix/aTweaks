@@ -72,13 +72,12 @@ THEN
 		NoAction()
 END
 
-// Petrification
+// Petrification (2e)
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(NearestEnemyOf(Myself),30)
-	!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
-	!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
 	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
@@ -87,16 +86,15 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",NearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SecondNearestEnemyOf(Myself),30)
-	!CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
@@ -105,16 +103,15 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",SecondNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(ThirdNearestEnemyOf(Myself),30)
-	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
@@ -123,16 +120,15 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",ThirdNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FourthNearestEnemyOf(Myself),30)
-	!CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -141,16 +137,15 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",FourthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FifthNearestEnemyOf(Myself),30)
-	!CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -159,16 +154,15 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",FifthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SixthNearestEnemyOf(Myself),30)
-	!CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLOWED)
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -176,7 +170,7 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m2",SixthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 

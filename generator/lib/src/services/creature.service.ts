@@ -322,4 +322,19 @@ export class CreatureService {
     }) as { modifier: number };
     return item.modifier;
   }
+
+  getAttacksPerRound(value: number): number {
+    if (value === 0.5) {
+      return 6;
+    } else if (value === 1.5) {
+      return 7;
+    } else if (value === 2.5) {
+      return 8;
+    } else if (value === 3.5) {
+      return 9;
+    } else if (value === 4.5) {
+      return 10;
+    } else if (value < 6) return value;
+    throw new Error(`Can't set more than 5 attacks per round: ${value}`);
+  }
 }

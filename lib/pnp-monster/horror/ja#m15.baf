@@ -68,8 +68,8 @@ END
 // Magic Missiles
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_PANIC)
@@ -85,14 +85,14 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		ForceSpell([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_PANIC)
@@ -108,14 +108,14 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		ForceSpell([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_PANIC)
@@ -131,14 +131,14 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		ForceSpell([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpellRES("SPWI112")
 	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!CheckStatGT([PC.0.0.BARD],0,HELD)
 	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
 	!StateCheck([PC.0.0.BARD],STATE_PANIC)
@@ -153,7 +153,7 @@ IF
 	See([PC.0.0.BARD])
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI112",LastSeenBy(Myself))
+		ForceSpell([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -713,63 +713,99 @@ END
 
 // Dimension Door
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player1,180)
+	!General(Player1,WEAPON)
+	!CheckStatGT(Player1,0,SANCTUARY)
+	!StateCheck(Player1,STATE_CHARMED)
+	!StateCheck(Player1,STATE_REALLY_DEAD)
+	See(Player1)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player1)
-		RemoveSpellRES("SPWI402")
+		Spell(Player1,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player2,180)
+	!General(Player2,WEAPON)
+	!CheckStatGT(Player2,0,SANCTUARY)
+	!StateCheck(Player2,STATE_CHARMED)
+	!StateCheck(Player2,STATE_REALLY_DEAD)
+	See(Player2)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player2)
-		RemoveSpellRES("SPWI402")
+		Spell(Player2,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player3,180)
+	!General(Player3,WEAPON)
+	!CheckStatGT(Player3,0,SANCTUARY)
+	!StateCheck(Player3,STATE_CHARMED)
+	!StateCheck(Player3,STATE_REALLY_DEAD)
+	See(Player3)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player3)
-		RemoveSpellRES("SPWI402")
+		Spell(Player3,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player4,180)
+	!General(Player4,WEAPON)
+	!CheckStatGT(Player4,0,SANCTUARY)
+	!StateCheck(Player4,STATE_CHARMED)
+	!StateCheck(Player4,STATE_REALLY_DEAD)
+	See(Player4)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player4)
-		RemoveSpellRES("SPWI402")
+		Spell(Player4,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player5,180)
+	!General(Player5,WEAPON)
+	!CheckStatGT(Player5,0,SANCTUARY)
+	!StateCheck(Player5,STATE_CHARMED)
+	!StateCheck(Player5,STATE_REALLY_DEAD)
+	See(Player5)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player5)
-		RemoveSpellRES("SPWI402")
+		Spell(Player5,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
-	HaveSpellRES("SPWI402")
 	!StateCheck(Myself,STATE_BLIND)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player6,180)
+	!General(Player6,WEAPON)
+	!CheckStatGT(Player6,0,SANCTUARY)
+	!StateCheck(Player6,STATE_CHARMED)
+	!StateCheck(Player6,STATE_REALLY_DEAD)
+	See(Player6)
 THEN
 	RESPONSE #100
-		ForceSpellRES("SPWI402",Player6)
-		RemoveSpellRES("SPWI402")
+		Spell(Player6,WIZARD_DIMENSION_DOOR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Track players if allegiance is not GOODCUTOFF

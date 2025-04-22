@@ -873,6 +873,11 @@ export class WeiduCreatureService extends AbstractWeiduService {
       `LPF patchCreatureScript STR_VAR script=${p.script}${slot}${files}${skipFiles}${removeScripts} END`,
       p.tab
     );
+    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x248 "None" #8`);
+    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x250 "None" #8`);
+    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x258 "None" #8`);
+    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x260 "None" #8`);
+    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x268 "None" #8`);
   }
 
   private handleAdjustments(

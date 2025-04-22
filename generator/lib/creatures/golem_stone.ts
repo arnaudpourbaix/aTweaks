@@ -1,4 +1,4 @@
-import { GLOBAL_CONFIG } from "../config/generate";
+import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -7,8 +7,6 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.StoneGolem;
 // Script
 const script = bafFile(id);
-// Spells
-const slow = "spwi312";
 // Items
 const mainWeapon = file(1, id);
 
@@ -47,7 +45,7 @@ export const GOLEM_STONE: RawCreature = {
     immunities: ["construct"],
     removeScripts: ["GOLSTO01", "DW1MELMO", "BDSUM00"],
     removeItems: ["GOLSTO", "GOLSTONE"],
-    memorizedSpells: [{ file: slow, memorizedCount: 1 }],
+    memorizedSpells: [{ file: SPELLS.Slow, memorizedCount: 1 }],
   },
   items: [
     {
@@ -65,17 +63,14 @@ export const GOLEM_STONE: RawCreature = {
     {
       name: "Slow",
       target: { name: "NearestEnemies", limit: 5 },
+      spell: {
+        id: "WIZARD_SLOW",
+        type: "reallyForce",
+        excludeStateChecks: ["STATE_SLOWED"],
+        selfTarget: true,
+      },
       range: 10,
-      triggers: [
-        {
-          name: "StateCheck",
-          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-          negation: true,
-        },
-        { name: "HaveSpellRES", params: [slow] },
-      ],
       timer: { name: "Slow", value: 12 },
-      actions: [{ name: "ReallyForceSpellRES", params: [slow, "Myself"] }],
     },
   ],
   files: ["BDGOLSTO", "BDMENGO", "NTGOLSTO", "TOMEGOL3", "WISTOGOL"],

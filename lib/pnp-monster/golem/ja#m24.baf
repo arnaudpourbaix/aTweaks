@@ -67,10 +67,10 @@ END
 
 // Haste
 IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Delay(6)
 	HaveSpellRES("ja#1m24")
 	!StateCheck(Myself,STATE_HASTED)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 THEN
 	RESPONSE #100
 		ReallyForceSpellRES("ja#1m24",Myself)

@@ -7,7 +7,6 @@ import { ALLEGIANCE_IDENTIFIERS } from "../model/ids/allegiance";
 import { GENERAL_IDENTIFIERS } from "../model/ids/general";
 import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
 import { RACE_IDENTIFIERS } from "../model/ids/race";
-import { ConditionalStatement, Statements } from "../model/raw/script";
 import { TARGET_PARAMLESS_OBJECTS } from "../model/raw/target";
 import { State } from "../state";
 import { StatementService } from "./statement-builder.service";
@@ -17,6 +16,7 @@ import { GENDER_IDENTIFIER } from "../model/ids/gender";
 import { ALIGN_IDENTIFIERS } from "../model/ids/align";
 import { Triggers } from "../model/raw/triggers";
 import { Actions } from "../model/raw/actions";
+import { ConditionalStatement, Statements } from "../model/final/script";
 
 export class BafGeneratorService {
   static instance = new BafGeneratorService();

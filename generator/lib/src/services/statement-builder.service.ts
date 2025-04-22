@@ -6,10 +6,10 @@ import { TARGET_STATUS } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { CreatureAbility } from "../model/final/ability";
 import { Creature } from "../model/final/creature";
+import { CustomCodeLocation, Statements } from "../model/final/script";
 import { RaceIdentifier } from "../model/ids/race";
 import { BuilderOptions } from "../model/misc";
 import { Actions } from "../model/raw/actions";
-import { CustomCodeLocation, Statements } from "../model/raw/script";
 import { RawTargetList } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
 import { FactoryService } from "./factory.service";
@@ -129,13 +129,25 @@ export class StatementService {
   ) {
     const custom = creature.customCode.find((c) => c.location === location);
     if (custom && custom.type === "insertBefore") {
-      this.processStatements(statements, custom.statements);
+      this.processStatements(statements, custom.statements ?? []);
+      this.parseAbilities(
+        statements,
+        creature,
+        options,
+        custom.abilities ?? []
+      );
     }
     if (!custom || custom.type !== "replace") {
       fn.apply(this, [statements, creature, options]);
     }
     if (custom && custom.type === "insertAfter") {
-      this.processStatements(statements, custom.statements);
+      this.processStatements(statements, custom.statements ?? []);
+      this.parseAbilities(
+        statements,
+        creature,
+        options,
+        custom.abilities ?? []
+      );
     }
   }
 
@@ -695,7 +707,16 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    for (const ability of creature.abilities) {
+    this.parseAbilities(statements, creature, options, creature.abilities);
+  }
+
+  private parseAbilities(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+    abilities: CreatureAbility[]
+  ): void {
+    for (const ability of abilities) {
       if (ability.target)
         this.creatureTargetAbility(
           statements,
@@ -718,7 +739,7 @@ export class StatementService {
     const { triggers, targetTriggers } =
       this.targetService.getTriggersFromTargetList(target);
     triggers.unshift(...ability.triggers);
-    if (ability.isTargetSpell)
+    if (ability.isSpell)
       targetTriggers.push(
         ...this.factory.validSpellTarget({
           isTargetPlayer: false,
@@ -786,10 +807,9 @@ export class StatementService {
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
-    } else {
-      triggers.push(this.factory.globalRoundTimerNotExpired());
-      actions.push(this.factory.setGlobalRoundTimer());
     }
+    triggers.unshift(this.factory.globalRoundTimerNotExpired());
+    actions.push(this.factory.setGlobalRoundTimer());
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());
       actions.push(this.factory.enableInterrupt());

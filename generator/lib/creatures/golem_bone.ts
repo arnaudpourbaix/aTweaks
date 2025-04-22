@@ -65,17 +65,13 @@ export const GOLEM_BONE: RawCreature = {
     {
       name: "Hideous laugh",
       target: { name: "NearestEnemies", limit: 6 },
-      range: 30,
-      triggers: [
-        {
-          name: "StateCheck",
-          params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
-          negation: true,
-        },
-        { name: "HaveSpellRES", params: [hideousLaugh] },
-      ],
+      spell: {
+        resource: hideousLaugh,
+        type: "force",
+        excludeStateChecks: ["STATE_PANIC"],
+        selfTarget: true,
+      },
       timer: { name: "Fear", value: 18 },
-      actions: [{ name: "ForceSpellRES", params: [hideousLaugh, "Myself"] }],
     },
   ],
   files: ["NTGOLBON"],

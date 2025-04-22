@@ -62,45 +62,38 @@ export const BASILISK_LESSER: RawCreature = {
       target: {
         name: "NearestEnemies",
         random: true,
-        triggers: [
-          {
-            name: "HaveSpellRES",
-            params: [petrification2e],
-          },
-        ],
       },
-      actions: [
-        { name: "ForceSpellRES", params: [petrification2e, "LastSeenBy"] },
-      ],
-      range: 30,
-    },
-    {
-      name: "Petrification (5e)",
-      target: {
-        name: "NearestEnemies",
-        random: true,
-        triggers: [
-          {
-            name: "HaveSpellRES",
-            params: [petrification5e],
-          },
-          {
-            name: "CheckStatGT",
-            params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-            negation: true,
-          },
-          {
-            name: "StateCheck",
-            params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-            negation: true,
-          },
-        ],
+      spell: {
+        resource: petrification2e,
+        type: "force",
       },
-      actions: [
-        { name: "ForceSpellRES", params: [petrification5e, "LastSeenBy"] },
-      ],
-      range: 30,
     },
+    // {
+    //   name: "Petrification (5e)",
+    //   target: {
+    //     name: "NearestEnemies",
+    //     random: true,
+    //     triggers: [
+    //       {
+    //         name: "HaveSpellRES",
+    //         params: [petrification5e],
+    //       },
+    //       {
+    //         name: "CheckStatGT",
+    //         params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+    //         negation: true,
+    //       },
+    //       {
+    //         name: "StateCheck",
+    //         params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+    //         negation: true,
+    //       },
+    //     ],
+    //   },
+    //   actions: [
+    //     { name: "ForceSpellRES", params: [petrification5e, "LastSeenBy"] },
+    //   ],
+    // },
   ],
   items: [
     {

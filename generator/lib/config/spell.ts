@@ -1,11 +1,18 @@
 export const SPELLS = {
-  BerserkerRage: "SPCL321",
-  BarbarianRage: "SPCL152",
+  // Wizard
+  CharmPerson: "SPWI104",
+  MagicMissiles: "SPWI112",
+  Sleep: "SPWI116",
   Invisibility: "SPWI206",
   Darkness15Radius: "SPWI228",
-  CharmPerson: "SPWI104",
-  Sleep: "SPWI116",
+  Haste: "SPWI305",
+  Slow: "SPWI312",
+  DimensionDoor: "SPWI402",
+  PolymorphSelf: "SPWI416",
   ConeOfCold: "SPWI503",
+  // Class
+  BerserkerRage: "SPCL321",
+  BarbarianRage: "SPCL152",
 };
 
 export const SPELL_STATES = {

@@ -1,3 +1,33 @@
+export type RawDisableButton =
+  | "Stealth"
+  | "ThievingSkill"
+  | "SpellSelect"
+  | "FirstQuickSpell"
+  | "SecondQuickSpell"
+  | "ThirdQuickSpell"
+  | "TurnUndead"
+  | "Talk"
+  | "UseItem"
+  | "FirstQuickItem"
+  | "BardSong"
+  | "SecondQuickItem"
+  | "ThirdQuickItem"
+  | "InnateAbility"
+  | "FindTraps"
+  | "Inventory";
+
+export type RawDisableSpellcastingType =
+  | "Wizard"
+  | "Priest"
+  | "Innate"
+  | "MagicalSpells";
+
+export type RawAttackModifierType =
+  | "Increment"
+  | "Set"
+  | "Percentage"
+  | "Final";
+
 export type RawPolymorphType = "GainResistancesStatistics" | "AppearanceOnly";
 
 export type RawAnimationChangeType =

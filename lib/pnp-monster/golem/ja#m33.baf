@@ -67,6 +67,7 @@ END
 
 // Charge
 IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!GlobalTimerNotExpired("Charge","LOCALS")
 	HaveSpellRES("ja#1m33")
 	!Range(NearestEnemyOf(Myself),5)
@@ -74,6 +75,7 @@ THEN
 	RESPONSE #100
 		ReallyForceSpellRES("ja#1m33",Myself)
 		SetGlobalTimer("Charge","LOCALS",25)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Attack NoCheck enemy

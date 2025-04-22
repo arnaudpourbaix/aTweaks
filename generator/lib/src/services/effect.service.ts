@@ -4,9 +4,12 @@ import { BaseEffect, Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AnimationChangeTypeEnum,
+  AttackModifierTypeEnum,
   CastSpellOnConditionTargetEnum,
   CharmTypeEnum,
   ColorEnum,
+  DisableButtonEnum,
+  DisableSpellcastingTypeEnum,
   DiseaseTypeEnum,
   DispelEffectTypeEnum,
   DispelEffectWeaponTypeEnum,
@@ -50,9 +53,12 @@ import {
   CharmCreatureEffect,
   ColorPulseEffect,
   CreateItemInSlotEffect,
+  CreateWeaponEffect,
   CreatureRGBColorFadeEffect,
   CurrentHPbonusEffect,
   DamageEffect,
+  DisableButtonEffect,
+  DisableSpellcastingEffect,
   DiseaseEffect,
   DispelEffectsEffect,
   HasteEffect,
@@ -65,6 +71,7 @@ import {
   MakeUnselectableEffect,
   MinimumHPEffect,
   ModifierTypeEffect,
+  ModifyAttacksPerRoundEffect,
   NoCollisionDetectionEffect,
   OverrideCreatureDataEffect,
   PlayVisualEffect,
@@ -92,11 +99,13 @@ import {
 } from "../model/raw/effect";
 import { RawEffectOpcode } from "../model/raw/effect.type";
 import { RawPortraitIcon } from "../model/raw/enum";
+import { CreatureService } from "./creature.service";
 import { UtilsService } from "./utils.service";
 
 export class EffectService {
   static instance = new EffectService();
 
+  private creatureService = CreatureService.instance;
   private utils = UtilsService.instance;
 
   getEffects(effects: RawEffect[]): Effect[] {
@@ -442,12 +451,35 @@ export class EffectService {
         }`;
         break;
       case EffectTypeEnum.AnimationChange:
-        result.parameter1 = `IDS_OF_SYMBOL (~anim~ ~${
+        result.parameter1 = `IDS_OF_SYMBOL (~animate~ ~${
           (<AnimationChangeEffect>effect).animationId
         }~)`;
         result.parameter2 = `${
           AnimationChangeTypeEnum[(<AnimationChangeEffect>effect).animationType]
         }`;
+        break;
+      case EffectTypeEnum.ModifyAttacksPerRound:
+        result.parameter1 = `${this.creatureService.getAttacksPerRound(
+          (<ModifyAttacksPerRoundEffect>effect).value
+        )}`;
+        result.parameter2 = `${
+          AttackModifierTypeEnum[(<ModifyAttacksPerRoundEffect>effect).type]
+        }`;
+        break;
+      case EffectTypeEnum.DisableSpellcasting:
+        result.parameter2 = `${
+          DisableSpellcastingTypeEnum[(<DisableSpellcastingEffect>effect).type]
+        }`;
+        if ((<DisableSpellcastingEffect>effect).showMessage === false)
+          effect.special = 1;
+        break;
+      case EffectTypeEnum.DisableButton:
+        result.parameter2 = `${
+          DisableButtonEnum[(<DisableButtonEffect>effect).button]
+        }`;
+        break;
+      case EffectTypeEnum.CreateWeapon:
+        result.parameter1 = `${(<CreateWeaponEffect>effect).amount}`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:
       case EffectTypeEnum.ProtectionFromBackstab:

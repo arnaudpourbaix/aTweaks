@@ -98,8 +98,10 @@ END
 IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
+	RandomNumGT(800,641)
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
@@ -114,8 +116,10 @@ END
 IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
+	RandomNumGT(800,641)
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
@@ -130,8 +134,10 @@ END
 IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
+	RandomNumGT(800,641)
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)

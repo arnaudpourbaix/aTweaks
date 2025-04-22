@@ -1,5 +1,38 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum DisableButtonEnum {
+  Stealth = 0,
+  ThievingSkill = 1,
+  SpellSelect = 2,
+  FirstQuickSpell = 3,
+  SecondQuickSpell = 4,
+  ThirdQuickSpell = 5,
+  TurnUndead = 6,
+  Talk = 7,
+  UseItem = 8,
+  FirstQuickItem = 9,
+  BardSong = 10,
+  SecondQuickItem = 11,
+  ThirdQuickItem = 12,
+  InnateAbility = 13,
+  FindTraps = 14,
+  Inventory = 15,
+}
+
+export enum DisableSpellcastingTypeEnum {
+  Wizard = 0,
+  Priest = 1,
+  Innate = 2,
+  MagicalSpells = 3,
+}
+
+export enum AttackModifierTypeEnum {
+  Increment = 0,
+  Set = 1,
+  Percentage = 2,
+  Final = 3,
+}
+
 export enum PolymorphTypeEnum {
   GainResistancesStatistics = 0,
   AppearanceOnly = 1,

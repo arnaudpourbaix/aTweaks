@@ -885,7 +885,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: [
       "Construct trait.",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
-      "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\nDarkvision out to 60 feet.",
+      "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.",
+      "Darkvision out to 60 feet.",
     ],
     immunities: [
       "poison",

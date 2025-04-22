@@ -74,9 +74,10 @@ END
 
 // Blink
 IF
+	HaveSpellRES("ja#1m14")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FarthestEnemyOf(Myself),30)
 	!General(FarthestEnemyOf(Myself),WEAPON)
+	!StateCheck(FarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_CHARMED)
@@ -85,15 +86,16 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m14",FarthestEnemyOf(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m14")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SecondFarthestEnemyOf(Myself),30)
 	!General(SecondFarthestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_CHARMED)
@@ -102,15 +104,16 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m14",SecondFarthestEnemyOf(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
+	HaveSpellRES("ja#1m14")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(ThirdFarthestEnemyOf(Myself),30)
 	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_CHARMED)
@@ -118,7 +121,7 @@ IF
 	See(ThirdFarthestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m14",ThirdFarthestEnemyOf(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END

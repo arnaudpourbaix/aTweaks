@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { GRAB_DEFAULT_CONFIG } from "../../config/grab";
-import { CreatureAbility } from "../model/final/ability";
 import { CreatureAttack, CreatureAttackAction } from "../model/final/attack";
 import {
   Creature,
@@ -40,7 +39,6 @@ import {
   ProjectileTypeEnum,
 } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
-import { RawCreatureAbility } from "../model/raw/ability";
 import { RawCreature, RawCreatureAdditionalData } from "../model/raw/creature";
 import { RawEffect } from "../model/raw/effect";
 import {
@@ -52,11 +50,11 @@ import {
 import { RawProjectile } from "../model/raw/projectile";
 import {
   RawAlterSpell,
-  RawBaseSpell,
   RawCreateSpell,
   RawMemorizedSpell,
   RawSpell,
 } from "../model/raw/spell";
+import { AbilityService } from "./ability.service";
 import { BafGeneratorService } from "./baf-generator.service";
 import { CreatureService } from "./creature.service";
 import { EffectService } from "./effect.service";
@@ -66,6 +64,8 @@ import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
+import { RawCustomCode } from "../model/raw/script";
+import { CustomCode } from "../model/final/script";
 
 export class MainService {
   private effectService = EffectService.instance;
@@ -76,6 +76,7 @@ export class MainService {
   private immunityService = ImmunityService.instance;
   private creatureService = CreatureService.instance;
   private targerService = TargetService.instance;
+  private abilityService = AbilityService.instance;
   private utils = UtilsService.instance;
 
   generateCommonCode(): Promise<void> {
@@ -115,8 +116,8 @@ export class MainService {
       },
       ...rawCreature,
       data: { ...rawCreature.data },
-      abilities: this.mapAbilities(rawCreature.abilities),
-      customCode: rawCreature.customCode ?? [],
+      abilities: this.abilityService.getAbilities(rawCreature.abilities),
+      customCode: this.mapCustomCode(rawCreature.customCode),
       adjustments: this.mapAdjustments(rawCreature),
       additionalData: this.mapAdditionalData({
         additionalData: rawCreature.additionalData,
@@ -147,37 +148,30 @@ export class MainService {
 
   private transformAttackPerRound(creature?: CreatureData) {
     if (!creature || !creature.apr) return;
-    else if (creature.apr === 0.5) {
-      return (creature.apr = 6);
-    } else if (creature.apr === 1.5) {
-      return (creature.apr = 7);
-    } else if (creature.apr === 2.5) {
-      return (creature.apr = 8);
-    } else if (creature.apr === 3.5) {
-      return (creature.apr = 9);
-    } else if (creature.apr === 4.5) {
-      return (creature.apr = 10);
-    } else if (creature.apr < 6) return;
-    creature.doubleApr = true;
-    if (creature.movement) {
-      creature.movement = Math.round(creature.movement / 2);
-    }
-    switch (creature.apr) {
-      case 6:
-        creature.apr = 3;
-        break;
-      case 7:
-        creature.apr = 9;
-        break;
-      case 8:
-        creature.apr = 4;
-        break;
-      case 9:
-        creature.apr = 10;
-        break;
-      case 10:
-        creature.apr = 5;
-        break;
+    try {
+      return this.creatureService.getAttacksPerRound(creature.apr);
+    } catch {
+      creature.doubleApr = true;
+      if (creature.movement) {
+        creature.movement = Math.round(creature.movement / 2);
+      }
+      switch (creature.apr) {
+        case 6:
+          creature.apr = 3;
+          break;
+        case 7:
+          creature.apr = 9;
+          break;
+        case 8:
+          creature.apr = 4;
+          break;
+        case 9:
+          creature.apr = 10;
+          break;
+        case 10:
+          creature.apr = 5;
+          break;
+      }
     }
   }
 
@@ -418,36 +412,6 @@ export class MainService {
     };
   }
 
-  private mapBaseSpell(spell: RawBaseSpell) {
-    return {
-      ...spell,
-      range: spell.range ?? 0,
-      speed: spell.speed ?? 0,
-      spellType: spell.spellType
-        ? SpellTypeEnum[spell.spellType]
-        : SpellTypeEnum.Innate,
-      spellLevel: spell.spellLevel ?? 1,
-      primaryType: spell.primaryType
-        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
-        : undefined,
-      secondaryType: spell.secondaryType
-        ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
-        : undefined,
-      castingAnimation: spell.castingAnimation
-        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
-        : undefined,
-      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
-      location: spell.location
-        ? ItemAbilityLocationEnum[spell.location]
-        : ItemAbilityLocationEnum.Ability,
-      target: spell.target
-        ? ItemAbilityTargetEnum[spell.target]
-        : ItemAbilityTargetEnum.LivingActor,
-      flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
-      effects: spell.effects ? this.mapEffects(spell.effects) : [],
-    };
-  }
-
   private mapMemorizedSpells(
     memorizedSpells: RawMemorizedSpell[] | undefined,
     spells: RawSpell[] | undefined
@@ -468,6 +432,17 @@ export class MainService {
   private mapEffects(effects: RawEffect[]): Effect[] {
     const results = this.effectService.getEffects(effects);
     return results;
+  }
+
+  private mapCustomCode(
+    customCodes: RawCustomCode[] | undefined
+  ): CustomCode[] {
+    if (!customCodes) return [];
+    return customCodes.map((code) => ({
+      ...code,
+      abilities: this.abilityService.getAbilities(code.abilities),
+      statements: code.statements ?? [],
+    }));
   }
 
   private mapProjectiles(
@@ -505,16 +480,5 @@ export class MainService {
         : undefined,
     }));
     return results;
-  }
-
-  private mapAbilities(
-    abilities: RawCreatureAbility[] | undefined
-  ): CreatureAbility[] {
-    if (!abilities) return [];
-    return abilities.map((a) => ({
-      ...a,
-      triggers: a.triggers ?? [],
-      isTargetSpell: a.isTargetSpell ?? false,
-    }));
   }
 }

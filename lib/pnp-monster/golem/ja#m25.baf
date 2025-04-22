@@ -68,10 +68,11 @@ END
 // Slow
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
-	HaveSpellRES("spwi312")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
@@ -79,16 +80,17 @@ IF
 	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("spwi312",Myself)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
-	HaveSpellRES("spwi312")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
@@ -96,16 +98,17 @@ IF
 	See(SecondNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("spwi312",Myself)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
-	HaveSpellRES("spwi312")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
@@ -113,16 +116,17 @@ IF
 	See(ThirdNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("spwi312",Myself)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
-	HaveSpellRES("spwi312")
 	Range(FourthNearestEnemyOf(Myself),10)
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -130,16 +134,17 @@ IF
 	See(FourthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("spwi312",Myself)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
-	HaveSpellRES("spwi312")
 	Range(FifthNearestEnemyOf(Myself),10)
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
@@ -147,7 +152,7 @@ IF
 	See(FifthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("spwi312",Myself)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
 END
 

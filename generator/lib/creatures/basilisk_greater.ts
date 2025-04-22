@@ -58,27 +58,15 @@ export const BASILISK_GREATER: RawCreature = {
   },
   abilities: [
     {
-      name: "Petrification",
+      name: "Petrification (2e)",
       target: {
         name: "NearestEnemies",
         random: true,
-        triggers: [
-          {
-            name: "CheckStatGT",
-            params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-            negation: true,
-          },
-          {
-            name: "StateCheck",
-            params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-            negation: true,
-          },
-        ],
       },
-      actions: [
-        { name: "ForceSpellRES", params: [petrification2e, "LastSeenBy"] },
-      ],
-      range: 30,
+      spell: {
+        resource: petrification2e,
+        type: "force",
+      },
     },
   ],
   items: [

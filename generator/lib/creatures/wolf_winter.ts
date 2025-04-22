@@ -62,14 +62,18 @@ export const WOLF_WINTER: RawCreature = {
   abilities: [
     {
       name: "Stream of frost",
-      target: { name: "NearestEnemies", limit: 3 },
+      target: {
+        name: "NearestEnemies",
+        limit: 3,
+      },
+      spell: {
+        resource: streamOfFrost,
+        type: "force",
+        probability: 20,
+        selfTarget: true,
+      },
       range: 10,
-      triggers: [
-        { name: "HaveSpellRES", params: [streamOfFrost] },
-        { name: "RandomNum", params: [10, 1] },
-      ],
       timer: { name: "StreamOfFrost", value: 60 },
-      actions: [{ name: "ForceSpellRES", params: [streamOfFrost, "Myself"] }],
     },
   ],
   spells: [

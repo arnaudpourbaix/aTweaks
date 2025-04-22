@@ -128,19 +128,13 @@ export const GOLEM_CLAY: RawCreature = {
   abilities: [
     {
       name: "Haste",
-      triggers: [
-        { name: "Delay", params: [6] },
-        { name: "HaveSpellRES", params: [haste] },
-        {
-          name: "StateCheck",
-          params: ["Myself", "STATE_HASTED"],
-          negation: true,
-        },
-      ],
-      actions: [
-        { name: "ReallyForceSpellRES", params: [haste, "Myself"] },
-        { name: "RemoveSpellRES", params: [haste] },
-      ],
+      spell: {
+        resource: haste,
+        type: "reallyForce",
+        excludeStateChecks: ["STATE_HASTED"],
+        remove: true,
+      },
+      triggers: [{ name: "Delay", params: [6] }],
     },
   ],
   files: ["AC#FPCLG", "AC#FPCLY", "BPCLAY", "TOMEGOL2", "WICLAYGO"],

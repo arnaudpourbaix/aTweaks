@@ -14,7 +14,7 @@ import { RawEffectOpcode } from "./effect.type";
 import { CreatureSize, RawProficiencyType } from "./enum";
 import { RawItem, RawItemSlot } from "./item";
 import { RawProjectile } from "./projectile";
-import { CustomCode } from "./script";
+import { RawCustomCode } from "./script";
 import { RawMemorizedSpell, RawSpell } from "./spell";
 
 export interface RawCreature {
@@ -73,7 +73,7 @@ export interface RawCreature {
 
   initActions?: Actions.Action[];
 
-  customCode?: CustomCode[];
+  customCode?: RawCustomCode[];
 
   data: RawCreatureData;
   additionalData: RawCreatureAdditionalData;

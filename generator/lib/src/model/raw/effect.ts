@@ -8,12 +8,15 @@ import { StringReference } from "../misc";
 import { RawEffectOpcode } from "./effect.type";
 import {
   RawAnimationChangeType,
+  RawAttackModifierType,
   RawBerserkType,
   RawBonusHPHealFlag,
   RawCastSpellOnConditionTarget,
   RawCastSpellOnConditionType,
   RawCharmType,
   RawColor,
+  RawDisableButton,
+  RawDisableSpellcastingType,
   RawDiseaseType,
   RawDispelEffectType,
   RawDispelEffectWeaponType,
@@ -399,6 +402,31 @@ export type AnimationChangeEffect = RawBaseEffect & {
   animationType: RawAnimationChangeType;
 };
 
+export type ModifyAttacksPerRoundEffect = RawBaseEffect & {
+  opcode: "ModifyAttacksPerRound";
+  /**
+   * Between -5 and +5
+   */
+  value: number;
+  type: RawAttackModifierType;
+};
+
+export type DisableSpellcastingEffect = RawBaseEffect & {
+  opcode: "DisableSpellcasting";
+  type: RawDisableSpellcastingType;
+  showMessage?: boolean;
+};
+
+export type DisableButtonEffect = RawBaseEffect & {
+  opcode: "DisableButton";
+  button: RawDisableButton;
+};
+
+export type CreateWeaponEffect = RawBaseEffect & {
+  opcode: "CreateWeapon";
+  amount: number;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -448,9 +476,12 @@ export type RawEffect =
   | ColorPulseEffect
   | CharmCreatureEffect
   | CreateItemInSlotEffect
+  | CreateWeaponEffect
   | CreatureRGBColorFadeEffect
   | CurrentHPbonusEffect
   | DamageEffect
+  | DisableButtonEffect
+  | DisableSpellcastingEffect
   | DiseaseEffect
   | DispelEffectsEffect
   | HasteEffect
@@ -463,6 +494,7 @@ export type RawEffect =
   | MakeUnselectableEffect
   | MinimumHPEffect
   | ModifierTypeEffect
+  | ModifyAttacksPerRoundEffect
   | NoCollisionDetectionEffect
   | OverrideCreatureDataEffect
   | PlayVisualEffect
