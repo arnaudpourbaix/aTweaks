@@ -26,6 +26,7 @@ export interface Item {
   description?: string[];
   immunities: ImmunityName[];
   enchantment?: number;
+  weight?: number;
   animation?: ItemAnimationEnum;
   category?: ItemCategoryEnum;
   proficiency?: ProficiencyTypeEnum;

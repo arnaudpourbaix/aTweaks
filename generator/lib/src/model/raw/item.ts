@@ -34,6 +34,7 @@ export interface RawBaseItem {
   immunities?: ImmunityName[];
   equippedSlot?: ItemSlot;
   enchantment?: number;
+  weight?: number;
   animation?: RawItemAnimation;
   category?: RawItemCategory;
   proficiency?: RawProficiencyType;

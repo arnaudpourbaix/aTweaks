@@ -38,4 +38,5 @@ export enum MonsterEnum {
   Hellcat = 37,
   DisplacerBeast = 38,
   SpectralHound = 39,
+  OgreShaman = 40,
 }

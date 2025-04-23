@@ -101,6 +101,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
           `SAY UNIDENTIFIED_DESC ~${item.description.join("\n")}~`,
           1
         );
+      if (item.weight) this.add(lines, `WRITE_LONG 0x4c ${item.weight}`, 1);
       if (item.category)
         this.add(lines, `WRITE_SHORT 0x1c ${item.category}`, 1);
       if (item.animation)
@@ -823,7 +824,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
           tab,
           script: scriptName,
           slot: adjustment.additionalData.scriptLocation,
-          removeScripts: adjustment.additionalData.removeScripts,
+          removeScripts: [
+            ...creature.additionalData.removeScripts,
+            ...adjustment.additionalData.removeScripts,
+          ],
           files: adjustment.files,
           skipFiles: [],
         });

@@ -252,6 +252,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 // ------------------------------------------------------
@@ -364,6 +365,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
 /*

@@ -91,9 +91,10 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Detect(NearestEnemyOf(Myself))
+	StateCheck(Myself,STATE_INVISIBLE)
 	HaveSpellRES("ja#2m32")
 	!CheckSpellState(Myself,JA_FLYING)
-	RandomNumGT(801,160)
+	RandomNumGT(801,80)
 THEN
 	RESPONSE #100
 		SpellNoDecRES("ja#2m32",Myself)

@@ -1,5 +1,3 @@
-import { GLOBAL_CONFIG } from "../config/generate";
-import { GRAB_DEFAULT_CONFIG } from "../config/grab";
 import { ITEMS } from "../config/item";
 import { SPELL_STATES, SPELLS } from "../config/spell";
 import {
@@ -58,20 +56,32 @@ export const OGRE_MAGE: RawCreature = {
     size: "Large",
   },
   additionalData: {
-    proficiencies: [{ type: "PROFICIENCYKATANA", value: 2 }],
-    removeItems: ["REGHP1", "BDOGRE03"],
+    proficiencies: [{ type: "PROFICIENCYHALBERD", value: 2 }],
+    removeItems: [
+      "REGHP1",
+      "BDOGRE03",
+      "HELMNOAN",
+      "SW1H43",
+      "SW1H01",
+      "COMPS01",
+      "COMPS02",
+      "OGREMASU",
+    ],
+    removeScripts: [
+      "BDOGRE03",
+      "BDFIG00",
+      "BDFMAG01",
+      "BPASIGHT",
+      "OGREMASU",
+      "DW1MELGE",
+      "DW#MG108",
+      "DW#MG56",
+    ],
     memorizedSpells: [
       { file: SPELLS.Invisibility, memorizedCount: 1 },
       { file: SPELLS.Darkness15Radius, memorizedCount: 1 },
       { file: SPELLS.CharmPerson, memorizedCount: 1 },
       { file: SPELLS.Sleep, memorizedCount: 1 },
-    ],
-    effects: [
-      {
-        opcode: "Regeneration",
-        type: "OneHPperAmountSeconds",
-        amount: 6,
-      },
     ],
   },
   attack: {
@@ -84,22 +94,32 @@ export const OGRE_MAGE: RawCreature = {
   },
   items: [
     {
-      // Naganata, 1d12 slashing, range 2
       file: mainWeapon,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      flags: ["Displayable"],
+      flags: ["Displayable", "TwoHanded"],
       animation: "LongSword",
       name: "Naganata",
+      description: [
+        "Similar to the glaive, the naginata is a pole weapon. Naginata were originally used by the samurai class.",
+        "",
+        "STATISTICS:",
+        "Damage: 1D12",
+        "Damage type: slashing",
+        "Weight: 15",
+        "Speed Factor: 8",
+        "Proficiency Type: Halberds",
+      ],
       category: "Halberds",
       icon: "ISW1H44",
-      proficiency: "PROFICIENCYKATANA",
+      proficiency: "PROFICIENCYHALBERD",
+      weight: 15,
       animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
       range: 2,
       diceThrown: 1,
       diceSize: 12,
       damageType: "Slashing",
-      speed: 5,
+      speed: 8,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
@@ -107,6 +127,11 @@ export const OGRE_MAGE: RawCreature = {
           type: "Set",
           value: 8, // 9 in PnP
           global: true,
+        },
+        {
+          opcode: "Regeneration",
+          type: "OneHPperAmountSeconds",
+          amount: 6,
         },
       ],
     },
@@ -118,7 +143,6 @@ export const OGRE_MAGE: RawCreature = {
       ],
       type: "Melee",
       flags: ["Displayable"],
-      icon: "ISPER01",
       immunities: ["poison", "cold", "physical"],
       effects: [
         { opcode: "NoCollisionDetection", passWalls: true, global: true },
@@ -337,10 +361,6 @@ export const OGRE_MAGE: RawCreature = {
   abilities: [
     {
       name: "Invisibility",
-      timer: {
-        name: "invisible",
-        value: 18,
-      },
       spell: {
         id: "WIZARD_INVISIBILITY",
         type: "noDec",
@@ -348,6 +368,10 @@ export const OGRE_MAGE: RawCreature = {
         probability: 80,
       },
       triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
+      timer: {
+        name: "invisible",
+        value: 18,
+      },
     },
     {
       name: "Fly",
@@ -355,9 +379,12 @@ export const OGRE_MAGE: RawCreature = {
         resource: fly,
         type: "noDec",
         excludeSpellStates: [SPELL_STATES.flying],
-        probability: 80,
+        probability: 90,
       },
-      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
+      triggers: [
+        { name: "Detect", params: ["NearestEnemyOf"] },
+        { name: "StateCheck", params: ["Myself", "STATE_INVISIBLE"] },
+      ],
     },
     {
       name: "Charm Person",
@@ -394,7 +421,6 @@ export const OGRE_MAGE: RawCreature = {
     },
     {
       name: "Darkness 15' Radius",
-      timer: { name: "darkness", value: 60 },
       target: {
         name: "NearestEnemies",
         random: true,
@@ -406,6 +432,7 @@ export const OGRE_MAGE: RawCreature = {
         excludeStateChecks: ["STATE_HELPLESS"],
         probability: 80,
       },
+      timer: { name: "darkness", value: 60 },
     },
     {
       name: "Gaseous form",
@@ -439,15 +466,40 @@ export const OGRE_MAGE: RawCreature = {
     "UBOGMA01",
     "UBOGMA02",
     "NTFOREOG",
-    "BDOGRE05", // Ogre Shaman
     "BDMURS", // Murs
     "BDMURS2", // Murs
     "DROTH", // Droth
-    "DWSST2", //
     "KAHRK", // Kahrk
     "KROTAN", // Krotan
     "NTKROTAN", // Krotan
     "WIGENTLE", // The Gentleman
     "WIOGMA01", // Yondak Master of Portals
+  ],
+  adjustments: [
+    {
+      files: ["OGREMASU"],
+      summon: true,
+    },
+    {
+      files: ["BDWAVE16"],
+      data: { level1: 7, xpv: 1400 },
+      additionalData: {
+        scriptLocation: "General",
+      },
+    },
+    {
+      files: ["BDMURS", "BDMURS2"],
+      data: { level1: 9, xpv: 2000 },
+      additionalData: {
+        //TODO:
+      },
+    },
+    {
+      files: ["DROTH"],
+      data: { level1: 7, level2: 7, class: "FIGHTER_MAGE", xpv: 2000 },
+      additionalData: {
+        //TODO:
+      },
+    },
   ],
 };

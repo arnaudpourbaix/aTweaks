@@ -296,6 +296,7 @@ export class MainService {
       description: item.description,
       equippedSlot: item.equippedSlot,
       icon: item.icon,
+      weight: item.weight,
       immunities: item.immunities ?? [],
       flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
       animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
