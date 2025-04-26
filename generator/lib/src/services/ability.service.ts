@@ -1,4 +1,6 @@
+import deepmerge from "deepmerge";
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { ABILITY_PRESETS } from "../../config/spell";
 import { CreatureAbility } from "../model/final/ability";
 import {
   RawCreatureAbility,
@@ -13,58 +15,75 @@ export class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
     if (!abilities) return [];
     let randomPool = 800;
-    const results: CreatureAbility[] = abilities.map((a) => {
-      const triggers: Triggers.Trigger[] = a.triggers ?? [];
-      const actions: Actions.Action[] = a.actions ?? [];
+    const results: CreatureAbility[] = abilities.map((ability) => {
+      const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
+      if (preset) ability = deepmerge(preset.ability, ability);
+      if (preset) console.log(ability);
+      const triggers: Triggers.Trigger[] = ability.triggers ?? [];
+      const actions: Actions.Action[] = ability.actions ?? [];
       const result: CreatureAbility = {
-        ...a,
-        isSpell: !!a.spell,
+        ...ability,
+        name: ability.name ?? "",
+        isSpell: !!ability.spell,
         triggers,
         actions,
       };
-      const target = a.target ? GLOBAL_CONFIG.tokens.target : "Myself";
-      if (!a.spell) return result;
-      a.spell.type = a.spell.type ?? "normal";
-      if (a.spell.id) {
-        triggers.push({ name: "HaveSpell", params: [a.spell.id] });
-      } else if (a.spell.resource) {
-        triggers.push({ name: "HaveSpellRES", params: [a.spell.resource] });
-      } else throw new Error(`No spell specified for ability ${a.name}`);
+      const target = ability.target ? GLOBAL_CONFIG.tokens.target : "Myself";
+      if (!ability.spell) return result;
+      ability.spell.type = ability.spell.type ?? "normal";
+      if (ability.spell.id) {
+        triggers.push({ name: "HaveSpell", params: [ability.spell.id] });
+      } else if (ability.spell.resource) {
+        triggers.push({
+          name: "HaveSpellRES",
+          params: [ability.spell.resource],
+        });
+      } else throw new Error(`No spell specified for ability ${ability.name}`);
 
-      for (const state of a.spell.excludeStateChecks ?? []) {
+      for (const state of ability.spell.excludeStateChecks ?? []) {
         triggers.push({
           name: "StateCheck",
           params: [target, state],
           negation: true,
         });
       }
-      for (const state of a.spell.excludeSpellStates ?? []) {
+      for (const state of ability.spell.excludeSpellStates ?? []) {
         triggers.push({
           name: "CheckSpellState",
           params: [target, state],
           negation: true,
         });
       }
-      if (!!a.spell.probability && a.spell.probability < 100) {
+      if (!!ability.spell.probability && ability.spell.probability < 100) {
         triggers.push({
           name: "RandomNumGT",
           params: [
             randomPool++,
-            Math.round(randomPool * (1 - a.spell.probability / 100)),
+            Math.round(randomPool * (1 - ability.spell.probability / 100)),
           ],
         });
       }
       actions.unshift(
-        this.getSpellAction(a.spell, a.spell.selfTarget ? "Myself" : target)
+        this.getSpellAction(
+          ability.spell,
+          ability.spell.selfTarget ? "Myself" : target
+        )
       );
-      if (a.spell.remove && a.spell.type !== "normal" && a.spell.id) {
-        actions.push({ name: "RemoveSpell", params: [a.spell.id] });
-      } else if (
-        a.spell.remove &&
-        a.spell.type !== "normal" &&
-        a.spell.resource
+      if (
+        ability.spell.remove &&
+        ability.spell.type !== "normal" &&
+        ability.spell.id
       ) {
-        actions.push({ name: "RemoveSpellRES", params: [a.spell.resource] });
+        actions.push({ name: "RemoveSpell", params: [ability.spell.id] });
+      } else if (
+        ability.spell.remove &&
+        ability.spell.type !== "normal" &&
+        ability.spell.resource
+      ) {
+        actions.push({
+          name: "RemoveSpellRES",
+          params: [ability.spell.resource],
+        });
       }
 
       return result;

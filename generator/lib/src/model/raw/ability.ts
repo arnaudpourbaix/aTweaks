@@ -5,7 +5,11 @@ import { RawTargetList } from "./target";
 import { Triggers } from "./triggers";
 
 export interface RawCreatureAbility {
-  name: string;
+  name?: string;
+  /**
+   * Will check for preset in ABILITIES_PRESETS
+   */
+  preset?: string;
   target?: RawTargetList;
   spell?: RawCreatureAbilitySpell;
   /**

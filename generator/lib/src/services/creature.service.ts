@@ -8,6 +8,7 @@ import { Item } from "../model/final/item";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { CreatureSize } from "../model/raw/enum";
 import { convertMovement } from "./misc.func";
+import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 
 export class CreatureService {
   static instance = new CreatureService();
@@ -114,7 +115,7 @@ export class CreatureService {
       25: 7,
     };
     const size: CreatureSize = p.data.size ?? p.parent?.size ?? "Tiny";
-    let bonusHitPoints = p.creature.data.bonusHp ?? p.parent?.bonusHp ?? 0;
+    let bonusHitPoints = p.data.bonusHp ?? p.parent?.bonusHp ?? 0;
     const constructBonusHP = p.creature.additionalData.immunities.includes(
       "construct"
     )
@@ -125,10 +126,14 @@ export class CreatureService {
           }
         ).hp
       : 0;
+    const isPlayerClass = PLAYER_CLASS_IDENTIFIERS.includes(
+      p.data.class ?? p.parent?.class ?? "NO_CLASS"
+    );
     const constitution = p.data.constitution ?? p.parent?.constitution ?? 10;
-    const conHPPerLevel = GLOBAL_CONFIG.constitutionAffectHitPoint
-      ? constitutionTable[constitution] ?? 0
-      : 0;
+    const conHPPerLevel =
+      GLOBAL_CONFIG.constitutionAffectHitPoint && !isPlayerClass
+        ? constitutionTable[constitution] ?? 0
+        : 0;
     const baseHP = level * 8;
     const constitutionHP =
       constructBonusHP === 0 ? Math.min(level, 9) * conHPPerLevel : 0;
@@ -136,7 +141,7 @@ export class CreatureService {
     if (constitutionHP > 0 || constructBonusHP > 0) {
       bonusHitPoints = 0;
     }
-    let log = `${figureSet.arrowRight} Hit points: ${baseHP} (base)`;
+    let log = `${figureSet.arrowRight} Level: ${level}, hit points: ${baseHP} (base)`;
     if (constitutionHP > 0) log = `${log} + ${constitutionHP} (con)`;
     if (specialBonusHp > 0) log = `${log} + ${specialBonusHp} (special)`;
     if (constructBonusHP > 0) log = `${log} + ${constructBonusHP} (construct)`;

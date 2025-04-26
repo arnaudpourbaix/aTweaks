@@ -68,11 +68,9 @@ export const HORROR_HELMED: RawCreature = {
   },
   abilities: [
     {
-      name: "Magic Missiles",
-      target: { name: "PCSpellcasters", includeStatus: ["Able"], random: true },
+      preset: SPELLS.MagicMissiles,
       spell: {
-        id: "WIZARD_MAGIC_MISSILE",
-        type: "force",
+        type: "noDec",
       },
       triggers: [
         { name: "Range", params: ["NearestEnemyOf", 10], negation: true },

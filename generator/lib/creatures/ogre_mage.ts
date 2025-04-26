@@ -1,3 +1,4 @@
+import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS } from "../config/item";
 import { SPELL_STATES, SPELLS } from "../config/spell";
 import {
@@ -33,6 +34,7 @@ export const OGRE_MAGE: RawCreature = {
   usePotions: true,
   data: {
     level1: 5,
+    level2: 5,
     bonusHp: 2,
     strength: 18,
     exceptionalStrength: 100,
@@ -52,6 +54,7 @@ export const OGRE_MAGE: RawCreature = {
     general: "GIANTHUMANOID",
     race: "OGRE",
     class: "OGRE_MAGE",
+    kit: "TRUECLASS",
     gender: "MALE",
     size: "Large",
   },
@@ -66,6 +69,7 @@ export const OGRE_MAGE: RawCreature = {
       "COMPS01",
       "COMPS02",
       "OGREMASU",
+      "BLUN15",
     ],
     removeScripts: [
       "BDOGRE03",
@@ -75,6 +79,7 @@ export const OGRE_MAGE: RawCreature = {
       "OGREMASU",
       "DW1MELGE",
       "DW#MG108",
+      "DW#MG139",
       "DW#MG56",
     ],
     memorizedSpells: [
@@ -360,14 +365,10 @@ export const OGRE_MAGE: RawCreature = {
   ],
   abilities: [
     {
-      name: "Invisibility",
+      preset: SPELLS.Invisibility,
       spell: {
-        id: "WIZARD_INVISIBILITY",
         type: "noDec",
-        excludeStateChecks: ["STATE_INVISIBLE"],
-        probability: 80,
       },
-      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
       timer: {
         name: "invisible",
         value: 18,
@@ -387,50 +388,31 @@ export const OGRE_MAGE: RawCreature = {
       ],
     },
     {
-      name: "Charm Person",
-      target: {
-        name: "PCsPreferringStrong",
-        random: true,
-      },
-      spell: {
-        id: "WIZARD_CHARM_PERSON",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
-      },
+      preset: SPELLS.Domination,
     },
     {
-      name: "Sleep",
-      target: {
-        name: "PCsPreferringStrong",
-        random: true,
-      },
-      spell: {
-        id: "WIZARD_SLEEP",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
-      },
+      preset: SPELLS.DireCharm,
     },
     {
-      name: "Cone of Cold",
-      target: { name: "NearestEnemies", random: true },
+      preset: SPELLS.CharmPerson,
+    },
+    {
+      preset: SPELLS.PowerWordSleep,
+    },
+    {
+      preset: SPELLS.Sleep,
+    },
+    {
+      preset: SPELLS.ConeOfCold,
       spell: {
+        id: undefined,
         resource: coneOfCold,
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
       },
     },
     {
-      name: "Darkness 15' Radius",
-      target: {
-        name: "NearestEnemies",
-        random: true,
-        limit: 6,
-      },
+      preset: SPELLS.Darkness15Radius,
       spell: {
-        id: "WIZARD_DARKNESS_15_FOOT",
         type: "noDec",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
       },
       timer: { name: "darkness", value: 60 },
     },
@@ -481,25 +463,64 @@ export const OGRE_MAGE: RawCreature = {
       summon: true,
     },
     {
-      files: ["BDWAVE16"],
-      data: { level1: 7, xpv: 1400 },
+      files: ["BDWAVE16", "WIOGMA01", "WIGENTLE", "DROTH"],
+      data: { level1: 7, level2: 7, xpv: 1400, class: "FIGHTER_MAGE" },
       additionalData: {
         scriptLocation: "General",
+        proficiencies: [{ type: "PROFICIENCYHALBERD", value: 4 }],
+        memorizedSpells: [
+          { file: SPELLS.DireCharm, memorizedCount: 1 },
+          { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
+          { file: SPELLS.CharmPerson, memorizedCount: 1 },
+          { file: SPELLS.Sleep, memorizedCount: 1 },
+        ],
       },
     },
     {
       files: ["BDMURS", "BDMURS2"],
-      data: { level1: 9, xpv: 2000 },
+      data: { level1: 9, level2: 9, xpv: 2000, class: "FIGHTER_MAGE" },
       additionalData: {
-        //TODO:
+        proficiencies: [{ type: "PROFICIENCYHALBERD", value: 5 }],
+        memorizedSpells: [
+          { file: coneOfCold, memorizedCount: 1 },
+          { file: SPELLS.DireCharm, memorizedCount: 2 },
+          { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
+          { file: SPELLS.CharmPerson, memorizedCount: 2 },
+          { file: SPELLS.Sleep, memorizedCount: 2 },
+        ],
       },
     },
     {
-      files: ["DROTH"],
-      data: { level1: 7, level2: 7, class: "FIGHTER_MAGE", xpv: 2000 },
-      additionalData: {
-        //TODO:
+      files: ["KROTAN", "NTKROTAN", "KAHRK"],
+      data: {
+        level1: 12,
+        level2: 12,
+        strength: 19,
+        class: "FIGHTER_MAGE",
+        xpv: 3500,
       },
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYHALBERD", value: 5 }],
+        memorizedSpells: [
+          { file: SPELLS.Domination, memorizedCount: 1 },
+          { file: coneOfCold, memorizedCount: 2 },
+          { file: SPELLS.DireCharm, memorizedCount: 4 },
+          { file: SPELLS.PowerWordSleep, memorizedCount: 4 },
+          { file: SPELLS.CharmPerson, memorizedCount: 3 },
+          { file: SPELLS.Sleep, memorizedCount: 3 },
+        ],
+      },
+    },
+    {
+      files: ["KAHRK"],
+      noWeapon: true,
+      additionalData: {
+        proficiencies: [{ type: "PROFICIENCYKATANA", value: 5 }],
+      },
+    },
+    {
+      files: ["KROTAN", "NTKROTAN"],
+      data: { level1: 15, level2: 15, class: "FIGHTER_MAGE", xpv: 4000 },
     },
   ],
 };

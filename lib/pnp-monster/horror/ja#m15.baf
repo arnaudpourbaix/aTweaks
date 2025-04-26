@@ -70,6 +70,7 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	RandomNumGT(800,160)
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_PANIC)
@@ -85,7 +86,7 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		ForceSpell([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
+		SpellNoDec([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -93,6 +94,7 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	RandomNumGT(800,160)
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_PANIC)
@@ -108,7 +110,7 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		ForceSpell([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
+		SpellNoDec([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -116,6 +118,7 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	RandomNumGT(800,160)
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_PANIC)
@@ -131,7 +134,7 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		ForceSpell([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
+		SpellNoDec([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
@@ -139,6 +142,7 @@ IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	RandomNumGT(800,160)
 	!CheckStatGT([PC.0.0.BARD],0,HELD)
 	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
 	!StateCheck([PC.0.0.BARD],STATE_PANIC)
@@ -153,7 +157,7 @@ IF
 	See([PC.0.0.BARD])
 THEN
 	RESPONSE #100
-		ForceSpell([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
+		SpellNoDec([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
 END
 
