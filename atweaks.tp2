@@ -252,9 +252,9 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/half.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/ogre.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
-
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // ------------------------------------------------------
 
 // // Core monsters (required)
@@ -368,6 +368,23 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
+// Fey (Dryad, Hamadryad, Sirene)
+// BEGIN @185 DESIGNATED 5120
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
+
+// // Revised Call Woodland Beings spell
+// BEGIN @186 DESIGNATED 5121
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#fdrya.bcs~ @1908 
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5120 @5002 // Fey (Dryad, Hamadryad, Sirene)
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-monster/4080-woodland_beings.tpa~
+
+
 /*
 // PnP Fiends
 BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4010 // PnP Fiends, mod-added fiends are also affected
@@ -443,21 +460,6 @@ REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee~ @90
 REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 iwdee~ @92
 REQUIRE_PREDICATE !GAME_IS ~bgee~ @95
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/mephit/main.tpa"
-
-
-// PnP Fey creatures
-BEGIN @185 DESIGNATED 4070
-GROUP @6
-REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
-
-
-// Revised Call Woodland Beings spell
-BEGIN @186 DESIGNATED 4080
-GROUP @6
-REQUIRE_PREDICATE ENGINE_IS ~tob bg2ee iwdee~ @90
-REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#fdrya.bcs~ @1908                         // PnP Fey creatures required
-INCLUDE ~%MOD_FOLDER%/lib/pnp-monster/4080-woodland_beings.tpa~
 
 
 // PnP Elementals

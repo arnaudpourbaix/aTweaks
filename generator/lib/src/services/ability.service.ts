@@ -18,7 +18,6 @@ export class AbilityService {
     const results: CreatureAbility[] = abilities.map((ability) => {
       const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
       if (preset) ability = deepmerge(preset.ability, ability);
-      if (preset) console.log(ability);
       const triggers: Triggers.Trigger[] = ability.triggers ?? [];
       const actions: Actions.Action[] = ability.actions ?? [];
       const result: CreatureAbility = {

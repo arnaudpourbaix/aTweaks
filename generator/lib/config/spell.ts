@@ -19,6 +19,19 @@ export const SPELLS = {
   Sleep: "SPWI116",
   Slow: "SPWI312",
   Stoneskin: "SPWI408",
+  // Priest
+  Bless: "SPPR101",
+  Command: "SPPR102",
+  ResistFear: "SPPR108",
+  Chant: "SPPR203",
+  HoldPerson: "SPPR208",
+  Silence: "SPPR211",
+  CallLightning: "SPPR302",
+  GlyphOfWarding: "SPPR304",
+  HoldPersonOrAnimal: "SPPR305",
+  MiscastMagic: "SPPR310",
+  RigidThinking: "SPPR311",
+  SummonInsects: "SPPR319",
   // Class
   BerserkerRage: "SPCL321",
   BarbarianRage: "SPCL152",
@@ -42,7 +55,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "WIZARD_INVISIBILITY",
         excludeStateChecks: ["STATE_INVISIBLE"],
-        probability: 80,
+        probability: 70,
       },
       triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
     },
@@ -53,6 +66,7 @@ export const ABILITY_PRESETS: {
       name: "Domination",
       target: {
         name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
         triggers: [
           {
             name: "Race",
@@ -64,8 +78,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_DOMINATION",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -75,6 +88,7 @@ export const ABILITY_PRESETS: {
       name: "Dire Charm",
       target: {
         name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
         triggers: [
           {
             name: "Race",
@@ -86,8 +100,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_DIRE_CHARM",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -97,6 +110,7 @@ export const ABILITY_PRESETS: {
       name: "Charm Person",
       target: {
         name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
         triggers: [
           {
             name: "Race",
@@ -108,8 +122,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_CHARM_PERSON",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -119,6 +132,7 @@ export const ABILITY_PRESETS: {
       name: "Power Word Sleep",
       target: {
         name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
         triggers: [
           {
             name: "Race",
@@ -130,8 +144,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_POWER_WORD_SLEEP",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -141,6 +154,7 @@ export const ABILITY_PRESETS: {
       name: "Sleep",
       target: {
         name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
         triggers: [
           {
             name: "Race",
@@ -152,8 +166,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_SLEEP",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -163,13 +176,13 @@ export const ABILITY_PRESETS: {
       name: "Darkness 15' Radius",
       target: {
         name: "NearestEnemies",
-        random: true,
+        includeStatus: ["Able"],
         limit: 6,
+        random: true,
       },
       spell: {
         id: "WIZARD_DARKNESS_15_FOOT",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -180,8 +193,7 @@ export const ABILITY_PRESETS: {
       target: { name: "NearestEnemies", random: true },
       spell: {
         id: "WIZARD_CONE_OF_COLD",
-        excludeStateChecks: ["STATE_HELPLESS"],
-        probability: 80,
+        probability: 70,
       },
     },
   },
@@ -189,10 +201,196 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.MagicMissiles,
     ability: {
       name: "Magic Missiles",
-      target: { name: "PCSpellcasters", includeStatus: ["Able"], random: true },
+      target: { name: "PCSpellcasters", random: true },
       spell: {
         id: "WIZARD_MAGIC_MISSILE",
-        probability: 80,
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.Bless,
+    ability: {
+      name: "Bless",
+      spell: {
+        id: "CLERIC_BLESS",
+        probability: 70,
+        selfTarget: true,
+      },
+    },
+  },
+  {
+    preset: SPELLS.Command,
+    ability: {
+      name: "Command",
+      target: {
+        name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
+        triggers: [
+          {
+            name: "Race",
+            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+            negation: true,
+          },
+        ],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_COMMAND",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.ResistFear,
+    ability: {
+      name: "Resist fear",
+      spell: {
+        id: "CLERIC_REMOVE_FEAR",
+        probability: 70,
+        selfTarget: true,
+      },
+    },
+  },
+  {
+    preset: SPELLS.Chant,
+    ability: {
+      name: "Chant",
+      spell: {
+        id: "CLERIC_CHANT",
+        probability: 70,
+        selfTarget: true,
+      },
+    },
+  },
+  {
+    preset: SPELLS.HoldPerson,
+    ability: {
+      name: "Hold person",
+      target: {
+        name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_HOLD_PERSON",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.HoldPersonOrAnimal,
+    ability: {
+      name: "Hold person or animal",
+      target: {
+        name: "PCsPreferringStrong",
+        includeStatus: ["Able"],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_HOLD_ANIMAL",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.Silence,
+    ability: {
+      name: "Silence",
+      target: {
+        name: "PCSpellcasters",
+        includeStatus: ["Able"],
+        triggers: [
+          {
+            name: "Range",
+            params: [GLOBAL_CONFIG.tokens.target, 20],
+            negation: true,
+          },
+        ],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_SILENCE_15_FOOT",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.CallLightning,
+    ability: {
+      name: "Call lightning",
+      target: {
+        name: "NearestEnemies",
+        triggers: [
+          {
+            name: "AreaType",
+            params: [1],
+          },
+        ],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_CALL_LIGHTNING",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.GlyphOfWarding,
+    ability: {
+      name: "Glyph of warding",
+      target: {
+        name: "FarthestEnemies",
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_GLYPH_OF_WARDING",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.MiscastMagic,
+    ability: {
+      name: "Miscast magic",
+      target: {
+        name: "PCSpellcasters",
+        includeStatus: ["Able"],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_MISCAST_MAGIC",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.RigidThinking,
+    ability: {
+      name: "Rigid thinking",
+      target: {
+        name: "NearestEnemies",
+        includeStatus: ["Able"],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_RIGID_THINKING",
+        probability: 70,
+      },
+    },
+  },
+  {
+    preset: SPELLS.SummonInsects,
+    ability: {
+      name: "Summon insects",
+      target: {
+        name: "PCSpellcasters",
+        includeStatus: ["Able"],
+        random: true,
+      },
+      spell: {
+        id: "CLERIC_SUMMON_INSECTS",
+        probability: 70,
       },
     },
   },

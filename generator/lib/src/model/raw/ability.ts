@@ -1,5 +1,6 @@
 import { SpellIdentifier } from "../ids/spell";
 import { StateIdentifier } from "../ids/state";
+import { StatsIdentifier } from "../ids/stats";
 import { Actions } from "./actions";
 import { RawTargetList } from "./target";
 import { Triggers } from "./triggers";
@@ -34,6 +35,7 @@ export interface RawCreatureAbilitySpell {
   type?: "normal" | "noDec" | "force" | "reallyForce";
   excludeStateChecks?: StateIdentifier[];
   excludeSpellStates?: string[];
+  excludeStatsChecks?: StatsIdentifier[];
   /**
    * Probability (0-100)
    */

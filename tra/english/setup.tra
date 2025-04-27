@@ -52,6 +52,7 @@
 
 @5000 = ~Core monsters (required)~
 @5001  = ~Core monsters component is not installed.~
+@5002  = ~Fey component is not installed.~
 @5010 = ~Ankhegs~
 @5020 = ~Basilisks~
 @5030 = ~Bears~
@@ -63,6 +64,7 @@
 @5090 = ~Wolves~
 @5100 = ~Golems~
 @5110 = ~Ogres~
+@5120 = ~Fey (Dryad, Hamadryad, Sirene)~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

@@ -42,14 +42,6 @@ export const OGRE: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    // effects: [
-    //   {
-    //     opcode: "AttackDamageBonus",
-    //     type: "Increment",
-    //     value: 2,
-    //     global: true,
-    //   },
-    // ],
     removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
     removeScripts: ["BDSUM00", "OGRE"],
   },

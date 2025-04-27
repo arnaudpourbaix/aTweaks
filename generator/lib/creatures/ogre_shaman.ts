@@ -1,3 +1,4 @@
+import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -30,7 +31,7 @@ export const OGRE_SHAMAN: RawCreature = {
     movement: 9,
     ac: 5,
     apr: 1,
-    xpv: 270,
+    xpv: 420,
     alignment: "CHAOTIC_EVIL",
     morale: 12,
     moraleBreak: 4,
@@ -42,16 +43,14 @@ export const OGRE_SHAMAN: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYTWOHANDEDSWORD", value: 2 }],
-    // effects: [
-    //   {
-    //     opcode: "AttackDamageBonus",
-    //     type: "Increment",
-    //     value: 2,
-    //     global: true,
-    //   },
-    // ],
     removeItems: ["BLUN01"],
     removeScripts: ["BDSHM00"],
+    memorizedSpells: [
+      { file: SPELLS.Bless, memorizedCount: 1 },
+      { file: SPELLS.Command, memorizedCount: 2 },
+      { file: SPELLS.Chant, memorizedCount: 1 },
+      { file: SPELLS.HoldPerson, memorizedCount: 1 },
+    ],
   },
   attack: {
     targetPriorities: [
@@ -71,6 +70,26 @@ export const OGRE_SHAMAN: RawCreature = {
       damageType: "Crushing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  abilities: [
+    {
+      preset: SPELLS.Bless,
+    },
+    {
+      preset: SPELLS.Command,
+    },
+    {
+      preset: SPELLS.Chant,
+    },
+    {
+      preset: SPELLS.HoldPerson,
+    },
+    {
+      preset: SPELLS.ResistFear,
+    },
+    {
+      preset: SPELLS.CallLightning,
     },
   ],
   files: ["BDOGRE05"],

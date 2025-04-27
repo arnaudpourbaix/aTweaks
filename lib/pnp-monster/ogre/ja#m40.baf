@@ -72,6 +72,459 @@ THEN
 		NoAction()
 END
 
+// Bless
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpell(CLERIC_BLESS)
+	RandomNumGT(800,240)
+THEN
+	RESPONSE #100
+		Spell(Myself,CLERIC_BLESS)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Command
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.FIGHTER],ELF)
+	!CheckStatGT([PC.0.0.FIGHTER],0,HELD)
+	!StateCheck([PC.0.0.FIGHTER],STATE_STUNNED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_PANIC)
+	!StateCheck([PC.0.0.FIGHTER],STATE_CONFUSED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_SLEEPING)
+	!StateCheck([PC.0.0.FIGHTER],STATE_HELPLESS)
+	!General([PC.0.0.FIGHTER],WEAPON)
+	!StateCheck([PC.0.0.FIGHTER],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
+	!StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
+	See([PC.0.0.FIGHTER])
+	RandomNumGT(1000,167)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.FIGHTER],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.RANGER],ELF)
+	!CheckStatGT([PC.0.0.RANGER],0,HELD)
+	!StateCheck([PC.0.0.RANGER],STATE_STUNNED)
+	!StateCheck([PC.0.0.RANGER],STATE_PANIC)
+	!StateCheck([PC.0.0.RANGER],STATE_CONFUSED)
+	!StateCheck([PC.0.0.RANGER],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.RANGER],STATE_SLEEPING)
+	!StateCheck([PC.0.0.RANGER],STATE_HELPLESS)
+	!General([PC.0.0.RANGER],WEAPON)
+	!StateCheck([PC.0.0.RANGER],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
+	!StateCheck([PC.0.0.RANGER],STATE_CHARMED)
+	!StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
+	See([PC.0.0.RANGER])
+	RandomNumGT(1000,200)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.RANGER],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.PALADIN],ELF)
+	!CheckStatGT([PC.0.0.PALADIN],0,HELD)
+	!StateCheck([PC.0.0.PALADIN],STATE_STUNNED)
+	!StateCheck([PC.0.0.PALADIN],STATE_PANIC)
+	!StateCheck([PC.0.0.PALADIN],STATE_CONFUSED)
+	!StateCheck([PC.0.0.PALADIN],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.PALADIN],STATE_SLEEPING)
+	!StateCheck([PC.0.0.PALADIN],STATE_HELPLESS)
+	!General([PC.0.0.PALADIN],WEAPON)
+	!StateCheck([PC.0.0.PALADIN],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
+	!StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
+	!StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
+	See([PC.0.0.PALADIN])
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.PALADIN],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.FIGHTER_THIEF],ELF)
+	!CheckStatGT([PC.0.0.FIGHTER_THIEF],0,HELD)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_STUNNED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_PANIC)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CONFUSED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_SLEEPING)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_HELPLESS)
+	!General([PC.0.0.FIGHTER_THIEF],WEAPON)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.FIGHTER_THIEF])
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.FIGHTER_THIEF],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.BARD],ELF)
+	!CheckStatGT([PC.0.0.BARD],0,HELD)
+	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
+	!StateCheck([PC.0.0.BARD],STATE_PANIC)
+	!StateCheck([PC.0.0.BARD],STATE_CONFUSED)
+	!StateCheck([PC.0.0.BARD],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.BARD],STATE_SLEEPING)
+	!StateCheck([PC.0.0.BARD],STATE_HELPLESS)
+	!General([PC.0.0.BARD],WEAPON)
+	!StateCheck([PC.0.0.BARD],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
+	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
+	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
+	See([PC.0.0.BARD])
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.BARD],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_COMMAND)
+	RandomNumGT(801,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Race([PC.0.0.THIEF],ELF)
+	!CheckStatGT([PC.0.0.THIEF],0,HELD)
+	!StateCheck([PC.0.0.THIEF],STATE_STUNNED)
+	!StateCheck([PC.0.0.THIEF],STATE_PANIC)
+	!StateCheck([PC.0.0.THIEF],STATE_CONFUSED)
+	!StateCheck([PC.0.0.THIEF],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.THIEF],STATE_SLEEPING)
+	!StateCheck([PC.0.0.THIEF],STATE_HELPLESS)
+	!General([PC.0.0.THIEF],WEAPON)
+	!StateCheck([PC.0.0.THIEF],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.THIEF],STATE_CHARMED)
+	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.THIEF])
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.THIEF],CLERIC_COMMAND)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Chant
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpell(CLERIC_CHANT)
+	RandomNumGT(802,241)
+THEN
+	RESPONSE #100
+		Spell(Myself,CLERIC_CHANT)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Hold person
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.FIGHTER],0,HELD)
+	!StateCheck([PC.0.0.FIGHTER],STATE_STUNNED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_PANIC)
+	!StateCheck([PC.0.0.FIGHTER],STATE_CONFUSED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_SLEEPING)
+	!StateCheck([PC.0.0.FIGHTER],STATE_HELPLESS)
+	!General([PC.0.0.FIGHTER],WEAPON)
+	!StateCheck([PC.0.0.FIGHTER],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
+	!StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
+	!StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
+	See([PC.0.0.FIGHTER])
+	RandomNumGT(1000,167)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.FIGHTER],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.RANGER],0,HELD)
+	!StateCheck([PC.0.0.RANGER],STATE_STUNNED)
+	!StateCheck([PC.0.0.RANGER],STATE_PANIC)
+	!StateCheck([PC.0.0.RANGER],STATE_CONFUSED)
+	!StateCheck([PC.0.0.RANGER],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.RANGER],STATE_SLEEPING)
+	!StateCheck([PC.0.0.RANGER],STATE_HELPLESS)
+	!General([PC.0.0.RANGER],WEAPON)
+	!StateCheck([PC.0.0.RANGER],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
+	!StateCheck([PC.0.0.RANGER],STATE_CHARMED)
+	!StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
+	See([PC.0.0.RANGER])
+	RandomNumGT(1000,200)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.RANGER],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.PALADIN],0,HELD)
+	!StateCheck([PC.0.0.PALADIN],STATE_STUNNED)
+	!StateCheck([PC.0.0.PALADIN],STATE_PANIC)
+	!StateCheck([PC.0.0.PALADIN],STATE_CONFUSED)
+	!StateCheck([PC.0.0.PALADIN],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.PALADIN],STATE_SLEEPING)
+	!StateCheck([PC.0.0.PALADIN],STATE_HELPLESS)
+	!General([PC.0.0.PALADIN],WEAPON)
+	!StateCheck([PC.0.0.PALADIN],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
+	!StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
+	!StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
+	See([PC.0.0.PALADIN])
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.PALADIN],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.FIGHTER_THIEF],0,HELD)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_STUNNED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_PANIC)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CONFUSED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_SLEEPING)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_HELPLESS)
+	!General([PC.0.0.FIGHTER_THIEF],WEAPON)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
+	!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.FIGHTER_THIEF])
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.FIGHTER_THIEF],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.BARD],0,HELD)
+	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
+	!StateCheck([PC.0.0.BARD],STATE_PANIC)
+	!StateCheck([PC.0.0.BARD],STATE_CONFUSED)
+	!StateCheck([PC.0.0.BARD],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.BARD],STATE_SLEEPING)
+	!StateCheck([PC.0.0.BARD],STATE_HELPLESS)
+	!General([PC.0.0.BARD],WEAPON)
+	!StateCheck([PC.0.0.BARD],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
+	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
+	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
+	See([PC.0.0.BARD])
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.BARD],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_HOLD_PERSON)
+	RandomNumGT(803,241)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!CheckStatGT([PC.0.0.THIEF],0,HELD)
+	!StateCheck([PC.0.0.THIEF],STATE_STUNNED)
+	!StateCheck([PC.0.0.THIEF],STATE_PANIC)
+	!StateCheck([PC.0.0.THIEF],STATE_CONFUSED)
+	!StateCheck([PC.0.0.THIEF],STATE_FEEBLEMINDED)
+	!StateCheck([PC.0.0.THIEF],STATE_SLEEPING)
+	!StateCheck([PC.0.0.THIEF],STATE_HELPLESS)
+	!General([PC.0.0.THIEF],WEAPON)
+	!StateCheck([PC.0.0.THIEF],STATE_IMPROVEDINVISIBILITY)
+	!StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.THIEF],STATE_CHARMED)
+	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.THIEF])
+THEN
+	RESPONSE #100
+		Spell([PC.0.0.THIEF],CLERIC_HOLD_PERSON)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Resist fear
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpell(CLERIC_REMOVE_FEAR)
+	RandomNumGT(804,242)
+THEN
+	RESPONSE #100
+		Spell(Myself,CLERIC_REMOVE_FEAR)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Call lightning
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NearestEnemyOf(Myself))
+	RandomNumGT(1000,167)
+THEN
+	RESPONSE #100
+		Spell(NearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOf(Myself))
+	RandomNumGT(1000,200)
+THEN
+	RESPONSE #100
+		Spell(SecondNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOf(Myself))
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		Spell(ThirdNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FourthNearestEnemyOf(Myself))
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		Spell(FourthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FifthNearestEnemyOf(Myself))
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		Spell(FifthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	RandomNumGT(805,242)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	AreaType(1)
+	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SixthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		Spell(SixthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
 // Potion of extra healing (40hp)
 IF
 	HasItem("POTN55",Myself)

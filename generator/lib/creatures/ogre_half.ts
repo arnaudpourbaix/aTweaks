@@ -43,14 +43,6 @@ export const OGRE_HALF: RawCreature = {
       { type: "PROFICIENCYBASTARDSWORD", value: 2 },
       { type: "PROFICIENCYTWOHANDEDSWORD", value: 2 },
     ],
-    // effects: [
-    //   {
-    //     opcode: "AttackDamageBonus",
-    //     type: "Increment",
-    //     value: 2,
-    //     global: true,
-    //   },
-    // ],
     removeItems: [],
     removeScripts: ["HALFOGRE", "BDFIG00"],
   },
