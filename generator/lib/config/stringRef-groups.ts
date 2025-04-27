@@ -1,0 +1,15 @@
+export type StringReferenceGroup =
+  | "poison"
+  | "disease"
+  | "bleed"
+  | "held"
+  | "stun"
+  | "levelDrain"
+  | "sleep"
+  | "charm"
+  | "panic"
+  | "rigidThinking"
+  | "confusion"
+  | "petrified"
+  | "polymorph"
+  | "death";

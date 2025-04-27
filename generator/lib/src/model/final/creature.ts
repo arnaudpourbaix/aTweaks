@@ -14,7 +14,7 @@ import { RawCustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
-import { Effect } from "./effect";
+import { Effect, EffectFile } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import { Item } from "./item";
 import { Projectile } from "./projectile";
@@ -92,6 +92,7 @@ export interface Creature {
   items: Item[];
   spells: Spell[];
   projectiles: Projectile[];
+  effectFiles: EffectFile[];
 
   /**
    * Auto-generate some creature data (true by default)

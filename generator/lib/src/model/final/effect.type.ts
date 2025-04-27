@@ -40,6 +40,7 @@ export enum EffectTypeEnum {
   DisplayPortraitIcon = 142,
   DisplayString = 139,
   ElectricityResistanceModifier = 29,
+  EntangleOverlay = 154,
   FatigueBonus = 93,
   FireResistanceModifier = 30,
   Haste = 16,

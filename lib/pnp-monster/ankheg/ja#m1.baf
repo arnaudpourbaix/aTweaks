@@ -84,7 +84,7 @@ IF
 	!StateCheck([PC.0.0.MAGE],STATE_CHARMED)
 	!StateCheck([PC.0.0.MAGE],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE])
-	RandomNumGT(1000,167)
+	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -105,7 +105,7 @@ IF
 	!StateCheck([PC.0.0.MAGE_THIEF],STATE_CHARMED)
 	!StateCheck([PC.0.0.MAGE_THIEF],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_THIEF])
-	RandomNumGT(1000,200)
+	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -126,7 +126,7 @@ IF
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_ALL])
-	RandomNumGT(1000,250)
+	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -147,7 +147,7 @@ IF
 	!StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 	See([PC.0.0.THIEF])
-	RandomNumGT(1000,333)
+	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -168,7 +168,7 @@ IF
 	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
 	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 	See([PC.0.0.BARD])
-	RandomNumGT(1000,500)
+	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -189,6 +189,90 @@ IF
 	!StateCheck([PC.0.0.THIEF_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.THIEF_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.THIEF_ALL])
+	RandomNumGT(1000,200)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON1,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetInterrupt(TRUE)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	HaveSpellRES("ja#2m1")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.CLERIC],30)
+	!General([PC.0.0.CLERIC],WEAPON)
+	!StateCheck([PC.0.0.CLERIC],STATE_INVISIBLE)
+	!CheckStatGT([PC.0.0.CLERIC],0,SANCTUARY)
+	!StateCheck([PC.0.0.CLERIC],STATE_CHARMED)
+	!StateCheck([PC.0.0.CLERIC],STATE_REALLY_DEAD)
+	See([PC.0.0.CLERIC])
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON1,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetInterrupt(TRUE)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	HaveSpellRES("ja#2m1")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC],30)
+	!General([PC],WEAPON)
+	!StateCheck([PC],STATE_INVISIBLE)
+	!CheckStatGT([PC],0,SANCTUARY)
+	!StateCheck([PC],STATE_CHARMED)
+	!StateCheck([PC],STATE_REALLY_DEAD)
+	See([PC])
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON1,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetInterrupt(TRUE)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	HaveSpellRES("ja#2m1")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(SecondNearest([PC]),30)
+	!General(SecondNearest([PC]),WEAPON)
+	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
+	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
+	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
+	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
+	See(SecondNearest([PC]))
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SelectWeaponAbility(SLOT_WEAPON1,0)
+		AttackOneRound(LastSeenBy(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetInterrupt(TRUE)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	HaveSpellRES("ja#2m1")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(ThirdNearest([PC]),30)
+	!General(ThirdNearest([PC]),WEAPON)
+	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
+	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
+	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
+	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
+	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)

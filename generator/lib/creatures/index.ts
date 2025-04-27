@@ -38,6 +38,7 @@ import { DISPLACER_BEAST } from "./displacer_beast";
 import { SPECTRAL_HOUND } from "./dog_spectral_hound";
 import { OGRE_BERSERKER } from "./ogre_berserker";
 import { OGRE_SHAMAN } from "./ogre_shaman";
+import { FEY_DRYAD } from "./fey_dryad";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -80,4 +81,5 @@ export const CREATURES: RawCreature[] = [
   OGRE_SHAMAN,
   OGRE_BERSERKER,
   OGRE_MAGE,
+  FEY_DRYAD,
 ];

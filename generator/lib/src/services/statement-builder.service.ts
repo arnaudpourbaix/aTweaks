@@ -581,11 +581,32 @@ export class StatementService {
     });
   }
 
+  private runAway(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    statements.push({
+      comment: `Run away from enemies`,
+      triggers: [
+        {
+          name: "Range",
+          params: ["NearestEnemyOf", 20],
+        },
+      ],
+      responses: this.factory.response([
+        { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
+      ]),
+    });
+  }
+
   private attack(
     statements: Statements,
     creature: Creature,
     options: BuilderOptions
   ): void {
+    if (!creature.attack.melee && !creature.attack.ranged)
+      return this.runAway(statements, creature, options);
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(

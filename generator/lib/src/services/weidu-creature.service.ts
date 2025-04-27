@@ -9,7 +9,7 @@ import {
   CreatureAdjustment,
   CreatureData,
 } from "../model/final/creature";
-import { Effect } from "../model/final/effect";
+import { Effect, EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   ItemAbilityLocationEnum,
@@ -42,11 +42,12 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (creature.bafFile) this.compileScripts(lines, creature);
     this.creatureService.checkWeapons(creature);
     this.createProjectiles(lines, creature);
-    this.createSpells(lines, creature);
+    this.createEffectFiles(lines, creature.effectFiles);
     if (creature.attack.grab) {
-      this.createGrabSpell(lines, creature, creature.attack.grab);
       this.createGrabProtectionEffect(lines, creature.attack.grab);
+      this.createGrabSpell(lines, creature, creature.attack.grab);
     }
+    this.createSpells(lines, creature);
     this.createItems(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
@@ -429,14 +430,37 @@ export class WeiduCreatureService extends AbstractWeiduService {
 
   private createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
     const effect = this.grabService.getGrabProtectionEffect(grab);
-    this.add(lines, `CREATE EFF "${grab.file}"`, 0);
-    this.add(lines, `WRITE_LONG 0x10 ${effect.opcode}`, 1);
-    this.add(lines, `WRITE_LONG 0x14 ${effect.target}`, 1);
-    this.add(lines, `WRITE_LONG 0x24 ${effect.timing}`, 1);
-    this.add(lines, `WRITE_LONG 0x28 ${effect.duration}`, 1);
-    this.add(lines, `WRITE_SHORT 0x2c ${effect.probability1}`, 1);
-    this.add(lines, `WRITE_ASCII 0x30 ~${effect.resource}~ #8`, 1);
-    this.add(lines, "", 0);
+    this.createEffectFiles(lines, [{ ...effect, file: grab.file }]);
+  }
+
+  private createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
+    for (const effect of effectFiles) {
+      this.add(lines, `CREATE EFF "${effect.file}"`, 0);
+      this.add(lines, `WRITE_LONG 0x10 ${effect.opcode}`, 1);
+      this.add(lines, `WRITE_LONG 0x14 ${effect.target}`, 1);
+      if (effect.timing) this.add(lines, `WRITE_LONG 0x24 ${effect.timing}`, 1);
+      if (effect.parameter1 && effect.parameter1 !== "0")
+        this.add(
+          lines,
+          `WRITE_LONG 0x1c ${this.getIntegerValue(effect.parameter1)}`,
+          1
+        );
+      if (effect.parameter2 && effect.parameter2 !== "0")
+        this.add(
+          lines,
+          `WRITE_LONG 0x20 ${this.getIntegerValue(effect.parameter2)}`,
+          1
+        );
+      if (effect.dispelResistance)
+        this.add(lines, `WRITE_LONG 0x5c ${effect.dispelResistance}`, 1);
+      if (effect.duration)
+        this.add(lines, `WRITE_LONG 0x28 ${effect.duration}`, 1);
+      if (effect.probability1)
+        this.add(lines, `WRITE_SHORT 0x2c ${effect.probability1}`, 1);
+      if (effect.resource)
+        this.add(lines, `WRITE_ASCII 0x30 ~${effect.resource}~ #8`, 1);
+      this.add(lines, "", 0);
+    }
   }
 
   private addEffect(

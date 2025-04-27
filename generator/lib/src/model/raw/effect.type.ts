@@ -40,6 +40,7 @@ export type RawEffectOpcode =
   | "DisplayPortraitIcon"
   | "DisplayString"
   | "ElectricityResistanceModifier"
+  | "EntangleOverlay"
   | "FatigueBonus"
   | "FireResistanceModifier"
   | "Haste"

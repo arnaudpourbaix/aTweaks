@@ -3,6 +3,7 @@ import { PortraitIconEnum } from "../src/model/final/enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
 import { RawEffect } from "../src/model/raw/effect";
 import { RawImmunityConfig } from "../src/model/raw/immunity";
+import { StringRefUtils } from "../src/services/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
 
@@ -14,12 +15,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     preventEffects: [EffectTypeEnum.Poison],
     preventIcons: [PortraitIconEnum.Poisoned],
     displayIcons: [PortraitIconEnum.ProtectionFromPoison],
-    strings: [
-      14017, // Poison
-      14662, // Poisoned
-      26215, // Poison
-      25425, // Poisoned
-    ],
+    strings: StringRefUtils.getStringIds("poison"),
     effects: [
       {
         opcode: "PoisonResistanceModifier",
@@ -47,9 +43,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Disease immunity"],
     preventEffects: [EffectTypeEnum.Disease],
     preventIcons: [PortraitIconEnum.Diseased],
-    strings: [
-      31238, // Diseased
-    ],
+    strings: StringRefUtils.getStringIds("disease"),
     idsSpells: [
       { id: "CLERIC_CAUSE_DISEASE" }, // Cause Disease (IWDification)
     ],
@@ -70,9 +64,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Bleeding immunity"],
     preventIcons: [PortraitIconEnum.Bleeding],
-    strings: [
-      25137, // Bleeding
-    ],
+    strings: StringRefUtils.getStringIds("bleed"),
     spells: ["RR#BLEED"],
   },
   {
@@ -85,9 +77,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       EffectTypeEnum.StrengthBonus,
       EffectTypeEnum.ConstitutionBonus,
     ],
-    strings: [
-      26184, // Rigid Thinking
-    ],
+    strings: StringRefUtils.getStringIds("rigidThinking"),
   },
   {
     name: "hold",
@@ -99,12 +89,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR208", // Hold Person
       "SPWI306", // Hold Person
     ],
-    strings: [
-      14102, // Held
-      14650, // Paralyzed
-      25866, // Held
-      31799, // Held
-    ],
+    strings: StringRefUtils.getStringIds("held"),
     animations: ["SPFLAYER", "SPMINDAT"],
     effects: [
       {
@@ -119,11 +104,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Stun immunity"],
     preventEffects: [EffectTypeEnum.Stun, EffectTypeEnum.Stun90HP],
     preventIcons: [PortraitIconEnum.Stun],
-    strings: [
-      14043, // Stun
-      25862, // Stun
-      26050, // Stunned
-    ],
+    strings: StringRefUtils.getStringIds("stun"),
     effects: [
       {
         opcode: "SetExtendedSpellState",
@@ -136,13 +117,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Energy drain immunity"],
     preventEffects: [EffectTypeEnum.LevelDrain],
-    strings: [
-      25802, // One Level Drained
-      25803, // Two Levels Drained
-      25804, // Three Levels Drained
-      25805, // Four Levels Drained
-      25806, // Five Levels Drained
-    ],
+    strings: StringRefUtils.getStringIds("levelDrain"),
     effects: [
       {
         opcode: "SetExtendedSpellState",
@@ -156,17 +131,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Sleep immunity"],
     preventEffects: [EffectTypeEnum.Sleep, EffectTypeEnum.Sleep20HP],
     preventIcons: [PortraitIconEnum.Sleep, PortraitIconEnum.Unconscious],
-    strings: [
-      12047, // Sleep
-      12958, // Sleep
-      13027, // Sleep
-      14001, // Sleep
-      17405, // Sleep
-      20438, // Unconscious
-      25130, // Unconscious
-      26040, // Sleep
-      26371, // Sleep
-    ],
+    strings: StringRefUtils.getStringIds("sleep"),
     effects: [
       {
         opcode: "SetExtendedSpellState",
@@ -187,13 +152,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       PortraitIconEnum.DireCharm,
       PortraitIconEnum.Domination,
     ],
-    strings: [
-      26206, // Dominated
-      14672, // Charmed
-      31787, // Charmed
-      14780, // Dire charmed
-      158915, // Dire Charmed
-    ],
+    strings: StringRefUtils.getStringIds("charm"),
     animations: ["SPNWCHRM"],
     effects: [
       {
@@ -212,12 +171,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       EffectTypeEnum.MoraleBreakModifier,
     ],
     preventIcons: [PortraitIconEnum.Panic],
-    strings: [
-      14007, // Panic
-      17427, // Panic
-      20568, // Morale Failure: Panic
-      25818, // Panic
-    ],
+    strings: StringRefUtils.getStringIds("panic"),
     animations: ["CDHORROR"],
     idsSpells: [
       { id: "WIZARD_EMOTION_FEAR" }, // SpellPack Charm plants
@@ -283,11 +237,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Confusion immunity"],
     preventEffects: [EffectTypeEnum.Confusion],
     preventIcons: [PortraitIconEnum.Confused],
-    strings: [
-      14791, // Rigid Thinking
-      14782, // Confused
-      25807, // Confused
-    ],
+    strings: StringRefUtils.getStringIds(["rigidThinking", "confusion"]),
     animations: ["SPCONFUS"],
     spells: [
       "SPPR709", // Confusion (priest version)
@@ -639,10 +589,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Petrification immunity"],
     preventEffects: [EffectTypeEnum.Petrification],
-    strings: [
-      14665, // Petrified
-      25863, // Petrified
-    ],
+    strings: StringRefUtils.getStringIds("petrified"),
     spells: [
       "SPWI604", // Flesh to Stone
       "SPWI604D", // Flesh to Stone
@@ -670,13 +617,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Polymorph immunity"],
     //preventEffects: [EffectTypeEnum.PolymorphIntoSpecific], // not used anymore
     preventIcons: [PortraitIconEnum.Polymorphed],
-    strings: [
-      14128, // Polymorph
-      25124, // Polymorphed
-      31729, // Polymorphed
-      31732, // Polymorphed
-      31757, // Polymorphed
-    ],
+    strings: StringRefUtils.getStringIds("polymorph"),
     spells: [
       "SPIN538", // Polymorph Other
       "SPWI415", // Polymorph Other
@@ -689,9 +630,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "immunity",
     description: ["Vorpal immunity"],
     preventEffects: [EffectTypeEnum.KillTarget, EffectTypeEnum.Slay],
-    strings: [
-      14026, // Death
-    ],
+    strings: StringRefUtils.getStringIds("death"),
   },
   {
     name: "earthquake",

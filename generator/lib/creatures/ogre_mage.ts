@@ -1,12 +1,10 @@
 import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS } from "../config/item";
 import { SPELL_STATES, SPELLS } from "../config/spell";
-import {
-  StringReferenceEnum,
-  TraStringReferenceEnum,
-} from "../config/stringRef";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
+import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
@@ -222,7 +220,7 @@ export const OGRE_MAGE: RawCreature = {
     {
       name: "Cone of Cold",
       file: coneOfCold,
-      stringRef: StringReferenceEnum.ConeOfCold,
+      stringRef: StringRefUtils.getStringId("Cone of Cold"),
       memorizedCount: 1,
       type: "Melee",
       projectile: coneOfCold,

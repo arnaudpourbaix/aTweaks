@@ -9,7 +9,7 @@ import { RaceIdentifier } from "../ids/race";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
 import { RawCreatureAttack } from "./attack";
-import { RawEffect } from "./effect";
+import { RawEffect, RawEffectFile } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
 import { CreatureSize, RawProficiencyType } from "./enum";
 import { RawItem, RawItemSlot } from "./item";
@@ -89,6 +89,7 @@ export interface RawCreature {
   items?: RawItem[];
   spells?: RawSpell[];
   projectiles?: RawProjectile[];
+  effectFiles?: RawEffectFile[];
 
   /**
    * Auto-generate some creature data (true by default)

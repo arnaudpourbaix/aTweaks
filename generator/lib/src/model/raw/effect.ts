@@ -442,6 +442,7 @@ export type ParamLessEffect = RawBaseEffect & {
     | "CureStun"
     | "Blur"
     | "DeathKill60HP"
+    | "EntangleOverlay"
     | "ImmunityToTurnUndead"
     | "Infravision"
     | "InvisibilityDetection"
@@ -518,3 +519,5 @@ export type RawEffect =
   | StringRefEffect
   | TeleportEffect
   | TranslucencyEffect;
+
+export type RawEffectFile = RawEffect & { file: string };

@@ -7,7 +7,7 @@ import {
   CreatureAdjustment,
   CreatureData,
 } from "../model/final/creature";
-import { Effect } from "../model/final/effect";
+import { Effect, EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AbilityDamageTypeEnum,
@@ -40,7 +40,7 @@ import {
 } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
 import { RawCreature, RawCreatureAdditionalData } from "../model/raw/creature";
-import { RawEffect } from "../model/raw/effect";
+import { RawEffect, RawEffectFile } from "../model/raw/effect";
 import {
   RawAlterItem,
   RawCreateItem,
@@ -129,6 +129,7 @@ export class MainService {
       spells: this.mapSpells(rawCreature.spells),
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
+      effectFiles: this.mapEffectFiles(rawCreature.effectFiles),
     };
     if (creature.attack.dualWielding) {
       this.dualWielding(creature);
@@ -187,6 +188,14 @@ export class MainService {
       }),
     }));
     return results;
+  }
+
+  private mapEffectFiles(effects?: RawEffectFile[]): EffectFile[] {
+    if (!effects) return [];
+    return effects.map((e) => {
+      const effect = this.effectService.getEffect(e);
+      return { ...effect, file: e.file };
+    });
   }
 
   private mapAdditionalData(p: {

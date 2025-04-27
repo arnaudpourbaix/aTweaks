@@ -53,7 +53,7 @@ export class TargetService {
   ): ObjectIdentifier | AllegianceIdentifier | string[] {
     try {
       const results = this.getList(target as TargetListName);
-      return results.slice(0, limit ?? 6);
+      return results.slice(0, limit ?? results.length);
     } catch {
       return target as ObjectIdentifier | AllegianceIdentifier;
     }

@@ -1,0 +1,178 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
+
+CREATE EFF "ja#1m41"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~ja#1m41~ #8
+
+	// Dire Charm
+CREATE SPL "ja#1m41"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPWI316C~ #8
+	WRITE_ASCII 0x76 ~SPWI316B~ #8
+	WRITE_SHORT 0x22 11
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x25 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x10 ~CAS_M05~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	WRITE_LONG 0x8 26328
+	WRITE_LONG 0xc 26328
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~SPARKLGO~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~ELF~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 90
+		STR_VAR
+			resource = "ja#1m41"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 30
+		STR_VAR
+			resource = "ja#1m41"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 5
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~)
+			parameter2 = 2
+			resist_dispel = 1
+			duration = 180
+			probability1 = 100
+			savingthrow = 1
+			savebonus = "-3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			parameter1 = 14780
+			timing = 1
+			resist_dispel = 1
+			probability1 = 100
+			savingthrow = 1
+			savebonus = "-3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			parameter1 = "-1819214080"
+			parameter2 = 1966080
+			resist_dispel = 1
+			duration = 1
+			probability1 = 100
+			savingthrow = 1
+			savebonus = "-3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter2 = 1
+			resist_dispel = 1
+			duration = 3
+			probability1 = 100
+			savingthrow = 1
+			savebonus = "-3"
+		STR_VAR
+			resource = "SPNWCHRM"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			timing = 3
+			resist_dispel = 1
+			duration = 180
+			probability1 = 100
+			savingthrow = 1
+			savebonus = "-3"
+		STR_VAR
+			resource = "EFF_E07"
+		END
+
+ACTION_FOR_EACH ~file~ IN
+	DRYAD
+	DRY01
+	DRYAD01
+	DRYAD02
+	DRYAD03
+	IDRYAD01
+	IDRYAD02
+	IDRYAD03
+	dr01mod
+	drmod
+	RE_DRYAD
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			ADD_MEMORIZED_SPELL ~ja#1m41~ #0 ~innate~ (3)
+			LPF clearProficiencies END
+			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
+			LPF patchCreature
+				INT_VAR
+					level1=2
+					strength=10
+					dexterity=12
+					constitution=11
+					intelligence=14
+					wisdom=15
+					charisma=18
+					movement=10
+					hp=16
+					ac=9
+					resistMagic=50
+					thac0=19
+					apr=1
+					xpv=975
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=14
+					saveWand=16
+					savePolymorph=15
+					saveBreath=17
+					saveSpell=17
+					morale=12
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
+					class=IDS_OF_SYMBOL (~class~ ~FAIRY_DRYAD~)
+					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE END
+			LPF patchCreatureScript STR_VAR script=ja#m41 removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) BEGIN 
+				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

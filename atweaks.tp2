@@ -254,7 +254,8 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/berserker.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
 // ------------------------------------------------------
 
 // // Core monsters (required)
@@ -368,7 +369,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 
-// Fey (Dryad, Hamadryad, Sirene)
+// Fey (Dryad, Hamadryad, Sirene, Nymph)
 // BEGIN @185 DESIGNATED 5120
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92

@@ -39,4 +39,8 @@ export enum MonsterEnum {
   DisplacerBeast = 38,
   SpectralHound = 39,
   OgreShaman = 40,
+  Dryad = 41,
+  Hamadryad = 42,
+  Sirene = 43,
+  Nymph = 44,
 }
