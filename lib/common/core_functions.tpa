@@ -454,3 +454,65 @@ BEGIN
     BUT_ONLY IF_EXISTS
   END
 END
+
+
+DEFINE_PATCH_FUNCTION find_first_row INT_VAR col = 0 start = 0 STR_VAR key = "" RET index BEGIN
+    //Sanity bounds check.
+    COUNT_2DA_COLS cols
+    PATCH_IF NOT ((0 <= col) AND (col <= cols)) BEGIN
+        PATCH_FAIL "find_first_row: column index '%col%' out of bounds."
+    END
+
+    COUNT_2DA_ROWS cols rows
+    //Sanitize start.
+    PATCH_IF NOT ((0 <= start) AND (start < rows)) BEGIN
+        PATCH_FAIL "find_first_row: argument start: '%start%' out of bounds."
+    END
+
+    //Read table.
+    index = 0 - 1
+    FOR (i = start ; (i < rows) AND (index < 0) ; ++i) BEGIN
+        READ_2DA_ENTRY i col cols value
+        PATCH_IF ("%key%" STRING_EQUAL_CASE "%value%") BEGIN
+            //Set index => break out of the loop.
+            index = i
+        END
+    END
+END
+
+
+DEFINE_ACTION_FUNCTION hide_spell
+  INT_VAR
+    hide = 1
+    silent = 0    // Silent error, will produce a warning if 1
+  STR_VAR 
+    ids = ""
+    resource = ""
+BEGIN
+  COPY_EXISTING ~hidespl.2da~ ~override~
+    COUNT_2DA_COLS cols
+    PATCH_IF NOT cols = 4 BEGIN
+      PATCH_FAIL "hide_spell: unexpected number of columns '%cols%'."
+    END
+    PATCH_IF "%resource%" STRING_EQUAL_CASE "" BEGIN
+      LPF getResourceFromSpellIds STR_VAR ids RET resource=result END
+    END
+    PATCH_IF "%resource%" STRING_EQUAL_CASE "" BEGIN
+      PATCH_IF silent = 1 BEGIN
+        PATCH_WARN "hide_spell: resource name for spell '%ids%' not found."
+      END ELSE BEGIN
+        PATCH_FAIL "hide_spell: resource name for spell '%ids%' not found."
+      END
+    END ELSE BEGIN
+      LPF find_first_row STR_VAR key = EVAL "%resource%" RET row = index END
+      PATCH_IF NOT (row = 0 - 1) AND hide = 0 BEGIN
+        REMOVE_2DA_ROW row cols
+      END ELSE PATCH_IF NOT (row = 0 - 1) BEGIN
+        SET_2DA_ENTRY row 1 cols 1
+      END ELSE PATCH_IF hide = 1 BEGIN
+        COUNT_2DA_ROWS cols rows
+        INSERT_2DA_ROW rows cols "%resource% 1 0 0"
+      END
+    END
+  BUT_ONLY
+END

@@ -324,7 +324,7 @@ export const ABILITY_PRESETS: {
         triggers: [
           {
             name: "AreaType",
-            params: [1],
+            params: ["OUTDOOR"],
           },
         ],
         random: true,

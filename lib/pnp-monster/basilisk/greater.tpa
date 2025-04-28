@@ -26,7 +26,7 @@ CREATE SPL "ja#1m3"
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 5
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4006)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4006)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@4006)
 	SAY UNIDENTIFIED_DESC ~Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m3~)) + 1
 	LPF ADD_EFFECT

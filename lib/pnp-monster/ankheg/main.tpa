@@ -387,7 +387,7 @@ CREATE SPL "ja#1m1"
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 5
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4001)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4001)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@4001)
 	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).~
 	LPF ADD_EFFECT
 		INT_VAR
@@ -465,7 +465,7 @@ CREATE SPL "ja#2m1"
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 3
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4000)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4000)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@4000)
 	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
 A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
 It uses this attack technique only when desperate.~

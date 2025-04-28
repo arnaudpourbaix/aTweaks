@@ -1,9 +1,12 @@
 import { SPELLS } from "../config/spell";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { FactoryService } from "../src/services/factory.service";
 import { bafFile, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
+
+const factory = FactoryService.instance;
 
 // Creature Id
 const id = MonsterEnum.Dryad;
@@ -16,6 +19,11 @@ const dimensionDoor = file(3, id);
 
 const charmDuration = 180;
 const speakWithPlantsDuration = 60;
+
+const globals = {
+  dialog: "ja#dialog",
+  trees: "ja#trees",
+};
 
 export const FEY_DRYAD: RawCreature = {
   name: "Dryad",
@@ -55,7 +63,7 @@ export const FEY_DRYAD: RawCreature = {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: [],
     removeScripts: ["DRYAD", "DW1MELGE"],
-    memorizedSpells: [],
+    memorizedSpells: [{ file: SPELLS.DimensionDoor, memorizedCount: 1 }],
   },
   effectFiles: [
     {
@@ -203,6 +211,55 @@ export const FEY_DRYAD: RawCreature = {
           timing: "InstantLimited",
           duration: 2,
           dispelResistance: "DispelBypassResistance",
+        },
+      ],
+    },
+  ],
+  customCode: [
+    {
+      location: "init",
+      type: "insertBefore",
+      statements: [
+        {
+          comment:
+            "Ability to literally step through a tree and then dimension door to the oak tree she is part of",
+          triggers: [
+            factory.global(globals.trees, 0),
+            { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+            { name: "AreaType", params: ["OUTDOOR"] },
+            { name: "AreaType", params: ["CITY"], negation: true },
+            { name: "AreaType", params: ["DUNGEON"], negation: true },
+          ],
+          responses: factory.response([factory.setGlobal(globals.trees, 1)]),
+        },
+        {
+          triggers: [
+            factory.global(globals.trees, 0),
+            { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+          ],
+          responses: factory.response([
+            { name: "RemoveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+          ]),
+        },
+        {
+          comment: "Initiate dialog",
+          triggers: [
+            factory.global(globals.dialog, 0),
+            {
+              name: "Or",
+              triggers: ["CDryad", "Ulene"].map((n) => ({
+                name: "Name",
+                params: [n, "Myself"],
+              })),
+            },
+            { name: "NumTimesTalkedTo", params: [0] },
+            { name: "See", params: ["PC"] },
+          ],
+          responses: factory.response([
+            factory.setGlobal(globals.dialog, 1),
+            { name: "FaceObject", params: ["PC"] },
+            { name: "StartDialogueNoSet", params: ["PC"] },
+          ]),
         },
       ],
     },

@@ -1,3 +1,4 @@
+import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { StringReference } from "../misc";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
@@ -58,7 +59,7 @@ export interface RawBaseSpell {
   icon?: string;
   spellbookIcon?: string;
   memorizedIcon?: string;
-  description?: string[];
+  description?: string[] | TraStringReferenceEnum;
   spellType?: RawSpellType;
   castingSound?: string;
   castingAnimation?: RawItemAbilityCastingAnimation;

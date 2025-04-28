@@ -87,7 +87,10 @@ export namespace Actions {
     | "Continue"
     | "Wait"
     | "SmallWait"
-    | "SetInterrupt";
+    | "SetInterrupt"
+    | "CreateCreatureOffScreen"
+    | "FaceObject"
+    | "StartDialogueNoSet";
 
   export interface Attack {
     name: "Attack";
@@ -365,6 +368,21 @@ export namespace Actions {
     params: [string];
   }
 
+  export interface CreateCreatureOffScreen {
+    name: "CreateCreatureOffScreen";
+    params: [string, number];
+  }
+
+  export interface FaceObject {
+    name: "FaceObject";
+    params: [ParamObject];
+  }
+
+  export interface StartDialogueNoSet {
+    name: "StartDialogueNoSet";
+    params: [ParamObject];
+  }
+
   export type Action =
     | Attack
     | AttackOneRound
@@ -423,7 +441,10 @@ export namespace Actions {
     | Continue
     | Wait
     | SmallWait
-    | SetInterrupt;
+    | SetInterrupt
+    | CreateCreatureOffScreen
+    | FaceObject
+    | StartDialogueNoSet;
 
   export const ACTIONS: GenericScriptRawData[] = [
     {
@@ -962,6 +983,27 @@ export namespace Actions {
       parameters: "I:State*Boolean",
       description:
         "This action sets whether a creature can be interrupted while carrying out script actions.",
+      section: "Misc",
+    },
+    {
+      name: "CreateCreatureOffScreen",
+      parameters: "S:ResRef*,I:Face*Dir",
+      description:
+        "This action creates the specified creature just offscreen from the active creature.",
+      section: "Misc",
+    },
+    {
+      name: "FaceObject",
+      parameters: "O:Object*",
+      description:
+        "This action instructs the active creature to face the target object.",
+      section: "Misc",
+    },
+    {
+      name: "StartDialogueNoSet",
+      parameters: "O:Object*",
+      description:
+        "This action instructs the active creature to initiate dialog with the target object, using its currently assigned dialog file. This action can be used from a distance and will work whether the target creature is in sight or not. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false. If the target is invalid, the active creature will initiate dialog with Player1.",
       section: "Misc",
     },
   ];

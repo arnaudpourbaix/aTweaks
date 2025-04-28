@@ -25,7 +25,7 @@ CREATE SPL "ja#1m20"
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 10
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4011)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4011)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@4011)
 	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m20~)) + 1
 	LPF ADD_EFFECT

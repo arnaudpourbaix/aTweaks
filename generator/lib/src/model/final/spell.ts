@@ -1,4 +1,4 @@
-import { SpellIdentifier } from "../ids/spell";
+import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { StringReference } from "../misc";
 import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
@@ -41,7 +41,7 @@ export interface Spell {
 
   spellbookIcon?: string;
   memorizedIcon?: string;
-  description?: string[];
+  description?: string[] | TraStringReferenceEnum;
   spellType?: SpellTypeEnum;
   castingSound?: string;
   castingAnimation?: ItemAbilityCastingAnimationEnum;

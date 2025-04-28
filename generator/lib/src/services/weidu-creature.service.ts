@@ -233,6 +233,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
       this.add(lines, `WRITE_SHORT 0x72 ${spell.type}`, 1);
       this.add(lines, `WRITE_SHORT 0x82 1`, 1);
     }
+    if (spell.flags) {
+      const flags = spell.flags.reduce((sum, save) => {
+        sum += 2 ** save;
+        return sum;
+      }, 0);
+      this.add(lines, `WRITE_LONG 0x18 ${flags}`, 1);
+    }
     if (spell.spellbookIcon) {
       this.add(lines, `WRITE_ASCII 0x3a ~${spell.spellbookIcon}~ #8`, 1);
     }
@@ -264,11 +271,17 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
       this.add(
         lines,
-        `WRITE_LONG 0xc ${this.utils.resolveStringRef(spell.stringRef)}`,
+        `WRITE_LONG 0x50 ${this.utils.resolveStringRef(spell.stringRef)}`,
         1
       );
     }
-    if (spell.description)
+    if (spell.description && typeof spell.description === "number")
+      this.add(
+        lines,
+        `WRITE_LONG 0x50 ${this.utils.resolveStringRef(spell.description)}`,
+        1
+      );
+    else if (spell.description && Array.isArray(spell.description))
       this.add(
         lines,
         `SAY UNIDENTIFIED_DESC ~${spell.description.join("\n")}~`,

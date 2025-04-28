@@ -1,3 +1,38 @@
+// Ability to literally step through a tree and then dimension door to the oak tree she is part of
+IF
+	Global("ja#trees","LOCALS",0)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+	AreaType(OUTDOOR)
+	!AreaType(CITY)
+	!AreaType(DUNGEON)
+THEN
+	RESPONSE #100
+		SetGlobal("ja#trees","LOCALS",1)
+END
+
+IF
+	Global("ja#trees","LOCALS",0)
+	HaveSpell(WIZARD_DIMENSION_DOOR)
+THEN
+	RESPONSE #100
+		RemoveSpell(WIZARD_DIMENSION_DOOR)
+END
+
+// Initiate dialog
+IF
+	Global("ja#dialog","LOCALS",0)
+	OR(2)
+		Name("CDryad",Myself)
+		Name("Ulene",Myself)
+	NumTimesTalkedTo(0)
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("ja#dialog","LOCALS",1)
+		FaceObject([PC])
+		StartDialogueNoSet([PC])
+END
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -303,6 +338,17 @@ IF
 THEN
 	RESPONSE #100
 		SpellRES("ja#1m41",ThirdNearest([PC]))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!GlobalTimerNotExpired("speakWithPlants","LOCALS")
+	HaveSpellRES("ja#2m41")
+THEN
+	RESPONSE #100
+		ForceSpellRES("ja#2m41",Myself)
+		SetGlobalTimer("speakWithPlants","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 

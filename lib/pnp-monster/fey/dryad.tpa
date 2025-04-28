@@ -14,6 +14,7 @@ CREATE SPL "ja#1m41"
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
+	WRITE_LONG 0x18 512
 	WRITE_ASCII 0x3a ~SPWI316C~ #8
 	WRITE_ASCII 0x76 ~SPWI316B~ #8
 	WRITE_SHORT 0x22 11
@@ -27,7 +28,7 @@ CREATE SPL "ja#1m41"
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 1
 	WRITE_LONG 0x8 26328
-	WRITE_LONG 0xc 26328
+	WRITE_LONG 0x50 26328
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~SPARKLGO~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -113,6 +114,69 @@ CREATE SPL "ja#1m41"
 			resource = "EFF_E07"
 		END
 
+	// Speak With Plants
+CREATE SPL "ja#2m41"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~RR#FSPKPC~ #8
+	WRITE_ASCII 0x76 ~RR#FSPKPB~ #8
+	WRITE_SHORT 0x22 10
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 13
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x10 ~CAS_P02~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@1907)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@1907)
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~SPARGRPA~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 101
+			target = 2
+			parameter2 = 154
+			resist_dispel = 3
+			duration = 60
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 169
+			target = 2
+			parameter2 = 144
+			resist_dispel = 3
+			duration = 60
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			parameter1 = 1727219712
+			parameter2 = 1966080
+			resist_dispel = 3
+			duration = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			parameter2 = 1
+			resist_dispel = 3
+			duration = 2
+			probability1 = 100
+		STR_VAR
+			resource = "SPRMCURS"
+		END
+
 ACTION_FOR_EACH ~file~ IN
 	DRYAD
 	DRY01
@@ -131,7 +195,9 @@ BEGIN
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
+			ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m41~ #0 ~innate~ (3)
+			ADD_MEMORIZED_SPELL ~ja#2m41~ #0 ~innate~ (3)
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature

@@ -22,6 +22,7 @@ export enum TraStringReferenceEnum {
   EndCharge = 4014,
   Fly = 4015,
   GaseousForm = 4016,
+  DimensionDoorDescription = 1891,
 }
 
 export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [

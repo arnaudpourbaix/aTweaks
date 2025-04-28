@@ -6,6 +6,7 @@ import { ClassIdentifier } from "../ids/class";
 import { DamageIdentifier } from "../ids/damage";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
+import { AreaTypeValue } from "../ids/misc";
 import { RaceIdentifier } from "../ids/race";
 import { SlotIdentifier } from "../ids/slot";
 import { SpellIdentifier } from "../ids/spell";
@@ -144,7 +145,8 @@ export namespace Triggers {
     | "RandomNum"
     | "RandomNumGT"
     | "RandomNumLT"
-    | "IsActive";
+    | "IsActive"
+    | "NumTimesTalkedTo";
 
   export interface BaseTrigger {
     negation?: boolean;
@@ -560,7 +562,7 @@ export namespace Triggers {
 
   export interface AreaType extends BaseTrigger {
     name: "AreaType";
-    params: [number];
+    params: [AreaTypeValue];
   }
 
   export interface InMyArea extends BaseTrigger {
@@ -599,6 +601,16 @@ export namespace Triggers {
   export interface RandomNumLT extends BaseTrigger {
     name: "RandomNumLT";
     params: [number, number];
+  }
+
+  export interface Name extends BaseTrigger {
+    name: "Name";
+    params: [string, ParamObject];
+  }
+
+  export interface NumTimesTalkedTo extends BaseTrigger {
+    name: "NumTimesTalkedTo";
+    params: [number];
   }
 
   export interface Or extends BaseTrigger {
@@ -699,7 +711,9 @@ export namespace Triggers {
     | Delay
     | RandomNum
     | RandomNumGT
-    | RandomNumLT;
+    | RandomNumLT
+    | Name
+    | NumTimesTalkedTo;
 
   export const TRIGGERS: GenericScriptRawData[] = [
     {
@@ -1580,6 +1594,13 @@ export namespace Triggers {
       parameters: "O:Object*",
       description:
         "Returns true if the specified creature is active and false if it is deactivated. A creature will continue to execute script blocks even while deactivated — this trigger can be used to restrict this behaviour.",
+      section: "Misc.",
+    },
+    {
+      name: "NumTimesTalkedTo",
+      parameters: "I:Num*",
+      description:
+        "Returns true only if the player's party has spoken to the active CRE the exact number of times specified.",
       section: "Misc.",
     },
   ];
