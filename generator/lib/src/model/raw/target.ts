@@ -34,25 +34,6 @@ export interface TargetStatus {
 }
 
 /**
- * These objects can't have any parameter
- */
-export const TARGET_PARAMLESS_OBJECTS: ObjectIdentifier[] = [
-  "Nothing",
-  "Myself",
-  "Player1",
-  "Player2",
-  "Player3",
-  "Player4",
-  "Player5",
-  "Player6",
-  "Protagonist",
-  "StrongestOfMale",
-  "Familiar",
-  "FamiliarSummoner",
-  "LastKilled",
-];
-
-/**
  * Target Priority
  * For each target list, go through all status
  * If status is not set, it will auto generated based on creature intelligence and if it has a grabbing ability

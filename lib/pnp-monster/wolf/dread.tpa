@@ -13,7 +13,6 @@ CREATE SPL "ja#1m22"
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf down state~)
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Dread wolf down state~)
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 112

@@ -7,7 +7,6 @@ import { ALLEGIANCE_IDENTIFIERS } from "../model/ids/allegiance";
 import { GENERAL_IDENTIFIERS } from "../model/ids/general";
 import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
 import { RACE_IDENTIFIERS } from "../model/ids/race";
-import { TARGET_PARAMLESS_OBJECTS } from "../model/raw/target";
 import { State } from "../state";
 import { StatementService } from "./statement-builder.service";
 import { CLASS_IDENTIFIERS } from "../model/ids/class";
@@ -175,15 +174,16 @@ export class BafGeneratorService {
       ALIGN_IDENTIFIERS.some((v) => value.indexOf(v) !== -1);
     if (!startsWithObject && containsObjectTypes) return `[${value}]`;
     else if (
-      !TARGET_PARAMLESS_OBJECTS.includes(value as ObjectIdentifier) &&
+      this.requireParameter(value as ObjectIdentifier) &&
       !containsObjectTypes
     )
       return `${value}(Myself)`;
     else if (
       Object.values(OBJECT_IDENTIFIERS).includes(value as ObjectIdentifier)
     )
-      return `${value}`;
-    return value;
+      return value;
+    // return value;
+    return `"${value}"`;
   }
 
   getActionParameters(name: string): GenericScriptParameterData[] {
@@ -196,5 +196,9 @@ export class BafGeneratorService {
     const triggerRef = State.triggers.find((a) => a.name === name);
     if (!triggerRef) throw new Error(`Unknown trigger ${name}`);
     return triggerRef.parameters;
+  }
+
+  requireParameter(objectParam: ObjectIdentifier): boolean {
+    return objectParam.endsWith("Of") || objectParam.endsWith("By");
   }
 }

@@ -33,6 +33,31 @@ THEN
 		StartDialogueNoSet([PC])
 END
 
+// Irenicus' Dungeon specific code
+IF
+	Name("Ulene",Myself)
+	AreaCheck("AR0602")
+	Global("MinscCharmed","AR0602",1)
+	Global("HelpDryads","GLOBAL",0)
+	!See("Minsc")
+	!Range("Minsc",4)
+THEN
+	RESPONSE #100
+		ActionOverride("Minsc",JumpToPoint([4069.1222]))
+END
+
+IF
+	Name("Ulene",Myself)
+	AreaCheck("AR0602")
+	Global("MinscCharmed","AR0602",1)
+	Global("HelpDryads","GLOBAL",0)
+	See("Minsc")
+	!Range("Minsc",4)
+THEN
+	RESPONSE #100
+		ActionOverride("Minsc",MoveToObject("Ulene"))
+END
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)

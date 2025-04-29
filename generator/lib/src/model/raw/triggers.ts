@@ -146,7 +146,8 @@ export namespace Triggers {
     | "RandomNumGT"
     | "RandomNumLT"
     | "IsActive"
-    | "NumTimesTalkedTo";
+    | "NumTimesTalkedTo"
+    | "AreaCheck";
 
   export interface BaseTrigger {
     negation?: boolean;
@@ -218,17 +219,17 @@ export namespace Triggers {
 
   export interface Global extends BaseTrigger {
     name: "Global";
-    params: [string, "LOCALS" | "GLOBAL", number];
+    params: [string, "LOCALS" | "GLOBAL" | string, number];
   }
 
   export interface GlobalGT extends BaseTrigger {
     name: "GlobalGT";
-    params: [string, "LOCALS" | "GLOBAL", number];
+    params: [string, "LOCALS" | "GLOBAL" | string, number];
   }
 
   export interface GlobalLT extends BaseTrigger {
     name: "GlobalLT";
-    params: [string, "LOCALS" | "GLOBAL", number];
+    params: [string, "LOCALS" | "GLOBAL" | string, number];
   }
 
   export interface GlobalsEqual extends BaseTrigger {
@@ -613,6 +614,11 @@ export namespace Triggers {
     params: [number];
   }
 
+  export interface AreaCheck extends BaseTrigger {
+    name: "AreaCheck";
+    params: [string];
+  }
+
   export interface Or extends BaseTrigger {
     name: "Or";
     triggers: Trigger[];
@@ -713,7 +719,8 @@ export namespace Triggers {
     | RandomNumGT
     | RandomNumLT
     | Name
-    | NumTimesTalkedTo;
+    | NumTimesTalkedTo
+    | AreaCheck;
 
   export const TRIGGERS: GenericScriptRawData[] = [
     {
@@ -1601,6 +1608,13 @@ export namespace Triggers {
       parameters: "I:Num*",
       description:
         "Returns true only if the player's party has spoken to the active CRE the exact number of times specified.",
+      section: "Misc.",
+    },
+    {
+      name: "AreaCheck",
+      parameters: "S:ResRef*",
+      description:
+        "Returns true only if the active CRE is in the area specified.",
       section: "Misc.",
     },
   ];

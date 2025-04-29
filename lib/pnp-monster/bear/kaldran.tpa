@@ -25,7 +25,6 @@ CREATE SPL "ja#1m8"
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 10
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4008)
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@4008)
 	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m8~)) + 1
 	LPF ADD_EFFECT

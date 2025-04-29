@@ -16,9 +16,13 @@ export class FactoryService {
     { weight, actions },
   ];
 
-  global = (name: string, value: number): Triggers.Trigger => ({
+  global = (
+    name: string,
+    value: number,
+    area = "LOCALS"
+  ): Triggers.Trigger => ({
     name: "Global",
-    params: [name, "LOCALS", value],
+    params: [name, area, value],
   });
 
   setGlobal = (name: string, value: number): Actions.Action => ({

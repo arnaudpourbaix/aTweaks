@@ -90,7 +90,9 @@ export namespace Actions {
     | "SetInterrupt"
     | "CreateCreatureOffScreen"
     | "FaceObject"
-    | "StartDialogueNoSet";
+    | "StartDialogueNoSet"
+    | "ActionOverride"
+    | "JumpToPoint";
 
   export interface Attack {
     name: "Attack";
@@ -383,6 +385,17 @@ export namespace Actions {
     params: [ParamObject];
   }
 
+  export interface ActionOverride {
+    name: "ActionOverride";
+    //params: [ParamObject, Action];
+    params: [ParamObject, string];
+  }
+
+  export interface JumpToPoint {
+    name: "JumpToPoint";
+    params: [string];
+  }
+
   export type Action =
     | Attack
     | AttackOneRound
@@ -444,7 +457,9 @@ export namespace Actions {
     | SetInterrupt
     | CreateCreatureOffScreen
     | FaceObject
-    | StartDialogueNoSet;
+    | StartDialogueNoSet
+    | ActionOverride
+    | JumpToPoint;
 
   export const ACTIONS: GenericScriptRawData[] = [
     {
@@ -1004,6 +1019,20 @@ export namespace Actions {
       parameters: "O:Object*",
       description:
         "This action instructs the active creature to initiate dialog with the target object, using its currently assigned dialog file. This action can be used from a distance and will work whether the target creature is in sight or not. Dialog will not be initiated if the creature using this action has been assigned a dialog that has all top level conditions returning false. If the target is invalid, the active creature will initiate dialog with Player1.",
+      section: "Misc",
+    },
+    {
+      name: "ActionOverride",
+      parameters: "O:Actor*,I:Action*",
+      description:
+        "This action can be used to control another creature. A creature referenced as the result of SetTokenObject() is not a valid target for the ActionOverride() action.",
+      section: "Misc",
+    },
+    {
+      name: "JumpToPoint",
+      parameters: "P:Target*",
+      description:
+        "This action instantly moves the active creature to the specified point.",
       section: "Misc",
     },
   ];

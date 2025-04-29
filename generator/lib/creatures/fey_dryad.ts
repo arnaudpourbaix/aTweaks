@@ -23,6 +23,8 @@ const speakWithPlantsDuration = 60;
 const globals = {
   dialog: "ja#dialog",
   trees: "ja#trees",
+  MinscCharmed: "MinscCharmed",
+  HelpDryads: "HelpDryads",
 };
 
 export const FEY_DRYAD: RawCreature = {
@@ -62,7 +64,7 @@ export const FEY_DRYAD: RawCreature = {
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: [],
-    removeScripts: ["DRYAD", "DW1MELGE"],
+    removeScripts: ["DRYAD", "DW1MELGE", "initdlg"],
     memorizedSpells: [{ file: SPELLS.DimensionDoor, memorizedCount: 1 }],
   },
   effectFiles: [
@@ -259,6 +261,51 @@ export const FEY_DRYAD: RawCreature = {
             factory.setGlobal(globals.dialog, 1),
             { name: "FaceObject", params: ["PC"] },
             { name: "StartDialogueNoSet", params: ["PC"] },
+          ]),
+        },
+        {
+          comment: "Irenicus' Dungeon specific code",
+          triggers: [
+            {
+              name: "Name",
+              params: ["Ulene", "Myself"],
+            },
+            {
+              name: "AreaCheck",
+              params: ["AR0602"], // Irenicus' Dungeon, first level
+            },
+            factory.global(globals.MinscCharmed, 1, "AR0602"),
+            factory.global(globals.HelpDryads, 0, "GLOBAL"),
+            { name: "See", params: ["Minsc"], negation: true },
+            { name: "Range", params: ["Minsc", 4], negation: true },
+          ],
+          responses: factory.response([
+            {
+              name: "ActionOverride",
+              params: ["Minsc", "JumpToPoint([4069.1222])"],
+            },
+          ]),
+        },
+        {
+          triggers: [
+            {
+              name: "Name",
+              params: ["Ulene", "Myself"],
+            },
+            {
+              name: "AreaCheck",
+              params: ["AR0602"], // Irenicus' Dungeon, first level
+            },
+            factory.global(globals.MinscCharmed, 1, "AR0602"),
+            factory.global(globals.HelpDryads, 0, "GLOBAL"),
+            { name: "See", params: ["Minsc"] },
+            { name: "Range", params: ["Minsc", 4], negation: true },
+          ],
+          responses: factory.response([
+            {
+              name: "ActionOverride",
+              params: ["Minsc", `MoveToObject("Ulene")`],
+            },
           ]),
         },
       ],

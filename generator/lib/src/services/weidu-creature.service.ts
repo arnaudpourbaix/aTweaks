@@ -269,11 +269,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
         `WRITE_LONG 0x8 ${this.utils.resolveStringRef(spell.stringRef)}`,
         1
       );
-      this.add(
-        lines,
-        `WRITE_LONG 0x50 ${this.utils.resolveStringRef(spell.stringRef)}`,
-        1
-      );
     }
     if (spell.description && typeof spell.description === "number")
       this.add(
