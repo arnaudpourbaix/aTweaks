@@ -6,6 +6,7 @@ import { RawImmunityConfig } from "../src/model/raw/immunity";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
+import { ATWEAKS_SPELLS } from "./spell";
 
 export const IMMUNITIES: RawImmunityConfig[] = [
   {
@@ -30,11 +31,11 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPWI016", // Cloudkill (trap)
       "SPWI502", // Cloudkill
       "dvckill", // Cloudkill (IR/SR)
-      "RR#WI502", // RR/aTweaks Cloudkill
       "SPIN979", // Golem Gas Cloud
       "SPIN642", // Poisonous Cloud
-      "RR#SPOI1", // Spiders Class F poison
-      "RR#spwrt", // Wraith Spiders Class F poison
+      ATWEAKS_SPELLS.Cloudkill,
+      ATWEAKS_SPELLS.SpiderPoisonClassF,
+      ATWEAKS_SPELLS.WraithSpiderPoisonClassF,
     ],
   },
   {
@@ -49,14 +50,14 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     spells: [
       "SPWI409", // Contagion
-      "FL#CSDIS", // aTweaks' Cause Disease
-      "RR#DPDIS", // aTweaks' Pit Fiend disease
-      "fl#glor2", // aTweaks' Ghoul Lord disease
-      "fl#mum", // aTweaks' Mummy disease
-      "fl#gmum", // aTweaks' Greater Mummy disease
-      "fl#zomsd", // aTweaks' Zombie Sea disease
-      "rr#gassp", // aTweaks' (plant) Spore Explosion disease
-      "rr#bogaz", // aTweaks' Boalisk disease
+      ATWEAKS_SPELLS.CauseDisease,
+      ATWEAKS_SPELLS.PitFiendDisease,
+      ATWEAKS_SPELLS.GhoulLordDisease,
+      ATWEAKS_SPELLS.MummyDisease,
+      ATWEAKS_SPELLS.GreaterMummyDisease,
+      ATWEAKS_SPELLS.ZombieSeaDisease,
+      ATWEAKS_SPELLS.SporeExplosionDisease,
+      ATWEAKS_SPELLS.BoaliskDisease,
     ],
   },
   {
@@ -65,7 +66,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Bleeding immunity"],
     preventIcons: [PortraitIconEnum.Bleeding],
     strings: StringRefUtils.getStringIds("bleed"),
-    spells: ["RR#BLEED"],
+    spells: [ATWEAKS_SPELLS.Bleeding],
   },
   {
     name: "abilityDrain",
@@ -192,20 +193,20 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPWI899", // Symbol, Fear
       "SPWI956", // Symbol, Fear
       "SPWM123", // Symbol, Fear
-      "fl#cnefr", // Fear
-      "fl#shafi", // Fear
-      "fl#tchfr", // Fear
       "dw#licfi", // Fear Aura
       "ca#sfear", // Symbol, Fear
       "A^causfr", // Cause Fear
-      "rr#dcfea", // Cause Fear
-      "rr#dcfa1", // Aura of Fear
-      "rr#dcfa2", // Aura of Fear
-      "rr#dmfea", // Blast of Fear
-      "rr#scare", // Cloak of Fear
-      "rr#wi811", // Symbol, Fear
       "DVFEARSM", // Panic
       "DVHORRO", // Panic
+      ATWEAKS_SPELLS.Fear1,
+      ATWEAKS_SPELLS.Fear2,
+      ATWEAKS_SPELLS.Fear3,
+      ATWEAKS_SPELLS.CauseFear,
+      ATWEAKS_SPELLS.AuraOfFear1,
+      ATWEAKS_SPELLS.AuraOfFear2,
+      ATWEAKS_SPELLS.BlastOfFear,
+      ATWEAKS_SPELLS.CloakOfFear,
+      ATWEAKS_SPELLS.SymbolFear,
     ],
     displaySpellIneffective: true,
     effects: [
@@ -249,7 +250,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR983", // Confusion
       "MISC3M", // Confusion (Divine Remix)
       "A#SHA07", // Confusion (Divine Remix)
-      "RR#WI401", // Confusion (atweaks)
+      ATWEAKS_SPELLS.Confusion,
     ],
     displaySpellIneffective: true,
     effects: [
@@ -272,7 +273,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     spells: [
       "SPWI003", // Magic Missile
       "SPWI112", // Magic Missile
-      "RR#WI112", // aTweaks' Magic Missile
+      ATWEAKS_SPELLS.MagicMissile,
     ],
     displaySpellIneffective: true,
   },
@@ -335,12 +336,9 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPWI001", // Fireball
       "SPWI957", // Fireball
       "WAND05", // Fireball (IRR)
-      "RR#WI304", // Pit Fiend Fireball
       "SPWI523", // Sunfire
       "CDSLSUN", // Sunfire (mod)
       "A#KOS09", // Sunfire (Divine Remix)
-      "RR#WI103", // RR's burning hand
-      "RR#WI523", // RR's Sunfire (Blazing Glory buckler)
       "SPWI712", // Delayed Blast Fireball
       "A#KOS14", // Delayed Blast Fireball (Divine Remix)
       "SPWI810", // Incendiary Cloud
@@ -352,18 +350,21 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "DW#TRPMS", // Meteor Swarm (Stratagems)
       "SPPR705", // Fire Storm
       "CA#FSTOM", // Fire Storm (PnP Deva)
-      "RR#PR705", // Fire Storm (atweaks)
-      "RR#MFIFF", // Flame Fan (Fire Mephit)
-      "RR#MFIFJ", // Flame Jet (Fire Mephit)
-      "RR#MFIHA", // Heat Aura (Fire Mephit)
-      "RR#MMAHE", // Heat Emission (Magma Mephit)
-      "rr#eimhe", // Heat Emission (Imix)
-      "rr#eimfb", // Fireball, 20d6 (Imix)
-      "rr#ezafb", // Fireball, 12d6 (Zaaman Rul)
-      "rr#eburn", // Burn (Fire Elemental on-hit effect)
-      "rr#englf", // Engulf, part 1 (Greater Fire Elemental on-hit effect)
-      "RR#GWOF1", // Wall of Fire (Efreet)
-      "rr#gfbth", // Fire breath (Guardian Genie)
+      ATWEAKS_SPELLS.PitFiendFireball,
+      ATWEAKS_SPELLS.BurningHand,
+      ATWEAKS_SPELLS.SunfireBlazingGloryBuckler,
+      ATWEAKS_SPELLS.FireStorm,
+      ATWEAKS_SPELLS.FlameFan,
+      ATWEAKS_SPELLS.FlameJet,
+      ATWEAKS_SPELLS.HeatAura,
+      ATWEAKS_SPELLS.HeatEmission,
+      ATWEAKS_SPELLS.ImixHeatEmission,
+      ATWEAKS_SPELLS.ImixFireball,
+      ATWEAKS_SPELLS.ZaamanRulFireball,
+      ATWEAKS_SPELLS.Burn,
+      ATWEAKS_SPELLS.Engulf,
+      ATWEAKS_SPELLS.WallOfFire,
+      ATWEAKS_SPELLS.FireBreath,
     ],
   },
   {
@@ -377,20 +378,20 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     spells: [
       "SPWI404", // Ice Storm
-      "RR#WI404", // %MOD_FOLDER%/RR Ice Storm
       "SPWI503", // Cone of Cold
       "d1#wi503", // Cone of Cold (mod)
       "DVCONEC", // Cone of Cold (IR)
-      "RR#WI503", // Cone of Cold (%MOD_FOLDER%/RR)
       "SPCRYO01", // Cone of Cold (mod)
       "SPIN133", // Cone of Cold (mod)
       "SPIN158", // Cone of Cold (mod)
       "SPIN162", // Cone of Cold (mod)
       "SPIN833", // Dragon Cone of Cold
       "WAND06", // Cone of Cold (IR)
-      "rr#icew", // aTweaks' Wall of Ice
-      "rr#efrzn", // aTweaks' Freeze (Cryonax)
-      "rr#ehyis", // aTweaks' Ice Storn (Olhydra's version)
+      ATWEAKS_SPELLS.IceStorm,
+      ATWEAKS_SPELLS.ConeOfCold,
+      ATWEAKS_SPELLS.WallOfIce,
+      ATWEAKS_SPELLS.Freeze,
+      ATWEAKS_SPELLS.IceStorn,
     ],
   },
   {
@@ -416,7 +417,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPWI308", // Lightning Bolt
       "SPWI399", // Lightning Bolt
       "SPWI997", // Lightning Bolt
-      "RR#WI308", // RR/aTweaks Lightning Bolt
+      ATWEAKS_SPELLS.LightningBolt,
       "SPDR601", // Chain Lightning
       "SPWI615", // Chain Lightning
       "SPBLUN29", // Chain Lightning
@@ -472,7 +473,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR514", // Mass Cure
       "A#RE11", // Mass Cure (Divine Remix)
       "DVMCURE", // Mass Cure (IR/SR)
-      "RR#PR514", // Mass Cure (atweaks temple)
       "SPPR607", // Heal
       "SPWM168", // Heal (Wild Mage)
       "SPWISH39", // Heal
@@ -480,7 +480,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "spin679", // Heal
       "SPIN101", // Cure Light Wounds (Bhaalpower)
       "FINP101", // Cure Light Wounds (TOB Bhaalpower Ascension)
-      "fl#bp101", // Cure Light Wounds (TOB Bhaalpower atweal)
       "SPIN202", // Cause Serious Wounds
       "SPIN551", // Cause Serious Wounds (Hive Mother)
       "SPIN986", // Cause Serious Wounds (Beholder)
@@ -488,12 +487,14 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR510", // Cause critical Wounds
       "SPCL211", // Paladin Lay On Hands
       "BHAAL1A", // Mass Healing (Bhaalpower restored by Ascension/UB)
-      "RR#DCSW", // RR/aTweaks Cause Serious Wounds (Marilith)
-      "rr#csw", // aTweaks Cause Serious Wounds (externalized)
-      "rr#ccw", // aTweaks Cause Critical Wounds (externalized)
-      "rr#harm", // aTweaks Harm (externalized)
       "sppr608", // Harm
       "sppr699", // Harm
+      ATWEAKS_SPELLS.CureLightWounds,
+      ATWEAKS_SPELLS.TempleMassCure,
+      ATWEAKS_SPELLS.MarilithCauseSeriousWounds,
+      ATWEAKS_SPELLS.CauseSeriousWounds,
+      ATWEAKS_SPELLS.CauseCriticalWounds,
+      ATWEAKS_SPELLS.Harm,
     ],
     displaySpellIneffective: true,
   },
@@ -518,13 +519,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPIN940", // Stinking Cloud (mephit)
       "SPIN979", // Golem Gas Cloud
       "SPIN642", // Poisonous Cloud
-      "RR#WI502", // aTweaks' Cloudkill (used by Marilith)
-      "RR#MMSWF", // Wall of Fog (aTweaks' Mist Mephit)
-      "RR#FCLD", // Fog Cloud (aTweaks' Sirine)
-      "RR#FTVAP", // Toxic Vapors (aTweaks' Mustard Jelly)
-      "RR#MOZSC", // Stinking Cloud (aTweaks' Ooze Mephit)
-      "RR#ECHSF", // Solid Fog (aTweaks)
-      "RR#WI213", // Stinking Cloud (aTweaks)
+      ATWEAKS_SPELLS.Cloudkill,
+      ATWEAKS_SPELLS.WallOfFog,
+      ATWEAKS_SPELLS.FogCloud,
+      ATWEAKS_SPELLS.ToxicVapors,
+      ATWEAKS_SPELLS.OozeStinkingCloud,
+      ATWEAKS_SPELLS.SolidFog,
+      ATWEAKS_SPELLS.StinkingCloud,
     ],
     displaySpellIneffective: true,
   },
@@ -545,9 +546,9 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "spletter", // Web (heartwood)
       "wand14", // Web (IR/IRR)
       "wtpin05", // Web (wtp familiar)
-      "rr#spweb", // aTweaks web tangle
-      "rr#spwr2", // Wraith web
-      "rr#wi215", // web (aTweaks)
+      ATWEAKS_SPELLS.WebTangle,
+      ATWEAKS_SPELLS.WraithWeb,
+      ATWEAKS_SPELLS.Web,
     ],
     displaySpellIneffective: true,
   },
@@ -555,6 +556,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "entangle",
     type: "immunity",
     description: ["Entangle immunity"],
+    preventEffects: [EffectTypeEnum.EntangleOverlay],
+    preventIcons: [PortraitIconEnum.Entangled],
     idsSpells: [
       { id: "WIZARD_CHARM_PLANTS" }, // Charm plants (SpellPack)
     ],
@@ -562,10 +565,11 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR105", // Entangle (Priest)
       "SPWM111", // Entangle (Wild Mage)
       "SPIN688", // Plant Growth (Black Dragon)
-      "RR#SMENT", // Shambler Entangle (RR)
-      "RR#FENTG", // Hamadryad Entangle (aTweaks)
+      ATWEAKS_SPELLS.ShamblerEntangle,
+      ATWEAKS_SPELLS.HamadryadEntangle,
     ],
     displaySpellIneffective: true,
+    itemSlot: { file: ITEMS.Entangle, slot: "AMULET" },
   },
   {
     name: "insectSpells",
@@ -639,10 +643,10 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     spells: [
       "SPOGRE01", // Earthquake (Ogremoch)
       "SPPR720", // Earthquake (Priest version)
-      "rr#equa", // Earthquake (aTweaks)
       "CA#EQ", // Earthquake (PnP Deva)
       "CDTLQAK", // Earthquake (mod)
-      "rr#r2mud", // Rock to mud spell (Dao)
+      ATWEAKS_SPELLS.Earthquake,
+      ATWEAKS_SPELLS.RockToMud,
     ],
     displaySpellIneffective: true,
   },

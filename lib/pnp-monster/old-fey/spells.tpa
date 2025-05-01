@@ -1,9 +1,3 @@
-ACTION_IF NOT FILE_EXISTS_IN_GAME ~RR#DDOOR.BAM~ THEN BEGIN             // Checks for the Icewind Dale's Dimension Door animation component
-  COPY    ~%MOD_FOLDER%/BAM/SPDIMNDR.BAM~   ~override/RR#DDOOR.BAM~     // IWD1's Dimension Door animation (custom file name)
-  COPY    ~%MOD_FOLDER%/WAV/EFF_M09.WAV~    ~override/RR#DDOOR.WAV~     // IWD1's Dimension Door sound effect (custom file name)
-  COPY    ~%MOD_FOLDER%/VVC/RR#DDOOR.VVC~   ~override~                  // Custom Dimension Door VVC
-END
-
 COPY ~%MOD_FOLDER%/spl/rr#telwe.spl~ ~override/rr#ddoor.spl~            // Dimension Door (renewable)
   SAY NAME1 #12082 SAY NAME2 #12082
   LPF spellToInnate INT_VAR ctime=1 renew=1 END
@@ -29,10 +23,6 @@ COPY ~%MOD_FOLDER%/spl/fey/rr#fbbea.spl~ ~override~                     // Blind
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#fbbe2.spl~ ~override~                     // Blinding Beauty (part 2)
 COPY ~%MOD_FOLDER%/eff/fey/rr#fbbea.eff~ ~override~                     // Blinding Beauty EFF (for targeting only humanoids)
-
-COPY ~%MOD_FOLDER%/spl/fey/rr#fchrm.spl~ ~override~                     // Charm Person (renewable)
-COPY ~%MOD_FOLDER%/eff/fey/rr#fchrm.eff~ ~override~                     // Charm Person EFF (for elven and half-elven charm immunity)
-  SAY 0x1C @1903                                                        // Resists charm effect
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#fcsng.spl~ ~override~                     // Charming Song (part 1)
   SAY NAME1 @1902 SAY NAME2 @1902
@@ -72,29 +62,6 @@ COPY ~%MOD_FOLDER%/spl/fey/rr#fdsnr.spl~ ~override~       // Detect Snares and P
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#ftrnq.spl~ ~override~       // Touch of Tranquility (spell)
   SAY NAME1 @1905 SAY NAME2 @1905
-
-COPY ~%MOD_FOLDER%/bam/fey/rr#fspkp.bam~ ~override~       // Speak With Plants icon
-COPY ~%MOD_FOLDER%/spl/fey/rr#fspkp.spl~ ~override~       // Speak With Plants (renewable)
-  SAY NAME1 @1907 SAY NAME2 @1907
-  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPPR105 END              // Entangle (Priest)
-  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPWM111 END              // Entangle (Wild Mage)
-  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPIN688 END              // Plant Growth (Black Dragon)
-  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = RR#SMENT END             // Shambler Entangle (RR)
-  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = RR#FENTG END             // Hamadryad Entangle (aTweaks)
-  PATCH_IF MOD_IS_INSTALLED ~SETUP-SPELLPACKB6.TP2~ ~2731~ BEGIN
-    SET DEST_RES = (IDS_OF_SYMBOL (~spell~ ~WIZARD_CHARM_PLANTS~)-2000)
-	  SPRINT spell_id "sppr%DEST_RES%"
-	  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = EVAL ~%spell_id%~ END  // charm Plants (SpellPack)
-  END
-
-ADD_PROJECTILE ~%MOD_FOLDER%/pro/rr#fentg.pro~            // New projectile for Entangle (party friendly)
-COPY ~%MOD_FOLDER%/eff/fey/rr#fentg.eff~ ~override~       // Entangle EFF (for incorporeal and large creature immunity)
-COPY ~%MOD_FOLDER%/spl/fey/rr#fentg.spl~ ~override~       // Entangle
-  READ_LONG  0x64 ab_off
-  READ_SHORT 0x68 ab_num
-  FOR(i=0; i<ab_num; i+=1) BEGIN
-    WRITE_SHORT (ab_off+i*0x28+0x26) %rr#fentg%           // use new projectile
-  END
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#fiinv.spl~ ~override~       // Improved Invisibility shell spell (use Casting Level 11th)
 COPY_EXISTING ~SPWI405.SPL~  ~override/rr#wi405.spl~      // Clone Improved Invisibility into an innate ability (used by Sirine)

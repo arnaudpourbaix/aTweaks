@@ -1,5 +1,7 @@
 import { PRESET_NAMES, SPELLS } from "../config/spell";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { ConditionalStatement } from "../src/model/final/script";
+import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { FactoryService } from "../src/services/factory.service";
 import { bafFile, file } from "../src/services/misc.func";
@@ -13,17 +15,63 @@ const id = MonsterEnum.Dryad;
 // Script
 const script = bafFile(id);
 // Spells
-const charm = file(1, id);
-const speakWithPlants = file(2, id);
+export const dryadCharm = file(1, id);
+export const speakWithPlants = file(2, id);
 
 const charmDuration = 180;
 const speakWithPlantsDuration = 60;
+
+export const abilitySpeakWithPlants: RawCreatureAbility = {
+  name: "Speak with plants",
+  spell: {
+    resource: speakWithPlants,
+    type: "force",
+    selfTarget: true,
+  },
+  disableInterrupt: true,
+  triggers: [{ name: "CheckStatGT", params: ["Myself", 0, "ENTANGLE"] }],
+  timer: { name: "speakWithPlants", value: 60 },
+};
+export const abilityDryadDireCharm: RawCreatureAbility = {
+  preset: SPELLS.DireCharm,
+  spell: {
+    resource: dryadCharm,
+    id: undefined,
+    type: "force",
+    remove: true,
+  },
+  disableInterrupt: true,
+};
 
 const globals = {
   trees: "ja#trees",
   MinscCharmed: "MinscCharmed",
   HelpDryads: "HelpDryads",
 };
+
+export const dryadOakTreeDimensionDoor: ConditionalStatement[] = [
+  {
+    comment:
+      "Ability to literally step through a tree and then dimension door to the oak tree she is part of",
+    triggers: [
+      factory.global(globals.trees, 0),
+      { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+      { name: "AreaType", params: ["OUTDOOR"] },
+      { name: "AreaType", params: ["CITY"], negation: true },
+      { name: "AreaType", params: ["DUNGEON"], negation: true },
+    ],
+    responses: factory.response([factory.setGlobal(globals.trees, 1)]),
+  },
+  {
+    triggers: [
+      factory.global(globals.trees, 0),
+      { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+    ],
+    responses: factory.response([
+      { name: "RemoveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+    ]),
+  },
+];
 
 export const FEY_DRYAD: RawCreature = {
   name: "Dryad",
@@ -67,16 +115,16 @@ export const FEY_DRYAD: RawCreature = {
   },
   effectFiles: [
     {
-      file: charm,
+      file: dryadCharm,
       opcode: "ProtectionFromSpell",
-      resource: charm,
+      resource: dryadCharm,
       timing: "InstantLimited",
     },
   ],
   spells: [
     {
       name: "Dire Charm",
-      file: charm,
+      file: dryadCharm,
       stringRef: `${StringRefUtils.getStringId("Dire Charm")}`,
       memorizedCount: 3,
       type: "Melee",
@@ -101,7 +149,7 @@ export const FEY_DRYAD: RawCreature = {
           probability1: 90,
           timing: "InstantLimited",
           duration: 1,
-          resource: charm,
+          resource: dryadCharm,
         },
         {
           opcode: "UseEFFFile",
@@ -110,7 +158,7 @@ export const FEY_DRYAD: RawCreature = {
           probability1: 30,
           timing: "InstantLimited",
           duration: 1,
-          resource: charm,
+          resource: dryadCharm,
         },
         {
           opcode: "CharmCreature",
@@ -182,15 +230,8 @@ export const FEY_DRYAD: RawCreature = {
       speed: 1,
       effects: [
         {
-          opcode: "ProtectionFromOpcode",
-          type: "EntangleOverlay",
-          timing: "InstantLimited",
-          duration: speakWithPlantsDuration,
-          dispelResistance: "DispelBypassResistance",
-        },
-        {
-          opcode: "PreventPortraitIcon",
-          icon: "Entangled",
+          opcode: "CreateItemInSlot",
+          slot: "SLOT_AMULET",
           timing: "InstantLimited",
           duration: speakWithPlantsDuration,
           dispelResistance: "DispelBypassResistance",
@@ -218,7 +259,7 @@ export const FEY_DRYAD: RawCreature = {
   additionalCode: [
     {
       location: "trackTargets",
-      triggers: [{ name: "HaveSpellRES", params: [charm] }],
+      triggers: [{ name: "HaveSpellRES", params: [dryadCharm] }],
     },
   ],
   customCode: [
@@ -226,27 +267,7 @@ export const FEY_DRYAD: RawCreature = {
       location: "init",
       type: "insertBefore",
       statements: [
-        {
-          comment:
-            "Ability to literally step through a tree and then dimension door to the oak tree she is part of",
-          triggers: [
-            factory.global(globals.trees, 0),
-            { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
-            { name: "AreaType", params: ["OUTDOOR"] },
-            { name: "AreaType", params: ["CITY"], negation: true },
-            { name: "AreaType", params: ["DUNGEON"], negation: true },
-          ],
-          responses: factory.response([factory.setGlobal(globals.trees, 1)]),
-        },
-        {
-          triggers: [
-            factory.global(globals.trees, 0),
-            { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
-          ],
-          responses: factory.response([
-            { name: "RemoveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
-          ]),
-        },
+        ...dryadOakTreeDimensionDoor,
         {
           comment: "Irenicus' Dungeon specific code",
           triggers: [
@@ -302,27 +323,8 @@ export const FEY_DRYAD: RawCreature = {
         type: "force",
       },
     },
-    {
-      name: "Speak with plants",
-      spell: {
-        resource: speakWithPlants,
-        type: "force",
-        selfTarget: true,
-      },
-      disableInterrupt: true,
-      triggers: [{ name: "CheckStatGT", params: ["Myself", 0, "ENTANGLE"] }],
-      timer: { name: "speakWithPlants", value: 60 },
-    },
-    {
-      preset: SPELLS.DireCharm,
-      spell: {
-        resource: charm,
-        id: undefined,
-        type: "force",
-        remove: true,
-      },
-      disableInterrupt: true,
-    },
+    abilitySpeakWithPlants,
+    abilityDryadDireCharm,
   ],
   files: [
     "DRYAD", // Dryad of the Cloudpeaks

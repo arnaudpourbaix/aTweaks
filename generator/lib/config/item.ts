@@ -4,4 +4,5 @@ export const ITEMS = {
   Hover: "ja#i3",
   Incorporeal: "ja#i4",
   CriticalHit: "ja#i5",
+  Entangle: "ja#i6",
 };

@@ -1,0 +1,25 @@
+COPY ~%MOD_FOLDER%/bam/fey/rr#fspkp.bam~ ~override~       // Speak With Plants icon
+COPY ~%MOD_FOLDER%/spl/fey/rr#fspkp.spl~ ~override~       // Speak With Plants (renewable)
+  SAY NAME1 @1907 SAY NAME2 @1907
+  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPPR105 END              // Entangle (Priest)
+  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPWM111 END              // Entangle (Wild Mage)
+  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = SPIN688 END              // Plant Growth (Black Dragon)
+  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = RR#SMENT END             // Shambler Entangle (RR)
+  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = RR#FENTG END             // Hamadryad Entangle (aTweaks)
+  PATCH_IF MOD_IS_INSTALLED ~SETUP-SPELLPACKB6.TP2~ ~2731~ BEGIN
+    SET DEST_RES = (IDS_OF_SYMBOL (~spell~ ~WIZARD_CHARM_PLANTS~)-2000)
+	  SPRINT spell_id "sppr%DEST_RES%"
+	  LPF add_conditional_immunity INT_VAR f_Condition = 169 f_Strref = 4742 STR_VAR f_Spell = EVAL ~%spell_id%~ END  // charm Plants (SpellPack)
+  END
+
+ADD_PROJECTILE ~%MOD_FOLDER%/pro/rr#fentg.pro~            // New projectile for Entangle (party friendly)
+COPY ~%MOD_FOLDER%/eff/fey/rr#fentg.eff~ ~override~       // Entangle EFF (for incorporeal and large creature immunity)
+COPY ~%MOD_FOLDER%/spl/fey/rr#fentg.spl~ ~override~       // Entangle
+  READ_LONG  0x64 ab_off
+  READ_SHORT 0x68 ab_num
+  FOR(i=0; i<ab_num; i+=1) BEGIN
+    WRITE_SHORT (ab_off+i*0x28+0x26) %rr#fentg%           // use new projectile
+  END
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/hamadryad.tpa"
