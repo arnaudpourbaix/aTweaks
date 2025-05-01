@@ -101,6 +101,10 @@ const CHARM_TARGET_LISTS: RawTargetList[] = [
   },
 ];
 
+export const PRESET_NAMES = {
+  DimensionDoorOffscreen: "DimensionDoorOffscreen",
+};
+
 const SLEEP_TARGET_LISTS: RawTargetList[] = [...CHARM_TARGET_LISTS];
 
 const HOLD_TARGET_LISTS: RawTargetList[] = [
@@ -407,6 +411,33 @@ export const ABILITY_PRESETS: {
           negation: true,
         },
       ],
+    },
+  },
+  {
+    preset: PRESET_NAMES.DimensionDoorOffscreen,
+    ability: {
+      name: "Dimension Door",
+      disableInterrupt: true,
+      triggers: [
+        {
+          name: "Or",
+          triggers: [
+            { name: "Range", params: ["NearestEnemyOf", 10] },
+            { name: "AttackedBy", params: ["ANYONE", "DEFAULT"] },
+          ],
+        },
+      ],
+      spell: {
+        id: "WIZARD_DIMENSION_DOOR",
+        targetName: "RR#TRAT",
+      },
+      actionsBefore: [
+        {
+          name: "CreateCreatureOffscreen", // Create a rat offscreen to teleport to
+          params: ["RR#TRAT", 0],
+        },
+      ],
+      actionsAfter: [{ name: "Wait", params: [1] }],
     },
   },
 ];

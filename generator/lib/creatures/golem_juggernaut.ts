@@ -112,12 +112,15 @@ export const GOLEM_JUGGERNAUT: RawCreature = {
   abilities: [
     {
       name: "Charge",
+      spell: {
+        resource: charge,
+        selfTarget: true,
+        type: "reallyForce",
+      },
       triggers: [
-        { name: "HaveSpellRES", params: [charge] },
         { name: "Range", params: ["NearestEnemyOf", 5], negation: true },
       ],
       timer: { name: "Charge", value: 25 },
-      actions: [{ name: "ReallyForceSpellRES", params: [charge, "Myself"] }],
     },
   ],
   files: ["TOMEGOL4"],

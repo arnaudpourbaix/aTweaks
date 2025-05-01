@@ -1,2 +1,7 @@
 COPY ~%MOD_FOLDER%/vvc/rr#cnstr.vvc~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
 COPY ~%MOD_FOLDER%/bam/rr#cnstr.bam~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
+
+ACTION_IF !FILE_EXISTS_IN_GAME rr#trat.cre BEGIN                                         // Invisible Rat that destroys itself after a round, used to Dimension Door away from screen
+  COPY ~%MOD_FOLDER%/cre/rr#trat.cre~ ~override~                                         // Targeting Rat (script aid)
+  COMPILE ~%MOD_FOLDER%/baf/rr#trat.baf~                                                 // Targeting Rat AI script
+END

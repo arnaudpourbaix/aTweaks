@@ -40,6 +40,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",0)
 	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -49,6 +50,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",1)
 	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -104,8 +106,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -125,8 +125,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -146,8 +144,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -167,8 +163,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -188,8 +182,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -209,8 +201,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -230,8 +220,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -251,8 +239,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -272,8 +258,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -292,8 +276,6 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		SelectWeaponAbility(SLOT_WEAPON1,0)
-		AttackOneRound(LastSeenBy(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
@@ -656,5 +638,16 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
+END
+
+// Random walking (in combat) 
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	ActionListEmpty()
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		RandomWalk()
+		Wait(2)
 END
 

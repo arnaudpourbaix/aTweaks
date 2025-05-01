@@ -67,6 +67,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",0)
 	Heard([EVILCUTOFF.0.GOLEM],99)
+	InMyArea([EVILCUTOFF.0.GOLEM])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -76,6 +77,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",1)
 	Heard([EVILCUTOFF.0.GOLEM],99)
+	InMyArea([EVILCUTOFF.0.GOLEM])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -96,8 +98,8 @@ END
 // Magic Missiles
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!General([PC.0.0.MAGE_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
@@ -113,8 +115,8 @@ END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!General([PC.0.0.CLERIC_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
@@ -130,8 +132,8 @@ END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!General([PC.0.0.DRUID_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
@@ -147,8 +149,8 @@ END
 
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	!Range(NearestEnemyOf(Myself),10)
 	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!General([PC.0.0.BARD],WEAPON)
 	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
@@ -717,8 +719,8 @@ END
 
 // Dimension Door
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player1,180)
@@ -735,8 +737,8 @@ THEN
 END
 
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player2,180)
@@ -753,8 +755,8 @@ THEN
 END
 
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player3,180)
@@ -771,8 +773,8 @@ THEN
 END
 
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player4,180)
@@ -789,8 +791,8 @@ THEN
 END
 
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player5,180)
@@ -807,8 +809,8 @@ THEN
 END
 
 IF
-	!StateCheck(Myself,STATE_BLIND)
 	HaveSpell(WIZARD_DIMENSION_DOOR)
+	!StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(Player6,180)
@@ -908,5 +910,30 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
+END
+
+// Open door
+IF
+	Global("RR#NOPND","GLOBAL",0)
+	Allegiance(Myself,EVILCUTOFF)
+	!AreaType(OUTDOOR)
+	!Range(NearestEnemyOf(Myself),30)
+	Range(NearestDoor,15)
+	OpenState(NearestDoor,FALSE)
+THEN
+	RESPONSE #100
+		MoveToObject(NearestDoor)
+		OpenDoor(NearestDoor)
+END
+
+// Random walking (in combat) 
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	ActionListEmpty()
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		RandomWalk()
+		Wait(2)
 END
 

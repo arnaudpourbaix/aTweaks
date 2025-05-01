@@ -115,6 +115,7 @@ export class MainService {
         meleeRange: true,
       },
       ...rawCreature,
+      dialog: rawCreature.dialog ?? [],
       data: { ...rawCreature.data },
       abilities: this.abilityService.getAbilities(rawCreature.abilities),
       customCode: this.mapCustomCode(rawCreature.customCode),

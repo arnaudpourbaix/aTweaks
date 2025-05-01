@@ -92,7 +92,10 @@ export namespace Actions {
     | "FaceObject"
     | "StartDialogueNoSet"
     | "ActionOverride"
-    | "JumpToPoint";
+    | "JumpToPoint"
+    | "CreateCreatureOffscreen"
+    | "RandomTurn"
+    | "OpenDoor";
 
   export interface Attack {
     name: "Attack";
@@ -387,13 +390,26 @@ export namespace Actions {
 
   export interface ActionOverride {
     name: "ActionOverride";
-    //params: [ParamObject, Action];
     params: [ParamObject, string];
   }
 
   export interface JumpToPoint {
     name: "JumpToPoint";
     params: [string];
+  }
+
+  export interface CreateCreatureOffscreen {
+    name: "CreateCreatureOffscreen";
+    params: [string, number];
+  }
+
+  export interface RandomTurn {
+    name: "RandomTurn";
+  }
+
+  export interface OpenDoor {
+    name: "OpenDoor";
+    params: [ParamObject];
   }
 
   export type Action =
@@ -459,7 +475,10 @@ export namespace Actions {
     | FaceObject
     | StartDialogueNoSet
     | ActionOverride
-    | JumpToPoint;
+    | JumpToPoint
+    | CreateCreatureOffscreen
+    | RandomTurn
+    | OpenDoor;
 
   export const ACTIONS: GenericScriptRawData[] = [
     {
@@ -1033,6 +1052,27 @@ export namespace Actions {
       parameters: "P:Target*",
       description:
         "This action instantly moves the active creature to the specified point.",
+      section: "Misc",
+    },
+    {
+      name: "CreateCreatureOffscreen",
+      parameters: "S:ResRef*,I:Face*Dir",
+      description:
+        "This action creates the specified creature just offscreen from the active creature.",
+      section: "Misc",
+    },
+    {
+      name: "RandomTurn",
+      parameters: "",
+      description:
+        "This action causes the active creature to turn in a random direction.",
+      section: "Misc",
+    },
+    {
+      name: "OpenDoor",
+      parameters: "O:Object*",
+      description:
+        "This action will open the specified door. If the door is locked the creature must possess the correct key. Some doors central to the plot doors cannot be opened. The active creature can stick on this action if it fails.",
       section: "Misc",
     },
   ];

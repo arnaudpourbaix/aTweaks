@@ -67,6 +67,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",0)
 	Heard([EVILCUTOFF.0.GOLEM],99)
+	InMyArea([EVILCUTOFF.0.GOLEM])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -76,6 +77,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",1)
 	Heard([EVILCUTOFF.0.GOLEM],99)
+	InMyArea([EVILCUTOFF.0.GOLEM])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -96,8 +98,8 @@ END
 // Haste
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Delay(6)
 	HaveSpellRES("ja#1m24")
+	Delay(6)
 	!StateCheck(Myself,STATE_HASTED)
 THEN
 	RESPONSE #100
@@ -355,5 +357,16 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
+END
+
+// Random walking (in combat) 
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	ActionListEmpty()
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		RandomWalk()
+		Wait(2)
 END
 

@@ -33,6 +33,7 @@ export class StatementService {
       creature,
       options
     );
+    this.execute(this.dialog, "dialog", statements, creature, options);
     this.execute(this.init, "init", statements, creature, options);
     this.execute(this.rest, "rest", statements, creature, options);
     this.execute(
@@ -168,6 +169,34 @@ export class StatementService {
         });
       }
     }
+  }
+
+  private dialog(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    if (!creature.dialog.length) return;
+    statements.push({
+      comment: "Initiate dialog",
+      triggers: [
+        this.factory.global(GLOBAL_CONFIG.bafConstants.dialog, 0),
+        {
+          name: "Or",
+          triggers: creature.dialog.map((n) => ({
+            name: "Name",
+            params: [n, "Myself"],
+          })),
+        },
+        { name: "NumTimesTalkedTo", params: [0] },
+        { name: "See", params: ["PC"] },
+      ],
+      responses: this.factory.response([
+        this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.dialog, 1),
+        { name: "FaceObject", params: ["PC"] },
+        { name: "StartDialogueNoSet", params: ["PC"] },
+      ]),
+    });
   }
 
   private handlePanic(
@@ -419,6 +448,7 @@ export class StatementService {
       triggers: [
         this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
         { name: "Heard", params: [heardObject, shoutId] },
+        { name: "InMyArea", params: [heardObject] },
       ],
       responses: this.factory.response([
         this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
@@ -429,6 +459,7 @@ export class StatementService {
       triggers: [
         this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
         { name: "Heard", params: [heardObject, shoutId] },
+        { name: "InMyArea", params: [heardObject] },
         { name: "See", params: ["GOODCUTOFF"], negation: true },
       ],
       responses: this.factory.response([
@@ -576,6 +607,27 @@ export class StatementService {
       targets: ["LastSeenBy"],
       random: false,
     });
+    if (!!creature.data.intelligence && creature.data.intelligence > 10) {
+      statements.push({
+        comment: "Open door",
+        triggers: [
+          this.factory.global(
+            GLOBAL_CONFIG.bafConstants.noOpenDoor,
+            0,
+            "GLOBAL"
+          ),
+          { name: "Allegiance", params: ["Myself", "EVILCUTOFF"] },
+          { name: "AreaType", params: ["OUTDOOR"], negation: true },
+          { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
+          { name: "Range", params: ["NearestDoor", 15] },
+          { name: "OpenState", params: ["NearestDoor", "FALSE"] },
+        ],
+        responses: this.factory.response([
+          { name: "MoveToObject", params: ["NearestDoor"] },
+          { name: "OpenDoor", params: ["NearestDoor"] },
+        ]),
+      });
+    }
   }
 
   private randomWalkCombat(
@@ -583,8 +635,9 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    this;
+    if (!creature.combatWalk) return;
     this.randomWalk(statements, true, creature, options);
+    this.avoidMeleeCombat(statements, creature, options);
   }
 
   private randomWalkNoCombat(
@@ -592,7 +645,7 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    this;
+    if (!creature.walk) return;
     this.randomWalk(statements, false, creature, options);
   }
 
@@ -602,7 +655,6 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.walk) return;
     const triggers: Triggers.Trigger[] = [
       this.factory.global(
         GLOBAL_CONFIG.bafConstants.combatStarted,
@@ -622,6 +674,25 @@ export class StatementService {
         { name: "RandomWalk" },
         { name: "Wait", params: [2] },
       ]),
+    });
+  }
+
+  private avoidMeleeCombat(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ) {
+    if (creature.attack.melee || creature.attack.ranged) return;
+    statements.push({
+      comment: `Random facing`,
+      triggers: [
+        {
+          name: "Range",
+          params: ["NearestEnemyOf", 30],
+          negation: true,
+        },
+      ],
+      responses: this.factory.response([{ name: "RandomTurn" }]),
     });
   }
 
@@ -801,12 +872,7 @@ export class StatementService {
     targets: RawTargetList[],
     options: BuilderOptions
   ): void {
-    const name = ability.name;
     for (const [index, target] of targets.entries()) {
-      if (targets.length > 1)
-        ability.name = `${name} (${
-          !index ? "most" : "less"
-        } important targets)`;
       this.creatureTargetAbility(
         statements,
         creature,

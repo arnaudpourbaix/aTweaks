@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell";
+import { PRESET_NAMES, SPELLS } from "../config/spell";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { FactoryService } from "../src/services/factory.service";
@@ -15,13 +15,11 @@ const script = bafFile(id);
 // Spells
 const charm = file(1, id);
 const speakWithPlants = file(2, id);
-const dimensionDoor = file(3, id);
 
 const charmDuration = 180;
 const speakWithPlantsDuration = 60;
 
 const globals = {
-  dialog: "ja#dialog",
   trees: "ja#trees",
   MinscCharmed: "MinscCharmed",
   HelpDryads: "HelpDryads",
@@ -33,7 +31,7 @@ export const FEY_DRYAD: RawCreature = {
   tpaFile: "lib/pnp-monster/fey/dryad",
   tracking: true,
   combatWalk: true,
-  usePotions: false,
+  dialog: ["CDryad", "Ulene"],
   attack: {
     melee: false,
     ranged: false,
@@ -250,26 +248,6 @@ export const FEY_DRYAD: RawCreature = {
           ]),
         },
         {
-          comment: "Initiate dialog",
-          triggers: [
-            factory.global(globals.dialog, 0),
-            {
-              name: "Or",
-              triggers: ["CDryad", "Ulene"].map((n) => ({
-                name: "Name",
-                params: [n, "Myself"],
-              })),
-            },
-            { name: "NumTimesTalkedTo", params: [0] },
-            { name: "See", params: ["PC"] },
-          ],
-          responses: factory.response([
-            factory.setGlobal(globals.dialog, 1),
-            { name: "FaceObject", params: ["PC"] },
-            { name: "StartDialogueNoSet", params: ["PC"] },
-          ]),
-        },
-        {
           comment: "Irenicus' Dungeon specific code",
           triggers: [
             {
@@ -319,6 +297,12 @@ export const FEY_DRYAD: RawCreature = {
   ],
   abilities: [
     {
+      preset: PRESET_NAMES.DimensionDoorOffscreen,
+      spell: {
+        type: "force",
+      },
+    },
+    {
       name: "Speak with plants",
       spell: {
         resource: speakWithPlants,
@@ -356,7 +340,6 @@ export const FEY_DRYAD: RawCreature = {
   adjustments: [
     {
       files: ["DRYAD"],
-      // summon: true, //TODO: just for test
       data: { class: "INNOCENT" },
     },
   ],

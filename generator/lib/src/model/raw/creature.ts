@@ -36,6 +36,11 @@ export interface RawCreature {
   help?: boolean;
 
   /**
+   * Will initiate dialog (values are creatures' names)
+   */
+  dialog?: string[];
+
+  /**
    * Can track enemies when no one in sight ? (default: true)
    */
   tracking?: boolean;

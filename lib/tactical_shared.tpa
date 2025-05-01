@@ -15,11 +15,6 @@ ACTION_IF NOT FILE_EXISTS_IN_GAME fl#labelled_item.mrk BEGIN
   COPY_EXISTING sw1h01.itm "override/fl#labelled_item.mrk"
 END
 
-ACTION_IF !FILE_EXISTS_IN_GAME rr#trat.cre BEGIN                                    // TODO: Purpose of this file ???
-  COPY ~%MOD_FOLDER%/cre/rr#trat.cre~ ~override~                                         // Targeting Rat (script aid)
-  COMPILE ~%MOD_FOLDER%/baf/rr#trat.baf~                                                 // Targeting Rat AI script
-END
-
 ACTION_IF !FILE_EXISTS_IN_GAME rr#vsbl.spl BEGIN
   COPY ~%MOD_FOLDER%/spl/rr#vsbl.spl~ ~override~                                         // Spell which turns the target visible but doesn't remove Improved Invisibility
 END

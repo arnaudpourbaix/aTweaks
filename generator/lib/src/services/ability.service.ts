@@ -18,28 +18,28 @@ export class AbilityService {
     const results: CreatureAbility[] = abilities.map((ability) => {
       if (ability.preset) ability = this.applyPreset(ability, ability.preset);
       const triggers: Triggers.Trigger[] = ability.triggers ?? [];
-      const actions: Actions.Action[] = ability.actions ?? [];
       let targets =
         !ability.target || Array.isArray(ability.target)
           ? ability.target
           : undefined;
       if (!!ability.target && !Array.isArray(ability.target))
         targets = [ability.target];
+      const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
       const result: CreatureAbility = {
         ...ability,
         target: targets,
         name: ability.name ?? "",
         isSpell: !!ability.spell,
         triggers,
-        actions,
+        actions: ability.actionsBefore ?? [],
       };
       const target = ability.target ? GLOBAL_CONFIG.tokens.target : "Myself";
       if (!ability.spell) return result;
       ability.spell.type = ability.spell.type ?? "normal";
       if (ability.spell.id) {
-        triggers.push({ name: "HaveSpell", params: [ability.spell.id] });
+        triggers.unshift({ name: "HaveSpell", params: [ability.spell.id] });
       } else if (ability.spell.resource) {
-        triggers.push({
+        triggers.unshift({
           name: "HaveSpellRES",
           params: [ability.spell.resource],
         });
@@ -68,29 +68,29 @@ export class AbilityService {
           ],
         });
       }
-      actions.unshift(
-        this.getSpellAction(
-          ability.spell,
-          ability.spell.selfTarget ? "Myself" : target
-        )
-      );
+      let spellTarget = ability.spell.selfTarget ? "Myself" : target;
+      if (ability.spell.targetName) spellTarget = ability.spell.targetName;
+      result.actions.push(this.getSpellAction(ability.spell, spellTarget));
       if (
         ability.spell.remove &&
         ability.spell.type !== "normal" &&
         ability.spell.id
       ) {
-        actions.push({ name: "RemoveSpell", params: [ability.spell.id] });
+        result.actions.push({
+          name: "RemoveSpell",
+          params: [ability.spell.id],
+        });
       } else if (
         ability.spell.remove &&
         ability.spell.type !== "normal" &&
         ability.spell.resource
       ) {
-        actions.push({
+        result.actions.push({
           name: "RemoveSpellRES",
           params: [ability.spell.resource],
         });
       }
-
+      result.actions.push(...actionsAfter);
       return result;
     });
     return results;

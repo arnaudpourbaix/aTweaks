@@ -49,7 +49,7 @@ export const DOG_BLINK: RawCreature = {
         resource: blink,
         type: "force",
       },
-      actions: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+      actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
     },
   ],
   items: [

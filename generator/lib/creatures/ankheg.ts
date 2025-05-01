@@ -62,7 +62,7 @@ export const ANKHEG: RawCreature = {
         { name: "HPPercentLT", params: ["Myself", 50] },
         { name: "HaveSpellRES", params: [acidicEnzyme] },
       ],
-      actions: [
+      actionsAfter: [
         { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
         { name: "AttackOneRound", params: ["LastSeenBy"] },
       ],

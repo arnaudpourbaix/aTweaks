@@ -32,6 +32,7 @@ export interface AdditionalCode {
 
 export type CustomCodeLocation =
   | "destroyUponDeath"
+  | "dialog"
   | "init"
   | "rest"
   | "turnHostile"

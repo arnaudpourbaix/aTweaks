@@ -22,7 +22,14 @@ export interface RawCreatureAbility {
    */
   timer?: { name: string; value: number };
   triggers?: Triggers.Trigger[];
-  actions?: Actions.Action[];
+  /**
+   * Actions before casting a spell
+   */
+  actionsBefore?: Actions.Action[];
+  /**
+   * Actions after casting a spell
+   */
+  actionsAfter?: Actions.Action[];
   /**
    * If true, disable interrupt (false by default)
    */
@@ -44,6 +51,10 @@ export interface RawCreatureAbilitySpell {
    * Target self with spell even if target is set
    */
   selfTarget?: boolean;
+  /**
+   * Target name when a spell is specifically cast at someone
+   */
+  targetName?: string;
   /**
    * Remove spell after use, only relevant is type is different than normal
    */

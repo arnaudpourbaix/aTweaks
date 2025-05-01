@@ -66,6 +66,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",0)
 	Heard([EVILCUTOFF.0.OGRE],99)
+	InMyArea([EVILCUTOFF.0.OGRE])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -75,6 +76,7 @@ END
 IF
 	Global("JA#COMBAT","LOCALS",1)
 	Heard([EVILCUTOFF.0.OGRE],99)
+	InMyArea([EVILCUTOFF.0.OGRE])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -1674,5 +1676,16 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
+END
+
+// Random walking (in combat) 
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	ActionListEmpty()
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		RandomWalk()
+		Wait(2)
 END
 

@@ -1,4 +1,5 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41su.baf~
 
 CREATE EFF "ja#1m41"
 	WRITE_LONG 0x10 206
@@ -231,8 +232,15 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG END
-			LPF patchCreatureScript STR_VAR script=ja#m41 removeScripts END
+			DEFINE_ARRAY skipFiles BEGIN DRYAD END
+			LPF patchCreatureScript STR_VAR script=ja#m41 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG END
+			DEFINE_ARRAY files BEGIN DRYAD END
+			LPF patchCreatureScript STR_VAR script=ja#m41su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) BEGIN 
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
 			END
 		BUT_ONLY_IF_IT_CHANGES

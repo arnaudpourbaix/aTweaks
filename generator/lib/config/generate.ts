@@ -9,6 +9,8 @@ export const GLOBAL_CONFIG = {
     restTimer: "JA#REST",
     helpTimer: "JA#HELP",
     roundTimer: "JA#ROUND",
+    noOpenDoor: "RR#NOPND",
+    dialog: "JA#DIALOG",
     monsterShoutId: 99,
     summonerShoutId: 98,
     trackingRange: 150,

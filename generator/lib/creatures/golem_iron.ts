@@ -69,21 +69,12 @@ export const GOLEM_IRON: RawCreature = {
       name: "Cloud of poisonous gas",
       target: { name: "NearestEnemies", limit: 3 },
       range: 10,
-      triggers: [
-        {
-          name: "StateCheck",
-          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-          negation: true,
-        },
-        { name: "HaveSpellRES", params: [cloudOfPoisonousGas] },
-      ],
-      timer: { name: "Slow", value: 12 },
-      actions: [
-        {
-          name: "ReallyForceSpellRES",
-          params: [cloudOfPoisonousGas, "Myself"],
-        },
-      ],
+      spell: {
+        resource: cloudOfPoisonousGas,
+        type: "reallyForce",
+        selfTarget: true,
+      },
+      timer: { name: "Gas", value: 12 },
     },
   ],
   files: ["", "", "", "", "", "", ""],

@@ -148,7 +148,8 @@ export namespace Triggers {
     | "IsActive"
     | "NumTimesTalkedTo"
     | "AreaCheck"
-    | "InActiveArea";
+    | "InActiveArea"
+    | "OpenState";
 
   export interface BaseTrigger {
     negation?: boolean;
@@ -625,6 +626,11 @@ export namespace Triggers {
     params: [ParamObject];
   }
 
+  export interface OpenState extends BaseTrigger {
+    name: "OpenState";
+    params: [ParamObject, "TRUE" | "FALSE"];
+  }
+
   export interface Or extends BaseTrigger {
     name: "Or";
     triggers: Trigger[];
@@ -727,7 +733,8 @@ export namespace Triggers {
     | Name
     | NumTimesTalkedTo
     | AreaCheck
-    | InActiveArea;
+    | InActiveArea
+    | OpenState;
 
   export const TRIGGERS: GenericScriptRawData[] = [
     {
@@ -1629,6 +1636,13 @@ export namespace Triggers {
       parameters: "O:Object*",
       description:
         "Returns true only if specified object is in the active area. The active area is that in which Player1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.",
+      section: "Misc.",
+    },
+    {
+      name: "OpenState",
+      parameters: "O:Object*,I:Open*BOOLEAN",
+      description:
+        "Returns true only if the open state of the specified door matches the state specified in the 2nd parameter.",
       section: "Misc.",
     },
   ];
