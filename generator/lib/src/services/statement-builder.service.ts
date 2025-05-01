@@ -7,6 +7,7 @@ import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { CreatureAbility } from "../model/final/ability";
 import { Creature } from "../model/final/creature";
 import { CustomCodeLocation, Statements } from "../model/final/script";
+import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { RaceIdentifier } from "../model/ids/race";
 import { BuilderOptions } from "../model/misc";
 import { Actions } from "../model/raw/actions";
@@ -42,22 +43,16 @@ export class StatementService {
       options
     );
     this.execute(
-      this.handlePanic,
-      "handlePanic",
-      statements,
-      creature,
-      options
-    );
-    this.execute(
       this.detectCombat,
       "detectCombat",
       statements,
       creature,
       options
     );
+    this.execute(this.shouts, "shouts", statements, creature, options);
     this.execute(
-      this.listenToShouts,
-      "listenToShouts",
+      this.handlePanic,
+      "handlePanic",
       statements,
       creature,
       options
@@ -159,7 +154,8 @@ export class StatementService {
           this.targetService.getTriggersFromTargetList(statement.target);
         const targets = this.targetService.getTargetFromAbility(
           statement.target.name,
-          statement.target.limit
+          statement.target.limit,
+          statement.target.randomOrder
         ) as string[];
         this.factory.addStatementsFromTargetList({
           statements,
@@ -215,8 +211,7 @@ export class StatementService {
     const actions: Actions.Action[] = [
       this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
       this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.allowMelee, 0),
-      this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
+      // this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
       this.factory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
     ];
     for (const action of creature.initActions) {
@@ -241,16 +236,18 @@ export class StatementService {
     ];
     if (creature.restHeal)
       actions.push({
-        name: "ApplySpellRES",
-        params: [GLOBAL_CONFIG.bafConstants.fullHealSpellResource, "Myself"],
+        name: "ApplySpell",
+        params: ["Myself", "RESTORE_FULL_HEALTH"],
       });
     statements.push({
       comment: "Rest (reset everything and heal if applicable)",
       triggers: [
         this.factory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
-        this.factory.globalTimerExpired(GLOBAL_CONFIG.bafConstants.restTimer),
+        this.factory.globalTimerReallyExpired(
+          GLOBAL_CONFIG.bafConstants.restTimer
+        ),
         {
-          name: "Detect",
+          name: "See",
           params: ["GOODCUTOFF"],
           negation: true,
         },
@@ -265,13 +262,13 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (options.summon) return;
+    const actions: Actions.Action[] = [{ name: "Enemy" }];
     statements.push({
       comment: "Turn hostile if attacked",
       triggers: [
         {
           name: "Allegiance",
-          params: ["Myself", "ENEMY"],
-          negation: true,
+          params: ["Myself", "NEUTRAL"],
         },
         {
           name: "Or",
@@ -281,29 +278,23 @@ export class StatementService {
               params: ["GOODCUTOFF", "DEFAULT"],
             },
             {
-              name: "AttackedBy",
-              params: ["CONTROLLED", "DEFAULT"],
-            },
-            {
-              name: "AttackedBy",
-              params: ["CHARMED", "DEFAULT"],
-            },
-            {
               name: "SpellCastOnMe",
               params: ["GOODCUTOFF", 0],
             },
             {
-              name: "SpellCastOnMe",
-              params: ["CONTROLLED", 0],
+              name: "TookDamage",
             },
             {
-              name: "SpellCastOnMe",
-              params: ["CHARMED", 0],
+              name: "Heard",
+              params: [
+                `${"EVILCUTOFF"}.0.${creature.data.race}`,
+                GLOBAL_CONFIG.bafConstants.monsterShoutId,
+              ],
             },
           ],
         },
       ],
-      responses: this.factory.response([{ name: "Enemy" }]),
+      responses: this.factory.response(actions),
     });
     if (["BEAR"].includes(creature.data.race as RaceIdentifier)) {
       statements.push({
@@ -368,27 +359,36 @@ export class StatementService {
     const actions: Actions.Action[] = [
       this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
-    if (creature.help) {
-      actions.push({
-        name: "Shout",
-        params: [
-          options.summon
-            ? GLOBAL_CONFIG.bafConstants.summonerShoutId
-            : GLOBAL_CONFIG.bafConstants.monsterShoutId,
+    const allegiances: {
+      myself: AllegianceIdentifier;
+      enemy: AllegianceIdentifier;
+    }[] = [
+      {
+        myself: "EVILCUTOFF",
+        enemy: "GOODCUTOFF",
+      },
+      {
+        myself: "GOODCUTOFF",
+        enemy: "EVILCUTOFF",
+      },
+    ];
+    for (const ea of allegiances) {
+      statements.push({
+        comment: "Detect combat",
+        triggers: [
+          this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+          {
+            name: "Allegiance",
+            params: ["Myself", ea.myself],
+          },
+          { name: "See", params: [ea.enemy] },
         ],
+        responses: this.factory.response(actions),
       });
     }
-    statements.push({
-      comment: "Detect combat",
-      triggers: [
-        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-        { name: "See", params: ["NearestEnemyOf"] },
-      ],
-      responses: this.factory.response(actions),
-    });
   }
 
-  private listenToShouts(
+  private shouts(
     statements: Statements,
     creature: Creature,
     options: BuilderOptions
@@ -397,20 +397,42 @@ export class StatementService {
     const shoutId = options.summon
       ? GLOBAL_CONFIG.bafConstants.summonerShoutId
       : GLOBAL_CONFIG.bafConstants.monsterShoutId;
-    const trigger: Triggers.Trigger = options.summon
-      ? { name: "Heard", params: ["LastSummonerOf", shoutId] }
-      : {
-          name: "Heard",
-          params: [`${"EVILCUTOFF"}.0.${creature.data.race}`, shoutId],
-        };
+    statements.push({
+      comment: "Shouts every 3 rounds",
+      triggers: [
+        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+        this.factory.globalTimerExpired(GLOBAL_CONFIG.bafConstants.helpTimer),
+      ],
+      responses: this.factory.response([
+        {
+          name: "Shout",
+          params: [shoutId],
+        },
+        this.factory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.helpTimer, 18),
+      ]),
+    });
+    const heardObject = options.summon
+      ? "LastSummonerOf"
+      : `${"EVILCUTOFF"}.0.${creature.data.race}`;
     statements.push({
       comment: "React to shouts",
       triggers: [
         this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-        trigger,
+        { name: "Heard", params: [heardObject, shoutId] },
       ],
       responses: this.factory.response([
         this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+        { name: "MoveToObject", params: ["LastHeardBy"] },
+      ]),
+    });
+    statements.push({
+      triggers: [
+        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+        { name: "Heard", params: [heardObject, shoutId] },
+        { name: "See", params: ["GOODCUTOFF"], negation: true },
+      ],
+      responses: this.factory.response([
+        { name: "MoveToObject", params: ["LastHeardBy"] },
       ]),
     });
   }
@@ -420,14 +442,33 @@ export class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
+    const responses = this.factory.response([{ name: "NoAction" }]);
     statements.push({
-      comment: "Do nothing if combat is not started",
+      comment: "Do nothing if...",
       triggers: [
-        this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-        { name: "ActionListEmpty" },
+        {
+          name: "Or",
+          triggers: [
+            this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+            { name: "StateCheck", params: ["Myself", "STATE_IMMOBILE"] },
+            { name: "StateCheck", params: ["Myself", "STATE_REALLY_DEAD"] },
+          ],
+        },
       ],
-      responses: this.factory.response([{ name: "NoAction" }]),
+      responses,
     });
+    // statements.push({
+    //   triggers: [
+    //     {
+    //       name: "Allegiance",
+    //       params: ["Myself", "EVILCUTOFF"],
+    //       negation: true,
+    //     },
+    //     { name: "InActiveArea", params: ["Myself"], negation: true },
+    //     { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
+    //   ],
+    //   responses,
+    // });
   }
 
   private followSummoner(
@@ -475,6 +516,7 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!creature.tracking) return;
+    const additionals = this.getAdditionals(creature, "trackTargets");
     const allegiance: Triggers.Trigger = {
       name: "Allegiance",
       params: ["Myself", "GOODCUTOFF"],
@@ -493,9 +535,11 @@ export class StatementService {
           GLOBAL_CONFIG.bafConstants.trackingRange,
         ],
       },
+      ...additionals.triggers,
     ];
     const actions: Actions.Action[] = [
       { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
+      ...additionals.actions,
     ];
     this.factory.addStatementsFromTargetList({
       statements,
@@ -675,7 +719,7 @@ export class StatementService {
       for (const file of potion.files) {
         const triggers: Triggers.Trigger[] = [
           { name: "HasItem", params: [file, "Myself"] },
-          this.factory.globalRoundTimerNotExpired(),
+          this.factory.globalRoundTimerExpired(),
           ...(potion.triggers ?? []),
         ];
         const actions: Actions.Action[] = [
@@ -706,7 +750,7 @@ export class StatementService {
       for (const file of ability.files) {
         const triggers: Triggers.Trigger[] = [
           { name: "HaveSpellRES", params: [file] },
-          this.factory.globalRoundTimerNotExpired(),
+          this.factory.globalRoundTimerExpired(),
           ...(ability.triggers ?? []),
         ];
         const actions: Actions.Action[] = [
@@ -739,7 +783,7 @@ export class StatementService {
   ): void {
     for (const ability of abilities) {
       if (ability.target)
-        this.creatureTargetAbility(
+        this.creatureTargetsAbility(
           statements,
           creature,
           ability,
@@ -747,6 +791,29 @@ export class StatementService {
           options
         );
       else this.creatureSelfAbility(statements, creature, ability, options);
+    }
+  }
+
+  private creatureTargetsAbility(
+    statements: Statements,
+    creature: Creature,
+    ability: CreatureAbility,
+    targets: RawTargetList[],
+    options: BuilderOptions
+  ): void {
+    const name = ability.name;
+    for (const [index, target] of targets.entries()) {
+      if (targets.length > 1)
+        ability.name = `${name} (${
+          !index ? "most" : "less"
+        } important targets)`;
+      this.creatureTargetAbility(
+        statements,
+        creature,
+        ability,
+        target,
+        options
+      );
     }
   }
 
@@ -760,7 +827,7 @@ export class StatementService {
     const { triggers, targetTriggers } =
       this.targetService.getTriggersFromTargetList(target);
     triggers.unshift(...ability.triggers);
-    if (ability.isSpell)
+    if (ability.isSpell) {
       targetTriggers.push(
         ...this.factory.validSpellTarget({
           isTargetPlayer: false,
@@ -770,7 +837,7 @@ export class StatementService {
           ),
         })
       );
-    else
+    } else {
       targetTriggers.push(
         ...this.factory.validAttackTarget({
           isTargetPlayer: false,
@@ -780,14 +847,15 @@ export class StatementService {
           ),
         })
       );
+    }
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
-      triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
+      triggers.unshift(this.factory.globalTimerExpired(ability.timer.name));
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     } else {
-      triggers.push(this.factory.globalRoundTimerNotExpired());
+      triggers.push(this.factory.globalRoundTimerExpired());
       actions.push(this.factory.setGlobalRoundTimer());
     }
     if (ability.range) {
@@ -802,7 +870,8 @@ export class StatementService {
     }
     const targets = this.targetService.getTargetFromAbility(
       target.name,
-      target.limit
+      target.limit,
+      target.randomOrder
     ) as string[];
     this.factory.addStatementsFromTargetList({
       statements,
@@ -824,12 +893,12 @@ export class StatementService {
     const triggers = [...ability.triggers];
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
-      triggers.unshift(this.factory.globalTimerNotExpired(ability.timer.name));
+      triggers.unshift(this.factory.globalTimerExpired(ability.timer.name));
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
-    triggers.unshift(this.factory.globalRoundTimerNotExpired());
+    triggers.unshift(this.factory.globalRoundTimerExpired());
     actions.push(this.factory.setGlobalRoundTimer());
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());
@@ -840,5 +909,15 @@ export class StatementService {
       triggers,
       responses: this.factory.response(actions),
     });
+  }
+
+  private getAdditionals(
+    creature: Creature,
+    location: CustomCodeLocation
+  ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] } {
+    const additionals = creature.additionalCode.find(
+      (a) => a.location === location
+    );
+    return additionals ?? { triggers: [], actions: [] };
   }
 }

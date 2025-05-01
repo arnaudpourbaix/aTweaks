@@ -24,13 +24,19 @@ export interface CustomCode {
   abilities: CreatureAbility[];
 }
 
+export interface AdditionalCode {
+  location: CustomCodeLocation;
+  triggers: Triggers.Trigger[];
+  actions: Actions.Action[];
+}
+
 export type CustomCodeLocation =
   | "destroyUponDeath"
   | "init"
   | "rest"
   | "turnHostile"
   | "detectCombat"
-  | "listenToShouts"
+  | "shouts"
   | "trackTargets"
   | "attack"
   | "handlePanic"

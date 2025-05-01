@@ -147,7 +147,8 @@ export namespace Triggers {
     | "RandomNumLT"
     | "IsActive"
     | "NumTimesTalkedTo"
-    | "AreaCheck";
+    | "AreaCheck"
+    | "InActiveArea";
 
   export interface BaseTrigger {
     negation?: boolean;
@@ -619,6 +620,11 @@ export namespace Triggers {
     params: [string];
   }
 
+  export interface InActiveArea extends BaseTrigger {
+    name: "InActiveArea";
+    params: [ParamObject];
+  }
+
   export interface Or extends BaseTrigger {
     name: "Or";
     triggers: Trigger[];
@@ -720,7 +726,8 @@ export namespace Triggers {
     | RandomNumLT
     | Name
     | NumTimesTalkedTo
-    | AreaCheck;
+    | AreaCheck
+    | InActiveArea;
 
   export const TRIGGERS: GenericScriptRawData[] = [
     {
@@ -1615,6 +1622,13 @@ export namespace Triggers {
       parameters: "S:ResRef*",
       description:
         "Returns true only if the active CRE is in the area specified.",
+      section: "Misc.",
+    },
+    {
+      name: "InActiveArea",
+      parameters: "O:Object*",
+      description:
+        "Returns true only if specified object is in the active area. The active area is that in which Player1 is. This trigger will crash the game if the specified creature is not in the active area and is not a global object.",
       section: "Misc.",
     },
   ];

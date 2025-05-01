@@ -5,8 +5,6 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",1)
 		SetGlobal("JA#COMBAT","LOCALS",0)
-		SetGlobal("JA#MELEE","LOCALS",0)
-		SetGlobal("JA#DISABLE_SPELLCASTING","LOCALS",0)
 		SetGlobalTimer("JA#REST","LOCALS",2400)
 END
 
@@ -14,7 +12,7 @@ END
 IF
 	Global("JA#INIT","LOCALS",1)
 	GlobalTimerExpired("JA#REST","LOCALS")
-	!Detect([GOODCUTOFF])
+	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
@@ -23,17 +21,64 @@ END
 
 // Turn hostile if attacked
 IF
-	!Allegiance(Myself,ENEMY)
-	OR(6)
+	Allegiance(Myself,NEUTRAL)
+	OR(4)
 		AttackedBy([GOODCUTOFF],DEFAULT)
-		AttackedBy([CONTROLLED],DEFAULT)
-		AttackedBy([CHARMED],DEFAULT)
 		SpellCastOnMe([GOODCUTOFF],0)
-		SpellCastOnMe([CONTROLLED],0)
-		SpellCastOnMe([CHARMED],0)
+		TookDamage()
+		Heard([EVILCUTOFF.0.BASILISK],99)
 THEN
 	RESPONSE #100
 		Enemy()
+END
+
+// Detect combat
+IF
+	Global("JA#COMBAT","LOCALS",0)
+	Allegiance(Myself,EVILCUTOFF)
+	See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		SetGlobal("JA#COMBAT","LOCALS",1)
+END
+
+// Detect combat
+IF
+	Global("JA#COMBAT","LOCALS",0)
+	Allegiance(Myself,GOODCUTOFF)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		SetGlobal("JA#COMBAT","LOCALS",1)
+END
+
+// Shouts every 3 rounds
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	!GlobalTimerNotExpired("JA#HELP","LOCALS")
+THEN
+	RESPONSE #100
+		Shout(99)
+		SetGlobalTimer("JA#HELP","LOCALS",18)
+END
+
+// React to shouts
+IF
+	Global("JA#COMBAT","LOCALS",0)
+	Heard([EVILCUTOFF.0.BASILISK],99)
+THEN
+	RESPONSE #100
+		SetGlobal("JA#COMBAT","LOCALS",1)
+		MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	Heard([EVILCUTOFF.0.BASILISK],99)
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		MoveToObject(LastHeardBy(Myself))
 END
 
 // Random walk on panic
@@ -44,29 +89,12 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Detect combat
+// Do nothing if...
 IF
-	Global("JA#COMBAT","LOCALS",0)
-	See(NearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SetGlobal("JA#COMBAT","LOCALS",1)
-		Shout(95)
-END
-
-// React to shouts
-IF
-	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.BASILISK],95)
-THEN
-	RESPONSE #100
-		SetGlobal("JA#COMBAT","LOCALS",1)
-END
-
-// Do nothing if combat is not started
-IF
-	Global("JA#COMBAT","LOCALS",0)
-	ActionListEmpty()
+	OR(3)
+		Global("JA#COMBAT","LOCALS",0)
+		StateCheck(Myself,STATE_IMMOBILE)
+		StateCheck(Myself,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
 		NoAction()

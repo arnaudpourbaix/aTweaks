@@ -1,4 +1,3 @@
-import { GLOBAL_CONFIG } from "../config/generate";
 import { SPELLS } from "../config/spell";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
@@ -84,23 +83,8 @@ export const HORROR_HELMED: RawCreature = {
       type: "insertBefore",
       abilities: [
         {
-          name: "Dimension Door",
-          target: {
-            name: "Players",
-            triggers: [
-              { name: "Range", params: [GLOBAL_CONFIG.tokens.target, 180] },
-            ],
-          },
-          spell: {
-            id: "WIZARD_DIMENSION_DOOR",
-          },
-          triggers: [
-            {
-              name: "StateCheck",
-              params: ["Myself", "STATE_BLIND"],
-              negation: true,
-            },
-          ],
+          preset: SPELLS.DimensionDoor,
+          range: 180,
         },
       ],
     },

@@ -35,18 +35,18 @@ export class FactoryService {
     params: [name, "LOCALS", value],
   });
 
-  globalTimerExpired = (name: string): Triggers.Trigger => ({
+  globalTimerReallyExpired = (name: string): Triggers.Trigger => ({
     name: "GlobalTimerExpired",
     params: [name, "LOCALS"],
   });
 
-  globalTimerNotExpired = (name: string): Triggers.Trigger => ({
+  globalTimerExpired = (name: string): Triggers.Trigger => ({
     name: "GlobalTimerNotExpired",
     params: [name, "LOCALS"],
     negation: true,
   });
 
-  globalRoundTimerNotExpired = (): Triggers.Trigger => ({
+  globalRoundTimerExpired = (): Triggers.Trigger => ({
     name: "GlobalTimerNotExpired",
     params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS"],
     negation: true,

@@ -255,7 +255,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/shaman.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/mage.tpa"
 INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
 // ------------------------------------------------------
 
 // // Core monsters (required)

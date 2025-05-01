@@ -4,7 +4,7 @@ import {
   TARGET_STATUS,
 } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
-import { TargetList, TargetPriority } from "../model/final/target";
+import { TargetPriority } from "../model/final/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";
@@ -49,10 +49,12 @@ export class TargetService {
 
   getTargetFromAbility(
     target: ObjectIdentifier | AllegianceIdentifier | TargetListName,
-    limit: number | undefined
+    limit: number | undefined,
+    randomOrder: boolean | undefined
   ): ObjectIdentifier | AllegianceIdentifier | string[] {
     try {
-      const results = this.getList(target as TargetListName);
+      let results = this.getList(target as TargetListName);
+      if (randomOrder) results = this.utils.shuffleArray(results);
       return results.slice(0, limit ?? results.length);
     } catch {
       return target as ObjectIdentifier | AllegianceIdentifier;

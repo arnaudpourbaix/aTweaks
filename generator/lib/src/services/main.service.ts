@@ -64,8 +64,8 @@ import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
-import { RawCustomCode } from "../model/raw/script";
-import { CustomCode } from "../model/final/script";
+import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
+import { AdditionalCode, CustomCode } from "../model/final/script";
 
 export class MainService {
   private effectService = EffectService.instance;
@@ -118,6 +118,7 @@ export class MainService {
       data: { ...rawCreature.data },
       abilities: this.abilityService.getAbilities(rawCreature.abilities),
       customCode: this.mapCustomCode(rawCreature.customCode),
+      additionalCode: this.mapAdditionalCode(rawCreature.additionalCode),
       adjustments: this.mapAdjustments(rawCreature),
       additionalData: this.mapAdditionalData({
         additionalData: rawCreature.additionalData,
@@ -452,6 +453,17 @@ export class MainService {
       ...code,
       abilities: this.abilityService.getAbilities(code.abilities),
       statements: code.statements ?? [],
+    }));
+  }
+
+  private mapAdditionalCode(
+    additionalCodes: RawAdditionalCode[] | undefined
+  ): AdditionalCode[] {
+    if (!additionalCodes) return [];
+    return additionalCodes.map((code) => ({
+      ...code,
+      triggers: code.triggers ?? [],
+      actions: code.actions ?? [],
     }));
   }
 

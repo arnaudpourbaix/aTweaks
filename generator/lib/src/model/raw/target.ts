@@ -10,9 +10,13 @@ export interface RawTargetList {
    */
   reverse?: boolean;
   /**
-   * Random targetting (default: false)
+   * Random targetting (default: false). Will equally select one target in the list
    */
   random?: boolean;
+  /**
+   * Randomize target list order (default: false)
+   */
+  randomOrder?: boolean;
   /**
    * Limit target list length
    */

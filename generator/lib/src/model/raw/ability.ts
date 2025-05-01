@@ -11,7 +11,7 @@ export interface RawCreatureAbility {
    * Will check for preset in ABILITIES_PRESETS
    */
   preset?: string;
-  target?: RawTargetList;
+  target?: RawTargetList | RawTargetList[];
   spell?: RawCreatureAbilitySpell;
   /**
    * Ability range (if applicable)

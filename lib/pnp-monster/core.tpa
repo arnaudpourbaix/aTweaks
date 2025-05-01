@@ -1,6 +1,2 @@
 COPY ~%MOD_FOLDER%/vvc/rr#cnstr.vvc~ ~override~                                         // Constrict/Grab/Flaming Whip ability VVC animation
 COPY ~%MOD_FOLDER%/bam/rr#cnstr.bam~ ~override~                                         // Constrict/Grab/Flaming Whip ability BAM graphics
-
-// Full heal during rest
-COPY_EXISTING ~SPPR607.SPL~  ~override/ja#heal.SPL~
-	LPF DELETE_EFFECT INT_VAR match_opcode = 139 END

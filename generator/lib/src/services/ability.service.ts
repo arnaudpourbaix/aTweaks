@@ -16,12 +16,18 @@ export class AbilityService {
     if (!abilities) return [];
     let randomPool = 800;
     const results: CreatureAbility[] = abilities.map((ability) => {
-      const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
-      if (preset) ability = deepmerge(preset.ability, ability);
+      if (ability.preset) ability = this.applyPreset(ability, ability.preset);
       const triggers: Triggers.Trigger[] = ability.triggers ?? [];
       const actions: Actions.Action[] = ability.actions ?? [];
+      let targets =
+        !ability.target || Array.isArray(ability.target)
+          ? ability.target
+          : undefined;
+      if (!!ability.target && !Array.isArray(ability.target))
+        targets = [ability.target];
       const result: CreatureAbility = {
         ...ability,
+        target: targets,
         name: ability.name ?? "",
         isSpell: !!ability.spell,
         triggers,
@@ -88,6 +94,16 @@ export class AbilityService {
       return result;
     });
     return results;
+  }
+
+  private applyPreset(
+    ability: RawCreatureAbility,
+    presetName: string
+  ): RawCreatureAbility {
+    const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
+    if (!preset) throw new Error(`Unknown preset ${presetName}`);
+    const result: RawCreatureAbility = deepmerge(preset.ability, ability, {});
+    return result;
   }
 
   private getSpellAction(

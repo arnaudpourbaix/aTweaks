@@ -12,13 +12,14 @@ import { CreatureSize, RawProficiencyType } from "../raw/enum";
 import { RawItemSlot } from "../raw/item";
 import { RawCustomCode } from "../raw/script";
 import { RawMemorizedSpell } from "../raw/spell";
+import { Triggers } from "../raw/triggers";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
 import { Effect, EffectFile } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import { Item } from "./item";
 import { Projectile } from "./projectile";
-import { CustomCode } from "./script";
+import { AdditionalCode, CustomCode } from "./script";
 import { Spell } from "./spell";
 
 export interface Creature {
@@ -77,6 +78,7 @@ export interface Creature {
   initActions: Actions.Action[];
 
   customCode: CustomCode[];
+  additionalCode: AdditionalCode[];
 
   data: CreatureData;
   additionalData: CreatureAdditionalData;

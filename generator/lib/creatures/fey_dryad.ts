@@ -33,7 +33,7 @@ export const FEY_DRYAD: RawCreature = {
   tpaFile: "lib/pnp-monster/fey/dryad",
   tracking: true,
   combatWalk: true,
-  usePotions: true,
+  usePotions: false,
   attack: {
     melee: false,
     ranged: false,
@@ -64,7 +64,7 @@ export const FEY_DRYAD: RawCreature = {
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: [],
-    removeScripts: ["DRYAD", "DW1MELGE", "initdlg"],
+    removeScripts: ["DRYAD", "DW1MELGE", "INITDLG"],
     memorizedSpells: [{ file: SPELLS.DimensionDoor, memorizedCount: 1 }],
   },
   effectFiles: [
@@ -168,7 +168,7 @@ export const FEY_DRYAD: RawCreature = {
       name: "Speak With Plants",
       file: speakWithPlants,
       stringRef: TraStringReferenceEnum.SpeakWithPlants,
-      memorizedCount: 3,
+      memorizedCount: 1,
       type: "Melee",
       projectile: "SPARGRPA",
       icon: "RR#FSPKP",
@@ -215,6 +215,12 @@ export const FEY_DRYAD: RawCreature = {
           dispelResistance: "DispelBypassResistance",
         },
       ],
+    },
+  ],
+  additionalCode: [
+    {
+      location: "trackTargets",
+      triggers: [{ name: "HaveSpellRES", params: [charm] }],
     },
   ],
   customCode: [
@@ -313,19 +319,25 @@ export const FEY_DRYAD: RawCreature = {
   ],
   abilities: [
     {
-      preset: SPELLS.DireCharm,
-      spell: {
-        resource: charm,
-        id: undefined,
-      },
-    },
-    {
+      name: "Speak with plants",
       spell: {
         resource: speakWithPlants,
         type: "force",
         selfTarget: true,
       },
+      disableInterrupt: true,
+      triggers: [{ name: "CheckStatGT", params: ["Myself", 0, "ENTANGLE"] }],
       timer: { name: "speakWithPlants", value: 60 },
+    },
+    {
+      preset: SPELLS.DireCharm,
+      spell: {
+        resource: charm,
+        id: undefined,
+        type: "force",
+        remove: true,
+      },
+      disableInterrupt: true,
     },
   ],
   files: [
@@ -344,6 +356,7 @@ export const FEY_DRYAD: RawCreature = {
   adjustments: [
     {
       files: ["DRYAD"],
+      // summon: true, //TODO: just for test
       data: { class: "INNOCENT" },
     },
   ],

@@ -4,7 +4,7 @@ import { Triggers } from "../raw/triggers";
 
 export interface CreatureAbility {
   name: string;
-  target?: RawTargetList;
+  target?: RawTargetList[];
   isSpell: boolean;
   /**
    * Ability range (if applicable)

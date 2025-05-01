@@ -1,4 +1,5 @@
 import { RawCreatureAbility } from "../src/model/raw/ability";
+import { RawTargetList } from "../src/model/raw/target";
 import { GLOBAL_CONFIG } from "./generate";
 
 export const SPELLS = {
@@ -44,6 +45,72 @@ export const SPELL_STATES = {
   gaseousForm: "JA_GASEOUSFORM",
 };
 
+const DEFAULT_SPELL_PROBABILITY = 70;
+
+const CHARM_TARGET_LISTS: RawTargetList[] = [
+  {
+    name: "PCsFighters",
+    randomOrder: true,
+    includeStatus: ["Able"],
+    triggers: [
+      {
+        name: "Race",
+        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        negation: true,
+      },
+      {
+        name: "Race",
+        params: [GLOBAL_CONFIG.tokens.target, "HALF_ELF"],
+        negation: true,
+      },
+    ],
+  },
+  {
+    name: "PCs",
+    includeStatus: ["Able"],
+    randomOrder: true,
+    triggers: [
+      {
+        name: "Race",
+        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        negation: true,
+      },
+      {
+        name: "Race",
+        params: [GLOBAL_CONFIG.tokens.target, "HALF_ELF"],
+        negation: true,
+      },
+    ],
+  },
+  {
+    name: "PCsFighters",
+    randomOrder: true,
+    includeStatus: ["Able"],
+    triggers: [
+      {
+        name: "Race",
+        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        negation: true,
+      },
+    ],
+  },
+  {
+    name: "PCs",
+    includeStatus: ["Able"],
+    randomOrder: true,
+  },
+];
+
+const SLEEP_TARGET_LISTS: RawTargetList[] = [...CHARM_TARGET_LISTS];
+
+const HOLD_TARGET_LISTS: RawTargetList[] = [
+  {
+    name: "PCs",
+    includeStatus: ["Able"],
+    randomOrder: true,
+  },
+];
+
 export const ABILITY_PRESETS: {
   preset: string;
   ability: RawCreatureAbility;
@@ -55,7 +122,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "WIZARD_INVISIBILITY",
         excludeStateChecks: ["STATE_INVISIBLE"],
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
     },
@@ -64,21 +131,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.Domination,
     ability: {
       name: "Domination",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_DOMINATION",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -86,21 +142,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.DireCharm,
     ability: {
       name: "Dire Charm",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_DIRE_CHARM",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -108,21 +153,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.CharmPerson,
     ability: {
       name: "Charm Person",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_CHARM_PERSON",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -130,21 +164,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.PowerWordSleep,
     ability: {
       name: "Power Word Sleep",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: SLEEP_TARGET_LISTS,
       spell: {
         id: "WIZARD_POWER_WORD_SLEEP",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -152,21 +175,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.Sleep,
     ability: {
       name: "Sleep",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: SLEEP_TARGET_LISTS,
       spell: {
         id: "WIZARD_SLEEP",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -182,7 +194,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "WIZARD_DARKNESS_15_FOOT",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -193,7 +205,7 @@ export const ABILITY_PRESETS: {
       target: { name: "NearestEnemies", random: true },
       spell: {
         id: "WIZARD_CONE_OF_COLD",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -204,7 +216,7 @@ export const ABILITY_PRESETS: {
       target: { name: "PCSpellcasters", random: true },
       spell: {
         id: "WIZARD_MAGIC_MISSILE",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -214,7 +226,7 @@ export const ABILITY_PRESETS: {
       name: "Bless",
       spell: {
         id: "CLERIC_BLESS",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
     },
@@ -223,21 +235,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.Command,
     ability: {
       name: "Command",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        triggers: [
-          {
-            name: "Race",
-            params: [GLOBAL_CONFIG.tokens.target, "ELF"],
-            negation: true,
-          },
-        ],
-        random: true,
-      },
+      target: SLEEP_TARGET_LISTS,
       spell: {
         id: "CLERIC_COMMAND",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -247,7 +248,7 @@ export const ABILITY_PRESETS: {
       name: "Resist fear",
       spell: {
         id: "CLERIC_REMOVE_FEAR",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
     },
@@ -258,7 +259,7 @@ export const ABILITY_PRESETS: {
       name: "Chant",
       spell: {
         id: "CLERIC_CHANT",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
     },
@@ -267,14 +268,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.HoldPerson,
     ability: {
       name: "Hold person",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        random: true,
-      },
+      target: HOLD_TARGET_LISTS,
       spell: {
         id: "CLERIC_HOLD_PERSON",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -282,14 +279,10 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.HoldPersonOrAnimal,
     ability: {
       name: "Hold person or animal",
-      target: {
-        name: "PCsPreferringStrong",
-        includeStatus: ["Able"],
-        random: true,
-      },
+      target: HOLD_TARGET_LISTS,
       spell: {
         id: "CLERIC_HOLD_ANIMAL",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -311,7 +304,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_SILENCE_15_FOOT",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -331,7 +324,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_CALL_LIGHTNING",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -345,7 +338,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_GLYPH_OF_WARDING",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -360,7 +353,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_MISCAST_MAGIC",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -375,7 +368,7 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_RIGID_THINKING",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
     },
   },
@@ -390,8 +383,30 @@ export const ABILITY_PRESETS: {
       },
       spell: {
         id: "CLERIC_SUMMON_INSECTS",
-        probability: 70,
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
+    },
+  },
+  {
+    preset: SPELLS.DimensionDoor,
+    ability: {
+      name: "Dimension Door",
+      target: {
+        name: "Players",
+        random: true,
+      },
+      range: 900,
+      spell: {
+        id: "WIZARD_DIMENSION_DOOR",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_BLIND"],
+          negation: true,
+        },
+      ],
     },
   },
 ];

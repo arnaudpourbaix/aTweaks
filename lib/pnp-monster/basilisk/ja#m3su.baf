@@ -6,22 +6,34 @@ THEN
 		DestroySelf()
 END
 
-// Random walk on panic
+// Detect combat
 IF
-	StateCheck(Myself,STATE_PANIC)
+	Global("JA#COMBAT","LOCALS",0)
+	Allegiance(Myself,EVILCUTOFF)
+	See([GOODCUTOFF])
 THEN
 	RESPONSE #100
-		RandomWalkContinuous()
+		SetGlobal("JA#COMBAT","LOCALS",1)
 END
 
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	See(NearestEnemyOf(Myself))
+	Allegiance(Myself,GOODCUTOFF)
+	See([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
+END
+
+// Shouts every 3 rounds
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	!GlobalTimerNotExpired("JA#HELP","LOCALS")
+THEN
+	RESPONSE #100
 		Shout(98)
+		SetGlobalTimer("JA#HELP","LOCALS",18)
 END
 
 // React to shouts
@@ -31,6 +43,24 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
+		MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+	Global("JA#COMBAT","LOCALS",1)
+	Heard(LastSummonerOf(Myself),98)
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		MoveToObject(LastHeardBy(Myself))
+END
+
+// Random walk on panic
+IF
+	StateCheck(Myself,STATE_PANIC)
+THEN
+	RESPONSE #100
+		RandomWalkContinuous()
 END
 
 // Summon follow summoner
@@ -47,10 +77,12 @@ THEN
 		MoveToObject(LastSummonerOf(Myself))
 END
 
-// Do nothing if combat is not started
+// Do nothing if...
 IF
-	Global("JA#COMBAT","LOCALS",0)
-	ActionListEmpty()
+	OR(3)
+		Global("JA#COMBAT","LOCALS",0)
+		StateCheck(Myself,STATE_IMMOBILE)
+		StateCheck(Myself,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
 		NoAction()

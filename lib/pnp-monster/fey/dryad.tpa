@@ -195,7 +195,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m41~ #0 ~innate~ (3)
-			ADD_MEMORIZED_SPELL ~ja#2m41~ #0 ~innate~ (3)
+			ADD_MEMORIZED_SPELL ~ja#2m41~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
@@ -230,7 +230,7 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE initdlg END
+			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG END
 			LPF patchCreatureScript STR_VAR script=ja#m41 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) BEGIN 
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
