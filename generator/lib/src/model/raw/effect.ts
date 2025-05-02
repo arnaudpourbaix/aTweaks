@@ -443,6 +443,7 @@ export type ParamLessEffect = RawBaseEffect & {
     | "Blur"
     | "DeathKill60HP"
     | "EntangleOverlay"
+    | "GiveAbility"
     | "ImmunityToTurnUndead"
     | "Infravision"
     | "InvisibilityDetection"

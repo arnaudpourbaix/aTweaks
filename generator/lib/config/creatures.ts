@@ -35,23 +35,45 @@ export const WATER_CREATURES: [
   ["CLASS", "FAIRY_NEREID"],
 ];
 
-export const GRAB_IMMUNE_CREATURES: [
+export const FLYING_CREATURES: [
   RawEffectIDSFile,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "DRAGON"],
-  ["RACE", "MIMIC"],
+  ["RACE", "WILL-O-WISP"],
+  ["RACE", "WYVERN"],
+];
+
+export const INCORPOREAL_CREATURES: [
+  RawEffectIDSFile,
+  ClassIdentifier | RaceIdentifier
+][] = [
   ["RACE", "MIST"],
   ["RACE", "SHADOW"],
-  ["RACE", "SLIME"],
   ["RACE", "SPECTRAL_UNDEAD"],
   ["RACE", "SPECTRE"],
   ["RACE", "WILL-O-WISP"],
   ["RACE", "WRAITH"],
-  ["RACE", "WYVERN"],
-  ["CLASS", "NEOTHELID"],
   ["CLASS", "SPECTRAL_TROLL"],
   ["CLASS", "SPIDER_WRAITH"],
+];
+
+export const GARGANTUAN_CREATURES: [
+  RawEffectIDSFile,
+  ClassIdentifier | RaceIdentifier
+][] = [
+  ["RACE", "DRAGON"],
+  ["CLASS", "NEOTHELID"],
+];
+
+export const GRAB_IMMUNE_CREATURES: [
+  RawEffectIDSFile,
+  ClassIdentifier | RaceIdentifier
+][] = [
+  ["RACE", "MIMIC"],
+  ["RACE", "SLIME"],
+  ...FLYING_CREATURES,
+  ...INCORPOREAL_CREATURES,
+  ...GARGANTUAN_CREATURES,
 ];
 
 export const HUGE_CREATURES: [

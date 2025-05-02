@@ -32,6 +32,7 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 55
 			target = 2
+			power = 1
 			parameter1 = IDS_OF_SYMBOL (~EA~ ~ANYONE~)
 			parameter2 = 2
 			timing = 1
@@ -43,6 +44,7 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 1
 			timing = 1
 			probability1 = 100
 			savingthrow = 4
@@ -54,6 +56,7 @@ CREATE SPL "ja#1m3"
 		INT_VAR
 			opcode = 215
 			target = 2
+			power = 1
 			timing = 1
 			probability1 = 100
 			savingthrow = 4

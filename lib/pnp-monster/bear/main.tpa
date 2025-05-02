@@ -1,0 +1,5 @@
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/black.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/brown.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/cave.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/polar.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/kaldran.tpa"

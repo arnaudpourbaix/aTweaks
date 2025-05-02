@@ -39,6 +39,7 @@ CREATE SPL "ja#1m2"
 		INT_VAR
 			opcode = 134
 			target = 2
+			power = 1
 			probability1 = 100
 			savingthrow = 16
 			savebonus = "-4"
@@ -47,6 +48,7 @@ CREATE SPL "ja#1m2"
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = RESOLVE_STR_REF(@4004)
 			probability1 = 100
 			savingthrow = 16
@@ -56,6 +58,7 @@ CREATE SPL "ja#1m2"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 1
 			probability1 = 100
 			savingthrow = 16
 			savebonus = "-4"
@@ -66,6 +69,7 @@ CREATE SPL "ja#1m2"
 		INT_VAR
 			opcode = 215
 			target = 2
+			power = 1
 			probability1 = 100
 			savingthrow = 16
 			savebonus = "-4"
@@ -76,6 +80,7 @@ CREATE SPL "ja#1m2"
 		INT_VAR
 			opcode = 61
 			target = 2
+			power = 1
 			parameter1 = 2021160960
 			parameter2 = 1638400
 			probability1 = 100
@@ -106,6 +111,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = RESOLVE_STR_REF(@4005)
 			probability1 = 100
 			savingthrow = 16
@@ -115,6 +121,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = RESOLVE_STR_REF(@4003)
 			timing = 1
 			probability1 = 100
@@ -125,6 +132,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 141
 			target = 2
+			power = 1
 			parameter2 = 13
 			timing = 1
 			probability1 = 100
@@ -135,6 +143,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 40
 			target = 2
+			power = 1
 			duration = 12
 			probability1 = 100
 			savingthrow = 16
@@ -144,6 +153,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 176
 			target = 2
+			power = 1
 			parameter2 = 1
 			duration = 12
 			probability1 = 100
@@ -154,6 +164,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 278
 			target = 2
+			power = 1
 			parameter1 = "-4"
 			duration = 12
 			probability1 = 100
@@ -164,6 +175,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 0
 			target = 2
+			power = 1
 			parameter1 = "-4"
 			duration = 12
 			probability1 = 100
@@ -174,6 +186,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 36
 			target = 2
+			power = 1
 			parameter1 = "-4"
 			duration = 12
 			probability1 = 100
@@ -184,6 +197,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 146
 			target = 2
+			power = 1
 			parameter2 = 1
 			timing = 3
 			duration = 12
@@ -197,6 +211,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
 		INT_VAR
 			opcode = 206
 			target = 2
+			power = 1
 			timing = 3
 			duration = 12
 			probability1 = 100
@@ -224,6 +239,7 @@ CREATE SPL "ja#3m2"
 		INT_VAR
 			opcode = 134
 			target = 2
+			power = 1
 			timing = 9
 			probability1 = 100
 			savingthrow = 16
@@ -233,6 +249,7 @@ CREATE SPL "ja#3m2"
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = RESOLVE_STR_REF(@4004)
 			timing = 9
 			probability1 = 100
@@ -243,6 +260,7 @@ CREATE SPL "ja#3m2"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 1
 			timing = 9
 			probability1 = 100
 			savingthrow = 16
@@ -254,6 +272,7 @@ CREATE SPL "ja#3m2"
 		INT_VAR
 			opcode = 215
 			target = 2
+			power = 1
 			timing = 9
 			probability1 = 100
 			savingthrow = 16
@@ -265,6 +284,7 @@ CREATE SPL "ja#3m2"
 		INT_VAR
 			opcode = 61
 			target = 2
+			power = 1
 			parameter1 = 2021160960
 			parameter2 = 1638400
 			timing = 9

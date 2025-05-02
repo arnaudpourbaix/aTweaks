@@ -1,4 +1,5 @@
-import { PRESET_NAMES, SPELLS } from "../config/spell";
+import { ITEMS } from "../config/item";
+import { ATWEAKS_SPELLS, PRESET_NAMES, SPELLS } from "../config/spell";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { ConditionalStatement } from "../src/model/final/script";
 import { RawCreatureAbility } from "../src/model/raw/ability";
@@ -14,9 +15,6 @@ const factory = FactoryService.instance;
 const id = MonsterEnum.Dryad;
 // Script
 const script = bafFile(id);
-// Spells
-export const dryadCharm = file(1, id);
-export const speakWithPlants = file(2, id);
 
 const charmDuration = 180;
 const speakWithPlantsDuration = 60;
@@ -24,7 +22,7 @@ const speakWithPlantsDuration = 60;
 export const abilitySpeakWithPlants: RawCreatureAbility = {
   name: "Speak with plants",
   spell: {
-    resource: speakWithPlants,
+    resource: ATWEAKS_SPELLS.SpeakWithPlants,
     type: "force",
     selfTarget: true,
   },
@@ -35,7 +33,7 @@ export const abilitySpeakWithPlants: RawCreatureAbility = {
 export const abilityDryadDireCharm: RawCreatureAbility = {
   preset: SPELLS.DireCharm,
   spell: {
-    resource: dryadCharm,
+    resource: ATWEAKS_SPELLS.DryadCharmPerson,
     id: undefined,
     type: "force",
     remove: true,
@@ -111,20 +109,30 @@ export const FEY_DRYAD: RawCreature = {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: [],
     removeScripts: ["DRYAD", "DW1MELGE", "INITDLG"],
-    memorizedSpells: [{ file: SPELLS.DimensionDoor, memorizedCount: 1 }],
   },
   effectFiles: [
     {
-      file: dryadCharm,
+      file: ATWEAKS_SPELLS.DryadCharmPerson,
       opcode: "ProtectionFromSpell",
-      resource: dryadCharm,
-      timing: "InstantLimited",
+      resource: ATWEAKS_SPELLS.DryadCharmPerson,
+      timing: "InstantPermanentUntilDeath",
     },
   ],
   spells: [
     {
+      name: "Dimension Door",
+      file: ATWEAKS_SPELLS.DimensionDoor,
+      copyFrom: SPELLS.DimensionDoor,
+      memorizedCount: 1,
+      spellType: "Innate",
+      spellLevel: 1,
+      location: "Ability",
+      speed: 1,
+      infiniteUse: true,
+    },
+    {
       name: "Dire Charm",
-      file: dryadCharm,
+      file: ATWEAKS_SPELLS.DryadCharmPerson,
       stringRef: `${StringRefUtils.getStringId("Dire Charm")}`,
       memorizedCount: 3,
       type: "Melee",
@@ -149,7 +157,7 @@ export const FEY_DRYAD: RawCreature = {
           probability1: 90,
           timing: "InstantLimited",
           duration: 1,
-          resource: dryadCharm,
+          resource: ATWEAKS_SPELLS.DryadCharmPerson,
         },
         {
           opcode: "UseEFFFile",
@@ -158,7 +166,7 @@ export const FEY_DRYAD: RawCreature = {
           probability1: 30,
           timing: "InstantLimited",
           duration: 1,
-          resource: dryadCharm,
+          resource: ATWEAKS_SPELLS.DryadCharmPerson,
         },
         {
           opcode: "CharmCreature",
@@ -212,11 +220,11 @@ export const FEY_DRYAD: RawCreature = {
     },
     {
       name: "Speak With Plants",
-      file: speakWithPlants,
+      file: ATWEAKS_SPELLS.SpeakWithPlants,
       stringRef: TraStringReferenceEnum.SpeakWithPlants,
       memorizedCount: 1,
       type: "Melee",
-      projectile: "SPARGRPA",
+      // projectile: "SPARGRPA",
       icon: "RR#FSPKP",
       castingSound: "CAS_P02",
       spellType: "Innate",
@@ -228,10 +236,12 @@ export const FEY_DRYAD: RawCreature = {
       target: "Caster",
       range: 30,
       speed: 1,
+      infiniteUse: true,
       effects: [
         {
           opcode: "CreateItemInSlot",
           slot: "SLOT_AMULET",
+          resource: ITEMS.EntangleImmunity,
           timing: "InstantLimited",
           duration: speakWithPlantsDuration,
           dispelResistance: "DispelBypassResistance",
@@ -259,7 +269,9 @@ export const FEY_DRYAD: RawCreature = {
   additionalCode: [
     {
       location: "trackTargets",
-      triggers: [{ name: "HaveSpellRES", params: [dryadCharm] }],
+      triggers: [
+        { name: "HaveSpellRES", params: [ATWEAKS_SPELLS.DryadCharmPerson] },
+      ],
     },
   ],
   customCode: [

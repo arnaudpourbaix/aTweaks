@@ -1,0 +1,460 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42.baf~
+
+COPY_EXISTING "ENTANG2.pro" ~override/RR#FENTG.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_LONG 0x200 64
+ADD_PROJECTILE ~override/RR#FENTG.pro~ ~Hamadryad Entangle~
+
+CREATE EFF "RR#FENTG"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~RR#FENTG~ #8
+
+	// Entangle
+CREATE SPL "RR#FENTG"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPPR105C~ #8
+	WRITE_ASCII 0x76 ~SPPR105B~ #8
+	WRITE_SHORT 0x22 10
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x10 ~CAS_P08~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 4
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4017)
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~RR#FENTG~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~DRAGON~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIST~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SHADOW~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRAL_UNDEAD~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRE~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WILL-O-WISP~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WRAITH~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPECTRAL_TROLL~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPIDER_WRAITH~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter1 = 50
+			parameter2 = 2
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter2 = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 278
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 0
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 1
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "CRE_P01"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 4
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "EFF_M22A"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 154
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 144
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 172
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 171
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+
+	// Animal Friendship
+CREATE SPL "rr#fafrn"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPPR105C~ #8
+	WRITE_ASCII 0x76 ~SPPR105B~ #8
+	WRITE_SHORT 0x22 10
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x10 ~CAS_P08~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 4
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4017)
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~RR#FENTG~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter1 = 50
+			parameter2 = 2
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter2 = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 278
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 0
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 1
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "CRE_P01"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 4
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "EFF_M22A"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 154
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 144
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 172
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#fafrn"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 171
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#fafrn"
+		END
+
+ACTION_FOR_EACH ~file~ IN
+	DRYADHA
+	VAELASA
+	WQXHAMA
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~ANTIWEB~
+			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
+			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~RR#FENTG~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
+			LPF clearProficiencies END
+			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
+			LPF patchCreature
+				INT_VAR
+					level1=4
+					strength=10
+					dexterity=18
+					constitution=12
+					intelligence=14
+					wisdom=14
+					charisma=18
+					movement=13
+					hp=32
+					ac=7
+					resistMagic=75
+					thac0=17
+					apr=1
+					xpv=1400
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
+					morale=12
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
+					class=IDS_OF_SYMBOL (~class~ ~FAIRY_DRYAD~)
+					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE END
+			LPF patchCreatureScript STR_VAR script=ja#m42 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

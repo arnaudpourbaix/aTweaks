@@ -17,6 +17,7 @@ CREATE SPL "ja#1m33"
 		INT_VAR
 			opcode = 176
 			target = 2
+			power = 1
 			parameter1 = 5
 			parameter2 = 1
 			duration = 6
@@ -26,6 +27,7 @@ CREATE SPL "ja#1m33"
 		INT_VAR
 			opcode = 176
 			target = 2
+			power = 1
 			parameter1 = 8
 			parameter2 = 1
 			timing = 3
@@ -36,6 +38,7 @@ CREATE SPL "ja#1m33"
 		INT_VAR
 			opcode = 176
 			target = 2
+			power = 1
 			parameter1 = 10
 			parameter2 = 1
 			timing = 3
@@ -46,6 +49,7 @@ CREATE SPL "ja#1m33"
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = RESOLVE_STR_REF(@4014)
 			timing = 4
 			duration = 24

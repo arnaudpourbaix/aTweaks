@@ -43,6 +43,7 @@ export enum EffectTypeEnum {
   EntangleOverlay = 154,
   FatigueBonus = 93,
   FireResistanceModifier = 30,
+  GiveAbility = 171,
   Haste = 16,
   Hold = 175,
   ImmunityToTurnUndead = 297,

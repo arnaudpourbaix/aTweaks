@@ -163,14 +163,14 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (!item.copyFrom)
         this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
       for (const effect of item.effects) {
-        this.addEffect(lines, 1, effect, "ITM");
+        this.addEffect(lines, 1, effect, 0, "ITM");
       }
       if (creature.attack.grab?.weaponFile === item.file) {
         const effect = this.grabService.getGrabEffect(
           creature,
           creature.attack.grab
         );
-        this.addEffect(lines, 1, effect, "ITM");
+        this.addEffect(lines, 1, effect, 0, "ITM");
       }
       for (const name of item.immunities) {
         this.add(
@@ -288,7 +288,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
         `WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~${spell.projectile}~)) + 1`,
         1
       );
-    for (const effect of spell.effects) this.addEffect(lines, 1, effect, "SPL");
+    for (const effect of spell.effects)
+      this.addEffect(lines, 1, effect, spell.spellLevel ?? 0, "SPL");
     this.add(lines, "", 0);
   }
 
@@ -432,7 +433,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       1
     );
     const effects = this.grabService.getGrabbedEffects(creature, grab);
-    for (const effect of effects) this.addEffect(lines, 1, effect, "SPL");
+    for (const effect of effects) this.addEffect(lines, 1, effect, 0, "SPL");
     this.add(lines, "", 0);
   }
 
@@ -475,6 +476,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     lines: CodeLine[],
     tab: number,
     effect: Effect,
+    power: number,
     type: "SPL" | "ITM" | "CRE"
   ) {
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
@@ -493,7 +495,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `INT_VAR`, tab + 1);
     this.add(lines, `opcode = ${effect.opcode}`, tab + 2);
     if (effect.target) this.add(lines, `target = ${effect.target}`, tab + 2);
-    if (effect.power) this.add(lines, `power = ${effect.power}`, tab + 2);
+    if ((effect.power ?? power) !== 0)
+      this.add(lines, `power = ${effect.power ?? power}`, tab + 2);
     if (effect.parameter1 && effect.parameter1 !== "0")
       this.add(
         lines,
@@ -596,7 +599,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     for (const effect of creature.additionalData.effects) {
-      this.addEffect(lines, 3, effect, "CRE");
+      this.addEffect(lines, 3, effect, 0, "CRE");
     }
     this.patchCreature({
       lines,
@@ -961,13 +964,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
         type: "Set",
         value: movement,
       });
-      this.addEffect(lines, tab, effect, "CRE");
+      this.addEffect(lines, tab, effect, 0, "CRE");
     }
     if (adjustment.data?.kit === "BARBARIAN") {
       const effect = this.effectService.getEffect({
         opcode: "ProtectionFromBackstab",
       });
-      this.addEffect(lines, tab, effect, "CRE");
+      this.addEffect(lines, tab, effect, 0, "CRE");
     }
     if (adjustment.data)
       this.patchCreatureAdjustement({
@@ -994,7 +997,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
       this.addProficiencies(lines, tab, adjustment.additionalData);
       for (const effect of adjustment.additionalData.effects) {
-        this.addEffect(lines, tab, effect, "CRE");
+        this.addEffect(lines, tab, effect, 0, "CRE");
       }
     }
     this.add(lines, "END", --tab);

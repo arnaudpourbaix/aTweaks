@@ -18,12 +18,14 @@ CREATE SPL "ja#1m14"
 		INT_VAR
 			opcode = 124
 			target = 1
+			power = 1
 			probability1 = 100
 		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 278
 			target = 1
+			power = 1
 			parameter1 = 2
 			duration = 6
 			probability1 = 75

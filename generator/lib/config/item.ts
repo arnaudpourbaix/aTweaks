@@ -3,6 +3,6 @@ export const ITEMS = {
   Sketetal: "ja#i2",
   Hover: "ja#i3",
   Incorporeal: "ja#i4",
-  CriticalHit: "ja#i5",
-  Entangle: "ja#i6",
+  CriticalHitImmunity: "ja#i5",
+  EntangleImmunity: "ja#i6",
 };

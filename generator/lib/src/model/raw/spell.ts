@@ -78,6 +78,10 @@ export interface RawBaseSpell {
   projectile?: string;
   flags?: RawSpellFlag[];
   effects?: RawEffect[];
+  /**
+   * Spell will be removed and added again after use, so you only need to memorize it once (default: false).
+   */
+  infiniteUse?: boolean;
 }
 
 export interface RawMemorizedSpell {

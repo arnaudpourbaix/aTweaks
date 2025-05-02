@@ -3,6 +3,15 @@ LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLING" E
 LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_FLYING" END
 LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM" END
 
+CREATE ITM "ja#i6"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IAMUL01~ #8
+	SAY NAME1 ~entangle trait~ SAY NAME2 ~entangle trait~
+	SAY UNIDENTIFIED_DESC ~Entangle immunity~
+COPY_EXISTING ~ja#i6.itm~ ~override~
+	LPF entangle_immunity END
+
 CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32

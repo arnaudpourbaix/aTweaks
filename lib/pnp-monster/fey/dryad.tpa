@@ -1,14 +1,40 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41su.baf~
 
-CREATE EFF "ja#1m41"
+CREATE EFF "rr#fchrm"
 	WRITE_LONG 0x10 206
 	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 1
 	WRITE_SHORT 0x2c 100
-	WRITE_ASCII 0x30 ~ja#1m41~ #8
+	WRITE_ASCII 0x30 ~rr#fchrm~ #8
+
+COPY_EXISTING ~SPWI402.SPL~  ~override/rr#ddoor.SPL~
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_SHORT 0x84 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 172
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#ddoor"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 171
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#ddoor"
+		END
 
 	// Dire Charm
-CREATE SPL "ja#1m41"
+CREATE SPL "rr#fchrm"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
@@ -34,28 +60,31 @@ CREATE SPL "ja#1m41"
 		INT_VAR
 			opcode = 177
 			target = 2
+			power = 1
 			parameter1 = IDS_OF_SYMBOL (~RACE~ ~ELF~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 90
 		STR_VAR
-			resource = "ja#1m41"
+			resource = "rr#fchrm"
 		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 177
 			target = 2
+			power = 1
 			parameter1 = IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 30
 		STR_VAR
-			resource = "ja#1m41"
+			resource = "rr#fchrm"
 		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 5
 			target = 2
+			power = 1
 			parameter1 = IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~)
 			parameter2 = 2
 			resist_dispel = 1
@@ -68,6 +97,7 @@ CREATE SPL "ja#1m41"
 		INT_VAR
 			opcode = 139
 			target = 2
+			power = 1
 			parameter1 = 14780
 			timing = 1
 			resist_dispel = 1
@@ -79,6 +109,7 @@ CREATE SPL "ja#1m41"
 		INT_VAR
 			opcode = 50
 			target = 2
+			power = 1
 			parameter1 = "-1819214080"
 			parameter2 = 1966080
 			resist_dispel = 1
@@ -91,6 +122,7 @@ CREATE SPL "ja#1m41"
 		INT_VAR
 			opcode = 215
 			target = 2
+			power = 1
 			parameter2 = 1
 			resist_dispel = 1
 			duration = 3
@@ -104,6 +136,7 @@ CREATE SPL "ja#1m41"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 1
 			timing = 3
 			resist_dispel = 1
 			duration = 180
@@ -115,7 +148,7 @@ CREATE SPL "ja#1m41"
 		END
 
 	// Speak With Plants
-CREATE SPL "ja#2m41"
+CREATE SPL "rr#fspkp"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
@@ -135,29 +168,23 @@ CREATE SPL "ja#2m41"
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 1
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@1907)
-	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~SPARGRPA~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
-			opcode = 101
+			opcode = 143
 			target = 2
-			parameter2 = 154
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_AMULET~)
 			resist_dispel = 3
 			duration = 60
 			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 169
-			target = 2
-			parameter2 = 144
-			resist_dispel = 3
-			duration = 60
-			probability1 = 100
+		STR_VAR
+			resource = "ja#i6"
 		END
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 50
 			target = 2
+			power = 1
 			parameter1 = 1727219712
 			parameter2 = 1966080
 			resist_dispel = 3
@@ -168,12 +195,33 @@ CREATE SPL "ja#2m41"
 		INT_VAR
 			opcode = 215
 			target = 2
+			power = 1
 			parameter2 = 1
 			resist_dispel = 3
 			duration = 2
 			probability1 = 100
 		STR_VAR
 			resource = "SPRMCURS"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 172
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#fspkp"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 171
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#fspkp"
 		END
 
 ACTION_FOR_EACH ~file~ IN
@@ -194,9 +242,9 @@ BEGIN
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m41~ #0 ~innate~ (3)
-			ADD_MEMORIZED_SPELL ~ja#2m41~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
+			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
 			LPF clearProficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
@@ -232,15 +280,8 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG END
-			DEFINE_ARRAY skipFiles BEGIN DRYAD END
-			LPF patchCreatureScript STR_VAR script=ja#m41 skipFiles removeScripts END
-			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG END
-			DEFINE_ARRAY files BEGIN DRYAD END
-			LPF patchCreatureScript STR_VAR script=ja#m41su files removeScripts END
+			LPF patchCreatureScript STR_VAR script=ja#m41 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) BEGIN 
-				WRITE_LONG 0x14 0 // xpv
-				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
-				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
 			END
 		BUT_ONLY_IF_IT_CHANGES

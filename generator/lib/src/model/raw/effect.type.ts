@@ -43,6 +43,7 @@ export type RawEffectOpcode =
   | "EntangleOverlay"
   | "FatigueBonus"
   | "FireResistanceModifier"
+  | "GiveAbility"
   | "Haste"
   | "Hold"
   | "ImmunityToTurnUndead"

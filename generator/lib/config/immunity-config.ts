@@ -569,7 +569,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       ATWEAKS_SPELLS.HamadryadEntangle,
     ],
     displaySpellIneffective: true,
-    itemSlot: { file: ITEMS.Entangle, slot: "AMULET" },
+    itemSlot: { file: ITEMS.EntangleImmunity, slot: "AMULET" },
   },
   {
     name: "insectSpells",
@@ -812,7 +812,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "criticalHit",
     type: "immunity",
-    itemSlot: { file: ITEMS.CriticalHit, slot: "HELMET" },
+    itemSlot: { file: ITEMS.CriticalHitImmunity, slot: "HELMET" },
     description: ["Immunity to critical hits"],
   },
   {

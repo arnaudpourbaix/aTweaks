@@ -1,6 +1,9 @@
 import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawTargetList } from "../src/model/raw/target";
+import { FactoryService } from "../src/services/factory.service";
 import { GLOBAL_CONFIG } from "./generate";
+
+const factory = FactoryService.instance;
 
 export const SPELLS = {
   // Wizard
@@ -22,6 +25,7 @@ export const SPELLS = {
   Stoneskin: "SPWI408",
   // Priest
   Bless: "SPPR101",
+  Entangle: "SPPR105",
   Command: "SPPR102",
   ResistFear: "SPPR108",
   Chant: "SPPR203",
@@ -102,6 +106,10 @@ export const ATWEAKS_SPELLS = {
   HamadryadEntangle: "RR#FENTG",
   Earthquake: "rr#equa",
   RockToMud: "rr#r2mud",
+  SpeakWithPlants: "rr#fspkp",
+  DimensionDoor: "rr#ddoor",
+  DryadCharmPerson: "rr#fchrm",
+  HamadryadAnimalFriendship: "rr#fafrn",
 };
 
 export const SPELL_STATES = {
@@ -504,6 +512,20 @@ export const ABILITY_PRESETS: {
         },
       ],
       actionsAfter: [{ name: "Wait", params: [1] }],
+    },
+  },
+  {
+    preset: SPELLS.Entangle,
+    ability: {
+      name: "Entangle",
+      target: {
+        name: "NearestEnemies",
+        triggers: [factory.checkStat(0, "ENTANGLE")],
+      },
+      spell: {
+        id: "CLERIC_ENTANGLE",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
     },
   },
 ];

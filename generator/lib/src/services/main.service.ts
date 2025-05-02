@@ -356,6 +356,26 @@ export class MainService {
   private mapSpells(spells: RawSpell[] | undefined): Spell[] {
     if (!spells) return [];
     const results: Spell[] = spells.map((s) => {
+      s.effects = s.effects ?? [];
+      if (s.infiniteUse) {
+        const effects: RawEffect[] = [
+          {
+            opcode: "RemoveSpell",
+            resource: s.file,
+            target: "Self",
+            timing: "InstantPermanentUntilDeath",
+            global: true,
+          },
+          {
+            opcode: "GiveAbility",
+            resource: s.file,
+            target: "Self",
+            timing: "InstantPermanentUntilDeath",
+            global: true,
+          },
+        ];
+        s.effects.push(...effects);
+      }
       const result =
         "copyFrom" in s ? this.mapAlterSpell(s) : this.mapCreateSpell(s);
       if (s.icon) {

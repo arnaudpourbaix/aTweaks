@@ -6,9 +6,9 @@ BEGIN
 		~SPWI016~
 		~SPWI502~
 		~dvckill~
-		~RR#WI502~
 		~SPIN979~
 		~SPIN642~
+		~RR#WI502~
 		~RR#SPOI1~
 		~RR#spwrt~
 	END
@@ -130,20 +130,20 @@ BEGIN
 		~SPWI899~
 		~SPWI956~
 		~SPWM123~
-		~fl#cnefr~
-		~fl#shafi~
-		~fl#tchfr~
 		~dw#licfi~
 		~ca#sfear~
 		~A^causfr~
+		~DVFEARSM~
+		~DVHORRO~
+		~fl#cnefr~
+		~fl#shafi~
+		~fl#tchfr~
 		~rr#dcfea~
 		~rr#dcfa1~
 		~rr#dcfa2~
 		~rr#dmfea~
 		~rr#scare~
 		~rr#wi811~
-		~DVFEARSM~
-		~DVHORRO~
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_EMOTION_FEAR END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
@@ -270,12 +270,9 @@ BEGIN
 		~SPWI001~
 		~SPWI957~
 		~WAND05~
-		~RR#WI304~
 		~SPWI523~
 		~CDSLSUN~
 		~A#KOS09~
-		~RR#WI103~
-		~RR#WI523~
 		~SPWI712~
 		~A#KOS14~
 		~SPWI810~
@@ -287,6 +284,9 @@ BEGIN
 		~DW#TRPMS~
 		~SPPR705~
 		~CA#FSTOM~
+		~RR#WI304~
+		~RR#WI103~
+		~RR#WI523~
 		~RR#PR705~
 		~RR#MFIFF~
 		~RR#MFIFJ~
@@ -315,17 +315,17 @@ DEFINE_PATCH_FUNCTION coldSpells_immunity
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI404~
-		~RR#WI404~
 		~SPWI503~
 		~d1#wi503~
 		~DVCONEC~
-		~RR#WI503~
 		~SPCRYO01~
 		~SPIN133~
 		~SPIN158~
 		~SPIN162~
 		~SPIN833~
 		~WAND06~
+		~RR#WI404~
+		~RR#WI503~
 		~rr#icew~
 		~rr#efrzn~
 		~rr#ehyis~
@@ -419,7 +419,6 @@ BEGIN
 		~SPPR514~
 		~A#RE11~
 		~DVMCURE~
-		~RR#PR514~
 		~SPPR607~
 		~SPWM168~
 		~SPWISH39~
@@ -427,7 +426,6 @@ BEGIN
 		~spin679~
 		~SPIN101~
 		~FINP101~
-		~fl#bp101~
 		~SPIN202~
 		~SPIN551~
 		~SPIN986~
@@ -435,12 +433,14 @@ BEGIN
 		~SPPR510~
 		~SPCL211~
 		~BHAAL1A~
+		~sppr608~
+		~sppr699~
+		~fl#bp101~
+		~RR#PR514~
 		~RR#DCSW~
 		~rr#csw~
 		~rr#ccw~
 		~rr#harm~
-		~sppr608~
-		~sppr699~
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_CAUSE_MODERATE_WOUNDS CLERIC_CURE_MODERATE_WOUNDS CLERIC_CAUSE_LIGHT_WOUNDS CLERIC_CAUSE_MEDIUM_WOUNDS CLERIC_MASS_CAUSE_LIGHT_WOUNDS CLERIC_CURE_MEDIUM_WOUNDS END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
@@ -531,7 +531,7 @@ BEGIN
 		SPRINT $spells(~%index%~) ~%result%~
 		SET index = index + 1
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="154" prevent_icons="144" spells END
 END
 
 DEFINE_PATCH_FUNCTION insectSpells_immunity
@@ -644,9 +644,9 @@ BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPOGRE01~
 		~SPPR720~
-		~rr#equa~
 		~CA#EQ~
 		~CDTLQAK~
+		~rr#equa~
 		~rr#r2mud~
 	END
 	DEFINE_ARRAY identifiers BEGIN  END

@@ -2,6 +2,7 @@ import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
+
 // Creature Id
 const id = MonsterEnum.Ankheg;
 // Script
@@ -13,6 +14,7 @@ const grab = file(3, id);
 // Items
 const mainWeapon = file(1, id);
 const rangedWeapon = file(2, id);
+
 export const ANKHEG: RawCreature = {
   name: "Ankheg",
   bafFile: `lib/pnp-monster/ankheg/${script}`,

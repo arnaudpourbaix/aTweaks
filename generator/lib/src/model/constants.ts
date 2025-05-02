@@ -1,2 +1,2 @@
-export const CR = '\r\n';
-export const TAB = '\t';
+export const CR = "\r\n";
+export const TAB = "\t";

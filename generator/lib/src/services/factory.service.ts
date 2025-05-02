@@ -3,6 +3,7 @@ import { CreatureAttackAction } from "../model/final/attack";
 import { Response, Statements } from "../model/final/script";
 import { ObjectIdentifier } from "../model/ids/object";
 import { SlotIdentifier, WeaponSlot } from "../model/ids/slot";
+import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { UtilsService } from "./utils.service";
@@ -38,6 +39,21 @@ export class FactoryService {
   globalTimerReallyExpired = (name: string): Triggers.Trigger => ({
     name: "GlobalTimerExpired",
     params: [name, "LOCALS"],
+  });
+
+  checkStatGT = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
+    name: "CheckStatGT",
+    params: [GLOBAL_CONFIG.tokens.target, value, stat],
+  });
+
+  checkStatLT = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
+    name: "CheckStatLT",
+    params: [GLOBAL_CONFIG.tokens.target, value, stat],
+  });
+
+  checkStat = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
+    name: "CheckStat",
+    params: [GLOBAL_CONFIG.tokens.target, value, stat],
   });
 
   globalTimerExpired = (name: string): Triggers.Trigger => ({

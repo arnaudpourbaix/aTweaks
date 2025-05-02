@@ -38,6 +38,7 @@ CREATE SPL "ja#1m32"
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 5
 			parameter2 = 131072
 			probability1 = 100
 			dicenumber = 8
@@ -50,6 +51,7 @@ CREATE SPL "ja#1m32"
 		INT_VAR
 			opcode = 165
 			target = 2
+			power = 5
 			duration = 1
 			probability1 = 100
 		END
@@ -78,6 +80,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 176
 			target = 2
+			power = 3
 			parameter1 = 13
 			parameter2 = 1
 			duration = 72
@@ -87,6 +90,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 143
 			target = 2
+			power = 3
 			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~)
 			duration = 72
 			probability1 = 100
@@ -97,6 +101,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 328
 			target = 2
+			power = 3
 			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~))
 			duration = 72
 			probability1 = 100
@@ -106,6 +111,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 142
 			target = 2
+			power = 3
 			parameter2 = 38
 			duration = 72
 			probability1 = 100
@@ -114,6 +120,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 3
 			probability1 = 100
 		STR_VAR
 			resource = "EFF_M28"
@@ -122,6 +129,7 @@ CREATE SPL "ja#2m32"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 3
 			timing = 4
 			duration = 72
 			probability1 = 100
@@ -153,6 +161,7 @@ CREATE SPL "ja#3m32"
 		INT_VAR
 			opcode = 111
 			target = 2
+			power = 4
 			duration = 12
 			probability1 = 100
 		STR_VAR
@@ -162,6 +171,7 @@ CREATE SPL "ja#3m32"
 		INT_VAR
 			opcode = 215
 			target = 1
+			power = 4
 			duration = 3
 			probability1 = 100
 		STR_VAR
@@ -171,6 +181,7 @@ CREATE SPL "ja#3m32"
 		INT_VAR
 			opcode = 215
 			target = 1
+			power = 4
 			timing = 4
 			duration = 12
 			probability1 = 100
@@ -181,6 +192,7 @@ CREATE SPL "ja#3m32"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 4
 			probability1 = 100
 		STR_VAR
 			resource = "MSTCHNG"
@@ -189,6 +201,7 @@ CREATE SPL "ja#3m32"
 		INT_VAR
 			opcode = 174
 			target = 2
+			power = 4
 			timing = 4
 			duration = 12
 			probability1 = 100

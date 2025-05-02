@@ -26,7 +26,7 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~DRAGON~)
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIMIC~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -37,7 +37,29 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIMIC~)
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SLIME~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#3m1"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WILL-O-WISP~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#3m1"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WYVERN~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -60,17 +82,6 @@ CREATE SPL "ja#3m1"
 			opcode = 177
 			target = 2
 			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SHADOW~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SLIME~)
 			parameter2 = 4
 			duration = 1
 			probability1 = 100
@@ -125,28 +136,6 @@ CREATE SPL "ja#3m1"
 		INT_VAR
 			opcode = 177
 			target = 2
-			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WYVERN~)
-			parameter2 = 4
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
-			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~)
-			parameter2 = 5
-			duration = 1
-			probability1 = 100
-		STR_VAR
-			resource = "ja#3m1"
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 177
-			target = 2
 			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPECTRAL_TROLL~)
 			parameter2 = 5
 			duration = 1
@@ -159,6 +148,28 @@ CREATE SPL "ja#3m1"
 			opcode = 177
 			target = 2
 			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPIDER_WRAITH~)
+			parameter2 = 5
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#3m1"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~DRAGON~)
+			parameter2 = 4
+			duration = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#3m1"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~)
 			parameter2 = 5
 			duration = 1
 			probability1 = 100
@@ -392,6 +403,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 142
 			target = 2
+			power = 1
 			parameter2 = 102
 			duration = 24
 			probability1 = 100
@@ -400,6 +412,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 1
 			parameter2 = 65536
 			probability1 = 100
 			dicenumber = 1
@@ -409,6 +422,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 1
 			parameter2 = 65536
 			timing = 4
 			duration = 6
@@ -420,6 +434,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 1
 			parameter2 = 65536
 			timing = 4
 			duration = 12
@@ -431,6 +446,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 1
 			parameter2 = 65536
 			timing = 4
 			duration = 18
@@ -442,6 +458,7 @@ CREATE SPL "ja#1m1"
 		INT_VAR
 			opcode = 206
 			target = 2
+			power = 1
 			duration = 24
 			probability1 = 100
 		STR_VAR
@@ -472,6 +489,7 @@ It uses this attack technique only when desperate.~
 		INT_VAR
 			opcode = 12
 			target = 2
+			power = 1
 			parameter2 = 65536
 			probability1 = 100
 			dicenumber = 8
