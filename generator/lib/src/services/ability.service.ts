@@ -15,7 +15,8 @@ export class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
     if (!abilities) return [];
     let randomPool = 800;
-    const results: CreatureAbility[] = abilities.map((ability) => {
+    const results: CreatureAbility[] = abilities.map((abil) => {
+      let ability = structuredClone(abil);
       if (ability.preset) ability = this.applyPreset(ability, ability.preset);
       const triggers: Triggers.Trigger[] = ability.triggers ?? [];
       let targets =

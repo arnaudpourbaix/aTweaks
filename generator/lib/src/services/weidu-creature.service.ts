@@ -9,46 +9,50 @@ import {
   CreatureAdjustment,
   CreatureData,
 } from "../model/final/creature";
-import { Effect, EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
-import {
-  ItemAbilityLocationEnum,
-  ItemAbilityTargetEnum,
-  ItemAbilityTypeEnum,
-  SpellTypeEnum,
-} from "../model/final/enums";
 import { ImmunityConfig } from "../model/final/immunity";
-import { ProjectileTypeEnum } from "../model/final/projectile";
 import { Spell } from "../model/final/spell";
 import { CodeLine } from "../model/misc";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { WEAPON_SLOTS } from "../model/raw/enum";
-import { GrabConfig } from "../model/raw/grab";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { CreatureService } from "./creature.service";
-import { GrabService } from "./grab.service";
 import { EffectService } from "./effect.service";
+import { WeiduEffectService } from "./weidu-effect.service";
+import { WeiduItemService } from "./weidu-item.service";
+import { WeiduProjectileService } from "./weidu-projectile.service";
+import { WeiduSpellService } from "./weidu-spell.service";
 
 export class WeiduCreatureService extends AbstractWeiduService {
   static instance = new WeiduCreatureService();
 
   private creatureService = CreatureService.instance;
-  private grabService = GrabService.instance;
   private effectService = EffectService.instance;
+  private weiduSpellService = WeiduSpellService.instance;
+  private weiduItemService = WeiduItemService.instance;
+  private weiduEffectService = WeiduEffectService.instance;
+  private weiduProjectileService = WeiduProjectileService.instance;
 
   generateWeiduScript(creature: Creature): void {
     const lines: CodeLine[] = [];
     if (creature.bafFile) this.compileScripts(lines, creature);
     this.creatureService.checkWeapons(creature);
-    this.createProjectiles(lines, creature);
-    this.createEffectFiles(lines, creature.effectFiles);
+    this.weiduProjectileService.createProjectiles(lines, creature);
+    this.weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     if (creature.attack.grab) {
-      this.createGrabProtectionEffect(lines, creature.attack.grab);
-      this.createGrabSpell(lines, creature, creature.attack.grab);
+      this.weiduEffectService.createGrabProtectionEffect(
+        lines,
+        creature.attack.grab
+      );
+      this.weiduSpellService.createGrabSpell(
+        lines,
+        creature,
+        creature.attack.grab
+      );
     }
-    this.createSpells(lines, creature);
-    this.createItems(lines, creature);
+    this.weiduSpellService.createSpells(lines, creature);
+    this.weiduItemService.createItems(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
@@ -62,496 +66,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (creature.adjustments.some((a) => !!a.summon))
       this.add(lines, `COMPILE ~%MOD_FOLDER%/${creature.bafFile}su.baf~`);
     this.add(lines, "");
-  }
-
-  private createItems(lines: CodeLine[], creature: Creature) {
-    for (const item of creature.items) {
-      if (item.copyFrom) {
-        const immunity = State.immunities.find((i) => i.name === item.copyFrom);
-        if (immunity && !immunity.itemSlot)
-          throw new Error(`No file configured for immunity ${item.copyFrom}`);
-        this.add(
-          lines,
-          `COPY_EXISTING ~${
-            immunity?.itemSlot?.file ?? item.copyFrom
-          }.ITM~  ~override/${item.file}.ITM~`,
-          0
-        );
-      } else {
-        this.add(lines, `CREATE ITM "${item.file}"`, 0);
-        this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
-        if (item.type) {
-          this.add(lines, `INSERT_BYTES 0x72 0x38`, 1);
-          this.add(lines, `WRITE_SHORT 0x68 1`, 1);
-          this.add(lines, `WRITE_SHORT 0x72 ${item.type}`, 1);
-          this.add(lines, `WRITE_LONG 0x6a 0xaa`, 1);
-        }
-      }
-      if (item.flags) {
-        const flags = item.flags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x18 ${flags}`, 1);
-      }
-      if (item.name)
-        this.add(lines, `SAY NAME1 ~${item.name}~ SAY NAME2 ~${item.name}~`, 1);
-      if (item.description)
-        this.add(
-          lines,
-          `SAY UNIDENTIFIED_DESC ~${item.description.join("\n")}~`,
-          1
-        );
-      if (item.weight) this.add(lines, `WRITE_LONG 0x4c ${item.weight}`, 1);
-      if (item.category)
-        this.add(lines, `WRITE_SHORT 0x1c ${item.category}`, 1);
-      if (item.animation)
-        this.add(lines, `WRITE_ASCII 0x22 ~${item.animation}~ #2`, 1);
-      if (item.proficiency)
-        this.add(lines, `WRITE_BYTE 0x31 ${item.proficiency}`, 1);
-      if (item.icon) this.add(lines, `WRITE_ASCII 0x3a ~${item.icon}~ #8`, 1);
-      if (item.enchantment)
-        this.add(lines, `WRITE_LONG 0x60 ${item.enchantment}`, 1);
-      //this.add(lines, `LPF set_enchantment INT_VAR enchantment = ${item.enchantment} END`, 1);
-      if (item.location)
-        this.add(lines, `WRITE_SHORT 0x74 ${item.location}`, 1);
-      if (item.target) this.add(lines, `WRITE_BYTE 0x7e ${item.target}`, 1);
-      if (item.range) this.add(lines, `WRITE_SHORT 0x80 ${item.range}`, 1);
-      if (item.speed) this.add(lines, `WRITE_SHORT 0x84 ${item.speed}`, 1);
-      if (item.bonusToHit)
-        this.add(lines, `WRITE_SHORT 0x86 ${item.bonusToHit}`, 1);
-      if (item.diceSize) this.add(lines, `WRITE_BYTE 0x88 ${item.diceSize}`, 1);
-      if (item.diceThrown)
-        this.add(lines, `WRITE_BYTE 0x8a ${item.diceThrown}`, 1);
-      if (item.damageBonus)
-        this.add(lines, `WRITE_SHORT 0x8c ${item.damageBonus}`, 1);
-      if (item.damageType)
-        this.add(lines, `WRITE_SHORT 0x8e ${item.damageType}`, 1);
-      if (item.projectile)
-        this.add(
-          lines,
-          `WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~${item.projectile}~)) + 1`,
-          1
-        );
-      if (item.type === ItemAbilityTypeEnum.Melee) {
-        this.add(
-          lines,
-          `WRITE_SHORT 0x9e ${item.animationSwing?.overhand ?? "34"}`,
-          1
-        );
-        this.add(
-          lines,
-          `WRITE_SHORT 0xa0 ${item.animationSwing?.backhand ?? "33"}`,
-          1
-        );
-        this.add(
-          lines,
-          `WRITE_SHORT 0xa2 ${item.animationSwing?.thrust ?? "33"}`,
-          1
-        );
-      } else if (item.type === ItemAbilityTypeEnum.Ranged) {
-        this.add(lines, `WRITE_SHORT 0x38 1`, 1);
-        this.add(lines, `WRITE_SHORT 0xa4 1`, 1);
-      }
-      if (item.abilityflags) {
-        const flags = item.abilityflags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x98 ${flags}`, 1);
-      }
-      if (!item.copyFrom)
-        this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
-      for (const effect of item.effects) {
-        this.addEffect(lines, 1, effect, 0, "ITM");
-      }
-      if (creature.attack.grab?.weaponFile === item.file) {
-        const effect = this.grabService.getGrabEffect(
-          creature,
-          creature.attack.grab
-        );
-        this.addEffect(lines, 1, effect, 0, "ITM");
-      }
-      for (const name of item.immunities) {
-        this.add(
-          lines,
-          `LPF ${this.utils.getImmunityFunctionName(name)} END`,
-          1
-        );
-      }
-      this.add(lines, "", 0);
-    }
-  }
-
-  private createSpells(lines: CodeLine[], creature: Creature) {
-    for (const spell of creature.spells) {
-      if (spell.copyFrom) {
-        this.createSpellFrom(lines, creature, spell);
-      } else {
-        this.createSpell(lines, creature, spell);
-      }
-    }
-  }
-
-  private createSpell(lines: CodeLine[], creature: Creature, spell: Spell) {
-    this.add(lines, `// ${spell.name}`, 1);
-    this.add(lines, `CREATE SPL "${spell.file}"`, 0);
-    this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
-    this.createSpellCommon(lines, creature, spell);
-  }
-
-  private createSpellFrom(lines: CodeLine[], creature: Creature, spell: Spell) {
-    this.add(
-      lines,
-      `COPY_EXISTING ~${spell.copyFrom}.SPL~  ~override/${spell.file}.SPL~`,
-      0
-    );
-    for (const level of spell.deleteHeaders)
-      this.add(
-        lines,
-        `LPF DELETE_SPELL_HEADER STR_VAR min_level = ${level} END`,
-        1
-      );
-    for (const opcode of spell.removeOpcodes)
-      this.add(
-        lines,
-        `LPF DELETE_EFFECT INT_VAR match_opcode = ${opcode} END`,
-        1
-      );
-    this.createSpellCommon(lines, creature, spell);
-  }
-
-  private createSpellCommon(
-    lines: CodeLine[],
-    creature: Creature,
-    spell: Spell
-  ) {
-    if (spell.type) {
-      this.add(lines, `INSERT_BYTES 0x72 0x28`, 1);
-      this.add(lines, `WRITE_SHORT 0x68 1`, 1);
-      this.add(lines, `WRITE_LONG 0x6a 0x9a`, 1);
-      this.add(lines, `WRITE_SHORT 0x72 ${spell.type}`, 1);
-      this.add(lines, `WRITE_SHORT 0x82 1`, 1);
-    }
-    if (spell.flags) {
-      const flags = spell.flags.reduce((sum, save) => {
-        sum += 2 ** save;
-        return sum;
-      }, 0);
-      this.add(lines, `WRITE_LONG 0x18 ${flags}`, 1);
-    }
-    if (spell.spellbookIcon) {
-      this.add(lines, `WRITE_ASCII 0x3a ~${spell.spellbookIcon}~ #8`, 1);
-    }
-    if (spell.memorizedIcon) {
-      this.add(lines, `WRITE_ASCII 0x76 ~${spell.memorizedIcon}~ #8`, 1);
-    }
-    if (spell.castingAnimation)
-      this.add(lines, `WRITE_SHORT 0x22 ${spell.castingAnimation}`, 1);
-    if (spell.spellType)
-      this.add(lines, `WRITE_SHORT 0x1c ${spell.spellType}`, 1);
-    if (spell.primaryType)
-      this.add(lines, `WRITE_BYTE 0x25 ${spell.primaryType}`, 1);
-    if (spell.secondaryType)
-      this.add(lines, `WRITE_BYTE 0x27 ${spell.secondaryType}`, 1);
-    if (spell.spellLevel)
-      this.add(lines, `WRITE_LONG 0x34 ${spell.spellLevel}`, 1);
-    if (spell.castingSound)
-      this.add(lines, `WRITE_ASCII 0x10 ~${spell.castingSound}~ #8`, 1);
-    if (spell.location)
-      this.add(lines, `WRITE_SHORT 0x74 ${spell.location}`, 1);
-    if (spell.target) this.add(lines, `WRITE_BYTE 0x7e ${spell.target}`, 1);
-    if (spell.range) this.add(lines, `WRITE_SHORT 0x80 ${spell.range}`, 1);
-    if (spell.speed) this.add(lines, `WRITE_SHORT 0x84 ${spell.speed}`, 1);
-    if (spell.stringRef) {
-      this.add(
-        lines,
-        `WRITE_LONG 0x8 ${this.utils.resolveStringRef(spell.stringRef)}`,
-        1
-      );
-    }
-    if (spell.description && typeof spell.description === "number")
-      this.add(
-        lines,
-        `WRITE_LONG 0x50 ${this.utils.resolveStringRef(spell.description)}`,
-        1
-      );
-    else if (spell.description && Array.isArray(spell.description))
-      this.add(
-        lines,
-        `SAY UNIDENTIFIED_DESC ~${spell.description.join("\n")}~`,
-        1
-      );
-    if (spell.projectile)
-      this.add(
-        lines,
-        `WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~${spell.projectile}~)) + 1`,
-        1
-      );
-    for (const effect of spell.effects)
-      this.addEffect(lines, 1, effect, spell.spellLevel ?? 0, "SPL");
-    this.add(lines, "", 0);
-  }
-
-  private createProjectiles(lines: CodeLine[], creature: Creature) {
-    for (const projectile of creature.projectiles) {
-      this.add(
-        lines,
-        `COPY_EXISTING "${projectile.copyFromFile}.pro" ~override/${projectile.file}.pro~`,
-        0
-      );
-      this.add(lines, `READ_SHORT 0x08 type`, 1);
-      if (projectile.type !== ProjectileTypeEnum.NoBAM) {
-        this.add(lines, `PATCH_IF (%type% = 1) BEGIN`, 1);
-        this.add(lines, `INSERT_BYTES 0x100 0x100`, 2);
-        this.add(lines, `END`, 1);
-      }
-      if (projectile.type === ProjectileTypeEnum.AreaOfEffect) {
-        this.add(lines, `PATCH_IF (%type% != 3) BEGIN`, 1);
-        this.add(lines, `INSERT_BYTES 0x200 0x100`, 2);
-        this.add(lines, `END`, 1);
-      }
-      if (projectile.type)
-        this.add(lines, `WRITE_SHORT 0x08 ${projectile.type}`, 1);
-      if (projectile.speed)
-        this.add(lines, `WRITE_SHORT 0x0a ${projectile.speed}`, 1);
-      if (projectile.behaviorFlags.length) {
-        const flags = projectile.behaviorFlags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x0c ${flags}`, 1);
-      }
-      if (projectile.fireSound)
-        this.add(lines, `WRITE_ASCII 0x10 ~${projectile.fireSound}~ #8`, 1);
-      if (projectile.impactSound)
-        this.add(lines, `WRITE_ASCII 0x18 ~${projectile.impactSound}~ #8`, 1);
-      if (projectile.sourceAnimation)
-        this.add(
-          lines,
-          `WRITE_ASCII 0x20 ~${projectile.sourceAnimation}~ #8`,
-          1
-        );
-      if (projectile.particleColor)
-        this.add(lines, `WRITE_SHORT 0x28 ${projectile.particleColor}`, 1);
-      if (projectile.projectileWidth)
-        this.add(lines, `WRITE_SHORT 0x2a ${projectile.projectileWidth}`, 1);
-      if (projectile.extendedFlags.length) {
-        const flags = projectile.behaviorFlags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x2c ${flags}`, 1);
-      }
-      if (projectile.stringRef)
-        this.add(
-          lines,
-          `WRITE_LONG 0x30 ${this.utils.resolveStringRef(
-            projectile.stringRef
-          )})`,
-          1
-        );
-      if (projectile.color) {
-        this.add(lines, `WRITE_SHORT 0x3a ${projectile.color}`, 1);
-      }
-      if (projectile.colorSpeed)
-        this.add(lines, `WRITE_SHORT 0x38 ${projectile.colorSpeed}`, 1);
-      if (projectile.screenShakeAmount)
-        this.add(lines, `WRITE_SHORT 0x3a ${projectile.screenShakeAmount}`, 1);
-      if (projectile.idsTarget1)
-        this.add(lines, `WRITE_SHORT 0x3e ${projectile.idsTarget1}`, 1);
-      if (projectile.idsTarget2)
-        this.add(lines, `WRITE_SHORT 0x40 ${projectile.idsTarget2}`, 1);
-      if (projectile.defaultSpell)
-        this.add(lines, `WRITE_ASCII 0x44 ~${projectile.defaultSpell}~ #8`, 1);
-      if (projectile.successSpell)
-        this.add(lines, `WRITE_ASCII 0x4c ~${projectile.successSpell}~ #8`, 1);
-      if (projectile.bamProjectileFlags.length) {
-        const flags = projectile.bamProjectileFlags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x100 ${flags}`, 1);
-      }
-      if (projectile.projectileSmokeAnimation)
-        this.add(
-          lines,
-          `WRITE_SHORT 0x134 ${projectile.projectileSmokeAnimation}`,
-          1
-        );
-      if (projectile.areaProjectileFlags.length) {
-        const flags = projectile.areaProjectileFlags.reduce((sum, save) => {
-          sum += 2 ** save;
-          return sum;
-        }, 0);
-        this.add(lines, `WRITE_LONG 0x200 ${flags}`, 1);
-      }
-      if (projectile.rayCount)
-        this.add(lines, `WRITE_SHORT 0x202 ${projectile.rayCount}`, 1);
-      if (projectile.triggerRadius)
-        this.add(lines, `WRITE_SHORT 0x204 ${projectile.triggerRadius}`, 1);
-      if (projectile.areaOfEffect)
-        this.add(lines, `WRITE_SHORT 0x206 ${projectile.areaOfEffect}`, 1);
-      if (projectile.fragmentAnimation)
-        this.add(lines, `WRITE_SHORT 0x212 ${projectile.fragmentAnimation}`, 1);
-      if (projectile.explosionEffect)
-        this.add(lines, `WRITE_BYTE 0x217 ${projectile.explosionEffect}`, 1);
-      if (projectile.triggerCount)
-        this.add(lines, `WRITE_BYTE 0x216 ${projectile.triggerCount}`, 1);
-      if (projectile.coneWidth)
-        this.add(lines, `WRITE_SHORT 0x224 ${projectile.coneWidth}`, 1);
-      this.add(
-        lines,
-        `ADD_PROJECTILE ~override/${projectile.file}.pro~ ~${projectile.description}~`,
-        0
-      );
-      this.add(lines, "", 0);
-    }
-  }
-
-  private createGrabSpell(
-    lines: CodeLine[],
-    creature: Creature,
-    grab: GrabConfig
-  ) {
-    this.add(lines, `CREATE SPL "${grab.file}"`, 0);
-    this.add(lines, `WRITE_SHORT 0x1c ${SpellTypeEnum.Innate}`, 1);
-    this.add(lines, `WRITE_LONG 0x34 1`, 1);
-    this.add(lines, `WRITE_LONG 0x64 0x72`, 1);
-    this.add(lines, `WRITE_SHORT 0x68 1`, 1);
-    this.add(lines, `WRITE_LONG 0x6a 0x9a`, 1);
-    this.add(lines, `INSERT_BYTES 0x72 0x28`, 1);
-    this.add(lines, `WRITE_SHORT 0x72 ${ItemAbilityTypeEnum.Melee}`, 1);
-    this.add(lines, `WRITE_SHORT 0x74 ${ItemAbilityLocationEnum.Ability}`, 1);
-    this.add(lines, `WRITE_BYTE 0x7e ${ItemAbilityTargetEnum.LivingActor}`, 1);
-    this.add(lines, `WRITE_SHORT 0x80 5`, 1);
-    this.add(lines, `WRITE_SHORT 0x82 1`, 1);
-    this.add(lines, `WRITE_SHORT 0x94 1`, 1);
-    this.add(
-      lines,
-      `SAY NAME1 @${grab.grabStringRef} SAY NAME2 @${grab.grabStringRef}`,
-      1
-    );
-    const effects = this.grabService.getGrabbedEffects(creature, grab);
-    for (const effect of effects) this.addEffect(lines, 1, effect, 0, "SPL");
-    this.add(lines, "", 0);
-  }
-
-  private createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
-    const effect = this.grabService.getGrabProtectionEffect(grab);
-    this.createEffectFiles(lines, [{ ...effect, file: grab.file }]);
-  }
-
-  private createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
-    for (const effect of effectFiles) {
-      this.add(lines, `CREATE EFF "${effect.file}"`, 0);
-      this.add(lines, `WRITE_LONG 0x10 ${effect.opcode}`, 1);
-      this.add(lines, `WRITE_LONG 0x14 ${effect.target}`, 1);
-      if (effect.timing) this.add(lines, `WRITE_LONG 0x24 ${effect.timing}`, 1);
-      if (effect.parameter1 && effect.parameter1 !== "0")
-        this.add(
-          lines,
-          `WRITE_LONG 0x1c ${this.getIntegerValue(effect.parameter1)}`,
-          1
-        );
-      if (effect.parameter2 && effect.parameter2 !== "0")
-        this.add(
-          lines,
-          `WRITE_LONG 0x20 ${this.getIntegerValue(effect.parameter2)}`,
-          1
-        );
-      if (effect.dispelResistance)
-        this.add(lines, `WRITE_LONG 0x5c ${effect.dispelResistance}`, 1);
-      if (effect.duration)
-        this.add(lines, `WRITE_LONG 0x28 ${effect.duration}`, 1);
-      if (effect.probability1)
-        this.add(lines, `WRITE_SHORT 0x2c ${effect.probability1}`, 1);
-      if (effect.resource)
-        this.add(lines, `WRITE_ASCII 0x30 ~${effect.resource}~ #8`, 1);
-      this.add(lines, "", 0);
-    }
-  }
-
-  private addEffect(
-    lines: CodeLine[],
-    tab: number,
-    effect: Effect,
-    power: number,
-    type: "SPL" | "ITM" | "CRE"
-  ) {
-    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
-      this.add(
-        lines,
-        `LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~${effect.parameter2}~ RET row col END`,
-        1
-      );
-      effect.parameter2 = "row";
-      this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab++);
-    }
-    let fn = "ADD_EFFECT";
-    if (effect.global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
-    else if (type === "CRE") fn = "ADD_CRE_EFFECT";
-    this.add(lines, `LPF ${fn}`, tab);
-    this.add(lines, `INT_VAR`, tab + 1);
-    this.add(lines, `opcode = ${effect.opcode}`, tab + 2);
-    if (effect.target) this.add(lines, `target = ${effect.target}`, tab + 2);
-    if ((effect.power ?? power) !== 0)
-      this.add(lines, `power = ${effect.power ?? power}`, tab + 2);
-    if (effect.parameter1 && effect.parameter1 !== "0")
-      this.add(
-        lines,
-        `parameter1 = ${this.getIntegerValue(effect.parameter1)}`,
-        tab + 2
-      );
-    if (effect.parameter2 && effect.parameter2 !== "0")
-      this.add(
-        lines,
-        `parameter2 = ${this.getIntegerValue(effect.parameter2)}`,
-        tab + 2
-      );
-    if (effect.timing) this.add(lines, `timing = ${effect.timing}`, tab + 2);
-    if (effect.dispelResistance)
-      this.add(lines, `resist_dispel = ${effect.dispelResistance}`, tab + 2);
-    if (effect.duration)
-      this.add(lines, `duration = ${effect.duration}`, tab + 2);
-    this.add(lines, `probability1 = ${effect.probability1}`, tab + 2);
-    if (effect.probability2)
-      this.add(lines, `probability2 = ${effect.probability2}`, tab + 2);
-    if (effect.diceThrown)
-      this.add(lines, `dicenumber = ${effect.diceThrown}`, tab + 2);
-    if (effect.diceSize)
-      this.add(lines, `dicesize = ${effect.diceSize}`, tab + 2);
-    if (effect.saveTypes) {
-      const savingthrow = effect.saveTypes.reduce((sum, save) => {
-        sum += 2 ** save;
-        return sum;
-      }, 0);
-      this.add(lines, `savingthrow = ${savingthrow}`, tab + 2);
-    }
-    if (effect.saveBonus) {
-      this.add(lines, `savebonus = "${effect.saveBonus}"`, tab + 2);
-    }
-    if (effect.flags !== undefined) {
-      const special =
-        typeof effect.flags === "number"
-          ? effect.flags
-          : effect.flags.reduce((sum, save) => {
-              sum += 2 ** save;
-              return sum;
-            }, 0);
-      this.add(lines, `special = ${special}`, tab + 2);
-    }
-    if (effect.special) {
-      this.add(lines, `special = ${effect.special}`, tab + 2);
-    }
-    if (effect.resource) {
-      this.add(lines, `STR_VAR`, 2);
-      this.add(lines, `resource = "${effect.resource}"`, tab + 2);
-    }
-    this.add(lines, `END`, tab + 1);
-    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
-      this.add(lines, `END`, --tab);
-    }
   }
 
   private patchCreatures(lines: CodeLine[], creature: Creature) {
@@ -599,7 +113,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     for (const effect of creature.additionalData.effects) {
-      this.addEffect(lines, 3, effect, 0, "CRE");
+      this.weiduEffectService.addEffect(lines, 3, effect, 0, "CRE");
     }
     this.patchCreature({
       lines,
@@ -964,13 +478,13 @@ export class WeiduCreatureService extends AbstractWeiduService {
         type: "Set",
         value: movement,
       });
-      this.addEffect(lines, tab, effect, 0, "CRE");
+      this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
     }
     if (adjustment.data?.kit === "BARBARIAN") {
       const effect = this.effectService.getEffect({
         opcode: "ProtectionFromBackstab",
       });
-      this.addEffect(lines, tab, effect, 0, "CRE");
+      this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
     }
     if (adjustment.data)
       this.patchCreatureAdjustement({
@@ -997,7 +511,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
       this.addProficiencies(lines, tab, adjustment.additionalData);
       for (const effect of adjustment.additionalData.effects) {
-        this.addEffect(lines, tab, effect, 0, "CRE");
+        this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
       }
     }
     this.add(lines, "END", --tab);

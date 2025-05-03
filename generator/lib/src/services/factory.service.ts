@@ -26,9 +26,13 @@ export class FactoryService {
     params: [name, area, value],
   });
 
-  setGlobal = (name: string, value: number): Actions.Action => ({
+  setGlobal = (
+    name: string,
+    value: number,
+    area = "LOCALS"
+  ): Actions.Action => ({
     name: "SetGlobal",
-    params: [name, "LOCALS", value],
+    params: [name, area, value],
   });
 
   setGlobalTimer = (name: string, value: number): Actions.Action => ({

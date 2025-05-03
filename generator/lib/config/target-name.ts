@@ -7,7 +7,8 @@ export type TargetListName =
   | "PCsPreferringWeak"
   | "PCSpellcasters"
   | "FarthestEnemies"
-  | "CloseEnemies";
+  | "CloseEnemies"
+  | "Animals";
 
 export type TargetStatusName =
   | "Grabbed"

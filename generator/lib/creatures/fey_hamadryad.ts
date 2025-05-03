@@ -2,8 +2,17 @@ import {
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
-import { ATWEAKS_SPELLS, PRESET_NAMES, SPELLS } from "../config/spell";
-import { TraStringReferenceEnum } from "../config/stringRef";
+import { GLOBAL_CONFIG } from "../config/generate";
+import {
+  ATWEAKS_SPELLS,
+  DEFAULT_SPELL_PROBABILITY,
+  PRESET_NAMES,
+  SPELLS,
+} from "../config/spell";
+import {
+  BafExistingStringReference,
+  TraStringReferenceEnum,
+} from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
 import { FactoryService } from "../src/services/factory.service";
@@ -11,7 +20,7 @@ import { bafFile, file } from "../src/services/misc.func";
 import {
   abilityDryadDireCharm,
   abilitySpeakWithPlants,
-  dryadOakTreeDimensionDoor,
+  dryadWildernessAbilities,
 } from "./fey_dryad";
 import { MonsterEnum } from "./monster.enum";
 
@@ -29,12 +38,26 @@ const entangleCommonEffect: RawBaseEffect = {
   saveTypes: ["Spell"],
 };
 
+const animalFriendshipCommonEffect: RawBaseEffect = {
+  timing: "InstantLimited",
+  duration: 120,
+  dispelResistance: "DispelNotBypassResistance",
+  saveTypes: ["Spell"],
+};
+
+const globals = {
+  SummonDryads: "SummonDryads",
+  VaelasaHostile: "VaelasaHostile",
+  CloakwoodHamadryad: "rr#hamat",
+};
+
 export const FEY_HAMADRYAD: RawCreature = {
   name: "Hamadryad",
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/hamadryad",
   tracking: true,
   combatWalk: true,
+  dialog: ["VAELASA"],
   attack: {
     melee: false,
     ranged: false,
@@ -71,6 +94,7 @@ export const FEY_HAMADRYAD: RawCreature = {
       { file: ATWEAKS_SPELLS.SpeakWithPlants, memorizedCount: 1 },
       { file: ATWEAKS_SPELLS.DimensionDoor, memorizedCount: 1 },
     ],
+    immunities: ["entangle"],
   },
   projectiles: [
     {
@@ -170,73 +194,94 @@ export const FEY_HAMADRYAD: RawCreature = {
     },
     {
       name: "Animal Friendship",
-      file: ATWEAKS_SPELLS.HamadryadAnimalFriendship,
-      stringRef: TraStringReferenceEnum.Entangle,
+      file: ATWEAKS_SPELLS.AnimalFriendship,
+      stringRef: TraStringReferenceEnum.AnimalFriendship,
       memorizedCount: 1,
       type: "Melee",
-      projectile: ATWEAKS_SPELLS.HamadryadEntangle,
-      icon: SPELLS.Entangle,
-      castingSound: "CAS_P08",
+      icon: SPELLS.CharmPersonOrAnimal,
+      flags: ["CastableWhenSilenced"],
+      castingSound: "CORAN03",
       spellType: "Innate",
-      castingAnimation: "Alteration",
-      primaryType: "Transmuter",
+      primaryType: "Enchanter",
       secondaryType: "Disabling",
       spellLevel: 1,
       location: "Ability",
-      target: "AnyPointWithinRange",
+      target: "LivingActor",
       range: 30,
       speed: 1,
       infiniteUse: true,
       effects: [
         // The caster can use this spell to attract up to 2 Hit Dice of animal(s) per experience level he possesses
         {
-          opcode: "MovementRateBonus",
-          type: "SetPercentOf",
-          value: 50,
-          ...entangleCommonEffect,
-          saveTypes: undefined,
+          opcode: "CharmCreature",
+          charmType: "NeutralCharm",
+          generalType: "ANIMAL",
+          ...animalFriendshipCommonEffect,
         },
         {
-          opcode: "MovementRateBonus",
-          type: "Set",
-          value: 0,
-          ...entangleCommonEffect,
-        },
-        {
-          opcode: "Thac0Bonus",
-          type: "Increment",
-          value: -2,
-          ...entangleCommonEffect,
-        },
-        {
-          opcode: "ArmorClassBonus",
-          bonusTo: "AllWeapons",
-          value: -2,
-          ...entangleCommonEffect,
-        },
-        {
-          opcode: "PlaySound",
-          resource: "CRE_P01",
-          ...entangleCommonEffect,
+          opcode: "CharacterColorPulse",
+          color: { red: 120, green: 90, blue: 30 },
+          location: "ArmorGreyBeltAmulet",
+          cycleSpeed: 25,
+          timing: "InstantPermanentUntilDeath",
+          ...animalFriendshipCommonEffect,
           duration: 1,
         },
         {
-          opcode: "PlaySound",
-          resource: "EFF_M22A",
-          ...entangleCommonEffect,
-          timing: "DelayPermanent",
-        },
-        {
-          opcode: "EntangleOverlay",
-          ...entangleCommonEffect,
-        },
-        {
-          opcode: "DisplayPortraitIcon",
-          icon: "Entangled",
-          ...entangleCommonEffect,
+          opcode: "PlayVisualEffect",
+          playWhere: "OverTargetAttached",
+          resource: "SPNWCHRM",
+          ...animalFriendshipCommonEffect,
+          duration: 3,
         },
       ],
     },
+    {
+      name: "Detect Snares And Pits",
+      file: ATWEAKS_SPELLS.DetectSnaresAndPits,
+      memorizedCount: 1,
+      stringRef: TraStringReferenceEnum.DetectSnaresAndPits,
+      castingSound: "CAS_P04",
+      flags: ["OutdoorsOnly"],
+      spellType: "Innate",
+      castingAnimation: "Divination",
+      primaryType: "Diviner",
+      secondaryType: "NonCombat",
+      icon: SPELLS.FindTraps,
+      type: "Melee",
+      location: "Ability",
+      target: "Caster",
+      speed: 1,
+      projectile: "INAREANS",
+      infiniteUse: true,
+      effects: [
+        { opcode: "FindTraps", duration: 96, target: "Self" },
+        {
+          opcode: "DisplayPortraitIcon",
+          icon: "DetectingTrapsIllusions",
+          duration: 96,
+          target: "Self",
+        },
+        {
+          opcode: "LightingEffects",
+          effect: "DivinationWater",
+          lightingTarget: "SpellTarget",
+          timing: "InstantPermanentUntilDeath",
+          target: "Self",
+        },
+        {
+          opcode: "CharacterColorPulse",
+          color: { red: 70, green: 32, blue: 73 },
+          location: "ArmorGreyBeltAmulet",
+          cycleSpeed: 20,
+          duration: 2,
+        },
+      ],
+    },
+    // TODO: Quench Fire
+    // You extinguish all fires in a 30-foot cube centered on a point you choose within range. Any nonmagical fire is put out automatically, as are magical flames created by a spell of 3rd level or lower.
+    // For each spell of 4th level or higher which is creating flame within this area,  make an ability check using your spellcasting ability.
+    // On a successful check, the spell that created the fire ends. Fire created by a magical item is also doused, and the item becomes unable to produce fire for 1d4 hours.
   ],
   additionalCode: [
     {
@@ -250,13 +295,74 @@ export const FEY_HAMADRYAD: RawCreature = {
     {
       location: "init",
       type: "insertBefore",
-      statements: [...dryadOakTreeDimensionDoor],
+      statements: [
+        ...dryadWildernessAbilities,
+        {
+          comment: "Vaelasa, the Fairy Queen",
+          triggers: [
+            {
+              name: "Name",
+              params: ["VAELASA", "Myself"],
+            },
+            {
+              name: "AreaCheck",
+              params: ["AR1200"], // Windsper Hills
+            },
+            factory.global(globals.SummonDryads, 1, "AR1200"),
+          ],
+          responses: factory.response([
+            factory.setGlobal(globals.SummonDryads, 2, "AR1200"),
+            {
+              name: "StartCutSceneMode",
+            },
+            {
+              name: "StartCutScene",
+              params: ["Cut23a"],
+            },
+          ]),
+        },
+        {
+          triggers: [
+            {
+              name: "Name",
+              params: ["VAELASA", "Myself"],
+            },
+            {
+              name: "AreaCheck",
+              params: ["AR0602"], // Irenicus' Dungeon, first level
+            },
+            { name: "AttackedBy", params: ["GOODCUTOFF", "DEFAULT"] },
+            factory.global(globals.VaelasaHostile, 0, "GLOBAL"),
+          ],
+          responses: factory.response([
+            factory.setGlobal(globals.VaelasaHostile, 1, "GLOBAL"),
+            { name: "Enemy" },
+          ]),
+        },
+        {
+          triggers: [
+            factory.global("rr#chama", 1, "MYAREA"),
+            factory.global(globals.CloakwoodHamadryad, 0),
+            { name: "See", params: ["PC"] },
+          ],
+          responses: factory.response([
+            factory.setGlobal(globals.CloakwoodHamadryad, 1),
+            { name: "FaceObject", params: ["PC"] },
+            {
+              name: "DisplayStringHead",
+              params: ["Myself", BafExistingStringReference.LeaveMyWood],
+            },
+          ]),
+        },
+      ],
     },
   ],
   abilities: [
     {
       preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
+        resource: ATWEAKS_SPELLS.DimensionDoor,
+        id: undefined,
         type: "force",
       },
     },
@@ -274,6 +380,30 @@ export const FEY_HAMADRYAD: RawCreature = {
       },
     },
     abilityDryadDireCharm,
+    {
+      name: "Animal Friendship",
+      target: [
+        {
+          name: "Animals",
+        },
+      ],
+      spell: {
+        resource: ATWEAKS_SPELLS.AnimalFriendship,
+        type: "force",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      disableInterrupt: true,
+    },
+    {
+      name: "Detect Snares And Pits",
+      spell: {
+        resource: ATWEAKS_SPELLS.DetectSnaresAndPits,
+        type: "force",
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      disableInterrupt: true,
+    },
   ],
   files: [
     "DRYADHA", // Hamadryad

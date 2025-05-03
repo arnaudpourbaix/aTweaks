@@ -24,6 +24,7 @@ CREATE ITM "ja#1m16"
 COPY_EXISTING ~ja#1m16.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 27
@@ -33,6 +34,7 @@ COPY_EXISTING ~ja#1m16.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 94
@@ -42,6 +44,7 @@ COPY_EXISTING ~ja#1m16.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 6
@@ -57,6 +60,7 @@ CREATE ITM "ja#2m16"
 COPY_EXISTING ~ja#2m16.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 98
@@ -66,6 +70,7 @@ COPY_EXISTING ~ja#2m16.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 29
@@ -75,6 +80,7 @@ COPY_EXISTING ~ja#2m16.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 87
@@ -87,6 +93,7 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#3m16.ITM~
 	WRITE_ASCII 0x22 ~H5~ #2
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 27
@@ -96,6 +103,7 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#3m16.ITM~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 27
@@ -105,6 +113,7 @@ COPY_EXISTING ~ja#i1.ITM~  ~override/ja#3m16.ITM~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 7
 			target = 1
 			parameter1 = 27

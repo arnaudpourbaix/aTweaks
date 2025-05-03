@@ -29,6 +29,8 @@ export const SPELLS = {
   Command: "SPPR102",
   ResistFear: "SPPR108",
   Chant: "SPPR203",
+  CharmPersonOrAnimal: "SPPR204",
+  FindTraps: "SPPR205",
   HoldPerson: "SPPR208",
   Silence: "SPPR211",
   CallLightning: "SPPR302",
@@ -109,7 +111,8 @@ export const ATWEAKS_SPELLS = {
   SpeakWithPlants: "rr#fspkp",
   DimensionDoor: "rr#ddoor",
   DryadCharmPerson: "rr#fchrm",
-  HamadryadAnimalFriendship: "rr#fafrn",
+  AnimalFriendship: "rr#fafrn",
+  DetectSnaresAndPits: "rr#fdsnr",
 };
 
 export const SPELL_STATES = {
@@ -119,7 +122,7 @@ export const SPELL_STATES = {
   gaseousForm: "JA_GASEOUSFORM",
 };
 
-const DEFAULT_SPELL_PROBABILITY = 70;
+export const DEFAULT_SPELL_PROBABILITY = 70;
 
 const CHARM_TARGET_LISTS: RawTargetList[] = [
   {

@@ -14,6 +14,7 @@ COPY_EXISTING ~SPWI402.SPL~  ~override/rr#ddoor.SPL~
 	WRITE_SHORT 0x84 1
 	LPF ADD_EFFECT
 		INT_VAR
+			global = 1
 			opcode = 172
 			target = 1
 			power = 1
@@ -24,6 +25,7 @@ COPY_EXISTING ~SPWI402.SPL~  ~override/rr#ddoor.SPL~
 		END
 	LPF ADD_EFFECT
 		INT_VAR
+			global = 1
 			opcode = 171
 			target = 1
 			power = 1
@@ -205,6 +207,7 @@ CREATE SPL "rr#fspkp"
 		END
 	LPF ADD_EFFECT
 		INT_VAR
+			global = 1
 			opcode = 172
 			target = 1
 			power = 1
@@ -215,6 +218,7 @@ CREATE SPL "rr#fspkp"
 		END
 	LPF ADD_EFFECT
 		INT_VAR
+			global = 1
 			opcode = 171
 			target = 1
 			power = 1

@@ -100,6 +100,7 @@ IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
 	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -112,12 +113,14 @@ THEN
 	RESPONSE #100
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
 	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -130,12 +133,14 @@ THEN
 	RESPONSE #100
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
 	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -148,12 +153,14 @@ THEN
 	RESPONSE #100
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
 	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(FourthNearestEnemyOf(Myself),10)
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -166,12 +173,14 @@ THEN
 	RESPONSE #100
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Slow","LOCALS")
 	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(FifthNearestEnemyOf(Myself),10)
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -184,6 +193,7 @@ THEN
 	RESPONSE #100
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 		SetGlobalTimer("Slow","LOCALS",12)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Attack NoCheck enemy

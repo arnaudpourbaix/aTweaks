@@ -94,6 +94,17 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       "ThirdFarthestEnemyOf(Myself)",
     ],
   },
+  {
+    name: "Animals",
+    value: [
+      `NearestEnemyOfType([0.ANIMAL])`,
+      `SecondNearestEnemyOfType([0.ANIMAL])`,
+      `ThirdNearestEnemyOfType([0.ANIMAL])`,
+      `[NEUTRAL.ANIMAL]`,
+      `SecondNearest([NEUTRAL.ANIMAL])`,
+      `ThirdNearest([NEUTRAL.ANIMAL])`,
+    ],
+  },
 ];
 
 export const DEFAULT_STATUS_ORDER: TargetStatusName[] = [

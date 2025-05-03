@@ -5,7 +5,7 @@ import { ConditionalStatement } from "../src/model/final/script";
 import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { FactoryService } from "../src/services/factory.service";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 
@@ -42,31 +42,40 @@ export const abilityDryadDireCharm: RawCreatureAbility = {
 };
 
 const globals = {
-  trees: "ja#trees",
+  Wilderness: "ja#wilderness",
   MinscCharmed: "MinscCharmed",
   HelpDryads: "HelpDryads",
 };
 
-export const dryadOakTreeDimensionDoor: ConditionalStatement[] = [
+export const dryadWildernessAbilities: ConditionalStatement[] = [
   {
-    comment:
-      "Ability to literally step through a tree and then dimension door to the oak tree she is part of",
+    comment: "Can use dimension door and detect traps",
     triggers: [
-      factory.global(globals.trees, 0),
-      { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+      factory.global(globals.Wilderness, 0),
       { name: "AreaType", params: ["OUTDOOR"] },
       { name: "AreaType", params: ["CITY"], negation: true },
       { name: "AreaType", params: ["DUNGEON"], negation: true },
     ],
-    responses: factory.response([factory.setGlobal(globals.trees, 1)]),
+    responses: factory.response([factory.setGlobal(globals.Wilderness, 1)]),
   },
   {
     triggers: [
-      factory.global(globals.trees, 0),
-      { name: "HaveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+      factory.global(globals.Wilderness, 0),
+      {
+        name: "Or",
+        triggers: [
+          { name: "HaveSpellRES", params: [ATWEAKS_SPELLS.DimensionDoor] },
+          {
+            name: "HaveSpellRES",
+            params: [ATWEAKS_SPELLS.DetectSnaresAndPits],
+          },
+        ],
+      },
     ],
     responses: factory.response([
-      { name: "RemoveSpell", params: ["WIZARD_DIMENSION_DOOR"] },
+      { name: "RemoveSpellRES", params: [ATWEAKS_SPELLS.DimensionDoor] },
+      { name: "RemoveSpellRES", params: [ATWEAKS_SPELLS.DetectSnaresAndPits] },
+      factory.setGlobal(globals.Wilderness, 2),
     ]),
   },
 ];
@@ -279,7 +288,7 @@ export const FEY_DRYAD: RawCreature = {
       location: "init",
       type: "insertBefore",
       statements: [
-        ...dryadOakTreeDimensionDoor,
+        ...dryadWildernessAbilities,
         {
           comment: "Irenicus' Dungeon specific code",
           triggers: [

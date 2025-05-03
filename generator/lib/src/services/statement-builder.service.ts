@@ -177,17 +177,19 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!creature.dialog.length) return;
+    const nameTriggers: Triggers.Trigger[] = creature.dialog.map((n) => ({
+      name: "Name",
+      params: [n, "Myself"],
+    }));
+    const finalNameTrigger: Triggers.Trigger =
+      nameTriggers.length == 1
+        ? nameTriggers[0]
+        : { name: "Or", triggers: nameTriggers };
     statements.push({
       comment: "Initiate dialog",
       triggers: [
         this.factory.global(GLOBAL_CONFIG.bafConstants.dialog, 0),
-        {
-          name: "Or",
-          triggers: creature.dialog.map((n) => ({
-            name: "Name",
-            params: [n, "Myself"],
-          })),
-        },
+        finalNameTrigger,
         { name: "NumTimesTalkedTo", params: [0] },
         { name: "See", params: ["PC"] },
       ],
@@ -920,10 +922,9 @@ export class StatementService {
       actions.push(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
-    } else {
-      triggers.push(this.factory.globalRoundTimerExpired());
-      actions.push(this.factory.setGlobalRoundTimer());
     }
+    triggers.push(this.factory.globalRoundTimerExpired());
+    actions.push(this.factory.setGlobalRoundTimer());
     if (ability.range) {
       targetTriggers.unshift({
         name: "Range",

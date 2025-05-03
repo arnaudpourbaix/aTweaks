@@ -100,6 +100,7 @@ IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOf(Myself),WEAPON)
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -111,12 +112,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -128,12 +131,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -145,12 +150,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -162,12 +169,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -179,12 +188,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
 	HaveSpellRES("spin890")
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
@@ -196,6 +207,7 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("spin890",Myself)
 		SetGlobalTimer("Fear","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Attack NoCheck enemy

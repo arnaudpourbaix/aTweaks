@@ -101,6 +101,7 @@ IF
 	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([PC.0.0.MAGE_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
@@ -111,6 +112,7 @@ THEN
 	RESPONSE #100
 		SpellNoDec([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -118,6 +120,7 @@ IF
 	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([PC.0.0.CLERIC_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
@@ -128,6 +131,7 @@ THEN
 	RESPONSE #100
 		SpellNoDec([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -135,6 +139,7 @@ IF
 	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([PC.0.0.DRUID_ALL],WEAPON)
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
@@ -145,6 +150,7 @@ THEN
 	RESPONSE #100
 		SpellNoDec([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -152,6 +158,7 @@ IF
 	HaveSpell(WIZARD_MAGIC_MISSILE)
 	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([PC.0.0.BARD],WEAPON)
 	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
 	!StateCheck([PC.0.0.BARD],STATE_CHARMED)
@@ -161,6 +168,7 @@ THEN
 	RESPONSE #100
 		SpellNoDec([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
 		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Attack Slowed enemy

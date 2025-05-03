@@ -129,6 +129,7 @@ IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -141,12 +142,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("ja#1m8",Myself)
 		SetGlobalTimer("StreamOfFrost","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -159,12 +162,14 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("ja#1m8",Myself)
 		SetGlobalTimer("StreamOfFrost","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
 	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -177,6 +182,7 @@ THEN
 	RESPONSE #100
 		ForceSpellRES("ja#1m8",Myself)
 		SetGlobalTimer("StreamOfFrost","LOCALS",18)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Attack Slowed enemy

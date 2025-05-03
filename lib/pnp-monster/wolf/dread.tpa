@@ -207,6 +207,7 @@ Electricity-based spells cause only half damage.~
 COPY_EXISTING ~ja#2m22.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 98
 			target = 1
 			parameter1 = 2
@@ -217,6 +218,7 @@ COPY_EXISTING ~ja#2m22.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 208
 			target = 1
 			parameter1 = 1
@@ -225,6 +227,7 @@ COPY_EXISTING ~ja#2m22.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 232
 			target = 1
 			parameter2 = 19
@@ -247,6 +250,7 @@ CREATE ITM "ja#3m22"
 COPY_EXISTING ~ja#3m22.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 29
 			target = 1
 			parameter1 = 100
@@ -256,6 +260,7 @@ COPY_EXISTING ~ja#3m22.itm~ ~override~
 		END
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 31
 			target = 1
 			parameter1 = 100

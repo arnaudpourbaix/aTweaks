@@ -72,6 +72,7 @@ CREATE ITM "ja#3m37"
 COPY_EXISTING ~ja#3m37.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT
 		INT_VAR
+			global = 1
 			opcode = 20
 			target = 1
 			parameter2 = 1

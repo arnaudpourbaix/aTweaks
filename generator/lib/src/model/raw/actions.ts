@@ -95,7 +95,9 @@ export namespace Actions {
     | "JumpToPoint"
     | "CreateCreatureOffscreen"
     | "RandomTurn"
-    | "OpenDoor";
+    | "OpenDoor"
+    | "StartCutSceneMode"
+    | "StartCutScene";
 
   export interface Attack {
     name: "Attack";
@@ -175,7 +177,7 @@ export namespace Actions {
 
   export interface SetGlobal {
     name: "SetGlobal";
-    params: [string, "LOCALS" | "GLOBAL", number];
+    params: [string, "LOCALS" | "GLOBAL" | string, number];
   }
 
   export interface AddGlobals {
@@ -412,6 +414,15 @@ export namespace Actions {
     params: [ParamObject];
   }
 
+  export interface StartCutSceneMode {
+    name: "StartCutSceneMode";
+  }
+
+  export interface StartCutScene {
+    name: "StartCutScene";
+    params: [string];
+  }
+
   export type Action =
     | Attack
     | AttackOneRound
@@ -478,7 +489,9 @@ export namespace Actions {
     | JumpToPoint
     | CreateCreatureOffscreen
     | RandomTurn
-    | OpenDoor;
+    | OpenDoor
+    | StartCutSceneMode
+    | StartCutScene;
 
   export const ACTIONS: GenericScriptRawData[] = [
     {
@@ -1073,6 +1086,20 @@ export namespace Actions {
       parameters: "O:Object*",
       description:
         "This action will open the specified door. If the door is locked the creature must possess the correct key. Some doors central to the plot doors cannot be opened. The active creature can stick on this action if it fails.",
+      section: "Misc",
+    },
+    {
+      name: "StartCutSceneMode",
+      parameters: "",
+      description:
+        "This action starts a cutscene. Player control is removed, and scripts stop running. Note that actions already in the action list are not cleared without an explicit call to ClearAllActions.",
+      section: "Misc",
+    },
+    {
+      name: "StartCutScene",
+      parameters: "S:CutScene*",
+      description:
+        "This action starts a cutscene; a cinematic sequence that removes the GUI and player control. The cutscene parameter is the script name to run. The second variant can enable condition checking (trigger evaluation, off by default) when the second parameter is set to TRUE.",
       section: "Misc",
     },
   ];
