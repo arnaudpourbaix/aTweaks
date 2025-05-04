@@ -24,7 +24,6 @@ export const abilitySpeakWithPlants: RawCreatureAbility = {
   spell: {
     resource: ATWEAKS_SPELLS.SpeakWithPlants,
     type: "force",
-    selfTarget: true,
   },
   disableInterrupt: true,
   triggers: [{ name: "CheckStatGT", params: ["Myself", 0, "ENTANGLE"] }],
@@ -86,7 +85,7 @@ export const FEY_DRYAD: RawCreature = {
   tpaFile: "lib/pnp-monster/fey/dryad",
   tracking: true,
   combatWalk: true,
-  dialog: ["CDryad", "Ulene"],
+  dialog: ["CDryad", "Ulene", "L#APEST"],
   attack: {
     melee: false,
     ranged: false,
@@ -117,7 +116,7 @@ export const FEY_DRYAD: RawCreature = {
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: [],
-    removeScripts: ["DRYAD", "DW1MELGE", "INITDLG"],
+    removeScripts: ["DRYAD", "DW1MELGE", "INITDLG", "WTRUNSGT"],
   },
   effectFiles: [
     {
@@ -359,10 +358,19 @@ export const FEY_DRYAD: RawCreature = {
     "dr01mod", // Dryad (PofQuestPack)
     "drmod", // Dryad (PofQuestPack)
     "RE_DRYAD", // Dryad (PofQuestPack)
+    "H_KATREC", // Katreda
+    "L#APEST", // Y'Uula
+    "NTARCHAN", // Archandra
+    "NTASSAIA", // Assaia
+    "NTESSILA", // Essila
+    "NTLUCRET", // Lucretia
+    "NTMILEA", // Milea
+    "NTPAULIA", // Paulia
+    "NTTAMAEL", // Tamael
   ],
   adjustments: [
     {
-      files: ["DRYAD"],
+      files: ["DRYAD", "L#APEST"],
       data: { class: "INNOCENT" },
     },
   ],

@@ -86,10 +86,19 @@ END
 
 // Do nothing if...
 IF
-	OR(3)
+	OR(4)
 		Global("JA#COMBAT","LOCALS",0)
+		!Allegiance(Myself,EVILCUTOFF)
 		StateCheck(Myself,STATE_IMMOBILE)
 		StateCheck(Myself,STATE_REALLY_DEAD)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!InActiveArea(Myself)
+	!Range(NearestEnemyOf(Myself),30)
 THEN
 	RESPONSE #100
 		NoAction()

@@ -28,7 +28,7 @@ CREATE SPL "ja#1m33"
 			opcode = 176
 			target = 2
 			power = 1
-			parameter1 = 8
+			parameter1 = 7
 			parameter2 = 1
 			timing = 3
 			duration = 6
@@ -99,7 +99,7 @@ BEGIN
 					intelligence=3
 					wisdom=11
 					charisma=1
-					movement=3
+					movement=2
 					hp=174
 					ac=2
 					resistFire=100
@@ -108,11 +108,11 @@ BEGIN
 					apr=2
 					xpv=11000
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=3
-					saveWand=5
-					savePolymorph=4
-					saveBreath=4
-					saveSpell=6
+					saveDeath=4
+					saveWand=8
+					savePolymorph=7
+					saveBreath=10
+					saveSpell=9
 					morale=16
 					moraleBreak=4
 					moraleRecovery=15

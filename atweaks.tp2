@@ -202,7 +202,8 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 //             READ_LONG 0x28 animation
 //             READ_STRREF 0x08 name
 //             // PATCH_IF class = 183 BEGIN
-//             PATCH_IF class = 126 OR animation = 0x2200 BEGIN
+//             //PATCH_IF class = 126 OR animation = 0x2200 BEGIN
+//             PATCH_IF race = 120 OR animation = 0x2000 BEGIN
 //             //PATCH_IF animation = 0x7F0A BEGIN
 //                 //PATCH_PRINT ~"%SOURCE_RES%",~
 //                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~

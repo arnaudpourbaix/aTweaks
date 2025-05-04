@@ -5,6 +5,7 @@ import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AnimationChangeTypeEnum,
   AttackModifierTypeEnum,
+  CastingTimeModifierTypeEnum,
   CastSpellOnConditionTargetEnum,
   CharmTypeEnum,
   ColorEnum,
@@ -48,6 +49,7 @@ import {
   AnimationChangeEffect,
   ArmorClassBonusEffect,
   BerserkEffect,
+  CastingTimeModifierEffect,
   CastSpellEffect,
   CastSpellOnConditionEffect,
   CharmCreatureEffect,
@@ -486,6 +488,12 @@ export class EffectService {
       case EffectTypeEnum.InvisibilityDetection:
       case EffectTypeEnum.ModifyCollisionBehavior:
         result.parameter2 = `1`;
+        break;
+      case EffectTypeEnum.CastingTimeModifier:
+        result.parameter1 = `${(<CastingTimeModifierEffect>effect).value}`;
+        result.parameter2 = `${
+          CastingTimeModifierTypeEnum[(<CastingTimeModifierEffect>effect).type]
+        }`;
         break;
     }
     return result;

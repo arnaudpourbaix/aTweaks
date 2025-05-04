@@ -4,7 +4,8 @@ import { ObjectIdentifier } from "../ids/object";
 import { Triggers } from "./triggers";
 
 export interface RawTargetList {
-  name: ObjectIdentifier | AllegianceIdentifier | TargetListName;
+  //name: ObjectIdentifier | AllegianceIdentifier | TargetListName;
+  name: TargetListName;
   /**
    * Reverse target list
    */

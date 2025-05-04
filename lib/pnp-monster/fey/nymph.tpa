@@ -1,0 +1,246 @@
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m44.baf~
+
+CREATE EFF "rr#fbbea"
+	WRITE_LONG 0x10 146
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 1
+	WRITE_LONG 0x20 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~rr#fbbe2~ #8
+
+	// Blinding Beauty
+CREATE SPL "rr#fbbea"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPPR704C~ #8
+	WRITE_ASCII 0x76 ~SPPR704B~ #8
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 5
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@1901)
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~BIGNAREA~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 1
+			power = 1
+			parameter2 = 1
+			duration = 2
+			probability1 = 100
+		STR_VAR
+			resource = "ICCLKFR2"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~)
+			parameter2 = 3
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "rr#fbbea"
+		END
+
+	// Blinding Beauty (technical)
+CREATE SPL "rr#fbbe2"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x3a ~SPPR704C~ #8
+	WRITE_ASCII 0x76 ~SPPR704B~ #8
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 5
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@1901)
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~BIGNAREA~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 74
+			target = 2
+			power = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			power = 1
+			parameter1 = 14674
+			timing = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 8
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "EFF_P71B"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			power = 1
+			parameter2 = 1
+			resist_dispel = 3
+			duration = 3
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "SPH1HI01"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			power = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "fl#clrsp"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			power = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "rr#mracs"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			power = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "SPWI105"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			power = 1
+			resist_dispel = 3
+			duration = 7200
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "rr#fbbe2"
+		END
+
+ACTION_FOR_EACH ~file~ IN
+	BDNYMP01
+	HGNYMPH
+	BDNYMP02
+	NYMPHSU
+	NYMPHSUM
+	DW#NYMSU
+	ABELA
+	WQXNYM
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~DAGG01~
+			REMOVE_CRE_ITEM ~B1-6~
+			ADD_MEMORIZED_SPELL ~SPPR103~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR202~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR204~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR302~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR319~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR410~ #3 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR402~ #3 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~rr#fbbea~ #0 ~innate~ (1)
+			LPF clearProficiencies END
+			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
+			LPF patchCreature
+				INT_VAR
+					level1=7
+					strength=10
+					dexterity=17
+					constitution=12
+					intelligence=16
+					wisdom=12
+					charisma=19
+					movement=10
+					hp=24
+					ac=9
+					resistMagic=50
+					thac0=17
+					apr=0
+					xpv=1400
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_GOOD~)
+					saveDeath=10
+					saveWand=14
+					savePolymorph=13
+					saveBreath=16
+					saveSpell=15
+					morale=7
+					moraleBreak=2
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
+					class=IDS_OF_SYMBOL (~class~ ~DRUID~)
+					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN BDENSHTV BDNYMP01 END
+			LPF patchCreatureScript STR_VAR script=ja#m44 removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDNYMP02~) BEGIN 
+				WRITE_BYTE 0x27b IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~) // alignment
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

@@ -25,6 +25,7 @@ export enum TraStringReferenceEnum {
   DimensionDoorDescription = 1891,
   Entangle = 4017,
   AnimalFriendship = 1900,
+  BlindingBeauty = 1901,
   DetectSnaresAndPits = 1904,
 }
 
@@ -65,4 +66,5 @@ export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [
   { id: [14128], str: "Polymorph", group: "polymorph" },
   { id: [25124, 31729, 31732, 31757], str: "Polymorphed", group: "polymorph" },
   { id: [14026], str: "Death", group: "death" },
+  { id: [14674], str: "Blinded", group: "blind" },
 ];

@@ -8,6 +8,7 @@ const factory = FactoryService.instance;
 export const SPELLS = {
   // Wizard
   CharmPerson: "SPWI104",
+  ColorSpray: "SPWI105",
   ConeOfCold: "SPWI503",
   Darkness15Radius: "SPWI228",
   DimensionDoor: "SPWI402",
@@ -25,6 +26,7 @@ export const SPELLS = {
   Stoneskin: "SPWI408",
   // Priest
   Bless: "SPPR101",
+  CureLightWounds: "SPPR103",
   Entangle: "SPPR105",
   Command: "SPPR102",
   ResistFear: "SPPR108",
@@ -32,6 +34,7 @@ export const SPELLS = {
   CharmPersonOrAnimal: "SPPR204",
   FindTraps: "SPPR205",
   HoldPerson: "SPPR208",
+  Barkskin: "SPPR202",
   Silence: "SPPR211",
   CallLightning: "SPPR302",
   GlyphOfWarding: "SPPR304",
@@ -39,6 +42,9 @@ export const SPELLS = {
   MiscastMagic: "SPPR310",
   RigidThinking: "SPPR311",
   SummonInsects: "SPPR319",
+  AnimalSummoning4: "SPPR402",
+  CallWoodlandBeeings: "SPPR410",
+  BlindingBeauty: "SPPR704",
   // Class
   BerserkerRage: "SPCL321",
   BarbarianRage: "SPCL152",
@@ -113,6 +119,10 @@ export const ATWEAKS_SPELLS = {
   DryadCharmPerson: "rr#fchrm",
   AnimalFriendship: "rr#fafrn",
   DetectSnaresAndPits: "rr#fdsnr",
+  BlindingBeauty: "rr#fbbea",
+  BlindingBeautyTechnical: "rr#fbbe2",
+  ColorSpray: "fl#clrsp",
+  ColorSprayRadiant: "rr#mracs",
 };
 
 export const SPELL_STATES = {
@@ -242,6 +252,17 @@ export const ABILITY_PRESETS: {
     },
   },
   {
+    preset: SPELLS.CharmPersonOrAnimal,
+    ability: {
+      name: "Charm Person or Animal",
+      target: CHARM_TARGET_LISTS,
+      spell: {
+        id: "CLERIC_CHARM_PERSON",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+    },
+  },
+  {
     preset: SPELLS.PowerWordSleep,
     ability: {
       name: "Power Word Sleep",
@@ -308,7 +329,6 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_BLESS",
         probability: DEFAULT_SPELL_PROBABILITY,
-        selfTarget: true,
       },
     },
   },
@@ -330,7 +350,6 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_REMOVE_FEAR",
         probability: DEFAULT_SPELL_PROBABILITY,
-        selfTarget: true,
       },
     },
   },
@@ -341,7 +360,6 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_CHANT",
         probability: DEFAULT_SPELL_PROBABILITY,
-        selfTarget: true,
       },
     },
   },
@@ -523,10 +541,72 @@ export const ABILITY_PRESETS: {
       name: "Entangle",
       target: {
         name: "NearestEnemies",
+        includeStatus: ["Able"],
         triggers: [factory.checkStat(0, "ENTANGLE")],
       },
       spell: {
         id: "CLERIC_ENTANGLE",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+    },
+  },
+  {
+    preset: SPELLS.CureLightWounds,
+    ability: {
+      name: "Cure Light Wounds",
+      spell: {
+        id: "CLERIC_CURE_LIGHT_WOUNDS",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [{ name: "HPPercentLT", params: ["Myself", 75] }],
+    },
+  },
+  {
+    preset: SPELLS.Barkskin,
+    ability: {
+      name: "Barkskin",
+      spell: {
+        id: "CLERIC_BARKSKIN",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+    },
+  },
+  {
+    preset: SPELLS.SummonInsects,
+    ability: {
+      name: "Summon Insects",
+      target: {
+        name: "PCSpellcasters",
+        includeStatus: ["Able"],
+        randomOrder: true,
+      },
+      spell: {
+        id: "CLERIC_SUMMON_INSECTS",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+    },
+  },
+  {
+    preset: SPELLS.AnimalSummoning4,
+    ability: {
+      name: "Summon Insects",
+      target: {
+        name: "PCsPreferringWeak",
+        randomOrder: true,
+      },
+      spell: {
+        //id: "CLERIC_ANIMAL_SUMMONING_4", // id depends on installed mods (can be 1 or 4)
+        resource: "SPPR402",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+    },
+  },
+  {
+    preset: SPELLS.CallWoodlandBeeings,
+    ability: {
+      name: "Call Woodland Beeings",
+      spell: {
+        id: "CLERIC_CALL_WOODLAND_BEINGS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
     },

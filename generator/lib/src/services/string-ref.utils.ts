@@ -13,7 +13,9 @@ export namespace StringRefUtils {
       .flat();
   }
   export function getStringId(str: string): number {
-    const result = EXISTING_STRING_REFERENCES.find((s) => s.str === str);
+    const result = EXISTING_STRING_REFERENCES.find(
+      (s) => s.str.toLowerCase() === str.toLowerCase()
+    );
     if (!result) throw new Error(`Stringref ${str} not found !`);
     if (!result.id[0])
       throw new Error(`Stringref ${str} has been found but no id configured !`);

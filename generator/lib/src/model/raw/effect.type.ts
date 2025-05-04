@@ -7,6 +7,7 @@ export type RawEffectOpcode =
   | "Berserk"
   | "Blindness"
   | "Blur"
+  | "CastingTimeModifier"
   | "CastSpell"
   | "CastSpellOnCondition"
   | "CharacterColorPulse"

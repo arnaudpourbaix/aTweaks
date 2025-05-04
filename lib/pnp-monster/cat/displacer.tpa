@@ -59,7 +59,7 @@ BEGIN
 					intelligence=4
 					wisdom=12
 					charisma=8
-					movement=13
+					movement=12
 					hp=60
 					ac=4
 					thac0=15

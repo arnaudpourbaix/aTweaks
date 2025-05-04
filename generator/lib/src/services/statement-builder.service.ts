@@ -52,13 +52,6 @@ export class StatementService {
     );
     this.execute(this.shouts, "shouts", statements, creature, options);
     this.execute(
-      this.handlePanic,
-      "handlePanic",
-      statements,
-      creature,
-      options
-    );
-    this.execute(
       this.followSummoner,
       "followSummoner",
       statements,
@@ -75,6 +68,13 @@ export class StatementService {
     this.execute(
       this.noActionOutsideOfCombat,
       "noActionOutsideOfCombat",
+      statements,
+      creature,
+      options
+    );
+    this.execute(
+      this.handlePanic,
+      "handlePanic",
       statements,
       creature,
       options
@@ -483,6 +483,11 @@ export class StatementService {
           name: "Or",
           triggers: [
             this.factory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+            {
+              name: "Allegiance",
+              params: ["Myself", "EVILCUTOFF"],
+              negation: true,
+            },
             { name: "StateCheck", params: ["Myself", "STATE_IMMOBILE"] },
             { name: "StateCheck", params: ["Myself", "STATE_REALLY_DEAD"] },
           ],
@@ -490,18 +495,13 @@ export class StatementService {
       ],
       responses,
     });
-    // statements.push({
-    //   triggers: [
-    //     {
-    //       name: "Allegiance",
-    //       params: ["Myself", "EVILCUTOFF"],
-    //       negation: true,
-    //     },
-    //     { name: "InActiveArea", params: ["Myself"], negation: true },
-    //     { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
-    //   ],
-    //   responses,
-    // });
+    statements.push({
+      triggers: [
+        { name: "InActiveArea", params: ["Myself"], negation: true },
+        { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
+      ],
+      responses,
+    });
   }
 
   private followSummoner(
@@ -923,8 +923,10 @@ export class StatementService {
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
-    triggers.push(this.factory.globalRoundTimerExpired());
-    actions.push(this.factory.setGlobalRoundTimer());
+    if (!ability.noRoundTimer) {
+      triggers.push(this.factory.globalRoundTimerExpired());
+      actions.push(this.factory.setGlobalRoundTimer());
+    }
     if (ability.range) {
       targetTriggers.unshift({
         name: "Range",

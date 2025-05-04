@@ -2,7 +2,6 @@ import {
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
-import { GLOBAL_CONFIG } from "../config/generate";
 import {
   ATWEAKS_SPELLS,
   DEFAULT_SPELL_PROBABILITY,
@@ -13,10 +12,11 @@ import {
   BafExistingStringReference,
   TraStringReferenceEnum,
 } from "../config/stringRef";
+import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
 import { FactoryService } from "../src/services/factory.service";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile } from "../src/services/misc.func";
 import {
   abilityDryadDireCharm,
   abilitySpeakWithPlants,
@@ -37,12 +37,25 @@ const entangleCommonEffect: RawBaseEffect = {
   dispelResistance: "DispelNotBypassResistance",
   saveTypes: ["Spell"],
 };
-
 const animalFriendshipCommonEffect: RawBaseEffect = {
   timing: "InstantLimited",
   duration: 120,
   dispelResistance: "DispelNotBypassResistance",
   saveTypes: ["Spell"],
+};
+export const abilityAnimalFriendship: RawCreatureAbility = {
+  name: "Animal Friendship",
+  target: [
+    {
+      name: "Animals",
+    },
+  ],
+  spell: {
+    resource: ATWEAKS_SPELLS.AnimalFriendship,
+    type: "force",
+    probability: DEFAULT_SPELL_PROBABILITY,
+  },
+  disableInterrupt: true,
 };
 
 const globals = {
@@ -88,13 +101,14 @@ export const FEY_HAMADRYAD: RawCreature = {
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: ["ANTIWEB"],
-    removeScripts: ["HAMA", "DW1MELGE"],
+    removeScripts: ["HAMA", "DW1MELGE", "BDHAMADC"],
     memorizedSpells: [
       { file: ATWEAKS_SPELLS.DryadCharmPerson, memorizedCount: 3 },
       { file: ATWEAKS_SPELLS.SpeakWithPlants, memorizedCount: 1 },
       { file: ATWEAKS_SPELLS.DimensionDoor, memorizedCount: 1 },
     ],
     immunities: ["entangle"],
+    deleteEffectOpcodes: ["CastingTimeModifier", "ProtectionFromSpell"],
   },
   projectiles: [
     {
@@ -376,40 +390,44 @@ export const FEY_HAMADRYAD: RawCreature = {
       },
       timer: {
         name: "entangle",
-        value: 30,
+        value: 18,
       },
     },
     abilityDryadDireCharm,
-    {
-      name: "Animal Friendship",
-      target: [
-        {
-          name: "Animals",
-        },
-      ],
-      spell: {
-        resource: ATWEAKS_SPELLS.AnimalFriendship,
-        type: "force",
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      disableInterrupt: true,
-    },
+    abilityAnimalFriendship,
     {
       name: "Detect Snares And Pits",
       spell: {
         resource: ATWEAKS_SPELLS.DetectSnaresAndPits,
         type: "force",
         probability: DEFAULT_SPELL_PROBABILITY,
-        selfTarget: true,
       },
       disableInterrupt: true,
     },
   ],
   files: [
-    "DRYADHA", // Hamadryad
+    "DRYADHA",
     //"HAMASU",    // Spell Revisions summoned Hamadryad (do not touch unless reviewing spell Call Woodland Beings)
     "VAELASA", // Vaelasa (Fairy Queen in Windsper Hills)
     "WQXHAMA", // The White Queen
+    "WIDRYAD1", // Dryad of Peldvale
+    "WIDRYAD2", // Dryad of Peldvale
+    "BDHAMADC", // Corrupted Hamadryad
+    "BDHAMADR", // Hamadryad
   ],
-  adjustments: [],
+  adjustments: [
+    // {
+    //   files: [],
+    //   summon: true,
+    //   // RR#FHAMA
+    // },
+    {
+      files: ["WIDRYAD1", "WIDRYAD2"],
+      data: { level1: 8 },
+    },
+    {
+      files: ["BDHAMADC"],
+      data: { alignment: "NEUTRAL_EVIL" },
+    },
+  ],
 };

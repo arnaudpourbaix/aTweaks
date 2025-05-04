@@ -92,10 +92,10 @@ BEGIN
 					apr=2
 					xpv=650
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=11
+					saveDeath=9
 					saveWand=13
 					savePolymorph=12
-					saveBreath=13
+					saveBreath=15
 					saveSpell=14
 					morale=9
 					moraleBreak=4
@@ -127,11 +127,11 @@ BEGIN
 				WRITE_SHORT 0x24 80 // hp
 				WRITE_SHORT 0x26 80 // hp
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 10 // saveDeath
-				WRITE_BYTE 0x55 12 // saveWand
-				WRITE_BYTE 0x56 11 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 8 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES

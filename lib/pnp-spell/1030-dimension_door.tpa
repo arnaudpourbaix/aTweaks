@@ -27,7 +27,7 @@ CREATE SPL "spwi402"
 	LPF ADD_EFFECT INT_VAR opcode=174	target=1 power=4 resist_dispel=1 probability1=100 timing=1 STR_VAR resource="EFF_M09"	END
 	LPF ADD_EFFECT INT_VAR opcode=215 target=1 power=4 resist_dispel=1 probability1=100 timing=1 parameter2=2 duration=1 STR_VAR resource="SPDIMNDR" END
 	LPF ADD_EFFECT INT_VAR opcode=124	target=1 power=4 resist_dispel=1 probability1=100 timing=4 duration=1 END
-	LPF ADD_EFFECT INT_VAR opcode=20  target=1 power=4 resist_dispel=1 probability1=100 timing=3 duration=1 END
+	LPF ADD_EFFECT INT_VAR opcode=20  target=1 power=4 resist_dispel=1 probability1=100 timing=0 duration=1 END // 3
 
 LAF hide_spell INT_VAR hide=0 STR_VAR ids="WIZARD_DIMENSION_DOOR" END
 LAF hide_spell INT_VAR hide=1 silent=1 STR_VAR ids="WIZARD_DIMENSION_JUMP" END

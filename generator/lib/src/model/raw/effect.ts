@@ -11,6 +11,7 @@ import {
   RawAttackModifierType,
   RawBerserkType,
   RawBonusHPHealFlag,
+  RawCastingTimeModifierType,
   RawCastSpellOnConditionTarget,
   RawCastSpellOnConditionType,
   RawCharmType,
@@ -157,6 +158,12 @@ export type StatisticModifierEffect = RawBaseEffect & {
     | "SaveVsWandModifier";
   value: number;
   type: RawEffectStatisticModifier;
+};
+
+export type CastingTimeModifierEffect = RawBaseEffect & {
+  opcode: "CastingTimeModifier";
+  value: number;
+  type: RawCastingTimeModifierType;
 };
 
 export type ModifierTypeEffect = RawBaseEffect & {
@@ -474,6 +481,7 @@ export type RawEffect =
   | AnimationChangeEffect
   | ArmorClassBonusEffect
   | BerserkEffect
+  | CastingTimeModifierEffect
   | CastSpellEffect
   | CastSpellOnConditionEffect
   | ColorPulseEffect

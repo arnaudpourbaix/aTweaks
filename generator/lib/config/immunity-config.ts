@@ -565,6 +565,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "SPPR105", // Entangle (Priest)
       "SPWM111", // Entangle (Wild Mage)
       "SPIN688", // Plant Growth (Black Dragon)
+      "BDBOW06", // Entangle (Hamadryad SoD ?)
       ATWEAKS_SPELLS.ShamblerEntangle,
       ATWEAKS_SPELLS.HamadryadEntangle,
     ],
@@ -958,18 +959,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "trait",
     description: ["Plants' traits"],
     immunities: [
+      "mindSpells",
+      "poison",
+      "sleep",
+      "hold",
+      "polymorph",
+      "stun",
+      "criticalHit",
+      "backstab",
       "disease",
       "bleeding",
       "petrification",
-      "stun",
-      "hold",
-      "polymorph",
-      "confusion",
-      "charm",
-      "fear",
-      "sleep",
-      "illusion",
-      "poison",
       "insectSpells",
       "entangle",
     ],

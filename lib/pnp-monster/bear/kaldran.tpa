@@ -129,11 +129,11 @@ BEGIN
 					thac0=7
 					apr=2
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=7
-					saveWand=9
-					savePolymorph=8
-					saveBreath=8
-					saveSpell=10
+					saveDeath=6
+					saveWand=10
+					savePolymorph=9
+					saveBreath=12
+					saveSpell=11
 					morale=15
 					moraleBreak=4
 					moraleRecovery=15

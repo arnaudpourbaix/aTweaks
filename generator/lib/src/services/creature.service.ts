@@ -9,6 +9,7 @@ import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { CreatureSize } from "../model/raw/enum";
 import { convertMovement } from "./misc.func";
 import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
+import { SAVING_THROWS } from "../model/constants";
 
 export class CreatureService {
   static instance = new CreatureService();
@@ -213,87 +214,19 @@ export class CreatureService {
     const level = data.level1 ?? parent?.level1;
     if (!level)
       throw new Error(`Can't generate thac0 because level1 is unknown`);
-    const table = [
-      {
-        levels: [0],
-        saveDeath: 16,
-        saveWand: 18,
-        savePolymorph: 17,
-        saveBreath: 20,
-        saveSpell: 19,
-      },
-      {
-        levels: [1, 2],
-        saveDeath: 14,
-        saveWand: 16,
-        savePolymorph: 15,
-        saveBreath: 17,
-        saveSpell: 17,
-      },
-      {
-        levels: [3, 4],
-        saveDeath: 13,
-        saveWand: 15,
-        savePolymorph: 14,
-        saveBreath: 16,
-        saveSpell: 16,
-      },
-      {
-        levels: [5, 6],
-        saveDeath: 11,
-        saveWand: 13,
-        savePolymorph: 12,
-        saveBreath: 13,
-        saveSpell: 14,
-      },
-      {
-        levels: [7, 8],
-        saveDeath: 10,
-        saveWand: 12,
-        savePolymorph: 11,
-        saveBreath: 12,
-        saveSpell: 13,
-      },
-      {
-        levels: [9, 10],
-        saveDeath: 8,
-        saveWand: 10,
-        savePolymorph: 9,
-        saveBreath: 9,
-        saveSpell: 11,
-      },
-      {
-        levels: [11, 12],
-        saveDeath: 7,
-        saveWand: 9,
-        savePolymorph: 8,
-        saveBreath: 8,
-        saveSpell: 10,
-      },
-      {
-        levels: [13, 14],
-        saveDeath: 5,
-        saveWand: 7,
-        savePolymorph: 6,
-        saveBreath: 5,
-        saveSpell: 8,
-      },
-      {
-        levels: [15, 16],
-        saveDeath: 4,
-        saveWand: 6,
-        savePolymorph: 5,
-        saveBreath: 4,
-        saveSpell: 7,
-      },
-    ];
-    const saves = table.find((t) => t.levels.includes(level)) ?? {
-      levels: [],
-      saveDeath: 3,
-      saveWand: 5,
-      savePolymorph: 4,
-      saveBreath: 4,
-      saveSpell: 6,
+    const classe = data.class ?? parent?.class ?? "";
+    const table =
+      classe.indexOf("DRUID") !== 1 || classe.indexOf("CLERIC") !== 1
+        ? SAVING_THROWS["priest"]
+        : SAVING_THROWS["fighter"];
+    const saves = table.find(
+      (t) => level >= t.levels[0] && level <= t.levels[1]
+    ) as {
+      saveDeath: number;
+      saveWand: number;
+      savePolymorph: number;
+      saveBreath: number;
+      saveSpell: number;
     };
     data.saveDeath = saves.saveDeath;
     data.saveWand = saves.saveWand;

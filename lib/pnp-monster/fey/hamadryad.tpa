@@ -435,6 +435,10 @@ ACTION_FOR_EACH ~file~ IN
 	DRYADHA
 	VAELASA
 	WQXHAMA
+	WIDRYAD1
+	WIDRYAD2
+	BDHAMADC
+	BDHAMADR
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -450,6 +454,8 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fdsnr~ #0 ~innate~ (1)
 			LPF clearProficiencies END
+			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=189 END
+			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
 				INT_VAR
@@ -460,7 +466,7 @@ BEGIN
 					intelligence=14
 					wisdom=14
 					charisma=18
-					movement=13
+					movement=12
 					hp=32
 					ac=7
 					resistMagic=75
@@ -468,11 +474,11 @@ BEGIN
 					apr=1
 					xpv=1400
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
+					saveDeath=9
+					saveWand=13
+					savePolymorph=12
+					saveBreath=15
+					saveSpell=14
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15
@@ -483,8 +489,22 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE END
+			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE BDHAMADC END
 			LPF patchCreatureScript STR_VAR script=ja#m42 removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD2~) BEGIN 
+				WRITE_SHORT 0x24 64 // hp
+				WRITE_SHORT 0x26 64 // hp
+				WRITE_BYTE 0x52 13 // thac0
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x234 8 // level1
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDHAMADC~) BEGIN 
+				WRITE_BYTE 0x27b IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~) // alignment
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

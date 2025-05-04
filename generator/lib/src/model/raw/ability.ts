@@ -21,6 +21,10 @@ export interface RawCreatureAbility {
    * For ability that can be cast every n seconds (one hour is 300)
    */
   timer?: { name: string; value: number };
+  /**
+   * Ability doesn't share common round timer
+   */
+  noRoundTimer?: boolean;
   triggers?: Triggers.Trigger[];
   /**
    * Actions before casting a spell

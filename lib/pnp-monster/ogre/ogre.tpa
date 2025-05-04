@@ -135,18 +135,18 @@ BEGIN
 					intelligence=8
 					wisdom=7
 					charisma=7
-					movement=8
+					movement=7
 					hp=40
 					ac=5
 					thac0=17
 					apr=1
 					xpv=270
 					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
+					saveDeath=9
+					saveWand=13
+					savePolymorph=12
+					saveBreath=15
+					saveSpell=14
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15
@@ -173,10 +173,10 @@ BEGIN
 				WRITE_SHORT 0x24 50 // hp
 				WRITE_SHORT 0x26 50 // hp
 				WRITE_BYTE 0x52 15 // thac0
-				WRITE_BYTE 0x54 11 // saveDeath
+				WRITE_BYTE 0x54 9 // saveDeath
 				WRITE_BYTE 0x55 13 // saveWand
 				WRITE_BYTE 0x56 12 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x57 15 // saveBreath
 				WRITE_BYTE 0x58 14 // saveSpell
 				WRITE_BYTE 0x234 5 // level1
 			END
@@ -187,11 +187,11 @@ BEGIN
 				WRITE_SHORT 0x46 3 // ac
 				WRITE_SHORT 0x48 3 // ac
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 10 // saveDeath
-				WRITE_BYTE 0x55 12 // saveWand
-				WRITE_BYTE 0x56 11 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 7 // level1
 				WRITE_BYTE 0x239 50 // exceptionalStrength
 				ADD_CRE_ITEM ~ja#2m30~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
@@ -203,11 +203,11 @@ BEGIN
 				WRITE_SHORT 0x46 2 // ac
 				WRITE_SHORT 0x48 2 // ac
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 10 // saveDeath
-				WRITE_BYTE 0x55 12 // saveWand
-				WRITE_BYTE 0x56 11 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 7 // level1
 				WRITE_BYTE 0x239 100 // exceptionalStrength
 				ADD_CRE_ITEM ~ja#3m30~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
@@ -229,11 +229,11 @@ BEGIN
 				WRITE_SHORT 0x24 73 // hp
 				WRITE_SHORT 0x26 73 // hp
 				WRITE_BYTE 0x52 11 // thac0
-				WRITE_BYTE 0x54 8 // saveDeath
-				WRITE_BYTE 0x55 10 // saveWand
-				WRITE_BYTE 0x56 9 // savePolymorph
-				WRITE_BYTE 0x57 9 // saveBreath
-				WRITE_BYTE 0x58 11 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 9 // level1
 				WRITE_BYTE 0x238 19 // strength
 				WRITE_BYTE 0x239 0 // exceptionalStrength
@@ -246,10 +246,10 @@ BEGIN
 				WRITE_SHORT 0x24 98 // hp
 				WRITE_SHORT 0x26 98 // hp
 				WRITE_BYTE 0x52 11 // thac0
-				WRITE_BYTE 0x54 8 // saveDeath
+				WRITE_BYTE 0x54 6 // saveDeath
 				WRITE_BYTE 0x55 10 // saveWand
 				WRITE_BYTE 0x56 9 // savePolymorph
-				WRITE_BYTE 0x57 9 // saveBreath
+				WRITE_BYTE 0x57 12 // saveBreath
 				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 10 // level1
 			END
@@ -257,11 +257,11 @@ BEGIN
 				WRITE_SHORT 0x24 106 // hp
 				WRITE_SHORT 0x26 106 // hp
 				WRITE_BYTE 0x52 9 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 9 // saveWand
-				WRITE_BYTE 0x56 8 // savePolymorph
-				WRITE_BYTE 0x57 8 // saveBreath
-				WRITE_BYTE 0x58 10 // saveSpell
+				WRITE_BYTE 0x54 6 // saveDeath
+				WRITE_BYTE 0x55 10 // saveWand
+				WRITE_BYTE 0x56 9 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 11 // level1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~LARZE~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~KROTAN~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~NTKROTAN~) BEGIN 
@@ -269,10 +269,10 @@ BEGIN
 				WRITE_SHORT 0x26 122 // hp
 				WRITE_BYTE 0x52 7 // thac0
 				WRITE_BYTE 0x54 5 // saveDeath
-				WRITE_BYTE 0x55 7 // saveWand
-				WRITE_BYTE 0x56 6 // savePolymorph
-				WRITE_BYTE 0x57 5 // saveBreath
-				WRITE_BYTE 0x58 8 // saveSpell
+				WRITE_BYTE 0x55 9 // saveWand
+				WRITE_BYTE 0x56 8 // savePolymorph
+				WRITE_BYTE 0x57 11 // saveBreath
+				WRITE_BYTE 0x58 10 // saveSpell
 				WRITE_BYTE 0x234 13 // level1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~KROTAN~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~NTKROTAN~) BEGIN 
@@ -281,11 +281,11 @@ BEGIN
 				WRITE_SHORT 0x46 10 // ac
 				WRITE_SHORT 0x48 10 // ac
 				WRITE_BYTE 0x52 5 // thac0
-				WRITE_BYTE 0x54 4 // saveDeath
-				WRITE_BYTE 0x55 6 // saveWand
-				WRITE_BYTE 0x56 5 // savePolymorph
-				WRITE_BYTE 0x57 4 // saveBreath
-				WRITE_BYTE 0x58 7 // saveSpell
+				WRITE_BYTE 0x54 5 // saveDeath
+				WRITE_BYTE 0x55 9 // saveWand
+				WRITE_BYTE 0x56 8 // savePolymorph
+				WRITE_BYTE 0x57 11 // saveBreath
+				WRITE_BYTE 0x58 10 // saveSpell
 				WRITE_BYTE 0x234 15 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES

@@ -40,6 +40,9 @@ import { OGRE_BERSERKER } from "./ogre_berserker";
 import { OGRE_SHAMAN } from "./ogre_shaman";
 import { FEY_DRYAD } from "./fey_dryad";
 import { FEY_HAMADRYAD } from "./fey_hamadryad";
+import { FEY_NYMPH } from "./fey_nymph";
+import { FEY_SIRINE } from "./fey_sirine";
+import { PLANT_TREANT } from "./plant_treant";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -84,4 +87,18 @@ export const CREATURES: RawCreature[] = [
   OGRE_MAGE,
   FEY_DRYAD,
   FEY_HAMADRYAD,
+  FEY_NYMPH,
+  FEY_SIRINE,
+  PLANT_TREANT,
 ];
+
+/*
+"SHOAL", // Shoal the Nereid
+"BDNEREID", // Nereid
+"BDPWATER", // Nereid
+
+"DEMSUC01", // Succubus
+"NTINDFIG", // Succubus
+"KIRINH", // Kirinhale
+
+*/

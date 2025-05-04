@@ -515,13 +515,14 @@ BEGIN
 END
 
 DEFINE_PATCH_FUNCTION entangle_immunity
-	INT_VAR index = 5
+	INT_VAR index = 6
 	STR_VAR result = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR105~
 		~SPWM111~
 		~SPIN688~
+		~BDBOW06~
 		~RR#SMENT~
 		~RR#FENTG~
 	END
@@ -926,18 +927,17 @@ END
 
 DEFINE_PATCH_FUNCTION plant_immunity
 BEGIN
+	LPF mindSpells_immunity END
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF polymorph_immunity END
+	LPF stun_immunity END
+	LPF criticalHit_immunity END
+	LPF backstab_immunity END
 	LPF disease_immunity END
 	LPF bleeding_immunity END
 	LPF petrification_immunity END
-	LPF stun_immunity END
-	LPF hold_immunity END
-	LPF polymorph_immunity END
-	LPF confusion_immunity END
-	LPF charm_immunity END
-	LPF fear_immunity END
-	LPF sleep_immunity END
-	LPF illusion_immunity END
-	LPF poison_immunity END
 	LPF insectSpells_immunity END
 	LPF entangle_immunity END
 END

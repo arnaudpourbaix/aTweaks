@@ -1,3 +1,5 @@
+export type RawCastingTimeModifierType = "Increment" | "SetAll" | "SetHigher";
+
 export type RawDisableButton =
   | "Stealth"
   | "ThievingSkill"

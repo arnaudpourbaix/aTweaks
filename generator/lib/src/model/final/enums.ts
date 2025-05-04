@@ -1,5 +1,11 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum CastingTimeModifierTypeEnum {
+  Increment = 0,
+  SetAll = 1,
+  SetHigher = 2,
+}
+
 export enum DisableButtonEnum {
   Stealth = 0,
   ThievingSkill = 1,

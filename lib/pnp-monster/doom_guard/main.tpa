@@ -158,10 +158,10 @@ BEGIN
 					apr=1
 					xpv=2000
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=11
+					saveDeath=9
 					saveWand=13
 					savePolymorph=12
-					saveBreath=13
+					saveBreath=15
 					saveSpell=14
 					morale=20
 					moraleBreak=4
@@ -179,11 +179,11 @@ BEGIN
 				WRITE_SHORT 0x24 84 // hp
 				WRITE_SHORT 0x26 84 // hp
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 10 // saveDeath
-				WRITE_BYTE 0x55 12 // saveWand
-				WRITE_BYTE 0x56 11 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 13 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 8 // level1
 				SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			END

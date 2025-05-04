@@ -77,11 +77,11 @@ BEGIN
 					apr=1
 					xpv=270
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
+					saveDeath=9
+					saveWand=13
+					savePolymorph=12
+					saveBreath=15
+					saveSpell=14
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15

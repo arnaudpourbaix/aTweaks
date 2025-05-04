@@ -97,7 +97,7 @@ BEGIN
 					intelligence=9
 					wisdom=12
 					charisma=8
-					movement=15
+					movement=14
 					hp=48
 					ac=5
 					resistFire="-10"
@@ -106,10 +106,10 @@ BEGIN
 					apr=1
 					xpv=975
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
-					saveDeath=11
+					saveDeath=9
 					saveWand=13
 					savePolymorph=12
-					saveBreath=13
+					saveBreath=15
 					saveSpell=14
 					morale=13
 					moraleBreak=4
