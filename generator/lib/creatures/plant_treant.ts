@@ -1,3 +1,6 @@
+import { ATWEAKS_CREATURES } from "../config/creatures";
+import { SPELLS } from "../config/spell";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -7,9 +10,9 @@ const id = MonsterEnum.Treant;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon8hd = file(1, id);
-const mainWeapon10hd = file(2, id);
-const mainWeapon12hd = file(3, id);
+const mainWeapon7hd = file(1, id);
+const mainWeapon9hd = file(2, id);
+const mainWeapon11hd = file(3, id);
 
 export const PLANT_TREANT: RawCreature = {
   name: "Treant",
@@ -19,9 +22,9 @@ export const PLANT_TREANT: RawCreature = {
   combatWalk: true,
   data: {
     level1: 7,
-    strength: 23,
+    strength: 20,
     dexterity: 8,
-    constitution: 21,
+    constitution: 20,
     intelligence: 12,
     wisdom: 16,
     charisma: 12,
@@ -43,12 +46,14 @@ export const PLANT_TREANT: RawCreature = {
   additionalData: {
     removeItems: ["BDTREANT", "BDPLANT", "IPSION"],
     removeScripts: ["BDENSHTV", "BDFIG00"],
+    immunities: ["plant"],
   },
   items: [
     {
-      file: mainWeapon8hd,
+      file: mainWeapon7hd,
       equippedSlot: "WEAPON1",
       type: "Melee",
+      range: 5,
       diceThrown: 2,
       diceSize: 8,
       damageType: "Crushing",
@@ -56,14 +61,14 @@ export const PLANT_TREANT: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
     {
-      file: mainWeapon10hd,
-      copyFrom: mainWeapon8hd,
+      file: mainWeapon9hd,
+      copyFrom: mainWeapon7hd,
       diceThrown: 3,
       diceSize: 6,
     },
     {
-      file: mainWeapon12hd,
-      copyFrom: mainWeapon10hd,
+      file: mainWeapon11hd,
+      copyFrom: mainWeapon9hd,
       diceThrown: 4,
     },
   ],
@@ -74,20 +79,24 @@ export const PLANT_TREANT: RawCreature = {
       files: ["ja#trea2"],
       data: {
         level1: 9,
+        strength: 21,
+        constitution: 20,
         xpv: 4000,
       },
       additionalData: {
-        itemSlots: [{ file: mainWeapon10hd, slot: "WEAPON1" }],
+        itemSlots: [{ file: mainWeapon9hd, slot: "WEAPON1" }],
       },
     },
     {
       files: ["ja#trea3"],
       data: {
         level1: 11,
+        strength: 23,
+        constitution: 21,
         xpv: 6000,
       },
       additionalData: {
-        itemSlots: [{ file: mainWeapon12hd, slot: "WEAPON1" }],
+        itemSlots: [{ file: mainWeapon11hd, slot: "WEAPON1" }],
       },
     },
   ],

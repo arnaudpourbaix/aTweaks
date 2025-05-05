@@ -124,6 +124,7 @@ export type RawEffectOpcode =
   | "Stun"
   | "StrengthBonus"
   | "Stun90HP"
+  | "SummonCreature"
   | "Thac0VsCreatureTypeModifier"
   | "Teleport"
   | "Thac0Bonus"

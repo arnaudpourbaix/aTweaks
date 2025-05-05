@@ -48,6 +48,7 @@ import {
   RawProtectionFromWeaponsType,
   RawRegenerationType,
   RawSaveType,
+  RawSummonCreatureMode,
   RawTranslucencyType,
 } from "./enum";
 
@@ -434,6 +435,11 @@ export type CreateWeaponEffect = RawBaseEffect & {
   amount: number;
 };
 
+export type SummonCreatureEffect = RawBaseEffect & {
+  opcode: "SummonCreature";
+  mode: RawSummonCreatureMode;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -527,6 +533,7 @@ export type RawEffect =
   | SleepEffect
   | StatisticModifierEffect
   | StringRefEffect
+  | SummonCreatureEffect
   | TeleportEffect
   | TranslucencyEffect;
 

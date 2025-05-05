@@ -244,28 +244,60 @@ export const FEY_NYMPH: RawCreature = {
     },
     {
       preset: SPELLS.CallWoodlandBeeings,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.AnimalSummoning4,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.Bless,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.Barkskin,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.CallLightning,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.SummonInsects,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     {
       preset: SPELLS.CharmPersonOrAnimal,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     abilityAnimalFriendship,
     {
       preset: SPELLS.CureLightWounds,
+      spell: {
+        type: "force",
+        remove: true,
+      },
     },
     // {
     //   preset: PRESET_NAMES.DimensionDoorOffscreen,

@@ -1,3 +1,4 @@
+import { CR } from "../model/constants";
 import { Creature } from "../model/final/creature";
 import { ItemAbilityTypeEnum } from "../model/final/enums";
 import { CodeLine } from "../model/misc";
@@ -45,7 +46,7 @@ export class WeiduItemService extends AbstractWeiduService {
       if (item.description)
         this.add(
           lines,
-          `SAY UNIDENTIFIED_DESC ~${item.description.join("\n")}~`,
+          `SAY UNIDENTIFIED_DESC ~${item.description.join(CR)}~`,
           1
         );
       if (item.weight) this.add(lines, `WRITE_LONG 0x4c ${item.weight}`, 1);

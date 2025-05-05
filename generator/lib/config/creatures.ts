@@ -2,6 +2,12 @@ import { ClassIdentifier } from "../src/model/ids/class";
 import { RaceIdentifier } from "../src/model/ids/race";
 import { CreatureSize, RawEffectIDSFile } from "../src/model/raw/enum";
 
+export const ATWEAKS_CREATURES = {
+  TreantYoung: "ja#trea1",
+  Treant: "ja#trea2",
+  TreantElder: "ja#trea3",
+};
+
 export const EARTH_CREATURES: [
   RawEffectIDSFile,
   ClassIdentifier | RaceIdentifier

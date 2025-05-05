@@ -1,5 +1,16 @@
 import { RawCastSpellOnConditionType } from "../raw/enum";
 
+export enum SummonCreatureModeEnum {
+  MatchTarget0 = 0,
+  MatchTarget1 = 1,
+  FromCRE2 = 2,
+  MatchTarget3 = 3,
+  FromCRE4 = 4,
+  Hostile = 5,
+  FromCRE6 = 6,
+  FromCRE8 = 8,
+}
+
 export enum CastingTimeModifierTypeEnum {
   Increment = 0,
   SetAll = 1,

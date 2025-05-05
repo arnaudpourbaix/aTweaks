@@ -124,6 +124,7 @@ export enum EffectTypeEnum {
   Stun = 45,
   StrengthBonus = 44,
   Stun90HP = 210,
+  SummonCreature = 67,
   Thac0VsCreatureTypeModifier = 178,
   Teleport = 124,
   Thac0Bonus = 278,

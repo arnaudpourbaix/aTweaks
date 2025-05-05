@@ -91,14 +91,6 @@ THEN
 		NoAction()
 END
 
-// Random walk on panic
-IF
-	StateCheck(Myself,STATE_PANIC)
-THEN
-	RESPONSE #100
-		RandomWalkContinuous()
-END
-
 // Attack Slowed enemy
 IF
 	OR(7)

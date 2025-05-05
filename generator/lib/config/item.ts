@@ -5,4 +5,5 @@ export const ITEMS = {
   Incorporeal: "ja#i4",
   CriticalHitImmunity: "ja#i5",
   EntangleImmunity: "ja#i6",
+  Plant: "ja#i7",
 };

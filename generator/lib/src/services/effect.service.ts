@@ -42,6 +42,7 @@ import {
   ProtectionFromWeaponsTypeEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
+  SummonCreatureModeEnum,
   TranslucencyTypeEnum,
 } from "../model/final/enums";
 import { StringReference } from "../model/misc";
@@ -96,6 +97,7 @@ import {
   SleepEffect,
   StatisticModifierEffect,
   StringRefEffect,
+  SummonCreatureEffect,
   TeleportEffect,
   TranslucencyEffect,
 } from "../model/raw/effect";
@@ -493,6 +495,11 @@ export class EffectService {
         result.parameter1 = `${(<CastingTimeModifierEffect>effect).value}`;
         result.parameter2 = `${
           CastingTimeModifierTypeEnum[(<CastingTimeModifierEffect>effect).type]
+        }`;
+        break;
+      case EffectTypeEnum.SummonCreature:
+        result.parameter2 = `${
+          SummonCreatureModeEnum[(<SummonCreatureEffect>effect).mode]
         }`;
         break;
     }

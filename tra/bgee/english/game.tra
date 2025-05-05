@@ -495,18 +495,33 @@ This spell transports the caster to any designated place that is already known t
 Level: 4
 Sphere: Animal, Summoning
 Range: Visual Range of Caster
-Duration: 3 turns
-Casting Time: 7
+Duration: 1 turn
+Casting Time: 9
 Area of Effect: Special
 Saving Throw: None
 
-By means of this spell, the caster is able to summon certain woodland creatures to his location. The type and the number of creatures that appear depend upon the level of the caster:
+By means of this spell, the caster is able to summon certain woodland creatures to his location. Naturally, this spell works only outdoors, but not necessarily only in wooded areas.
 
-7th: 2 Dryads or 1 Hamadryad
-10th: 3 Hamadryads
-13th+: 4 Hamadryads and 1 Nymph
+7th: 1 Young Treant
+13th: 1 Middle-aged Treant
+20th+: 1 Elder Treant
 
-The summoned creatures aid the caster by whatever means they possess, staying until they are slain or the spell duration expires.~
+The summoned creatures aid the caster by whatever means they possess, staying until they are slain or the spell duration expires.
+
+Young Treant (7 Hit Dice):
+STR 20, DEX 8, CON 20, INT 12, WIS 16, CHA 12
+HP 91, AC 0, THAC0 13, -25% fire resistance
+2 Attacks Per Round, 2d8 crushing
+
+Treant (9 Hit Dice):
+STR 21, DEX 8, CON 20, INT 12, WIS 16, CHA 12
+HP 117, AC 0, THAC0 11, -25% fire resistance
+2 Attacks Per Round, 3d6 crushing
+
+Young Treant (11 Hit Dice):
+STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
+HP 142, AC 0, THAC0 9, -25% fire resistance
+2 Attacks Per Round, 4d6 crushing~
 
 
 // PnP Fey
@@ -543,6 +558,9 @@ The summoned creatures aid the caster by whatever means they possess, staying un
 @1928 = ~Shades~
 @1929 = ~Giant Bear~
 @1930 = ~Smilodon~
+@1931 = ~Young Treant~
+@1932 = ~Treant~
+@1933 = ~Elder Treant~
 
 // PnP Elementals
 

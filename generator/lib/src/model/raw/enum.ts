@@ -1,3 +1,13 @@
+export type RawSummonCreatureMode =
+  | "MatchTarget0"
+  | "MatchTarget1"
+  | "FromCRE2"
+  | "MatchTarget3"
+  | "FromCRE4"
+  | "Hostile"
+  | "FromCRE6"
+  | "FromCRE8";
+
 export type RawCastingTimeModifierType = "Increment" | "SetAll" | "SetHigher";
 
 export type RawDisableButton =

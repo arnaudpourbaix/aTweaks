@@ -56,7 +56,11 @@ export class WeiduCoreService extends AbstractWeiduService {
       `SAY NAME1 ~${immunity.name} trait~ SAY NAME2 ~${immunity.name} trait~`,
       1
     );
-    this.add(this.lines, `SAY UNIDENTIFIED_DESC ~${immunity.description}~`, 1);
+    this.add(
+      this.lines,
+      `SAY UNIDENTIFIED_DESC ~${immunity.description.join(CR)}~`,
+      1
+    );
     this.add(this.lines, `COPY_EXISTING ~${itemSlot.file}.itm~ ~override~`, 0);
     this.add(
       this.lines,

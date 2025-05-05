@@ -957,7 +957,15 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "plant",
     type: "trait",
-    description: ["Plants' traits"],
+    description: [
+      "Plants' traits",
+      "",
+      "Infravision.",
+      "Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).",
+      "Immunity to poison, sleep effects, paralysis, polymorph, and stunning.",
+      "Not subject to critical hits and backstab.",
+    ],
+    itemSlot: { file: ITEMS.Plant, slot: "LRING" },
     immunities: [
       "mindSpells",
       "poison",
@@ -972,6 +980,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "petrification",
       "insectSpells",
       "entangle",
+      "infravision",
     ],
   },
   {

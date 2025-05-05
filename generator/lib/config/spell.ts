@@ -609,6 +609,12 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CALL_WOODLAND_BEINGS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      triggers: [
+        {
+          name: "AreaType",
+          params: ["OUTDOOR"],
+        },
+      ],
     },
   },
 ];

@@ -940,6 +940,7 @@ BEGIN
 	LPF petrification_immunity END
 	LPF insectSpells_immunity END
 	LPF entangle_immunity END
+	LPF infravision_immunity END
 END
 
 DEFINE_PATCH_FUNCTION infravision_immunity

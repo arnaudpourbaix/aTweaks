@@ -42,18 +42,20 @@ BEGIN
 			REMOVE_CRE_ITEM ~BDPLANT~
 			REMOVE_CRE_ITEM ~IPSION~
 			ADD_CRE_ITEM ~ja#1m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i7~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
+			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=7
-					strength=23
+					strength=20
 					dexterity=8
-					constitution=21
+					constitution=20
 					intelligence=12
 					wisdom=16
 					charisma=12
 					movement=10
-					hp=98
+					hp=91
 					ac=0
 					resistFire="-25"
 					thac0=13
@@ -88,8 +90,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea2~) BEGIN 
 				WRITE_LONG 0x14 4000 // xpv
-				WRITE_SHORT 0x24 126 // hp
-				WRITE_SHORT 0x26 126 // hp
+				WRITE_SHORT 0x24 117 // hp
+				WRITE_SHORT 0x26 117 // hp
 				WRITE_BYTE 0x52 11 // thac0
 				WRITE_BYTE 0x54 7 // saveDeath
 				WRITE_BYTE 0x55 11 // saveWand
@@ -97,6 +99,8 @@ BEGIN
 				WRITE_BYTE 0x57 13 // saveBreath
 				WRITE_BYTE 0x58 12 // saveSpell
 				WRITE_BYTE 0x234 9 // level1
+				WRITE_BYTE 0x238 21 // strength
+				WRITE_BYTE 0x23d 20 // constitution
 				ADD_CRE_ITEM ~ja#2m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) BEGIN 
@@ -110,6 +114,8 @@ BEGIN
 				WRITE_BYTE 0x57 12 // saveBreath
 				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 11 // level1
+				WRITE_BYTE 0x238 23 // strength
+				WRITE_BYTE 0x23d 21 // constitution
 				ADD_CRE_ITEM ~ja#3m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			END
 		BUT_ONLY_IF_IT_CHANGES

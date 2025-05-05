@@ -1,3 +1,4 @@
+import { CR } from "../model/constants";
 import { Creature } from "../model/final/creature";
 import {
   ItemAbilityLocationEnum,
@@ -137,7 +138,7 @@ export class WeiduSpellService extends AbstractWeiduService {
     else if (spell.description && Array.isArray(spell.description))
       this.add(
         lines,
-        `SAY UNIDENTIFIED_DESC ~${spell.description.join("\n")}~`,
+        `SAY UNIDENTIFIED_DESC ~${spell.description.join(CR)}~`,
         1
       );
     if (spell.projectile)
@@ -155,17 +156,6 @@ export class WeiduSpellService extends AbstractWeiduService {
         "SPL"
       );
     }
-    // this.add(lines, `COPY_EXISTING ~${spell.file}.spl~ ~override~`, 0);
-    // for (const effect of spell.effects.filter((e) => e.global)) {
-    //   this.weiduEffectService.addEffect(
-    //     lines,
-    //     1,
-    //     effect,
-    //     spell.spellLevel ?? 0,
-    //     "SPL"
-    //   );
-    // }
-    // this.add(lines, "LPF FJ_SPL_ITM_REINDEX END", 1);
     this.add(lines, "", 0);
   }
 }

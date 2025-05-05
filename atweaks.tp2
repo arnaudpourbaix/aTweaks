@@ -115,7 +115,6 @@ GROUP @5
 REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
 INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
 
-
 // Allow Mages to scribe memorized spells onto scrolls
 BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
 GROUP @5
@@ -129,6 +128,11 @@ REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
 OUTER_SET Restrictions = 0
 INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
 
+// PnP Call Woodland Beings
+// BEGIN @186 DESIGNATED 1050
+// GROUP @5
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1050-woodland_beings.tpa~
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,6 +221,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 
 INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1050-woodland_beings.tpa~
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // ------------------------------------------------------
 
@@ -310,15 +315,6 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
-
-// // Revised Call Woodland Beings spell
-// BEGIN @186 DESIGNATED 5121
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~rr#fdrya.bcs~ @1908 
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5120 @5002 // Fey (Dryad, Hamadryad, Sirene)
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-monster/4080-woodland_beings.tpa~
 
 
 /*
