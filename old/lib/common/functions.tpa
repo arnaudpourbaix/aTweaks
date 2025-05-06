@@ -1,0 +1,523 @@
+// Add an immunity to a CRE, ITM, or SPL
+DEFINE_PATCH_FUNCTION ADD_IMMUNITY_CRE_ITM_SPL
+INT_VAR
+  displaySpellIneffective=0 // only apply to "Protection from Spell" effect
+  power=0                   // only apply to "Protection from Spell" effect on a SPL file
+  resist_dispel=0           // only apply to "Protection from Spell" effect on a SPL file
+  duration=0                // only apply to "Protection from Spell" effect on a SPL file
+STR_VAR
+  effects = ""        // string value with space separator
+  prevent_icons = ""  // string value with space separator
+  display_icons = ""  // string value with space separator
+  strings = ""        // string value with space separator
+  animations = ""     // string value with space separator
+  spells = ""         // string array
+BEGIN
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%effects%" RET_ARRAY array1=array END
+  PATCH_PHP_EACH array1 AS _ => v BEGIN
+    // Immunity to effect
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=101 parameter2=v power resist_dispel duration END  
+  END
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%prevent_icons%" RET_ARRAY array2=array END
+  PATCH_PHP_EACH array2 AS _ => v BEGIN
+    // Prevent portrait icon
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=169 parameter2=v power resist_dispel duration END  
+  END
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%display_icons%" RET_ARRAY array3=array END
+  PATCH_PHP_EACH array3 AS _ => v BEGIN
+    // Display portrait icon
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=v power resist_dispel duration END  
+  END
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%strings%" RET_ARRAY array4=array END
+  PATCH_PHP_EACH array4 AS _ => v BEGIN
+    // Disable display string
+    LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=267 parameter1=v power resist_dispel duration END  
+  END
+  LPF STRING_TO_ARRAY STR_VAR string=EVALUATE_BUFFER "%animations%" RET_ARRAY array5=array END
+  PATCH_PHP_EACH array5 AS _ => v BEGIN
+    // Protection from Specific Animation
+    LPF ADD_CRE_EFFECT INT_VAR opcode=296 STR_VAR resource=EVALUATE_BUFFER "%v%" END
+  END
+  PATCH_PHP_EACH EVAL ~%spells%~ AS _ => v BEGIN
+    PATCH_IF FILE_EXISTS_IN_GAME ~%v%.spl~ BEGIN
+      // Protection from Spell
+      SET stringref = GAME_IS ~bgee~ ? 24534 : 4742 // Spell Ineffective
+      SET parameter1 = displaySpellIneffective ? %stringref% : 0 // 24534
+      LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=206 
+                                         parameter1
+                                         power 
+                                         resist_dispel 
+                                         duration
+                                 STR_VAR resource=EVALUATE_BUFFER "%v%" 
+      END
+    END
+  END
+END
+
+
+
+// Add an effect to a CRE, ITM, or SPL
+DEFINE_PATCH_FUNCTION ADD_EFFECT_CRE_ITM_SPL
+INT_VAR
+  opcode=0
+  parameter1=0
+  parameter2=0
+  parameter3=0
+  parameter4=0
+  special=0
+  power=0           // only apply to a SPL file
+  resist_dispel=0   // only apply to a SPL file
+  duration=0        // only apply to a SPL file
+STR_VAR
+  resource=""
+BEGIN
+  PATCH_MATCH "%SOURCE_EXT%" WITH
+    ~CRE~ BEGIN
+      LPF ADD_CRE_EFFECT INT_VAR target=1 timing=9 opcode parameter1 parameter2 parameter3 parameter4 special STR_VAR resource END  
+    END
+    ~ITM~ BEGIN
+      LPF ADD_ITEM_EQEFFECT INT_VAR target=1 timing=2 opcode parameter1 parameter2 parameter3 parameter4 special STR_VAR resource END  
+    END
+    ~SPL~ BEGIN
+      LPF ADD_SPELL_EFFECT INT_VAR target=2 opcode parameter1 parameter2 parameter3 parameter4 special power resist_dispel duration STR_VAR resource END  
+    END
+  DEFAULT END
+END
+
+
+
+// Adds an opcode 206 (protection from spell) with the resref f_Spell to the extended header of the source spell or item,
+// if an effect of type f_Condition is found on the header
+// the string which is displayed when the spell fails can be set via f_Strref which defaults to 0 (meaning no message)
+DEFINE_PATCH_FUNCTION add_conditional_immunity 
+INT_VAR 
+  f_Condition = 999 
+  f_Strref = 0 
+BEGIN
+  PATCH_IF SOURCE_SIZE > 0x71 BEGIN
+    READ_LONG  0x64 ao
+    READ_LONG  0x6a eo
+    READ_SHORT 0x70 ei
+    al = "%SOURCE_EXT%" STRING_EQUAL_CASE spl ? 0x28 : 0x38
+    FOR (i=0;i<SHORT_AT 0x68;++i) BEGIN
+      WRITE_SHORT ao + al*i + 0x20 ei
+      READ_SHORT  ao + al*i + 0x1e ne
+      FOR (j=0;j<ne;++j) BEGIN
+        READ_SHORT eo + 0x30*(ei + j) type
+        PATCH_IF type = f_Condition BEGIN
+          READ_ASCII   eo + 0x30*(ei + j) copy (0x30)
+          INSERT_BYTES eo + 0x30*(ei + j) 0x30
+            WRITE_ASCIIE eo + 0x30*(ei + j)        "%copy%"
+            WRITE_SHORT  eo + 0x30*(ei + j)        206 //immunity to spell
+            WRITE_LONG   eo + 0x30*(ei + j) + 0x4  "%f_Strref%"
+            WRITE_ASCIIE eo + 0x30*(ei + j) + 0x14 "%f_Spell%" #8
+          ++ne
+          j=ne
+        END
+      END
+      WRITE_SHORT ao + al*i + 0x1e ne
+      ei+=ne
+    END
+  END
+END
+
+
+
+// Called from integrate_sectypes
+DEFINE_PATCH_FUNCTION integrate_sectypes_inner BEGIN
+  READ_LONG  0x64 ao
+  READ_SHORT 0x68 na
+  READ_LONG  0x6a eo
+  READ_SHORT 0x6e ei1
+  READ_SHORT 0x70 gne
+
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE itm BEGIN
+    FOR (i=0;i<gne;++i) BEGIN
+      READ_SHORT eo + 0x30*(ei1 + i)       type ELSE 999
+      READ_LONG  eo + 0x30*(ei1 + i) + 0x8 p2   ELSE 999
+
+      //This works as long as we always insert the new effects in front of the ones that trigger the insertion of a new effect
+      PATCH_IF type = 206 BEGIN
+        READ_ASCII eo + 0x30 * (ei1 + i) + 0x14 rr ELSE nil
+        TO_LOWER rr
+        SET $onequip_immunity("%rr%") = 1
+      END
+
+      //On-equip immunity
+      PATCH_IF type = 101 AND VARIABLE_IS_SET $f_ImmunitySecType("%p2%") BEGIN
+        PHP_EACH f_AddSecType AS file => SecTypeToAdd BEGIN
+          PATCH_IF "%file%" STRING_MATCHES_REGEXP ".*\.spl$" = 0 AND SecTypeToAdd = $f_ImmunitySecType("%p2%") BEGIN
+            INNER_PATCH "%file%" BEGIN
+              READ_ASCII 0 spell (STRING_LENGTH "%file%" - 4)
+            END
+            TO_LOWER spell
+            PATCH_IF !VARIABLE_IS_SET $onequip_immunity("%spell%") BEGIN
+              INSERT_BYTES   eo + 0x30 * (ei1 + i)        0x30
+                WRITE_SHORT  eo + 0x30 * (ei1 + i)        206 //protection from spell
+                WRITE_BYTE   eo + 0x30 * (ei1 + i) + 0x2  1
+                WRITE_BYTE   eo + 0x30 * (ei1 + i) + 0xc  2
+                WRITE_BYTE   eo + 0x30 * (ei1 + i) + 0x12 100
+                WRITE_ASCIIE eo + 0x30 * (ei1 + i) + 0x14 "%spell%" #8
+              ++i
+              ++gne
+            END
+          END
+        END
+      END
+    END
+  END
+
+  WRITE_SHORT 0x70 gne
+  ei = gne = 0 ? 0 : ei1 + gne //Some mod files have illegal values for ei1, but the engine disregards the illegal value because gne is 0; we do the same
+  ne = 0
+  al = "%SOURCE_EXT%" STRING_EQUAL_CASE itm ? 0x38 : 0x28
+
+  //Check for effects to remove e.g. fear or disease and effects that grant immunity to e.g. fear or disease
+  FOR (i=0;i<na AND ao + na*al < SOURCE_SIZE;++i) BEGIN
+    ei += ne
+    WRITE_SHORT ao + al*i + 0x20 ei
+    READ_SHORT  ao + al*i + 0x1e ne
+    FOR (j=0;j<ne;++j) BEGIN
+      READ_SHORT eo + 0x30*(ei + j)        type   ELSE 999
+      READ_BYTE  eo + 0x30*(ei + j) + 0x2  target ELSE 0
+      READ_BYTE  eo + 0x30*(ei + j) + 0x3  power  ELSE 0
+      READ_LONG  eo + 0x30*(ei + j) + 0x4  p1     ELSE 999
+      READ_LONG  eo + 0x30*(ei + j) + 0x8  p2     ELSE 999
+      READ_BYTE  eo + 0x30*(ei + j) + 0xc  timing ELSE 0
+      READ_BYTE  eo + 0x30*(ei + j) + 0xd  dr     ELSE 0
+      READ_LONG  eo + 0x30*(ei + j) + 0xe  time   ELSE 0
+
+      //This works as long as we always insert the new effects in front of the ones that trigger the insertion of the new effect
+      PATCH_IF type = 221 BEGIN
+        SET $extended_sectype_immunity("%i%" "%p2%") = 1
+      END
+      PATCH_IF type = 206 BEGIN
+        READ_ASCII eo + 0x30 * (ei + j) + 0x14 rr ELSE nil
+        TO_LOWER rr
+        SET $extended_spell_immunity("%i%" "%rr%") = 1
+      END
+
+      PATCH_IF VARIABLE_IS_SET $f_RemoveSecType("%type%") BEGIN
+        check = $f_RemoveSecType("%type%")
+        PATCH_IF !VARIABLE_IS_SET $extended_sectype_immunity("%i%" "%check%") BEGIN
+          INSERT_BYTES  eo + 0x30*(ei + j)        0x30
+            WRITE_SHORT eo + 0x30*(ei + j)        221 //remove sec type
+            WRITE_BYTE  eo + 0x30*(ei + j) + 0x2  target
+            WRITE_BYTE  eo + 0x30*(ei + j) + 0x3  power
+            WRITE_LONG  eo + 0x30*(ei + j) + 0x4  9
+            WRITE_LONG  eo + 0x30*(ei + j) + 0x8  $f_RemoveSecType("%type%")
+            WRITE_BYTE  eo + 0x30*(ei + j) + 0xc  1
+            WRITE_BYTE  eo + 0x30*(ei + j) + 0x12 100
+          ++ne
+          ++j
+        END
+      END
+
+      PATCH_IF type = 101 AND VARIABLE_IS_SET $f_ImmunitySecType("%p2%") BEGIN
+        PHP_EACH f_AddSecType AS file => SecTypeToAdd BEGIN
+          PATCH_IF "%file%" STRING_MATCHES_REGEXP ".+\.spl$" = 0 AND SecTypeToAdd = $f_ImmunitySecType("%p2%") BEGIN
+            INNER_PATCH "%file%" BEGIN
+              READ_ASCII 0 spell (STRING_LENGTH "%file%" - 4)
+            END
+            TO_LOWER spell
+            PATCH_IF !VARIABLE_IS_SET $extended_spell_immunity("%i%" "%spell%") BEGIN
+              INSERT_BYTES   eo + 0x30*(ei + j)        0x30
+                WRITE_SHORT  eo + 0x30*(ei + j)        206 //protection from spell
+                WRITE_BYTE   eo + 0x30*(ei + j) + 0x2  target
+                WRITE_BYTE   eo + 0x30*(ei + j) + 0x3  power
+                WRITE_BYTE   eo + 0x30*(ei + j) + 0xc  timing
+                WRITE_BYTE   eo + 0x30*(ei + j) + 0xd  dr
+                WRITE_LONG   eo + 0x30*(ei + j) + 0xe  time
+                WRITE_BYTE   eo + 0x30*(ei + j) + 0x12 100
+                WRITE_ASCIIE eo + 0x30*(ei + j) + 0x14 "%spell%" #8
+              ++ne
+              ++j
+            END
+          END
+        END
+      END
+
+    END
+    WRITE_SHORT ao + al*i + 0x1e ne
+  END
+END
+
+
+DEFINE_PATCH_FUNCTION integrate_sectype_cre BEGIN
+  READ_LONG 0x2c4 eo
+
+  // First, check out what's already there
+  FOR (i = 0; i < LONG_AT 0x2c8; ++i) BEGIN
+    p = eo + 0x108 * i + 0x8
+    READ_LONG p fx ELSE 999
+    PATCH_IF fx = 206 BEGIN // Protecton from spell
+      READ_ASCII p + 0x14 rr ELSE nil
+      TO_LOWER rr
+      SET $extended_spell_immunity("%rr%") = 1
+    END
+    PATCH_IF fx = 101 BEGIN // Immunity to effect
+      READ_LONG p + 0x10 p2 ELSE 999
+      SET $immunities("%p2%") = 1
+    END
+  END
+
+  // Then we see what, if anything, we need to do
+  PHP_EACH immunities AS fx => i BEGIN
+    PATCH_IF VARIABLE_IS_SET $f_ImmunitySecType("%fx%") BEGIN
+      PHP_EACH f_AddSecType AS file => SecTypeToAdd BEGIN
+        PATCH_IF "%file%" STRING_MATCHES_REGEXP ".+\.spl$" = 0 AND SecTypeToAdd = $f_ImmunitySecType("%fx%") BEGIN
+          INNER_PATCH "%file%" BEGIN
+            READ_ASCII 0 spell (STRING_LENGTH "%file%" - 4)
+          END
+          TO_LOWER spell
+          PATCH_IF !VARIABLE_IS_SET $extended_spell_immunity("%spell%") BEGIN
+            LPF ADD_CRE_EFFECT
+              INT_VAR
+                opcode = 206
+                target = 1
+                timing = 9
+              STR_VAR
+                resource = EVAL "%spell%"
+            END
+          END
+        END
+      END
+    END
+  END
+END
+
+
+//Add the SecTypes to items and spells that should grant immunity or be able to remove them
+//Needs the three arrays:
+//f_AddSecType(file) = SecType -> Associates a SecType with a specific file. Items and spells that grant immunity to e.g. disease will grant immunity to this particular file (spell) as well. Creatures with immunity effects will also be affected.
+//f_ImmunitySecType(opcode) = SecType -> opcode is the opcode used to determine if a spell/item should grant immunity to the file (spell).
+//f_RemoveSecType(opcode) = Secype -> opcode is the opcode used to determine if a spell/item should cure the secondary type.
+//E.g. is your secondary type covers disease you would have:
+//f_AddSecType(YourDisease-causingSpell.spl) = YourDiseaseSecType
+//f_ImmunitySecType(78) = YourDiseaseSecType
+//f_RemoveSecType(79) = YourDiseaseSecType
+DEFINE_ACTION_FUNCTION integrate_sectypes BEGIN
+  COPY_EXISTING_REGEXP GLOB ~.+\.\(spl\|itm\)$~ override
+    PATCH_IF SOURCE_SIZE > 0x71 BEGIN
+      LPF integrate_sectypes_inner END
+    END
+  BUT_ONLY
+  COPY_EXISTING_REGEXP GLOB ~.+\.cre$~ override
+    PATCH_IF SOURCE_SIZE > 0x2d3 BEGIN
+      LPF integrate_sectype_cre END
+    END
+  BUT_ONLY
+END
+
+
+// The Shield spell and amulet should protect from RR/aTweaks' cloned Magic Missile
+DEFINE_ACTION_FUNCTION magic_missile_shield BEGIN
+  ACTION_IF !FILE_CONTAINS_EVALUATED (spwi114.spl "RR#WI112") BEGIN
+  COPY_EXISTING ~spwi114.spl~ ~override~ // Shield (WIZARD_SHIELD)
+    READ_LONG  0x64 "abil_off" ELSE 0
+    READ_SHORT 0x68 "abil_num" ELSE 0
+    READ_LONG  0x6a "fx_off"   ELSE 0
+    SET "delta" = 0
+    FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+      READ_SHORT ("%abil_off%" + 0x1e + (0x28 * "%index%")) "abil_fx_num"
+      READ_SHORT ("%abil_off%" + 0x20 + (0x28 * "%index%")) "abil_fx_idx"
+      SET "abil_fx_idx" = ("%abil_fx_idx%" + "%delta%")
+      WRITE_SHORT ("%abil_off%" + 0x20 + (0x28 * "%index%")) "%abil_fx_idx%"
+      FOR (index2 = 0 ; index2 < abil_fx_num ; index2 = index2 + 1) BEGIN
+      READ_SHORT ("%fx_off%" +        (0x30 * ("%abil_fx_idx%" + "%index2%"))) "opcode"
+      READ_ASCII ("%fx_off%" +        (0x30 * ("%abil_fx_idx%" + "%index2%"))) "resref"
+      READ_ASCII ("%fx_off%" + 0x14 + (0x30 * ("%abil_fx_idx%" + "%index2%"))) "resref"
+        PATCH_IF (("%opcode%" = "206") AND ("%resref%" STRING_EQUAL_CASE ~SPWI112~)) BEGIN           // effect #206: Protection from Spell
+          READ_ASCII ("%fx_off%" +        (("%abil_fx_idx%" + "%index2%") * 0x30)) "clone_fx" (0x30) // clone effect
+          SET "index2"= "%abil_fx_num%" // kills loop
+          INSERT_BYTES            ("%fx_off%" +        ("%abil_fx_idx%" * 0x30)) 0x30                // new effect
+            WRITE_EVALUATED_ASCII ("%fx_off%" +        ("%abil_fx_idx%" * 0x30)) "%clone_fx%"        // cloned effect
+            WRITE_ASCII           ("%fx_off%" + 0x14 + ("%abil_fx_idx%" * 0x30)) "RR#WI112" #8       // resref (RR/aTweaks cloned Magic Missile)
+          SET "delta" = "%delta%" + 1
+          WRITE_SHORT ("%abil_off%" + 0x1e + (0x28 * "%index%")) ("%abil_fx_num%" + 1)
+        END
+      END
+    END
+  BUT_ONLY_IF_IT_CHANGES
+
+  COPY_EXISTING ~amul15.itm~   ~override~ // Shield Amulet
+    READ_LONG  0x64 "abil_off" ELSE 0
+    READ_SHORT 0x68 "abil_num" ELSE 0
+    READ_LONG  0x6a "fx_off"   ELSE 0
+    SET "abil_length" = 0x38
+    SET "fx_delta" = 0
+    FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN // start iterating through abilities
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_length%" * "%index%")) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_length%" * "%index%")) "abil_fx_idx"
+      SET "abil_fx_idx" = ("%abil_fx_idx%" + "%fx_delta%")
+      WRITE_SHORT ("%abil_off%" + 0x20 + ("%abil_length%" * "%index%")) ("%abil_fx_idx%")
+      FOR (index2 = 0 ; index2 < abil_fx_num ; index2 = index2 + 1) BEGIN
+        READ_SHORT ("%fx_off%" +        (0x30 * ("%abil_fx_idx%" + "%index2%"))) "opcode"
+        READ_LONG  ("%fx_off%" + 0x08 + (0x30 * ("%abil_fx_idx%" + "%index2%"))) "param2"
+        PATCH_IF (("%opcode%" = "142") AND ("%param2%" = "15")) BEGIN // display shield icon
+          READ_ASCII ("%fx_off%" +        (0x30 * ("%abil_fx_idx%" + "%index2%"))) "clone" (48) // clone fx
+          INSERT_BYTES            ("%fx_off%" +        (0x30 * "%abil_fx_idx%")) 0x30           // insert new effect
+            WRITE_EVALUATED_ASCII ("%fx_off%" +        (0x30 * "%abil_fx_idx%")) "%clone%"      // clones effect
+            WRITE_SHORT           ("%fx_off%" +        (0x30 * "%abil_fx_idx%")) "206"          // effect #206: Protection from Spell
+            WRITE_LONG            ("%fx_off%" + 0x04 + (0x30 * "%abil_fx_idx%")) "0"            // param1: 0 (empty strref)
+            WRITE_LONG            ("%fx_off%" + 0x08 + (0x30 * "%abil_fx_idx%")) "0"            // param2: 0
+            WRITE_ASCII           ("%fx_off%" + 0x14 + (0x30 * "%abil_fx_idx%")) ~RR#WI112~ #8  // resref (RR/aTweaks cloned Magic Missile)
+          SET "fx_delta" = "%fx_delta%" + 1
+          SET "abil_fx_num" = "%abil_fx_num%" + 1
+          WRITE_SHORT  ("%abil_off%" + 0x1e + ("%abil_length%" * "%index%")) "%abil_fx_num%"
+          SET "index2" = "%abil_fx_num%" // kills loop
+        END
+      END
+    END
+    BUT_ONLY_IF_IT_CHANGES
+
+    COPY_EXISTING ~amul15.itm~   ~override~                                          // Shield Amulet - just in case the amulet was changed by a mod (IRR or item pack)
+      LPF CLONE_EFFECT
+        INT_VAR silent = 1 match_opcode = 206 
+        STR_VAR match_resource = ~spwi112~ resource = ~RR#WI112~
+      END
+
+  END
+END
+
+// Fire Salamander immunities (these apply for the noble variety too, but not for Frost Salamanders)
+DEFINE_PATCH_FUNCTION fire_salamander_immunities BEGIN
+  LPF charm_immunity END
+  LPF sleep_immunity END
+  LPF hold_immunity END 
+  LPF fire_spell_immunities END
+  LPF extraplanar_traits END
+END
+
+// Water Elemental effect
+DEFINE_PATCH_FUNCTION add_water_elemental_effects BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "SPL" BEGIN
+    PATCH_FAIL ~Function add_water_elemental_effects was not configured for spell, file: %SOURCE_RES%~
+  END
+  LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=52 parameter1=0x02000000 parameter2=0x2 END // Character tint
+  LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=100 END // Translucency
+  LPF entangle_immunities END
+  LPF web_immunity END
+END
+
+
+// Set enchantment, and account for detectable enchantment from DS
+DEFINE_PATCH_FUNCTION set_enchantment INT_VAR enchantment = 1 BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "ITM" BEGIN
+    WRITE_LONG 0x60 enchantment
+    READ_LONG 0x6a eo
+    done = 0
+    FOR (i = 0; i < SHORT_AT 0x70; ++i) BEGIN
+      READ_SHORT eo + 0x30 * i       type
+      READ_LONG  eo + 0x30 * i + 0x8 prof
+      PATCH_IF type = 233 AND prof = 109 BEGIN
+        WRITE_LONG eo + 0x30 * i + 0x4 enchantment
+        done = 1
+      END
+    END
+    PATCH_IF !done BEGIN
+      LPF ADD_ITEM_EQEFFECT INT_VAR opcode=233 target=1 parameter1=enchantment parameter2=109 timing=2 END
+    END
+  END
+END
+
+
+// Will increase the priority of a single script matching the regexp script to the first empty script slot.
+// Script slots with scripts matching the regexp kill will be treated as empty.
+DEFINE_PATCH_FUNCTION promote_script STR_VAR script = "^$" kill = "^$" BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "CRE" AND SOURCE_SIZE > 0x2d3 BEGIN
+    FOR (o = 0x248; o < 0x270; o += 0x8) BEGIN
+      READ_ASCII o s1
+      PATCH_IF "%s1%" STRING_MATCHES_REGEXP "%script%" = 0 BEGIN
+        FOR (p = 0x248; p < 0x270 AND p < o; p += 0x8) BEGIN
+          READ_ASCII p s2
+          PATCH_IF "%s2%" STRING_EQUAL "" OR "%s2%" STRING_EQUAL_CASE none OR "%s2%" STRING_MATCHES_REGEXP "%kill%" = 0 BEGIN
+            WRITE_ASCII  o "" #8
+            WRITE_ASCIIE p "%s1%" #8
+            p = SOURCE_SIZE
+            o = SOURCE_SIZE
+          END
+        END
+      END
+    END
+  END ELSE PATCH_FAIL "promote_script: incorrect signature or below minimum file size (%SOURCE_FILE%)"
+END
+
+
+DEFINE_PATCH_FUNCTION make_summon STR_VAR slot = boots BEGIN
+  PATCH_IF "%SOURCE_EXT%" STRING_EQUAL_CASE "CRE" AND SOURCE_SIZE > 0x2d3 BEGIN
+    WRITE_LONG 0x14 0                                                // No experience from summons
+    WRITE_BYTE 0x275 6                                               // Gender: Summon
+    WRITE_BYTE 0x10 (THIS BOR BIT1) BAND 0xfb                        // Set 'No corpse' (BIT1) and unset 'Permanent Corpse' (BIT2)
+    ADD_CRE_ITEM rr#dinv #0 #0 #0 "unstealable&undroppable" "%slot%" // item for keeping summons from being killed before the summoning is done
+    ADD_MEMORIZED_SPELL rr#usumn #0 innate (1)                       // 'Unsummon' spell
+    WRITE_ASCIIL SCRIPT_OVERRIDE "" "" "" "" ""                      // Clear all scripts; correct scripts are set by the specialised code
+  END ELSE PATCH_FAIL "make_summon: incorrect signature or below minimum file size (%SOURCE_FILE%)"
+END
+
+
+DEFINE_PATCH_FUNCTION fiend_summoning_spell
+INT_VAR
+  duration = 120
+STR_VAR
+  lawful = rr#scorn
+  lcneutral = fl#sarca
+  chaotic = spcaco
+BEGIN
+  LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 177 END
+  SET $p1("%lawful%") = 16    // MASK_LAWFUL
+  SET $p1("%lcneutral%") = 32 // MASK_LCNEUTRAL
+  SET $p1("%chaotic%") = 48   // MASK_CHAOTIC
+  PATCH_FOR_EACH resource IN "%lawful%" "%lcneutral%" "%chaotic%" BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=177 target=1 parameter1=$p1("%resource%") parameter2=8 resist_dispel=2 duration STR_VAR resource END
+  END
+END
+
+
+// Clear BG1 weapon proficiencies
+DEFINE_PATCH_FUNCTION clear_bg1_profs BEGIN
+  READ_ASCII 0 sig (3)
+  PATCH_MATCH "%sig%" WITH
+    ~CRE~ BEGIN
+      PATCH_FOR_EACH ~bg1_prof~ IN ~0x6e~ ~0x6f~ ~0x70~ ~0x71~ ~0x72~ ~0x73~ ~0x74~ ~0x75~ BEGIN
+        WRITE_BYTE %bg1_prof% 0
+      END
+    END
+  DEFAULT END
+END
+
+DEFINE_PATCH_FUNCTION minimum_proficiency
+INT_VAR
+  value = 1
+  proficiency = 0
+BEGIN
+  PATCH_IF value >= 0 AND proficiency >= 0 BEGIN
+    coveredp = 0
+    GET_OFFSET_ARRAY effect_array 0x2c4 4 0x2c8 4 0 0 0x108
+    PHP_EACH effect_array AS i => off BEGIN
+      READ_LONG off + 0x08 opcode
+      READ_LONG off + 0x14 stars
+      READ_LONG off + 0x18 prof
+      PATCH_IF opcode = 233 AND prof = proficiency AND stars >= value BEGIN
+        coveredp = 1
+      END
+    END
+    PATCH_IF !coveredp BEGIN
+      SET_BG2_PROFICIENCY proficiency value
+    END
+  END ELSE BEGIN
+    PATCH_WARN "WARNING: minimum_proficiency received illegal arguments: value = %value%, proficiency = %proficiency%"
+  END
+END
+
+DEFINE_PATCH_FUNCTION clearProficiencies BEGIN
+  LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=233 END
+  READ_ASCII 0 sig (3)
+  PATCH_MATCH "%sig%" WITH
+    ~CRE~ BEGIN
+      PATCH_FOR_EACH ~bg1_prof~ IN ~0x6e~ ~0x6f~ ~0x70~ ~0x71~ ~0x72~ ~0x73~ ~0x74~ ~0x75~ BEGIN
+        WRITE_BYTE %bg1_prof% 0
+      END
+    END
+  DEFAULT END
+END

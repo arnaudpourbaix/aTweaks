@@ -464,10 +464,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     adjustment: CreatureAdjustment
   ) {
     this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
-    if (adjustment.summon) {
-      adjustment.data = adjustment.data ?? {};
-      adjustment.data.xpv = 0;
-    }
     if (adjustment.data?.kit === "BARBARIAN" || adjustment.data?.movement) {
       this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus);
       this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus2);
