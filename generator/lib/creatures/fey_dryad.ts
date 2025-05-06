@@ -1,3 +1,4 @@
+import { ATWEAKS_CREATURES } from "../config/creatures";
 import { ITEMS } from "../config/item";
 import { ATWEAKS_SPELLS, PRESET_NAMES, SPELLS } from "../config/spell";
 import { TraStringReferenceEnum } from "../config/stringRef";
@@ -348,6 +349,7 @@ export const FEY_DRYAD: RawCreature = {
   ],
   files: [
     "DRYAD", // Dryad of the Cloudpeaks
+    ATWEAKS_CREATURES.DryadSummon,
     "DRY01", // Dryad (unused?)
     "DRYAD01", // Dryad (unused?)
     "DRYAD02", // Dryad (unused?)
@@ -369,6 +371,10 @@ export const FEY_DRYAD: RawCreature = {
     "NTTAMAEL", // Tamael
   ],
   adjustments: [
+    {
+      files: [ATWEAKS_CREATURES.DryadSummon],
+      summon: true,
+    },
     {
       files: ["DRYAD", "L#APEST"],
       data: { class: "INNOCENT" },

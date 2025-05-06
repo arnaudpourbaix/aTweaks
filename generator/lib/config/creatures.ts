@@ -6,6 +6,7 @@ export const ATWEAKS_CREATURES = {
   TreantYoung: "ja#trea1",
   Treant: "ja#trea2",
   TreantElder: "ja#trea3",
+  DryadSummon: "ja#dryad",
 };
 
 export const EARTH_CREATURES: [

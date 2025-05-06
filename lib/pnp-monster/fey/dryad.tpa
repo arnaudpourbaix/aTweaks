@@ -1,4 +1,5 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41su.baf~
 
 CREATE EFF "rr#fchrm"
 	WRITE_LONG 0x10 206
@@ -230,6 +231,7 @@ CREATE SPL "rr#fspkp"
 
 ACTION_FOR_EACH ~file~ IN
 	DRYAD
+	ja#dryad
 	DRY01
 	DRYAD01
 	DRYAD02
@@ -293,7 +295,16 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG WTRUNSGT END
-			LPF patchCreatureScript STR_VAR script=ja#m41 removeScripts END
+			DEFINE_ARRAY skipFiles BEGIN ja#dryad END
+			LPF patchCreatureScript STR_VAR script=ja#m41 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN DRYAD DW1MELGE INITDLG WTRUNSGT END
+			DEFINE_ARRAY files BEGIN ja#dryad END
+			LPF patchCreatureScript STR_VAR script=ja#m41su files removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#dryad~) BEGIN 
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DRYAD~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~L#APEST~) BEGIN 
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
 			END

@@ -495,18 +495,24 @@ This spell transports the caster to any designated place that is already known t
 Level: 4
 Sphere: Animal, Summoning
 Range: Visual Range of Caster
-Duration: 1 turn
+Duration: 2 turns
 Casting Time: 9
 Area of Effect: Special
 Saving Throw: None
 
 By means of this spell, the caster is able to summon certain woodland creatures to his location. Naturally, this spell works only outdoors, but not necessarily only in wooded areas.
 
-7th: 1 Young Treant
+7th: 1d4 Dryads
 13th: 1 Middle-aged Treant
 20th+: 1 Elder Treant
 
 The summoned creatures aid the caster by whatever means they possess, staying until they are slain or the spell duration expires.
+
+Dryad (2 Hit Dice):
+STR 10, DEX 12, CON 11, INT 14, WIS 15, CHA 18
+HP 16, AC 9, THAC0 19, 50% magic resistance
+Dimension Door (at will) in wilderness area only.
+Dire Charm (x3), saves vs spell at -3.
 
 Young Treant (7 Hit Dice):
 STR 20, DEX 8, CON 20, INT 12, WIS 16, CHA 12
@@ -518,7 +524,7 @@ STR 21, DEX 8, CON 20, INT 12, WIS 16, CHA 12
 HP 117, AC 0, THAC0 11, -25% fire resistance
 2 Attacks Per Round, 3d6 crushing
 
-Young Treant (11 Hit Dice):
+Elder Treant (11 Hit Dice):
 STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
 HP 142, AC 0, THAC0 9, -25% fire resistance
 2 Attacks Per Round, 4d6 crushing~
@@ -534,6 +540,7 @@ HP 142, AC 0, THAC0 9, -25% fire resistance
 @1905 = ~Touch of Tranquility~
 @1906 = ~Toxic Vapors~
 @1907 = ~Speak With Plants~
+@1908 = ~Dryad~
 
 // PnP Plants & Beasts
 
