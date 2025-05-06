@@ -8,7 +8,7 @@ CREATE ITM "ja#1m45"
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
-	WRITE_LONG 0x60 2
+	WRITE_LONG 0x60 4
 	WRITE_SHORT 0x74 1
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 2
@@ -32,6 +32,7 @@ ACTION_FOR_EACH ~file~ IN
 	ja#trea1
 	ja#trea2
 	ja#trea3
+	ja#trea4
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -41,32 +42,32 @@ BEGIN
 			REMOVE_CRE_ITEM ~BDTREANT~
 			REMOVE_CRE_ITEM ~BDPLANT~
 			REMOVE_CRE_ITEM ~IPSION~
-			ADD_CRE_ITEM ~ja#1m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#3m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i7~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clearProficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=7
-					strength=20
+					level1=11
+					strength=23
 					dexterity=8
-					constitution=20
+					constitution=21
 					intelligence=12
 					wisdom=16
 					charisma=12
 					movement=10
-					hp=91
+					hp=142
 					ac=0
 					resistFire="-25"
-					thac0=13
+					thac0=9
 					apr=2
-					xpv=2000
+					xpv=6000
 					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_GOOD~)
-					saveDeath=7
-					saveWand=11
-					savePolymorph=10
-					saveBreath=13
-					saveSpell=12
+					saveDeath=6
+					saveWand=10
+					savePolymorph=9
+					saveBreath=12
+					saveSpell=11
 					morale=16
 					moraleBreak=4
 					moraleRecovery=15
@@ -78,17 +79,44 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN BDENSHTV BDFIG00 END
-			DEFINE_ARRAY skipFiles BEGIN ja#trea1 ja#trea2 ja#trea3 END
+			DEFINE_ARRAY skipFiles BEGIN ja#trea1 ja#trea2 ja#trea3 ja#trea4 END
 			LPF patchCreatureScript STR_VAR script=ja#m45 skipFiles removeScripts END
 			DEFINE_ARRAY removeScripts BEGIN BDENSHTV BDFIG00 END
-			DEFINE_ARRAY files BEGIN ja#trea1 ja#trea2 ja#trea3 END
+			DEFINE_ARRAY files BEGIN ja#trea1 ja#trea2 ja#trea3 ja#trea4 END
 			LPF patchCreatureScript STR_VAR script=ja#m45su files removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) BEGIN 
-				WRITE_LONG 0x14 0 // xpv
-				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
-				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea4~) BEGIN 
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea1~) BEGIN 
+				WRITE_LONG 0x14 1400 // xpv
+				WRITE_SHORT 0x24 65 // hp
+				WRITE_SHORT 0x26 65 // hp
+				WRITE_BYTE 0x52 15 // thac0
+				WRITE_BYTE 0x54 9 // saveDeath
+				WRITE_BYTE 0x55 13 // saveWand
+				WRITE_BYTE 0x56 12 // savePolymorph
+				WRITE_BYTE 0x57 15 // saveBreath
+				WRITE_BYTE 0x58 14 // saveSpell
+				WRITE_BYTE 0x234 5 // level1
+				WRITE_BYTE 0x238 19 // strength
+				WRITE_BYTE 0x23d 19 // constitution
+				ADD_CRE_ITEM ~ja#1m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea2~) BEGIN 
+				WRITE_LONG 0x14 2000 // xpv
+				WRITE_SHORT 0x24 91 // hp
+				WRITE_SHORT 0x26 91 // hp
+				WRITE_BYTE 0x52 13 // thac0
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 11 // saveWand
+				WRITE_BYTE 0x56 10 // savePolymorph
+				WRITE_BYTE 0x57 13 // saveBreath
+				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x234 7 // level1
+				WRITE_BYTE 0x238 20 // strength
+				WRITE_BYTE 0x23d 20 // constitution
+				ADD_CRE_ITEM ~ja#1m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) BEGIN 
 				WRITE_LONG 0x14 4000 // xpv
 				WRITE_SHORT 0x24 117 // hp
 				WRITE_SHORT 0x26 117 // hp
@@ -102,21 +130,6 @@ BEGIN
 				WRITE_BYTE 0x238 21 // strength
 				WRITE_BYTE 0x23d 20 // constitution
 				ADD_CRE_ITEM ~ja#2m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) BEGIN 
-				WRITE_LONG 0x14 6000 // xpv
-				WRITE_SHORT 0x24 142 // hp
-				WRITE_SHORT 0x26 142 // hp
-				WRITE_BYTE 0x52 9 // thac0
-				WRITE_BYTE 0x54 6 // saveDeath
-				WRITE_BYTE 0x55 10 // saveWand
-				WRITE_BYTE 0x56 9 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 11 // saveSpell
-				WRITE_BYTE 0x234 11 // level1
-				WRITE_BYTE 0x238 23 // strength
-				WRITE_BYTE 0x23d 21 // constitution
-				ADD_CRE_ITEM ~ja#3m45~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

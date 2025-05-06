@@ -21,17 +21,17 @@ export const PLANT_TREANT: RawCreature = {
   tracking: true,
   combatWalk: true,
   data: {
-    level1: 7,
-    strength: 20,
+    level1: 11,
+    strength: 23,
     dexterity: 8,
-    constitution: 20,
+    constitution: 21,
     intelligence: 12,
     wisdom: 16,
     charisma: 12,
     movement: 12,
     ac: 0,
     apr: 2,
-    xpv: 2000,
+    xpv: 6000,
     alignment: "CHAOTIC_GOOD",
     morale: 16,
     moraleBreak: 4,
@@ -51,7 +51,6 @@ export const PLANT_TREANT: RawCreature = {
   items: [
     {
       file: mainWeapon7hd,
-      equippedSlot: "WEAPON1",
       type: "Melee",
       range: 5,
       diceThrown: 2,
@@ -68,15 +67,40 @@ export const PLANT_TREANT: RawCreature = {
     },
     {
       file: mainWeapon11hd,
+      equippedSlot: "WEAPON1",
       copyFrom: mainWeapon9hd,
       diceThrown: 4,
     },
   ],
-  files: ["ja#trea1", "ja#trea2", "ja#trea3"],
+  files: ["ja#trea1", "ja#trea2", "ja#trea3", "ja#trea4"],
   adjustments: [
-    { files: ["ja#trea1", "ja#trea2", "ja#trea3"], summon: true },
+    { files: ["ja#trea1", "ja#trea2", "ja#trea3", "ja#trea4"], summon: true },
+    {
+      files: ["ja#trea1"],
+      data: {
+        level1: 5,
+        strength: 19,
+        constitution: 19,
+        xpv: 1400,
+      },
+      additionalData: {
+        itemSlots: [{ file: mainWeapon7hd, slot: "WEAPON1" }],
+      },
+    },
     {
       files: ["ja#trea2"],
+      data: {
+        level1: 7,
+        strength: 20,
+        constitution: 20,
+        xpv: 2000,
+      },
+      additionalData: {
+        itemSlots: [{ file: mainWeapon7hd, slot: "WEAPON1" }],
+      },
+    },
+    {
+      files: ["ja#trea3"],
       data: {
         level1: 9,
         strength: 21,
@@ -85,18 +109,6 @@ export const PLANT_TREANT: RawCreature = {
       },
       additionalData: {
         itemSlots: [{ file: mainWeapon9hd, slot: "WEAPON1" }],
-      },
-    },
-    {
-      files: ["ja#trea3"],
-      data: {
-        level1: 11,
-        strength: 23,
-        constitution: 21,
-        xpv: 6000,
-      },
-      additionalData: {
-        itemSlots: [{ file: mainWeapon11hd, slot: "WEAPON1" }],
       },
     },
   ],

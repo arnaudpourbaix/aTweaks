@@ -565,9 +565,10 @@ HP 142, AC 0, THAC0 9, -25% fire resistance
 @1928 = ~Shades~
 @1929 = ~Giant Bear~
 @1930 = ~Smilodon~
-@1931 = ~Young Treant~
-@1932 = ~Treant~
-@1933 = ~Elder Treant~
+@1931 = ~Very Young Treant~
+@1932 = ~Young Treant~
+@1933 = ~Treant~
+@1934 = ~Elder Treant~
 
 // PnP Elementals
 

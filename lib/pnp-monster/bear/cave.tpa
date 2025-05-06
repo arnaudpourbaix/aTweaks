@@ -118,9 +118,6 @@ BEGIN
 			DEFINE_ARRAY files BEGIN BDBEARCA END
 			LPF patchCreatureScript STR_VAR script=ja#m6 slot=General files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARCASU~) BEGIN 
-				WRITE_LONG 0x14 0 // xpv
-				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
-				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~) BEGIN 
 				WRITE_LONG 0x14 900 // xpv
