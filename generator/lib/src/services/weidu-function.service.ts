@@ -40,7 +40,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
     );
     if (immunity.spells.length || immunity.idsSpells.length) {
       this.add(lines, `INT_VAR index = ${immunity.spells.length}`, tab + 1);
-      this.add(lines, `STR_VAR result = ""`, tab + 1);
+      this.add(lines, `STR_VAR resource = ""`, tab + 1);
     }
     this.add(lines, `BEGIN`, tab);
     if (
@@ -137,10 +137,10 @@ export class WeiduFunctionService extends AbstractWeiduService {
       this.add(lines, `PATCH_PHP_EACH identifiers AS _ => ids BEGIN`, tab);
       this.add(
         lines,
-        `LPF getResourceFromSpellIds STR_VAR ids RET result END`,
+        `LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END`,
         tab + 1
       );
-      this.add(lines, `SPRINT $spells(~%index%~) ~%result%~`, tab + 1);
+      this.add(lines, `SPRINT $spells(~%index%~) ~%resource%~`, tab + 1);
       this.add(lines, `SET index = index + 1`, tab + 1);
       this.add(lines, `END`, tab);
     }

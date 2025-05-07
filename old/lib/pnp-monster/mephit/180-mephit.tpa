@@ -112,7 +112,7 @@ COPY "%MOD_FOLDER%/spl/base.spl" "override/RR#mracs.spl"
   WRITE_SHORT 0x22 10 //alteration (animation)
   WRITE_SHORT 0x25 8 //transmuter (school)
   WRITE_BYTE  0x27 11 //disabling (secondary type)
-  LPF fill_headers END
+  LPF fill_spl_headers END
   LPF configure_spell_header INT_VAR f_Target = 4 f_Range = 15 f_Projectile = 249 END
   target = 2
   power = 1

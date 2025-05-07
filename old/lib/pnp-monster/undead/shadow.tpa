@@ -113,7 +113,7 @@ END
 COPY_EXISTING b1-10.itm "override/fl#shad.itm"
   LPF set_enchantment END
   LPF cold_spell_immunities END
-  LPF configure_header
+  LPF configure_itm_header
     INT_VAR
       f_TargetType = 1
       f_NumDice = 2

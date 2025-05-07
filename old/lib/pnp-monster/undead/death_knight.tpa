@@ -151,7 +151,7 @@ COPY_EXISTING sw1h02.itm "override/fl#dksw4.itm" //Bastard sword +2, +1 APR
   WRITE_SHORT 0x42 0 //lore
   WRITE_BYTE  0x18 THIS BAND 0xfb //Unset 'droppable' (BIT2)
   LPF set_enchantment INT_VAR enchantment = 2 END
-  LPF configure_header
+  LPF configure_itm_header
     INT_VAR
       f_ToHit = 2
       f_Damage = 2

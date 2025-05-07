@@ -1,4 +1,4 @@
-//-*- coding: cp1252 -*-
+//-*- coding: utf-8 -*-
 
 // PnP tweaks
 
@@ -9,18 +9,18 @@
 // Gameplay Tweaks
 
 @221 = ~aTWEAKS - Semplice script per ladri~
-@222 = ~Questo script consente al ladro di utilizzare le sue abilit‡ "Scoprire trappole" o "Nascondersi nelle ombre" ogni qualvolta non sar‡ diversamente impegnato. Il ladro cercher‡ di individuare trappole in assenza di nemici. Premendo il tasto "D" il ladro cercher‡ di nascondersi nelle ombre fintanto che non ci sono nemici nel suo raggio di visuale. Il ladro non attaccher‡, nÈ cercher‡ di difendersi, se impegnato a individuare trappole o nascondersi nelle ombre. Premendo il tasto "V" il ladro smetter‡ di usare le proprie abilit‡ e attaccher‡ il nemico pi˘ vicino. Questo script non interferir‡ mai con i comandi manualmente impartiti dall'utente. (RR#THF01)~
+@222 = ~Questo script consente al ladro di utilizzare le sue abilit√† "Scoprire trappole" o "Nascondersi nelle ombre" ogni qualvolta non sar√† diversamente impegnato. Il ladro cercher√† di individuare trappole in assenza di nemici. Premendo il tasto "D" il ladro cercher√† di nascondersi nelle ombre fintanto che non ci sono nemici nel suo raggio di visuale. Il ladro non attaccher√†, n√© cercher√† di difendersi, se impegnato a individuare trappole o nascondersi nelle ombre. Premendo il tasto "V" il ladro smetter√† di usare le proprie abilit√† e attaccher√† il nemico pi√π vicino. Questo script non interferir√† mai con i comandi manualmente impartiti dall'utente. (RR#THF01)~
 @223 = ~Cerca di nascondersi nelle ombre~
 @224 = ~Individuare trappole~
 
 @231 = ~aTWEAKS - Semplice script per bardi~
-@232 = ~Questo script consente al bardo di eseguire il suo canto di battaglia ogni qualvolta non sar‡ diversamente impegnato. Il bardo canter‡ solo in prossimit‡ di nemici e s'interromper‡ quando questi escono dal suo raggio di visuale. Premendo il tasto "D" si far‡ cantare il bardo continuamente, indipendentemente dalla presenza o meno di nemici. Il bardo non attaccher‡, nÈ si difender‡, se impegnato nel canto. Premendo il tasto "V" il bardo smetter‡ di cantare e attaccher‡ il nemico pi˘ vicino. Questo script non interferir‡ mai con i comandi manualmente impartiti dall'utente. (RR#BRD01)~
+@232 = ~Questo script consente al bardo di eseguire il suo canto di battaglia ogni qualvolta non sar√† diversamente impegnato. Il bardo canter√† solo in prossimit√† di nemici e s'interromper√† quando questi escono dal suo raggio di visuale. Premendo il tasto "D" si far√† cantare il bardo continuamente, indipendentemente dalla presenza o meno di nemici. Il bardo non attaccher√†, n√© si difender√†, se impegnato nel canto. Premendo il tasto "V" il bardo smetter√† di cantare e attaccher√† il nemico pi√π vicino. Questo script non interferir√† mai con i comandi manualmente impartiti dall'utente. (RR#BRD01)~
 @233 = ~Canto costante se inattivo~
 @234 = ~Canto limitato al combattimento~
 @235 = ~Attacca i nemici~
 @236 = ~Non attacca i nemici~
-@237 = ~Il Canto di Battaglia avviene solo quando non Ë in combattimento~
-@238 = ~Questo script permetter‡ ad un Bardo di suonare il suo canto di battaglia tutte le volte che lui È inoperoso. Per default il Bardo suoner‡ solamente quando non ci sono nemici nelle vicinanze e si fermer‡ ogni qualvolta inizia un combattimento. Premendo il tasto 'D' si permetter‡ al Bardo di suonare costantemente anche in presenza dei nemici, oppure cantare solo durante il combattimento. Quando non combatte il Bardo suoner‡ o La Melodia di Tymora oppure La Storia di Curran Strongheart, purchÈ il Bardo conosca queste canzoni. Durante il combattimento il Bardo suoner‡ o La Ballata dei Tre Eroi, o Il Canto di Guerra di Sith oppure La Storia di Curran Strongheart, purchÈ il Bardo conosca queste canzoni. Ricorda che il Bardo non attaccher‡ gli avversari e non si difender‡ mentre suona il canto di battaglia. Premendo il tasto 'V' si indurr‡ il Bardo a smettere di suonare e ad iniziare ad attaccare i nemici nelle vicinanze. Lo script non sovrascriver‡ mai le azioni assegnate al giocatore. (RR#BRD01)~
+@237 = ~Il Canto di Battaglia avviene solo quando non √® in combattimento~
+@238 = ~Questo script permetter√† ad un Bardo di suonare il suo canto di battaglia tutte le volte che lui √© inoperoso. Per default il Bardo suoner√† solamente quando non ci sono nemici nelle vicinanze e si fermer√† ogni qualvolta inizia un combattimento. Premendo il tasto 'D' si permetter√† al Bardo di suonare costantemente anche in presenza dei nemici, oppure cantare solo durante il combattimento. Quando non combatte il Bardo suoner√† o La Melodia di Tymora oppure La Storia di Curran Strongheart, purch√© il Bardo conosca queste canzoni. Durante il combattimento il Bardo suoner√† o La Ballata dei Tre Eroi, o Il Canto di Guerra di Sith oppure La Storia di Curran Strongheart, purch√© il Bardo conosca queste canzoni. Ricorda che il Bardo non attaccher√† gli avversari e non si difender√† mentre suona il canto di battaglia. Premendo il tasto 'V' si indurr√† il Bardo a smettere di suonare e ad iniziare ad attaccare i nemici nelle vicinanze. Lo script non sovrascriver√† mai le azioni assegnate al giocatore. (RR#BRD01)~
 @242 = ~Tocco Guarente~
 @243 = ~Risucchio di Vita~
 @244 = ~Cura Ferite~
@@ -60,7 +60,7 @@
 @440 = ~~ [RR#MAR10] // Select Common 1
 @441 = ~(risatina)~ [RR#DRY01] // Select Common 1
 @442 = ~Lasciami stare, folle creatura!~ [RR#DRY02] // Battle Cry 1
-@443 = ~Non lo permetterÚ!~ [RR#DRY03] // Battle Cry 2
+@443 = ~Non lo permetter√≤!~ [RR#DRY03] // Battle Cry 2
 @444 = ~Mmmm, si!~ [RR#DRY04] // Action Acknowledgement 1
 
 
@@ -72,8 +72,8 @@
 
 // Succubus soundset
 
-@461 = ~La tua morte sar‡ bellissima!~ [RR#SUC01] // Select Common 1
-@462 = ~La tua anima sar‡ mia!~ [RR#SUC02] // Select Common 2
+@461 = ~La tua morte sar√† bellissima!~ [RR#SUC01] // Select Common 1
+@462 = ~La tua anima sar√† mia!~ [RR#SUC02] // Select Common 2
 @463 = ~Hahaha!~ [RR#SUC03] // Action Acknowledgement 1
 @464 = ~Oh si!~ [RR#SUC04] // Action Acknowledgement 2
 
@@ -103,9 +103,9 @@
 // Miscellaneous tweaks
 
 
-@511 = ~Questo incantesimo cura permanentemente qualunque malattia affligga il bersaglio. Rimuove inoltre gli effetti di cecit‡, sordit‡ e regressione mentale.~
+@511 = ~Questo incantesimo cura permanentemente qualunque malattia affligga il bersaglio. Rimuove inoltre gli effetti di cecit√†, sordit√† e regressione mentale.~
 @512 = ~Questo incantesimo neutralizza immediatamente qualunque veleno infetti il bersaglio.~
-@513 = ~Questo incantesimo ripristina l'energia vitale in un personaggio al quale Ë stata risucchiata (tutti i livelli risucchiati vengono recuperati).~
+@513 = ~Questo incantesimo ripristina l'energia vitale in un personaggio al quale √® stata risucchiata (tutti i livelli risucchiati vengono recuperati).~
 @514 = ~Questo incantesimo cura 1d8+10 punti ferita +1 punto ferita per ogni livello del mago che lancia l'incantesimo (+20 al massimo) a tutti i membri del gruppo.~
 
 
@@ -115,21 +115,21 @@
 
 @651 = ~Muori Baatezu!~
 @652 = ~Testimonia il vero potere!~
-@653 = ~Alla fine... ci sar‡ solo il caos!~
-@654 = ~BanchetterÚ con la tua anima, mortale!~
-@655 = ~Non c'Ë scampo!~
+@653 = ~Alla fine... ci sar√† solo il caos!~
+@654 = ~Banchetter√≤ con la tua anima, mortale!~
+@655 = ~Non c'√® scampo!~
 @656 = ~L'Abisso ti attende! Hahahaha!~
 @657 = ~Ahh, la Guerra Sanguinosa chiama.~
-@658 = ~Vile Tanar'ri, porrÚ fine alla tua meschina esistenza!~
+@658 = ~Vile Tanar'ri, porr√≤ fine alla tua meschina esistenza!~
 @659 = ~Bah! Sei inferiore da ogni punto di vista.~
-@660 = ~Disperati mortale, Ë giunto il tuo tempo!~
+@660 = ~Disperati mortale, √® giunto il tuo tempo!~
 @661 = ~Patetica creatura, non hai niente da offrirmi a parte la tua vita.~
-@662 = ~Prova a fuggire con ogni mezzo. » molto pi˘ divertente in questo modo!~
-@663 = ~Sciocco mortale, il tuo trucco meschino non puÚ ingannarmi!~
-@664 = ~Bah, la magia dei mortali Ë cosÏ prevedibile.~
+@662 = ~Prova a fuggire con ogni mezzo. √à molto pi√π divertente in questo modo!~
+@663 = ~Sciocco mortale, il tuo trucco meschino non pu√≤ ingannarmi!~
+@664 = ~Bah, la magia dei mortali √® cos√¨ prevedibile.~
 @665 = ~Cos-?! Dei, aiutatemi!~
 @666 = ~No, ti prego! Aaaaaargh!~
-@667 = ~Quello Ë un... d-diavolo?! Mettiamoci in salvo!~
+@667 = ~Quello √® un... d-diavolo?! Mettiamoci in salvo!~
 @668 = ~Un d-demone!? Devo fuggire!~
 @669 = ~N-no! Sta indietro!~
 @670 = ~Gelugon~
@@ -152,7 +152,7 @@
 @687 = ~Corda d'Intralcio~
 @688 = ~Tocco Paralizzante~
 @689 = ~Maledizione~
-@690 = ~Sar‡ fatto.~
+@690 = ~Sar√† fatto.~
 @691 = ~Come comandi.~
 @692 = ~Garantito.~
 @693 = ~Fatto.~
@@ -161,12 +161,12 @@
 @697 = ~Vorrei che uno sciame di meteore colpisse i miei nemici!~
 @698 = ~Desidero che io ed i miei alleati diventiamo rapidi!~
 
-@700 = ~Patetico Imp! Ti caverÚ gli occhi!~
+@700 = ~Patetico Imp! Ti caver√≤ gli occhi!~
 @701 = ~Io odio gli sporchi Imp!~
 @702 = ~Non significhi nulla per me, debole Imp!~
-@703 = ~Sciocco! Ti pungerÚ a morte!~
+@703 = ~Sciocco! Ti punger√≤ a morte!~
 @704 = ~Ora morirai stupido Quasit!~
-@705 = ~Zitto! Sono pi˘ intelligente, forte e bello di te!~
+@705 = ~Zitto! Sono pi√π intelligente, forte e bello di te!~
 @706 = ~Spaventare~
 @707 = ~Lasciando il Piano Etereo~
 @708 = ~Suggestione~
@@ -174,20 +174,20 @@
 @710 = ~Causa Paura~
 @711 = ~tenta di nascondersi nelle ombre~
 @712 = ~Abbraccia le tenebre, mortale! Ora servi solo me.~
-@713 = ~SÏÏÏÏÏ... padrrrone...~
+@713 = ~S√¨√¨√¨√¨√¨... padrrrone...~
 @714 = ~Cambio di Piano - L'Abisso~
-@715 = ~Dimmi mortale, qual Ë il tuo maggior desiderio?~
+@715 = ~Dimmi mortale, qual √® il tuo maggior desiderio?~
 @716 = ~Una ricchezza incommensurabile, innumerevoli donne ai tuoi piedi, o vero potere sugli altri?~
-@717 = ~Posso darti tutto ciÚ e molto di pi˘. Devi solo venire con me... volentieri.~
-@718 = ~Vero potere dici? Dimmi di pi˘...~
-@719 = ~Eccellente, hai fatto la scelta giusta. Ora, cerchiamo di continuare questa discussione in un luogo pi˘ appropriato.~
-@720 = ~Eterna giovinezza, bellezza che non sfiorisce, un amante che puÚ soddisfare tutti i tuoi desideri?~
+@717 = ~Posso darti tutto ci√≤ e molto di pi√π. Devi solo venire con me... volentieri.~
+@718 = ~Vero potere dici? Dimmi di pi√π...~
+@719 = ~Eccellente, hai fatto la scelta giusta. Ora, cerchiamo di continuare questa discussione in un luogo pi√π appropriato.~
+@720 = ~Eterna giovinezza, bellezza che non sfiorisce, un amante che pu√≤ soddisfare tutti i tuoi desideri?~
 @721 = ~Potete farmi apparire giovane per sempre? Questo sembra... interessante.~
-@722 = ~PerchÈ tanta paura? Forse voglio solo... parlare.~
+@722 = ~Perch√© tanta paura? Forse voglio solo... parlare.~
 @723 = ~Uhm...~
 @724 = ~Bah, i mortali sono sempre sciocchi!~
 
-@730 = ~Oscurit‡, nel raggio di 5 m~
+@730 = ~Oscurit√†, nel raggio di 5 m~
 @731 = ~Telecinesi~
 @732 = ~Gatto Infernale~
 @733 = ~Ultroloth~
@@ -196,32 +196,31 @@
 @736 = ~Causa Malattia~
 @737 = ~Suggestione di Massa~
 @738 = ~Urlo~
-@739 = ~Mortale, la tua anima Ë mia!~
+@739 = ~Mortale, la tua anima √® mia!~
 @740 = ~Aaaaiiiieeee!~
-@741 = ~La tua esistenza Ë giunta al termine, mortale.~
+@741 = ~La tua esistenza √® giunta al termine, mortale.~
 @742 = ~N-No, non farmi del male, ti prego!~
-@743 = ~Delizioso mortale, la tua sofferenza andr‡ oltre la tua pi˘ fervida immaginazione.~
+@743 = ~Delizioso mortale, la tua sofferenza andr√† oltre la tua pi√π fervida immaginazione.~
 @744 = ~Per gli dei...No, per favore!~
 @745 = ~Sguardo Ammaliante~
-@746 = ~Non mi sei di nessuna utilit‡, mortale, inoltre dovrai andarti a cercare divertimento altrove.~ //Note to translators: this string is currently unused and there's no guarantee it will ever be used, or won't be altered. There is no need to translate it unless you really want to.
+@746 = ~Non mi sei di nessuna utilit√†, mortale, inoltre dovrai andarti a cercare divertimento altrove.~ //Note to translators: this string is currently unused and there's no guarantee it will ever be used, or won't be altered. There is no need to translate it unless you really want to.
 @747 = ~Pirotecnica~
 @748 = ~Esplosione di Paura~
 @749 = ~Ecologie di Elminster: Appendice IIIa
 
-Questo tomo rovinato dal tempo Ë scritto dal saggio Elminster, e sembra una parte di un lavoro molto pi˘ esteso sullo studio dettagliato della maggior parte delle strane creature che popolano Faerun.
+Questo tomo rovinato dal tempo √® scritto dal saggio Elminster, e sembra una parte di un lavoro molto pi√π esteso sullo studio dettagliato della maggior parte delle strane creature che popolano Faerun.
 
-L'appendice sembra far riferimento a variet‡ recentemente scoperte di tipi normali di creature. Di particolare interesse troviamo:
+L'appendice sembra far riferimento a variet√† recentemente scoperte di tipi normali di creature. Di particolare interesse troviamo:
 
-"Protoplasma Denso: Un parente dei fanghi e delle muffe, questo protoplasma Ë relativamente normale... eccetto quando esposto all'elettricit‡ o al fuoco. Quando ciÚ accade, si divide in nuovi protoplasmi e puÚ quindi risultare molto pericoloso."
+"Protoplasma Denso: Un parente dei fanghi e delle muffe, questo protoplasma √® relativamente normale... eccetto quando esposto all'elettricit√† o al fuoco. Quando ci√≤ accade, si divide in nuovi protoplasmi e pu√≤ quindi risultare molto pericoloso."
 
 "Troll del Fuoco: Una nuova forma di troll che si pensa sia stata creata dagli stregoni Giganti del Fuoco per svolgere la funzione di servitori e guardie. Sembrano dei normali troll sotto diversi aspetti tranne che per la pelle con la temperatura della lava e il loro tocco bruciante. Una volta che vengono sconfitti, possono essere uccisi permanentemente solo dal freddo o dall'acido."
 
 "Fango a Fissione: Un discendente dei fanghi e delle muffe, questa particolare fanghiglia si divide in due nuove e indipendenti creature quando colpita. E' vulnerabile al fuoco, che la uccide definitivamente."
 
-"Golem Magici: Questo raro tipo di golem Ë formato di pura energia magica ed Ë completamente immune alle arti magiche cosÏ come alle armi incantate. Per quanto ne so, solo le armi prive di incantamenti hanno effetto su questa creatura."
+"Golem Magici: Questo raro tipo di golem √® formato di pura energia magica ed √® completamente immune alle arti magiche cos√¨ come alle armi incantate. Per quanto ne so, solo le armi prive di incantamenti hanno effetto su questa creatura."
 
-"Marilith: Sebbene sembri un demone normale, si tratta di una creatura che ben pochi hanno incontrato e a cui sono sopravvissuti. Il Marilith Ë un demone a sei braccia con la parte superiore di una femmina umana e la parte inferiore di un serpente. E' incredibilmente veloce e letale, e oltre alla sua capacit‡ di combattimento con sei spade, Ë anche in grado di lanciare incantesimi. I guerrieri devono stare in guardia: questo demone È immune alle armi normali ed agli incantamenti minori."~
-
+"Marilith: Sebbene sembri un demone normale, si tratta di una creatura che ben pochi hanno incontrato e a cui sono sopravvissuti. Il Marilith √® un demone a sei braccia con la parte superiore di una femmina umana e la parte inferiore di un serpente. E' incredibilmente veloce e letale, e oltre alla sua capacit√† di combattimento con sei spade, √® anche in grado di lanciare incantesimi. I guerrieri devono stare in guardia: questo demone √© immune alle armi normali ed agli incantamenti minori."~
 
 
 // Revised Fiend summoning
@@ -234,7 +233,7 @@ Tempo di lancio: 7
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Cornugon se l'allineamento Ë legale, mentre appare un Nabassu se l'allineamento Ë caotico. Se l'evocatore non Ë nÈ legale nÈ caotico, apparir‡ invece un Arcanaloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Cornugon se l'allineamento √® legale, mentre appare un Nabassu se l'allineamento √® caotico. Se l'evocatore non √® n√© legale n√© caotico, apparir√† invece un Arcanaloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
 @752 = ~Evoca Demone (Evocazione/Attrazione)
@@ -245,7 +244,7 @@ Tempo di lancio: 8
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un potente abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Gelugon se l'allineamento Ë legale, mentre appare un Glabrezu se l'allineamento Ë caotico. Se l'evocatore non Ë nÈ legale nÈ caotico, apparir‡ invece un Nycaloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un potente abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Gelugon se l'allineamento √® legale, mentre appare un Glabrezu se l'allineamento √® caotico. Se l'evocatore non √® n√© legale n√© caotico, apparir√† invece un Nycaloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
 @753 = ~Portale (Evocazione/Attrazione)
@@ -256,10 +255,10 @@ Tempo di lancio: 9
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Demone della Fossa se l'allineamento Ë legale, mentre appare un Balor se l'allineamento Ë caotico. Se l'evocatore non Ë nÈ legale nÈ caotico, apparir‡ invece un Ultroloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Demone della Fossa se l'allineamento √® legale, mentre appare un Balor se l'allineamento √® caotico. Se l'evocatore non √® n√© legale n√© caotico, apparir√† invece un Ultroloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
-// Nota: La versione del Portale per i Sacerdoti È differente in termini di livello di incantesimo e di tempo di lancio
+// Nota: La versione del Portale per i Sacerdoti √© differente in termini di livello di incantesimo e di tempo di lancio
 @754 = ~Portale (Evocazione/Attrazione)
 Livello: 7
 Raggio d'azione: Campo visivo del lanciatore
@@ -268,14 +267,14 @@ Tempo di lancio: 5
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Demone della Fossa se l'allineamento Ë legale, mentre appare un Balor se l'allineamento Ë caotico. Se l'evocatore non Ë nÈ legale nÈ caotico, apparir‡ invece un Ultroloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. La natura del Demone corrisponde all'allineamento dell'evocatore. Appare un Demone della Fossa se l'allineamento √® legale, mentre appare un Balor se l'allineamento √® caotico. Se l'evocatore non √® n√© legale n√© caotico, apparir√† invece un Ultroloth. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 @755 = ~Evocare Tanar'ri~
 @756 = ~Evocare Baatezu~
 @757 = ~Evocare Yugoloth~
 @758 = ~Cerchi di aprire un portale verso l'Abisso~
 @759 = ~Cerchi di aprire un portale verso Baator~
-@760 = ~Il tentativo Ë fallito~
+@760 = ~Il tentativo √® fallito~
 
 
 @761 = ~Creatura Immonda (Evocazione/Attrazione)
@@ -286,7 +285,7 @@ Tempo di lancio: 7
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore Ë di allineamento legale puÚ scegliere di evocare o un Cornugon baatezu o un Arcanaloth yugoloth. Se il lanciatore Ë di allineamento caotico puÚ scegliere tra un Nabassu tanar'ri o un Arcanaloth yugoloth. Il lanciatore che non Ë nÈ di allineamento legale e nÈ di allineamento neutrale puÚ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore √® di allineamento legale pu√≤ scegliere di evocare o un Cornugon baatezu o un Arcanaloth yugoloth. Se il lanciatore √® di allineamento caotico pu√≤ scegliere tra un Nabassu tanar'ri o un Arcanaloth yugoloth. Il lanciatore che non √® n√© di allineamento legale e n√© di allineamento neutrale pu√≤ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
 @762 = ~Evoca Demone (Evocazione/Attrazione)
@@ -297,7 +296,7 @@ Tempo di lancio: 8
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore Ë di allineamento legale puÚ scegliere di evocare o un Gelugon baatezu o un Nycaloth yugoloth. Se il lanciatore Ë di allineamento caotico puÚ scegliere tra un Glabrezu tanar'ri o un Nycaloth yugoloth. Il lanciatore che non Ë nÈ di allineamento legale e nÈ di allineamento neutrale puÚ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore √® di allineamento legale pu√≤ scegliere di evocare o un Gelugon baatezu o un Nycaloth yugoloth. Se il lanciatore √® di allineamento caotico pu√≤ scegliere tra un Glabrezu tanar'ri o un Nycaloth yugoloth. Il lanciatore che non √® n√© di allineamento legale e n√© di allineamento neutrale pu√≤ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
 @763 = ~Portale (Evocazione/Attrazione)
@@ -308,10 +307,10 @@ Tempo di lancio: 9
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore Ë di allineamento legale puÚ scegliere di evocare o un Demone della Fossa baatezu o un Ultroloth yugoloth. Se il lanciatore Ë di allineamento caotico puÚ scegliere tra un Balor tanar'ri o un Ultroloth yugoloth. Il lanciatore che non Ë nÈ di allineamento legale e nÈ di allineamento neutrale puÚ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore √® di allineamento legale pu√≤ scegliere di evocare o un Demone della Fossa baatezu o un Ultroloth yugoloth. Se il lanciatore √® di allineamento caotico pu√≤ scegliere tra un Balor tanar'ri o un Ultroloth yugoloth. Il lanciatore che non √® n√© di allineamento legale e n√© di allineamento neutrale pu√≤ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
-// Nota: La versione del Portale per i Sacerdoti È differente in termini di livello di incantesimo e di tempo di lancio
+// Nota: La versione del Portale per i Sacerdoti √© differente in termini di livello di incantesimo e di tempo di lancio
 @764 = ~Portale (Evocazione/Attrazione)
 Livello: 7
 Raggio d'azione: Campo visivo del lanciatore
@@ -320,7 +319,7 @@ Tempo di lancio: 5
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore Ë di allineamento legale puÚ scegliere di evocare o un Demone della Fossa baatezu o un Ultroloth yugoloth. Se il lanciatore Ë di allineamento caotico puÚ scegliere tra un Balor tanar'ri o un Ultroloth yugoloth. Il lanciatore che non Ë nÈ di allineamento legale e nÈ di allineamento neutrale puÚ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
+Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell'incantesimo il mago deve scegliere la natura del demone da evocare. Se il lanciatore √® di allineamento legale pu√≤ scegliere di evocare o un Demone della Fossa baatezu o un Ultroloth yugoloth. Se il lanciatore √® di allineamento caotico pu√≤ scegliere tra un Balor tanar'ri o un Ultroloth yugoloth. Il lanciatore che non √® n√© di allineamento legale e n√© di allineamento neutrale pu√≤ scegliere tra uno dei tre tipi di demoni. In ogni caso, l'incantatore non ha alcun controllo sulle azioni dei Demoni evocati. Chiunque non sia protetto dal male, come con l'incantesimo, potrebbe essere attaccato dalla creatura, anche i passanti innocenti, l'incantatore e il suo gruppo. Si noti che l'incantatore subisce tutte le conseguenze in termini di reputazione e allineamento per gli atti del Demone evocato.~
 
 
 @790 = ~fallita l'apertura di un portale per gli Abissi~
@@ -339,11 +338,11 @@ Questo incantesimo evoca un abitante dei Piani Inferiori. Durante il lancio dell
 @1029 = ~Colpito da imputridimento da mummia~
 @1030 = ~Spada Danzante~
 @1031 = ~Spada rotte~
-@1032 = ~Qualsiasi potere avesse avuto una volta questíarma, ora non lo ha pi˘.~
+@1032 = ~Qualsiasi potere avesse avuto una volta quest‚Äôarma, ora non lo ha pi√π.~
 @1033 = ~Signore dei Ghoul~
 @1034 = ~Affetto da aura malvagia del Signore dei Ghoul~
-@1035 = ~Vicino alla morte a causa dellíimputridimento da mummia~
-@1036 = ~Morte a causa dellíimputridimento da mummia~
+@1035 = ~Vicino alla morte a causa dell‚Äôimputridimento da mummia~
+@1036 = ~Morte a causa dell‚Äôimputridimento da mummia~
 @1037 = ~Ju-ju Zombie~
 @1038 = ~In guardia!~
 @1039 = ~Attivata la Spada Danzante~
@@ -373,7 +372,7 @@ Tempo di Lancio: 1
 Area d'Effetto: Cuneo di 1,5 m x 6 m x 6 m
 Tiro Salvezza: Speciale
 
-Lanciando questo incantesimo, il mago lancia davanti a lui uno spruzzo a forma di ventaglio dai colori vivaci. Tutte le creature all'interno del raggio d'effetto hanno diritto ad un tiro salvezza contro incantesimo per evitarne gli effetti, se sono del sesto livello o oltre il livello del lanciatore. Le creature accecate o non vedenti non ne sono influenzate. Alle creature che non Ë permesso effettuare un tiro salvezza, alle creature che hanno fallito il tiro salvezza e alle creature che hanno un livello inferiore o uguale al livello del lanciatore perderanno conoscenza per 4 round; le creature che possiedono un livello o due pi˘ alto di quello del lanciatore sono accecate per 2 round; le creature che possiedono 3 o pi˘ livelli in pi˘ rispetto al livello del lanciatore saranno disorientate e non in grado di pensare o di agire coerentemente per 1 round.~
+Lanciando questo incantesimo, il mago lancia davanti a lui uno spruzzo a forma di ventaglio dai colori vivaci. Tutte le creature all'interno del raggio d'effetto hanno diritto ad un tiro salvezza contro incantesimo per evitarne gli effetti, se sono del sesto livello o oltre il livello del lanciatore. Le creature accecate o non vedenti non ne sono influenzate. Alle creature che non √® permesso effettuare un tiro salvezza, alle creature che hanno fallito il tiro salvezza e alle creature che hanno un livello inferiore o uguale al livello del lanciatore perderanno conoscenza per 4 round; le creature che possiedono un livello o due pi√π alto di quello del lanciatore sono accecate per 2 round; le creature che possiedono 3 o pi√π livelli in pi√π rispetto al livello del lanciatore saranno disorientate e non in grado di pensare o di agire coerentemente per 1 round.~
 
 
 @1891 = ~Porta dimensionale (Alterazione)
@@ -384,7 +383,7 @@ Tempo di lancio: 1
 Area d'Effetto: Il lanciatore
 Tiro Salvezza: Nessuno
 
-Questo incantesimo trasporta il lanciatore in un dato luogo gi‡ da lui conosciuto. Il lanciatore arriva sempre esattamente nel luogo da lui desiderato visualizzando semplicemente l'area a lui familiare. Quando l'incantesimo viene lanciato, davanti al lanciatore si aprir‡ una porta dimensionale, da dove si potr‡ passare. Quando il lanciatore passa attraverso il portale si trover‡ nel luogo di destinazione da lui scelto.~
+Questo incantesimo trasporta il lanciatore in un dato luogo gi√† da lui conosciuto. Il lanciatore arriva sempre esattamente nel luogo da lui desiderato visualizzando semplicemente l'area a lui familiare. Quando l'incantesimo viene lanciato, davanti al lanciatore si aprir√† una porta dimensionale, da dove si potr√† passare. Quando il lanciatore passa attraverso il portale si trover√† nel luogo di destinazione da lui scelto.~
 
 
 @1895 = ~Chiama Creature del Bosco
@@ -397,7 +396,7 @@ Casting Time: 7
 Area d'Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Mediante questo incantesimo, il lanciatore È in grado di evocare diverse creature del bosco. Il tipo ed il numero di creature evocate dipendono dal livello del lanciatore:
+Mediante questo incantesimo, il lanciatore √© in grado di evocare diverse creature del bosco. Il tipo ed il numero di creature evocate dipendono dal livello del lanciatore:
 
 Livello 7: 2 Driadi o 1 Amadriade
 Livello 10: 3 Amadriadi
@@ -413,7 +412,7 @@ Le creature evocate aiuteranno il lanciatore con qualsiasi mezzo in loro possess
 @1902 = ~Canzone Ammaliante~
 @1903 = ~Resistenza agli effetti dello charme~
 @1904 = ~Scoprire Trappole e Fosse~
-@1905 = ~Tocco della Tranquilit‡~
+@1905 = ~Tocco della Tranquilit√†~
 @1906 = ~Vapori Tossici~
 @1907 = ~Parlare con Le Piante~
 @1908 = ~* * * Questo componente richiede 'Creature Fey PnP' * * *~
@@ -423,12 +422,12 @@ Le creature evocate aiuteranno il lanciatore con qualsiasi mezzo in loro possess
 
 @2000 = ~* * * Questo componente richiede 'Elementali PnP' * * *~
 @2001 = ~Hsss! L'ardente deve morire!~
-@2002 = ~La fiamma ti consumer‡!~
+@2002 = ~La fiamma ti consumer√†!~
 @2003 = ~Le odiate fiamme... devono spegnersi!~
-@2004 = ~Il fuoco pulir‡ la tua impurit‡!~
+@2004 = ~Il fuoco pulir√† la tua impurit√†!~
 @2005 = ~Morte al sangue che ribolle!~
-@2006 = ~Ti ridurrÚ in cenere, verme!~
-@2100 = ~Invisibilit‡ Naturale~
+@2006 = ~Ti ridurr√≤ in cenere, verme!~
+@2100 = ~Invisibilit√† Naturale~
 @2101 = ~Aura di Freddo~
 @2102 = ~Resistenza al Fuoco abbassata~
 @2103 = ~Nereide~
@@ -442,7 +441,7 @@ Le creature evocate aiuteranno il lanciatore con qualsiasi mezzo in loro possess
 @2111 = ~Avvolgere~
 @2112 = ~Affogare~
 @2113 = ~Elementale Dominato~
-@2114 = ~CosÏ sia, allora! Non desidero combattere con te <RACE>, ma ho poca scelta in merito.~
+@2114 = ~Cos√¨ sia, allora! Non desidero combattere con te <RACE>, ma ho poca scelta in merito.~
 @2115 = ~Elementale dell'Aria Maggiore~
 @2116 = ~Elementale della Terra Maggiore~
 @2117 = ~Elementale dl Fuoco Maggiore~
@@ -457,7 +456,7 @@ Le creature evocate aiuteranno il lanciatore con qualsiasi mezzo in loro possess
 @2126 = ~Elementale dell'Acqua Minore~
 @2127 = ~Evoca Alleati~
 @2128 = ~Nebbia Solida~
-@2129 = ~Ridotta la Velocit‡ di Movimento~
+@2129 = ~Ridotta la Velocit√† di Movimento~
 @2130 = ~Protetto da incantesimi gassosi ed attacchi~
 @2131 = ~Chiuso in combattimento mentale~
 @2132 = ~Non convocato~
@@ -472,15 +471,15 @@ Le creature evocate aiuteranno il lanciatore con qualsiasi mezzo in loro possess
 @2174 = ~Ti sei rivelato essere una delusione.~
 @2175 = ~Non hai la minima idea di quello che sono in grado di fare.~
 @2176 = ~Sei il disonore della tua razza.~
-@2177 = ~ForgerÚ ilo stesso il mio destino, padre.~
-@2178 = ~Davvero credi di avere qualche possibilit‡ contro di me?~
-@2179 = ~La tua arroganza sar‡ la tua fine.~
-@2180 = ~Ti mostrerÚ le vere dimensioni del mio potere!~
+@2177 = ~Forger√≤ ilo stesso il mio destino, padre.~
+@2178 = ~Davvero credi di avere qualche possibilit√† contro di me?~
+@2179 = ~La tua arroganza sar√† la tua fine.~
+@2180 = ~Ti mostrer√≤ le vere dimensioni del mio potere!~
 @2181 = ~Possa la nostra battaglia scuotere le fondamenta della terra!~
 @2182 = ~Folle ragazzina, sei ancora troppo debole!~
 @2183 = ~E tu sei ancora un pazzo illuso.~
 @2184 = ~Ti sei finalmente stancato di nasconderti ed hai deciso di affrontarmi?~
-@2185 = ~Il tempo delle sottigliezze È finito. Dobbiamo sistemare tutto qui ed ora.~
+@2185 = ~Il tempo delle sottigliezze √© finito. Dobbiamo sistemare tutto qui ed ora.~
 @2186 = ~Mio caro, ho considerato qualsiasi stratagemma con cui saresti potuto venire.~
 @2187 = ~Nonostante il tuo piano, ancora non sembri in grado di sconfiggermi.~
 @2188 = ~Permettimi di sollevarti dal peso delle regole.~
@@ -499,7 +498,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale del Fuoco, evocando un elementale del fuoco che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'Ë la possibilit‡ del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir‡ ai comandi del lanciatore finchÈ non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale del Fuoco, evocando un elementale del fuoco che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'√® la possibilit√† del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir√† ai comandi del lanciatore finch√© non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata.~
 
 @2201 = ~Evocare Elementale dell'Aria
 (Evocazione/Attrazione)
@@ -510,7 +509,7 @@ Tempo di Lancio: Speciale
 Area di Effetto: Speciale
 Tiro Salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Aria, evocando un elementale dell'aria che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'Ë la possibilit‡ del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir‡ ai comandi del lanciatore finchÈ non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Aria, evocando un elementale dell'aria che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'√® la possibilit√† del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir√† ai comandi del lanciatore finch√© non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata.~
 
 @2202 = ~Evocare Elementale della Terra
 (Evocazione/Attrazione)
@@ -521,7 +520,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'Ë la possibilit‡ del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir‡ ai comandi del lanciatore finchÈ non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'√® la possibilit√† del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir√† ai comandi del lanciatore finch√© non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata.~
 
 @2213 = ~Evocare Elementale dell'Acqua
 (Evocazione/Attrazione)
@@ -532,7 +531,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Acqua, evocando un elementale dell'Acqua che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'Ë la possibilit‡ del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir‡ ai comandi del lanciatore finchÈ non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Acqua, evocando un elementale dell'Acqua che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Una volta evocato l'Elementale il lanciatore deve concentrarsi sulla creatura per 3 round per assicurarsi che l'Elementale non gli si rivolti contro (c'√® la possibilit√† del 15% che l'Elementale attacchi il lanciatore). Tuttavia, una volta passato questo periodo di tempo l'Elementale ubbidir√† ai comandi del lanciatore finch√© non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata.~
 
 // Divine versions
 
@@ -546,7 +545,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale del Fuoco, evocando un elementale del fuoco che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. L'Elementale ubbidir‡ ai comandi del lanciatore finchÈ non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata. Diversamente dall'incantesimo di Evocare Elementale del Fuoco del mago, i sacerdoti non devono impegnarsi in scontri di volont‡ per controllare l'elementale evocato.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale del Fuoco, evocando un elementale del fuoco che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. L'Elementale ubbidir√† ai comandi del lanciatore finch√© non rimane ucciso o fino a che non svanisca l'effetto dell'incantesimo. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata. Diversamente dall'incantesimo di Evocare Elementale del Fuoco del mago, i sacerdoti non devono impegnarsi in scontri di volont√† per controllare l'elementale evocato.~
 
 
 @2204 = ~Evocare Elementale della Terra
@@ -559,7 +558,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont‡ per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr‡ sotto il controllo del lanciatore fino a che non morir‡ o svanir‡ l'effetto dell'incantesimo.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont√† per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr√† sotto il controllo del lanciatore fino a che non morir√† o svanir√† l'effetto dell'incantesimo.~
 
 @2205 = ~ Evocare Elementale dell'Aria
 (Evocazione/Attrazione)
@@ -570,7 +569,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Aria, evocando un elementale dell'Aria che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont‡ per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr‡ sotto il controllo del lanciatore fino a che non morir‡ o svanir‡ l'effetto dell'incantesimo.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale dell'Aria, evocando un elementale dell'Aria che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 16 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont√† per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr√† sotto il controllo del lanciatore fino a che non morir√† o svanir√† l'effetto dell'incantesimo.~
 
 
 // HLAs
@@ -583,7 +582,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro salvezza: Nessuno
 
-Questo incantesimo permette al lanciatore di richiamare tre potenti elementali dai piani dell'aria, della terre e del fuoco (ciascuno dal suo piano). C'Ë il 90% di possibilit‡ che degli Elementali Maggiori (16 Dadi Vita) vengano evocati ed un 10% di possibilit‡ che vengano invece evocati degli Elementeli Maggiori (20 Dadi Vita). In ciascun caso, gli elementali rimangono sotto il controllo del lanciatore fino a che non vengono uccisi o non termini l'effetto dell'incantesimo.~
+Questo incantesimo permette al lanciatore di richiamare tre potenti elementali dai piani dell'aria, della terre e del fuoco (ciascuno dal suo piano). C'√® il 90% di possibilit√† che degli Elementali Maggiori (16 Dadi Vita) vengano evocati ed un 10% di possibilit√† che vengano invece evocati degli Elementeli Maggiori (20 Dadi Vita). In ciascun caso, gli elementali rimangono sotto il controllo del lanciatore fino a che non vengono uccisi o non termini l'effetto dell'incantesimo.~
 
 @2207 = ~Trasformazione in Elementale del Fuoco
 Livello: Cerca
@@ -593,7 +592,7 @@ Tempo di lancio: 4
 Area d'effetto: L'incantatore
 Tiro salvezza: Nessuno
 
-Chiamando a sÈ il potere del fuoco, questa potente capacit‡ di trasformazione permette al druido di diventare un elementale di 20 Dadi Vita con una forza immensa. Durante le trasformazione, il druido guadagna l'aspetto e le abilit‡ di un Elementare del Fuoco Maggiore. Quando il druido ritorna nella sua forma umana, guarisce anche di 3D10.~
+Chiamando a s√© il potere del fuoco, questa potente capacit√† di trasformazione permette al druido di diventare un elementale di 20 Dadi Vita con una forza immensa. Durante le trasformazione, il druido guadagna l'aspetto e le abilit√† di un Elementare del Fuoco Maggiore. Quando il druido ritorna nella sua forma umana, guarisce anche di 3D10.~
 
 @2208 = ~Trasformazione in Elementale della Terra
 Livello: Cerca
@@ -603,7 +602,7 @@ Tempo di lancio: 4
 Area d'effetto: L'incantatore
 Tiro salvezza: Nessuno
 
-Chiamando a sÈ il potere del fuoco, questa potente capacit‡ di trasformazione permette al druido di diventare un elementale di 20 Dadi Vita con una forza immensa. Durante le trasformazione, il druido guadagna l'aspetto e le abilit‡ di un Elementare della Terra Maggiore. Quando il druido ritorna nella sua forma umana, guarisce anche di 3D10.~
+Chiamando a s√© il potere del fuoco, questa potente capacit√† di trasformazione permette al druido di diventare un elementale di 20 Dadi Vita con una forza immensa. Durante le trasformazione, il druido guadagna l'aspetto e le abilit√† di un Elementare della Terra Maggiore. Quando il druido ritorna nella sua forma umana, guarisce anche di 3D10.~
 
 @2209 = ~Muro di Vento~
 @2210 = ~Muro di Vento
@@ -615,7 +614,7 @@ Tempo di Lancio: 3
 Area d'effetto: muro, 10 x 5 metro/livello, 61 cm di lunghezza
 Tiro Salvezza: Nessuno
 
-Questo incantesimo crea una barriera invisibile di vento di considerevole potenza. Il muro di vento È incentrato sul lanciatore e protegge tutte le creature sue alleate all'interno dell'area d'effetto. Gli insetti ed i proiettili normali non possono passare questa barriera mentre le armi da lancio magiche hanno una penalit‡ di -4 ai tiri per colpire. Inoltrte, le creature protette dal muro di vento non vengono influenzate dagli incantesimi basati sul gas ed agli attacchi.~
+Questo incantesimo crea una barriera invisibile di vento di considerevole potenza. Il muro di vento √© incentrato sul lanciatore e protegge tutte le creature sue alleate all'interno dell'area d'effetto. Gli insetti ed i proiettili normali non possono passare questa barriera mentre le armi da lancio magiche hanno una penalit√† di -4 ai tiri per colpire. Inoltrte, le creature protette dal muro di vento non vengono influenzate dagli incantesimi basati sul gas ed agli attacchi.~
 
 @2211 = ~Evocare Elementale Maggiore
 Livello: Cerca
@@ -625,7 +624,7 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro salvezza: Nessuno
 
-I druidi, essendo maggiormente legati agli elementi, possono lanciare una versione pi˘ potente di Evocare Elementale. Questo incantesimo puÚ evocare un direttamente un Principe Elementale, in modo casuale scelto tra la terra, l'aria ed il fuoco. I Principi Elementari rimangono per 2 turni ed obbediranno al lanciatore per tutta la durata dell'evocazione.
+I druidi, essendo maggiormente legati agli elementi, possono lanciare una versione pi√π potente di Evocare Elementale. Questo incantesimo pu√≤ evocare un direttamente un Principe Elementale, in modo casuale scelto tra la terra, l'aria ed il fuoco. I Principi Elementari rimangono per 2 turni ed obbediranno al lanciatore per tutta la durata dell'evocazione.
 
 Richiede: Evocare Elementale~
 
@@ -640,46 +639,46 @@ Tempo di lancio: 1 round
 Area d'effetto: Speciale
 Tiro-salvezza: Nessuno
 
-Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'È inoltre la possibilit‡ del 35% che appaia un Elementale Maggiore con 12 Dadi Vita ed un 5% di possibilit‡ che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit‡ di comunicazione e non Ë necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont‡ per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr‡ sotto il controllo del lanciatore fino a che non morir‡ o svanir‡ l'effetto dell'incantesimo.~
+Lanciando questo incantesimo, il sacerdote apre uno speciale portale connesso al Piano Elementale della Terra, evocando un elementale della terra che appare nelle immediate vicinanze. Un elementare con 12 dadi vita risponde sempre all'evocazione. C'√© inoltre la possibilit√† del 35% che appaia un Elementale Maggiore con 12 Dadi Vita ed un 5% di possibilit√† che sia evocato un ulteriore Elementare Maggiore con 20 dadi vita. Tutti i comandi dati all'Elementale sono fatti telepaticamente, in questo modo non si rischiano incompatibilit√† di comunicazione e non √® necessario conoscere il linguaggio della creatura evocata. I sacerdoti non devono impegnarsi in scontri di volont√† per controllare l'elementale evocato (diversamente dai maghi). L'elementale rimarr√† sotto il controllo del lanciatore fino a che non morir√† o svanir√† l'effetto dell'incantesimo.~
 
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod
 
-@8120 = ~Questa abilit‡ non puÚ essere usata in ambienti ostili~
+@8120 = ~Questa abilit√† non pu√≤ essere usata in ambienti ostili~
 @8200 = ~Scrivere Pergamene
 
-Questa abilit‡ consente a un incantatore arcano di trascrivere qualunque incantesimo sia in grado di lanciare su una pergamena. Solo un incantesimo che Ë attualmente memorizzato puÚ essere trascritto in questo modo. Tuttavia, i costi delle materie prime necessarie all'operazione devono essere coperti. Infine, scrivere una pergamena rimuove un'istanza dell'incantesimo in questione dalla memoria dell'incantatore.
+Questa abilit√† consente a un incantatore arcano di trascrivere qualunque incantesimo sia in grado di lanciare su una pergamena. Solo un incantesimo che √® attualmente memorizzato pu√≤ essere trascritto in questo modo. Tuttavia, i costi delle materie prime necessarie all'operazione devono essere coperti. Infine, scrivere una pergamena rimuove un'istanza dell'incantesimo in questione dalla memoria dell'incantatore.
 
-Nota: scrivere pergamene Ë un'operazione delicata che puÚ essere svolta solo in luoghi sicuri (non ostili).~
+Nota: scrivere pergamene √® un'operazione delicata che pu√≤ essere svolta solo in luoghi sicuri (non ostili).~
 
-@8221 = ~(Questa abilit‡ consente a un incantatore arcano di trascrivere qualunque incantesimo sia in grado di lanciare su una pergamena. Solo un incantesimo che Ë attualmente memorizzato puÚ essere trascritto in questo modo. Tuttavia, i costi delle materie prime necessarie all'operazione devono essere coperti. Infine, scrivere una pergamena rimuove un'istanza dell'incantesimo in questione dalla memoria dell'incantatore.)~
+@8221 = ~(Questa abilit√† consente a un incantatore arcano di trascrivere qualunque incantesimo sia in grado di lanciare su una pergamena. Solo un incantesimo che √® attualmente memorizzato pu√≤ essere trascritto in questo modo. Tuttavia, i costi delle materie prime necessarie all'operazione devono essere coperti. Infine, scrivere una pergamena rimuove un'istanza dell'incantesimo in questione dalla memoria dell'incantatore.)~
 @8222 = ~(Scegli un livello d'incantesimo:)~
-@8223 = ~(Questa abilit‡ permette ad un esperto lanciatore di incantesimi di scrivere un incantesimo dal <HISHER> Libro degli incantesimi in una pergamena. Tuttavia bisogna che cerchi un luogo pi˘ appropriato, come una locanda, per utilizzare questa abilit‡).~
+@8223 = ~(Questa abilit√† permette ad un esperto lanciatore di incantesimi di scrivere un incantesimo dal <HISHER> Libro degli incantesimi in una pergamena. Tuttavia bisogna che cerchi un luogo pi√π appropriato, come una locanda, per utilizzare questa abilit√†).~
 
-@8230 = ~Incantesimi di 1∞ livello (50 mo)~
-@8231 = ~Incantesimi di 2∞ livello (100 mo)~
-@8232 = ~Incantesimi di 3∞ livello (150 mo)~
-@8233 = ~Incantesimi di 4∞ livello (250 mo)~
-@8234 = ~Incantesimi di 5∞ livello (500 mo)~
-@8235 = ~Incantesimi di 6∞ livello (1000 mo)~
-@8236 = ~Incantesimi di 7∞ livello (1500 mo)~
-@8237 = ~Incantesimi di 8∞ livello (2500 mo)~
-@8238 = ~Incantesimi di 9∞ livello (5000 mo)~
+@8230 = ~Incantesimi di 1¬∞ livello (50 mo)~
+@8231 = ~Incantesimi di 2¬∞ livello (100 mo)~
+@8232 = ~Incantesimi di 3¬∞ livello (150 mo)~
+@8233 = ~Incantesimi di 4¬∞ livello (250 mo)~
+@8234 = ~Incantesimi di 5¬∞ livello (500 mo)~
+@8235 = ~Incantesimi di 6¬∞ livello (1000 mo)~
+@8236 = ~Incantesimi di 7¬∞ livello (1500 mo)~
+@8237 = ~Incantesimi di 8¬∞ livello (2500 mo)~
+@8238 = ~Incantesimi di 9¬∞ livello (5000 mo)~
 
 @8250 = ~(Non scrivere alcuna pergamena)~
 
 @8260 = ~(Scegli l'incantesimo da trascrivere sulla pergamena:)~
 @8261 = ~(Scegli un diverso livello d'incantesimo)~
-@8270 = ~Abilit‡ speciale guadagnata: Scrivere Pergamene~
-@8271 = ~Immunit‡ agli Incantesimi: Scongiurazione~
-@8272 = ~Immunit‡ agli Incantesimi: Evocazione~
-@8273 = ~Immunit‡ agli Incantesimi: Divinazione~
-@8274 = ~Immunit‡ agli Incantesimi: Incantamento~
-@8275 = ~Immunit‡ agli Incantesimi: Illusione~
-@8276 = ~Immunit‡ agli Incantesimi: Invocazione~
-@8277 = ~Immunit‡ agli Incantesimi: Necromanzia~
-@8278 = ~Immunit‡ agli Incantesimi: Alterazione~
+@8270 = ~Abilit√† speciale guadagnata: Scrivere Pergamene~
+@8271 = ~Immunit√† agli Incantesimi: Scongiurazione~
+@8272 = ~Immunit√† agli Incantesimi: Evocazione~
+@8273 = ~Immunit√† agli Incantesimi: Divinazione~
+@8274 = ~Immunit√† agli Incantesimi: Incantamento~
+@8275 = ~Immunit√† agli Incantesimi: Illusione~
+@8276 = ~Immunit√† agli Incantesimi: Invocazione~
+@8277 = ~Immunit√† agli Incantesimi: Necromanzia~
+@8278 = ~Immunit√† agli Incantesimi: Alterazione~
 
 //WeiDU prompts
 
@@ -689,18 +688,18 @@ Nota: scrivere pergamene Ë un'operazione delicata che puÚ essere svolta solo in 
 
 // New load screen hints
 
-@9000 = ~Le creature eteree possono essere rilevate da Individuazione dell'invisibilit‡, Visione del vero ed incantesimi simili. Tuttavia non possono essere attaccate fino a che non escono dal Piano Etereo.~
-@9001 = ~Qualsisi creatura umanoide afflitta dallo Sguardo Mortale di un Nabassu inizier‡ a trasformarsi in un Ghast. Uccidendo il Nabassu o lanciando un incantesimo di Scaccia maledizione sulla vittima prima della trasformazione si possono completamente evitare tali effetti.~
-@9002 = ~Alcuni demoni possono aprire un portale verso il loro piano natÏo e portare altri della loro razza per aiutarli in battaglia.~
-@9003 = ~Tutti i mephit possono aprire un portale verso il loro piano natÏo e portare altri della loro razza per aiutarli in battaglia.~
+@9000 = ~Le creature eteree possono essere rilevate da Individuazione dell'invisibilit√†, Visione del vero ed incantesimi simili. Tuttavia non possono essere attaccate fino a che non escono dal Piano Etereo.~
+@9001 = ~Qualsisi creatura umanoide afflitta dallo Sguardo Mortale di un Nabassu inizier√† a trasformarsi in un Ghast. Uccidendo il Nabassu o lanciando un incantesimo di Scaccia maledizione sulla vittima prima della trasformazione si possono completamente evitare tali effetti.~
+@9002 = ~Alcuni demoni possono aprire un portale verso il loro piano nat√¨o e portare altri della loro razza per aiutarli in battaglia.~
+@9003 = ~Tutti i mephit possono aprire un portale verso il loro piano nat√¨o e portare altri della loro razza per aiutarli in battaglia.~
 @9004 = ~Alcune creature extraplanari (vale a dire demoni, mephit, elementali) non possono essere guariti dalla magia curativa.~
 
 
 // Party script descriptions and strings
 
 @23900 = ~aTWEAKS - Script del Chierico/Paladino semplice~
-@23901 = ~Questo script permetter‡ ad un Chierico/Paladino di Scacciare i Non-Morti anche quando È inoperoso. Di default il Chierico/Paladino usa l'abilit‡ di Scacciare i Non Morti solamente quando i Non Morti avversari sono nelle sue vicinanze e fermandosi quando sono fuori dalla sua vista. Premendo il tasto 'D' si toglier‡ questo settaggio e render‡ il Chierico/Paladino costantemente in grado di Scacciare i Non Morti, a prescindere dalla loro presenza. Da notare che il Chierico/Paladino non attaccher‡ gli avversari e nemmeno difender‡ se stesso mentre scaccia i Non Morti. Premendo il tasto 'V' si toglier‡ questo settaggio e si far‡ in modo che il Chierico/Paladino non scaccer‡ pi˘ i Non Morti ma inizier‡ ad attaccare i nemici nelle vicinanze. Premendo il tasto 'V' una seconda volta si far‡ in modo che il personaggio attaccher‡ qualsiasi creatura Non Morta che vedr‡ ed automaticamente smetter‡ di Scacciare i Non Morti ogni volta che incontrer‡ una creatura Non Morta. Infine, premendo il tasto 'E' si ordiner‡ al Chierico/Paladino di guarire i componenti del gruppo che sono feriti. Di default, il Chierico/Paladino guarir‡ solamente gli alleati fuori dal combattimento. Premendo nuovamente il tasto 'E' si puÚ costringere il Chierico/Paladino a guarire gli alleati anche durante un combattimento oppure bloccare totalmente la routine di guarigione. Questo script non sovrascriver‡ mai le azioni assegnate al giocatore. (RR#CLP01)~
-@23902 = ~Scacciare i Non Morti se il personaggio Ë inoperoso~
+@23901 = ~Questo script permetter√† ad un Chierico/Paladino di Scacciare i Non-Morti anche quando √© inoperoso. Di default il Chierico/Paladino usa l'abilit√† di Scacciare i Non Morti solamente quando i Non Morti avversari sono nelle sue vicinanze e fermandosi quando sono fuori dalla sua vista. Premendo il tasto 'D' si toglier√† questo settaggio e render√† il Chierico/Paladino costantemente in grado di Scacciare i Non Morti, a prescindere dalla loro presenza. Da notare che il Chierico/Paladino non attaccher√† gli avversari e nemmeno difender√† se stesso mentre scaccia i Non Morti. Premendo il tasto 'V' si toglier√† questo settaggio e si far√† in modo che il Chierico/Paladino non scaccer√† pi√π i Non Morti ma inizier√† ad attaccare i nemici nelle vicinanze. Premendo il tasto 'V' una seconda volta si far√† in modo che il personaggio attaccher√† qualsiasi creatura Non Morta che vedr√† ed automaticamente smetter√† di Scacciare i Non Morti ogni volta che incontrer√† una creatura Non Morta. Infine, premendo il tasto 'E' si ordiner√† al Chierico/Paladino di guarire i componenti del gruppo che sono feriti. Di default, il Chierico/Paladino guarir√† solamente gli alleati fuori dal combattimento. Premendo nuovamente il tasto 'E' si pu√≤ costringere il Chierico/Paladino a guarire gli alleati anche durante un combattimento oppure bloccare totalmente la routine di guarigione. Questo script non sovrascriver√† mai le azioni assegnate al giocatore. (RR#CLP01)~
+@23902 = ~Scacciare i Non Morti se il personaggio √® inoperoso~
 @23903 = ~Scacciare i Non Morti solo quando gli avversari sono nelle vicinanze~
 @23904 = ~Guarire gli alleati solo quando non sono in combattimento~
 @23905 = ~Guarire gli alleati anche durante un combattimento~

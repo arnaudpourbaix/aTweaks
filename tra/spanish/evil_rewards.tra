@@ -1,30 +1,30 @@
-// -*- coding: cp1252 -*-
+// -*- coding: utf-8 -*-
 
-@0=~ Ah, sÌ. Una recompensa. DeberÌais ser bien pagado en oro. Si hacÈis bien el trabajo tambiÈn estoy dispuesto a ofreceros unas valiosas herencias familiares.~ ~ Ah, sÌ. Una recompensa. DeberÌais ser bien pagada en oro. Si hacÈis bien el trabajo tambiÈn estoy dispuesto a ofreceros unas valiosas herencias familiares.~ //Speaker: Khellon Menold, Trademeet (TREVIL01.DLG)
+@0=~ Ah, s√≠. Una recompensa. Deber√≠ais ser bien pagado en oro. Si hac√©is bien el trabajo tambi√©n estoy dispuesto a ofreceros unas valiosas herencias familiares.~ ~ Ah, s√≠. Una recompensa. Deber√≠ais ser bien pagada en oro. Si hac√©is bien el trabajo tambi√©n estoy dispuesto a ofreceros unas valiosas herencias familiares.~ //Speaker: Khellon Menold, Trademeet (TREVIL01.DLG)
 
-@50=~Ah, esperando por vos, he estado. Fiel sirviente de la ˙nica Plateada, yo soy. En camino de obtener los huevos, vos est·is. Mantenedlos a salvo, vos debÈis~ //Speaker: Adalon's imp (UDIMP.DLG)
+@50=~Ah, esperando por vos, he estado. Fiel sirviente de la √∫nica Plateada, yo soy. En camino de obtener los huevos, vos est√°is. Mantenedlos a salvo, vos deb√©is~ //Speaker: Adalon's imp (UDIMP.DLG)
 
-@51=~Tomar estos vos debÈis. Hechos en secretos ellos est·n. Hechos por el hombre drow que matasteis ellos est·n. D·dselos a la hija de la Madre Matrona, vos debÈis. EngaÒadla, tambiÈn.~ //Speaker: Adalon's imp (UDIMP.DLG)
+@51=~Tomar estos vos deb√©is. Hechos en secretos ellos est√°n. Hechos por el hombre drow que matasteis ellos est√°n. D√°dselos a la hija de la Madre Matrona, vos deb√©is. Enga√±adla, tambi√©n.~ //Speaker: Adalon's imp (UDIMP.DLG)
 
-@52=~SeguirÈ al drow para obtener lo huevos autÈnticos.~ //Speaker: Protagonist
+@52=~Seguir√© al drow para obtener lo huevos aut√©nticos.~ //Speaker: Protagonist
 @53=~Veremos, diablillo.~ //Speaker: Protagonist
-@54=~Bien, bien. Agradecida, la ˙nica Plateada estar·~ //Speaker: Adalon's imp (UDIMP.DLG)
-@55=~Poner en peligro los huevos, vos no debÈis. La Plateada vendr· por vos. Eso gustar·, a vos no.~ //Speaker: Adalon's imp (UDIMP.DLG)
+@54=~Bien, bien. Agradecida, la √∫nica Plateada estar√°~ //Speaker: Adalon's imp (UDIMP.DLG)
+@55=~Poner en peligro los huevos, vos no deb√©is. La Plateada vendr√° por vos. Eso gustar√°, a vos no.~ //Speaker: Adalon's imp (UDIMP.DLG)
 
-@56=~El Ritual de ConvocaciÛn Drow
+@56=~El Ritual de Convocaci√≥n Drow
 
-He entregado un segundo juego de huevos falsos a un diablillo que dice ser sirviente de la Dragona Plateada. El diablillo implicado perteneciÛ alguna vez a Solaufein. øCÛmo el diablillo los consiguiÛ?, no tengo idea. SÛlo me dijo que le diese estos huevos falsos a Phaere en orden a salvar los huevos autÈnticos~ //Journal entry
+He entregado un segundo juego de huevos falsos a un diablillo que dice ser sirviente de la Dragona Plateada. El diablillo implicado perteneci√≥ alguna vez a Solaufein. ¬øC√≥mo el diablillo los consigui√≥?, no tengo idea. S√≥lo me dijo que le diese estos huevos falsos a Phaere en orden a salvar los huevos aut√©nticos~ //Journal entry
 @57=~Saludos nuevamente, <GABBER>.~ //Speaker: Adalon's imp (UDIMP.DLG)
-@58=~El Ritual de convocaciÛn Drow
+@58=~El Ritual de convocaci√≥n Drow
 
-El mismo diablillo se mostrÛ nuevamente diciÈndome que en orden a que pudiere salir de la ciudad con los huevos, es necesario que mate a la Matriarca Ardulace. Haciendo esto sÛlo me dejar· unos minutos para salir de la ciudad antes de que mi disfraz sea revelado por la furia de los sirvientes de Lolth. Seguramente mi oportunidad ser· durante el ritual... muy al lÌmite, ciertamente.~ //Journal entry
-@59=~ El Ritual de convocaciÛn Drow
+El mismo diablillo se mostr√≥ nuevamente dici√©ndome que en orden a que pudiere salir de la ciudad con los huevos, es necesario que mate a la Matriarca Ardulace. Haciendo esto s√≥lo me dejar√° unos minutos para salir de la ciudad antes de que mi disfraz sea revelado por la furia de los sirvientes de Lolth. Seguramente mi oportunidad ser√° durante el ritual... muy al l√≠mite, ciertamente.~ //Journal entry
+@59=~ El Ritual de convocaci√≥n Drow
 
-El mismo diablillo se mostrÛ nuevamente diciÈndome que los huevos deben ser rescatados antes de que el ritual sea completado y los huevos sean sacrificados al demonio. El ritual debe de ser detenido... y entonces la Matriarca Ardulace debe ser asesinada para poder levantar el sello que est· sobre la ciudad. Una vez que estÈ hecho, tendrÈ sÛlo unos minutos para salir de la ciudad con los huevos antes de que mi disfraz sea descubierto. Muy al lÌmite, ciertamente.~ //Journal entry
-
-
+El mismo diablillo se mostr√≥ nuevamente dici√©ndome que los huevos deben ser rescatados antes de que el ritual sea completado y los huevos sean sacrificados al demonio. El ritual debe de ser detenido... y entonces la Matriarca Ardulace debe ser asesinada para poder levantar el sello que est√° sobre la ciudad. Una vez que est√© hecho, tendr√© s√≥lo unos minutos para salir de la ciudad con los huevos antes de que mi disfraz sea descubierto. Muy al l√≠mite, ciertamente.~ //Journal entry
 
 
-@60=~Tramposo, tramposo. Drows piensan que tienen los huevos, eso creen; pero los huevos, seguros est·n.~ ~Tramposa, tramposa. Drows piensan que tienen los huevos, eso creen; pero los huevos, seguros est·n.~ //Speaker: Adalon's imp (UDIMP.DLG)
-@61=~Dado los huevos a los drows, vos habÈis. °Ahora recuperarlos ilesos, vos debÈis! ~ //Speaker: Adalon's imp (UDIMP.DLG)
-@70=~Estos son los huevos falsos de dragÛn que Solaufein ha hecho.~ //Item description
+
+
+@60=~Tramposo, tramposo. Drows piensan que tienen los huevos, eso creen; pero los huevos, seguros est√°n.~ ~Tramposa, tramposa. Drows piensan que tienen los huevos, eso creen; pero los huevos, seguros est√°n.~ //Speaker: Adalon's imp (UDIMP.DLG)
+@61=~Dado los huevos a los drows, vos hab√©is. ¬°Ahora recuperarlos ilesos, vos deb√©is! ~ //Speaker: Adalon's imp (UDIMP.DLG)
+@70=~Estos son los huevos falsos de drag√≥n que Solaufein ha hecho.~ //Item description

@@ -1,6 +1,6 @@
 DEFINE_PATCH_FUNCTION poison_immunity
 	INT_VAR index = 8
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI016~
@@ -14,8 +14,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="25" prevent_icons="6" strings="14017 26215 14662 25425" spells END
@@ -25,7 +25,7 @@ END
 
 DEFINE_PATCH_FUNCTION disease_immunity
 	INT_VAR index = 9
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI409~
@@ -40,8 +40,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_CAUSE_DISEASE END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="78" prevent_icons="7" strings="31238" spells END
@@ -49,15 +49,15 @@ END
 
 DEFINE_PATCH_FUNCTION bleeding_immunity
 	INT_VAR index = 1
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~RR#BLEED~
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR prevent_icons="137" strings="25137" spells END
@@ -70,7 +70,7 @@ END
 
 DEFINE_PATCH_FUNCTION hold_immunity
 	INT_VAR index = 2
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR208~
@@ -78,8 +78,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="109 175" prevent_icons="13" strings="14650 14102 25866 25866 31799" animations="SPFLAYER SPMINDAT" spells END
@@ -112,7 +112,7 @@ END
 
 DEFINE_PATCH_FUNCTION fear_immunity
 	INT_VAR index = 29
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPIN203~
@@ -147,8 +147,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_EMOTION_FEAR END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="24 23 106" prevent_icons="36" strings="14007 17427 25818 20568" animations="CDHORROR" spells END
@@ -158,15 +158,15 @@ END
 
 DEFINE_PATCH_FUNCTION fatigue_immunity
 	INT_VAR index = 1
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI508~
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="93" spells END
@@ -174,7 +174,7 @@ END
 
 DEFINE_PATCH_FUNCTION confusion_immunity
 	INT_VAR index = 10
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR709~
@@ -190,8 +190,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791 26184 14782 25807" animations="SPCONFUS" spells END
@@ -200,7 +200,7 @@ END
 
 DEFINE_PATCH_FUNCTION magicMissile_immunity
 	INT_VAR index = 3
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI003~
@@ -209,8 +209,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_MORDENKAINENS_FORCE_MISSILES END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -218,7 +218,7 @@ END
 
 DEFINE_PATCH_FUNCTION blindness_immunity
 	INT_VAR index = 21
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~spdr101.spl~
@@ -245,8 +245,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_CLOUD_OF_PESTILENCE CLERIC_SUNSCORCH END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="74" prevent_icons="8" spells END
@@ -254,7 +254,7 @@ END
 
 DEFINE_PATCH_FUNCTION fireSpells_immunity
 	INT_VAR index = 42
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPIN561~
@@ -302,8 +302,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_BELTYNS_BURNING_BLOOD WIZARD_SHROUD_OF_FLAME CLERIC_SUNSCORCH CLERIC_PRODUCE_FIRE CLERIC_WALL_OF_FIRE END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
@@ -311,7 +311,7 @@ END
 
 DEFINE_PATCH_FUNCTION coldSpells_immunity
 	INT_VAR index = 15
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI404~
@@ -332,8 +332,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_OTILUKES_FREEZING_SPHERE WIZARD_SNILLOCS_SNOWBALL_SWARM WIZARD_ICELANCE END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
@@ -341,7 +341,7 @@ END
 
 DEFINE_PATCH_FUNCTION electricalSpells_immunity
 	INT_VAR index = 22
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~CDSTAF12~
@@ -369,8 +369,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_STATIC_CHARGE END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
@@ -378,7 +378,7 @@ END
 
 DEFINE_PATCH_FUNCTION acidSpells_immunity
 	INT_VAR index = 6
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPIN994~
@@ -390,8 +390,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_VITRIOLIC_SPHERE WIZARD_ACID_STORM END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
@@ -399,7 +399,7 @@ END
 
 DEFINE_PATCH_FUNCTION cureSpells_immunity
 	INT_VAR index = 39
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR103~
@@ -444,8 +444,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_CAUSE_MODERATE_WOUNDS CLERIC_CURE_MODERATE_WOUNDS CLERIC_CAUSE_LIGHT_WOUNDS CLERIC_CAUSE_MEDIUM_WOUNDS CLERIC_MASS_CAUSE_LIGHT_WOUNDS CLERIC_CURE_MEDIUM_WOUNDS END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -453,7 +453,7 @@ END
 
 DEFINE_PATCH_FUNCTION cloudSpells_immunity
 	INT_VAR index = 20
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI004~
@@ -479,8 +479,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN CLERIC_CLOUD_OF_PESTILENCE END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -488,7 +488,7 @@ END
 
 DEFINE_PATCH_FUNCTION web_immunity
 	INT_VAR index = 13
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPDR201~
@@ -507,8 +507,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="157" prevent_icons="129" spells END
@@ -516,7 +516,7 @@ END
 
 DEFINE_PATCH_FUNCTION entangle_immunity
 	INT_VAR index = 6
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR105~
@@ -528,8 +528,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN WIZARD_CHARM_PLANTS END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="154" prevent_icons="144" spells END
@@ -537,7 +537,7 @@ END
 
 DEFINE_PATCH_FUNCTION insectSpells_immunity
 	INT_VAR index = 8
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPPR319~
@@ -551,8 +551,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -560,7 +560,7 @@ END
 
 DEFINE_PATCH_FUNCTION petrification_immunity
 	INT_VAR index = 2
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI604~
@@ -568,8 +568,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="134" strings="14665 25863" spells END
@@ -617,7 +617,7 @@ END
 
 DEFINE_PATCH_FUNCTION polymorph_immunity
 	INT_VAR index = 3
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPIN538~
@@ -626,8 +626,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR prevent_icons="124" strings="14128 25124 31729 31732 31757" spells END
@@ -640,7 +640,7 @@ END
 
 DEFINE_PATCH_FUNCTION earthquake_immunity
 	INT_VAR index = 6
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPOGRE01~
@@ -652,8 +652,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -680,7 +680,7 @@ END
 
 DEFINE_PATCH_FUNCTION illusion_immunity
 	INT_VAR index = 6
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~sppr704~
@@ -692,8 +692,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -701,7 +701,7 @@ END
 
 DEFINE_PATCH_FUNCTION necromancyEffects_immunity
 	INT_VAR index = 11
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~sppr313~
@@ -718,8 +718,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -734,7 +734,7 @@ END
 
 DEFINE_PATCH_FUNCTION deathSpell_immunity
 	INT_VAR index = 2
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPWI605~
@@ -742,8 +742,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -762,7 +762,7 @@ END
 
 DEFINE_PATCH_FUNCTION hover_immunity
 	INT_VAR index = 12
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~SPIN561~
@@ -780,8 +780,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -955,7 +955,7 @@ END
 
 DEFINE_PATCH_FUNCTION fireballSpell_immunity
 	INT_VAR index = 9
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~BDBLOWUP~
@@ -970,8 +970,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -979,7 +979,7 @@ END
 
 DEFINE_PATCH_FUNCTION lightningBoltSpell_immunity
 	INT_VAR index = 14
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~b_tal10~
@@ -999,8 +999,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
@@ -1008,7 +1008,7 @@ END
 
 DEFINE_PATCH_FUNCTION flameArrowSpell_immunity
 	INT_VAR index = 6
-	STR_VAR result = ""
+	STR_VAR resource = ""
 BEGIN
 	DEFINE_ARRAY spells BEGIN
 		~d5f2303~
@@ -1020,8 +1020,8 @@ BEGIN
 	END
 	DEFINE_ARRAY identifiers BEGIN  END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
-		LPF getResourceFromSpellIds STR_VAR ids RET result END
-		SPRINT $spells(~%index%~) ~%result%~
+		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+		SPRINT $spells(~%index%~) ~%resource%~
 		SET index = index + 1
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END

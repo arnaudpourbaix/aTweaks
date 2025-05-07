@@ -1,24 +1,24 @@
-//-*- coding: cp1252 -*-
+//-*- coding: utf-8 -*-
 
-@0=~Ah, oui. Une récompense. Vous serez bien payés en or. Si vous effectuez correctement le travail, je suis également prêt à vous offrir quelques objets de famille de valeur.~
+@0=~Ah, oui. Une rÃ©compense. Vous serez bien payÃ©s en or. Si vous effectuez correctement le travail, je suis Ã©galement prÃªt Ã  vous offrir quelques objets de famille de valeur.~
 
-@50=~Ah, t'avoir attendu, j'ai. Loyal serviteur de l'Argenté, je suis. Sur la piste des oeufs, tu es. Les conserver à l'abri, tu dois.~
-@51=~Ceux-ci tu dois prendre. Fabriqués en secret ils furent. Fabriqués pour le drow que tu as tué, ils furent. Les donner à la fille de la Mère Matrone, tu dois. Piège-la, elle aussi.~
-@52=~J'empêcherai les drows de prendre les vrais oeufs.~
+@50=~Ah, t'avoir attendu, j'ai. Loyal serviteur de l'ArgentÃ©, je suis. Sur la piste des oeufs, tu es. Les conserver Ã  l'abri, tu dois.~
+@51=~Ceux-ci tu dois prendre. FabriquÃ©s en secret ils furent. FabriquÃ©s pour le drow que tu as tuÃ©, ils furent. Les donner Ã  la fille de la MÃ¨re Matrone, tu dois. PiÃ¨ge-la, elle aussi.~
+@52=~J'empÃªcherai les drows de prendre les vrais oeufs.~
 @53=~Nous verrons, diablotin.~
-@54=~Bien, bien. Reconnaissant, l'Argenté sera.~
-@55=~Mettre les oeufs en danger, tu ne dois. L'Argenté viendrait à toi. Aimer cela, tu ne ferais.~
+@54=~Bien, bien. Reconnaissant, l'ArgentÃ© sera.~
+@55=~Mettre les oeufs en danger, tu ne dois. L'ArgentÃ© viendrait Ã  toi. Aimer cela, tu ne ferais.~
 @56=~Le rituel des elfes noirs
 
-J'ai reçu une seconde copie des oeufs par un diablotin se réclamant être un serviteur du dragon d'argent. Le diablotin a laissé entendre qu'ils appartenaient autrefois à Solaufein. Comment le diablotin a pu les récupérer, je n'en ai aucune idée, mais il m'a dit de donner ces faux oeufs à Phaere afin de conserver les véritables oeufs à l'abri.~
+J'ai reÃ§u une seconde copie des oeufs par un diablotin se rÃ©clamant Ãªtre un serviteur du dragon d'argent. Le diablotin a laissÃ© entendre qu'ils appartenaient autrefois Ã  Solaufein. Comment le diablotin a pu les rÃ©cupÃ©rer, je n'en ai aucune idÃ©e, mais il m'a dit de donner ces faux oeufs Ã  Phaere afin de conserver les vÃ©ritables oeufs Ã  l'abri.~
 @57=~Rebonjour, <GABBER>.~
 @58=~Le rituel des elfes noirs
 
-Le même diablotin s'est montré à nouveau, me révélant que je ne pourrais quitter la cité avec les oeufs qu'après avoir tué la Matrone Ardulace. Faire cela me laisserait seulement quelques minutes pour sortir de la cité avant que mon déguisement ne soit découvert par les prêtresses de Lolth en colère. Aucun doute quant au fait que ma chance interviendra lors du rituel... Cela va être juste, en effet.~
+Le mÃªme diablotin s'est montrÃ© Ã  nouveau, me rÃ©vÃ©lant que je ne pourrais quitter la citÃ© avec les oeufs qu'aprÃ¨s avoir tuÃ© la Matrone Ardulace. Faire cela me laisserait seulement quelques minutes pour sortir de la citÃ© avant que mon dÃ©guisement ne soit dÃ©couvert par les prÃªtresses de Lolth en colÃ¨re. Aucun doute quant au fait que ma chance interviendra lors du rituel... Cela va Ãªtre juste, en effet.~
 @59=~Le rituel des elfes noirs
 
-Le même diablotin s'est montré à nouveau, me révélant que les oeufs doivent être sauvés avant que le rituel ne soit achevé et qu'ils soient sacrifiés au démon. Le rituel devra être interrompu... et la Matrone Ardulace doit être tuée afin de dissiper le sceau qui clôt la cité. Une fois ceci fait, j'aurai seulement quelques minutes pour fuir la cité avec les oeufs, avant que mon déguisement ne soit découvert. Cela va être juste, en effet.~
-@60=~Astucieux, astucieux. Les drows pensent qu'ils ont les oeufs, mais les oeufs sont à l'abri.~
-@61=~Donné les oeufs aux drows, tu as. Maintenant, les récupérer intacts, tu dois !~
+Le mÃªme diablotin s'est montrÃ© Ã  nouveau, me rÃ©vÃ©lant que les oeufs doivent Ãªtre sauvÃ©s avant que le rituel ne soit achevÃ© et qu'ils soient sacrifiÃ©s au dÃ©mon. Le rituel devra Ãªtre interrompu... et la Matrone Ardulace doit Ãªtre tuÃ©e afin de dissiper le sceau qui clÃ´t la citÃ©. Une fois ceci fait, j'aurai seulement quelques minutes pour fuir la citÃ© avec les oeufs, avant que mon dÃ©guisement ne soit dÃ©couvert. Cela va Ãªtre juste, en effet.~
+@60=~Astucieux, astucieux. Les drows pensent qu'ils ont les oeufs, mais les oeufs sont Ã  l'abri.~
+@61=~DonnÃ© les oeufs aux drows, tu as. Maintenant, les rÃ©cupÃ©rer intacts, tu dois !~
 
 @70=~Ce sont les faux oeufs de dragon que Solaufein a fait fabriquer.~

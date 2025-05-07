@@ -3,50 +3,17 @@
  *                              -=by aVENGER=-
  *                 http://www.spellholdstudios.net/ie/atweaks
  *************************************************************************/
-
-
-
 BACKUP ~weidu_external/backup/aTweaks~
 AUTHOR "Wisp, shsforums.net"
-VERSION ~v4.53~
+VERSION ~v5.0~
 
 ALWAYS
-    INCLUDE "%MOD_FOLDER%/lib/common/core_functions.tpa"         // Common functions used by many mods
-    INCLUDE "%MOD_FOLDER%/lib/common/alter_effect.tph"           // David W. improved effect functions
-    INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common aTweaks functions
-    INCLUDE "%MOD_FOLDER%/lib/common/immune-trait.tpa"           // Common aTweaks functions
-    INCLUDE ~%MOD_FOLDER%/lib/common/regexp.tph~                 // allows regexp to match tabs and newlines (from the G3 BG2 Fixpack)
-    INCLUDE ~%MOD_FOLDER%/lib/common/iwd1fix.tpa~                // fix some IDS file issues with IWD1 to ensure proper script compiling
-    INCLUDE "%MOD_FOLDER%/lib/common/comp_vars.tpa"              // Game engines stuff
-    INCLUDE ~%MOD_FOLDER%/lib/common/spell_to_innate.tph~
-    INCLUDE "%MOD_FOLDER%/lib/common/patch_creature.tph"
-    INCLUDE "%MOD_FOLDER%/lib/common/patch_creature_script.tph"
+    INCLUDE "%MOD_FOLDER%/lib/common/index.tpa"
     RANDOM_SEED go
-
-    OUTER_PATCH ~12~ BEGIN
-        WRITE_BYTE 1 0x09
-        READ_ASCII 1 tab (1)  // 0x09, tab
-        WRITE_BYTE 1 0x0a
-        READ_ASCII 1 lnl (1)  // 0x0a, Linux
-        WRITE_BYTE 0 0x0d
-        READ_ASCII 0 mnl (1)  // 0x0d, Mac
-        READ_ASCII 0 wnl (2)  // 0x0d0a, Windows
-    END
-<<<<<<<< ...blank
->>>>>>>>
-
-    // Load UTF8-encoded tra files if the game is BGEE
-    DEFINE_ACTION_MACRO bgee_language BEGIN
-        ACTION_IF ENGINE_IS ~bgee bg2ee iwdee~ BEGIN
-            LOAD_TRA ~%MOD_FOLDER%/tra/bgee/english/game.tra~
-            LOAD_TRA ~%MOD_FOLDER%/tra/bgee/%LANGUAGE%/game.tra~
-        END
-    END
-END                                                                                // End the ALWAYS block
+END
 
 // README ~%MOD_FOLDER%/doc/readme_atweaks.html~
 // ASK_EVERY_COMPONENT
-
 
 LANGUAGE ~English~ ~english~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
@@ -81,58 +48,58 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
                            ~%MOD_FOLDER%/tra/polish/game.tra~
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // PnP spell tweaks
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-// Make Spiritual Hammer into a ranged force weapon and remove its strength bonus to damage
-BEGIN @102 DESIGNATED 1000
-GROUP @5
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-FORBID_COMPONENT spell_rev.tp2 0 @98
-INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1000-spiritual_hammer.tpa~
-
-
-// Allow Dispel/Remove Magic to take down Globes of Invulnerability
-BEGIN @103 DESIGNATED 1010
-GROUP @5
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
-FORBID_COMPONENT spell_rev.tp2 0 @98
-INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1010-dispellable_globes.tpa~
-
-
-// PnP Color Spray
-BEGIN @104 DESIGNATED 1020
-GROUP @5
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1020-color_spray.tpa~
-
 
 // PnP Dimension Door
 BEGIN @105 DESIGNATED 1030
 GROUP @5
 REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
-
-// Allow Mages to scribe memorized spells onto scrolls
-BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
-GROUP @5
-REQUIRE_PREDICATE !GAME_IS ~iwdee~ @92
-OUTER_SET Restrictions = 1
-INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
-
-BEGIN @116 SUBCOMPONENT @115 DESIGNATED 1041 // Scrolls can be scribed everywhere
-GROUP @5
-REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
-OUTER_SET Restrictions = 0
-INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/dimension_door/main.tpa~
 
 // PnP Call Woodland Beings
-// BEGIN @186 DESIGNATED 1050
+BEGIN @186 DESIGNATED 1050
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa~
+
+// Make Spiritual Hammer into a ranged force weapon and remove its strength bonus to damage
+// BEGIN @102 DESIGNATED 1000
 // GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1050-woodland_beings.tpa~
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+// FORBID_COMPONENT spell_rev.tp2 0 @98
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1000-spiritual_hammer.tpa~
+
+
+// // Allow Dispel/Remove Magic to take down Globes of Invulnerability
+// BEGIN @103 DESIGNATED 1010
+// GROUP @5
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+// FORBID_COMPONENT spell_rev.tp2 0 @98
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1010-dispellable_globes.tpa~
+
+
+// // PnP Color Spray
+// BEGIN @104 DESIGNATED 1020
+// GROUP @5
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1020-color_spray.tpa~
+
+
+
+// // Allow Mages to scribe memorized spells onto scrolls
+// BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
+// GROUP @5
+// REQUIRE_PREDICATE !GAME_IS ~iwdee~ @92
+// OUTER_SET Restrictions = 1
+// INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
+
+// BEGIN @116 SUBCOMPONENT @115 DESIGNATED 1041 // Scrolls can be scribed everywhere
+// GROUP @5
+// REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
+// OUTER_SET Restrictions = 0
+// INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,40 +107,40 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Restore innate infravision to Half-Orc characters
-BEGIN @100 DESIGNATED 2000
-GROUP @7
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
-INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2000-infravision.tpa~
+// BEGIN @100 DESIGNATED 2000
+// GROUP @7
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+// INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2000-infravision.tpa~
 
 
-// Restore innate disease immunity to Paladins
-BEGIN @120 DESIGNATED 2010
-GROUP @7
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
-REQUIRE_PREDICATE !FILE_EXISTS_IN_GAME k0pa001.spl @98
-INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2010-paladins.tpa~
+// // Restore innate disease immunity to Paladins
+// BEGIN @120 DESIGNATED 2010
+// GROUP @7
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee~ @92
+// REQUIRE_PREDICATE !FILE_EXISTS_IN_GAME k0pa001.spl @98
+// INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2010-paladins.tpa~
 
 
-// Rangers' Animal Empathy improves with experience
-BEGIN @125 DESIGNATED 2020
-GROUP @7
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-FORBID_COMPONENT SETUP-OVERSIGHT.TP2 3 @98
-INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2020-animal_empathy.tpa~
+// // Rangers' Animal Empathy improves with experience
+// BEGIN @125 DESIGNATED 2020
+// GROUP @7
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+// FORBID_COMPONENT SETUP-OVERSIGHT.TP2 3 @98
+// INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2020-animal_empathy.tpa~
 
 
-// Additional racial traits for Dwarves 
-BEGIN @130 DESIGNATED 2030
-GROUP @7
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2030-dwarf_traits.tpa~
+// // Additional racial traits for Dwarves 
+// BEGIN @130 DESIGNATED 2030
+// GROUP @7
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+// INCLUDE ~%MOD_FOLDER%/lib/class-and-race/2030-dwarf_traits.tpa~
 
 
-// Additional racial traits for Gnomes
-BEGIN @140 DESIGNATED 2040
-GROUP @7
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
-INCLUDE "%MOD_FOLDER%/lib/class-and-race/2040-gnome_traits.tpa"
+// // Additional racial traits for Gnomes
+// BEGIN @140 DESIGNATED 2040
+// GROUP @7
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bgee bg2ee iwdee~ @92
+// INCLUDE "%MOD_FOLDER%/lib/class-and-race/2040-gnome_traits.tpa"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,16 +148,16 @@ INCLUDE "%MOD_FOLDER%/lib/class-and-race/2040-gnome_traits.tpa"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Magical arrows and bolts deal bonus damage equal to their enchantment level
-BEGIN @110 DESIGNATED 3000
-GROUP @8
-REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bg2ee~ @92
-REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 bgee iwdee tutu tutu_totsc~ @92
-REQUIRE_PREDICATE !GAME_IS ~ca~ @98     // Avoid content duplication
-FORBID_COMPONENT item_rev.tp2 0 @98     // Avoid content duplication
-FORBID_COMPONENT bgttweak.tp2 2204 @98  // Avoid content duplication
-INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
+// BEGIN @110 DESIGNATED 3000
+// GROUP @8
+// REQUIRE_PREDICATE ENGINE_IS ~bg2 tob bg2ee~ @92
+// REQUIRE_PREDICATE !GAME_IS ~iwd-in-bg2 bgee iwdee tutu tutu_totsc~ @92
+// REQUIRE_PREDICATE !GAME_IS ~ca~ @98     // Avoid content duplication
+// FORBID_COMPONENT item_rev.tp2 0 @98     // Avoid content duplication
+// FORBID_COMPONENT bgttweak.tp2 2204 @98  // Avoid content duplication
+// INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 
-*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // PnP monster tweaks
@@ -215,106 +182,104 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-item/3000-magical_ammunition.tpa~
 //         END
 //     BUT_ONLY
 
-BEGIN @5000 DESIGNATED 5000
-REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// BEGIN @5000 DESIGNATED 5000
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1030-dimension_door.tpa~
-INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1050-woodland_beings.tpa~
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // ------------------------------------------------------
 
-// // Core monsters (required)
-// BEGIN @5000 DESIGNATED 5000
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
+// Core monsters (required)
+BEGIN @5000 DESIGNATED 5000
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common.tpa"
 
-// // Ankheg
-// BEGIN @5010 DESIGNATED 5010
-// GROUP @6
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
+// Ankheg
+BEGIN @5010 DESIGNATED 5010
+GROUP @6
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 
-// // Basilisk
-// BEGIN @5020 DESIGNATED 5020
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
+// Basilisk
+BEGIN @5020 DESIGNATED 5020
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
 
-// // Bear
-// BEGIN @5030 DESIGNATED 5030
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/main.tpa"
+// Bear
+BEGIN @5030 DESIGNATED 5030
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/main.tpa"
 
-// // Carrion Crawler
-// BEGIN @5040 DESIGNATED 5040
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/main.tpa"
+// Carrion Crawler
+BEGIN @5040 DESIGNATED 5040
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/main.tpa"
 
-// // Greater Cats
-// BEGIN @5050 DESIGNATED 5050
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/main.tpa"
+// Greater Cats
+BEGIN @5050 DESIGNATED 5050
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/main.tpa"
 
-// // Dogs
-// BEGIN @5060 DESIGNATED 5060
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/main.tpa"
+// Dogs
+BEGIN @5060 DESIGNATED 5060
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/main.tpa"
 
-// // Helmed Horrors, Battle Horrors, Doom Sayer
-// BEGIN @5070 DESIGNATED 5070
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/main.tpa"
+// Helmed Horrors, Battle Horrors, Doom Sayer
+BEGIN @5070 DESIGNATED 5070
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/main.tpa"
 
-// // Doom Guards, Dwarven Doom Guards
-// BEGIN @5080 DESIGNATED 5080
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
+// Doom Guards, Dwarven Doom Guards
+BEGIN @5080 DESIGNATED 5080
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
 
-// // Wolves
-// BEGIN @5090 DESIGNATED 5090
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
+// Wolves
+BEGIN @5090 DESIGNATED 5090
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 
-// // Golems
-// BEGIN @5100 DESIGNATED 5100
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/main.tpa"
+// Golems
+BEGIN @5100 DESIGNATED 5100
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/main.tpa"
 
-// // Ogres
-// BEGIN @5110 DESIGNATED 5110
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
+// Ogres
+BEGIN @5110 DESIGNATED 5110
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
 
 // Fey (Dryad, Hamadryad, Sirene, Nymph)
-// BEGIN @185 DESIGNATED 5120
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
+BEGIN @185 DESIGNATED 5120
+GROUP @6
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 
 
 /*

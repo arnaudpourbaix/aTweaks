@@ -1,29 +1,29 @@
-//-*- coding: cp1250 -*-
+//-*- coding: utf-8 -*-
 
-@0=~Ach tak, nagroda. Zostaniesz sowicie wynagrodzony w z³ocie. Jeœli wywi¹¿esz siê z zadania, gotów jestem zaoferowaæ ci te¿ kilka cennych rodzinnych pami¹tek.~ ~Ach tak, nagroda. Zostaniesz sowicie wynagrodzona w z³ocie. Jeœli wywi¹¿esz siê z zadania, gotów jestem zaoferowaæ ci te¿ kilka cennych rodzinnych pami¹tek.~ //Mówi¹cy: Khellon Menold, Targowo (TREVIL01.DLG)
+@0=~Ach tak, nagroda. Zostaniesz sowicie wynagrodzony w zÅ‚ocie. JeÅ›li wywiÄ…Å¼esz siÄ™ z zadania, gotÃ³w jestem zaoferowaÄ‡ ci teÅ¼ kilka cennych rodzinnych pamiÄ…tek.~ ~Ach tak, nagroda. Zostaniesz sowicie wynagrodzona w zÅ‚ocie. JeÅ›li wywiÄ…Å¼esz siÄ™ z zadania, gotÃ³w jestem zaoferowaÄ‡ ci teÅ¼ kilka cennych rodzinnych pamiÄ…tek.~ //MÃ³wiÄ…cy: Khellon Menold, Targowo (TREVIL01.DLG)
 
-@50=~Ach, czeka³em na ciebie, o tak. Lojalny s³uga srebrzystej, do us³ug. W drodze po jaja jesteœ. Pilnowaæ ich musisz.~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@51=~Zabraæ je musisz. W tajemnicy je stworzono, dla mê¿czyzn drowów, których zabi³eœ. Daæ je córce Matki Prze³o¿onej musisz, oszukaæ j¹ te¿.~ ~Zabraæ je musisz. W tajemnicy je stworzono, dla mê¿czyzn drowów, których zabi³aœ. Daæ je córce Matki Prze³o¿onej musisz, oszukaæ j¹ te¿.~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@52=~Dopilnujê, aby drowy nie po³o¿y³y ³ap na prawdziwych jajach.~ //Mówi¹cy: Gracz
-@53=~To siê oka¿e, impie.~ //Mówi¹cy: Gracz
-@54=~Dobrze, dobrze. Srebrzysta wdziêczna bêdzie.~ //Mówi¹cy: Imp Adalon  (UDIMP.DLG)
-@55=~Naraziæ jaj nie mo¿esz. Srebrzysta przyjdzie po ciebie. Nie spodoba ci siê to.~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@56=~Rytua³ Przyzwania Drowów
+@50=~Ach, czekaÅ‚em na ciebie, o tak. Lojalny sÅ‚uga srebrzystej, do usÅ‚ug. W drodze po jaja jesteÅ›. PilnowaÄ‡ ich musisz.~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@51=~ZabraÄ‡ je musisz. W tajemnicy je stworzono, dla mÄ™Å¼czyzn drowÃ³w, ktÃ³rych zabiÅ‚eÅ›. DaÄ‡ je cÃ³rce Matki PrzeÅ‚oÅ¼onej musisz, oszukaÄ‡ jÄ… teÅ¼.~ ~ZabraÄ‡ je musisz. W tajemnicy je stworzono, dla mÄ™Å¼czyzn drowÃ³w, ktÃ³rych zabiÅ‚aÅ›. DaÄ‡ je cÃ³rce Matki PrzeÅ‚oÅ¼onej musisz, oszukaÄ‡ jÄ… teÅ¼.~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@52=~DopilnujÄ™, aby drowy nie poÅ‚oÅ¼yÅ‚y Å‚ap na prawdziwych jajach.~ //MÃ³wiÄ…cy: Gracz
+@53=~To siÄ™ okaÅ¼e, impie.~ //MÃ³wiÄ…cy: Gracz
+@54=~Dobrze, dobrze. Srebrzysta wdziÄ™czna bÄ™dzie.~ //MÃ³wiÄ…cy: Imp Adalon  (UDIMP.DLG)
+@55=~NaraziÄ‡ jaj nie moÅ¼esz. Srebrzysta przyjdzie po ciebie. Nie spodoba ci siÄ™ to.~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@56=~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Otrzyma³em drugi zestaw fa³szywych jaj od impa s³u¿¹cego rzekomo Srebrnej Smoczycy. Twierdzi³ on, ¿e jaja nale¿a³y niegdyœ do Solaufeina. Nie mam pojêcia jak znalaz³ siê w ich posiadaniu, ale powiedzia³, ¿e aby uratowaæ prawdziwe jaja, muszê daæ te fa³szywe Phaere.~ ~Rytua³ Przyzwania Drowów
+OtrzymaÅ‚em drugi zestaw faÅ‚szywych jaj od impa sÅ‚uÅ¼Ä…cego rzekomo Srebrnej Smoczycy. TwierdziÅ‚ on, Å¼e jaja naleÅ¼aÅ‚y niegdyÅ› do Solaufeina. Nie mam pojÄ™cia jak znalazÅ‚ siÄ™ w ich posiadaniu, ale powiedziaÅ‚, Å¼e aby uratowaÄ‡ prawdziwe jaja, muszÄ™ daÄ‡ te faÅ‚szywe Phaere.~ ~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Otrzyma³am drugi zestaw fa³szywych jaj od impa s³u¿¹cego rzekomo Srebrnej Smoczycy. Twierdzi³ on, ¿e jaja nale¿a³y niegdyœ do Solaufeina. Nie mam pojêcia jak znalaz³ siê w ich posiadaniu, ale powiedzia³, ¿e aby uratowaæ prawdziwe jaja, muszê daæ te fa³szywe Phaere.~ //Wpis do dziennika
-@57=~Witaj ponownie, <GABBER>.~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@58=~Rytua³ Przyzwania Drowów
+OtrzymaÅ‚am drugi zestaw faÅ‚szywych jaj od impa sÅ‚uÅ¼Ä…cego rzekomo Srebrnej Smoczycy. TwierdziÅ‚ on, Å¼e jaja naleÅ¼aÅ‚y niegdyÅ› do Solaufeina. Nie mam pojÄ™cia jak znalazÅ‚ siÄ™ w ich posiadaniu, ale powiedziaÅ‚, Å¼e aby uratowaÄ‡ prawdziwe jaja, muszÄ™ daÄ‡ te faÅ‚szywe Phaere.~ //Wpis do dziennika
+@57=~Witaj ponownie, <GABBER>.~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@58=~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Znów zjawi³ siê ten sam imp, informuj¹c, ¿e abym móg³ uciec z miasta wraz z jajami muszê wpierw zabiæ Matkê Prze³o¿on¹ Ardulace. Gdy mi siê to uda, bêdê mia³ tylko kilka minut na ucieczkê z miasta, zanim rozwœcieczone S³u¿ki Lolth odkryj¹ moje przebranie. Bez w¹tpienia szansa nadejdzie w trakcie rytua³u...bêdzie naprawdê ciê¿ko.~ ~Rytua³ Przyzwania Drowów
+ZnÃ³w zjawiÅ‚ siÄ™ ten sam imp, informujÄ…c, Å¼e abym mÃ³gÅ‚ uciec z miasta wraz z jajami muszÄ™ wpierw zabiÄ‡ MatkÄ™ PrzeÅ‚oÅ¼onÄ… Ardulace. Gdy mi siÄ™ to uda, bÄ™dÄ™ miaÅ‚ tylko kilka minut na ucieczkÄ™ z miasta, zanim rozwÅ›cieczone SÅ‚uÅ¼ki Lolth odkryjÄ… moje przebranie. Bez wÄ…tpienia szansa nadejdzie w trakcie rytuaÅ‚u...bÄ™dzie naprawdÄ™ ciÄ™Å¼ko.~ ~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Znów zjawi³ siê ten sam imp, informuj¹c, ¿e abym mog³a uciec z miasta wraz z jajami muszê wpierw zabiæ Matkê Prze³o¿on¹ Ardulace. Gdy mi siê to uda, bêdê mia³a tylko kilka minut na ucieczkê z miasta, zanim rozwœcieczone S³u¿ki Lolth odkryj¹ moje przebranie. Bez w¹tpienia szansa nadejdzie w trakcie rytua³u...bêdzie naprawdê ciê¿ko.~ //Wpis do dziennika
-@59=~Rytua³ Przyzwania Drowów
+ZnÃ³w zjawiÅ‚ siÄ™ ten sam imp, informujÄ…c, Å¼e abym mogÅ‚a uciec z miasta wraz z jajami muszÄ™ wpierw zabiÄ‡ MatkÄ™ PrzeÅ‚oÅ¼onÄ… Ardulace. Gdy mi siÄ™ to uda, bÄ™dÄ™ miaÅ‚a tylko kilka minut na ucieczkÄ™ z miasta, zanim rozwÅ›cieczone SÅ‚uÅ¼ki Lolth odkryjÄ… moje przebranie. Bez wÄ…tpienia szansa nadejdzie w trakcie rytuaÅ‚u...bÄ™dzie naprawdÄ™ ciÄ™Å¼ko.~ //Wpis do dziennika
+@59=~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Znów zjawi³ siê ten sam imp, informuj¹c, ¿e jaja musz¹ zostaæ ocalone zanim rytua³ dobiegnie koñca i zostan¹ one poœwiêcone demonowi. Aby z³amaæ magiczn¹ pieczêæ chroni¹c¹ miasto, trzeba przerwaæ rytua³...a nastêpnie zabiæ Matkê Ardulace. Gdy mi siê to uda, bêdê mia³ tylko kilka minut na ucieczkê z miasta wraz z jajami, zanim moje przebranie zostanie odkryte. Bêdzie naprawdê ciê¿ko.~ ~Rytua³ Przyzwania Drowów
+ZnÃ³w zjawiÅ‚ siÄ™ ten sam imp, informujÄ…c, Å¼e jaja muszÄ… zostaÄ‡ ocalone zanim rytuaÅ‚ dobiegnie koÅ„ca i zostanÄ… one poÅ›wiÄ™cone demonowi. Aby zÅ‚amaÄ‡ magicznÄ… pieczÄ™Ä‡ chroniÄ…cÄ… miasto, trzeba przerwaÄ‡ rytuaÅ‚...a nastÄ™pnie zabiÄ‡ MatkÄ™ Ardulace. Gdy mi siÄ™ to uda, bÄ™dÄ™ miaÅ‚ tylko kilka minut na ucieczkÄ™ z miasta wraz z jajami, zanim moje przebranie zostanie odkryte. BÄ™dzie naprawdÄ™ ciÄ™Å¼ko.~ ~RytuaÅ‚ Przyzwania DrowÃ³w
 
-Znów zjawi³ siê ten sam imp, informuj¹c, ¿e jaja musz¹ zostaæ ocalone zanim rytua³ dobiegnie koñca i zostan¹ one poœwiêcone demonowi. Aby z³amaæ magiczn¹ pieczêæ chroni¹c¹ miasto, trzeba przerwaæ rytu³a³...a nastêpnie zabiæ Matkê Ardulace. Gdy mi siê to uda, bêdê mia³a tylko kilka minut na ucieczkê z miasta wraz z jajami, zanim moje przebranie zostanie odkryte. Bêdzie naprawdê ciê¿ko.~ //Wpis do dziennika
-@60=~Sprytnie, sprytnie. Drowy myœl¹, ¿e masz jaja, o tak, ale jaja bezpieczne s¹, o tak.~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@61=~Da³eœ jaja drowom. Teraz odzyskaæ je musisz!~ //Mówi¹cy: Imp Adalon (UDIMP.DLG)
-@70=~Oto fa³szywe smocze jaja stworzone przez Solaufeina.~ //Opis przedmiotu
+ZnÃ³w zjawiÅ‚ siÄ™ ten sam imp, informujÄ…c, Å¼e jaja muszÄ… zostaÄ‡ ocalone zanim rytuaÅ‚ dobiegnie koÅ„ca i zostanÄ… one poÅ›wiÄ™cone demonowi. Aby zÅ‚amaÄ‡ magicznÄ… pieczÄ™Ä‡ chroniÄ…cÄ… miasto, trzeba przerwaÄ‡ rytuÅ‚aÅ‚...a nastÄ™pnie zabiÄ‡ MatkÄ™ Ardulace. Gdy mi siÄ™ to uda, bÄ™dÄ™ miaÅ‚a tylko kilka minut na ucieczkÄ™ z miasta wraz z jajami, zanim moje przebranie zostanie odkryte. BÄ™dzie naprawdÄ™ ciÄ™Å¼ko.~ //Wpis do dziennika
+@60=~Sprytnie, sprytnie. Drowy myÅ›lÄ…, Å¼e masz jaja, o tak, ale jaja bezpieczne sÄ…, o tak.~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@61=~DaÅ‚eÅ› jaja drowom. Teraz odzyskaÄ‡ je musisz!~ //MÃ³wiÄ…cy: Imp Adalon (UDIMP.DLG)
+@70=~Oto faÅ‚szywe smocze jaja stworzone przez Solaufeina.~ //Opis przedmiotu
