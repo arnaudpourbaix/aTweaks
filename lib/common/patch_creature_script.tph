@@ -1,6 +1,6 @@
 // Creature Script modification function
 // Useful for situations where you want to put your custom script at the top tier possible, without deleting other scripts (unless so desired)
-DEFINE_PATCH_FUNCTION ~patchCreatureScript~  
+DEFINE_PATCH_FUNCTION patchCreatureScript
 INT_VAR
   assigned  = 0   // new script has been assigned or file is skiped
   foundFile = 0

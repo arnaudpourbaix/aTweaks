@@ -6,7 +6,7 @@ import { RawImmunityConfig } from "../src/model/raw/immunity";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
-import { ATWEAKS_SPELLS } from "./spell";
+import { ATWEAKS_SPELLS } from "./spell-names";
 
 export const IMMUNITIES: RawImmunityConfig[] = [
   {
@@ -269,6 +269,10 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         id: "WIZARD_MORDENKAINENS_FORCE_MISSILES",
         suffixes: ["", "B"],
       }, // Mordenkainen's Force Missiles (IWDification)
+      {
+        id: "WIZARD_CHARM_PLANTS",
+        suffixes: ["", "E"],
+      }, // TODO: for test
     ],
     spells: [
       "SPWI003", // Magic Missile
@@ -283,33 +287,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Blindness immunity"],
     preventEffects: [EffectTypeEnum.Blindness],
     preventIcons: [PortraitIconEnum.Blind],
-    idsSpells: [
-      { id: "CLERIC_CLOUD_OF_PESTILENCE" }, // Sunscorch (IWDification)
-      { id: "CLERIC_SUNSCORCH" }, // Cloud of Pestilence (IWDification)
-    ],
-    spells: [
-      "spdr101.spl", // Chromatic Orb
-      "spin595.spl", // Yellow Dragon Scorching Sand
-      "spin878.spl", // Level Drain
-      "spin893.spl", // Shadow Dragon Breath
-      "spin929.spl", // Mist Ball
-      "spin931.spl", // Sooty Ball
-      "sppr704.spl", // Nature's Beauty
-      "sppr707.spl", // Sunray
-      "spwi106.spl", // Blindness
-      "spwi118.spl", // Chromatic Orb
-      "spwi224.spl", // Glitterdust
-      "spwi714.spl", // Prismatic Spray
-      "spwi815.spl", // Power Word, Blind
-      "spwi958.spl", // Power Word, Blind
-      "spwm178.spl", // Blindness
-      "chalcy2.itm", // The Shadow's Blade +3
-      "gorwom4.itm", // Drow Flail +3
-      "halb06.itm", // Blackmist +4
-      "sorb.itm", // Searing Orb
-      "sw1h51.itm", // Celestial Fury +3
-      "wand19.itm", // Wand of Cursing
-    ],
+    spellGroups: ["blind"],
   },
   {
     name: "fireSpells",

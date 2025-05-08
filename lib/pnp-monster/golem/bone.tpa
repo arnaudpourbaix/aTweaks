@@ -37,7 +37,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#i2~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			ADD_MEMORIZED_SPELL ~spin890~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=14

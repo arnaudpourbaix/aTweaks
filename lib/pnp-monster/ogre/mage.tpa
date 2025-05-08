@@ -443,7 +443,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m32~ #2 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~ja#3m32~ #3 ~wizard~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYHALBERD~ 2
 			LPF patchCreature
 				INT_VAR

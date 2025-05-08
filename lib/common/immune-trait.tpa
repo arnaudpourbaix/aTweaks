@@ -1,3 +1,38 @@
+DEFINE_ACTION_FUNCTION get_blind_resources RET_ARRAY spells BEGIN
+	DEFINE_ARRAY spells BEGIN
+		spdr101.spl
+		spin595.spl
+		spin878.spl
+		spin893.spl
+		spin929.spl
+		spin931.spl
+		sppr704.spl
+		sppr707.spl
+		spwi106.spl
+		spwi118.spl
+		spwi224.spl
+		spwi714.spl
+		spwi815.spl
+		spwi958.spl
+		spwm178.spl
+		chalcy2.itm
+		gorwom4.itm
+		halb06.itm
+		sorb.itm
+		sw1h51.itm
+		wand19.itm
+		sppr313.spl
+		sppr614c.spl
+		sppr614d.spl
+		spwi224c.spl
+		halb06.spl
+		sw1h51.spl
+		wand19.spl
+END
+	DEFINE_ARRAY ids BEGIN CLERIC_CLOUD_OF_PESTILENCE CLERIC_SUNSCORCH END
+	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY spells END
+END
+
 DEFINE_PATCH_FUNCTION poison_immunity
 	INT_VAR index = 8
 	STR_VAR resource = ""
@@ -207,7 +242,7 @@ BEGIN
 		~SPWI112~
 		~RR#WI112~
 	END
-	DEFINE_ARRAY identifiers BEGIN WIZARD_MORDENKAINENS_FORCE_MISSILES END
+	DEFINE_ARRAY identifiers BEGIN WIZARD_MORDENKAINENS_FORCE_MISSILES WIZARD_CHARM_PLANTS END
 	PATCH_PHP_EACH identifiers AS _ => ids BEGIN
 		LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
 		SPRINT $spells(~%index%~) ~%resource%~

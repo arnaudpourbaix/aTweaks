@@ -38,7 +38,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~IMMUNE1~
 			REMOVE_CRE_ITEM ~RING95~
 			ADD_CRE_ITEM ~ja#1m19~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=4

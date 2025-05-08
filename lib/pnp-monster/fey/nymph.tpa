@@ -200,7 +200,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fbbea~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			LPF patchCreature
 				INT_VAR

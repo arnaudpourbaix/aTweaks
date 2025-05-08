@@ -157,7 +157,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=10

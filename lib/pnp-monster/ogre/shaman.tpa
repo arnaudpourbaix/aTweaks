@@ -34,7 +34,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (2)
 			ADD_MEMORIZED_SPELL ~SPPR203~ #1 ~priest~ (1)
 			ADD_MEMORIZED_SPELL ~SPPR208~ #1 ~priest~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
 			LPF patchCreature
 				INT_VAR

@@ -82,9 +82,9 @@ END
  * Get spell resource from its IDS
  * 
  * ids                The IDS entry.
- * RET resource       Spell resource that matches IDS entry. Empty string if ids could not be found.
+ * resource           Spell resource that matches IDS entry. Empty string if ids could not be found.
  */
-DEFINE_PATCH_FUNCTION GET_RESOURCE_FROM_SPELL_IDS
+DEFINE_ACTION_FUNCTION GET_RESOURCE_FROM_SPELL_IDS
 INT_VAR
   value = 0
 STR_VAR
@@ -92,10 +92,10 @@ STR_VAR
 RET
   resource
 BEGIN
-  SET value=IDS_OF_SYMBOL("spell" "%ids%")
-  SPRINT resource ""
-  PATCH_IF value > 0 BEGIN
-		INNER_PATCH_SAVE resource "%value%" BEGIN
+  OUTER_SET value = IDS_OF_SYMBOL("spell" "%ids%")
+  OUTER_SPRINT resource ""
+  ACTION_IF value > 0 BEGIN
+		OUTER_INNER_PATCH_SAVE resource "%value%" BEGIN
 			REPLACE_TEXTUALLY "^1" "SPPR"
 			REPLACE_TEXTUALLY "^2" "SPWI"
 			REPLACE_TEXTUALLY "^3" "SPIN"

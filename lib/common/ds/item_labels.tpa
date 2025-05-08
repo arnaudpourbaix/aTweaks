@@ -4,17 +4,10 @@ INCLUDE ~%MOD_FOLDER%/lib/ds/ds.tph~
 DEFINE_PATCH_FUNCTION rr_item_labels
   STR_VAR list = ""
 BEGIN
-  PATCH_IF FILE_EXISTS "tobex.dll" BEGIN
-	  SET ds_opcode = 318
-	  SET ds_special = 0
-	  SET ds_parameter1 = 1
-	  TEXT_SPRINT ds_stats "stats"
-  END ELSE PATCH_IF GAME_IS "BGEE BG2EE EET IWDEE" BEGIN
-	  SET ds_opcode = 328
-	  SET ds_special = 1
-	  SET ds_parameter1 = 0
-	  TEXT_SPRINT ds_stats "splstate"
-  END
+  SET ds_opcode = 328
+  SET ds_special = 1
+  SET ds_parameter1 = 0
+  TEXT_SPRINT ds_stats "splstate"
   SET item_mm = IDS_OF_SYMBOL ("%ds_stats%" "ITEM_MM")
   LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 206 opcode = EVAL "%ds_opcode%" parameter1 = EVAL "%ds_parameter1%" parameter2 = "%item_mm%" special = EVAL "ds_special" STR_VAR match_resource = "spwi112" END
   SET item_evil = IDS_OF_SYMBOL ("%ds_stats%" "ITEM_PROTFROMEVIL")

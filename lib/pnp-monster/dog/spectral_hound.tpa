@@ -38,7 +38,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#2m39~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
 			ADD_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=5

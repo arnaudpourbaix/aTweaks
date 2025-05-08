@@ -54,12 +54,12 @@ BEGIN
 END
 
 DEFINE_ACTION_FUNCTION HIDE_SPELL
-  INT_VAR
-    hide = 1
-    silent = 0    // Silent error, will produce a warning if 1
-  STR_VAR 
-    ids = ""
-    resource = ""
+INT_VAR
+  hide = 1
+  silent = 0    // Silent error, will produce a warning if 1
+STR_VAR 
+  ids = ""
+  resource = ""
 BEGIN
   COPY_EXISTING ~hidespl.2da~ ~override~
     COUNT_2DA_COLS cols

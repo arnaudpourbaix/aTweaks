@@ -15,7 +15,7 @@ ACTION_IF NOT FILE_EXISTS_IN_GAME ~RR#DDOOR.BAM~ THEN BEGIN                     
   COPY    ~%MOD_FOLDER%/VVC/RR#DDOOR.VVC~   ~override~                                  // Custom Dimension Door VVC
 END                                                                                // ends ACTION_IF block
 COPY ~%MOD_FOLDER%/spl/rr#telwe.spl~ ~override/rr#telwr.spl~                            // Teleport Without Error (renewable)
-LPF spellToInnate INT_VAR ctime=1 renew=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 renew=1 END
 
 COPY ~%MOD_FOLDER%/spl/rr#niinv.spl~ ~override~                                         // Natural Invisibility
   SAY NAME1 @2100 SAY NAME2 @2100
@@ -351,53 +351,53 @@ COPY ~%MOD_FOLDER%/spl/elementals/rr#esuis.spl~ ~override~                      
 // Clone spells into innate abilities
 
 COPY_EXISTING ~spwi103.spl~  ~override/rr#wi103.spl~                               // Clone Burning Hands into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi104.spl~  ~override/rr#ersug.spl~                               // Change Charm Person into renewable Suggestion
   SAY NAME1 @708 SAY NAME2 @708                                                    // Suggestion
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 renew=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 renew=1 END
 
 COPY_EXISTING ~spwi213.spl~  ~override/rr#wi213.spl~                               // Clone Stinking Cloud into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi302.spl~  ~override/rr#wr302.spl~                               // Clone Remove Magic into a renewable innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 renew=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 renew=1 END
 
 COPY_EXISTING ~spwi303.spl~  ~override/rr#wi303.spl~                               // Clone Flame Arrow into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi304.spl~  ~override/rr#wi304.spl~                               // Clone Fireball into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi306.spl~  ~override/rr#wi306.spl~                               // Clone Hold Person into an innate ability (used by Cryonax)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi403.spl~  ~override/rr#wi403.spl~                               // Clone Fire Shield:Blue into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi404.spl~  ~override/rr#wi404.spl~                               // Clone Ice Storm into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi404.spl~  ~override/rr#ehyis.spl~                               // Clone Ice Storm into an innate ability (Olhydra's version)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi408.spl~  ~override/rr#wi408.spl~                               // Clone Stoneskin into an innate ability
-LPF spellToInnate INT_VAR ctime=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY_EXISTING ~spwi418.spl~  ~override/rr#wi418.spl~                               // Clone Fire Shield:Red into an innate ability
-LPF spellToInnate INT_VAR ctime=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY_EXISTING ~spwi502.spl~  ~override/rr#wi502.spl~                               // Clone Cloudkill into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi503.spl~  ~override/rr#wi503.spl~                               // Clone Cone of Cold into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi604.spl~  ~override/rr#wi604.spl~                               // Clone Flesh to Stone into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~spwi625.spl~  ~override/rr#wi625.spl~                               // Clone Stone to Flesh into an innate ability
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 
 
@@ -3052,7 +3052,6 @@ STR_VAR                                                                         
 END                                                                                // ends FUNCTION call
 LPF petrification_immunity  END                                  // petrification immunity
 LPF cold_spell_immunities END                                    // grant immunities to cold-based area effect spells
-LPF clear_bg1_profs  END                                         // Clear BG1 proficiencies
 // =============================================================================== // the actual work ends here
 BUT_ONLY_IF_IT_CHANGES
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
@@ -3133,7 +3132,6 @@ LPF petrification_immunity END                                   // petrificatio
 // LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
 // LPF entangle_immunities END                                      // grant immunity to entangle spells
 // LPF web_immunity END                                             // grant immunity to web spells and effects
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // =============================================================================== // the actual work ends here
 BUT_ONLY_IF_IT_CHANGES
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
@@ -3216,7 +3214,6 @@ LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "16" END      // remove spuriou
 // LPF entangle_immunities END                                      // grant immunity to entangle spells
 // LPF web_immunity END                                             // grant immunity to web spells and effects
 LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // =============================================================================== // the actual work ends here
 BUT_ONLY_IF_IT_CHANGES
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
@@ -3296,7 +3293,6 @@ END                                                                             
 LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "101" END     // remove spurious opcode protections
 LPF entangle_immunities END                                      // grant immunity to entangle spells
 LPF web_immunity END                                             // grant immunity to web spells and effects
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // =============================================================================== // the actual work ends here
 BUT_ONLY_IF_IT_CHANGES
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block
@@ -3373,7 +3369,6 @@ STR_VAR                                                                         
 "script06"   = "DW2MC3GE"                                                          // Stratagems melee AI script
 END                                                                                // ends FUNCTION call
 LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "101" END     // remove spurious opcode protections
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // LPF hover_immunities END                                         // grant immunities to ground-based spells
 // LPF air_affinity END                                             // grant air affinity bonuses
 LPF petrification_immunity END                                   // petrification immunity
@@ -3470,7 +3465,6 @@ STR_VAR                                                                         
 "skipfile01" = "AR#AIRGD"
 END                                                                                // ends FUNCTION call
 LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "101" END     // remove spurious opcode protections
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // LPF hover_immunities END                                         // grant immunities to ground-based spells
 // LPF air_affinity END                                             // grant air affinity bonuses
 LPF petrification_immunity END                                   // petrification immunity
@@ -3559,7 +3553,6 @@ STR_VAR                                                                         
 "skipfile01" = "AR#EARGD"
 END                                                                                // ends FUNCTION call
 LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "101" END     // remove spurious opcode protections
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // LPF earth_affinity END                                           // apply earth affinity traits
 // LPF entangle_immunities END                                      // grant immunity to entangle spells
 // LPF web_immunity END                                             // grant immunity to web spells and effects
@@ -3650,7 +3643,6 @@ LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete = "101" END     // remove spuriou
 // LPF fire_spell_immunities END                                    // grant immunities to fire-based area effect spells
 // LPF entangle_immunities END                                      // grant immunity to entangle spells
 // LPF web_immunity END                                             // grant immunity to web spells and effects
-LPF clear_bg1_profs END                                          // Clear BG1 proficiencies
 // =============================================================================== // the actual work ends here
 BUT_ONLY_IF_IT_CHANGES
 END                                                                                // ends ACTION_IF FILE_EXISTS_IN_GAME block

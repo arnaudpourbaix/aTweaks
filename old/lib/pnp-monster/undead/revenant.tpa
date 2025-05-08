@@ -122,4 +122,4 @@ COPY_EXISTING ~spwi604.spl~ ~override/rr#rgaze.spl~  								// Revenent Gaze
   LPF DELETE_EFFECT INT_VAR silent = 1 match_opcode = 326 END
   LPF ALTER_EFFECT INT_VAR savingthrow = 1 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 139 parameter1 = RESOLVE_STR_REF(@1026) END
-  LPF spellToInnate INT_VAR ctime=0 rinvs=1 renew=1 END
+  LPF SPELL_TO_INNATE INT_VAR ctime=0 rinvs=1 renew=1 END

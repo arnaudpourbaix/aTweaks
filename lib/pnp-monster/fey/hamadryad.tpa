@@ -453,7 +453,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~RR#FENTG~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fdsnr~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=189 END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2

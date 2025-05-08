@@ -1,7 +1,7 @@
 import { ImmunityName } from "../../../config/immunity-name";
+import { SpellGroupName } from "../../../config/spell-group-name";
 import { EffectTypeEnum } from "../final/effect.type";
 import { PortraitIconEnum } from "../final/enums";
-import { SpellIdentifier } from "../ids/spell";
 import { RawEffect } from "./effect";
 import { RawItemSlot } from "./item";
 
@@ -15,12 +15,7 @@ export interface RawImmunityConfig {
   displayIcons?: PortraitIconEnum[];
   strings?: number[];
   animations?: string[];
-  idsSpells?: {
-    id: SpellIdentifier | string;
-    suffixes?: string[];
-    source?: string;
-  }[];
-  spells?: string[];
+  spellGroups?: SpellGroupName[];
   displaySpellIneffective?: boolean;
   /**
    * All effects are permanent (spl) or while equiped (itm)

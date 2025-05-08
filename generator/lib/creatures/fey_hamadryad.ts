@@ -1,13 +1,12 @@
 import {
+  DEFAULT_SPELL_PROBABILITY,
+  PRESET_NAMES,
+} from "../config/ability-presets";
+import {
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
-import {
-  ATWEAKS_SPELLS,
-  DEFAULT_SPELL_PROBABILITY,
-  PRESET_NAMES,
-  SPELLS,
-} from "../config/spell";
+import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import {
   BafExistingStringReference,
   TraStringReferenceEnum,

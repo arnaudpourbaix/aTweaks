@@ -1,6 +1,5 @@
 import deepmerge from "deepmerge";
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { ABILITY_PRESETS } from "../../config/spell";
 import { CreatureAbility } from "../model/final/ability";
 import {
   RawCreatureAbility,
@@ -8,6 +7,7 @@ import {
 } from "../model/raw/ability";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
+import { ABILITY_PRESETS } from "../../config/ability-presets";
 
 export class AbilityService {
   static instance = new AbilityService();

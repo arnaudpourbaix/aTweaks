@@ -1,6 +1,7 @@
+import { SPELL_STATES } from "../config/ability-presets";
 import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS } from "../config/item";
-import { SPELL_STATES, SPELLS } from "../config/spell";
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";

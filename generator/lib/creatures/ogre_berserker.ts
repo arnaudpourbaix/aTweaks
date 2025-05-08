@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell";
+import { SPELLS } from "../config/spell-names";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";

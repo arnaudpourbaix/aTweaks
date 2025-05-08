@@ -1,14 +1,14 @@
 COPY ~%MOD_FOLDER%/spl/rr#telwe.spl~ ~override/rr#ddoor.spl~            // Dimension Door (renewable)
   SAY NAME1 #12082 SAY NAME2 #12082
-  LPF spellToInnate INT_VAR ctime=1 renew=1 END
+  LPF SPELL_TO_INNATE INT_VAR ctime=1 renew=1 END
 
 COPY ~%MOD_FOLDER%/spl/rr#telwe.spl~ ~override/rr#ddor2.spl~            // Dimension Door (non-renewable, for Nymphs)
   SAY NAME1 #12082 SAY NAME2 #12082
-  LPF spellToInnate INT_VAR ctime=1 END
+  LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY ~%MOD_FOLDER%/spl/rr#telwx.spl~ ~override/rr#ddorx.spl~            // Dimension Door (special version, breaks targeting via 1 second invisibility)
   SAY NAME1 #12082 SAY NAME2 #12082
-  LPF spellToInnate INT_VAR ctime=1 END
+  LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#fafrn.spl~ ~override~                     // Animal Friendship (renewable)
   SAY NAME1 @1900 SAY NAME2 @1900
@@ -45,7 +45,7 @@ BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.spl~ BEGIN
     COPY_EXISTING ~%file%.spl~ ~override~
       PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN  // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
-        LPF add_conditional_immunity INT_VAR f_Condition = 80 f_Strref = 4742 STR_VAR f_Spell = rr#fcsng END
+        LPF add_conditional_immunity INT_VAR opcode = 80 stringref = 4742 STR_VAR spell = rr#fcsng END
       END
     BUT_ONLY_IF_IT_CHANGES
   END
@@ -65,7 +65,7 @@ COPY ~%MOD_FOLDER%/spl/fey/rr#ftrnq.spl~ ~override~       // Touch of Tranquilit
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#fiinv.spl~ ~override~       // Improved Invisibility shell spell (use Casting Level 11th)
 COPY_EXISTING ~SPWI405.SPL~  ~override/rr#wi405.spl~      // Clone Improved Invisibility into an innate ability (used by Sirine)
-  LPF spellToInnate INT_VAR ctime=1 END
+  LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY ~%MOD_FOLDER%/spl/fey/rr#pjell.spl~ ~override~       // Polymorph Mustard Jelly (Sirine)
   ADD_PROJECTILE ~%MOD_FOLDER%/pro/rr#ftvap.pro~          // New projectile for Toxic Vapors (small area cloud)

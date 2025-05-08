@@ -9,6 +9,8 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import { EffectService } from "./effect.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import path from "path";
+import { SPELL_GROUPS } from "../../config/spell-group";
+import { SpellGroup } from "../model/raw/item-spell-group";
 
 export class WeiduFunctionService extends AbstractWeiduService {
   static instance = new WeiduFunctionService();
@@ -18,6 +20,9 @@ export class WeiduFunctionService extends AbstractWeiduService {
 
   generateFunctions(): void {
     const lines: CodeLine[] = [];
+    for (const group of SPELL_GROUPS) {
+      this.generateItemSpellGroupFunction(lines, group, 0);
+    }
     for (const immunity of State.immunities) {
       this.generateImmunityFunction(lines, immunity, 0);
     }
@@ -26,6 +31,39 @@ export class WeiduFunctionService extends AbstractWeiduService {
       path.join(State.modFolder, GLOBAL_CONFIG.commonFunctionsFile),
       content
     );
+  }
+
+  generateItemSpellGroupFunction(
+    lines: CodeLine[],
+    group: SpellGroup,
+    tab: number
+  ): void {
+    this.add(
+      lines,
+      `DEFINE_ACTION_FUNCTION ${this.utils.getItemSpellGroupFunctionName(
+        group
+      )} RET_ARRAY spells BEGIN`,
+      tab
+    );
+    this.add(lines, `DEFINE_ARRAY spells BEGIN`, tab + 1);
+    for (const spell of group.spells ?? []) {
+      this.add(lines, `${spell}`, tab + 2);
+    }
+    this.add(lines, `END`, tab);
+    this.add(
+      lines,
+      `DEFINE_ARRAY ids BEGIN ${(group.idsSpells ?? [])
+        .map((i) => i.id)
+        .join(" ")} END`,
+      tab + 1
+    );
+    this.add(
+      lines,
+      `LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY spells END`,
+      tab + 1
+    );
+    this.add(lines, `END`, tab);
+    this.add(lines, ``);
   }
 
   generateImmunityFunction(
@@ -140,6 +178,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
         `LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END`,
         tab + 1
       );
+      // console.log("suffixes", immunity.idsSpells);
       this.add(lines, `SPRINT $spells(~%index%~) ~%resource%~`, tab + 1);
       this.add(lines, `SET index = index + 1`, tab + 1);
       this.add(lines, `END`, tab);

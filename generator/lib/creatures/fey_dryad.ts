@@ -1,6 +1,7 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
 import { ITEMS } from "../config/item";
-import { ATWEAKS_SPELLS, PRESET_NAMES, SPELLS } from "../config/spell";
+import { PRESET_NAMES } from "../config/ability-presets";
+import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { ConditionalStatement } from "../src/model/final/script";
 import { RawCreatureAbility } from "../src/model/raw/ability";

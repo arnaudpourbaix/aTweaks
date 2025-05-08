@@ -1,33 +1,11 @@
-import {
-  GARGANTUAN_CREATURES,
-  INCORPOREAL_CREATURES,
-} from "../config/creatures";
 import { GLOBAL_CONFIG } from "../config/generate";
-import {
-  ATWEAKS_SPELLS,
-  DEFAULT_SPELL_PROBABILITY,
-  PRESET_NAMES,
-  SPELLS,
-} from "../config/spell";
-import {
-  BafExistingStringReference,
-  TraStringReferenceEnum,
-} from "../config/stringRef";
+import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import {
-  IdsEffect,
-  RawBaseEffect,
-  RawEffect,
-  StringRefEffect,
-} from "../src/model/raw/effect";
+import { RawBaseEffect, StringRefEffect } from "../src/model/raw/effect";
 import { FactoryService } from "../src/services/factory.service";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
-import {
-  abilityDryadDireCharm,
-  abilitySpeakWithPlants,
-  dryadWildernessAbilities,
-} from "./fey_dryad";
 import { abilityAnimalFriendship } from "./fey_hamadryad";
 import { MonsterEnum } from "./monster.enum";
 

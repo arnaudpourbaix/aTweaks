@@ -97,7 +97,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m37~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m37~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_CRE_ITEM ~ja#3m37~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=65 END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=292 END
 			LPF patchCreature

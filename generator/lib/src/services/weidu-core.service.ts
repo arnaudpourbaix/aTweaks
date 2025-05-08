@@ -8,7 +8,7 @@ import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import path from "path";
-import { SPELL_STATES } from "../../config/spell";
+import { SPELL_STATES } from "../../config/ability-presets";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -40,16 +40,13 @@ export class WeiduCoreService extends AbstractWeiduService {
     const criticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
     this.add(this.lines, `WRITE_LONG 0x64 0x72`, 1);
-    const criticalHit = criticalHitImmunity
-      ? 2 ** ItemFlagEnum.ToggleCriticalHit
-      : 0;
-    this.add(
-      this.lines,
-      `WRITE_LONG 0x18 ${2 ** ItemFlagEnum.NotCopyable + criticalHit}`,
-      1
-    );
-    if (itemSlot.slot === "HELMET")
+    let flags = 2 ** ItemFlagEnum.NotCopyable;
+    if (itemSlot.slot === "HELMET") {
       this.add(this.lines, `WRITE_SHORT 0x1c 72`, 1);
+    } else if (criticalHitImmunity) {
+      flags += 2 ** ItemFlagEnum.ToggleCriticalHit;
+    }
+    this.add(this.lines, `WRITE_LONG 0x18 ${flags}`, 1);
     this.add(this.lines, `WRITE_ASCII 0x3a ~${this.getIcon(itemSlot)}~ #8`, 1);
     this.add(
       this.lines,

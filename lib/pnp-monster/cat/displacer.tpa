@@ -49,7 +49,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~BDDISPBE~
 			ADD_CRE_ITEM ~ja#1m38~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=6

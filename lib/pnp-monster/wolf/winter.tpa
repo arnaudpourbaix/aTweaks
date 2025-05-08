@@ -87,7 +87,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~WOLFWI2~
 			ADD_CRE_ITEM ~ja#1m20~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_MEMORIZED_SPELL ~ja#1m20~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=6

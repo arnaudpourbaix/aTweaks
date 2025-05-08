@@ -85,7 +85,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       creature,
     });
     this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
-    this.add(lines, `LPF clearProficiencies END`, 3);
+    this.add(lines, `LPF clear_proficiencies END`, 3);
     for (const opcode of creature.additionalData.deleteEffectOpcodes) {
       this.add(
         lines,

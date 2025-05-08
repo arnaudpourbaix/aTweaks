@@ -72,7 +72,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~CATJAGSU~
 			ADD_CRE_ITEM ~ja#1m36~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m36~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=3

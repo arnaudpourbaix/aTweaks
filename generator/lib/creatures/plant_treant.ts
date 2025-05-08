@@ -1,6 +1,3 @@
-import { ATWEAKS_CREATURES } from "../config/creatures";
-import { SPELLS } from "../config/spell";
-import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";

@@ -162,7 +162,7 @@ COPY "%MOD_FOLDER%/spl/base.spl" "override/RR#mracs.spl"
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target power parameter2 = 3 resist_dispel duration dicesize savingthrow header END //confused
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 215 target power parameter2 = 1 resist_dispel duration dicesize savingthrow header STR_VAR resource = spconfus END //visual effect      
   END
-  LPF spellToInnate INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
+  LPF SPELL_TO_INNATE INT_VAR rinvs=1 END //General "make innate" treatment (overrides the casting time specified above)
 END ELSE COPY_EXISTING ~fl#clrsp.SPL~  ~override/rr#mracs.spl~                               // Clone Color Spray into an innate ability (Radiant Mephit)
  LAF add_blindness_immunity STR_VAR f_Spell = "rr#mracs" END
 
@@ -171,20 +171,20 @@ END ELSE COPY_EXISTING ~fl#clrsp.SPL~  ~override/rr#mracs.spl~                  
 //////////////////
 
 COPY_EXISTING ~SPWI112.SPL~  ~override/rr#wi112.spl~                               // Clone Magic Missile into an innate ability (Fire Mephit)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 LAUNCH_ACTION_FUNCTION magic_missile_shield END                                    // Make the Shield spell and amulet protect against the cloned Magic Missile
 
 COPY_EXISTING ~SPWI201.SPL~  ~override/rr#wi201.spl~                               // Clone Blur into an innate ability (Air Mephit)
-LPF spellToInnate INT_VAR ctime=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI206.SPL~  ~override/rr#wi206.spl~                               // Clone Invisibility into an innate ability (Smoke Mephit)
-LPF spellToInnate INT_VAR ctime=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 END
 
 COPY_EXISTING ~SPWI213.SPL~  ~override/rr#mozsc.spl~                               // Clone Stinking Cloud into an innate ability (Ooze Mephit, special version)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~SPWI224.SPL~  ~override/rr#wi224.spl~                               // Clone Glitterdust into an innate ability (Mineral Mephit)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 
 /////////////
@@ -1483,7 +1483,7 @@ END
 // Note: this is needed in order to grant proper immunity to gas-based spells to certain mephits
 
 COPY_EXISTING ~spwi502.spl~  ~override/rr#wi502.spl~                                          // Clone Cloudkill into an innate ability (used by the Cloudkill wand)
-LPF spellToInnate INT_VAR ctime=1 rinvs=1 END
+LPF SPELL_TO_INNATE INT_VAR ctime=1 rinvs=1 END
 
 COPY_EXISTING ~wand13.itm~ ~override~
 PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN                                                    // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)

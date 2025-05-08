@@ -41,7 +41,7 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
 			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
 				INT_VAR

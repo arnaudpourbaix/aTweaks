@@ -296,7 +296,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~BDWOLFDR~
 			ADD_CRE_ITEM ~ja#1m22~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m22~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=4

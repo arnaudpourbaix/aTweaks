@@ -1,7 +1,7 @@
 import { RawEffect } from "../src/model/raw/effect";
 import { CreatureSize } from "../src/model/raw/enum";
 import { GrabConfig, GrabGlobalConfig } from "../src/model/raw/grab";
-import { SPELL_STATES } from "./spell";
+import { SPELL_STATES } from "./ability-presets";
 import { TraStringReferenceEnum } from "./stringRef";
 
 /**

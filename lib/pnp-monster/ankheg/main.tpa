@@ -593,7 +593,7 @@ BEGIN
 			ADD_CRE_ITEM ~ja#2m1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_MEMORIZED_SPELL ~ja#1m1~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
-			LPF clearProficiencies END
+			LPF clear_proficiencies END
 			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
