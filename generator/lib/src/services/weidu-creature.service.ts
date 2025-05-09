@@ -35,7 +35,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
   private weiduProjectileService = WeiduProjectileService.instance;
 
   generateWeiduScript(creature: Creature): void {
-    const lines: CodeLine[] = [];
+    const lines = this.initLines();
     if (creature.bafFile) this.compileScripts(lines, creature);
     this.creatureService.checkWeapons(creature);
     this.weiduProjectileService.createProjectiles(lines, creature);

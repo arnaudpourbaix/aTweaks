@@ -54,8 +54,7 @@ export class StateService {
         displayIcons: i.displayIcons ?? [],
         strings: i.strings ?? [],
         animations: i.animations ?? [],
-        idsSpells: i.idsSpells ?? [],
-        spells: i.spells ?? [],
+        spellGroups: i.spellGroups ?? [],
         displaySpellIneffective: !!i.displaySpellIneffective,
         effects: i.effects ?? [],
       };

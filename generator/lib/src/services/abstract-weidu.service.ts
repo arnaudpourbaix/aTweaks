@@ -7,6 +7,13 @@ export class AbstractWeiduService {
   protected utils = UtilsService.instance;
   protected grabService = GrabService.instance;
 
+  protected initLines() {
+    const lines: CodeLine[] = [];
+    this.add(lines, "// Generated file (don't edit)");
+    this.add(lines, "");
+    return lines;
+  }
+
   protected deleteEffect(
     lines: CodeLine[],
     tab: number,

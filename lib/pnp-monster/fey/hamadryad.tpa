@@ -1,3 +1,5 @@
+// Generated file (don't edit)
+
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42.baf~
 
 COPY_EXISTING "ENTANG2.pro" ~override/RR#FENTG.pro~

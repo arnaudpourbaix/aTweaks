@@ -18,46 +18,18 @@ COPY ~%MOD_FOLDER%/lib/pnp-spell/color_spray/spwi105.spl~ ~override~            
 // Note: Color Spray should not protect the target from its own effects. It's clunky and can often cause more harm than good. 
 // The drawbacks outweigh the benefits in this case.
 ACTION_IF !GAME_IS ~iwdee~ BEGIN // not needed on IWD:EE
-  ACTION_DEFINE_ARRAY ids BEGIN CLERIC_SUNSCORCH CLERIC_CLOUD_OF_PESTILENCE END
-  ACTION_DEFINE_ARRAY spells BEGIN  
-    spdr101.spl
-    spin595.spl
-    spin878.spl
-    spin893.spl
-    spin929.spl
-    spin931.spl
-    sppr313.spl   // SpellPack b6
-    sppr614c.spl  // SpellPack b6
-    sppr614d.spl  // SpellPack b6				
-    sppr704.spl
-    sppr707.spl
-    spwi106.spl
-    spwi118.spl
-    spwi224.spl
-    spwi224c.spl  // SpellPack b6
-    spwi714.spl
-    spwi815.spl
-    spwi958.spl
-    spwm178.spl
-    chalcy2.itm
-    gorwom4.itm
-    halb06.itm
-    halb06.spl    // IR/IRR
-    sorb.itm
-    sw1h51.itm
-    sw1h51.spl    // IR/IRR
-    wand19.itm
-    wand19.spl    // IR/IRR
-  END
-  LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY spells END
-  ACTION_PHP_EACH spells AS _ => spell BEGIN
-    ACTION_IF FILE_EXISTS_IN_GAME ~%file%~ BEGIN
-      COPY_EXISTING ~%file%~ ~override~
-        PATCH_IF (SOURCE_SIZE > 0x71) THEN BEGIN // protects against invalid files
-          LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spwi105 END
-          LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spin937 END
-        END
-      BUT_ONLY_IF_IT_CHANGES
-    END
+  //LAF get_blindness_resources RET_ARRAY resources END
+  LAF get_magicMissile_resources RET_ARRAY resources END
+
+  ACTION_PHP_EACH resources AS _ => file BEGIN
+    PRINT ~File %file%~
+    // ACTION_IF FILE_EXISTS_IN_GAME ~%file%~ BEGIN
+    //   COPY_EXISTING ~%file%~ ~override~
+    //     PATCH_IF (SOURCE_SIZE > 0x71) THEN BEGIN // protects against invalid files
+    //       LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spwi105 END
+    //       LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spin937 END
+    //     END
+    //   BUT_ONLY_IF_IT_CHANGES
+    // END
   END
 END

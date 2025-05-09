@@ -6,7 +6,7 @@ import { Response } from "../model/final/script";
 import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
-import { SpellGroup } from "../model/raw/item-spell-group";
+import { SpellGroup } from "../model/raw/spell-group";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
@@ -108,7 +108,7 @@ export class UtilsService {
     }_immunity`;
   }
 
-  getItemSpellGroupFunctionName(group: SpellGroupName | SpellGroup) {
+  getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {
     return `get_${typeof group === "string" ? group : group.name}_resources`;
   }
 

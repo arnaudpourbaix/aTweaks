@@ -1,3 +1,5 @@
+// Generated file (don't edit)
+
 CREATE ITM "ja#2m39"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 1

@@ -55,3 +55,56 @@ BEGIN
     END ~%MATCH0%~
   END    
 END
+
+DEFINE_ACTION_FUNCTION MERGE_ARRAYS
+STR_VAR
+  array1 = ""
+  array2 = ""
+  array3 = ""
+  array4 = ""
+  array5 = ""
+  array6 = ""
+  array7 = ""
+  array8 = ""
+  array9 = ""
+RET_ARRAY array
+BEGIN
+  ACTION_CLEAR_ARRAY array
+  OUTER_SET i=0
+  ACTION_PHP_EACH array1 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array2 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array3 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array4 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array5 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array6 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array7 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array8 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+  ACTION_PHP_EACH array9 AS _ => item BEGIN
+    OUTER_SPRINT $array("%i%") EVAL ~%item%~
+    OUTER_SET i=i+1
+  END
+END

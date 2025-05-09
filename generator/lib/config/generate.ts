@@ -1,5 +1,6 @@
 export const GLOBAL_CONFIG = {
   commonCreatureFile: "lib/pnp-monster/common.tpa",
+  commonSpellResourcesFile: "lib/common/spell-resources.tpa",
   commonFunctionsFile: "lib/common/immune-trait.tpa",
   constitutionAffectHitPoint: true,
   bafConstants: {

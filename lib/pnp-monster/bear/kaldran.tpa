@@ -1,3 +1,5 @@
+// Generated file (don't edit)
+
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m8.baf~
 
 COPY_EXISTING "CONECOLD.pro" ~override/ja#1m8.pro~

@@ -1,19 +1,18 @@
 import * as fs from "fs";
+import path from "path";
+import { SPELL_STATES } from "../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CR, TAB } from "../model/constants";
 import { ItemFlagEnum } from "../model/final/enums";
 import { ImmunityConfig } from "../model/final/immunity";
-import { CodeLine } from "../model/misc";
 import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
-import path from "path";
-import { SPELL_STATES } from "../../config/ability-presets";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
 
-  private lines: CodeLine[] = [];
+  private lines = this.initLines();
 
   writeFile(): void {
     const content = this.lines
