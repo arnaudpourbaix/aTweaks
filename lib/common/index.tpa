@@ -11,7 +11,8 @@ INCLUDE "%MOD_FOLDER%/lib/common/utils.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/alter_effect.tph"           // David W. improved effect functions
 INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common aTweaks functions
 INCLUDE "%MOD_FOLDER%/lib/common/spell-resources.tpa"
-INCLUDE "%MOD_FOLDER%/lib/common/immune-trait.tpa"
+INCLUDE "%MOD_FOLDER%/lib/common/spell-functions.tpa"
+INCLUDE "%MOD_FOLDER%/lib/common/immunities.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/patch_creature.tph"
 INCLUDE "%MOD_FOLDER%/lib/common/patch_creature_script.tph"
 

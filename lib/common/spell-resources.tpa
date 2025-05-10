@@ -530,3 +530,24 @@ DEFINE_ACTION_FUNCTION get_flameArrow_resources RET_ARRAY resources BEGIN
 	ACTION_DEFINE_ARRAY ids BEGIN  END
 	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END
 END
+
+DEFINE_ACTION_FUNCTION get_minorGlobeOfInvulnerability_resources RET_ARRAY resources BEGIN
+	ACTION_DEFINE_ARRAY spells BEGIN
+		"spwi406"
+		"RR#WI406"
+		"SPWM126"
+		"DWSW406"
+	END
+	ACTION_DEFINE_ARRAY ids BEGIN  END
+	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END
+END
+
+DEFINE_ACTION_FUNCTION get_globeOfInvulnerability_resources RET_ARRAY resources BEGIN
+	ACTION_DEFINE_ARRAY spells BEGIN
+		"spwi602"
+		"DWSW602"
+		"DW#mlglb"
+	END
+	ACTION_DEFINE_ARRAY ids BEGIN  END
+	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END
+END

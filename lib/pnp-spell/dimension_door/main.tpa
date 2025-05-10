@@ -1,5 +1,5 @@
 // Dimension Door
-CREATE SPL "spwi402"
+CREATE SPL "SPWI402"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
@@ -20,8 +20,8 @@ CREATE SPL "spwi402"
 	WRITE_SHORT 0x80 900
 	WRITE_SHORT 0x84 1
 	WRITE_SHORT 0x98 1
-	WRITE_LONG 0x8 12082
-	WRITE_LONG 0xc 12082
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@1892)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@1892)
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@1891)
 	LPF ADD_EFFECT INT_VAR opcode=141 target=1 power=4 resist_dispel=1 probability1=100 timing=1 parameter2=38 END
 	LPF ADD_EFFECT INT_VAR opcode=174	target=1 power=4 resist_dispel=1 probability1=100 timing=1 STR_VAR resource="EFF_M09"	END
@@ -53,6 +53,7 @@ BEGIN
 	END
 END
 
+// TODO: 
 // COPY_EXISTING_REGEXP GLOB ~^.+\.sto$~ ~override~                                   // parses through all stores in the game (even those added by mods)
 //   PATCH_IF (%SOURCE_SIZE% > 0x9b) THEN BEGIN                                       // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
 //     READ_LONG 0x08 "itemtype" ELSE 0                                               // check store type

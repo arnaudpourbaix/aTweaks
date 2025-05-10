@@ -82,7 +82,8 @@ export class MainService {
   generateCommonCode(): Promise<void> {
     this.weiduCoreService.generateSpellStates();
     this.weiduFunctionService.generateSpellResources();
-    this.weiduFunctionService.generateFunctions();
+    this.weiduFunctionService.generateSpellFunctions();
+    this.weiduFunctionService.generateImmunities();
     this.weiduCoreService.writeFile();
     return Promise.resolve();
   }

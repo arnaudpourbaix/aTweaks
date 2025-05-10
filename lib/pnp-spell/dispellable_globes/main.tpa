@@ -1,18 +1,12 @@
 
 // The Major and Minor Globes of Invulnerability should be dispellable by Dispel Magic, as per the spell's description and per PnP rules
-
-ACTION_FOR_EACH ~file~ IN
-                ~spwi406~                                                          // Minor Globe of Invulnrability
-                ~spwi602~                                                          // Globe of Invulnrability
-                ~RR#WI406~                                                         // Minor Globe of Invulnrability (used by RR for Selina's Amulet)
-                ~SPWM126~                                                          // Minor Globe of Invulnrability (Wild Mage)
-                ~DWSW406~                                                          // Minor Globe of Invulnrability (stratagems Cast Previously)	
-                ~DWSW602~                                                          // Globe of Invulnrability (stratagems Cast Previously)					
-                ~DW#mlglb~                                                         // Globe of Invulnrability (stratagems)
-BEGIN
+LAF get_minorGlobeOfInvulnerability_resources RET_ARRAY array1=resources END
+LAF get_globeOfInvulnerability_resources RET_ARRAY array2=resources END
+LAF MERGE_ARRAYS STR_VAR array1 array2 RET_ARRAY array END
+ACTION_PHP_EACH array AS _ => file BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%file%.spl~ BEGIN
     COPY_EXISTING ~%file%.spl~ ~override~
-      PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN                                   // file size sanity check (filters out 0 byte files i.e. ALLOW_MISSING)
+      PATCH_IF (%SOURCE_SIZE% > 0x71) THEN BEGIN
         READ_LONG  0x64 "abil_off"
         READ_SHORT 0x68 "abil_num"
         READ_LONG  0x6a "fx_off"

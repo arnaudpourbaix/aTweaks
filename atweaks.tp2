@@ -68,7 +68,7 @@ INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/dispellable_globes/main.tpa~
 
 // PnP Color Spray
 BEGIN @104 DESIGNATED 1020
-// GROUP @5
+GROUP @5
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
 INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/color_spray/main.tpa~
 

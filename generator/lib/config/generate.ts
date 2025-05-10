@@ -1,7 +1,10 @@
 export const GLOBAL_CONFIG = {
-  commonCreatureFile: "lib/pnp-monster/common.tpa",
-  commonSpellResourcesFile: "lib/common/spell-resources.tpa",
-  commonFunctionsFile: "lib/common/immune-trait.tpa",
+  files: {
+    commonCreature: "lib/pnp-monster/common.tpa",
+    spellResources: "lib/common/spell-resources.tpa",
+    spellFunctions: "lib/common/spell-functions.tpa",
+    immunities: "lib/common/immunities.tpa",
+  },
   constitutionAffectHitPoint: true,
   bafConstants: {
     combatStarted: "JA#COMBAT",

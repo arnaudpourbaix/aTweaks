@@ -6,6 +6,7 @@ import { Response } from "../model/final/script";
 import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
+import { RawSpell } from "../model/raw/spell";
 import { SpellGroup } from "../model/raw/spell-group";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
@@ -106,6 +107,10 @@ export class UtilsService {
     return `${
       typeof immunity === "string" ? immunity : immunity.name
     }_immunity`;
+  }
+
+  getSpellFunctionName(spell: RawSpell) {
+    return `create_spell_${spell.name}`;
   }
 
   getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {

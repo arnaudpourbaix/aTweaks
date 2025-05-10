@@ -516,4 +516,21 @@ export const SPELL_GROUPS: SpellGroup[] = [
     name: "flameArrow",
     spells: ["d5f2303", "d5p2303", "d5p2303W", "d5y391i", "SPWI303", "SPWI888"],
   },
+  {
+    name: "minorGlobeOfInvulnerability",
+    spells: [
+      "spwi406",
+      "RR#WI406", // used by RR for Selina's Amulet
+      "SPWM126", // Wild Mage
+      "DWSW406", // Stratagems Cast Previously
+    ],
+  },
+  {
+    name: "globeOfInvulnerability",
+    spells: [
+      "spwi602",
+      "DWSW602", // Stratagems Cast Previously
+      "DW#mlglb", // Stratagems
+    ],
+  },
 ];

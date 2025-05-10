@@ -11,6 +11,8 @@ import { WeiduCoreService } from "./weidu-core.service";
 import path from "path";
 import { SPELL_GROUPS } from "../../config/spell-group";
 import { SpellGroup } from "../model/raw/spell-group";
+import { SPELL_FUNCTIONS } from "../../spells";
+import { RawSpell } from "../model/raw/spell";
 
 export class WeiduFunctionService extends AbstractWeiduService {
   static instance = new WeiduFunctionService();
@@ -25,21 +27,47 @@ export class WeiduFunctionService extends AbstractWeiduService {
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
-      path.join(State.modFolder, GLOBAL_CONFIG.commonSpellResourcesFile),
+      path.join(State.modFolder, GLOBAL_CONFIG.files.spellResources),
       content
     );
   }
 
-  generateFunctions(): void {
+  generateSpellFunctions(): void {
+    const lines = this.initLines();
+    for (const spell of SPELL_FUNCTIONS) {
+      this.generateSpellFunction(lines, spell, 0);
+    }
+    const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
+    fs.writeFileSync(
+      path.join(State.modFolder, GLOBAL_CONFIG.files.spellFunctions),
+      content
+    );
+  }
+
+  generateImmunities(): void {
     const lines = this.initLines();
     for (const immunity of State.immunities) {
       this.generateImmunityFunction(lines, immunity, 0);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
-      path.join(State.modFolder, GLOBAL_CONFIG.commonFunctionsFile),
+      path.join(State.modFolder, GLOBAL_CONFIG.files.immunities),
       content
     );
+  }
+
+  private generateSpellFunction(
+    lines: CodeLine[],
+    spell: RawSpell,
+    tab: number
+  ): void {
+    this.add(
+      lines,
+      `DEFINE_ACTION_FUNCTION ${this.utils.getSpellFunctionName(spell)} BEGIN`,
+      tab
+    );
+    this.add(lines, `END`, tab);
+    this.add(lines, ``, tab);
   }
 
   private generateSpellResource(

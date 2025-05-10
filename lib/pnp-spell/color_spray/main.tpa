@@ -22,7 +22,7 @@ ACTION_IF !GAME_IS ~iwdee~ BEGIN // not needed on IWD:EE
     PRINT ~File %file%~
     ACTION_IF FILE_EXISTS_IN_GAME ~%file%~ BEGIN
       COPY_EXISTING ~%file%~ ~override~
-        PATCH_IF (SOURCE_SIZE > 0x71) THEN BEGIN // protects against invalid files
+        PATCH_IF (SOURCE_SIZE > 0x71) THEN BEGIN
           LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spwi105 END
           LPF add_conditional_immunity INT_VAR opcode = 74 STR_VAR spell = spin937 END
         END

@@ -19,7 +19,7 @@ export class WeiduCoreService extends AbstractWeiduService {
       .map((l) => `${TAB.repeat(l.tab)}${l.code}`)
       .join(CR);
     fs.writeFileSync(
-      path.join(State.modFolder, GLOBAL_CONFIG.commonCreatureFile),
+      path.join(State.modFolder, GLOBAL_CONFIG.files.commonCreature),
       content
     );
   }

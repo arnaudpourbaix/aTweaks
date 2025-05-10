@@ -28,6 +28,8 @@ export enum TraStringReferenceEnum {
   BlindingBeauty = 1901,
   DetectSnaresAndPits = 1904,
   CallWoodlandBeeingsDescription = 1895,
+  ColorSpray = 1893,
+  ColorSprayDescription = 1890,
 }
 
 export enum BafExistingStringReference {
