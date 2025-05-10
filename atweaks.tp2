@@ -52,54 +52,50 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 // PnP spell tweaks
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Make Spiritual Hammer into a ranged force weapon and remove its strength bonus to damage
+BEGIN @102 DESIGNATED 1000
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
+FORBID_COMPONENT spell_rev.tp2 0 @98
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/spiritual_hammer/main.tpa~
+
+// Allow Dispel/Remove Magic to take down Globes of Invulnerability
+BEGIN @103 DESIGNATED 1010
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+FORBID_COMPONENT spell_rev.tp2 0 @98
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/dispellable_globes/main.tpa~
+
 // PnP Color Spray
 BEGIN @104 DESIGNATED 1020
 // GROUP @5
 REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
 INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/color_spray/main.tpa~
 
-// // PnP Dimension Door
-// BEGIN @105 DESIGNATED 1030
-// GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/dimension_door/main.tpa~
+// PnP Dimension Door
+BEGIN @105 DESIGNATED 1030
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/dimension_door/main.tpa~
 
-// // PnP Call Woodland Beings
-// BEGIN @186 DESIGNATED 1050
-// GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa~
+// Allow Mages to scribe memorized spells onto scrolls
+BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
+GROUP @5
+REQUIRE_PREDICATE !GAME_IS ~iwdee~ @92
+OUTER_SET Restrictions = 1
+INCLUDE "%MOD_FOLDER%/lib/pnp-spell/scribe_scrolls/main.tpa"
 
+BEGIN @116 SUBCOMPONENT @115 DESIGNATED 1041 // Scrolls can be scribed everywhere
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @90
+OUTER_SET Restrictions = 0
+INCLUDE "%MOD_FOLDER%/lib/pnp-spell/scribe_scrolls/main.tpa"
 
-
-// Make Spiritual Hammer into a ranged force weapon and remove its strength bonus to damage
-// BEGIN @102 DESIGNATED 1000
-// GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee iwdee~ @92
-// FORBID_COMPONENT spell_rev.tp2 0 @98
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1000-spiritual_hammer.tpa~
-
-
-// // Allow Dispel/Remove Magic to take down Globes of Invulnerability
-// BEGIN @103 DESIGNATED 1010
-// GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// FORBID_COMPONENT spell_rev.tp2 0 @98
-// INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/1010-dispellable_globes.tpa~
-
-// // Allow Mages to scribe memorized spells onto scrolls
-// BEGIN @117 SUBCOMPONENT @115 DESIGNATED 1040 // Scrolls can only be scribed at inns and strongholds
-// GROUP @5
-// REQUIRE_PREDICATE !GAME_IS ~iwdee~ @92
-// OUTER_SET Restrictions = 1
-// INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
-
-// BEGIN @116 SUBCOMPONENT @115 DESIGNATED 1041 // Scrolls can be scribed everywhere
-// GROUP @5
-// REQUIRE_PREDICATE ENGINE_IS ~tob bgee bg2ee iwdee~ @90
-// OUTER_SET Restrictions = 0
-// INCLUDE "%MOD_FOLDER%/lib/pnp-spell/1040-scribe_scrolls.tpa"
-
+// PnP Call Woodland Beings
+BEGIN @186 DESIGNATED 1050
+GROUP @5
+REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+INCLUDE ~%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa~
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // PnP class and race tweaks

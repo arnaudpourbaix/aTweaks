@@ -144,7 +144,7 @@ export const SPELL_GROUPS: SpellGroup[] = [
     idsSpells: [
       {
         id: "WIZARD_MORDENKAINENS_FORCE_MISSILES",
-        suffixes: ["", "B"],
+        suffixes: ["B"],
       }, // Mordenkainen's Force Missiles (IWDification)
     ],
     spells: [

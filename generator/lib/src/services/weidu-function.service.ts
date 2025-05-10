@@ -47,6 +47,8 @@ export class WeiduFunctionService extends AbstractWeiduService {
     group: SpellGroup,
     tab: number
   ): void {
+    const spells = group.spells ?? [];
+    const idsSpells = group.idsSpells ?? [];
     this.add(
       lines,
       `DEFINE_ACTION_FUNCTION ${this.utils.getSpellResourceFunctionName(
@@ -55,23 +57,39 @@ export class WeiduFunctionService extends AbstractWeiduService {
       tab
     );
     this.add(lines, `ACTION_DEFINE_ARRAY spells BEGIN`, tab + 1);
-    for (const spell of group.spells ?? []) {
+    for (const spell of spells) {
       this.add(lines, `"${spell}"`, tab + 2);
     }
     this.add(lines, `END`, tab + 1);
     this.add(
       lines,
-      `ACTION_DEFINE_ARRAY ids BEGIN ${(group.idsSpells ?? [])
+      `ACTION_DEFINE_ARRAY ids BEGIN ${idsSpells
         .map((i) => i.id)
         .join(" ")} END`,
       tab + 1
     );
-    //TODO: handle suffixes
     this.add(
       lines,
       `LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END`,
       tab + 1
     );
+    let index = spells.length + idsSpells.length;
+    for (const [i, spell] of idsSpells.entries()) {
+      if (!!spell.suffixes) {
+        this.add(
+          lines,
+          `OUTER_SPRINT res $resources(${spells.length + i})`,
+          tab + 1
+        );
+        for (const suffix of spell.suffixes) {
+          this.add(
+            lines,
+            `OUTER_SPRINT $resources(${index++}) ~%res%${suffix}~`,
+            tab + 1
+          );
+        }
+      }
+    }
     this.add(lines, `END`, tab);
     this.add(lines, ``);
   }
