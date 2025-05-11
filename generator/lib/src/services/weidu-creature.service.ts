@@ -51,7 +51,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
         creature.attack.grab
       );
     }
-    this.weiduSpellService.createSpells(lines, creature);
+    this.weiduSpellService.createSpells(lines, creature.spells);
     this.weiduItemService.createItems(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
@@ -113,7 +113,14 @@ export class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     for (const effect of creature.additionalData.effects) {
-      this.weiduEffectService.addEffect(lines, 3, effect, 0, "CRE");
+      this.weiduEffectService.addEffect({
+        lines,
+        tab: 3,
+        effect,
+        power: 0,
+        header: 0,
+        type: "CRE",
+      });
     }
     this.patchCreature({
       lines,
@@ -474,13 +481,27 @@ export class WeiduCreatureService extends AbstractWeiduService {
         type: "Set",
         value: movement,
       });
-      this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
+      this.weiduEffectService.addEffect({
+        lines,
+        tab,
+        effect,
+        power: 0,
+        header: 0,
+        type: "CRE",
+      });
     }
     if (adjustment.data?.kit === "BARBARIAN") {
       const effect = this.effectService.getEffect({
         opcode: "ProtectionFromBackstab",
       });
-      this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
+      this.weiduEffectService.addEffect({
+        lines,
+        tab,
+        effect,
+        power: 0,
+        header: 0,
+        type: "CRE",
+      });
     }
     if (adjustment.data)
       this.patchCreatureAdjustement({
@@ -507,7 +528,14 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
       this.addProficiencies(lines, tab, adjustment.additionalData);
       for (const effect of adjustment.additionalData.effects) {
-        this.weiduEffectService.addEffect(lines, tab, effect, 0, "CRE");
+        this.weiduEffectService.addEffect({
+          lines,
+          tab,
+          effect,
+          power: 0,
+          header: 0,
+          type: "CRE",
+        });
       }
     }
     this.add(lines, "END", --tab);

@@ -385,21 +385,12 @@ CREATE SPL "ja#3m1"
 			resource = "ja#3m1"
 		END
 
-	// Acidic digestive enzymes
+// Acidic digestive enzymes
 CREATE SPL "ja#1m1"
 	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 5
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4001)
 	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).~
 	LPF ADD_EFFECT
 		INT_VAR
@@ -466,26 +457,110 @@ CREATE SPL "ja#1m1"
 		STR_VAR
 			resource = "ja#1m1"
 		END
-
-	// Stream of acidic enzymes
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 5
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 102
+			duration = 24
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 65536
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 65536
+			timing = 4
+			duration = 6
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 65536
+			timing = 4
+			duration = 12
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 65536
+			timing = 4
+			duration = 18
+			probability1 = 100
+			dicenumber = 1
+			dicesize = 4
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 206
+			target = 2
+			power = 1
+			duration = 24
+			probability1 = 100
+		STR_VAR
+			resource = "ja#1m1"
+		END
+		
+		// Stream of acidic enzymes
 CREATE SPL "ja#2m1"
 	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
+A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
+It uses this attack technique only when desperate.~
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 65536
+			probability1 = 100
+			dicenumber = 8
+			dicesize = 4
+			savingthrow = 4
+			special = 256
+		END
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 2
 	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 1
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 30
 	WRITE_SHORT 0x84 3
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4000)
-	SAY UNIDENTIFIED_DESC ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
-A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
-It uses this attack technique only when desperate.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -499,7 +574,7 @@ It uses this attack technique only when desperate.~
 			savingthrow = 4
 			special = 256
 		END
-
+		
 CREATE ITM "ja#1m1"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

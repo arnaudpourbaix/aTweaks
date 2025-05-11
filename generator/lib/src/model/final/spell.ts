@@ -9,6 +9,7 @@ import {
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
+  SpellExclusionFlagEnum,
   SpellFlagEnum,
   SpellTypeEnum,
 } from "./enums";
@@ -40,7 +41,6 @@ export interface Spell {
   stringRef?: StringReference;
 
   spellbookIcon?: string;
-  memorizedIcon?: string;
   description?: string[] | TraStringReferenceEnum;
   spellType?: SpellTypeEnum;
   castingSound?: string;
@@ -48,17 +48,21 @@ export interface Spell {
   primaryType?: ItemAbilityPrimaryTypeEnum;
   secondaryType?: ItemAbilitySecondaryTypeEnum;
   spellLevel?: number;
+  flags?: SpellFlagEnum[];
+  exclusionFlags?: SpellExclusionFlagEnum[];
+  effects: Effect[];
+  removeOpcodes: EffectTypeEnum[];
+  headers: SpellHeader[];
+}
 
+export interface SpellHeader {
   type?: ItemAbilityTypeEnum;
-  /**
-   * Range (feet)
-   */
+  memorizedIcon?: string;
   range?: number;
   speed?: number;
+  minLevel?: number;
   target?: ItemAbilityTargetEnum;
   location?: ItemAbilityLocationEnum;
   projectile?: string;
-  flags?: SpellFlagEnum[];
   effects: Effect[];
-  removeOpcodes: EffectTypeEnum[];
 }

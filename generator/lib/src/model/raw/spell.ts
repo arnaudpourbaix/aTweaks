@@ -11,39 +11,12 @@ import {
   RawItemAbilitySecondaryType,
   RawItemAbilityTarget,
   RawItemAbilityType,
+  RawSpellExclusionFlag,
   RawSpellFlag,
   RawSpellType,
 } from "./enum";
 
-export type RawSpell = RawAlterSpell | RawCreateSpell;
-
-export interface RawAlterSpell extends RawBaseSpell {
-  /**
-   * Create a spell from another one
-   */
-  copyFrom: string;
-
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef?: StringReference;
-
-  /**
-   * Array of min levels
-   */
-  deleteHeaders?: number[];
-
-  deleteOpcodes?: RawEffectOpcode[];
-}
-
-export interface RawCreateSpell extends RawBaseSpell {
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef: StringReference;
-}
-
-export interface RawBaseSpell {
+export interface RawSpell extends RawSpellHeader {
   /**
    * Only for TPA readibility
    */
@@ -53,6 +26,16 @@ export interface RawBaseSpell {
    * Filename for SPL file (without extension)
    */
   file: string;
+
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: StringReference;
+
+  /**
+   * Create a spell from another one
+   */
+  copyFrom?: string;
 
   memorizedCount?: number;
   /**
@@ -68,22 +51,30 @@ export interface RawBaseSpell {
   primaryType?: RawItemAbilityPrimaryType;
   secondaryType?: RawItemAbilitySecondaryType;
   spellLevel?: number;
-
-  type?: RawItemAbilityType;
-  /**
-   * Range (feet)
-   */
-  range?: number;
-  speed?: number;
-  target?: RawItemAbilityTarget;
-  location?: RawItemAbilityLocation;
-  projectile?: string;
   flags?: RawSpellFlag[];
-  effects?: RawEffect[];
+  exclusionFlags?: RawSpellExclusionFlag[];
   /**
    * Spell will be removed and added again after use, so you only need to memorize it once (default: false).
    */
   infiniteUse?: boolean;
+  headers?: RawSpellHeader[];
+
+  /**
+   * Array of min levels
+   */
+  deleteHeaders?: number[];
+  deleteOpcodes?: RawEffectOpcode[];
+}
+
+export interface RawSpellHeader {
+  type?: RawItemAbilityType;
+  location?: RawItemAbilityLocation;
+  target?: RawItemAbilityTarget;
+  range?: number;
+  speed?: number;
+  minLevel?: number;
+  projectile?: string;
+  effects?: RawEffect[];
 }
 
 export interface RawMemorizedSpell {

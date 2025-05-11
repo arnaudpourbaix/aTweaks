@@ -9,9 +9,9 @@ DEFINE_PATCH_FUNCTION ADD_SPELL_HEADER
     speed=0
     projectile=1
     copy_header=0
-    insert_point=~-1~
+    insert_point="-1"
   STR_VAR
-    icon=~~
+    icon=""
   RET
     insert_point
 BEGIN

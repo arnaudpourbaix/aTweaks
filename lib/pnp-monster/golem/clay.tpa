@@ -2,19 +2,11 @@
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/golem/ja#m24.baf~
 
-	// Haste
+// Haste
 CREATE SPL "ja#1m24"
 	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4012)
 	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#SLOW~ RET row col END
 	PATCH_IF row != "-1" BEGIN
 		LPF ADD_EFFECT
@@ -94,7 +86,93 @@ CREATE SPL "ja#1m24"
 		STR_VAR
 			resource = "EFF_M29"
 		END
-
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#SLOW~ RET row col END
+	PATCH_IF row != "-1" BEGIN
+		LPF ADD_EFFECT
+			INT_VAR
+				opcode = 221
+				target = 2
+				power = 1
+				parameter1 = 9
+				parameter2 = row
+				duration = 18
+				probability1 = 100
+			END
+	END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 16
+			target = 2
+			power = 1
+			duration = 18
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 38
+			duration = 18
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 141
+			target = 2
+			power = 1
+			parameter2 = 4
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 61
+			target = 2
+			power = 1
+			parameter1 = 2017213440
+			parameter2 = 1638400
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 139
+			target = 2
+			power = 1
+			parameter1 = 14023
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M28"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 4
+			duration = 18
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M29"
+		END
+		
 CREATE ITM "ja#1m24"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

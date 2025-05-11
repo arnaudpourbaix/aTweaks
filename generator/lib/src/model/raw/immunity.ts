@@ -13,7 +13,7 @@ export interface RawImmunityConfig {
   preventEffects?: EffectTypeEnum[];
   preventIcons?: PortraitIconEnum[];
   displayIcons?: PortraitIconEnum[];
-  strings?: number[];
+  strings?: string[];
   animations?: string[];
   spellGroups?: SpellGroupName[];
   displaySpellIneffective?: boolean;

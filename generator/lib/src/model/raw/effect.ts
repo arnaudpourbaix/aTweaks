@@ -74,6 +74,8 @@ export interface RawBaseEffect {
   saveBonus?: number;
   diceThrown?: number;
   diceSize?: number;
+  minLevel?: number;
+  maxLevel?: number;
   flags?: RawEffectFlags[];
   resource?: string;
   special?: number;

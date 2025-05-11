@@ -13,28 +13,48 @@ COPY_EXISTING "CONECOLD.pro" ~override/ja#1m32.pro~
 	WRITE_SHORT 0x206 620
 ADD_PROJECTILE ~override/ja#1m32.pro~ ~Ogre-Mage Cone of Cold~
 
-	// Cone of Cold
+// Cone of Cold
 CREATE SPL "ja#1m32"
 	WRITE_LONG 0x64 0x72
+	WRITE_ASCII 0x10 ~CAS_M06~ #8
+	WRITE_LONG 0x18 1536
+	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 15
+	WRITE_BYTE 0x25 6
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 5
+	WRITE_ASCII 0x3a ~SPWI503C~ #8
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 5
+			parameter2 = 131072
+			probability1 = 100
+			dicenumber = 8
+			dicesize = 8
+			savingthrow = 16777217
+			savebonus = "-4"
+			special = 256
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 165
+			target = 2
+			power = 5
+			duration = 1
+			probability1 = 100
+		END
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
-	WRITE_LONG 0x18 1536
-	WRITE_ASCII 0x3a ~SPWI503C~ #8
 	WRITE_ASCII 0x76 ~SPWI503B~ #8
-	WRITE_SHORT 0x22 15
-	WRITE_SHORT 0x1c 1
-	WRITE_BYTE 0x25 6
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 5
-	WRITE_ASCII 0x10 ~CAS_M06~ #8
 	WRITE_SHORT 0x74 2
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 10
 	WRITE_SHORT 0x84 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@26492)
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -57,27 +77,17 @@ CREATE SPL "ja#1m32"
 			duration = 1
 			probability1 = 100
 		END
-
-	// Fly
+		
+		// Fly
 CREATE SPL "ja#2m32"
 	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
-	WRITE_ASCII 0x3a ~SPWI305C~ #8
-	WRITE_ASCII 0x76 ~SPWI305B~ #8
-	WRITE_SHORT 0x22 10
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
 	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 10
 	WRITE_BYTE 0x25 8
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 3
-	WRITE_ASCII 0x10 ~CAS_M08~ #8
-	WRITE_SHORT 0x74 2
-	WRITE_BYTE 0x7e 5
-	WRITE_SHORT 0x84 3
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4015)
+	WRITE_ASCII 0x3a ~SPWI305C~ #8
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 176
@@ -138,27 +148,86 @@ CREATE SPL "ja#2m32"
 		STR_VAR
 			resource = "EFF_M29"
 		END
-
-	// Gaseous form
-CREATE SPL "ja#3m32"
-	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
-	WRITE_ASCII 0x3a ~SPWI416C~ #8
-	WRITE_ASCII 0x76 ~SPWI416B~ #8
-	WRITE_SHORT 0x22 10
+	WRITE_ASCII 0x76 ~SPWI305B~ #8
+	WRITE_SHORT 0x74 2
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x84 3
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 176
+			target = 2
+			power = 3
+			parameter1 = 13
+			parameter2 = 1
+			duration = 72
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 2
+			power = 3
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~)
+			duration = 72
+			probability1 = 100
+		STR_VAR
+			resource = "ja#i3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 328
+			target = 2
+			power = 3
+			parameter2 = (IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~))
+			duration = 72
+			probability1 = 100
+			special = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 3
+			parameter2 = 38
+			duration = 72
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 3
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M28"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 3
+			timing = 4
+			duration = 72
+			probability1 = 100
+		STR_VAR
+			resource = "EFF_M29"
+		END
+		
+		// Gaseous form
+CREATE SPL "ja#3m32"
+	WRITE_LONG 0x64 0x72
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
 	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 10
 	WRITE_BYTE 0x25 8
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 4
-	WRITE_ASCII 0x10 ~CAS_M08~ #8
-	WRITE_SHORT 0x74 2
-	WRITE_BYTE 0x7e 5
-	WRITE_SHORT 0x84 4
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4016)
+	WRITE_ASCII 0x3a ~SPWI416C~ #8
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 111
@@ -210,7 +279,67 @@ CREATE SPL "ja#3m32"
 		STR_VAR
 			resource = "MSTCHNG"
 		END
-
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x76 ~SPWI416B~ #8
+	WRITE_SHORT 0x74 2
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x84 4
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 111
+			target = 2
+			power = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#2m32"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 1
+			power = 4
+			duration = 3
+			probability1 = 100
+		STR_VAR
+			resource = "SPDISPM3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 1
+			power = 4
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "SPDISPM3"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 4
+			probability1 = 100
+		STR_VAR
+			resource = "MSTCHNG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 4
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "MSTCHNG"
+		END
+		
 CREATE ITM "ja#1m32"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

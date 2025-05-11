@@ -7,24 +7,19 @@ import {
   CreatureAdjustment,
   CreatureData,
 } from "../model/final/creature";
-import { Effect, EffectFile } from "../model/final/effect";
+import { EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AbilityDamageTypeEnum,
   EffectIDSFileEnum,
-  ItemAbilityCastingAnimationEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
-  ItemAbilityPrimaryTypeEnum,
-  ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
   ItemAnimationEnum,
   ItemCategoryEnum,
   ItemFlagEnum,
   ProficiencyTypeEnum,
-  SpellFlagEnum,
-  SpellTypeEnum,
 } from "../model/final/enums";
 import { Item } from "../model/final/item";
 import {
@@ -38,9 +33,9 @@ import {
   ProjectileExtendedFlagsEnum,
   ProjectileTypeEnum,
 } from "../model/final/projectile";
-import { Spell } from "../model/final/spell";
+import { AdditionalCode, CustomCode } from "../model/final/script";
 import { RawCreature, RawCreatureAdditionalData } from "../model/raw/creature";
-import { RawEffect, RawEffectFile } from "../model/raw/effect";
+import { RawEffectFile } from "../model/raw/effect";
 import {
   RawAlterItem,
   RawCreateItem,
@@ -48,27 +43,23 @@ import {
   RawItemSlot,
 } from "../model/raw/item";
 import { RawProjectile } from "../model/raw/projectile";
-import {
-  RawAlterSpell,
-  RawCreateSpell,
-  RawMemorizedSpell,
-  RawSpell,
-} from "../model/raw/spell";
+import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
+import { RawMemorizedSpell, RawSpell } from "../model/raw/spell";
 import { AbilityService } from "./ability.service";
 import { BafGeneratorService } from "./baf-generator.service";
 import { CreatureService } from "./creature.service";
 import { EffectService } from "./effect.service";
 import { ImmunityService } from "./immunity.service";
+import { SpellService } from "./spell.service";
 import { TargetService } from "./target.service";
 import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
-import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
-import { AdditionalCode, CustomCode } from "../model/final/script";
 
 export class MainService {
   private effectService = EffectService.instance;
+  private spellService = SpellService.instance;
   private bafService = BafGeneratorService.instance;
   private weiduCreatureService = WeiduCreatureService.instance;
   private weiduFunctionService = WeiduFunctionService.instance;
@@ -130,7 +121,7 @@ export class MainService {
       }),
       notEnforceFiles: rawCreature.notEnforceFiles ?? [],
       items: this.mapItems(rawCreature.items),
-      spells: this.mapSpells(rawCreature.spells),
+      spells: this.spellService.mapSpells(rawCreature.spells),
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
       effectFiles: this.mapEffectFiles(rawCreature.effectFiles),
@@ -298,7 +289,7 @@ export class MainService {
       abilityflags: item.abilityFlags
         ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
         : undefined,
-      effects: item.effects ? this.mapEffects(item.effects) : [],
+      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
     };
   }
 
@@ -320,7 +311,7 @@ export class MainService {
       abilityflags: item.abilityFlags
         ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
         : undefined,
-      effects: item.effects ? this.mapEffects(item.effects) : [],
+      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
     };
     if (item.type) {
       result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
@@ -355,97 +346,6 @@ export class MainService {
     return results;
   }
 
-  private mapSpells(spells: RawSpell[] | undefined): Spell[] {
-    if (!spells) return [];
-    const results: Spell[] = spells.map((s) => {
-      s.effects = s.effects ?? [];
-      if (s.infiniteUse) {
-        const effects: RawEffect[] = [
-          {
-            opcode: "RemoveSpell",
-            resource: s.file,
-            target: "Self",
-            timing: "InstantPermanentUntilDeath",
-            global: true,
-          },
-          {
-            opcode: "GiveAbility",
-            resource: s.file,
-            target: "Self",
-            timing: "InstantPermanentUntilDeath",
-            global: true,
-          },
-        ];
-        s.effects.push(...effects);
-      }
-      const result =
-        "copyFrom" in s ? this.mapAlterSpell(s) : this.mapCreateSpell(s);
-      if (s.icon) {
-        result.spellbookIcon = `${s.icon}C`;
-        result.memorizedIcon = `${s.icon}B`;
-      }
-      return result;
-    });
-    return results;
-  }
-
-  private mapAlterSpell(spell: RawAlterSpell): Spell {
-    return {
-      ...spell,
-      spellType: spell.spellType ? SpellTypeEnum[spell.spellType] : undefined,
-      primaryType: spell.primaryType
-        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
-        : undefined,
-      secondaryType: spell.secondaryType
-        ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
-        : undefined,
-      castingAnimation: spell.castingAnimation
-        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
-        : undefined,
-      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
-      location: spell.location
-        ? ItemAbilityLocationEnum[spell.location]
-        : undefined,
-      target: spell.target ? ItemAbilityTargetEnum[spell.target] : undefined,
-      flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
-      effects: spell.effects ? this.mapEffects(spell.effects) : [],
-      removeOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
-      deleteHeaders: spell.deleteHeaders ?? [],
-    };
-  }
-
-  private mapCreateSpell(spell: RawCreateSpell): Spell {
-    return {
-      ...spell,
-      range: spell.range ?? 0,
-      speed: spell.speed ?? 0,
-      spellType: spell.spellType
-        ? SpellTypeEnum[spell.spellType]
-        : SpellTypeEnum.Innate,
-      spellLevel: spell.spellLevel ?? 1,
-      primaryType: spell.primaryType
-        ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
-        : undefined,
-      secondaryType: spell.secondaryType
-        ? ItemAbilitySecondaryTypeEnum[spell.secondaryType]
-        : undefined,
-      castingAnimation: spell.castingAnimation
-        ? ItemAbilityCastingAnimationEnum[spell.castingAnimation]
-        : undefined,
-      type: spell.type ? ItemAbilityTypeEnum[spell.type] : undefined,
-      location: spell.location
-        ? ItemAbilityLocationEnum[spell.location]
-        : ItemAbilityLocationEnum.Ability,
-      target: spell.target
-        ? ItemAbilityTargetEnum[spell.target]
-        : ItemAbilityTargetEnum.LivingActor,
-      flags: spell.flags ? spell.flags.map((f) => SpellFlagEnum[f]) : undefined,
-      effects: spell.effects ? this.mapEffects(spell.effects) : [],
-      removeOpcodes: [],
-      deleteHeaders: [],
-    };
-  }
-
   private mapMemorizedSpells(
     memorizedSpells: RawMemorizedSpell[] | undefined,
     spells: RawSpell[] | undefined
@@ -460,11 +360,6 @@ export class MainService {
         });
       }
     }
-    return results;
-  }
-
-  private mapEffects(effects: RawEffect[]): Effect[] {
-    const results = this.effectService.getEffects(effects);
     return results;
   }
 

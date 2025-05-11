@@ -42,13 +42,21 @@ export class WeiduEffectService extends AbstractWeiduService {
     }
   }
 
-  addEffect(
-    lines: CodeLine[],
-    tab: number,
-    effect: Effect,
-    power: number,
-    type: "SPL" | "ITM" | "CRE"
-  ) {
+  addEffect({
+    lines,
+    tab,
+    effect,
+    power,
+    header,
+    type,
+  }: {
+    lines: CodeLine[];
+    tab: number;
+    effect: Effect;
+    power: number;
+    header: number;
+    type: "SPL" | "ITM" | "CRE";
+  }) {
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
       this.add(
         lines,
@@ -61,47 +69,36 @@ export class WeiduEffectService extends AbstractWeiduService {
     let fn = "ADD_EFFECT";
     if (effect.global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
     else if (type === "CRE") fn = "ADD_CRE_EFFECT";
-    this.add(lines, `LPF ${fn}`, tab);
-    this.add(lines, `INT_VAR`, tab + 1);
-    if (effect.global) this.add(lines, `global = 1`, tab + 2);
-    this.add(lines, `opcode = ${effect.opcode}`, tab + 2);
-    if (effect.target) this.add(lines, `target = ${effect.target}`, tab + 2);
+    const intVars: string[] = [
+      `header=${header}`,
+      `opcode=${effect.opcode}`,
+      `target=${effect.target}`,
+    ];
+    if (effect.global) intVars.push("global=1");
     if ((effect.power ?? power) !== 0)
-      this.add(lines, `power = ${effect.power ?? power}`, tab + 2);
+      intVars.push(`power=${effect.power ?? power}`);
     if (effect.parameter1 && effect.parameter1 !== "0")
-      this.add(
-        lines,
-        `parameter1 = ${this.getIntegerValue(effect.parameter1)}`,
-        tab + 2
-      );
+      intVars.push(`parameter1=${this.getIntegerValue(effect.parameter1)}`);
     if (effect.parameter2 && effect.parameter2 !== "0")
-      this.add(
-        lines,
-        `parameter2 = ${this.getIntegerValue(effect.parameter2)}`,
-        tab + 2
-      );
-    if (effect.timing) this.add(lines, `timing = ${effect.timing}`, tab + 2);
+      intVars.push(`parameter2=${this.getIntegerValue(effect.parameter2)}`);
+    if (effect.timing) intVars.push(`timing=${effect.timing}`);
     if (effect.dispelResistance)
-      this.add(lines, `resist_dispel = ${effect.dispelResistance}`, tab + 2);
-    if (effect.duration)
-      this.add(lines, `duration = ${effect.duration}`, tab + 2);
-    this.add(lines, `probability1 = ${effect.probability1}`, tab + 2);
+      intVars.push(`resist_dispel=${effect.dispelResistance}`);
+    if (effect.duration) intVars.push(`duration=${effect.duration}`);
+    if (effect.probability1)
+      intVars.push(`probability1=${effect.probability1}`);
     if (effect.probability2)
-      this.add(lines, `probability2 = ${effect.probability2}`, tab + 2);
-    if (effect.diceThrown)
-      this.add(lines, `dicenumber = ${effect.diceThrown}`, tab + 2);
-    if (effect.diceSize)
-      this.add(lines, `dicesize = ${effect.diceSize}`, tab + 2);
+      intVars.push(`probability2=${effect.probability2}`);
+    if (effect.diceThrown) intVars.push(`dicenumber=${effect.diceThrown}`);
+    if (effect.diceSize) intVars.push(`dicesize=${effect.diceSize}`);
     if (effect.saveTypes) {
       const savingthrow = effect.saveTypes.reduce((sum, save) => {
         sum += 2 ** save;
         return sum;
       }, 0);
-      this.add(lines, `savingthrow = ${savingthrow}`, tab + 2);
+      intVars.push(`savingthrow=${savingthrow}`);
     }
-    if (effect.saveBonus) {
-      this.add(lines, `savebonus = "${effect.saveBonus}"`, tab + 2);
-    }
+    if (effect.saveBonus) intVars.push(`savebonus="${effect.saveBonus}"`);
     if (effect.flags !== undefined) {
       const special =
         typeof effect.flags === "number"
@@ -110,16 +107,14 @@ export class WeiduEffectService extends AbstractWeiduService {
               sum += 2 ** save;
               return sum;
             }, 0);
-      this.add(lines, `special = ${special}`, tab + 2);
+      intVars.push(`special=${special}`);
+    } else if (effect.special) {
+      intVars.push(`special=${effect.special}`);
     }
-    if (effect.special) {
-      this.add(lines, `special = ${effect.special}`, tab + 2);
-    }
-    if (effect.resource) {
-      this.add(lines, `STR_VAR`, 2);
-      this.add(lines, `resource = "${effect.resource}"`, tab + 2);
-    }
-    this.add(lines, `END`, tab + 1);
+    const strVar = effect.resource
+      ? ` STR_VAR resource="${effect.resource}"`
+      : "";
+    this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
       this.add(lines, `END`, --tab);
     }

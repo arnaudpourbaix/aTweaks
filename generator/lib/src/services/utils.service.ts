@@ -109,7 +109,7 @@ export class UtilsService {
     }_immunity`;
   }
 
-  getSpellFunctionName(spell: RawSpell) {
+  getSpellFunctionName(spell: Spell) {
     return `create_spell_${spell.name}`;
   }
 

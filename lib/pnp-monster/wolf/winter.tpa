@@ -12,22 +12,44 @@ COPY_EXISTING "CONECOLD.pro" ~override/ja#1m20.pro~
 	WRITE_SHORT 0x206 180
 ADD_PROJECTILE ~override/ja#1m20.pro~ ~Stream of frost~
 
-	// Stream of frost
+// Stream of frost
 CREATE SPL "ja#1m20"
 	WRITE_LONG 0x64 0x72
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.~
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 12
+			target = 2
+			power = 1
+			parameter2 = 131072
+			timing = 1
+			probability1 = 100
+			dicenumber = 6
+			dicesize = 4
+			savingthrow = 2
+			special = 256
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			power = 1
+			parameter1 = "-2786560"
+			parameter2 = 1310720
+			timing = 1
+			probability1 = 100
+		END
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 2
 	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 1
 	WRITE_SHORT 0x74 4
 	WRITE_BYTE 0x7e 4
 	WRITE_SHORT 0x80 10
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4011)
-	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.~
 	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~ja#1m20~)) + 1
 	LPF ADD_EFFECT
 		INT_VAR
@@ -52,7 +74,7 @@ CREATE SPL "ja#1m20"
 			timing = 1
 			probability1 = 100
 		END
-
+		
 CREATE ITM "ja#1m20"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

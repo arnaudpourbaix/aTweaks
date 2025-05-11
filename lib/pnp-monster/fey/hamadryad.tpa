@@ -17,28 +17,16 @@ CREATE EFF "RR#FENTG"
 	WRITE_SHORT 0x2c 100
 	WRITE_ASCII 0x30 ~RR#FENTG~ #8
 
-	// Entangle
+// Entangle
 CREATE SPL "RR#FENTG"
 	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
-	WRITE_ASCII 0x3a ~SPPR105C~ #8
-	WRITE_ASCII 0x76 ~SPPR105B~ #8
-	WRITE_SHORT 0x22 10
+	WRITE_ASCII 0x10 ~CAS_P08~ #8
 	WRITE_SHORT 0x1c 4
+	WRITE_SHORT 0x22 10
 	WRITE_BYTE 0x25 8
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x10 ~CAS_P08~ #8
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 4
-	WRITE_SHORT 0x80 30
-	WRITE_SHORT 0x84 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4017)
-	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~RR#FENTG~)) + 1
+	WRITE_ASCII 0x3a ~SPPR105C~ #8
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 177
@@ -271,28 +259,238 @@ CREATE SPL "RR#FENTG"
 		STR_VAR
 			resource = "RR#FENTG"
 		END
-
-	// Animal Friendship
-CREATE SPL "rr#fafrn"
-	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x76 ~SPPR105B~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 4
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~RR#FENTG~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~DRAGON~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~MIST~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SHADOW~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRAL_UNDEAD~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~SPECTRE~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WILL-O-WISP~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~RACE~ ~WRAITH~)
+			parameter2 = 4
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPECTRAL_TROLL~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 177
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~CLASS~ ~SPIDER_WRAITH~)
+			parameter2 = 5
+			duration = 6
+			probability1 = 100
+		STR_VAR
+			resource = "RR#FENTG"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter1 = 50
+			parameter2 = 2
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 126
+			target = 2
+			power = 1
+			parameter2 = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 278
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 0
+			target = 2
+			power = 1
+			parameter1 = "-2"
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 1
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "CRE_P01"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 174
+			target = 2
+			power = 1
+			timing = 4
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "EFF_M22A"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 154
+			target = 2
+			power = 1
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 2
+			power = 1
+			parameter2 = 144
+			resist_dispel = 1
+			duration = 6
+			probability1 = 100
+			savingthrow = 1
+		END
+		
+		// Animal Friendship
+CREATE SPL "rr#fafrn"
+	WRITE_LONG 0x64 0x72
+	WRITE_ASCII 0x10 ~CORAN03~ #8
 	WRITE_LONG 0x18 33554432
-	WRITE_ASCII 0x3a ~SPPR204C~ #8
-	WRITE_ASCII 0x76 ~SPPR204B~ #8
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x25 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x10 ~CORAN03~ #8
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 30
-	WRITE_SHORT 0x84 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@1900)
+	WRITE_ASCII 0x3a ~SPPR204C~ #8
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 5
@@ -351,29 +549,64 @@ CREATE SPL "rr#fafrn"
 		STR_VAR
 			resource = "rr#fafrn"
 		END
-
-	// Detect Snares And Pits
-CREATE SPL "rr#fdsnr"
-	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x28
 	WRITE_SHORT 0x68 1
 	WRITE_LONG 0x6a 0x9a
 	WRITE_SHORT 0x72 1
 	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x76 ~SPPR204B~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 30
+	WRITE_SHORT 0x84 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 5
+			target = 2
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~GENERAL~ ~ANIMAL~)
+			resist_dispel = 1
+			duration = 120
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			power = 1
+			parameter1 = 509245440
+			parameter2 = 1638400
+			resist_dispel = 1
+			duration = 1
+			probability1 = 100
+			savingthrow = 1
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 215
+			target = 2
+			power = 1
+			parameter2 = 1
+			resist_dispel = 1
+			duration = 3
+			probability1 = 100
+			savingthrow = 1
+		STR_VAR
+			resource = "SPNWCHRM"
+		END
+		
+		// Detect Snares And Pits
+CREATE SPL "rr#fdsnr"
+	WRITE_LONG 0x64 0x72
+	WRITE_ASCII 0x10 ~CAS_P04~ #8
 	WRITE_LONG 0x18 8192
-	WRITE_ASCII 0x3a ~SPPR205C~ #8
-	WRITE_ASCII 0x76 ~SPPR205B~ #8
-	WRITE_SHORT 0x22 16
 	WRITE_SHORT 0x1c 4
+	WRITE_SHORT 0x22 16
 	WRITE_BYTE 0x25 3
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x10 ~CAS_P04~ #8
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 5
-	WRITE_SHORT 0x84 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@1904)
-	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~INAREANS~)) + 1
+	WRITE_ASCII 0x3a ~SPPR205C~ #8
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 150
@@ -432,8 +665,54 @@ CREATE SPL "rr#fdsnr"
 		STR_VAR
 			resource = "rr#fdsnr"
 		END
-
-ACTION_FOR_EACH ~file~ IN
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_ASCII 0x76 ~SPPR205B~ #8
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 5
+	WRITE_SHORT 0x84 1
+	WRITE_SHORT 0x98 (IDS_OF_SYMBOL (~projectl~ ~INAREANS~)) + 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 150
+			target = 1
+			power = 1
+			duration = 96
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 142
+			target = 1
+			power = 1
+			parameter2 = 109
+			duration = 96
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 141
+			target = 1
+			power = 1
+			parameter2 = 30
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 50
+			target = 2
+			power = 1
+			parameter1 = 1226851840
+			parameter2 = 1310720
+			duration = 2
+			probability1 = 100
+		END
+		
+		ACTION_FOR_EACH ~file~ IN
 	DRYADHA
 	VAELASA
 	WQXHAMA

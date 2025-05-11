@@ -143,7 +143,7 @@ export const FEY_DRYAD: RawCreature = {
     {
       name: "Dire Charm",
       file: ATWEAKS_SPELLS.DryadCharmPerson,
-      stringRef: `${StringRefUtils.getStringId("Dire Charm")}`,
+      stringRef: StringRefUtils.getStringId("Dire Charm"),
       memorizedCount: 3,
       type: "Melee",
       projectile: "SPARKLGO",
@@ -190,7 +190,7 @@ export const FEY_DRYAD: RawCreature = {
         },
         {
           opcode: "DisplayString",
-          stringRef: `${StringRefUtils.getStringId("Dire charmed")}`,
+          stringRef: StringRefUtils.getStringId("Dire charmed"),
           timing: "InstantPermanentUntilDeath",
           dispelResistance: "DispelNotBypassResistance",
           saveTypes: ["Spell"],

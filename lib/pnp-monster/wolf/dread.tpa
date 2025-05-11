@@ -2,19 +2,11 @@
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#m22.baf~
 
-	// Dread wolf down state
+// Dread wolf down state
 CREATE SPL "ja#1m22"
 	WRITE_LONG 0x64 0x72
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf down state~)
 	LPF ADD_EFFECT
 		INT_VAR
 			opcode = 112
@@ -166,7 +158,165 @@ CREATE SPL "ja#1m22"
 			duration = 12
 			probability1 = 100
 		END
-
+	INSERT_BYTES 0x72 0x28
+	WRITE_SHORT 0x68 1
+	WRITE_LONG 0x6a 0x9a
+	WRITE_SHORT 0x72 1
+	WRITE_SHORT 0x82 1
+	WRITE_SHORT 0x74 4
+	WRITE_BYTE 0x7e 1
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 112
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		STR_VAR
+			resource = "ja#2m22"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 4
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 75
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 242
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 81
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 79
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 77
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 11
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 2
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 46
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 162
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 161
+			target = 1
+			power = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 1
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#3m22"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 39
+			target = 1
+			power = 1
+			parameter2 = 1
+			duration = 12
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 17
+			target = 1
+			power = 1
+			parameter1 = 1
+			parameter2 = 1
+			timing = 1
+			probability1 = 100
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 143
+			target = 1
+			power = 1
+			parameter1 = IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~)
+			timing = 4
+			duration = 12
+			probability1 = 100
+		STR_VAR
+			resource = "ja#2m22"
+		END
+	LPF ADD_EFFECT
+		INT_VAR
+			opcode = 17
+			target = 1
+			power = 1
+			parameter1 = 6
+			parameter2 = 1
+			timing = 4
+			duration = 12
+			probability1 = 100
+		END
+		
 CREATE ITM "ja#1m22"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

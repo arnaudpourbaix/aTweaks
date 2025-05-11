@@ -110,14 +110,28 @@ export class WeiduItemService extends AbstractWeiduService {
       if (!item.copyFrom)
         this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
       for (const effect of item.effects) {
-        this.weiduEffectService.addEffect(lines, 1, effect, 0, "ITM");
+        this.weiduEffectService.addEffect({
+          lines,
+          tab: 1,
+          effect,
+          power: 0,
+          header: 0,
+          type: "ITM",
+        });
       }
       if (creature.attack.grab?.weaponFile === item.file) {
         const effect = this.grabService.getGrabEffect(
           creature,
           creature.attack.grab
         );
-        this.weiduEffectService.addEffect(lines, 1, effect, 0, "ITM");
+        this.weiduEffectService.addEffect({
+          lines,
+          tab: 1,
+          effect,
+          power: 0,
+          header: 0,
+          type: "ITM",
+        });
       }
       for (const name of item.immunities) {
         this.add(

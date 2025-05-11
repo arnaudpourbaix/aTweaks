@@ -138,7 +138,7 @@ export const FEY_NYMPH: RawCreature = {
         {
           opcode: "DisplayString",
           ...blindingBeautyEffect,
-          stringRef: `${StringRefUtils.getStringId("blinded")}`,
+          stringRef: StringRefUtils.getStringId("blinded"),
           timing: "InstantPermanentUntilDeath",
         },
         {

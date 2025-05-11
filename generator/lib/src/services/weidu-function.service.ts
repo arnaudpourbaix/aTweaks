@@ -13,12 +13,17 @@ import { SPELL_GROUPS } from "../../config/spell-group";
 import { SpellGroup } from "../model/raw/spell-group";
 import { SPELL_FUNCTIONS } from "../../spells";
 import { RawSpell } from "../model/raw/spell";
+import { SpellService } from "./spell.service";
+import { Spell } from "../model/final/spell";
+import { WeiduSpellService } from "./weidu-spell.service";
 
 export class WeiduFunctionService extends AbstractWeiduService {
   static instance = new WeiduFunctionService();
 
   private effectService = EffectService.instance;
   private weiduCoreService = WeiduCoreService.instance;
+  private spellService = SpellService.instance;
+  private weiduSpellService = WeiduSpellService.instance;
 
   generateSpellResources(): void {
     const lines = this.initLines();
@@ -34,7 +39,8 @@ export class WeiduFunctionService extends AbstractWeiduService {
 
   generateSpellFunctions(): void {
     const lines = this.initLines();
-    for (const spell of SPELL_FUNCTIONS) {
+    const spells = this.spellService.mapSpells(SPELL_FUNCTIONS);
+    for (const spell of spells) {
       this.generateSpellFunction(lines, spell, 0);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
@@ -58,7 +64,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
 
   private generateSpellFunction(
     lines: CodeLine[],
-    spell: RawSpell,
+    spell: Spell,
     tab: number
   ): void {
     this.add(
@@ -66,6 +72,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
       `DEFINE_ACTION_FUNCTION ${this.utils.getSpellFunctionName(spell)} BEGIN`,
       tab
     );
+    this.weiduSpellService.createSpell(lines, spell, 1);
     this.add(lines, `END`, tab);
     this.add(lines, ``, tab);
   }

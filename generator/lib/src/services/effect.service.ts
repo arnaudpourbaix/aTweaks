@@ -552,8 +552,8 @@ export class EffectService {
       duration: effect.duration,
       probability1: effect.probability1 ?? 100,
       probability2: effect.probability2,
-      diceThrown: effect.diceThrown,
-      diceSize: effect.diceSize,
+      diceThrown: effect.diceThrown ?? effect.maxLevel,
+      diceSize: effect.diceSize ?? effect.minLevel,
       saveTypes: effect.saveTypes
         ? effect.saveTypes.map((s) => SaveTypeEnum[s])
         : undefined,
