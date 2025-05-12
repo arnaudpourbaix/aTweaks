@@ -57,6 +57,7 @@ export class SpellService {
     }
     const result: Spell = {
       file: spell.file,
+      copyFrom: spell.copyFrom,
       name: spell.name,
       stringRef: spell.stringRef,
       description: spell.description,
@@ -64,8 +65,10 @@ export class SpellService {
       castingSound: spell.castingSound,
       spellType: spell.spellType
         ? SpellTypeEnum[spell.spellType]
+        : spell.copyFrom
+        ? undefined
         : SpellTypeEnum.Innate,
-      spellLevel: spell.spellLevel ?? 1,
+      spellLevel: spell.spellLevel,
       primaryType: spell.primaryType
         ? ItemAbilityPrimaryTypeEnum[spell.primaryType]
         : undefined,
@@ -83,9 +86,13 @@ export class SpellService {
         ? this.effectService.getEffects(spell.effects)
         : [],
       headers,
-      removeOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
-      deleteHeaders: spell.deleteHeaders ?? [],
+      deleteOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
+      deleteHeaders: spell.deleteHeaders ?? false,
     };
+    if (!spell.copyFrom && spell.spellType === undefined)
+      result.spellType = SpellTypeEnum.Innate;
+    if (!spell.copyFrom && spell.spellLevel === undefined)
+      result.spellLevel = 1;
     return result;
   }
 

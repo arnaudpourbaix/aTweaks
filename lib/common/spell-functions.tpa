@@ -1,5 +1,23 @@
 // Generated file (don't edit)
 
+DEFINE_ACTION_FUNCTION create_spell_CallWoodlandBeeings BEGIN
+	COPY_EXISTING ~SPPR410.SPL~  ~override/SPPR410.SPL~
+		LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END
+	COPY_EXISTING ~SPPR410.SPL~  ~override~
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@1895)
+		WRITE_ASCII 0x3a ~SPPR410C~ #8
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=7 STR_VAR icon="SPPR410B" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea1" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=13 STR_VAR icon="SPPR410B" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea2" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea3" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=20 STR_VAR icon="SPPR410B" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea3" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea4" END
+END
+
 DEFINE_ACTION_FUNCTION create_spell_ColorSpray BEGIN
 	CREATE SPL "SPWI105"
 		WRITE_LONG 0x64 0x72
@@ -450,4 +468,27 @@ DEFINE_ACTION_FUNCTION create_spell_ColorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=23 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=23 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=23 savingthrow=1 END
+END
+
+DEFINE_ACTION_FUNCTION create_spell_DimensionDoor BEGIN
+	CREATE SPL "SPWI402"
+		WRITE_LONG 0x64 0x72
+	COPY_EXISTING ~SPWI402.SPL~  ~override~
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@1892)
+		WRITE_ASCII 0x10 ~CAS_M08~ #8
+		WRITE_LONG 0x18 2048
+		WRITE_SHORT 0x1c 1
+		WRITE_LONG 0x1e 64
+		WRITE_SHORT 0x22 10
+		WRITE_BYTE 0x25 8
+		WRITE_BYTE 0x27 13
+		WRITE_LONG 0x34 4
+		WRITE_ASCII 0x3a ~SPWI402C~ #8
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@1891)
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 STR_VAR icon="SPWI402B" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=4 timing=4 resist_dispel=1 duration=1 probability1=100 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=1 power=4 resist_dispel=1 duration=1 probability1=100 END
 END

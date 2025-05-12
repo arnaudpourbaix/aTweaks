@@ -11,8 +11,7 @@ CREATE EFF "rr#fchrm"
 	WRITE_ASCII 0x30 ~rr#fchrm~ #8
 
 // Dimension Door
-CREATE SPL "rr#ddoor"
-	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~SPWI402.SPL~  ~override/rr#ddoor.SPL~
 COPY_EXISTING ~rr#ddoor.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1

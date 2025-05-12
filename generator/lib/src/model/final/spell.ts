@@ -31,11 +31,6 @@ export interface Spell {
   copyFrom?: string;
 
   /**
-   * Array of min levels
-   */
-  deleteHeaders: number[];
-
-  /**
    * String reference, must be referenced in TRA files
    */
   stringRef?: StringReference;
@@ -51,7 +46,11 @@ export interface Spell {
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
   effects: Effect[];
-  removeOpcodes: EffectTypeEnum[];
+  /**
+   * Array of min levels or boolean
+   */
+  deleteHeaders: number[] | boolean;
+  deleteOpcodes: EffectTypeEnum[];
   headers: SpellHeader[];
 }
 

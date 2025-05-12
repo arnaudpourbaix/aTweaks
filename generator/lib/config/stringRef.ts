@@ -23,6 +23,7 @@ export enum TraStringReferenceEnum {
   Fly = 4015,
   GaseousForm = 4016,
   DimensionDoorDescription = 1891,
+  DimensionDoor = 1892,
   Entangle = 4017,
   AnimalFriendship = 1900,
   BlindingBeauty = 1901,

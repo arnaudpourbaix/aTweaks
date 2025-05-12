@@ -67,7 +67,9 @@ BEGIN
       PATCH_FAIL "hide_spell: unexpected number of columns '%cols%'."
     END
     PATCH_IF "%resource%" STRING_EQUAL_CASE "" BEGIN
-      LPF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+      INNER_ACTION BEGIN
+        LAF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids RET resource END
+      END
     END
     PATCH_IF "%resource%" STRING_EQUAL_CASE "" BEGIN
       PATCH_IF silent = 1 BEGIN

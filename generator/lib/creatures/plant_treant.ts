@@ -1,3 +1,4 @@
+import { ATWEAKS_CREATURES } from "../config/creatures";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -69,11 +70,24 @@ export const PLANT_TREANT: RawCreature = {
       diceThrown: 4,
     },
   ],
-  files: ["ja#trea1", "ja#trea2", "ja#trea3", "ja#trea4"],
+  files: [
+    ATWEAKS_CREATURES.TreantVeryYoung,
+    ATWEAKS_CREATURES.TreantYoung,
+    ATWEAKS_CREATURES.Treant,
+    ATWEAKS_CREATURES.TreantElder,
+  ],
   adjustments: [
-    { files: ["ja#trea1", "ja#trea2", "ja#trea3", "ja#trea4"], summon: true },
     {
-      files: ["ja#trea1"],
+      files: [
+        ATWEAKS_CREATURES.TreantVeryYoung,
+        ATWEAKS_CREATURES.TreantYoung,
+        ATWEAKS_CREATURES.Treant,
+        ATWEAKS_CREATURES.TreantElder,
+      ],
+      summon: true,
+    },
+    {
+      files: [ATWEAKS_CREATURES.TreantVeryYoung],
       data: {
         level1: 5,
         strength: 19,
@@ -85,7 +99,7 @@ export const PLANT_TREANT: RawCreature = {
       },
     },
     {
-      files: ["ja#trea2"],
+      files: [ATWEAKS_CREATURES.TreantYoung],
       data: {
         level1: 7,
         strength: 20,
@@ -97,7 +111,7 @@ export const PLANT_TREANT: RawCreature = {
       },
     },
     {
-      files: ["ja#trea3"],
+      files: [ATWEAKS_CREATURES.Treant],
       data: {
         level1: 9,
         strength: 21,

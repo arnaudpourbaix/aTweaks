@@ -58,11 +58,10 @@ export interface RawSpell extends RawSpellHeader {
    */
   infiniteUse?: boolean;
   headers?: RawSpellHeader[];
-
   /**
-   * Array of min levels
+   * Array of min levels or boolean
    */
-  deleteHeaders?: number[];
+  deleteHeaders?: number[] | boolean;
   deleteOpcodes?: RawEffectOpcode[];
 }
 

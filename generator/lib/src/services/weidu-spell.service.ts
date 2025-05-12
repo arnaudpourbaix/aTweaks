@@ -32,13 +32,21 @@ export class WeiduSpellService extends AbstractWeiduService {
         `COPY_EXISTING ~${spell.copyFrom}.SPL~  ~override/${spell.file}.SPL~`,
         tab
       );
-      for (const level of spell.deleteHeaders)
+      if (spell.deleteHeaders === true) {
         this.add(
           lines,
-          `LPF DELETE_SPELL_HEADER STR_VAR min_level = ${level} END`,
+          `LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END`,
           tab + 1
         );
-      for (const opcode of spell.removeOpcodes)
+      } else if (Array.isArray(spell.deleteHeaders)) {
+        for (const level of spell.deleteHeaders)
+          this.add(
+            lines,
+            `LPF DELETE_SPELL_HEADER STR_VAR min_level = ${level} END`,
+            tab + 1
+          );
+      }
+      for (const opcode of spell.deleteOpcodes)
         this.add(
           lines,
           `LPF DELETE_EFFECT INT_VAR match_opcode = ${opcode} END`,
@@ -47,8 +55,8 @@ export class WeiduSpellService extends AbstractWeiduService {
     } else {
       this.add(lines, `CREATE SPL "${spell.file}"`, tab);
       this.add(lines, `WRITE_LONG 0x64 0x72`, tab + 1);
-      this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     }
+    this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     this.createSpellCommon(lines, spell, tab + 1);
   }
 

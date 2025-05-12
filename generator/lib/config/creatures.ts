@@ -3,9 +3,10 @@ import { RaceIdentifier } from "../src/model/ids/race";
 import { CreatureSize, RawEffectIDSFile } from "../src/model/raw/enum";
 
 export const ATWEAKS_CREATURES = {
-  TreantYoung: "ja#trea1",
-  Treant: "ja#trea2",
-  TreantElder: "ja#trea3",
+  TreantVeryYoung: "ja#trea1",
+  TreantYoung: "ja#trea2",
+  Treant: "ja#trea3",
+  TreantElder: "ja#trea4",
   DryadSummon: "ja#dryad",
 };
 
