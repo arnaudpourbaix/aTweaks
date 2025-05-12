@@ -146,7 +146,7 @@ export class WeiduSpellService extends AbstractWeiduService {
         tab,
         effect,
         power: spell.spellLevel ?? 0,
-        header: index,
+        header: index + 1,
         type: "SPL",
       });
     }

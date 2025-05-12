@@ -5,49 +5,16 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m14.baf~
 // Blink
 CREATE SPL "ja#1m14"
 	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m14.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4010)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 124
-			target = 1
-			power = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 278
-			target = 1
-			power = 1
-			parameter1 = 2
-			duration = 6
-			probability1 = 75
-		END
-	INSERT_BYTES 0x72 0x28
-	WRITE_SHORT 0x68 1
-	WRITE_LONG 0x6a 0x9a
-	WRITE_SHORT 0x72 1
-	WRITE_SHORT 0x82 1
-	WRITE_SHORT 0x74 4
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 30
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 124
-			target = 1
-			power = 1
-			probability1 = 100
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 278
-			target = 1
-			power = 1
-			parameter1 = 2
-			duration = 6
-			probability1 = 75
-		END
-		
+	LPF ADD_EFFECT INT_VAR header=0 opcode=124 target=1 power=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=0 opcode=278 target=1 power=1 parameter1=2 duration=6 probability1=75 END
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=1 power=1 parameter1=2 duration=6 probability1=75 END
+	
 CREATE ITM "ja#1m14"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

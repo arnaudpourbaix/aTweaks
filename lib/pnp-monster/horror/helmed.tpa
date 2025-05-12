@@ -24,148 +24,31 @@ CREATE ITM "ja#1m15"
 	WRITE_SHORT 0xa2 20
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m15.itm~ ~override~
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 12
-			target = 2
-			parameter2 = 524288
-			probability1 = 100
-			dicenumber = 1
-			dicesize = 6
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 67
-			parameter2 = 21
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 67
-			parameter2 = 20
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 12
-			parameter2 = 16
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 8
-			target = 1
-			parameter1 = 16384
-			parameter2 = 16
-			timing = 2
-			duration = 3
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 8
-			target = 1
-			parameter1 = 16384
-			parameter2 = 21
-			timing = 2
-			duration = 3
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 8
-			target = 1
-			parameter2 = 20
-			timing = 2
-			duration = 3
-			probability1 = 100
-		END
+	LPF ADD_EFFECT INT_VAR header=0 opcode=12 target=2 parameter2=524288 probability1=100 dicenumber=1 dicesize=6 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=67 parameter2=21 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=67 parameter2=20 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=12 parameter2=16 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=8 target=1 global=1 parameter1=16384 parameter2=16 timing=2 duration=3 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=8 target=1 global=1 parameter1=16384 parameter2=21 timing=2 duration=3 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=8 target=1 global=1 parameter2=20 timing=2 duration=3 probability1=100 END
 
 CREATE ITM "ja#2m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 2
 	WRITE_ASCII 0x22 ~4A~ #2
 COPY_EXISTING ~ja#2m15.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 98
-			parameter2 = 5
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 29
-			parameter2 = 4
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 87
-			timing = 2
-			probability1 = 100
-		END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=98 parameter2=5 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=29 parameter2=4 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=87 timing=2 probability1=100 END
 
 CREATE ITM "ja#3m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 7
 	WRITE_ASCII 0x22 ~H5~ #2
 COPY_EXISTING ~ja#3m15.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 27
-			parameter2 = 53
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 27
-			parameter2 = 52
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 7
-			target = 1
-			parameter1 = 27
-			parameter2 = 48
-			timing = 2
-			probability1 = 100
-		END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=27 parameter2=53 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=27 parameter2=52 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=7 target=1 global=1 parameter1=27 parameter2=48 timing=2 probability1=100 END
 
 CREATE ITM "ja#4m15"
 	WRITE_LONG 0x64 0x72

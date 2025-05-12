@@ -19,26 +19,8 @@ CREATE ITM "ja#1m38"
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m38.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 0
-			target = 1
-			parameter1 = 2
-			timing = 2
-			probability1 = 100
-		END
-	LPF ADD_ITEM_EQEFFECT
-		INT_VAR
-			global = 1
-			opcode = 146
-			target = 1
-			parameter2 = 1
-			timing = 2
-			probability1 = 100
-		STR_VAR
-			resource = "BDDISPB2"
-		END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=0 target=1 global=1 parameter1=2 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=146 target=1 global=1 parameter2=1 timing=2 probability1=100 STR_VAR resource="BDDISPB2" END
 
 ACTION_FOR_EACH ~file~ IN
 	BDDISPBE

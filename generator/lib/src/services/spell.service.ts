@@ -58,6 +58,7 @@ export class SpellService {
     const result: Spell = {
       file: spell.file,
       name: spell.name,
+      stringRef: spell.stringRef,
       description: spell.description,
       spellbookIcon: spell.icon ? `${spell.icon}C` : undefined,
       castingSound: spell.castingSound,
