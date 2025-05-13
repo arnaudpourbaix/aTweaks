@@ -4,6 +4,10 @@ COPY ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#dryad.cre~ ~override~   // Dryad summo
   WRITE_LONG 0x8 RESOLVE_STR_REF(@1908)
   WRITE_LONG 0xc RESOLVE_STR_REF(@1908)
 
+COPY ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#hama.cre~ ~override~    // Hamadryad summon
+  WRITE_LONG 0x8 RESOLVE_STR_REF(@1909)
+  WRITE_LONG 0xc RESOLVE_STR_REF(@1909)
+
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/hamadryad.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/nymph.tpa"

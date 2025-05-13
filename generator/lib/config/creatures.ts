@@ -8,6 +8,7 @@ export const ATWEAKS_CREATURES = {
   Treant9hd: "ja#trea3",
   Treant11hd: "ja#trea4",
   DryadSummon: "ja#dryad",
+  HamadryadSummon: "ja#hama",
 };
 
 export const EARTH_CREATURES: [

@@ -1,6 +1,7 @@
 // Generated file (don't edit)
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42su.baf~
 
 COPY_EXISTING "ENTANG2.pro" ~override/RR#FENTG.pro~
 	READ_SHORT 0x08 type
@@ -93,6 +94,7 @@ COPY_EXISTING ~rr#fdsnr.SPL~  ~override~
 	
 	ACTION_FOR_EACH ~file~ IN
 	DRYADHA
+	ja#hama
 	VAELASA
 	WQXHAMA
 	WIDRYAD1
@@ -150,7 +152,13 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE BDHAMADC END
-			LPF patchCreatureScript STR_VAR script=ja#m42 removeScripts END
+			DEFINE_ARRAY skipFiles BEGIN ja#hama END
+			LPF patchCreatureScript STR_VAR script=ja#m42 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE BDHAMADC END
+			DEFINE_ARRAY files BEGIN ja#hama END
+			LPF patchCreatureScript STR_VAR script=ja#m42su files removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#hama~) BEGIN 
+			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD2~) BEGIN 
 				WRITE_SHORT 0x24 64 // hp
 				WRITE_SHORT 0x26 64 // hp

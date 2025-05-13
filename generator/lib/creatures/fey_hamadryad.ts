@@ -3,6 +3,7 @@ import {
   PRESET_NAMES,
 } from "../config/ability-presets";
 import {
+  ATWEAKS_CREATURES,
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
@@ -418,7 +419,7 @@ export const FEY_HAMADRYAD: RawCreature = {
   ],
   files: [
     "DRYADHA",
-    //"HAMASU",    // Spell Revisions summoned Hamadryad (do not touch unless reviewing spell Call Woodland Beings)
+    ATWEAKS_CREATURES.HamadryadSummon,
     "VAELASA", // Vaelasa (Fairy Queen in Windsper Hills)
     "WQXHAMA", // The White Queen
     "WIDRYAD1", // Dryad of Peldvale
@@ -427,11 +428,10 @@ export const FEY_HAMADRYAD: RawCreature = {
     "BDHAMADR", // Hamadryad
   ],
   adjustments: [
-    // {
-    //   files: [],
-    //   summon: true,
-    //   // RR#FHAMA
-    // },
+    {
+      files: [ATWEAKS_CREATURES.HamadryadSummon],
+      summon: true,
+    },
     {
       files: ["WIDRYAD1", "WIDRYAD2"],
       data: { level1: 8 },
