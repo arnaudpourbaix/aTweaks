@@ -5,3 +5,5 @@ ACTION_IF !FILE_EXISTS_IN_GAME rr#trat.cre BEGIN                            // I
   COPY ~%MOD_FOLDER%/lib/pnp-monster/common/rat/rr#trat.cre~ ~override~     // Targeting Rat (script aid)
   COMPILE ~%MOD_FOLDER%/lib/pnp-monster/common/rat/rr#trat.baf~             // Targeting Rat AI script
 END
+
+APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%1%TAB%9~ UNLESS ~JA_NOT_OUTDOOR_CHECK~

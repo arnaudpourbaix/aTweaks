@@ -70,18 +70,22 @@ export const DOG_BLINK: RawCreature = {
       file: blink,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.Blink,
-      type: "Melee",
-      range: 30,
-      effects: [
-        { opcode: "Teleport", type: "Default", target: "Self" },
+      headers: [
         {
-          opcode: "Thac0Bonus",
-          timing: "InstantLimited",
-          duration: 6,
-          type: "Increment",
-          probability1: 75,
-          value: 2,
-          target: "Self",
+          type: "Melee",
+          range: 30,
+          effects: [
+            { opcode: "Teleport", type: "Default", target: "Self" },
+            {
+              opcode: "Thac0Bonus",
+              timing: "InstantLimited",
+              duration: 6,
+              type: "Increment",
+              probability1: 75,
+              value: 2,
+              target: "Self",
+            },
+          ],
         },
       ],
     },

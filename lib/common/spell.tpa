@@ -78,8 +78,10 @@ BEGIN
   ACTION_PHP_EACH ~%spells%~ AS _ => spell BEGIN  OUTER_SET index=index+1 END
 	ACTION_PHP_EACH ~%ids%~ AS _ => id BEGIN
 		LAF GET_RESOURCE_FROM_SPELL_IDS STR_VAR ids=EVALUATE_BUFFER "%id%" RET resource END
-		OUTER_SPRINT $spells("%index%") "%resource%"
-		OUTER_SET index = index + 1
+    ACTION_IF NOT "%resource%" STRING_EQUAL "" BEGIN
+		  OUTER_SPRINT $spells("%index%") "%resource%"
+		  OUTER_SET index = index + 1
+    END
 	END
 END
 

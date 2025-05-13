@@ -99,27 +99,31 @@ export const FEY_NYMPH: RawCreature = {
       stringRef: TraStringReferenceEnum.BlindingBeauty,
       spellType: "Innate",
       icon: SPELLS.BlindingBeauty,
-      type: "Melee",
-      location: "Ability",
-      target: "Caster",
-      projectile: "BIGNAREA",
-      effects: [
+      headers: [
         {
-          opcode: "PlayVisualEffect",
-          target: "Self",
-          playWhere: "OverTargetAttached",
-          timing: "InstantLimited",
-          dispelResistance: "NaturalNonMagical",
-          duration: 2,
-          resource: "ICCLKFR2",
-        },
-        {
-          opcode: "UseEFFFile",
-          idsFile: "GENERAL",
-          idsEntry: "HUMANOID",
-          timing: "InstantPermanentUntilDeath",
-          dispelResistance: "NaturalNonMagical",
-          resource: ATWEAKS_SPELLS.BlindingBeauty,
+          type: "Melee",
+          location: "Ability",
+          target: "Caster",
+          projectile: "BIGNAREA",
+          effects: [
+            {
+              opcode: "PlayVisualEffect",
+              target: "Self",
+              playWhere: "OverTargetAttached",
+              timing: "InstantLimited",
+              dispelResistance: "NaturalNonMagical",
+              duration: 2,
+              resource: "ICCLKFR2",
+            },
+            {
+              opcode: "UseEFFFile",
+              idsFile: "GENERAL",
+              idsEntry: "HUMANOID",
+              timing: "InstantPermanentUntilDeath",
+              dispelResistance: "NaturalNonMagical",
+              resource: ATWEAKS_SPELLS.BlindingBeauty,
+            },
+          ],
         },
       ],
     },
@@ -129,49 +133,53 @@ export const FEY_NYMPH: RawCreature = {
       stringRef: TraStringReferenceEnum.BlindingBeauty,
       spellType: "Innate",
       icon: SPELLS.BlindingBeauty,
-      type: "Melee",
-      location: "Ability",
-      target: "Caster",
-      projectile: "BIGNAREA",
-      effects: [
-        { opcode: "Blindness", ...blindingBeautyEffect },
+      headers: [
         {
-          opcode: "DisplayString",
-          ...blindingBeautyEffect,
-          stringRef: StringRefUtils.getStringId("blinded"),
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "DisplayPortraitIcon",
-          ...blindingBeautyEffect,
-          icon: "Blind",
-        },
-        {
-          opcode: "PlaySound",
-          resource: "EFF_P71B",
-          ...blindingBeautyEffect,
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "PlayVisualEffect",
-          playWhere: "OverTargetAttached",
-          ...blindingBeautyEffect,
-          duration: 3,
-          resource: "SPH1HI01",
-        },
-        ...[
-          ATWEAKS_SPELLS.ColorSpray,
-          ATWEAKS_SPELLS.ColorSprayRadiant,
-          SPELLS.ColorSpray,
-          ATWEAKS_SPELLS.BlindingBeautyTechnical,
-        ].map(
-          (s) =>
-            <StringRefEffect>{
-              opcode: "ProtectionFromSpell",
+          type: "Melee",
+          location: "Ability",
+          target: "Caster",
+          projectile: "BIGNAREA",
+          effects: [
+            { opcode: "Blindness", ...blindingBeautyEffect },
+            {
+              opcode: "DisplayString",
               ...blindingBeautyEffect,
-              resource: s,
-            }
-        ),
+              stringRef: StringRefUtils.getStringId("blinded"),
+              timing: "InstantPermanentUntilDeath",
+            },
+            {
+              opcode: "DisplayPortraitIcon",
+              ...blindingBeautyEffect,
+              icon: "Blind",
+            },
+            {
+              opcode: "PlaySound",
+              resource: "EFF_P71B",
+              ...blindingBeautyEffect,
+              timing: "InstantPermanentUntilDeath",
+            },
+            {
+              opcode: "PlayVisualEffect",
+              playWhere: "OverTargetAttached",
+              ...blindingBeautyEffect,
+              duration: 3,
+              resource: "SPH1HI01",
+            },
+            ...[
+              ATWEAKS_SPELLS.ColorSpray,
+              ATWEAKS_SPELLS.ColorSprayRadiant,
+              SPELLS.ColorSpray,
+              ATWEAKS_SPELLS.BlindingBeautyTechnical,
+            ].map(
+              (s) =>
+                <StringRefEffect>{
+                  opcode: "ProtectionFromSpell",
+                  ...blindingBeautyEffect,
+                  resource: s,
+                }
+            ),
+          ],
+        },
       ],
     },
   ],

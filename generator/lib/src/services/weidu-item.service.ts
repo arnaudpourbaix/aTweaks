@@ -114,8 +114,6 @@ export class WeiduItemService extends AbstractWeiduService {
           lines,
           tab: 1,
           effect,
-          power: 0,
-          header: 0,
           type: "ITM",
         });
       }
@@ -128,8 +126,6 @@ export class WeiduItemService extends AbstractWeiduService {
           lines,
           tab: 1,
           effect,
-          power: 0,
-          header: 0,
           type: "ITM",
         });
       }

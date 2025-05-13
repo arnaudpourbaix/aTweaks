@@ -51,8 +51,9 @@
 @191 = ~Increase the Hit Dice of Elemental Princes~
 
 @5000 = ~Core monsters (required)~
-@5001  = ~Core monsters component is not installed.~
-@5002  = ~Fey component is not installed.~
+@5001 = ~Core monsters component is not installed.~
+@5002 = ~Fey component is not installed.~
+@5003 = ~Plant component is not installed.~
 @5010 = ~Ankhegs~
 @5020 = ~Basilisks~
 @5030 = ~Bears~

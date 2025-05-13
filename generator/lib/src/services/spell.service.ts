@@ -51,7 +51,6 @@ export class SpellService {
 
   private mapSpell(spell: RawSpell): Spell {
     const headers: SpellHeader[] = [];
-    if (spell.type) headers.push(this.mapHeader(spell, spell.icon));
     for (const header of spell.headers ?? []) {
       headers.push(this.mapHeader(header, spell.icon));
     }

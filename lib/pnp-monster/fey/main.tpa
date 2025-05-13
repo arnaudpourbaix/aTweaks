@@ -1,5 +1,6 @@
-COPY ~%MOD_FOLDER%/bam/fey/rr#fspkp.bam~ ~override~       // Speak With Plants icon
-COPY ~%MOD_FOLDER%/cre/ja#dryad.cre~ ~override~           // Dryad summon
+COPY ~%MOD_FOLDER%/lib/pnp-monster/fey/rr#fspkp.bam~ ~override~   // Speak With Plants icon
+
+COPY ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#dryad.cre~ ~override~   // Dryad summon
   WRITE_LONG 0x8 RESOLVE_STR_REF(@1908)
   WRITE_LONG 0xc RESOLVE_STR_REF(@1908)
 

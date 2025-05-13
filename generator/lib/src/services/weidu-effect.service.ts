@@ -53,8 +53,8 @@ export class WeiduEffectService extends AbstractWeiduService {
     lines: CodeLine[];
     tab: number;
     effect: Effect;
-    power: number;
-    header: number;
+    power?: number;
+    header?: number;
     type: "SPL" | "ITM" | "CRE";
   }) {
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
@@ -70,12 +70,12 @@ export class WeiduEffectService extends AbstractWeiduService {
     if (effect.global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
     else if (type === "CRE") fn = "ADD_CRE_EFFECT";
     const intVars: string[] = [
-      `header=${header}`,
       `opcode=${effect.opcode}`,
       `target=${effect.target}`,
     ];
+    if (header) intVars.unshift(`header=${header}`);
     if (effect.global) intVars.push("global=1");
-    if ((effect.power ?? power) !== 0)
+    if (!!effect.power || !!power)
       intVars.push(`power=${effect.power ?? power}`);
     if (effect.parameter1 && effect.parameter1 !== "0")
       intVars.push(`parameter1=${this.getIntegerValue(effect.parameter1)}`);

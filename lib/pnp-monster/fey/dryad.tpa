@@ -15,8 +15,8 @@ COPY_EXISTING ~SPWI402.SPL~  ~override/rr#ddoor.SPL~
 COPY_EXISTING ~rr#ddoor.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	LPF ADD_EFFECT INT_VAR header=0 opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#ddoor" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#ddoor" END
+	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#ddoor" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#ddoor" END
 	
 	// Dire Charm
 CREATE SPL "rr#fchrm"
@@ -31,13 +31,6 @@ COPY_EXISTING ~rr#fchrm.SPL~  ~override~
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI316C~ #8
-	LPF ADD_EFFECT INT_VAR header=0 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fchrm" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fchrm" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 savebonus="-3" STR_VAR resource="SPNWCHRM" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=174 target=2 power=1 timing=3 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-3" STR_VAR resource="EFF_E07" END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~SPARKLGO~)) + 1 STR_VAR icon="SPWI316B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fchrm" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fchrm" END
@@ -59,11 +52,8 @@ COPY_EXISTING ~rr#fspkp.SPL~  ~override~
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~RR#FSPKPC~ #8
-	LPF ADD_EFFECT INT_VAR header=0 opcode=143 target=2 power=1 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_AMULET~) resist_dispel=3 duration=60 probability1=100 STR_VAR resource="ja#i6" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=50 target=2 power=1 parameter1=1727219712 parameter2=1966080 resist_dispel=3 duration=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=215 target=2 power=1 parameter2=1 resist_dispel=3 duration=2 probability1=100 STR_VAR resource="SPRMCURS" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fspkp" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fspkp" END
+	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fspkp" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fspkp" END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 range=30 speed=1 STR_VAR icon="RR#FSPKPB" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=1 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_AMULET~) resist_dispel=3 duration=60 probability1=100 STR_VAR resource="ja#i6" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=1727219712 parameter2=1966080 resist_dispel=3 duration=1 probability1=100 END

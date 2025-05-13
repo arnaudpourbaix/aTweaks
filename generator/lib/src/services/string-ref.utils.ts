@@ -6,11 +6,12 @@ export namespace StringRefUtils {
     groups: StringReferenceGroup | StringReferenceGroup[]
   ): string[] {
     groups = typeof groups === "string" ? [groups] : groups;
-    return EXISTING_STRING_REFERENCES.filter(
+    const results = EXISTING_STRING_REFERENCES.filter(
       (s) => !!s.group && groups.includes(s.group)
     )
-      .map((s) => `${s.id}`)
+      .map((s) => s.id.map((i) => `${i}`))
       .flat();
+    return results;
   }
   export function getStringId(str: string): string {
     const result = EXISTING_STRING_REFERENCES.find(

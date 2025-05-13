@@ -114,7 +114,6 @@ export class WeiduSpellService extends AbstractWeiduService {
         tab,
         effect,
         power: spell.spellLevel ?? 0,
-        header: 0,
         type: "SPL",
       });
     }
@@ -185,8 +184,6 @@ export class WeiduSpellService extends AbstractWeiduService {
         lines,
         tab: 0,
         effect,
-        power: 0,
-        header: 0,
         type: "SPL",
       });
     this.add(lines, "", 0);

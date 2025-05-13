@@ -4,18 +4,18 @@ DEFINE_ACTION_FUNCTION create_spell_CallWoodlandBeeings BEGIN
 	COPY_EXISTING ~SPPR410.SPL~  ~override/SPPR410.SPL~
 		LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END
 	COPY_EXISTING ~SPPR410.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@1895)
 		WRITE_ASCII 0x3a ~SPPR410C~ #8
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@1895)
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=7 STR_VAR icon="SPPR410B" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea1" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#dryad" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea1" END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=13 STR_VAR icon="SPPR410B" END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea2" END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea3" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea2" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea3" END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=20 STR_VAR icon="SPPR410B" END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea3" END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea4" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=75 STR_VAR resource="ja#trea3" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=180 probability1=100 probability2=75 STR_VAR resource="ja#trea4" END
 END
 
 DEFINE_ACTION_FUNCTION create_spell_ColorSpray BEGIN

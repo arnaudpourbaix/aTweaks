@@ -6,6 +6,7 @@ import { RawSpell } from "../src/model/raw/spell";
 
 const baseEffect: RawEffect = {
   opcode: "UseEFFFile",
+  target: "Self",
   idsFile: "EA",
   idsEntry: "ANYONE",
   timing: "InstantLimited",
@@ -17,7 +18,7 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
   name: "CallWoodlandBeeings",
   file: SPELLS.CallWoodlandBeeings,
   copyFrom: SPELLS.CallWoodlandBeeings,
-  stringRef: TraStringReferenceEnum.CallWoodlandBeeingsDescription,
+  description: TraStringReferenceEnum.CallWoodlandBeeingsDescription,
   icon: SPELLS.CallWoodlandBeeings,
   deleteHeaders: true,
   headers: [
@@ -42,7 +43,7 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
         },
         {
           ...baseEffect,
-          resource: ATWEAKS_CREATURES.TreantVeryYoung,
+          resource: ATWEAKS_CREATURES.Treant5hd,
           probability1: 100,
           probability2: 75,
         },
@@ -57,13 +58,13 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
       effects: [
         {
           ...baseEffect,
-          resource: ATWEAKS_CREATURES.TreantYoung,
+          resource: ATWEAKS_CREATURES.Treant7hd,
           probability1: 75,
           probability2: 0,
         },
         {
           ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant,
+          resource: ATWEAKS_CREATURES.Treant9hd,
           probability1: 100,
           probability2: 75,
         },
@@ -78,13 +79,13 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
       effects: [
         {
           ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant,
+          resource: ATWEAKS_CREATURES.Treant9hd,
           probability1: 75,
           probability2: 0,
         },
         {
           ...baseEffect,
-          resource: ATWEAKS_CREATURES.TreantElder,
+          resource: ATWEAKS_CREATURES.Treant11hd,
           probability1: 100,
           probability2: 75,
         },

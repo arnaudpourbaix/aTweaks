@@ -3,9 +3,9 @@
 DEFINE_PATCH_FUNCTION poison_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_poison_resources RET_ARRAY spells=ressources END
+		LAF get_poison_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="25" prevent_icons="6" strings="14017,26215 14662,25425" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="25" prevent_icons="6" strings="14017 26215 14662 25425" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=100 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_POISON~)) special=1 END
 END
@@ -13,7 +13,7 @@ END
 DEFINE_PATCH_FUNCTION disease_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_disease_resources RET_ARRAY spells=ressources END
+		LAF get_disease_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="78" prevent_icons="7" strings="31238" spells END
 END
@@ -21,28 +21,28 @@ END
 DEFINE_PATCH_FUNCTION bleeding_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_bleeding_resources RET_ARRAY spells=ressources END
+		LAF get_bleeding_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR prevent_icons="137" strings="25137" spells END
 END
 
 DEFINE_PATCH_FUNCTION abilityDrain_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791,26184" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791 26184" END
 END
 
 DEFINE_PATCH_FUNCTION hold_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_hold_resources RET_ARRAY spells=ressources END
+		LAF get_hold_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="109 175" prevent_icons="13" strings="14650 14102,25866,25866,31799" animations="SPFLAYER SPMINDAT" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="109 175" prevent_icons="13" strings="14650 14102 25866 25866 31799" animations="SPFLAYER SPMINDAT" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~HOLD_IMMUNITY~)) special=1 END
 END
 
 DEFINE_PATCH_FUNCTION stun_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="45 210" prevent_icons="55" strings="14043,25862 26050" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="45 210" prevent_icons="55" strings="14043 25862 26050" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~STUN_IMMUNITY~)) special=1 END
 END
 
@@ -54,22 +54,22 @@ END
 
 DEFINE_PATCH_FUNCTION sleep_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="39 217" prevent_icons="14 130" strings="12047,12958,13027,14001,17405,26040,26371 20438,25130" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="39 217" prevent_icons="14 130" strings="12047 12958 13027 14001 17405 26040 26371 20438 25130" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~SLEEP_IMMUNITY~)) special=1 END
 END
 
 DEFINE_PATCH_FUNCTION charm_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="5 241" prevent_icons="0 1 43" strings="26206 14672,31787 14780,158915" animations="SPNWCHRM" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="5 241" prevent_icons="0 1 43" strings="26206 14672 31787 14780 158915" animations="SPNWCHRM" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)) special=1 END
 END
 
 DEFINE_PATCH_FUNCTION fear_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_fear_resources RET_ARRAY spells=ressources END
+		LAF get_fear_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="24 23 106" prevent_icons="36" strings="14007,17427,25818 20568" animations="CDHORROR" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="24 23 106" prevent_icons="36" strings="14007 17427 25818 20568" animations="CDHORROR" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~RESIST_FEAR~)) special=1 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~PANIC_IMMUNITY~)) special=1 END
 END
@@ -77,7 +77,7 @@ END
 DEFINE_PATCH_FUNCTION fatigue_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_fatigue_resources RET_ARRAY spells=ressources END
+		LAF get_fatigue_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="93" spells END
 END
@@ -85,16 +85,16 @@ END
 DEFINE_PATCH_FUNCTION confusion_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_confusion_resources RET_ARRAY spells=ressources END
+		LAF get_confusion_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791,26184 14782,25807" animations="SPCONFUS" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791 26184 14782 25807" animations="SPCONFUS" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CONFUSION_IMMUNITY~)) special=1 END
 END
 
 DEFINE_PATCH_FUNCTION magicMissile_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_magicMissile_resources RET_ARRAY spells=ressources END
+		LAF get_magicMissile_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -102,7 +102,7 @@ END
 DEFINE_PATCH_FUNCTION blindness_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_blindness_resources RET_ARRAY spells=ressources END
+		LAF get_blindness_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="74" prevent_icons="8" spells END
 END
@@ -110,7 +110,7 @@ END
 DEFINE_PATCH_FUNCTION fireSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_fire_resources RET_ARRAY spells=ressources END
+		LAF get_fire_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
@@ -118,7 +118,7 @@ END
 DEFINE_PATCH_FUNCTION coldSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_cold_resources RET_ARRAY spells=ressources END
+		LAF get_cold_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
@@ -126,7 +126,7 @@ END
 DEFINE_PATCH_FUNCTION electricalSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_electrical_resources RET_ARRAY spells=ressources END
+		LAF get_electrical_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
@@ -134,7 +134,7 @@ END
 DEFINE_PATCH_FUNCTION acidSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_acidSpells_resources RET_ARRAY spells=ressources END
+		LAF get_acidSpells_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
@@ -142,7 +142,7 @@ END
 DEFINE_PATCH_FUNCTION cureSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_cure_resources RET_ARRAY spells=ressources END
+		LAF get_cure_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -150,7 +150,7 @@ END
 DEFINE_PATCH_FUNCTION cloudSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_cloud_resources RET_ARRAY spells=ressources END
+		LAF get_cloud_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -158,7 +158,7 @@ END
 DEFINE_PATCH_FUNCTION web_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_web_resources RET_ARRAY spells=ressources END
+		LAF get_web_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="157" prevent_icons="129" spells END
 END
@@ -166,7 +166,7 @@ END
 DEFINE_PATCH_FUNCTION entangle_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_entangle_resources RET_ARRAY spells=ressources END
+		LAF get_entangle_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="154" prevent_icons="144" spells END
 END
@@ -174,7 +174,7 @@ END
 DEFINE_PATCH_FUNCTION insectSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_insect_resources RET_ARRAY spells=ressources END
+		LAF get_insect_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -182,9 +182,9 @@ END
 DEFINE_PATCH_FUNCTION petrification_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_petrification_resources RET_ARRAY spells=ressources END
+		LAF get_petrification_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="134" strings="14665,25863" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="134" strings="14665 25863" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~PETRIFY_IMMUNITY~)) special=1 END
 END
 
@@ -230,9 +230,9 @@ END
 DEFINE_PATCH_FUNCTION polymorph_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_polymorph_resources RET_ARRAY spells=ressources END
+		LAF get_polymorph_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR prevent_icons="124" strings="14128 25124,31729,31732,31757" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR prevent_icons="124" strings="14128 25124 31729 31732 31757" spells END
 END
 
 DEFINE_PATCH_FUNCTION vorpal_immunity
@@ -243,7 +243,7 @@ END
 DEFINE_PATCH_FUNCTION earthquake_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_earthquake_resources RET_ARRAY spells=ressources END
+		LAF get_earthquake_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -270,7 +270,7 @@ END
 DEFINE_PATCH_FUNCTION illusion_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_illusion_resources RET_ARRAY spells=ressources END
+		LAF get_illusion_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -278,7 +278,7 @@ END
 DEFINE_PATCH_FUNCTION necromancyEffects_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_necromancyEffects_resources RET_ARRAY spells=ressources END
+		LAF get_necromancyEffects_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 	LPF cureSpells_immunity END
@@ -293,7 +293,7 @@ END
 DEFINE_PATCH_FUNCTION deathSpell_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_death_resources RET_ARRAY spells=ressources END
+		LAF get_death_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -312,7 +312,7 @@ END
 DEFINE_PATCH_FUNCTION hover_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_ground_resources RET_ARRAY spells=ressources END
+		LAF get_ground_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 	LPF entangle_immunity END
@@ -486,7 +486,7 @@ END
 DEFINE_PATCH_FUNCTION fireballSpell_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_fireball_resources RET_ARRAY spells=ressources END
+		LAF get_fireball_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -494,7 +494,7 @@ END
 DEFINE_PATCH_FUNCTION lightningBoltSpell_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_lightningBolt_resources RET_ARRAY spells=ressources END
+		LAF get_lightningBolt_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
@@ -502,7 +502,7 @@ END
 DEFINE_PATCH_FUNCTION flameArrowSpell_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_flameArrow_resources RET_ARRAY spells=ressources END
+		LAF get_flameArrow_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END

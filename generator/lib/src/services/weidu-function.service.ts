@@ -226,7 +226,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
         lines,
         `LAF ${this.utils.getSpellResourceFunctionName(
           immunity.spellGroups[0]
-        )} RET_ARRAY spells=ressources END`,
+        )} RET_ARRAY spells=resources END`,
         tab + 1
       );
     } else {
@@ -237,7 +237,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
           lines,
           `LAF ${this.utils.getSpellResourceFunctionName(
             groupName
-          )} RET_ARRAY ${array}=ressources END`,
+          )} RET_ARRAY ${array}=resources END`,
           tab + 1
         );
       }

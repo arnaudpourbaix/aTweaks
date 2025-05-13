@@ -16,7 +16,7 @@ import {
   RawSpellType,
 } from "./enum";
 
-export interface RawSpell extends RawSpellHeader {
+export interface RawSpell {
   /**
    * Only for TPA readibility
    */
@@ -57,6 +57,7 @@ export interface RawSpell extends RawSpellHeader {
    * Spell will be removed and added again after use, so you only need to memorize it once (default: false).
    */
   infiniteUse?: boolean;
+  effects?: RawEffect[];
   headers?: RawSpellHeader[];
   /**
    * Array of min levels or boolean

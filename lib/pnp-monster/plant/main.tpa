@@ -1,0 +1,9 @@
+ACTION_FOR_EACH i IN 1 2 3 4 BEGIN
+	COPY ~%MOD_FOLDER%/lib/pnp-monster/plant/ja#trean.cre~ ~override/ja#trea%i%.cre~
+		SET ref = 1930 + i
+		WRITE_LONG 0x8 RESOLVE_STR_REF((AT ref))
+		WRITE_LONG 0xc RESOLVE_STR_REF((AT ref))
+END
+
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/treant.tpa"
+

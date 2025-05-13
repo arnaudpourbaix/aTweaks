@@ -9,10 +9,6 @@ COPY_EXISTING ~ja#1m33.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4013)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	LPF ADD_EFFECT INT_VAR header=0 opcode=176 target=2 power=1 parameter1=5 parameter2=1 duration=6 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=176 target=2 power=1 parameter1=7 parameter2=1 timing=3 duration=6 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=176 target=2 power=1 parameter1=10 parameter2=1 timing=3 duration=12 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4014) timing=4 duration=24 probability1=100 END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter1=5 parameter2=1 duration=6 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter1=7 parameter2=1 timing=3 duration=6 probability1=100 END

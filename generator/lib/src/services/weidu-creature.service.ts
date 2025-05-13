@@ -117,8 +117,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
         lines,
         tab: 3,
         effect,
-        power: 0,
-        header: 0,
         type: "CRE",
       });
     }
@@ -485,8 +483,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
         lines,
         tab,
         effect,
-        power: 0,
-        header: 0,
         type: "CRE",
       });
     }
@@ -498,8 +494,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
         lines,
         tab,
         effect,
-        power: 0,
-        header: 0,
         type: "CRE",
       });
     }
@@ -532,8 +526,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
           lines,
           tab,
           effect,
-          power: 0,
-          header: 0,
           type: "CRE",
         });
       }

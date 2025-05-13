@@ -9,23 +9,6 @@ COPY_EXISTING ~ja#1m22.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf down state~)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	LPF ADD_EFFECT INT_VAR header=0 opcode=112 target=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#2m22" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=4 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=75 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=242 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=81 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=79 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=77 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=11 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=2 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=46 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=162 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=161 target=1 power=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=143 target=1 power=1 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~) duration=12 probability1=100 STR_VAR resource="ja#3m22" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=39 target=1 power=1 parameter2=1 duration=12 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=17 target=1 power=1 parameter1=1 parameter2=1 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=143 target=1 power=1 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_RING_LEFT~) timing=4 duration=12 probability1=100 STR_VAR resource="ja#2m22" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=17 target=1 power=1 parameter1=6 parameter2=1 timing=4 duration=12 probability1=100 END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=112 target=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#2m22" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=4 target=1 power=1 timing=1 probability1=100 END
@@ -64,7 +47,7 @@ CREATE ITM "ja#1m22"
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m22.itm~ ~override~
-	LPF ADD_EFFECT INT_VAR header=0 opcode=78 target=2 parameter1=300 parameter2=3 duration=90000 probability1=100 special=7 END
+	LPF ADD_EFFECT INT_VAR opcode=78 target=2 parameter1=300 parameter2=3 duration=90000 probability1=100 special=7 END
 
 CREATE ITM "ja#2m22"
 	WRITE_LONG 0x64 0x72
@@ -76,9 +59,9 @@ Electricity-based spells cause only half damage.~
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 COPY_EXISTING ~ja#2m22.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=98 target=1 global=1 parameter1=2 parameter2=3 timing=2 probability1=100 special=87 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=208 target=1 global=1 parameter1=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=232 target=1 global=1 parameter2=19 timing=2 probability1=100 special=6 STR_VAR resource="ja#1m22" END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=2 parameter2=3 timing=2 probability1=100 special=87 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=208 target=1 global=1 parameter1=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=232 target=1 global=1 parameter2=19 timing=2 probability1=100 special=6 STR_VAR resource="ja#1m22" END
 	LPF coldSpells_immunity END
 	LPF charm_immunity END
 	LPF hold_immunity END
@@ -90,8 +73,8 @@ CREATE ITM "ja#3m22"
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 COPY_EXISTING ~ja#3m22.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=29 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR header=0 opcode=31 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=29 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=31 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
 	LPF poison_immunity END
 	LPF disease_immunity END
 	LPF cold_immunity END

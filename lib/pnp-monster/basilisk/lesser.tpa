@@ -29,11 +29,6 @@ COPY_EXISTING ~ja#1m2.SPL~  ~override~
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.~
-	LPF ADD_EFFECT INT_VAR header=0 opcode=134 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4004) probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=174 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="MISC_06B" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=215 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="SPFLESHS.VVC" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=61 target=2 power=1 parameter1=2021160960 parameter2=1638400 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=134 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4004) probability1=100 savingthrow=16 savebonus="-4" END
@@ -52,16 +47,6 @@ COPY_EXISTING ~ja#2m2.SPL~  ~override~
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.
 On a failed save, the creature magically begins to turn to stone and is restrained.
 It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4005) probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4003) timing=1 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=141 target=2 power=1 parameter2=13 timing=1 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=40 target=2 power=1 duration=12 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=176 target=2 power=1 parameter2=1 duration=12 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=278 target=2 power=1 parameter1="-4" duration=12 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=0 target=2 power=1 parameter1="-4" duration=12 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=36 target=2 power=1 parameter1="-4" duration=12 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=146 target=2 power=1 parameter2=1 timing=3 duration=12 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="ja#3m2" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=206 target=2 power=1 timing=3 duration=12 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="ja#2m2" END
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4005) probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4003) timing=1 probability1=100 savingthrow=16 savebonus="-4" END
@@ -82,11 +67,6 @@ COPY_EXISTING ~ja#3m2.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
-	LPF ADD_EFFECT INT_VAR header=0 opcode=134 target=2 power=1 timing=9 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4004) timing=9 probability1=100 savingthrow=16 savebonus="-4" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=174 target=2 power=1 timing=9 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="MISC_06B" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=215 target=2 power=1 timing=9 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="SPFLESHS.VVC" END
-	LPF ADD_EFFECT INT_VAR header=0 opcode=61 target=2 power=1 parameter1=2021160960 parameter2=1638400 timing=9 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=134 target=2 power=1 timing=9 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4004) timing=9 probability1=100 savingthrow=16 savebonus="-4" END

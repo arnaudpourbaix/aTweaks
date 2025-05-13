@@ -71,23 +71,23 @@ export const PLANT_TREANT: RawCreature = {
     },
   ],
   files: [
-    ATWEAKS_CREATURES.TreantVeryYoung,
-    ATWEAKS_CREATURES.TreantYoung,
-    ATWEAKS_CREATURES.Treant,
-    ATWEAKS_CREATURES.TreantElder,
+    ATWEAKS_CREATURES.Treant5hd,
+    ATWEAKS_CREATURES.Treant7hd,
+    ATWEAKS_CREATURES.Treant9hd,
+    ATWEAKS_CREATURES.Treant11hd,
   ],
   adjustments: [
     {
       files: [
-        ATWEAKS_CREATURES.TreantVeryYoung,
-        ATWEAKS_CREATURES.TreantYoung,
-        ATWEAKS_CREATURES.Treant,
-        ATWEAKS_CREATURES.TreantElder,
+        ATWEAKS_CREATURES.Treant5hd,
+        ATWEAKS_CREATURES.Treant7hd,
+        ATWEAKS_CREATURES.Treant9hd,
+        ATWEAKS_CREATURES.Treant11hd,
       ],
       summon: true,
     },
     {
-      files: [ATWEAKS_CREATURES.TreantVeryYoung],
+      files: [ATWEAKS_CREATURES.Treant5hd],
       data: {
         level1: 5,
         strength: 19,
@@ -99,7 +99,7 @@ export const PLANT_TREANT: RawCreature = {
       },
     },
     {
-      files: [ATWEAKS_CREATURES.TreantYoung],
+      files: [ATWEAKS_CREATURES.Treant7hd],
       data: {
         level1: 7,
         strength: 20,
@@ -111,7 +111,7 @@ export const PLANT_TREANT: RawCreature = {
       },
     },
     {
-      files: [ATWEAKS_CREATURES.Treant],
+      files: [ATWEAKS_CREATURES.Treant9hd],
       data: {
         level1: 9,
         strength: 21,
