@@ -105,7 +105,7 @@ export const FEY_HAMADRYAD: RawCreature = {
     memorizedSpells: [
       { file: ATWEAKS_SPELLS.DryadCharmPerson, memorizedCount: 3 },
       { file: ATWEAKS_SPELLS.SpeakWithPlants, memorizedCount: 1 },
-      { file: ATWEAKS_SPELLS.DimensionDoor, memorizedCount: 1 },
+      { file: ATWEAKS_SPELLS.DimensionDoorInfinite, memorizedCount: 1 },
     ],
     immunities: ["entangle"],
     deleteEffectOpcodes: ["CastingTimeModifier", "ProtectionFromSpell"],
@@ -387,7 +387,7 @@ export const FEY_HAMADRYAD: RawCreature = {
     {
       preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
-        resource: ATWEAKS_SPELLS.DimensionDoor,
+        resource: ATWEAKS_SPELLS.DimensionDoorInfinite,
         id: undefined,
         type: "force",
       },

@@ -1,6 +1,8 @@
+import { PRESET_NAMES } from "../config/ability-presets";
 import { GLOBAL_CONFIG } from "../config/generate";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { createDimensionDoor } from "../spells/dimension_door";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawBaseEffect, StringRefEffect } from "../src/model/raw/effect";
 import { FactoryService } from "../src/services/factory.service";
@@ -67,18 +69,17 @@ export const FEY_NYMPH: RawCreature = {
   },
   additionalData: {
     removeItems: ["DAGG01", "B1-6"],
-    removeScripts: ["BDENSHTV", "BDNYMP01"],
+    removeScripts: ["BDENSHTV", "BDNYMP01", "NYMPH"],
     memorizedSpells: [
-      { file: SPELLS.CureLightWounds, memorizedCount: 1 },
+      { file: SPELLS.CureLightWounds, memorizedCount: 2 },
       { file: SPELLS.Bless, memorizedCount: 1 },
+      { file: SPELLS.Entangle, memorizedCount: 1 },
       { file: SPELLS.Barkskin, memorizedCount: 1 },
       { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
       { file: SPELLS.CallLightning, memorizedCount: 1 },
       { file: SPELLS.SummonInsects, memorizedCount: 1 },
-      { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 }, //TODO:
-      { file: SPELLS.AnimalSummoning4, memorizedCount: 1 },
+      { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
       { file: ATWEAKS_SPELLS.AnimalFriendship, memorizedCount: 1 },
-      { file: ATWEAKS_SPELLS.DimensionDoor, memorizedCount: 1 }, //TODO: once per day
     ],
     deleteEffectOpcodes: ["ProtectionFromSpell"],
   },
@@ -99,6 +100,7 @@ export const FEY_NYMPH: RawCreature = {
       stringRef: TraStringReferenceEnum.BlindingBeauty,
       spellType: "Innate",
       icon: SPELLS.BlindingBeauty,
+      infiniteUse: true,
       headers: [
         {
           type: "Melee",
@@ -182,6 +184,12 @@ export const FEY_NYMPH: RawCreature = {
         },
       ],
     },
+    createDimensionDoor({
+      file: ATWEAKS_SPELLS.DimensionDoorPriest,
+      memorizedCount: 1,
+      spellLevel: 4,
+      spellType: "Priest",
+    }),
   ],
   additionalCode: [
     {
@@ -229,14 +237,15 @@ export const FEY_NYMPH: RawCreature = {
       },
     },
     {
-      preset: SPELLS.CallWoodlandBeeings,
+      preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
+        resource: ATWEAKS_SPELLS.DimensionDoorPriest,
+        id: undefined,
         type: "force",
-        remove: true,
       },
     },
     {
-      preset: SPELLS.AnimalSummoning4,
+      preset: SPELLS.CallWoodlandBeeings,
       spell: {
         type: "force",
         remove: true,
@@ -271,6 +280,13 @@ export const FEY_NYMPH: RawCreature = {
       },
     },
     {
+      preset: SPELLS.Entangle,
+      spell: {
+        type: "force",
+        remove: true,
+      },
+    },
+    {
       preset: SPELLS.CharmPersonOrAnimal,
       spell: {
         type: "force",
@@ -285,20 +301,11 @@ export const FEY_NYMPH: RawCreature = {
         remove: true,
       },
     },
-    // {
-    //   preset: PRESET_NAMES.DimensionDoorOffscreen,
-    //   spell: {
-    //     resource: ATWEAKS_SPELLS.DimensionDoor,
-    //     id: undefined,
-    //     type: "force",
-    //   },
-    // },
   ],
   files: [
     "BDNYMP01",
     "HGNYMPH", // Nymph
     "BDNYMP02", // Corrupted Nymph
-    //"DVNYMPH",  // Spell Revisions summoned Nymph (do not touch unless reviewing spell Call Woodland Beings)
     "NYMPHSU", // default summoned Nymph
     "NYMPHSUM", // summoned Nymph
     "DW#NYMSU", // SCSII summoned Nymph
@@ -306,11 +313,10 @@ export const FEY_NYMPH: RawCreature = {
     "WQXNYM", // White Queen
   ],
   adjustments: [
-    // {
-    //   files: [],
-    //   summon: true,
-    //   // RR#SNYMP
-    // },
+    {
+      files: ["NYMPHSU", "NYMPHSUM", "DW#NYMSU"],
+      summon: true,
+    },
     {
       files: ["BDNYMP02"],
       data: { alignment: "NEUTRAL_EVIL" },

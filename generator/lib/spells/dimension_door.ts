@@ -1,27 +1,43 @@
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { RawSpellType } from "../src/model/raw/enum";
 import { RawSpell } from "../src/model/raw/spell";
 
-export const SPELL_DIMENSION_DOOR: RawSpell = {
+export const createDimensionDoor = ({
+  spellLevel,
+  infiniteUse,
+  spellType,
+  file,
+  memorizedCount,
+}: {
+  file: string;
+  spellLevel: number;
+  spellType: RawSpellType;
+  infiniteUse?: boolean;
+  memorizedCount?: number;
+}): RawSpell => ({
   name: "DimensionDoor",
-  file: SPELLS.DimensionDoor,
+  file,
+  memorizedCount,
   stringRef: TraStringReferenceEnum.DimensionDoor,
   description: TraStringReferenceEnum.DimensionDoorDescription,
   castingSound: "CAS_M08",
   flags: ["NoLOSRequired"],
-  spellType: "Wizard",
+  spellType,
   exclusionFlags: ["Abjurer"],
   castingAnimation: "Alteration",
   primaryType: "Transmuter",
   secondaryType: "NonCombat",
-  spellLevel: 4,
+  spellLevel,
   icon: SPELLS.DimensionDoor,
+  infiniteUse,
   headers: [
     {
       type: "Melee",
-      location: "Spell",
+      location: ["Wizard", "Priest"].includes(spellType) ? "Spell" : "Ability",
       target: "AnyPointWithinRange",
       range: 900,
+      speed: 1,
       effects: [
         {
           opcode: "LightingEffects",
@@ -66,4 +82,10 @@ export const SPELL_DIMENSION_DOOR: RawSpell = {
       ],
     },
   ],
-};
+});
+
+export const SPELL_DIMENSION_DOOR: RawSpell = createDimensionDoor({
+  file: SPELLS.DimensionDoor,
+  spellLevel: 4,
+  spellType: "Wizard",
+});

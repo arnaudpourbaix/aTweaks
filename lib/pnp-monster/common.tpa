@@ -9,7 +9,7 @@ CREATE ITM "ja#i6"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IAMUL01~ #8
-	SAY NAME1 ~entangle trait~ SAY NAME2 ~entangle trait~
+	SAY NAME1 ~entangle immunity~ SAY NAME2 ~entangle immunity~
 	SAY UNIDENTIFIED_DESC ~Entangle immunity~
 COPY_EXISTING ~ja#i6.itm~ ~override~
 	LPF entangle_immunity END
@@ -30,7 +30,7 @@ CREATE ITM "ja#i5"
 	WRITE_SHORT 0x1c 72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IHELM01~ #8
-	SAY NAME1 ~criticalHit trait~ SAY NAME2 ~criticalHit trait~
+	SAY NAME1 ~criticalHit immunity~ SAY NAME2 ~criticalHit immunity~
 	SAY UNIDENTIFIED_DESC ~Immunity to critical hits~
 COPY_EXISTING ~ja#i5.itm~ ~override~
 	LPF criticalHit_immunity END

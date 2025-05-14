@@ -71,7 +71,7 @@ export const FEY_SIRINE: RawCreature = {
     memorizedSpells: [
       { file: ATWEAKS_SPELLS.DryadCharmPerson, memorizedCount: 3 },
       { file: ATWEAKS_SPELLS.SpeakWithPlants, memorizedCount: 1 },
-      { file: ATWEAKS_SPELLS.DimensionDoor, memorizedCount: 1 },
+      { file: ATWEAKS_SPELLS.DimensionDoorInfinite, memorizedCount: 1 },
     ],
     immunities: ["entangle"],
   },
@@ -111,7 +111,7 @@ export const FEY_SIRINE: RawCreature = {
     {
       preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
-        resource: ATWEAKS_SPELLS.DimensionDoor,
+        resource: ATWEAKS_SPELLS.DimensionDoorInfinite,
         id: undefined,
         type: "force",
       },

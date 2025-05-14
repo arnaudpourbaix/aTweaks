@@ -10,6 +10,7 @@ import { FactoryService } from "../src/services/factory.service";
 import { bafFile } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
+import { createDimensionDoor } from "../spells/dimension_door";
 
 const factory = FactoryService.instance;
 
@@ -65,7 +66,10 @@ export const dryadWildernessAbilities: ConditionalStatement[] = [
       {
         name: "Or",
         triggers: [
-          { name: "HaveSpellRES", params: [ATWEAKS_SPELLS.DimensionDoor] },
+          {
+            name: "HaveSpellRES",
+            params: [ATWEAKS_SPELLS.DimensionDoorInfinite],
+          },
           {
             name: "HaveSpellRES",
             params: [ATWEAKS_SPELLS.DetectSnaresAndPits],
@@ -74,7 +78,10 @@ export const dryadWildernessAbilities: ConditionalStatement[] = [
       },
     ],
     responses: factory.response([
-      { name: "RemoveSpellRES", params: [ATWEAKS_SPELLS.DimensionDoor] },
+      {
+        name: "RemoveSpellRES",
+        params: [ATWEAKS_SPELLS.DimensionDoorInfinite],
+      },
       { name: "RemoveSpellRES", params: [ATWEAKS_SPELLS.DetectSnaresAndPits] },
       factory.setGlobal(globals.Wilderness, 2),
     ]),
@@ -129,17 +136,13 @@ export const FEY_DRYAD: RawCreature = {
     },
   ],
   spells: [
-    {
-      name: "Dimension Door",
-      file: ATWEAKS_SPELLS.DimensionDoor,
-      copyFrom: SPELLS.DimensionDoor,
+    createDimensionDoor({
+      file: ATWEAKS_SPELLS.DimensionDoorInfinite,
       memorizedCount: 1,
-      spellType: "Innate",
       spellLevel: 1,
-      // location: "Ability",
-      // speed: 1,
+      spellType: "Innate",
       infiniteUse: true,
-    },
+    }),
     {
       name: "Dire Charm",
       file: ATWEAKS_SPELLS.DryadCharmPerson,

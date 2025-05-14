@@ -487,7 +487,7 @@ DEFINE_ACTION_FUNCTION create_spell_DimensionDoor BEGIN
 		WRITE_LONG 0x34 4
 		WRITE_ASCII 0x3a ~SPWI402C~ #8
 		WRITE_LONG 0x50 RESOLVE_STR_REF(@1891)
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 STR_VAR icon="SPWI402B" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END

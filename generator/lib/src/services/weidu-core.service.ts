@@ -49,7 +49,7 @@ export class WeiduCoreService extends AbstractWeiduService {
     this.add(this.lines, `WRITE_ASCII 0x3a ~${this.getIcon(itemSlot)}~ #8`, 1);
     this.add(
       this.lines,
-      `SAY NAME1 ~${immunity.name} trait~ SAY NAME2 ~${immunity.name} trait~`,
+      `SAY NAME1 ~${immunity.name} ${immunity.type}~ SAY NAME2 ~${immunity.name} ${immunity.type}~`,
       1
     );
     this.add(
