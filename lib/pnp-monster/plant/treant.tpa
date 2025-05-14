@@ -65,11 +65,11 @@ BEGIN
 					apr=2
 					xpv=6000
 					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_GOOD~)
-					saveDeath=6
-					saveWand=10
-					savePolymorph=9
-					saveBreath=12
-					saveSpell=11
+					saveDeath=7
+					saveWand=9
+					savePolymorph=8
+					saveBreath=8
+					saveSpell=10
 					morale=16
 					moraleBreak=4
 					moraleRecovery=15
@@ -93,10 +93,10 @@ BEGIN
 				WRITE_SHORT 0x24 65 // hp
 				WRITE_SHORT 0x26 65 // hp
 				WRITE_BYTE 0x52 15 // thac0
-				WRITE_BYTE 0x54 9 // saveDeath
+				WRITE_BYTE 0x54 11 // saveDeath
 				WRITE_BYTE 0x55 13 // saveWand
 				WRITE_BYTE 0x56 12 // savePolymorph
-				WRITE_BYTE 0x57 15 // saveBreath
+				WRITE_BYTE 0x57 13 // saveBreath
 				WRITE_BYTE 0x58 14 // saveSpell
 				WRITE_BYTE 0x234 5 // level1
 				WRITE_BYTE 0x238 19 // strength
@@ -108,11 +108,11 @@ BEGIN
 				WRITE_SHORT 0x24 91 // hp
 				WRITE_SHORT 0x26 91 // hp
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 11 // saveWand
-				WRITE_BYTE 0x56 10 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
-				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x54 10 // saveDeath
+				WRITE_BYTE 0x55 12 // saveWand
+				WRITE_BYTE 0x56 11 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 13 // saveSpell
 				WRITE_BYTE 0x234 7 // level1
 				WRITE_BYTE 0x238 20 // strength
 				WRITE_BYTE 0x23d 20 // constitution
@@ -123,11 +123,11 @@ BEGIN
 				WRITE_SHORT 0x24 117 // hp
 				WRITE_SHORT 0x26 117 // hp
 				WRITE_BYTE 0x52 11 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 11 // saveWand
-				WRITE_BYTE 0x56 10 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
-				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x54 8 // saveDeath
+				WRITE_BYTE 0x55 10 // saveWand
+				WRITE_BYTE 0x56 9 // savePolymorph
+				WRITE_BYTE 0x57 9 // saveBreath
+				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 9 // level1
 				WRITE_BYTE 0x238 21 // strength
 				WRITE_BYTE 0x23d 20 // constitution

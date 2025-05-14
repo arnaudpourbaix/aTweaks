@@ -11,4 +11,4 @@ COPY ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#hama.cre~ ~override~    // Hamadryad s
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/dryad.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/hamadryad.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/nymph.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/sirine.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/sirine.tpa"

@@ -77,11 +77,11 @@ BEGIN
 					apr=1
 					xpv=650
 					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
-					saveDeath=9
-					saveWand=13
-					savePolymorph=12
-					saveBreath=15
-					saveSpell=14
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
 					morale=12
 					moraleBreak=4
 					moraleRecovery=15
@@ -104,11 +104,11 @@ BEGIN
 				WRITE_SHORT 0x24 57 // hp
 				WRITE_SHORT 0x26 57 // hp
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 11 // saveWand
-				WRITE_BYTE 0x56 10 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
-				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x54 10 // saveDeath
+				WRITE_BYTE 0x55 12 // saveWand
+				WRITE_BYTE 0x56 11 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 13 // saveSpell
 				WRITE_BYTE 0x234 7 // level1
 				WRITE_BYTE 0x238 19 // strength
 				WRITE_BYTE 0x239 0 // exceptionalStrength
@@ -120,11 +120,11 @@ BEGIN
 				WRITE_SHORT 0x24 73 // hp
 				WRITE_SHORT 0x26 73 // hp
 				WRITE_BYTE 0x52 11 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 11 // saveWand
-				WRITE_BYTE 0x56 10 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
-				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x54 8 // saveDeath
+				WRITE_BYTE 0x55 10 // saveWand
+				WRITE_BYTE 0x56 9 // savePolymorph
+				WRITE_BYTE 0x57 9 // saveBreath
+				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 9 // level1
 				ADD_MEMORIZED_SPELL ~SPCL321~ #0 ~innate~ (2)
 				SET_BG2_PROFICIENCY ~PROFICIENCYFLAILMORNINGSTAR~ 5
@@ -134,11 +134,11 @@ BEGIN
 				WRITE_SHORT 0x24 89 // hp
 				WRITE_SHORT 0x26 89 // hp
 				WRITE_BYTE 0x52 9 // thac0
-				WRITE_BYTE 0x54 6 // saveDeath
-				WRITE_BYTE 0x55 10 // saveWand
-				WRITE_BYTE 0x56 9 // savePolymorph
-				WRITE_BYTE 0x57 12 // saveBreath
-				WRITE_BYTE 0x58 11 // saveSpell
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 9 // saveWand
+				WRITE_BYTE 0x56 8 // savePolymorph
+				WRITE_BYTE 0x57 8 // saveBreath
+				WRITE_BYTE 0x58 10 // saveSpell
 				WRITE_BYTE 0x234 11 // level1
 				ADD_MEMORIZED_SPELL ~SPCL321~ #0 ~innate~ (1)
 				SET_BG2_PROFICIENCY ~PROFICIENCYFLAILMORNINGSTAR~ 5
@@ -161,11 +161,11 @@ BEGIN
 				WRITE_SHORT 0x24 65 // hp
 				WRITE_SHORT 0x26 65 // hp
 				WRITE_BYTE 0x52 13 // thac0
-				WRITE_BYTE 0x54 7 // saveDeath
-				WRITE_BYTE 0x55 11 // saveWand
-				WRITE_BYTE 0x56 10 // savePolymorph
-				WRITE_BYTE 0x57 13 // saveBreath
-				WRITE_BYTE 0x58 12 // saveSpell
+				WRITE_BYTE 0x54 10 // saveDeath
+				WRITE_BYTE 0x55 12 // saveWand
+				WRITE_BYTE 0x56 11 // savePolymorph
+				WRITE_BYTE 0x57 12 // saveBreath
+				WRITE_BYTE 0x58 13 // saveSpell
 				WRITE_BYTE 0x234 8 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES

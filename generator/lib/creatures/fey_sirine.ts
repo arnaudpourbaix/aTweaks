@@ -2,65 +2,58 @@ import {
   DEFAULT_SPELL_PROBABILITY,
   PRESET_NAMES,
 } from "../config/ability-presets";
-import {
-  GARGANTUAN_CREATURES,
-  INCORPOREAL_CREATURES,
-} from "../config/creatures";
-import { GLOBAL_CONFIG } from "../config/generate";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
-import {
-  BafExistingStringReference,
-  TraStringReferenceEnum,
-} from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
 import { FactoryService } from "../src/services/factory.service";
-import { bafFile, file } from "../src/services/misc.func";
-import {
-  abilityDryadDireCharm,
-  abilitySpeakWithPlants,
-  dryadWildernessAbilities,
-} from "./fey_dryad";
+import { bafFile } from "../src/services/misc.func";
+import { abilityDryadDireCharm, abilitySpeakWithPlants } from "./fey_dryad";
 import { MonsterEnum } from "./monster.enum";
 
 const factory = FactoryService.instance;
-
 // Creature Id
 const id = MonsterEnum.Sirine;
 // Script
 const script = bafFile(id);
 
 export const FEY_SIRINE: RawCreature = {
-  name: "Hamadryad",
+  name: "Sirine",
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/sirine",
   tracking: true,
   combatWalk: true,
-  dialog: ["VAELASA"],
+  dialog: [],
   attack: {
     melee: false,
     ranged: false,
   },
   data: {
-    level1: 4,
+    level1: 11, // 4-7
+    hp: 40,
+    thac0: 15,
+    saveDeath: 9,
+    saveWand: 7,
+    savePolymorph: 9,
+    saveBreath: 11,
+    saveSpell: 8,
     strength: 10,
     dexterity: 18,
-    constitution: 12,
-    intelligence: 14,
-    wisdom: 14,
-    charisma: 18,
-    movement: 15,
-    ac: 7,
+    constitution: 11,
+    intelligence: 13,
+    wisdom: 16,
+    charisma: 17,
+    movement: 12,
+    ac: 3,
     apr: 1,
-    resistMagic: 75,
-    xpv: 1400,
+    resistMagic: 20,
+    xpv: 3000,
     alignment: "NEUTRAL",
     morale: 12,
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "HUMANOID",
     race: "FAIRY",
-    class: "FAIRY_DRYAD",
+    //class: "FAIRY_SIRINE",
+    class: "MAGE",
     gender: "FEMALE",
     size: "Medium",
   },
@@ -162,13 +155,15 @@ export const FEY_SIRINE: RawCreature = {
     "NTSILUA", // Sirine
     "NTSIRIN2", // Sirine
     "NTSIRIN4", // Sirine
+    "NTSIRINE", // Krestian's friend
     "SIL", // Sil
     "SIRINE", // Sirine
     "SIRINE02", // Sirine
     "SIRINE_A", // Sirine
     "SIRINE_B", // Sirine
     "LARRIA", // Larriaz
-    "NTSIRINE", // Krestian's friend
+    "L#NDC1", // Southern Edge
+    "QSEROMOD", // Sirine (PofQuestPack)
   ],
   adjustments: [],
 };

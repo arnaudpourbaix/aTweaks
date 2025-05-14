@@ -87,11 +87,11 @@ BEGIN
 					apr=2
 					xpv=5000
 					alignment=IDS_OF_SYMBOL (~align~ ~LAWFUL_EVIL~)
-					saveDeath=7
-					saveWand=11
-					savePolymorph=10
-					saveBreath=13
-					saveSpell=12
+					saveDeath=10
+					saveWand=12
+					savePolymorph=11
+					saveBreath=12
+					saveSpell=13
 					morale=13
 					moraleBreak=4
 					moraleRecovery=15

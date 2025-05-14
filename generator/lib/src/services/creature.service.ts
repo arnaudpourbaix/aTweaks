@@ -10,6 +10,7 @@ import { CreatureSize } from "../model/raw/enum";
 import { convertMovement } from "./misc.func";
 import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import { SAVING_THROWS } from "../model/constants";
+import { stringify } from "querystring";
 
 export class CreatureService {
   static instance = new CreatureService();
@@ -215,10 +216,10 @@ export class CreatureService {
     if (!level)
       throw new Error(`Can't generate thac0 because level1 is unknown`);
     const classe = data.class ?? parent?.class ?? "";
-    const table =
-      classe.indexOf("DRUID") !== 1 || classe.indexOf("CLERIC") !== 1
-        ? SAVING_THROWS["priest"]
-        : SAVING_THROWS["fighter"];
+    let key: keyof typeof SAVING_THROWS = "fighter";
+    if (classe === "DRUID" || classe === "CLERIC") key = "priest";
+    else if (classe === "MAGE") key = "wizard";
+    const table = SAVING_THROWS[key];
     const saves = table.find(
       (t) => level >= t.levels[0] && level <= t.levels[1]
     ) as {
@@ -228,6 +229,14 @@ export class CreatureService {
       saveBreath: number;
       saveSpell: number;
     };
+    if (key !== "fighter")
+      console.log(
+        `${
+          figureSet.arrowRight
+        } Level: ${level}, class: ${classe}, saving throws table: ${key}, ${JSON.stringify(
+          saves
+        )}`
+      );
     data.saveDeath = saves.saveDeath;
     data.saveWand = saves.saveWand;
     data.savePolymorph = saves.savePolymorph;
