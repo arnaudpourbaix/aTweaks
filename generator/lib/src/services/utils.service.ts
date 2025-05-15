@@ -6,7 +6,6 @@ import { Response } from "../model/final/script";
 import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
-import { RawSpell } from "../model/raw/spell";
 import { SpellGroup } from "../model/raw/spell-group";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";

@@ -51,22 +51,22 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Testing and Extracting
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-BEGIN ~Extraction~ DESIGNATED 9999
-    COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
-        PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
-            READ_BYTE 0x272 race
-            READ_BYTE 0x273 class
-            READ_LONG 0x28 animation
-            READ_STRREF 0x08 name
-            PATCH_IF class = 130 BEGIN
-            //PATCH_IF class = 130 OR animation = 0x2200 BEGIN
-            // PATCH_IF race = 130 OR animation = 0x2000 BEGIN
-            //PATCH_IF animation = 0x7F0A BEGIN
-                //PATCH_PRINT ~"%SOURCE_RES%",~
-                PATCH_PRINT ~"%SOURCE_RES%", // %name%~
-            END
-        END
-    BUT_ONLY
+// BEGIN ~Extraction~ DESIGNATED 9999
+//     COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+//         PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
+//             READ_BYTE 0x272 race
+//             READ_BYTE 0x273 class
+//             READ_LONG 0x28 animation
+//             READ_STRREF 0x08 name
+//             PATCH_IF class = 130 BEGIN
+//             //PATCH_IF class = 130 OR animation = 0x2200 BEGIN
+//             // PATCH_IF race = 130 OR animation = 0x2000 BEGIN
+//             //PATCH_IF animation = 0x7F0A BEGIN
+//                 //PATCH_PRINT ~"%SOURCE_RES%",~
+//                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
+//             END
+//         END
+//     BUT_ONLY
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/core.tpa"

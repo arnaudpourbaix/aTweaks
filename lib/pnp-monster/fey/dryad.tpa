@@ -3,13 +3,6 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41su.baf~
 
-CREATE EFF "rr#fchrm"
-	WRITE_LONG 0x10 206
-	WRITE_LONG 0x14 2
-	WRITE_LONG 0x24 1
-	WRITE_SHORT 0x2c 100
-	WRITE_ASCII 0x30 ~rr#fchrm~ #8
-
 // DimensionDoor
 CREATE SPL "rr#ddoor"
 	WRITE_LONG 0x64 0x72
@@ -48,8 +41,8 @@ COPY_EXISTING ~rr#fchrm.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI316C~ #8
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~SPARKLGO~)) + 1 STR_VAR icon="SPWI316B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fchrm" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fchrm" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fchrm" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-3" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 savebonus="-3" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 savebonus="-3" END

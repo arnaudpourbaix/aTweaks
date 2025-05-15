@@ -2,22 +2,60 @@
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m43.baf~
 
-COPY_EXISTING "ENTANG2.pro" ~override/RR#FENTG.pro~
-	READ_SHORT 0x08 type
-	PATCH_IF (%type% = 1) BEGIN
-		INSERT_BYTES 0x100 0x100
-	END
-	WRITE_LONG 0x200 64
-ADD_PROJECTILE ~override/RR#FENTG.pro~ ~Hamadryad Entangle~
+CREATE EFF "rr#fcsng"
+	WRITE_LONG 0x10 146
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 1
+	WRITE_LONG 0x20 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~rr#fcsn2~ #8
 
-CREATE EFF "RR#FENTG"
+CREATE EFF "rr#fcsn2"
 	WRITE_LONG 0x10 206
 	WRITE_LONG 0x14 2
 	WRITE_LONG 0x24 1
 	WRITE_SHORT 0x2c 100
-	WRITE_ASCII 0x30 ~RR#FENTG~ #8
+	WRITE_ASCII 0x30 ~rr#fcsn2~ #8
 
-ACTION_FOR_EACH ~file~ IN
+// CharmingSong
+CREATE SPL "rr#fcsng"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~rr#fcsng.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@1902)
+	WRITE_ASCII 0x10 ~SIRIN05~ #8
+	WRITE_LONG 0x18 16384
+	WRITE_SHORT 0x1c 4
+	WRITE_SHORT 0x22 11
+	WRITE_BYTE 0x25 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI316C~ #8
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~SPARGONP~)) + 1 STR_VAR icon="SPWI316B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=3 probability1=100 STR_VAR resource="rr#fcsng" END
+	
+	// CharmingSongTechnical
+CREATE SPL "rr#fcsn2"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~rr#fcsn2.SPL~  ~override~
+	WRITE_LONG 0x8 26328
+	WRITE_ASCII 0x10 ~SIRIN05~ #8
+	WRITE_LONG 0x18 512
+	WRITE_SHORT 0x1c 4
+	WRITE_SHORT 0x22 11
+	WRITE_BYTE 0x25 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI316C~ #8
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 STR_VAR icon="SPWI316B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fcsn2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fcsn2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 STR_VAR resource="SPNWCHRM" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=3 resist_dispel=1 duration=180 probability1=100 savingthrow=1 STR_VAR resource="EFF_E07" END
+	
+	ACTION_FOR_EACH ~file~ IN
 	ISLSIR
 	J#SIRIN1
 	J#SIRIN2
@@ -42,9 +80,8 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			ADD_CRE_ITEM ~ja#i6~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
-			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
-			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~SPWI405~ #3 ~wizard~ (1)
+			ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
@@ -64,7 +101,7 @@ BEGIN
 					apr=1
 					xpv=3000
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=11
+					saveDeath=9
 					saveWand=7
 					savePolymorph=9
 					saveBreath=11
@@ -74,13 +111,13 @@ BEGIN
 					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
 					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
-					class=IDS_OF_SYMBOL (~class~ ~MAGE~)
+					class=IDS_OF_SYMBOL (~class~ ~FAIRY_SIRINE~)
 					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN HAMA DW1MELGE END
-			LPF patchCreatureScript STR_VAR script=ja#m43 removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN SHOUT DW#GPSHT SIRSPELL DW1RANMO END
+			LPF patchCreatureScript STR_VAR script=ja#m43 slot=Race removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

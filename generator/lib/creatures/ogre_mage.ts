@@ -1,10 +1,9 @@
 import { SPELL_STATES } from "../config/ability-presets";
-import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 
@@ -129,7 +128,7 @@ export const OGRE_MAGE: RawCreature = {
         {
           opcode: "MovementRateBonus2",
           type: "Set",
-          value: 8, // 9 in PnP
+          value: convertMovement(9),
           global: true,
         },
         {
@@ -178,7 +177,7 @@ export const OGRE_MAGE: RawCreature = {
         {
           opcode: "MovementRateBonus2",
           type: "Set",
-          value: 3, // 3 in PnP
+          value: convertMovement(3),
           global: true,
         },
         {
@@ -280,7 +279,7 @@ export const OGRE_MAGE: RawCreature = {
             {
               opcode: "MovementRateBonus2",
               type: "Set",
-              value: 13, // 15 in PnP
+              value: convertMovement(15),
               timing: "InstantLimited",
               duration: flyDuration,
             },

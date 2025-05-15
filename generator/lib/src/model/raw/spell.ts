@@ -1,6 +1,4 @@
-import { SpellGroupName } from "../../../config/spell-group-name";
 import { TraStringReferenceEnum } from "../../../config/stringRef";
-import { SpellIdentifier } from "../ids/spell";
 import { StringReference } from "../misc";
 import { RawEffect } from "./effect";
 import { RawEffectOpcode } from "./effect.type";
@@ -74,6 +72,10 @@ export interface RawSpellHeader {
   speed?: number;
   minLevel?: number;
   projectile?: string;
+  /**
+   * Convenience to add sleep-charm resistance form elves et half-elves.
+   */
+  racialSleepCharmResistance?: boolean;
   effects?: RawEffect[];
 }
 

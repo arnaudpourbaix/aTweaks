@@ -11,7 +11,7 @@ import {
   SpellTypeEnum,
 } from "../model/final/enums";
 import { Spell, SpellHeader } from "../model/final/spell";
-import { RawEffect } from "../model/raw/effect";
+import { RawEffect, RawEffectFile } from "../model/raw/effect";
 import { RawSpell, RawSpellHeader } from "../model/raw/spell";
 import { EffectService } from "./effect.service";
 
@@ -20,7 +20,10 @@ export class SpellService {
 
   private effectService = EffectService.instance;
 
-  mapSpells(spells: RawSpell[] | undefined): Spell[] {
+  mapSpells(
+    spells: RawSpell[] | undefined,
+    effectFiles: RawEffectFile[]
+  ): Spell[] {
     if (!spells) return [];
     const results: Spell[] = spells.map((s) => {
       s.effects = s.effects ?? [];
@@ -43,16 +46,16 @@ export class SpellService {
         ];
         s.effects.push(...effects);
       }
-      const result = this.mapSpell(s);
+      const result = this.mapSpell(s, effectFiles);
       return result;
     });
     return results;
   }
 
-  private mapSpell(spell: RawSpell): Spell {
+  private mapSpell(spell: RawSpell, effectFiles: RawEffectFile[]): Spell {
     const headers: SpellHeader[] = [];
     for (const header of spell.headers ?? []) {
-      headers.push(this.mapHeader(header, spell.icon));
+      headers.push(this.mapHeader(header, spell, effectFiles));
     }
     const result: Spell = {
       file: spell.file,
@@ -95,11 +98,42 @@ export class SpellService {
     return result;
   }
 
-  private mapHeader(header: RawSpellHeader, icon?: string): SpellHeader {
+  private mapHeader(
+    header: RawSpellHeader,
+    spell: RawSpell,
+    effectFiles: RawEffectFile[]
+  ): SpellHeader {
     if (!header.type) throw new Error(`Header type is required!`);
+    const effects = [...(header.effects ?? [])].filter((e) => !e.global);
+    if (header.racialSleepCharmResistance) {
+      effects.unshift({
+        opcode: "UseEFFFile",
+        idsFile: "RACE",
+        idsEntry: "ELF",
+        probability1: 90,
+        timing: "InstantLimited",
+        duration: 1,
+        resource: spell.file,
+      });
+      effects.unshift({
+        opcode: "UseEFFFile",
+        idsFile: "RACE",
+        idsEntry: "HALF_ELF",
+        probability1: 30,
+        timing: "InstantLimited",
+        duration: 1,
+        resource: spell.file,
+      });
+      effectFiles.push({
+        file: spell.file,
+        opcode: "ProtectionFromSpell",
+        resource: spell.file,
+        timing: "InstantPermanentUntilDeath",
+      });
+    }
     const result: SpellHeader = {
       type: ItemAbilityTypeEnum[header.type],
-      memorizedIcon: icon ? `${icon}B` : undefined,
+      memorizedIcon: spell.icon ? `${spell.icon}B` : undefined,
       range: header.range ?? 0,
       speed: header.speed ?? 0,
       minLevel: header.minLevel ?? 0,
@@ -110,9 +144,7 @@ export class SpellService {
         ? ItemAbilityTargetEnum[header.target]
         : ItemAbilityTargetEnum.LivingActor,
       projectile: header.projectile,
-      effects: header.effects
-        ? this.effectService.getEffects(header.effects.filter((e) => !e.global))
-        : [],
+      effects: this.effectService.getEffects(effects),
     };
     return result;
   }

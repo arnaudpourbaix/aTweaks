@@ -3,9 +3,11 @@ import {
   PRESET_NAMES,
 } from "../config/ability-presets";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { FactoryService } from "../src/services/factory.service";
 import { bafFile } from "../src/services/misc.func";
+import { StringRefUtils } from "../src/services/string-ref.utils";
 import { abilityDryadDireCharm, abilitySpeakWithPlants } from "./fey_dryad";
 import { MonsterEnum } from "./monster.enum";
 
@@ -14,6 +16,8 @@ const factory = FactoryService.instance;
 const id = MonsterEnum.Sirine;
 // Script
 const script = bafFile(id);
+
+const charmDuration = 180;
 
 export const FEY_SIRINE: RawCreature = {
   name: "Sirine",
@@ -27,7 +31,7 @@ export const FEY_SIRINE: RawCreature = {
     ranged: false,
   },
   data: {
-    level1: 11, // 4-7
+    level1: 11, // 5 HD but level 11 caster
     hp: 40,
     thac0: 15,
     saveDeath: 9,
@@ -41,7 +45,7 @@ export const FEY_SIRINE: RawCreature = {
     intelligence: 13,
     wisdom: 16,
     charisma: 17,
-    movement: 12,
+    movement: 12, //TODO: move it elsewhere
     ac: 3,
     apr: 1,
     resistMagic: 20,
@@ -52,39 +56,135 @@ export const FEY_SIRINE: RawCreature = {
     moraleRecovery: 15,
     general: "HUMANOID",
     race: "FAIRY",
-    //class: "FAIRY_SIRINE",
-    class: "MAGE",
+    class: "FAIRY_SIRINE",
     gender: "FEMALE",
     size: "Medium",
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
     removeItems: ["ANTIWEB"],
-    removeScripts: ["HAMA", "DW1MELGE"],
-    memorizedSpells: [
-      { file: ATWEAKS_SPELLS.DryadCharmPerson, memorizedCount: 3 },
-      { file: ATWEAKS_SPELLS.SpeakWithPlants, memorizedCount: 1 },
-      { file: ATWEAKS_SPELLS.DimensionDoorInfinite, memorizedCount: 1 },
+    removeScripts: [
+      "SHOUT",
+      "DW#GPSHT",
+      // "J#SIRIN1",
+      "SIRSPELL",
+      "DW1RANMO",
     ],
+    scriptLocation: "Race",
+    memorizedSpells: [{ file: SPELLS.ImprovedInvisibility, memorizedCount: 1 }],
     immunities: ["entangle"],
   },
-  projectiles: [
-    {
-      file: ATWEAKS_SPELLS.HamadryadEntangle,
-      copyFromFile: "ENTANG2",
-      description: "Hamadryad Entangle",
-      areaProjectileFlags: ["AffectOnlyEnemies"],
-    },
-  ],
   effectFiles: [
     {
-      file: ATWEAKS_SPELLS.HamadryadEntangle,
-      opcode: "ProtectionFromSpell",
-      resource: ATWEAKS_SPELLS.HamadryadEntangle,
+      file: ATWEAKS_SPELLS.CharmingSong,
+      opcode: "CastSpell",
+      type: "CastInstantlyAtCasterLevel",
+      resource: ATWEAKS_SPELLS.CharmingSongTechnical,
       timing: "InstantPermanentUntilDeath",
+      dispelResistance: "NaturalNonMagical",
     },
   ],
-  spells: [],
+  spells: [
+    {
+      name: "CharmingSong",
+      file: ATWEAKS_SPELLS.CharmingSong,
+      memorizedCount: 1,
+      stringRef: TraStringReferenceEnum.CharmingSong,
+      castingSound: "SIRIN05",
+      flags: ["IgnoreDead"],
+      spellType: "Innate",
+      spellLevel: 1,
+      castingAnimation: "Enchantment",
+      primaryType: "Enchanter",
+      secondaryType: "Disabling",
+      icon: SPELLS.DireCharm,
+      headers: [
+        {
+          type: "Melee",
+          location: "Ability",
+          target: "Caster",
+          projectile: "SPARGONP",
+          effects: [
+            {
+              opcode: "UseEFFFile",
+              idsFile: "GENERAL",
+              idsEntry: "HUMANOID",
+              resource: ATWEAKS_SPELLS.CharmingSong,
+              dispelResistance: "NaturalNonMagical",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "CharmingSongTechnical",
+      file: ATWEAKS_SPELLS.CharmingSongTechnical,
+      stringRef: StringRefUtils.getStringId("Dire Charm"),
+      icon: SPELLS.DireCharm,
+      castingSound: "SIRIN05",
+      flags: ["BreakSanctuary"],
+      spellType: "Innate",
+      castingAnimation: "Enchantment",
+      primaryType: "Enchanter",
+      secondaryType: "Disabling",
+      spellLevel: 1,
+      headers: [
+        {
+          type: "Melee",
+          location: "Ability",
+          target: "LivingActor",
+          range: 30,
+          speed: 1,
+          racialSleepCharmResistance: true,
+          effects: [
+            {
+              opcode: "CharmCreature",
+              generalType: "HUMANOID",
+              charmType: "NeutralDireCharm",
+              timing: "InstantLimited",
+              duration: charmDuration,
+              dispelResistance: "DispelNotBypassResistance",
+              saveTypes: ["Spell"],
+            },
+            {
+              opcode: "DisplayString",
+              stringRef: StringRefUtils.getStringId("Dire charmed"),
+              timing: "InstantPermanentUntilDeath",
+              dispelResistance: "DispelNotBypassResistance",
+              saveTypes: ["Spell"],
+            },
+            {
+              opcode: "CharacterColorPulse",
+              color: { red: 255, green: 144, blue: 147 },
+              location: "ArmorGreyBeltAmulet",
+              cycleSpeed: 30,
+              timing: "InstantLimited",
+              duration: 1,
+              dispelResistance: "DispelNotBypassResistance",
+              saveTypes: ["Spell"],
+            },
+            {
+              opcode: "PlayVisualEffect",
+              playWhere: "OverTargetAttached",
+              resource: "SPNWCHRM",
+              timing: "InstantLimited",
+              duration: 3,
+              dispelResistance: "DispelNotBypassResistance",
+              saveTypes: ["Spell"],
+            },
+            {
+              opcode: "PlaySound",
+              resource: "EFF_E07",
+              timing: "DelayLimited",
+              duration: charmDuration,
+              dispelResistance: "DispelNotBypassResistance",
+              saveTypes: ["Spell"],
+            },
+          ],
+        },
+      ],
+    },
+  ],
   additionalCode: [
     {
       location: "trackTargets",
@@ -102,49 +202,15 @@ export const FEY_SIRINE: RawCreature = {
   ],
   abilities: [
     {
-      preset: PRESET_NAMES.DimensionDoorOffscreen,
+      preset: SPELLS.ImprovedInvisibility,
+    },
+    {
+      preset: SPELLS.DireCharm,
       spell: {
-        resource: ATWEAKS_SPELLS.DimensionDoorInfinite,
+        resource: ATWEAKS_SPELLS.CharmingSong,
         id: undefined,
         type: "force",
       },
-    },
-    abilitySpeakWithPlants,
-    {
-      preset: SPELLS.Entangle,
-      spell: {
-        resource: ATWEAKS_SPELLS.HamadryadEntangle,
-        id: undefined,
-        type: "force",
-      },
-      timer: {
-        name: "entangle",
-        value: 30,
-      },
-    },
-    abilityDryadDireCharm,
-    {
-      name: "Animal Friendship",
-      target: [
-        {
-          name: "Animals",
-        },
-      ],
-      spell: {
-        resource: ATWEAKS_SPELLS.AnimalFriendship,
-        type: "force",
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      disableInterrupt: true,
-    },
-    {
-      name: "Detect Snares And Pits",
-      spell: {
-        resource: ATWEAKS_SPELLS.DetectSnaresAndPits,
-        type: "force",
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      disableInterrupt: true,
     },
   ],
   files: [

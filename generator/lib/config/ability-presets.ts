@@ -100,6 +100,18 @@ export const ABILITY_PRESETS: {
     },
   },
   {
+    preset: SPELLS.ImprovedInvisibility,
+    ability: {
+      name: "Improved Invisibility",
+      spell: {
+        id: "WIZARD_IMPROVED_INVISIBILITY",
+        excludeStateChecks: ["STATE_INVISIBLE"],
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
+    },
+  },
+  {
     preset: SPELLS.Domination,
     ability: {
       name: "Domination",

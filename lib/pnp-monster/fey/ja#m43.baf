@@ -111,312 +111,22 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Dimension Door
+// Improved Invisibility
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpellRES("rr#ddoor")
-	OR(2)
-		Range(NearestEnemyOf(Myself),10)
-		AttackedBy([ANYONE],DEFAULT)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		CreateCreatureOffscreen("RR#TRAT",0)
-		ForceSpellRES("rr#ddoor","RR#TRAT")
-		Wait(1)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-// Speak with plants
-IF
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!GlobalTimerNotExpired("speakWithPlants","LOCALS")
-	HaveSpellRES("rr#fspkp")
-	CheckStatGT(Myself,0,ENTANGLE)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fspkp",Myself)
-		SetGlobalTimer("speakWithPlants","LOCALS",60)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-// Entangle
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
+	HaveSpell(WIZARD_IMPROVED_INVISIBILITY)
+	Detect(NearestEnemyOf(Myself))
+	!StateCheck(Myself,STATE_INVISIBLE)
 	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(NearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
-	!StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(NearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(NearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(NearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(NearestEnemyOf(Myself),WEAPON)
-	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",NearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(SecondNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(SecondNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SecondNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SecondNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(ThirdNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(ThirdNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(ThirdNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",ThirdNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(FourthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(FourthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FourthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",FourthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(FifthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(FifthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FifthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",FifthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(SixthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(SixthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SixthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SixthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(SeventhNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(SeventhNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SeventhNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SeventhNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(EighthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(EighthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(EighthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(EighthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",EighthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(NinthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(NinthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(NinthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(NinthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",NinthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-END
-
-IF
-	!GlobalTimerNotExpired("entangle","LOCALS")
-	HaveSpellRES("RR#FENTG")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	CheckStat(TenthNearestEnemyOf(Myself),0,ENTANGLE)
-	!CheckStatGT(TenthNearestEnemyOf(Myself),0,HELD)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_STUNNED)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_PANIC)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CONFUSED)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_SLEEPING)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_HELPLESS)
-	!General(TenthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
-	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(TenthNearestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		ForceSpellRES("RR#FENTG",TenthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",30)
+		Spell(Myself,WIZARD_IMPROVED_INVISIBILITY)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -437,15 +147,12 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -466,15 +173,12 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -495,15 +199,12 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -524,15 +225,12 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -553,15 +251,12 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -582,15 +277,12 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -611,15 +303,12 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -640,15 +329,12 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -669,16 +355,13 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC],ELF)
@@ -699,15 +382,12 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC]),ELF)
@@ -728,15 +408,12 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC]),ELF)
@@ -757,15 +434,12 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FourthNearest([PC]),ELF)
@@ -786,15 +460,12 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",FourthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FifthNearest([PC]),ELF)
@@ -815,15 +486,12 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",FifthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SixthNearest([PC]),ELF)
@@ -844,16 +512,13 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SixthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -873,15 +538,12 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -901,15 +563,12 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -929,15 +588,12 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -957,15 +613,12 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -985,15 +638,12 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -1013,15 +663,12 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -1041,15 +688,12 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -1069,15 +713,12 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -1097,16 +738,13 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC],0,HELD)
@@ -1125,15 +763,12 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",[PC])
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",[PC])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
@@ -1152,15 +787,12 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SecondNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
@@ -1179,15 +811,12 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",ThirdNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
@@ -1206,15 +835,12 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",FourthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
@@ -1233,15 +859,12 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",FifthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
@@ -1260,139 +883,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("rr#fcsng",SixthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-// Animal Friendship
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(NearestEnemyOfType([0.ANIMAL]),WEAPON)
-	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
-	!CheckStatGT(NearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
-	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
-	See(NearestEnemyOfType([0.ANIMAL]))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondNearestEnemyOfType([0.ANIMAL]),WEAPON)
-	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
-	!CheckStatGT(SecondNearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
-	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
-	See(SecondNearestEnemyOfType([0.ANIMAL]))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdNearestEnemyOfType([0.ANIMAL]),WEAPON)
-	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
-	!CheckStatGT(ThirdNearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
-	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
-	See(ThirdNearestEnemyOfType([0.ANIMAL]))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General([NEUTRAL.ANIMAL],WEAPON)
-	!StateCheck([NEUTRAL.ANIMAL],STATE_IMPROVEDINVISIBILITY)
-	!StateCheck([NEUTRAL.ANIMAL],STATE_INVISIBLE)
-	!CheckStatGT([NEUTRAL.ANIMAL],0,SANCTUARY)
-	!StateCheck([NEUTRAL.ANIMAL],STATE_CHARMED)
-	!StateCheck([NEUTRAL.ANIMAL],STATE_REALLY_DEAD)
-	See([NEUTRAL.ANIMAL])
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondNearest([NEUTRAL.ANIMAL]),WEAPON)
-	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_INVISIBLE)
-	!CheckStatGT(SecondNearest([NEUTRAL.ANIMAL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_CHARMED)
-	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_REALLY_DEAD)
-	See(SecondNearest([NEUTRAL.ANIMAL]))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#fafrn")
-	RandomNumGT(802,241)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdNearest([NEUTRAL.ANIMAL]),WEAPON)
-	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_INVISIBLE)
-	!CheckStatGT(ThirdNearest([NEUTRAL.ANIMAL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_CHARMED)
-	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_REALLY_DEAD)
-	See(ThirdNearest([NEUTRAL.ANIMAL]))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
-END
-
-// Detect Snares And Pits
-IF
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpellRES("rr#fdsnr")
-	RandomNumGT(803,241)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fdsnr",Myself)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetInterrupt(TRUE)
 END
 
 // Run away from enemies

@@ -1,20 +1,19 @@
 import * as fs from "fs";
+import path from "path";
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { SPELL_GROUPS } from "../../config/spell-group";
+import { SPELL_FUNCTIONS } from "../../spells";
 import { CR, TAB } from "../model/constants";
 import { Effect } from "../model/final/effect";
 import { ImmunityConfig } from "../model/final/immunity";
+import { Spell } from "../model/final/spell";
 import { CodeLine } from "../model/misc";
+import { SpellGroup } from "../model/raw/spell-group";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { EffectService } from "./effect.service";
-import { WeiduCoreService } from "./weidu-core.service";
-import path from "path";
-import { SPELL_GROUPS } from "../../config/spell-group";
-import { SpellGroup } from "../model/raw/spell-group";
-import { SPELL_FUNCTIONS } from "../../spells";
-import { RawSpell } from "../model/raw/spell";
 import { SpellService } from "./spell.service";
-import { Spell } from "../model/final/spell";
+import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduSpellService } from "./weidu-spell.service";
 
 export class WeiduFunctionService extends AbstractWeiduService {
@@ -39,7 +38,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
 
   generateSpellFunctions(): void {
     const lines = this.initLines();
-    const spells = this.spellService.mapSpells(SPELL_FUNCTIONS);
+    const spells = this.spellService.mapSpells(SPELL_FUNCTIONS, []); //FIXME: can't handle effect file creation
     for (const spell of spells) {
       this.generateSpellFunction(lines, spell, 0);
     }

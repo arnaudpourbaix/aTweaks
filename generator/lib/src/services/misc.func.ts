@@ -1,4 +1,4 @@
-export function convertMovement(movement: number, silent = true): number {
+export function convertMovement(movement: number): number {
   // aVENGER was using a coef of 0.75
   const result = Math.round(movement * 0.8);
   return result;

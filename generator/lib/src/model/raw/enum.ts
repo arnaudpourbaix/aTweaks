@@ -802,6 +802,7 @@ export type RawSpellFlag =
   | "NoLOSRequired"
   | "AllowSpotting"
   | "OutdoorsOnly"
+  | "IgnoreDead"
   | "CanTargetInvisible"
   | "CastableWhenSilenced";
 

@@ -127,14 +127,6 @@ export const FEY_DRYAD: RawCreature = {
     removeItems: [],
     removeScripts: ["DRYAD", "DW1MELGE", "INITDLG", "WTRUNSGT"],
   },
-  effectFiles: [
-    {
-      file: ATWEAKS_SPELLS.DryadCharmPerson,
-      opcode: "ProtectionFromSpell",
-      resource: ATWEAKS_SPELLS.DryadCharmPerson,
-      timing: "InstantPermanentUntilDeath",
-    },
-  ],
   spells: [
     createDimensionDoor({
       file: ATWEAKS_SPELLS.DimensionDoorInfinite,
@@ -164,25 +156,8 @@ export const FEY_DRYAD: RawCreature = {
           target: "LivingActor",
           range: 30,
           speed: 1,
+          racialSleepCharmResistance: true,
           effects: [
-            {
-              opcode: "UseEFFFile",
-              idsFile: "RACE",
-              idsEntry: "ELF",
-              probability1: 90,
-              timing: "InstantLimited",
-              duration: 1,
-              resource: ATWEAKS_SPELLS.DryadCharmPerson,
-            },
-            {
-              opcode: "UseEFFFile",
-              idsFile: "RACE",
-              idsEntry: "HALF_ELF",
-              probability1: 30,
-              timing: "InstantLimited",
-              duration: 1,
-              resource: ATWEAKS_SPELLS.DryadCharmPerson,
-            },
             {
               opcode: "CharmCreature",
               generalType: "HUMANOID",

@@ -90,6 +90,7 @@ export class MainService {
   }
 
   private getCreature(rawCreature: RawCreature): Creature {
+    const effectFiles: RawEffectFile[] = rawCreature.effectFiles ?? [];
     const creature: Creature = {
       tracking: true,
       help: true,
@@ -121,7 +122,7 @@ export class MainService {
       }),
       notEnforceFiles: rawCreature.notEnforceFiles ?? [],
       items: this.mapItems(rawCreature.items),
-      spells: this.spellService.mapSpells(rawCreature.spells),
+      spells: this.spellService.mapSpells(rawCreature.spells, effectFiles),
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
       effectFiles: this.mapEffectFiles(rawCreature.effectFiles),

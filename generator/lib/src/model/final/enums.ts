@@ -868,6 +868,7 @@ export enum SpellFlagEnum {
   NoLOSRequired = 11,
   AllowSpotting = 12,
   OutdoorsOnly = 13,
+  IgnoreDead = 14,
   CanTargetInvisible = 24,
   CastableWhenSilenced = 25,
 }

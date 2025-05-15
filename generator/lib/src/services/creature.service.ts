@@ -208,7 +208,7 @@ export class CreatureService {
   }
 
   convertMovement(movement: number): number {
-    return convertMovement(movement, false);
+    return convertMovement(movement);
   }
 
   private autogenerateSavingThrows(data: CreatureData, parent?: CreatureData) {
