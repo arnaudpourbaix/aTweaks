@@ -1,0 +1,16 @@
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/core.tpa"
+
+// Grab files
+COPY ~%MOD_FOLDER%/lib/pnp-monster/common/grab/rr#cnstr.vvc~ ~override~
+COPY ~%MOD_FOLDER%/lib/pnp-monster/common/grab/rr#cnstr.bam~ ~override~
+
+// Invisible Rat:
+// - used to Dimension Door away from screen
+// - destroys itself after a round
+ACTION_IF !FILE_EXISTS_IN_GAME rr#trat.cre BEGIN
+  COPY ~%MOD_FOLDER%/lib/pnp-monster/common/rat/rr#trat.cre~ ~override~
+  COMPILE ~%MOD_FOLDER%/lib/pnp-monster/common/rat/rr#trat.baf~
+END
+
+// Wall of Fog
+COPY ~%MOD_FOLDER%/lib/pnp-monster/common/fog/rr#mmswf.vvc~ ~override~

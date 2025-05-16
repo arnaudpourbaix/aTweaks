@@ -5,13 +5,15 @@ import { TraStringReferenceEnum } from "../config/stringRef";
 import { createDimensionDoor } from "../spells/dimension_door";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawBaseEffect, StringRefEffect } from "../src/model/raw/effect";
+import { RawSaveType } from "../src/model/raw/enum";
+import { EffectService } from "../src/services/effect.service";
 import { FactoryService } from "../src/services/factory.service";
 import { bafFile } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { abilityAnimalFriendship } from "./fey_hamadryad";
 import { MonsterEnum } from "./monster.enum";
 
-const factory = FactoryService.instance;
+const effects = EffectService.instance;
 
 // Creature Id
 const id = MonsterEnum.Nymph;
@@ -142,18 +144,11 @@ export const FEY_NYMPH: RawCreature = {
           target: "Caster",
           projectile: "BIGNAREA",
           effects: [
-            { opcode: "Blindness", ...blindingBeautyEffect },
-            {
-              opcode: "DisplayString",
-              ...blindingBeautyEffect,
-              stringRef: StringRefUtils.getStringId("blinded"),
-              timing: "InstantPermanentUntilDeath",
-            },
-            {
-              opcode: "DisplayPortraitIcon",
-              ...blindingBeautyEffect,
-              icon: "Blind",
-            },
+            ...effects.getBlindnessEffects({
+              duration: blindingBeautyEffect.duration as number,
+              dispelResistance: blindingBeautyEffect.dispelResistance,
+              saveType: (blindingBeautyEffect.saveTypes as RawSaveType[])[0],
+            }),
             {
               opcode: "PlaySound",
               resource: "EFF_P71B",
@@ -163,23 +158,15 @@ export const FEY_NYMPH: RawCreature = {
             {
               opcode: "PlayVisualEffect",
               playWhere: "OverTargetAttached",
+              resource: "SPH1HI01",
               ...blindingBeautyEffect,
               duration: 3,
-              resource: "SPH1HI01",
             },
-            ...[
-              ATWEAKS_SPELLS.ColorSpray,
-              ATWEAKS_SPELLS.ColorSprayRadiant,
-              SPELLS.ColorSpray,
-              ATWEAKS_SPELLS.BlindingBeautyTechnical,
-            ].map(
-              (s) =>
-                <StringRefEffect>{
-                  opcode: "ProtectionFromSpell",
-                  ...blindingBeautyEffect,
-                  resource: s,
-                }
-            ),
+            {
+              opcode: "ProtectionFromSpell",
+              resource: ATWEAKS_SPELLS.BlindingBeautyTechnical,
+              ...blindingBeautyEffect,
+            },
           ],
         },
       ],

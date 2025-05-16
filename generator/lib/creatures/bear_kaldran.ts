@@ -80,10 +80,12 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
       file: improvedStreamOfFrostProjectile,
       copyFromFile: "CONECOLD",
       description: "Improved stream of frost",
-      triggerRadius: 180,
-      areaOfEffect: 180,
-      areaProjectileFlags: ["AffectOnlyEnemies", "UseSecondaryProjectile"],
-      coneWidth: 0,
+      areaEffectInfo: {
+        areaProjectileFlags: ["AffectOnlyEnemies", "UseSecondaryProjectile"],
+        triggerRadius: 180,
+        areaOfEffect: 180,
+        coneWidth: 0,
+      },
     },
   ],
   abilities: [

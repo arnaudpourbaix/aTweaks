@@ -19,7 +19,7 @@ export class WeiduCoreService extends AbstractWeiduService {
       .map((l) => `${TAB.repeat(l.tab)}${l.code}`)
       .join(CR);
     fs.writeFileSync(
-      path.join(State.modFolder, GLOBAL_CONFIG.files.commonCreature),
+      path.join(State.modFolder, GLOBAL_CONFIG.files.coreMonsters),
       content
     );
   }
@@ -38,15 +38,15 @@ export class WeiduCoreService extends AbstractWeiduService {
   generateItem(itemSlot: RawItemSlot, immunity: ImmunityConfig) {
     const criticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
-    this.add(this.lines, `WRITE_LONG 0x64 0x72`, 1);
+    this.write(this.lines, 0x64, 4, "0x72", 1);
     let flags = 2 ** ItemFlagEnum.NotCopyable;
     if (itemSlot.slot === "HELMET") {
-      this.add(this.lines, `WRITE_SHORT 0x1c 72`, 1);
+      this.write(this.lines, 0x1c, 2, 72, 1);
     } else if (criticalHitImmunity) {
       flags += 2 ** ItemFlagEnum.ToggleCriticalHit;
     }
-    this.add(this.lines, `WRITE_LONG 0x18 ${flags}`, 1);
-    this.add(this.lines, `WRITE_ASCII 0x3a ~${this.getIcon(itemSlot)}~ #8`, 1);
+    this.write(this.lines, 0x18, 4, flags, 1);
+    this.write(this.lines, 0x3a, 8, this.getIcon(itemSlot), 1);
     this.add(
       this.lines,
       `SAY NAME1 ~${immunity.name} ${immunity.type}~ SAY NAME2 ~${immunity.name} ${immunity.type}~`,

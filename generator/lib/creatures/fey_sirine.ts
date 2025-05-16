@@ -1,23 +1,19 @@
-import {
-  DEFAULT_SPELL_PROBABILITY,
-  PRESET_NAMES,
-} from "../config/ability-presets";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { FactoryService } from "../src/services/factory.service";
-import { bafFile } from "../src/services/misc.func";
+import { EffectService } from "../src/services/effect.service";
+import { bafFile, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
-import { abilityDryadDireCharm, abilitySpeakWithPlants } from "./fey_dryad";
 import { MonsterEnum } from "./monster.enum";
 
-const factory = FactoryService.instance;
+const effects = EffectService.instance;
+
 // Creature Id
 const id = MonsterEnum.Sirine;
+// Items
+const mainWeapon = file(1, id);
 // Script
 const script = bafFile(id);
-
-const charmDuration = 180;
 
 export const FEY_SIRINE: RawCreature = {
   name: "Sirine",
@@ -25,10 +21,13 @@ export const FEY_SIRINE: RawCreature = {
   tpaFile: "lib/pnp-monster/fey/sirine",
   tracking: true,
   combatWalk: true,
-  dialog: [],
+  dialog: ["MEIALA", "NTSILUA"],
   attack: {
     melee: false,
     ranged: false,
+  },
+  autoGenerate: {
+    savingThrows: false,
   },
   data: {
     level1: 11, // 5 HD but level 11 caster
@@ -62,13 +61,15 @@ export const FEY_SIRINE: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
-    removeItems: ["ANTIWEB"],
+    removeItems: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
     removeScripts: [
       "SHOUT",
+      "INITDLG",
       "DW#GPSHT",
       // "J#SIRIN1",
       "SIRSPELL",
       "DW1RANMO",
+      "DW1RANGE",
     ],
     scriptLocation: "Race",
     memorizedSpells: [{ file: SPELLS.ImprovedInvisibility, memorizedCount: 1 }],
@@ -84,9 +85,44 @@ export const FEY_SIRINE: RawCreature = {
       dispelResistance: "NaturalNonMagical",
     },
   ],
+  items: [
+    {
+      file: mainWeapon,
+      icon: "IGHOUL",
+      type: "Melee",
+      diceSize: 3,
+      diceThrown: 1,
+      damageType: "Crushing",
+      effects: [
+        {
+          opcode: "CastSpell",
+          type: "CastInstantlyAtCasterLevel",
+          castingLevel: 1,
+          timing: "InstantPermanentUntilDeath",
+          dispelResistance: "NaturalNonMagical",
+          resource: ATWEAKS_SPELLS.TouchOfTranquility,
+        },
+      ],
+    },
+  ],
+  projectiles: [
+    {
+      file: ATWEAKS_SPELLS.CharmingSong,
+      copyFromFile: "SPARGONP",
+      description: "Sirine Charming Song",
+      speed: 40,
+      projectileInfo: {
+        bamProjectileFlags: ["EnableBrightenFlags", "HighLevelBrighten"],
+      },
+      areaEffectInfo: {
+        triggerRadius: 470,
+        areaOfEffect: 470,
+      },
+    },
+  ],
   spells: [
     {
-      name: "CharmingSong",
+      name: "Charming Song",
       file: ATWEAKS_SPELLS.CharmingSong,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.CharmingSong,
@@ -103,7 +139,7 @@ export const FEY_SIRINE: RawCreature = {
           type: "Melee",
           location: "Ability",
           target: "Caster",
-          projectile: "SPARGONP",
+          projectile: ATWEAKS_SPELLS.CharmingSong,
           effects: [
             {
               opcode: "UseEFFFile",
@@ -117,7 +153,7 @@ export const FEY_SIRINE: RawCreature = {
       ],
     },
     {
-      name: "CharmingSongTechnical",
+      name: "Charming Song Technical",
       file: ATWEAKS_SPELLS.CharmingSongTechnical,
       stringRef: StringRefUtils.getStringId("Dire Charm"),
       icon: SPELLS.DireCharm,
@@ -136,51 +172,36 @@ export const FEY_SIRINE: RawCreature = {
           range: 30,
           speed: 1,
           racialSleepCharmResistance: true,
-          effects: [
-            {
-              opcode: "CharmCreature",
-              generalType: "HUMANOID",
-              charmType: "NeutralDireCharm",
-              timing: "InstantLimited",
-              duration: charmDuration,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-            },
-            {
-              opcode: "DisplayString",
-              stringRef: StringRefUtils.getStringId("Dire charmed"),
-              timing: "InstantPermanentUntilDeath",
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-            },
-            {
-              opcode: "CharacterColorPulse",
-              color: { red: 255, green: 144, blue: 147 },
-              location: "ArmorGreyBeltAmulet",
-              cycleSpeed: 30,
-              timing: "InstantLimited",
-              duration: 1,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-            },
-            {
-              opcode: "PlayVisualEffect",
-              playWhere: "OverTargetAttached",
-              resource: "SPNWCHRM",
-              timing: "InstantLimited",
-              duration: 3,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-            },
-            {
-              opcode: "PlaySound",
-              resource: "EFF_E07",
-              timing: "DelayLimited",
-              duration: charmDuration,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-            },
-          ],
+          effects: effects.getCharmEffects({
+            charmType: "NeutralDireCharm",
+            duration: 180,
+            dispelResistance: "DispelNotBypassResistance",
+            saveType: "Spell",
+          }),
+        },
+      ],
+    },
+    {
+      name: "Fog Cloud",
+      file: ATWEAKS_SPELLS.FogCloud,
+      memorizedCount: 1,
+      stringRef: TraStringReferenceEnum.FogCloud,
+      castingSound: "CAS_M08",
+      spellType: "Innate",
+      castingAnimation: "Alteration",
+      primaryType: "Transmuter",
+      secondaryType: "Battleground",
+      icon: "SPWI204",
+      headers: [
+        {
+          type: "Ranged",
+          location: "Ability",
+          target: "AnyPointWithinRange",
+          projectile: "CLOUD",
+          effects: effects.getBlindnessEffects({
+            duration: 7,
+            dispelResistance: "DispelNotBypassResistance",
+          }),
         },
       ],
     },
@@ -209,7 +230,17 @@ export const FEY_SIRINE: RawCreature = {
       spell: {
         resource: ATWEAKS_SPELLS.CharmingSong,
         id: undefined,
-        type: "force",
+        // type: "force",
+      },
+    },
+    {
+      name: "Fog Cloud",
+      target: {
+        name: "NearestEnemies",
+      },
+      spell: {
+        resource: ATWEAKS_SPELLS.FogCloud,
+        excludeStateChecks: ["STATE_BLIND"],
       },
     },
   ],
@@ -231,5 +262,9 @@ export const FEY_SIRINE: RawCreature = {
     "L#NDC1", // Southern Edge
     "QSEROMOD", // Sirine (PofQuestPack)
   ],
-  adjustments: [],
+  adjustments: [
+    { files: ["SIL"], data: { level1: 7 } },
+    { files: ["ISLSIR"], data: { level1: 11 } },
+    { files: ["MEIALA"], data: { level1: 11 } },
+  ],
 };

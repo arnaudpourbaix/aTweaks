@@ -52,7 +52,7 @@ export class SpellService {
     return results;
   }
 
-  private mapSpell(spell: RawSpell, effectFiles: RawEffectFile[]): Spell {
+  mapSpell(spell: RawSpell, effectFiles: RawEffectFile[]): Spell {
     const headers: SpellHeader[] = [];
     for (const header of spell.headers ?? []) {
       headers.push(this.mapHeader(header, spell, effectFiles));

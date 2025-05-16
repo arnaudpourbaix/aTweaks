@@ -211,9 +211,11 @@ export const OGRE_MAGE: RawCreature = {
       file: coneOfCold,
       copyFromFile: "CONECOLD",
       description: "Ogre-Mage Cone of Cold",
-      areaOfEffect: 620,
-      triggerRadius: 620,
-      areaProjectileFlags: ["Coneshaped"], // "AffectOnlyEnemies" to prevent them for killing their allies
+      areaEffectInfo: {
+        areaProjectileFlags: ["Coneshaped"], // "AffectOnlyEnemies" to prevent them for killing their allies
+        areaOfEffect: 620,
+        triggerRadius: 620,
+      },
     },
   ],
   spells: [

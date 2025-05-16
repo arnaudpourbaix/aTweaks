@@ -1,6 +1,6 @@
 export const GLOBAL_CONFIG = {
   files: {
-    commonCreature: "lib/pnp-monster/common.tpa",
+    coreMonsters: "lib/pnp-monster/common/core.tpa",
     spellResources: "lib/common/spell-resources.tpa",
     spellFunctions: "lib/common/spell-functions.tpa",
     immunities: "lib/common/immunities.tpa",

@@ -11,15 +11,16 @@ import { bafFile } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 import { createDimensionDoor } from "../spells/dimension_door";
+import { EffectService } from "../src/services/effect.service";
 
 const factory = FactoryService.instance;
+const effects = EffectService.instance;
 
 // Creature Id
 const id = MonsterEnum.Dryad;
 // Script
 const script = bafFile(id);
 
-const charmDuration = 180;
 const speakWithPlantsDuration = 60;
 
 export const abilitySpeakWithPlants: RawCreatureAbility = {
@@ -157,56 +158,13 @@ export const FEY_DRYAD: RawCreature = {
           range: 30,
           speed: 1,
           racialSleepCharmResistance: true,
-          effects: [
-            {
-              opcode: "CharmCreature",
-              generalType: "HUMANOID",
-              charmType: "NeutralDireCharm",
-              timing: "InstantLimited",
-              duration: charmDuration,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-              saveBonus: -3,
-            },
-            {
-              opcode: "DisplayString",
-              stringRef: StringRefUtils.getStringId("Dire charmed"),
-              timing: "InstantPermanentUntilDeath",
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-              saveBonus: -3,
-            },
-            {
-              opcode: "CharacterColorPulse",
-              color: { red: 255, green: 144, blue: 147 },
-              location: "ArmorGreyBeltAmulet",
-              cycleSpeed: 30,
-              timing: "InstantLimited",
-              duration: 1,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-              saveBonus: -3,
-            },
-            {
-              opcode: "PlayVisualEffect",
-              playWhere: "OverTargetAttached",
-              resource: "SPNWCHRM",
-              timing: "InstantLimited",
-              duration: 3,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-              saveBonus: -3,
-            },
-            {
-              opcode: "PlaySound",
-              resource: "EFF_E07",
-              timing: "DelayLimited",
-              duration: charmDuration,
-              dispelResistance: "DispelNotBypassResistance",
-              saveTypes: ["Spell"],
-              saveBonus: -3,
-            },
-          ],
+          effects: effects.getCharmEffects({
+            charmType: "NeutralDireCharm",
+            duration: 180,
+            dispelResistance: "DispelNotBypassResistance",
+            saveType: "Spell",
+            saveBonus: -3,
+          }),
         },
       ],
     },

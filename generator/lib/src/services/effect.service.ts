@@ -1,5 +1,6 @@
 import { EFFECT_GROUP_NAMES } from "../../config/effect-group-name";
 import { EFFECT_GROUPS } from "../../config/effect-groups";
+import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import { BaseEffect, Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
@@ -102,8 +103,14 @@ import {
   TranslucencyEffect,
 } from "../model/raw/effect";
 import { RawEffectOpcode } from "../model/raw/effect.type";
-import { RawPortraitIcon } from "../model/raw/enum";
+import {
+  RawCharmType,
+  RawEffectDispelResistance,
+  RawPortraitIcon,
+  RawSaveType,
+} from "../model/raw/enum";
 import { CreatureService } from "./creature.service";
+import { StringRefUtils } from "./string-ref.utils";
 import { UtilsService } from "./utils.service";
 
 export class EffectService {
@@ -532,6 +539,116 @@ export class EffectService {
     if (!groupEffects)
       throw new Error(`Effects group ${effect.opcode} not found`);
     return this.getEffects(groupEffects.effectsFn(effect));
+  }
+
+  getCharmEffects(params: {
+    charmType: RawCharmType;
+    duration: number;
+    saveType?: RawSaveType;
+    saveBonus?: number;
+    dispelResistance?: RawEffectDispelResistance;
+  }) {
+    const effects: RawEffect[] = [
+      {
+        opcode: "CharmCreature",
+        generalType: "HUMANOID",
+        charmType: params.charmType,
+        timing: "InstantLimited",
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "DisplayString",
+        stringRef: StringRefUtils.getStringId("Dire charmed"),
+        timing: "InstantPermanentUntilDeath",
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "CharacterColorPulse",
+        color: { red: 255, green: 144, blue: 147 },
+        location: "ArmorGreyBeltAmulet",
+        cycleSpeed: 30,
+        timing: "InstantLimited",
+        duration: 1,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "PlayVisualEffect",
+        playWhere: "OverTargetAttached",
+        resource: "SPNWCHRM",
+        timing: "InstantLimited",
+        duration: 3,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "PlaySound",
+        resource: "EFF_E07",
+        timing: "DelayLimited",
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+    ];
+    return effects;
+  }
+
+  getBlindnessEffects(params: {
+    duration: number;
+    saveType?: RawSaveType;
+    saveBonus?: number;
+    dispelResistance?: RawEffectDispelResistance;
+  }) {
+    const effects: RawEffect[] = [
+      ATWEAKS_SPELLS.ColorSpray,
+      ATWEAKS_SPELLS.ColorSprayRadiant,
+      SPELLS.ColorSpray,
+      SPELLS.MephitColorSpray,
+    ].map((s) => ({
+      opcode: "ProtectionFromSpell",
+      resource: s,
+      timing: "InstantLimited",
+      duration: params.duration,
+      dispelResistance: params.dispelResistance,
+      saveTypes: params.saveType ? [params.saveType] : undefined,
+      saveBonus: params.saveBonus,
+    }));
+    effects.push(
+      {
+        opcode: "Blindness",
+        timing: "InstantLimited",
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "DisplayPortraitIcon",
+        icon: "Blind",
+        timing: "InstantLimited",
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: "DisplayString",
+        stringRef: StringRefUtils.getStringId("blinded"),
+        timing: "InstantPermanentUntilDeath",
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      }
+    );
+    return effects;
   }
 
   getBaseEffect(effect: RawBaseEffect): BaseEffect {

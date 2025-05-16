@@ -15,29 +15,15 @@ export class WeiduEffectService extends AbstractWeiduService {
   createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
     for (const effect of effectFiles) {
       this.add(lines, `CREATE EFF "${effect.file}"`, 0);
-      this.add(lines, `WRITE_LONG 0x10 ${effect.opcode}`, 1);
-      this.add(lines, `WRITE_LONG 0x14 ${effect.target}`, 1);
-      if (effect.timing) this.add(lines, `WRITE_LONG 0x24 ${effect.timing}`, 1);
-      if (effect.parameter1 && effect.parameter1 !== "0")
-        this.add(
-          lines,
-          `WRITE_LONG 0x1c ${this.getIntegerValue(effect.parameter1)}`,
-          1
-        );
-      if (effect.parameter2 && effect.parameter2 !== "0")
-        this.add(
-          lines,
-          `WRITE_LONG 0x20 ${this.getIntegerValue(effect.parameter2)}`,
-          1
-        );
-      if (effect.dispelResistance)
-        this.add(lines, `WRITE_LONG 0x5c ${effect.dispelResistance}`, 1);
-      if (effect.duration)
-        this.add(lines, `WRITE_LONG 0x28 ${effect.duration}`, 1);
-      if (effect.probability1)
-        this.add(lines, `WRITE_SHORT 0x2c ${effect.probability1}`, 1);
-      if (effect.resource)
-        this.add(lines, `WRITE_ASCII 0x30 ~${effect.resource}~ #8`, 1);
+      this.write(lines, 0x10, 4, effect.opcode, 1);
+      this.write(lines, 0x14, 4, effect.target, 1);
+      this.write(lines, 0x1c, 4, this.getIntegerValue(effect.parameter1), 1);
+      this.write(lines, 0x24, 4, effect.timing, 1);
+      this.write(lines, 0x20, 4, this.getIntegerValue(effect.parameter2), 1);
+      this.write(lines, 0x5c, 4, effect.dispelResistance, 1);
+      this.write(lines, 0x28, 4, effect.duration, 1);
+      this.write(lines, 0x2c, 2, effect.probability1, 1);
+      this.writeAscii(lines, 0x30, 8, effect.resource, 1);
       this.add(lines, "", 0);
     }
   }

@@ -34,7 +34,11 @@ import {
   ProjectileTypeEnum,
 } from "../model/final/projectile";
 import { AdditionalCode, CustomCode } from "../model/final/script";
-import { RawCreature, RawCreatureAdditionalData } from "../model/raw/creature";
+import {
+  RawCreature,
+  RawCreatureAdditionalData,
+  RawCreatureAutoGenerate,
+} from "../model/raw/creature";
 import { RawEffectFile } from "../model/raw/effect";
 import {
   RawAlterItem,
@@ -91,6 +95,13 @@ export class MainService {
 
   private getCreature(rawCreature: RawCreature): Creature {
     const effectFiles: RawEffectFile[] = rawCreature.effectFiles ?? [];
+    const autoGenerate: RawCreatureAutoGenerate = {
+      hitPoints: true,
+      savingThrows: true,
+      thac0: true,
+      enchantment: true,
+      meleeRange: true,
+    };
     const creature: Creature = {
       tracking: true,
       help: true,
@@ -101,14 +112,10 @@ export class MainService {
       useKitAbilities: false,
       hideInShadows: false,
       initActions: [],
-      autoGenerate: {
-        hitPoints: true,
-        savingThrows: true,
-        thac0: true,
-        enchantment: true,
-        meleeRange: true,
-      },
       ...rawCreature,
+      autoGenerate: rawCreature.autoGenerate
+        ? { ...autoGenerate, ...rawCreature.autoGenerate }
+        : autoGenerate,
       dialog: rawCreature.dialog ?? [],
       data: { ...rawCreature.data },
       abilities: this.abilityService.getAbilities(rawCreature.abilities),
@@ -404,21 +411,30 @@ export class MainService {
       ),
       idsTarget1: p.idsTarget1 ? EffectIDSFileEnum[p.idsTarget1] : undefined,
       idsTarget2: p.idsTarget2 ? EffectIDSFileEnum[p.idsTarget2] : undefined,
-      bamProjectileFlags: (p.bamProjectileFlags ?? []).map(
-        (f) => BamProjectileFlagsEnum[f]
-      ),
-      projectileSmokeAnimation: p.projectileSmokeAnimation
-        ? ProjectileAnimationEnum[p.projectileSmokeAnimation]
+      color: p.color
+        ? (p.color.red << 8) + (p.color.green << 16) + (p.color.blue << 24)
         : undefined,
-      fragmentAnimation: p.fragmentAnimation
-        ? ProjectileAnimationEnum[p.fragmentAnimation]
-        : undefined,
-      areaProjectileFlags: (p.areaProjectileFlags ?? []).map(
-        (f) => AreaProjectileEnum[f]
-      ),
-      explosionEffect: p.explosionEffect
-        ? ProjectileExplosionEffectEnum[p.explosionEffect]
-        : undefined,
+      projectileInfo: {
+        ...p.projectileInfo,
+        bamProjectileFlags: (p.projectileInfo?.bamProjectileFlags ?? []).map(
+          (f) => BamProjectileFlagsEnum[f]
+        ),
+        projectileSmokeAnimation: p.projectileInfo?.projectileSmokeAnimation
+          ? ProjectileAnimationEnum[p.projectileInfo?.projectileSmokeAnimation]
+          : undefined,
+      },
+      areaEffectInfo: {
+        ...p.areaEffectInfo,
+        areaProjectileFlags: (p.areaEffectInfo?.areaProjectileFlags ?? []).map(
+          (f) => AreaProjectileEnum[f]
+        ),
+        fragmentAnimation: p.areaEffectInfo?.fragmentAnimation
+          ? ProjectileAnimationEnum[p.areaEffectInfo?.fragmentAnimation]
+          : undefined,
+        explosionEffect: p.areaEffectInfo?.explosionEffect
+          ? ProjectileExplosionEffectEnum[p.areaEffectInfo?.explosionEffect]
+          : undefined,
+      },
     }));
     return results;
   }

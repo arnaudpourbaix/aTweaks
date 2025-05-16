@@ -85,8 +85,9 @@ export class UtilsService {
     else return `@${value}`;
   }
 
-  resolveStringRef(value: StringReference): string {
-    if (typeof value === "string" && /^\d+$/.test(value)) return value;
+  resolveStringRef(value: StringReference | undefined): string | undefined {
+    if (value === undefined) return;
+    else if (typeof value === "string" && /^\d+$/.test(value)) return value;
     else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
     else return `RESOLVE_STR_REF(@${value})`;
   }

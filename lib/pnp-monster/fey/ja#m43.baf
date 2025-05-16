@@ -1,3 +1,18 @@
+// Initiate dialog
+IF
+	Global("JA#DIALOG","LOCALS",0)
+	OR(2)
+		Name("MEIALA",Myself)
+		Name("NTSILUA",Myself)
+	NumTimesTalkedTo(0)
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("JA#DIALOG","LOCALS",1)
+		FaceObject([PC])
+		StartDialogueNoSet([PC])
+END
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -147,7 +162,7 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -173,7 +188,7 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -199,7 +214,7 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -225,7 +240,7 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -251,7 +266,7 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -277,7 +292,7 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -303,7 +318,7 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -329,7 +344,7 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -355,7 +370,7 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -382,7 +397,7 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC])
+		SpellRES("rr#fcsng",[PC])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -408,7 +423,7 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC]))
+		SpellRES("rr#fcsng",SecondNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -434,7 +449,7 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC]))
+		SpellRES("rr#fcsng",ThirdNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -460,7 +475,7 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",FourthNearest([PC]))
+		SpellRES("rr#fcsng",FourthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -486,7 +501,7 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",FifthNearest([PC]))
+		SpellRES("rr#fcsng",FifthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -512,7 +527,7 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SixthNearest([PC]))
+		SpellRES("rr#fcsng",SixthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -538,7 +553,7 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.FIGHTER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -563,7 +578,7 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -588,7 +603,7 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -613,7 +628,7 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.RANGER_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -638,7 +653,7 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -663,7 +678,7 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.RANGER_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -688,7 +703,7 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
+		SpellRES("rr#fcsng",[PC.0.0.PALADIN_ALL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -713,7 +728,7 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
+		SpellRES("rr#fcsng",SecondNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -738,7 +753,7 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
+		SpellRES("rr#fcsng",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -763,7 +778,7 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",[PC])
+		SpellRES("rr#fcsng",[PC])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -787,7 +802,7 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SecondNearest([PC]))
+		SpellRES("rr#fcsng",SecondNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -811,7 +826,7 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",ThirdNearest([PC]))
+		SpellRES("rr#fcsng",ThirdNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -835,7 +850,7 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",FourthNearest([PC]))
+		SpellRES("rr#fcsng",FourthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -859,7 +874,7 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",FifthNearest([PC]))
+		SpellRES("rr#fcsng",FifthNearest([PC]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
@@ -883,7 +898,178 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		ForceSpellRES("rr#fcsng",SixthNearest([PC]))
+		SpellRES("rr#fcsng",SixthNearest([PC]))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+// Fog Cloud
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(NearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",NearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",SecondNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",ThirdNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FourthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",FourthNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FifthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",FifthNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SixthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",SixthNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(SeventhNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SeventhNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",SeventhNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(EighthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(EighthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(EighthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",EighthNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(NinthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(NinthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NinthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",NinthNearestEnemyOf(Myself))
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+END
+
+IF
+	HaveSpellRES("RR#FCLD")
+	!StateCheck(TenthNearestEnemyOf(Myself),STATE_BLIND)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(TenthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
+	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
+	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(TenthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SpellRES("RR#FCLD",TenthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 

@@ -163,11 +163,7 @@ export interface Projectile {
   projectileWidth?: number;
   extendedFlags: ProjectileExtendedFlagsEnum[];
   stringRef?: StringReference;
-  color?: {
-    red: number;
-    green: number;
-    blue: number;
-  };
+  color?: number;
   colorSpeed?: number;
   screenShakeAmount?: number;
   idsTarget1?: EffectIDSFileEnum;
@@ -175,26 +171,16 @@ export interface Projectile {
   defaultSpell?: string;
   successSpell?: string;
 
-  bamProjectileFlags: BamProjectileFlagsEnum[];
-  travelingProjectileAnimation?: string;
-  shadowAnimation?: string;
-  lightSpotIntensity?: number;
-  lightSpotWidth?: number;
-  lightSpotHeight?: number;
-  palette?: string;
-  projectileColours?: string;
-  smokePuffDelay?: number;
-  smokeColours?: string;
-  faceTargetGranularity?: number;
-  projectileSmokeAnimation?: ProjectileAnimationEnum;
-  trailingAnimation1?: string;
-  trailingAnimation2?: string;
-  trailingAnimation3?: string;
-  trailingNumber1?: number;
-  trailingNumber2?: number;
-  trailingNumber3?: number;
-  flags?: number;
+  projectileInfo?: ProjectileInfo;
+  areaEffectInfo?: ProjectileAreaEffectInfo;
+}
 
+export interface ProjectileInfo {
+  bamProjectileFlags: BamProjectileFlagsEnum[];
+  projectileSmokeAnimation?: ProjectileAnimationEnum;
+}
+
+export interface ProjectileAreaEffectInfo {
   areaProjectileFlags: AreaProjectileEnum[];
   rayCount?: number;
   /**
@@ -215,4 +201,21 @@ export interface Projectile {
   explosionProjectile?: number;
   explosionAnimation?: number;
   coneWidth?: number;
+
+  travelingProjectileAnimation?: string;
+  shadowAnimation?: string;
+  lightSpotIntensity?: number;
+  lightSpotWidth?: number;
+  lightSpotHeight?: number;
+  palette?: string;
+  projectileColours?: string;
+  smokePuffDelay?: number;
+  smokeColours?: string;
+  faceTargetGranularity?: number;
+  trailingAnimation1?: string;
+  trailingAnimation2?: string;
+  trailingAnimation3?: string;
+  trailingNumber1?: number;
+  trailingNumber2?: number;
+  trailingNumber3?: number;
 }

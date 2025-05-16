@@ -45,6 +45,7 @@ export enum EffectTypeEnum {
   FatigueBonus = 93,
   FindTraps = 150,
   FireResistanceModifier = 30,
+  ForceVisible = 136,
   GiveAbility = 171,
   Haste = 16,
   Hold = 175,

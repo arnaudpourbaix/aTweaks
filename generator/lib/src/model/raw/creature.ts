@@ -105,11 +105,11 @@ export interface RawCreature {
 }
 
 export interface RawCreatureAutoGenerate {
-  thac0: boolean;
-  hitPoints: boolean;
-  savingThrows: boolean;
-  enchantment: boolean;
-  meleeRange: boolean;
+  thac0?: boolean;
+  hitPoints?: boolean;
+  savingThrows?: boolean;
+  enchantment?: boolean;
+  meleeRange?: boolean;
 }
 
 export interface RawCreatureAdjustment {

@@ -120,10 +120,12 @@ export const BASILISK_GREATER: RawCreature = {
       file: breathProjectile,
       copyFromFile: basiliskGazeProjectile,
       description: "Basilisk foul breath",
-      triggerRadius: 85,
-      areaOfEffect: 85,
-      triggerCount: 0,
-      areaProjectileFlags: ["AffectOnlyEnemies"],
+      areaEffectInfo: {
+        areaProjectileFlags: ["AffectOnlyEnemies"],
+        triggerRadius: 85,
+        areaOfEffect: 85,
+        triggerCount: 0,
+      },
     },
   ],
   spells: [

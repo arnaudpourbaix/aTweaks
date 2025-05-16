@@ -45,6 +45,7 @@ export type RawEffectOpcode =
   | "FatigueBonus"
   | "FindTraps"
   | "FireResistanceModifier"
+  | "ForceVisible"
   | "GiveAbility"
   | "Haste"
   | "Hold"

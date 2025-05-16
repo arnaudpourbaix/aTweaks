@@ -834,6 +834,7 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4015 = ~Fly~
 @4016 = ~Gaseous form~
 @4017 = ~Entangle~
+@4018 = ~Fog Cloud~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

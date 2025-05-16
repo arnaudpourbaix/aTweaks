@@ -53,10 +53,12 @@ export const WOLF_WINTER: RawCreature = {
       file: streamOfFrostProjectile,
       copyFromFile: "CONECOLD",
       description: "Stream of frost",
-      triggerRadius: 180,
-      areaOfEffect: 180,
-      areaProjectileFlags: ["AffectOnlyEnemies", "UseSecondaryProjectile"],
-      coneWidth: 0,
+      areaEffectInfo: {
+        areaProjectileFlags: ["AffectOnlyEnemies", "UseSecondaryProjectile"],
+        triggerRadius: 180,
+        areaOfEffect: 180,
+        coneWidth: 0,
+      },
     },
   ],
   abilities: [

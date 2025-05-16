@@ -115,7 +115,9 @@ export const FEY_HAMADRYAD: RawCreature = {
       file: ATWEAKS_SPELLS.HamadryadEntangle,
       copyFromFile: "ENTANG2",
       description: "Hamadryad Entangle",
-      areaProjectileFlags: ["AffectOnlyEnemies"],
+      areaEffectInfo: {
+        areaProjectileFlags: ["AffectOnlyEnemies"],
+      },
     },
   ],
   effectFiles: [

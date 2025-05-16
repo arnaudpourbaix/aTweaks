@@ -38,6 +38,8 @@ export const SPELLS = {
   AnimalSummoning4: "SPPR402",
   CallWoodlandBeeings: "SPPR410",
   BlindingBeauty: "SPPR704",
+  // Innates
+  MephitColorSpray: "SPIN937",
   // Class
   BerserkerRage: "SPCL321",
   BarbarianRage: "SPCL152",
@@ -119,4 +121,5 @@ export const ATWEAKS_SPELLS = {
   ColorSprayRadiant: "rr#mracs",
   CharmingSong: "rr#fcsng",
   CharmingSongTechnical: "rr#fcsn2",
+  TouchOfTranquility: "rr#ftrnq",
 };

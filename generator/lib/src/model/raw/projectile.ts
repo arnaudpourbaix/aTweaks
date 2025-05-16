@@ -37,26 +37,16 @@ export interface RawProjectile {
   defaultSpell?: string;
   successSpell?: string;
 
-  bamProjectileFlags?: RawBamProjectileFlags[];
-  travelingProjectileAnimation?: string;
-  shadowAnimation?: string;
-  lightSpotIntensity?: number;
-  lightSpotWidth?: number;
-  lightSpotHeight?: number;
-  palette?: string;
-  projectileColours?: string;
-  smokePuffDelay?: number;
-  smokeColours?: string;
-  faceTargetGranularity?: number;
-  projectileSmokeAnimation?: RawProjectileAnimation;
-  trailingAnimation1?: string;
-  trailingAnimation2?: string;
-  trailingAnimation3?: string;
-  trailingNumber1?: number;
-  trailingNumber2?: number;
-  trailingNumber3?: number;
-  flags?: number;
+  projectileInfo?: RawProjectileInfo;
+  areaEffectInfo?: RawProjectileAreaEffectInfo;
+}
 
+export interface RawProjectileInfo {
+  bamProjectileFlags?: RawBamProjectileFlags[];
+  projectileSmokeAnimation?: RawProjectileAnimation;
+}
+
+export interface RawProjectileAreaEffectInfo {
   areaProjectileFlags?: RawAreaProjectile[];
   rayCount?: number;
   /**
@@ -81,4 +71,21 @@ export interface RawProjectile {
   explosionProjectile?: number;
   explosionAnimation?: number;
   coneWidth?: number;
+
+  travelingProjectileAnimation?: string;
+  shadowAnimation?: string;
+  lightSpotIntensity?: number;
+  lightSpotWidth?: number;
+  lightSpotHeight?: number;
+  palette?: string;
+  projectileColours?: string;
+  smokePuffDelay?: number;
+  smokeColours?: string;
+  faceTargetGranularity?: number;
+  trailingAnimation1?: string;
+  trailingAnimation2?: string;
+  trailingAnimation3?: string;
+  trailingNumber1?: number;
+  trailingNumber2?: number;
+  trailingNumber3?: number;
 }

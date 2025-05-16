@@ -11,6 +11,7 @@ export const SPELL_STATES = {
   grabbing: "JA_GRAPPLING",
   flying: "JA_FLYING",
   gaseousForm: "JA_GASEOUSFORM",
+  notOutdoorCheck: "JA_NOT_OUTDOOR_CHECK",
 };
 
 export const DEFAULT_SPELL_PROBABILITY = 70;
