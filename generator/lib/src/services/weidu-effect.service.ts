@@ -43,13 +43,8 @@ export class WeiduEffectService extends AbstractWeiduService {
     header?: number;
     type: "SPL" | "ITM" | "CRE";
   }) {
-    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
-      this.add(
-        lines,
-        `LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~${effect.parameter2}~ RET row col END`,
-        1
-      );
-      effect.parameter2 = "row";
+    const has2da = this.has2daLookup({ lines, tab, effect });
+    if (has2da) {
       this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab++);
     }
     let fn = "ADD_EFFECT";
@@ -101,8 +96,43 @@ export class WeiduEffectService extends AbstractWeiduService {
       ? ` STR_VAR resource="${effect.resource}"`
       : "";
     this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
-    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
+    if (has2da) {
       this.add(lines, `END`, --tab);
     }
+  }
+
+  has2daLookup({
+    lines,
+    tab,
+    effect,
+  }: {
+    lines: CodeLine[];
+    tab: number;
+    effect: Effect;
+  }): boolean {
+    let col = 0;
+    let file = "";
+    let param = 1;
+    if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
+      file = "msectype";
+      param = 2;
+    } else if (
+      effect.opcode === EffectTypeEnum.ProtectionFromResourceAndMessage &&
+      !/\d+/.test(effect.parameter1)
+    ) {
+      file = "splprot";
+      col = 3;
+    }
+    if (!file) return false;
+    this.add(
+      lines,
+      `LPF GET_2DA_ENTRY_OF INT_VAR col_match = ${col} STR_VAR file = ~${file}.2da~ entry_match = ~${
+        param === 1 ? effect.parameter1 : effect.parameter2
+      }~ RET row col END`,
+      1
+    );
+    if (param === 1) effect.parameter1 = "row";
+    else effect.parameter2 = "row";
+    return true;
   }
 }

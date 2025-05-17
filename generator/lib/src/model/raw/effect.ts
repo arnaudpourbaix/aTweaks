@@ -240,6 +240,7 @@ export type PoisonResistanceModifierEffect = RawBaseEffect & {
 
 export type ProtectionFromResourceEffect = RawBaseEffect & {
   opcode: "ProtectionFromResource" | "ProtectionFromResourceAndMessage";
+  //TODO:
   value: string;
   type: string;
 };

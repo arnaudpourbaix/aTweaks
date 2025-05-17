@@ -67,7 +67,7 @@ export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [
   { id: [14780, 158915], str: "Dire charmed", group: "charm" },
   { id: [14007, 17427, 25818], str: "Panic", group: "panic" },
   { id: [20568], str: "Morale Failure: Panic", group: "panic" },
-  { id: [14791, 26184], str: "Rigid Thinking", group: "rigidThinking" },
+  { id: [14791, 26184], str: "Rigid Thinking", group: "rigidThinking" }, // Feebleminded 23744
   { id: [14782, 25807], str: "Confused", group: "confusion" },
   { id: [14665, 25863], str: "Petrified", group: "petrified" },
   { id: [14128], str: "Polymorph", group: "polymorph" },

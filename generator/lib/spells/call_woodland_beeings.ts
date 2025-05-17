@@ -21,6 +21,20 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
   description: TraStringReferenceEnum.CallWoodlandBeeingsDescription,
   icon: SPELLS.CallWoodlandBeeings,
   deleteHeaders: true,
+  effects: [
+    {
+      opcode: "ProtectionFromResourceAndMessage",
+      target: "Self",
+      // LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=1 duration=1 parameter2=JA_NOT_OUTDOOR_CHECK STR_VAR resource=~sppr410~ END
+      type: "110", // SPLSTATE = specified value
+      value: "CHAOTIC_COMMANDS", // CHAOTIC_COMMANDS 41
+      timing: "InstantLimited",
+      dispelResistance: "NaturalNonMagical",
+      duration: 1,
+      resource: SPELLS.CallWoodlandBeeings,
+      global: true,
+    },
+  ],
   headers: [
     {
       type: "Melee",

@@ -231,16 +231,25 @@ export const FEY_SIRINE: RawCreature = {
           location: "Ability",
           target: "LivingActor",
           effects: [
+            // {
+            //   opcode: "ProtectionFromResourceAndMessage",
+            //   type: "110", // SPLSTATE = specified value
+            //   value: "CHAOTIC_COMMANDS", // CHAOTIC_COMMANDS 41
+            //   timing: "InstantLimited",
+            //   dispelResistance: "NaturalNonMagical",
+            //   duration: 1,
+            //   resource: ATWEAKS_SPELLS.TouchOfTranquility,
+            // },
             {
               opcode: "Feeblemindedness",
               ...tranquilityBaseEffect,
             },
-            {
-              opcode: "IntelligenceBonus",
-              type: "Set",
-              value: 2,
-              ...tranquilityBaseEffect,
-            },
+            // {
+            //   opcode: "IntelligenceBonus",
+            //   type: "Set",
+            //   value: 2,
+            //   ...tranquilityBaseEffect,
+            // },
             {
               opcode: "DisplayPortraitIcon",
               icon: "Feebleminded",

@@ -8,6 +8,7 @@ import { ImmunityConfig } from "../model/final/immunity";
 import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
+import { SPELL_PROTECTIONS } from "../../config/spell-protection";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -22,6 +23,21 @@ export class WeiduCoreService extends AbstractWeiduService {
       path.join(State.modFolder, GLOBAL_CONFIG.files.coreMonsters),
       content
     );
+  }
+
+  generateProtectionSpells() {
+    for (const sp of SPELL_PROTECTIONS) {
+      //TODO: value can be an IDS value, need to be converted to ID
+      let value = sp.value;
+      this.add(
+        this.lines,
+        `APPEND ~splprot.2da~ ~${sp.name}%TAB%${sp.stat}%TAB%${
+          value ?? -1
+        }%TAB%${sp.relation}~ UNLESS ~${sp.name}~`,
+        0
+      );
+    }
+    this.add(this.lines, ``, 0);
   }
 
   generateSpellStates() {

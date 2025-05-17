@@ -76,6 +76,7 @@ export class MainService {
 
   generateCommonCode(): Promise<void> {
     this.weiduCoreService.generateSpellStates();
+    this.weiduCoreService.generateProtectionSpells();
     this.weiduFunctionService.generateSpellResources();
     this.weiduFunctionService.generateSpellFunctions();
     this.weiduFunctionService.generateImmunities();
