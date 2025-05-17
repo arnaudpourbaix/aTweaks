@@ -12,8 +12,6 @@ CREATE ITM "ja#1m15"
 	WRITE_SHORT 0x1c 57
 	WRITE_ASCII 0x22 ~S2~ #2
 	WRITE_BYTE 0x31 93
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 	WRITE_LONG 0x60 1
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -38,8 +36,6 @@ CREATE ITM "ja#2m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 2
 	WRITE_ASCII 0x22 ~4A~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 COPY_EXISTING ~ja#2m15.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=98 parameter2=5 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=29 parameter2=4 timing=2 probability1=100 END
@@ -49,8 +45,6 @@ CREATE ITM "ja#3m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 7
 	WRITE_ASCII 0x22 ~H5~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 COPY_EXISTING ~ja#3m15.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=53 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=52 timing=2 probability1=100 END
@@ -59,9 +53,7 @@ COPY_EXISTING ~ja#3m15.itm~ ~override~
 CREATE ITM "ja#4m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 1
-	WRITE_ASCII 0x22 ~undefined~ #2
 	WRITE_ASCII 0x3a ~IRING01~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 COPY_EXISTING ~ja#4m15.itm~ ~override~
 	LPF fireballSpell_immunity END
 	LPF lightningBoltSpell_immunity END

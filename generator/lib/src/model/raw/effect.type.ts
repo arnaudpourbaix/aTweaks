@@ -43,6 +43,7 @@ export type RawEffectOpcode =
   | "ElectricityResistanceModifier"
   | "EntangleOverlay"
   | "FatigueBonus"
+  | "Feeblemindedness"
   | "FindTraps"
   | "FireResistanceModifier"
   | "ForceVisible"

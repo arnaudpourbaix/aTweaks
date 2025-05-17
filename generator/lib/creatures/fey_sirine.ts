@@ -1,6 +1,7 @@
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { RawBaseEffect } from "../src/model/raw/effect";
 import { EffectService } from "../src/services/effect.service";
 import { bafFile, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
@@ -14,6 +15,12 @@ const id = MonsterEnum.Sirine;
 const mainWeapon = file(1, id);
 // Script
 const script = bafFile(id);
+
+const tranquilityBaseEffect: RawBaseEffect = {
+  timing: "InstantLimited",
+  duration: 300,
+  saveTypes: ["ParalyzePoisonDeath"],
+};
 
 export const FEY_SIRINE: RawCreature = {
   name: "Sirine",
@@ -88,6 +95,7 @@ export const FEY_SIRINE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      equippedSlot: "WEAPON1",
       icon: "IGHOUL",
       type: "Melee",
       diceSize: 3,
@@ -202,6 +210,64 @@ export const FEY_SIRINE: RawCreature = {
             duration: 7,
             dispelResistance: "DispelNotBypassResistance",
           }),
+        },
+      ],
+    },
+    {
+      name: "Touch of Tranquility",
+      file: ATWEAKS_SPELLS.TouchOfTranquility,
+      memorizedCount: 1,
+      stringRef: TraStringReferenceEnum.TouchOfTranquility,
+      castingSound: "EFF_P11",
+      flags: ["Hostile", "IgnoreDead"],
+      spellType: "Innate",
+      castingAnimation: "Alteration",
+      primaryType: "Transmuter",
+      secondaryType: "Battleground",
+      icon: SPELLS.Feeblemind,
+      headers: [
+        {
+          type: "Melee",
+          location: "Ability",
+          target: "LivingActor",
+          effects: [
+            {
+              opcode: "Feeblemindedness",
+              ...tranquilityBaseEffect,
+            },
+            {
+              opcode: "IntelligenceBonus",
+              type: "Set",
+              value: 2,
+              ...tranquilityBaseEffect,
+            },
+            {
+              opcode: "DisplayPortraitIcon",
+              icon: "Feebleminded",
+              ...tranquilityBaseEffect,
+            },
+            {
+              opcode: "PlayVisualEffect",
+              playWhere: "OverTargetAttached",
+              ...tranquilityBaseEffect,
+              duration: 2,
+              resource: "SPMINDAT",
+            },
+            {
+              opcode: "CharacterColorPulse",
+              color: { red: 109, green: 73, blue: 0 },
+              location: "ArmorGreyBeltAmulet",
+              cycleSpeed: 20,
+              ...tranquilityBaseEffect,
+              duration: 1,
+            },
+            {
+              opcode: "DisplayString",
+              stringRef: "", //TODO:
+              ...tranquilityBaseEffect,
+              timing: "InstantPermanentUntilDeath",
+            },
+          ],
         },
       ],
     },

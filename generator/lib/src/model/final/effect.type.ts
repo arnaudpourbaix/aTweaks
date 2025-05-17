@@ -43,6 +43,7 @@ export enum EffectTypeEnum {
   ElectricityResistanceModifier = 29,
   EntangleOverlay = 154,
   FatigueBonus = 93,
+  Feeblemindedness = 76,
   FindTraps = 150,
   FireResistanceModifier = 30,
   ForceVisible = 136,

@@ -44,6 +44,9 @@ export interface RawProjectile {
 export interface RawProjectileInfo {
   bamProjectileFlags?: RawBamProjectileFlags[];
   projectileSmokeAnimation?: RawProjectileAnimation;
+  lightSpotIntensity?: number;
+  lightSpotWidth?: number;
+  lightSpotHeight?: number;
 }
 
 export interface RawProjectileAreaEffectInfo {

@@ -94,6 +94,23 @@ export const FEY_NYMPH: RawCreature = {
       timing: "InstantPermanentUntilDeath",
     },
   ],
+  projectiles: [
+    {
+      file: ATWEAKS_SPELLS.BlindingBeauty,
+      copyFromFile: "BIGNAREA",
+      description: "Nymph Blinding Beauty",
+      speed: 60,
+      projectileInfo: {
+        lightSpotIntensity: 128,
+        lightSpotWidth: 15,
+        lightSpotHeight: 11,
+      },
+      areaEffectInfo: {
+        triggerRadius: 470,
+        areaOfEffect: 470,
+      },
+    },
+  ],
   spells: [
     {
       name: "Blinding Beauty",
@@ -108,7 +125,7 @@ export const FEY_NYMPH: RawCreature = {
           type: "Melee",
           location: "Ability",
           target: "Caster",
-          projectile: "BIGNAREA",
+          projectile: ATWEAKS_SPELLS.BlindingBeauty,
           effects: [
             {
               opcode: "PlayVisualEffect",
@@ -142,7 +159,6 @@ export const FEY_NYMPH: RawCreature = {
           type: "Melee",
           location: "Ability",
           target: "Caster",
-          projectile: "BIGNAREA",
           effects: [
             ...effects.getBlindnessEffects({
               duration: blindingBeautyEffect.duration as number,

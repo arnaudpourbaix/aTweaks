@@ -3,9 +3,23 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m44.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m44su.baf~
 
+COPY_EXISTING "BIGNAREA.pro" ~override/rr#fbbea.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_SHORT 0xa 60
+	WRITE_SHORT 0x116 128
+	WRITE_SHORT 0x118 15
+	WRITE_SHORT 0x11a 11
+	WRITE_SHORT 0x204 470
+	WRITE_SHORT 0x206 470
+ADD_PROJECTILE ~override/rr#fbbea.pro~ ~Nymph Blinding Beauty~
+
 CREATE EFF "rr#fbbea"
 	WRITE_LONG 0x10 146
 	WRITE_LONG 0x14 2
+	WRITE_LONG 0x1c 0
 	WRITE_LONG 0x24 1
 	WRITE_LONG 0x20 1
 	WRITE_SHORT 0x2c 100
@@ -21,7 +35,7 @@ COPY_EXISTING ~rr#fbbea.SPL~  ~override~
 	WRITE_ASCII 0x3a ~SPPR704C~ #8
 	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
 	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~BIGNAREA~)) + 1 STR_VAR icon="SPPR704B" END
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~rr#fbbea~)) + 1 STR_VAR icon="SPPR704B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=1 parameter2=1 duration=2 probability1=100 STR_VAR resource="ICCLKFR2" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=3 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
 	
@@ -33,7 +47,7 @@ COPY_EXISTING ~rr#fbbe2.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPPR704C~ #8
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~BIGNAREA~)) + 1 STR_VAR icon="SPPR704B" END
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 STR_VAR icon="SPPR704B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 resist_dispel=3 duration=7200 probability1=100 savingthrow=1 STR_VAR resource="fl#clrsp" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 resist_dispel=3 duration=7200 probability1=100 savingthrow=1 STR_VAR resource="rr#mracs" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 resist_dispel=3 duration=7200 probability1=100 savingthrow=1 STR_VAR resource="SPWI105" END

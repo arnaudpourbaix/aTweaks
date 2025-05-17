@@ -5,6 +5,8 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/wolf/ja#m21.baf~
 CREATE EFF "ja#1m21"
 	WRITE_LONG 0x10 206
 	WRITE_LONG 0x14 2
+	WRITE_LONG 0x1c 0
+	WRITE_LONG 0x20 0
 	WRITE_LONG 0x28 1
 	WRITE_SHORT 0x2c 100
 	WRITE_ASCII 0x30 ~ja#1m21~ #8
@@ -49,9 +51,6 @@ CREATE ITM "ja#1m21"
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
-	WRITE_ASCII 0x22 ~undefined~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 	WRITE_LONG 0x60 2
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -67,15 +66,9 @@ COPY_EXISTING ~ja#1m21.itm~ ~override~
 	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
 
 COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#2m21.ITM~
-	WRITE_ASCII 0x22 ~undefined~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 savebonus="-1" STR_VAR resource="ja#1m21" END
 
 COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#3m21.ITM~
-	WRITE_ASCII 0x22 ~undefined~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~~)
 	WRITE_SHORT 0x86 30
 
 ACTION_FOR_EACH ~file~ IN

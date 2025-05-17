@@ -16,6 +16,7 @@ export const SPELLS = {
   PolymorphSelf: "SPWI416",
   MinorGlobeOfInvulnerability: "SPWI406",
   ConeOfCold: "SPWI503",
+  Feeblemind: "SPWI509",
   Domination: "SPWI506",
   // Priest
   Bless: "SPPR101",

@@ -112,8 +112,6 @@ CREATE ITM "ja#2m32"
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Gaseous form~)
 	WRITE_LONG 0x18 72
-	WRITE_ASCII 0x22 ~undefined~ #2
-	WRITE_ASCII 0x3a ~undefined~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Gaseous form is immuned to everything but magical fire, lightning and mind spells.~)
 	WRITE_LONG 0x60 1
 	WRITE_BYTE 0x74 1

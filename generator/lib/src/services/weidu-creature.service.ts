@@ -264,10 +264,12 @@ export class WeiduCreatureService extends AbstractWeiduService {
     for (const key of CREATURE_DATA_KEYS) {
       if (p.data[key] !== undefined) {
         const value = this.extractDataValue(key, p.data);
-        if (value !== undefined)
-          this.add(p.lines, `${key}=${this.getIntegerValue(value)}`, p.tab + 2);
-        if (key === "gender") {
-          this.add(p.lines, `sex=${value}`, p.tab + 2);
+        const intValue = this.getIntegerValue(value);
+        if (intValue !== undefined) {
+          this.add(p.lines, `${key}=${intValue}`, p.tab + 2);
+          if (key === "gender") {
+            this.add(p.lines, `sex=${value}`, p.tab + 2);
+          }
         }
       }
     }
@@ -305,13 +307,14 @@ export class WeiduCreatureService extends AbstractWeiduService {
     for (const data of CREATURE_DATA) {
       if (p.data[data.key] !== undefined) {
         const value = this.extractDataValue(data.key, p.data);
-        if (value !== undefined) {
+        const intValue = this.getIntegerValue(value);
+        if (intValue !== undefined) {
           for (const field of data.fields) {
             this.add(
               p.lines,
               `${this.getWrite(field.size)} 0x${field.index.toString(
                 16
-              )} ${this.getIntegerValue(value)} // ${data.key}`,
+              )} ${intValue} // ${data.key}`,
               p.tab
             );
           }
@@ -433,11 +436,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
       `LPF patchCreatureScript STR_VAR script=${p.script}${slot}${files}${skipFiles}${removeScripts} END`,
       p.tab
     );
-    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x248 "None" #8`);
-    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x250 "None" #8`);
-    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x258 "None" #8`);
-    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x260 "None" #8`);
-    // this.add(p.lines, `WRITE_EVALUATED_ASCII 0x268 "None" #8`);
   }
 
   private handleAdjustments(

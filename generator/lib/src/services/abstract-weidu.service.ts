@@ -85,6 +85,7 @@ export class AbstractWeiduService {
     value: string | undefined,
     tab?: number
   ) {
+    if (!value) return;
     this.add(
       lines,
       `WRITE_ASCII 0x${offset.toString(16)} ~${value}~ #${size}`,
@@ -98,6 +99,7 @@ export class AbstractWeiduService {
     stringRef: StringReference | undefined,
     tab?: number
   ) {
+    if (!stringRef) return;
     const value = this.utils.resolveStringRef(stringRef);
     this.write(lines, offset, 4, value, tab);
   }
@@ -117,16 +119,8 @@ export class AbstractWeiduService {
     this.write(lines, offset, 4, value, tab);
   }
 
-  protected getFlagValue(array: number[] | undefined): number | undefined {
-    if (!array) return;
-    return array.reduce((sum, save) => {
-      sum += 2 ** save;
-      return sum;
-    }, 0);
-  }
-
-  protected getIntegerValue(value: number | string) {
-    if (value === 0 || value === "" || value === "0") return;
+  protected getIntegerValue(value: number | string | undefined) {
+    if (value === undefined || value === "") return;
     const val = `${value}`.trim();
     if (!val.startsWith("-")) return value;
     return `"${val}"`;

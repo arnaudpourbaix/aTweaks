@@ -49,6 +49,9 @@ export class WeiduProjectileService extends AbstractWeiduService {
     if (projectile.projectileInfo) {
       const info = projectile.projectileInfo;
       this.writeFlag(lines, 0x100, 4, info.bamProjectileFlags, 1);
+      this.write(lines, 0x116, 2, info.lightSpotIntensity, 1);
+      this.write(lines, 0x118, 2, info.lightSpotWidth, 1);
+      this.write(lines, 0x11a, 2, info.lightSpotHeight, 1);
       this.write(lines, 0x134, 2, info.projectileSmokeAnimation, 1);
     }
     if (projectile.areaEffectInfo) {

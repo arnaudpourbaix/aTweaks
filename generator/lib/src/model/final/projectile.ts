@@ -178,6 +178,9 @@ export interface Projectile {
 export interface ProjectileInfo {
   bamProjectileFlags: BamProjectileFlagsEnum[];
   projectileSmokeAnimation?: ProjectileAnimationEnum;
+  lightSpotIntensity?: number;
+  lightSpotWidth?: number;
+  lightSpotHeight?: number;
 }
 
 export interface ProjectileAreaEffectInfo {
