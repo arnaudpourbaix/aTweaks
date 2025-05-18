@@ -237,6 +237,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "cloudSpells",
     type: "immunity",
+    itemSlot: { file: ITEMS.CloudSpells, slot: "RRING" },
     description: ["Cloud spells immunity"],
     spellGroups: ["cloud"],
     displaySpellIneffective: true,

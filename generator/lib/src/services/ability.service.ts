@@ -104,6 +104,14 @@ export class AbilityService {
     const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
     if (!preset) throw new Error(`Unknown preset ${presetName}`);
     const result: RawCreatureAbility = deepmerge(preset.ability, ability, {});
+    if (result.spell && preset.ability.spell?.id && ability.spell?.resource)
+      result.spell.id = undefined;
+    else if (
+      result.spell &&
+      preset.ability.spell?.resource &&
+      ability.spell?.id
+    )
+      result.spell.resource = undefined;
     return result;
   }
 
@@ -111,15 +119,7 @@ export class AbilityService {
     spell: RawCreatureAbilitySpell,
     target: string
   ): Actions.Action {
-    if (spell.id && spell.type === "normal")
-      return { name: "Spell", params: [target, spell.id] };
-    else if (spell.id && spell.type === "noDec")
-      return { name: "SpellNoDec", params: [target, spell.id] };
-    else if (spell.id && spell.type === "force")
-      return { name: "ForceSpell", params: [target, spell.id] };
-    else if (spell.id && spell.type === "reallyForce")
-      return { name: "ReallyForceSpell", params: [target, spell.id] };
-    else if (spell.resource && spell.type === "normal")
+    if (spell.resource && spell.type === "normal")
       return { name: "SpellRES", params: [spell.resource, target] };
     else if (spell.resource && spell.type === "noDec")
       return { name: "SpellNoDecRES", params: [spell.resource, target] };
@@ -127,6 +127,15 @@ export class AbilityService {
       return { name: "ForceSpellRES", params: [spell.resource, target] };
     else if (spell.resource && spell.type === "reallyForce")
       return { name: "ReallyForceSpellRES", params: [spell.resource, target] };
+    else if (spell.id && spell.type === "normal")
+      return { name: "Spell", params: [target, spell.id] };
+    else if (spell.id && spell.type === "noDec")
+      return { name: "SpellNoDec", params: [target, spell.id] };
+    else if (spell.id && spell.type === "force")
+      return { name: "ForceSpell", params: [target, spell.id] };
+    else if (spell.id && spell.type === "reallyForce")
+      return { name: "ReallyForceSpell", params: [target, spell.id] };
+
     throw new Error("getSpellAction: unexpected combination");
   }
 }

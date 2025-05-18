@@ -3,7 +3,6 @@ import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawEffect } from "../src/model/raw/effect";
 import { RawSpell } from "../src/model/raw/spell";
-import { StringRefUtils } from "../src/services/string-ref.utils";
 
 const baseEffect: RawEffect = {
   opcode: "UseEFFFile",

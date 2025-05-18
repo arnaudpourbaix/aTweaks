@@ -8,6 +8,15 @@ LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM"
 OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)
 APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%%value%%TAB%9~ UNLESS ~JA_NOT_OUTDOOR_CHECK~
 
+CREATE ITM "ja#i8"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	SAY NAME1 ~cloudSpells immunity~ SAY NAME2 ~cloudSpells immunity~
+	SAY UNIDENTIFIED_DESC ~Cloud spells immunity~
+COPY_EXISTING ~ja#i8.itm~ ~override~
+	LPF cloudSpells_immunity END
+
 CREATE ITM "ja#i6"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32

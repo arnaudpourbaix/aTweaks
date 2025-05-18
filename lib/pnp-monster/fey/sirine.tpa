@@ -109,7 +109,13 @@ COPY_EXISTING ~rr#ftrnq.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=48 duration=300 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 duration=2 probability1=100 savingthrow=4 STR_VAR resource="SPMINDAT" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=4812032 parameter2=1310720 duration=1 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 timing=1 duration=300 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=23744 timing=1 duration=300 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=300 probability1=100 savingthrow=4 STR_VAR resource="rr#ftrnq" END
+	
+	// Improved Invisibility
+COPY_EXISTING ~SPWI405.SPL~  ~override/ja#1m43.SPL~
+COPY_EXISTING ~ja#1m43.SPL~  ~override~
+	LPF SPELL_TO_INNATE INT_VAR ctime=1   END
 	
 CREATE ITM "ja#1m43"
 	WRITE_LONG 0x64 0x72
@@ -162,11 +168,12 @@ BEGIN
 			REMOVE_CRE_ITEM ~AROW01~
 			REMOVE_CRE_ITEM ~AROW05~
 			ADD_CRE_ITEM ~ja#1m43~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#i6~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
+			ADD_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_MEMORIZED_SPELL ~SPWI405~ #3 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~RR#FCLD~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ftrnq~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m43~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature

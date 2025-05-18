@@ -90,6 +90,7 @@ export class SpellService {
       headers,
       deleteOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
       deleteHeaders: spell.deleteHeaders ?? false,
+      makeInnate: spell.makeInnate,
     };
     if (!spell.copyFrom && spell.spellType === undefined)
       result.spellType = SpellTypeEnum.Innate;

@@ -46,12 +46,17 @@ export interface Spell {
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
   effects: Effect[];
+  headers: SpellHeader[];
   /**
    * Array of min levels or boolean
    */
   deleteHeaders: number[] | boolean;
   deleteOpcodes: EffectTypeEnum[];
-  headers: SpellHeader[];
+  makeInnate?: {
+    castingTime?: number;
+    removeInvisbilityOnCast?: boolean;
+    renew?: boolean;
+  };
 }
 
 export interface SpellHeader {

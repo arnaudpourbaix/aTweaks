@@ -17,6 +17,8 @@ const utils = UtilsService.instance;
 
 // Creature Id
 const id = MonsterEnum.Sirine;
+// Spells
+const improvedInvisibility = file(1, id);
 // Items
 const mainWeapon = file(1, id);
 // Script
@@ -36,8 +38,7 @@ export const FEY_SIRINE: RawCreature = {
   combatWalk: true,
   dialog: ["MEIALA", "NTSILUA"],
   attack: {
-    melee: false,
-    ranged: false,
+    //TODO: attack in melee as a last resort, inv -> charm -> fog cloud (mb?) -> polymorph self or ranged attack
   },
   autoGenerate: {
     savingThrows: false,
@@ -85,8 +86,7 @@ export const FEY_SIRINE: RawCreature = {
       "DW1RANGE",
     ],
     scriptLocation: "Race",
-    memorizedSpells: [{ file: SPELLS.ImprovedInvisibility, memorizedCount: 1 }],
-    immunities: ["entangle"],
+    immunities: ["cloudSpells"],
   },
   effectFiles: [
     {
@@ -253,12 +253,6 @@ export const FEY_SIRINE: RawCreature = {
               opcode: "Feeblemindedness",
               ...tranquilityBaseEffect,
             },
-            // {
-            //   opcode: "IntelligenceBonus",
-            //   type: "Set",
-            //   value: 2,
-            //   ...tranquilityBaseEffect,
-            // },
             {
               opcode: "DisplayPortraitIcon",
               icon: "Feebleminded",
@@ -281,13 +275,27 @@ export const FEY_SIRINE: RawCreature = {
             },
             {
               opcode: "DisplayString",
-              stringRef: "", //TODO:
+              stringRef: StringRefUtils.getStringId("Feebleminded"),
               ...tranquilityBaseEffect,
               timing: "InstantPermanentUntilDeath",
+            },
+            {
+              opcode: "ProtectionFromSpell",
+              resource: ATWEAKS_SPELLS.TouchOfTranquility,
+              ...tranquilityBaseEffect,
             },
           ],
         },
       ],
+    },
+    {
+      name: "Improved Invisibility",
+      file: improvedInvisibility,
+      memorizedCount: 1,
+      copyFrom: SPELLS.ImprovedInvisibility,
+      makeInnate: {
+        castingTime: 1,
+      },
     },
   ],
   additionalCode: [
@@ -299,34 +307,59 @@ export const FEY_SIRINE: RawCreature = {
     },
   ],
   customCode: [
-    {
-      location: "init",
-      type: "insertBefore",
-      statements: [],
-    },
+    // {
+    //   location: "attack",
+    //   type: "insertBefore",
+    //   statements: [
+    //     {
+    //       comment: "Don't break invisibility when charm is available",
+    //       triggers: [
+    //         {
+    //           name: "StateCheck",
+    //           params: ["Myself", "STATE_INVISIBLE"],
+    //         },
+    //         {
+    //           name: "HaveSpellRES",
+    //           params: [ATWEAKS_SPELLS.CharmingSong],
+    //         },
+    //       ],
+    //       responses: [
+    //         {
+    //           weight: 100,
+    //           actions: [{ name: "NoAction" }],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
   ],
   abilities: [
     {
       preset: SPELLS.ImprovedInvisibility,
-    },
-    {
-      preset: SPELLS.DireCharm,
       spell: {
-        resource: ATWEAKS_SPELLS.CharmingSong,
-        id: undefined,
-        // type: "force",
+        resource: improvedInvisibility,
+        type: "force",
+        remove: true,
       },
     },
-    {
-      name: "Fog Cloud",
-      target: {
-        name: "NearestEnemies",
-      },
-      spell: {
-        resource: ATWEAKS_SPELLS.FogCloud,
-        excludeStateChecks: ["STATE_BLIND"],
-      },
-    },
+    // {
+    //   preset: SPELLS.DireCharm,
+    //   spell: {
+    //     resource: ATWEAKS_SPELLS.CharmingSong,
+    //     id: undefined,
+    //     // type: "force",
+    //   },
+    // },
+    // {
+    //   name: "Fog Cloud",
+    //   target: {
+    //     name: "NearestEnemies",
+    //   },
+    //   spell: {
+    //     resource: ATWEAKS_SPELLS.FogCloud,
+    //     excludeStateChecks: ["STATE_BLIND"],
+    //   },
+    // },
   ],
   files: [
     "ISLSIR", // Sirine Queen

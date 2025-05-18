@@ -6,4 +6,5 @@ export const ITEMS = {
   CriticalHitImmunity: "ja#i5",
   EntangleImmunity: "ja#i6",
   Plant: "ja#i7",
+  CloudSpells: "ja#i8",
 };

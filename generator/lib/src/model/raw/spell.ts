@@ -62,6 +62,11 @@ export interface RawSpell {
    */
   deleteHeaders?: number[] | boolean;
   deleteOpcodes?: RawEffectOpcode[];
+  makeInnate?: {
+    castingTime?: number;
+    removeInvisbilityOnCast?: boolean;
+    renew?: boolean;
+  };
 }
 
 export interface RawSpellHeader {
