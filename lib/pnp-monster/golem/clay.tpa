@@ -10,7 +10,7 @@ COPY_EXISTING ~ja#1m24.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
-	LPF GET_2DA_ENTRY_OF INT_VAR col_match = 0 STR_VAR file = ~msectype.2da~ entry_match = ~K1#SLOW~ RET row col END
+	LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~msectype~ entry_match=~K1#SLOW~ RET row col END
 	PATCH_IF row != "-1" BEGIN
 		LPF ADD_EFFECT INT_VAR header=1 opcode=221 target=2 power=1 parameter1=9 parameter2=row duration=18 probability1=100 END
 	END

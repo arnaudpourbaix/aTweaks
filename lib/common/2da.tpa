@@ -11,6 +11,8 @@ STR_VAR
 RET
   row col
 BEGIN
+  SET row = "-1"
+  SET col = "-1"
   INNER_ACTION BEGIN
     COPY_EXISTING - ~%file%.2da~ ~override~
       LPF GET_2DA_ENTRY INT_VAR row_match col_match STR_VAR entry_match RET row col END
@@ -40,9 +42,11 @@ BEGIN
   SET rowMax = (row_match < 0) ? (numRows - 1) : row_match
   SET colMin = (col_match < 0) ? 0 : col_match
   SET colMax = (col_match < 0) ? (numCols - 1) : col_match
+  // PATCH_PRINT ~%entry_match%, rowMin=%rowMin%, rowMax=%rowMax%, colMin=%colMin%, colMax=%colMax%, row_match=%row_match%, col_match=%col_match%~
   FOR (curRow = rowMin + rowOffset; curRow <= rowMax; ++curRow) BEGIN
     FOR (curCol = colMin; curCol <= colMax; ++curCol) BEGIN
       READ_2DA_ENTRY curRow curCol numCols value
+      // PATCH_PRINT ~Read %value%~
       PATCH_IF (~%entry_match%~ STR_EQ ~%value%~) BEGIN
         SET row = curRow - rowOffset
         SET col = curCol

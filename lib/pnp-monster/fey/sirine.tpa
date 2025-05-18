@@ -104,6 +104,7 @@ COPY_EXISTING ~rr#ftrnq.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI509C~ #8
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 STR_VAR icon="SPWI509B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~CHAOTIC_COMMANDS~) parameter2=76 duration=1 probability1=100 STR_VAR resource="rr#ftrnq" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=76 target=2 power=1 duration=300 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=48 duration=300 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 duration=2 probability1=100 savingthrow=4 STR_VAR resource="SPMINDAT" END

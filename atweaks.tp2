@@ -73,6 +73,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/clay.tpa"
 
 
 

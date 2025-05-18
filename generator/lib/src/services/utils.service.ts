@@ -7,6 +7,10 @@ import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { SpellGroup } from "../model/raw/spell-group";
+import {
+  SpellProtection,
+  SpellProtectionStat,
+} from "../model/raw/spell-protection";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
@@ -92,6 +96,10 @@ export class UtilsService {
     else return `RESOLVE_STR_REF(@${value})`;
   }
 
+  getSpellProtectionIndex(protection: SpellProtection): number {
+    return 0;
+  }
+
   getSpellResourceFromIds(ids: string): string {
     const type = ids.substring(0, 1);
     const num = ids.substring(1);
@@ -155,6 +163,43 @@ export class UtilsService {
       name: file.substring(0, file.indexOf(".")),
       ext: file.substring(file.indexOf(".") + 1),
     };
+  }
+
+  getIdsFileFromSpellProtectionStat(stat: SpellProtectionStat): string {
+    let file = "";
+    switch (stat) {
+      case SpellProtectionStat.Align:
+        file = "align";
+        break;
+      case SpellProtectionStat.Areatype:
+        file = "areatype";
+        break;
+      case SpellProtectionStat.Class:
+        file = "class";
+        break;
+      case SpellProtectionStat.Ea:
+        file = "ea";
+        break;
+      case SpellProtectionStat.Gender:
+        file = "gender";
+        break;
+      case SpellProtectionStat.General:
+        file = "general";
+        break;
+      case SpellProtectionStat.Race:
+        file = "race";
+        break;
+      case SpellProtectionStat.Specific:
+        file = "specific";
+        break;
+      case SpellProtectionStat.Splstate:
+        file = "splstate";
+        break;
+      case SpellProtectionStat.State:
+        file = "state";
+        break;
+    }
+    return file;
   }
 
   getSpellInfos(

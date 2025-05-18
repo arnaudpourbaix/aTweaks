@@ -1,4 +1,5 @@
 import { RawEffectGroupName } from "../../../config/effect-group-name";
+import { SpellProtectionName } from "../../../config/spell-protection-name";
 import { AnimationIdentifiers } from "../ids/animate";
 import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifier } from "../ids/slot";
@@ -51,6 +52,7 @@ import {
   RawSummonCreatureMode,
   RawTranslucencyType,
 } from "./enum";
+import { SpellProtection } from "./spell-protection";
 
 export interface RawBaseEffect {
   // opcode: RawEffectTypeEnum;
@@ -240,9 +242,8 @@ export type PoisonResistanceModifierEffect = RawBaseEffect & {
 
 export type ProtectionFromResourceEffect = RawBaseEffect & {
   opcode: "ProtectionFromResource" | "ProtectionFromResourceAndMessage";
-  //TODO:
-  value: string;
-  type: string;
+  type: SpellProtectionName | SpellProtection;
+  value?: string | number;
 };
 
 export type ScriptingStateModifierEffect = RawBaseEffect & {

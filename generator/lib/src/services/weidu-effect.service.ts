@@ -112,24 +112,22 @@ export class WeiduEffectService extends AbstractWeiduService {
   }): boolean {
     let col = 0;
     let file = "";
-    let param = 1;
+    let param = 2;
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
       file = "msectype";
-      param = 2;
     } else if (
       effect.opcode === EffectTypeEnum.ProtectionFromResourceAndMessage &&
-      !/\d+/.test(effect.parameter1)
+      !/\d+/.test(effect.parameter2)
     ) {
       file = "splprot";
-      col = 3;
     }
     if (!file) return false;
     this.add(
       lines,
-      `LPF GET_2DA_ENTRY_OF INT_VAR col_match = ${col} STR_VAR file = ~${file}.2da~ entry_match = ~${
+      `LPF GET_2DA_ENTRY_OF INT_VAR col_match=${col} STR_VAR file=~${file}~ entry_match=~${
         param === 1 ? effect.parameter1 : effect.parameter2
       }~ RET row col END`,
-      1
+      tab
     );
     if (param === 1) effect.parameter1 = "row";
     else effect.parameter2 = "row";

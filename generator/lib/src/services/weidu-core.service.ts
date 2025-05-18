@@ -9,6 +9,7 @@ import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { SPELL_PROTECTIONS } from "../../config/spell-protection";
+import { SpellProtectionStat } from "../model/raw/spell-protection";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -27,8 +28,18 @@ export class WeiduCoreService extends AbstractWeiduService {
 
   generateProtectionSpells() {
     for (const sp of SPELL_PROTECTIONS) {
-      //TODO: value can be an IDS value, need to be converted to ID
-      let value = sp.value;
+      let file = this.utils.getIdsFileFromSpellProtectionStat(
+        sp.stat as SpellProtectionStat
+      );
+      let value: string | number | undefined = sp.value;
+      if (typeof value === "string" && !/\d+/.test(value) && file) {
+        this.add(
+          this.lines,
+          `OUTER_SET value=IDS_OF_SYMBOL (~${file}~ ~${value}~)`,
+          0
+        );
+        value = "%value%";
+      }
       this.add(
         this.lines,
         `APPEND ~splprot.2da~ ~${sp.name}%TAB%${sp.stat}%TAB%${

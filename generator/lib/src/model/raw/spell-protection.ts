@@ -22,7 +22,22 @@ export type SpellProtection =
   | SpellProtectionGender
   | SpellProtectionAlign
   | SpellProtectionState
-  | SpellProtectionSplstate;
+  | SpellProtectionSplstate
+  | SpellProtectionNumber;
+// | SpellProtectionRow1OrRow2
+// | SpellProtectionNotRow1AndNotRow2
+
+export interface SpellProtectionRow1OrRow2 {
+  name?: SpellProtectionName;
+  row1: SpellProtectionName | number;
+  row2: SpellProtectionName | number;
+}
+
+export interface SpellProtectionNotRow1AndNotRow2 {
+  name?: SpellProtectionName;
+  row1: SpellProtectionName | number;
+  row2: SpellProtectionName | number;
+}
 
 export interface SpellProtectionStats extends BaseSpellProtection {
   stat: StatsIdentifier;
@@ -79,8 +94,21 @@ export interface SpellProtectionSplstate extends BaseSpellProtection {
   value?: SplStateIdentifier;
 }
 
+export interface SpellProtectionNumber extends BaseSpellProtection {
+  stat:
+    | SpellProtectionStat.SourceEqualsTarget
+    | SpellProtectionStat.SourceIsNotTarget
+    | SpellProtectionStat.CircleSize
+    | SpellProtectionStat.SourceAndTargetMoraleMatch
+    | SpellProtectionStat.SourceAndTargetAllies
+    | SpellProtectionStat.SourceAndTargetEnemies
+    | SpellProtectionStat.SummonCreatureLimit
+    | SpellProtectionStat.ChapterCheck;
+  value?: number;
+}
+
 export interface BaseSpellProtection {
-  name: SpellProtectionName;
+  name?: SpellProtectionName;
   relation: SpellProtectionRelation;
 }
 
@@ -88,6 +116,8 @@ export enum SpellProtectionStat {
   SourceEqualsTarget = "0x100",
   SourceIsNotTarget = "0x101",
   CircleSize = "0x102",
+  // Row1OrRow2 = "0x103",
+  // NotRow1AndNotRow2 = "0x104",
   SourceAndTargetMoraleMatch = "0x105",
   Areatype = "0x106",
   Ea = "0x10a",

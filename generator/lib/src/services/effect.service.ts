@@ -1,6 +1,8 @@
 import { EFFECT_GROUP_NAMES } from "../../config/effect-group-name";
 import { EFFECT_GROUPS } from "../../config/effect-groups";
 import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
+import { EXISTING_SPELL_PROTECTIONS } from "../../config/spell-protection";
+import { SpellProtectionName } from "../../config/spell-protection-name";
 import { BaseEffect, Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import {
@@ -109,6 +111,10 @@ import {
   RawPortraitIcon,
   RawSaveType,
 } from "../model/raw/enum";
+import {
+  SpellProtection,
+  SpellProtectionStat,
+} from "../model/raw/spell-protection";
 import { CreatureService } from "./creature.service";
 import { StringRefUtils } from "./string-ref.utils";
 import { UtilsService } from "./utils.service";
@@ -284,8 +290,10 @@ export class EffectService {
         break;
       case EffectTypeEnum.ProtectionFromResource:
       case EffectTypeEnum.ProtectionFromResourceAndMessage:
-        result.parameter1 = (<ProtectionFromResourceEffect>effect).value;
-        result.parameter2 = (<ProtectionFromResourceEffect>effect).type;
+        this.protectionFromResource(
+          result,
+          effect as ProtectionFromResourceEffect
+        );
         break;
       case EffectTypeEnum.ScriptingStateModifier:
         this.scriptingStateModifier(
@@ -520,6 +528,66 @@ export class EffectService {
     const type = EffectDamageTypeEnum[effect.type];
     result.parameter1 = `${effect.amount ?? 0}`;
     result.parameter2 = `${mode + (type << 16)}`;
+  }
+
+  private protectionFromResource(
+    result: Effect,
+    effect: ProtectionFromResourceEffect
+  ) {
+    const isValueString =
+      typeof effect.value === "string" && !/\d+/.test(effect.value);
+    if (effect.value !== undefined && !isValueString)
+      result.parameter1 = `${effect.value}`;
+    if (typeof effect.type === "string")
+      this.protectionFromResourceFromName(
+        result,
+        effect,
+        effect.type,
+        isValueString
+      );
+    else
+      this.protectionFromResourceFromObject(
+        result,
+        effect,
+        effect.type,
+        isValueString
+      );
+  }
+
+  private protectionFromResourceFromName(
+    result: Effect,
+    effect: ProtectionFromResourceEffect,
+    type: SpellProtectionName,
+    isValueString: boolean
+  ) {
+    result.parameter2 = type;
+    if (isValueString)
+      throw new Error(`Can't determine param1 in ${JSON.stringify(effect)}`);
+  }
+
+  private protectionFromResourceFromObject(
+    result: Effect,
+    effect: ProtectionFromResourceEffect,
+    type: SpellProtection,
+    isValueString: boolean
+  ) {
+    type.value = type.value ?? -1;
+    const prot = EXISTING_SPELL_PROTECTIONS.find(
+      (p) =>
+        p.stat === type.stat &&
+        p.relation === type.relation &&
+        p.value == type.value
+    );
+    if (!prot)
+      throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
+    result.parameter2 = `${prot.index}`;
+    if (!isValueString) return;
+    let file = this.utils.getIdsFileFromSpellProtectionStat(
+      prot.stat as SpellProtectionStat
+    );
+    if (!file)
+      throw new Error(`Can't find IDS file for: ${JSON.stringify(type)}`);
+    result.parameter1 = `IDS_OF_SYMBOL (~${file}~ ~${effect.value}~)`;
   }
 
   private scriptingStateModifier(
