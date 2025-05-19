@@ -105,10 +105,9 @@ export const ABILITY_PRESETS: {
       name: "Improved Invisibility",
       spell: {
         id: "WIZARD_IMPROVED_INVISIBILITY",
-        excludeStateChecks: ["STATE_INVISIBLE"],
+        excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
-      triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
     },
   },
   {

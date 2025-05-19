@@ -179,10 +179,10 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("rr#ddoor","RR#TRAT")
 		Wait(1)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -195,9 +195,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fspkp",Myself)
 		SetGlobalTimer("speakWithPlants","LOCALS",60)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -238,9 +238,11 @@ IF
 	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",NearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",NearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -279,9 +281,11 @@ IF
 	See(SecondNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SecondNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",SecondNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -320,9 +324,11 @@ IF
 	See(ThirdNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",ThirdNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",ThirdNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -361,9 +367,11 @@ IF
 	See(FourthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",FourthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",FourthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -402,9 +410,11 @@ IF
 	See(FifthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",FifthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",FifthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -443,9 +453,11 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SixthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",SixthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -484,9 +496,11 @@ IF
 	See(SeventhNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",SeventhNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",SeventhNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -525,9 +539,11 @@ IF
 	See(EighthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",EighthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",EighthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -566,9 +582,11 @@ IF
 	See(NinthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",NinthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",NinthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 IF
@@ -607,9 +625,11 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("RR#FENTG",TenthNearestEnemyOf(Myself))
-		SetGlobalTimer("entangle","LOCALS",18)
+		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("entangle","LOCALS",18)
+		ForceSpellRES("RR#FENTG",TenthNearestEnemyOf(Myself))
+		SetInterrupt(TRUE)
 END
 
 // Dire Charm
@@ -650,9 +670,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -693,9 +713,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -736,9 +756,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -779,9 +799,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -822,9 +842,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -865,9 +885,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -908,9 +928,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -951,9 +971,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -994,9 +1014,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1038,9 +1058,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1081,9 +1101,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1124,9 +1144,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1167,9 +1187,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1210,9 +1230,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1253,9 +1273,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1296,9 +1316,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1338,9 +1358,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1380,9 +1400,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1422,9 +1442,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1464,9 +1484,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1506,9 +1526,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1548,9 +1568,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1590,9 +1610,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1632,9 +1652,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1660,9 +1680,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",[PC])
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1687,9 +1707,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1714,9 +1734,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1741,9 +1761,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1768,9 +1788,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1795,9 +1815,9 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
 		RemoveSpellRES("rr#fchrm")
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -1816,8 +1836,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1835,8 +1855,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1854,8 +1874,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1873,8 +1893,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
 		SetInterrupt(TRUE)
 END
 
@@ -1892,8 +1912,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1911,8 +1931,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1924,8 +1944,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fdsnr",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fdsnr",Myself)
 		SetInterrupt(TRUE)
 END
 
@@ -1941,6 +1961,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
@@ -1956,6 +1977,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
@@ -1971,6 +1993,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
@@ -1986,6 +2009,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
@@ -2001,6 +2025,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
@@ -2016,6 +2041,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	HaveSpellRES("rr#fchrm")
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
@@ -2032,6 +2058,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	HaveSpellRES("rr#fchrm")
 	!General(LastSeenBy(Myself),WEAPON)

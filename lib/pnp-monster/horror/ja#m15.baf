@@ -119,9 +119,9 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		SpellNoDec([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec([PC.0.0.MAGE_ALL],WIZARD_MAGIC_MISSILE)
 END
 
 IF
@@ -138,9 +138,9 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		SpellNoDec([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec([PC.0.0.CLERIC_ALL],WIZARD_MAGIC_MISSILE)
 END
 
 IF
@@ -157,9 +157,9 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		SpellNoDec([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec([PC.0.0.DRUID_ALL],WIZARD_MAGIC_MISSILE)
 END
 
 IF
@@ -175,9 +175,9 @@ IF
 	See([PC.0.0.BARD])
 THEN
 	RESPONSE #100
-		SpellNoDec([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec([PC.0.0.BARD],WIZARD_MAGIC_MISSILE)
 END
 
 // Attack Slowed enemy
@@ -749,8 +749,8 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		Spell(Player1,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player1,WIZARD_DIMENSION_DOOR)
 END
 
 IF
@@ -767,8 +767,8 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
-		Spell(Player2,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player2,WIZARD_DIMENSION_DOOR)
 END
 
 IF
@@ -785,8 +785,8 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		Spell(Player3,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player3,WIZARD_DIMENSION_DOOR)
 END
 
 IF
@@ -803,8 +803,8 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		Spell(Player4,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player4,WIZARD_DIMENSION_DOOR)
 END
 
 IF
@@ -821,8 +821,8 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		Spell(Player5,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player5,WIZARD_DIMENSION_DOOR)
 END
 
 IF
@@ -838,14 +838,15 @@ IF
 	See(Player6)
 THEN
 	RESPONSE #100
-		Spell(Player6,WIZARD_DIMENSION_DOOR)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(Player6,WIZARD_DIMENSION_DOOR)
 END
 
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	!CheckStatGT(Player1,0,SANCTUARY)
 	!StateCheck(Player1,STATE_CHARMED)
@@ -858,6 +859,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	!CheckStatGT(Player2,0,SANCTUARY)
 	!StateCheck(Player2,STATE_CHARMED)
@@ -870,6 +872,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	!CheckStatGT(Player3,0,SANCTUARY)
 	!StateCheck(Player3,STATE_CHARMED)
@@ -882,6 +885,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	!CheckStatGT(Player4,0,SANCTUARY)
 	!StateCheck(Player4,STATE_CHARMED)
@@ -894,6 +898,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	!CheckStatGT(Player5,0,SANCTUARY)
 	!StateCheck(Player5,STATE_CHARMED)
@@ -906,6 +911,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	!CheckStatGT(Player6,0,SANCTUARY)
 	!StateCheck(Player6,STATE_CHARMED)
@@ -919,6 +925,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)

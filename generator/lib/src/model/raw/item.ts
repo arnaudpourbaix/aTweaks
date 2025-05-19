@@ -65,6 +65,17 @@ export interface RawItemSlot {
    * Filename for ITM file (without extension)
    */
   file: string;
-
   slot: ItemSlot;
+  /**
+   * default: 1
+   */
+  quantity?: number;
+  /**
+   * default: false
+   */
+  unstealable?: boolean;
+  /**
+   * default: true
+   */
+  undroppable?: boolean;
 }

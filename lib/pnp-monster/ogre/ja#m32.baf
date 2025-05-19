@@ -121,9 +121,9 @@ IF
 	RandomNumGT(800,240)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellNoDec(Myself,WIZARD_INVISIBILITY)
 		SetGlobalTimer("invisible","LOCALS",18)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Fly
@@ -136,8 +136,8 @@ IF
 	RandomNumGT(801,80)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellNoDecRES("ja#2m32",Myself)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Domination
@@ -163,8 +163,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -189,8 +189,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -215,8 +215,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -241,8 +241,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_DOMINATION)
 END
 
 IF
@@ -267,8 +267,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -293,8 +293,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -319,8 +319,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_DOMINATION)
 END
 
 IF
@@ -345,8 +345,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -371,8 +371,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 END
 
 // Domination
@@ -398,8 +398,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_DOMINATION)
 END
 
 IF
@@ -424,8 +424,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_DOMINATION)
 END
 
 IF
@@ -450,8 +450,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_DOMINATION)
 END
 
 IF
@@ -476,8 +476,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_DOMINATION)
 END
 
 IF
@@ -502,8 +502,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_DOMINATION)
 END
 
 IF
@@ -528,8 +528,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_DOMINATION)
 END
 
 // Domination
@@ -554,8 +554,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -579,8 +579,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -604,8 +604,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -629,8 +629,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_DOMINATION)
 END
 
 IF
@@ -654,8 +654,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -679,8 +679,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -704,8 +704,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_DOMINATION)
 END
 
 IF
@@ -729,8 +729,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 END
 
 IF
@@ -754,8 +754,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DOMINATION)
 END
 
 // Domination
@@ -779,8 +779,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC],WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -803,8 +803,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SecondNearest([PC]),WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -827,8 +827,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(ThirdNearest([PC]),WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -851,8 +851,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FourthNearest([PC]),WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -875,8 +875,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FifthNearest([PC]),WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -899,8 +899,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SixthNearest([PC]),WIZARD_DOMINATION)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Dire Charm
@@ -926,8 +926,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -952,8 +952,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -978,8 +978,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1004,8 +1004,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1030,8 +1030,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1056,8 +1056,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1082,8 +1082,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1108,8 +1108,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1134,8 +1134,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 END
 
 // Dire Charm
@@ -1161,8 +1161,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1187,8 +1187,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1213,8 +1213,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1239,8 +1239,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1265,8 +1265,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1291,8 +1291,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_DIRE_CHARM)
 END
 
 // Dire Charm
@@ -1317,8 +1317,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1342,8 +1342,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1367,8 +1367,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1392,8 +1392,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1417,8 +1417,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1442,8 +1442,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1467,8 +1467,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1492,8 +1492,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 END
 
 IF
@@ -1517,8 +1517,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_DIRE_CHARM)
 END
 
 // Dire Charm
@@ -1542,8 +1542,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC],WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1566,8 +1566,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SecondNearest([PC]),WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1590,8 +1590,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(ThirdNearest([PC]),WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1614,8 +1614,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FourthNearest([PC]),WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1638,8 +1638,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FifthNearest([PC]),WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1662,8 +1662,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SixthNearest([PC]),WIZARD_DIRE_CHARM)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Charm Person
@@ -1689,8 +1689,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1715,8 +1715,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1741,8 +1741,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1767,8 +1767,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1793,8 +1793,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1819,8 +1819,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1845,8 +1845,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1871,8 +1871,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1897,8 +1897,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 END
 
 // Charm Person
@@ -1924,8 +1924,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1950,8 +1950,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -1976,8 +1976,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2002,8 +2002,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2028,8 +2028,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2054,8 +2054,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_CHARM_PERSON)
 END
 
 // Charm Person
@@ -2080,8 +2080,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC.0.0.FIGHTER_ALL],WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2105,8 +2105,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2130,8 +2130,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2155,8 +2155,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2180,8 +2180,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2205,8 +2205,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2230,8 +2230,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2255,8 +2255,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 END
 
 IF
@@ -2280,8 +2280,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_CHARM_PERSON)
 END
 
 // Charm Person
@@ -2305,8 +2305,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell([PC],WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2329,8 +2329,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SecondNearest([PC]),WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2353,8 +2353,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(ThirdNearest([PC]),WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2377,8 +2377,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FourthNearest([PC]),WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2401,8 +2401,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(FifthNearest([PC]),WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -2425,8 +2425,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		Spell(SixthNearest([PC]),WIZARD_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Power Word Sleep
@@ -2452,8 +2452,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.FIGHTER_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.FIGHTER_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2478,8 +2478,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2504,8 +2504,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2530,8 +2530,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2556,8 +2556,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2582,8 +2582,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2608,8 +2608,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2634,8 +2634,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2660,8 +2660,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 // Power Word Sleep
@@ -2687,8 +2687,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2713,8 +2713,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2739,8 +2739,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2765,8 +2765,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2791,8 +2791,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2817,8 +2817,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 // Power Word Sleep
@@ -2843,8 +2843,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.FIGHTER_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.FIGHTER_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2868,8 +2868,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2893,8 +2893,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2918,8 +2918,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2943,8 +2943,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2968,8 +2968,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -2993,8 +2993,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3018,8 +3018,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3043,8 +3043,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_POWER_WORD_SLEEP)
 END
 
 // Power Word Sleep
@@ -3068,8 +3068,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3092,8 +3092,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3116,8 +3116,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3140,8 +3140,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3164,8 +3164,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 IF
@@ -3188,8 +3188,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_POWER_WORD_SLEEP)
 END
 
 // Sleep
@@ -3215,8 +3215,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.FIGHTER_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.FIGHTER_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3241,8 +3241,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3267,8 +3267,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3293,8 +3293,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3319,8 +3319,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3345,8 +3345,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3371,8 +3371,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3397,8 +3397,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3423,8 +3423,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 END
 
 // Sleep
@@ -3450,8 +3450,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_SLEEP)
 END
 
 IF
@@ -3476,8 +3476,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3502,8 +3502,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3528,8 +3528,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3554,8 +3554,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3580,8 +3580,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_SLEEP)
 END
 
 // Sleep
@@ -3606,8 +3606,8 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.FIGHTER_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.FIGHTER_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3631,8 +3631,8 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3656,8 +3656,8 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3681,8 +3681,8 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.RANGER_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.RANGER_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3706,8 +3706,8 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3731,8 +3731,8 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3756,8 +3756,8 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
-		Spell([PC.0.0.PALADIN_ALL],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC.0.0.PALADIN_ALL],WIZARD_SLEEP)
 END
 
 IF
@@ -3781,8 +3781,8 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 END
 
 IF
@@ -3806,8 +3806,8 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),WIZARD_SLEEP)
 END
 
 // Sleep
@@ -3831,8 +3831,8 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
-		Spell([PC],WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell([PC],WIZARD_SLEEP)
 END
 
 IF
@@ -3855,8 +3855,8 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SecondNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SecondNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3879,8 +3879,8 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(ThirdNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(ThirdNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3903,8 +3903,8 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FourthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FourthNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3927,8 +3927,8 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(FifthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(FifthNearest([PC]),WIZARD_SLEEP)
 END
 
 IF
@@ -3951,8 +3951,8 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
-		Spell(SixthNearest([PC]),WIZARD_SLEEP)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		Spell(SixthNearest([PC]),WIZARD_SLEEP)
 END
 
 // Cone of Cold
@@ -3970,8 +3970,8 @@ IF
 	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",NearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",NearestEnemyOf(Myself))
 END
 
 IF
@@ -3988,8 +3988,8 @@ IF
 	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",SecondNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",SecondNearestEnemyOf(Myself))
 END
 
 IF
@@ -4006,8 +4006,8 @@ IF
 	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",ThirdNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",ThirdNearestEnemyOf(Myself))
 END
 
 IF
@@ -4024,8 +4024,8 @@ IF
 	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",FourthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",FourthNearestEnemyOf(Myself))
 END
 
 IF
@@ -4042,8 +4042,8 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",FifthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",FifthNearestEnemyOf(Myself))
 END
 
 IF
@@ -4060,8 +4060,8 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",SixthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",SixthNearestEnemyOf(Myself))
 END
 
 IF
@@ -4078,8 +4078,8 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",SeventhNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",SeventhNearestEnemyOf(Myself))
 END
 
 IF
@@ -4096,8 +4096,8 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",EighthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",EighthNearestEnemyOf(Myself))
 END
 
 IF
@@ -4114,8 +4114,8 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",NinthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",NinthNearestEnemyOf(Myself))
 END
 
 IF
@@ -4131,8 +4131,8 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SpellRES("ja#1m32",TenthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#1m32",TenthNearestEnemyOf(Myself))
 END
 
 // Darkness 15' Radius
@@ -4158,9 +4158,9 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		SpellNoDec(NearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(NearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 IF
@@ -4185,9 +4185,9 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
-		SpellNoDec(SecondNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(SecondNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 IF
@@ -4212,9 +4212,9 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		SpellNoDec(ThirdNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(ThirdNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 IF
@@ -4239,9 +4239,9 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		SpellNoDec(FourthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(FourthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 IF
@@ -4266,9 +4266,9 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		SpellNoDec(FifthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(FifthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 IF
@@ -4292,9 +4292,9 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SpellNoDec(SixthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
-		SetGlobalTimer("darkness","LOCALS",60)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("darkness","LOCALS",60)
+		SpellNoDec(SixthNearestEnemyOf(Myself),WIZARD_DARKNESS_15_FOOT)
 END
 
 // Gaseous form
@@ -4309,8 +4309,8 @@ IF
 	RandomNumGT(809,162)
 THEN
 	RESPONSE #100
-		SpellRES("ja#3m32",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#3m32",Myself)
 END
 
 // Potion of extra healing (40hp)
@@ -4322,8 +4322,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN55",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN55",Myself)
 END
 
 // Potion of extra healing (30hp)
@@ -4335,8 +4335,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN52",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN52",Myself)
 END
 
 // Exilir of health (10hp)
@@ -4348,8 +4348,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN08",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN08",Myself)
 END
 
 // Potion of healing (10hp)
@@ -4361,8 +4361,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN08",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN08",Myself)
 END
 
 // Potion of speed
@@ -4373,8 +4373,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN14",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN14",Myself)
 END
 
 // Attack Slowed enemy
@@ -5792,6 +5792,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player1,STATE_INVISIBLE)
@@ -5806,6 +5807,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player2,STATE_INVISIBLE)
@@ -5820,6 +5822,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player3,STATE_INVISIBLE)
@@ -5834,6 +5837,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player4,STATE_INVISIBLE)
@@ -5848,6 +5852,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player5,STATE_INVISIBLE)
@@ -5862,6 +5867,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player6,STATE_INVISIBLE)
@@ -5877,6 +5883,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)

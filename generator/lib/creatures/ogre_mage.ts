@@ -417,7 +417,6 @@ export const OGRE_MAGE: RawCreature = {
     {
       preset: SPELLS.ConeOfCold,
       spell: {
-        id: undefined,
         resource: coneOfCold,
       },
     },

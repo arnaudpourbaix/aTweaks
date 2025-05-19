@@ -562,6 +562,10 @@ export class StatementService {
         negation: true,
       },
       {
+        name: "InMyArea",
+        params: [GLOBAL_CONFIG.tokens.target],
+      },
+      {
         name: "Range",
         params: [
           GLOBAL_CONFIG.tokens.target,
@@ -724,6 +728,33 @@ export class StatementService {
   ): void {
     if (!creature.attack.melee && !creature.attack.ranged)
       return this.runAway(statements, creature, options);
+    // IF
+    // 	Global("RR#Melee","LOCALS",0)
+    // 	CheckStat(Myself,0,POLYMORPHED) // not polymorphed
+    // 	OR(2)
+    // 	  Range(NearestEnemyOf(Myself),6)
+    // 	  !HasItem("AROW01",Myself) // Arrow
+    // THEN
+    // 	RESPONSE #100
+    // 		SetGlobal("RR#Melee","LOCALS",1)
+    // 		SetGlobal("RR#Ranged","LOCALS",0)
+    // 		EquipMostDamagingMelee()
+    // 		Continue()
+    // END
+
+    // IF
+    // 	Global("RR#Ranged","LOCALS",0)
+    // 	CheckStat(Myself,0,POLYMORPHED) // not polymorphed
+    // 	!Range(NearestEnemyOf(Myself),6)
+    // 	HasItem("AROW01",Myself) // Arrow
+    // THEN
+    // 	RESPONSE #100
+    // 		SetGlobal("RR#Ranged","LOCALS",1)
+    // 		SetGlobal("RR#Melee","LOCALS",0)
+    // 		EquipRanged()
+    // 		Continue()
+    // END
+
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(
@@ -801,8 +832,8 @@ export class StatementService {
             name: "DisplayStringHead",
             params: ["Myself", `@${TraStringReferenceEnum.QuaffPotion}`],
           },
-          { name: "UseItem", params: [file, "Myself"] },
           this.factory.setGlobalRoundTimer(),
+          { name: "UseItem", params: [file, "Myself"] },
         ];
         statements.push({
           comment: potion.name,
@@ -828,8 +859,8 @@ export class StatementService {
         ];
         const actions: Actions.Action[] = [
           ...(ability.actions ?? []),
-          { name: "SpellRES", params: [file, "Myself"] },
           this.factory.setGlobalRoundTimer(),
+          { name: "SpellRES", params: [file, "Myself"] },
         ];
         statements.push({
           comment: ability.name,
@@ -919,13 +950,13 @@ export class StatementService {
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(this.factory.globalTimerExpired(ability.timer.name));
-      actions.push(
+      actions.unshift(
         this.factory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
     if (!ability.noRoundTimer) {
       triggers.push(this.factory.globalRoundTimerExpired());
-      actions.push(this.factory.setGlobalRoundTimer());
+      actions.unshift(this.factory.setGlobalRoundTimer());
     }
     if (ability.range) {
       targetTriggers.unshift({
@@ -968,7 +999,7 @@ export class StatementService {
       );
     }
     triggers.unshift(this.factory.globalRoundTimerExpired());
-    actions.push(this.factory.setGlobalRoundTimer());
+    actions.unshift(this.factory.setGlobalRoundTimer());
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());
       actions.push(this.factory.enableInterrupt());

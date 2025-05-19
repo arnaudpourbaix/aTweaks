@@ -120,8 +120,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN55",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN55",Myself)
 END
 
 // Potion of extra healing (30hp)
@@ -133,8 +133,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN52",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN52",Myself)
 END
 
 // Exilir of health (10hp)
@@ -146,8 +146,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN08",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN08",Myself)
 END
 
 // Potion of healing (10hp)
@@ -159,8 +159,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN08",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN08",Myself)
 END
 
 // Potion of speed
@@ -171,8 +171,8 @@ IF
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
-		UseItem("POTN14",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN14",Myself)
 END
 
 // Enrage
@@ -182,8 +182,8 @@ IF
 	!CheckSpellState(Myself,STATE_ENRAGED)
 THEN
 	RESPONSE #100
-		SpellRES("SPCL321",Myself)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("SPCL321",Myself)
 END
 
 // Attack Slowed enemy
@@ -1601,6 +1601,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player1,STATE_INVISIBLE)
@@ -1615,6 +1616,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player2,STATE_INVISIBLE)
@@ -1629,6 +1631,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player3,STATE_INVISIBLE)
@@ -1643,6 +1646,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player4,STATE_INVISIBLE)
@@ -1657,6 +1661,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player5,STATE_INVISIBLE)
@@ -1671,6 +1676,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player6,STATE_INVISIBLE)
@@ -1686,6 +1692,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)

@@ -76,6 +76,7 @@ export interface RawCreature {
   hideInShadows?: boolean;
 
   attack?: RawCreatureAttack;
+  canPolymorph?: boolean;
 
   initActions?: Actions.Action[];
 

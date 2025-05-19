@@ -112,6 +112,7 @@ export class MainService {
       usePotions: false,
       useKitAbilities: false,
       hideInShadows: false,
+      canPolymorph: false,
       initActions: [],
       ...rawCreature,
       autoGenerate: rawCreature.autoGenerate

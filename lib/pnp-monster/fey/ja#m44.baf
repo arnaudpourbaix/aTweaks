@@ -126,8 +126,8 @@ IF
 	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -144,8 +144,8 @@ IF
 	See(SecondNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -162,8 +162,8 @@ IF
 	See(ThirdNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -180,8 +180,8 @@ IF
 	See(FourthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -198,8 +198,8 @@ IF
 	See(FifthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -216,8 +216,8 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -234,8 +234,8 @@ IF
 	See(SeventhNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -252,8 +252,8 @@ IF
 	See(EighthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -270,8 +270,8 @@ IF
 	See(NinthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 IF
@@ -288,8 +288,8 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("rr#fbbea",Myself)
 		SetGlobalTimer("BlindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("rr#fbbea",Myself)
 END
 
 // Dimension Door
@@ -302,10 +302,10 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("rr#ddoo2","RR#TRAT")
 		Wait(1)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetInterrupt(TRUE)
 END
 
@@ -317,9 +317,9 @@ IF
 	RandomNumGT(800,240)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(Myself,CLERIC_CALL_WOODLAND_BEINGS)
 		RemoveSpell(CLERIC_CALL_WOODLAND_BEINGS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Bless
@@ -329,9 +329,9 @@ IF
 	RandomNumGT(801,241)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(Myself,CLERIC_BLESS)
 		RemoveSpell(CLERIC_BLESS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Barkskin
@@ -341,9 +341,9 @@ IF
 	RandomNumGT(802,241)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(Myself,CLERIC_BARKSKIN)
 		RemoveSpell(CLERIC_BARKSKIN)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Call lightning
@@ -362,9 +362,9 @@ IF
 	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(NearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -382,9 +382,9 @@ IF
 	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -402,9 +402,9 @@ IF
 	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -422,9 +422,9 @@ IF
 	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FourthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -442,9 +442,9 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FifthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -462,9 +462,9 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SixthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -482,9 +482,9 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SeventhNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -502,9 +502,9 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(EighthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -522,9 +522,9 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(NinthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -541,9 +541,9 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(TenthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Summon insects
@@ -568,9 +568,9 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.MAGE_ALL],CLERIC_SUMMON_INSECTS)
 		RemoveSpell(CLERIC_SUMMON_INSECTS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -594,9 +594,9 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.CLERIC_ALL],CLERIC_SUMMON_INSECTS)
 		RemoveSpell(CLERIC_SUMMON_INSECTS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -620,9 +620,9 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.DRUID_ALL],CLERIC_SUMMON_INSECTS)
 		RemoveSpell(CLERIC_SUMMON_INSECTS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -645,9 +645,9 @@ IF
 	See([PC.0.0.BARD])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.BARD],CLERIC_SUMMON_INSECTS)
 		RemoveSpell(CLERIC_SUMMON_INSECTS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Entangle
@@ -672,9 +672,9 @@ IF
 	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(NearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -698,9 +698,9 @@ IF
 	See(SecondNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -724,9 +724,9 @@ IF
 	See(ThirdNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -750,9 +750,9 @@ IF
 	See(FourthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FourthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -776,9 +776,9 @@ IF
 	See(FifthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FifthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -802,9 +802,9 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SixthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -828,9 +828,9 @@ IF
 	See(SeventhNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SeventhNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -854,9 +854,9 @@ IF
 	See(EighthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(EighthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -880,9 +880,9 @@ IF
 	See(NinthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(NinthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -906,9 +906,9 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(TenthNearestEnemyOf(Myself),CLERIC_ENTANGLE)
 		RemoveSpell(CLERIC_ENTANGLE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Charm Person or Animal
@@ -934,9 +934,9 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.FIGHTER_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -961,9 +961,9 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.FIGHTER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -988,9 +988,9 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.FIGHTER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1015,9 +1015,9 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.RANGER_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1042,9 +1042,9 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.RANGER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1069,9 +1069,9 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.RANGER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1096,9 +1096,9 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.PALADIN_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1123,9 +1123,9 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.PALADIN_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1150,9 +1150,9 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.PALADIN_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Charm Person or Animal
@@ -1178,9 +1178,9 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1205,9 +1205,9 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1232,9 +1232,9 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1259,9 +1259,9 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FourthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1286,9 +1286,9 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FifthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1313,9 +1313,9 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SixthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Charm Person or Animal
@@ -1340,9 +1340,9 @@ IF
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.FIGHTER_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1366,9 +1366,9 @@ IF
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.FIGHTER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1392,9 +1392,9 @@ IF
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.FIGHTER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1418,9 +1418,9 @@ IF
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.RANGER_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1444,9 +1444,9 @@ IF
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.RANGER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1470,9 +1470,9 @@ IF
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.RANGER_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1496,9 +1496,9 @@ IF
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC.0.0.PALADIN_ALL],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1522,9 +1522,9 @@ IF
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC.0.0.PALADIN_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1548,9 +1548,9 @@ IF
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC.0.0.PALADIN_ALL]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Charm Person or Animal
@@ -1574,9 +1574,9 @@ IF
 	See([PC])
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell([PC],CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1599,9 +1599,9 @@ IF
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SecondNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1624,9 +1624,9 @@ IF
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(ThirdNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1649,9 +1649,9 @@ IF
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FourthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1674,9 +1674,9 @@ IF
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(FifthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 IF
@@ -1699,9 +1699,9 @@ IF
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(SixthNearest([PC]),CLERIC_CHARM_PERSON)
 		RemoveSpell(CLERIC_CHARM_PERSON)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Animal Friendship
@@ -1719,8 +1719,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1738,8 +1738,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1757,8 +1757,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1776,8 +1776,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
 		SetInterrupt(TRUE)
 END
 
@@ -1795,8 +1795,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1814,8 +1814,8 @@ IF
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
-		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
 		SetInterrupt(TRUE)
 END
 
@@ -1827,9 +1827,9 @@ IF
 	RandomNumGT(808,243)
 THEN
 	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(Myself,CLERIC_CURE_LIGHT_WOUNDS)
 		RemoveSpell(CLERIC_CURE_LIGHT_WOUNDS)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
 END
 
 // Run away from enemies
@@ -1844,6 +1844,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1862,6 +1863,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1880,6 +1882,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1898,6 +1901,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1916,6 +1920,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1934,6 +1939,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	OR(3)
 		HaveSpellRES("SPPR302")
@@ -1953,6 +1959,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	OR(3)
 		HaveSpellRES("SPPR302")

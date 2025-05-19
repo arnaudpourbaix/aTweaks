@@ -77,6 +77,7 @@ export interface Creature {
   hideInShadows: boolean;
 
   attack: CreatureAttack;
+  canPolymorph: boolean;
 
   initActions: Actions.Action[];
 

@@ -390,18 +390,18 @@ export const FEY_HAMADRYAD: RawCreature = {
       preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
         resource: ATWEAKS_SPELLS.DimensionDoorInfinite,
-        id: undefined,
         type: "force",
       },
+      disableInterrupt: true,
     },
     abilitySpeakWithPlants,
     {
       preset: SPELLS.Entangle,
       spell: {
         resource: ATWEAKS_SPELLS.HamadryadEntangle,
-        id: undefined,
         type: "force",
       },
+      disableInterrupt: true,
       timer: {
         name: "entangle",
         value: 18,

@@ -243,7 +243,6 @@ export const FEY_NYMPH: RawCreature = {
       preset: PRESET_NAMES.DimensionDoorOffscreen,
       spell: {
         resource: ATWEAKS_SPELLS.DimensionDoorPriest,
-        id: undefined,
         type: "force",
       },
     },

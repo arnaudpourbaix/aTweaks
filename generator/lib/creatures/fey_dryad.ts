@@ -37,7 +37,6 @@ export const abilityDryadDireCharm: RawCreatureAbility = {
   preset: SPELLS.DireCharm,
   spell: {
     resource: ATWEAKS_SPELLS.DryadCharmPerson,
-    id: undefined,
     type: "force",
     remove: true,
   },
@@ -287,6 +286,7 @@ export const FEY_DRYAD: RawCreature = {
       spell: {
         type: "force",
       },
+      disableInterrupt: true,
     },
     abilitySpeakWithPlants,
     abilityDryadDireCharm,

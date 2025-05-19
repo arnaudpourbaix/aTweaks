@@ -7,7 +7,7 @@ import {
   SpellProtectionStat,
 } from "../src/model/raw/spell-protection";
 import { EffectService } from "../src/services/effect.service";
-import { bafFile, file } from "../src/services/misc.func";
+import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { UtilsService } from "../src/services/utils.service";
 import { MonsterEnum } from "./monster.enum";
@@ -21,6 +21,7 @@ const id = MonsterEnum.Sirine;
 const improvedInvisibility = file(1, id);
 // Items
 const mainWeapon = file(1, id);
+const movementBoots = file(2, id);
 // Script
 const script = bafFile(id);
 
@@ -36,10 +37,12 @@ export const FEY_SIRINE: RawCreature = {
   tpaFile: "lib/pnp-monster/fey/sirine",
   tracking: true,
   combatWalk: true,
-  dialog: ["MEIALA", "NTSILUA"],
+  restHeal: true,
+  dialog: ["MEIALA", "NTSILUA", "SIL", "LARRIA"],
   attack: {
     //TODO: attack in melee as a last resort, inv -> charm -> fog cloud (mb?) -> polymorph self or ranged attack
   },
+  canPolymorph: true,
   autoGenerate: {
     savingThrows: false,
   },
@@ -58,7 +61,6 @@ export const FEY_SIRINE: RawCreature = {
     intelligence: 13,
     wisdom: 16,
     charisma: 17,
-    movement: 12, //TODO: move it elsewhere
     ac: 3,
     apr: 1,
     resistMagic: 20,
@@ -80,10 +82,29 @@ export const FEY_SIRINE: RawCreature = {
       "SHOUT",
       "INITDLG",
       "DW#GPSHT",
+      "DW#MG84",
       // "J#SIRIN1",
       "SIRSPELL",
       "DW1RANMO",
       "DW1RANGE",
+      "SIL",
+    ],
+    itemSlots: [
+      { file: "BOW05", slot: "WEAPON2", undroppable: false },
+      {
+        file: "AROW10",
+        quantity: 10,
+        slot: "QUIVER1",
+        undroppable: false,
+        unstealable: true,
+      },
+      {
+        file: "AROW01",
+        quantity: 40,
+        slot: "QUIVER2",
+        undroppable: false,
+        unstealable: true,
+      },
     ],
     scriptLocation: "Race",
     immunities: ["cloudSpells"],
@@ -115,6 +136,18 @@ export const FEY_SIRINE: RawCreature = {
           timing: "InstantPermanentUntilDeath",
           dispelResistance: "NaturalNonMagical",
           resource: ATWEAKS_SPELLS.TouchOfTranquility,
+        },
+      ],
+    },
+    {
+      file: movementBoots,
+      equippedSlot: "BOOTS",
+      effects: [
+        {
+          opcode: "MovementRateBonus2",
+          type: "Set",
+          value: convertMovement(12),
+          global: true,
         },
       ],
     },
@@ -307,6 +340,15 @@ export const FEY_SIRINE: RawCreature = {
     },
   ],
   customCode: [
+    // IF
+    // 	!GlobalTimerNotExpired("RR#Gas","LOCALS")
+    // 	HasItem("rr#pjell",Myself) // Mustard Jelly form
+    // 	!StateCheck(Myself,STATE_REALLY_DEAD) // prevents contingencies and other ReallyForceSpell() stuff from popping up on dead creatures
+    // THEN
+    // 	RESPONSE #100
+    // 		SetGlobalTimer("RR#Gas","LOCALS",6)
+    //         ForceSpellRES("rr#ftvap",Myself) // Toxic Vapors
+    // END
     // {
     //   location: "attack",
     //   type: "insertBefore",
@@ -341,25 +383,38 @@ export const FEY_SIRINE: RawCreature = {
         type: "force",
         remove: true,
       },
+      disableInterrupt: true,
     },
-    // {
-    //   preset: SPELLS.DireCharm,
-    //   spell: {
-    //     resource: ATWEAKS_SPELLS.CharmingSong,
-    //     id: undefined,
-    //     // type: "force",
-    //   },
-    // },
-    // {
-    //   name: "Fog Cloud",
-    //   target: {
-    //     name: "NearestEnemies",
-    //   },
-    //   spell: {
-    //     resource: ATWEAKS_SPELLS.FogCloud,
-    //     excludeStateChecks: ["STATE_BLIND"],
-    //   },
-    // },
+    {
+      preset: SPELLS.DireCharm,
+      spell: {
+        resource: ATWEAKS_SPELLS.CharmingSong,
+        type: "force",
+        remove: true,
+      },
+      triggers: [
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_SILENCED"],
+          negation: true,
+        },
+        { name: "CheckStat", params: ["Myself", 0, "POLYMORPHED"] },
+      ],
+      disableInterrupt: true,
+    },
+    {
+      name: "Fog Cloud",
+      target: {
+        name: "NearestEnemies",
+      },
+      spell: {
+        resource: ATWEAKS_SPELLS.FogCloud,
+        excludeStateChecks: ["STATE_BLIND"],
+        type: "force",
+        remove: true,
+      },
+      disableInterrupt: true,
+    },
   ],
   files: [
     "ISLSIR", // Sirine Queen

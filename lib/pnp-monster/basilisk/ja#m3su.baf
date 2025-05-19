@@ -113,8 +113,8 @@ IF
 	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",NearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",NearestEnemyOf(Myself))
 END
 
 IF
@@ -130,8 +130,8 @@ IF
 	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",SecondNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",SecondNearestEnemyOf(Myself))
 END
 
 IF
@@ -147,8 +147,8 @@ IF
 	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",ThirdNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",ThirdNearestEnemyOf(Myself))
 END
 
 IF
@@ -164,8 +164,8 @@ IF
 	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",FourthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",FourthNearestEnemyOf(Myself))
 END
 
 IF
@@ -181,8 +181,8 @@ IF
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",FifthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",FifthNearestEnemyOf(Myself))
 END
 
 IF
@@ -198,8 +198,8 @@ IF
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",SixthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",SixthNearestEnemyOf(Myself))
 END
 
 IF
@@ -215,8 +215,8 @@ IF
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",SeventhNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",SeventhNearestEnemyOf(Myself))
 END
 
 IF
@@ -232,8 +232,8 @@ IF
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",EighthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",EighthNearestEnemyOf(Myself))
 END
 
 IF
@@ -249,8 +249,8 @@ IF
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",NinthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",NinthNearestEnemyOf(Myself))
 END
 
 IF
@@ -265,8 +265,8 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		ForceSpellRES("ja#1m2",TenthNearestEnemyOf(Myself))
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m2",TenthNearestEnemyOf(Myself))
 END
 
 // Attack NoCheck enemy
@@ -423,6 +423,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player1)
 	Range(Player1,150)
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player1,STATE_INVISIBLE)
@@ -437,6 +438,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player2)
 	Range(Player2,150)
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player2,STATE_INVISIBLE)
@@ -451,6 +453,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player3)
 	Range(Player3,150)
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player3,STATE_INVISIBLE)
@@ -465,6 +468,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player4)
 	Range(Player4,150)
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player4,STATE_INVISIBLE)
@@ -479,6 +483,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player5)
 	Range(Player5,150)
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player5,STATE_INVISIBLE)
@@ -493,6 +498,7 @@ END
 IF
 	!Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(Player6)
 	Range(Player6,150)
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player6,STATE_INVISIBLE)
@@ -508,6 +514,7 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!StateCheck(Myself,STATE_BLIND)
+	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
