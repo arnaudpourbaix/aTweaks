@@ -101,6 +101,7 @@ END
 
 // Invisibility
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!GlobalTimerNotExpired("invisible","LOCALS")
 	HaveSpell(WIZARD_INVISIBILITY)
@@ -130,6 +131,7 @@ END
 
 // Domination
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -170,6 +172,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -210,6 +213,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -250,6 +254,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -290,6 +295,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -330,6 +336,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -370,6 +377,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -410,6 +418,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -450,6 +459,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -491,6 +501,7 @@ END
 
 // Domination
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -531,6 +542,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -571,6 +583,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -611,6 +624,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -651,6 +665,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -691,6 +706,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -732,6 +748,7 @@ END
 
 // Domination
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -771,6 +788,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -810,6 +828,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -849,6 +868,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -888,6 +908,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -927,6 +948,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -966,6 +988,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1005,6 +1028,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1044,6 +1068,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1084,6 +1109,7 @@ END
 
 // Domination
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1108,6 +1134,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1132,6 +1159,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1156,6 +1184,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1180,6 +1209,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1204,6 +1234,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DOMINATION)
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1229,6 +1260,7 @@ END
 
 // Dire Charm
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1269,6 +1301,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1309,6 +1342,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1349,6 +1383,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1389,6 +1424,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1429,6 +1465,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1469,6 +1506,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1509,6 +1547,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1549,6 +1588,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1590,6 +1630,7 @@ END
 
 // Dire Charm
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1630,6 +1671,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1670,6 +1712,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1710,6 +1753,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1750,6 +1794,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1790,6 +1835,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1831,6 +1877,7 @@ END
 
 // Dire Charm
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1870,6 +1917,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1909,6 +1957,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1948,6 +1997,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1987,6 +2037,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2026,6 +2077,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2065,6 +2117,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2104,6 +2157,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2143,6 +2197,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2183,6 +2238,7 @@ END
 
 // Dire Charm
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2207,6 +2263,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2231,6 +2288,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2255,6 +2313,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2279,6 +2338,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2303,6 +2363,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_DIRE_CHARM)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2328,6 +2389,7 @@ END
 
 // Charm Person
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2368,6 +2430,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2408,6 +2471,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2448,6 +2512,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2488,6 +2553,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2528,6 +2594,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2568,6 +2635,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2608,6 +2676,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2648,6 +2717,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2689,6 +2759,7 @@ END
 
 // Charm Person
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2729,6 +2800,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2769,6 +2841,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2809,6 +2882,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2849,6 +2923,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2889,6 +2964,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2930,6 +3006,7 @@ END
 
 // Charm Person
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2969,6 +3046,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3008,6 +3086,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3047,6 +3126,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3086,6 +3166,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3125,6 +3206,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3164,6 +3246,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3203,6 +3286,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3242,6 +3326,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3282,6 +3367,7 @@ END
 
 // Charm Person
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3306,6 +3392,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3330,6 +3417,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3354,6 +3442,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3378,6 +3467,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3402,6 +3492,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CHARM_PERSON)
 	RandomNumGT(804,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3427,6 +3518,7 @@ END
 
 // Power Word Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3467,6 +3559,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3507,6 +3600,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3547,6 +3641,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3587,6 +3682,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3627,6 +3723,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3667,6 +3764,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3707,6 +3805,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3747,6 +3846,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3788,6 +3888,7 @@ END
 
 // Power Word Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3828,6 +3929,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3868,6 +3970,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3908,6 +4011,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3948,6 +4052,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -3988,6 +4093,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4029,6 +4135,7 @@ END
 
 // Power Word Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4068,6 +4175,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4107,6 +4215,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4146,6 +4255,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4185,6 +4295,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4224,6 +4335,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4263,6 +4375,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4302,6 +4415,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4341,6 +4455,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4381,6 +4496,7 @@ END
 
 // Power Word Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4405,6 +4521,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4429,6 +4546,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4453,6 +4571,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4477,6 +4596,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4501,6 +4621,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_POWER_WORD_SLEEP)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4526,6 +4647,7 @@ END
 
 // Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4566,6 +4688,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4606,6 +4729,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4646,6 +4770,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4686,6 +4811,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4726,6 +4852,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4766,6 +4893,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4806,6 +4934,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4846,6 +4975,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4887,6 +5017,7 @@ END
 
 // Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4927,6 +5058,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -4967,6 +5099,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5007,6 +5140,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5047,6 +5181,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5087,6 +5222,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5128,6 +5264,7 @@ END
 
 // Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5167,6 +5304,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5206,6 +5344,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5245,6 +5384,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5284,6 +5424,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5323,6 +5464,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5362,6 +5504,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5401,6 +5544,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5440,6 +5584,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5480,6 +5625,7 @@ END
 
 // Sleep
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5504,6 +5650,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5528,6 +5675,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5552,6 +5700,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5576,6 +5725,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5600,6 +5750,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_SLEEP)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5625,6 +5776,7 @@ END
 
 // Cone of Cold
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5643,6 +5795,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5661,6 +5814,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5679,6 +5833,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5697,6 +5852,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5715,6 +5871,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5733,6 +5890,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5751,6 +5909,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5769,6 +5928,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5787,6 +5947,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m32")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -5805,6 +5966,7 @@ END
 
 // Darkness 15' Radius
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)
@@ -5832,6 +5994,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)
@@ -5859,6 +6022,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)
@@ -5886,6 +6050,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)
@@ -5913,6 +6078,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)
@@ -5940,6 +6106,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("darkness","LOCALS")
 	HaveSpell(WIZARD_DARKNESS_15_FOOT)
 	RandomNumGT(808,243)

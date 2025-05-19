@@ -27,6 +27,9 @@ export class AbilityService {
         targets = [ability.target];
       const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
       const result: CreatureAbility = {
+        requireVocal: false,
+        disableInterrupt: false,
+        canUseWhenPolymorphed: false,
         ...ability,
         target: targets,
         name: ability.name ?? "",

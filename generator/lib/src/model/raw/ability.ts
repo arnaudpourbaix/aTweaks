@@ -38,6 +38,14 @@ export interface RawCreatureAbility {
    * If true, disable interrupt (false by default)
    */
   disableInterrupt?: boolean;
+  /**
+   * Can't be cast when silenced (false by default)
+   */
+  requireVocal?: boolean;
+  /**
+   * Can use ability when polymorphed (false by default)
+   */
+  canUseWhenPolymorphed?: boolean;
 }
 
 export interface RawCreatureAbilitySpell {

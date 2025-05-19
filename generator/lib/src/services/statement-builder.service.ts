@@ -964,6 +964,19 @@ export class StatementService {
         params: [GLOBAL_CONFIG.tokens.target, ability.range],
       });
     }
+    if (ability.requireVocal) {
+      triggers.unshift({
+        name: "StateCheck",
+        params: ["Myself", "STATE_SILENCED"],
+        negation: true,
+      });
+    }
+    if (!ability.canUseWhenPolymorphed && creature.canPolymorph) {
+      triggers.unshift({
+        name: "CheckStat",
+        params: ["Myself", 0, "POLYMORPHED"],
+      });
+    }
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());
       actions.push(this.factory.enableInterrupt());
@@ -1000,6 +1013,19 @@ export class StatementService {
     }
     triggers.unshift(this.factory.globalRoundTimerExpired());
     actions.unshift(this.factory.setGlobalRoundTimer());
+    if (ability.requireVocal) {
+      triggers.unshift({
+        name: "StateCheck",
+        params: ["Myself", "STATE_SILENCED"],
+        negation: true,
+      });
+    }
+    if (!ability.canUseWhenPolymorphed && creature.canPolymorph) {
+      triggers.unshift({
+        name: "CheckStat",
+        params: ["Myself", 0, "POLYMORPHED"],
+      });
+    }
     if (ability.disableInterrupt) {
       actions.unshift(this.factory.disableInterrupt());
       actions.push(this.factory.enableInterrupt());

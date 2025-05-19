@@ -131,6 +131,7 @@ END
 
 // Improved Invisibility
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("ja#1m43")
 	!StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
@@ -146,9 +147,8 @@ END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -177,9 +177,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -208,9 +207,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -239,9 +237,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -270,9 +267,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -301,9 +297,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -332,9 +327,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -363,9 +357,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -394,9 +387,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -426,9 +418,8 @@ END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC],ELF)
@@ -457,9 +448,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC]),ELF)
@@ -488,9 +478,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC]),ELF)
@@ -519,9 +508,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FourthNearest([PC]),ELF)
@@ -550,9 +538,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FifthNearest([PC]),ELF)
@@ -581,9 +568,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SixthNearest([PC]),ELF)
@@ -613,9 +599,8 @@ END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -643,9 +628,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -673,9 +657,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -703,9 +686,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -733,9 +715,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -763,9 +744,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -793,9 +773,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -823,9 +802,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -853,9 +831,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -884,9 +861,8 @@ END
 
 // Dire Charm
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC],0,HELD)
@@ -913,9 +889,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
@@ -942,9 +917,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
@@ -971,9 +945,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
@@ -1000,9 +973,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
@@ -1029,9 +1001,8 @@ THEN
 END
 
 IF
-	HaveSpellRES("rr#fcsng")
 	!StateCheck(Myself,STATE_SILENCED)
-	CheckStat(Myself,0,POLYMORPHED)
+	HaveSpellRES("rr#fcsng")
 	RandomNumGT(801,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
@@ -1059,6 +1030,7 @@ END
 
 // Fog Cloud
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(NearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1079,6 +1051,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1099,6 +1072,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1119,6 +1093,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1139,6 +1114,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1159,6 +1135,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1179,6 +1156,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1199,6 +1177,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1219,6 +1198,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1239,6 +1219,7 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("RR#FCLD")
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_BLIND)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")

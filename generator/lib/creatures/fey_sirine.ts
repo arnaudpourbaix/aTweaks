@@ -1,3 +1,4 @@
+import { truncate } from "fs";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
@@ -392,14 +393,6 @@ export const FEY_SIRINE: RawCreature = {
         type: "force",
         remove: true,
       },
-      triggers: [
-        {
-          name: "StateCheck",
-          params: ["Myself", "STATE_SILENCED"],
-          negation: true,
-        },
-        { name: "CheckStat", params: ["Myself", 0, "POLYMORPHED"] },
-      ],
       disableInterrupt: true,
     },
     {
@@ -413,6 +406,7 @@ export const FEY_SIRINE: RawCreature = {
         type: "force",
         remove: true,
       },
+      requireVocal: true,
       disableInterrupt: true,
     },
   ],

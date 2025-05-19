@@ -96,6 +96,7 @@ export const ABILITY_PRESETS: {
         excludeStateChecks: ["STATE_INVISIBLE"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
       triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
     },
   },
@@ -108,6 +109,7 @@ export const ABILITY_PRESETS: {
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -119,6 +121,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DOMINATION",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -130,6 +133,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DIRE_CHARM",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -141,6 +145,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_CHARM_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -152,6 +157,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CHARM_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -163,6 +169,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_POWER_WORD_SLEEP",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -174,6 +181,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_SLEEP",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -190,6 +198,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DARKNESS_15_FOOT",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -201,6 +210,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_CONE_OF_COLD",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -212,6 +222,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_MAGIC_MISSILE",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -222,6 +233,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_BLESS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -233,6 +245,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_COMMAND",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -243,6 +256,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_REMOVE_FEAR",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -253,6 +267,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CHANT",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -264,6 +279,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_HOLD_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -275,6 +291,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_HOLD_ANIMAL",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -297,6 +314,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_SILENCE_15_FOOT",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -317,6 +335,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CALL_LIGHTNING",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -331,6 +350,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_GLYPH_OF_WARDING",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -346,6 +366,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_MISCAST_MAGIC",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -361,6 +382,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_RIGID_THINKING",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -376,6 +398,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_SUMMON_INSECTS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -391,6 +414,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DIMENSION_DOOR",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
       triggers: [
         {
           name: "StateCheck",
@@ -418,6 +442,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DIMENSION_DOOR",
         targetName: "RR#TRAT",
       },
+      requireVocal: true,
       actionsBefore: [
         {
           name: "CreateCreatureOffscreen", // Create a rat offscreen to teleport to
@@ -440,6 +465,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_ENTANGLE",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -450,6 +476,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CURE_LIGHT_WOUNDS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
       triggers: [{ name: "HPPercentLT", params: ["Myself", 75] }],
     },
   },
@@ -461,6 +488,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_BARKSKIN",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -476,6 +504,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_SUMMON_INSECTS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -491,6 +520,7 @@ export const ABILITY_PRESETS: {
         resource: "SPPR402",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
     },
   },
   {
@@ -501,6 +531,7 @@ export const ABILITY_PRESETS: {
         id: "CLERIC_CALL_WOODLAND_BEINGS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      requireVocal: true,
       triggers: [
         {
           name: "AreaType",
