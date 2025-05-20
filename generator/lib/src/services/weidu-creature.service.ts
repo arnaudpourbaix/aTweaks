@@ -216,7 +216,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
       if (item.undroppable === true || item.undroppable === undefined)
         flagsArray.push("UNDROPPABLE");
       if (item.unstealable === true) flagsArray.push("UNSTEALABLE");
-      const flags = flagsArray.length ? `~${flagsArray.join("&")}~` : "";
+      if (!flagsArray.length) flagsArray.push("NONE");
+      const flags = `~${flagsArray.join("&")}~`;
       const quantity = `#${item.quantity ?? 0}`;
       const equip = `${isWeapon && !isEquip ? "EQUIP" : ""}`;
       const code = `ADD_CRE_ITEM ~${item.file}~ ${quantity} #0 #0 ${flags} ~${item.slot}~ ${equip}`;

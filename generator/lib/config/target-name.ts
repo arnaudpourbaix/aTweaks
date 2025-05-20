@@ -1,6 +1,7 @@
 export type TargetListName =
   | "Players"
   | "NearestEnemies"
+  | "NearestAllies"
   | "PCs"
   | "PCsFighters"
   | "PCsPreferringStrong"

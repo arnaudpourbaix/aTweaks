@@ -120,7 +120,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(Myself,CLERIC_BLESS)
+		Spell(LastSeenBy(Myself),CLERIC_BLESS)
 END
 
 // Command
@@ -142,13 +142,12 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.FIGHTER_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -169,13 +168,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -196,13 +194,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -223,13 +220,12 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.RANGER_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -250,13 +246,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -277,13 +272,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -304,13 +298,12 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.PALADIN_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -331,13 +324,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -358,13 +350,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 // Command
@@ -386,13 +377,12 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -413,13 +403,12 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -440,13 +429,12 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -467,13 +455,12 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FourthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -494,13 +481,12 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FifthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -521,13 +507,12 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SixthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 // Command
@@ -548,13 +533,12 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.FIGHTER_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -574,13 +558,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.FIGHTER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -600,13 +583,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.FIGHTER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -626,13 +608,12 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.RANGER_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -652,13 +633,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.RANGER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -678,13 +658,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.RANGER_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -704,13 +683,12 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC.0.0.PALADIN_ALL],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -730,13 +708,12 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC.0.0.PALADIN_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -756,13 +733,12 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC.0.0.PALADIN_ALL]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 // Command
@@ -782,13 +758,12 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC],CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -807,13 +782,12 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -832,13 +806,12 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -857,13 +830,12 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FourthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -882,13 +854,12 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FifthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 IF
@@ -907,13 +878,12 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SixthNearest([PC]),CLERIC_COMMAND)
+		Spell(LastSeenBy(Myself),CLERIC_COMMAND)
 END
 
 // Chant
@@ -925,7 +895,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(Myself,CLERIC_CHANT)
+		Spell(LastSeenBy(Myself),CLERIC_CHANT)
 END
 
 // Hold person
@@ -945,13 +915,12 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell([PC],CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 IF
@@ -970,13 +939,12 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearest([PC]),CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 IF
@@ -995,13 +963,12 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearest([PC]),CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 IF
@@ -1020,13 +987,12 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FourthNearest([PC]),CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 IF
@@ -1045,13 +1011,12 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FifthNearest([PC]),CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 IF
@@ -1070,13 +1035,12 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SixthNearest([PC]),CLERIC_HOLD_PERSON)
+		Spell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
 END
 
 // Resist fear
@@ -1088,7 +1052,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(Myself,CLERIC_REMOVE_FEAR)
+		Spell(LastSeenBy(Myself),CLERIC_REMOVE_FEAR)
 END
 
 // Call lightning
@@ -1102,14 +1066,13 @@ IF
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NearestEnemyOf(Myself))
 	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(NearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1122,14 +1085,13 @@ IF
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOf(Myself))
 	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SecondNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1142,14 +1104,13 @@ IF
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOf(Myself))
 	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(ThirdNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1162,14 +1123,13 @@ IF
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthNearestEnemyOf(Myself))
 	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FourthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1182,14 +1142,13 @@ IF
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FifthNearestEnemyOf(Myself))
 	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(FifthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1202,14 +1161,13 @@ IF
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SixthNearestEnemyOf(Myself))
 	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SixthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1222,14 +1180,13 @@ IF
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SeventhNearestEnemyOf(Myself))
 	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(SeventhNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1242,14 +1199,13 @@ IF
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(EighthNearestEnemyOf(Myself))
 	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(EighthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1262,14 +1218,13 @@ IF
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NinthNearestEnemyOf(Myself))
 	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(NinthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 IF
@@ -1282,13 +1237,12 @@ IF
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(TenthNearestEnemyOf(Myself),CLERIC_CALL_LIGHTNING)
+		Spell(LastSeenBy(Myself),CLERIC_CALL_LIGHTNING)
 END
 
 // Potion of extra healing (40hp)
@@ -1357,36 +1311,32 @@ END
 
 // Attack Slowed enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.MAGE_ALL],STATE_SLOWED)
 		General([PC.0.0.MAGE_ALL],WEAPON)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.MAGE_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.CLERIC_ALL],STATE_SLOWED)
 		General([PC.0.0.CLERIC_ALL],WEAPON)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.CLERIC_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.DRUID_ALL],STATE_SLOWED)
 		General([PC.0.0.DRUID_ALL],WEAPON)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.DRUID_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.BARD],STATE_SLOWED)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
 THEN
@@ -1399,7 +1349,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1409,7 +1358,7 @@ END
 
 // Attack Able enemy
 IF
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_PANIC)
@@ -1420,10 +1369,9 @@ IF
 		General([PC.0.0.MAGE_ALL],WEAPON)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.MAGE_ALL])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_PANIC)
@@ -1434,10 +1382,9 @@ IF
 		General([PC.0.0.CLERIC_ALL],WEAPON)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.CLERIC_ALL])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_PANIC)
@@ -1448,10 +1395,9 @@ IF
 		General([PC.0.0.DRUID_ALL],WEAPON)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.DRUID_ALL])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.BARD],0,HELD)
 		StateCheck([PC.0.0.BARD],STATE_STUNNED)
 		StateCheck([PC.0.0.BARD],STATE_PANIC)
@@ -1462,7 +1408,6 @@ IF
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
 THEN
@@ -1481,7 +1426,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1491,36 +1435,32 @@ END
 
 // Attack Held enemy
 IF
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 		General([PC.0.0.MAGE_ALL],WEAPON)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.MAGE_ALL])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 		General([PC.0.0.CLERIC_ALL],WEAPON)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.CLERIC_ALL])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 		General([PC.0.0.DRUID_ALL],WEAPON)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.DRUID_ALL])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.BARD],0,HELD)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
 THEN
@@ -1533,7 +1473,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1543,36 +1482,32 @@ END
 
 // Attack Stunned enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
 		General([PC.0.0.MAGE_ALL],WEAPON)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.MAGE_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
 		General([PC.0.0.CLERIC_ALL],WEAPON)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.CLERIC_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
 		General([PC.0.0.DRUID_ALL],WEAPON)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.DRUID_ALL])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.BARD],STATE_STUNNED)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
 THEN
@@ -1585,7 +1520,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1595,32 +1529,28 @@ END
 
 // Attack NoCheck enemy
 IF
-	OR(6)
+	OR(5)
 		General([PC.0.0.MAGE_ALL],WEAPON)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.MAGE_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.MAGE_ALL])
-	OR(6)
+	OR(5)
 		General([PC.0.0.CLERIC_ALL],WEAPON)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.CLERIC_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.CLERIC_ALL])
-	OR(6)
+	OR(5)
 		General([PC.0.0.DRUID_ALL],WEAPON)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-		StateCheck([PC.0.0.DRUID_ALL],STATE_CHARMED)
 		StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 		!See([PC.0.0.DRUID_ALL])
-	OR(6)
+	OR(5)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
 THEN
@@ -1632,7 +1562,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1642,76 +1571,67 @@ END
 
 // Attack Slowed enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.FIGHTER],STATE_SLOWED)
 		General([PC.0.0.FIGHTER],WEAPON)
 		StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.RANGER],STATE_SLOWED)
 		General([PC.0.0.RANGER],WEAPON)
 		StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
-		StateCheck([PC.0.0.RANGER],STATE_CHARMED)
 		StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
 		!See([PC.0.0.RANGER])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.PALADIN],STATE_SLOWED)
 		General([PC.0.0.PALADIN],WEAPON)
 		StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
-		StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
 		StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
 		!See([PC.0.0.PALADIN])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_SLOWED)
 		General([PC.0.0.FIGHTER_THIEF],WEAPON)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER_THIEF])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.BARD],STATE_SLOWED)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.THIEF],STATE_SLOWED)
 		General([PC.0.0.THIEF],WEAPON)
 		StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.THIEF])
-	OR(7)
+	OR(6)
 		!StateCheck([PC],STATE_SLOWED)
 		General([PC],WEAPON)
 		StateCheck([PC],STATE_INVISIBLE)
 		CheckStatGT([PC],0,SANCTUARY)
-		StateCheck([PC],STATE_CHARMED)
 		StateCheck([PC],STATE_REALLY_DEAD)
 		!See([PC])
-	OR(7)
+	OR(6)
 		!StateCheck(SecondNearest([PC]),STATE_SLOWED)
 		General(SecondNearest([PC]),WEAPON)
 		StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-		StateCheck(SecondNearest([PC]),STATE_CHARMED)
 		StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 		!See(SecondNearest([PC]))
-	OR(7)
+	OR(6)
 		!StateCheck(ThirdNearest([PC]),STATE_SLOWED)
 		General(ThirdNearest([PC]),WEAPON)
 		StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-		StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 		StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 		!See(ThirdNearest([PC]))
 THEN
@@ -1724,7 +1644,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1734,7 +1653,7 @@ END
 
 // Attack Able enemy
 IF
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.FIGHTER],0,HELD)
 		StateCheck([PC.0.0.FIGHTER],STATE_STUNNED)
 		StateCheck([PC.0.0.FIGHTER],STATE_PANIC)
@@ -1745,10 +1664,9 @@ IF
 		General([PC.0.0.FIGHTER],WEAPON)
 		StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.RANGER],0,HELD)
 		StateCheck([PC.0.0.RANGER],STATE_STUNNED)
 		StateCheck([PC.0.0.RANGER],STATE_PANIC)
@@ -1759,10 +1677,9 @@ IF
 		General([PC.0.0.RANGER],WEAPON)
 		StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
-		StateCheck([PC.0.0.RANGER],STATE_CHARMED)
 		StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
 		!See([PC.0.0.RANGER])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.PALADIN],0,HELD)
 		StateCheck([PC.0.0.PALADIN],STATE_STUNNED)
 		StateCheck([PC.0.0.PALADIN],STATE_PANIC)
@@ -1773,10 +1690,9 @@ IF
 		General([PC.0.0.PALADIN],WEAPON)
 		StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
-		StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
 		StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
 		!See([PC.0.0.PALADIN])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,HELD)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_STUNNED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_PANIC)
@@ -1787,10 +1703,9 @@ IF
 		General([PC.0.0.FIGHTER_THIEF],WEAPON)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER_THIEF])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.BARD],0,HELD)
 		StateCheck([PC.0.0.BARD],STATE_STUNNED)
 		StateCheck([PC.0.0.BARD],STATE_PANIC)
@@ -1801,10 +1716,9 @@ IF
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC.0.0.THIEF],0,HELD)
 		StateCheck([PC.0.0.THIEF],STATE_STUNNED)
 		StateCheck([PC.0.0.THIEF],STATE_PANIC)
@@ -1815,10 +1729,9 @@ IF
 		General([PC.0.0.THIEF],WEAPON)
 		StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.THIEF])
-	OR(13)
+	OR(12)
 		CheckStatGT([PC],0,HELD)
 		StateCheck([PC],STATE_STUNNED)
 		StateCheck([PC],STATE_PANIC)
@@ -1829,10 +1742,9 @@ IF
 		General([PC],WEAPON)
 		StateCheck([PC],STATE_INVISIBLE)
 		CheckStatGT([PC],0,SANCTUARY)
-		StateCheck([PC],STATE_CHARMED)
 		StateCheck([PC],STATE_REALLY_DEAD)
 		!See([PC])
-	OR(13)
+	OR(12)
 		CheckStatGT(SecondNearest([PC]),0,HELD)
 		StateCheck(SecondNearest([PC]),STATE_STUNNED)
 		StateCheck(SecondNearest([PC]),STATE_PANIC)
@@ -1843,10 +1755,9 @@ IF
 		General(SecondNearest([PC]),WEAPON)
 		StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-		StateCheck(SecondNearest([PC]),STATE_CHARMED)
 		StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 		!See(SecondNearest([PC]))
-	OR(13)
+	OR(12)
 		CheckStatGT(ThirdNearest([PC]),0,HELD)
 		StateCheck(ThirdNearest([PC]),STATE_STUNNED)
 		StateCheck(ThirdNearest([PC]),STATE_PANIC)
@@ -1857,7 +1768,6 @@ IF
 		General(ThirdNearest([PC]),WEAPON)
 		StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-		StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 		StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 		!See(ThirdNearest([PC]))
 THEN
@@ -1876,7 +1786,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1886,76 +1795,67 @@ END
 
 // Attack Held enemy
 IF
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.FIGHTER],0,HELD)
 		General([PC.0.0.FIGHTER],WEAPON)
 		StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.RANGER],0,HELD)
 		General([PC.0.0.RANGER],WEAPON)
 		StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
-		StateCheck([PC.0.0.RANGER],STATE_CHARMED)
 		StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
 		!See([PC.0.0.RANGER])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.PALADIN],0,HELD)
 		General([PC.0.0.PALADIN],WEAPON)
 		StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
-		StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
 		StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
 		!See([PC.0.0.PALADIN])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.FIGHTER_THIEF],0,HELD)
 		General([PC.0.0.FIGHTER_THIEF],WEAPON)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER_THIEF])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.BARD],0,HELD)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC.0.0.THIEF],0,HELD)
 		General([PC.0.0.THIEF],WEAPON)
 		StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.THIEF])
-	OR(7)
+	OR(6)
 		!CheckStatGT([PC],0,HELD)
 		General([PC],WEAPON)
 		StateCheck([PC],STATE_INVISIBLE)
 		CheckStatGT([PC],0,SANCTUARY)
-		StateCheck([PC],STATE_CHARMED)
 		StateCheck([PC],STATE_REALLY_DEAD)
 		!See([PC])
-	OR(7)
+	OR(6)
 		!CheckStatGT(SecondNearest([PC]),0,HELD)
 		General(SecondNearest([PC]),WEAPON)
 		StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-		StateCheck(SecondNearest([PC]),STATE_CHARMED)
 		StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 		!See(SecondNearest([PC]))
-	OR(7)
+	OR(6)
 		!CheckStatGT(ThirdNearest([PC]),0,HELD)
 		General(ThirdNearest([PC]),WEAPON)
 		StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-		StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 		StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 		!See(ThirdNearest([PC]))
 THEN
@@ -1968,7 +1868,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -1978,76 +1877,67 @@ END
 
 // Attack Stunned enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.FIGHTER],STATE_STUNNED)
 		General([PC.0.0.FIGHTER],WEAPON)
 		StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.RANGER],STATE_STUNNED)
 		General([PC.0.0.RANGER],WEAPON)
 		StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
-		StateCheck([PC.0.0.RANGER],STATE_CHARMED)
 		StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
 		!See([PC.0.0.RANGER])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.PALADIN],STATE_STUNNED)
 		General([PC.0.0.PALADIN],WEAPON)
 		StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
-		StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
 		StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
 		!See([PC.0.0.PALADIN])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.FIGHTER_THIEF],STATE_STUNNED)
 		General([PC.0.0.FIGHTER_THIEF],WEAPON)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER_THIEF])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.BARD],STATE_STUNNED)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
-	OR(7)
+	OR(6)
 		!StateCheck([PC.0.0.THIEF],STATE_STUNNED)
 		General([PC.0.0.THIEF],WEAPON)
 		StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.THIEF])
-	OR(7)
+	OR(6)
 		!StateCheck([PC],STATE_STUNNED)
 		General([PC],WEAPON)
 		StateCheck([PC],STATE_INVISIBLE)
 		CheckStatGT([PC],0,SANCTUARY)
-		StateCheck([PC],STATE_CHARMED)
 		StateCheck([PC],STATE_REALLY_DEAD)
 		!See([PC])
-	OR(7)
+	OR(6)
 		!StateCheck(SecondNearest([PC]),STATE_STUNNED)
 		General(SecondNearest([PC]),WEAPON)
 		StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-		StateCheck(SecondNearest([PC]),STATE_CHARMED)
 		StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 		!See(SecondNearest([PC]))
-	OR(7)
+	OR(6)
 		!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
 		General(ThirdNearest([PC]),WEAPON)
 		StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-		StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 		StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 		!See(ThirdNearest([PC]))
 THEN
@@ -2060,7 +1950,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2070,67 +1959,58 @@ END
 
 // Attack NoCheck enemy
 IF
-	OR(6)
+	OR(5)
 		General([PC.0.0.FIGHTER],WEAPON)
 		StateCheck([PC.0.0.FIGHTER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER])
-	OR(6)
+	OR(5)
 		General([PC.0.0.RANGER],WEAPON)
 		StateCheck([PC.0.0.RANGER],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.RANGER],0,SANCTUARY)
-		StateCheck([PC.0.0.RANGER],STATE_CHARMED)
 		StateCheck([PC.0.0.RANGER],STATE_REALLY_DEAD)
 		!See([PC.0.0.RANGER])
-	OR(6)
+	OR(5)
 		General([PC.0.0.PALADIN],WEAPON)
 		StateCheck([PC.0.0.PALADIN],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.PALADIN],0,SANCTUARY)
-		StateCheck([PC.0.0.PALADIN],STATE_CHARMED)
 		StateCheck([PC.0.0.PALADIN],STATE_REALLY_DEAD)
 		!See([PC.0.0.PALADIN])
-	OR(6)
+	OR(5)
 		General([PC.0.0.FIGHTER_THIEF],WEAPON)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.FIGHTER_THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.FIGHTER_THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.FIGHTER_THIEF])
-	OR(6)
+	OR(5)
 		General([PC.0.0.BARD],WEAPON)
 		StateCheck([PC.0.0.BARD],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-		StateCheck([PC.0.0.BARD],STATE_CHARMED)
 		StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 		!See([PC.0.0.BARD])
-	OR(6)
+	OR(5)
 		General([PC.0.0.THIEF],WEAPON)
 		StateCheck([PC.0.0.THIEF],STATE_INVISIBLE)
 		CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
-		StateCheck([PC.0.0.THIEF],STATE_CHARMED)
 		StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 		!See([PC.0.0.THIEF])
-	OR(6)
+	OR(5)
 		General([PC],WEAPON)
 		StateCheck([PC],STATE_INVISIBLE)
 		CheckStatGT([PC],0,SANCTUARY)
-		StateCheck([PC],STATE_CHARMED)
 		StateCheck([PC],STATE_REALLY_DEAD)
 		!See([PC])
-	OR(6)
+	OR(5)
 		General(SecondNearest([PC]),WEAPON)
 		StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-		StateCheck(SecondNearest([PC]),STATE_CHARMED)
 		StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 		!See(SecondNearest([PC]))
-	OR(6)
+	OR(5)
 		General(ThirdNearest([PC]),WEAPON)
 		StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-		StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 		StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 		!See(ThirdNearest([PC]))
 THEN
@@ -2142,7 +2022,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2152,84 +2031,74 @@ END
 
 // Attack Slowed enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
 		General(NearestEnemyOf(Myself),WEAPON)
 		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SecondNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(ThirdNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FourthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FifthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SixthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SeventhNearestEnemyOf(Myself),STATE_SLOWED)
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SeventhNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(EighthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(EighthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(NinthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NinthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(TenthNearestEnemyOf(Myself),STATE_SLOWED)
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(TenthNearestEnemyOf(Myself))
 THEN
@@ -2242,7 +2111,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2252,7 +2120,7 @@ END
 
 // Attack Able enemy
 IF
-	OR(13)
+	OR(12)
 		CheckStatGT(NearestEnemyOf(Myself),0,HELD)
 		StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
@@ -2263,10 +2131,9 @@ IF
 		General(NearestEnemyOf(Myself),WEAPON)
 		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
@@ -2277,10 +2144,9 @@ IF
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SecondNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
@@ -2291,10 +2157,9 @@ IF
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(ThirdNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2305,10 +2170,9 @@ IF
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FourthNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2319,10 +2183,9 @@ IF
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FifthNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2333,10 +2196,9 @@ IF
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SixthNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,HELD)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_PANIC)
@@ -2347,10 +2209,9 @@ IF
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SeventhNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2361,10 +2222,9 @@ IF
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(EighthNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2375,10 +2235,9 @@ IF
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NinthNearestEnemyOf(Myself))
-	OR(13)
+	OR(12)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,HELD)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_STUNNED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_PANIC)
@@ -2389,7 +2248,6 @@ IF
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(TenthNearestEnemyOf(Myself))
 THEN
@@ -2408,7 +2266,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2418,84 +2275,74 @@ END
 
 // Attack Held enemy
 IF
-	OR(7)
+	OR(6)
 		!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
 		General(NearestEnemyOf(Myself),WEAPON)
 		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SecondNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(ThirdNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FourthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FifthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SixthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(SeventhNearestEnemyOf(Myself),0,HELD)
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SeventhNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(EighthNearestEnemyOf(Myself),0,HELD)
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(EighthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(NinthNearestEnemyOf(Myself),0,HELD)
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NinthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!CheckStatGT(TenthNearestEnemyOf(Myself),0,HELD)
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(TenthNearestEnemyOf(Myself))
 THEN
@@ -2508,7 +2355,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2518,84 +2364,74 @@ END
 
 // Attack Stunned enemy
 IF
-	OR(7)
+	OR(6)
 		!StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
 		General(NearestEnemyOf(Myself),WEAPON)
 		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SecondNearestEnemyOf(Myself),STATE_STUNNED)
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SecondNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(ThirdNearestEnemyOf(Myself),STATE_STUNNED)
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(ThirdNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(FourthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FourthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(FifthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FifthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SixthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SixthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(SeventhNearestEnemyOf(Myself),STATE_STUNNED)
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SeventhNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(EighthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(EighthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(NinthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NinthNearestEnemyOf(Myself))
-	OR(7)
+	OR(6)
 		!StateCheck(TenthNearestEnemyOf(Myself),STATE_STUNNED)
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(TenthNearestEnemyOf(Myself))
 THEN
@@ -2608,7 +2444,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2618,74 +2453,64 @@ END
 
 // Attack NoCheck enemy
 IF
-	OR(6)
+	OR(5)
 		General(NearestEnemyOf(Myself),WEAPON)
 		StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(SecondNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SecondNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(ThirdNearestEnemyOf(Myself),WEAPON)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(ThirdNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(FourthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FourthNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(FifthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(FifthNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(SixthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SixthNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(SeventhNearestEnemyOf(Myself),WEAPON)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(SeventhNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(EighthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(EighthNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(NinthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(NinthNearestEnemyOf(Myself))
-	OR(6)
+	OR(5)
 		General(TenthNearestEnemyOf(Myself),WEAPON)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-		StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 		!See(TenthNearestEnemyOf(Myself))
 THEN
@@ -2697,7 +2522,6 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2707,46 +2531,40 @@ END
 
 // Attack Sleep enemy
 IF
-	OR(6)
+	OR(5)
 		!StateCheck(Player1,STATE_SLEEPING)
 		StateCheck(Player1,STATE_INVISIBLE)
 		CheckStatGT(Player1,0,SANCTUARY)
-		StateCheck(Player1,STATE_CHARMED)
 		StateCheck(Player1,STATE_REALLY_DEAD)
 		!See(Player1)
-	OR(6)
+	OR(5)
 		!StateCheck(Player2,STATE_SLEEPING)
 		StateCheck(Player2,STATE_INVISIBLE)
 		CheckStatGT(Player2,0,SANCTUARY)
-		StateCheck(Player2,STATE_CHARMED)
 		StateCheck(Player2,STATE_REALLY_DEAD)
 		!See(Player2)
-	OR(6)
+	OR(5)
 		!StateCheck(Player3,STATE_SLEEPING)
 		StateCheck(Player3,STATE_INVISIBLE)
 		CheckStatGT(Player3,0,SANCTUARY)
-		StateCheck(Player3,STATE_CHARMED)
 		StateCheck(Player3,STATE_REALLY_DEAD)
 		!See(Player3)
-	OR(6)
+	OR(5)
 		!StateCheck(Player4,STATE_SLEEPING)
 		StateCheck(Player4,STATE_INVISIBLE)
 		CheckStatGT(Player4,0,SANCTUARY)
-		StateCheck(Player4,STATE_CHARMED)
 		StateCheck(Player4,STATE_REALLY_DEAD)
 		!See(Player4)
-	OR(6)
+	OR(5)
 		!StateCheck(Player5,STATE_SLEEPING)
 		StateCheck(Player5,STATE_INVISIBLE)
 		CheckStatGT(Player5,0,SANCTUARY)
-		StateCheck(Player5,STATE_CHARMED)
 		StateCheck(Player5,STATE_REALLY_DEAD)
 		!See(Player5)
-	OR(6)
+	OR(5)
 		!StateCheck(Player6,STATE_SLEEPING)
 		StateCheck(Player6,STATE_INVISIBLE)
 		CheckStatGT(Player6,0,SANCTUARY)
-		StateCheck(Player6,STATE_CHARMED)
 		StateCheck(Player6,STATE_REALLY_DEAD)
 		!See(Player6)
 THEN
@@ -2758,7 +2576,6 @@ IF
 	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	See(LastSeenBy(Myself))
 THEN
@@ -2779,7 +2596,7 @@ IF
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player1)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2794,7 +2611,7 @@ IF
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player2)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2809,7 +2626,7 @@ IF
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player3)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2824,7 +2641,7 @@ IF
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player4)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2839,7 +2656,7 @@ IF
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player5)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2854,7 +2671,7 @@ IF
 	!StateCheck(Player6,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player6)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 // Track last seen enemy if allegiance is GOODCUTOFF

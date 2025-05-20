@@ -180,11 +180,11 @@ export class FactoryService {
         params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
         negation: true,
       },
-      {
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
-        negation: true,
-      },
+      // {
+      //   name: "StateCheck",
+      //   params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+      //   negation: true,
+      // },
       {
         name: "StateCheck",
         params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
@@ -226,11 +226,11 @@ export class FactoryService {
         params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
         negation: true,
       },
-      {
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
-        negation: true,
-      },
+      // {
+      //   name: "StateCheck",
+      //   params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+      //   negation: true,
+      // },
       {
         name: "StateCheck",
         params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
@@ -276,11 +276,12 @@ export class FactoryService {
           name: "RandomNumGT",
           params: [max, Math.round(max / (targets.length - index))],
         });
+      const actionTarget = target === "Myself" ? "Myself" : "LastSeenBy";
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
         responses: this.utils.replaceResponseTokens(p.responses, [
-          { key: GLOBAL_CONFIG.tokens.target, value: target },
+          { key: GLOBAL_CONFIG.tokens.target, value: actionTarget },
         ]),
       });
     }

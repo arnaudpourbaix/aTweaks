@@ -72,7 +72,7 @@ export class AbilityService {
           ],
         });
       }
-      let spellTarget = ability.spell.selfTarget ? "Myself" : target;
+      let spellTarget = ability.spell.selfTarget ? "Myself" : "LastSeenBy";
       if (ability.spell.targetName) spellTarget = ability.spell.targetName;
       result.actions.push(this.getSpellAction(ability.spell, spellTarget));
       if (

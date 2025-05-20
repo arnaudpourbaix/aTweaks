@@ -197,7 +197,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fspkp",Myself)
+		ForceSpellRES("rr#fspkp",LastSeenBy(Myself))
 		SetGlobalTimer("speakWithPlants","LOCALS",60)
 		SetInterrupt(TRUE)
 END
@@ -221,7 +221,6 @@ IF
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NearestEnemyOf(Myself))
 	!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
@@ -235,7 +234,6 @@ IF
 	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NearestEnemyOf(Myself))
 THEN
@@ -243,7 +241,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",NearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -265,7 +263,6 @@ IF
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOf(Myself))
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
@@ -279,7 +276,6 @@ IF
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOf(Myself))
 THEN
@@ -287,7 +283,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",SecondNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -309,7 +305,6 @@ IF
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOf(Myself))
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
@@ -323,7 +318,6 @@ IF
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOf(Myself))
 THEN
@@ -331,7 +325,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",ThirdNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -353,7 +347,6 @@ IF
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthNearestEnemyOf(Myself))
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
@@ -367,7 +360,6 @@ IF
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthNearestEnemyOf(Myself))
 THEN
@@ -375,7 +367,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",FourthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -397,7 +389,6 @@ IF
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FifthNearestEnemyOf(Myself))
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
@@ -411,7 +402,6 @@ IF
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FifthNearestEnemyOf(Myself))
 THEN
@@ -419,7 +409,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",FifthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -441,7 +431,6 @@ IF
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SixthNearestEnemyOf(Myself))
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
@@ -455,7 +444,6 @@ IF
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SixthNearestEnemyOf(Myself))
 THEN
@@ -463,7 +451,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",SixthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -485,7 +473,6 @@ IF
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SeventhNearestEnemyOf(Myself))
 	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,HELD)
@@ -499,7 +486,6 @@ IF
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SeventhNearestEnemyOf(Myself))
 THEN
@@ -507,7 +493,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",SeventhNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -529,7 +515,6 @@ IF
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(EighthNearestEnemyOf(Myself))
 	!CheckStatGT(EighthNearestEnemyOf(Myself),0,HELD)
@@ -543,7 +528,6 @@ IF
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(EighthNearestEnemyOf(Myself))
 THEN
@@ -551,7 +535,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",EighthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -573,7 +557,6 @@ IF
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NinthNearestEnemyOf(Myself))
 	!CheckStatGT(NinthNearestEnemyOf(Myself),0,HELD)
@@ -587,7 +570,6 @@ IF
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NinthNearestEnemyOf(Myself))
 THEN
@@ -595,7 +577,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",NinthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -617,7 +599,6 @@ IF
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(TenthNearestEnemyOf(Myself))
 	!CheckStatGT(TenthNearestEnemyOf(Myself),0,HELD)
@@ -631,7 +612,6 @@ IF
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_INVISIBLE)
 	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_CHARMED)
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(TenthNearestEnemyOf(Myself))
 THEN
@@ -639,7 +619,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("entangle","LOCALS",18)
-		ForceSpellRES("RR#FENTG",TenthNearestEnemyOf(Myself))
+		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -662,7 +642,6 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,HELD)
@@ -676,14 +655,13 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -706,7 +684,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -720,14 +697,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -750,7 +726,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -764,14 +739,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -794,7 +768,6 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,HELD)
@@ -808,14 +781,13 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -838,7 +810,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -852,14 +823,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -882,7 +852,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -896,14 +865,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -926,7 +894,6 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,HELD)
@@ -940,14 +907,13 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -970,7 +936,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -984,14 +949,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1014,7 +978,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -1028,14 +991,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1059,7 +1021,6 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 	!CheckStatGT([PC],0,HELD)
@@ -1073,14 +1034,13 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1103,7 +1063,6 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
@@ -1117,14 +1076,13 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1147,7 +1105,6 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
@@ -1161,14 +1118,13 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1191,7 +1147,6 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
@@ -1205,14 +1160,13 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1235,7 +1189,6 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
@@ -1249,14 +1202,13 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1279,7 +1231,6 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
@@ -1293,14 +1244,13 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1323,7 +1273,6 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,HELD)
@@ -1337,14 +1286,13 @@ IF
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.FIGHTER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.FIGHTER_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.FIGHTER_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1366,7 +1314,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -1380,14 +1327,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.FIGHTER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1409,7 +1355,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -1423,14 +1368,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.FIGHTER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.FIGHTER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.FIGHTER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1452,7 +1396,6 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,HELD)
@@ -1466,14 +1409,13 @@ IF
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.RANGER_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.RANGER_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.RANGER_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.RANGER_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1495,7 +1437,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -1509,14 +1450,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.RANGER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1538,7 +1478,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -1552,14 +1491,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.RANGER_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.RANGER_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.RANGER_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1581,7 +1519,6 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,HELD)
@@ -1595,14 +1532,13 @@ IF
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_INVISIBLE)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.PALADIN_ALL],STATE_CHARMED)
 	!StateCheck([PC.0.0.PALADIN_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.PALADIN_ALL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC.0.0.PALADIN_ALL])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1624,7 +1560,6 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -1638,14 +1573,13 @@ IF
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC.0.0.PALADIN_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1667,7 +1601,6 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -1681,14 +1614,13 @@ IF
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC.0.0.PALADIN_ALL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC.0.0.PALADIN_ALL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC.0.0.PALADIN_ALL]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1710,14 +1642,13 @@ IF
 	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([PC],STATE_INVISIBLE)
 	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_CHARMED)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",[PC])
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1738,14 +1669,13 @@ IF
 	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_CHARMED)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SecondNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1766,14 +1696,13 @@ IF
 	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",ThirdNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1794,14 +1723,13 @@ IF
 	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FourthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",FourthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1822,14 +1750,13 @@ IF
 	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(FifthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_CHARMED)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",FifthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1850,14 +1777,13 @@ IF
 	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SixthNearest([PC]),STATE_INVISIBLE)
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_CHARMED)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",SixthNearest([PC]))
+		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
 		RemoveSpellRES("rr#fchrm")
 		SetInterrupt(TRUE)
 END
@@ -1871,14 +1797,13 @@ IF
 	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
 	!CheckStatGT(NearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
 	!StateCheck(NearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
 	See(NearestEnemyOfType([0.ANIMAL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",NearestEnemyOfType([0.ANIMAL]))
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1890,14 +1815,13 @@ IF
 	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
 	!StateCheck(SecondNearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOfType([0.ANIMAL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",SecondNearestEnemyOfType([0.ANIMAL]))
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1909,14 +1833,13 @@ IF
 	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearestEnemyOfType([0.ANIMAL]),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_CHARMED)
 	!StateCheck(ThirdNearestEnemyOfType([0.ANIMAL]),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOfType([0.ANIMAL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",ThirdNearestEnemyOfType([0.ANIMAL]))
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1928,14 +1851,13 @@ IF
 	!StateCheck([NEUTRAL.ANIMAL],STATE_IMPROVEDINVISIBILITY)
 	!StateCheck([NEUTRAL.ANIMAL],STATE_INVISIBLE)
 	!CheckStatGT([NEUTRAL.ANIMAL],0,SANCTUARY)
-	!StateCheck([NEUTRAL.ANIMAL],STATE_CHARMED)
 	!StateCheck([NEUTRAL.ANIMAL],STATE_REALLY_DEAD)
 	See([NEUTRAL.ANIMAL])
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",[NEUTRAL.ANIMAL])
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1947,14 +1869,13 @@ IF
 	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_INVISIBLE)
 	!CheckStatGT(SecondNearest([NEUTRAL.ANIMAL]),0,SANCTUARY)
-	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_CHARMED)
 	!StateCheck(SecondNearest([NEUTRAL.ANIMAL]),STATE_REALLY_DEAD)
 	See(SecondNearest([NEUTRAL.ANIMAL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",SecondNearest([NEUTRAL.ANIMAL]))
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1966,14 +1887,13 @@ IF
 	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_INVISIBLE)
 	!CheckStatGT(ThirdNearest([NEUTRAL.ANIMAL]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_CHARMED)
 	!StateCheck(ThirdNearest([NEUTRAL.ANIMAL]),STATE_REALLY_DEAD)
 	See(ThirdNearest([NEUTRAL.ANIMAL]))
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",ThirdNearest([NEUTRAL.ANIMAL]))
+		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1986,7 +1906,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fdsnr",Myself)
+		ForceSpellRES("rr#fdsnr",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -2012,7 +1932,7 @@ IF
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player1)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2028,7 +1948,7 @@ IF
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player2)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2044,7 +1964,7 @@ IF
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player3)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2060,7 +1980,7 @@ IF
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player4)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2076,7 +1996,7 @@ IF
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player5)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 IF
@@ -2092,7 +2012,7 @@ IF
 	!StateCheck(Player6,STATE_REALLY_DEAD)
 THEN
 	RESPONSE #100
-		MoveToObject(Player6)
+		MoveToObject(LastSeenBy(Myself))
 END
 
 // Track last seen enemy if allegiance is GOODCUTOFF

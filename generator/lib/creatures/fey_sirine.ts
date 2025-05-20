@@ -12,6 +12,7 @@ import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { UtilsService } from "../src/services/utils.service";
 import { MonsterEnum } from "./monster.enum";
+import { GLOBAL_CONFIG } from "../config/generate";
 
 const effects = EffectService.instance;
 const utils = UtilsService.instance;
@@ -42,6 +43,8 @@ export const FEY_SIRINE: RawCreature = {
   dialog: ["MEIALA", "NTSILUA", "SIL", "LARRIA"],
   attack: {
     //TODO: attack in melee as a last resort, inv -> charm -> fog cloud (mb?) -> polymorph self or ranged attack
+    melee: false,
+    ranged: false,
   },
   canPolymorph: true,
   autoGenerate: {
@@ -78,6 +81,7 @@ export const FEY_SIRINE: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
+    memorizedSpells: [], //TODO: polymorph self
     removeItems: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
     removeScripts: [
       "SHOUT",
@@ -182,6 +186,14 @@ export const FEY_SIRINE: RawCreature = {
       primaryType: "Enchanter",
       secondaryType: "Disabling",
       icon: SPELLS.DireCharm,
+      effects: [
+        {
+          opcode: "ForceVisible",
+          target: "Self",
+          timing: "InstantPermanentUntilDeath",
+          global: true,
+        },
+      ],
       headers: [
         {
           type: "Melee",
@@ -225,6 +237,7 @@ export const FEY_SIRINE: RawCreature = {
             duration: 180,
             dispelResistance: "DispelNotBypassResistance",
             saveType: "Spell",
+            saveBonus: -8, //TODO: for testing
           }),
         },
       ],
@@ -377,15 +390,15 @@ export const FEY_SIRINE: RawCreature = {
     // },
   ],
   abilities: [
-    {
-      preset: SPELLS.ImprovedInvisibility,
-      spell: {
-        resource: improvedInvisibility,
-        type: "force",
-        remove: true,
-      },
-      disableInterrupt: true,
-    },
+    // {
+    //   preset: SPELLS.ImprovedInvisibility,
+    //   spell: {
+    //     resource: improvedInvisibility,
+    //     type: "force",
+    //     remove: true,
+    //   },
+    //   disableInterrupt: true,
+    // },
     {
       preset: SPELLS.DireCharm,
       spell: {
@@ -396,19 +409,54 @@ export const FEY_SIRINE: RawCreature = {
       disableInterrupt: true,
     },
     {
-      name: "Fog Cloud",
+      name: "Touch of Tranquility (The touch is automatic for charmed individuals)",
       target: {
-        name: "NearestEnemies",
+        name: "NearestAllies",
+        includeStatus: ["Able"],
+        triggers: [
+          {
+            name: "StateCheck",
+            params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+          },
+          {
+            name: "See",
+            params: ["NearestEnemyOf"],
+            negation: true,
+          },
+        ],
       },
       spell: {
-        resource: ATWEAKS_SPELLS.FogCloud,
-        excludeStateChecks: ["STATE_BLIND"],
+        resource: ATWEAKS_SPELLS.TouchOfTranquility,
         type: "force",
-        remove: true,
       },
-      requireVocal: true,
+      noRoundTimer: true,
+      timer: {
+        name: "Touch",
+        value: 6,
+      },
+      actionsBefore: [
+        { name: "EquipMostDamagingMelee" },
+        {
+          name: "MoveToObjectNoInterrupt",
+          params: [GLOBAL_CONFIG.tokens.target],
+        },
+      ],
       disableInterrupt: true,
     },
+    // {
+    //   name: "Fog Cloud",
+    //   target: {
+    //     name: "NearestEnemies",
+    //   },
+    //   spell: {
+    //     resource: ATWEAKS_SPELLS.FogCloud,
+    //     excludeStateChecks: ["STATE_BLIND"],
+    //     type: "force",
+    //     remove: true,
+    //   },
+    //   requireVocal: true,
+    //   disableInterrupt: true,
+    // },
   ],
   files: [
     "ISLSIR", // Sirine Queen

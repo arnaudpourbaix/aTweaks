@@ -20,6 +20,17 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
     ],
   },
   {
+    name: "NearestAllies",
+    value: [
+      "NearestAllyOf",
+      "SecondNearestAllyOf",
+      "ThirdNearestAllyOf",
+      "FourthNearestAllyOf",
+      "FifthNearestAllyOf",
+      "SixthNearestAllyOf",
+    ],
+  },
+  {
     name: "Players",
     value: ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6"],
   },
