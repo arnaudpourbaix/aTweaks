@@ -95,21 +95,16 @@ export class FactoryService {
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];
-      if (a.weaponSlot || p.weaponAttackSlot)
+      if (a.weaponSlot || p.weaponAttackSlot) {
         actions.push({
           name: "SelectWeaponAbility",
           params: [a.weaponSlot || (p.weaponAttackSlot as SlotIdentifier), 0],
         });
-      if (a.duration === 6)
-        actions.push({
-          name: "AttackOneRound",
-          params: [GLOBAL_CONFIG.tokens.target],
-        });
-      else
-        actions.push({
-          name: "AttackReevaluate",
-          params: [GLOBAL_CONFIG.tokens.target, a.duration],
-        });
+      }
+      actions.push({
+        name: "AttackOneRound",
+        params: [GLOBAL_CONFIG.tokens.target],
+      });
       if (a.disableInterrupt) {
         actions.unshift(this.disableInterrupt());
         actions.push(this.enableInterrupt());
@@ -296,6 +291,7 @@ export class FactoryService {
     reverse?: boolean;
     random?: boolean;
     comment?: string;
+    inBetweenStatements?: Statements;
   }): void => {
     p.reverse = p.reverse ?? false;
     p.random = p.random ?? false;
@@ -323,6 +319,7 @@ export class FactoryService {
       triggers,
       responses: this.response([{ name: "Continue" }]),
     });
+    if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
     const lastSeenBy: ObjectIdentifier = "LastSeenBy";
     const responses = this.utils.replaceResponseTokens(p.responses, [
       { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },

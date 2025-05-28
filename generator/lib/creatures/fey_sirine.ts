@@ -41,14 +41,12 @@ export const FEY_SIRINE: RawCreature = {
   combatWalk: true,
   restHeal: true,
   dialog: ["MEIALA", "NTSILUA", "SIL", "LARRIA"],
-  attack: {
-    //TODO: attack in melee as a last resort, inv -> charm -> fog cloud (mb?) -> polymorph self or ranged attack
-    melee: false,
-    ranged: false,
-  },
   canPolymorph: true,
   autoGenerate: {
     savingThrows: false,
+  },
+  attack: {
+    ranged: true,
   },
   data: {
     level1: 11, // 5 HD but level 11 caster

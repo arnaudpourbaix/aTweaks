@@ -241,13 +241,11 @@ export class MainService {
   private mapAttack(creature: RawCreature): CreatureAttack {
     creature.attack = creature.attack ?? {};
     const defaultAction: CreatureAttackAction = {
-      duration: 6,
       disableInterrupt: false,
       responseWeight: 100,
     };
     const actions: CreatureAttackAction[] = (creature.attack.actions ?? []).map(
       (a) => ({
-        duration: a.duration ?? defaultAction.duration,
         responseWeight: a.responseWeight ?? defaultAction.responseWeight,
         disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
         weaponSlot: a.weaponSlot,

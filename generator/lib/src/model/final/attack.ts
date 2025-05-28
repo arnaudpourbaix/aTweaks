@@ -57,10 +57,6 @@ export interface CreatureAttackAction {
   responseWeight: number;
   weaponSlot?: WeaponSlot;
   /**
-   * Default is one round
-   */
-  duration: number;
-  /**
    * If true, disable interrupt while attacking (false by default)
    */
   disableInterrupt: boolean;

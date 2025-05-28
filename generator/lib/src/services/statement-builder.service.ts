@@ -209,7 +209,22 @@ export class StatementService {
     if (this.utils.hasImmunity(creature.additionalData.immunities, "fear"))
       return;
     statements.push({
-      comment: "Random walk on panic",
+      comment: "Handle Panic state",
+      triggers: [
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_PANIC"],
+        },
+        {
+          name: "Range",
+          params: ["NearestEnemyOf", 10],
+        },
+      ],
+      responses: this.factory.response([
+        { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 15] },
+      ]),
+    });
+    statements.push({
       triggers: [
         {
           name: "StateCheck",
@@ -728,33 +743,6 @@ export class StatementService {
   ): void {
     if (!creature.attack.melee && !creature.attack.ranged)
       return this.runAway(statements, creature, options);
-    // IF
-    // 	Global("RR#Melee","LOCALS",0)
-    // 	CheckStat(Myself,0,POLYMORPHED) // not polymorphed
-    // 	OR(2)
-    // 	  Range(NearestEnemyOf(Myself),6)
-    // 	  !HasItem("AROW01",Myself) // Arrow
-    // THEN
-    // 	RESPONSE #100
-    // 		SetGlobal("RR#Melee","LOCALS",1)
-    // 		SetGlobal("RR#Ranged","LOCALS",0)
-    // 		EquipMostDamagingMelee()
-    // 		Continue()
-    // END
-
-    // IF
-    // 	Global("RR#Ranged","LOCALS",0)
-    // 	CheckStat(Myself,0,POLYMORPHED) // not polymorphed
-    // 	!Range(NearestEnemyOf(Myself),6)
-    // 	HasItem("AROW01",Myself) // Arrow
-    // THEN
-    // 	RESPONSE #100
-    // 		SetGlobal("RR#Ranged","LOCALS",1)
-    // 		SetGlobal("RR#Melee","LOCALS",0)
-    // 		EquipRanged()
-    // 		Continue()
-    // END
-
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(
@@ -798,6 +786,22 @@ export class StatementService {
           ),
         }),
       ];
+      // TODO: priorities are more important than melee or range attack.
+      // target selection must use priorities but there is one difference for ranged attackers.
+      // they can attack random valid target at any visible range instead of nearest. random might be dangerous because no focus fire, so maybe not a good idea.
+      // to keep it simple, just select correct weapon just before attacking
+      //
+      // if (creature.canPolymorph) {
+      //   const poly: Triggers.Trigger = {
+      //     name: "CheckStat",
+      //     params: ["Myself", 0, "POLYMORPHED"],
+      //   };
+      // }
+      const selectWeaponStatements =
+        creature.attack.melee && creature.attack.ranged
+          ? this.selectWeaponStatements(creature, options)
+          : [];
+
       const responses = this.factory.attackResponses({
         attacks: creature.attack.actions,
         oncePerRound: false,
@@ -809,8 +813,43 @@ export class StatementService {
         targetTriggers,
         responses,
         targets,
+        inBetweenStatements: selectWeaponStatements,
       });
     }
+  }
+
+  private selectWeaponStatements(
+    creature: Creature,
+    options: BuilderOptions
+  ): Statements {
+    const statements: Statements = [];
+    statements.push({
+      triggers: [
+        { name: "CanEquipRanged" },
+        {
+          name: "Range",
+          params: ["LastSeenBy", 4],
+          negation: true,
+        },
+      ],
+      responses: this.factory.response([
+        { name: "EquipRanged" },
+        { name: "Continue" },
+      ]),
+    });
+    statements.push({
+      triggers: [
+        {
+          name: "Range",
+          params: ["LastSeenBy", 4],
+        },
+      ],
+      responses: this.factory.response([
+        { name: "EquipMostDamagingMelee" },
+        { name: "Continue" },
+      ]),
+    });
+    return statements;
   }
 
   private potions(
