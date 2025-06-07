@@ -736,6 +736,34 @@ export class StatementService {
     });
   }
 
+  private reposition(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    statements.push({
+      comment: `Try to reposition to use ranged attack`,
+      triggers: [
+        { name: "CanEquipRanged" },
+        {
+          name: "Range",
+          params: ["NearestEnemyOf", GLOBAL_CONFIG.bafConstants.meleeRange],
+        },
+      ],
+      responses: [
+        {
+          weight: 50,
+          actions: [
+            this.factory.disableInterrupt(),
+            { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
+            this.factory.enableInterrupt(),
+          ],
+        },
+        { weight: 50, actions: [{ name: "Continue" }] },
+      ],
+    });
+  }
+
   private attack(
     statements: Statements,
     creature: Creature,
@@ -743,6 +771,8 @@ export class StatementService {
   ): void {
     if (!creature.attack.melee && !creature.attack.ranged)
       return this.runAway(statements, creature, options);
+    else if (creature.attack.ranged)
+      this.reposition(statements, creature, options);
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(
@@ -786,11 +816,6 @@ export class StatementService {
           ),
         }),
       ];
-      // TODO: priorities are more important than melee or range attack.
-      // target selection must use priorities but there is one difference for ranged attackers.
-      // they can attack random valid target at any visible range instead of nearest. random might be dangerous because no focus fire, so maybe not a good idea.
-      // to keep it simple, just select correct weapon just before attacking
-      //
       // if (creature.canPolymorph) {
       //   const poly: Triggers.Trigger = {
       //     name: "CheckStat",
@@ -828,7 +853,7 @@ export class StatementService {
         { name: "CanEquipRanged" },
         {
           name: "Range",
-          params: ["LastSeenBy", 4],
+          params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
           negation: true,
         },
       ],
@@ -841,7 +866,7 @@ export class StatementService {
       triggers: [
         {
           name: "Range",
-          params: ["LastSeenBy", 4],
+          params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
         },
       ],
       responses: this.factory.response([

@@ -13,12 +13,12 @@ export const GLOBAL_CONFIG = {
     restTimer: "JA#REST",
     helpTimer: "JA#HELP",
     roundTimer: "JA#ROUND",
-    attack: "JA#ATTACK", // 0: none, 1: melee, 2: ranged
     noOpenDoor: "RR#NOPND",
     dialog: "JA#DIALOG",
     monsterShoutId: 99,
     summonerShoutId: 98,
     trackingRange: 150,
+    meleeRange: 4,
   },
   tpaConstants: {
     genericScriptsToRemove: [

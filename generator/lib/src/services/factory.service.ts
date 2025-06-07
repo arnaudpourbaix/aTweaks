@@ -190,11 +190,6 @@ export class FactoryService {
     if (!seeInvisible) {
       results.unshift({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
-        negation: true,
-      });
-      results.unshift({
-        name: "StateCheck",
         params: [GLOBAL_CONFIG.tokens.target, "STATE_IMPROVEDINVISIBILITY"],
         negation: true,
       });
@@ -233,13 +228,6 @@ export class FactoryService {
       },
       { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
     ];
-    if (!seeInvisible) {
-      results.unshift({
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
-        negation: true,
-      });
-    }
     if (!isTargetPlayer)
       results.unshift({
         name: "General",

@@ -108,6 +108,13 @@ export const FEY_SIRINE: RawCreature = {
         undroppable: false,
         unstealable: true,
       },
+      {
+        file: "AROW01",
+        quantity: 40,
+        slot: "QUIVER3",
+        undroppable: false,
+        unstealable: true,
+      },
     ],
     scriptLocation: "Race",
     immunities: ["cloudSpells"],
@@ -174,7 +181,7 @@ export const FEY_SIRINE: RawCreature = {
     {
       name: "Charming Song",
       file: ATWEAKS_SPELLS.CharmingSong,
-      memorizedCount: 1,
+      // memorizedCount: 1,
       stringRef: TraStringReferenceEnum.CharmingSong,
       castingSound: "SIRIN05",
       flags: ["IgnoreDead"],
@@ -235,7 +242,6 @@ export const FEY_SIRINE: RawCreature = {
             duration: 180,
             dispelResistance: "DispelNotBypassResistance",
             saveType: "Spell",
-            saveBonus: -8, //TODO: for testing
           }),
         },
       ],
@@ -336,21 +342,14 @@ export const FEY_SIRINE: RawCreature = {
     {
       name: "Improved Invisibility",
       file: improvedInvisibility,
-      memorizedCount: 1,
+      // memorizedCount: 1,
       copyFrom: SPELLS.ImprovedInvisibility,
       makeInnate: {
         castingTime: 1,
       },
     },
   ],
-  additionalCode: [
-    {
-      location: "trackTargets",
-      triggers: [
-        { name: "HaveSpellRES", params: [ATWEAKS_SPELLS.DryadCharmPerson] },
-      ],
-    },
-  ],
+  additionalCode: [],
   customCode: [
     // IF
     // 	!GlobalTimerNotExpired("RR#Gas","LOCALS")
@@ -361,42 +360,42 @@ export const FEY_SIRINE: RawCreature = {
     // 		SetGlobalTimer("RR#Gas","LOCALS",6)
     //         ForceSpellRES("rr#ftvap",Myself) // Toxic Vapors
     // END
-    // {
-    //   location: "attack",
-    //   type: "insertBefore",
-    //   statements: [
-    //     {
-    //       comment: "Don't break invisibility when charm is available",
-    //       triggers: [
-    //         {
-    //           name: "StateCheck",
-    //           params: ["Myself", "STATE_INVISIBLE"],
-    //         },
-    //         {
-    //           name: "HaveSpellRES",
-    //           params: [ATWEAKS_SPELLS.CharmingSong],
-    //         },
-    //       ],
-    //       responses: [
-    //         {
-    //           weight: 100,
-    //           actions: [{ name: "NoAction" }],
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      location: "attack",
+      type: "insertBefore",
+      statements: [
+        {
+          comment: "Don't break invisibility when charm is available",
+          triggers: [
+            {
+              name: "StateCheck",
+              params: ["Myself", "STATE_INVISIBLE"],
+            },
+            {
+              name: "HaveSpellRES",
+              params: [ATWEAKS_SPELLS.CharmingSong],
+            },
+          ],
+          responses: [
+            {
+              weight: 100,
+              actions: [{ name: "NoAction" }],
+            },
+          ],
+        },
+      ],
+    },
   ],
   abilities: [
-    // {
-    //   preset: SPELLS.ImprovedInvisibility,
-    //   spell: {
-    //     resource: improvedInvisibility,
-    //     type: "force",
-    //     remove: true,
-    //   },
-    //   disableInterrupt: true,
-    // },
+    {
+      preset: SPELLS.ImprovedInvisibility,
+      spell: {
+        resource: improvedInvisibility,
+        type: "force",
+        remove: true,
+      },
+      disableInterrupt: true,
+    },
     {
       preset: SPELLS.DireCharm,
       spell: {
@@ -441,20 +440,20 @@ export const FEY_SIRINE: RawCreature = {
       ],
       disableInterrupt: true,
     },
-    // {
-    //   name: "Fog Cloud",
-    //   target: {
-    //     name: "NearestEnemies",
-    //   },
-    //   spell: {
-    //     resource: ATWEAKS_SPELLS.FogCloud,
-    //     excludeStateChecks: ["STATE_BLIND"],
-    //     type: "force",
-    //     remove: true,
-    //   },
-    //   requireVocal: true,
-    //   disableInterrupt: true,
-    // },
+    {
+      name: "Fog Cloud",
+      target: {
+        name: "NearestEnemies",
+      },
+      spell: {
+        resource: ATWEAKS_SPELLS.FogCloud,
+        excludeStateChecks: ["STATE_BLIND"],
+        type: "force",
+        remove: true,
+      },
+      requireVocal: true,
+      disableInterrupt: true,
+    },
   ],
   files: [
     "ISLSIR", // Sirine Queen

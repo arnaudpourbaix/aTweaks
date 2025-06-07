@@ -151,6 +151,41 @@ export const TARGET_STATUS: TargetStatus[] = [
         name: "StateCheck",
         params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
       },
+      {
+        name: "CheckStatGT",
+        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_HELPLESS"],
+        negation: true,
+      },
     ],
   },
   {
