@@ -6,43 +6,48 @@ import { BEAR_BLACK } from "./bear_black";
 import { BEAR_BROWN } from "./bear_brown";
 import { BEAR_CAVE } from "./bear_cave";
 import { BEAR_POLAR_KALDRAN } from "./bear_kaldran";
+import { HELLCAT } from "./cat_hell";
+import { CAT_JAGUAR } from "./cat_jaguar";
 import { CAT_LEOPARD } from "./cat_leopard";
 import { CAT_LION } from "./cat_lion";
 import { CAT_LION_MOUNTAIN } from "./cat_mountain_lion";
-import { CAT_JAGUAR } from "./cat_jaguar";
-import { CAT_TIGER } from "./cat_tiger";
 import { CARRION_CRAWLER } from "./crawler_carrion";
+import { DISPLACER_BEAST } from "./displacer_beast";
 import { DOG_BLINK } from "./dog_blink";
+import { SPECTRAL_HOUND } from "./dog_spectral_hound";
 import { DOG_WAR } from "./dog_war";
 import { DOG_WILD } from "./dog_wild";
 import { DOOM_GUARD } from "./doom_guard";
+import { FEY_DRYAD } from "./fey_dryad";
+import { FEY_HAMADRYAD } from "./fey_hamadryad";
+import { FEY_NYMPH } from "./fey_nymph";
+import { FEY_SIRINE } from "./fey_sirine";
 import { GOLEM_BONE } from "./golem_bone";
 import { GOLEM_CLAY } from "./golem_clay";
 import { GOLEM_FLESH } from "./golem_flesh";
-import { GOLEM_IRON } from "./golem_iron";
 import { GOLEM_JUGGERNAUT } from "./golem_juggernaut";
 import { GOLEM_STONE } from "./golem_stone";
 import { HORROR_HELMED } from "./horror_helmed";
 import { OGRE } from "./ogre";
+import { OGRE_BERSERKER } from "./ogre_berserker";
 import { OGRE_HALF } from "./ogre_half";
 import { OGRE_MAGE } from "./ogre_mage";
 import { OGRE_OGRILLON } from "./ogre_ogrillon";
+import { OGRE_SHAMAN } from "./ogre_shaman";
+import { PLANT_TREANT } from "./plant_treant";
+import { SLIME_BLACK_PUDDING } from "./slime_black_pudding";
+import { SLIME_FISSION } from "./slime_fission";
+import { SLIME_GRAY_OOZE } from "./slime_gray_ooze";
+import { SLIME_GREEN } from "./slime_green";
+import { SLIME_MUSTARD_JELLY } from "./slime_mustard_jelly";
+import { SLIME_OCHRE_JELLY } from "./slime_ochre_jelly";
+import { SLIME_OLIVE_CREATURE } from "./slime_olive_creature";
 import { WOLF } from "./wolf";
 import { WOLF_DIRE } from "./wolf_dire";
 import { WOLF_DREAD } from "./wolf_dread";
 import { WOLF_VAMPIRIC } from "./wolf_vampiric";
 import { WOLF_WINTER } from "./wolf_winter";
 import { WOLF_WORG } from "./wolf_worg";
-import { HELLCAT } from "./cat_hell";
-import { DISPLACER_BEAST } from "./displacer_beast";
-import { SPECTRAL_HOUND } from "./dog_spectral_hound";
-import { OGRE_BERSERKER } from "./ogre_berserker";
-import { OGRE_SHAMAN } from "./ogre_shaman";
-import { FEY_DRYAD } from "./fey_dryad";
-import { FEY_HAMADRYAD } from "./fey_hamadryad";
-import { FEY_NYMPH } from "./fey_nymph";
-import { FEY_SIRINE } from "./fey_sirine";
-import { PLANT_TREANT } from "./plant_treant";
 
 export const CREATURES: RawCreature[] = [
   ANKHEG,
@@ -90,6 +95,22 @@ export const CREATURES: RawCreature[] = [
   FEY_NYMPH,
   FEY_SIRINE,
   PLANT_TREANT,
+  SLIME_MUSTARD_JELLY,
+  SLIME_BLACK_PUDDING,
+  SLIME_FISSION,
+  SLIME_OCHRE_JELLY,
+  SLIME_GRAY_OOZE,
+  SLIME_GREEN,
+  SLIME_OLIVE_CREATURE,
+];
+export const CREATURES_TEST: RawCreature[] = [
+  SLIME_MUSTARD_JELLY,
+  SLIME_BLACK_PUDDING,
+  SLIME_FISSION,
+  SLIME_OCHRE_JELLY,
+  SLIME_GRAY_OOZE,
+  SLIME_GREEN,
+  SLIME_OLIVE_CREATURE,
 ];
 
 /*

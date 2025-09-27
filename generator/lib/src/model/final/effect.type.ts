@@ -99,6 +99,7 @@ export enum EffectTypeEnum {
   ProtectionFromResourceAndMessage = 324,
   ProtectionFromWeapons = 120,
   Regeneration = 98,
+  RemoveCreature = 168,
   RemoveFear = 161,
   RemoveItem = 112,
   RemoveOpcode = 337,

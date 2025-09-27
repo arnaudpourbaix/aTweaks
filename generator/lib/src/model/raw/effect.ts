@@ -475,6 +475,7 @@ export type ParamLessEffect = RawBaseEffect & {
     | "ProtectionFromAnimation"
     | "ProtectionFromBackstab"
     | "ProtectionFromProjectile"
+    | "RemoveCreature"
     | "RemoveFear"
     | "RemoveItem"
     | "RemoveParalysis"

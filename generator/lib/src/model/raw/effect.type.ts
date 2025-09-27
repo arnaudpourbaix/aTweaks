@@ -99,6 +99,7 @@ export type RawEffectOpcode =
   | "ProtectionFromResourceAndMessage"
   | "ProtectionFromWeapons"
   | "Regeneration"
+  | "RemoveCreature"
   | "RemoveFear"
   | "RemoveItem"
   | "RemoveOpcode"

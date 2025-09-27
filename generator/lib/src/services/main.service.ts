@@ -281,6 +281,8 @@ export class MainService {
       diceSize: item.diceSize ?? 0,
       diceThrown: item.diceThrown ?? 0,
       type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
+      range: item.range ?? 0,
+      projectile: item.projectile,
       flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
       animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
       category: item.category ? ItemCategoryEnum[item.category] : undefined,
@@ -323,6 +325,8 @@ export class MainService {
     };
     if (item.type) {
       result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
+      result.range = item.range ?? 0;
+      result.projectile = item.projectile;
       result.diceSize = item.diceSize ?? 0;
       result.diceThrown = item.diceThrown ?? 0;
       result.animationSwing = item.animationSwing;

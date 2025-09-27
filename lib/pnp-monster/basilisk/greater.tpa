@@ -3,14 +3,17 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/basilisk/ja#m3su.baf~
 
-COPY_EXISTING "ja#1m2.pro" ~override/ja#1m3.pro~
+COPY_EXISTING "dvstink.pro" ~override/ja#1m3.pro~
 	READ_SHORT 0x08 type
 	PATCH_IF (%type% = 1) BEGIN
 		INSERT_BYTES 0x100 0x100
 	END
+	WRITE_SHORT 0x28 5
 	WRITE_LONG 0x200 64
-	WRITE_SHORT 0x204 85
-	WRITE_SHORT 0x206 85
+	WRITE_SHORT 0x204 64
+	WRITE_SHORT 0x206 64
+	WRITE_SHORT 0x210 12
+	WRITE_BYTE 0x216 6
 ADD_PROJECTILE ~override/ja#1m3.pro~ ~Basilisk foul breath~
 
 // Foul breath
@@ -87,8 +90,8 @@ BEGIN
 			REMOVE_CRE_ITEM ~BASILG1~
 			REMOVE_CRE_ITEM ~BASILG2~
 			REMOVE_CRE_ITEM ~BASILG3~
-			ADD_CRE_ITEM ~ja#1m3~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#2m3~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			REPLACE_CRE_ITEM ~ja#1m3~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REPLACE_CRE_ITEM ~ja#2m3~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)

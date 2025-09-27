@@ -535,3 +535,31 @@ BEGIN
 	LPF backstab_immunity END
 	LPF criticalHit_immunity END
 END
+
+DEFINE_PATCH_FUNCTION gazeAttacks_immunity
+BEGIN
+	LPF petrification_immunity END
+END
+
+DEFINE_PATCH_FUNCTION blindsight_immunity
+BEGIN
+	LPF gazeAttacks_immunity END
+	LPF seeInvisible_immunity END
+END
+
+DEFINE_PATCH_FUNCTION ooze_immunity
+BEGIN
+	LPF mindSpells_immunity END
+	LPF backstab_immunity END
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF stun_immunity END
+	LPF bleeding_immunity END
+	LPF criticalHit_immunity END
+	LPF backstab_immunity END
+	LPF infravision_immunity END
+	LPF polymorph_immunity END
+	LPF blindsight_immunity END
+	LPF blindness_immunity END
+END

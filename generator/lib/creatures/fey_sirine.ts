@@ -21,6 +21,7 @@ const utils = UtilsService.instance;
 const id = MonsterEnum.Sirine;
 // Spells
 const improvedInvisibility = file(1, id);
+const polymorphSelf = file(2, id);
 // Items
 const mainWeapon = file(1, id);
 const movementBoots = file(2, id);
@@ -79,7 +80,6 @@ export const FEY_SIRINE: RawCreature = {
   },
   additionalData: {
     proficiencies: [{ type: "PROFICIENCYDAGGER", value: 2 }],
-    memorizedSpells: [], //TODO: polymorph self
     removeItems: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
     removeScripts: [
       "SHOUT",
@@ -345,6 +345,16 @@ export const FEY_SIRINE: RawCreature = {
       // memorizedCount: 1,
       copyFrom: SPELLS.ImprovedInvisibility,
       makeInnate: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Polymorph Self",
+      file: polymorphSelf,
+      memorizedCount: 1,
+      copyFrom: SPELLS.PolymorphSelf,
+      makeInnate: {
+        // duration 2 turn / level
         castingTime: 1,
       },
     },

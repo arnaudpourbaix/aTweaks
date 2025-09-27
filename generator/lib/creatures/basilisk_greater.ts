@@ -8,6 +8,7 @@ import {
   petrification5e,
 } from "./basilisk_lesser";
 import { MonsterEnum } from "./monster.enum";
+
 // Creature Id
 const id = MonsterEnum.GreaterBasilisk;
 // Script
@@ -18,7 +19,8 @@ const foulBreath = file(1, id);
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
 // Projectiles
-const breathProjectile = file(1, id);
+const foulBreathProjectile = file(1, id);
+
 export const BASILISK_GREATER: RawCreature = {
   name: "Greater Basilisk",
   bafFile: `lib/pnp-monster/basilisk/${script}`,
@@ -117,14 +119,16 @@ export const BASILISK_GREATER: RawCreature = {
   ],
   projectiles: [
     {
-      file: breathProjectile,
-      copyFromFile: basiliskGazeProjectile,
+      file: foulBreathProjectile,
+      copyFromFile: "dvstink",
       description: "Basilisk foul breath",
+      particleColor: "Green",
       areaEffectInfo: {
         areaProjectileFlags: ["AffectOnlyEnemies"],
-        triggerRadius: 85,
-        areaOfEffect: 85,
-        triggerCount: 0,
+        explosionDelay: 12,
+        triggerCount: 6,
+        triggerRadius: 64,
+        areaOfEffect: 64,
       },
     },
   ],
@@ -141,7 +145,7 @@ export const BASILISK_GREATER: RawCreature = {
       headers: [
         {
           type: "Ranged",
-          projectile: breathProjectile,
+          projectile: foulBreathProjectile,
           range: 5,
           target: "AnyPointWithinRange",
           effects: [

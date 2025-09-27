@@ -1,0 +1,70 @@
+// Generated file (don't edit)
+
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m50.baf~
+
+CREATE ITM "ja#1m50"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_ASCII 0x3a ~IGHOUL~ #8
+	WRITE_BYTE 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_BYTE 0x88 3
+	WRITE_BYTE 0x8a 1
+	WRITE_SHORT 0x8e 2
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+COPY_EXISTING ~ja#1m50.itm~ ~override~
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter1=1 parameter2=1 timing=1 probability1=100 STR_VAR resource="rr#ftrnq" END
+
+ACTION_FOR_EACH ~file~ IN
+	AC#FPSLT
+	BPJLGR01
+	JELLGR
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REPLACE_CRE_ITEM ~ja#1m50~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REPLACE_CRE_ITEM ~ja#i9~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
+			REPLACE_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			LPF clear_proficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=3
+					strength=12
+					dexterity=1
+					constitution=21
+					intelligence=1
+					wisdom=1
+					charisma=1
+					movement=1
+					hp=42
+					ac=8
+					resistMagic=0
+					thac0=17
+					apr=1
+					xpv=270
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					morale=10
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
+					class=IDS_OF_SYMBOL (~class~ ~GREY_OOZE~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN SHOUT INITDLG DW#GPSHT DW#MG84 SIRSPELL DW1RANMO DW1RANGE SIL END
+			LPF patchCreatureScript STR_VAR script=ja#m50 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

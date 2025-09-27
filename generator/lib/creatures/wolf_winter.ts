@@ -92,7 +92,7 @@ export const WOLF_WINTER: RawCreature = {
         {
           type: "Ranged",
           target: "AnyPointWithinRange",
-          projectile: streamOfFrost,
+          projectile: streamOfFrostProjectile,
           range: 10,
           effects: [
             {

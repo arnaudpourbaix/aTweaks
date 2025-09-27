@@ -64,11 +64,11 @@ COPY_EXISTING ~rr#fcsn2.SPL~  ~override~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 STR_VAR icon="SPWI316B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fcsn2" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fcsn2" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-8" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 savebonus="-8" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 savebonus="-8" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 savebonus="-8" STR_VAR resource="SPNWCHRM" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=3 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-8" STR_VAR resource="EFF_E07" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 STR_VAR resource="SPNWCHRM" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=3 resist_dispel=1 duration=180 probability1=100 savingthrow=1 STR_VAR resource="EFF_E07" END
 	
 	// Fog Cloud
 CREATE SPL "RR#FCLD"
@@ -116,6 +116,11 @@ COPY_EXISTING ~rr#ftrnq.SPL~  ~override~
 	// Improved Invisibility
 COPY_EXISTING ~SPWI405.SPL~  ~override/ja#1m43.SPL~
 COPY_EXISTING ~ja#1m43.SPL~  ~override~
+	LPF SPELL_TO_INNATE INT_VAR ctime=1   END
+	
+	// Polymorph Self
+COPY_EXISTING ~SPWI416.SPL~  ~override/ja#2m43.SPL~
+COPY_EXISTING ~ja#2m43.SPL~  ~override~
 	LPF SPELL_TO_INNATE INT_VAR ctime=1   END
 	
 CREATE ITM "ja#1m43"
@@ -173,17 +178,16 @@ BEGIN
 			REMOVE_CRE_ITEM ~SIRINE1~
 			REMOVE_CRE_ITEM ~AROW01~
 			REMOVE_CRE_ITEM ~AROW05~
-			ADD_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~WEAPON2~ EQUIP
-			ADD_CRE_ITEM ~AROW10~ #10 #0 #0 ~UNSTEALABLE~ ~QUIVER1~ 
-			ADD_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~QUIVER2~ 
-			ADD_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~QUIVER3~ 
-			ADD_CRE_ITEM ~ja#1m43~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ 
-			ADD_CRE_ITEM ~ja#2m43~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
-			ADD_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
-			ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)
+			REPLACE_CRE_ITEM ~BOW05~ #0 #0 #0 ~NONE~ ~WEAPON2~ EQUIP
+			REPLACE_CRE_ITEM ~AROW10~ #10 #0 #0 ~UNSTEALABLE~ ~QUIVER1~ 
+			REPLACE_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~QUIVER2~ 
+			REPLACE_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~QUIVER3~ 
+			REPLACE_CRE_ITEM ~ja#1m43~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ 
+			REPLACE_CRE_ITEM ~ja#2m43~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
+			REPLACE_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			ADD_MEMORIZED_SPELL ~RR#FCLD~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ftrnq~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m43~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m43~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature

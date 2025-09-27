@@ -89,7 +89,7 @@ export class CreatureService {
     ) {
       const range = ranges.find((r) => r.size === creature.data.size);
       if (range) {
-        // console.log(creature.data.class, 'range:', range.range);
+        console.log(creature.data.class, "range:", range.range);
         item.range = range.range;
       }
     }

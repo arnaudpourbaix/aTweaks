@@ -35,6 +35,7 @@ export class WeiduItemService extends AbstractWeiduService {
         }
       }
       this.writeStringRef(lines, 0x8, item.name, 1);
+      this.writeStringRef(lines, 0xc, item.name, 1);
       this.writeFlag(lines, 0x18, 4, item.flags, 1);
       this.write(lines, 0x1c, 2, item.category, 1);
       this.writeAscii(lines, 0x22, 2, item.animation, 1);
@@ -64,6 +65,9 @@ export class WeiduItemService extends AbstractWeiduService {
       } else if (item.type === ItemAbilityTypeEnum.Ranged) {
         this.write(lines, 0x38, 2, 1, 1);
         this.write(lines, 0xa4, 2, 1, 1);
+        this.write(lines, 0x9e, 2, item.animationSwing?.overhand ?? 0, 1);
+        this.write(lines, 0xa0, 2, item.animationSwing?.backhand ?? 0, 1);
+        this.write(lines, 0xa2, 2, item.animationSwing?.thrust ?? 0, 1);
       }
       this.writeFlag(lines, 0x98, 4, item.abilityflags, 1);
       if (!item.copyFrom)

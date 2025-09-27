@@ -44,4 +44,11 @@ export enum MonsterEnum {
   Sirine = 43,
   Nymph = 44,
   Treant = 45,
+  MustardJelly = 46,
+  BlackPudding = 47,
+  FissionSlime = 48,
+  OchreJelly = 49,
+  GrayOoze = 50,
+  GreenSlime = 51,
+  OliveSlimeCreature = 52,
 }

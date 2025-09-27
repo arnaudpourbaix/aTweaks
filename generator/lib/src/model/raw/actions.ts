@@ -88,12 +88,13 @@ export namespace Actions {
     | "Wait"
     | "SmallWait"
     | "SetInterrupt"
-    | "CreateCreatureOffScreen"
     | "FaceObject"
     | "StartDialogueNoSet"
     | "ActionOverride"
     | "JumpToPoint"
     | "CreateCreatureOffscreen"
+    | "CreateCreatureObject"
+    | "CreateCreatureObjectEffect"
     | "RandomTurn"
     | "OpenDoor"
     | "StartCutSceneMode"
@@ -380,6 +381,16 @@ export namespace Actions {
     params: [string, number];
   }
 
+  export interface CreateCreatureObject {
+    name: "CreateCreatureObject";
+    params: [string, ParamObject];
+  }
+
+  export interface CreateCreatureObjectEffect {
+    name: "CreateCreatureObjectEffect";
+    params: [string, string, ParamObject];
+  }
+
   export interface FaceObject {
     name: "FaceObject";
     params: [ParamObject];
@@ -482,12 +493,13 @@ export namespace Actions {
     | Wait
     | SmallWait
     | SetInterrupt
-    | CreateCreatureOffScreen
     | FaceObject
     | StartDialogueNoSet
     | ActionOverride
     | JumpToPoint
     | CreateCreatureOffscreen
+    | CreateCreatureObject
+    | CreateCreatureObjectEffect
     | RandomTurn
     | OpenDoor
     | StartCutSceneMode
@@ -1037,6 +1049,20 @@ export namespace Actions {
       parameters: "S:ResRef*,I:Face*Dir",
       description:
         "This action creates the specified creature just offscreen from the active creature.",
+      section: "Misc",
+    },
+    {
+      name: "CreateCreatureObject",
+      parameters: "S:ResRef*,O:Object*",
+      description:
+        "This action will create the specified creature next to the specified object.",
+      section: "Misc",
+    },
+    {
+      name: "CreateCreatureObjectEffect",
+      parameters: "S:ResRef*,S:Effect*,O:Object*",
+      description:
+        "This action will create the specified creature with specified effect next to the specified object.",
       section: "Misc",
     },
     {

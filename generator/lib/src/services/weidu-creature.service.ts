@@ -220,7 +220,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       const flags = `~${flagsArray.join("&")}~`;
       const quantity = `#${item.quantity ?? 0}`;
       const equip = `${isWeapon && !isEquip ? "EQUIP" : ""}`;
-      const code = `ADD_CRE_ITEM ~${item.file}~ ${quantity} #0 #0 ${flags} ~${item.slot}~ ${equip}`;
+      const code = `REPLACE_CRE_ITEM ~${item.file}~ ${quantity} #0 #0 ${flags} ~${item.slot}~ ${equip}`;
       this.addConditionalSourceRes(p.lines, code, p.tab, noWeaponFiles, true);
       if (isWeapon) isEquip = true;
     }

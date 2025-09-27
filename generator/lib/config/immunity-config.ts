@@ -761,4 +761,48 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       { opcode: "PoisonResistanceModifier", value: 50 },
     ],
   },
+  {
+    name: "gazeAttacks",
+    type: "immunity",
+    description: ["Gaze attacks immunity.", "", ""],
+    immunities: ["petrification"], //TODO:
+  },
+  {
+    name: "blindsight",
+    type: "trait",
+    description: [
+      "Blindsight trait.",
+      "Invisibility, darkness, and most kinds of concealment are irrelevant.",
+      "Blindsight does not subject a creature to gaze attacks.",
+    ],
+    immunities: ["gazeAttacks", "seeInvisible"],
+  },
+  {
+    name: "ooze",
+    type: "trait",
+    itemSlot: { file: ITEMS.Ooze, slot: "LRING" },
+    description: [
+      "Ooze trait.",
+      "Blindsight (can see invisible, not subject to gaze attacks).",
+      "Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
+      "Not subject to critical hits, backstab.",
+      "Darkvision out to 60 feet.",
+      "10-sided Hit Dice",
+    ],
+    immunities: [
+      "mindSpells",
+      "backstab",
+      "poison",
+      "sleep",
+      "hold",
+      "stun",
+      "bleeding",
+      "criticalHit",
+      "backstab",
+      "infravision",
+      "polymorph",
+      "blindsight",
+      "blindness",
+    ],
+  },
 ];

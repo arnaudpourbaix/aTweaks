@@ -97,3 +97,17 @@ Attacks pass through armor (+4 THAC0).
 Do not set off traps that are triggered by weight. (not implemented)~
 COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF incorporeal_immunity END
+
+CREATE ITM "ja#i9"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	SAY NAME1 ~ooze trait~ SAY NAME2 ~ooze trait~
+	SAY UNIDENTIFIED_DESC ~Ooze trait.
+Blindsight (can see invisible, not subject to gaze attacks).
+Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab.
+Darkvision out to 60 feet.
+10-sided Hit Dice~
+COPY_EXISTING ~ja#i9.itm~ ~override~
+	LPF ooze_immunity END
