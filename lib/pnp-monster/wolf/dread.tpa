@@ -35,10 +35,12 @@ CREATE ITM "ja#1m22"
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+Melee damage: 1D10 (Piercing)
+Disease~)
 	WRITE_LONG 0x60 1
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
 	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1
@@ -52,6 +54,7 @@ COPY_EXISTING ~ja#1m22.itm~ ~override~
 CREATE ITM "ja#2m22"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf resistances~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Dread wolf resistances~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.
@@ -69,6 +72,7 @@ COPY_EXISTING ~ja#2m22.itm~ ~override~
 CREATE ITM "ja#3m22"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf down resistances~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Dread wolf down resistances~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~A down dread wolf is immune to everything but fire and acid.~)

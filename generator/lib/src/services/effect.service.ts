@@ -8,6 +8,7 @@ import { EffectTypeEnum } from "../model/final/effect.type";
 import {
   AnimationChangeTypeEnum,
   AttackModifierTypeEnum,
+  CastingFailureTypeEnum,
   CastingTimeModifierTypeEnum,
   CastSpellOnConditionTargetEnum,
   CharmTypeEnum,
@@ -53,6 +54,7 @@ import {
   AnimationChangeEffect,
   ArmorClassBonusEffect,
   BerserkEffect,
+  CastingFailureEffect,
   CastingTimeModifierEffect,
   CastSpellEffect,
   CastSpellOnConditionEffect,
@@ -491,6 +493,12 @@ export class EffectService {
         }`;
         if ((<DisableSpellcastingEffect>effect).showMessage === false)
           effect.special = 1;
+        break;
+      case EffectTypeEnum.CastingFailure:
+        result.parameter1 = `${(<CastingFailureEffect>effect).amount}`;
+        result.parameter2 = `${
+          CastingFailureTypeEnum[(<CastingFailureEffect>effect).type]
+        }`;
         break;
       case EffectTypeEnum.DisableButton:
         result.parameter2 = `${

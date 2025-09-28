@@ -104,6 +104,17 @@ THEN
 		NoAction()
 END
 
+// Split
+IF
+	CheckStat(Myself,0,POLYMORPHED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpellRES("ja#2m46")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m46",Myself)
+END
+
 // Toxic Vapors
 IF
 	CheckStat(Myself,0,POLYMORPHED)

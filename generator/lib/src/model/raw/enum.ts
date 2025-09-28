@@ -34,6 +34,8 @@ export type RawDisableSpellcastingType =
   | "Innate"
   | "MagicalSpells";
 
+export type RawCastingFailureType = "Wizard" | "Priest" | "Innate";
+
 export type RawAttackModifierType =
   | "Increment"
   | "Set"

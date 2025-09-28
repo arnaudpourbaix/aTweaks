@@ -9,3 +9,18 @@ export const ITEMS = {
   Plant: "ja#i7",
   Sketetal: "ja#i2",
 };
+
+export enum MonsterItemIconEnum {
+  ISQUIRL = "ISQUIRL",
+  ISHAPE03 = "ISHAPE03",
+  ISHAPE04 = "ISHAPE04",
+  ISHAPE05 = "ISHAPE05",
+  ISHAPE06 = "ISHAPE06",
+  ISHAPE07 = "ISHAPE07",
+  IGHOUL = "IGHOUL",
+  IFIST = "IFIST",
+  IWOLF = "IWOLF",
+  IJELLY = "IJELLY",
+  SPIN155 = "SPIN155",
+  SPPR416B = "SPPR416B",
+}

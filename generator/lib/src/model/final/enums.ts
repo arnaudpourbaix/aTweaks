@@ -43,6 +43,12 @@ export enum DisableSpellcastingTypeEnum {
   MagicalSpells = 3,
 }
 
+export enum CastingFailureTypeEnum {
+  Wizard = 0,
+  Priest = 1,
+  Innate = 2,
+}
+
 export enum AttackModifierTypeEnum {
   Increment = 0,
   Set = 1,

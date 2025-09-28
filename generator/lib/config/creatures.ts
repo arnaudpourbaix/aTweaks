@@ -1,4 +1,5 @@
 import { ClassIdentifier } from "../src/model/ids/class";
+import { GeneralIdentifier } from "../src/model/ids/general";
 import { RaceIdentifier } from "../src/model/ids/race";
 import { CreatureSize, RawEffectIDSFile } from "../src/model/raw/enum";
 
@@ -11,6 +12,16 @@ export const ATWEAKS_CREATURES = {
   HamadryadSummon: "ja#hama",
   SplitMustardJelly: "ja#jelmu",
 };
+
+export const VAPOR_IMMUNE_CREATURES: [
+  RawEffectIDSFile,
+  ClassIdentifier | RaceIdentifier | GeneralIdentifier
+][] = [
+  ["RACE", "SLIME"],
+  ["RACE", "ELEMENTAL"],
+  ["RACE", "GOLEM"],
+  ["GENERAL", "UNDEAD"],
+];
 
 export const EARTH_CREATURES: [
   RawEffectIDSFile,

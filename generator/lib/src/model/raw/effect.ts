@@ -12,6 +12,7 @@ import {
   RawAttackModifierType,
   RawBerserkType,
   RawBonusHPHealFlag,
+  RawCastingFailureType,
   RawCastingTimeModifierType,
   RawCastSpellOnConditionTarget,
   RawCastSpellOnConditionType,
@@ -444,6 +445,12 @@ export type SummonCreatureEffect = RawBaseEffect & {
   mode: RawSummonCreatureMode;
 };
 
+export type CastingFailureEffect = RawBaseEffect & {
+  opcode: "CastingFailure";
+  amount: number;
+  type: RawCastingFailureType;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -494,6 +501,7 @@ export type RawEffect =
   | AnimationChangeEffect
   | ArmorClassBonusEffect
   | BerserkEffect
+  | CastingFailureEffect
   | CastingTimeModifierEffect
   | CastSpellEffect
   | CastSpellOnConditionEffect

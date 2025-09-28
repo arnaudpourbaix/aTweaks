@@ -128,6 +128,7 @@ export class MainService {
         additionalData: rawCreature.additionalData,
         spells: rawCreature.spells,
         items: rawCreature.items,
+        isAdjustment: false,
       }),
       notEnforceFiles: rawCreature.notEnforceFiles ?? [],
       items: this.mapItems(rawCreature.items),
@@ -149,6 +150,7 @@ export class MainService {
       this.transformAttackPerRound(a.data);
     }
     this.immunityService.handleImmunities(creature);
+    this.generateDescriptions(creature);
     return creature;
   }
 
@@ -190,6 +192,7 @@ export class MainService {
       summon: a.summon ?? false,
       additionalData: this.mapAdditionalData({
         additionalData: a.additionalData,
+        isAdjustment: true,
       }),
     }));
     return results;
@@ -207,13 +210,18 @@ export class MainService {
     additionalData?: RawCreatureAdditionalData;
     items?: RawItem[];
     spells?: RawSpell[];
+    isAdjustment: boolean;
   }): CreatureAdditionalData {
     p.additionalData = p.additionalData ?? {};
+    let removeMemorizedSpells = p.additionalData.removeMemorizedSpells;
+    if (removeMemorizedSpells === undefined && !p.isAdjustment) {
+      removeMemorizedSpells = true;
+    }
     const result: CreatureAdditionalData = {
       removeScripts: p.additionalData.removeScripts ?? [],
       removeItems: p.additionalData.removeItems ?? [],
       removeKnownSpells: p.additionalData.removeKnownSpells ?? true,
-      removeMemorizedSpells: p.additionalData.removeMemorizedSpells ?? true,
+      removeMemorizedSpells,
       immunities: p.additionalData.immunities ?? [],
       itemSlots: this.mapItemSlots(p.additionalData.itemSlots, p.items),
       memorizedSpells: this.mapMemorizedSpells(
@@ -441,5 +449,32 @@ export class MainService {
       },
     }));
     return results;
+  }
+
+  generateDescriptions(creature: Creature): void {
+    for (const item of creature.items) {
+      if (!item.description) this.generateItemDescription(item);
+    }
+  }
+
+  generateItemDescription(item: Item) {
+    item.description = ["STATISTICS:"];
+    const type = item.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
+    if (item.diceThrown) {
+      item.description.push(
+        `${type} damage: ${item.diceThrown}D${item.diceSize} (${
+          AbilityDamageTypeEnum[item.damageType!]
+        })`
+      );
+    }
+    if (item.speed !== undefined) {
+      item.description.push(`Speed Factor: ${item.speed}`);
+    }
+    if (item.range) {
+      item.description.push(`Range: ${item.range} feet`);
+    }
+    for (const effect of item.effects.filter((e) => !e.global)) {
+      item.description.push(EffectTypeEnum[effect.opcode]);
+    }
   }
 }

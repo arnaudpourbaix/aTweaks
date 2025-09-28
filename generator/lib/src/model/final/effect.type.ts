@@ -7,6 +7,7 @@ export enum EffectTypeEnum {
   Berserk = 3,
   Blindness = 74,
   Blur = 65,
+  CastingFailure = 60,
   CastingTimeModifier = 189,
   CastSpell = 146,
   CastSpellOnCondition = 232,

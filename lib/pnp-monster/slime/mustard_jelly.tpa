@@ -16,6 +16,15 @@ COPY_EXISTING "dvstink.pro" ~override/ja#1m46.pro~
 	WRITE_BYTE 0x216 6
 ADD_PROJECTILE ~override/ja#1m46.pro~ ~Mustard jelly Toxic Vapors~
 
+CREATE EFF "ja#1m46"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x1c 0
+	WRITE_LONG 0x24 1
+	WRITE_LONG 0x20 0
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~ja#1m46~ #8
+
 // Toxic vapors
 CREATE SPL "ja#1m46"
 	WRITE_LONG 0x64 0x72
@@ -24,17 +33,24 @@ COPY_EXISTING ~ja#1m46.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI312C~ #8
-	SAY UNIDENTIFIED_DESC ~Unleash a vapor over a 10-foot radius.
+	WRITE_ASCII 0x3a ~SPWI213C~ #8
+	SAY UNIDENTIFIED_DESC ~Unleash a toxic vapor over a 10-foot radius.
 Those near the jelly must roll a saving throw vs. poison each round.
-Those who fail the saving throw become lethargic and move at half-normal speed, due to the effects of the vapor.
-The toxic effects last for two rounds and they are cumulative.~
+Those who fail the saving throw become lethargic.
+Lethargic characters are unable to attack or cast spells, but can still move at half-normal speed.
+The toxic effects last for two rounds.~
 	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
 	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=5 range=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m46~)) + 1 STR_VAR icon="SPWI312B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=40 target=2 power=1 duration=12 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=6 timing=1 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_M29" END
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=5 range=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m46~)) + 1 STR_VAR icon="SPWI213B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~SLIME~) parameter2=4 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELEMENTAL~) parameter2=4 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~GOLEM~) parameter2=4 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~UNDEAD~) parameter2=3 timing=1 probability1=100 STR_VAR resource="ja#1m46" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=1 target=2 power=1 parameter2=1 duration=12 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=60 target=2 power=1 parameter1=100 duration=12 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=60 target=2 power=1 parameter1=100 parameter2=1 duration=12 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=126 target=2 power=1 parameter1=50 parameter2=2 duration=12 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=126 duration=12 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=6 probability1=100 STR_VAR resource="ja#1m46" END
 	
 	// Split
@@ -44,10 +60,10 @@ COPY_EXISTING ~ja#2m46.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4019)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPPR203C~ #8
+	WRITE_ASCII 0x3a ~SPWI212C~ #8
 	SAY UNIDENTIFIED_DESC ~This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
 Each is capable of attacking, but has only half the hit points the creature had before dividing.~
-	LPF ADD_SPELL_HEADER INT_VAR type=3 location=4 target=5 STR_VAR icon="SPPR203B" END
+	LPF ADD_SPELL_HEADER INT_VAR type=3 location=4 target=5 STR_VAR icon="SPWI212B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 timing=1 probability1=100 STR_VAR resource="TRGOOYAA" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=67 target=2 power=1 parameter2=3 timing=1 probability1=100 STR_VAR resource="ja#jelmu" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=67 target=2 power=1 parameter2=3 timing=1 probability1=100 STR_VAR resource="ja#jelmu" END
@@ -63,6 +79,9 @@ CREATE ITM "ja#1m46"
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Pseudopod~)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IJELLY~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+Melee damage: 5D4 (Crushing)
+Range: 5 feet~)
 	WRITE_LONG 0x60 2
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -108,8 +127,8 @@ BEGIN
 					intelligence=10
 					wisdom=10
 					charisma=10
-					movement=14
-					hp=49
+					movement=7
+					hp=98
 					ac=4
 					resistCold=50
 					resistElectricity=100
@@ -137,8 +156,10 @@ BEGIN
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~JELLMUSU~) BEGIN 
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#jelmu~) BEGIN 
+				WRITE_LONG 0x14 2000 // xpv
 				WRITE_SHORT 0x24 49 // hp
 				WRITE_SHORT 0x26 49 // hp
+				REMOVE_MEMORIZED_SPELLS
 				ADD_MEMORIZED_SPELL ~ja#1m46~ #0 ~innate~ (1)
 			END
 		BUT_ONLY_IF_IT_CHANGES

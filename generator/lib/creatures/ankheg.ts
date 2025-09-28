@@ -1,3 +1,4 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
@@ -74,8 +75,10 @@ export const ANKHEG: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      name: "Mandibles",
       equippedSlot: "WEAPON1",
       type: "Melee",
+      icon: MonsterItemIconEnum.IWOLF,
       diceThrown: 3,
       diceSize: 6,
       damageType: "Crushing",
@@ -91,8 +94,10 @@ export const ANKHEG: RawCreature = {
     },
     {
       file: rangedWeapon,
+      name: "Squirt acid",
       equippedSlot: "WEAPON2",
       type: "Ranged",
+      icon: "SPWI211B",
       range: 30,
       speed: 3,
       bonusToHit: 20,

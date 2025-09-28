@@ -520,6 +520,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
         tab,
         additionalData: adjustment.additionalData,
       });
+      if (adjustment.additionalData.removeMemorizedSpells) {
+        this.add(lines, `REMOVE_MEMORIZED_SPELLS`, tab);
+      }
       this.addMemorizedSpells(
         lines,
         tab,

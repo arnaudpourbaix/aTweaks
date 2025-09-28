@@ -1,20 +1,13 @@
-import { truncate } from "fs";
-import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { RawBaseEffect } from "../src/model/raw/effect";
-import {
-  SpellProtectionRelation,
-  SpellProtectionStat,
-} from "../src/model/raw/spell-protection";
+import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
 import { EffectService } from "../src/services/effect.service";
-import { bafFile, convertMovement, file } from "../src/services/misc.func";
-import { StringRefUtils } from "../src/services/string-ref.utils";
+import { FactoryService } from "../src/services/factory.service";
+import { bafFile, file } from "../src/services/misc.func";
 import { UtilsService } from "../src/services/utils.service";
 import { MonsterEnum } from "./monster.enum";
-import { GLOBAL_CONFIG } from "../config/generate";
-import { FactoryService } from "../src/services/factory.service";
-import { ATWEAKS_CREATURES } from "../config/creatures";
 
 const effects = EffectService.instance;
 const utils = UtilsService.instance;
@@ -31,6 +24,13 @@ const toxicVaporsProjectile = file(1, id);
 // Script
 const script = bafFile(id);
 
+const vaporBaseEffect: RawBaseEffect = {
+  timing: "InstantLimited",
+  dispelResistance: "NaturalNonMagical",
+  duration: 12,
+  saveTypes: ["ParalyzePoisonDeath"],
+};
+
 export const SLIME_MUSTARD_JELLY: RawCreature = {
   name: "Mustard Jelly",
   bafFile: `lib/pnp-monster/slime/${script}`,
@@ -45,7 +45,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
   },
   data: {
     level1: 7,
-    hp: 49,
     // bonusHp: 14,
     thac0: 13,
     strength: 15,
@@ -54,8 +53,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     intelligence: 10,
     wisdom: 10,
     charisma: 10,
-    // movement: 9,
-    movement: 18,
+    movement: 9,
     ac: 4,
     apr: 1,
     resistMagic: 10,
@@ -82,16 +80,16 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     {
       file: mainWeapon,
       name: "Pseudopod",
+      // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
       equippedSlot: "WEAPON1",
       icon: "IJELLY",
       type: "Melee",
       range: 5,
-      diceSize: 4,
       diceThrown: 5,
+      diceSize: 4,
       damageType: "Crushing",
       animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
       projectile: "ACIDBLMU",
-      // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
     },
   ],
   projectiles: [
@@ -109,6 +107,14 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       },
     },
   ],
+  effectFiles: [
+    {
+      file: toxicVapors,
+      opcode: "ProtectionFromSpell",
+      resource: toxicVapors,
+      timing: "InstantPermanentUntilDeath",
+    },
+  ],
   spells: [
     {
       // 5e: Poison Aura. At the start of each of the jelly’s turns, each creature within 10 feet of it takes 3d6 poison damage. A creature that touches the jelly or hits it with a melee attack while within 5 feet of it takes 3d6 poison damage.
@@ -116,13 +122,14 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       file: toxicVapors,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.ToxicVapors,
-      icon: SPELLS.Slow,
+      icon: SPELLS.StinkingCloud,
       infiniteUse: true,
       description: [
-        "Unleash a vapor over a 10-foot radius.",
+        "Unleash a toxic vapor over a 10-foot radius.",
         "Those near the jelly must roll a saving throw vs. poison each round.",
-        "Those who fail the saving throw become lethargic and move at half-normal speed, due to the effects of the vapor.",
-        "The toxic effects last for two rounds and they are cumulative.",
+        "Those who fail the saving throw become lethargic.",
+        "Lethargic characters are unable to attack or cast spells, but can still move at half-normal speed.",
+        "The toxic effects last for two rounds.",
       ],
       secondaryType: "Disabling",
       headers: [
@@ -132,27 +139,44 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
           projectile: toxicVaporsProjectile,
           range: 10,
           effects: [
+            ...[...VAPOR_IMMUNE_CREATURES].map(
+              (c) =>
+                <IdsEffect>{
+                  opcode: "UseEFFFile",
+                  idsFile: c[0],
+                  idsEntry: c[1],
+                  timing: "InstantPermanentUntilDeath",
+                  resource: toxicVapors,
+                }
+            ),
             {
-              opcode: "Slow",
-              timing: "InstantLimited",
-              duration: 12,
-              dispelResistance: "NaturalNonMagical",
-              saveTypes: ["ParalyzePoisonDeath"],
+              opcode: "ModifyAttacksPerRound",
+              type: "Set",
+              value: 0,
+              ...vaporBaseEffect,
             },
             {
-              opcode: "LightingEffects",
-              effect: "AlterationWater",
-              lightingTarget: "SpellTarget",
-              timing: "InstantPermanentUntilDeath",
-              dispelResistance: "NaturalNonMagical",
-              saveTypes: ["ParalyzePoisonDeath"],
+              opcode: "CastingFailure",
+              type: "Wizard",
+              amount: 100,
+              ...vaporBaseEffect,
             },
             {
-              opcode: "PlaySound",
-              resource: "EFF_M29",
-              timing: "InstantPermanentUntilDeath",
-              dispelResistance: "NaturalNonMagical",
-              saveTypes: ["ParalyzePoisonDeath"],
+              opcode: "CastingFailure",
+              type: "Priest",
+              amount: 100,
+              ...vaporBaseEffect,
+            },
+            {
+              opcode: "MovementRateBonus",
+              type: "SetPercentOf",
+              value: 50,
+              ...vaporBaseEffect,
+            },
+            {
+              opcode: "DisplayPortraitIcon",
+              icon: "Nauseated",
+              ...vaporBaseEffect,
             },
             {
               opcode: "ProtectionFromSpell",
@@ -170,7 +194,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       file: split,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.Split,
-      icon: SPELLS.Chant,
+      icon: SPELLS.MirrorImages,
       description: [
         "This large creature can divide itself at will into two smaller, faster halves (movement rate 18).",
         "Each is capable of attacking, but has only half the hit points the creature had before dividing.",
@@ -202,18 +226,21 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
               opcode: "RemoveCreature",
               timing: "InstantPermanentUntilDeath",
             },
-            // {
-            //   opcode: "LightingEffects",
-            //   effect: "AlterationWater",
-            //   lightingTarget: "SpellTarget",
-            //   timing: "InstantPermanentUntilDeath",
-            // },
           ],
         },
       ],
     },
   ],
   abilities: [
+    {
+      name: "Split",
+      spell: {
+        resource: split,
+        type: "force",
+        probability: 100,
+        selfTarget: true,
+      },
+    },
     {
       name: "Toxic Vapors",
       target: {
@@ -279,11 +306,11 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       data: {
         hp: 49,
         xpv: 2000,
-        // movement: 18,
+        // movement: 18, //TODO: is there a solution for this one?
       },
       additionalData: {
         removeMemorizedSpells: true,
-        // memorizedSpells: [{ file: toxicVapors, memorizedCount: 1 }],
+        memorizedSpells: [{ file: toxicVapors, memorizedCount: 1 }],
       },
     },
   ],
