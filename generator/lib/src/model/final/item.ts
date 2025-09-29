@@ -1,4 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
+import { StringReference } from "../misc";
 import { ItemSlot } from "../raw/enum";
 import { Effect } from "./effect";
 import {
@@ -22,7 +23,10 @@ export interface Item {
    * Create an item from another one
    */
   copyFrom?: ImmunityName | string;
-  name?: string;
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: StringReference;
   description?: string[];
   immunities: ImmunityName[];
   enchantment?: number;

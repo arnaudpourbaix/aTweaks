@@ -1,3 +1,4 @@
+import { RawEffect } from "../raw/effect";
 import { EffectTypeEnum } from "./effect.type";
 import {
   EffectDispelResistanceEnum,
@@ -27,6 +28,7 @@ export interface BaseEffect {
    * Global effect
    */
   global: boolean;
+  raw: RawEffect;
 }
 
 export interface Effect extends BaseEffect {

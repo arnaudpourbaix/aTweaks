@@ -34,8 +34,8 @@ export class WeiduItemService extends AbstractWeiduService {
           this.write(lines, 0x6a, 4, "0xaa", 1);
         }
       }
-      this.writeStringRef(lines, 0x8, item.name, 1);
-      this.writeStringRef(lines, 0xc, item.name, 1);
+      this.writeStringRef(lines, 0x8, item.stringRef, 1);
+      this.writeStringRef(lines, 0xc, item.stringRef, 1);
       this.writeFlag(lines, 0x18, 4, item.flags, 1);
       this.write(lines, 0x1c, 2, item.category, 1);
       this.writeAscii(lines, 0x22, 2, item.animation, 1);
@@ -73,18 +73,6 @@ export class WeiduItemService extends AbstractWeiduService {
       if (!item.copyFrom)
         this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
       for (const effect of item.effects) {
-        this.weiduEffectService.addEffect({
-          lines,
-          tab: 1,
-          effect,
-          type: "ITM",
-        });
-      }
-      if (creature.attack.grab?.weaponFile === item.file) {
-        const effect = this.grabService.getGrabEffect(
-          creature,
-          creature.attack.grab
-        );
         this.weiduEffectService.addEffect({
           lines,
           tab: 1,

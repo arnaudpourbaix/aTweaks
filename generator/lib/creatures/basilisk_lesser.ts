@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../config/generate";
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawSaveType } from "../src/model/raw/enum";
@@ -99,6 +100,7 @@ export const BASILISK_LESSER: RawCreature = {
     {
       file: mainWeapon,
       equippedSlot: "WEAPON1",
+      icon: MonsterItemIconEnum.IWOLF,
       type: "Melee",
       diceThrown: 1,
       diceSize: 10,

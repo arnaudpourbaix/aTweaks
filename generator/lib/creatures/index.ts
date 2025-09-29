@@ -6,6 +6,7 @@ import { BEAR_BLACK } from "./bear_black";
 import { BEAR_BROWN } from "./bear_brown";
 import { BEAR_CAVE } from "./bear_cave";
 import { BEAR_POLAR_KALDRAN } from "./bear_kaldran";
+import { BEAR_POLAR } from "./bear_polar";
 import { HELLCAT } from "./cat_hell";
 import { CAT_JAGUAR } from "./cat_jaguar";
 import { CAT_LEOPARD } from "./cat_leopard";
@@ -56,7 +57,7 @@ export const CREATURES: RawCreature[] = [
   BEAR_BLACK,
   BEAR_BROWN,
   BEAR_CAVE,
-  BEAR_CAVE,
+  BEAR_POLAR,
   BEAR_POLAR_KALDRAN,
   CAT_JAGUAR,
   CAT_LEOPARD,
@@ -104,7 +105,13 @@ export const CREATURES: RawCreature[] = [
   SLIME_OLIVE_CREATURE,
 ];
 export const CREATURES_TEST: RawCreature[] = [
-  SLIME_MUSTARD_JELLY,
+  ANKHEG,
+  BEAR_BLACK,
+  BEAR_BROWN,
+  BEAR_CAVE,
+  BEAR_POLAR,
+  BEAR_POLAR_KALDRAN,
+  // SLIME_MUSTARD_JELLY,
   // SLIME_BLACK_PUDDING,
   // SLIME_FISSION,
   // SLIME_OCHRE_JELLY,

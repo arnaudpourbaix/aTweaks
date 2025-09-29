@@ -1,16 +1,10 @@
 import { Effect, EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import { CodeLine } from "../model/misc";
-import { GrabConfig } from "../model/raw/grab";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 
 export class WeiduEffectService extends AbstractWeiduService {
   static instance = new WeiduEffectService();
-
-  createGrabProtectionEffect(lines: CodeLine[], grab: GrabConfig) {
-    const effect = this.grabService.getGrabProtectionEffect(grab);
-    this.createEffectFiles(lines, [{ ...effect, file: grab.file }]);
-  }
 
   createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
     for (const effect of effectFiles) {

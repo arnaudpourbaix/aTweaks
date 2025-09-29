@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../config/generate";
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
@@ -74,6 +75,8 @@ export const BASILISK_GREATER: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Claws,
+      icon: MonsterItemIconEnum.IWOLF,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -101,6 +104,8 @@ export const BASILISK_GREATER: RawCreature = {
     },
     {
       file: offhandWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
+      icon: MonsterItemIconEnum.SPPR416B,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 2,

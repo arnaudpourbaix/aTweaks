@@ -79,7 +79,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     // Mustard jelly is translucent, and very hard to see until it attacks. The only clue to its presence is a faint odor, similar to blooming mustard plants.
     {
       file: mainWeapon,
-      name: "Pseudopod",
+      stringRef: TraStringReferenceEnum.Pseudopod,
       // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
       equippedSlot: "WEAPON1",
       icon: "IJELLY",

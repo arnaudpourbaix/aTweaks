@@ -1,24 +1,13 @@
 import { CR } from "../model/constants";
-import { Creature } from "../model/final/creature";
-import {
-  ItemAbilityLocationEnum,
-  ItemAbilityTargetEnum,
-  ItemAbilityTypeEnum,
-  SpellTypeEnum,
-} from "../model/final/enums";
 import { Spell, SpellHeader } from "../model/final/spell";
 import { CodeLine } from "../model/misc";
-import { GrabConfig } from "../model/raw/grab";
-import { RawSpell } from "../model/raw/spell";
 import { AbstractWeiduService } from "./abstract-weidu.service";
-import { SpellService } from "./spell.service";
 import { WeiduEffectService } from "./weidu-effect.service";
 
 export class WeiduSpellService extends AbstractWeiduService {
   static instance = new WeiduSpellService();
 
   private weiduEffectService = WeiduEffectService.instance;
-  private spellService = SpellService.instance;
 
   createSpells(lines: CodeLine[], spells: Spell[]) {
     for (const spell of spells) {
@@ -142,29 +131,5 @@ export class WeiduSpellService extends AbstractWeiduService {
         type: "SPL",
       });
     }
-  }
-
-  createGrabSpell(lines: CodeLine[], creature: Creature, grab: GrabConfig) {
-    const spell = this.spellService.mapSpell(
-      {
-        name: "Grab spell",
-        stringRef: grab.grabStringRef,
-        file: grab.file,
-        headers: [
-          {
-            type: "Melee",
-            target: "LivingActor",
-            range: 5,
-          },
-        ],
-      },
-      []
-    );
-    spell.headers[0].effects = this.grabService.getGrabbedEffects(
-      creature,
-      grab
-    );
-    this.createSpell(lines, spell, 1);
-    this.add(lines, "", 0);
   }
 }

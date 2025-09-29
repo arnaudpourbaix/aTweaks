@@ -75,7 +75,7 @@ export const ANKHEG: RawCreature = {
   items: [
     {
       file: mainWeapon,
-      name: "Mandibles",
+      stringRef: TraStringReferenceEnum.Mandibles,
       equippedSlot: "WEAPON1",
       type: "Melee",
       icon: MonsterItemIconEnum.IWOLF,
@@ -94,7 +94,7 @@ export const ANKHEG: RawCreature = {
     },
     {
       file: rangedWeapon,
-      name: "Squirt acid",
+      stringRef: "Squirt acid",
       equippedSlot: "WEAPON2",
       type: "Ranged",
       icon: "SPWI211B",
@@ -116,7 +116,6 @@ export const ANKHEG: RawCreature = {
     {
       name: "Acidic digestive enzymes",
       file: digestiveEnzyme,
-      memorizedCount: 1,
       stringRef: TraStringReferenceEnum.AcidicDigestiveEnzymes,
       description: [
         "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",

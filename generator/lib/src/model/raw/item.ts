@@ -1,4 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
+import { StringReference } from "../misc";
 import { RawEffect } from "./effect";
 import {
   ItemSlot,
@@ -29,7 +30,10 @@ export interface RawBaseItem {
    * Filename for ITM file (without extension)
    */
   file: string;
-  name?: string;
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: StringReference;
   description?: string[];
   immunities?: ImmunityName[];
   equippedSlot?: ItemSlot;

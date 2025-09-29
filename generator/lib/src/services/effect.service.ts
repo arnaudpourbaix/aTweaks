@@ -90,7 +90,6 @@ import {
   ProtectionFromProjectileEffect,
   ProtectionFromResourceEffect,
   ProtectionFromWeaponsEffect,
-  RawBaseEffect,
   RawEffect,
   RawEffectGroup,
   RegenerationEffect,
@@ -727,7 +726,7 @@ export class EffectService {
     return effects;
   }
 
-  getBaseEffect(effect: RawBaseEffect): BaseEffect {
+  getBaseEffect(effect: RawEffect): BaseEffect {
     const defaultTarget = !!effect.global
       ? EffectTargetEnum.Self
       : EffectTargetEnum.PresetTarget;
@@ -757,6 +756,7 @@ export class EffectService {
         : undefined,
       special: effect.special,
       global: effect.global ?? false,
+      raw: effect,
     };
     return result;
   }

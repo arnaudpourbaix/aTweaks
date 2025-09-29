@@ -69,7 +69,7 @@ export const WOLF_DREAD: RawCreature = {
     },
     {
       file: aliveResistances,
-      name: "Dread wolf resistances",
+      stringRef: "Dread wolf resistances",
       equippedSlot: "LRING",
       description: [
         "A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.",
@@ -101,7 +101,7 @@ export const WOLF_DREAD: RawCreature = {
     },
     {
       file: downResistances,
-      name: "Dread wolf down resistances",
+      stringRef: "Dread wolf down resistances",
       description: [
         "A down dread wolf is immune to everything but fire and acid.",
       ],

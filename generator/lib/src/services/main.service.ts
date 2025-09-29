@@ -52,7 +52,9 @@ import { RawMemorizedSpell, RawSpell } from "../model/raw/spell";
 import { AbilityService } from "./ability.service";
 import { BafGeneratorService } from "./baf-generator.service";
 import { CreatureService } from "./creature.service";
+import { DescriptionService } from "./description.service";
 import { EffectService } from "./effect.service";
+import { GrabService } from "./grab.service";
 import { ImmunityService } from "./immunity.service";
 import { SpellService } from "./spell.service";
 import { TargetService } from "./target.service";
@@ -72,6 +74,8 @@ export class MainService {
   private creatureService = CreatureService.instance;
   private targerService = TargetService.instance;
   private abilityService = AbilityService.instance;
+  private descriptionService = DescriptionService.instance;
+  private grabService = GrabService.instance;
   private utils = UtilsService.instance;
 
   generateCommonCode(): Promise<void> {
@@ -150,7 +154,8 @@ export class MainService {
       this.transformAttackPerRound(a.data);
     }
     this.immunityService.handleImmunities(creature);
-    this.generateDescriptions(creature);
+    this.grabService.addGrabEffects(creature);
+    this.descriptionService.generate(creature);
     return creature;
   }
 
@@ -314,7 +319,7 @@ export class MainService {
   private mapCreateItem(item: RawCreateItem): Item {
     const result: Item = {
       file: item.file,
-      name: item.name,
+      stringRef: item.stringRef,
       description: item.description,
       equippedSlot: item.equippedSlot,
       icon: item.icon,
@@ -449,32 +454,5 @@ export class MainService {
       },
     }));
     return results;
-  }
-
-  generateDescriptions(creature: Creature): void {
-    for (const item of creature.items) {
-      if (!item.description) this.generateItemDescription(item);
-    }
-  }
-
-  generateItemDescription(item: Item) {
-    item.description = ["STATISTICS:"];
-    const type = item.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
-    if (item.diceThrown) {
-      item.description.push(
-        `${type} damage: ${item.diceThrown}D${item.diceSize} (${
-          AbilityDamageTypeEnum[item.damageType!]
-        })`
-      );
-    }
-    if (item.speed !== undefined) {
-      item.description.push(`Speed Factor: ${item.speed}`);
-    }
-    if (item.range) {
-      item.description.push(`Range: ${item.range} feet`);
-    }
-    for (const effect of item.effects.filter((e) => !e.global)) {
-      item.description.push(EffectTypeEnum[effect.opcode]);
-    }
   }
 }

@@ -37,10 +37,10 @@ CREATE ITM "ja#1m3"
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+	WRITE_ASCII 0x3a ~IWOLF~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
 Melee damage: 1D6 (Slashing)
-Poison
-DisplayPortraitIcon~)
+Poison: deals one damage per 6 seconds for 5 rounds (saves vs poison/death at +4).~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
@@ -62,9 +62,12 @@ CREATE ITM "ja#2m3"
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
 Melee damage: 2D8 (Piercing)
-CastSpell~)
+
+Cast spell Foul breath (100%)
+Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1

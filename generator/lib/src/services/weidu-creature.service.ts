@@ -40,17 +40,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.creatureService.checkWeapons(creature);
     this.weiduProjectileService.createProjectiles(lines, creature);
     this.weiduEffectService.createEffectFiles(lines, creature.effectFiles);
-    if (creature.attack.grab) {
-      this.weiduEffectService.createGrabProtectionEffect(
-        lines,
-        creature.attack.grab
-      );
-      this.weiduSpellService.createGrabSpell(
-        lines,
-        creature,
-        creature.attack.grab
-      );
-    }
     this.weiduSpellService.createSpells(lines, creature.spells);
     this.weiduItemService.createItems(lines, creature);
     this.patchCreatures(lines, creature);

@@ -8,7 +8,7 @@ export interface GrabSharedConfig {
    */
   probability: number;
 
-  saveTypes: RawSaveType[];
+  saveType: RawSaveType;
   saveBonus: number;
 
   /**

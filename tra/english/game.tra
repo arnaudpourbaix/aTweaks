@@ -837,6 +837,11 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4017 = ~Entangle~
 @4018 = ~Fog Cloud~
 @4019 = ~Split~
+@4020 = ~Claws~
+@4021 = ~Jaws~
+@4022 = ~Paws~
+@4023 = ~Mandibles~
+@4024 = ~Pseudopod~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

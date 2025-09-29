@@ -1,17 +1,22 @@
+// Generated file (don't edit)
+
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m7.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m7su.baf~
 
-CREATE ITM "ja#m7w1"
+CREATE ITM "ja#1m7"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IWOLF~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+Melee damage: 1D10 (Slashing)
+Crushing damage: 3D6~)
 	WRITE_LONG 0x60 3
-	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_SHORT 0x84 3
 	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -19,37 +24,23 @@ CREATE ITM "ja#m7w1"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m7w1.itm~ ~override~
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 139
-			target = 2
-			parameter1 = RESOLVE_STR_REF(@4007)
-			parameter2 = 0
-			probability1 = 10
-		END
-	LPF ADD_EFFECT
-		INT_VAR
-			opcode = 12
-			target = 2
-			parameter1 = 0
-			parameter2 = 0
-			probability1 = 10
-			dicenumber = 3
-			dicesize = 6
-		END
+COPY_EXISTING ~ja#1m7.itm~ ~override~
+	LPF ADD_EFFECT INT_VAR opcode=139 target=2 parameter1=RESOLVE_STR_REF(@4007) probability1=10 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 probability1=10 dicenumber=3 dicesize=6 END
 
-CREATE ITM "ja#m7w2"
+CREATE ITM "ja#2m7"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+Melee damage: 2D6 (Piercing)~)
 	WRITE_LONG 0x60 3
-	WRITE_SHORT 0x74 1
+	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_SHORT 0x84 3
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 2
 	WRITE_SHORT 0x8e 1
@@ -57,7 +48,7 @@ CREATE ITM "ja#m7w2"
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-COPY_EXISTING ~ja#m7w2.itm~ ~override~
+COPY_EXISTING ~ja#2m7.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	BEARPO
@@ -66,6 +57,8 @@ ACTION_FOR_EACH ~file~ IN
 	BEARPO3
 	BEARPOSU
 	NTBEARPO
+	BDGHBRSU
+	SPIRBEAR
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -74,9 +67,9 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~B1-12~
 			REMOVE_CRE_ITEM ~BEARPOSU~
-			ADD_CRE_ITEM ~ja#m7w1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#m7w2~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
-			LPF clearProficiencies END
+			REPLACE_CRE_ITEM ~ja#1m7~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REPLACE_CRE_ITEM ~ja#2m7~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=8
@@ -90,9 +83,9 @@ BEGIN
 					hp=92
 					ac=6
 					thac0=11
-					apr=3
+					apr=2
 					xpv=1400
-					alignment=34
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
 					saveDeath=10
 					saveWand=12
 					savePolymorph=11
@@ -101,33 +94,35 @@ BEGIN
 					morale=9
 					moraleBreak=4
 					moraleRecovery=15
-					general=255
-					race=103
-					class=107
-					gender=4
-					sex=4
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
+					class=IDS_OF_SYMBOL (~class~ ~BEAR_POLAR~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
+					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY skipFiles BEGIN BEARPOSU END
+			DEFINE_ARRAY skipFiles BEGIN BEARPOSU BDGHBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m7 skipFiles removeScripts END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY files BEGIN BEARPOSU END
+			DEFINE_ARRAY files BEGIN BEARPOSU BDGHBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m7su files removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARPOSU~) BEGIN 
-				LPF patchCreature
-					INT_VAR
-						hp=80
-						thac0=13
-						xpv=0
-						saveDeath=10
-						saveWand=12
-						savePolymorph=11
-						saveBreath=12
-						saveSpell=13
-						summon=1
-				END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARPOSU~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDGHBRSU~) BEGIN 
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDGHBRSU~) BEGIN 
+				WRITE_SHORT 0x24 90 // hp
+				WRITE_SHORT 0x26 90 // hp
+				WRITE_BYTE 0x52 11 // thac0
+				WRITE_BYTE 0x54 8 // saveDeath
+				WRITE_BYTE 0x55 10 // saveWand
+				WRITE_BYTE 0x56 9 // savePolymorph
+				WRITE_BYTE 0x57 9 // saveBreath
+				WRITE_BYTE 0x58 11 // saveSpell
+				WRITE_BYTE 0x234 9 // level1
 			END
 		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
 	END
 END

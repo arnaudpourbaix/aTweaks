@@ -102,7 +102,7 @@ export const OGRE_MAGE: RawCreature = {
       type: "Melee",
       flags: ["Displayable", "TwoHanded"],
       animation: "LongSword",
-      name: "Naganata",
+      stringRef: "Naganata",
       description: [
         "Similar to the glaive, the naginata is a pole weapon. Naginata were originally used by the samurai class.",
         "",
@@ -140,7 +140,7 @@ export const OGRE_MAGE: RawCreature = {
     },
     {
       file: gaseousFormWeapon,
-      name: "Gaseous form",
+      stringRef: "Gaseous form",
       description: [
         "Gaseous form is immuned to everything but magical fire, lightning and mind spells.",
       ],

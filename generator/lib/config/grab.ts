@@ -25,7 +25,7 @@ export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   grabbedState: SPELL_STATES.grabbed,
   grabbingState: SPELL_STATES.grabbing,
   duration: 12,
-  saveTypes: ["ParalyzePoisonDeath"],
+  saveType: "ParalyzePoisonDeath",
   saveBonus: 99, // will be calculated
   grabStringRef: TraStringReferenceEnum.Grab,
   grabbedStringRef: TraStringReferenceEnum.Grabbed,
