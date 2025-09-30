@@ -625,6 +625,11 @@ export type CreatureSize =
   | "Gargantuan"
   | "Colossal";
 
+export type RawRemoveEffectsByResourceType =
+  | "Default"
+  | "EquippedEffectsListOnly"
+  | "TimedEffectsListOnly";
+
 export type RawEffectColorLocation =
   | "ArmorGreyBeltAmulet"
   | "ArmorTealMinorColor"

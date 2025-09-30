@@ -842,6 +842,9 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4022 = ~Paws~
 @4023 = ~Mandibles~
 @4024 = ~Pseudopod~
+@4025 = ~Tentacles~
+@4026 = ~Displacement~
+@4027 = ~Astral Plane Shift~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

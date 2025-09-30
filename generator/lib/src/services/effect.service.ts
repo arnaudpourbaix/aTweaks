@@ -45,6 +45,7 @@ import {
   ProficiencyTypeEnum,
   ProtectionFromWeaponsTypeEnum,
   RegenerationTypeEnum,
+  RemoveEffectsByResourceTypeEnum,
   SaveTypeEnum,
   SummonCreatureModeEnum,
   TranslucencyTypeEnum,
@@ -78,6 +79,7 @@ import {
   LightingEffectsEffect,
   MakeUnselectableEffect,
   MinimumHPEffect,
+  MirrorImageEffect,
   ModifierTypeEffect,
   ModifyAttacksPerRoundEffect,
   NoCollisionDetectionEffect,
@@ -93,6 +95,7 @@ import {
   RawEffect,
   RawEffectGroup,
   RegenerationEffect,
+  RemoveEffectsByResource,
   RemoveOpcodeEffect,
   RemoveSpellTypeProtectionsEffect,
   ScriptingStateModifierEffect,
@@ -231,6 +234,13 @@ export class EffectService {
       case EffectTypeEnum.PlayVisualEffect:
         result.parameter2 = `${
           EffectVisualEffectLocationEnum[(<PlayVisualEffect>effect).playWhere]
+        }`;
+        break;
+      case EffectTypeEnum.RemoveEffectsByResource:
+        result.parameter2 = `${
+          RemoveEffectsByResourceTypeEnum[
+            (<RemoveEffectsByResource>effect).type
+          ]
         }`;
         break;
       case EffectTypeEnum.Slay:
@@ -498,6 +508,9 @@ export class EffectService {
         result.parameter2 = `${
           CastingFailureTypeEnum[(<CastingFailureEffect>effect).type]
         }`;
+        break;
+      case EffectTypeEnum.MirrorImageEffect:
+        result.parameter1 = `${(<MirrorImageEffect>effect).amount}`;
         break;
       case EffectTypeEnum.DisableButton:
         result.parameter2 = `${

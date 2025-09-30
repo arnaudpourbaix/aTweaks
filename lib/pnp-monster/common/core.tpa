@@ -88,7 +88,6 @@ CREATE ITM "ja#i4"
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
 	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.
-
 Immune to backstab and critical hits
 Immune to all nonmagical attacks.
 Has a 50% resistance to every damages.

@@ -1261,3 +1261,9 @@ export enum PoisonTypeEnum {
   OneDamagePerAmountSecond = 3,
   // Amount1DamagePerAmount2Second = 4
 }
+
+export enum RemoveEffectsByResourceTypeEnum {
+  Default = 0,
+  EquippedEffectsListOnly = 1,
+  TimedEffectsListOnly = 2,
+}

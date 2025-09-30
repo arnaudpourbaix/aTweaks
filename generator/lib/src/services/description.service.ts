@@ -1,3 +1,4 @@
+import { IMMUNITIES } from "../../config/immunity-config";
 import { Creature } from "../model/final/creature";
 import { Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
@@ -7,7 +8,13 @@ import {
   SaveTypeEnum,
 } from "../model/final/enums";
 import { Item } from "../model/final/item";
-import { DamageEffect, PoisonEffect, RawEffect } from "../model/raw/effect";
+import {
+  ArmorClassBonusEffect,
+  DamageEffect,
+  IdsEffect,
+  PoisonEffect,
+  RawEffect,
+} from "../model/raw/effect";
 
 export class DescriptionService {
   static instance = new DescriptionService();
@@ -22,9 +29,11 @@ export class DescriptionService {
     const desc: string[] = ["STATISTICS:", ""];
     const type = item.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
     if (item.bonusToHit) {
-      desc.push(`THAC0: +${item.bonusToHit}`);
+      desc.push(`THAC0: ${this.getSignedNumber(item.bonusToHit)}`);
     }
-    const damageBonus = item.damageBonus ? `+${item.damageBonus}` : "";
+    const damageBonus = item.damageBonus
+      ? `${this.getSignedNumber(item.damageBonus)}`
+      : "";
     if (item.diceThrown) {
       desc.push(
         `${type} damage: ${item.diceThrown}D${item.diceSize}${damageBonus} (${
@@ -42,7 +51,17 @@ export class DescriptionService {
       desc.push(`Range: ${item.range} feet`);
     }
     desc.push(...this.getItemEffectsDescription(creature, item.effects));
+    desc.push(...this.getImmunitiesDescription(creature, item));
     item.description = desc;
+  }
+
+  private getImmunitiesDescription(creature: Creature, item: Item): string[] {
+    const results: string[] = [];
+    for (const name of item.immunities) {
+      const immunity = IMMUNITIES.find((i) => i.name === name);
+      if (immunity) results.push(...immunity.description);
+    }
+    return results;
   }
 
   private getItemEffectsDescription(
@@ -65,12 +84,10 @@ export class DescriptionService {
     effect: Effect
   ): string[] {
     const spell = creature.spells.find((s) => s.file === effect.resource);
-    const results: string[] = [
-      "",
-      `Cast spell ${spell ? spell.name : effect.resource} (${
-        effect.probability1
-      }%)`,
-    ];
+    let text = `Cast spell ${spell ? spell.name : effect.resource}`;
+    const condition = this.getSaveText(effect) ?? this.getProbability(effect);
+    if (condition) text = `${text}${condition}`;
+    const results: string[] = ["", text];
     if (spell && Array.isArray(spell.description)) {
       results.push(...spell.description);
     }
@@ -83,6 +100,14 @@ export class DescriptionService {
       results.push(...this.getDamage(effect.raw));
     } else if (effect.raw.opcode === "Poison") {
       results.push(...this.getPoison(effect.raw));
+    } else if (effect.raw.opcode === "ArmorClassBonus") {
+      results.push(...this.getArmorClassBonus(effect.raw));
+    } else if (effect.raw.opcode === "Paralyze") {
+      results.push(...this.getParalyze(effect.raw));
+    } else if (effect.raw.opcode === "InvisibilityDetection") {
+      results.push("Can see invisible creatures.");
+    } else if (effect.raw.opcode === "Blur") {
+      results.push("Blur (visual effect only)");
     }
     return results;
   }
@@ -104,19 +129,43 @@ export class DescriptionService {
     else if (type === "RodStaffWand" || type === SaveTypeEnum.RodStaffWand)
       save = "wand";
     else if (type === "Spell" || type === SaveTypeEnum.Spell) save = "spell";
-    let bonus = "";
-    if (effect.saveBonus && effect.saveBonus < 0)
-      bonus = ` at ${effect.saveBonus}`;
-    else if (effect.saveBonus && effect.saveBonus > 0)
-      bonus = ` at +${effect.saveBonus}`;
+    let bonus = effect.saveBonus
+      ? ` at ${this.getSignedNumber(effect.saveBonus)}`
+      : "";
     const saveText = save ? ` (saves vs ${save}${bonus})` : "";
     return saveText;
+  }
+
+  getProbability(effect: Effect | RawEffect): string {
+    //TODO: handle probability2
+    return effect.probability1 && effect.probability1 < 100
+      ? ` (${effect.probability1}%)`
+      : "";
   }
 
   getDuration(duration?: number): string {
     if (!duration) return "";
     const rounds = Math.round(duration / 6);
     return `${rounds} rounds`;
+  }
+
+  private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
+    const results: string[] = [];
+    results.push(
+      `${this.getSignedNumber(effect.value)} AC (${effect.bonusTo})`
+    );
+    return results;
+  }
+
+  private getParalyze(effect: IdsEffect): string[] {
+    const results: string[] = [];
+    //TODO: handle ids entry/id
+    results.push(
+      `Paralyze target for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}.`
+    );
+    return results;
   }
 
   private getDamage(effect: DamageEffect): string[] {
@@ -141,5 +190,11 @@ export class DescriptionService {
       )}${this.getSaveText(effect)}.`
     );
     return results;
+  }
+
+  private getSignedNumber(value: number | null | undefined): string {
+    if (value === null || value === undefined) return "";
+    else if (value <= 0) return `${value}`;
+    return `+${value}`;
   }
 }

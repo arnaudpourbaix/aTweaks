@@ -1,5 +1,6 @@
 export const SPELLS = {
   // Wizard
+  Blur: "SPWI201",
   CharmPerson: "SPWI104",
   ColorSpray: "SPWI105",
   ConeOfCold: "SPWI503",

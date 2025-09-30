@@ -653,7 +653,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
-      "",
       "Immune to backstab and critical hits",
       "Immune to all nonmagical attacks.",
       "Has a 50% resistance to every damages.",
@@ -682,7 +681,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       { opcode: "NoCollisionDetection", passWalls: true },
       { opcode: "ModifyCollisionBehavior" },
       { opcode: "OverrideCreatureData", field: "PersonalSpace", value: 0 },
-      { opcode: "MakeUnselectable", disableDialog: false },
+      // { opcode: "MakeUnselectable", disableDialog: false },
       // { opcode: "SelectionCircleRemoval" },
       {
         opcode: "ProtectionFromWeapons",

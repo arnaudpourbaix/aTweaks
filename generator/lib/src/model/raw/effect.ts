@@ -49,6 +49,7 @@ import {
   RawProficiencyType,
   RawProtectionFromWeaponsType,
   RawRegenerationType,
+  RawRemoveEffectsByResourceType,
   RawSaveType,
   RawSummonCreatureMode,
   RawTranslucencyType,
@@ -451,6 +452,16 @@ export type CastingFailureEffect = RawBaseEffect & {
   type: RawCastingFailureType;
 };
 
+export type RemoveEffectsByResource = RawBaseEffect & {
+  opcode: "RemoveEffectsByResource";
+  type: RawRemoveEffectsByResourceType;
+};
+
+export type MirrorImageEffect = RawBaseEffect & {
+  opcode: "MirrorImageEffect";
+  amount: number;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -525,6 +536,7 @@ export type RawEffect =
   | LightingEffectsEffect
   | MakeUnselectableEffect
   | MinimumHPEffect
+  | MirrorImageEffect
   | ModifierTypeEffect
   | ModifyAttacksPerRoundEffect
   | NoCollisionDetectionEffect
@@ -539,6 +551,7 @@ export type RawEffect =
   | ProtectionFromResourceEffect
   | ProtectionFromWeaponsEffect
   | RegenerationEffect
+  | RemoveEffectsByResource
   | RemoveOpcodeEffect
   | RemoveSpellTypeProtectionsEffect
   | ScriptingStateModifierEffect

@@ -1,3 +1,5 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -6,6 +8,7 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.DisplacerBeast;
 // Items
 const mainWeapon = file(1, id);
+const ring = file(2, id);
 
 export const DISPLACER_BEAST: RawCreature = {
   name: "Displacer Beast",
@@ -45,6 +48,8 @@ export const DISPLACER_BEAST: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Tentacles,
+      icon: MonsterItemIconEnum.IJELLY,
       equippedSlot: "WEAPON1",
       type: "Melee",
       range: 5,
@@ -53,21 +58,45 @@ export const DISPLACER_BEAST: RawCreature = {
       damageType: "PiercingOrCrushing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
+    },
+    {
+      file: ring,
+      stringRef: "Displacer Beast traits",
+      description: [
+        "Its main advantage in combat is its magical power of displacement, which allows it to appear to be some 3 feet from their actual location.",
+        "Anyone attacking a displacer beast does so at -2 on his attack roll. In addition, the beasts save as 12th-level fighters; adding +2 to their die rolls.",
+      ],
       effects: [
         {
           opcode: "ArmorClassBonus",
           bonusTo: "AllWeapons",
           value: 2,
+          dispelResistance: "NotDispelBypassResistance",
           global: true,
         },
         {
-          opcode: "CastSpell",
-          type: "CastInstantlyAtCasterLevel",
-          target: "Self",
-          resource: "BDDISPB2",
+          opcode: "Blur",
+          dispelResistance: "NotDispelBypassResistance",
+          global: true,
+        },
+        {
+          opcode: "MirrorImageEffect",
+          amount: 1,
+          dispelResistance: "NotDispelBypassResistance",
+          global: true,
+        },
+        {
+          opcode: "CastSpellOnCondition",
+          condition: "AttackedBy([ANYONE])",
+          conditionTarget: "Myself",
+          resource: "BDDISPLC",
+          dispelResistance: "NotDispelBypassResistance",
           global: true,
         },
       ],
+      equippedSlot: "RRING",
+      category: "Rings",
+      icon: "IRING01",
     },
   ],
   files: ["BDDISPBE", "BDDISPBP"],

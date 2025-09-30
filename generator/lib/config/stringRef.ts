@@ -3,6 +3,7 @@ import { ExistingStringReference } from "../src/model/raw/stringref";
 export enum TraStringReferenceEnum {
   AcidicDigestiveEnzymes = 4001,
   AnimalFriendship = 1900,
+  AstralPlaneShift = 4027,
   BlindingBeauty = 1901,
   Blink = 4010,
   CallWoodlandBeeingsDescription = 1895,
@@ -14,6 +15,7 @@ export enum TraStringReferenceEnum {
   DetectSnaresAndPits = 1904,
   DimensionDoorDescription = 1891,
   DimensionDoor = 1892,
+  Displacement = 4026,
   EndCharge = 4014,
   Entangle = 4017,
   Fly = 4015,
@@ -38,6 +40,7 @@ export enum TraStringReferenceEnum {
   SpeakWithPlants = 1907,
   StreamOfAcidicEnzymes = 4000,
   StreamOfFrost = 4011,
+  Tentacles = 4025,
   TouchOfTranquility = 1905,
   ToxicVapors = 1906,
   TurningToStone = 4005,

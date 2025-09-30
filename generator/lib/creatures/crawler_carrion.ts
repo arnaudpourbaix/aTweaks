@@ -1,3 +1,5 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -8,6 +10,7 @@ const id = MonsterEnum.CarrionCrawler;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
+
 export const CARRION_CRAWLER: RawCreature = {
   name: "Carrion Crawler",
   bafFile: `lib/pnp-monster/carrion/${script}`,
@@ -21,9 +24,35 @@ export const CARRION_CRAWLER: RawCreature = {
       },
     ],
   },
+  data: {
+    level1: 3,
+    bonusHp: 1,
+    strength: 14,
+    dexterity: 13,
+    constitution: 16,
+    intelligence: 1,
+    wisdom: 12,
+    charisma: 5,
+    movement: 12,
+    ac: 3,
+    apr: 8,
+    alignment: "NEUTRAL",
+    morale: 10,
+    moraleBreak: 4,
+    moraleRecovery: 15,
+    general: "MONSTER",
+    race: "CARRIONCRAWLER",
+    class: "CARRIONCRAWLER",
+    gender: "NIETHER",
+    size: "Large",
+    xpv: 420,
+  },
+  additionalData: { removeItems: ["CARRIO1"], removeScripts: ["ccrawler"] },
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Tentacles,
+      icon: MonsterItemIconEnum.IJELLY,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -78,30 +107,6 @@ export const CARRION_CRAWLER: RawCreature = {
       ],
     },
   ],
-  data: {
-    level1: 3,
-    bonusHp: 1,
-    strength: 14,
-    dexterity: 13,
-    constitution: 16,
-    intelligence: 1,
-    wisdom: 12,
-    charisma: 5,
-    movement: 12,
-    ac: 3,
-    apr: 8,
-    alignment: "NEUTRAL",
-    morale: 10,
-    moraleBreak: 4,
-    moraleRecovery: 15,
-    general: "MONSTER",
-    race: "CARRIONCRAWLER",
-    class: "CARRIONCRAWLER",
-    gender: "NIETHER",
-    size: "Large",
-    xpv: 420,
-  },
-  additionalData: { removeItems: ["CARRIO1"], removeScripts: ["ccrawler"] },
   files: [
     "BDCCRAW1",
     "BPCRCW01",

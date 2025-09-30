@@ -1,16 +1,77 @@
 // Generated file (don't edit)
 
+// Astral Plane Shift
+CREATE SPL "ja#1m39"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m39.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4027)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~
+Slow target for 6 rounds.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=40 target=2 power=1 resist_dispel=1 duration=36 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=66 target=2 power=1 parameter1=99 resist_dispel=1 duration=36 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=9 target=2 power=1 parameter1=2105376000 parameter2=1966335 resist_dispel=1 duration=36 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=61 target=2 power=1 parameter1=1511938560 parameter2=1638400 resist_dispel=1 duration=36 probability1=100 END
+	
+CREATE ITM "ja#1m39"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
+Melee damage: 2D6 (Piercing)
+Speed Factor: 3
+Enchantment: 1
+Range: 1 feet
+
+Cast spell Astral Plane Shift (saves vs spell)
+
+Slow target for 6 rounds.~)
+	WRITE_LONG 0x60 1
+	WRITE_BYTE 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 3
+	WRITE_BYTE 0x88 6
+	WRITE_BYTE 0x8a 2
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#1m39.itm~ ~override~
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=1 STR_VAR resource="ja#1m39" END
+
 CREATE ITM "ja#2m39"
 	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Spectral Hound traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Spectral Hound traits~)
 	WRITE_SHORT 0x1c 1
 	WRITE_ASCII 0x3a ~IRING01~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-InvisibilityDetection ==> TODO
-MakeUnselectable ==> TODO~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
+See invisible creatures
+Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.
+An incorporeal creature has no physical body.
+Immune to backstab and critical hits
+Immune to all nonmagical attacks.
+Has a 50% resistance to every damages.
+Deflection bonus (+3 AC).
+Attacks pass through armor (+4 THAC0).
+Do not set off traps that are triggered by weight. (not implemented)~)
 COPY_EXISTING ~ja#2m39.itm~ ~override~
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=193 target=1 global=1 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=365 target=1 global=1 parameter2=1 timing=2 probability1=100 END
+	LPF seeInvisible_immunity END
 	LPF extraplanar_immunity END
+	LPF incorporeal_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDSHA01C
@@ -24,9 +85,10 @@ BEGIN
 			REMOVE_CRE_ITEM ~FIGRING3~
 			REMOVE_CRE_ITEM ~IPSION~
 			REMOVE_CRE_ITEM ~BDSPIRIM~
+			REMOVE_CRE_ITEM ~DOGWAWP~
+			REMOVE_CRE_ITEM ~BDSHA01C~
+			REPLACE_CRE_ITEM ~ja#1m39~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m39~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
-			REPLACE_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
-			REPLACE_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
