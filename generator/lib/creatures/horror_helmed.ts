@@ -1,4 +1,5 @@
 import { SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -52,7 +53,7 @@ export const HORROR_HELMED: RawCreature = {
     leatherColor: 63,
   },
   additionalData: {
-    immunities: ["construct", "hover", "seeInvisible"],
+    immunities: ["construct"],
     removeScripts: ["dw1melmo"],
     removeItems: [
       "HELM08",
@@ -92,12 +93,14 @@ export const HORROR_HELMED: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.FlamingGreatsword,
       equippedSlot: "WEAPON1",
       enchantment: 1,
       type: "Melee",
       flags: ["TwoHanded", "Magical"],
       animation: "TwoHandedSword",
       category: "Greatswords",
+      icon: "IFLAMS01",
       proficiency: "PROFICIENCYTWOHANDEDSWORD",
       animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
       range: 2,
@@ -163,8 +166,10 @@ export const HORROR_HELMED: RawCreature = {
     },
     {
       file: armor,
+      stringRef: TraStringReferenceEnum.PlateMail,
       equippedSlot: "ARMOR",
       animation: "PlateMail",
+      icon: "IPLAT01",
       category: "ArmorSlot",
       effects: [
         {
@@ -195,9 +200,11 @@ export const HORROR_HELMED: RawCreature = {
     },
     {
       file: helmet,
+      stringRef: TraStringReferenceEnum.Helmet,
       equippedSlot: "HELMET",
       animation: "HelmetFeatherSideburns",
       category: "Headgear",
+      icon: "ihelm10",
       effects: [
         {
           global: true,
@@ -227,11 +234,14 @@ export const HORROR_HELMED: RawCreature = {
     },
     {
       file: amulet,
+      stringRef: "Helmed Horror traits",
       immunities: [
+        "seeInvisible",
         "fireballSpell",
         "lightningBoltSpell",
         "flameArrowSpell",
         "magicMissile",
+        "hover",
       ],
       equippedSlot: "AMULET",
       category: "Amulets",

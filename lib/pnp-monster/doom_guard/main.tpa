@@ -8,20 +8,24 @@ CREATE ITM "ja#1m16"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4028)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4028)
 	WRITE_LONG 0x18 64
 	WRITE_SHORT 0x1c 20
 	WRITE_ASCII 0x22 ~S1~ #2
 	WRITE_BYTE 0x31 90
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+	WRITE_ASCII 0x3a ~ISW1H04~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
 Melee damage: 1D8 (Slashing)
-Range: 1 feet
-SetColor ==> TODO
-SetColor ==> TODO
-SetColor ==> TODO~)
+Speed Factor: 5
+Enchantment: 1
+Range: 1 feet~)
 	WRITE_LONG 0x60 1
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 5
 	WRITE_BYTE 0x88 8
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -35,24 +39,24 @@ COPY_EXISTING ~ja#1m16.itm~ ~override~
 
 CREATE ITM "ja#2m16"
 	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4029)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4029)
 	WRITE_SHORT 0x1c 2
 	WRITE_ASCII 0x22 ~4A~ #2
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-SetColor ==> TODO
-SetColor ==> TODO
-SetColor ==> TODO~)
+	WRITE_ASCII 0x3a ~IPLAT01~ #8
 COPY_EXISTING ~ja#2m16.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=98 parameter2=5 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=29 parameter2=4 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=87 timing=2 probability1=100 END
 
-COPY_EXISTING ~ja#i1.ITM~  ~override/ja#3m16.ITM~
+CREATE ITM "ja#3m16"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4030)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4030)
 	WRITE_SHORT 0x1c 7
 	WRITE_ASCII 0x22 ~H5~ #2
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-SetColor ==> TODO
-SetColor ==> TODO
-SetColor ==> TODO~)
+	WRITE_ASCII 0x3a ~ihelm10~ #8
+COPY_EXISTING ~ja#3m16.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=53 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=52 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=48 timing=2 probability1=100 END
@@ -73,6 +77,7 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#1m16~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m16~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
 			REPLACE_CRE_ITEM ~ja#3m16~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			REPLACE_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			LPF patchCreature

@@ -475,7 +475,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "mindSpells",
       "backstab",
       "criticalHit",
-      "backstab",
       "abilityDrain",
       "energyDrain",
       "fatigue",

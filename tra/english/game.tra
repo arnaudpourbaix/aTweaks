@@ -845,6 +845,10 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4025 = ~Tentacles~
 @4026 = ~Displacement~
 @4027 = ~Astral Plane Shift~
+@4028 = ~Long Sword~
+@4029 = ~Plate Mail~
+@4030 = ~Helmet~
+@4031 = ~Flaming Greatsword~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

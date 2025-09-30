@@ -1,3 +1,4 @@
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -51,11 +52,13 @@ export const DOOM_GUARD: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.LongSword,
       equippedSlot: "WEAPON1",
       enchantment: 1,
       type: "Melee",
       flags: ["Magical"],
       animation: "LongSword",
+      icon: "ISW1H04",
       category: "LargeSwords",
       proficiency: "PROFICIENCYLONGSWORD",
       animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
@@ -94,8 +97,10 @@ export const DOOM_GUARD: RawCreature = {
     },
     {
       file: armor,
+      stringRef: TraStringReferenceEnum.PlateMail,
       equippedSlot: "ARMOR",
       animation: "PlateMail",
+      icon: "IPLAT01",
       category: "ArmorSlot",
       effects: [
         {
@@ -126,9 +131,10 @@ export const DOOM_GUARD: RawCreature = {
     },
     {
       file: helmet,
-      copyFrom: "construct",
+      stringRef: TraStringReferenceEnum.Helmet,
       equippedSlot: "HELMET",
       animation: "HelmetFeatherSideburns",
+      icon: "ihelm10",
       category: "Headgear",
       effects: [
         {
