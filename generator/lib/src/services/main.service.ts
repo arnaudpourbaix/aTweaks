@@ -155,6 +155,7 @@ export class MainService {
     }
     this.immunityService.handleImmunities(creature);
     this.grabService.addGrabEffects(creature);
+    this.creatureService.checkWeapons(creature);
     this.descriptionService.generate(creature);
     return creature;
   }
@@ -293,8 +294,11 @@ export class MainService {
       immunities: item.immunities ?? [],
       diceSize: item.diceSize ?? 0,
       diceThrown: item.diceThrown ?? 0,
+      damageBonus: item.damageBonus,
+      bonusToHit: item.bonusToHit,
+      speed: item.speed ?? 0,
       type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
-      range: item.range ?? 0,
+      range: item.range,
       projectile: item.projectile,
       flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
       animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
@@ -338,10 +342,13 @@ export class MainService {
     };
     if (item.type) {
       result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
-      result.range = item.range ?? 0;
+      result.range = item.range;
       result.projectile = item.projectile;
       result.diceSize = item.diceSize ?? 0;
       result.diceThrown = item.diceThrown ?? 0;
+      result.speed = item.speed ?? 0;
+      result.damageBonus = item.damageBonus;
+      result.bonusToHit = item.bonusToHit;
       result.animationSwing = item.animationSwing;
       result.enchantment = item.enchantment;
       result.location = item.location

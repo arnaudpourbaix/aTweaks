@@ -19,17 +19,24 @@ export class DescriptionService {
   }
 
   private getItemDescription(creature: Creature, item: Item) {
-    const desc: string[] = ["STATISTICS:"];
+    const desc: string[] = ["STATISTICS:", ""];
     const type = item.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
+    if (item.bonusToHit) {
+      desc.push(`THAC0: +${item.bonusToHit}`);
+    }
+    const damageBonus = item.damageBonus ? `+${item.damageBonus}` : "";
     if (item.diceThrown) {
       desc.push(
-        `${type} damage: ${item.diceThrown}D${item.diceSize} (${
+        `${type} damage: ${item.diceThrown}D${item.diceSize}${damageBonus} (${
           AbilityDamageTypeEnum[item.damageType!]
         })`
       );
     }
     if (item.speed !== undefined) {
       desc.push(`Speed Factor: ${item.speed}`);
+    }
+    if (item.enchantment && item.enchantment > 0) {
+      desc.push(`Enchantment: ${item.enchantment}`);
     }
     if (item.range) {
       desc.push(`Range: ${item.range} feet`);

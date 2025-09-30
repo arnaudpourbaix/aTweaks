@@ -84,9 +84,7 @@ export const BEAR_BLACK: RawCreature = {
       name: "Hug",
       file: hug,
       stringRef: TraStringReferenceEnum.Hug,
-      description: [
-        "If a black bear scores a paw hit with a roll of 18 or better it will also hug for 2d4 points of additional damage.",
-      ],
+      description: ["Hug target for 2d4 points of additional crushing damage."],
       secondaryType: "OffensiveDamage",
       headers: [
         {

@@ -11,6 +11,9 @@ const script = bafFile(id);
 // Items
 export const polarBearMainWeapon = file(1, id);
 export const polarBearOffhandWeapon = file(2, id);
+// Spells
+const hug = file(1, id);
+
 export const BEAR_POLAR: RawCreature = {
   name: "Polar Bear",
   bafFile: `lib/pnp-monster/bear/${script}`,
@@ -49,6 +52,7 @@ export const BEAR_POLAR: RawCreature = {
   items: [
     {
       file: polarBearMainWeapon,
+      stringRef: TraStringReferenceEnum.Claws,
       icon: MonsterItemIconEnum.IWOLF,
       equippedSlot: "WEAPON1",
       type: "Melee",
@@ -59,23 +63,16 @@ export const BEAR_POLAR: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
-          opcode: "DisplayString",
-          stringRef: TraStringReferenceEnum.Hug,
-          probability1: 10,
-        },
-        {
-          opcode: "Damage",
-          damageMode: "Normal",
-          type: "Crushing",
-          amount: 0,
-          diceThrown: 3,
-          diceSize: 6,
+          opcode: "CastSpell",
+          resource: hug,
+          type: "CastInstantlyAtCasterLevel",
           probability1: 10,
         },
       ],
     },
     {
       file: polarBearOffhandWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
       icon: MonsterItemIconEnum.SPPR416B,
       equippedSlot: "SHIELD",
       type: "Melee",
@@ -84,6 +81,31 @@ export const BEAR_POLAR: RawCreature = {
       damageType: "Piercing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  spells: [
+    {
+      name: "Hug",
+      file: hug,
+      stringRef: TraStringReferenceEnum.Hug,
+      description: ["Hug target for 3d6 points of additional crushing damage."],
+      secondaryType: "OffensiveDamage",
+      headers: [
+        {
+          type: "Melee",
+          range: 5,
+          effects: [
+            {
+              opcode: "Damage",
+              damageMode: "Normal",
+              type: "Crushing",
+              amount: 0,
+              diceThrown: 3,
+              diceSize: 6,
+            },
+          ],
+        },
+      ],
     },
   ],
   files: [

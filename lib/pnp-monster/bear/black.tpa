@@ -11,7 +11,7 @@ COPY_EXISTING ~ja#1m4.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~If a black bear scores a paw hit with a roll of 18 or better it will also hug for 2d4 points of additional damage.~
+	SAY UNIDENTIFIED_DESC ~Hug target for 2d4 points of additional crushing damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicenumber=2 dicesize=4 END
 	
@@ -24,13 +24,18 @@ CREATE ITM "ja#1m4"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
 Melee damage: 1D3 (Slashing)
+Speed Factor: 3
+Range: 1 feet
 
 Cast spell Hug (10%)
-If a black bear scores a paw hit with a roll of 18 or better it will also hug for 2d4 points of additional damage.~)
+Hug target for 2d4 points of additional crushing damage.~)
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 3
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -50,10 +55,15 @@ CREATE ITM "ja#2m4"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-Melee damage: 1D6 (Piercing)~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
+Melee damage: 1D6 (Piercing)
+Speed Factor: 3
+Range: 1 feet~)
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 1

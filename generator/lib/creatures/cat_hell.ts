@@ -1,3 +1,4 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { file } from "../src/services/misc.func";
@@ -9,6 +10,8 @@ const id = MonsterEnum.Hellcat;
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
 const ring = file(3, id);
+// Spells
+const rearClawsAttack = file(1, id);
 
 export const HELLCAT: RawCreature = {
   name: "Hellcat",
@@ -47,41 +50,29 @@ export const HELLCAT: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Claws,
+      icon: MonsterItemIconEnum.IWOLF,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
       diceSize: 4,
+      damageBonus: 1,
       damageType: "Slashing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
-          opcode: "DisplayString",
-          stringRef: TraStringReferenceEnum.RearClawsAttack,
-          probability1: 10,
-        },
-        {
-          opcode: "Damage",
-          damageMode: "Normal",
-          type: "Slashing",
-          amount: 1,
-          diceThrown: 1,
-          diceSize: 6,
-          probability1: 10,
-        },
-        {
-          opcode: "Damage",
-          damageMode: "Normal",
-          type: "Slashing",
-          amount: 1,
-          diceThrown: 1,
-          diceSize: 6,
-          probability1: 10,
+          opcode: "CastSpell",
+          resource: rearClawsAttack,
+          type: "CastInstantlyAtCasterLevel",
+          probability1: 20,
         },
       ],
     },
     {
       file: offhandWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
+      icon: MonsterItemIconEnum.SPPR416B,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 2,
@@ -103,6 +94,39 @@ export const HELLCAT: RawCreature = {
       equippedSlot: "RRING",
       category: "Rings",
       icon: "IRING01",
+    },
+  ],
+  spells: [
+    {
+      name: "Rear claws attack",
+      file: rearClawsAttack,
+      stringRef: TraStringReferenceEnum.RearClawsAttack,
+      description: ["Rake with its rear claws doing 1D6 points damage each."],
+      secondaryType: "OffensiveDamage",
+      headers: [
+        {
+          type: "Melee",
+          range: 5,
+          effects: [
+            {
+              opcode: "Damage",
+              damageMode: "Normal",
+              type: "Slashing",
+              amount: 0,
+              diceThrown: 1,
+              diceSize: 6,
+            },
+            {
+              opcode: "Damage",
+              damageMode: "Normal",
+              type: "Slashing",
+              amount: 0,
+              diceThrown: 1,
+              diceSize: 6,
+            },
+          ],
+        },
+      ],
     },
   ],
   files: ["BDHELCAT"],

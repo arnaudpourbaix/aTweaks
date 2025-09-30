@@ -3,20 +3,42 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m7.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m7su.baf~
 
+// Hug
+CREATE SPL "ja#1m7"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m7.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4007)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~Hug target for 3d6 points of additional crushing damage.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicenumber=3 dicesize=6 END
+	
 CREATE ITM "ja#1m7"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
 Melee damage: 1D10 (Slashing)
-Crushing damage: 3D6~)
+Speed Factor: 3
+Enchantment: 3
+Range: 2 feet
+
+Cast spell Hug (10%)
+Hug target for 3d6 points of additional crushing damage.~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -25,8 +47,7 @@ Crushing damage: 3D6~)
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m7.itm~ ~override~
-	LPF ADD_EFFECT INT_VAR opcode=139 target=2 parameter1=RESOLVE_STR_REF(@4007) probability1=10 END
-	LPF ADD_EFFECT INT_VAR opcode=12 target=2 probability1=10 dicenumber=3 dicesize=6 END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=10 STR_VAR resource="ja#1m7" END
 
 CREATE ITM "ja#2m7"
 	WRITE_LONG 0x64 0x72
@@ -34,13 +55,21 @@ CREATE ITM "ja#2m7"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-Melee damage: 2D6 (Piercing)~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
+Melee damage: 2D6 (Piercing)
+Speed Factor: 3
+Enchantment: 3
+Range: 2 feet~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 2
 	WRITE_SHORT 0x8e 1

@@ -3,6 +3,7 @@ import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
+
 // Creature Id
 const id = MonsterEnum.CaveBear;
 // Script
@@ -10,6 +11,9 @@ const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
+// Spells
+const hug = file(1, id);
+
 export const BEAR_CAVE: RawCreature = {
   name: "Cave Bear",
   bafFile: `lib/pnp-monster/bear/${script}`,
@@ -48,6 +52,7 @@ export const BEAR_CAVE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Claws,
       icon: MonsterItemIconEnum.IWOLF,
       equippedSlot: "WEAPON1",
       type: "Melee",
@@ -58,23 +63,16 @@ export const BEAR_CAVE: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
-          opcode: "DisplayString",
-          stringRef: TraStringReferenceEnum.Hug,
-          probability1: 10,
-        },
-        {
-          opcode: "Damage",
-          damageMode: "Normal",
-          type: "Crushing",
-          amount: 0,
-          diceThrown: 2,
-          diceSize: 6,
+          opcode: "CastSpell",
+          resource: hug,
+          type: "CastInstantlyAtCasterLevel",
           probability1: 10,
         },
       ],
     },
     {
       file: offhandWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
       icon: MonsterItemIconEnum.SPPR416B,
       equippedSlot: "SHIELD",
       type: "Melee",
@@ -83,6 +81,31 @@ export const BEAR_CAVE: RawCreature = {
       damageType: "Piercing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  spells: [
+    {
+      name: "Hug",
+      file: hug,
+      stringRef: TraStringReferenceEnum.Hug,
+      description: ["Hug target for 2d6 points of additional crushing damage."],
+      secondaryType: "OffensiveDamage",
+      headers: [
+        {
+          type: "Melee",
+          range: 5,
+          effects: [
+            {
+              opcode: "Damage",
+              damageMode: "Normal",
+              type: "Crushing",
+              amount: 0,
+              diceThrown: 2,
+              diceSize: 6,
+            },
+          ],
+        },
+      ],
     },
   ],
   files: ["BD328OSO", "BDBEARCA", "BEARCA", "BEARCASU", "CAVENE", "URSA"],
