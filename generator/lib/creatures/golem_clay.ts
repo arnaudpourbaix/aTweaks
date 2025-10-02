@@ -1,6 +1,8 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
+import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 
 // Creature Id
@@ -54,6 +56,8 @@ export const GOLEM_CLAY: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Fists,
+      icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,
@@ -110,7 +114,7 @@ export const GOLEM_CLAY: RawCreature = {
             },
             {
               opcode: "DisplayString",
-              stringRef: "14023",
+              stringRef: StringRefUtils.getStringId("Hasted"),
               timing: "InstantPermanentUntilDeath",
             },
             {

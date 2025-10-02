@@ -1,5 +1,8 @@
-import { GLOBAL_CONFIG } from "../config/generate";
+import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { RawBaseEffect } from "../src/model/raw/effect";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
@@ -8,9 +11,15 @@ const id = MonsterEnum.BoneGolem;
 // Script
 const script = bafFile(id);
 // Spells
-const hideousLaugh = "spin890";
+const hideousLaugh = file(1, id);
 // Items
 const mainWeapon = file(1, id);
+
+const laughEffect: RawBaseEffect = {
+  timing: "InstantLimited",
+  duration: 42,
+  saveTypes: ["Spell"],
+};
 
 export const GOLEM_BONE: RawCreature = {
   name: "Bone Golem",
@@ -52,6 +61,8 @@ export const GOLEM_BONE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Fists,
+      icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,
@@ -59,6 +70,53 @@ export const GOLEM_BONE: RawCreature = {
       damageType: "Slashing",
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
+    },
+  ],
+  spells: [
+    {
+      name: "Hideous Laugh",
+      file: hideousLaugh,
+      memorizedCount: 1,
+      stringRef: TraStringReferenceEnum.HideousLaugh,
+      icon: SPELLS.CloakOfFear,
+      description: [
+        "The bone golem may throw back its head and issue a hideous laugh that causes all those who hear it to make fear and horror checks.",
+        "Those who fail either check are paralyzed and cannot move for 2-12 rounds.",
+        "Those who fail both checks are instantly stricken dead with fear.",
+      ],
+      secondaryType: "Disabling",
+      headers: [
+        {
+          type: "Ranged",
+          target: "AnyPointWithinRange",
+          projectile: "INAREANP",
+          range: 30,
+          effects: [
+            {
+              opcode: "Panic",
+              ...laughEffect,
+            },
+            {
+              opcode: "DisplayPortraitIcon",
+              timing: "InstantLimited",
+              icon: "Panic",
+              ...laughEffect,
+            },
+            {
+              opcode: "PlaySound",
+              timing: "InstantPermanentUntilDeath",
+              resource: "EFF_M07",
+              ...laughEffect,
+            },
+            {
+              opcode: "PlaySound",
+              timing: "DelayPermanent",
+              resource: "EFF_E07",
+              ...laughEffect,
+            },
+          ],
+        },
+      ],
     },
   ],
   abilities: [

@@ -123,12 +123,28 @@ BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
 
+DEFINE_PATCH_FUNCTION cold_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION electricalSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
 		LAF get_electrical_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION electricity_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION magicDamage_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=100 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION acidSpells_immunity
@@ -246,12 +262,6 @@ BEGIN
 		LAF get_earthquake_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION cold_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=100 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION physical_immunity

@@ -1,3 +1,5 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -10,8 +12,9 @@ const script = bafFile(id);
 const downState = file(1, id);
 // Items
 const mainWeapon = file(1, id);
-const aliveResistances = file(2, id);
+const traits = file(2, id);
 const downResistances = file(3, id);
+
 export const WOLF_DREAD: RawCreature = {
   name: "Dread Wolf",
   tpaFile: "lib/pnp-monster/wolf/dread",
@@ -50,6 +53,8 @@ export const WOLF_DREAD: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
+      icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -68,8 +73,8 @@ export const WOLF_DREAD: RawCreature = {
       ],
     },
     {
-      file: aliveResistances,
-      stringRef: "Dread wolf resistances",
+      file: traits,
+      stringRef: "Dread wolf traits",
       equippedSlot: "LRING",
       description: [
         "A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.",
@@ -105,20 +110,13 @@ export const WOLF_DREAD: RawCreature = {
       description: [
         "A down dread wolf is immune to everything but fire and acid.",
       ],
-      immunities: ["poison", "disease", "cold", "physical"],
-      effects: [
-        {
-          opcode: "ElectricityResistanceModifier",
-          value: 100,
-          type: "Set",
-          global: true,
-        },
-        {
-          opcode: "MagicDamageResistanceModifier",
-          value: 100,
-          type: "Set",
-          global: true,
-        },
+      immunities: [
+        "poison",
+        "disease",
+        "cold",
+        "electricity",
+        "magicDamage",
+        "physical",
       ],
       category: "Rings",
       icon: "IRING01",
@@ -135,7 +133,7 @@ export const WOLF_DREAD: RawCreature = {
           effects: [
             {
               opcode: "RemoveItem",
-              resource: aliveResistances,
+              resource: traits,
               timing: "InstantPermanentUntilDeath",
               target: "Self",
             },
@@ -168,7 +166,7 @@ export const WOLF_DREAD: RawCreature = {
             },
             {
               opcode: "CreateItemInSlot",
-              resource: aliveResistances,
+              resource: traits,
               slot: "SLOT_RING_LEFT",
               duration: 12,
               timing: "DelayPermanent",

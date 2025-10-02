@@ -46,7 +46,7 @@ export const CAT_TIGER: RawCreature = {
     {
       file: mainWeapon,
       stringRef: TraStringReferenceEnum.Claws,
-      icon: MonsterItemIconEnum.IWOLF,
+      icon: MonsterItemIconEnum.Wolf,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -67,7 +67,7 @@ export const CAT_TIGER: RawCreature = {
     {
       file: offhandWeapon,
       stringRef: TraStringReferenceEnum.Jaws,
-      icon: MonsterItemIconEnum.SPPR416B,
+      icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "SHIELD",
       type: "Melee",
       diceThrown: 2,

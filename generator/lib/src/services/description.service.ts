@@ -10,10 +10,12 @@ import {
 import { Item } from "../model/final/item";
 import {
   ArmorClassBonusEffect,
+  CurrentHPbonusEffect,
   DamageEffect,
   IdsEffect,
   PoisonEffect,
   RawEffect,
+  SleepEffect,
 } from "../model/raw/effect";
 
 export class DescriptionService {
@@ -31,18 +33,10 @@ export class DescriptionService {
     if (item.bonusToHit) {
       desc.push(`THAC0: ${this.getSignedNumber(item.bonusToHit)}`);
     }
-    const damage =
-      item.diceThrown && item.diceSize
-        ? `${item.diceThrown}D${item.diceSize}`
-        : "";
-    const damageBonus = item.damageBonus
-      ? `${this.getSignedNumber(item.damageBonus)}`
-      : "";
-    if (damage || damageBonus) {
+    const damage = this.getDiceValue({ ...item, value: item.damageBonus });
+    if (damage) {
       desc.push(
-        `${type} damage: ${damage}${damageBonus} (${
-          AbilityDamageTypeEnum[item.damageType!]
-        })`
+        `${type} damage: ${damage} (${AbilityDamageTypeEnum[item.damageType!]})`
       );
       if (item.speed !== undefined) {
         desc.push(`Speed Factor: ${item.speed}`);
@@ -113,6 +107,10 @@ export class DescriptionService {
       results.push("Can see invisible creatures.");
     } else if (effect.raw.opcode === "Blur") {
       results.push("Blur (visual effect only)");
+    } else if (effect.raw.opcode === "CurrentHPbonus") {
+      results.push(...this.getCurrentHPbonus(effect.raw));
+    } else if (effect.raw.opcode === "Sleep") {
+      results.push(...this.getSleep(effect.raw));
     }
     return results;
   }
@@ -173,6 +171,24 @@ export class DescriptionService {
     return results;
   }
 
+  private getCurrentHPbonus(effect: CurrentHPbonusEffect): string[] {
+    const results: string[] = [];
+    const heal = this.getDiceValue(effect);
+    results.push(`Heal: ${heal}`);
+    return results;
+  }
+
+  private getSleep(effect: SleepEffect): string[] {
+    const results: string[] = [];
+    const wake = effect.wakeOnDamage ? " (wake on damage)" : "";
+    results.push(
+      `Sleep for ${this.getDuration(effect.duration)}${wake}${this.getSaveText(
+        effect
+      )}`
+    );
+    return results;
+  }
+
   private getDamage(effect: DamageEffect): string[] {
     const results: string[] = [];
     if (effect.diceSize && effect.diceThrown) {
@@ -195,6 +211,19 @@ export class DescriptionService {
       )}${this.getSaveText(effect)}.`
     );
     return results;
+  }
+
+  private getDiceValue(payload: {
+    diceThrown?: number;
+    diceSize?: number;
+    value?: number;
+  }) {
+    const dice =
+      payload.diceThrown && payload.diceSize
+        ? `${payload.diceThrown}D${payload.diceSize}`
+        : "";
+    const value = payload.value ? `${this.getSignedNumber(payload.value)}` : "";
+    return dice ? `${dice}${value}` : `${value.substring(1)}`;
   }
 
   private getSignedNumber(value: number | null | undefined): string {

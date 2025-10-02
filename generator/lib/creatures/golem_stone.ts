@@ -1,4 +1,6 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -50,6 +52,8 @@ export const GOLEM_STONE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Fists,
+      icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 3,

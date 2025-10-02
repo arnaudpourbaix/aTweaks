@@ -1,3 +1,5 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -8,6 +10,7 @@ const id = MonsterEnum.FleshGolem;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
+
 export const GOLEM_FLESH: RawCreature = {
   name: "Flesh Golem",
   bafFile: `lib/pnp-monster/golem/${script}`,
@@ -51,6 +54,8 @@ export const GOLEM_FLESH: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Fists,
+      icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 2,

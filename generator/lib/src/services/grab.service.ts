@@ -35,14 +35,14 @@ export class GrabService {
     item.effects.push(grabEffect);
     const effectFile = this.getGrabProtectionEffect(grab);
     creature.effectFiles.push({ ...effectFile, file: grab.file });
-    const saveText = this.descriptionService.getSaveText(grabEffect);
+    // const saveText = this.descriptionService.getSaveText(grabEffect);
     const spell = this.spellService.mapSpell(
       {
         name: "Grab",
         description: [
           `Grab and hold your target for ${this.descriptionService.getDuration(
             grab.duration
-          )}${saveText}.`,
+          )}.`,
           "Grabbed creature will suffer these effects:",
           "- can not move",
           "- loose armor class from dexterity bonus",

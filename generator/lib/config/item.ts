@@ -12,15 +12,15 @@ export const ITEMS = {
 
 export enum MonsterItemIconEnum {
   ISQUIRL = "ISQUIRL",
-  ISHAPE03 = "ISHAPE03",
-  ISHAPE04 = "ISHAPE04",
-  ISHAPE05 = "ISHAPE05",
-  ISHAPE06 = "ISHAPE06",
-  ISHAPE07 = "ISHAPE07",
-  IGHOUL = "IGHOUL",
-  IFIST = "IFIST",
-  IWOLF = "IWOLF",
-  IJELLY = "IJELLY",
-  SPIN155 = "SPIN155",
-  SPPR416B = "SPPR416B",
+  MindFlayer = "ISHAPE02",
+  Golem = "ISHAPE03",
+  Troll = "ISHAPE04",
+  Wolfwere = "ISHAPE05",
+  EarthElemental = "ISHAPE06",
+  FireElemental = "ISHAPE07",
+  Ghoul = "IGHOUL",
+  Fist = "IFIST",
+  Wolf = "IWOLF",
+  Jelly = "IJELLY",
+  Jaws = "SPPR416B", // not great, until a better icon is found or created
 }

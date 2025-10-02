@@ -57,7 +57,7 @@ export const DOG_BLINK: RawCreature = {
     {
       file: mainWeapon,
       stringRef: TraStringReferenceEnum.Jaws,
-      icon: MonsterItemIconEnum.SPPR416B,
+      icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,

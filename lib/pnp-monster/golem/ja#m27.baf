@@ -107,7 +107,7 @@ END
 // Hideous laugh
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(NearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -119,12 +119,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -136,12 +136,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -153,12 +153,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
@@ -170,12 +170,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
@@ -187,12 +187,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 IF
 	!GlobalTimerNotExpired("Fear","LOCALS")
-	HaveSpellRES("spin890")
+	HaveSpellRES("ja#1m27")
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_PANIC)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
@@ -204,7 +204,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Fear","LOCALS",18)
-		ForceSpellRES("spin890",Myself)
+		ForceSpellRES("ja#1m27",Myself)
 END
 
 // Attack NoCheck enemy

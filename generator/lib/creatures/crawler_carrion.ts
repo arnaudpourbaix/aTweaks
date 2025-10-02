@@ -52,7 +52,7 @@ export const CARRION_CRAWLER: RawCreature = {
     {
       file: mainWeapon,
       stringRef: TraStringReferenceEnum.Tentacles,
-      icon: MonsterItemIconEnum.IJELLY,
+      icon: MonsterItemIconEnum.Jelly,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,

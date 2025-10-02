@@ -1,3 +1,4 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
@@ -121,6 +122,8 @@ export const WOLF_WINTER: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Jaws,
+      icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 2,

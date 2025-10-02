@@ -18,6 +18,7 @@ export enum TraStringReferenceEnum {
   Displacement = 4026,
   EndCharge = 4014,
   Entangle = 4017,
+  Fists = 4032,
   FlamingGreatsword = 4031,
   Fly = 4015,
   FogCloud = 4018,
@@ -27,6 +28,7 @@ export enum TraStringReferenceEnum {
   Grabbed = 3001,
   Haste = 4012,
   Helmet = 4030,
+  HideousLaugh = 4033,
   Hug = 4007,
   ImprovedStreamOfFrost = 4008,
   Jaws = 4021,
@@ -55,6 +57,7 @@ export enum BafExistingStringReference {
 }
 
 export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [
+  { id: [14023], str: "Hasted" },
   { id: [26492], str: "Cone of Cold" },
   { id: [14017, 26215], str: "Poison", group: "poison" },
   { id: [14662, 25425], str: "Poisoned", group: "poison" },

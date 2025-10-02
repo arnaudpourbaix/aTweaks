@@ -216,10 +216,51 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     spellGroups: ["cold"],
   },
   {
+    name: "cold",
+    type: "immunity",
+    description: ["Cold and magical cold immunity"],
+    effects: [
+      {
+        opcode: "ColdResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+      {
+        opcode: "MagicalColdResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "electricalSpells",
     type: "immunity",
     description: ["Electrical spells immunity"],
     spellGroups: ["electrical"],
+  },
+  {
+    name: "electricity",
+    type: "immunity",
+    description: ["Electricity immunity"],
+    effects: [
+      {
+        opcode: "ElectricityResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "magicDamage",
+    type: "immunity",
+    description: ["Magic damage immunity"],
+    effects: [
+      {
+        opcode: "MagicDamageResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
   },
   {
     name: "acidSpells",
@@ -316,23 +357,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: ["Earthquake spells immunity"],
     spellGroups: ["earthquake"],
     displaySpellIneffective: true,
-  },
-  {
-    name: "cold",
-    type: "immunity",
-    description: ["Cold and magical cold immunity"],
-    effects: [
-      {
-        opcode: "ColdResistanceModifier",
-        value: 100,
-        type: "Set",
-      },
-      {
-        opcode: "MagicalColdResistanceModifier",
-        value: 100,
-        type: "Set",
-      },
-    ],
   },
   {
     name: "physical",

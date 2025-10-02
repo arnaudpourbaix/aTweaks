@@ -31,6 +31,7 @@ export const SPELLS = {
   CallWoodlandBeeings: "SPPR410",
   Chant: "SPPR203",
   CharmPersonOrAnimal: "SPPR204",
+  CloakOfFear: "SPPR416C",
   Command: "SPPR102",
   CureLightWounds: "SPPR103",
   Entangle: "SPPR105",

@@ -100,7 +100,7 @@ export const BASILISK_LESSER: RawCreature = {
     {
       file: mainWeapon,
       equippedSlot: "WEAPON1",
-      icon: MonsterItemIconEnum.IWOLF,
+      icon: MonsterItemIconEnum.Wolf,
       type: "Melee",
       diceThrown: 1,
       diceSize: 10,

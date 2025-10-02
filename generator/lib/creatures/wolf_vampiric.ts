@@ -1,4 +1,7 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { RawItem } from "../src/model/raw/item";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
 
@@ -12,6 +15,45 @@ const grab = file(1, id);
 const mainWeapon = file(1, id);
 const proneBiteWeapon = file(2, id);
 const autoHitWeapon = file(3, id);
+const ring = file(4, id);
+
+const baseWeapon: RawItem = {
+  file: mainWeapon,
+  stringRef: TraStringReferenceEnum.Jaws,
+  icon: MonsterItemIconEnum.Jaws,
+  type: "Melee",
+  equippedSlot: "WEAPON1",
+  damageBonus: 8,
+  damageType: "Piercing",
+  speed: 1,
+  abilityFlags: ["AddStrengthBonus"],
+  effects: [
+    {
+      opcode: "CurrentHPbonus",
+      target: "Self",
+      timing: "InstantPermanentUntilDeath",
+      value: 10, // average roll of 8 + 2 strength damage bonus
+      type: "Increment",
+    },
+    {
+      opcode: "CharacterColorPulse",
+      target: "Self",
+      timing: "InstantLimited",
+      color: { blue: 191, green: 125, red: 53 },
+      location: "ArmorGreyBeltAmulet",
+      cycleSpeed: 20,
+      duration: 1,
+    },
+    {
+      opcode: "Sleep",
+      wakeOnDamage: true,
+      timing: "InstantLimited",
+      duration: 12,
+      saveTypes: ["ParalyzePoisonDeath"],
+    },
+  ],
+};
+
 export const WOLF_VAMPIRIC: RawCreature = {
   name: "Vampiric Wolf",
   tpaFile: "lib/pnp-monster/wolf/vampiric",
@@ -42,15 +84,15 @@ export const WOLF_VAMPIRIC: RawCreature = {
     size: "Small",
   },
   additionalData: {
-    removeItems: ["WOLFVA1", "BDWOLFVA"],
+    removeItems: ["WOLFVA1", "BDWOLFVA", "IMMUNE1", "RING95"],
     removeScripts: ["DW#GPSHM", "VAMPWOLF"],
   },
-  // A bite attack will cause a running or standing victim to fall if the victim fails a saving throw vs. paralysis.
-  // Once the prey falls, the wolves continue to attack, shifting to the victim's arms so that he can no longer use a weapon.
-  // This involves a called-shot attack in which a vampiric wolf has a -4 penalty to hit;
-  // success means the wolf has grasped an arm in its mouth, and the victim cannot get free unless he makes a successful Strength check (one attempt per round).
-  // Once a grasping bite is made, damage is continually inflicted each round as the wolf gnaws on the limb.
   attack: {
+    // A bite attack will cause a running or standing victim to fall if the victim fails a saving throw vs. paralysis.
+    // Once the prey falls, the wolves continue to attack, shifting to the victim's arms so that he can no longer use a weapon.
+    // This involves a called-shot attack in which a vampiric wolf has a -4 penalty to hit;
+    // success means the wolf has grasped an arm in its mouth, and the victim cannot get free unless he makes a successful Strength check (one attempt per round).
+    // Once a grasping bite is made, damage is continually inflicted each round as the wolf gnaws on the limb.
     targetPriorities: [{ status: ["Grabbed", "Sleep"] }],
     defaultWeaponSlot: "SLOT_WEAPON",
     targetStatusWeaponSlot: [
@@ -65,57 +107,34 @@ export const WOLF_VAMPIRIC: RawCreature = {
     },
   },
   items: [
+    baseWeapon,
     {
-      file: mainWeapon,
-      type: "Melee",
-      equippedSlot: "WEAPON1",
-      speed: 1,
-      abilityFlags: ["AddStrengthBonus"],
-      effects: [
-        {
-          opcode: "Damage",
-          target: "PresetTarget",
-          diceThrown: 3,
-          diceSize: 4,
-          type: "Piercing",
-        },
-        {
-          opcode: "CurrentHPbonus",
-          target: "Self",
-          timing: "InstantPermanentUntilDeath",
-          diceThrown: 3,
-          diceSize: 4,
-          value: 0,
-          type: "Increment",
-        },
-        {
-          opcode: "CharacterColorPulse",
-          target: "Self",
-          timing: "InstantLimited",
-          color: { blue: 191, green: 125, red: 53 },
-          location: "ArmorGreyBeltAmulet",
-          cycleSpeed: 20,
-          duration: 1,
-        },
-        {
-          opcode: "Sleep",
-          wakeOnDamage: true,
-          timing: "InstantLimited",
-          duration: 12,
-          saveTypes: ["ParalyzePoisonDeath"],
-        },
-      ],
-    },
-    {
+      ...baseWeapon,
+      stringRef: "Jaws-grab sleeping target",
       file: proneBiteWeapon,
       equippedSlot: "WEAPON2",
-      copyFrom: mainWeapon,
+      // copyFrom: mainWeapon,
     },
     {
+      ...baseWeapon,
+      stringRef: "Jaws-autohit grabbed target",
       file: autoHitWeapon,
       equippedSlot: "WEAPON3",
-      copyFrom: mainWeapon,
       bonusToHit: 30,
+      // copyFrom: mainWeapon,
+    },
+    {
+      file: ring,
+      stringRef: "Vampiric wolf traits",
+      equippedSlot: "LRING",
+      description: [
+        "Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.",
+        "Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.",
+        "They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent",
+      ],
+      immunities: ["sleep", "charm", "hold", "normalWeapons"],
+      category: "Rings",
+      icon: "IRING01",
     },
   ],
   files: [

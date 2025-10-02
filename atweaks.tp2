@@ -70,12 +70,11 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
 
 
 

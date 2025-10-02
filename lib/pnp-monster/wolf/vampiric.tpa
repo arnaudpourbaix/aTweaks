@@ -18,7 +18,7 @@ COPY_EXISTING ~ja#1m21.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@3000)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~Grab and hold your target for 5 rounds (saves vs poison/death at -1).
+	SAY UNIDENTIFIED_DESC ~Grab and hold your target for 5 rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus
@@ -57,45 +57,127 @@ CREATE ITM "ja#1m21"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
+Melee damage: 8 (Piercing)
+Speed Factor: 1
 Enchantment: 2
 Range: 1 feet
-Piercing damage: 3D4~)
+Heal: 10
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)~)
 	WRITE_LONG 0x60 2
 	WRITE_BYTE 0x74 1
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 1
 	WRITE_BYTE 0x84 1
+	WRITE_SHORT 0x8c 8
+	WRITE_SHORT 0x8e 1
 	WRITE_SHORT 0x9e 34
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m21.itm~ ~override~
-	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=1048576 probability1=100 dicenumber=3 dicesize=4 END
-	LPF ADD_EFFECT INT_VAR opcode=17 target=1 timing=1 probability1=100 dicenumber=3 dicesize=4 END
+	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
 
-COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#2m21.ITM~
+CREATE ITM "ja#2m21"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Jaws-grab sleeping target~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Jaws-grab sleeping target~)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
+Melee damage: 8 (Piercing)
+Speed Factor: 1
+Enchantment: 2
+Range: 1 feet
+Heal: 10
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)
 
 Cast spell Grab (saves vs poison/death at -1)
-Grab and hold your target for 5 rounds (saves vs poison/death at -1).
+Grab and hold your target for 5 rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~)
+	WRITE_LONG 0x60 2
+	WRITE_BYTE 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 1
+	WRITE_SHORT 0x8c 8
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#2m21.itm~ ~override~
+	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 savebonus="-1" STR_VAR resource="ja#1m21" END
 
-COPY_EXISTING ~ja#1m21.ITM~  ~override/ja#3m21.ITM~
+CREATE ITM "ja#3m21"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Jaws-autohit grabbed target~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Jaws-autohit grabbed target~)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
-THAC0: +30~)
+THAC0: +30
+Melee damage: 8 (Piercing)
+Speed Factor: 1
+Enchantment: 2
+Range: 1 feet
+Heal: 10
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)~)
+	WRITE_LONG 0x60 2
+	WRITE_BYTE 0x74 1
+	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 1
 	WRITE_SHORT 0x86 30
+	WRITE_SHORT 0x8c 8
+	WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+COPY_EXISTING ~ja#3m21.itm~ ~override~
+	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
+
+CREATE ITM "ja#4m21"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Vampiric wolf traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Vampiric wolf traits~)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.
+Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.
+They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent~)
+COPY_EXISTING ~ja#4m21.itm~ ~override~
+	LPF sleep_immunity END
+	LPF charm_immunity END
+	LPF hold_immunity END
+	LPF normalWeapons_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDWOLFVA
@@ -110,9 +192,12 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~WOLFVA1~
 			REMOVE_CRE_ITEM ~BDWOLFVA~
+			REMOVE_CRE_ITEM ~IMMUNE1~
+			REMOVE_CRE_ITEM ~RING95~
 			REPLACE_CRE_ITEM ~ja#1m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			REPLACE_CRE_ITEM ~ja#3m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
+			REPLACE_CRE_ITEM ~ja#4m21~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clear_proficiencies END
 			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
 			DEFINE_ARRAY notEnforceFiles BEGIN DW#ULCWO END

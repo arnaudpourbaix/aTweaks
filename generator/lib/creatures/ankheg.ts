@@ -78,7 +78,7 @@ export const ANKHEG: RawCreature = {
       stringRef: TraStringReferenceEnum.Mandibles,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      icon: MonsterItemIconEnum.IWOLF,
+      icon: MonsterItemIconEnum.Wolf,
       diceThrown: 3,
       diceSize: 6,
       damageType: "Crushing",

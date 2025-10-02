@@ -1,4 +1,6 @@
 import { GLOBAL_CONFIG } from "../config/generate";
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -21,7 +23,6 @@ export const GOLEM_IRON: RawCreature = {
   restHeal: true,
   data: {
     level1: 18,
-    bonusHp: 0,
     strength: 24,
     dexterity: 9,
     constitution: 20,
@@ -46,12 +47,14 @@ export const GOLEM_IRON: RawCreature = {
   },
   additionalData: {
     immunities: ["construct"],
-    removeScripts: [""],
-    removeItems: [""],
+    // removeScripts: [""],
+    // removeItems: [""],
   },
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Fists,
+      icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 4,
@@ -77,5 +80,5 @@ export const GOLEM_IRON: RawCreature = {
       timer: { name: "Gas", value: 12 },
     },
   ],
-  files: ["", "", "", "", "", "", ""],
+  files: [],
 };
