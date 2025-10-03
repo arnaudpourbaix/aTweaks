@@ -1,4 +1,6 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -63,6 +65,8 @@ export const OGRE_SHAMAN: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Fist,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,

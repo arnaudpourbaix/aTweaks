@@ -210,6 +210,24 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     spellGroups: ["fire"],
   },
   {
+    name: "fire",
+    type: "immunity",
+    description: ["Fire and magical fire immunity"],
+    effects: [
+      {
+        opcode: "FireResistanceModifier",
+        value: 100,
+        type: "Set",
+        global: true,
+      },
+      {
+        opcode: "MagicalFireResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "coldSpells",
     type: "immunity",
     description: ["Cold spells immunity"],
@@ -259,6 +277,19 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         opcode: "MagicDamageResistanceModifier",
         value: 100,
         type: "Set",
+      },
+    ],
+  },
+  {
+    name: "acid",
+    type: "immunity",
+    description: ["Acid immunity"],
+    effects: [
+      {
+        opcode: "AcidResistanceModifier",
+        value: 100,
+        type: "Set",
+        global: true,
       },
     ],
   },

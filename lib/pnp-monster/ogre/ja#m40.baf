@@ -128,7 +128,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),CLERIC_BLESS)
+		Spell(Myself,CLERIC_BLESS)
 END
 
 // Command
@@ -873,7 +873,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),CLERIC_CHANT)
+		Spell(Myself,CLERIC_CHANT)
 END
 
 // Hold person
@@ -1024,7 +1024,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),CLERIC_REMOVE_FEAR)
+		Spell(Myself,CLERIC_REMOVE_FEAR)
 END
 
 // Call lightning

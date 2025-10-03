@@ -1,4 +1,6 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -53,7 +55,7 @@ export const OGRE_BERSERKER: RawCreature = {
       "OGRE1",
       "BDSLUG",
     ],
-    removeScripts: ["BDSUM00"],
+    removeScripts: ["BDSUM00", "BDFIG00", "BDENSHTV"],
   },
   attack: {
     targetPriorities: [
@@ -65,8 +67,9 @@ export const OGRE_BERSERKER: RawCreature = {
   },
   items: [
     {
-      // Giant flail 2d8 crushing
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.GiantFlail,
+      icon: "IBLUN13",
       equippedSlot: "WEAPON1",
       type: "Melee",
       category: "Flails",

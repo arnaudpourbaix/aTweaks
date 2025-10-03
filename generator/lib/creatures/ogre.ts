@@ -1,3 +1,5 @@
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -56,6 +58,8 @@ export const OGRE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Fist,
       equippedSlot: "WEAPON1",
       type: "Melee",
       diceThrown: 1,
@@ -66,6 +70,8 @@ export const OGRE: RawCreature = {
     },
     {
       file: leaderWeapon,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Fist,
       type: "Melee",
       diceThrown: 2,
       diceSize: 6,
@@ -76,6 +82,8 @@ export const OGRE: RawCreature = {
     },
     {
       file: chiefWeapon,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Fist,
       type: "Melee",
       diceThrown: 2,
       diceSize: 6,

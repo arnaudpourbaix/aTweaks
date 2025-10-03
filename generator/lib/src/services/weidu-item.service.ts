@@ -46,6 +46,7 @@ export class WeiduItemService extends AbstractWeiduService {
       this.write(lines, 0x60, 4, item.enchantment, 1);
       //this.add(lines, `LPF set_enchantment INT_VAR enchantment = ${item.enchantment} END`, 1);
       this.write(lines, 0x74, 1, item.location, 1);
+      this.writeAscii(lines, 0x76, 8, item.icon, 1);
       this.write(lines, 0x7e, 1, item.target, 1);
       this.write(lines, 0x80, 2, item.range, 1);
       this.write(lines, 0x84, 1, item.speed, 1);

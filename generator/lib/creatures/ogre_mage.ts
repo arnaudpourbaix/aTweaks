@@ -1,5 +1,5 @@
 import { SPELL_STATES } from "../config/ability-presets";
-import { ITEMS } from "../config/item";
+import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
@@ -76,6 +76,7 @@ export const OGRE_MAGE: RawCreature = {
       "BPASIGHT",
       "OGREMASU",
       "DW1MELGE",
+      "DW#MG101",
       "DW#MG108",
       "DW#MG139",
       "DW#MG56",
@@ -98,11 +99,11 @@ export const OGRE_MAGE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Naganata,
       equippedSlot: "WEAPON1",
       type: "Melee",
       flags: ["Displayable", "TwoHanded"],
       animation: "LongSword",
-      stringRef: "Naganata",
       description: [
         "Similar to the glaive, the naginata is a pole weapon. Naginata were originally used by the samurai class.",
         "",
@@ -146,32 +147,20 @@ export const OGRE_MAGE: RawCreature = {
       ],
       type: "Melee",
       flags: ["Displayable"],
-      immunities: ["poison", "cold", "physical"],
+      immunities: ["poison", "cold", "magicDamage", "physical"],
       effects: [
-        { opcode: "NoCollisionDetection", passWalls: true, global: true },
-        { opcode: "ModifyCollisionBehavior", global: true },
-        {
-          opcode: "OverrideCreatureData",
-          field: "PersonalSpace",
-          value: 0,
-          global: true,
-        },
         {
           opcode: "FireResistanceModifier",
           value: 100,
           type: "Set",
           global: true,
         },
+        { opcode: "NoCollisionDetection", passWalls: true, global: true },
+        { opcode: "ModifyCollisionBehavior", global: true },
         {
-          opcode: "AcidResistanceModifier",
-          value: 100,
-          type: "Set",
-          global: true,
-        },
-        {
-          opcode: "MagicDamageResistanceModifier",
-          value: 100,
-          type: "Set",
+          opcode: "OverrideCreatureData",
+          field: "PersonalSpace",
+          value: 0,
           global: true,
         },
         {
@@ -212,7 +201,7 @@ export const OGRE_MAGE: RawCreature = {
       copyFromFile: "CONECOLD",
       description: "Ogre-Mage Cone of Cold",
       areaEffectInfo: {
-        areaProjectileFlags: ["Coneshaped"], // "AffectOnlyEnemies" to prevent them for killing their allies
+        areaProjectileFlags: ["Coneshaped"], // "AffectOnlyEnemies" to prevent them for killing their allies ?
         areaOfEffect: 620,
         triggerRadius: 620,
       },
@@ -393,6 +382,7 @@ export const OGRE_MAGE: RawCreature = {
         type: "noDec",
         excludeSpellStates: [SPELL_STATES.flying],
         probability: 90,
+        selfTarget: true,
       },
       triggers: [
         { name: "Detect", params: ["NearestEnemyOf"] },

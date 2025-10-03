@@ -358,7 +358,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpell(LastSeenBy(Myself),CLERIC_BLESS)
+		ForceSpell(Myself,CLERIC_BLESS)
 		RemoveSpell(CLERIC_BLESS)
 END
 
@@ -371,7 +371,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpell(LastSeenBy(Myself),CLERIC_BARKSKIN)
+		ForceSpell(Myself,CLERIC_BARKSKIN)
 		RemoveSpell(CLERIC_BARKSKIN)
 END
 

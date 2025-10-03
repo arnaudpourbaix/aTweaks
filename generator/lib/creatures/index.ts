@@ -50,15 +50,17 @@ import { WOLF_VAMPIRIC } from "./wolf_vampiric";
 import { WOLF_WINTER } from "./wolf_winter";
 import { WOLF_WORG } from "./wolf_worg";
 
-export const CREATURES: RawCreature[] = [
-  ANKHEG,
-  BASILISK_GREATER,
-  BASILISK_LESSER,
+const Basilisks: RawCreature[] = [BASILISK_GREATER, BASILISK_LESSER];
+
+const Bears: RawCreature[] = [
   BEAR_BLACK,
   BEAR_BROWN,
   BEAR_CAVE,
   BEAR_POLAR,
   BEAR_POLAR_KALDRAN,
+];
+
+const Cats: RawCreature[] = [
   CAT_JAGUAR,
   CAT_LEOPARD,
   CAT_LION,
@@ -66,36 +68,40 @@ export const CREATURES: RawCreature[] = [
   // CAT_TIGER,
   HELLCAT,
   DISPLACER_BEAST,
-  CARRION_CRAWLER,
-  DOG_BLINK,
-  DOG_WAR,
-  DOG_WILD,
-  SPECTRAL_HOUND,
-  DOOM_GUARD,
-  HORROR_HELMED,
+];
+
+const Dogs: RawCreature[] = [DOG_BLINK, DOG_WAR, DOG_WILD, SPECTRAL_HOUND];
+
+const Wolves: RawCreature[] = [
   WOLF_DIRE,
   WOLF_DREAD,
   WOLF_VAMPIRIC,
   WOLF_WINTER,
   WOLF_WORG,
   WOLF,
+];
+
+const Golems: RawCreature[] = [
   GOLEM_FLESH,
   GOLEM_CLAY,
   GOLEM_STONE,
   // GOLEM_IRON, // None in BG1 (unfinished work)
   GOLEM_BONE,
   GOLEM_JUGGERNAUT,
+];
+
+const Ogres: RawCreature[] = [
   OGRE_OGRILLON,
   OGRE_HALF,
   OGRE,
   OGRE_SHAMAN,
   OGRE_BERSERKER,
   OGRE_MAGE,
-  FEY_DRYAD,
-  FEY_HAMADRYAD,
-  FEY_NYMPH,
-  FEY_SIRINE,
-  PLANT_TREANT,
+];
+
+const Feys: RawCreature[] = [FEY_DRYAD, FEY_HAMADRYAD, FEY_NYMPH, FEY_SIRINE];
+
+const Slimes: RawCreature[] = [
   SLIME_MUSTARD_JELLY,
   SLIME_BLACK_PUDDING,
   SLIME_FISSION,
@@ -104,26 +110,26 @@ export const CREATURES: RawCreature[] = [
   SLIME_GREEN,
   SLIME_OLIVE_CREATURE,
 ];
-export const CREATURES_TEST: RawCreature[] = [
-  OGRE_OGRILLON,
-  OGRE_HALF,
-  OGRE,
-  OGRE_SHAMAN,
-  OGRE_BERSERKER,
-  OGRE_MAGE,
-  // FEY_DRYAD,
-  // FEY_HAMADRYAD,
-  // FEY_NYMPH,
-  // FEY_SIRINE,
-  // PLANT_TREANT,
-  // SLIME_MUSTARD_JELLY,
-  // SLIME_BLACK_PUDDING,
-  // SLIME_FISSION,
-  // SLIME_OCHRE_JELLY,
-  // SLIME_GRAY_OOZE,
-  // SLIME_GREEN,
-  // SLIME_OLIVE_CREATURE,
+
+const Constructs: RawCreature[] = [HORROR_HELMED, DOOM_GUARD];
+
+export const CREATURES: RawCreature[] = [
+  ANKHEG,
+  ...Basilisks,
+  ...Bears,
+  ...Cats,
+  ...Dogs,
+  ...Wolves,
+  ...Golems,
+  ...Constructs,
+  ...Ogres,
+  ...Feys,
+  ...Slimes,
+  CARRION_CRAWLER,
+  PLANT_TREANT,
 ];
+
+export const CREATURES_TEST: RawCreature[] = [...Ogres, ...Feys, PLANT_TREANT];
 
 /*
 "SHOAL", // Shoal the Nereid

@@ -95,6 +95,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_INVISIBILITY",
         excludeStateChecks: ["STATE_INVISIBLE"],
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
       triggers: [{ name: "Detect", params: ["NearestEnemyOf"] }],
@@ -108,6 +109,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_IMPROVED_INVISIBILITY",
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
     },
@@ -232,6 +234,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_BLESS",
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
     },
@@ -255,6 +258,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_REMOVE_FEAR",
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
     },
@@ -266,6 +270,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_CHANT",
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
     },
@@ -472,6 +477,7 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.CureLightWounds,
     ability: {
       name: "Cure Light Wounds",
+      //TODO: target
       spell: {
         id: "CLERIC_CURE_LIGHT_WOUNDS",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -487,6 +493,7 @@ export const ABILITY_PRESETS: {
       spell: {
         id: "CLERIC_BARKSKIN",
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
       requireVocal: true,
     },

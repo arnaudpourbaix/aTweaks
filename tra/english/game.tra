@@ -849,8 +849,10 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4029 = ~Plate Mail~
 @4030 = ~Helmet~
 @4031 = ~Flaming Greatsword~
-@4032 = ~Fists~
+@4032 = ~Lethal Fists~
 @4033 = ~Hideous Laugh~
+@4034 = ~Naganata~
+@4035 = ~Giant Flail~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

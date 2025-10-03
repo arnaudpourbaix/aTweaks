@@ -149,7 +149,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m43",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m43",Myself)
 		RemoveSpellRES("ja#1m43")
 		SetInterrupt(TRUE)
 END

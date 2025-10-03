@@ -1,5 +1,6 @@
 export type ImmunityName =
   | "abilityDrain"
+  | "acid"
   | "acidSpells"
   | "airAffinity"
   | "backstab"
@@ -28,6 +29,7 @@ export type ImmunityName =
   | "extraplanar"
   | "fatigue"
   | "fear"
+  | "fire"
   | "fireSpells"
   | "fireballSpell"
   | "flameArrowSpell"

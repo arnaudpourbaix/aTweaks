@@ -53,7 +53,7 @@ export const GOLEM_IRON: RawCreature = {
   items: [
     {
       file: mainWeapon,
-      stringRef: TraStringReferenceEnum.Fists,
+      stringRef: TraStringReferenceEnum.LethalFists,
       icon: MonsterItemIconEnum.Golem,
       equippedSlot: "WEAPON1",
       type: "Melee",
