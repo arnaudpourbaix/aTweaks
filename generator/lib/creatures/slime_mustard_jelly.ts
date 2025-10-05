@@ -123,7 +123,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.ToxicVapors,
       icon: SPELLS.StinkingCloud,
-      infiniteUse: true,
+      infiniteUse: 1,
       description: [
         "Unleash a toxic vapor over a 10-foot radius.",
         "Those near the jelly must roll a saving throw vs. poison each round.",

@@ -1,5 +1,7 @@
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
+import { RawSaveType } from "../src/model/raw/enum";
 import { bafFile, file } from "../src/services/misc.func";
 import { polarBearMainWeapon, polarBearOffhandWeapon } from "./bear_polar";
 import { MonsterEnum } from "./monster.enum";
@@ -12,6 +14,11 @@ const script = bafFile(id);
 const improvedStreamOfFrost = file(1, id);
 // Projectile
 const improvedStreamOfFrostProjectile = file(1, id);
+
+const paralyzeSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
+  saveTypes: ["ParalyzePoisonDeath"],
+  saveBonus: -2,
+};
 
 export const BEAR_POLAR_KALDRAN: RawCreature = {
   name: "Polar Bear Kaldran",
@@ -111,6 +118,7 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
       file: improvedStreamOfFrost,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.ImprovedStreamOfFrost,
+      icon: SPELLS.Fireburst,
       description: [
         "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)",
       ],
@@ -146,31 +154,27 @@ export const BEAR_POLAR_KALDRAN: RawCreature = {
               idsFile: "EA",
               idsEntry: "ANYONE",
               duration: 60,
-              saveTypes: ["ParalyzePoisonDeath"],
-              saveBonus: -2,
+              ...paralyzeSave,
             },
             {
               opcode: "DisplayPortraitIcon",
               timing: "InstantLimited",
               icon: "Held",
               duration: 60,
-              saveTypes: ["ParalyzePoisonDeath"],
-              saveBonus: -2,
+              ...paralyzeSave,
             },
             {
               opcode: "PlaySound",
               timing: "InstantPermanentUntilDeath",
               resource: "MISC_04A",
-              saveTypes: ["ParalyzePoisonDeath"],
-              saveBonus: -2,
+              ...paralyzeSave,
             },
             {
               opcode: "PlaySound",
               timing: "DelayPermanent",
               resource: "EFF_E03",
               duration: 60,
-              saveTypes: ["ParalyzePoisonDeath"],
-              saveBonus: -2,
+              ...paralyzeSave,
             },
           ],
         },

@@ -113,7 +113,6 @@ export const WOLF_VAMPIRIC: RawCreature = {
       stringRef: "Jaws-grab sleeping target",
       file: proneBiteWeapon,
       equippedSlot: "WEAPON2",
-      // copyFrom: mainWeapon,
     },
     {
       ...baseWeapon,
@@ -121,7 +120,6 @@ export const WOLF_VAMPIRIC: RawCreature = {
       file: autoHitWeapon,
       equippedSlot: "WEAPON3",
       bonusToHit: 30,
-      // copyFrom: mainWeapon,
     },
     {
       file: ring,

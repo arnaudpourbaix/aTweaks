@@ -119,7 +119,7 @@ export const FEY_NYMPH: RawCreature = {
       stringRef: TraStringReferenceEnum.BlindingBeauty,
       spellType: "Innate",
       icon: SPELLS.BlindingBeauty,
-      infiniteUse: true,
+      infiniteUse: 1,
       headers: [
         {
           type: "Melee",

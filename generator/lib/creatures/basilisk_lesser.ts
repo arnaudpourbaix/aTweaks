@@ -1,6 +1,8 @@
 import { GLOBAL_CONFIG } from "../config/generate";
 import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawSaveType } from "../src/model/raw/enum";
 import { bafFile, file } from "../src/services/misc.func";
@@ -22,6 +24,46 @@ export const basiliskGazeProjectile = file(1, id);
 const petrificationSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
   saveTypes: ["PetrifyPolymorph"],
   saveBonus: -4,
+};
+
+export const petrificationAbility: RawCreatureAbility = {
+  name: "Petrification (2e)",
+  target: {
+    name: "NearestEnemies",
+    random: true,
+  },
+  spell: {
+    resource: petrification2e,
+    type: "force",
+  },
+};
+
+export const petrification5eAbility: RawCreatureAbility = {
+  name: "Petrification (5e)",
+  target: {
+    name: "NearestEnemies",
+    random: true,
+    triggers: [
+      {
+        name: "HaveSpellRES",
+        params: [petrification5e],
+      },
+      {
+        name: "CheckStatGT",
+        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        negation: true,
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+        negation: true,
+      },
+    ],
+  },
+  spell: {
+    resource: petrification5e,
+    type: "force",
+  },
 };
 
 export const BASILISK_LESSER: RawCreature = {
@@ -57,45 +99,7 @@ export const BASILISK_LESSER: RawCreature = {
     removeItems: ["BASILL1", "BASILL2"],
     removeScripts: ["LBASILSK"],
   },
-  abilities: [
-    {
-      name: "Petrification (2e)",
-      target: {
-        name: "NearestEnemies",
-        random: true,
-      },
-      spell: {
-        resource: petrification2e,
-        type: "force",
-      },
-    },
-    // {
-    //   name: "Petrification (5e)",
-    //   target: {
-    //     name: "NearestEnemies",
-    //     random: true,
-    //     triggers: [
-    //       {
-    //         name: "HaveSpellRES",
-    //         params: [petrification5e],
-    //       },
-    //       {
-    //         name: "CheckStatGT",
-    //         params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-    //         negation: true,
-    //       },
-    //       {
-    //         name: "StateCheck",
-    //         params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-    //         negation: true,
-    //       },
-    //     ],
-    //   },
-    //   actions: [
-    //     { name: "ForceSpellRES", params: [petrification5e, "LastSeenBy"] },
-    //   ],
-    // },
-  ],
+  abilities: [petrificationAbility],
   items: [
     {
       file: mainWeapon,
@@ -135,6 +139,8 @@ export const BASILISK_LESSER: RawCreature = {
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
       ],
       secondaryType: "Disabling",
+      infiniteUse: 1,
+      icon: SPELLS.FleshToStone,
       headers: [
         {
           type: "Ranged",
@@ -175,6 +181,8 @@ export const BASILISK_LESSER: RawCreature = {
       name: "Petrification (5e)",
       file: petrification5e,
       //memorizedCount: 1,
+      infiniteUse: 1,
+      icon: SPELLS.FleshToStone,
       stringRef: TraStringReferenceEnum.PetrifyingGaze,
       description: [
         "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.",

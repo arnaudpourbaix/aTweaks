@@ -9,6 +9,8 @@ export const SPELLS = {
   DimensionDoor: "SPWI402",
   Domination: "SPWI506",
   Feeblemind: "SPWI509",
+  Fireburst: "SPWI523",
+  FleshToStone: "SPWI604",
   Haste: "SPWI305",
   ImprovedInvisibility: "SPWI405",
   Invisibility: "SPWI206",

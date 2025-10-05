@@ -82,24 +82,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
       );
     }
     this.addProficiencies(lines, 3, creature.additionalData);
-    if (creature.attack.grab) {
-      this.add(
-        lines,
-        `ADD_MEMORIZED_SPELL ~${creature.attack.grab.file}~ #0 ~innate~ (1)`
-      );
-    }
-    for (const name of creature.additionalData.immunities) {
-      const immunity = State.immunities.find(
-        (i) => i.name === name
-      ) as ImmunityConfig;
-      if (!immunity.itemSlot) {
-        this.add(
-          lines,
-          `LPF ${this.utils.getImmunityFunctionName(name)} END`,
-          3
-        );
-      }
-    }
+    this.addImmunities(lines, 3, creature.additionalData);
     for (const effect of creature.additionalData.effects) {
       this.weiduEffectService.addEffect({
         lines,
@@ -182,6 +165,25 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (!additionalData.proficiencies.length) return;
     for (const prof of additionalData.proficiencies)
       this.add(lines, `SET_BG2_PROFICIENCY ~${prof.type}~ ${prof.value}`, tab);
+  }
+
+  private addImmunities(
+    lines: CodeLine[],
+    tab: number,
+    additionalData: CreatureAdditionalData
+  ) {
+    for (const name of additionalData.immunities) {
+      const immunity = State.immunities.find(
+        (i) => i.name === name
+      ) as ImmunityConfig;
+      if (!immunity.itemSlot) {
+        this.add(
+          lines,
+          `LPF ${this.utils.getImmunityFunctionName(name)} END`,
+          tab
+        );
+      }
+    }
   }
 
   private addItemSlots(p: {
@@ -501,33 +503,42 @@ export class WeiduCreatureService extends AbstractWeiduService {
         summon: !!adjustment.summon,
         creature,
       });
-    if (adjustment.additionalData) {
-      this.removeItems(lines, tab, adjustment.additionalData);
-      this.addItemSlots({
-        lines,
-        tab,
-        additionalData: adjustment.additionalData,
-      });
-      if (adjustment.additionalData.removeMemorizedSpells) {
-        this.add(lines, `REMOVE_MEMORIZED_SPELLS`, tab);
-      }
-      this.addMemorizedSpells(
-        lines,
-        tab,
-        adjustment.additionalData,
-        creature.spells
-      );
-      this.addProficiencies(lines, tab, adjustment.additionalData);
-      for (const effect of adjustment.additionalData.effects) {
-        this.weiduEffectService.addEffect({
-          lines,
-          tab,
-          effect,
-          type: "CRE",
-        });
-      }
-    }
+    this.handleAdjustmentAdditionalData(lines, tab, creature, adjustment);
     this.add(lines, "END", --tab);
+  }
+
+  private handleAdjustmentAdditionalData(
+    lines: CodeLine[],
+    tab: number,
+    creature: Creature,
+    adjustment: CreatureAdjustment
+  ) {
+    if (!adjustment.additionalData) return;
+    this.removeItems(lines, tab, adjustment.additionalData);
+    this.addItemSlots({
+      lines,
+      tab,
+      additionalData: adjustment.additionalData,
+    });
+    if (adjustment.additionalData.removeMemorizedSpells) {
+      this.add(lines, `REMOVE_MEMORIZED_SPELLS`, tab);
+    }
+    this.addImmunities(lines, tab, adjustment.additionalData);
+    this.addMemorizedSpells(
+      lines,
+      tab,
+      adjustment.additionalData,
+      creature.spells
+    );
+    this.addProficiencies(lines, tab, adjustment.additionalData);
+    for (const effect of adjustment.additionalData.effects) {
+      this.weiduEffectService.addEffect({
+        lines,
+        tab,
+        effect,
+        type: "CRE",
+      });
+    }
   }
 
   private extractDataValue(key: keyof CreatureData, creature: CreatureData) {

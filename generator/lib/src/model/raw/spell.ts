@@ -52,9 +52,9 @@ export interface RawSpell {
   flags?: RawSpellFlag[];
   exclusionFlags?: RawSpellExclusionFlag[];
   /**
-   * Spell will be removed and added again after use, so you only need to memorize it once (default: false).
+   * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
    */
-  infiniteUse?: boolean;
+  infiniteUse?: number;
   effects?: RawEffect[];
   headers?: RawSpellHeader[];
   /**

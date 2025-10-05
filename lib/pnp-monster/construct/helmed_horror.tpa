@@ -1,6 +1,6 @@
 // Generated file (don't edit)
 
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/horror/ja#m15.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/construct/ja#m15.baf~
 
 CREATE ITM "ja#1m15"
 	WRITE_LONG 0x64 0x72
@@ -23,18 +23,22 @@ Enchantment: 1
 Range: 2 feet
 Fire damage: 1D6~)
 	WRITE_LONG 0x60 1
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_BYTE 0x84 10
-	WRITE_BYTE 0x88 6
-	WRITE_BYTE 0x8a 2
-	WRITE_SHORT 0x8e 3
-	WRITE_SHORT 0x9e 40
-	WRITE_SHORT 0xa0 40
-	WRITE_SHORT 0xa2 20
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m15.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IFLAMS01~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 10
+		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x8a 2
+		WRITE_SHORT 0x8e 3
+		WRITE_SHORT 0x9e 40
+		WRITE_SHORT 0xa0 40
+		WRITE_SHORT 0xa2 20
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=524288 probability1=100 dicenumber=1 dicesize=6 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=67 parameter2=21 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=67 parameter2=20 timing=2 probability1=100 END
@@ -51,6 +55,10 @@ CREATE ITM "ja#2m15"
 	WRITE_ASCII 0x22 ~4A~ #2
 	WRITE_ASCII 0x3a ~IPLAT01~ #8
 COPY_EXISTING ~ja#2m15.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IPLAT01~ #8
+	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=98 parameter2=5 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=29 parameter2=4 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=87 timing=2 probability1=100 END
@@ -63,6 +71,10 @@ CREATE ITM "ja#3m15"
 	WRITE_ASCII 0x22 ~H5~ #2
 	WRITE_ASCII 0x3a ~ihelm10~ #8
 COPY_EXISTING ~ja#3m15.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~ihelm10~ #8
+	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=53 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=52 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=27 parameter2=48 timing=2 probability1=100 END
@@ -71,7 +83,7 @@ CREATE ITM "ja#4m15"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Helmed Horror traits~)
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Helmed Horror traits~)
-	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING01~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
@@ -84,6 +96,10 @@ Hover (flight)
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them~)
 COPY_EXISTING ~ja#4m15.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING01~ #8
+	END
 	LPF seeInvisible_immunity END
 	LPF fireballSpell_immunity END
 	LPF lightningBoltSpell_immunity END
@@ -113,7 +129,7 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#1m15~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m15~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
 			REPLACE_CRE_ITEM ~ja#3m15~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			REPLACE_CRE_ITEM ~ja#4m15~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
+			REPLACE_CRE_ITEM ~ja#4m15~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			REPLACE_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
@@ -177,7 +193,7 @@ BEGIN
 				ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
-				REPLACE_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
+				REPLACE_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

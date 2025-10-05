@@ -133,12 +133,16 @@ export const FEY_DRYAD: RawCreature = {
       memorizedCount: 1,
       spellLevel: 1,
       spellType: "Innate",
-      infiniteUse: true,
+      infiniteUse: 1,
     }),
     {
       name: "Dire Charm",
       file: ATWEAKS_SPELLS.DryadCharmPerson,
       stringRef: StringRefUtils.getStringId("Dire Charm"),
+      description: [
+        "Dryads have the ability to throw a powerful charm person spell.",
+        "This spell is so powerful that targets of the spell suffer a -3 penalty to their saving throws.",
+      ],
       memorizedCount: 3,
       icon: SPELLS.DireCharm,
       castingSound: "CAS_M05",
@@ -171,6 +175,11 @@ export const FEY_DRYAD: RawCreature = {
       name: "Speak With Plants",
       file: ATWEAKS_SPELLS.SpeakWithPlants,
       stringRef: TraStringReferenceEnum.SpeakWithPlants,
+      description: [
+        "Speak with plants",
+        "The caster can question plants as to whether or not creatures have passed through them, cause thickets to part to enable easy passage, require vines to entangle pursuers, and command similar services.",
+        "Immunity to entangle spell for 10 rounds.",
+      ],
       memorizedCount: 1,
       icon: "RR#FSPKP",
       castingSound: "CAS_P02",
@@ -179,7 +188,7 @@ export const FEY_DRYAD: RawCreature = {
       primaryType: "Transmuter",
       secondaryType: "NonCombat",
       spellLevel: 1,
-      infiniteUse: true,
+      infiniteUse: 1,
       headers: [
         {
           type: "Melee",

@@ -547,4 +547,15 @@ export const ABILITY_PRESETS: {
       ],
     },
   },
+  {
+    preset: SPELLS.Slow,
+    ability: {
+      name: "Slow",
+      target: { name: "NearestEnemies", limit: 6 },
+      spell: {
+        id: "WIZARD_SLOW",
+        excludeStateChecks: ["STATE_SLOWED"],
+      },
+    },
+  },
 ];

@@ -70,17 +70,21 @@ Range: 1 feet
 Heal: 10
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~)
 	WRITE_LONG 0x60 2
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x84 1
-	WRITE_SHORT 0x8c 8
-	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m21.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 1
+		WRITE_SHORT 0x8c 8
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
@@ -112,17 +116,21 @@ Grabbed creature will suffer these effects:
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~)
 	WRITE_LONG 0x60 2
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x84 1
-	WRITE_SHORT 0x8c 8
-	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#2m21.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 1
+		WRITE_SHORT 0x8c 8
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
@@ -148,18 +156,22 @@ Range: 1 feet
 Heal: 10
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~)
 	WRITE_LONG 0x60 2
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x84 1
-	WRITE_SHORT 0x86 30
-	WRITE_SHORT 0x8c 8
-	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#3m21.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 1
+		WRITE_SHORT 0x86 30
+		WRITE_SHORT 0x8c 8
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=17 target=1 parameter1=10 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=50 target=1 parameter1="-1082313472" parameter2=1310720 duration=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR opcode=39 target=2 duration=12 probability1=100 savingthrow=4 END
@@ -174,6 +186,10 @@ CREATE ITM "ja#4m21"
 Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.
 They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent~)
 COPY_EXISTING ~ja#4m21.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING01~ #8
+	END
 	LPF sleep_immunity END
 	LPF charm_immunity END
 	LPF hold_immunity END
@@ -199,7 +215,6 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#3m21~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
 			REPLACE_CRE_ITEM ~ja#4m21~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			LPF clear_proficiencies END
-			ADD_MEMORIZED_SPELL ~ja#1m21~ #0 ~innate~ (1)
 			DEFINE_ARRAY notEnforceFiles BEGIN DW#ULCWO END
 			LPF patchCreature
 				INT_VAR

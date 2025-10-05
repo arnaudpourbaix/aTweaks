@@ -34,7 +34,7 @@ COPY_EXISTING ~rr#fbbea.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPPR704C~ #8
 	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
-	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=4 duration=6 probability1=100 STR_VAR resource="rr#fbbea" END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~rr#fbbea~)) + 1 STR_VAR icon="SPPR704B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=1 parameter2=1 duration=2 probability1=100 STR_VAR resource="ICCLKFR2" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=3 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END

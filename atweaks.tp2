@@ -70,8 +70,10 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
@@ -130,19 +132,12 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/main.tpa"
 
-// // Helmed Horrors, Battle Horrors, Doom Sayer
+// // Constructs (Helmed Horrors, Battle Horrors, Doom Sayer, Doom Guards)
 // BEGIN @5070 DESIGNATED 5070
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/horror/main.tpa"
-
-// // Doom Guards, Dwarven Doom Guards
-// BEGIN @5080 DESIGNATED 5080
-// GROUP @6
-// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
-// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/doom_guard/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/main.tpa"
 
 // // Wolves
 // BEGIN @5090 DESIGNATED 5090

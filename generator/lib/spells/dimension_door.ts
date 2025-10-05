@@ -13,7 +13,7 @@ export const createDimensionDoor = ({
   file: string;
   spellLevel: number;
   spellType: RawSpellType;
-  infiniteUse?: boolean;
+  infiniteUse?: number;
   memorizedCount?: number;
 }): RawSpell => ({
   name: "DimensionDoor",

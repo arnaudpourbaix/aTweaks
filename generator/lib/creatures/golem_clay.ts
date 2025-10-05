@@ -73,6 +73,7 @@ export const GOLEM_CLAY: RawCreature = {
       file: haste,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.Haste,
+      description: ["", "Haste golem for 3 rounds."],
       headers: [
         {
           type: "Melee",

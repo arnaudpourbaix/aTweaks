@@ -18,7 +18,7 @@ import { DOG_BLINK } from "./dog_blink";
 import { SPECTRAL_HOUND } from "./dog_spectral_hound";
 import { DOG_WAR } from "./dog_war";
 import { DOG_WILD } from "./dog_wild";
-import { DOOM_GUARD } from "./doom_guard";
+import { DOOM_GUARD } from "./construct_doom_guard";
 import { FEY_DRYAD } from "./fey_dryad";
 import { FEY_HAMADRYAD } from "./fey_hamadryad";
 import { FEY_NYMPH } from "./fey_nymph";
@@ -28,7 +28,7 @@ import { GOLEM_CLAY } from "./golem_clay";
 import { GOLEM_FLESH } from "./golem_flesh";
 import { GOLEM_JUGGERNAUT } from "./golem_juggernaut";
 import { GOLEM_STONE } from "./golem_stone";
-import { HORROR_HELMED } from "./horror_helmed";
+import { HORROR_HELMED } from "./construct_horror_helmed";
 import { OGRE } from "./ogre";
 import { OGRE_BERSERKER } from "./ogre_berserker";
 import { OGRE_HALF } from "./ogre_half";
@@ -129,7 +129,11 @@ export const CREATURES: RawCreature[] = [
   PLANT_TREANT,
 ];
 
-export const CREATURES_TEST: RawCreature[] = [...Ogres, ...Feys, PLANT_TREANT];
+export const CREATURES_TEST: RawCreature[] = [
+  ...Ogres,
+  ...Feys,
+  // PLANT_TREANT,
+];
 
 /*
 "SHOAL", // Shoal the Nereid

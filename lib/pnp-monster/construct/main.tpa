@@ -1,0 +1,2 @@
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/doom_guard.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/helmed_horror.tpa"

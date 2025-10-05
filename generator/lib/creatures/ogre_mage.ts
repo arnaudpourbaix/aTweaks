@@ -22,6 +22,7 @@ const gaseousFormDuration = 12;
 // Items
 const mainWeapon = file(1, id);
 const gaseousFormWeapon = file(2, id);
+const traits = file(3, id);
 
 export const OGRE_MAGE: RawCreature = {
   name: "Ogre Mage",
@@ -64,6 +65,7 @@ export const OGRE_MAGE: RawCreature = {
       "HELMNOAN",
       "SW1H43",
       "SW1H01",
+      "SW1H20",
       "COMPS01",
       "COMPS02",
       "OGREMASU",
@@ -132,6 +134,19 @@ export const OGRE_MAGE: RawCreature = {
           value: convertMovement(9),
           global: true,
         },
+      ],
+    },
+    {
+      file: traits,
+      stringRef: "Ogre Mage Traits",
+      equippedSlot: "RRING",
+      description: [
+        "Ogre Mage Traits",
+        "Regenerate one hit point per round (lost members must be reattached to regenerate).",
+      ],
+      category: "Rings",
+      icon: "IRING01",
+      effects: [
         {
           opcode: "Regeneration",
           type: "OneHPperAmountSeconds",
@@ -201,9 +216,10 @@ export const OGRE_MAGE: RawCreature = {
       copyFromFile: "CONECOLD",
       description: "Ogre-Mage Cone of Cold",
       areaEffectInfo: {
-        areaProjectileFlags: ["Coneshaped"], // "AffectOnlyEnemies" to prevent them for killing their allies ?
+        areaProjectileFlags: ["Coneshaped"], // FIXME: "AffectOnlyEnemies" to prevent them for killing their allies ?
         areaOfEffect: 620,
         triggerRadius: 620,
+        coneWidth: 60,
       },
     },
   ],
@@ -212,6 +228,14 @@ export const OGRE_MAGE: RawCreature = {
       name: "Cone of Cold",
       file: coneOfCold,
       stringRef: StringRefUtils.getStringId("Cone of Cold"),
+      description: [
+        "Cone of Cold",
+        "Casting Time: 1",
+        "Saving Throw: Breath half",
+        "When this spell is cast, it causes a cone-shaped spray of extreme cold to spring forth.",
+        "The cone is 60 feet long with a terminal diameter of 20 feet.",
+        "It drains heat and causes 8d8 cold damage, with a save vs. breath at -4 allowed for half damage.",
+      ],
       memorizedCount: 1,
       icon: SPELLS.ConeOfCold,
       castingSound: "CAS_M06",
@@ -252,6 +276,12 @@ export const OGRE_MAGE: RawCreature = {
       name: "Fly",
       file: fly,
       stringRef: TraStringReferenceEnum.Fly,
+      description: [
+        "Fly",
+        "The creature affected is able to move vertically and horizontally at a rate of 18.",
+        "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
+        "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.",
+      ],
       memorizedCount: 1,
       icon: SPELLS.Haste,
       castingSound: "CAS_M08",
@@ -311,6 +341,10 @@ export const OGRE_MAGE: RawCreature = {
       name: "Gaseous form",
       file: gaseousForm,
       stringRef: TraStringReferenceEnum.GaseousForm,
+      description: [
+        "Gaseous form",
+        "The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.",
+      ],
       memorizedCount: 1,
       icon: SPELLS.PolymorphSelf,
       castingSound: "CAS_M08",

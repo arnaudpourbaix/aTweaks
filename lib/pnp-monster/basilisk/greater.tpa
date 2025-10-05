@@ -24,7 +24,7 @@ COPY_EXISTING ~ja#1m3.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
+	SAY UNIDENTIFIED_DESC ~All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=4 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m3~)) + 1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=55 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 timing=1 probability1=100 savingthrow=4 savebonus="2" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=1 probability1=100 savingthrow=4 savebonus="2" STR_VAR resource="EFF_P88" END
@@ -36,14 +36,23 @@ CREATE ITM "ja#1m3"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
 Melee damage: 1D6 (Slashing)
+Speed Factor: 3
+Enchantment: 3
+Range: 2 feet
 Poison: deals one damage per 6 seconds for 5 rounds (saves vs poison/death at +4).~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
+	WRITE_ASCII 0x76 ~IWOLF~ #8
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 6
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3
@@ -61,16 +70,25 @@ CREATE ITM "ja#2m3"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-Melee damage: 2D8 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
-Cast spell Foul breath (100%)
-Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~)
+Melee damage: 2D8 (Piercing)
+Speed Factor: 3
+Enchantment: 3
+Range: 2 feet
+
+Cast spell Foul breath
+All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
+	WRITE_ASCII 0x76 ~SPPR416B~ #8
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 2
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 8
 	WRITE_BYTE 0x8a 2
 	WRITE_SHORT 0x8e 1
@@ -101,8 +119,6 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#1m3~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m3~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_MEMORIZED_SPELL ~ja#1m2~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#2m2~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m3~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR

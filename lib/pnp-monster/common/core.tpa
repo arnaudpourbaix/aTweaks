@@ -33,7 +33,7 @@ CREATE ITM "ja#i3"
 	SAY NAME1 ~hover trait~ SAY NAME2 ~hover trait~
 	SAY UNIDENTIFIED_DESC ~Hover (flight)
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
-Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them~
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
 COPY_EXISTING ~ja#i3.itm~ ~override~
 	LPF hover_immunity END
 
@@ -85,15 +85,14 @@ COPY_EXISTING ~ja#i7.itm~ ~override~
 CREATE ITM "ja#i4"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
-	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_ASCII 0x3a ~IAMUL01~ #8
 	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
 	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.
 Immune to backstab and critical hits
 Immune to all nonmagical attacks.
 Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
-Attacks pass through armor (+4 THAC0).
-Do not set off traps that are triggered by weight. (not implemented)~
+Attacks pass through armor (+4 THAC0).~
 COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF incorporeal_immunity END
 

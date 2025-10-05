@@ -1,4 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
@@ -72,7 +73,13 @@ export const DOG_BLINK: RawCreature = {
       name: "Blink",
       file: blink,
       memorizedCount: 1,
+      icon: SPELLS.DimensionDoor,
+      infiniteUse: 1,
       stringRef: TraStringReferenceEnum.Blink,
+      description: [
+        "",
+        "Blink to target location and get a +2 THAC0 bonus for 1 round.",
+      ],
       headers: [
         {
           type: "Melee",

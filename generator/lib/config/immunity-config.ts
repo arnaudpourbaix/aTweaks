@@ -476,7 +476,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     description: [
       "Hover (flight)",
       "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
-      "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them",
+      "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.",
     ],
     immunities: ["entangle", "web"],
     spellGroups: ["ground"],
@@ -703,7 +703,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   },
   {
     name: "incorporeal",
-    itemSlot: { file: ITEMS.Incorporeal, slot: "RRING" },
+    itemSlot: { file: ITEMS.Incorporeal, slot: "AMULET" },
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
@@ -712,7 +712,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Has a 50% resistance to every damages.",
       "Deflection bonus (+3 AC).",
       "Attacks pass through armor (+4 THAC0).",
-      "Do not set off traps that are triggered by weight. (not implemented)",
+      // "Do not set off traps that are triggered by weight. (not implemented)",
     ],
     immunities: ["backstab", "criticalHit"],
     effects: [

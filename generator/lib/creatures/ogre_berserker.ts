@@ -127,7 +127,8 @@ export const OGRE_BERSERKER: RawCreature = {
       },
       additionalData: {
         proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 4 }],
-        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+        removeMemorizedSpells: true,
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 2 }],
       },
     },
     {
@@ -139,7 +140,8 @@ export const OGRE_BERSERKER: RawCreature = {
       },
       additionalData: {
         proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 5 }],
-        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 2 }],
+        removeMemorizedSpells: true,
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 3 }],
       },
     },
     {
@@ -151,7 +153,8 @@ export const OGRE_BERSERKER: RawCreature = {
       },
       additionalData: {
         proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 5 }],
-        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+        removeMemorizedSpells: true,
+        memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 3 }],
       },
     },
     {
@@ -168,10 +171,8 @@ export const OGRE_BERSERKER: RawCreature = {
       },
       additionalData: {
         proficiencies: [{ type: "PROFICIENCYFLAILMORNINGSTAR", value: 2 }],
-        memorizedSpells: [
-          { file: SPELLS.BerserkerRage, memorizedCount: 0 },
-          { file: SPELLS.BarbarianRage, memorizedCount: 2 },
-        ],
+        removeMemorizedSpells: true,
+        memorizedSpells: [{ file: SPELLS.BarbarianRage, memorizedCount: 3 }],
       },
     },
     {

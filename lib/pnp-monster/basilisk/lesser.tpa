@@ -28,8 +28,11 @@ COPY_EXISTING ~ja#1m2.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI604C~ #8
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.~
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 END
+	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m2" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m2" END
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 STR_VAR icon="SPWI604B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=134 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4004) probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="MISC_06B" END
@@ -44,10 +47,13 @@ COPY_EXISTING ~ja#2m2.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI604C~ #8
 	SAY UNIDENTIFIED_DESC ~Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.
 On a failed save, the creature magically begins to turn to stone and is restrained.
 It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.~
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 END
+	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#2m2" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#2m2" END
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 STR_VAR icon="SPWI604B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4005) probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@4003) timing=1 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=13 timing=1 probability1=100 savingthrow=16 savebonus="-4" END
@@ -82,11 +88,18 @@ CREATE ITM "ja#1m2"
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS
-Melee damage: 1D10 (Slashing)~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+
+Melee damage: 1D10 (Slashing)
+Speed Factor: 3
+Enchantment: 1
+Range: 1 feet~)
 	WRITE_LONG 0x60 1
 	WRITE_BYTE 0x74 1
+	WRITE_ASCII 0x76 ~IWOLF~ #8
 	WRITE_BYTE 0x7e 1
+	WRITE_SHORT 0x80 1
+	WRITE_BYTE 0x84 3
 	WRITE_BYTE 0x88 10
 	WRITE_BYTE 0x8a 1
 	WRITE_SHORT 0x8e 3

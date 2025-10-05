@@ -12,12 +12,12 @@ const script = bafFile(id);
 const mainWeapon = file(1, id);
 const armor = file(2, id);
 const helmet = file(3, id);
-const amulet = file(4, id);
+const traits = file(4, id);
 
 export const HORROR_HELMED: RawCreature = {
   name: "Helmed Horror",
-  bafFile: `lib/pnp-monster/horror/${script}`,
-  tpaFile: "lib/pnp-monster/horror/helmed",
+  bafFile: `lib/pnp-monster/construct/${script}`,
+  tpaFile: "lib/pnp-monster/construct/helmed_horror",
   tracking: true,
   combatWalk: true,
   restHeal: true,
@@ -233,7 +233,7 @@ export const HORROR_HELMED: RawCreature = {
       ],
     },
     {
-      file: amulet,
+      file: traits,
       stringRef: "Helmed Horror traits",
       immunities: [
         "seeInvisible",
@@ -243,8 +243,8 @@ export const HORROR_HELMED: RawCreature = {
         "magicMissile",
         "hover",
       ],
-      equippedSlot: "AMULET",
-      category: "Amulets",
+      equippedSlot: "RRING",
+      category: "Rings",
       icon: "IRING01",
     },
   ],

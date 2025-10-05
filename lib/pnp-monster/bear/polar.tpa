@@ -32,10 +32,11 @@ Speed Factor: 3
 Enchantment: 3
 Range: 2 feet
 
-Cast spell Hug (10%)
+Cast spell Hug
 Hug target for 3d6 points of additional crushing damage.~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
+	WRITE_ASCII 0x76 ~IWOLF~ #8
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 2
 	WRITE_BYTE 0x84 3
@@ -67,6 +68,7 @@ Enchantment: 3
 Range: 2 feet~)
 	WRITE_LONG 0x60 3
 	WRITE_BYTE 0x74 1
+	WRITE_ASCII 0x76 ~SPPR416B~ #8
 	WRITE_BYTE 0x7e 1
 	WRITE_SHORT 0x80 2
 	WRITE_BYTE 0x84 3

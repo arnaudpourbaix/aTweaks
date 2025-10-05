@@ -14,8 +14,8 @@ const helmet = file(3, id);
 
 export const DOOM_GUARD: RawCreature = {
   name: "Doom Guard",
-  bafFile: `lib/pnp-monster/doom_guard/${script}`,
-  tpaFile: "lib/pnp-monster/doom_guard/main",
+  bafFile: `lib/pnp-monster/construct/${script}`,
+  tpaFile: "lib/pnp-monster/construct/doom_guard",
   tracking: true,
   combatWalk: true,
   restHeal: true,

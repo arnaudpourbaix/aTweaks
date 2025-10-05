@@ -195,6 +195,24 @@ THEN
 		ReallyForceSpell(Myself,WIZARD_SLOW)
 END
 
+IF
+	!GlobalTimerNotExpired("Slow","LOCALS")
+	HaveSpell(WIZARD_SLOW)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(SixthNearestEnemyOf(Myself),10)
+	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SixthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("Slow","LOCALS",12)
+		ReallyForceSpell(Myself,WIZARD_SLOW)
+END
+
 // Attack NoCheck enemy
 IF
 	OR(4)

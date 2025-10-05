@@ -11,6 +11,7 @@ COPY_EXISTING "CONECOLD.pro" ~override/ja#1m32.pro~
 	WRITE_LONG 0x200 2048
 	WRITE_SHORT 0x204 620
 	WRITE_SHORT 0x206 620
+	WRITE_SHORT 0x224 60
 ADD_PROJECTILE ~override/ja#1m32.pro~ ~Ogre-Mage Cone of Cold~
 
 // Cone of Cold
@@ -26,6 +27,12 @@ COPY_EXISTING ~ja#1m32.SPL~  ~override~
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 5
 	WRITE_ASCII 0x3a ~SPWI503C~ #8
+	SAY UNIDENTIFIED_DESC ~Cone of Cold
+Casting Time: 1
+Saving Throw: Breath half
+When this spell is cast, it causes a cone-shaped spray of extreme cold to spring forth.
+The cone is 60 feet long with a terminal diameter of 20 feet.
+It drains heat and causes 8d8 cold damage, with a save vs. breath at -4 allowed for half damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 range=10 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1 STR_VAR icon="SPWI503B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=5 parameter2=131072 probability1=100 dicenumber=8 dicesize=8 savingthrow=16777217 savebonus="-4" special=256 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=165 target=2 power=5 duration=1 probability1=100 END
@@ -42,6 +49,10 @@ COPY_EXISTING ~ja#2m32.SPL~  ~override~
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 3
 	WRITE_ASCII 0x3a ~SPWI305C~ #8
+	SAY UNIDENTIFIED_DESC ~Fly
+The creature affected is able to move vertically and horizontally at a rate of 18.
+This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=3 STR_VAR icon="SPWI305B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=3 parameter1=12 parameter2=1 duration=72 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i3" END
@@ -62,6 +73,8 @@ COPY_EXISTING ~ja#3m32.SPL~  ~override~
 	WRITE_BYTE 0x27 13
 	WRITE_LONG 0x34 4
 	WRITE_ASCII 0x3a ~SPWI416C~ #8
+	SAY UNIDENTIFIED_DESC ~Gaseous form
+The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=4 STR_VAR icon="SPWI416B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=111 target=2 power=4 duration=12 probability1=100 STR_VAR resource="ja#2m32" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 duration=3 probability1=100 STR_VAR resource="SPDISPM3" END
@@ -92,19 +105,36 @@ Weight: 15
 Speed Factor: 8
 Proficiency Type: Halberds~)
 	WRITE_LONG 0x60 1
-	WRITE_BYTE 0x74 1
-	WRITE_ASCII 0x76 ~ISW1H44~ #8
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_BYTE 0x84 8
-	WRITE_BYTE 0x88 12
-	WRITE_BYTE 0x8a 1
-	WRITE_SHORT 0x8e 3
-	WRITE_SHORT 0x9e 50
-	WRITE_SHORT 0xa0 50
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m32.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~ISW1H44~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 8
+		WRITE_BYTE 0x88 12
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 3
+		WRITE_SHORT 0x9e 50
+		WRITE_SHORT 0xa0 50
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 global=1 parameter1=7 parameter2=1 timing=2 probability1=100 END
+
+CREATE ITM "ja#3m32"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Ogre Mage Traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Ogre Mage Traits~)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Ogre Mage Traits
+Regenerate one hit point per round (lost members must be reattached to regenerate).~)
+COPY_EXISTING ~ja#3m32.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING01~ #8
+	END
 	LPF ADD_EFFECT INT_VAR opcode=98 target=2 parameter1=6 parameter2=3 probability1=100 END
 
 CREATE ITM "ja#2m32"
@@ -118,13 +148,16 @@ CREATE ITM "ja#2m32"
 	WRITE_LONG 0x18 72
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Gaseous form is immuned to everything but magical fire, lightning and mind spells.~)
 	WRITE_LONG 0x60 1
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
 COPY_EXISTING ~ja#2m32.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=184 target=1 global=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=300 target=1 global=1 parameter2=1 timing=2 probability1=100 END
@@ -176,12 +209,16 @@ BEGIN
 			REMOVE_CRE_ITEM ~HELMNOAN~
 			REMOVE_CRE_ITEM ~SW1H43~
 			REMOVE_CRE_ITEM ~SW1H01~
+			REMOVE_CRE_ITEM ~SW1H20~
 			REMOVE_CRE_ITEM ~COMPS01~
 			REMOVE_CRE_ITEM ~COMPS02~
 			REMOVE_CRE_ITEM ~OGREMASU~
 			REMOVE_CRE_ITEM ~BLUN15~
 			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
 				REPLACE_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			END
+			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
+				REPLACE_CRE_ITEM ~ja#3m32~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
 			END
 			ADD_MEMORIZED_SPELL ~SPWI206~ #1 ~wizard~ (1)
 			ADD_MEMORIZED_SPELL ~SPWI228~ #1 ~wizard~ (1)

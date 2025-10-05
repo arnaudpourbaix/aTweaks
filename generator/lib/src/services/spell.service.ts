@@ -27,7 +27,7 @@ export class SpellService {
     if (!spells) return [];
     const results: Spell[] = spells.map((s) => {
       s.effects = s.effects ?? [];
-      if (s.infiniteUse) {
+      if (s.infiniteUse !== undefined) {
         const effects: RawEffect[] = [
           {
             opcode: "RemoveSpell",
@@ -40,7 +40,13 @@ export class SpellService {
             opcode: "GiveAbility",
             resource: s.file,
             target: "Self",
-            timing: "InstantPermanentUntilDeath",
+            // timing:
+            //   s.infiniteUse > 1
+            //     ? "DelayPermanent"
+            //     : "InstantPermanentUntilDeath",
+            // duration: s.infiniteUse > 1 ? s.infiniteUse * 6 : undefined,
+            timing: "DelayPermanent",
+            duration: s.infiniteUse * 6,
             global: true,
           },
         ];

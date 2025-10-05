@@ -1,4 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, convertMovement, file } from "../src/services/misc.func";
@@ -48,7 +49,7 @@ export const GOLEM_JUGGERNAUT: RawCreature = {
   },
   additionalData: {
     immunities: ["construct"],
-    removeScripts: ["GOLSTO01"],
+    removeScripts: ["GOLSTO01", "GOLIRO01", "TOMEGOL4"],
     removeItems: ["IRONGOL"],
   },
   items: [
@@ -79,6 +80,12 @@ export const GOLEM_JUGGERNAUT: RawCreature = {
       name: "Juggernaut charge",
       file: charge,
       stringRef: TraStringReferenceEnum.Charge,
+      description: [
+        "",
+        "Gradually increases movement for 4 rounds. Peak speed is reached after 2 rounds.",
+      ],
+      icon: SPELLS.Haste,
+      infiniteUse: 5,
       memorizedCount: 1,
       headers: [
         {

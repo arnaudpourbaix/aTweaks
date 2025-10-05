@@ -65,12 +65,9 @@ export const GOLEM_STONE: RawCreature = {
   ],
   abilities: [
     {
-      name: "Slow",
-      target: { name: "NearestEnemies", limit: 5 },
+      preset: SPELLS.Slow,
       spell: {
-        id: "WIZARD_SLOW",
         type: "reallyForce",
-        excludeStateChecks: ["STATE_SLOWED"],
         selfTarget: true,
       },
       range: 10,

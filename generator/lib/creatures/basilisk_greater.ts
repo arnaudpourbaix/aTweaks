@@ -1,12 +1,11 @@
-import { GLOBAL_CONFIG } from "../config/generate";
 import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import {
-  basiliskGazeProjectile,
   petrification2e,
   petrification5e,
+  petrificationAbility,
 } from "./basilisk_lesser";
 import { MonsterEnum } from "./monster.enum";
 
@@ -54,24 +53,9 @@ export const BASILISK_GREATER: RawCreature = {
   additionalData: {
     removeScripts: ["GBASILSK"],
     removeItems: ["BASILG1", "BASILG2", "BASILG3"],
-    memorizedSpells: [
-      { file: petrification2e, memorizedCount: 1 },
-      { file: petrification5e, memorizedCount: 1 },
-    ],
+    memorizedSpells: [{ file: petrification2e, memorizedCount: 1 }],
   },
-  abilities: [
-    {
-      name: "Petrification (2e)",
-      target: {
-        name: "NearestEnemies",
-        random: true,
-      },
-      spell: {
-        resource: petrification2e,
-        type: "force",
-      },
-    },
-  ],
+  abilities: [petrificationAbility],
   items: [
     {
       file: mainWeapon,
@@ -141,10 +125,9 @@ export const BASILISK_GREATER: RawCreature = {
     {
       name: "Foul breath",
       file: foulBreath,
-      memorizedCount: 1,
       stringRef: TraStringReferenceEnum.FoulBreath,
       description: [
-        "Its foul breath is also poisonous, and all creatures, coming within 5 feet of its mouth, even if just for a moment, must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
+        "All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).",
       ],
       secondaryType: "OffensiveDamage",
       headers: [

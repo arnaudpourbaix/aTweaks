@@ -121,18 +121,22 @@ Grabbed creature will suffer these effects:
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~)
 	WRITE_LONG 0x60 2
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_BYTE 0x84 3
-	WRITE_BYTE 0x88 6
-	WRITE_BYTE 0x8a 3
-	WRITE_SHORT 0x8e 2
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m1.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IWOLF~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x8a 3
+		WRITE_SHORT 0x8e 2
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#1m1" END
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 savebonus="-9" STR_VAR resource="ja#3m1" END
 
@@ -157,15 +161,19 @@ The ankheg can squirt a stream of acidic enzymes once every six hours to a dista
 A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
 It uses this attack technique only when desperate.~)
 	WRITE_LONG 0x60 2
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 30
-	WRITE_BYTE 0x84 3
-	WRITE_SHORT 0x86 20
-	WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
+COPY_EXISTING ~ja#2m1.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPWI211B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 30
+		WRITE_BYTE 0x84 3
+		WRITE_SHORT 0x86 20
+		WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1
 	WRITE_SHORT 0x38 1
 	WRITE_SHORT 0xa4 1
-COPY_EXISTING ~ja#2m1.itm~ ~override~
+	END
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#2m1" END
 	LPF ADD_EFFECT INT_VAR opcode=172 target=1 probability1=100 STR_VAR resource="ja#2m1" END
 
@@ -192,7 +200,6 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#2m1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_MEMORIZED_SPELL ~ja#2m1~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
-			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
 			LPF patchCreature
 				INT_VAR
 					level1=8

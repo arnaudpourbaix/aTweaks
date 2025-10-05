@@ -8,6 +8,7 @@ import {
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { EXISTING_SPELL_PROTECTIONS } from "../config/spell-protection";
 import {
   BafExistingStringReference,
   TraStringReferenceEnum,
@@ -15,6 +16,10 @@ import {
 import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
+import {
+  SpellProtectionRelation,
+  SpellProtectionStat,
+} from "../src/model/raw/spell-protection";
 import { FactoryService } from "../src/services/factory.service";
 import { bafFile } from "../src/services/misc.func";
 import {
@@ -133,6 +138,9 @@ export const FEY_HAMADRYAD: RawCreature = {
       name: "Entangle",
       file: ATWEAKS_SPELLS.HamadryadEntangle,
       stringRef: TraStringReferenceEnum.Entangle,
+      description: [
+        "Hamadryad can cast Entangle as the priest spell, but it won't affect its allies since her affinity with nature.",
+      ],
       memorizedCount: 1,
       icon: SPELLS.Entangle,
       castingSound: "CAS_P08",
@@ -141,7 +149,7 @@ export const FEY_HAMADRYAD: RawCreature = {
       primaryType: "Transmuter",
       secondaryType: "Disabling",
       spellLevel: 1,
-      infiniteUse: true,
+      infiniteUse: 1,
       headers: [
         {
           type: "Melee",
@@ -216,6 +224,10 @@ export const FEY_HAMADRYAD: RawCreature = {
       name: "Animal Friendship",
       file: ATWEAKS_SPELLS.AnimalFriendship,
       stringRef: TraStringReferenceEnum.AnimalFriendship,
+      description: [
+        "Animal friendship",
+        "The caster can use this spell to attract up to 2 Hit Dice of animal(s) per experience level he possesses (save vs spell to negate).",
+      ],
       memorizedCount: 1,
       icon: SPELLS.CharmPersonOrAnimal,
       flags: ["CastableWhenSilenced"],
@@ -224,7 +236,7 @@ export const FEY_HAMADRYAD: RawCreature = {
       primaryType: "Enchanter",
       secondaryType: "Disabling",
       spellLevel: 1,
-      infiniteUse: true,
+      infiniteUse: 1,
       headers: [
         {
           type: "Melee",
@@ -233,7 +245,16 @@ export const FEY_HAMADRYAD: RawCreature = {
           range: 30,
           speed: 1,
           effects: [
-            // The caster can use this spell to attract up to 2 Hit Dice of animal(s) per experience level he possesses
+            {
+              opcode: "ProtectionFromResourceAndMessage",
+              type: {
+                stat: SpellProtectionStat.General,
+                relation: SpellProtectionRelation.NotEqual,
+              },
+              value: "ANIMAL",
+              resource: ATWEAKS_SPELLS.AnimalFriendship,
+              ...animalFriendshipCommonEffect,
+            },
             {
               opcode: "CharmCreature",
               charmType: "NeutralCharm",
@@ -265,6 +286,10 @@ export const FEY_HAMADRYAD: RawCreature = {
       file: ATWEAKS_SPELLS.DetectSnaresAndPits,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.DetectSnaresAndPits,
+      description: [
+        "Detect snares and pits",
+        "When cast, all traps—concealed normally or magically—of magical or mechanical nature become apparent for 16 rounds.",
+      ],
       castingSound: "CAS_P04",
       flags: ["OutdoorsOnly"],
       spellType: "Innate",
@@ -272,7 +297,7 @@ export const FEY_HAMADRYAD: RawCreature = {
       primaryType: "Diviner",
       secondaryType: "NonCombat",
       icon: SPELLS.FindTraps,
-      infiniteUse: true,
+      infiniteUse: 1,
       headers: [
         {
           type: "Melee",
