@@ -2,6 +2,7 @@ import { SPELL_STATES } from "../config/ability-presets";
 import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
@@ -139,7 +140,7 @@ export const OGRE_MAGE: RawCreature = {
     {
       file: traits,
       stringRef: "Ogre Mage Traits",
-      equippedSlot: "RRING",
+      equippedSlot: JEWEL_SLOTS,
       description: [
         "Ogre Mage Traits",
         "Regenerate one hit point per round (lost members must be reattached to regenerate).",

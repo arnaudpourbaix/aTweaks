@@ -4,12 +4,10 @@ import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { createDimensionDoor } from "../spells/dimension_door";
 import { RawCreature } from "../src/model/raw/creature";
-import { RawBaseEffect, StringRefEffect } from "../src/model/raw/effect";
+import { RawBaseEffect } from "../src/model/raw/effect";
 import { RawSaveType } from "../src/model/raw/enum";
 import { EffectService } from "../src/services/effect.service";
-import { FactoryService } from "../src/services/factory.service";
 import { bafFile } from "../src/services/misc.func";
-import { StringRefUtils } from "../src/services/string-ref.utils";
 import { abilityAnimalFriendship } from "./fey_hamadryad";
 import { MonsterEnum } from "./monster.enum";
 
@@ -117,6 +115,10 @@ export const FEY_NYMPH: RawCreature = {
       memorizedCount: 1,
       file: ATWEAKS_SPELLS.BlindingBeauty,
       stringRef: TraStringReferenceEnum.BlindingBeauty,
+      description: [
+        "Looking at a nymph will cause permanent blindness unless the onlookers save versus spell.",
+        "If the nymph is nude or disrobes, an onlooker will die unless a saving throw versus spell is successful.",
+      ],
       spellType: "Innate",
       icon: SPELLS.BlindingBeauty,
       infiniteUse: 1,

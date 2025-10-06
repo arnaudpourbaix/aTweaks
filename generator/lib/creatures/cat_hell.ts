@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -91,7 +92,7 @@ export const HELLCAT: RawCreature = {
           global: true,
         },
       ],
-      equippedSlot: "RRING",
+      equippedSlot: JEWEL_SLOTS,
       category: "Rings",
       icon: "IRING01",
     },

@@ -1,3 +1,4 @@
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { EffectTypeEnum } from "../src/model/final/effect.type";
 import { PortraitIconEnum } from "../src/model/final/enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
@@ -309,7 +310,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "cloudSpells",
     type: "immunity",
-    itemSlot: { file: ITEMS.CloudSpells, slot: "RRING" },
+    itemSlot: { file: ITEMS.CloudSpells, slot: JEWEL_SLOTS },
     description: ["Cloud spells immunity"],
     spellGroups: ["cloud"],
     displaySpellIneffective: true,
@@ -331,7 +332,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     preventIcons: [PortraitIconEnum.Entangled],
     spellGroups: ["entangle"],
     displaySpellIneffective: true,
-    itemSlot: { file: ITEMS.EntangleImmunity, slot: "AMULET" },
+    itemSlot: { file: ITEMS.EntangleImmunity, slot: JEWEL_SLOTS },
   },
   {
     name: "insectSpells",
@@ -511,7 +512,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "construct",
     type: "trait",
-    itemSlot: { file: ITEMS.Construct, slot: "LRING" },
+    itemSlot: { file: ITEMS.Construct, slot: JEWEL_SLOTS },
     description: [
       "Construct trait.",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
@@ -608,7 +609,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "skeletal",
     type: "trait",
-    itemSlot: { file: ITEMS.Sketetal, slot: "RRING" },
+    itemSlot: { file: ITEMS.Sketetal, slot: JEWEL_SLOTS },
     description: [
       "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
     ],
@@ -650,7 +651,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Immunity to poison, sleep effects, paralysis, polymorph, and stunning.",
       "Not subject to critical hits and backstab.",
     ],
-    itemSlot: { file: ITEMS.Plant, slot: "LRING" },
+    itemSlot: { file: ITEMS.Plant, slot: JEWEL_SLOTS },
     immunities: [
       "mindSpells",
       "poison",
@@ -703,7 +704,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   },
   {
     name: "incorporeal",
-    itemSlot: { file: ITEMS.Incorporeal, slot: "AMULET" },
+    itemSlot: { file: ITEMS.Incorporeal, slot: JEWEL_SLOTS },
     type: "trait",
     description: [
       "An incorporeal creature has no physical body.",
@@ -833,7 +834,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "ooze",
     type: "trait",
-    itemSlot: { file: ITEMS.Ooze, slot: "LRING" },
+    itemSlot: { file: ITEMS.Ooze, slot: JEWEL_SLOTS },
     description: [
       "Ooze trait.",
       "Blindsight (can see invisible, not subject to gaze attacks).",

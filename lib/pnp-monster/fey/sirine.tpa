@@ -44,6 +44,9 @@ COPY_EXISTING ~rr#fcsng.SPL~  ~override~
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI316C~ #8
+	SAY UNIDENTIFIED_DESC ~Charming Song
+The charm ability is used through the sirine's song, and all people within 30 feet are subject to it, even if they are hostile or attacking.
+Each victim can save vs spell to negate or be charmed for 3 turns.~
 	LPF ADD_EFFECT INT_VAR opcode=136 target=1 global=1 power=1 timing=1 probability1=100 END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~rr#fcsng~)) + 1 STR_VAR icon="SPWI316B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=3 probability1=100 STR_VAR resource="rr#fcsng" END
@@ -82,6 +85,9 @@ COPY_EXISTING ~RR#FCLD.SPL~  ~override~
 	WRITE_BYTE 0x27 9
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI204C~ #8
+	SAY UNIDENTIFIED_DESC ~Fog Cloud
+As a fog bank, this spell creates a fog of any size and shape up to a maximum 20-foot cube per caster level. The fog obscures all sight, normal and infravision, beyond 2 feet.
+Victims are blinded for one round, no save.~
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=4 projectile=(IDS_OF_SYMBOL (~projectl~ ~CLOUD~)) + 1 STR_VAR icon="SPWI204B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 resist_dispel=1 duration=7 probability1=100 STR_VAR resource="fl#clrsp" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 resist_dispel=1 duration=7 probability1=100 STR_VAR resource="rr#mracs" END
@@ -104,6 +110,7 @@ COPY_EXISTING ~rr#ftrnq.SPL~  ~override~
 	WRITE_BYTE 0x27 9
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI509C~ #8
+	SAY UNIDENTIFIED_DESC ~If the sirine touches an opponent, the victim must make a saving throw vs. poison; those failing to save are reduced to an Intelligence of 2.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 STR_VAR icon="SPWI509B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~CHAOTIC_COMMANDS~) parameter2=76 duration=1 probability1=100 STR_VAR resource="rr#ftrnq" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=76 target=2 power=1 duration=300 probability1=100 savingthrow=4 END
@@ -129,8 +136,10 @@ CREATE ITM "ja#1m43"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4032)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4032)
 	WRITE_LONG 0x18 64
-	WRITE_ASCII 0x3a ~IGHOUL~ #8
+	WRITE_ASCII 0x3a ~IFIST~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 Melee damage: 1D3 (Crushing)
@@ -138,13 +147,14 @@ Speed Factor: 0
 Enchantment: 4
 Range: 1 feet
 
-Cast spell Touch of Tranquility~)
+Cast spell Touch of Tranquility
+If the sirine touches an opponent, the victim must make a saving throw vs. poison; those failing to save are reduced to an Intelligence of 2.~)
 	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#1m43.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
-		WRITE_ASCII 0x76 ~IGHOUL~ #8
+		WRITE_ASCII 0x76 ~IFIST~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 1
 		WRITE_BYTE 0x88 3
@@ -199,9 +209,10 @@ BEGIN
 			REPLACE_CRE_ITEM ~AROW01~ #40 #0 #0 ~UNSTEALABLE~ ~QUIVER3~ 
 			REPLACE_CRE_ITEM ~ja#1m43~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ 
 			REPLACE_CRE_ITEM ~ja#2m43~ #0 #0 #0 ~UNDROPPABLE~ ~BOOTS~ 
-			REPLACE_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
+			ADD_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_MEMORIZED_SPELL ~rr#fcsng~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~RR#FCLD~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#ftrnq~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m43~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~ja#2m43~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2

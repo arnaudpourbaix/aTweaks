@@ -201,7 +201,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
         },
         [] as string[]
       );
-      const isWeapon = WEAPON_SLOTS.includes(item.slot);
+      const slots = this.utils.getItemSlots(item.slot);
+      const isWeapon = slots.every((slot) => WEAPON_SLOTS.includes(slot));
       const flagsArray: string[] = [];
       if (item.undroppable === true || item.undroppable === undefined)
         flagsArray.push("UNDROPPABLE");
@@ -210,7 +211,10 @@ export class WeiduCreatureService extends AbstractWeiduService {
       const flags = `~${flagsArray.join("&")}~`;
       const quantity = `#${item.quantity ?? 0}`;
       const equip = `${isWeapon && !isEquip ? "EQUIP" : ""}`;
-      const code = `REPLACE_CRE_ITEM ~${item.file}~ ${quantity} #0 #0 ${flags} ~${item.slot}~ ${equip}`;
+      const macro = slots.length > 1 ? "ADD_CRE_ITEM" : "REPLACE_CRE_ITEM";
+      const code = `${macro} ~${
+        item.file
+      }~ ${quantity} #0 #0 ${flags} ~${slots.join(" ")}~ ${equip}`;
       this.addConditionalSourceRes(p.lines, code, p.tab, noWeaponFiles, true);
       if (isWeapon) isEquip = true;
     }

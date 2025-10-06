@@ -1,4 +1,5 @@
-import { truncate } from "fs";
+import { GLOBAL_CONFIG } from "../config/generate";
+import { MonsterItemIconEnum } from "../config/item";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
@@ -12,7 +13,6 @@ import { bafFile, convertMovement, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { UtilsService } from "../src/services/utils.service";
 import { MonsterEnum } from "./monster.enum";
-import { GLOBAL_CONFIG } from "../config/generate";
 
 const effects = EffectService.instance;
 const utils = UtilsService.instance;
@@ -132,8 +132,9 @@ export const FEY_SIRINE: RawCreature = {
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Fist,
       equippedSlot: "WEAPON1",
-      icon: "IGHOUL",
       type: "Melee",
       diceSize: 3,
       diceThrown: 1,
@@ -181,8 +182,13 @@ export const FEY_SIRINE: RawCreature = {
     {
       name: "Charming Song",
       file: ATWEAKS_SPELLS.CharmingSong,
-      // memorizedCount: 1,
+      memorizedCount: 1,
       stringRef: TraStringReferenceEnum.CharmingSong,
+      description: [
+        "Charming Song",
+        "The charm ability is used through the sirine's song, and all people within 30 feet are subject to it, even if they are hostile or attacking.",
+        "Each victim can save vs spell to negate or be charmed for 3 turns.",
+      ],
       castingSound: "SIRIN05",
       flags: ["IgnoreDead"],
       spellType: "Innate",
@@ -251,6 +257,11 @@ export const FEY_SIRINE: RawCreature = {
       file: ATWEAKS_SPELLS.FogCloud,
       memorizedCount: 1,
       stringRef: TraStringReferenceEnum.FogCloud,
+      description: [
+        "Fog Cloud",
+        "As a fog bank, this spell creates a fog of any size and shape up to a maximum 20-foot cube per caster level. The fog obscures all sight, normal and infravision, beyond 2 feet.",
+        "Victims are blinded for one round, no save.",
+      ],
       castingSound: "CAS_M08",
       spellType: "Innate",
       castingAnimation: "Alteration",
@@ -273,8 +284,10 @@ export const FEY_SIRINE: RawCreature = {
     {
       name: "Touch of Tranquility",
       file: ATWEAKS_SPELLS.TouchOfTranquility,
-      memorizedCount: 1,
       stringRef: TraStringReferenceEnum.TouchOfTranquility,
+      description: [
+        "If the sirine touches an opponent, the victim must make a saving throw vs. poison; those failing to save are reduced to an Intelligence of 2.",
+      ],
       castingSound: "EFF_P11",
       flags: ["Hostile", "IgnoreDead"],
       spellType: "Innate",
@@ -342,7 +355,7 @@ export const FEY_SIRINE: RawCreature = {
     {
       name: "Improved Invisibility",
       file: improvedInvisibility,
-      // memorizedCount: 1,
+      memorizedCount: 1,
       copyFrom: SPELLS.ImprovedInvisibility,
       makeInnate: {
         castingTime: 1,

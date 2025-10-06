@@ -6,6 +6,7 @@ import { Response } from "../model/final/script";
 import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
+import { ItemSlot } from "../model/raw/enum";
 import { SpellGroup } from "../model/raw/spell-group";
 import {
   SpellProtection,
@@ -234,5 +235,11 @@ export class UtilsService {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return result;
+  }
+
+  getItemSlots(slot: ItemSlot | ItemSlot[] | undefined): ItemSlot[] {
+    const results: ItemSlot[] = Array.isArray(slot) ? slot : [];
+    if (typeof slot === "string") results.push(slot);
+    return results;
   }
 }

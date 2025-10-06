@@ -48,8 +48,6 @@ DEFINE_PATCH_FUNCTION FJ_SPL_ITM_REINDEX BEGIN
   WRITE_SHORT 0x6e 0
 END
 
-
-
 // Deletes all effects and extended headers from the source item or spell and inserts a new extended header of type f_Type (defaults to f_Type = 1), provided f_Type >= 0
 // if the source file is an item file and f_Type = 1, the function launches an auxilliary function to set up the basics of the melee header
 // FAILs if the source file is too small or doesn't have an ITM or SPL file extension

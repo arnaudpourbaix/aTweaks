@@ -1,5 +1,6 @@
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -243,7 +244,7 @@ export const HORROR_HELMED: RawCreature = {
         "magicMissile",
         "hover",
       ],
-      equippedSlot: "RRING",
+      equippedSlot: JEWEL_SLOTS,
       category: "Rings",
       icon: "IRING01",
     },

@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -75,7 +76,7 @@ export const WOLF_DREAD: RawCreature = {
     {
       file: traits,
       stringRef: "Dread wolf traits",
-      equippedSlot: "LRING",
+      equippedSlot: JEWEL_SLOTS,
       description: [
         "A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.",
         "Only acid, fire, or total dismemberment will inflict permanent damage.",

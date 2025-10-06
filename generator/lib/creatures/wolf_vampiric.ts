@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawItem } from "../src/model/raw/item";
 import { bafFile, file } from "../src/services/misc.func";
@@ -124,7 +125,7 @@ export const WOLF_VAMPIRIC: RawCreature = {
     {
       file: ring,
       stringRef: "Vampiric wolf traits",
-      equippedSlot: "LRING",
+      equippedSlot: JEWEL_SLOTS,
       description: [
         "Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.",
         "Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.",

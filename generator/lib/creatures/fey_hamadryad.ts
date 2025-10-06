@@ -8,7 +8,6 @@ import {
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
-import { EXISTING_SPELL_PROTECTIONS } from "../config/spell-protection";
 import {
   BafExistingStringReference,
   TraStringReferenceEnum,

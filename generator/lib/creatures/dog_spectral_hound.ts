@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { RawBaseEffect } from "../src/model/raw/effect";
 import { file } from "../src/services/misc.func";
@@ -75,7 +76,7 @@ export const SPECTRAL_HOUND: RawCreature = {
       file: ring,
       stringRef: "Spectral Hound traits",
       immunities: ["seeInvisible", "extraplanar", "incorporeal"],
-      equippedSlot: "RRING",
+      equippedSlot: JEWEL_SLOTS,
       category: "Rings",
       icon: "IRING01",
     },

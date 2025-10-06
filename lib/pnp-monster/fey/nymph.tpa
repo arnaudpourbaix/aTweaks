@@ -33,6 +33,8 @@ COPY_EXISTING ~rr#fbbea.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPPR704C~ #8
+	SAY UNIDENTIFIED_DESC ~Looking at a nymph will cause permanent blindness unless the onlookers save versus spell.
+If the nymph is nude or disrobes, an onlooker will die unless a saving throw versus spell is successful.~
 	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="rr#fbbea" END
 	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=4 duration=6 probability1=100 STR_VAR resource="rr#fbbea" END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~rr#fbbea~)) + 1 STR_VAR icon="SPPR704B" END

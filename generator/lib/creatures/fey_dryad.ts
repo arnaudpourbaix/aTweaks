@@ -7,19 +7,35 @@ import { ConditionalStatement } from "../src/model/final/script";
 import { RawCreatureAbility } from "../src/model/raw/ability";
 import { RawCreature } from "../src/model/raw/creature";
 import { FactoryService } from "../src/services/factory.service";
-import { bafFile } from "../src/services/misc.func";
+import { bafFile, file } from "../src/services/misc.func";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { MonsterEnum } from "./monster.enum";
 import { createDimensionDoor } from "../spells/dimension_door";
 import { EffectService } from "../src/services/effect.service";
+import { RawItem } from "../src/model/raw/item";
+import { JEWEL_SLOTS } from "../src/model/constants";
 
 const factory = FactoryService.instance;
 const effects = EffectService.instance;
 
 // Creature Id
 const id = MonsterEnum.Dryad;
+// Items
+const traits = file(1, id);
 // Script
 const script = bafFile(id);
+
+export const feyTraits: RawItem = {
+  file: traits,
+  stringRef: "Fey traits",
+  description: [
+    "Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.",
+    "In all other aspects, spell-like abilities function exactly like the spells which they mimic.",
+  ],
+  equippedSlot: JEWEL_SLOTS,
+  category: "Rings",
+  icon: "IRING01",
+};
 
 const speakWithPlantsDuration = 60;
 

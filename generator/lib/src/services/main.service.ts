@@ -62,6 +62,7 @@ import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
+import { ItemSlot } from "../model/raw/enum";
 
 export class MainService {
   private effectService = EffectService.instance;
@@ -291,6 +292,7 @@ export class MainService {
   private mapAlterItem(item: RawAlterItem): Item {
     return {
       ...item,
+      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
       immunities: item.immunities ?? [],
       diceSize: item.diceSize ?? 0,
       diceThrown: item.diceThrown ?? 0,
@@ -325,7 +327,7 @@ export class MainService {
       file: item.file,
       stringRef: item.stringRef,
       description: item.description,
-      equippedSlot: item.equippedSlot,
+      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
       icon: item.icon,
       weight: item.weight,
       immunities: item.immunities ?? [],

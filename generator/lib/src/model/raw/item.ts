@@ -36,7 +36,7 @@ export interface RawBaseItem {
   stringRef?: StringReference;
   description?: string[];
   immunities?: ImmunityName[];
-  equippedSlot?: ItemSlot;
+  equippedSlot?: ItemSlot | ItemSlot[];
   enchantment?: number;
   weight?: number;
   animation?: RawItemAnimation;
@@ -69,7 +69,7 @@ export interface RawItemSlot {
    * Filename for ITM file (without extension)
    */
   file: string;
-  slot: ItemSlot;
+  slot: ItemSlot | ItemSlot[];
   /**
    * default: 1
    */

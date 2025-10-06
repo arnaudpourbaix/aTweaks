@@ -28,14 +28,18 @@ export class AbstractWeiduService {
 
   protected addConditionalSourceRes(
     lines: CodeLine[],
-    code: string,
+    codes: string | string[],
     tab: number,
     files: string[],
     exclude: boolean
   ) {
-    if (!files.length) return this.add(lines, code, tab);
+    codes = Array.isArray(codes) ? codes : [codes];
+    if (!files.length) {
+      for (const code of codes) this.add(lines, code, tab);
+      return;
+    }
     this.startConditionalSourceRes(lines, tab, files, exclude);
-    this.add(lines, code, tab + 1);
+    for (const code of codes) this.add(lines, code, tab + 1);
     this.add(lines, "END", tab);
   }
 

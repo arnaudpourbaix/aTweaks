@@ -54,5 +54,5 @@ export interface Item {
   projectile?: string;
   abilityflags?: ItemAbilityFlagEnum[];
   effects: Effect[];
-  equippedSlot?: ItemSlot;
+  equippedSlot: ItemSlot[];
 }
