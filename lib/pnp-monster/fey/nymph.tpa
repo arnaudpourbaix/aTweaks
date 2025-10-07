@@ -73,15 +73,55 @@ COPY_EXISTING ~rr#ddoo2.SPL~  ~override~
 	WRITE_SHORT 0x22 10
 	WRITE_BYTE 0x25 8
 	WRITE_BYTE 0x27 13
-	WRITE_LONG 0x34 4
+	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI402C~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@1891)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=4 timing=4 resist_dispel=1 duration=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=1 power=4 resist_dispel=1 duration=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=1 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=1 timing=4 resist_dispel=1 duration=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=1 power=1 resist_dispel=1 duration=1 probability1=100 END
+	
+	// Cure Light Wounds
+COPY_EXISTING ~SPPR103.SPL~  ~override/ja#1m44.SPL~
+COPY_EXISTING ~ja#1m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Bless
+COPY_EXISTING ~SPPR101.SPL~  ~override/ja#2m44.SPL~
+COPY_EXISTING ~ja#2m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Entangle
+COPY_EXISTING ~SPPR105.SPL~  ~override/ja#3m44.SPL~
+COPY_EXISTING ~ja#3m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Barkskin
+COPY_EXISTING ~SPPR202.SPL~  ~override/ja#4m44.SPL~
+COPY_EXISTING ~ja#4m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Charm Person Or Animal
+COPY_EXISTING ~SPPR204.SPL~  ~override/ja#5m44.SPL~
+COPY_EXISTING ~ja#5m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Call Lightning
+COPY_EXISTING ~SPPR302.SPL~  ~override/ja#6m44.SPL~
+COPY_EXISTING ~ja#6m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Summon Insects
+COPY_EXISTING ~SPPR319.SPL~  ~override/ja#7m44.SPL~
+COPY_EXISTING ~ja#7m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
+	
+	// Call Woodland Beeings
+COPY_EXISTING ~SPPR410.SPL~  ~override/ja#8m44.SPL~
+COPY_EXISTING ~ja#8m44.SPL~  ~override~
+	LPF CHANGE_SPELL INT_VAR  ctime=1   END
 	
 	ACTION_FOR_EACH ~file~ IN
 	BDNYMP01
@@ -100,17 +140,17 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~DAGG01~
 			REMOVE_CRE_ITEM ~B1-6~
-			ADD_MEMORIZED_SPELL ~SPPR103~ #0 ~priest~ (2)
-			ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR105~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR202~ #1 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR204~ #1 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR302~ #2 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR319~ #2 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~SPPR410~ #3 ~priest~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fbbea~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#ddoo2~ #3 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~rr#ddoo2~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1m44~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#2m44~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#3m44~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#4m44~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#5m44~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#6m44~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#7m44~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~ja#8m44~ #3 ~priest~ (1)
 			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			LPF patchCreature

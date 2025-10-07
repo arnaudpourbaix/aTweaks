@@ -50,14 +50,19 @@ export class WeiduSpellService extends AbstractWeiduService {
     }
     this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     this.createSpellCommon(lines, spell, tab + 1);
-    if (spell.makeInnate) {
-      const ctime = spell.makeInnate.castingTime !== undefined ? "ctime=1" : "";
+    if (spell.changes) {
+      console.log(spell.changes);
+      const type =
+        spell.changes.spellType !== undefined
+          ? `type=${spell.changes.spellType}`
+          : "";
+      const ctime = spell.changes.castingTime !== undefined ? "ctime=1" : "";
       const rinvs =
-        spell.makeInnate.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
-      const renew = spell.makeInnate.renew !== undefined ? "renew=1" : "";
+        spell.changes.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
+      const renew = spell.changes.renew !== undefined ? "renew=1" : "";
       this.add(
         lines,
-        `LPF SPELL_TO_INNATE INT_VAR ${ctime} ${rinvs} ${renew} END`,
+        `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`,
         tab + 1
       );
     }

@@ -1,4 +1,5 @@
 import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
+import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
@@ -79,10 +80,10 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     // Mustard jelly is translucent, and very hard to see until it attacks. The only clue to its presence is a faint odor, similar to blooming mustard plants.
     {
       file: mainWeapon,
-      stringRef: TraStringReferenceEnum.Pseudopod,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.Jelly,
       // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
       equippedSlot: "WEAPON1",
-      icon: "IJELLY",
       type: "Melee",
       range: 5,
       diceThrown: 5,
@@ -254,7 +255,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
         selfTarget: true,
       },
       range: 10,
-      timer: { name: "ToxicVapors", value: 6 },
+      // timer: { name: "ToxicVapors", value: 6 },
     },
   ],
   // customCode: [

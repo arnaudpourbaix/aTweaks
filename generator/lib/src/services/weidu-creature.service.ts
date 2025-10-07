@@ -227,11 +227,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
     spells: Spell[]
   ) {
     for (const m of additionalData.memorizedSpells) {
-      const spell = spells.find((s) => s.file === m.file);
       const infos = this.utils.getSpellInfos(m.file, spells);
-      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${
-        spell ? (spell.spellLevel ?? 1) - 1 : infos.level - 1
-      } ~${infos.type}~ (${m.memorizedCount})`;
+      const level = infos.level - 1;
+      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${level} ~${infos.type}~ (${m.memorizedCount})`;
       if (m.memorizedCount === 0) code = `REMOVE_MEMORIZED_SPELL ~${m.file}~`;
       this.add(lines, code, tab);
     }

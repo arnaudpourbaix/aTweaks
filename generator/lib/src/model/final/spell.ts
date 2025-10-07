@@ -52,7 +52,8 @@ export interface Spell {
    */
   deleteHeaders: number[] | boolean;
   deleteOpcodes: EffectTypeEnum[];
-  makeInnate?: {
+  changes?: {
+    spellType?: SpellTypeEnum;
     castingTime?: number;
     removeInvisbilityOnCast?: boolean;
     renew?: boolean;

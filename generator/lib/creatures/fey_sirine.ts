@@ -357,17 +357,19 @@ export const FEY_SIRINE: RawCreature = {
       file: improvedInvisibility,
       memorizedCount: 1,
       copyFrom: SPELLS.ImprovedInvisibility,
-      makeInnate: {
+      changes: {
+        spellType: "Innate",
         castingTime: 1,
       },
     },
     {
+      // TODO: script for this one !
       name: "Polymorph Self",
       file: polymorphSelf,
       memorizedCount: 1,
       copyFrom: SPELLS.PolymorphSelf,
-      makeInnate: {
-        // duration 2 turn / level
+      changes: {
+        spellType: "Innate",
         castingTime: 1,
       },
     },

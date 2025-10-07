@@ -113,6 +113,8 @@ const Slimes: RawCreature[] = [
 
 const Constructs: RawCreature[] = [HORROR_HELMED, DOOM_GUARD];
 
+const Plants: RawCreature[] = [PLANT_TREANT];
+
 export const CREATURES: RawCreature[] = [
   ANKHEG,
   ...Basilisks,
@@ -125,15 +127,11 @@ export const CREATURES: RawCreature[] = [
   ...Ogres,
   ...Feys,
   ...Slimes,
+  ...Plants,
   CARRION_CRAWLER,
-  PLANT_TREANT,
 ];
 
-export const CREATURES_TEST: RawCreature[] = [
-  ...Ogres,
-  ...Feys,
-  // PLANT_TREANT,
-];
+export const CREATURES_TEST: RawCreature[] = [...Plants, ...Feys, ...Slimes];
 
 /*
 "SHOAL", // Shoal the Nereid

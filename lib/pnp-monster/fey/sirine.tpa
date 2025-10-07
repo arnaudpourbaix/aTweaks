@@ -123,12 +123,12 @@ COPY_EXISTING ~rr#ftrnq.SPL~  ~override~
 	// Improved Invisibility
 COPY_EXISTING ~SPWI405.SPL~  ~override/ja#1m43.SPL~
 COPY_EXISTING ~ja#1m43.SPL~  ~override~
-	LPF SPELL_TO_INNATE INT_VAR ctime=1   END
+	LPF CHANGE_SPELL INT_VAR type=4 ctime=1   END
 	
 	// Polymorph Self
 COPY_EXISTING ~SPWI416.SPL~  ~override/ja#2m43.SPL~
 COPY_EXISTING ~ja#2m43.SPL~  ~override~
-	LPF SPELL_TO_INNATE INT_VAR ctime=1   END
+	LPF CHANGE_SPELL INT_VAR type=4 ctime=1   END
 	
 CREATE ITM "ja#1m43"
 	WRITE_LONG 0x64 0x72

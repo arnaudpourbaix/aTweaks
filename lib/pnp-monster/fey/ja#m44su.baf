@@ -331,6 +331,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("rr#ddoo2","RR#TRAT")
+		RemoveSpellRES("rr#ddoo2")
 		Wait(1)
 		SetInterrupt(TRUE)
 END

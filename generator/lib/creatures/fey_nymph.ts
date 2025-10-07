@@ -7,7 +7,7 @@ import { RawCreature } from "../src/model/raw/creature";
 import { RawBaseEffect } from "../src/model/raw/effect";
 import { RawSaveType } from "../src/model/raw/enum";
 import { EffectService } from "../src/services/effect.service";
-import { bafFile } from "../src/services/misc.func";
+import { bafFile, file } from "../src/services/misc.func";
 import { abilityAnimalFriendship } from "./fey_hamadryad";
 import { MonsterEnum } from "./monster.enum";
 
@@ -15,6 +15,16 @@ const effects = EffectService.instance;
 
 // Creature Id
 const id = MonsterEnum.Nymph;
+// Spells
+const cureLightWounds = file(1, id);
+const bless = file(2, id);
+const entangle = file(3, id);
+const barkskin = file(4, id);
+const charmPersonOrAnimal = file(5, id);
+const callLightning = file(6, id);
+const summonInsects = file(7, id);
+const callWoodlandBeeings = file(8, id);
+
 // Script
 const script = bafFile(id);
 
@@ -71,14 +81,6 @@ export const FEY_NYMPH: RawCreature = {
     removeItems: ["DAGG01", "B1-6"],
     removeScripts: ["BDENSHTV", "BDNYMP01", "NYMPH"],
     memorizedSpells: [
-      { file: SPELLS.CureLightWounds, memorizedCount: 2 },
-      { file: SPELLS.Bless, memorizedCount: 1 },
-      { file: SPELLS.Entangle, memorizedCount: 1 },
-      { file: SPELLS.Barkskin, memorizedCount: 1 },
-      { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
-      { file: SPELLS.CallLightning, memorizedCount: 1 },
-      { file: SPELLS.SummonInsects, memorizedCount: 1 },
-      { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
       { file: ATWEAKS_SPELLS.AnimalFriendship, memorizedCount: 1 },
     ],
     deleteEffectOpcodes: ["ProtectionFromSpell"],
@@ -192,9 +194,81 @@ export const FEY_NYMPH: RawCreature = {
     createDimensionDoor({
       file: ATWEAKS_SPELLS.DimensionDoorPriest,
       memorizedCount: 1,
-      spellLevel: 4,
+      spellLevel: 1,
       spellType: "Priest",
     }),
+    {
+      name: "Cure Light Wounds",
+      file: cureLightWounds,
+      copyFrom: SPELLS.CureLightWounds,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Bless",
+      file: bless,
+      copyFrom: SPELLS.Bless,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Entangle",
+      file: entangle,
+      copyFrom: SPELLS.Entangle,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Barkskin",
+      file: barkskin,
+      copyFrom: SPELLS.Barkskin,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Charm Person Or Animal",
+      file: charmPersonOrAnimal,
+      copyFrom: SPELLS.CharmPersonOrAnimal,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Call Lightning",
+      file: callLightning,
+      copyFrom: SPELLS.CallLightning,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Summon Insects",
+      file: summonInsects,
+      copyFrom: SPELLS.SummonInsects,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
+    {
+      name: "Call Woodland Beeings",
+      file: callWoodlandBeeings,
+      copyFrom: SPELLS.CallWoodlandBeeings,
+      memorizedCount: 1,
+      changes: {
+        castingTime: 1,
+      },
+    },
   ],
   additionalCode: [
     {
@@ -246,6 +320,7 @@ export const FEY_NYMPH: RawCreature = {
       spell: {
         resource: ATWEAKS_SPELLS.DimensionDoorPriest,
         type: "force",
+        remove: true,
       },
     },
     {

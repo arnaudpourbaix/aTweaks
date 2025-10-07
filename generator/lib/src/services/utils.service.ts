@@ -7,6 +7,7 @@ import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { ItemSlot } from "../model/raw/enum";
+import { RawMemorizedSpellType } from "../model/raw/spell";
 import { SpellGroup } from "../model/raw/spell-group";
 import {
   SpellProtection,
@@ -206,23 +207,49 @@ export class UtilsService {
   getSpellInfos(
     file: string,
     spells: Spell[]
-  ): { type: string; level: number } {
+  ): { type: RawMemorizedSpellType; level: number } {
+    let result = this.getSpellInfosByFilename(file);
+    if (result) return result;
     const spell = spells.find((s) => s.file === file);
-    if (file.toUpperCase().includes("SPWI"))
-      return { type: "wizard", level: +(file.at(4) as string) };
-    else if (file.toUpperCase().includes("SPPR"))
-      return { type: "priest", level: +(file.at(4) as string) };
-    else if (!spell) return { type: "innate", level: 1 };
-    let type = "innate";
-    switch (spell.spellType) {
-      case SpellTypeEnum.Wizard:
-        type = "wizard";
-        break;
-      case SpellTypeEnum.Priest:
-        type = "priest";
-        break;
+    if (!spell) return { type: "innate", level: 1 }; // unknown case, returns innate
+    if (spell?.copyFrom) result = this.getSpellInfosByFilename(spell.copyFrom);
+    let type = this.getMemorizedSpellType(spell.spellType);
+    if (!type && spell.changes?.spellType)
+      type = this.getMemorizedSpellType(spell.changes.spellType);
+    if (!type && result) {
+      // console.log(`${file} => fallback to copyFrom ${JSON.stringify(result)}`);
+      return result;
     }
-    return { type, level: spell.spellLevel ?? 1 };
+    // console.log(`${file} => type: ${type}, level: ${spell.spellLevel}`);
+    return { type: type ?? "innate", level: spell.spellLevel ?? 1 };
+  }
+
+  getMemorizedSpellType(
+    spellType?: SpellTypeEnum
+  ): RawMemorizedSpellType | null {
+    switch (spellType) {
+      case SpellTypeEnum.Wizard:
+        return "wizard";
+      case SpellTypeEnum.Priest:
+        return "priest";
+      case SpellTypeEnum.Innate:
+        return "innate";
+    }
+    return null;
+  }
+
+  getSpellInfosByFilename(
+    filename: string
+  ): { type: RawMemorizedSpellType; level: number } | null {
+    const name = filename.toUpperCase();
+    let result: { type: RawMemorizedSpellType; level: number } | null = null;
+    if (name.startsWith("SPWI"))
+      result = { type: "wizard", level: +(name.at(4) as string) };
+    else if (name.startsWith("SPPR"))
+      result = { type: "priest", level: +(name.at(4) as string) };
+    else if (name.startsWith("SPIN") || name.startsWith("SPCL"))
+      result = { type: "innate", level: +(name.at(4) as string) };
+    return result;
   }
 
   /**

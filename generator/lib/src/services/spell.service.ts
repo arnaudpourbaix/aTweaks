@@ -40,11 +40,6 @@ export class SpellService {
             opcode: "GiveAbility",
             resource: s.file,
             target: "Self",
-            // timing:
-            //   s.infiniteUse > 1
-            //     ? "DelayPermanent"
-            //     : "InstantPermanentUntilDeath",
-            // duration: s.infiniteUse > 1 ? s.infiniteUse * 6 : undefined,
             timing: "DelayPermanent",
             duration: s.infiniteUse * 6,
             global: true,
@@ -96,7 +91,14 @@ export class SpellService {
       headers,
       deleteOpcodes: (spell.deleteOpcodes ?? []).map((o) => EffectTypeEnum[o]),
       deleteHeaders: spell.deleteHeaders ?? false,
-      makeInnate: spell.makeInnate,
+      changes: spell.changes
+        ? {
+            ...spell.changes,
+            spellType: spell.changes?.spellType
+              ? SpellTypeEnum[spell.changes.spellType]
+              : undefined,
+          }
+        : undefined,
     };
     if (!spell.copyFrom && spell.spellType === undefined)
       result.spellType = SpellTypeEnum.Innate;

@@ -62,7 +62,8 @@ export interface RawSpell {
    */
   deleteHeaders?: number[] | boolean;
   deleteOpcodes?: RawEffectOpcode[];
-  makeInnate?: {
+  changes?: {
+    spellType?: RawSpellType;
     castingTime?: number;
     removeInvisbilityOnCast?: boolean;
     renew?: boolean;
@@ -84,6 +85,7 @@ export interface RawSpellHeader {
   effects?: RawEffect[];
 }
 
+export type RawMemorizedSpellType = "priest" | "wizard" | "innate";
 export interface RawMemorizedSpell {
   /**
    * Filename for SPL file (without extension)

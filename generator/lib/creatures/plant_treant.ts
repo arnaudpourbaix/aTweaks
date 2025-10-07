@@ -1,4 +1,6 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
+import { MonsterItemIconEnum } from "../config/item";
+import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
 import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
@@ -49,6 +51,8 @@ export const PLANT_TREANT: RawCreature = {
   items: [
     {
       file: mainWeapon7hd,
+      stringRef: TraStringReferenceEnum.LethalFists,
+      icon: MonsterItemIconEnum.EarthElemental,
       type: "Melee",
       range: 5,
       diceThrown: 2,
