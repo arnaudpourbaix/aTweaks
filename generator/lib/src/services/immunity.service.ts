@@ -45,10 +45,10 @@ export class ImmunityService {
     creature: Creature
   ): void {
     const hasCriticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
-    const hasHelmet = [
-      ...additionalData.itemSlots,
-      ...creature.additionalData.itemSlots,
-    ].some((i) => i.slot === "HELMET");
+    const hasHelmet = this.utils.isSlotIncluded(
+      [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
+      "HELMET"
+    );
     if (hasCriticalHitImmunity && itemSlot.slot !== "HELMET" && !hasHelmet) {
       console.log(
         chalk.yellowBright(
@@ -60,10 +60,10 @@ export class ImmunityService {
     const overwrittingItem = creature.items.find(
       (i) => i.copyFrom === immunity.name
     );
-    const overwrittingSlot = [
-      ...additionalData.itemSlots,
-      ...creature.additionalData.itemSlots,
-    ].some((i) => i.slot === itemSlot.slot);
+    const overwrittingSlot = this.utils.isSlotIncluded(
+      [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
+      itemSlot.slot
+    );
     if (overwrittingItem)
       console.log(
         chalk.yellowBright(

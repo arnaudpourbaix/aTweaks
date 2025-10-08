@@ -28,7 +28,7 @@ async function main() {
     return chain
       .then(() => mainService.generateCommonCode())
       .then(() => {
-        console.log(chalk.green(`Finished!`));
+        console.log(chalk.green(`\nFinished!`));
       });
     //.catch(error => { console.trace(chalk.red(error)); });
   });

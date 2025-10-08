@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import figureSet from "figures";
 import { GRAB_DEFAULT_CONFIG } from "../../config/grab";
 import { CreatureAttack, CreatureAttackAction } from "../model/final/attack";
 import {
@@ -27,13 +28,12 @@ import {
   RawCreatureAdditionalData,
   RawCreatureAdjustment,
   RawCreatureAutoGenerate,
-  RawCreatureData,
 } from "../model/raw/creature";
 import { RawEffectFile } from "../model/raw/effect";
 import { RawItem } from "../model/raw/item";
 import { RawProjectile } from "../model/raw/projectile";
 import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
-import { RawMemorizedSpell, RawSpell } from "../model/raw/spell";
+import { RawSpell } from "../model/raw/spell";
 import { AbilityService } from "./ability.service";
 import { BafGeneratorService } from "./baf-generator.service";
 import { CreatureService } from "./creature.service";
@@ -48,7 +48,6 @@ import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
-import figureSet from "figures";
 
 export class MainService {
   private effectService = EffectService.instance;

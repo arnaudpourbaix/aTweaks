@@ -51,7 +51,6 @@ export class WeiduSpellService extends AbstractWeiduService {
     this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     this.createSpellCommon(lines, spell, tab + 1);
     if (spell.changes) {
-      console.log(spell.changes);
       const type =
         spell.changes.spellType !== undefined
           ? `type=${spell.changes.spellType}`

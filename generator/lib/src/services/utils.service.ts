@@ -7,6 +7,7 @@ import { Spell } from "../model/final/spell";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { ItemSlot } from "../model/raw/enum";
+import { RawItemSlot } from "../model/raw/item";
 import { RawMemorizedSpellType } from "../model/raw/spell";
 import { SpellGroup } from "../model/raw/spell-group";
 import {
@@ -268,5 +269,14 @@ export class UtilsService {
     const results: ItemSlot[] = Array.isArray(slot) ? slot : [];
     if (typeof slot === "string") results.push(slot);
     return results;
+  }
+
+  isSlotIncluded(
+    itemSlots: RawItemSlot[],
+    includedSlot: ItemSlot | ItemSlot[]
+  ): boolean {
+    if (Array.isArray(includedSlot)) return false;
+    const list = itemSlots.map((i) => this.getItemSlots(i.slot)).flat(1);
+    return list.includes(includedSlot);
   }
 }
