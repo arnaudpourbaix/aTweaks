@@ -255,7 +255,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
         selfTarget: true,
       },
       range: 10,
-      // timer: { name: "ToxicVapors", value: 6 },
     },
   ],
   // customCode: [
@@ -307,7 +306,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       data: {
         hp: 49,
         xpv: 2000,
-        // movement: 18, //TODO: is there a solution for this one?
+        movement: 18,
       },
       additionalData: {
         removeMemorizedSpells: true,

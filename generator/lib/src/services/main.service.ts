@@ -192,16 +192,23 @@ export class MainService {
 
   private mapAdjustments(creature: RawCreature): CreatureAdjustment[] {
     if (!creature.adjustments) return [];
-    const results: CreatureAdjustment[] = creature.adjustments.map((a) => ({
-      ...a,
-      noScript: a.noScript ?? false,
-      noWeapon: a.noWeapon ?? false,
-      summon: a.summon ?? false,
-      additionalData: this.mapAdditionalData({
-        additionalData: a.additionalData,
-        isAdjustment: true,
-      }),
-    }));
+    const results: CreatureAdjustment[] = creature.adjustments.map((a) => {
+      const result: CreatureAdjustment = {
+        ...a,
+        noScript: a.noScript ?? false,
+        noWeapon: a.noWeapon ?? false,
+        summon: a.summon ?? false,
+        additionalData: this.mapAdditionalData({
+          additionalData: a.additionalData,
+          isAdjustment: true,
+        }),
+      };
+      if (result.data?.movement)
+        result.data.movement = this.creatureService.convertMovement(
+          result.data.movement
+        );
+      return result;
+    });
     return results;
   }
 

@@ -2,15 +2,14 @@ import chalk from "chalk";
 import figureSet from "figures";
 import { CONSTRUCT_BONUS_HIT_POINT } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { SAVING_THROWS } from "../model/constants";
 import { Creature, CreatureData } from "../model/final/creature";
 import { ItemAbilityLocationEnum, ItemFlagEnum } from "../model/final/enums";
 import { Item } from "../model/final/item";
+import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { CreatureSize } from "../model/raw/enum";
 import { convertMovement } from "./misc.func";
-import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
-import { SAVING_THROWS } from "../model/constants";
-import { stringify } from "querystring";
 
 export class CreatureService {
   static instance = new CreatureService();

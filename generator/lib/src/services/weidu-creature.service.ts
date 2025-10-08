@@ -319,8 +319,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
         }
       }
     }
-    if (p.data.movement !== undefined)
-      throw new Error("movement is not handled in ajustment");
     if (p.data.doubleApr !== undefined)
       throw new Error("doubleApr is not handled in ajustment");
   }
@@ -470,8 +468,9 @@ export class WeiduCreatureService extends AbstractWeiduService {
     if (adjustment.data?.kit === "BARBARIAN" || adjustment.data?.movement) {
       this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus);
       this.deleteEffect(lines, tab, EffectTypeEnum.MovementRateBonus2);
-      const movement =
-        adjustment.data.movement ?? (creature.data.movement as number) + 2;
+      let movement =
+        adjustment.data.movement ?? (creature.data.movement as number);
+      if (adjustment.data?.kit === "BARBARIAN") movement += 2;
       const effect = this.effectService.getEffect({
         opcode: "MovementRateBonus2",
         type: "Set",
