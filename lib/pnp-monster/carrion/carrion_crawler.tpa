@@ -18,18 +18,22 @@ Melee damage: 1D2 (Piercing)
 Speed Factor: 3
 Range: 2 feet
 Paralyze target for 7 rounds (saves vs poison/death).~)
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 2
-	WRITE_BYTE 0x84 3
-	WRITE_BYTE 0x88 2
-	WRITE_BYTE 0x8a 1
-	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m9.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IJELLY~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x88 2
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=109 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=42 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR opcode=142 target=2 parameter2=13 duration=42 probability1=100 savingthrow=4 END
 	LPF ADD_EFFECT INT_VAR opcode=174 target=2 timing=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_P11" END

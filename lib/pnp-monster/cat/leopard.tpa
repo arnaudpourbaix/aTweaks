@@ -28,20 +28,24 @@ Melee damage: 1D3 (Slashing)
 Speed Factor: 3
 Range: 1 feet
 
-Cast spell Rear claws attack (20%)
+Cast spell Rear claws attack
 Rake with its rear claws doing 1D4 points damage each.~)
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x84 3
-	WRITE_BYTE 0x88 3
-	WRITE_BYTE 0x8a 1
-	WRITE_SHORT 0x8e 3
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#1m36.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IWOLF~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x88 3
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 3
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=20 STR_VAR resource="ja#1m36" END
 
 CREATE ITM "ja#2m36"
@@ -58,18 +62,22 @@ CREATE ITM "ja#2m36"
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~)
-	WRITE_BYTE 0x74 1
-	WRITE_BYTE 0x7e 1
-	WRITE_SHORT 0x80 1
-	WRITE_BYTE 0x84 3
-	WRITE_BYTE 0x88 6
-	WRITE_BYTE 0x8a 1
-	WRITE_SHORT 0x8e 1
-	WRITE_SHORT 0x9e 34
-	WRITE_SHORT 0xa0 33
-	WRITE_SHORT 0xa2 33
-	WRITE_LONG 0x98 1
 COPY_EXISTING ~ja#2m36.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
 
 ACTION_FOR_EACH ~file~ IN
 	CATJAGSU

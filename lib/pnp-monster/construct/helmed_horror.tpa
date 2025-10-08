@@ -94,7 +94,7 @@ Flame Arrow spell immunity
 Magic missiles immunity
 Hover (flight)
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
-Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them~)
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~)
 COPY_EXISTING ~ja#4m15.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -129,8 +129,7 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#1m15~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m15~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
 			REPLACE_CRE_ITEM ~ja#3m15~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			REPLACE_CRE_ITEM ~ja#4m15~ #0 #0 #0 ~UNDROPPABLE~ ~RRING~ 
-			REPLACE_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
+			ADD_CRE_ITEM ~ja#4m15~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
 			LPF patchCreature
@@ -191,9 +190,6 @@ BEGIN
 				WRITE_BYTE 0x27b IDS_OF_SYMBOL (~align~ ~LAWFUL_EVIL~) // alignment
 				ADD_MEMORIZED_SPELL ~SPWI112~ #0 ~wizard~ (1)
 				ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
-				REPLACE_CRE_ITEM ~ja#i4~ #0 #0 #0 ~UNDROPPABLE~ ~AMULET~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

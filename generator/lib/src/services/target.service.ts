@@ -125,7 +125,7 @@ export class TargetService {
     if (defaultPlayerStatus.length) {
       results.push({ targets: ["Players"], status: defaultPlayerStatus });
     }
-    console.log("targets:", results);
+    // console.log("targets:", results);
     return results;
   }
 

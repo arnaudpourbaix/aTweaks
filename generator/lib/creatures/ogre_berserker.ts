@@ -13,7 +13,7 @@ const script = bafFile(id);
 const mainWeapon = file(1, id);
 
 export const OGRE_BERSERKER: RawCreature = {
-  name: "Ogre",
+  name: "Berserker Ogre",
   bafFile: `lib/pnp-monster/ogre/${script}`,
   tpaFile: "lib/pnp-monster/ogre/berserker",
   tracking: true,

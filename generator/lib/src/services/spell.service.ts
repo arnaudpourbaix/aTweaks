@@ -12,13 +12,34 @@ import {
 } from "../model/final/enums";
 import { Spell, SpellHeader } from "../model/final/spell";
 import { RawEffect, RawEffectFile } from "../model/raw/effect";
-import { RawSpell, RawSpellHeader } from "../model/raw/spell";
+import {
+  RawMemorizedSpell,
+  RawSpell,
+  RawSpellHeader,
+} from "../model/raw/spell";
 import { EffectService } from "./effect.service";
 
 export class SpellService {
   static instance = new SpellService();
 
   private effectService = EffectService.instance;
+
+  mapMemorizedSpells(
+    memorizedSpells: RawMemorizedSpell[] | undefined,
+    spells: RawSpell[] | undefined
+  ): RawMemorizedSpell[] {
+    const results: RawMemorizedSpell[] = memorizedSpells ?? [];
+    if (!spells) return results;
+    for (const spell of spells) {
+      if (spell.memorizedCount) {
+        results.push({
+          file: spell.file,
+          memorizedCount: spell.memorizedCount,
+        });
+      }
+    }
+    return results;
+  }
 
   mapSpells(
     spells: RawSpell[] | undefined,

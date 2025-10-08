@@ -22,7 +22,7 @@ async function main() {
   return stateService.init().then(() => {
     const mainService = new MainService();
     let chain: Promise<any> = Promise.resolve();
-    CREATURES_TEST.forEach((creature) => {
+    CREATURES.forEach((creature) => {
       chain = chain.then(() => mainService.processCreature(creature));
     });
     return chain

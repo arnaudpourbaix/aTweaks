@@ -2,3 +2,4 @@ ssl/baf
 backup
 TAGS
 node_modules
+generator/log.txt

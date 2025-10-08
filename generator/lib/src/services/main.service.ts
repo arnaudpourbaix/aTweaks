@@ -9,19 +9,7 @@ import {
 } from "../model/final/creature";
 import { EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
-import {
-  AbilityDamageTypeEnum,
-  EffectIDSFileEnum,
-  ItemAbilityFlagEnum,
-  ItemAbilityLocationEnum,
-  ItemAbilityTargetEnum,
-  ItemAbilityTypeEnum,
-  ItemAnimationEnum,
-  ItemCategoryEnum,
-  ItemFlagEnum,
-  ProficiencyTypeEnum,
-} from "../model/final/enums";
-import { Item } from "../model/final/item";
+import { EffectIDSFileEnum } from "../model/final/enums";
 import {
   AreaProjectileEnum,
   BamProjectileFlagsEnum,
@@ -37,15 +25,12 @@ import { AdditionalCode, CustomCode } from "../model/final/script";
 import {
   RawCreature,
   RawCreatureAdditionalData,
+  RawCreatureAdjustment,
   RawCreatureAutoGenerate,
+  RawCreatureData,
 } from "../model/raw/creature";
 import { RawEffectFile } from "../model/raw/effect";
-import {
-  RawAlterItem,
-  RawCreateItem,
-  RawItem,
-  RawItemSlot,
-} from "../model/raw/item";
+import { RawItem } from "../model/raw/item";
 import { RawProjectile } from "../model/raw/projectile";
 import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
 import { RawMemorizedSpell, RawSpell } from "../model/raw/spell";
@@ -56,17 +41,19 @@ import { DescriptionService } from "./description.service";
 import { EffectService } from "./effect.service";
 import { GrabService } from "./grab.service";
 import { ImmunityService } from "./immunity.service";
+import { ItemService } from "./item.service";
 import { SpellService } from "./spell.service";
 import { TargetService } from "./target.service";
 import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
-import { ItemSlot } from "../model/raw/enum";
+import figureSet from "figures";
 
 export class MainService {
   private effectService = EffectService.instance;
   private spellService = SpellService.instance;
+  private itemService = ItemService.instance;
   private bafService = BafGeneratorService.instance;
   private weiduCreatureService = WeiduCreatureService.instance;
   private weiduFunctionService = WeiduFunctionService.instance;
@@ -90,7 +77,7 @@ export class MainService {
   }
 
   processCreature(rawCreature: RawCreature): Promise<void> {
-    console.log(chalk.bold(`Processing ${rawCreature.name}...`));
+    console.log(chalk.bold(`\nProcessing ${rawCreature.name}...`));
     const creature = this.getCreature(rawCreature);
     if (creature.bafFile) {
       this.bafService.generateBafScript(creature);
@@ -136,23 +123,23 @@ export class MainService {
         isAdjustment: false,
       }),
       notEnforceFiles: rawCreature.notEnforceFiles ?? [],
-      items: this.mapItems(rawCreature.items),
+      items: this.itemService.mapItems(rawCreature.items),
       spells: this.spellService.mapSpells(rawCreature.spells, effectFiles),
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
       effectFiles: this.mapEffectFiles(rawCreature.effectFiles),
     };
-    if (creature.attack.dualWielding) {
-      this.dualWielding(creature);
-    }
-    if (creature.data.movement) {
-      creature.data.movement = this.creatureService.convertMovement(
-        creature.data.movement
-      );
-    }
-    this.transformAttackPerRound(creature.data);
+    this.checkData({
+      creature,
+      data: creature.data,
+      isAdjustment: false,
+    });
     for (const a of creature.adjustments) {
-      this.transformAttackPerRound(a.data);
+      this.checkData({
+        creature,
+        data: a.data,
+        isAdjustment: true,
+      });
     }
     this.immunityService.handleImmunities(creature);
     this.grabService.addGrabEffects(creature);
@@ -192,24 +179,27 @@ export class MainService {
 
   private mapAdjustments(creature: RawCreature): CreatureAdjustment[] {
     if (!creature.adjustments) return [];
-    const results: CreatureAdjustment[] = creature.adjustments.map((a) => {
-      const result: CreatureAdjustment = {
-        ...a,
-        noScript: a.noScript ?? false,
-        noWeapon: a.noWeapon ?? false,
-        summon: a.summon ?? false,
-        additionalData: this.mapAdditionalData({
-          additionalData: a.additionalData,
-          isAdjustment: true,
-        }),
-      };
-      if (result.data?.movement)
-        result.data.movement = this.creatureService.convertMovement(
-          result.data.movement
-        );
-      return result;
-    });
+    const results: CreatureAdjustment[] = creature.adjustments.map((a) =>
+      this.mapAdjustment(creature, a)
+    );
     return results;
+  }
+
+  private mapAdjustment(
+    creature: RawCreature,
+    adjustment: RawCreatureAdjustment
+  ): CreatureAdjustment {
+    const result: CreatureAdjustment = {
+      ...adjustment,
+      noScript: adjustment.noScript ?? false,
+      noWeapon: adjustment.noWeapon ?? false,
+      summon: adjustment.summon ?? false,
+      additionalData: this.mapAdditionalData({
+        additionalData: adjustment.additionalData,
+        isAdjustment: true,
+      }),
+    };
+    return result;
   }
 
   private mapEffectFiles(effects?: RawEffectFile[]): EffectFile[] {
@@ -218,6 +208,36 @@ export class MainService {
       const effect = this.effectService.getEffect(e);
       return { ...effect, file: e.file };
     });
+  }
+
+  private checkData(p: {
+    creature: Creature;
+    data?: CreatureData;
+    isAdjustment: boolean;
+  }): void {
+    const data = p.data ?? {};
+    if (p.creature.attack.dualWielding && !p.isAdjustment) {
+      if (!data.apr)
+        throw new Error(
+          "Attacks per round need to be set for dual wielding flag"
+        );
+      data.apr -= 1;
+      console.log(
+        `${figureSet.arrowRight} setting dual wield: ${data.apr} APR +1 offhand`
+      );
+    }
+    if (data.movement) {
+      data.movement = this.creatureService.convertMovement(data.movement);
+      console.log(`${figureSet.arrowRight} movement set to ${data.movement}`);
+    }
+    this.transformAttackPerRound(p.creature.data);
+    const movement = data.movement ?? p.creature.data.movement;
+    if (data.kit === "BARBARIAN" && movement) {
+      data.movement = movement + 2;
+      console.log(
+        `${figureSet.arrowRight} movement increased by 2 (barbarian): ${data.movement}`
+      );
+    }
   }
 
   private mapAdditionalData(p: {
@@ -237,8 +257,11 @@ export class MainService {
       removeKnownSpells: p.additionalData.removeKnownSpells ?? true,
       removeMemorizedSpells,
       immunities: p.additionalData.immunities ?? [],
-      itemSlots: this.mapItemSlots(p.additionalData.itemSlots, p.items),
-      memorizedSpells: this.mapMemorizedSpells(
+      itemSlots: this.itemService.mapItemSlots(
+        p.additionalData.itemSlots,
+        p.items
+      ),
+      memorizedSpells: this.spellService.mapMemorizedSpells(
         p.additionalData.memorizedSpells,
         p.spells
       ),
@@ -250,14 +273,6 @@ export class MainService {
       effects: this.effectService.getEffects(p.additionalData.effects ?? []),
     };
     return result;
-  }
-
-  private dualWielding(creature: Creature) {
-    if (!creature.data.apr)
-      throw new Error(
-        "Attacks per round need to be set for dual wielding flag"
-      );
-    creature.data.apr -= 1;
   }
 
   private mapAttack(creature: RawCreature): CreatureAttack {
@@ -286,122 +301,6 @@ export class MainService {
       targetStatusWeaponSlot: creature.attack.targetStatusWeaponSlot ?? [],
     };
     return result;
-  }
-
-  private mapItems(items: RawItem[] | undefined): Item[] {
-    if (!items) return [];
-    const results: Item[] = items.map((i) =>
-      "copyFrom" in i ? this.mapAlterItem(i) : this.mapCreateItem(i)
-    );
-    return results;
-  }
-
-  private mapAlterItem(item: RawAlterItem): Item {
-    return {
-      ...item,
-      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
-      immunities: item.immunities ?? [],
-      diceSize: item.diceSize ?? 0,
-      diceThrown: item.diceThrown ?? 0,
-      damageBonus: item.damageBonus,
-      bonusToHit: item.bonusToHit,
-      speed: item.speed ?? 0,
-      type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
-      range: item.range,
-      projectile: item.projectile,
-      flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
-      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
-      category: item.category ? ItemCategoryEnum[item.category] : undefined,
-      proficiency: item.proficiency
-        ? ProficiencyTypeEnum[item.proficiency]
-        : undefined,
-      location: item.location
-        ? ItemAbilityLocationEnum[item.location]
-        : undefined,
-      target: item.target ? ItemAbilityTargetEnum[item.target] : undefined,
-      damageType: item.damageType
-        ? AbilityDamageTypeEnum[item.damageType]
-        : undefined,
-      abilityflags: item.abilityFlags
-        ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
-        : undefined,
-      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
-    };
-  }
-
-  private mapCreateItem(item: RawCreateItem): Item {
-    const result: Item = {
-      file: item.file,
-      stringRef: item.stringRef,
-      description: item.description,
-      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
-      icon: item.icon,
-      weight: item.weight,
-      immunities: item.immunities ?? [],
-      flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
-      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
-      category: item.category ? ItemCategoryEnum[item.category] : undefined,
-      proficiency: item.proficiency
-        ? ProficiencyTypeEnum[item.proficiency]
-        : undefined,
-      abilityflags: item.abilityFlags
-        ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
-        : undefined,
-      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
-    };
-    if (item.type) {
-      result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
-      result.range = item.range;
-      result.projectile = item.projectile;
-      result.diceSize = item.diceSize ?? 0;
-      result.diceThrown = item.diceThrown ?? 0;
-      result.speed = item.speed ?? 0;
-      result.damageBonus = item.damageBonus;
-      result.bonusToHit = item.bonusToHit;
-      result.animationSwing = item.animationSwing;
-      result.enchantment = item.enchantment;
-      result.location = item.location
-        ? ItemAbilityLocationEnum[item.location]
-        : ItemAbilityLocationEnum.Weapon;
-      result.target = item.target
-        ? ItemAbilityTargetEnum[item.target]
-        : ItemAbilityTargetEnum.LivingActor;
-      result.damageType = item.damageType
-        ? AbilityDamageTypeEnum[item.damageType]
-        : AbilityDamageTypeEnum.None;
-    }
-    return result;
-  }
-
-  private mapItemSlots(
-    itemSlots: RawItemSlot[] | undefined,
-    items: RawItem[] | undefined
-  ): RawItemSlot[] {
-    const results: RawItemSlot[] = itemSlots ?? [];
-    if (!items) return results;
-    for (const item of items) {
-      if (item.equippedSlot) {
-        results.push({ file: item.file, slot: item.equippedSlot });
-      }
-    }
-    return results;
-  }
-
-  private mapMemorizedSpells(
-    memorizedSpells: RawMemorizedSpell[] | undefined,
-    spells: RawSpell[] | undefined
-  ): RawMemorizedSpell[] {
-    const results: RawMemorizedSpell[] = memorizedSpells ?? [];
-    if (!spells) return results;
-    for (const spell of spells) {
-      if (spell.memorizedCount) {
-        results.push({
-          file: spell.file,
-          memorizedCount: spell.memorizedCount,
-        });
-      }
-    }
-    return results;
   }
 
   private mapCustomCode(

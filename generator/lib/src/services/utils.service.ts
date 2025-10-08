@@ -248,7 +248,7 @@ export class UtilsService {
     else if (name.startsWith("SPPR"))
       result = { type: "priest", level: +(name.at(4) as string) };
     else if (name.startsWith("SPIN") || name.startsWith("SPCL"))
-      result = { type: "innate", level: +(name.at(4) as string) };
+      result = { type: "innate", level: 1 };
     return result;
   }
 
