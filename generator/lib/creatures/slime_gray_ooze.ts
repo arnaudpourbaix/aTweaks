@@ -1,21 +1,9 @@
-import { truncate } from "fs";
-import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { RawBaseEffect } from "../src/model/raw/effect";
-import {
-  SpellProtectionRelation,
-  SpellProtectionStat,
-} from "../src/model/raw/spell-protection";
-import { EffectService } from "../src/services/effect.service";
-import { bafFile, convertMovement, file } from "../src/services/misc.func";
-import { StringRefUtils } from "../src/services/string-ref.utils";
-import { UtilsService } from "../src/services/utils.service";
+import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
-import { GLOBAL_CONFIG } from "../config/generate";
 
-const effects = EffectService.instance;
-const utils = UtilsService.instance;
 // Creature Id
 const id = MonsterEnum.GrayOoze;
 // Spells
@@ -31,28 +19,22 @@ export const SLIME_GRAY_OOZE: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: [],
-  canPolymorph: true,
-  autoGenerate: {
-    savingThrows: false,
-  },
-  attack: {
-    ranged: true,
-  },
   data: {
     level1: 3,
     bonusHp: 3,
     thac0: 17,
     strength: 12,
-    dexterity: 1,
-    constitution: 21,
+    dexterity: 6,
+    constitution: 16,
     intelligence: 1,
-    wisdom: 1,
-    charisma: 1,
+    wisdom: 6,
+    charisma: 2,
     movement: 1,
     ac: 8,
     apr: 1,
-    resistMagic: 0,
+    resistMagic: 100,
+    resistFire: 100,
+    resistCold: 100,
     xpv: 270,
     alignment: "NEUTRAL",
     morale: 10,
@@ -65,55 +47,35 @@ export const SLIME_GRAY_OOZE: RawCreature = {
     size: "Large",
   },
   additionalData: {
-    removeItems: [],
-    removeScripts: [
-      "SHOUT",
-      "INITDLG",
-      "DW#GPSHT",
-      "DW#MG84",
-      // "J#SIRIN1",
-      "SIRSPELL",
-      "DW1RANMO",
-      "DW1RANGE",
-      "SIL",
-    ],
-    // immunity to cold and fire
+    removeItems: ["RING95", "OOZEGR1", "DW#OOZEG"],
+    removeScripts: ["BPSIGHT", "BPASIGHT", "DW1RANMO"],
     immunities: ["ooze"],
+    // The gray ooze strikes like a snake, and can corrode metal at an alarming rate (chain mail in one round, plate mail in two, and magical armor in one round per each plus to Armor Class).
+    // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage. Note that weapons striking a gray ooze may corrode and break.
+    //
+    // 5e:
+    // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
+    // The ooze’s acidic touch deals 16 points of damage per round to wooden or metal objects, but the ooze must remain in contact with the object for 1 full round to deal this damage.
+    // Constrict (Ex): A gray ooze deals automatic slam and acid damage with a successful grapple check. The opponent’s clothing and armor take a –4 penalty on Reflex saves against the acid.
+    // Improved Grab (Ex): To use this ability, a gray ooze must hit with its slam attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity. If it wins the grapple check, it establishes a hold and can constrict.
+    // Transparent (Ex): A gray ooze is hard to identify, even under ideal conditions, and it takes a DC 15 Spot check to notice one. Creatures who fail to notice a gray ooze and walk into it are automatically hit with a melee attack for slam and acid damage.
   },
   items: [
     {
-      // 2-16
-      // The gray ooze strikes like a snake, and can corrode metal at an alarming rate (chain mail in one round, plate mail in two, and magical armor in one round per each plus to Armor Class).
-      // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage. Note that weapons striking a gray ooze may corrode and break.
-      //
-      // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
-      // The ooze’s acidic touch deals 16 points of damage per round to wooden or metal objects, but the ooze must remain in contact with the object for 1 full round to deal this damage.
-      // Constrict (Ex): A gray ooze deals automatic slam and acid damage with a successful grapple check. The opponent’s clothing and armor take a –4 penalty on Reflex saves against the acid.
-      // Improved Grab (Ex): To use this ability, a gray ooze must hit with its slam attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity. If it wins the grapple check, it establishes a hold and can constrict.
-      // Transparent (Ex): A gray ooze is hard to identify, even under ideal conditions, and it takes a DC 15 Spot check to notice one. Creatures who fail to notice a gray ooze and walk into it are automatically hit with a melee attack for slam and acid damage.
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Pseudopod,
+      icon: MonsterItemIconEnum.Jelly,
       equippedSlot: "WEAPON1",
-      icon: "IGHOUL",
       type: "Melee",
-      diceSize: 3,
-      diceThrown: 1,
+      diceSize: 8,
+      diceThrown: 2,
       damageType: "Crushing",
-      effects: [
-        {
-          opcode: "CastSpell",
-          type: "CastInstantlyAtCasterLevel",
-          castingLevel: 1,
-          timing: "InstantPermanentUntilDeath",
-          dispelResistance: "NaturalNonMagical",
-          resource: ATWEAKS_SPELLS.TouchOfTranquility,
-        },
-      ],
     },
   ],
   files: [
-    "AC#FPSLT", // Slithering Tracker
     "BPJLGR01", // Gray Ooze
     "JELLGR", // Gray Ooze
+    // "AC#FPSLT", // Slithering Tracker, TODO: this one is special, not sure how to alter it !
   ],
   adjustments: [],
 };

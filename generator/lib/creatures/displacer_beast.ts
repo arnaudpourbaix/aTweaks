@@ -9,7 +9,7 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.DisplacerBeast;
 // Items
 const mainWeapon = file(1, id);
-const ring = file(2, id);
+const traits = file(2, id);
 
 export const DISPLACER_BEAST: RawCreature = {
   name: "Displacer Beast",
@@ -61,7 +61,7 @@ export const DISPLACER_BEAST: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
     {
-      file: ring,
+      file: traits,
       stringRef: "Displacer Beast traits",
       description: [
         "Its main advantage in combat is its magical power of displacement, which allows it to appear to be some 3 feet from their actual location.",
@@ -97,7 +97,7 @@ export const DISPLACER_BEAST: RawCreature = {
       ],
       equippedSlot: JEWEL_SLOTS,
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
   ],
   files: ["BDDISPBE", "BDDISPBP"],

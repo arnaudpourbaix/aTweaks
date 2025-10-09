@@ -146,7 +146,7 @@ export const OGRE_MAGE: RawCreature = {
         "Regenerate one hit point per round (lost members must be reattached to regenerate).",
       ],
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
       effects: [
         {
           opcode: "Regeneration",

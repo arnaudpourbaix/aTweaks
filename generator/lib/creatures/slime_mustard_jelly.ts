@@ -2,21 +2,17 @@ import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { JEWEL_SLOTS } from "../src/model/constants";
 import { RawCreature } from "../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../src/model/raw/effect";
-import { EffectService } from "../src/services/effect.service";
-import { FactoryService } from "../src/services/factory.service";
 import { bafFile, file } from "../src/services/misc.func";
-import { UtilsService } from "../src/services/utils.service";
 import { MonsterEnum } from "./monster.enum";
 
-const effects = EffectService.instance;
-const utils = UtilsService.instance;
-const factory = FactoryService.instance;
 // Creature Id
 const id = MonsterEnum.MustardJelly;
 // Items
 const mainWeapon = file(1, id);
+const traits = file(2, id);
 // Spells
 const toxicVapors = file(1, id);
 const split = file(2, id);
@@ -39,14 +35,9 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: [],
-  canPolymorph: true,
-  autoGenerate: {
-    savingThrows: false,
-  },
   data: {
     level1: 7,
-    // bonusHp: 14,
+    bonusHp: 14,
     thac0: 13,
     strength: 15,
     dexterity: 10,
@@ -77,10 +68,9 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     immunities: ["ooze"],
   },
   items: [
-    // Mustard jelly is translucent, and very hard to see until it attacks. The only clue to its presence is a faint odor, similar to blooming mustard plants.
     {
       file: mainWeapon,
-      stringRef: TraStringReferenceEnum.LethalFists,
+      stringRef: TraStringReferenceEnum.Pseudopod,
       icon: MonsterItemIconEnum.Jelly,
       // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
       equippedSlot: "WEAPON1",
@@ -92,6 +82,33 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       damageType: "Crushing",
       animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
       projectile: "ACIDBLMU",
+    },
+    {
+      file: traits,
+      equippedSlot: JEWEL_SLOTS,
+      category: "Rings",
+      icon: MonsterItemIconEnum.Traits,
+      stringRef: "Mustard Jelly traits",
+      description: [
+        "Mustard jelly is translucent, and very hard to see until it attacks.",
+        "The only clue to its presence is a faint odor, similar to blooming mustard plants.",
+      ],
+      effects: [
+        {
+          opcode: "Translucency",
+          amount: 99,
+          type: "DrawInstantly",
+          global: true,
+        },
+        { opcode: "NoCollisionDetection", passWalls: true, global: true },
+        { opcode: "ModifyCollisionBehavior", global: true },
+        {
+          opcode: "OverrideCreatureData",
+          field: "PersonalSpace",
+          value: 0,
+          global: true,
+        },
+      ],
     },
   ],
   projectiles: [
@@ -258,34 +275,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       range: 10,
     },
   ],
-  // customCode: [
-  //   {
-  //     location: "init",
-  //     type: "insertAfter",
-  //     statements: [
-  //       {
-  //         comment:
-  //           "This large creature can divide itself at will into two smaller, faster halves (movement rate 18). Each is capable of attacking, but has only half the hit points the creature had before dividing.",
-  //         triggers: [
-  //           factory.global("split", 0),
-  //           { name: "Exists", params: ["LastSummonerOf"], negation: true },
-  //         ],
-  //         responses: [
-  //           {
-  //             weight: 100,
-  //             actions: [
-  //               {
-  //                 name: "CreateCreatureObjectEffect",
-  //                 params: ["JELLMU", "TRGOOYAA", "Myself"],
-  //               },
-  //               factory.setGlobal("split", 1),
-  //             ],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ],
   files: [
     // "AC#FPWP2", // White Blob
     // "AC#FPWPU", // White Blob

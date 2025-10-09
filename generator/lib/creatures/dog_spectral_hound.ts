@@ -10,7 +10,7 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.SpectralHound;
 // Items
 const mainWeapon = file(1, id);
-const ring = file(2, id);
+const traits = file(2, id);
 // Spells
 const astralPlaneShift = file(1, id);
 
@@ -73,12 +73,12 @@ export const SPECTRAL_HOUND: RawCreature = {
       ],
     },
     {
-      file: ring,
+      file: traits,
       stringRef: "Spectral Hound traits",
       immunities: ["seeInvisible", "extraplanar", "incorporeal"],
       equippedSlot: JEWEL_SLOTS,
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
   ],
   spells: [

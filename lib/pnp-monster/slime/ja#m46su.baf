@@ -93,7 +93,6 @@ END
 
 // Split
 IF
-	CheckStat(Myself,0,POLYMORPHED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("ja#2m46")
 THEN
@@ -104,7 +103,6 @@ END
 
 // Toxic Vapors
 IF
-	CheckStat(Myself,0,POLYMORPHED)
 	HaveSpellRES("ja#1m46")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
@@ -119,7 +117,6 @@ THEN
 END
 
 IF
-	CheckStat(Myself,0,POLYMORPHED)
 	HaveSpellRES("ja#1m46")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
@@ -134,7 +131,6 @@ THEN
 END
 
 IF
-	CheckStat(Myself,0,POLYMORPHED)
 	HaveSpellRES("ja#1m46")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)

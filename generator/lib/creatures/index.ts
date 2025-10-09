@@ -142,4 +142,6 @@ export const CREATURES_TEST: RawCreature[] = [...Plants, ...Feys, ...Slimes];
 "NTINDFIG", // Succubus
 "KIRINH", // Kirinhale
 
+"AC#FPOX1", // Obliviax https://adnd2e.fandom.com/wiki/Obliviax
+
 */

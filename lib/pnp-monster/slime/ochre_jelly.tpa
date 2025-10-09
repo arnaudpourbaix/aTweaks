@@ -15,7 +15,7 @@ CREATE ITM "ja#1m49"
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 Melee damage: 1D10+2 (Crushing)
-Speed Factor: 3
+Speed Factor: 4
 Enchantment: 1
 Range: 5 feet~)
 	WRITE_LONG 0x60 1
@@ -26,7 +26,7 @@ COPY_EXISTING ~ja#1m49.itm~ ~override~
 		WRITE_ASCII 0x76 ~IJELLY~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 5
-		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x84 4
 		WRITE_BYTE 0x88 10
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8c 2
@@ -64,13 +64,18 @@ BEGIN
 					wisdom=6
 					charisma=1
 					movement=2
-					hp=48
+					hp=60
 					ac=8
 					resistElectricity=100
 					thac0=15
 					apr=1
 					xpv=270
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
 					morale=10
 					moraleBreak=4
 					moraleRecovery=15

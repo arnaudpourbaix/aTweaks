@@ -2,7 +2,7 @@ import * as fs from "fs";
 import path from "path";
 import { SPELL_STATES } from "../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { CR, TAB } from "../model/constants";
+import { CR, JEWEL_SLOTS, TAB } from "../model/constants";
 import { ItemFlagEnum } from "../model/final/enums";
 import { ImmunityConfig } from "../model/final/immunity";
 import { RawItemSlot } from "../model/raw/item";
@@ -94,6 +94,7 @@ export class WeiduCoreService extends AbstractWeiduService {
   }
 
   getIcon(itemSlot: RawItemSlot) {
+    if (itemSlot.slot === JEWEL_SLOTS) return "IRING16";
     switch (itemSlot.slot) {
       case "ARMOR":
         return "IPLAT01";
@@ -103,7 +104,7 @@ export class WeiduCoreService extends AbstractWeiduService {
         return "IAMUL01";
       case "LRING":
       case "RRING":
-        return "IRING01";
+        return "IRING16";
       case "BOOTS":
         return "IBOOT01";
     }

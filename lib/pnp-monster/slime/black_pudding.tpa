@@ -44,6 +44,9 @@ BEGIN
 			LPF FJ_CRE_VALIDITY END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~HELMNOAN~
+			REMOVE_CRE_ITEM ~RING95~
+			REMOVE_CRE_ITEM ~BDPUDDBL~
 			REPLACE_CRE_ITEM ~ja#1m47~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i9~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
@@ -51,20 +54,24 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					level1=10
-					strength=17
-					dexterity=1
-					constitution=22
+					strength=16
+					dexterity=5
+					constitution=16
 					intelligence=1
-					wisdom=1
+					wisdom=6
 					charisma=1
 					movement=3
 					hp=100
 					ac=6
-					resistMagic=10
 					thac0=11
 					apr=1
 					xpv=4000
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=8
+					saveWand=10
+					savePolymorph=9
+					saveBreath=9
+					saveSpell=11
 					morale=14
 					moraleBreak=4
 					moraleRecovery=15
@@ -75,7 +82,7 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN SHOUT INITDLG DW#GPSHT DW#MG84 SIRSPELL DW1RANMO DW1RANGE SIL END
+			DEFINE_ARRAY removeScripts BEGIN SHOUT DW1RANMO END
 			LPF patchCreatureScript STR_VAR script=ja#m47 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

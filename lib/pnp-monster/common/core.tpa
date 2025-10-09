@@ -11,6 +11,7 @@ APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%%value%%TAB%9~ UNLESS ~
 CREATE ITM "ja#i8"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~cloudSpells immunity~ SAY NAME2 ~cloudSpells immunity~
 	SAY UNIDENTIFIED_DESC ~Cloud spells immunity~
 COPY_EXISTING ~ja#i8.itm~ ~override~
@@ -19,6 +20,7 @@ COPY_EXISTING ~ja#i8.itm~ ~override~
 CREATE ITM "ja#i6"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~entangle immunity~ SAY NAME2 ~entangle immunity~
 	SAY UNIDENTIFIED_DESC ~Entangle immunity~
 COPY_EXISTING ~ja#i6.itm~ ~override~
@@ -48,6 +50,7 @@ COPY_EXISTING ~ja#i5.itm~ ~override~
 CREATE ITM "ja#i1"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~construct trait~ SAY NAME2 ~construct trait~
 	SAY UNIDENTIFIED_DESC ~Construct trait.
 Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
@@ -59,6 +62,7 @@ COPY_EXISTING ~ja#i1.itm~ ~override~
 CREATE ITM "ja#i2"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
 	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
 COPY_EXISTING ~ja#i2.itm~ ~override~
@@ -67,6 +71,7 @@ COPY_EXISTING ~ja#i2.itm~ ~override~
 CREATE ITM "ja#i7"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~plant trait~ SAY NAME2 ~plant trait~
 	SAY UNIDENTIFIED_DESC ~Plants' traits
 
@@ -80,6 +85,7 @@ COPY_EXISTING ~ja#i7.itm~ ~override~
 CREATE ITM "ja#i4"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
 	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.
 Immune to backstab and critical hits
@@ -93,6 +99,7 @@ COPY_EXISTING ~ja#i4.itm~ ~override~
 CREATE ITM "ja#i9"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~ooze trait~ SAY NAME2 ~ooze trait~
 	SAY UNIDENTIFIED_DESC ~Ooze trait.
 Blindsight (can see invisible, not subject to gaze attacks).

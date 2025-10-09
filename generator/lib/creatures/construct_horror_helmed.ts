@@ -1,3 +1,4 @@
+import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { JEWEL_SLOTS } from "../src/model/constants";
@@ -246,7 +247,7 @@ export const HORROR_HELMED: RawCreature = {
       ],
       equippedSlot: JEWEL_SLOTS,
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
   ],
   files: ["HELMHO", "GLOWTEST", "BATTHO", "dw#davho", "DOOMSA"],

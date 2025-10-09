@@ -68,7 +68,7 @@ CREATE ITM "ja#2m22"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Dread wolf traits~)
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Dread wolf traits~)
 	WRITE_SHORT 0x1c 10
-	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_ASCII 0x3a ~IRING15~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.
 Only acid, fire, or total dismemberment will inflict permanent damage.
 It is immune to charm, hold, and cold-based spells.
@@ -76,7 +76,7 @@ Electricity-based spells cause only half damage.~)
 COPY_EXISTING ~ja#2m22.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
-		WRITE_ASCII 0x76 ~IRING01~ #8
+		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=2 parameter2=3 timing=2 probability1=100 special=87 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=208 target=1 global=1 parameter1=1 timing=2 probability1=100 END

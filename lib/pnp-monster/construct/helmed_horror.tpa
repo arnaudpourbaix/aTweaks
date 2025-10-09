@@ -84,7 +84,7 @@ CREATE ITM "ja#4m15"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Helmed Horror traits~)
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Helmed Horror traits~)
 	WRITE_SHORT 0x1c 10
-	WRITE_ASCII 0x3a ~IRING01~ #8
+	WRITE_ASCII 0x3a ~IRING15~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 See invisible creatures
@@ -98,7 +98,7 @@ Furthermore, creatures with this ability can cross lava and acid pools without t
 COPY_EXISTING ~ja#4m15.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
-		WRITE_ASCII 0x76 ~IRING01~ #8
+		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
 	LPF seeInvisible_immunity END
 	LPF fireballSpell_immunity END

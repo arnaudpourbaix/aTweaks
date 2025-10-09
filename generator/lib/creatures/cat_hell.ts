@@ -10,7 +10,7 @@ const id = MonsterEnum.Hellcat;
 // Items
 const mainWeapon = file(1, id);
 const offhandWeapon = file(2, id);
-const ring = file(3, id);
+const traits = file(3, id);
 // Spells
 const rearClawsAttack = file(1, id);
 
@@ -83,7 +83,13 @@ export const HELLCAT: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
     },
     {
-      file: ring,
+      file: traits,
+      stringRef: "Hellcat traits",
+      description: [
+        "One of the worst things about the hellcat is that it's damned near invisible in any kind of light.",
+        "Though it can be seen by those beings who can ordinarily see invisible creatures, all others are at a serious disadvantage.",
+        "However, if a body's smart enough to douse the light when a hellcat's suspected nearby, she'll see a glowing outline of a cat the size of a tiger. ",
+      ],
       immunities: ["mindSpells", "normalWeapons", "extraplanar"],
       effects: [
         {
@@ -94,7 +100,7 @@ export const HELLCAT: RawCreature = {
       ],
       equippedSlot: JEWEL_SLOTS,
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
   ],
   spells: [

@@ -1,3 +1,16 @@
+// Initiate dialog
+IF
+	Global("JA#DIALOG","LOCALS",0)
+	Name("SCHLUM",Myself)
+	NumTimesTalkedTo(0)
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("JA#DIALOG","LOCALS",1)
+		FaceObject([PC])
+		StartDialogueNoSet([PC])
+END
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -102,19 +115,6 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
-END
-
-// Try to reposition to use ranged attack
-IF
-	CanEquipRanged()
-	Range(NearestEnemyOf(Myself),4)
-THEN
-	RESPONSE #50
-		SetInterrupt(FALSE)
-		RunAwayFromNoLeaveArea(NearestEnemyOf(Myself),45)
-		SetInterrupt(TRUE)
-	RESPONSE #50
-		Continue()
 END
 
 // Attack Slowed enemy
@@ -251,23 +251,6 @@ IF
 		!See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		Continue()
-END
-
-IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
 		Continue()
 END
 
@@ -417,23 +400,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -518,23 +484,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -613,23 +562,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -698,23 +630,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -758,23 +673,6 @@ IF
 		!See(Player6)
 THEN
 	RESPONSE #100
-		Continue()
-END
-
-IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
 		Continue()
 END
 

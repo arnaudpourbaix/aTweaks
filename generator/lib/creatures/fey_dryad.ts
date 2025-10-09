@@ -1,5 +1,5 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
-import { ITEMS } from "../config/item";
+import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { PRESET_NAMES } from "../config/ability-presets";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
@@ -34,7 +34,7 @@ export const feyTraits: RawItem = {
   ],
   equippedSlot: JEWEL_SLOTS,
   category: "Rings",
-  icon: "IRING01",
+  icon: MonsterItemIconEnum.Traits,
 };
 
 const speakWithPlantsDuration = 60;

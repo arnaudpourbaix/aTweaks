@@ -103,7 +103,7 @@ export const WOLF_DREAD: RawCreature = {
         },
       ],
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
     {
       file: downResistances,

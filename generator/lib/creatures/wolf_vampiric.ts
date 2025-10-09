@@ -16,7 +16,7 @@ const grab = file(1, id);
 const mainWeapon = file(1, id);
 const proneBiteWeapon = file(2, id);
 const autoHitWeapon = file(3, id);
-const ring = file(4, id);
+const traits = file(4, id);
 
 const baseWeapon: RawItem = {
   file: mainWeapon,
@@ -123,7 +123,7 @@ export const WOLF_VAMPIRIC: RawCreature = {
       bonusToHit: 30,
     },
     {
-      file: ring,
+      file: traits,
       stringRef: "Vampiric wolf traits",
       equippedSlot: JEWEL_SLOTS,
       description: [
@@ -133,7 +133,7 @@ export const WOLF_VAMPIRIC: RawCreature = {
       ],
       immunities: ["sleep", "charm", "hold", "normalWeapons"],
       category: "Rings",
-      icon: "IRING01",
+      icon: MonsterItemIconEnum.Traits,
     },
   ],
   files: [

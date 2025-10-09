@@ -1,21 +1,9 @@
-import { truncate } from "fs";
-import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { MonsterItemIconEnum } from "../config/item";
 import { TraStringReferenceEnum } from "../config/stringRef";
 import { RawCreature } from "../src/model/raw/creature";
-import { RawBaseEffect } from "../src/model/raw/effect";
-import {
-  SpellProtectionRelation,
-  SpellProtectionStat,
-} from "../src/model/raw/spell-protection";
-import { EffectService } from "../src/services/effect.service";
-import { bafFile, convertMovement, file } from "../src/services/misc.func";
-import { StringRefUtils } from "../src/services/string-ref.utils";
-import { UtilsService } from "../src/services/utils.service";
+import { bafFile, file } from "../src/services/misc.func";
 import { MonsterEnum } from "./monster.enum";
-import { GLOBAL_CONFIG } from "../config/generate";
 
-const effects = EffectService.instance;
-const utils = UtilsService.instance;
 // Creature Id
 const id = MonsterEnum.OchreJelly;
 // Spells
@@ -31,14 +19,6 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: [],
-  canPolymorph: true,
-  autoGenerate: {
-    savingThrows: false,
-  },
-  attack: {
-    ranged: true,
-  },
   data: {
     level1: 6,
     thac0: 15,
@@ -52,8 +32,7 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
     ac: 8,
     apr: 1,
     resistElectricity: 100,
-    // Damage Resistances acid
-    // Damage Immunities lightning, slashing
+    // 5e: Damage Resistances acid. Damage Immunities lightning, slashing
     xpv: 270,
     alignment: "NEUTRAL",
     morale: 10,
@@ -76,16 +55,17 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
       // Each new jelly has hit points equal to half the original jelly's, rounded down. New jellies are one size smaller than the original jelly.
       file: mainWeapon,
       stringRef: TraStringReferenceEnum.Pseudopod,
+      icon: MonsterItemIconEnum.Jelly,
       equippedSlot: "WEAPON1",
-      icon: "IJELLY",
       type: "Melee",
+      speed: 4,
       range: 5,
+      // 2e: The ochre jelly attacks by attempting to envelop its prey. Its secretions dissolve flesh, inflicting 3-12 (d10+2) points of damage per round of exposure.
+      // 5e: reach 5 ft, 2d6+2 bludgeoning damage plus 1d6 acid damage
       diceSize: 10,
       diceThrown: 1,
       damageBonus: 2,
       damageType: "Crushing",
-      // 2e: The ochre jelly attacks by attempting to envelop its prey. Its secretions dissolve flesh, inflicting 3-12 (d10+2) points of damage per round of exposure.
-      // 5e: reach 5 ft, 2d6+2 bludgeoning damage plus 1d6 acid damage
       animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
       projectile: "ACIDBLMU",
     },
@@ -97,5 +77,4 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
     "JELLOC", // Ochre Jelly
     "JELLYCO", // Ochre Jelly
   ],
-  adjustments: [],
 };

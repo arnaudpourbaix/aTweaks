@@ -11,6 +11,7 @@ export const ITEMS = {
 };
 
 export enum MonsterItemIconEnum {
+  Traits = "IRING15",
   ISQUIRL = "ISQUIRL",
   MindFlayer = "ISHAPE02",
   Golem = "ISHAPE03",
