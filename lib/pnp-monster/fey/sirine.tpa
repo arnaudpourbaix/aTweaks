@@ -143,7 +143,7 @@ CREATE ITM "ja#1m43"
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 Melee damage: 1D3 (Crushing)
-Speed Factor: 0
+Speed Factor: 2
 Enchantment: 4
 Range: 1 feet
 
@@ -157,6 +157,7 @@ COPY_EXISTING ~ja#1m43.itm~ ~override~
 		WRITE_ASCII 0x76 ~IFIST~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 2
 		WRITE_BYTE 0x88 3
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 2

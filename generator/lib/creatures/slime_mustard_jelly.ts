@@ -85,6 +85,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       // 5e: +5 to hit, reach 5 ft, 3d6+2 bludgeoning damage and 3d6 acid damage.
       equippedSlot: "WEAPON1",
       type: "Melee",
+      speed: 4,
       range: 5,
       diceThrown: 5,
       diceSize: 4,

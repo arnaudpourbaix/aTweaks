@@ -1,3 +1,4 @@
+import figureSet from "figures";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityFlagEnum,
@@ -41,9 +42,17 @@ export class ItemService {
 
   mapItems(items: RawItem[] | undefined): Item[] {
     if (!items) return [];
-    const results: Item[] = items.map((i) =>
-      "copyFrom" in i ? this.mapAlterItem(i) : this.mapCreateItem(i)
-    );
+    const results: Item[] = items.map((i) => {
+      const item =
+        "copyFrom" in i ? this.mapAlterItem(i) : this.mapCreateItem(i);
+      if (!!item.diceSize && !item.speed) {
+        item.speed = 3;
+        console.log(
+          `${figureSet.warning} default speed of ${item.speed} from item ${item.file}.`
+        );
+      }
+      return item;
+    });
     return results;
   }
 

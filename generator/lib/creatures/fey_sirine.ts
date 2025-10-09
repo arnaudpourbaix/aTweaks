@@ -136,6 +136,7 @@ export const FEY_SIRINE: RawCreature = {
       icon: MonsterItemIconEnum.Fist,
       equippedSlot: "WEAPON1",
       type: "Melee",
+      speed: 2,
       diceSize: 3,
       diceThrown: 1,
       damageType: "Crushing",

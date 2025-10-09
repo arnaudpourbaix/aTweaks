@@ -41,9 +41,10 @@ COPY_EXISTING ~ja#1m45.ITM~  ~override/ja#2m45.ITM~
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 Ranged damage: 3D6 (undefined)
-Speed Factor: 0~)
+Speed Factor: 3~)
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x84 3
 		WRITE_BYTE 0x88 6
 		WRITE_BYTE 0x8a 3
 	END

@@ -12,7 +12,7 @@ CREATE ITM "ja#1m50"
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
 
 Melee damage: 1D3 (Crushing)
-Speed Factor: 0
+Speed Factor: 3
 Range: 2 feet
 
 Cast spell rr#ftrnq~)
@@ -23,6 +23,7 @@ COPY_EXISTING ~ja#1m50.itm~ ~override~
 		WRITE_ASCII 0x76 ~IGHOUL~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
 		WRITE_BYTE 0x88 3
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 2
