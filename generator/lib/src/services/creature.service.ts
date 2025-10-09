@@ -18,7 +18,7 @@ export class CreatureService {
     autoGenerate: RawCreatureAutoGenerate;
     data: CreatureData;
     creature: Creature;
-    parent?: CreatureData;
+    parent: CreatureData | undefined;
   }) {
     if (p.autoGenerate.hitPoints && p.data.hp === undefined)
       this.autogenerateHitPoints({
@@ -99,9 +99,10 @@ export class CreatureService {
     creature: Creature;
     parent?: CreatureData;
   }) {
-    const level = p.data.level1 ?? p.parent?.level1;
-    if (!level)
+    const level = p.data.level1;
+    if (!level && !p.parent)
       throw new Error(`Can't generate hit points because level1 is unknown`);
+    else if (!level) return;
     const constitutionTable: { [index: number]: number } = {
       15: 1,
       16: 2,
@@ -156,9 +157,10 @@ export class CreatureService {
   }
 
   private autogenerateThac0(data: CreatureData, parent?: CreatureData) {
-    let level = data.level1 ?? parent?.level1;
-    if (!level)
-      throw new Error(`Can't generate hit points because level1 is unknown`);
+    let level = data.level1;
+    if (!level && !parent)
+      throw new Error(`Can't generate thac0 because level1 is unknown`);
+    else if (!level) return;
     if (!!data.bonusHp && data.bonusHp >= 3) {
       level++;
       console.log(
@@ -211,9 +213,10 @@ export class CreatureService {
   }
 
   private autogenerateSavingThrows(data: CreatureData, parent?: CreatureData) {
-    const level = data.level1 ?? parent?.level1;
-    if (!level)
-      throw new Error(`Can't generate thac0 because level1 is unknown`);
+    const level = data.level1;
+    if (!level && !parent)
+      throw new Error(`Can't generate saving throws because level1 is unknown`);
+    else if (!level) return;
     const classe = data.class ?? parent?.class ?? "";
     let key: keyof typeof SAVING_THROWS = "fighter";
     if (classe === "DRUID" || classe === "CLERIC") key = "priest";

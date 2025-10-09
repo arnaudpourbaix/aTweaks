@@ -165,6 +165,9 @@ BEGIN
 			DEFINE_ARRAY files BEGIN BASILGSU END
 			LPF patchCreatureScript STR_VAR script=ja#m3su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILGSU~) BEGIN 
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

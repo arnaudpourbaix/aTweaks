@@ -5,6 +5,17 @@ DEFINE_PATCH_FUNCTION clear_proficiencies BEGIN
   END
 END
 
+DEFINE_PATCH_FUNCTION set_movement_speed
+INT_VAR
+  value = 99
+BEGIN
+  PATCH_IF value < 99 BEGIN
+    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=126 END
+    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=176 END
+    LPF ADD_CRE_EFFECT INT_VAR opcode=176 target=2 parameter1=value parameter2=1 probability1=100 END
+  END
+END
+
 DEFINE_PATCH_FUNCTION minimum_proficiency
 INT_VAR
   value = 1

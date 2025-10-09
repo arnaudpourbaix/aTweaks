@@ -111,6 +111,9 @@ BEGIN
 			DEFINE_ARRAY files BEGIN ja#trea1 ja#trea2 ja#trea3 ja#trea4 END
 			LPF patchCreatureScript STR_VAR script=ja#m45su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea3~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea4~) BEGIN 
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ja#trea1~) BEGIN 
 				WRITE_LONG 0x14 1400 // xpv

@@ -20,7 +20,13 @@ import { Projectile } from "./projectile";
 import { AdditionalCode, CustomCode } from "./script";
 import { Spell } from "./spell";
 
-export interface Creature {
+export interface BaseCreature {
+  files: string[];
+  data: CreatureData;
+  additionalData: CreatureAdditionalData;
+}
+
+export interface Creature extends BaseCreature {
   /**
    * Filename for BAF file (without extension, relative path from mod folder)
    */
@@ -87,7 +93,6 @@ export interface Creature {
   data: CreatureData;
   additionalData: CreatureAdditionalData;
 
-  files: string[];
   /**
    * For these files, keep existing creature values if they are better
    */
@@ -106,10 +111,7 @@ export interface Creature {
   autoGenerate: RawCreatureAutoGenerate;
 }
 
-export interface CreatureAdjustment {
-  files: string[];
-  data?: CreatureData;
-  additionalData: CreatureAdditionalData;
+export interface CreatureAdjustment extends BaseCreature {
   /**
    * Is it a summon ?
    */

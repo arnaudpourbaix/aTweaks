@@ -310,9 +310,7 @@ BEGIN
   END
 
   PATCH_IF movement != 999 BEGIN // creature movement rate
-    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=126 END // Movement Modifier
-    LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=176 END // Movement Modifier II
-    LPF ADD_CRE_EFFECT INT_VAR opcode=176 target=1 timing=9 parameter1=%movement% parameter2=1 END
+    LPF set_movement_speed INT_VAR value=movement END
   END
 
   PATCH_IF ~%proficiencies%~ STRING_COMPARE ~~ BEGIN
