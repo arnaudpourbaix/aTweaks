@@ -270,6 +270,18 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "magic",
+    type: "immunity",
+    description: ["Magic immunity"],
+    effects: [
+      {
+        opcode: "MagicResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "magicDamage",
     type: "immunity",
     description: ["Magic damage immunity"],
@@ -391,27 +403,59 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     displaySpellIneffective: true,
   },
   {
-    name: "physical",
+    name: "physicalDamage",
     type: "immunity",
-    description: ["All physical damage"],
+    description: ["Physical damage immunity"],
+    immunities: [
+      "slashingDamage",
+      "crushingDamage",
+      "piercingDamage",
+      "missileDamage",
+    ],
+  },
+  {
+    name: "slashingDamage",
+    type: "immunity",
+    description: ["Slashing damage immunity"],
     effects: [
       {
         opcode: "SlashingResistanceModifier",
         value: 100,
         type: "Set",
       },
+    ],
+  },
+  {
+    name: "crushingDamage",
+    type: "immunity",
+    description: ["Crushing damage immunity"],
+    effects: [
+      {
+        opcode: "CrushingResistanceModifier",
+        value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "piercingDamage",
+    type: "immunity",
+    description: ["Piercing damage immunity"],
+    effects: [
       {
         opcode: "PiercingResistanceModifier",
         value: 100,
         type: "Set",
       },
+    ],
+  },
+  {
+    name: "missileDamage",
+    type: "immunity",
+    description: ["Missile damage immunity"],
+    effects: [
       {
         opcode: "MissilesResistanceModifier",
-        value: 100,
-        type: "Set",
-      },
-      {
-        opcode: "CrushingResistanceModifier",
         value: 100,
         type: "Set",
       },
@@ -514,7 +558,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "trait",
     itemSlot: { file: ITEMS.Construct, slot: JEWEL_SLOTS },
     description: [
-      "Construct trait.",
+      "Construct trait",
+      "",
       "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
       "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.",
       "Darkvision out to 60 feet.",
@@ -537,6 +582,24 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "petrification",
       "insectSpells",
       "infravision",
+    ],
+  },
+  {
+    name: "fey",
+    type: "trait",
+    itemSlot: { file: ITEMS.Fey, slot: JEWEL_SLOTS },
+    description: [
+      "Fey trait",
+      "",
+      "Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.",
+      "In all other aspects, spell-like abilities function exactly like the spells which they mimic.",
+    ],
+    effects: [
+      {
+        opcode: "CastingTimeModifier",
+        value: 1,
+        type: "Set",
+      },
     ],
   },
   {

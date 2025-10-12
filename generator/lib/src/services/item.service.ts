@@ -42,7 +42,8 @@ export class ItemService {
 
   mapItems(items: RawItem[] | undefined): Item[] {
     if (!items) return [];
-    const results: Item[] = items.map((i) => {
+    const results: Item[] = [];
+    for (const i of items) {
       const item =
         "copyFrom" in i ? this.mapAlterItem(i) : this.mapCreateItem(i);
       if (!!item.diceSize && !item.speed) {
@@ -51,8 +52,10 @@ export class ItemService {
           `${figureSet.warning} default speed of ${item.speed} from item ${item.file}.`
         );
       }
-      return item;
-    });
+      if (results.some((r) => r.file === item.file))
+        throw new Error(`Duplicate item file detected: ${item.file}`);
+      results.push(item);
+    }
     return results;
   }
 

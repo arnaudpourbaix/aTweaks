@@ -59,6 +59,7 @@ export enum EffectTypeEnum {
   KillTarget = 13,
   LevelDrain = 216,
   LightingEffects = 141,
+  MagicResistanceModifier = 166,
   MagicalColdResistanceModifier = 85,
   MagicalFireResistanceModifier = 84,
   MagicDamageResistanceModifier = 31,

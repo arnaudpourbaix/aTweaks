@@ -11,6 +11,7 @@ export const ATWEAKS_CREATURES = {
   DryadSummon: "ja#dryad",
   HamadryadSummon: "ja#hama",
   SplitMustardJelly: "ja#jelmu",
+  SplitBlackPudding: "ja#blpud",
 };
 
 export const VAPOR_IMMUNE_CREATURES: [

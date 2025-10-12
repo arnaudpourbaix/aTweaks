@@ -46,7 +46,8 @@ export class SpellService {
     effectFiles: RawEffectFile[]
   ): Spell[] {
     if (!spells) return [];
-    const results: Spell[] = spells.map((s) => {
+    const results: Spell[] = [];
+    for (const s of spells) {
       s.effects = s.effects ?? [];
       if (s.infiniteUse !== undefined) {
         const effects: RawEffect[] = [
@@ -69,8 +70,10 @@ export class SpellService {
         s.effects.push(...effects);
       }
       const result = this.mapSpell(s, effectFiles);
-      return result;
-    });
+      if (results.some((r) => r.file === result.file))
+        throw new Error(`Duplicate spell file detected: ${result.file}`);
+      results.push(result);
+    }
     return results;
   }
 

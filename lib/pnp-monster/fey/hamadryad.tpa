@@ -100,7 +100,25 @@ When cast, all traps—concealed normally or magically—of magical or mechanica
 	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=30 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=1226851840 parameter2=1310720 duration=2 probability1=100 END
 	
-	ACTION_FOR_EACH ~file~ IN
+CREATE ITM "ja#1m42"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Hamadryad traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Hamadryad traits~)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING15~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Hamadryad traits
+
+Magic Resistance: 75%
+Entangle immunity~)
+COPY_EXISTING ~ja#1m42.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING15~ #8
+	END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=166 target=1 global=1 parameter1=75 parameter2=1 timing=2 probability1=100 END
+	LPF entangle_immunity END
+
+ACTION_FOR_EACH ~file~ IN
 	DRYADHA
 	ja#hama
 	VAELASA
@@ -113,10 +131,14 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
+			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~ja#hama~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD1~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD2~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDHAMADC~ BEGIN
+				REMOVE_CRE_EFFECTS
+			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~ANTIWEB~
-			ADD_CRE_ITEM ~ja#i6~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#1m42~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
 			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
@@ -139,7 +161,6 @@ BEGIN
 					movement=12
 					hp=32
 					ac=7
-					resistMagic=75
 					thac0=17
 					apr=1
 					xpv=1400

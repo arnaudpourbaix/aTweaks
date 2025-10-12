@@ -1,8 +1,7 @@
-COPY_EXISTING ~JELLMU.cre~ ~override/ja#jelmu.cre~
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/black_pudding.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/fission_slime.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/gray_ooze.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/green_slime.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/black_pudding.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/fission_slime.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/gray_ooze.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/green_slime.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/mustard_jelly.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/ochre_jelly.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/olive_slime_creature.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/olive_slime_creature.tpa"

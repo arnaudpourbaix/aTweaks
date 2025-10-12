@@ -104,6 +104,7 @@ export interface Creature extends BaseCreature {
   spells: Spell[];
   projectiles: Projectile[];
   effectFiles: EffectFile[];
+  newFiles: { files: string[]; copyFrom: string }[];
 
   /**
    * Auto-generate some creature data (true by default)
@@ -210,6 +211,7 @@ export interface CreatureAdditionalData {
   itemSlots: RawItemSlot[];
   immunities: ImmunityName[];
 
+  removeEffects: boolean;
   removeKnownSpells: boolean;
   removeMemorizedSpells?: boolean;
   memorizedSpells: RawMemorizedSpell[];

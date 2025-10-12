@@ -148,6 +148,7 @@ export type StatisticModifierEffect = RawBaseEffect & {
     | "MissilesResistanceModifier"
     | "FireResistanceModifier"
     | "ColdResistanceModifier"
+    | "MagicResistanceModifier"
     | "MagicalColdResistanceModifier"
     | "MagicalFireResistanceModifier"
     | "AcidResistanceModifier"

@@ -6,7 +6,7 @@ import { MonsterEnum } from "./monster.enum";
 const id = MonsterEnum.Wolf;
 // Items
 const mainWeapon = file(1, id);
-export const WOLF: RawCreature = {
+export const WEREWOLF: RawCreature = {
   name: "WereWolf",
   tpaFile: "lib/pnp-monster/werewolf/were",
   tracking: true,

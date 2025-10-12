@@ -15,9 +15,7 @@ CREATE ITM "ja#1m16"
 	WRITE_ASCII 0x22 ~S1~ #2
 	WRITE_BYTE 0x31 90
 	WRITE_ASCII 0x3a ~ISW1H04~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
-
-Melee damage: 1D8 (Slashing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D8 (Slashing)
 Speed Factor: 5
 Enchantment: 1
 Range: 1 feet~)
@@ -43,12 +41,35 @@ COPY_EXISTING ~ja#1m16.itm~ ~override~
 
 CREATE ITM "ja#2m16"
 	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Doom Guard traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Doom Guard traits~)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING15~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Doom guard traits
+
+50% fire resistance
+50% cold resistance~)
+COPY_EXISTING ~ja#2m16.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING15~ #8
+	END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=84 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=28 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=85 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
+	LPF mindSpells_immunity END
+	LPF normalWeapons_immunity END
+	LPF extraplanar_immunity END
+
+CREATE ITM "ja#3m16"
+	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4029)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4029)
 	WRITE_SHORT 0x1c 2
 	WRITE_ASCII 0x22 ~4A~ #2
 	WRITE_ASCII 0x3a ~IPLAT01~ #8
-COPY_EXISTING ~ja#2m16.itm~ ~override~
+COPY_EXISTING ~ja#3m16.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~IPLAT01~ #8
@@ -57,14 +78,14 @@ COPY_EXISTING ~ja#2m16.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=29 parameter2=4 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=87 timing=2 probability1=100 END
 
-CREATE ITM "ja#3m16"
+CREATE ITM "ja#4m16"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4030)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4030)
 	WRITE_SHORT 0x1c 7
 	WRITE_ASCII 0x22 ~H5~ #2
 	WRITE_ASCII 0x3a ~ihelm10~ #8
-COPY_EXISTING ~ja#3m16.itm~ ~override~
+COPY_EXISTING ~ja#4m16.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~ihelm10~ #8
@@ -80,6 +101,9 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
+			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMDUR~ BEGIN
+				REMOVE_CRE_EFFECTS
+			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~HELM13~
@@ -87,9 +111,10 @@ BEGIN
 			REMOVE_CRE_ITEM ~SW1H11~
 			REMOVE_CRE_ITEM ~RING95~
 			REPLACE_CRE_ITEM ~ja#1m16~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			REPLACE_CRE_ITEM ~ja#2m16~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
-			REPLACE_CRE_ITEM ~ja#3m16~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			ADD_CRE_ITEM ~ja#i1~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#2m16~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#3m16~ #0 #0 #0 ~UNDROPPABLE~ ~ARMOR~ 
+			REPLACE_CRE_ITEM ~ja#4m16~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_CRE_ITEM ~ja#i2~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			LPF patchCreature
@@ -104,8 +129,6 @@ BEGIN
 					movement=10
 					hp=60
 					ac=2
-					resistFire=50
-					resistCold=50
 					thac0=15
 					apr=1
 					xpv=2000

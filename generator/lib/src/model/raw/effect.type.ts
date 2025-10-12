@@ -59,6 +59,7 @@ export type RawEffectOpcode =
   | "KillTarget"
   | "LevelDrain"
   | "LightingEffects"
+  | "MagicResistanceModifier"
   | "MagicalColdResistanceModifier"
   | "MagicalFireResistanceModifier"
   | "MagicDamageResistanceModifier"

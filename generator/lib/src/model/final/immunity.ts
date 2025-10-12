@@ -1,7 +1,7 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { SpellGroupName } from "../../../config/spell-group-name";
-import { RawEffect } from "../raw/effect";
 import { RawItemSlot } from "../raw/item";
+import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
 import { PortraitIconEnum } from "./enums";
 
@@ -9,7 +9,7 @@ export interface ImmunityConfig {
   name: ImmunityName | string;
   type: "trait" | "immunity";
   description: string[];
-  immunities: (ImmunityName | string)[];
+  immunities: ImmunityName[];
   preventEffects: EffectTypeEnum[];
   preventIcons: PortraitIconEnum[];
   displayIcons: PortraitIconEnum[];
@@ -20,7 +20,7 @@ export interface ImmunityConfig {
   /**
    * All effects are permanent (spl) or while equiped (itm)
    */
-  effects: RawEffect[];
+  effects: Effect[];
   /**
    * Will create an item and add it into chosen slot
    */

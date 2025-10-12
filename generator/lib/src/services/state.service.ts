@@ -4,9 +4,14 @@ import { ImmunityConfig } from "../model/final/immunity";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
+import { DescriptionService } from "./description.service";
+import { EffectService } from "./effect.service";
 
 export class StateService {
   static instance = new StateService();
+
+  private descriptionService = DescriptionService.instance;
+  private effectService = EffectService.instance;
 
   init(): Promise<void> {
     try {
@@ -48,6 +53,7 @@ export class StateService {
     State.immunities = IMMUNITIES.map((i) => {
       const result: ImmunityConfig = {
         ...i,
+        description: i.description ?? [],
         immunities: i.immunities ?? [],
         preventEffects: i.preventEffects ?? [],
         preventIcons: i.preventIcons ?? [],
@@ -56,9 +62,12 @@ export class StateService {
         animations: i.animations ?? [],
         spellGroups: i.spellGroups ?? [],
         displaySpellIneffective: !!i.displaySpellIneffective,
-        effects: i.effects ?? [],
+        effects: this.effectService.getEffects(i.effects ?? []),
       };
       return result;
     });
+    for (const i of State.immunities) {
+      this.descriptionService.generateImmunity(i);
+    }
   }
 }

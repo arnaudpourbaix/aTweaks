@@ -55,7 +55,7 @@ This effectively prevents ground-based spells such as Earthquake, Entangle, Grea
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=3 STR_VAR icon="SPWI305B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=3 parameter1=12 parameter2=1 duration=72 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i3" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i6" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=328 target=2 power=3 parameter2=(IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~)) duration=72 probability1=100 special=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=3 parameter2=38 duration=72 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=3 probability1=100 STR_VAR resource="EFF_M28" END
@@ -171,7 +171,7 @@ COPY_EXISTING ~ja#2m32.itm~ ~override~
 	LPF poison_immunity END
 	LPF cold_immunity END
 	LPF magicDamage_immunity END
-	LPF physical_immunity END
+	LPF physicalDamage_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDOGRE03
@@ -202,6 +202,9 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
+			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~OGREMASU~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDWAVE16~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~WIOGMA01~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~WIGENTLE~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~DROTH~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDMURS~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDMURS2~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KROTAN~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~NTKROTAN~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~ BEGIN
+				REMOVE_CRE_EFFECTS
+			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~REGHP1~

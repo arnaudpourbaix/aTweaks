@@ -8,7 +8,7 @@ import { RawItemSlot } from "./item";
 export interface RawImmunityConfig {
   name: ImmunityName;
   type: "trait" | "immunity";
-  description: string[];
+  description?: string[];
   immunities?: ImmunityName[];
   preventEffects?: EffectTypeEnum[];
   preventIcons?: PortraitIconEnum[];

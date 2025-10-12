@@ -128,6 +128,7 @@ export class MainService {
       attack: this.mapAttack(rawCreature),
       projectiles: this.mapProjectiles(rawCreature.projectiles),
       effectFiles: this.mapEffectFiles(rawCreature.effectFiles),
+      newFiles: rawCreature.newFiles ?? [],
     };
     this.checkData({
       creature,
@@ -144,7 +145,7 @@ export class MainService {
     this.immunityService.handleImmunities(creature);
     this.grabService.addGrabEffects(creature);
     this.creatureService.checkWeapons(creature);
-    this.descriptionService.generate(creature);
+    this.descriptionService.generateCreatureItems(creature);
     return creature;
   }
 
@@ -269,6 +270,7 @@ export class MainService {
     const result: CreatureAdditionalData = {
       removeScripts: p.additionalData.removeScripts ?? [],
       removeItems: p.additionalData.removeItems ?? [],
+      removeEffects: p.additionalData.removeEffects ?? false,
       removeKnownSpells: p.additionalData.removeKnownSpells ?? true,
       removeMemorizedSpells,
       immunities: p.additionalData.immunities ?? [],
@@ -344,45 +346,55 @@ export class MainService {
     projectiles: RawProjectile[] | undefined
   ): Projectile[] {
     if (!projectiles) return [];
-    const results: Projectile[] = projectiles.map((p) => ({
-      ...p,
-      type: p.type ? ProjectileTypeEnum[p.type] : undefined,
-      behaviorFlags: (p.behaviorFlags ?? []).map(
-        (f) => ProjectileBehaviorEnum[f]
-      ),
-      particleColor: p.particleColor
-        ? ParticleColorEnum[p.particleColor]
-        : undefined,
-      extendedFlags: (p.extendedFlags ?? []).map(
-        (f) => ProjectileExtendedFlagsEnum[f]
-      ),
-      idsTarget1: p.idsTarget1 ? EffectIDSFileEnum[p.idsTarget1] : undefined,
-      idsTarget2: p.idsTarget2 ? EffectIDSFileEnum[p.idsTarget2] : undefined,
-      color: p.color
-        ? (p.color.red << 8) + (p.color.green << 16) + (p.color.blue << 24)
-        : undefined,
-      projectileInfo: {
-        ...p.projectileInfo,
-        bamProjectileFlags: (p.projectileInfo?.bamProjectileFlags ?? []).map(
-          (f) => BamProjectileFlagsEnum[f]
+    const results: Projectile[] = [];
+    for (const p of projectiles) {
+      const projectile = {
+        ...p,
+        type: p.type ? ProjectileTypeEnum[p.type] : undefined,
+        behaviorFlags: (p.behaviorFlags ?? []).map(
+          (f) => ProjectileBehaviorEnum[f]
         ),
-        projectileSmokeAnimation: p.projectileInfo?.projectileSmokeAnimation
-          ? ProjectileAnimationEnum[p.projectileInfo?.projectileSmokeAnimation]
+        particleColor: p.particleColor
+          ? ParticleColorEnum[p.particleColor]
           : undefined,
-      },
-      areaEffectInfo: {
-        ...p.areaEffectInfo,
-        areaProjectileFlags: (p.areaEffectInfo?.areaProjectileFlags ?? []).map(
-          (f) => AreaProjectileEnum[f]
+        extendedFlags: (p.extendedFlags ?? []).map(
+          (f) => ProjectileExtendedFlagsEnum[f]
         ),
-        fragmentAnimation: p.areaEffectInfo?.fragmentAnimation
-          ? ProjectileAnimationEnum[p.areaEffectInfo?.fragmentAnimation]
+        idsTarget1: p.idsTarget1 ? EffectIDSFileEnum[p.idsTarget1] : undefined,
+        idsTarget2: p.idsTarget2 ? EffectIDSFileEnum[p.idsTarget2] : undefined,
+        color: p.color
+          ? (p.color.red << 8) + (p.color.green << 16) + (p.color.blue << 24)
           : undefined,
-        explosionEffect: p.areaEffectInfo?.explosionEffect
-          ? ProjectileExplosionEffectEnum[p.areaEffectInfo?.explosionEffect]
-          : undefined,
-      },
-    }));
+        projectileInfo: {
+          ...p.projectileInfo,
+          bamProjectileFlags: (p.projectileInfo?.bamProjectileFlags ?? []).map(
+            (f) => BamProjectileFlagsEnum[f]
+          ),
+          projectileSmokeAnimation: p.projectileInfo?.projectileSmokeAnimation
+            ? ProjectileAnimationEnum[
+                p.projectileInfo?.projectileSmokeAnimation
+              ]
+            : undefined,
+        },
+        areaEffectInfo: {
+          ...p.areaEffectInfo,
+          areaProjectileFlags: (
+            p.areaEffectInfo?.areaProjectileFlags ?? []
+          ).map((f) => AreaProjectileEnum[f]),
+          fragmentAnimation: p.areaEffectInfo?.fragmentAnimation
+            ? ProjectileAnimationEnum[p.areaEffectInfo?.fragmentAnimation]
+            : undefined,
+          explosionEffect: p.areaEffectInfo?.explosionEffect
+            ? ProjectileExplosionEffectEnum[p.areaEffectInfo?.explosionEffect]
+            : undefined,
+        },
+      };
+      if (results.some((r) => r.file === projectile.file))
+        throw new Error(
+          `Duplicate projectile file detected: ${projectile.file}`
+        );
+      results.push(projectile);
+    }
     return results;
   }
 }

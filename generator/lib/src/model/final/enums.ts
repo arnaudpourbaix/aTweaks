@@ -13,7 +13,7 @@ export enum SummonCreatureModeEnum {
 
 export enum CastingTimeModifierTypeEnum {
   Increment = 0,
-  SetAll = 1,
+  Set = 1,
   SetHigher = 2,
 }
 

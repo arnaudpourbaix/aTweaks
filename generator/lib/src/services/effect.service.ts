@@ -183,6 +183,7 @@ export class EffectService {
       case EffectTypeEnum.AcidResistanceModifier:
       case EffectTypeEnum.ElectricityResistanceModifier:
       case EffectTypeEnum.MagicDamageResistanceModifier:
+      case EffectTypeEnum.MagicResistanceModifier:
       case EffectTypeEnum.MoraleModifier:
       case EffectTypeEnum.MaximumHPModifier:
       case EffectTypeEnum.MoraleBreakModifier:

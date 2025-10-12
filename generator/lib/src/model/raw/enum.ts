@@ -8,7 +8,7 @@ export type RawSummonCreatureMode =
   | "FromCRE6"
   | "FromCRE8";
 
-export type RawCastingTimeModifierType = "Increment" | "SetAll" | "SetHigher";
+export type RawCastingTimeModifierType = "Increment" | "Set" | "SetHigher";
 
 export type RawDisableButton =
   | "Stealth"

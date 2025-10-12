@@ -61,9 +61,7 @@ CREATE ITM "ja#1m21"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
-
-Melee damage: 8 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 8 (Piercing)
 Speed Factor: 1
 Enchantment: 2
 Range: 1 feet
@@ -99,7 +97,7 @@ CREATE ITM "ja#2m21"
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Jaws-grab sleeping target~)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws-grab sleeping target
 
 Melee damage: 8 (Piercing)
 Speed Factor: 1
@@ -146,7 +144,7 @@ CREATE ITM "ja#3m21"
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Jaws-autohit grabbed target~)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~STATISTICS:
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws-autohit grabbed target
 
 THAC0: +30
 Melee damage: 8 (Piercing)
@@ -204,6 +202,7 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
+			REMOVE_CRE_EFFECTS
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~WOLFVA1~

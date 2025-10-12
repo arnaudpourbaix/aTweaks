@@ -16,7 +16,6 @@ import { RawItem, RawItemSlot } from "./item";
 import { RawProjectile } from "./projectile";
 import { RawAdditionalCode, RawCustomCode } from "./script";
 import { RawMemorizedSpell, RawSpell } from "./spell";
-import { Triggers } from "./triggers";
 
 export interface RawCreature {
   name: string;
@@ -87,6 +86,8 @@ export interface RawCreature {
   additionalData: RawCreatureAdditionalData;
 
   files: string[];
+  newFiles?: { files: string[]; copyFrom: string }[];
+
   /**
    * For these files, keep existing creature values if they are better
    */
@@ -214,6 +215,7 @@ export interface RawCreatureAdditionalData {
   itemSlots?: RawItemSlot[];
   immunities?: ImmunityName[];
 
+  removeEffects?: boolean;
   removeKnownSpells?: boolean;
   removeMemorizedSpells?: boolean;
   memorizedSpells?: RawMemorizedSpell[];

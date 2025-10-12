@@ -8,25 +8,25 @@ LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM"
 OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)
 APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%%value%%TAB%9~ UNLESS ~JA_NOT_OUTDOOR_CHECK~
 
-CREATE ITM "ja#i8"
+CREATE ITM "ja#i1"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~cloudSpells immunity~ SAY NAME2 ~cloudSpells immunity~
 	SAY UNIDENTIFIED_DESC ~Cloud spells immunity~
-COPY_EXISTING ~ja#i8.itm~ ~override~
+COPY_EXISTING ~ja#i1.itm~ ~override~
 	LPF cloudSpells_immunity END
 
-CREATE ITM "ja#i6"
+CREATE ITM "ja#i4"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~entangle immunity~ SAY NAME2 ~entangle immunity~
 	SAY UNIDENTIFIED_DESC ~Entangle immunity~
-COPY_EXISTING ~ja#i6.itm~ ~override~
+COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF entangle_immunity END
 
-CREATE ITM "ja#i3"
+CREATE ITM "ja#i6"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IBOOT01~ #8
@@ -34,41 +34,54 @@ CREATE ITM "ja#i3"
 	SAY UNIDENTIFIED_DESC ~Hover (flight)
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
-COPY_EXISTING ~ja#i3.itm~ ~override~
+COPY_EXISTING ~ja#i6.itm~ ~override~
 	LPF hover_immunity END
 
-CREATE ITM "ja#i5"
+CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IHELM01~ #8
 	SAY NAME1 ~criticalHit immunity~ SAY NAME2 ~criticalHit immunity~
 	SAY UNIDENTIFIED_DESC ~Immunity to critical hits~
-COPY_EXISTING ~ja#i5.itm~ ~override~
+COPY_EXISTING ~ja#i3.itm~ ~override~
 	LPF criticalHit_immunity END
 
-CREATE ITM "ja#i1"
+CREATE ITM "ja#i2"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~construct trait~ SAY NAME2 ~construct trait~
-	SAY UNIDENTIFIED_DESC ~Construct trait.
+	SAY UNIDENTIFIED_DESC ~Construct trait
+
 Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
 Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
 Darkvision out to 60 feet.~
-COPY_EXISTING ~ja#i1.itm~ ~override~
+COPY_EXISTING ~ja#i2.itm~ ~override~
 	LPF construct_immunity END
 
-CREATE ITM "ja#i2"
+CREATE ITM "ja#i5"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
+	SAY NAME1 ~fey trait~ SAY NAME2 ~fey trait~
+	SAY UNIDENTIFIED_DESC ~Fey trait
+
+Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.
+In all other aspects, spell-like abilities function exactly like the spells which they mimic.~
+COPY_EXISTING ~ja#i5.itm~ ~override~
+	LPF fey_immunity END
+
+CREATE ITM "ja#i10"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
 	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
-COPY_EXISTING ~ja#i2.itm~ ~override~
+COPY_EXISTING ~ja#i10.itm~ ~override~
 	LPF skeletal_immunity END
 
-CREATE ITM "ja#i7"
+CREATE ITM "ja#i9"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -79,10 +92,10 @@ Infravision.
 Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).
 Immunity to poison, sleep effects, paralysis, polymorph, and stunning.
 Not subject to critical hits and backstab.~
-COPY_EXISTING ~ja#i7.itm~ ~override~
+COPY_EXISTING ~ja#i9.itm~ ~override~
 	LPF plant_immunity END
 
-CREATE ITM "ja#i4"
+CREATE ITM "ja#i7"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -93,10 +106,10 @@ Immune to all nonmagical attacks.
 Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
 Attacks pass through armor (+4 THAC0).~
-COPY_EXISTING ~ja#i4.itm~ ~override~
+COPY_EXISTING ~ja#i7.itm~ ~override~
 	LPF incorporeal_immunity END
 
-CREATE ITM "ja#i9"
+CREATE ITM "ja#i8"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -107,5 +120,5 @@ Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mi
 Not subject to critical hits, backstab.
 Darkvision out to 60 feet.
 10-sided Hit Dice~
-COPY_EXISTING ~ja#i9.itm~ ~override~
+COPY_EXISTING ~ja#i8.itm~ ~override~
 	LPF ooze_immunity END

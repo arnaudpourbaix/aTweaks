@@ -39,6 +39,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     this.weiduSpellService.createSpells(lines, creature.spells);
     this.weiduItemService.createItems(lines, creature);
+    this.createNewFiles(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
@@ -54,6 +55,17 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "");
   }
 
+  private createNewFiles(lines: CodeLine[], creature: Creature) {
+    for (const entry of creature.newFiles) {
+      for (const file of entry.files) {
+        this.add(
+          lines,
+          `COPY_EXISTING ~${entry.copyFrom}.cre~ ~override/${file}.cre~`
+        );
+      }
+    }
+  }
+
   private patchCreatures(lines: CodeLine[], creature: Creature) {
     this.add(lines, "ACTION_FOR_EACH ~file~ IN");
     for (const file of creature.files) this.add(lines, file, 1);
@@ -61,6 +73,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, 1);
     this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, 2);
     this.add(lines, `LPF FJ_CRE_VALIDITY END`, 3);
+    this.removeEffects(lines, 3, creature);
     this.removeKnownSpells(lines, 3, creature);
     this.removeMemorizedSpells(lines, 3, creature);
     this.removeItems(lines, 3, creature.additionalData);
@@ -106,6 +119,18 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "PRINT ~====> CRE %file% not found!~", 2);
     this.add(lines, "END", 1);
     this.add(lines, "END", 0);
+  }
+
+  private removeEffects(lines: CodeLine[], tab: number, creature: Creature) {
+    const files = [
+      ...creature.adjustments.reduce((acc, adjustement) => {
+        if (adjustement.additionalData?.removeEffects === false) {
+          for (const f of adjustement.files) acc.add(f);
+        }
+        return acc;
+      }, new Set<string>()),
+    ];
+    this.executeCodeWithExcludedFiles(lines, tab, `REMOVE_CRE_EFFECTS`, files);
   }
 
   private removeKnownSpells(

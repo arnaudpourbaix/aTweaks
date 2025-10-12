@@ -147,8 +147,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
       immunity.animations.length
     )
       this.callImmunityFunction(lines, immunity, tab + 1);
-    const effects = this.effectService.getEffects(immunity.effects);
-    for (const effect of effects) {
+    for (const effect of immunity.effects) {
       this.generateEffect(lines, effect, tab + 1);
     }
     for (const type of immunity.immunities) {
