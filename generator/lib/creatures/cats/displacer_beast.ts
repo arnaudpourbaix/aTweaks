@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -11,8 +11,10 @@ const id = MonsterEnum.DisplacerBeast;
 const mainWeapon = file(1, id);
 const traits = file(2, id);
 
+const name = "Displacer Beast";
+
 export const DISPLACER_BEAST: RawCreature = {
-  name: "Displacer Beast",
+  name,
   tpaFile: "lib/pnp-monster/cat/displacer",
   tracking: true,
   combatWalk: true,
@@ -60,34 +62,25 @@ export const DISPLACER_BEAST: RawCreature = {
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Displacer Beast traits",
-      description: [
-        "Displacer Beast traits",
-        "",
-        "+2 to AC (anyone attacking a displacer beast does so at -2 on his attack roll)",
-        "Permanent mirror image (magical power of displacement, which allows it to appear to be some 3 feet from their actual location)",
-        "Saves as 12th-level fighter; adding +2 to their die rolls.",
-      ],
+      name,
+      immunities: ["magic", "fire", "cold"],
       effects: [
         {
           opcode: "ArmorClassBonus",
           bonusTo: "AllWeapons",
           value: 2,
           dispelResistance: "NotDispelBypassResistance",
-          global: true,
         },
         {
           opcode: "Blur",
           dispelResistance: "NotDispelBypassResistance",
-          global: true,
         },
         {
           opcode: "MirrorImageEffect",
           amount: 1,
           dispelResistance: "NotDispelBypassResistance",
-          global: true,
         },
         {
           opcode: "CastSpellOnCondition",
@@ -95,13 +88,9 @@ export const DISPLACER_BEAST: RawCreature = {
           conditionTarget: "Myself",
           resource: "BDDISPLC",
           dispelResistance: "NotDispelBypassResistance",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   files: ["BDDISPBE", "BDDISPBP"],
   adjustments: [

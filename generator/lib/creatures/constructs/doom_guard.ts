@@ -1,7 +1,6 @@
-import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -15,8 +14,10 @@ const traits = file(2, id);
 const armor = file(3, id);
 const helmet = file(4, id);
 
+const name = "Doom Guard";
+
 export const DOOM_GUARD: RawCreature = {
-  name: "Doom Guard",
+  name,
   bafFile: `lib/pnp-monster/construct/${script}`,
   tpaFile: "lib/pnp-monster/construct/doom_guard",
   tracking: true,
@@ -96,46 +97,33 @@ export const DOOM_GUARD: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Doom Guard traits",
-      description: [
-        "Doom guard traits",
-        "",
-        "50% fire resistance",
-        "50% cold resistance",
-      ],
-      immunities: ["mindSpells", "normalWeapons", "extraplanar"],
+      name,
+      immunities: ["mindSpells"],
       effects: [
         {
           opcode: "FireResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
         {
           opcode: "MagicalFireResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
         {
           opcode: "ColdResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
         {
           opcode: "MagicalColdResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
     {
       file: armor,
       stringRef: TraStringReferenceEnum.PlateMail,

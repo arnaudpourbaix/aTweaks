@@ -108,8 +108,8 @@ CREATE ITM "ja#1m42"
 	WRITE_ASCII 0x3a ~IRING15~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Hamadryad traits
 
-Magic Resistance: 75%
-Entangle immunity~)
+Entangle immunity
+Magic Resistance: 75%~)
 COPY_EXISTING ~ja#1m42.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN

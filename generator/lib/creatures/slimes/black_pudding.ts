@@ -2,11 +2,10 @@ import { ATWEAKS_CREATURES } from "../../config/creatures";
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createCreatureSplit } from "../../spells/slime_split";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
-import { FactoryService } from "../../src/services/factory.service";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "./../monster.enum";
+import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
 const id = MonsterEnum.BlackPudding;
@@ -18,14 +17,10 @@ const traits = file(2, id);
 // Script
 const script = bafFile(id);
 
-const factory = FactoryService.instance;
-
-const globals = {
-  SlimeSplit: "SlimeSplit",
-};
+const name = "Black Pudding";
 
 export const SLIME_BLACK_PUDDING: RawCreature = {
-  name: "Black Pudding",
+  name,
   bafFile: `lib/pnp-monster/slime/${script}`,
   tpaFile: "lib/pnp-monster/slime/black_pudding",
   tracking: true,
@@ -43,7 +38,6 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
     movement: 6,
     ac: 6,
     apr: 1,
-    // 5e: Damage Immunities Acid, Cold, Lightning, Slashing
     xpv: 2000,
     alignment: "NEUTRAL",
     morale: 12,
@@ -86,18 +80,16 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
         // The armor is destroyed if the penalty reduces its AC to 10.
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-      stringRef: "Black pudding traits",
+      name,
       description: [
-        "All deadly puddings are immune to acid, cold, and poison. Fire causes normal damage, as do magic missiles.",
+        "Immune to acid, cold, and poison.",
         "Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.",
       ],
-      immunities: ["acid", "cold"],
-    },
+      // 5e: Damage Immunities Acid, Cold, Lightning, Slashing
+      immunities: ["acid", "cold", "poison"],
+    }),
   ],
   spells: [
     createCreatureSplit({
@@ -121,7 +113,6 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
         remove: true,
       },
       triggers: [
-        factory.global(globals.SlimeSplit, 0),
         {
           name: "Or",
           triggers: [
@@ -133,7 +124,6 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
           ],
         },
       ],
-      actionsAfter: [factory.setGlobal(globals.SlimeSplit, 1)],
     },
   ],
   files: [

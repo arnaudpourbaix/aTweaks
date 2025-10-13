@@ -1,19 +1,22 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "./../monster.enum";
+import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
 const id = MonsterEnum.OchreJelly;
-// Spells
 // Items
 const mainWeapon = file(1, id);
+const traits = file(2, id);
 // Script
 const script = bafFile(id);
 
+const name = "Ochre Jelly";
+
 export const SLIME_OCHRE_JELLY: RawCreature = {
-  name: "Ochre Jelly",
+  name,
   bafFile: `lib/pnp-monster/slime/${script}`,
   tpaFile: "lib/pnp-monster/slime/ochre_jelly",
   tracking: true,
@@ -31,8 +34,6 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
     movement: 3,
     ac: 8,
     apr: 1,
-    resistElectricity: 100,
-    // 5e: Damage Resistances acid. Damage Immunities lightning, slashing
     xpv: 270,
     alignment: "NEUTRAL",
     morale: 10,
@@ -62,13 +63,25 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
       range: 5,
       // 2e: The ochre jelly attacks by attempting to envelop its prey. Its secretions dissolve flesh, inflicting 3-12 (d10+2) points of damage per round of exposure.
       // 5e: reach 5 ft, 2d6+2 bludgeoning damage plus 1d6 acid damage
-      diceSize: 10,
-      diceThrown: 1,
-      damageBonus: 2,
-      damageType: "Crushing",
+      effects: [
+        {
+          opcode: "Damage",
+          type: "Acid",
+          diceSize: 10,
+          diceThrown: 1,
+          amount: 2,
+        },
+      ],
       animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
       projectile: "ACIDBLMU",
     },
+    createTraitItem({
+      file: traits,
+      name,
+      immunities: ["electricity"],
+      // 5e:
+      // Damage Resistances acid. Damage Immunities lightning, slashing
+    }),
   ],
   files: [
     "BDJELLOC", // Ochre Jelly

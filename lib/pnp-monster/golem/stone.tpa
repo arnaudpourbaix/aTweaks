@@ -12,7 +12,9 @@ CREATE ITM "ja#1m25"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4032)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~ISHAPE03~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 3D8 (Crushing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~LethalFists
+
+Melee damage: 3D8 (Crushing)
 Speed Factor: 3
 Enchantment: 4
 Range: 2 feet~)

@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -16,8 +16,10 @@ const mainWeapon = file(1, id);
 const traits = file(2, id);
 const downResistances = file(3, id);
 
+const name = "Dread Wolf";
+
 export const WOLF_DREAD: RawCreature = {
-  name: "Dread Wolf",
+  name,
   tpaFile: "lib/pnp-monster/wolf/dread",
   bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
@@ -73,38 +75,38 @@ export const WOLF_DREAD: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Dread wolf traits",
-      equippedSlot: JEWEL_SLOTS,
+      name,
       description: [
         "A dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.",
         "Only acid, fire, or total dismemberment will inflict permanent damage.",
         "It is immune to charm, hold, and cold-based spells.",
         "Electricity-based spells cause only half damage.",
       ],
-      immunities: ["coldSpells", "charm", "hold"],
+      immunities: ["coldSpells", "cold", "charm", "hold"],
       effects: [
         {
           opcode: "Regeneration",
           amount: 2,
           type: "OneHPperAmountSeconds",
           icon: "Regenerating",
-          global: true,
         },
-        { opcode: "MinimumHP", value: 1, global: true },
+        {
+          opcode: "ElectricityResistanceModifier",
+          value: 50,
+          type: "Set",
+        },
+        { opcode: "MinimumHP", value: 1 },
         {
           opcode: "CastSpellOnCondition",
           conditionTarget: "Myself",
           condition: "HPLT(Myself,Extra)",
           special: 6,
           resource: downState,
-          global: true,
         },
       ],
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
     {
       file: downResistances,
       stringRef: "Dread wolf down resistances",

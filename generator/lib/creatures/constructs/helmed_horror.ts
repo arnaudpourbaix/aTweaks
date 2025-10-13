@@ -1,8 +1,7 @@
-import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -16,8 +15,10 @@ const armor = file(2, id);
 const helmet = file(3, id);
 const traits = file(4, id);
 
+const name = "Helmed Horror";
+
 export const HORROR_HELMED: RawCreature = {
-  name: "Helmed Horror",
+  name,
   bafFile: `lib/pnp-monster/construct/${script}`,
   tpaFile: "lib/pnp-monster/construct/helmed_horror",
   tracking: true,
@@ -234,9 +235,9 @@ export const HORROR_HELMED: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Helmed Horror traits",
+      name,
       immunities: [
         "seeInvisible",
         "fireballSpell",
@@ -245,10 +246,7 @@ export const HORROR_HELMED: RawCreature = {
         "magicMissile",
         "hover",
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   files: ["HELMHO", "GLOWTEST", "BATTHO", "dw#davho", "DOOMSA"],
   adjustments: [

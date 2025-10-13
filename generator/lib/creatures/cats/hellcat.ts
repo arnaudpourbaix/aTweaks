@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -14,8 +14,10 @@ const traits = file(3, id);
 // Spells
 const rearClawsAttack = file(1, id);
 
+const name = "Hellcat";
+
 export const HELLCAT: RawCreature = {
-  name: "Hellcat",
+  name,
   tpaFile: "lib/pnp-monster/cat/hellcat",
   tracking: true,
   combatWalk: true,
@@ -81,33 +83,22 @@ export const HELLCAT: RawCreature = {
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Hellcat traits",
-      description: [
-        "Hellcat traits",
-        "",
-        "20% magic resistance.",
-        "Improved invisibility",
-      ],
+      name,
       immunities: ["mindSpells", "normalWeapons", "extraplanar"],
       effects: [
         {
           opcode: "MagicResistanceModifier",
           value: 20,
           type: "Set",
-          global: true,
         },
         {
           opcode: "Invisibility",
           type: "Improved",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   spells: [
     {

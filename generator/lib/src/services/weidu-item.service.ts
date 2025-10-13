@@ -78,6 +78,10 @@ export class WeiduItemService extends AbstractWeiduService {
       this.writeFlag(lines, 0x98, 4, item.abilityflags, 2);
       this.add(lines, `END`, 1);
       for (const effect of item.effects) {
+        if (!item.type && !effect.global)
+          throw new Error(
+            `Can't add a non-global effect to an item without extended header: ${item.file} -> ${effect.opcode}`
+          );
         this.weiduEffectService.addEffect({
           lines,
           tab: 1,

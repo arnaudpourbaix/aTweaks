@@ -25,7 +25,9 @@ CREATE ITM "ja#1m5"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D6 (Slashing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Claws
+
+Melee damage: 1D6 (Slashing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet
@@ -61,7 +63,9 @@ CREATE ITM "ja#2m5"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D8 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 1D8 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~)

@@ -6,12 +6,11 @@ import { createDimensionDoor } from "../../spells/dimension_door";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
 import { RawSaveType } from "../../src/model/raw/enum";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { bafFile, file } from "../../src/services/misc.func";
-import { abilityAnimalFriendship } from "./hamadryad";
 import { MonsterEnum } from "../monster.enum";
-import { JEWEL_SLOTS } from "../../src/model/constants";
-import { MonsterItemIconEnum } from "../../config/item";
+import { abilityAnimalFriendship } from "./hamadryad";
 
 const effects = EffectService.instance;
 
@@ -38,8 +37,10 @@ const blindingBeautyEffect: RawBaseEffect = {
   saveTypes: ["Spell"],
 };
 
+const name = "Nymph";
+
 export const FEY_NYMPH: RawCreature = {
-  name: "Nymph",
+  name,
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/nymph",
   tracking: true,
@@ -274,21 +275,17 @@ export const FEY_NYMPH: RawCreature = {
     },
   ],
   items: [
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Nymph traits",
+      name,
       effects: [
         {
           opcode: "MagicResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   additionalCode: [
     {

@@ -1,14 +1,13 @@
 import { PRESET_NAMES } from "../../config/ability-presets";
 import { ATWEAKS_CREATURES } from "../../config/creatures";
-import { ITEMS, MonsterItemIconEnum } from "../../config/item";
+import { ITEMS } from "../../config/item";
 import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createDimensionDoor } from "../../spells/dimension_door";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { ConditionalStatement } from "../../src/model/final/script";
 import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
-import { RawItem } from "../../src/model/raw/item";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -24,18 +23,6 @@ const id = MonsterEnum.Dryad;
 const traits = file(1, id);
 // Script
 const script = bafFile(id);
-
-export const feyTraits: RawItem = {
-  file: traits,
-  stringRef: "Fey traits",
-  description: [
-    "Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.",
-    "In all other aspects, spell-like abilities function exactly like the spells which they mimic.",
-  ],
-  equippedSlot: JEWEL_SLOTS,
-  category: "Rings",
-  icon: MonsterItemIconEnum.Traits,
-};
 
 const speakWithPlantsDuration = 60;
 
@@ -104,8 +91,10 @@ export const dryadWildernessAbilities: ConditionalStatement[] = [
   },
 ];
 
+const name = "Dryad";
+
 export const FEY_DRYAD: RawCreature = {
-  name: "Dryad",
+  name,
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/dryad",
   tracking: true,
@@ -244,21 +233,17 @@ export const FEY_DRYAD: RawCreature = {
     },
   ],
   items: [
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Dryad traits",
+      name,
       effects: [
         {
           opcode: "MagicResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   additionalCode: [
     {

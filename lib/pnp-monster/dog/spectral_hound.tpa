@@ -26,7 +26,9 @@ CREATE ITM "ja#1m39"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 2D6 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 2D6 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 1 feet

@@ -108,7 +108,6 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("ja#1m47")
-	Global("SlimeSplit","LOCALS",0)
 	OR(5)
 		HitBy([ANYONE],ELECTRICITY)
 		HitBy([ANYONE],SLASHING)
@@ -120,7 +119,6 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#1m47",Myself)
 		RemoveSpellRES("ja#1m47")
-		SetGlobal("SlimeSplit","LOCALS",1)
 END
 
 // Attack NoCheck enemy

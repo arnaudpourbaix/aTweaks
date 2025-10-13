@@ -124,18 +124,19 @@ COPY_EXISTING ~ja#1m32.itm~ ~override~
 
 CREATE ITM "ja#3m32"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Ogre Mage Traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Ogre Mage Traits~)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Ogre Mage traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Ogre Mage traits~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Ogre Mage Traits
-Regenerate one hit point per round (lost members must be reattached to regenerate).~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Ogre Mage traits
+
+Regeneration: 1 hp/round~)
 COPY_EXISTING ~ja#3m32.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
-	LPF ADD_EFFECT INT_VAR opcode=98 target=2 parameter1=6 parameter2=3 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=6 parameter2=3 timing=2 probability1=100 END
 
 CREATE ITM "ja#2m32"
 	WRITE_LONG 0x64 0x72

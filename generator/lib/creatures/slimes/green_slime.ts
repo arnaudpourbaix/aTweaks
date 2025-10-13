@@ -1,19 +1,22 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "./../monster.enum";
+import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
 const id = MonsterEnum.GreenSlime;
-// Spells
 // Items
 const mainWeapon = file(1, id);
+const traits = file(2, id);
 // Script
 const script = bafFile(id);
 
+const name = "Green Slime";
+
 export const SLIME_GREEN: RawCreature = {
-  name: "Green Slime",
+  name,
   bafFile: `lib/pnp-monster/slime/${script}`,
   tpaFile: "lib/pnp-monster/slime/green_slime",
   tracking: true,
@@ -57,11 +60,7 @@ export const SLIME_GREEN: RawCreature = {
   },
   items: [
     {
-      //
-      // This slime cannot attack but is sensitive to vibrations and often drops from the ceiling onto a passing victim.
       // Green slime attaches itself to living flesh and in 1-4 melee rounds turns the creature into green slime (no resurrection possible).
-      // Green slime eats through one inch of wood in an hour, but can dissolve metal quickly, going through plate armor in three melee rounds.
-      // The horrid growth can be scraped off quickly, cut away, frozen, or burned. A cure disease spell kills green slime, but other attacks, including weapons and spells, have no effect.
       //
       // 5e: Pseudopod. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) acid damage.
       file: mainWeapon,
@@ -70,11 +69,23 @@ export const SLIME_GREEN: RawCreature = {
       equippedSlot: "WEAPON1",
       type: "Melee",
       range: 5,
-      diceSize: 4,
-      diceThrown: 1,
-      damageBonus: 1,
-      damageType: "Crushing",
+      effects: [
+        {
+          opcode: "Damage",
+          type: "Acid",
+          amount: 1,
+          diceThrown: 1,
+          diceSize: 4,
+        },
+      ],
     },
+    createTraitItem({
+      file: traits,
+      name,
+      // The horrid growth can be scraped off quickly, cut away, frozen, or burned.
+      // A cure disease spell kills green slime, but other attacks, including weapons and spells, have no effect.
+      immunities: ["magic", "physicalDamage"],
+    }),
   ],
   files: [
     "JELLGRSU", // Green Slime

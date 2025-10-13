@@ -23,7 +23,9 @@ CREATE ITM "ja#1m37"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D4+1 (Slashing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Claws
+
+Melee damage: 1D4+1 (Slashing)
 Speed Factor: 3
 Enchantment: 2
 Range: 2 feet
@@ -60,7 +62,9 @@ CREATE ITM "ja#2m37"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 2D6 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 2D6 (Piercing)
 Speed Factor: 3
 Enchantment: 2
 Range: 2 feet~)
@@ -90,7 +94,10 @@ CREATE ITM "ja#3m37"
 	WRITE_ASCII 0x3a ~IRING15~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Hellcat traits
 
-20% magic resistance.
+Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+Immunity to normal weapons
+Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.
+Magic Resistance: 20%
 Improved invisibility~)
 COPY_EXISTING ~ja#3m37.itm~ ~override~
 	READ_SHORT 0x68 abicount

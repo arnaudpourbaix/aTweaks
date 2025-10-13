@@ -1,8 +1,8 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -20,8 +20,10 @@ const shiftEffect: RawBaseEffect = {
   duration: 36,
 };
 
+const name = "Spectral Hound";
+
 export const SPECTRAL_HOUND: RawCreature = {
-  name: "Spectral Hound",
+  name,
   tpaFile: "lib/pnp-monster/dog/spectral_hound",
   tracking: true,
   combatWalk: true,
@@ -72,14 +74,11 @@ export const SPECTRAL_HOUND: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Spectral Hound traits",
+      name,
       immunities: ["seeInvisible", "extraplanar", "incorporeal"],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   spells: [
     {

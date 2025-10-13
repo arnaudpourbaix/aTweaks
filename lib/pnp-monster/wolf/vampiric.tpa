@@ -61,7 +61,9 @@ CREATE ITM "ja#1m21"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 8 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 8 (Piercing)
 Speed Factor: 1
 Enchantment: 2
 Range: 1 feet
@@ -176,13 +178,16 @@ COPY_EXISTING ~ja#3m21.itm~ ~override~
 
 CREATE ITM "ja#4m21"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Vampiric wolf traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Vampiric wolf traits~)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Vampiric Wolf traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Vampiric Wolf traits~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.
-Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.
-They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Vampiric Wolf traits
+
+Sleep immunity
+Charm immunity
+Hold immunity
+Immunity to normal weapons~)
 COPY_EXISTING ~ja#4m21.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN

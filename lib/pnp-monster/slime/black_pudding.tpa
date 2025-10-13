@@ -28,9 +28,12 @@ CREATE ITM "ja#1m47"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4024)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IJELLY~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Enchantment: 3
-Range: 5 feet
-Acid damage: 3D8~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Pseudopod
+
+Acid damage: 3D8
+Speed Factor: 4
+Enchantment: 3
+Range: 5 feet~)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m47.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -48,11 +51,13 @@ COPY_EXISTING ~ja#1m47.itm~ ~override~
 
 CREATE ITM "ja#2m47"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Black pudding traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Black pudding traits~)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Black Pudding traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Black Pudding traits~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~All deadly puddings are immune to acid, cold, and poison. Fire causes normal damage, as do magic missiles.
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Black Pudding traits
+
+Immune to acid, cold, and poison.
 Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.~)
 COPY_EXISTING ~ja#2m47.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -61,6 +66,7 @@ COPY_EXISTING ~ja#2m47.itm~ ~override~
 	END
 	LPF acid_immunity END
 	LPF cold_immunity END
+	LPF poison_immunity END
 
 COPY_EXISTING ~BDPUDDBL.cre~ ~override/ja#blpud.cre~
 ACTION_FOR_EACH ~file~ IN

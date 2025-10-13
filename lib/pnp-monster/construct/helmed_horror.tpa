@@ -15,11 +15,13 @@ CREATE ITM "ja#1m15"
 	WRITE_ASCII 0x22 ~S2~ #2
 	WRITE_BYTE 0x31 93
 	WRITE_ASCII 0x3a ~IFLAMS01~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 2D6 (Slashing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~FlamingGreatsword
+
+Melee damage: 2D6 (Slashing)
+Fire damage: 1D6
 Speed Factor: 10
 Enchantment: 1
-Range: 2 feet
-Fire damage: 1D6~)
+Range: 2 feet~)
 	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#1m15.itm~ ~override~
 	READ_SHORT 0x68 abicount

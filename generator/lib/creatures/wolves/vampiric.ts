@@ -1,8 +1,8 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawItem } from "../../src/model/raw/item";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -55,8 +55,10 @@ const baseWeapon: RawItem = {
   ],
 };
 
+const name = "Vampiric Wolf";
+
 export const WOLF_VAMPIRIC: RawCreature = {
-  name: "Vampiric Wolf",
+  name,
   tpaFile: "lib/pnp-monster/wolf/vampiric",
   bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
@@ -122,19 +124,11 @@ export const WOLF_VAMPIRIC: RawCreature = {
       equippedSlot: "WEAPON3",
       bonusToHit: 30,
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Vampiric wolf traits",
-      equippedSlot: JEWEL_SLOTS,
-      description: [
-        "Vampiric wolves are immune to sleep, charm, hold, and paralysis-based spells.",
-        "Only silver weapons or magical weapons of +1 value or better can do actual damage in melee.",
-        "They also regenerate, instantly gaining the same number of hit points they inflict as damage on an opponent",
-      ],
+      name,
       immunities: ["sleep", "charm", "hold", "normalWeapons"],
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   files: [
     "BDWOLFVA",

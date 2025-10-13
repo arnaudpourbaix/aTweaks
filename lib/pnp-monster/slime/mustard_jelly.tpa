@@ -79,7 +79,10 @@ CREATE ITM "ja#1m46"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4024)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IJELLY~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 5D4 (Crushing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Pseudopod
+
+Melee damage: 2D4 (Crushing)
+Acid damage: 3D4
 Speed Factor: 4
 Enchantment: 2
 Range: 5 feet~)
@@ -93,11 +96,12 @@ COPY_EXISTING ~ja#1m46.itm~ ~override~
 		WRITE_SHORT 0x80 5
 		WRITE_BYTE 0x84 4
 		WRITE_BYTE 0x88 4
-		WRITE_BYTE 0x8a 5
+		WRITE_BYTE 0x8a 2
 		WRITE_SHORT 0x8e 2
 		WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~ACIDBLMU~)) + 1
 		WRITE_SHORT 0xa0 100
 	END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=65536 probability1=100 dicenumber=3 dicesize=4 END
 
 CREATE ITM "ja#2m46"
 	WRITE_LONG 0x64 0x72
@@ -105,10 +109,15 @@ CREATE ITM "ja#2m46"
 	WRITE_LONG 0xc RESOLVE_STR_REF(~Mustard Jelly traits~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Mustard jelly is impervious to normal weapons and electrical attacks. Cold causes only half damage.
-A magic missile spell will only cause it to grow; mustard jelly gains hit points equal in number to the damage rolled.
-Mustard jelly is translucent, and very hard to see until it attacks.
-The only clue to its presence is a faint odor, similar to blooming mustard plants.~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Mustard Jelly traits
+
+Electricity immunity
+Immunity to normal weapons
+Magic missiles immunity
+Cold Resistance: 50%
+Magical Cold Resistance: 50%
+Magic Resistance: 10%
+Translucent~)
 COPY_EXISTING ~ja#2m46.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -123,6 +132,7 @@ COPY_EXISTING ~ja#2m46.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=342 target=1 global=1 parameter2=4 timing=2 probability1=100 END
 	LPF electricity_immunity END
 	LPF normalWeapons_immunity END
+	LPF magicMissile_immunity END
 
 COPY_EXISTING ~JELLMU.cre~ ~override/ja#jelmu.cre~
 ACTION_FOR_EACH ~file~ IN

@@ -6,11 +6,11 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createCreatureSplit } from "../../spells/slime_split";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../../src/model/raw/effect";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "./../monster.enum";
+import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
 const id = MonsterEnum.MustardJelly;
@@ -32,8 +32,10 @@ const vaporBaseEffect: RawBaseEffect = {
   saveTypes: ["ParalyzePoisonDeath"],
 };
 
+const name = "Mustard Jelly";
+
 export const SLIME_MUSTARD_JELLY: RawCreature = {
-  name: "Mustard Jelly",
+  name,
   bafFile: `lib/pnp-monster/slime/${script}`,
   tpaFile: "lib/pnp-monster/slime/mustard_jelly",
   tracking: true,
@@ -78,60 +80,54 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       type: "Melee",
       speed: 4,
       range: 5,
-      diceThrown: 5,
+      diceThrown: 2,
       diceSize: 4,
       damageType: "Crushing",
       animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
       projectile: "ACIDBLMU",
-    },
-    {
-      file: traits,
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-      stringRef: "Mustard Jelly traits",
-      description: [
-        "Mustard jelly is impervious to normal weapons and electrical attacks. Cold causes only half damage.",
-        "A magic missile spell will only cause it to grow; mustard jelly gains hit points equal in number to the damage rolled.",
-        "Mustard jelly is translucent, and very hard to see until it attacks.",
-        "The only clue to its presence is a faint odor, similar to blooming mustard plants.",
+      effects: [
+        {
+          opcode: "Damage",
+          type: "Acid",
+          diceThrown: 3,
+          diceSize: 4,
+        },
       ],
-      immunities: ["electricity", "normalWeapons"],
+    },
+    createTraitItem({
+      file: traits,
+      name,
+      immunities: ["electricity", "normalWeapons", "magicMissile"],
       effects: [
         {
           opcode: "ColdResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
         {
           opcode: "MagicalColdResistanceModifier",
           value: 50,
           type: "Set",
-          global: true,
         },
         {
           opcode: "MagicResistanceModifier",
           value: 10,
           type: "Set",
-          global: true,
         },
         {
           opcode: "Translucency",
           amount: 99,
           type: "DrawInstantly",
-          global: true,
         },
-        { opcode: "NoCollisionDetection", passWalls: true, global: true },
-        { opcode: "ModifyCollisionBehavior", global: true },
+        { opcode: "NoCollisionDetection", passWalls: true },
+        { opcode: "ModifyCollisionBehavior" },
         {
           opcode: "OverrideCreatureData",
           field: "PersonalSpace",
           value: 0,
-          global: true,
         },
       ],
-    },
+    }),
   ],
   projectiles: [
     {

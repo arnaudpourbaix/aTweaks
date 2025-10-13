@@ -1,4 +1,5 @@
 import { ImmunityName } from "../../config/immunity-name";
+import { TraStringReferenceEnum } from "../../config/stringRef";
 import { Creature } from "../model/final/creature";
 import { Effect } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
@@ -15,8 +16,10 @@ import {
   CurrentHPbonusEffect,
   DamageEffect,
   IdsEffect,
+  InvisibilityEffect,
   PoisonEffect,
   RawEffect,
+  RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
 } from "../model/raw/effect";
@@ -55,9 +58,12 @@ export class DescriptionService {
       desc.push(
         `${type} damage: ${damage} (${AbilityDamageTypeEnum[item.damageType!]})`
       );
-      if (item.speed !== undefined) {
-        desc.push(`Speed Factor: ${item.speed}`);
-      }
+    }
+    const damageEffects = item.effects.filter((e) => e.raw.opcode === "Damage");
+    const otherEffects = item.effects.filter((e) => e.raw.opcode !== "Damage");
+    desc.push(...this.getItemEffectsDescription(damageEffects, creature));
+    if ((damage || damageEffects.length) && item.speed !== undefined) {
+      desc.push(`Speed Factor: ${item.speed}`);
     }
     if (item.enchantment && item.enchantment > 0) {
       desc.push(`Enchantment: ${item.enchantment}`);
@@ -65,10 +71,12 @@ export class DescriptionService {
     if (item.range) {
       desc.push(`Range: ${item.range} feet`);
     }
-    desc.push(...this.getItemEffectsDescription(item.effects, creature));
     desc.push(...this.getImmunitiesDescription(item.immunities));
+    desc.push(...this.getItemEffectsDescription(otherEffects, creature));
     if (desc.length && typeof item.stringRef === "string") {
       desc.unshift(item.stringRef, "");
+    } else if (desc.length && typeof item.stringRef === "number") {
+      desc.unshift(TraStringReferenceEnum[item.stringRef], "");
     }
     item.description = desc;
   }
@@ -131,10 +139,18 @@ export class DescriptionService {
       results.push("Can see invisible creatures.");
     } else if (effect.raw.opcode === "Blur") {
       results.push("Blur (visual effect only)");
+    } else if (effect.raw.opcode === "Translucency") {
+      results.push("Translucent");
     } else if (effect.raw.opcode === "CurrentHPbonus") {
       results.push(...this.getCurrentHPbonus(effect.raw));
     } else if (effect.raw.opcode === "Sleep") {
       results.push(...this.getSleep(effect.raw));
+    } else if (effect.raw.opcode === "MirrorImageEffect") {
+      results.push(`Mirror image (${effect.raw.amount})`);
+    } else if (effect.raw.opcode === "Invisibility") {
+      results.push(...this.getInvisibility(effect.raw));
+    } else if (effect.raw.opcode === "Regeneration") {
+      results.push(...this.getRegeneration(effect.raw));
     } else if (effect.raw.opcode === "CastingTimeModifier") {
       results.push(...this.getCastingTimeModifier(effect.raw));
     } else if (this.getStatisticText(effect.raw)) {
@@ -183,11 +199,36 @@ export class DescriptionService {
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
+    if (effect.bonusTo === "SetBaseArmorClassToValue")
+      return [`${effect.value} base AC`];
     const results: string[] = [];
-    results.push(
-      `${this.getSignedNumber(effect.value)} AC (${effect.bonusTo})`
-    );
+    let suffix = "";
+    if (effect.bonusTo === "CrushingWeapons") suffix = "crushing";
+    else if (effect.bonusTo === "SlashingWeapons") suffix = "slashing";
+    else if (effect.bonusTo === "PiercingWeapons") suffix = "piercing";
+    else if (effect.bonusTo === "MissileWeapons") suffix = "missile";
+    if (suffix) suffix = ` vs. ${suffix} attacks`;
+    results.push(`${this.getSignedNumber(effect.value)} AC${suffix}`);
     return results;
+  }
+
+  private getInvisibility(effect: InvisibilityEffect): string[] {
+    const results: string[] = [];
+    if (effect.type === "Improved") results.push("Improved invisibility");
+    else results.push(`Invisibility`);
+    return results;
+  }
+
+  private getRegeneration(effect: RegenerationEffect): string[] {
+    if (["AmountHPperSecond", "AmountHPperSecondBis"].includes(effect.type))
+      return [`Regeneration: ${effect.amount} hp/second`];
+    else if (effect.type === "AmountHPpercentagePerSecond")
+      return [`Regeneration: ${effect.amount}% hp/second`];
+    else if (effect.amount === 6) return [`Regeneration: 1 hp/round`];
+    const rounds = effect.amount / 6;
+    if (rounds > 1 && effect.amount % 6 === 0)
+      return [`Regeneration: 1 hp/${rounds} rounds`];
+    return [`Regeneration: 1 hp/${effect.amount} seconds`];
   }
 
   private getParalyze(effect: IdsEffect): string[] {
@@ -233,9 +274,10 @@ export class DescriptionService {
 
   private getDamage(effect: DamageEffect): string[] {
     const results: string[] = [];
+    const amount = effect.amount ? this.getSignedNumber(effect.amount) : "";
     if (effect.diceSize && effect.diceThrown) {
       results.push(
-        `${effect.type} damage: ${effect.diceThrown}D${effect.diceSize}`
+        `${effect.type} damage: ${effect.diceThrown}D${effect.diceSize}${amount}`
       );
     }
     return results;

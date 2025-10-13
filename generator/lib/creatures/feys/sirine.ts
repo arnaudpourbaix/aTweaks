@@ -9,6 +9,7 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../../src/model/raw/spell-protection";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { bafFile, convertMovement, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
@@ -36,8 +37,10 @@ const tranquilityBaseEffect: RawBaseEffect = {
   saveTypes: ["ParalyzePoisonDeath"],
 };
 
+const name = "Sirine";
+
 export const FEY_SIRINE: RawCreature = {
-  name: "Sirine",
+  name,
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/sirine",
   tracking: true,
@@ -164,22 +167,18 @@ export const FEY_SIRINE: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Sirine traits",
+      name,
       immunities: ["cloudSpells"],
       effects: [
         {
           opcode: "MagicResistanceModifier",
           value: 20,
           type: "Set",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   projectiles: [
     {

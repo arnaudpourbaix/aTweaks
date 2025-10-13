@@ -1,9 +1,9 @@
 import { RawCreature } from "../../src/model/raw/creature";
 import { OGRE } from "../minotaur";
 import { OGRE_BERSERKER } from "./ogre_berserker";
-import { OGRE_HALF } from "./ogre_half";
+import { OGRE_HALF } from "./half_ogre";
 import { OGRE_MAGE } from "./ogre_mage";
-import { OGRE_OGRILLON } from "./ogre_ogrillon";
+import { OGRE_OGRILLON } from "./ogrillon";
 import { OGRE_SHAMAN } from "./ogre_shaman";
 
 export const Ogres: RawCreature[] = [

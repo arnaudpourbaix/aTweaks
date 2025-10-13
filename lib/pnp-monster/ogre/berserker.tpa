@@ -16,7 +16,9 @@ CREATE ITM "ja#1m31"
 	WRITE_ASCII 0x22 ~FL~ #2
 	WRITE_BYTE 0x31 100
 	WRITE_ASCII 0x3a ~IBLUN13~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 2D8 (Crushing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~GiantFlail
+
+Melee damage: 2D8 (Crushing)
 Speed Factor: 8
 Enchantment: 1
 Range: 2 feet~)

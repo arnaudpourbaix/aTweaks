@@ -1,9 +1,9 @@
 import { SPELL_STATES } from "../../config/ability-presets";
-import { ITEMS, MonsterItemIconEnum } from "../../config/item";
+import { ITEMS } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, convertMovement, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { MonsterEnum } from "../monster.enum";
@@ -25,8 +25,10 @@ const mainWeapon = file(1, id);
 const gaseousFormWeapon = file(2, id);
 const traits = file(3, id);
 
+const name = "Ogre Mage";
+
 export const OGRE_MAGE: RawCreature = {
-  name: "Ogre Mage",
+  name,
   bafFile: `lib/pnp-monster/ogre/${script}`,
   tpaFile: "lib/pnp-monster/ogre/mage",
   tracking: true,
@@ -137,16 +139,9 @@ export const OGRE_MAGE: RawCreature = {
         },
       ],
     },
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Ogre Mage Traits",
-      equippedSlot: JEWEL_SLOTS,
-      description: [
-        "Ogre Mage Traits",
-        "Regenerate one hit point per round (lost members must be reattached to regenerate).",
-      ],
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
+      name,
       effects: [
         {
           opcode: "Regeneration",
@@ -154,7 +149,7 @@ export const OGRE_MAGE: RawCreature = {
           amount: 6,
         },
       ],
-    },
+    }),
     {
       file: gaseousFormWeapon,
       stringRef: "Gaseous form",

@@ -12,7 +12,9 @@ CREATE ITM "ja#1m9"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4025)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4025)
 	WRITE_ASCII 0x3a ~IJELLY~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D2 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Tentacles
+
+Melee damage: 1D2 (Piercing)
 Speed Factor: 3
 Range: 2 feet
 Paralyze target for 7 rounds (saves vs poison/death).~)

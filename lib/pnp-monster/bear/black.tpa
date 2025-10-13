@@ -24,7 +24,9 @@ CREATE ITM "ja#1m4"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D3 (Slashing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Claws
+
+Melee damage: 1D3 (Slashing)
 Speed Factor: 3
 Range: 1 feet
 
@@ -57,7 +59,9 @@ CREATE ITM "ja#2m4"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D6 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~)
 COPY_EXISTING ~ja#2m4.itm~ ~override~

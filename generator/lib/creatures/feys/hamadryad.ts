@@ -19,16 +19,15 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../../src/model/raw/spell-protection";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, file } from "../../src/services/misc.func";
+import { MonsterEnum } from "../monster.enum";
 import {
   abilityDryadDireCharm,
   abilitySpeakWithPlants,
   dryadWildernessAbilities,
 } from "./dryad";
-import { MonsterEnum } from "../monster.enum";
-import { JEWEL_SLOTS } from "../../src/model/constants";
-import { MonsterItemIconEnum } from "../../config/item";
 
 const factory = FactoryService.instance;
 
@@ -72,8 +71,10 @@ const globals = {
   CloakwoodHamadryad: "rr#hamat",
 };
 
+const name = "Hamadryad";
+
 export const FEY_HAMADRYAD: RawCreature = {
-  name: "Hamadryad",
+  name,
   bafFile: `lib/pnp-monster/fey/${script}`,
   tpaFile: "lib/pnp-monster/fey/hamadryad",
   tracking: true,
@@ -339,22 +340,18 @@ export const FEY_HAMADRYAD: RawCreature = {
     // On a successful check, the spell that created the fire ends. Fire created by a magical item is also doused, and the item becomes unable to produce fire for 1d4 hours.
   ],
   items: [
-    {
+    createTraitItem({
       file: traits,
-      stringRef: "Hamadryad traits",
+      name,
       immunities: ["entangle"],
       effects: [
         {
           opcode: "MagicResistanceModifier",
           value: 75,
           type: "Set",
-          global: true,
         },
       ],
-      equippedSlot: JEWEL_SLOTS,
-      category: "Rings",
-      icon: MonsterItemIconEnum.Traits,
-    },
+    }),
   ],
   additionalCode: [
     {

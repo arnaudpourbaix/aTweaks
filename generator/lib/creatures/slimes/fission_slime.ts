@@ -9,9 +9,9 @@ const effects = EffectService.instance;
 const utils = UtilsService.instance;
 // Creature Id
 const id = MonsterEnum.FissionSlime;
-// Spells
 // Items
 const mainWeapon = file(1, id);
+const traits = file(2, id);
 // Script
 const script = bafFile(id);
 

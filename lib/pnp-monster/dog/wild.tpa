@@ -9,7 +9,9 @@ CREATE ITM "ja#1m12"
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Melee damage: 1D4 (Piercing)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
+
+Melee damage: 1D4 (Piercing)
 Speed Factor: 3
 Range: 1 feet~)
 COPY_EXISTING ~ja#1m12.itm~ ~override~
