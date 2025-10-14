@@ -28,9 +28,8 @@ export const SLIME_OLIVE_CREATURE: RawCreature = {
     savingThrows: false,
   },
   data: {
-    level1: 8,
+    level1: 12,
     bonusHp: 2,
-    thac0: 13,
     strength: 15,
     dexterity: 10,
     constitution: 21,
@@ -72,7 +71,7 @@ export const SLIME_OLIVE_CREATURE: RawCreature = {
           opcode: "Damage",
           type: "Acid",
           diceSize: 4,
-          diceThrown: 1,
+          diceThrown: 2,
         },
       ],
     },
@@ -86,6 +85,6 @@ export const SLIME_OLIVE_CREATURE: RawCreature = {
     }),
   ],
   files: [
-    "SCHLUM", // TODO: Schlumpsha the Sewer King. Note: is an olive slime, was a former mage that appears to have transformed itself into a slime.
+    "SCHLUM", // Schlumpsha the Sewer King. Note: is an olive slime, was a former mage that appears to have transformed itself into a slime.
   ],
 };

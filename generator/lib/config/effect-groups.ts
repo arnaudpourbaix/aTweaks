@@ -1,15 +1,20 @@
-import { RawBaseEffect, RawEffect } from "../src/model/raw/effect";
+import {
+  RawBaseEffect,
+  RawEffect,
+  RawEffectGroup,
+  RawParalyzeEffectGroup,
+} from "../src/model/raw/effect";
 import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
 import { RawEffectGroupName } from "./effect-group-name";
 import { TraStringReferenceEnum } from "./stringRef";
 
 export const EFFECT_GROUPS: {
   group: RawEffectGroupName;
-  effectsFn: (effect: RawEffect) => RawEffect[];
+  effectsFn: (effect: RawEffectGroup) => RawEffect[];
 }[] = [
   {
     group: "RestrainedEffects",
-    effectsFn: (effect: RawEffect) => {
+    effectsFn: (effect) => {
       const base: { saveTypes?: RawSaveType[]; saveBonus?: number } = {
         saveTypes: effect.saveTypes,
         saveBonus: effect.saveBonus,
@@ -71,7 +76,7 @@ export const EFFECT_GROUPS: {
   },
   {
     group: "CureAllEffects",
-    effectsFn: (effect: RawEffect) => {
+    effectsFn: (effect) => {
       const base: RawBaseEffect = {
         timing: "InstantPermanentUntilDeath",
         target: "Self",
@@ -119,6 +124,64 @@ export const EFFECT_GROUPS: {
         },
         {
           opcode: "RemoveFear",
+          ...base,
+        },
+      ];
+      return rawEffects;
+    },
+  },
+  {
+    group: "ParalyzeEffects",
+    effectsFn: (eff) => {
+      const effect = eff as RawParalyzeEffectGroup;
+      const base: { saveTypes?: RawSaveType[]; saveBonus?: number } = {
+        saveTypes: effect.saveTypes,
+        saveBonus: effect.saveBonus,
+      };
+      const duration: { timing?: RawEffectTiming; duration?: number } = {
+        timing: "InstantLimited",
+        duration: effect.duration,
+      };
+      const rawEffects: RawEffect[] = [
+        {
+          opcode: "Paralyze",
+          idsFile: "EA",
+          idsEntry: "ANYONE",
+          ...duration,
+          ...base,
+        },
+        {
+          opcode: "DisplayPortraitIcon",
+          icon: "Held",
+          ...duration,
+          ...base,
+        },
+        {
+          opcode: "PlaySound",
+          timing: "InstantPermanentUntilDeath",
+          resource: "EFF_P11",
+          ...base,
+        },
+        {
+          opcode: "PlaySound",
+          resource: "EFF_E05",
+          ...duration,
+          timing: "DelayPermanent",
+          ...base,
+        },
+        {
+          opcode: "CharacterColorPulse",
+          timing: "InstantPermanentUntilDeath",
+          color: { blue: 0, green: 57, red: 87 },
+          location: "ArmorGreyBeltAmulet",
+          cycleSpeed: 25,
+          ...base,
+        },
+        {
+          opcode: "LightingEffects",
+          timing: "InstantPermanentUntilDeath",
+          lightingTarget: "SpellTarget",
+          effect: effect.lightningEffect,
           ...base,
         },
       ];

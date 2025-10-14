@@ -6,6 +6,7 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
+import { StringReference } from "../misc";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
 import { RawCreatureAttack } from "./attack";
@@ -19,6 +20,12 @@ import { RawMemorizedSpell, RawSpell } from "./spell";
 
 export interface RawCreature {
   name: string;
+
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: StringReference;
+
   /**
    * Filename for BAF file (without extension)
    */

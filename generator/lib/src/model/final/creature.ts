@@ -6,6 +6,7 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
+import { StringReference } from "../misc";
 import { Actions } from "../raw/actions";
 import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
 import { CreatureSize, RawProficiencyType } from "../raw/enum";
@@ -27,6 +28,11 @@ export interface BaseCreature {
 }
 
 export interface Creature extends BaseCreature {
+  /**
+   * String reference, must be referenced in TRA files
+   */
+  stringRef?: StringReference;
+
   /**
    * Filename for BAF file (without extension, relative path from mod folder)
    */

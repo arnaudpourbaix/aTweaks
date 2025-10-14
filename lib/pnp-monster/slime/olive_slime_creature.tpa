@@ -15,11 +15,11 @@ CREATE ITM "ja#1m52"
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Pseudopod
 
 Melee damage: 2D4 (Crushing)
-Acid damage: 1D4
+Acid damage: 2D4
 Speed Factor: 3
-Enchantment: 2
+Enchantment: 4
 Range: 2 feet~)
-	WRITE_LONG 0x60 2
+	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#1m52.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -35,7 +35,7 @@ COPY_EXISTING ~ja#1m52.itm~ ~override~
 		WRITE_SHORT 0xa0 33
 		WRITE_SHORT 0xa2 33
 	END
-	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=65536 probability1=100 dicenumber=1 dicesize=4 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=65536 probability1=100 dicenumber=2 dicesize=4 END
 
 CREATE ITM "ja#2m52"
 	WRITE_LONG 0x64 0x72
@@ -77,7 +77,7 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=8
+					level1=12
 					strength=15
 					dexterity=10
 					constitution=21
@@ -85,9 +85,9 @@ BEGIN
 					wisdom=10
 					charisma=10
 					movement=5
-					hp=128
+					hp=174
 					ac=9
-					thac0=13
+					thac0=9
 					apr=1
 					xpv=2500
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)

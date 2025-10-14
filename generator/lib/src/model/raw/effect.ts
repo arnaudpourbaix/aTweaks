@@ -380,10 +380,6 @@ export type CreateItemInSlotEffect = RawBaseEffect & {
   slot: SlotIdentifier;
 };
 
-export type RawEffectGroup = RawBaseEffect & {
-  opcode: RawEffectGroupName;
-};
-
 export type RemoveOpcodeEffect = RawBaseEffect & {
   opcode: "RemoveOpcode";
   opcodeToRemove: RawEffectOpcode;
@@ -506,6 +502,17 @@ export type ParamLessEffect = RawBaseEffect & {
     | "Stun90HP"
     | "Web";
 };
+
+export type RawParamlessEffectGroup = RawBaseEffect & {
+  opcode: "RestrainedEffects" | "CureAllEffects";
+};
+
+export type RawParalyzeEffectGroup = RawBaseEffect & {
+  opcode: "ParalyzeEffects";
+  lightningEffect: RawLightingEffect;
+};
+
+export type RawEffectGroup = RawParamlessEffectGroup | RawParalyzeEffectGroup;
 
 export type RawEffect =
   | ParamLessEffect

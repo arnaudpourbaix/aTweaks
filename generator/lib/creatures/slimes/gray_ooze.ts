@@ -79,14 +79,10 @@ export const SLIME_GRAY_OOZE: RawCreature = {
       // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage.
       // Note that weapons striking a gray ooze may corrode and break.
       immunities: ["magic", "fire", "cold"],
-      // 5e:
-      // Transparent (Ex): A gray ooze is hard to identify, even under ideal conditions, and it takes a DC 15 Spot check to notice one. Creatures who fail to notice a gray ooze and walk into it are automatically hit with a melee attack for slam and acid damage.
     }),
   ],
   files: [
     "BPJLGR01", // Gray Ooze
     "JELLGR", // Gray Ooze
-    // "AC#FPSLT", // Slithering Tracker, TODO: this one is special, not sure how to alter it !
   ],
-  adjustments: [],
 };

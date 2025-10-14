@@ -79,8 +79,7 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
       file: traits,
       name,
       immunities: ["electricity"],
-      // 5e:
-      // Damage Resistances acid. Damage Immunities lightning, slashing
+      // 5e: Damage Resistances: Acid. Damage Immunities: Slashing
     }),
   ],
   files: [

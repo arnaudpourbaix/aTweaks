@@ -119,6 +119,7 @@ Blindsight (can see invisible, not subject to gaze attacks).
 Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
 Not subject to critical hits, backstab.
 Darkvision out to 60 feet.
+Translucent
 10-sided Hit Dice~
 COPY_EXISTING ~ja#i8.itm~ ~override~
 	LPF ooze_immunity END

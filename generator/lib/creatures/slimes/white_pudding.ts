@@ -2,32 +2,33 @@ import { ATWEAKS_CREATURES } from "../../config/creatures";
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createCreatureSplit } from "../../spells/slime_split";
+import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
-import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
-const id = MonsterEnum.BlackPudding;
+const id = MonsterEnum.WhitePudding;
 // Spells
 const split = file(1, id);
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
+const traits = file(2, MonsterEnum.BlackPudding);
 // Script
 const script = bafFile(id);
 
-const name = "Black Pudding";
+const name = "White Pudding";
 
-export const SLIME_BLACK_PUDDING: RawCreature = {
+export const SLIME_WHITE_PUDDING: RawCreature = {
   name,
+  stringRef: TraStringReferenceEnum.WhitePudding,
   bafFile: `lib/pnp-monster/slime/${script}`,
-  tpaFile: "lib/pnp-monster/slime/black_pudding",
+  tpaFile: "lib/pnp-monster/slime/white_pudding",
   tracking: true,
   combatWalk: true,
   restHeal: true,
   data: {
-    level1: 10,
+    level1: 9,
     thac0: 11,
     strength: 16,
     dexterity: 5,
@@ -35,10 +36,10 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
     intelligence: 1,
     wisdom: 6,
     charisma: 1,
-    movement: 6,
-    ac: 6,
+    movement: 9,
+    ac: 8,
     apr: 1,
-    xpv: 2000,
+    xpv: 1400,
     alignment: "NEUTRAL",
     morale: 12,
     moraleBreak: 4,
@@ -46,16 +47,16 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
     general: "MONSTER",
     race: "SLIME",
     class: "GREY_OOZE",
-    animation: "BLACK_PUDDING",
+    animation: "GRAY_OOZE",
     gender: "NIETHER",
     size: "Large",
   },
   additionalData: {
     removeEffects: true,
-    removeItems: ["HELMNOAN", "RING95", "BDPUDDBL"],
-    removeScripts: ["DW1RANMO", "BDPUDDBL"],
+    removeItems: ["IMMUNE1", "RING95", "AC#FPWPU"],
+    removeScripts: ["DW1RANMO"],
     immunities: ["ooze"],
-    scriptLocation: "General",
+    itemSlots: [{ file: traits, slot: JEWEL_SLOTS }],
   },
   items: [
     {
@@ -72,23 +73,11 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
         {
           opcode: "Damage",
           type: "Acid",
-          diceThrown: 3,
-          diceSize: 8,
+          diceThrown: 7,
+          diceSize: 4,
         },
-        // TODO: In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative −1 penalty to the AC it offers.
-        // The armor is destroyed if the penalty reduces its AC to 10.
       ],
     },
-    createTraitItem({
-      file: traits,
-      name,
-      description: [
-        "Immune to acid, cold, and poison.",
-        "Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.",
-      ],
-      // 5e: Damage Immunities: Lightning, Slashing
-      immunities: ["acid", "cold", "poison"],
-    }),
   ],
   spells: [
     createCreatureSplit({
@@ -97,7 +86,7 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
         "Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.",
         "Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.",
       ],
-      resource: ATWEAKS_CREATURES.SplitBlackPudding,
+      resource: ATWEAKS_CREATURES.SplitWhitePudding,
       visualEffect: "BDGOOYAA",
     }),
   ],
@@ -126,18 +115,19 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
     },
   ],
   files: [
-    "BDPUDDBL", // Black Pudding
-    ATWEAKS_CREATURES.SplitBlackPudding,
+    "AC#FPWP2", // White Blob
+    "AC#FPWPU", // White Blob
+    ATWEAKS_CREATURES.SplitWhitePudding,
   ],
   newFiles: [
-    { files: [ATWEAKS_CREATURES.SplitBlackPudding], copyFrom: "BDPUDDBL" },
+    { files: [ATWEAKS_CREATURES.SplitWhitePudding], copyFrom: "AC#FPWPU" },
   ],
   adjustments: [
     {
-      files: [ATWEAKS_CREATURES.SplitBlackPudding],
+      files: [ATWEAKS_CREATURES.SplitWhitePudding],
       data: {
-        hp: 50, // a little less than half hp since it splits after taking some damage
-        xpv: 1000,
+        hp: 45, // a little less than half hp since it splits after taking some damage
+        xpv: 700,
       },
       additionalData: {
         removeMemorizedSpells: true,

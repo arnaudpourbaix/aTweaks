@@ -598,6 +598,10 @@ END
 
 DEFINE_PATCH_FUNCTION ooze_immunity
 BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=100 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=342 parameter2=4 END
 	LPF mindSpells_immunity END
 	LPF backstab_immunity END
 	LPF poison_immunity END

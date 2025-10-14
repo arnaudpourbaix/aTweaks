@@ -1,0 +1,100 @@
+// Generated file (don't edit)
+
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m53.baf~
+
+CREATE ITM "ja#1m53"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4024)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4024)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IJELLY~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Pseudopod
+
+Melee damage: 1D6 (Crushing)
+Acid damage: 4D6
+Speed Factor: 4
+Enchantment: 1
+Range: 5 feet
+Paralyze target for 10 rounds (saves vs poison/death).~)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#1m53.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IJELLY~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 5
+		WRITE_BYTE 0x84 4
+		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 2
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+	END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=65536 probability1=100 dicenumber=4 dicesize=6 END
+	LPF ADD_EFFECT INT_VAR opcode=109 target=2 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=60 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR opcode=142 target=2 parameter2=13 duration=60 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR opcode=174 target=2 timing=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_P11" END
+	LPF ADD_EFFECT INT_VAR opcode=174 target=2 timing=4 duration=60 probability1=100 savingthrow=4 STR_VAR resource="EFF_E05" END
+	LPF ADD_EFFECT INT_VAR opcode=50 target=2 parameter1=3757824 parameter2=1638400 timing=1 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR opcode=141 target=2 parameter2=33 timing=1 probability1=100 savingthrow=4 END
+
+ACTION_FOR_EACH ~file~ IN
+	AC#FPSLT
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			REMOVE_CRE_EFFECTS
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~RING95~
+			REMOVE_CRE_ITEM ~AC#FPSL2~
+			REMOVE_CRE_ITEM ~AC#FPSLT~
+			REPLACE_CRE_ITEM ~ja#1m53~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			LPF clear_proficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=5
+					strength=14
+					dexterity=8
+					constitution=18
+					intelligence=9
+					wisdom=7
+					charisma=2
+					movement=10
+					hp=70
+					ac=5
+					thac0=15
+					apr=1
+					xpv=975
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					morale=15
+					moraleBreak=4
+					moraleRecovery=15
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
+					class=IDS_OF_SYMBOL (~class~ ~GREY_OOZE~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN DW1RANMO END
+			LPF patchCreatureScript STR_VAR script=ja#m53 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

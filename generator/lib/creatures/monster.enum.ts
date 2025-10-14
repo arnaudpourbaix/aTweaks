@@ -51,4 +51,6 @@ export enum MonsterEnum {
   GrayOoze = 50,
   GreenSlime = 51,
   OliveSlimeCreature = 52,
+  SlitheringTracker = 53,
+  WhitePudding = 54,
 }

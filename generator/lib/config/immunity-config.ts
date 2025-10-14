@@ -881,7 +881,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "gazeAttacks",
     type: "immunity",
-    description: ["Gaze attacks immunity.", "", ""],
+    description: ["Gaze attacks immunity."],
     immunities: ["petrification"], //TODO:
   },
   {
@@ -904,6 +904,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
       "Not subject to critical hits, backstab.",
       "Darkvision out to 60 feet.",
+      "Translucent",
       "10-sided Hit Dice",
     ],
     immunities: [
@@ -920,6 +921,20 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "polymorph",
       "blindsight",
       "blindness",
+    ],
+    effects: [
+      {
+        opcode: "Translucency",
+        amount: 100,
+        type: "DrawInstantly",
+      },
+      { opcode: "NoCollisionDetection", passWalls: true },
+      { opcode: "ModifyCollisionBehavior" },
+      {
+        opcode: "OverrideCreatureData",
+        field: "PersonalSpace",
+        value: 0,
+      },
     ],
   },
 ];

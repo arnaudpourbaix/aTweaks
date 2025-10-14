@@ -98,6 +98,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       file: traits,
       name,
       immunities: ["electricity", "normalWeapons", "magicMissile"],
+      // 5e: Immunity to magic damage
       effects: [
         {
           opcode: "ColdResistanceModifier",
@@ -113,18 +114,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
           opcode: "MagicResistanceModifier",
           value: 10,
           type: "Set",
-        },
-        {
-          opcode: "Translucency",
-          amount: 99,
-          type: "DrawInstantly",
-        },
-        { opcode: "NoCollisionDetection", passWalls: true },
-        { opcode: "ModifyCollisionBehavior" },
-        {
-          opcode: "OverrideCreatureData",
-          field: "PersonalSpace",
-          value: 0,
         },
       ],
     }),
@@ -262,9 +251,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     },
   ],
   files: [
-    // "AC#FPWP2", // White Blob
-    // "AC#FPWPU", // White Blob
-    // "SCHLUM", // Schlumpsha the Sewer King TODO: it is a mustard ?
     "BDJELLMU", // Mustard Jelly
     "BPJLMU01", // Mustard Jelly
     "JELLMU", // Mustard Jelly
