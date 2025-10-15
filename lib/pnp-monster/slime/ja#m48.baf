@@ -104,17 +104,47 @@ THEN
 		NoAction()
 END
 
-// Try to reposition to use ranged attack
+// Toxic Vapors
 IF
-	CanEquipRanged()
-	Range(NearestEnemyOf(Myself),4)
+	HaveSpellRES("ja#1m46")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(NearestEnemyOf(Myself),10)
+	!General(NearestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NearestEnemyOf(Myself))
 THEN
-	RESPONSE #50
-		SetInterrupt(FALSE)
-		RunAwayFromNoLeaveArea(NearestEnemyOf(Myself),45)
-		SetInterrupt(TRUE)
-	RESPONSE #50
-		Continue()
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m46",Myself)
+END
+
+IF
+	HaveSpellRES("ja#1m46")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(SecondNearestEnemyOf(Myself),10)
+	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m46",Myself)
+END
+
+IF
+	HaveSpellRES("ja#1m46")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(ThirdNearestEnemyOf(Myself),10)
+	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m46",Myself)
 END
 
 // Attack Slowed enemy
@@ -251,23 +281,6 @@ IF
 		!See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		Continue()
-END
-
-IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
 		Continue()
 END
 
@@ -417,23 +430,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -518,23 +514,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -613,23 +592,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -698,23 +660,6 @@ THEN
 END
 
 IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
-		Continue()
-END
-
-IF
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -758,23 +703,6 @@ IF
 		!See(Player6)
 THEN
 	RESPONSE #100
-		Continue()
-END
-
-IF
-	CanEquipRanged()
-	!Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipRanged()
-		Continue()
-END
-
-IF
-	Range(LastSeenBy(Myself),4)
-THEN
-	RESPONSE #100
-		EquipMostDamagingMelee()
 		Continue()
 END
 

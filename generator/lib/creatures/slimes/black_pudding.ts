@@ -13,7 +13,7 @@ const id = MonsterEnum.BlackPudding;
 const split = file(1, id);
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
+export const puddingTraits = file(2, id);
 // Script
 const script = bafFile(id);
 
@@ -80,7 +80,7 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
       ],
     },
     createTraitItem({
-      file: traits,
+      file: puddingTraits,
       name: "Pudding",
       description: [
         "Immune to acid, cold, and poison.",

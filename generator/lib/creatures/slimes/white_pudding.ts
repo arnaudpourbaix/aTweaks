@@ -6,6 +6,7 @@ import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
+import { puddingTraits } from "./black_pudding";
 
 // Creature Id
 const id = MonsterEnum.WhitePudding;
@@ -13,7 +14,6 @@ const id = MonsterEnum.WhitePudding;
 const split = file(1, id);
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, MonsterEnum.BlackPudding);
 // Script
 const script = bafFile(id);
 
@@ -56,7 +56,7 @@ export const SLIME_WHITE_PUDDING: RawCreature = {
     removeItems: ["IMMUNE1", "RING95", "AC#FPWPU"],
     removeScripts: ["DW1RANMO"],
     immunities: ["ooze"],
-    itemSlots: [{ file: traits, slot: JEWEL_SLOTS }],
+    itemSlots: [{ file: puddingTraits, slot: JEWEL_SLOTS }],
   },
   items: [
     {

@@ -1,48 +1,44 @@
-import { ATWEAKS_SPELLS } from "../../config/spell-names";
+import { MonsterItemIconEnum } from "../../config/item";
+import { TraStringReferenceEnum } from "../../config/stringRef";
+import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
-import { EffectService } from "../../src/services/effect.service";
 import { bafFile, file } from "../../src/services/misc.func";
-import { UtilsService } from "../../src/services/utils.service";
 import { MonsterEnum } from "../monster.enum";
+import {
+  mustardJellyTraits,
+  toxicVapors,
+  toxicVaporsAbility,
+} from "./mustard_jelly";
 
-const effects = EffectService.instance;
-const utils = UtilsService.instance;
 // Creature Id
 const id = MonsterEnum.FissionSlime;
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
 // Script
 const script = bafFile(id);
 
+const name = "Fission Slime";
+
 export const SLIME_FISSION: RawCreature = {
-  name: "Fission Slime",
+  name,
   bafFile: `lib/pnp-monster/slime/${script}`,
   tpaFile: "lib/pnp-monster/slime/fission_slime",
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  canPolymorph: true,
-  autoGenerate: {
-    savingThrows: false,
-  },
-  attack: {
-    ranged: true,
-  },
   data: {
-    level1: 7,
+    level1: 12,
     bonusHp: 14,
-    thac0: 13,
-    strength: 0,
-    dexterity: 0,
-    constitution: 0,
+    strength: 15,
+    dexterity: 10,
+    constitution: 21,
     intelligence: 10,
-    wisdom: 0,
-    charisma: 0,
+    wisdom: 10,
+    charisma: 10,
+    movement: 9,
     ac: 4,
-    apr: 2,
-    resistMagic: 10,
-    xpv: 4000,
+    apr: 1,
+    xpv: 5000,
     alignment: "NEUTRAL",
     morale: 14,
     moraleBreak: 4,
@@ -54,53 +50,39 @@ export const SLIME_FISSION: RawCreature = {
     size: "Large",
   },
   additionalData: {
-    removeItems: [],
-    removeScripts: [
-      "SHOUT",
-      "INITDLG",
-      "DW#GPSHT",
-      "DW#MG84",
-      // "J#SIRIN1",
-      "SIRSPELL",
-      "DW1RANMO",
-      "DW1RANGE",
-      "SIL",
-    ],
+    removeItems: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
+    removeScripts: ["BPSIGHT", "BPASIGHT", "DW1RANMO"],
     immunities: ["ooze"],
+    itemSlots: [{ file: mustardJellyTraits, slot: JEWEL_SLOTS }],
+    memorizedSpells: [{ file: toxicVapors, memorizedCount: 1 }],
+    scriptLocation: "Race",
   },
-  effectFiles: [
-    {
-      file: ATWEAKS_SPELLS.CharmingSong,
-      opcode: "CastSpell",
-      type: "CastInstantlyAtCasterLevel",
-      resource: ATWEAKS_SPELLS.CharmingSongTechnical,
-      timing: "InstantPermanentUntilDeath",
-      dispelResistance: "NaturalNonMagical",
-    },
-  ],
   items: [
     {
       file: mainWeapon,
+      stringRef: TraStringReferenceEnum.Pseudopod,
+      icon: MonsterItemIconEnum.Jelly,
       equippedSlot: "WEAPON1",
-      icon: "IGHOUL",
       type: "Melee",
-      diceSize: 3,
-      diceThrown: 1,
+      speed: 4,
+      range: 5,
+      diceThrown: 3,
+      diceSize: 6,
       damageType: "Crushing",
+      animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
+      projectile: "ACIDBLMU",
       effects: [
         {
-          opcode: "CastSpell",
-          type: "CastInstantlyAtCasterLevel",
-          castingLevel: 1,
-          timing: "InstantPermanentUntilDeath",
-          dispelResistance: "NaturalNonMagical",
-          resource: ATWEAKS_SPELLS.TouchOfTranquility,
+          opcode: "Damage",
+          type: "Acid",
+          diceThrown: 3,
+          diceSize: 6,
         },
       ],
     },
   ],
-  files: [
-    "JELLSPA", // Fission Slime
-  ],
-  adjustments: [],
+  // no split ability since it is handled by existing scripts
+  // fission slime is not an official monster, so no rule to follow
+  abilities: [toxicVaporsAbility],
+  files: ["JELLSPA", "BPSLFS01", "BPSLFS02"],
 };

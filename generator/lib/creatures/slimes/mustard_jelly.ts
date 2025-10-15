@@ -6,6 +6,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createCreatureSplit } from "../../spells/slime_split";
+import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../../src/model/raw/effect";
 import { createTraitItem } from "../../src/services/creature-helper";
@@ -16,14 +17,29 @@ import { MonsterEnum } from "../monster.enum";
 const id = MonsterEnum.MustardJelly;
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
+export const mustardJellyTraits = file(2, id);
 // Spells
-const toxicVapors = file(1, id);
+export const toxicVapors = file(1, id);
 const split = file(2, id);
 // Projectile
 const toxicVaporsProjectile = file(1, id);
 // Script
 const script = bafFile(id);
+
+export const toxicVaporsAbility: RawCreatureAbility = {
+  name: "Toxic Vapors",
+  target: {
+    name: "NearestEnemies",
+    limit: 3,
+  },
+  spell: {
+    resource: toxicVapors,
+    type: "force",
+    probability: 100,
+    selfTarget: true,
+  },
+  range: 10,
+};
 
 const vaporBaseEffect: RawBaseEffect = {
   timing: "InstantLimited",
@@ -44,7 +60,6 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
   data: {
     level1: 7,
     bonusHp: 14,
-    thac0: 13,
     strength: 15,
     dexterity: 10,
     constitution: 21,
@@ -95,7 +110,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       ],
     },
     createTraitItem({
-      file: traits,
+      file: mustardJellyTraits,
       name,
       immunities: ["electricity", "normalWeapons", "magicMissile"],
       // 5e: Immunity to magic damage
@@ -235,20 +250,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
         selfTarget: true,
       },
     },
-    {
-      name: "Toxic Vapors",
-      target: {
-        name: "NearestEnemies",
-        limit: 3,
-      },
-      spell: {
-        resource: toxicVapors,
-        type: "force",
-        probability: 100,
-        selfTarget: true,
-      },
-      range: 10,
-    },
+    toxicVaporsAbility,
   ],
   files: [
     "BDJELLMU", // Mustard Jelly
