@@ -24,6 +24,7 @@ export const HORROR_HELMED: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
+  dialog: ["DOOMSAYER"],
   data: {
     level1: 4,
     bonusHp: 10,
@@ -57,7 +58,7 @@ export const HORROR_HELMED: RawCreature = {
   },
   additionalData: {
     immunities: ["construct"],
-    removeScripts: ["dw1melmo"],
+    removeScripts: ["dw1melmo", "initdlg"],
     removeItems: [
       "HELM08",
       "SHLD18",

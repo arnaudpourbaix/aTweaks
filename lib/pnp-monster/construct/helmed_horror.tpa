@@ -175,7 +175,7 @@ BEGIN
 					hairColor=63
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN dw1melmo END
+			DEFINE_ARRAY removeScripts BEGIN dw1melmo initdlg END
 			LPF patchCreatureScript STR_VAR script=ja#m15 removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BATTHO~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~dw#davho~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
 				WRITE_LONG 0x14 4000 // xpv

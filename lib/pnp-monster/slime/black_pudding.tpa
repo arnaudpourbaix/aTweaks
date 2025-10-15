@@ -50,11 +50,11 @@ COPY_EXISTING ~ja#1m47.itm~ ~override~
 
 CREATE ITM "ja#2m47"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Black Pudding traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Black Pudding traits~)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Pudding traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Pudding traits~)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Black Pudding traits
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Pudding traits
 
 Immune to acid, cold, and poison.
 Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.~)
@@ -63,6 +63,7 @@ COPY_EXISTING ~ja#2m47.itm~ ~override~
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=29 target=1 global=1 parameter1=90 parameter2=1 timing=2 probability1=100 END
 	LPF acid_immunity END
 	LPF cold_immunity END
 	LPF poison_immunity END

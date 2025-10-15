@@ -1,7 +1,7 @@
 // Initiate dialog
 IF
 	Global("JA#DIALOG","LOCALS",0)
-	Name("SCHLUM",Myself)
+	Name("SCHLUMPSA",Myself)
 	NumTimesTalkedTo(0)
 	See([PC])
 THEN

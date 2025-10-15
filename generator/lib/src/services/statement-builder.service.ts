@@ -177,10 +177,13 @@ export class StatementService {
     options: BuilderOptions
   ): void {
     if (!creature.dialog.length) return;
-    const nameTriggers: Triggers.Trigger[] = creature.dialog.map((n) => ({
-      name: "Name",
-      params: [n, "Myself"],
-    }));
+    const nameTriggers: Triggers.Trigger[] = [];
+    for (const name of creature.dialog) {
+      nameTriggers.push({
+        name: "Name",
+        params: [name, "Myself"],
+      });
+    }
     const finalNameTrigger: Triggers.Trigger =
       nameTriggers.length == 1
         ? nameTriggers[0]

@@ -22,7 +22,7 @@ export const SLIME_OLIVE_CREATURE: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: ["SCHLUM"],
+  dialog: ["SCHLUMPSA"],
   canPolymorph: true,
   autoGenerate: {
     savingThrows: false,

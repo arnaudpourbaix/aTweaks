@@ -49,7 +49,7 @@ export interface Creature extends BaseCreature {
   help: boolean;
 
   /**
-   * Will initiate dialog (values are creatures' names)
+   * Will initiate dialog (values are creature script name)
    */
   dialog: string[];
 

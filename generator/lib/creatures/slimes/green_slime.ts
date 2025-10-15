@@ -22,7 +22,6 @@ export const SLIME_GREEN: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: [],
   canPolymorph: true,
   autoGenerate: {
     savingThrows: false,

@@ -81,13 +81,20 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
     },
     createTraitItem({
       file: traits,
-      name,
+      name: "Pudding",
       description: [
         "Immune to acid, cold, and poison.",
         "Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.",
       ],
       // 5e: Damage Immunities: Lightning, Slashing
       immunities: ["acid", "cold", "poison"],
+      effects: [
+        {
+          opcode: "ElectricityResistanceModifier",
+          value: 90,
+          type: "Set",
+        },
+      ],
     }),
   ],
   spells: [

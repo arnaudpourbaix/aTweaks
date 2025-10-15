@@ -73,8 +73,8 @@ export class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, 1);
     this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, 2);
     this.add(lines, `LPF FJ_CRE_VALIDITY END`, 3);
-    this.writeStringRef(lines, 0x8, creature.stringRef, 1);
-    this.writeStringRef(lines, 0xc, creature.stringRef, 1);
+    this.writeStringRef(lines, 0x8, creature.stringRef, 3);
+    this.writeStringRef(lines, 0xc, creature.stringRef, 3);
     this.removeEffects(lines, 3, creature);
     this.removeKnownSpells(lines, 3, creature);
     this.removeMemorizedSpells(lines, 3, creature);

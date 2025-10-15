@@ -169,12 +169,6 @@ export const OGRE_MAGE: RawCreature = {
         { opcode: "NoCollisionDetection", passWalls: true, global: true },
         { opcode: "ModifyCollisionBehavior", global: true },
         {
-          opcode: "OverrideCreatureData",
-          field: "PersonalSpace",
-          value: 0,
-          global: true,
-        },
-        {
           opcode: "MovementRateBonus2",
           type: "Set",
           value: convertMovement(3),

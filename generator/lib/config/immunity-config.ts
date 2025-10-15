@@ -798,7 +798,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       },
       { opcode: "NoCollisionDetection", passWalls: true },
       { opcode: "ModifyCollisionBehavior" },
-      { opcode: "OverrideCreatureData", field: "PersonalSpace", value: 0 },
+      // { opcode: "OverrideCreatureData", field: "PersonalSpace", value: 0 }, // Create 2 issues: creature can attack from range and can't move at all
       // { opcode: "MakeUnselectable", disableDialog: false },
       // { opcode: "SelectionCircleRemoval" },
       {
@@ -930,11 +930,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       },
       { opcode: "NoCollisionDetection", passWalls: true },
       { opcode: "ModifyCollisionBehavior" },
-      {
-        opcode: "OverrideCreatureData",
-        field: "PersonalSpace",
-        value: 0,
-      },
     ],
   },
 ];

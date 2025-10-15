@@ -46,7 +46,6 @@ export const FEY_NYMPH: RawCreature = {
   tracking: true,
   combatWalk: true,
   restHeal: true,
-  dialog: [],
   attack: {
     melee: false,
     ranged: false,

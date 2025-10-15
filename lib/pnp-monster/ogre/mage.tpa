@@ -162,7 +162,6 @@ COPY_EXISTING ~ja#2m32.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=184 target=1 global=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=300 target=1 global=1 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=342 target=1 global=1 parameter2=4 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 global=1 parameter1=2 parameter2=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=1 target=1 global=1 parameter2=3 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=145 target=1 global=1 timing=2 probability1=100 END

@@ -42,7 +42,7 @@ export interface RawCreature {
   help?: boolean;
 
   /**
-   * Will initiate dialog (values are creatures' names)
+   * Will initiate dialog (values are creature script name)
    */
   dialog?: string[];
 
