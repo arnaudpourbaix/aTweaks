@@ -32,6 +32,7 @@ export enum TraStringReferenceEnum {
   Hug = 4007,
   ImprovedStreamOfFrost = 4008,
   Jaws = 4021,
+  Legs = 4037,
   LethalFists = 4032,
   LongSword = 4028,
   Mandibles = 4023,

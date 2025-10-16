@@ -46,7 +46,7 @@ Melee damage: 1D6 (Slashing)
 Speed Factor: 3
 Enchantment: 3
 Range: 2 feet
-Poison: deals one damage per 6 seconds for 5 rounds (saves vs poison/death at +4).~)
+Poison: deals one damage per 24 seconds for 20 rounds (saves vs poison/death at +4).~)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m3.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -64,8 +64,7 @@ COPY_EXISTING ~ja#1m3.itm~ ~override~
 		WRITE_SHORT 0xa2 33
 		WRITE_LONG 0x98 1
 	END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=6 parameter2=3 duration=30 probability1=100 savingthrow=4 savebonus="4" END
-	LPF ADD_EFFECT INT_VAR opcode=142 target=2 parameter2=6 duration=30 probability1=100 savingthrow=4 savebonus="4" END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=24 parameter2=3 duration=120 probability1=100 savingthrow=4 savebonus="4" special=6 END
 
 CREATE ITM "ja#2m3"
 	WRITE_LONG 0x64 0x72

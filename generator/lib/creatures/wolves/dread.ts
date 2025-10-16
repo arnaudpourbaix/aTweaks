@@ -47,8 +47,6 @@ export const WOLF_DREAD: RawCreature = {
     class: "WOLF_DREAD",
     gender: "MALE",
     size: "Small",
-    resistCold: 100,
-    resistElectricity: 50,
   },
   additionalData: {
     removeItems: ["P1-10", "RING95", "TROLLIMM", "BDWOLFD1", "BDWOLFDR"],

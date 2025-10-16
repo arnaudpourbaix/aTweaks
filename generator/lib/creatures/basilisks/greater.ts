@@ -66,19 +66,9 @@ export const BASILISK_GREATER: RawCreature = {
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
-          opcode: "Poison",
-          type: "OneDamagePerAmountSecond",
-          amount: 6,
-          saveTypes: ["ParalyzePoisonDeath"],
+          opcode: "PoisonTypeEffects",
+          poisonType: "K",
           saveBonus: 4,
-          duration: 30,
-        },
-        {
-          opcode: "DisplayPortraitIcon",
-          icon: "Poisoned",
-          saveTypes: ["ParalyzePoisonDeath"],
-          saveBonus: 4,
-          duration: 30,
         },
       ],
     },

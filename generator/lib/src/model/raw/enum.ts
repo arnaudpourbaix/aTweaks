@@ -1176,3 +1176,21 @@ export type RawPoisonType =
   | "OneDamagePerSecondBis"
   | "AmountDamagePerSecond"
   | "OneDamagePerAmountSecond";
+
+export type RawPnPPoisonType =
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P";

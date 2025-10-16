@@ -114,7 +114,8 @@ CREATE ITM "ja#i8"
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~ooze trait~ SAY NAME2 ~ooze trait~
-	SAY UNIDENTIFIED_DESC ~Ooze trait.
+	SAY UNIDENTIFIED_DESC ~Ooze trait
+
 Blindsight (can see invisible, not subject to gaze attacks).
 Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
 Not subject to critical hits, backstab.
@@ -123,3 +124,27 @@ Translucent
 10-sided Hit Dice~
 COPY_EXISTING ~ja#i8.itm~ ~override~
 	LPF ooze_immunity END
+
+CREATE ITM "ja#i12"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
+	SAY NAME1 ~vermin trait~ SAY NAME2 ~vermin trait~
+	SAY UNIDENTIFIED_DESC ~Vermin trait
+
+Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+Darkvision out to 60 feet.~
+COPY_EXISTING ~ja#i12.itm~ ~override~
+	LPF vermin_immunity END
+
+CREATE ITM "ja#i11"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
+	SAY NAME1 ~spider trait~ SAY NAME2 ~spider trait~
+	SAY UNIDENTIFIED_DESC ~Spider trait
+
+Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.
+Darkvision out to 60 feet.~
+COPY_EXISTING ~ja#i11.itm~ ~override~
+	LPF spider_immunity END

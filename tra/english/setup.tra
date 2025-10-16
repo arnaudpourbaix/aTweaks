@@ -66,6 +66,7 @@
 @5110 = ~Ogres~
 @5120 = ~Fey (Dryad, Hamadryad, Sirene)~
 @5130 = ~Oozes/slimes~
+@5140 = ~Spiders~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

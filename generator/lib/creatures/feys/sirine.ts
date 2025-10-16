@@ -122,6 +122,7 @@ export const FEY_SIRINE: RawCreature = {
       },
     ],
     scriptLocation: "Race",
+    memorizedSpells: [{ file: SPELLS.ImprovedInvisibility, memorizedCount: 1 }],
   },
   effectFiles: [
     {
@@ -369,27 +370,17 @@ export const FEY_SIRINE: RawCreature = {
         },
       ],
     },
-    {
-      name: "Improved Invisibility",
-      file: improvedInvisibility,
-      memorizedCount: 1,
-      copyFrom: SPELLS.ImprovedInvisibility,
-      changes: {
-        spellType: "Innate",
-        castingTime: 1,
-      },
-    },
-    {
-      // TODO: script for this one !
-      name: "Polymorph Self",
-      file: polymorphSelf,
-      memorizedCount: 1,
-      copyFrom: SPELLS.PolymorphSelf,
-      changes: {
-        spellType: "Innate",
-        castingTime: 1,
-      },
-    },
+    // {
+    //   // TODO: script for this one !
+    //   name: "Polymorph Self",
+    //   file: polymorphSelf,
+    //   memorizedCount: 1,
+    //   copyFrom: SPELLS.PolymorphSelf,
+    //   changes: {
+    //     spellType: "Innate",
+    //     castingTime: 1,
+    //   },
+    // },
   ],
   additionalCode: [],
   customCode: [

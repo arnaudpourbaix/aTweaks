@@ -11,6 +11,7 @@ import { Golems } from "./golems";
 import { Ogres } from "./ogres";
 import { Plants } from "./plants";
 import { Slimes } from "./slimes";
+import { Spiders } from "./spiders";
 import { Wolves } from "./wolves";
 
 export const CREATURES: RawCreature[] = [
@@ -19,17 +20,18 @@ export const CREATURES: RawCreature[] = [
   ...Bears,
   CARRION_CRAWLER,
   ...Cats,
-  ...Dogs,
-  ...Wolves,
-  ...Golems,
   ...Constructs,
-  ...Ogres,
+  ...Dogs,
   ...Feys,
-  ...Slimes,
+  ...Golems,
+  ...Ogres,
   ...Plants,
+  ...Slimes,
+  ...Spiders,
+  ...Wolves,
 ];
 
-export const CREATURES_TEST: RawCreature[] = [...Plants, ...Feys, ...Slimes];
+export const CREATURES_TEST: RawCreature[] = [...Spiders];
 
 /*
 "SHOAL", // Shoal the Nereid

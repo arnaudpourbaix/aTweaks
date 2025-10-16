@@ -9,6 +9,8 @@ export const ITEMS = {
   Ooze: "ja#i8",
   Plant: "ja#i9",
   Sketetal: "ja#i10",
+  Spider: "ja#i11",
+  Vermin: "ja#i12",
 };
 
 export enum MonsterItemIconEnum {

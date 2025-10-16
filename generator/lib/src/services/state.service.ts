@@ -64,6 +64,9 @@ export class StateService {
         displaySpellIneffective: !!i.displaySpellIneffective,
         effects: this.effectService.getEffects(i.effects ?? []),
       };
+      for (const effect of result.effects) {
+        effect.global = true;
+      }
       return result;
     });
     for (const i of State.immunities) {

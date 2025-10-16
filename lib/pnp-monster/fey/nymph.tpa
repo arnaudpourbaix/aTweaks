@@ -83,46 +83,6 @@ COPY_EXISTING ~rr#ddoo2.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=1 timing=4 resist_dispel=1 duration=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=1 power=1 resist_dispel=1 duration=1 probability1=100 END
 	
-	// Cure Light Wounds
-COPY_EXISTING ~SPPR103.SPL~  ~override/ja#1m44.SPL~
-COPY_EXISTING ~ja#1m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Bless
-COPY_EXISTING ~SPPR101.SPL~  ~override/ja#2m44.SPL~
-COPY_EXISTING ~ja#2m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Entangle
-COPY_EXISTING ~SPPR105.SPL~  ~override/ja#3m44.SPL~
-COPY_EXISTING ~ja#3m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Barkskin
-COPY_EXISTING ~SPPR202.SPL~  ~override/ja#4m44.SPL~
-COPY_EXISTING ~ja#4m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Charm Person Or Animal
-COPY_EXISTING ~SPPR204.SPL~  ~override/ja#5m44.SPL~
-COPY_EXISTING ~ja#5m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Call Lightning
-COPY_EXISTING ~SPPR302.SPL~  ~override/ja#6m44.SPL~
-COPY_EXISTING ~ja#6m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Summon Insects
-COPY_EXISTING ~SPPR319.SPL~  ~override/ja#7m44.SPL~
-COPY_EXISTING ~ja#7m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
-	// Call Woodland Beeings
-COPY_EXISTING ~SPPR410.SPL~  ~override/ja#8m44.SPL~
-COPY_EXISTING ~ja#8m44.SPL~  ~override~
-	LPF CHANGE_SPELL INT_VAR  ctime=1   END
-	
 CREATE ITM "ja#1m44"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x8 RESOLVE_STR_REF(~Nymph traits~)
@@ -162,16 +122,16 @@ BEGIN
 			ADD_CRE_ITEM ~ja#1m44~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR103~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR105~ #0 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR202~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR204~ #1 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR302~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR319~ #2 ~priest~ (1)
+			ADD_MEMORIZED_SPELL ~SPPR410~ #3 ~priest~ (1)
 			ADD_MEMORIZED_SPELL ~rr#fbbea~ #0 ~innate~ (1)
 			ADD_MEMORIZED_SPELL ~rr#ddoo2~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#1m44~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#2m44~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#3m44~ #0 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#4m44~ #1 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#5m44~ #1 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#6m44~ #2 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#7m44~ #2 ~priest~ (1)
-			ADD_MEMORIZED_SPELL ~ja#8m44~ #3 ~priest~ (1)
 			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			LPF patchCreature

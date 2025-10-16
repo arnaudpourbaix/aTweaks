@@ -43,6 +43,7 @@ import {
   RawLightingEffect,
   RawLightingEffectTarget,
   RawOverrideCreatureDataField,
+  RawPnPPoisonType,
   RawPoisonType,
   RawPolymorphType,
   RawPortraitIcon,
@@ -236,6 +237,7 @@ export type PoisonEffect = RawBaseEffect & {
   opcode: "Poison";
   amount: number;
   type: RawPoisonType;
+  icon?: RawPortraitIcon;
 };
 
 export type PoisonResistanceModifierEffect = RawBaseEffect & {
@@ -512,7 +514,15 @@ export type RawParalyzeEffectGroup = RawBaseEffect & {
   lightningEffect: RawLightingEffect;
 };
 
-export type RawEffectGroup = RawParamlessEffectGroup | RawParalyzeEffectGroup;
+export type RawPoisonTypeEffectGroup = RawBaseEffect & {
+  opcode: "PoisonTypeEffects";
+  poisonType: RawPnPPoisonType;
+};
+
+export type RawEffectGroup =
+  | RawParamlessEffectGroup
+  | RawParalyzeEffectGroup
+  | RawPoisonTypeEffectGroup;
 
 export type RawEffect =
   | ParamLessEffect

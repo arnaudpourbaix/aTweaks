@@ -193,6 +193,7 @@ BEGIN
 		LAF get_web_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="157" prevent_icons="129" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=83 parameter2=319 END
 END
 
 DEFINE_PATCH_FUNCTION entangle_immunity
@@ -613,4 +614,16 @@ BEGIN
 	LPF polymorph_immunity END
 	LPF blindsight_immunity END
 	LPF blindness_immunity END
+END
+
+DEFINE_PATCH_FUNCTION vermin_immunity
+BEGIN
+	LPF infravision_immunity END
+	LPF mindSpells_immunity END
+END
+
+DEFINE_PATCH_FUNCTION spider_immunity
+BEGIN
+	LPF web_immunity END
+	LPF infravision_immunity END
 END

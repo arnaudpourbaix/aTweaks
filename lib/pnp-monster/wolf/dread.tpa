@@ -145,8 +145,6 @@ BEGIN
 					movement=14
 					hp=46
 					ac=6
-					resistCold=100
-					resistElectricity=50
 					thac0=15
 					apr=1
 					xpv=650

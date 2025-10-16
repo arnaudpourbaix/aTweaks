@@ -59,7 +59,7 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 //             READ_LONG 0x28 animation
 //             READ_STRREF 0x08 name
 //             // PATCH_IF race = 119 BEGIN
-//             PATCH_IF class = 154 OR animation = 0x7901 BEGIN
+//             PATCH_IF class = 140 OR animation = 0x7A03 BEGIN
 //             // PATCH_IF race = 130 OR animation = 0x2000 BEGIN
 //             //PATCH_IF animation = 0x7F0A BEGIN
 //                 //PATCH_PRINT ~"%SOURCE_RES%",~
@@ -70,14 +70,14 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
-
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,18 +161,25 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
 
 // // Fey (Dryad, Hamadryad, Sirene, Nymph)
-// BEGIN @185 DESIGNATED 5120
+// BEGIN @5120 DESIGNATED 5120
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 
 // // Oozes/slimes
-// BEGIN @5120 DESIGNATED 5130
+// BEGIN @5130 DESIGNATED 5130
 // GROUP @6
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
+
+// Spiders
+// BEGIN @5140 DESIGNATED 5140
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
 
 /*
 // PnP Fiends

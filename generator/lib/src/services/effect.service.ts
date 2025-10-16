@@ -296,6 +296,9 @@ export class EffectService {
       case EffectTypeEnum.Poison:
         result.parameter1 = `${(<PoisonEffect>effect).amount}`;
         result.parameter2 = `${PoisonTypeEnum[(<PoisonEffect>effect).type]}`;
+        if ((<PoisonEffect>effect).icon)
+          result.special =
+            PortraitIconEnum[(<PoisonEffect>effect).icon as RawPortraitIcon];
         break;
       case EffectTypeEnum.PoisonResistanceModifier:
         result.parameter1 = `${(<ArmorClassBonusEffect>effect).value}`;

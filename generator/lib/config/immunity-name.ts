@@ -63,8 +63,10 @@ export type ImmunityName =
   | "seeInvisible"
   | "skeletal"
   | "sleep"
+  | "spider"
   | "stun"
   | "unturnable"
   | "undead"
+  | "vermin"
   | "vorpal"
   | "web";

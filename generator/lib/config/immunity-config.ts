@@ -219,7 +219,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         opcode: "FireResistanceModifier",
         value: 100,
         type: "Set",
-        global: true,
       },
       {
         opcode: "MagicalFireResistanceModifier",
@@ -302,7 +301,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         opcode: "AcidResistanceModifier",
         value: 100,
         type: "Set",
-        global: true,
       },
     ],
   },
@@ -334,6 +332,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     preventEffects: [EffectTypeEnum.Web],
     preventIcons: [PortraitIconEnum.Webbed],
     spellGroups: ["web"],
+    effects: [
+      {
+        opcode: "ProtectionFromProjectile",
+        projectile: 319, // webtrav
+      },
+    ],
     displaySpellIneffective: true,
   },
   {
@@ -899,7 +903,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     type: "trait",
     itemSlot: { file: ITEMS.Ooze, slot: JEWEL_SLOTS },
     description: [
-      "Ooze trait.",
+      "Ooze trait",
+      "",
       "Blindsight (can see invisible, not subject to gaze attacks).",
       "Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
       "Not subject to critical hits, backstab.",
@@ -931,5 +936,29 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       { opcode: "NoCollisionDetection", passWalls: true },
       { opcode: "ModifyCollisionBehavior" },
     ],
+  },
+  {
+    name: "vermin",
+    type: "trait",
+    description: [
+      "Vermin trait",
+      "",
+      "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
+      "Darkvision out to 60 feet.",
+    ],
+    itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
+    immunities: ["infravision", "mindSpells"],
+  },
+  {
+    name: "spider",
+    type: "trait",
+    itemSlot: { file: ITEMS.Spider, slot: JEWEL_SLOTS },
+    description: [
+      "Spider trait",
+      "",
+      "Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.",
+      "Darkvision out to 60 feet.",
+    ],
+    immunities: ["web", "infravision"],
   },
 ];

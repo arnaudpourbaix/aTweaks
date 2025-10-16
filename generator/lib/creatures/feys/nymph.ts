@@ -85,6 +85,14 @@ export const FEY_NYMPH: RawCreature = {
     removeScripts: ["BDENSHTV", "BDNYMP01", "NYMPH"],
     memorizedSpells: [
       { file: ATWEAKS_SPELLS.AnimalFriendship, memorizedCount: 1 },
+      { file: SPELLS.CureLightWounds, memorizedCount: 1 },
+      { file: SPELLS.Bless, memorizedCount: 1 },
+      { file: SPELLS.Entangle, memorizedCount: 1 },
+      { file: SPELLS.Barkskin, memorizedCount: 1 },
+      { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
+      { file: SPELLS.CallLightning, memorizedCount: 1 },
+      { file: SPELLS.SummonInsects, memorizedCount: 1 },
+      { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
     ],
     deleteEffectOpcodes: ["ProtectionFromSpell"],
   },
@@ -200,78 +208,6 @@ export const FEY_NYMPH: RawCreature = {
       spellLevel: 1,
       spellType: "Priest",
     }),
-    {
-      name: "Cure Light Wounds",
-      file: cureLightWounds,
-      copyFrom: SPELLS.CureLightWounds,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Bless",
-      file: bless,
-      copyFrom: SPELLS.Bless,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Entangle",
-      file: entangle,
-      copyFrom: SPELLS.Entangle,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Barkskin",
-      file: barkskin,
-      copyFrom: SPELLS.Barkskin,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Charm Person Or Animal",
-      file: charmPersonOrAnimal,
-      copyFrom: SPELLS.CharmPersonOrAnimal,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Call Lightning",
-      file: callLightning,
-      copyFrom: SPELLS.CallLightning,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Summon Insects",
-      file: summonInsects,
-      copyFrom: SPELLS.SummonInsects,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
-    {
-      name: "Call Woodland Beeings",
-      file: callWoodlandBeeings,
-      copyFrom: SPELLS.CallWoodlandBeeings,
-      memorizedCount: 1,
-      changes: {
-        castingTime: 1,
-      },
-    },
   ],
   items: [
     createTraitItem({

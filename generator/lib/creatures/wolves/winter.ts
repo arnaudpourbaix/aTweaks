@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
+import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
@@ -14,8 +15,12 @@ const streamOfFrost = file(1, id);
 const streamOfFrostProjectile = file(1, id);
 // Items
 const mainWeapon = file(1, id);
+const traits = file(2, id);
+
+export const name = "Winter Wolf";
+
 export const WOLF_WINTER: RawCreature = {
-  name: "Winter Wolf",
+  name,
   tpaFile: "lib/pnp-monster/wolf/winter",
   bafFile: `lib/pnp-monster/wolf/${script}`,
   tracking: true,
@@ -42,8 +47,6 @@ export const WOLF_WINTER: RawCreature = {
     class: "WOLF_WINTER",
     gender: "MALE",
     size: "Large",
-    resistCold: 100,
-    resistFire: -10,
   },
   additionalData: {
     removeItems: ["WOLFWI1", "WOLFWI2"],
@@ -132,6 +135,23 @@ export const WOLF_WINTER: RawCreature = {
       speed: 3,
       abilityFlags: ["AddStrengthBonus"],
     },
+    createTraitItem({
+      file: traits,
+      name,
+      immunities: ["cold"],
+      effects: [
+        {
+          opcode: "FireResistanceModifier",
+          value: -10,
+          type: "Set",
+        },
+        {
+          opcode: "MagicalFireResistanceModifier",
+          value: -10,
+          type: "Set",
+        },
+      ],
+    }),
   ],
   files: [
     "P#WOLF01",
