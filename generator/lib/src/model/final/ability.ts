@@ -7,9 +7,13 @@ export interface CreatureAbility {
   target?: RawTargetList[];
   isSpell: boolean;
   /**
-   * Ability range (if applicable)
+   * Ability maximum range (if applicable)
    */
   range?: number;
+  /**
+   * Ability minimum range (if applicable)
+   */
+  minRange?: number;
   /**
    * For ability that can be cast every n seconds (one hour is 300)
    */

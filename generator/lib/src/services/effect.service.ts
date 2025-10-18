@@ -47,8 +47,10 @@ import {
   RegenerationTypeEnum,
   RemoveEffectsByResourceTypeEnum,
   SaveTypeEnum,
+  SetAnimationSequenceEnum,
   SummonCreatureModeEnum,
   TranslucencyTypeEnum,
+  WingBuffetDirectionEnum,
 } from "../model/final/enums";
 import { StringReference } from "../model/misc";
 import {
@@ -99,6 +101,7 @@ import {
   RemoveOpcodeEffect,
   RemoveSpellTypeProtectionsEffect,
   ScriptingStateModifierEffect,
+  SetAnimationSequenceEffect,
   SetColorEffect,
   SetExtendedSpellStateEffect,
   SleepEffect,
@@ -107,6 +110,7 @@ import {
   SummonCreatureEffect,
   TeleportEffect,
   TranslucencyEffect,
+  WingBuffetEffect,
 } from "../model/raw/effect";
 import { RawEffectOpcode } from "../model/raw/effect.type";
 import {
@@ -539,6 +543,19 @@ export class EffectService {
       case EffectTypeEnum.SummonCreature:
         result.parameter2 = `${
           SummonCreatureModeEnum[(<SummonCreatureEffect>effect).mode]
+        }`;
+        break;
+      case EffectTypeEnum.SetAnimationSequence:
+        result.parameter2 = `${
+          SetAnimationSequenceEnum[
+            (<SetAnimationSequenceEffect>effect).sequence
+          ]
+        }`;
+        break;
+      case EffectTypeEnum.WingBuffet:
+        result.parameter1 = `${(<WingBuffetEffect>effect).speed}`;
+        result.parameter2 = `${
+          WingBuffetDirectionEnum[(<WingBuffetEffect>effect).direction]
         }`;
         break;
     }

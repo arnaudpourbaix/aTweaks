@@ -30,7 +30,6 @@ export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
       dispelResistance: "NaturalNonMagical",
       duration: 1,
       resource: SPELLS.CallWoodlandBeeings,
-      global: true,
     },
   ],
   headers: [

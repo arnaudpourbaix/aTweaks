@@ -119,6 +119,7 @@ export enum EffectTypeEnum {
   SaveVsSpellModifier = 37,
   ScriptingStateModifier = 282,
   SelectionCircleRemoval = 287,
+  SetAnimationSequence = 138,
   SetColor = 7,
   SetColorGlowSolid = 8,
   SetColorGlowPulse = 9,
@@ -138,4 +139,5 @@ export enum EffectTypeEnum {
   Translucency = 66,
   UseEFFFile = 177,
   Web = 157,
+  WingBuffet = 235,
 }

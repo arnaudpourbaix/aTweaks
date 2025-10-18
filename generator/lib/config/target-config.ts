@@ -1,4 +1,5 @@
 import { TargetStatus } from "../src/model/raw/target";
+import { SPELL_STATES } from "./ability-presets";
 import { GLOBAL_CONFIG } from "./generate";
 import { GRAB_DEFAULT_CONFIG } from "./grab";
 import { TargetListName, TargetStatusName } from "./target-name";

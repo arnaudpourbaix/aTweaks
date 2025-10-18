@@ -51,6 +51,7 @@ export const SPELLS = {
   // Class
   BerserkerRage: "SPCL321",
   BarbarianRage: "SPCL152",
+  OffensiveSpin: "SPCL521",
 };
 
 export const ATWEAKS_SPELLS = {

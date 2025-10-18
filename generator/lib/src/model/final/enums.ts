@@ -1267,3 +1267,30 @@ export enum RemoveEffectsByResourceTypeEnum {
   EquippedEffectsListOnly = 1,
   TimedEffectsListOnly = 2,
 }
+
+export enum SetAnimationSequenceEnum {
+  Attack = 0,
+  Awake = 1,
+  Cast = 2,
+  Conjure = 3,
+  Damage = 4,
+  Die = 5,
+  TurnHead = 6,
+  Ready = 7,
+  Shoot = 8,
+  Twitch = 9,
+  Walk = 10,
+  AttackSlash = 11,
+  AttackBackslash = 12,
+  AttackJab = 13,
+  Emerge = 14,
+  Hide = 15,
+  Sleep = 16,
+}
+
+export enum WingBuffetDirectionEnum {
+  AwayFromTargetPoint = 1,
+  AwayFromSource = 2,
+  TowardsTargetPoint = 3,
+  TowardsSource = 4,
+}

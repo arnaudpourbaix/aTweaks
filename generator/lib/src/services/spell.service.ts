@@ -56,7 +56,6 @@ export class SpellService {
             resource: s.file,
             target: "Self",
             timing: "InstantPermanentUntilDeath",
-            global: true,
           },
           {
             opcode: "GiveAbility",
@@ -64,12 +63,14 @@ export class SpellService {
             target: "Self",
             timing: "DelayPermanent",
             duration: s.infiniteUse * 6,
-            global: true,
           },
         ];
         s.effects.push(...effects);
       }
       const result = this.mapSpell(s, effectFiles);
+      for (const e of result.effects) {
+        e.global = true;
+      }
       if (results.some((r) => r.file === result.file))
         throw new Error(`Duplicate spell file detected: ${result.file}`);
       results.push(result);

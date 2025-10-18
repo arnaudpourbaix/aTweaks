@@ -47,9 +47,9 @@ COPY_EXISTING ~rr#fcsng.SPL~  ~override~
 	SAY UNIDENTIFIED_DESC ~Charming Song
 The charm ability is used through the sirine's song, and all people within 30 feet are subject to it, even if they are hostile or attacking.
 Each victim can save vs spell to negate or be charmed for 3 turns.~
-	LPF ADD_EFFECT INT_VAR opcode=136 target=1 global=1 power=1 timing=1 probability1=100 END
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~rr#fcsng~)) + 1 STR_VAR icon="SPWI316B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=3 probability1=100 STR_VAR resource="rr#fcsng" END
+	LPF CHANGE_SPELL INT_VAR   rinvs=1  END
 	
 	// Charming Song Technical
 CREATE SPL "rr#fcsn2"

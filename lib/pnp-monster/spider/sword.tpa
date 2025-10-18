@@ -1,7 +1,63 @@
 // Generated file (don't edit)
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m59.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m59su.baf~
 
+// Leap
+CREATE SPL "ja#1m59"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m59.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4038)
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI305C~ #8
+	SAY UNIDENTIFIED_DESC ~
+Leaps horizontally as far as 30 feet.
+Gains Impaling Attack ability for one round.~
+	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m59" END
+	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=4 duration=6 probability1=100 STR_VAR resource="ja#1m59" END
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 STR_VAR icon="SPWI305B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=235 target=1 power=1 parameter1=150 parameter2=3 duration=2 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=45 target=2 power=1 duration=1 probability1=100 END
+	
+	// Impaling Attack
+CREATE SPL "ja#2m59"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m59.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4039)
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPCL521C~ #8
+	SAY UNIDENTIFIED_DESC ~
+Lands legs forward, impaling target. Only one attack roll is made and if the attack is successful, the victim is struck by 4 legs.
+If the spider's leap is greater than 20 feet, each leg receives a +1 bonus to damage.
+Any upward attack against the leaping spider receives a -4 to the attack roll, due to the impaling blades which protect the spider.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 STR_VAR icon="SPCL521B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=2 power=1 parameter1="-4" duration=12 probability1=100 END
+	
+	// Impaling Attack
+CREATE SPL "ja#3m59"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#3m59.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4039)
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPCL521C~ #8
+	SAY UNIDENTIFIED_DESC ~
+Lands legs forward, impaling target. Only one attack roll is made and if the attack is successful, the victim is struck by 4 legs.
+If the spider's leap is greater than 20 feet, each leg receives a +1 bonus to damage.
+Any upward attack against the leaping spider receives a -4 to the attack roll, due to the impaling blades which protect the spider.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 STR_VAR icon="SPCL521B" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=1048576 probability1=100 dicenumber=12 dicesize=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=2 power=1 parameter1="-4" duration=12 probability1=100 END
+	
 CREATE ITM "ja#1m59"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -42,6 +98,80 @@ CREATE ITM "ja#2m59"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4039)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4039)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IWOLF~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~ImpalingAttack
+
+Enchantment: 1
+Range: 2 feet
+
+Cast spell Impaling Attack
+
+Lands legs forward, impaling target. Only one attack roll is made and if the attack is successful, the victim is struck by 4 legs.
+If the spider's leap is greater than 20 feet, each leg receives a +1 bonus to damage.
+Any upward attack against the leaping spider receives a -4 to the attack roll, due to the impaling blades which protect the spider.~)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#2m59.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IWOLF~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#2m59" END
+
+CREATE ITM "ja#3m59"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4039)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4039)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IWOLF~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~ImpalingAttack
+
+Enchantment: 1
+Range: 2 feet
+
+Cast spell Impaling Attack
+
+Lands legs forward, impaling target. Only one attack roll is made and if the attack is successful, the victim is struck by 4 legs.
+If the spider's leap is greater than 20 feet, each leg receives a +1 bonus to damage.
+Any upward attack against the leaping spider receives a -4 to the attack roll, due to the impaling blades which protect the spider.~)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#3m59.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IWOLF~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
+	END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#3m59" END
+
+CREATE ITM "ja#4m59"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0x18 64
@@ -53,7 +183,7 @@ Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~)
 	WRITE_LONG 0x60 1
-COPY_EXISTING ~ja#2m59.itm~ ~override~
+COPY_EXISTING ~ja#4m59.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
@@ -83,16 +213,22 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			REMOVE_CRE_EFFECTS
+			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP03~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~SPIDSWSU~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~PLYSPID~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~WISPID03~ BEGIN
+				REMOVE_CRE_EFFECTS
+			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~BDSPIDHU~
-			REMOVE_CRE_ITEM ~SPIDHU1~
+			REMOVE_CRE_ITEM ~SPIDSW1~
 			REMOVE_CRE_ITEM ~ANTIWEB~
+			REMOVE_CRE_ITEM ~SPIDSWSU~
+			REMOVE_CRE_ITEM ~WISPIDSW~
 			REPLACE_CRE_ITEM ~ja#1m59~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			REPLACE_CRE_ITEM ~ja#2m59~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			REPLACE_CRE_ITEM ~ja#2m59~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
+			REPLACE_CRE_ITEM ~ja#3m59~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON3~ 
+			REPLACE_CRE_ITEM ~ja#4m59~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			ADD_CRE_ITEM ~ja#i12~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_CRE_ITEM ~ja#i11~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_MEMORIZED_SPELL ~ja#1m59~ #0 ~innate~ (1)
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
@@ -127,7 +263,20 @@ BEGIN
 					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN DW1MELMO DW#GPSHM DW#SPIDS BPSIGHT BPASIGHT END
-			LPF patchCreatureScript STR_VAR script=ja#m59 removeScripts END
+			DEFINE_ARRAY skipFiles BEGIN BDHELP03 SPIDSWSU PLYSPID END
+			LPF patchCreatureScript STR_VAR script=ja#m59 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN DW1MELMO DW#GPSHM DW#SPIDS BPSIGHT BPASIGHT END
+			DEFINE_ARRAY files BEGIN BDHELP03 SPIDSWSU END
+			LPF patchCreatureScript STR_VAR script=ja#m59su files removeScripts END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP03~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~SPIDSWSU~) BEGIN 
+				WRITE_LONG 0x14 0 // xpv
+				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~PLYSPID~) BEGIN 
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WISPID03~) BEGIN 
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

@@ -52,8 +52,10 @@ import {
   RawRegenerationType,
   RawRemoveEffectsByResourceType,
   RawSaveType,
+  RawSetAnimationSequence,
   RawSummonCreatureMode,
   RawTranslucencyType,
+  RawWingBuffetDirection,
 } from "./enum";
 import { SpellProtection } from "./spell-protection";
 
@@ -461,6 +463,20 @@ export type MirrorImageEffect = RawBaseEffect & {
   amount: number;
 };
 
+export type SetAnimationSequenceEffect = RawBaseEffect & {
+  opcode: "SetAnimationSequence";
+  sequence: RawSetAnimationSequence;
+};
+
+export type WingBuffetEffect = RawBaseEffect & {
+  opcode: "WingBuffet";
+  /**
+   * 0 to 255
+   */
+  speed: number;
+  direction: RawWingBuffetDirection;
+};
+
 export type ParamLessEffect = RawBaseEffect & {
   opcode:
     | "Blindness"
@@ -573,6 +589,7 @@ export type RawEffect =
   | RemoveOpcodeEffect
   | RemoveSpellTypeProtectionsEffect
   | ScriptingStateModifierEffect
+  | SetAnimationSequenceEffect
   | SetColorEffect
   | SetColorGlowEffect
   | SetExtendedSpellStateEffect
@@ -581,6 +598,7 @@ export type RawEffect =
   | StringRefEffect
   | SummonCreatureEffect
   | TeleportEffect
-  | TranslucencyEffect;
+  | TranslucencyEffect
+  | WingBuffetEffect;
 
 export type RawEffectFile = RawEffect & { file: string };

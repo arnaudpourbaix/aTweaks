@@ -7,9 +7,9 @@ import { SPELLS } from "./spell-names";
 const factory = FactoryService.instance;
 
 export const SPELL_STATES = {
+  flying: "JA_FLYING",
   grabbed: "JA_GRAPPLED",
   grabbing: "JA_GRAPPLING",
-  flying: "JA_FLYING",
   gaseousForm: "JA_GASEOUSFORM",
 };
 

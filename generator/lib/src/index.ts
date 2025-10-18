@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { program } from "commander";
-import { CREATURES, CREATURES_TEST } from "../creatures";
+import { CREATURES } from "../creatures";
 import { MainService } from "./services/main.service";
 import { StateService } from "./services/state.service";
 

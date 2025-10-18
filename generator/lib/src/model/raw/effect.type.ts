@@ -119,6 +119,7 @@ export type RawEffectOpcode =
   | "SaveVsSpellModifier"
   | "ScriptingStateModifier"
   | "SelectionCircleRemoval"
+  | "SetAnimationSequence"
   | "SetColor"
   | "SetColorGlowSolid"
   | "SetColorGlowPulse"
@@ -137,4 +138,5 @@ export type RawEffectOpcode =
   | "Thac0Bonus"
   | "Translucency"
   | "UseEFFFile"
-  | "Web";
+  | "Web"
+  | "WingBuffet";

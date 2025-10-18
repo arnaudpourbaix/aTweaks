@@ -1,8 +1,8 @@
 // Generated file (don't edit)
 
+LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_FLYING" END
 LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLED" END
 LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GRAPPLING" END
-LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_FLYING" END
 LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM" END
 
 OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)

@@ -1031,6 +1031,13 @@ export class StatementService {
         params: [GLOBAL_CONFIG.tokens.target, ability.range],
       });
     }
+    if (ability.minRange) {
+      targetTriggers.unshift({
+        name: "Range",
+        params: [GLOBAL_CONFIG.tokens.target, ability.minRange],
+        negation: true,
+      });
+    }
     if (ability.requireVocal) {
       triggers.unshift({
         name: "StateCheck",

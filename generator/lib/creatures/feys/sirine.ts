@@ -215,14 +215,9 @@ export const FEY_SIRINE: RawCreature = {
       primaryType: "Enchanter",
       secondaryType: "Disabling",
       icon: SPELLS.DireCharm,
-      effects: [
-        {
-          opcode: "ForceVisible",
-          target: "Self",
-          timing: "InstantPermanentUntilDeath",
-          global: true,
-        },
-      ],
+      changes: {
+        removeInvisbilityOnCast: true,
+      },
       headers: [
         {
           type: "Melee",

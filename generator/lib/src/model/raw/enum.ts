@@ -1194,3 +1194,28 @@ export type RawPnPPoisonType =
   | "N"
   | "O"
   | "P";
+
+export type RawSetAnimationSequence =
+  | "Attack"
+  | "Awake"
+  | "Cast"
+  | "Conjure"
+  | "Damage"
+  | "Die"
+  | "TurnHead"
+  | "Ready"
+  | "Shoot"
+  | "Twitch"
+  | "Walk"
+  | "AttackSlash"
+  | "AttackBackslash"
+  | "AttackJab"
+  | "Emerge"
+  | "Hide"
+  | "Sleep";
+
+export type RawWingBuffetDirection =
+  | "AwayFromTargetPoint"
+  | "AwayFromSource"
+  | "TowardsTargetPoint"
+  | "TowardsSource";
