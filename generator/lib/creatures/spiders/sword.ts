@@ -13,17 +13,18 @@ const id = MonsterEnum.SwordSpider;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
+const legWeapon = file(1, id);
 const impaleWeapon = file(2, id);
 const strongerImpaleWeapon = file(3, id);
-const offhandWeapon = file(4, id);
+const jawWeapon = file(4, id);
+const lightningLegWeapon = file(5, id);
 // Spells
 const leap = file(1, id);
 const impaleSpell = file(2, id);
 const strongerImpaleSpell = file(3, id);
 
-const baseWeapon: RawItem = {
-  file: mainWeapon,
+const baseLegWeapon: RawItem = {
+  file: legWeapon,
   stringRef: TraStringReferenceEnum.Legs,
   icon: MonsterItemIconEnum.Wolf,
   equippedSlot: "WEAPON1",
@@ -31,7 +32,7 @@ const baseWeapon: RawItem = {
   diceThrown: 1,
   diceSize: 12,
   damageType: "Piercing",
-  speed: 3,
+  speed: 1,
   abilityFlags: ["AddStrengthBonus"],
 };
 
@@ -109,9 +110,20 @@ export const SPIDER_SWORD: RawCreature = {
     immunities: ["vermin", "spider"],
   },
   items: [
-    baseWeapon,
+    baseLegWeapon,
     {
-      ...baseWeapon,
+      ...baseLegWeapon,
+      file: lightningLegWeapon,
+      effects: [
+        {
+          opcode: "Damage",
+          type: "Electricity",
+          amount: 2,
+        },
+      ],
+    },
+    {
+      ...baseLegWeapon,
       file: impaleWeapon,
       stringRef: TraStringReferenceEnum.ImpalingAttack,
       equippedSlot: "WEAPON2",
@@ -126,7 +138,7 @@ export const SPIDER_SWORD: RawCreature = {
       ],
     },
     {
-      ...baseWeapon,
+      ...baseLegWeapon,
       file: strongerImpaleWeapon,
       stringRef: TraStringReferenceEnum.ImpalingAttack,
       equippedSlot: "WEAPON3",
@@ -141,7 +153,7 @@ export const SPIDER_SWORD: RawCreature = {
       ],
     },
     {
-      file: offhandWeapon,
+      file: jawWeapon,
       stringRef: TraStringReferenceEnum.Jaws,
       icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "SHIELD",
@@ -249,6 +261,11 @@ export const SPIDER_SWORD: RawCreature = {
   adjustments: [
     { files: ["BDHELP03", "SPIDSWSU"], summon: true },
     { files: ["PLYSPID"], noScript: true },
-    { files: ["WISPID03"] },
+    {
+      files: ["WISPID03"],
+      additionalData: {
+        itemSlots: [{ file: lightningLegWeapon, slot: "WEAPON1" }],
+      },
+    },
   ],
 };

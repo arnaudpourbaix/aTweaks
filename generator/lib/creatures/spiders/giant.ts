@@ -38,16 +38,16 @@ export const SPIDER_GIANT: RawCreature = {
     moraleRecovery: 15,
     general: "MONSTER",
     race: "SPIDER",
-    class: "SPIDER_HUGE",
+    class: "SPIDER_GIANT",
     gender: "NIETHER",
     size: "Large",
   },
   additionalData: {
-    removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB"],
+    removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
     removeScripts: [
       "DW1MELMO",
       "DW#GPSHM",
-      "DW#SPIDS",
+      "DW#SPIDG",
       "BPSIGHT",
       "BPASIGHT",
       "DVMELEE",
@@ -64,7 +64,7 @@ export const SPIDER_GIANT: RawCreature = {
       diceThrown: 1,
       diceSize: 8,
       damageType: "Piercing",
-      speed: 3,
+      speed: 2,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
@@ -84,5 +84,8 @@ export const SPIDER_GIANT: RawCreature = {
     "SPIDGI", // Giant Spider
     "SPIDGISU", // Giant Spider
   ],
-  adjustments: [{ files: ["SPIDGISU"], summon: true }],
+  adjustments: [
+    { files: ["SPIDGISU", "BDHELP01"], summon: true },
+    { files: ["PLYSPID2"], noScript: true },
+  ],
 };

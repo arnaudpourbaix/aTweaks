@@ -59,7 +59,7 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 //             READ_LONG 0x28 animation
 //             READ_STRREF 0x08 name
 //             // PATCH_IF race = 119 BEGIN
-//             PATCH_IF class = 140 OR animation = 0x7A03 BEGIN
+//             PATCH_IF class = 139 OR animation = 0x7A02 BEGIN
 //             // PATCH_IF race = 130 OR animation = 0x2000 BEGIN
 //             //PATCH_IF animation = 0x7F0A BEGIN
 //                 //PATCH_PRINT ~"%SOURCE_RES%",~

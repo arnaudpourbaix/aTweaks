@@ -65,7 +65,7 @@ export const SPIDER_HUGE: RawCreature = {
       diceThrown: 1,
       diceSize: 6,
       damageType: "Piercing",
-      speed: 3,
+      speed: 2,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {

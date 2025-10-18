@@ -15,7 +15,7 @@ CREATE ITM "ja#1m55"
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
 
 Melee damage: 1D6 (Piercing)
-Speed Factor: 3
+Speed Factor: 2
 Range: 1 feet
 Poison: deals one damage per 40 seconds for 100 rounds (saves vs poison/death at +1).~)
 COPY_EXISTING ~ja#1m55.itm~ ~override~
@@ -25,7 +25,7 @@ COPY_EXISTING ~ja#1m55.itm~ ~override~
 		WRITE_ASCII 0x76 ~SPPR416B~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 1
-		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x84 2
 		WRITE_BYTE 0x88 6
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1

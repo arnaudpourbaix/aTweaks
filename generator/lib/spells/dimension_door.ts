@@ -1,5 +1,6 @@
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
+import { RawEffect } from "../src/model/raw/effect";
 import { RawSpellType } from "../src/model/raw/enum";
 import { RawSpell } from "../src/model/raw/spell";
 
@@ -9,12 +10,14 @@ export const createDimensionDoor = ({
   spellType,
   file,
   memorizedCount,
+  effects,
 }: {
   file: string;
   spellLevel: number;
   spellType: RawSpellType;
   infiniteUse?: number;
   memorizedCount?: number;
+  effects?: RawEffect[];
 }): RawSpell => ({
   name: "DimensionDoor",
   file,
@@ -79,6 +82,7 @@ export const createDimensionDoor = ({
           duration: 1,
           dispelResistance: "DispelNotBypassResistance",
         },
+        ...(effects ?? []),
       ],
     },
   ],

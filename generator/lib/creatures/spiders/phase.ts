@@ -1,5 +1,8 @@
+import { PRESET_NAMES } from "../../config/ability-presets";
 import { MonsterItemIconEnum } from "../../config/item";
+import { ATWEAKS_SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
+import { createDimensionDoor } from "../../spells/dimension_door";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -11,7 +14,8 @@ const id = MonsterEnum.PhaseSpider;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
+// Spells
+const phase = file(1, id);
 
 const name = "Phase Spider";
 export const SPIDER_PHASE: RawCreature = {
@@ -23,7 +27,7 @@ export const SPIDER_PHASE: RawCreature = {
   data: {
     level1: 5,
     bonusHp: 5,
-    thac0: 15,
+    //thac0: 15,
     strength: 15,
     dexterity: 15,
     constitution: 12,
@@ -45,8 +49,17 @@ export const SPIDER_PHASE: RawCreature = {
     size: "Huge",
   },
   additionalData: {
-    removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB"],
-    removeScripts: ["DW1MELMO", "DW#GPSHM", "DW#SPIDS", "BPSIGHT", "BPASIGHT"],
+    removeItems: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
+    removeScripts: [
+      "DW1MELMO",
+      "DW#GPSHM",
+      "PSPIDER",
+      "BPSIGHT",
+      "BPASIGHT",
+      "DVMELEE",
+      "SPIDPHSU",
+    ],
+    immunities: ["vermin", "spider"],
   },
   items: [
     {
@@ -57,14 +70,11 @@ export const SPIDER_PHASE: RawCreature = {
       type: "Melee",
       diceThrown: 1,
       diceSize: 6,
+      bonusToHit: 4, // always attack from behind
       damageType: "Piercing",
-      speed: 3,
+      speed: 1,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
-        // They phase in, attack, and phase out, all in a single round.
-        // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
-        // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
-        // Phase spiders flee to the Ethereal plane when outmatched; there, they gain only a -1 modifier to initiative and can be attacked every round, regardless of the initiative result.
         {
           opcode: "PoisonTypeEffects",
           poisonType: "F",
@@ -72,11 +82,61 @@ export const SPIDER_PHASE: RawCreature = {
         },
       ],
     },
-    createTraitItem({
-      file: traits,
-      name,
-      description: [],
+  ],
+  spells: [
+    createDimensionDoor({
+      file: phase,
+      memorizedCount: 1,
+      spellLevel: 1,
+      spellType: "Innate",
+      infiniteUse: 1,
+      effects: [
+        { opcode: "Thac0Bonus", type: "Increment", value: 4, duration: 6 },
+      ],
     }),
   ],
-  files: [],
+  abilities: [
+    // They phase in, attack, and phase out, all in a single round.
+    // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
+    // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
+    // Phase spiders flee to the Ethereal plane when outmatched
+    {
+      name: "Phase in, attack, and phase out",
+      target: { name: "FarthestEnemies" },
+      spell: {
+        resource: phase,
+        type: "force",
+        remove: true,
+      },
+      disableInterrupt: true,
+      actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+    },
+    // {
+    //   preset: PRESET_NAMES.DimensionDoorOffscreen,
+    //   spell: {
+    //     type: "force",
+    //   },
+    //   disableInterrupt: true,
+    // },
+  ],
+  files: [
+    "SPIDPH", // Phase Spider
+    "SPIDPHSU", // Phase Spider
+    "SPIDPHAS", // Astral Phase Spider
+    //
+    "C#LCCENS", // Ghostly Spirit
+    "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
+    "SMSPID02", // Vortex Spider
+  ],
+  adjustments: [
+    { files: ["SPIDPHSU"], summon: true },
+    {
+      files: ["SPIDPHAS"],
+      data: {
+        level1: 12,
+        xpv: 4000,
+      },
+      additionalData: {},
+    },
+  ],
 };
