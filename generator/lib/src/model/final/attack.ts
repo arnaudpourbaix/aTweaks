@@ -15,6 +15,11 @@ export interface CreatureAttack {
   ranged: boolean;
 
   /**
+   * Maximum range for selecting a target (usefull when creature can leap/teleport at will)
+   */
+  maxRange?: number;
+
+  /**
    * Target priorities in combat
    */
   targetPriorities: TargetPriority[];

@@ -91,61 +91,6 @@ THEN
 		NoAction()
 END
 
-// Phase in, attack, and phase out
-IF
-	HaveSpellRES("rr#ddoor")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(FarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FarthestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#ddoor",LastSeenBy(Myself))
-		RemoveSpellRES("rr#ddoor")
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#ddoor")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondFarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SecondFarthestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#ddoor",LastSeenBy(Myself))
-		RemoveSpellRES("rr#ddoor")
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
-END
-
-IF
-	HaveSpellRES("rr#ddoor")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(ThirdFarthestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#ddoor",LastSeenBy(Myself))
-		RemoveSpellRES("rr#ddoor")
-		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
-END
-
 // Attack NoCheck enemy
 IF
 	OR(4)

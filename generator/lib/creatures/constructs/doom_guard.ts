@@ -100,29 +100,7 @@ export const DOOM_GUARD: RawCreature = {
     createTraitItem({
       file: traits,
       name,
-      immunities: ["mindSpells"],
-      effects: [
-        {
-          opcode: "FireResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-        {
-          opcode: "MagicalFireResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-        {
-          opcode: "ColdResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-        {
-          opcode: "MagicalColdResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-      ],
+      immunities: ["mindSpells", "fireResistance", "coldResistance"],
     }),
     {
       file: armor,

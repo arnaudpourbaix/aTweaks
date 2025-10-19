@@ -79,6 +79,7 @@ export const HORROR_HELMED: RawCreature = {
       triggers: [
         { name: "Range", params: ["NearestEnemyOf", 10], negation: true },
       ],
+      requireVocal: false,
       timer: { name: "MagicMissiles", value: 18 },
     },
   ],
@@ -90,6 +91,7 @@ export const HORROR_HELMED: RawCreature = {
         {
           preset: SPELLS.DimensionDoor,
           range: 180,
+          requireVocal: false,
         },
       ],
     },

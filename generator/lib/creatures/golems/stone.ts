@@ -79,6 +79,7 @@ export const GOLEM_STONE: RawCreature = {
         type: "reallyForce",
         selfTarget: true,
       },
+      requireVocal: false,
       range: 10,
       timer: { name: "Slow", value: 12 },
     },

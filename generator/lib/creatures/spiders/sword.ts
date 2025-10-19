@@ -1,8 +1,9 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
+import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
-import { RawEffect } from "../../src/model/raw/effect";
+import { DamageEffect, RawEffect } from "../../src/model/raw/effect";
 import { RawItem } from "../../src/model/raw/item";
 import { RawSpell } from "../../src/model/raw/spell";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -15,59 +16,128 @@ const script = bafFile(id);
 // Items
 const legWeapon = file(1, id);
 const impaleWeapon = file(2, id);
-const strongerImpaleWeapon = file(3, id);
 const jawWeapon = file(4, id);
+// special lightning sword spider
 const lightningLegWeapon = file(5, id);
+const lightningImpaleWeapon = file(6, id);
 // Spells
 const leap = file(1, id);
-const impaleSpell = file(2, id);
-const strongerImpaleSpell = file(3, id);
+const lightningLeap = file(2, id);
 
-const baseLegWeapon: RawItem = {
-  file: legWeapon,
-  stringRef: TraStringReferenceEnum.Legs,
-  icon: MonsterItemIconEnum.Wolf,
-  equippedSlot: "WEAPON1",
-  type: "Melee",
-  diceThrown: 1,
-  diceSize: 12,
-  damageType: "Piercing",
-  speed: 1,
-  abilityFlags: ["AddStrengthBonus"],
+const createLegWeapon = (
+  file: string,
+  impale: boolean,
+  lightning: boolean
+): RawItem => {
+  const effects: RawEffect[] = [];
+  if (impale) {
+    effects.push(
+      {
+        opcode: "DisplayString",
+        stringRef: TraStringReferenceEnum.ImpalingAttack,
+      },
+      // ...new Array(4).fill(<DamageEffect>{
+      //   opcode: "Damage",
+      //   type: "Piercing",
+      //   diceThrown: 1,
+      //   diceSize: 12,
+      //   amount: 1, // strength bonus
+      // }),
+      {
+        opcode: "Thac0Bonus",
+        type: "Increment",
+        value: -4,
+        timing: "InstantLimited",
+        duration: 12,
+      }
+    );
+  }
+  if (lightning) {
+    effects.push({
+      opcode: "Damage",
+      type: "Electricity",
+      amount: impale ? 8 : 2,
+    });
+  }
+  return {
+    file,
+    stringRef: impale
+      ? TraStringReferenceEnum.ImpalingAttack
+      : TraStringReferenceEnum.Legs,
+    icon: MonsterItemIconEnum.Wolf,
+    equippedSlot: impale ? undefined : "WEAPON1",
+    type: "Melee",
+    diceThrown: impale ? 4 : 1,
+    diceSize: 12,
+    damageType: "Piercing",
+    speed: 1,
+    abilityFlags: ["AddStrengthBonus"],
+    effects,
+  };
 };
 
-const createImpaleSpell = (
+const createLeapSpell = (
   file: string,
-  legCount: number,
-  effect: RawEffect
-): RawSpell => ({
-  name: "Impaling Attack",
-  file,
-  icon: SPELLS.OffensiveSpin,
-  stringRef: TraStringReferenceEnum.ImpalingAttack,
-  description: [
-    "",
-    "Lands legs forward, impaling target. Only one attack roll is made and if the attack is successful, the victim is struck by 4 legs.",
-    "If the spider's leap is greater than 20 feet, each leg receives a +1 bonus to damage.",
-    "Any upward attack against the leaping spider receives a -4 to the attack roll, due to the impaling blades which protect the spider.",
-  ],
-  headers: [
-    {
-      type: "Melee",
-      range: 30,
-      effects: [
-        ...new Array(legCount).fill(effect),
-        {
-          opcode: "Thac0Bonus",
-          type: "Increment",
-          value: -4,
-          timing: "InstantLimited",
-          duration: 12,
-        },
-      ],
+  memorizedCount: number,
+  weaponFile: string
+): RawSpell => {
+  return {
+    name: "Leap",
+    file,
+    memorizedCount,
+    icon: SPELLS.Haste,
+    infiniteUse: 1,
+    stringRef: TraStringReferenceEnum.Leap,
+    description: [
+      "",
+      "Leaps horizontally as far as 30 feet.",
+      "Gains Impaling Attack ability for one round.",
+    ],
+    headers: [
+      {
+        type: "Melee",
+        range: 30,
+        effects: [
+          {
+            opcode: "WingBuffet",
+            target: "Self",
+            speed: 150,
+            direction: "TowardsTargetPoint",
+            duration: 2,
+          },
+          {
+            opcode: "CreateWeapon",
+            amount: 1,
+            resource: weaponFile,
+            target: "Self",
+            timing: "InstantLimited",
+            duration: 6,
+          },
+          {
+            opcode: "Stun",
+            duration: 1,
+          },
+        ],
+      },
+    ],
+  };
+};
+
+const createLeapAbility = (resource: string): RawCreatureAbility => {
+  return {
+    name: "Leap Attack",
+    target: { name: "FarthestEnemies", random: true },
+    minRange: 5,
+    range: 30,
+    spell: {
+      resource,
+      type: "force",
+      isAttack: true,
     },
-  ],
-});
+    disableInterrupt: true,
+    actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+  };
+};
 
 const name = "Sword Spider";
 export const SPIDER_SWORD: RawCreature = {
@@ -79,6 +149,7 @@ export const SPIDER_SWORD: RawCreature = {
   attack: {
     dualWielding: true,
     defaultWeaponSlot: "SLOT_WEAPON",
+    maxRange: 5,
   },
   data: {
     level1: 5,
@@ -90,8 +161,8 @@ export const SPIDER_SWORD: RawCreature = {
     intelligence: 9,
     wisdom: 14,
     charisma: 4,
-    movement: 8,
-    ac: 3,
+    movement: 6, // 6, Web 8
+    ac: 7, // -4 with dex bonus
     apr: 2,
     xpv: 2000,
     alignment: "CHAOTIC_EVIL",
@@ -107,51 +178,13 @@ export const SPIDER_SWORD: RawCreature = {
   additionalData: {
     removeItems: ["SPIDSW1", "ANTIWEB", "SPIDSWSU", "WISPIDSW"],
     removeScripts: ["DW1MELMO", "DW#GPSHM", "DW#SPIDS", "BPSIGHT", "BPASIGHT"],
-    immunities: ["vermin", "spider"],
+    immunities: ["spider"],
   },
   items: [
-    baseLegWeapon,
-    {
-      ...baseLegWeapon,
-      file: lightningLegWeapon,
-      effects: [
-        {
-          opcode: "Damage",
-          type: "Electricity",
-          amount: 2,
-        },
-      ],
-    },
-    {
-      ...baseLegWeapon,
-      file: impaleWeapon,
-      stringRef: TraStringReferenceEnum.ImpalingAttack,
-      equippedSlot: "WEAPON2",
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: "CastSpell",
-          type: "CastInstantlyAtCasterLevel",
-          resource: impaleSpell,
-        },
-      ],
-    },
-    {
-      ...baseLegWeapon,
-      file: strongerImpaleWeapon,
-      stringRef: TraStringReferenceEnum.ImpalingAttack,
-      equippedSlot: "WEAPON3",
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: "CastSpell",
-          type: "CastInstantlyAtCasterLevel",
-          resource: strongerImpaleSpell,
-        },
-      ],
-    },
+    createLegWeapon(legWeapon, false, false),
+    createLegWeapon(impaleWeapon, true, false),
+    createLegWeapon(lightningLegWeapon, false, true),
+    createLegWeapon(lightningImpaleWeapon, true, true),
     {
       file: jawWeapon,
       stringRef: TraStringReferenceEnum.Jaws,
@@ -166,88 +199,10 @@ export const SPIDER_SWORD: RawCreature = {
     },
   ],
   spells: [
-    {
-      name: "Leap",
-      file: leap,
-      memorizedCount: 1,
-      icon: SPELLS.Haste,
-      infiniteUse: 1,
-      stringRef: TraStringReferenceEnum.Leap,
-      description: [
-        "",
-        "Leaps horizontally as far as 30 feet.",
-        "Gains Impaling Attack ability for one round.",
-      ],
-      headers: [
-        {
-          type: "Melee",
-          range: 30,
-          effects: [
-            {
-              opcode: "WingBuffet",
-              target: "Self",
-              speed: 150,
-              direction: "TowardsTargetPoint",
-              duration: 2,
-            },
-            {
-              opcode: "Stun",
-              duration: 1,
-            },
-          ],
-        },
-      ],
-    },
-    createImpaleSpell(impaleWeapon, 4, {
-      opcode: "Damage",
-      type: "Piercing",
-      diceSize: 1,
-      diceThrown: 12,
-    }),
-    createImpaleSpell(strongerImpaleSpell, 4, {
-      opcode: "Damage",
-      type: "Piercing",
-      diceSize: 1,
-      diceThrown: 12,
-      amount: 1,
-    }),
+    createLeapSpell(leap, 1, impaleWeapon),
+    createLeapSpell(lightningLeap, 0, lightningImpaleWeapon),
   ],
-  abilities: [
-    {
-      name: "Leap (from more than 20 feet range)",
-      target: { name: "FarthestEnemies" },
-      minRange: 20,
-      range: 30,
-      spell: {
-        resource: leap,
-        type: "force",
-        remove: true,
-      },
-      disableInterrupt: true,
-      actionsAfter: [
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON2", 0] },
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON", 0] },
-      ],
-    },
-    {
-      name: "Leap (from less than 20 feet range)",
-      target: { name: "FarthestEnemies" },
-      minRange: 5,
-      range: 20,
-      spell: {
-        resource: leap,
-        type: "force",
-        remove: true,
-      },
-      disableInterrupt: true,
-      actionsAfter: [
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON", 0] },
-      ],
-    },
-  ],
+  abilities: [createLeapAbility(leap), createLeapAbility(lightningLeap)],
   files: [
     "BDHELP03", // Sword Spider
     "BDSPID7L", // Seven-Legged Spider
@@ -264,7 +219,9 @@ export const SPIDER_SWORD: RawCreature = {
     {
       files: ["WISPID03"],
       additionalData: {
+        removeMemorizedSpells: true,
         itemSlots: [{ file: lightningLegWeapon, slot: "WEAPON1" }],
+        memorizedSpells: [{ file: lightningLeap, memorizedCount: 1 }],
       },
     },
   ],

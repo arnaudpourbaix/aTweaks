@@ -160,7 +160,7 @@ BEGIN
 					charisma=18
 					movement=12
 					hp=32
-					ac=7
+					ac=10
 					thac0=17
 					apr=1
 					xpv=1400

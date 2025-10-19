@@ -42,6 +42,7 @@ export enum TraStringReferenceEnum {
   Paws = 4022,
   PetrifyingGaze = 4002,
   Petrified = 4004,
+  PhaseOut = 4040,
   PlateMail = 4029,
   QuaffPotion = 3002,
   RearClawsAttack = 4009,

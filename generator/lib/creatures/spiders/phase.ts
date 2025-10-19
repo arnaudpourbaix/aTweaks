@@ -1,8 +1,5 @@
-import { PRESET_NAMES } from "../../config/ability-presets";
 import { MonsterItemIconEnum } from "../../config/item";
-import { ATWEAKS_SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { createDimensionDoor } from "../../spells/dimension_door";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -14,8 +11,7 @@ const id = MonsterEnum.PhaseSpider;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
-// Spells
-const phase = file(1, id);
+const trait = file(2, id);
 
 const name = "Phase Spider";
 export const SPIDER_PHASE: RawCreature = {
@@ -27,15 +23,14 @@ export const SPIDER_PHASE: RawCreature = {
   data: {
     level1: 5,
     bonusHp: 5,
-    //thac0: 15,
     strength: 15,
     dexterity: 15,
     constitution: 12,
     intelligence: 7,
     wisdom: 10,
     charisma: 6,
-    movement: 15,
-    ac: 7,
+    movement: 6, // 6, Web 15
+    ac: 8, // -1 with dex bonus
     apr: 1,
     xpv: 1400,
     alignment: "NEUTRAL",
@@ -59,10 +54,14 @@ export const SPIDER_PHASE: RawCreature = {
       "DVMELEE",
       "SPIDPHSU",
     ],
-    immunities: ["vermin", "spider"],
+    immunities: ["spider"],
   },
   items: [
     {
+      // They phase in, attack, and phase out, all in a single round.
+      // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
+      // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
+      // Phase spiders flee to the Ethereal plane when outmatched
       file: mainWeapon,
       stringRef: TraStringReferenceEnum.Jaws,
       icon: MonsterItemIconEnum.Jaws,
@@ -70,7 +69,6 @@ export const SPIDER_PHASE: RawCreature = {
       type: "Melee",
       diceThrown: 1,
       diceSize: 6,
-      bonusToHit: 4, // always attack from behind
       damageType: "Piercing",
       speed: 1,
       abilityFlags: ["AddStrengthBonus"],
@@ -80,53 +78,40 @@ export const SPIDER_PHASE: RawCreature = {
           poisonType: "F",
           saveBonus: -2,
         },
+        {
+          opcode: "DisplayString",
+          stringRef: TraStringReferenceEnum.PhaseOut,
+          target: "Self",
+          timing: "DelayPermanent",
+          duration: 2,
+        },
+        {
+          opcode: "Invisibility",
+          type: "Normal",
+          target: "Self",
+          timing: "DelayPermanent",
+          duration: 2,
+        },
       ],
     },
-  ],
-  spells: [
-    createDimensionDoor({
-      file: phase,
-      memorizedCount: 1,
-      spellLevel: 1,
-      spellType: "Innate",
-      infiniteUse: 1,
+    createTraitItem({
+      file: trait,
+      name,
+      description: [
+        "Phase spider only phases in material plane when attacking",
+      ],
       effects: [
-        { opcode: "Thac0Bonus", type: "Increment", value: 4, duration: 6 },
+        {
+          opcode: "Invisibility",
+          type: "Normal",
+        },
       ],
     }),
-  ],
-  abilities: [
-    // They phase in, attack, and phase out, all in a single round.
-    // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
-    // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
-    // Phase spiders flee to the Ethereal plane when outmatched
-    {
-      name: "Phase in, attack, and phase out",
-      target: { name: "FarthestEnemies" },
-      spell: {
-        resource: phase,
-        type: "force",
-        remove: true,
-      },
-      disableInterrupt: true,
-      actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
-    },
-    // {
-    //   preset: PRESET_NAMES.DimensionDoorOffscreen,
-    //   spell: {
-    //     type: "force",
-    //   },
-    //   disableInterrupt: true,
-    // },
   ],
   files: [
     "SPIDPH", // Phase Spider
     "SPIDPHSU", // Phase Spider
     "SPIDPHAS", // Astral Phase Spider
-    //
-    "C#LCCENS", // Ghostly Spirit
-    "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
-    "SMSPID02", // Vortex Spider
   ],
   adjustments: [
     { files: ["SPIDPHSU"], summon: true },
@@ -136,7 +121,6 @@ export const SPIDER_PHASE: RawCreature = {
         level1: 12,
         xpv: 4000,
       },
-      additionalData: {},
     },
   ],
 };

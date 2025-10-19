@@ -13,7 +13,7 @@ COPY_EXISTING ~ja#1m4.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	SAY UNIDENTIFIED_DESC ~Hug target for 2d4 points of additional crushing damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicenumber=2 dicesize=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicesize=4 dicenumber=2 END
 	
 CREATE ITM "ja#1m4"
 	WRITE_LONG 0x64 0x72

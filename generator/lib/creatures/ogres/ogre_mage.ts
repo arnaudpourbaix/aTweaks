@@ -352,8 +352,9 @@ export const OGRE_MAGE: RawCreature = {
           effects: [
             {
               opcode: "CreateWeapon",
-              amount: 0,
+              amount: 1,
               resource: gaseousFormWeapon,
+              target: "Self",
               timing: "InstantLimited",
               duration: gaseousFormDuration,
             },

@@ -33,7 +33,7 @@ export class AbilityService {
         ...ability,
         target: targets,
         name: ability.name ?? "",
-        isSpell: !!ability.spell,
+        isSpell: !!ability.spell && !ability.spell.isAttack,
         triggers,
         actions: ability.actionsBefore ?? [],
       };

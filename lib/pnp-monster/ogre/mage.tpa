@@ -34,7 +34,7 @@ When this spell is cast, it causes a cone-shaped spray of extreme cold to spring
 The cone is 60 feet long with a terminal diameter of 20 feet.
 It drains heat and causes 8d8 cold damage, with a save vs. breath at -4 allowed for half damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 range=10 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1 STR_VAR icon="SPWI503B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=5 parameter2=131072 probability1=100 dicenumber=8 dicesize=8 savingthrow=16777217 savebonus="-4" special=256 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=5 parameter2=131072 probability1=100 dicesize=8 dicenumber=8 savingthrow=16777217 savebonus="-4" special=256 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=165 target=2 power=5 duration=1 probability1=100 END
 	
 	// Fly
@@ -55,7 +55,7 @@ This effectively prevents ground-based spells such as Earthquake, Entangle, Grea
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=3 STR_VAR icon="SPWI305B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=3 parameter1=12 parameter2=1 duration=72 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i6" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i9" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=328 target=2 power=3 parameter2=(IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~)) duration=72 probability1=100 special=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=3 parameter2=38 duration=72 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=3 probability1=100 STR_VAR resource="EFF_M28" END
@@ -76,7 +76,7 @@ COPY_EXISTING ~ja#3m32.SPL~  ~override~
 	SAY UNIDENTIFIED_DESC ~Gaseous form
 The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=4 STR_VAR icon="SPWI416B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=111 target=2 power=4 duration=12 probability1=100 STR_VAR resource="ja#2m32" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=111 target=1 power=4 parameter1=1 duration=12 probability1=100 STR_VAR resource="ja#2m32" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 duration=3 probability1=100 STR_VAR resource="SPDISPM3" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 timing=4 duration=12 probability1=100 STR_VAR resource="SPDISPM3" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=4 probability1=100 STR_VAR resource="MSTCHNG" END

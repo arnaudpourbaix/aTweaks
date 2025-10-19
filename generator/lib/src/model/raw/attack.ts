@@ -16,6 +16,11 @@ export interface RawCreatureAttack {
   ranged?: boolean;
 
   /**
+   * Maximum range for selecting a target (usefull when creature can leap/teleport at will)
+   */
+  maxRange?: number;
+
+  /**
    * Target priorities, will focus first on these defined priorities and then complete with default priorities
    */
   targetPriorities?: RawTargetPriority[];

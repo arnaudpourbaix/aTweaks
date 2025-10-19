@@ -30,6 +30,16 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     spellGroups: ["poison"],
   },
   {
+    name: "poisonResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "PoisonResistanceModifier",
+        value: 50,
+      },
+    ],
+  },
+  {
     name: "disease",
     type: "immunity",
     description: ["Disease immunity"],
@@ -228,6 +238,22 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "fireResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "FireResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: "MagicalFireResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "coldSpells",
     type: "immunity",
     description: ["Cold spells immunity"],
@@ -251,6 +277,22 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "coldResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "ColdResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+      {
+        opcode: "MagicalColdResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "electricalSpells",
     type: "immunity",
     description: ["Electrical spells immunity"],
@@ -269,6 +311,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "electricityResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "ElectricityResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "magic",
     type: "immunity",
     description: ["Magic immunity"],
@@ -276,6 +329,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       {
         opcode: "MagicResistanceModifier",
         value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "magicResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "MagicResistanceModifier",
+        value: 50,
         type: "Set",
       },
     ],
@@ -293,6 +357,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "magicDamageResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "MagicDamageResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "acid",
     type: "immunity",
     description: ["Acid immunity"],
@@ -300,6 +375,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       {
         opcode: "AcidResistanceModifier",
         value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "acidResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "AcidResistanceModifier",
+        value: 50,
         type: "Set",
       },
     ],
@@ -418,6 +504,16 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "physicalDamageResistance",
+    type: "immunity",
+    immunities: [
+      "slashingDamageResistance",
+      "crushingDamageResistance",
+      "piercingDamageResistance",
+      "missileDamageResistance",
+    ],
+  },
+  {
     name: "slashingDamage",
     type: "immunity",
     description: ["Slashing damage immunity"],
@@ -425,6 +521,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       {
         opcode: "SlashingResistanceModifier",
         value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "slashingDamageResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "SlashingResistanceModifier",
+        value: 50,
         type: "Set",
       },
     ],
@@ -442,6 +549,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "crushingDamageResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "CrushingResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "piercingDamage",
     type: "immunity",
     description: ["Piercing damage immunity"],
@@ -454,6 +572,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
+    name: "piercingDamageResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "PiercingResistanceModifier",
+        value: 50,
+        type: "Set",
+      },
+    ],
+  },
+  {
     name: "missileDamage",
     type: "immunity",
     description: ["Missile damage immunity"],
@@ -461,6 +590,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       {
         opcode: "MissilesResistanceModifier",
         value: 100,
+        type: "Set",
+      },
+    ],
+  },
+  {
+    name: "missileDamageResistance",
+    type: "immunity",
+    effects: [
+      {
+        opcode: "MissilesResistanceModifier",
+        value: 50,
         type: "Set",
       },
     ],
@@ -782,7 +922,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Attacks pass through armor (+4 THAC0).",
       // "Do not set off traps that are triggered by weight. (not implemented)",
     ],
-    immunities: ["backstab", "criticalHit"],
+    immunities: [
+      "backstab",
+      "criticalHit",
+      "fireResistance",
+      "coldResistance",
+      "electricalSpells",
+      "acidResistance",
+      "poisonResistance",
+      "magicDamageResistance",
+      "physicalDamageResistance",
+    ],
     effects: [
       {
         opcode: "Translucency",
@@ -824,62 +974,6 @@ export const IMMUNITIES: RawImmunityConfig[] = [
         value: 4,
         type: "Increment",
       },
-      {
-        opcode: "FireResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MagicalFireResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "ColdResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MagicalColdResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "ElectricityResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "AcidResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MagicDamageResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "SlashingResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "CrushingResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "PiercingResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MissilesResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      { opcode: "PoisonResistanceModifier", value: 50 },
     ],
   },
   {
@@ -959,6 +1053,40 @@ export const IMMUNITIES: RawImmunityConfig[] = [
       "Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.",
       "Darkvision out to 60 feet.",
     ],
-    immunities: ["web", "infravision"],
+    immunities: ["vermin", "web", "poison", "infravision"],
+  },
+  {
+    name: "ghostVisual1",
+    type: "trait",
+    itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
+    effects: [
+      {
+        opcode: "SetColorGlowPulse",
+        color: { red: 222, green: 201, blue: 255 },
+        location: "ArmorBlueArmorTrimming",
+        cycleSpeed: 43,
+      },
+      {
+        opcode: "SetColorGlowPulse",
+        color: { red: 183, green: 222, blue: 255 },
+        location: "WeaponBlueHeadBladeMinor",
+        cycleSpeed: 47,
+      },
+      {
+        opcode: "SetColorGlowPulse",
+        color: { red: 174, green: 219, blue: 255 },
+        location: "HelmetBlueExterior",
+        cycleSpeed: 40,
+      },
+      {
+        opcode: "SetColorGlowPulse",
+        color: { red: 223, green: 223, blue: 249 },
+        location: "ShieldBlueBodyTrim",
+        cycleSpeed: 42,
+      },
+      {
+        opcode: "Blur",
+      },
+    ],
   },
 ];

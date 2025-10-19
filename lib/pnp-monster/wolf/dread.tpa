@@ -81,11 +81,11 @@ COPY_EXISTING ~ja#2m22.itm~ ~override~
 		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=2 parameter2=3 timing=2 probability1=100 special=87 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=29 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=208 target=1 global=1 parameter1=1 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=232 target=1 global=1 parameter2=19 timing=2 probability1=100 special=6 STR_VAR resource="ja#1m22" END
 	LPF coldSpells_immunity END
 	LPF cold_immunity END
+	LPF electricityResistance_immunity END
 	LPF charm_immunity END
 	LPF hold_immunity END
 

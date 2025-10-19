@@ -5,14 +5,9 @@ import {
   RawParalyzeEffectGroup,
   RawPoisonTypeEffectGroup,
 } from "../src/model/raw/effect";
-import {
-  RawEffectTiming,
-  RawPnPPoisonType,
-  RawPoisonType,
-  RawSaveType,
-} from "../src/model/raw/enum";
+import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
+import { PoisonService } from "../src/services/poison.service";
 import { RawEffectGroupName } from "./effect-group-name";
-import { PoisonModel, POISONS } from "./poison";
 import { TraStringReferenceEnum } from "./stringRef";
 
 export const EFFECT_GROUPS: {
@@ -197,48 +192,7 @@ export const EFFECT_GROUPS: {
   },
   {
     group: "PoisonTypeEffects",
-    effectsFn: (eff) => {
-      const effect = eff as RawPoisonTypeEffectGroup;
-      const fn = (
-        damage: number,
-        duration: number
-      ): { type: RawPoisonType; amount: number } => {
-        const type: RawPoisonType =
-          damage > duration
-            ? "AmountDamagePerSecond"
-            : "OneDamagePerAmountSecond";
-        const amount =
-          type === "OneDamagePerAmountSecond"
-            ? Math.ceil(duration / damage)
-            : Math.ceil(damage / duration);
-        console.log(`poison => ${damage}/${duration} ==> ${type}, ${amount}`);
-        return { type, amount };
-      };
-      const poison = POISONS.find(
-        (p) => p.type === effect.poisonType
-      ) as PoisonModel;
-      const base: RawBaseEffect = {
-        timing: "InstantLimited",
-        duration: poison.duration,
-      };
-      const effects: RawEffect[] = [];
-      if (poison.saveDamage) {
-        effects.push({
-          opcode: "Poison",
-          icon: "Poisoned",
-          ...fn(poison.saveDamage, poison.duration),
-          ...base,
-        });
-      }
-      effects.push({
-        opcode: "Poison",
-        icon: "Poisoned",
-        ...fn(poison.damage - poison.saveDamage, poison.duration),
-        ...base,
-        saveTypes: ["ParalyzePoisonDeath"],
-        saveBonus: effect.saveBonus,
-      });
-      return effects;
-    },
+    effectsFn: (eff) =>
+      PoisonService.instance.getEffects(eff as RawPoisonTypeEffectGroup),
   },
 ];

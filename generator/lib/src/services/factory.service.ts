@@ -206,9 +206,11 @@ export class FactoryService {
   validAttackTarget = ({
     isTargetPlayer,
     seeInvisible,
+    maxRange,
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
+    maxRange?: number;
   }): Triggers.Trigger[] => {
     const results: Triggers.Trigger[] = [
       {
@@ -234,6 +236,12 @@ export class FactoryService {
         params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
         negation: true,
       });
+    if (maxRange) {
+      results.push({
+        name: "Range",
+        params: [GLOBAL_CONFIG.tokens.target, maxRange],
+      });
+    }
     return results;
   };
 

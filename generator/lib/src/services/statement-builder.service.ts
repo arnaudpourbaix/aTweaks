@@ -817,6 +817,7 @@ export class StatementService {
             creature.additionalData.immunities,
             "seeInvisible"
           ),
+          maxRange: creature.attack.maxRange,
         }),
       ];
       // if (creature.canPolymorph) {

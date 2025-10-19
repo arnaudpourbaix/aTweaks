@@ -56,7 +56,7 @@ export enum MonsterEnum {
   HugeSpider = 55,
   GiantSpider = 56,
   PhaseSpider = 57,
-  AstralPhaseSpider = 58,
+  GhostwalkSpider = 58,
   SwordSpider = 59,
   WraithSpider = 60,
   MutatedSpider = 61,

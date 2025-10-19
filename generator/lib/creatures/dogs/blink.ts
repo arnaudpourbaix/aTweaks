@@ -29,7 +29,7 @@ export const DOG_BLINK: RawCreature = {
     wisdom: 13,
     charisma: 11,
     movement: 12,
-    ac: 5,
+    ac: 8, // -3 with dex bonus
     apr: 1,
     xpv: 270,
     alignment: "NEUTRAL",

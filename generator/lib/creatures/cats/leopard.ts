@@ -28,7 +28,7 @@ export const CAT_LEOPARD: RawCreature = {
     wisdom: 12,
     charisma: 6,
     movement: 15,
-    ac: 6,
+    ac: 10, // -4 with dex bonus
     apr: 3,
     xpv: 270,
     alignment: "NEUTRAL",

@@ -195,7 +195,8 @@ export class DescriptionService {
   getDuration(duration?: number): string {
     if (!duration) return "";
     const rounds = Math.round(duration / 6);
-    return `${rounds} rounds`;
+    const turns = duration / 60;
+    return duration % 60 === 0 ? `${turns} turns` : `${rounds} rounds`;
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
@@ -289,8 +290,12 @@ export class DescriptionService {
       text = `${effect.amount} per second`;
     else text = `one damage per ${effect.amount} seconds`;
     const results: string[] = [];
+    const level =
+      effect.diceSize && effect.diceThrown
+        ? `Level ${effect.diceSize}-${effect.diceThrown}: `
+        : "";
     results.push(
-      `Poison: deals ${text} for ${this.getDuration(
+      `${level}Poison: deals ${text} for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
     );

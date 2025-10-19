@@ -32,7 +32,7 @@ export const HELLCAT: RawCreature = {
     wisdom: 14,
     charisma: 10,
     movement: 15,
-    ac: 6,
+    ac: 10, // -5 with dex bonus
     apr: 3,
     xpv: 5000,
     alignment: "LAWFUL_EVIL",

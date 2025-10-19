@@ -27,7 +27,7 @@ export const DISPLACER_BEAST: RawCreature = {
     wisdom: 12,
     charisma: 8,
     movement: 15,
-    ac: 4,
+    ac: 5, // -1 with dex bonus
     apr: 2,
     xpv: 975,
     alignment: "LAWFUL_EVIL",

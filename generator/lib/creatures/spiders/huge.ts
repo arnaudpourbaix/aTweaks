@@ -29,7 +29,7 @@ export const SPIDER_HUGE: RawCreature = {
     wisdom: 11,
     charisma: 4,
     movement: 18,
-    ac: 6,
+    ac: 8, // -2 with dex bonus
     apr: 1,
     xpv: 270,
     alignment: "NEUTRAL",
@@ -53,7 +53,7 @@ export const SPIDER_HUGE: RawCreature = {
       "BDSUM00",
       "SPIDFGSU",
     ],
-    immunities: ["vermin", "spider"],
+    immunities: ["spider"],
   },
   items: [
     {

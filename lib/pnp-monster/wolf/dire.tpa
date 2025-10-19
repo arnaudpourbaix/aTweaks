@@ -69,7 +69,7 @@ BEGIN
 					charisma=7
 					movement=14
 					hp=36
-					ac=6
+					ac=7
 					thac0=15
 					apr=1
 					xpv=175
@@ -97,7 +97,7 @@ BEGIN
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~SHAWOL01~) BEGIN 
 				WRITE_LONG 0x14 450 // xpv
 				WRITE_BYTE 0x238 18 // strength
-				ADD_CRE_ITEM ~ja#i7~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+				ADD_CRE_ITEM ~ja#i10~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 				REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES

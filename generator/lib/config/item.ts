@@ -4,13 +4,16 @@ export const ITEMS = {
   CriticalHitImmunity: "ja#i3",
   EntangleImmunity: "ja#i4",
   Fey: "ja#i5",
-  Hover: "ja#i6",
-  Incorporeal: "ja#i7",
-  Ooze: "ja#i8",
-  Plant: "ja#i9",
-  Sketetal: "ja#i10",
-  Spider: "ja#i11",
-  Vermin: "ja#i12",
+  GhostVisuals1: "ja#6",
+  GhostVisuals2: "ja#7",
+  GhostVisuals3: "ja#8",
+  Hover: "ja#i9",
+  Incorporeal: "ja#i10",
+  Ooze: "ja#i11",
+  Plant: "ja#i12",
+  Sketetal: "ja#i13",
+  Spider: "ja#i14",
+  Vermin: "ja#i15",
 };
 
 export enum MonsterItemIconEnum {

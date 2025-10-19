@@ -37,7 +37,7 @@ export const SPECTRAL_HOUND: RawCreature = {
     wisdom: 14,
     charisma: 12,
     movement: 15,
-    ac: -2,
+    ac: -1, // -1 with dex bonus
     apr: 1,
     xpv: 975,
     alignment: "CHAOTIC_EVIL",

@@ -93,7 +93,7 @@ export const FEY_HAMADRYAD: RawCreature = {
     wisdom: 14,
     charisma: 18,
     movement: 15,
-    ac: 7,
+    ac: 10, // -4 with dex bonus
     apr: 1,
     xpv: 1400,
     alignment: "NEUTRAL",

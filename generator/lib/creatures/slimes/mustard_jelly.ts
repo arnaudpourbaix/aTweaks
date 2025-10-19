@@ -112,19 +112,14 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     createTraitItem({
       file: mustardJellyTraits,
       name,
-      immunities: ["electricity", "normalWeapons", "magicMissile"],
+      immunities: [
+        "electricity",
+        "normalWeapons",
+        "magicMissile",
+        "coldResistance",
+      ],
       // 5e: Immunity to magic damage
       effects: [
-        {
-          opcode: "ColdResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-        {
-          opcode: "MagicalColdResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
         {
           opcode: "MagicResistanceModifier",
           value: 10,

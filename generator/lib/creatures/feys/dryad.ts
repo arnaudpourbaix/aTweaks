@@ -236,13 +236,7 @@ export const FEY_DRYAD: RawCreature = {
     createTraitItem({
       file: traits,
       name,
-      effects: [
-        {
-          opcode: "MagicResistanceModifier",
-          value: 50,
-          type: "Set",
-        },
-      ],
+      immunities: ["magicResistance"],
     }),
   ],
   additionalCode: [

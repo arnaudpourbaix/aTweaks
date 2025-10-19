@@ -447,7 +447,7 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_DIMENSION_DOOR",
         targetName: "RR#TRAT",
       },
-      requireVocal: true,
+      requireVocal: false,
       actionsBefore: [
         {
           name: "CreateCreatureOffscreen", // Create a rat offscreen to teleport to
@@ -556,6 +556,19 @@ export const ABILITY_PRESETS: {
         id: "WIZARD_SLOW",
         excludeStateChecks: ["STATE_SLOWED"],
       },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Web,
+    ability: {
+      name: "Web",
+      target: HOLD_TARGET_LISTS,
+      spell: {
+        id: "WIZARD_WEB",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
     },
   },
 ];

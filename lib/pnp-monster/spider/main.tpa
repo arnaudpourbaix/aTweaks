@@ -1,4 +1,6 @@
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/huge.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/gargantuan.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/giant.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/sword.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/huge.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/phase.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/sword.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/ghostwalk.tpa"

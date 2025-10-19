@@ -239,7 +239,7 @@ BEGIN
 					wisdom=16
 					charisma=17
 					hp=40
-					ac=3
+					ac=7
 					thac0=15
 					apr=1
 					xpv=3000

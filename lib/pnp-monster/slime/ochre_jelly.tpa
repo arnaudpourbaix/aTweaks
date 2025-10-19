@@ -30,7 +30,7 @@ COPY_EXISTING ~ja#1m49.itm~ ~override~
 		WRITE_SHORT 0x9c (IDS_OF_SYMBOL (~projectl~ ~ACIDBLMU~)) + 1
 		WRITE_SHORT 0xa0 100
 	END
-	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter1=2 parameter2=65536 probability1=100 dicenumber=1 dicesize=10 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter1=2 parameter2=65536 probability1=100 dicesize=10 dicenumber=1 END
 
 CREATE ITM "ja#2m49"
 	WRITE_LONG 0x64 0x72
@@ -66,7 +66,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~DW#JELOC~
 			REPLACE_CRE_ITEM ~ja#1m49~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#2m49~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_CRE_ITEM ~ja#i8~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#i11~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clear_proficiencies END
 			LPF patchCreature

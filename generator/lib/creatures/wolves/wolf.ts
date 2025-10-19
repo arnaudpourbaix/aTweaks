@@ -23,7 +23,7 @@ export const WOLF: RawCreature = {
     wisdom: 12,
     charisma: 6,
     movement: 18,
-    ac: 7,
+    ac: 8, // -1 with dex bonus
     apr: 1,
     xpv: 65,
     alignment: "NEUTRAL",

@@ -64,8 +64,8 @@ export class WeiduEffectService extends AbstractWeiduService {
       intVars.push(`probability1=${effect.probability1}`);
     if (effect.probability2)
       intVars.push(`probability2=${effect.probability2}`);
-    if (effect.diceThrown) intVars.push(`dicenumber=${effect.diceThrown}`);
     if (effect.diceSize) intVars.push(`dicesize=${effect.diceSize}`);
+    if (effect.diceThrown) intVars.push(`dicenumber=${effect.diceThrown}`);
     if (effect.saveTypes) {
       const savingthrow = effect.saveTypes.reduce((sum, save) => {
         sum += 2 ** save;

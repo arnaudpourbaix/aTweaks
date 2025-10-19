@@ -1,16 +1,3 @@
-// Initiate dialog
-IF
-	Global("JA#DIALOG","LOCALS",0)
-	Name("DOOMSAYER",Myself)
-	NumTimesTalkedTo(0)
-	See([PC])
-THEN
-	RESPONSE #100
-		SetGlobal("JA#DIALOG","LOCALS",1)
-		FaceObject([PC])
-		StartDialogueNoSet([PC])
-END
-
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -30,7 +17,6 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
-		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked
@@ -40,7 +26,7 @@ IF
 		AttackedBy([GOODCUTOFF],DEFAULT)
 		SpellCastOnMe([GOODCUTOFF],0)
 		TookDamage()
-		Heard([EVILCUTOFF.0.GOLEM],99)
+		Heard([EVILCUTOFF.0.SPIDER],99)
 THEN
 	RESPONSE #100
 		Enemy()
@@ -79,8 +65,8 @@ END
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.GOLEM],99)
-	InMyArea([EVILCUTOFF.0.GOLEM])
+	Heard([EVILCUTOFF.0.SPIDER],99)
+	InMyArea([EVILCUTOFF.0.SPIDER])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -89,8 +75,8 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.GOLEM],99)
-	InMyArea([EVILCUTOFF.0.GOLEM])
+	Heard([EVILCUTOFF.0.SPIDER],99)
+	InMyArea([EVILCUTOFF.0.SPIDER])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -115,82 +101,6 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
-END
-
-// Magic Missiles
-IF
-	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General([PC.0.0.MAGE_ALL],WEAPON)
-	!StateCheck([PC.0.0.MAGE_ALL],STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
-	See([PC.0.0.MAGE_ALL])
-	RandomNumGT(1000,250)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
-		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
-END
-
-IF
-	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General([PC.0.0.CLERIC_ALL],WEAPON)
-	!StateCheck([PC.0.0.CLERIC_ALL],STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
-	See([PC.0.0.CLERIC_ALL])
-	RandomNumGT(1000,333)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
-		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
-END
-
-IF
-	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General([PC.0.0.DRUID_ALL],WEAPON)
-	!StateCheck([PC.0.0.DRUID_ALL],STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
-	!StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
-	See([PC.0.0.DRUID_ALL])
-	RandomNumGT(1000,500)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
-		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
-END
-
-IF
-	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
-	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General([PC.0.0.BARD],WEAPON)
-	!StateCheck([PC.0.0.BARD],STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
-	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
-	See([PC.0.0.BARD])
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("MagicMissiles","LOCALS",18)
-		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
 END
 
 // Attack Slowed enemy
@@ -762,114 +672,6 @@ THEN
 		AttackOneRound(LastSeenBy(Myself))
 END
 
-// Dimension Door
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player1,180)
-	!General(Player1,WEAPON)
-	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player1,0,SANCTUARY)
-	!StateCheck(Player1,STATE_REALLY_DEAD)
-	See(Player1)
-	RandomNumGT(1000,167)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player2,180)
-	!General(Player2,WEAPON)
-	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player2,0,SANCTUARY)
-	!StateCheck(Player2,STATE_REALLY_DEAD)
-	See(Player2)
-	RandomNumGT(1000,200)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player3,180)
-	!General(Player3,WEAPON)
-	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player3,0,SANCTUARY)
-	!StateCheck(Player3,STATE_REALLY_DEAD)
-	See(Player3)
-	RandomNumGT(1000,250)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player4,180)
-	!General(Player4,WEAPON)
-	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player4,0,SANCTUARY)
-	!StateCheck(Player4,STATE_REALLY_DEAD)
-	See(Player4)
-	RandomNumGT(1000,333)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player5,180)
-	!General(Player5,WEAPON)
-	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player5,0,SANCTUARY)
-	!StateCheck(Player5,STATE_REALLY_DEAD)
-	See(Player5)
-	RandomNumGT(1000,500)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
-IF
-	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(Player6,180)
-	!General(Player6,WEAPON)
-	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(Player6,0,SANCTUARY)
-	!StateCheck(Player6,STATE_REALLY_DEAD)
-	See(Player6)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		Spell(LastSeenBy(Myself),WIZARD_DIMENSION_DOOR)
-END
-
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
@@ -976,20 +778,6 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
-END
-
-// Open door
-IF
-	Global("RR#NOPND","GLOBAL",0)
-	Allegiance(Myself,EVILCUTOFF)
-	!AreaType(OUTDOOR)
-	!Range(NearestEnemyOf(Myself),30)
-	Range(NearestDoor,15)
-	OpenState(NearestDoor,FALSE)
-THEN
-	RESPONSE #100
-		MoveToObject(NearestDoor)
-		OpenDoor(NearestDoor)
 END
 
 // Random walking (in combat) 

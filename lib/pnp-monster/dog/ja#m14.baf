@@ -128,7 +128,7 @@ IF
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
-	RandomNumGT(1000,333)
+	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -144,7 +144,7 @@ IF
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
-	RandomNumGT(1000,500)
+	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -160,6 +160,22 @@ IF
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+	HaveSpellRES("ja#1m14")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(FourthFarthestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(FourthFarthestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FourthFarthestEnemyOf(Myself))
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

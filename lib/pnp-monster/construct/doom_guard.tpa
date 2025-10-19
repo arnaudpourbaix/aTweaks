@@ -59,11 +59,9 @@ COPY_EXISTING ~ja#2m16.itm~ ~override~
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=84 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=28 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=85 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
 	LPF mindSpells_immunity END
+	LPF fireResistance_immunity END
+	LPF coldResistance_immunity END
 
 CREATE ITM "ja#3m16"
 	WRITE_LONG 0x64 0x72

@@ -1,9 +1,8 @@
 // Generated file (don't edit)
 
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m56.baf~
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m56su.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m62.baf~
 
-CREATE ITM "ja#1m56"
+CREATE ITM "ja#1m62"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
@@ -27,7 +26,7 @@ Level 9-10: Poison: deals 9 per second for 3 rounds (saves vs poison/death).
 Level 11-15: Poison: deals 10 per second for 3 rounds (saves vs poison/death).
 Level 16-40: Poison: deals 14 per second for 3 rounds (saves vs poison/death).~)
 	WRITE_LONG 0x60 1
-COPY_EXISTING ~ja#1m56.itm~ ~override~
+COPY_EXISTING ~ja#1m62.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
@@ -52,28 +51,25 @@ COPY_EXISTING ~ja#1m56.itm~ ~override~
 	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=14 parameter2=2 duration=18 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 special=6 END
 
 ACTION_FOR_EACH ~file~ IN
-	BDHELP01
-	BDSPIDGI
-	BDWISTAK
-	BPSPID02
-	PLYSPID2
-	RSSPIDGI
-	SPIDGI
-	SPIDGISU
+	BDSPIDER
+	BPSPID01
+	D5SMSPID
+	GV#SPID
+	SPIDSM01
+	WISPID01
+	WISPID02
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~SPIDGISU~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP01~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~PLYSPID2~ BEGIN
-				REMOVE_CRE_EFFECTS
-			END
+			REMOVE_CRE_EFFECTS
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~BDSPIDGI~
 			REMOVE_CRE_ITEM ~SPIDG1~
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			REMOVE_CRE_ITEM ~PLYSPID~
-			REPLACE_CRE_ITEM ~ja#1m56~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REPLACE_CRE_ITEM ~ja#1m62~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
@@ -85,9 +81,9 @@ BEGIN
 					intelligence=7
 					wisdom=11
 					charisma=4
-					movement=2
+					movement=10
 					hp=36
-					ac=6
+					ac=4
 					thac0=15
 					apr=1
 					xpv=650
@@ -108,18 +104,7 @@ BEGIN
 					enforce=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN DW1MELMO DW#GPSHM DW#SPIDG BPSIGHT BPASIGHT DVMELEE END
-			DEFINE_ARRAY skipFiles BEGIN SPIDGISU BDHELP01 PLYSPID2 END
-			LPF patchCreatureScript STR_VAR script=ja#m56 skipFiles removeScripts END
-			DEFINE_ARRAY removeScripts BEGIN DW1MELMO DW#GPSHM DW#SPIDG BPSIGHT BPASIGHT DVMELEE END
-			DEFINE_ARRAY files BEGIN SPIDGISU BDHELP01 END
-			LPF patchCreatureScript STR_VAR script=ja#m56su files removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~SPIDGISU~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDHELP01~) BEGIN 
-				WRITE_LONG 0x14 0 // xpv
-				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
-				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
-			END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~PLYSPID2~) BEGIN 
-			END
+			LPF patchCreatureScript STR_VAR script=ja#m62 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

@@ -185,7 +185,6 @@ END
 
 // Dimension Door
 IF
-	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpell(WIZARD_DIMENSION_DOOR)
 	OR(2)

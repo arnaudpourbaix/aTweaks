@@ -66,7 +66,7 @@ export const FEY_NYMPH: RawCreature = {
     wisdom: 12,
     charisma: 19,
     movement: 12,
-    ac: 9,
+    ac: 10, // -3 with dex bonus
     apr: 0,
     xpv: 1400,
     alignment: "NEUTRAL_GOOD",

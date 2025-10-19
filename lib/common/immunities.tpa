@@ -10,6 +10,11 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_POISON~)) special=1 END
 END
 
+DEFINE_PATCH_FUNCTION poisonResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=50 END
+END
+
 DEFINE_PATCH_FUNCTION disease_immunity
 BEGIN
 	INNER_ACTION BEGIN
@@ -121,6 +126,12 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION fireResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=50 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=50 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION coldSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
@@ -133,6 +144,12 @@ DEFINE_PATCH_FUNCTION cold_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=100 parameter2=1 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION coldResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=50 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION electricalSpells_immunity
@@ -148,9 +165,19 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION electricityResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=50 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION magic_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=166 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION magicResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=166 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION magicDamage_immunity
@@ -158,9 +185,19 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION magicDamageResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=50 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION acid_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION acidResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION acidSpells_immunity
@@ -289,9 +326,22 @@ BEGIN
 	LPF missileDamage_immunity END
 END
 
+DEFINE_PATCH_FUNCTION physicalDamageResistance_immunity
+BEGIN
+	LPF slashingDamageResistance_immunity END
+	LPF crushingDamageResistance_immunity END
+	LPF piercingDamageResistance_immunity END
+	LPF missileDamageResistance_immunity END
+END
+
 DEFINE_PATCH_FUNCTION slashingDamage_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION slashingDamageResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION crushingDamage_immunity
@@ -299,14 +349,29 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION crushingDamageResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=50 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION piercingDamage_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=100 parameter2=1 END
 END
 
+DEFINE_PATCH_FUNCTION piercingDamageResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=50 parameter2=1 END
+END
+
 DEFINE_PATCH_FUNCTION missileDamage_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION missileDamageResistance_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION unturnable_immunity
@@ -569,20 +634,15 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=23 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=0 parameter1=3 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=278 parameter1=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=50 END
 	LPF backstab_immunity END
 	LPF criticalHit_immunity END
+	LPF fireResistance_immunity END
+	LPF coldResistance_immunity END
+	LPF electricalSpells_immunity END
+	LPF acidResistance_immunity END
+	LPF poisonResistance_immunity END
+	LPF magicDamageResistance_immunity END
+	LPF physicalDamageResistance_immunity END
 END
 
 DEFINE_PATCH_FUNCTION gazeAttacks_immunity
@@ -624,6 +684,17 @@ END
 
 DEFINE_PATCH_FUNCTION spider_immunity
 BEGIN
+	LPF vermin_immunity END
 	LPF web_immunity END
+	LPF poison_immunity END
 	LPF infravision_immunity END
+END
+
+DEFINE_PATCH_FUNCTION ghostVisual1_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-3547648" parameter2=2818053 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2181376" parameter2=3080213 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2380288" parameter2=2621493 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-102768896" parameter2=2752549 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=65 END
 END

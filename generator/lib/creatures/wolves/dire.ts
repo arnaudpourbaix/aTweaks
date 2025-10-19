@@ -23,7 +23,7 @@ export const WOLF_DIRE: RawCreature = {
     wisdom: 12,
     charisma: 7,
     movement: 18,
-    ac: 6,
+    ac: 7, // -1 with dex bonus
     apr: 1,
     xpv: 175,
     alignment: "NEUTRAL",

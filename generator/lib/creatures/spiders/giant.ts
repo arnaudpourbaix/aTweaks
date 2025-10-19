@@ -28,8 +28,8 @@ export const SPIDER_GIANT: RawCreature = {
     intelligence: 7,
     wisdom: 11,
     charisma: 4,
-    movement: 12,
-    ac: 4,
+    movement: 3, // 3, Web 12
+    ac: 6, // -2 with dex bonus
     apr: 1,
     xpv: 650,
     alignment: "CHAOTIC_EVIL",
@@ -52,7 +52,7 @@ export const SPIDER_GIANT: RawCreature = {
       "BPASIGHT",
       "DVMELEE",
     ],
-    immunities: ["vermin", "spider"],
+    immunities: ["spider"],
   },
   items: [
     {

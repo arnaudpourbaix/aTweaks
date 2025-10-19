@@ -22,7 +22,7 @@ COPY_EXISTING ~ja#1m20.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	SAY UNIDENTIFIED_DESC ~Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=4 range=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m20~)) + 1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=131072 timing=1 probability1=100 dicenumber=6 dicesize=4 savingthrow=2 special=256 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=131072 timing=1 probability1=100 dicesize=4 dicenumber=6 savingthrow=2 special=256 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-2786560" parameter2=1310720 timing=1 probability1=100 END
 	
 CREATE ITM "ja#1m20"

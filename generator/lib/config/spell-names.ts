@@ -24,6 +24,7 @@ export const SPELLS = {
   Slow: "SPWI312",
   StinkingCloud: "SPWI213",
   Stoneskin: "SPWI408",
+  Web: "SPWI215",
   // Priest
   AnimalSummoning4: "SPPR402",
   Barkskin: "SPPR202",
@@ -48,6 +49,7 @@ export const SPELLS = {
   SummonInsects: "SPPR319",
   // Innates
   MephitColorSpray: "SPIN937",
+  SpiderSingleTargetWeb: "BDSPIDGA",
   // Class
   BerserkerRage: "SPCL321",
   BarbarianRage: "SPCL152",

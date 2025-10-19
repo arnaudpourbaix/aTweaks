@@ -291,4 +291,17 @@ export class CreatureService {
     } else if (value < 6) return value;
     throw new Error(`Can't set more than 5 attacks per round: ${value}`);
   }
+
+  // Dexteriy AC bonus
+  // 15	-1
+  // 16	-2
+  // 17	-3
+  // 18	-4
+  // 19	-4
+  // 20	-4
+  // 21	-5
+  // 22	-5
+  // 23	-5
+  // 24	-6
+  // 25	-6
 }

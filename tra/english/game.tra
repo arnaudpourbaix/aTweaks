@@ -857,6 +857,8 @@ Upon casting a conjure air elemental spell, the caster opens a special gate to t
 @4037 = ~Legs~
 @4038 = ~Leap~
 @4039 = ~Impaling Attack~
+@4040 = ~Phase Out~
+
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

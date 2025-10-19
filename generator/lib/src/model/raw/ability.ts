@@ -68,6 +68,11 @@ export interface RawCreatureAbilitySpell {
    */
   selfTarget?: boolean;
   /**
+   * Is it an attack or a spell ? (default: false)
+   * A spell can't target an improved invisible character while an attack can
+   */
+  isAttack?: boolean;
+  /**
    * Target name when a spell is specifically cast at someone
    */
   targetName?: string;

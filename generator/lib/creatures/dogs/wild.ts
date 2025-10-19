@@ -23,7 +23,7 @@ export const DOG_WILD: RawCreature = {
     wisdom: 13,
     charisma: 11,
     movement: 15,
-    ac: 7,
+    ac: 10, // -3 with dex bonus
     thac0: 19,
     apr: 1,
     xpv: 35,

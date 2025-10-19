@@ -82,18 +82,19 @@ export const WOLF_DREAD: RawCreature = {
         "It is immune to charm, hold, and cold-based spells.",
         "Electricity-based spells cause only half damage.",
       ],
-      immunities: ["coldSpells", "cold", "charm", "hold"],
+      immunities: [
+        "coldSpells",
+        "cold",
+        "electricityResistance",
+        "charm",
+        "hold",
+      ],
       effects: [
         {
           opcode: "Regeneration",
           amount: 2,
           type: "OneHPperAmountSeconds",
           icon: "Regenerating",
-        },
-        {
-          opcode: "ElectricityResistanceModifier",
-          value: 50,
-          type: "Set",
         },
         { opcode: "MinimumHP", value: 1 },
         {

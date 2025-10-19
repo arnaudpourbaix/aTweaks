@@ -1,4 +1,5 @@
 import { MonsterItemIconEnum } from "../../config/item";
+import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -19,40 +20,36 @@ export const SPIDER_GARGANTUAN: RawCreature = {
   tracking: true,
   combatWalk: true,
   data: {
-    level1: 4,
-    bonusHp: 4,
-    thac0: 15,
-    strength: 14,
-    dexterity: 16,
-    constitution: 12,
+    level1: 8,
+    bonusHp: 8,
+    thac0: 11,
+    strength: 18,
+    dexterity: 15,
+    constitution: 17,
     intelligence: 7,
     wisdom: 11,
     charisma: 4,
-    movement: 12,
-    ac: 4,
+    movement: 9, // 9, Web 12
+    ac: 5, // -1 with dex bonus
     apr: 1,
-    xpv: 650,
+    xpv: 3000,
     alignment: "CHAOTIC_EVIL",
-    morale: 13,
+    morale: 14,
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "MONSTER",
     race: "SPIDER",
-    class: "SPIDER_HUGE",
-    gender: "MALE",
-    size: "Large",
+    class: "SPIDER_GIANT",
+    gender: "NIETHER",
+    size: "Gargantuan",
   },
   additionalData: {
-    removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB"],
-    removeScripts: [
-      "DW1MELMO",
-      "DW#GPSHM",
-      "DW#SPIDS",
-      "BPSIGHT",
-      "BPASIGHT",
-      "DVMELEE",
+    removeItems: ["BDSPIDGA", "ANTIWEB"],
+    removeScripts: ["BDENSHTV", "BDSPIDGA", "BDNONIN"],
+    immunities: ["spider"],
+    memorizedSpells: [
+      { file: SPELLS.SpiderSingleTargetWeb, memorizedCount: 1 },
     ],
-    immunities: ["vermin", "spider"],
   },
   items: [
     {
@@ -61,17 +58,50 @@ export const SPIDER_GARGANTUAN: RawCreature = {
       icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      diceThrown: 1,
-      diceSize: 8,
+      diceThrown: 2,
+      diceSize: 6,
       damageType: "Piercing",
-      speed: 3,
+      speed: 2,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
         {
-          opcode: "PoisonTypeEffects",
-          poisonType: "F",
+          opcode: "Sleep",
+          wakeOnDamage: false,
+          duration: 300,
+          saveTypes: ["ParalyzePoisonDeath"],
+          saveBonus: -2,
+        },
+        {
+          opcode: "LightingEffects",
+          lightingTarget: "SpellTarget",
+          effect: "InvocationEarth",
+          saveTypes: ["ParalyzePoisonDeath"],
+          saveBonus: -2,
+        },
+        {
+          opcode: "CharacterColorPulse",
+          color: { red: 119, green: 0, blue: 0 },
+          location: "ArmorGreyBeltAmulet",
+          cycleSpeed: 20,
+          saveTypes: ["ParalyzePoisonDeath"],
+          saveBonus: -2,
         },
       ],
+    },
+  ],
+  abilities: [
+    {
+      name: "Web Tangler",
+      preset: SPELLS.Web,
+      spell: {
+        //  it can shoot web strands up to 2 feet to bind a foe. Either attack treats the spider's opponent as AC 10 and prevents the spider from making a melee attack that round.
+        resource: SPELLS.SpiderSingleTargetWeb,
+        type: "force",
+        isAttack: true,
+        probability: 70,
+      },
+      range: 6, // to fix issue with very close range since melee attack is 3 feet
+      requireVocal: false,
     },
   ],
   files: [

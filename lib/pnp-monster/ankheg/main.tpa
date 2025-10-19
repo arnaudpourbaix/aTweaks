@@ -23,10 +23,10 @@ COPY_EXISTING ~ja#1m1.SPL~  ~override~
 	SAY UNIDENTIFIED_DESC ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=102 duration=24 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 probability1=100 dicenumber=1 dicesize=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=6 probability1=100 dicenumber=1 dicesize=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=12 probability1=100 dicenumber=1 dicesize=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=18 probability1=100 dicenumber=1 dicesize=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=6 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=12 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 timing=4 duration=18 probability1=100 dicesize=4 dicenumber=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=24 probability1=100 STR_VAR resource="ja#1m1" END
 	
 	// Stream of acidic enzymes
@@ -41,7 +41,7 @@ COPY_EXISTING ~ja#2m1.SPL~  ~override~
 A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
 It uses this attack technique only when desperate.~
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 speed=3 projectile=(IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 probability1=100 dicenumber=8 dicesize=4 savingthrow=4 special=256 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 probability1=100 dicesize=4 dicenumber=8 savingthrow=4 special=256 END
 	
 	// Grab
 CREATE SPL "ja#3m1"

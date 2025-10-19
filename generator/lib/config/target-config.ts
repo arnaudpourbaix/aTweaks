@@ -104,6 +104,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       "FarthestEnemyOf(Myself)",
       "SecondFarthestEnemyOf(Myself)",
       "ThirdFarthestEnemyOf(Myself)",
+      "FourthFarthestEnemyOf(Myself)",
     ],
   },
   {

@@ -46,7 +46,7 @@ Melee damage: 1D6 (Slashing)
 Speed Factor: 3
 Enchantment: 3
 Range: 2 feet
-Poison: deals one damage per 24 seconds for 20 rounds (saves vs poison/death at +4).~)
+Poison: deals one damage per 24 seconds for 2 turns (saves vs poison/death at +4).~)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m3.itm~ ~override~
 	READ_SHORT 0x68 abicount

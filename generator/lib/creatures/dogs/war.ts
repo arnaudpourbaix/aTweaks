@@ -23,7 +23,7 @@ export const DOG_WAR: RawCreature = {
     wisdom: 13,
     charisma: 11,
     movement: 12,
-    ac: 6,
+    ac: 9, // -3 with dex bonus
     apr: 1,
     xpv: 65,
     alignment: "NEUTRAL",

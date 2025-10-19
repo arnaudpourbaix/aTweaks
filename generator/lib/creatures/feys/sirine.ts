@@ -69,7 +69,7 @@ export const FEY_SIRINE: RawCreature = {
     intelligence: 13,
     wisdom: 16,
     charisma: 17,
-    ac: 3,
+    ac: 7, // -4 with dex bonus
     apr: 1,
     xpv: 3000,
     alignment: "NEUTRAL",

@@ -10,8 +10,8 @@ COPY_EXISTING ~ja#1m34.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	SAY UNIDENTIFIED_DESC ~Rake with its rear claws doing 2D4 points damage each.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicenumber=1 dicesize=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicenumber=1 dicesize=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
 	
 CREATE ITM "ja#1m34"
 	WRITE_LONG 0x64 0x72
@@ -112,7 +112,7 @@ BEGIN
 					charisma=7
 					movement=12
 					hp=33
-					ac=6
+					ac=7
 					thac0=17
 					apr=2
 					xpv=420

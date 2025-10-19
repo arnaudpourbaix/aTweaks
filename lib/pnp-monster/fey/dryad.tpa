@@ -87,7 +87,7 @@ COPY_EXISTING ~ja#1m41.itm~ ~override~
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_ASCII 0x76 ~IRING15~ #8
 	END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=166 target=1 global=1 parameter1=50 parameter2=1 timing=2 probability1=100 END
+	LPF magicResistance_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	DRYAD

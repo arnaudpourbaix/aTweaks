@@ -17,7 +17,7 @@ CREATE ITM "ja#1m55"
 Melee damage: 1D6 (Piercing)
 Speed Factor: 2
 Range: 1 feet
-Poison: deals one damage per 40 seconds for 100 rounds (saves vs poison/death at +1).~)
+Poison: deals one damage per 40 seconds for 10 turns (saves vs poison/death at +1).~)
 COPY_EXISTING ~ja#1m55.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -60,8 +60,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			REMOVE_CRE_ITEM ~D5SMSPID~
 			REPLACE_CRE_ITEM ~ja#1m55~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#i12~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_CRE_ITEM ~ja#i11~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#i14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
@@ -74,7 +73,7 @@ BEGIN
 					charisma=4
 					movement=14
 					hp=18
-					ac=6
+					ac=8
 					thac0=19
 					apr=1
 					xpv=270

@@ -7,8 +7,8 @@ export interface PoisonModel {
   duration: number;
 }
 
-const fatalDamage = 240;
-const fatalDuration = 6;
+export const poisonFatalDamage = 250;
+export const poisonImmediateDeathDuration = 18; // 3 rounds so it gives some time to cure it
 
 export const POISONS: PoisonModel[] = [
   {
@@ -42,16 +42,16 @@ export const POISONS: PoisonModel[] = [
   {
     // Immediate	Death/20
     type: "E",
-    damage: fatalDamage,
+    damage: poisonFatalDamage,
     saveDamage: 20,
-    duration: fatalDuration,
+    duration: poisonImmediateDeathDuration,
   },
   {
     // Immediate	Death/0
     type: "F",
-    damage: fatalDamage,
+    damage: poisonFatalDamage,
     saveDamage: 0,
-    duration: fatalDuration,
+    duration: poisonImmediateDeathDuration,
   },
   {
     // 2–12 hours	20/10
@@ -77,7 +77,7 @@ export const POISONS: PoisonModel[] = [
   {
     // 1–4 minutes	Death/20
     type: "J",
-    damage: fatalDamage,
+    damage: poisonFatalDamage,
     saveDamage: 20,
     duration: 60,
   },
@@ -105,12 +105,13 @@ export const POISONS: PoisonModel[] = [
   {
     // 1 minute	Death/25
     type: "N",
-    damage: fatalDamage,
+    damage: poisonFatalDamage,
     saveDamage: 25,
     duration: 60,
   },
   {
     // 2–24 minutes	Paralytic.
+    // Paralytic poisons leave the character unable to move for 2d6 hours.
     type: "O",
     damage: 0,
     saveDamage: 0,
@@ -118,6 +119,11 @@ export const POISONS: PoisonModel[] = [
   },
   {
     // 1–3 hours	Debilitative.
+    // Weaken the character for 1d3 days.
+    // All of the character's ability scores are reduced by half during this time.
+    // All appropriate adjustments to attack rolls, damage, Armor Class, etc., from the lowered ability scores are applied during the course of the illness.
+    // In addition, the character moves at one-half his normal movement rate.
+    // Finally, the character cannot heal by normal or magical means until the poison is neutralized or the duration of the debilitation is elapsed.
     type: "P",
     damage: 0,
     saveDamage: 0,

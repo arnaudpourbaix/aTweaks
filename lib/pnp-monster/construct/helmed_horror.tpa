@@ -39,7 +39,7 @@ COPY_EXISTING ~ja#1m15.itm~ ~override~
 		WRITE_SHORT 0xa2 20
 		WRITE_LONG 0x98 1
 	END
-	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=524288 probability1=100 dicenumber=1 dicesize=6 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=524288 probability1=100 dicesize=6 dicenumber=1 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=67 parameter2=21 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=67 parameter2=20 timing=2 probability1=100 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=7 target=1 global=1 parameter1=12 parameter2=16 timing=2 probability1=100 END
@@ -196,7 +196,7 @@ BEGIN
 				ADD_MEMORIZED_SPELL ~SPWI402~ #3 ~wizard~ (1)
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOOMSA~) BEGIN 
-				ADD_CRE_ITEM ~ja#i7~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+				ADD_CRE_ITEM ~ja#i10~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

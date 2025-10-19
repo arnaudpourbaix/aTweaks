@@ -26,7 +26,7 @@ CREATE ITM "ja#i4"
 COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF entangle_immunity END
 
-CREATE ITM "ja#i6"
+CREATE ITM "ja#i9"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IBOOT01~ #8
@@ -34,7 +34,7 @@ CREATE ITM "ja#i6"
 	SAY UNIDENTIFIED_DESC ~Hover (flight)
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
-COPY_EXISTING ~ja#i6.itm~ ~override~
+COPY_EXISTING ~ja#i9.itm~ ~override~
 	LPF hover_immunity END
 
 CREATE ITM "ja#i3"
@@ -72,16 +72,16 @@ In all other aspects, spell-like abilities function exactly like the spells whic
 COPY_EXISTING ~ja#i5.itm~ ~override~
 	LPF fey_immunity END
 
-CREATE ITM "ja#i10"
+CREATE ITM "ja#i13"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
 	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
-COPY_EXISTING ~ja#i10.itm~ ~override~
+COPY_EXISTING ~ja#i13.itm~ ~override~
 	LPF skeletal_immunity END
 
-CREATE ITM "ja#i9"
+CREATE ITM "ja#i12"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -92,10 +92,10 @@ Infravision.
 Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).
 Immunity to poison, sleep effects, paralysis, polymorph, and stunning.
 Not subject to critical hits and backstab.~
-COPY_EXISTING ~ja#i9.itm~ ~override~
+COPY_EXISTING ~ja#i12.itm~ ~override~
 	LPF plant_immunity END
 
-CREATE ITM "ja#i7"
+CREATE ITM "ja#i10"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -106,10 +106,10 @@ Immune to all nonmagical attacks.
 Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
 Attacks pass through armor (+4 THAC0).~
-COPY_EXISTING ~ja#i7.itm~ ~override~
+COPY_EXISTING ~ja#i10.itm~ ~override~
 	LPF incorporeal_immunity END
 
-CREATE ITM "ja#i8"
+CREATE ITM "ja#i11"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -122,10 +122,10 @@ Not subject to critical hits, backstab.
 Darkvision out to 60 feet.
 Translucent
 10-sided Hit Dice~
-COPY_EXISTING ~ja#i8.itm~ ~override~
+COPY_EXISTING ~ja#i11.itm~ ~override~
 	LPF ooze_immunity END
 
-CREATE ITM "ja#i12"
+CREATE ITM "ja#i15"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -134,10 +134,10 @@ CREATE ITM "ja#i12"
 
 Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-COPY_EXISTING ~ja#i12.itm~ ~override~
+COPY_EXISTING ~ja#i15.itm~ ~override~
 	LPF vermin_immunity END
 
-CREATE ITM "ja#i11"
+CREATE ITM "ja#i14"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -146,5 +146,14 @@ CREATE ITM "ja#i11"
 
 Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.
 Darkvision out to 60 feet.~
-COPY_EXISTING ~ja#i11.itm~ ~override~
+COPY_EXISTING ~ja#i14.itm~ ~override~
 	LPF spider_immunity END
+
+CREATE ITM "ja#i15"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IRING16~ #8
+	SAY NAME1 ~ghostVisual1 trait~ SAY NAME2 ~ghostVisual1 trait~
+	SAY UNIDENTIFIED_DESC ~Blur (visual effect only)~
+COPY_EXISTING ~ja#i15.itm~ ~override~
+	LPF ghostVisual1_immunity END

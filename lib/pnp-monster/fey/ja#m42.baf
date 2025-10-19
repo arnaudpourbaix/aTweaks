@@ -191,7 +191,6 @@ END
 
 // Dimension Door
 IF
-	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("rr#ddoor")
 	OR(2)
