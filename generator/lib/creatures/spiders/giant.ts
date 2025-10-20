@@ -51,6 +51,8 @@ export const SPIDER_GIANT: RawCreature = {
       "BPSIGHT",
       "BPASIGHT",
       "DVMELEE",
+      "BDSUM00",
+      "SPIDFGSU",
     ],
     immunities: ["spider"],
   },
@@ -83,9 +85,10 @@ export const SPIDER_GIANT: RawCreature = {
     "RSSPIDGI", // Giant Spider
     "SPIDGI", // Giant Spider
     "SPIDGISU", // Giant Spider
+    "SPIDFGSU", // Kitthix
   ],
   adjustments: [
-    { files: ["SPIDGISU", "BDHELP01"], summon: true },
+    { files: ["SPIDGISU", "BDHELP01", "SPIDFGSU"], summon: true },
     { files: ["PLYSPID2"], noScript: true },
   ],
 };

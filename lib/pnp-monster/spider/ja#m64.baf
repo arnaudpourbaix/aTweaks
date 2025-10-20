@@ -103,9 +103,9 @@ THEN
 		NoAction()
 END
 
-// Web Tangler
+// Web Tangle
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC],6)
@@ -123,11 +123,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearest([PC]),6)
@@ -145,11 +145,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearest([PC]),6)
@@ -167,11 +167,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(FourthNearest([PC]),6)
@@ -189,11 +189,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(FifthNearest([PC]),6)
@@ -211,11 +211,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("BDSPIDGA")
+	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SixthNearest([PC]),6)
@@ -233,7 +233,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("BDSPIDGA",LastSeenBy(Myself))
+		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
 END
 
 // Attack NoCheck enemy

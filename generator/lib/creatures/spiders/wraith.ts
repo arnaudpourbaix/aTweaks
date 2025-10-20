@@ -1,5 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
+import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
+import { createSingleTargetWeb } from "../../spells/web";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, file } from "../../src/services/misc.func";
@@ -15,6 +17,7 @@ const biteWeapon = file(1, id);
 const traits = file(2, id);
 // Spells
 const poison = file(1, id);
+const web = file(2, id);
 
 const name = "Wraith Spider";
 export const SPIDER_WRAITH: RawCreature = {
@@ -39,7 +42,7 @@ export const SPIDER_WRAITH: RawCreature = {
     apr: 1,
     xpv: 1400,
     alignment: "LAWFUL_EVIL",
-    morale: 13,
+    morale: 15,
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "MONSTER",
@@ -72,9 +75,10 @@ export const SPIDER_WRAITH: RawCreature = {
       effects: [
         {
           opcode: "Damage",
-          type: "MagicCold",
+          type: "Cold",
           diceThrown: 1,
           diceSize: 4,
+          amount: 1, // strength bonus
         },
         {
           opcode: "LevelDrain",
@@ -98,6 +102,13 @@ export const SPIDER_WRAITH: RawCreature = {
       name,
       file: traits,
       immunities: ["cold", "normalWeapons"],
+      effects: [
+        {
+          opcode: "MagicResistanceModifier",
+          value: 15,
+          type: "Set",
+        },
+      ],
     }),
   ],
   spells: [
@@ -142,19 +153,45 @@ export const SPIDER_WRAITH: RawCreature = {
         },
       ],
     },
+    createSingleTargetWeb({
+      file: web,
+      duration: 24,
+      // saveBonus: -2,
+      description: [
+        "These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.",
+        "Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.",
+      ],
+      damageEffect: {
+        opcode: "Damage",
+        type: "Cold",
+        diceThrown: 1,
+        diceSize: 4,
+      },
+    }),
   ],
-  //These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
-  // Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 1-6 rounds, sustaining cold damage for each round in the web.
+  abilities: [
+    {
+      name: "Web Tangle",
+      preset: SPELLS.Web,
+      spell: {
+        resource: web,
+        type: "force",
+        isAttack: true,
+        probability: 70,
+      },
+      range: 6, // to fix issue with very close range since melee attack is 3 feet
+      requireVocal: false,
+    },
+  ],
   files: [
     "C#Q04009", // Wraith Spider
     "SPIDWR", // Wraith Spider
     "SPIDWR01", // Wraith Spider
     "TTSPID", // Wraith Spider
-    "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
-    "D5DRSSP1", // Spirit Spider
-    "D5DRSSP2", // Spirit Spider
-    "D5DRSSP3", // Spirit Spider
-    "D5DRSSP4", // Spirit Spider
-    "D5DRSSP5", // Spirit Spider
+    // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
+    // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
+    // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
+    // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
+    // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
   ],
 };

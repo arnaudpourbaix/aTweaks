@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
+import { createSingleTargetWeb } from "../../spells/web";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
@@ -11,6 +12,8 @@ const id = MonsterEnum.GargantuanSpider;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
+// Spells
+const web = file(1, id);
 
 const name = "Gargantuan Spider";
 export const SPIDER_GARGANTUAN: RawCreature = {
@@ -47,9 +50,6 @@ export const SPIDER_GARGANTUAN: RawCreature = {
     removeItems: ["BDSPIDGA", "ANTIWEB"],
     removeScripts: ["BDENSHTV", "BDSPIDGA", "BDNONIN"],
     immunities: ["spider"],
-    memorizedSpells: [
-      { file: SPELLS.SpiderSingleTargetWeb, memorizedCount: 1 },
-    ],
   },
   items: [
     {
@@ -89,13 +89,24 @@ export const SPIDER_GARGANTUAN: RawCreature = {
       ],
     },
   ],
+  spells: [
+    createSingleTargetWeb({
+      file: web,
+      duration: 18,
+      // saveBonus: -2,
+      description: [
+        "The spider can shoot web strands up to 5 feet to bind a foe.",
+        "Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.",
+      ],
+    }),
+  ],
   abilities: [
     {
-      name: "Web Tangler",
+      name: "Web Tangle",
       preset: SPELLS.Web,
       spell: {
         //  it can shoot web strands up to 2 feet to bind a foe. Either attack treats the spider's opponent as AC 10 and prevents the spider from making a melee attack that round.
-        resource: SPELLS.SpiderSingleTargetWeb,
+        resource: web,
         type: "force",
         isAttack: true,
         probability: 70,

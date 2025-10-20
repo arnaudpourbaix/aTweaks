@@ -56,6 +56,7 @@ export enum TraStringReferenceEnum {
   TouchOfTranquility = 1905,
   ToxicVapors = 1906,
   TurningToStone = 4005,
+  WebTangle = 4042,
   WhitePudding = 4036,
   WraithSpiderPoison = 4041,
 }

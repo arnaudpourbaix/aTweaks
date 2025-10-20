@@ -45,7 +45,7 @@ export const SPIDER_GHOSTWALK: RawCreature = {
   },
   additionalData: {
     removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
-    removeScripts: ["INITDLG", "C#LCCENS"],
+    removeScripts: ["INITDLG", "C#LCCENS", "PSPIDER", "DW1MELMO"],
     immunities: ["spider"],
   },
   items: [
@@ -98,5 +98,6 @@ export const SPIDER_GHOSTWALK: RawCreature = {
   ],
   files: [
     "C#LCCENS", // Ghostly Spirit
+    "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
   ],
 };

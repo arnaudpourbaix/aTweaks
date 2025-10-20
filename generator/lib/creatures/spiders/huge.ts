@@ -44,15 +44,7 @@ export const SPIDER_HUGE: RawCreature = {
   },
   additionalData: {
     removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
-    removeScripts: [
-      "DW1MELMO",
-      "DW#GPSHM",
-      "DW#SPIDS",
-      "BPSIGHT",
-      "BPASIGHT",
-      "BDSUM00",
-      "SPIDFGSU",
-    ],
+    removeScripts: ["DW1MELMO", "DW#GPSHM", "DW#SPIDS", "BPSIGHT", "BPASIGHT"],
     immunities: ["spider"],
   },
   items: [
@@ -80,8 +72,5 @@ export const SPIDER_HUGE: RawCreature = {
     "BDSPIDHU", // Huge Spider
     "SPIDHU", // Huge Spider
     "SPIDLAND", // Huge Spider
-    //TODO:
-    "SPIDFGSU", // Kitthix
   ],
-  adjustments: [{ files: ["SPIDFGSU"], summon: true }],
 };
