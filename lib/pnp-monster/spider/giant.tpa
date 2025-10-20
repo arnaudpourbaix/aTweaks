@@ -19,13 +19,13 @@ Melee damage: 1D8 (Piercing)
 Speed Factor: 2
 Enchantment: 1
 Range: 2 feet
-Level 1-2: Poison: deals 2 per second for 3 rounds (saves vs poison/death).
-Level 3-4: Poison: deals 4 per second for 3 rounds (saves vs poison/death).
-Level 5-6: Poison: deals 6 per second for 3 rounds (saves vs poison/death).
-Level 7-8: Poison: deals 8 per second for 3 rounds (saves vs poison/death).
-Level 9-10: Poison: deals 9 per second for 3 rounds (saves vs poison/death).
-Level 11-15: Poison: deals 10 per second for 3 rounds (saves vs poison/death).
-Level 16-40: Poison: deals 14 per second for 3 rounds (saves vs poison/death).~)
+Level 1-2: Poison: deals 1 per second for 6 rounds (saves vs poison/death).
+Level 3-4: Poison: deals 3 per second for 4 rounds (saves vs poison/death).
+Level 5-6: Poison: deals 5 per second for 4 rounds (saves vs poison/death).
+Level 7-8: Poison: deals 7 per second for 3 rounds (saves vs poison/death).
+Level 9-10: Poison: deals 8 per second for 3 rounds (saves vs poison/death).
+Level 11-15: Poison: deals 9 per second for 3 rounds (saves vs poison/death).
+Level 16-40: Poison: deals 13 per second for 3 rounds (saves vs poison/death).~)
 	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#1m56.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -43,13 +43,13 @@ COPY_EXISTING ~ja#1m56.itm~ ~override~
 		WRITE_SHORT 0xa2 33
 		WRITE_LONG 0x98 1
 	END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=2 parameter2=2 duration=18 probability1=100 dicesize=1 dicenumber=2 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=4 parameter2=2 duration=18 probability1=100 dicesize=3 dicenumber=4 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=6 parameter2=2 duration=18 probability1=100 dicesize=5 dicenumber=6 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=8 parameter2=2 duration=18 probability1=100 dicesize=7 dicenumber=8 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=9 parameter2=2 duration=18 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=10 parameter2=2 duration=18 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=14 parameter2=2 duration=18 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=1 parameter2=2 duration=34 probability1=100 dicesize=1 dicenumber=2 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=3 parameter2=2 duration=23 probability1=100 dicesize=3 dicenumber=4 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=5 parameter2=2 duration=21 probability1=100 dicesize=5 dicenumber=6 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=7 parameter2=2 duration=20 probability1=100 dicesize=7 dicenumber=8 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=8 parameter2=2 duration=20 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=9 parameter2=2 duration=19 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=13 parameter2=2 duration=19 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 special=6 END
 
 ACTION_FOR_EACH ~file~ IN
 	BDHELP01

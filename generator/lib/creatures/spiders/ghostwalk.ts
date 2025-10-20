@@ -31,7 +31,7 @@ export const SPIDER_GHOSTWALK: RawCreature = {
     charisma: 8,
     movement: 15,
     ac: 10, // -4 with dex bonus
-    apr: 1,
+    apr: 2,
     xpv: 5000,
     alignment: "CHAOTIC_EVIL",
     morale: 13,

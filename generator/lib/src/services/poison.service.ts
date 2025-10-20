@@ -22,7 +22,7 @@ export class PoisonService {
       effects.push(this.getSaveEffect(poison));
     }
     if (poison.duration === poisonImmediateDeathDuration)
-      effects.push(...this.getImmediateDeathEffects(effect));
+      effects.push(...this.getImmediateDeathEffects(effect, poison));
     else effects.push(...this.getTimeEffects(poison, effect));
     return effects;
   }
@@ -32,6 +32,7 @@ export class PoisonService {
       opcode: "Poison",
       icon: "Poisoned",
       ...this.getEffect({
+        label: "save",
         damage: poison.saveDamage,
         duration: poison.duration,
       }),
@@ -39,7 +40,10 @@ export class PoisonService {
     };
   }
 
-  getImmediateDeathEffects(effect: RawPoisonTypeEffectGroup): RawEffect[] {
+  getImmediateDeathEffects(
+    effect: RawPoisonTypeEffectGroup,
+    poison: PoisonModel
+  ): RawEffect[] {
     const levels = [
       { min: 1, max: 2 },
       { min: 3, max: 4 },
@@ -53,11 +57,13 @@ export class PoisonService {
       const maxHP =
         12 * Math.min(level.max, 9) +
         3 * Math.max(level.max - 9, 0) +
-        5 * Math.min(level.max, 9);
+        5 * Math.min(level.max, 9) -
+        poison.saveDamage;
       return {
         opcode: "Poison",
         icon: "Poisoned",
         ...this.getEffect({
+          label: "death",
           damage: maxHP,
           duration: poisonImmediateDeathDuration,
         }),
@@ -79,6 +85,7 @@ export class PoisonService {
         opcode: "Poison",
         icon: "Poisoned",
         ...this.getEffect({
+          label: "normal",
           damage: poison.damage - poison.saveDamage,
           duration: poison.duration,
         }),
@@ -89,18 +96,82 @@ export class PoisonService {
     ];
   }
 
-  getEffect({ damage, duration }: { damage: number; duration: number }): {
+  getEffect({
+    label,
+    damage,
+    duration,
+  }: {
+    label: string;
+    damage: number;
+    duration: number;
+  }): {
     type: RawPoisonType;
     amount: number;
     duration: number;
   } {
-    const type: RawPoisonType =
-      damage > duration ? "AmountDamagePerSecond" : "OneDamagePerAmountSecond";
-    const amount =
-      type === "OneDamagePerAmountSecond"
-        ? Math.ceil(duration / damage)
-        : Math.ceil(damage / duration);
-    console.log(`poison => ${damage}/${duration} ==> ${type}: ${amount}`);
-    return { type, amount, duration };
+    if (damage > duration)
+      return this.getAmountDamagePerSecondEffect({ label, damage, duration });
+    else
+      return this.getOneDamagePerAmountSecondEffect({
+        label,
+        damage,
+        duration,
+      });
+  }
+
+  getOneDamagePerAmountSecondEffect({
+    label,
+    damage,
+    duration,
+  }: {
+    label: string;
+    damage: number;
+    duration: number;
+  }): {
+    type: RawPoisonType;
+    amount: number;
+    duration: number;
+  } {
+    const type: RawPoisonType = "OneDamagePerAmountSecond";
+    const amount = Math.floor(duration / damage);
+    let newDuration = duration;
+    while (damage > newDuration / amount) newDuration++;
+    const total = newDuration / amount;
+    console.log(
+      `poison (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
+        newDuration - duration
+      })`
+    );
+    return { type, amount, duration: newDuration };
+  }
+
+  getAmountDamagePerSecondEffect({
+    label,
+    damage,
+    duration,
+  }: {
+    label: string;
+    damage: number;
+    duration: number;
+  }): {
+    type: RawPoisonType;
+    amount: number;
+    duration: number;
+  } {
+    const type: RawPoisonType = "AmountDamagePerSecond";
+    const amount = Math.floor(damage / duration);
+    let newDuration = duration;
+    while (damage > amount * newDuration) newDuration++;
+    const total = amount * newDuration;
+    console.log(
+      `poison (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
+        newDuration - duration
+      })`
+    );
+    return {
+      type,
+      amount,
+      duration: newDuration,
+    };
   }
 }
