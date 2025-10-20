@@ -5,47 +5,48 @@ import { bafFile, file } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster.enum";
 
 // Creature Id
-const id = MonsterEnum.SmallSpider;
+const id = MonsterEnum.HairySpider;
 // Script
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
-const traits = file(2, id);
 
-const name = "Small Spider";
-export const SPIDER_SMALL: RawCreature = {
+const name = "Hairy Spider";
+export const SPIDER_HAIRY: RawCreature = {
   name,
-  tpaFile: "lib/pnp-monster/spider/small",
+  tpaFile: "lib/pnp-monster/spider/hairy",
   bafFile: `lib/pnp-monster/spider/${script}`,
   tracking: true,
   combatWalk: true,
   data: {
-    level1: 4,
-    bonusHp: 4,
-    thac0: 15,
-    strength: 14,
-    dexterity: 16,
-    constitution: 12,
-    intelligence: 7,
-    wisdom: 11,
-    charisma: 4,
-    movement: 12,
-    ac: 4,
+    level1: 1,
+    bonusHp: 1,
+    thac0: 20,
+    strength: 2,
+    dexterity: 14,
+    constitution: 8,
+    intelligence: 1,
+    wisdom: 10,
+    charisma: 2,
+    movement: 6, // 6, web 15
+    ac: 8,
     apr: 1,
-    xpv: 650,
-    alignment: "CHAOTIC_EVIL",
-    morale: 13,
+    xpv: 65,
+    alignment: "NEUTRAL_EVIL",
+    morale: 10,
     moraleBreak: 4,
     moraleRecovery: 15,
     general: "MONSTER",
     race: "SPIDER",
-    class: "SPIDER_GIANT",
+    class: "SPIDER_HUGE",
     gender: "NIETHER",
-    size: "Large",
+    size: "Tiny",
   },
   additionalData: {
-    removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
+    removeItems: ["SPIDHU1", "ANTIWEB"],
     removeScripts: [
+      "BDENSHTV",
+      "BDNONIN",
       "DW1MELMO",
       "DW#GPSHM",
       "DW#SPIDG",
@@ -62,26 +63,24 @@ export const SPIDER_SMALL: RawCreature = {
       icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      diceThrown: 1,
-      diceSize: 8,
+      damageBonus: 1,
       damageType: "Piercing",
       speed: 2,
       abilityFlags: ["AddStrengthBonus"],
       effects: [
+        // TODO: If the saving throw fails, the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 with respect to Dexterity checks.
+        // These effects begin one round after the bite and last for 1d4+1 rounds.
         {
           opcode: "PoisonTypeEffects",
-          poisonType: "F",
+          poisonType: "A",
+          saveBonus: 2,
         },
       ],
     },
   ],
   files: [
     "BDSPIDER", // Small Spider
-    "BPSPID01", // Spider
-    "D5SMSPID", // Beetle Swarm
-    "GV#SPID", // Spider
     "SPIDSM01", // Small Spider
-    "WISPID01", // Spider
-    "WISPID02", // Spider
   ],
+  adjustments: [{ files: ["BDSPIDER"], noScript: true }],
 };

@@ -471,6 +471,27 @@ BEGIN
 	LPF infravision_immunity END
 END
 
+DEFINE_PATCH_FUNCTION undead_immunity
+BEGIN
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF bleeding_immunity END
+	LPF stun_immunity END
+	LPF disease_immunity END
+	LPF deathEffects_immunity END
+	LPF necromancyEffects_immunity END
+	LPF mindSpells_immunity END
+	LPF backstab_immunity END
+	LPF criticalHit_immunity END
+	LPF abilityDrain_immunity END
+	LPF energyDrain_immunity END
+	LPF fatigue_immunity END
+	LPF petrification_immunity END
+	LPF insectSpells_immunity END
+	LPF infravision_immunity END
+END
+
 DEFINE_PATCH_FUNCTION fey_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=189 parameter1=1 parameter2=1 END

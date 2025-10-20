@@ -81,12 +81,7 @@ export const SPIDER_HUGE: RawCreature = {
     "SPIDHU", // Huge Spider
     "SPIDLAND", // Huge Spider
     //TODO:
-    "WISPID01", // Spider
-    "WISPID02", // Spider
-    "GV#SPID", // Spider
     "SPIDFGSU", // Kitthix
-    "D5SMSPID", // Beetle Swarm
-    "BPSPID01", // Spider
   ],
   adjustments: [{ files: ["SPIDFGSU"], summon: true }],
 };

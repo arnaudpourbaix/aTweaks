@@ -17,6 +17,7 @@ import {
   DamageEffect,
   IdsEffect,
   InvisibilityEffect,
+  LevelDrainEffect,
   PoisonEffect,
   RawEffect,
   RegenerationEffect,
@@ -143,6 +144,8 @@ export class DescriptionService {
       results.push("Translucent");
     } else if (effect.raw.opcode === "CurrentHPbonus") {
       results.push(...this.getCurrentHPbonus(effect.raw));
+    } else if (effect.raw.opcode === "LevelDrain") {
+      results.push(...this.getLevelDrain(effect.raw));
     } else if (effect.raw.opcode === "Sleep") {
       results.push(...this.getSleep(effect.raw));
     } else if (effect.raw.opcode === "MirrorImageEffect") {
@@ -239,6 +242,14 @@ export class DescriptionService {
       `Paralyze target for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
+    );
+    return results;
+  }
+
+  private getLevelDrain(effect: LevelDrainEffect): string[] {
+    const results: string[] = [];
+    results.push(
+      `Drain ${effect.amount} level from target${this.getSaveText(effect)}.`
     );
     return results;
   }

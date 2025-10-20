@@ -1,48 +1,9 @@
-// Initiate dialog
+// Summons are destroyed on death
 IF
-	Global("JA#DIALOG","LOCALS",0)
-	Name("C#LCCENS",Myself)
-	NumTimesTalkedTo(0)
-	See([PC])
+	Die()
 THEN
 	RESPONSE #100
-		SetGlobal("JA#DIALOG","LOCALS",1)
-		FaceObject([PC])
-		StartDialogueNoSet([PC])
-END
-
-// Init
-IF
-	Global("JA#INIT","LOCALS",0)
-THEN
-	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",1)
-		SetGlobal("JA#COMBAT","LOCALS",0)
-		SetGlobalTimer("JA#REST","LOCALS",2400)
-END
-
-// Rest (reset everything and heal if applicable)
-IF
-	Global("JA#INIT","LOCALS",1)
-	GlobalTimerExpired("JA#REST","LOCALS")
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",0)
-		Rest()
-END
-
-// Turn hostile if attacked
-IF
-	Allegiance(Myself,NEUTRAL)
-	OR(4)
-		AttackedBy([GOODCUTOFF],DEFAULT)
-		SpellCastOnMe([GOODCUTOFF],0)
-		TookDamage()
-		Heard([EVILCUTOFF.0.SPIDER],99)
-THEN
-	RESPONSE #100
-		Enemy()
+		DestroySelf()
 END
 
 // Detect combat
@@ -71,15 +32,15 @@ IF
 	!GlobalTimerNotExpired("JA#HELP","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(99)
+		Shout(98)
 		SetGlobalTimer("JA#HELP","LOCALS",18)
 END
 
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -88,12 +49,26 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
 		MoveToObject(LastHeardBy(Myself))
+END
+
+// Summon follow summoner
+IF
+	Global("JA#COMBAT","LOCALS",0)
+	!StateCheck(Myself,STATE_BLIND)
+	ActionListEmpty()
+	!See(NearestEnemyOf(Myself))
+	!See(LastSummonerOf(Myself))
+	HPGT(LastSummonerOf(Myself),0)
+	Range(LastSummonerOf(Myself),150)
+THEN
+	RESPONSE #100
+		MoveToObject(LastSummonerOf(Myself))
 END
 
 // Do nothing if...
@@ -114,6 +89,82 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
+END
+
+// Leap Attack
+IF
+	HaveSpellRES("ja#1m65")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Range(FarthestEnemyOf(Myself),5)
+	Range(FarthestEnemyOf(Myself),30)
+	!General(FarthestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FarthestEnemyOf(Myself))
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m65",LastSeenBy(Myself))
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#1m65")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Range(SecondFarthestEnemyOf(Myself),5)
+	Range(SecondFarthestEnemyOf(Myself),30)
+	!General(SecondFarthestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondFarthestEnemyOf(Myself))
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m65",LastSeenBy(Myself))
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#1m65")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Range(ThirdFarthestEnemyOf(Myself),5)
+	Range(ThirdFarthestEnemyOf(Myself),30)
+	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdFarthestEnemyOf(Myself))
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m65",LastSeenBy(Myself))
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#1m65")
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!Range(FourthFarthestEnemyOf(Myself),5)
+	Range(FourthFarthestEnemyOf(Myself),30)
+	!General(FourthFarthestEnemyOf(Myself),WEAPON)
+	!CheckStatGT(FourthFarthestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FourthFarthestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m65",LastSeenBy(Myself))
+		AttackOneRound(LastSeenBy(Myself))
+		SetInterrupt(TRUE)
 END
 
 // Attack Slowed enemy
@@ -691,8 +742,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
-	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player1,STATE_INVISIBLE)
 	!CheckStatGT(Player1,0,SANCTUARY)
 	!StateCheck(Player1,STATE_CHARMED)
 	!StateCheck(Player1,STATE_REALLY_DEAD)
@@ -706,8 +755,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
-	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player2,STATE_INVISIBLE)
 	!CheckStatGT(Player2,0,SANCTUARY)
 	!StateCheck(Player2,STATE_CHARMED)
 	!StateCheck(Player2,STATE_REALLY_DEAD)
@@ -721,8 +768,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
-	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player3,STATE_INVISIBLE)
 	!CheckStatGT(Player3,0,SANCTUARY)
 	!StateCheck(Player3,STATE_CHARMED)
 	!StateCheck(Player3,STATE_REALLY_DEAD)
@@ -736,8 +781,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
-	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player4,STATE_INVISIBLE)
 	!CheckStatGT(Player4,0,SANCTUARY)
 	!StateCheck(Player4,STATE_CHARMED)
 	!StateCheck(Player4,STATE_REALLY_DEAD)
@@ -751,8 +794,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
-	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player5,STATE_INVISIBLE)
 	!CheckStatGT(Player5,0,SANCTUARY)
 	!StateCheck(Player5,STATE_CHARMED)
 	!StateCheck(Player5,STATE_REALLY_DEAD)
@@ -766,8 +807,6 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
-	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(Player6,STATE_INVISIBLE)
 	!CheckStatGT(Player6,0,SANCTUARY)
 	!StateCheck(Player6,STATE_CHARMED)
 	!StateCheck(Player6,STATE_REALLY_DEAD)
@@ -783,8 +822,6 @@ IF
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
-	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_CHARMED)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)

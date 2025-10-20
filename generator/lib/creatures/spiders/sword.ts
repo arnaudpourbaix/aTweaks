@@ -211,6 +211,10 @@ export const SPIDER_SWORD: RawCreature = {
     "SPIDSW", // Sword Spider
     "SPIDSW01", // Sword Spider
     "SPIDSWSU", // Sword Spider
+    "BPSPID01", // Spider
+    "GV#SPID", // Spider
+    "WISPID01", // Spider
+    "WISPID02", // Spider
     "WISPID03", // Lightning Sword Spider (+2 electricity damage with leg)
   ],
   adjustments: [

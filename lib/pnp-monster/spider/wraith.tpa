@@ -2,6 +2,22 @@
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m60.baf~
 
+// Wraith Spider Poison
+CREATE SPL "ja#1m60"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m60.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4041)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~This poison remains active for 2-5 rounds and drains 1 point of Constitution each round it is active.
+The victim must roll a successful saving throw vs. poison each round to escape the poison's effects for that round.
+Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=10 target=2 power=1 parameter1="-5" duration=600 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=91 duration=600 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=30 probability1=100 STR_VAR resource="ja#1m60" END
+	
 CREATE ITM "ja#1m60"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -10,57 +26,65 @@ CREATE ITM "ja#1m60"
 	WRITE_LONG 0x6a 0xaa
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
 	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
 
-Melee damage: 1D8 (Piercing)
+MagicCold damage: 1D4
 Speed Factor: 2
-Enchantment: 1
-Range: 2 feet
-Level 1-2: Poison: deals 1 per second for 6 rounds (saves vs poison/death).
-Level 3-4: Poison: deals 3 per second for 4 rounds (saves vs poison/death).
-Level 5-6: Poison: deals 5 per second for 4 rounds (saves vs poison/death).
-Level 7-8: Poison: deals 7 per second for 3 rounds (saves vs poison/death).
-Level 9-10: Poison: deals 8 per second for 3 rounds (saves vs poison/death).
-Level 11-15: Poison: deals 9 per second for 3 rounds (saves vs poison/death).
-Level 16-40: Poison: deals 13 per second for 3 rounds (saves vs poison/death).~)
-	WRITE_LONG 0x60 1
+Range: 1 feet
+Drain 1 level from target.
+
+Cast spell Wraith Spider Poison (saves vs poison/death)
+This poison remains active for 2-5 rounds and drains 1 point of Constitution each round it is active.
+The victim must roll a successful saving throw vs. poison each round to escape the poison's effects for that round.
+Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.~)
 COPY_EXISTING ~ja#1m60.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
 		WRITE_ASCII 0x76 ~SPPR416B~ #8
 		WRITE_BYTE 0x7e 1
-		WRITE_SHORT 0x80 2
+		WRITE_SHORT 0x80 1
 		WRITE_BYTE 0x84 2
-		WRITE_BYTE 0x88 8
-		WRITE_BYTE 0x8a 1
-		WRITE_SHORT 0x8e 1
 		WRITE_SHORT 0x9e 34
 		WRITE_SHORT 0xa0 33
 		WRITE_SHORT 0xa2 33
 		WRITE_LONG 0x98 1
 	END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=1 parameter2=2 duration=34 probability1=100 dicesize=1 dicenumber=2 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=3 parameter2=2 duration=23 probability1=100 dicesize=3 dicenumber=4 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=5 parameter2=2 duration=21 probability1=100 dicesize=5 dicenumber=6 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=7 parameter2=2 duration=20 probability1=100 dicesize=7 dicenumber=8 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=8 parameter2=2 duration=20 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=9 parameter2=2 duration=19 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=13 parameter2=2 duration=19 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter2=67108864 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR opcode=216 target=2 parameter1=1 timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=139 target=2 parameter1=25802 timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 STR_VAR resource="ja#1m60" END
+
+CREATE ITM "ja#2m60"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(~Wraith Spider traits~)
+	WRITE_LONG 0xc RESOLVE_STR_REF(~Wraith Spider traits~)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING15~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Wraith Spider traits
+
+Cold and magical cold immunity
+Immunity to normal weapons~)
+COPY_EXISTING ~ja#2m60.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_ASCII 0x76 ~IRING15~ #8
+	END
+	LPF cold_immunity END
+	LPF normalWeapons_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	C#Q04009
+	SPIDWR
+	SPIDWR01
+	TTSPID
+	L#ULCSP
 	D5DRSSP1
 	D5DRSSP2
 	D5DRSSP3
 	D5DRSSP4
 	D5DRSSP5
-	L#ULCSP
-	SPIDWR
-	SPIDWR01
-	TTSPID
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -68,29 +92,32 @@ BEGIN
 			REMOVE_CRE_EFFECTS
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~BDSPIDGI~
-			REMOVE_CRE_ITEM ~SPIDG1~
+			REMOVE_CRE_ITEM ~IMMUNE1~
+			REMOVE_CRE_ITEM ~RING95~
 			REMOVE_CRE_ITEM ~ANTIWEB~
-			REMOVE_CRE_ITEM ~PLYSPID~
+			REMOVE_CRE_ITEM ~SPIDWR1~
 			REPLACE_CRE_ITEM ~ja#1m60~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#2m60~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_CRE_ITEM ~ja#i14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#i15~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=4
-					strength=14
-					dexterity=16
-					constitution=12
-					intelligence=7
-					wisdom=11
-					charisma=4
+					level1=3
+					strength=17
+					dexterity=15
+					constitution=9
+					intelligence=10
+					wisdom=10
+					charisma=1
 					movement=10
-					hp=36
-					ac=4
-					thac0=15
+					hp=26
+					ac=5
+					thac0=17
 					apr=1
-					xpv=650
-					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
+					xpv=1400
+					alignment=IDS_OF_SYMBOL (~align~ ~LAWFUL_EVIL~)
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -101,7 +128,7 @@ BEGIN
 					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
 					race=IDS_OF_SYMBOL (~race~ ~SPIDER~)
-					class=IDS_OF_SYMBOL (~class~ ~SPIDER_GIANT~)
+					class=IDS_OF_SYMBOL (~class~ ~SPIDER_WRAITH~)
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1

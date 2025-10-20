@@ -60,6 +60,22 @@ Darkvision out to 60 feet.~
 COPY_EXISTING ~ja#i2.itm~ ~override~
 	LPF construct_immunity END
 
+CREATE ITM "ja#i15"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 33554464
+	WRITE_ASCII 0x3a ~IRING16~ #8
+	SAY NAME1 ~undead trait~ SAY NAME2 ~undead trait~
+	SAY UNIDENTIFIED_DESC ~Undead trait
+
+Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
+Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.
+Negative energy (such as an inflict wounds spell) can heal undead creatures.
+Hit Die: d12
+Darkvision out to 60 feet.~
+COPY_EXISTING ~ja#i15.itm~ ~override~
+	LPF undead_immunity END
+
 CREATE ITM "ja#i5"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
@@ -125,7 +141,7 @@ Translucent
 COPY_EXISTING ~ja#i11.itm~ ~override~
 	LPF ooze_immunity END
 
-CREATE ITM "ja#i15"
+CREATE ITM "ja#i16"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
@@ -134,7 +150,7 @@ CREATE ITM "ja#i15"
 
 Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-COPY_EXISTING ~ja#i15.itm~ ~override~
+COPY_EXISTING ~ja#i16.itm~ ~override~
 	LPF vermin_immunity END
 
 CREATE ITM "ja#i14"
@@ -142,18 +158,21 @@ CREATE ITM "ja#i14"
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~spider trait~ SAY NAME2 ~spider trait~
-	SAY UNIDENTIFIED_DESC ~Spider trait
+	SAY UNIDENTIFIED_DESC ~Vermin trait
 
-Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.
-Darkvision out to 60 feet.~
+Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+Darkvision out to 60 feet.
+Web immunity
+Poison immunity
+Infravision~
 COPY_EXISTING ~ja#i14.itm~ ~override~
 	LPF spider_immunity END
 
-CREATE ITM "ja#i15"
+CREATE ITM "ja#i16"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
 	SAY NAME1 ~ghostVisual1 trait~ SAY NAME2 ~ghostVisual1 trait~
 	SAY UNIDENTIFIED_DESC ~Blur (visual effect only)~
-COPY_EXISTING ~ja#i15.itm~ ~override~
+COPY_EXISTING ~ja#i16.itm~ ~override~
 	LPF ghostVisual1_immunity END

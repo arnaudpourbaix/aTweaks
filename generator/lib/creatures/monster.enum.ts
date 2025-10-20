@@ -60,7 +60,8 @@ export enum MonsterEnum {
   SwordSpider = 59,
   WraithSpider = 60,
   MutatedSpider = 61,
-  SmallSpider = 62,
+  HairySpider = 62,
   VortexSpider = 63,
   GargantuanSpider = 64,
+  HuntingSpider = 65,
 }

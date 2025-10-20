@@ -57,6 +57,7 @@ export enum TraStringReferenceEnum {
   ToxicVapors = 1906,
   TurningToStone = 4005,
   WhitePudding = 4036,
+  WraithSpiderPoison = 4041,
 }
 
 export enum BafExistingStringReference {

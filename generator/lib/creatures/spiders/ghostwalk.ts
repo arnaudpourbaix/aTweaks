@@ -20,7 +20,7 @@ export const SPIDER_GHOSTWALK: RawCreature = {
   bafFile: `lib/pnp-monster/spider/${script}`,
   tracking: true,
   combatWalk: true,
-  // dialog: ["C#LCCENS"],
+  dialog: ["C#LCCENS"],
   data: {
     level1: 14,
     strength: 15,
@@ -49,6 +49,7 @@ export const SPIDER_GHOSTWALK: RawCreature = {
     immunities: ["spider"],
   },
   items: [
+    //TODO:
     // Multiattack. The ghostwalk spider makes one Bite attack and one Ghostly Snare attack, or it makes two Bite attacks.
     // Bite. reach 5 ft., 3d10 piercing damage. If the ghostwalk spider is in its true form, the target must make a DC 15 Constitution saving throw, taking 3d8 poison damage on a failed save, or half as much damage on a successful one.
     // Ghostly Snare (Ghostwalk Form Only, Recharge 4–6). Ranged Weapon Attack: range 30, one target. Hit: The target is restrained by invisible webbing. While restrained in this way, the target is invisible.
@@ -68,6 +69,7 @@ export const SPIDER_GHOSTWALK: RawCreature = {
         {
           opcode: "PoisonTypeEffects",
           poisonType: "E",
+          saveBonus: -2,
         },
       ],
     },
@@ -88,14 +90,11 @@ export const SPIDER_GHOSTWALK: RawCreature = {
       effects: [
         { opcode: "NoCollisionDetection", passWalls: true },
         { opcode: "ModifyCollisionBehavior" },
-        // { opcode: "MagicDamageResistanceModifier", type: "Set", value: 100 },
       ],
-      // Ghostly Body (Ghostwalk Form Only). The ghostwalk spider has resistance to acid, cold, fire, lightning, and thunder damage and to bludgeoning, piercing, and slashing damage from nonmagical attacks,
-      // and it has immunity to the grappled, paralyzed, petrified, and restrained conditions.
     }),
   ],
   abilities: [
-    // Ghostwalk. The ghostwalk spider magically takes on a ghostly form or returns to its true, tangible form.
+    // TODO: Ghostwalk. The ghostwalk spider magically takes on a ghostly form or returns to its true, tangible form.
   ],
   files: [
     "C#LCCENS", // Ghostly Spirit
