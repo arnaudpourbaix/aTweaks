@@ -1,8 +1,10 @@
-import { MonsterItemIconEnum } from "../config/item";
-import { TraStringReferenceEnum } from "../config/stringRef";
-import { RawCreature } from "../src/model/raw/creature";
-import { bafFile, file } from "../src/services/misc.func";
-import { MonsterEnum } from "./monster.enum";
+import { MonsterItemIconEnum } from "../../config/item";
+import { TraStringReferenceEnum } from "../../config/stringRef";
+import { Cre } from "../../src/model/classes/cre";
+import { RawCreature } from "../../src/model/raw/creature";
+import { bafFile, file } from "../../src/services/misc.func";
+import { t } from "../../src/translations/i18n";
+import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.Ankheg;
@@ -16,8 +18,107 @@ const grab = file(3, id);
 const mainWeapon = file(1, id);
 const rangedWeapon = file(2, id);
 
+const cre = new Cre(MonsterEnum.Ankheg, MonsterFamilyEnum.Ankheg);
+const enzyme = cre.addSpell({
+  name: "Acidic digestive enzymes",
+  file: digestiveEnzyme,
+  stringRef: TraStringReferenceEnum.AcidicDigestiveEnzymes,
+  description: [
+    "The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round until the victim is dissolved (truncated to 4 rounds).",
+  ],
+  secondaryType: "OffensiveDamage",
+  headers: [
+    {
+      type: "Melee",
+      range: 5,
+      effects: [
+        { opcode: "DisplayPortraitIcon", icon: "Acid", duration: 24 },
+        { opcode: "Damage", type: "Acid", diceThrown: 1, diceSize: 4 },
+        {
+          opcode: "Damage",
+          timing: "DelayPermanent",
+          duration: 6,
+          type: "Acid",
+          diceThrown: 1,
+          diceSize: 4,
+        },
+        {
+          opcode: "Damage",
+          timing: "DelayPermanent",
+          duration: 12,
+          type: "Acid",
+          diceThrown: 1,
+          diceSize: 4,
+        },
+        {
+          opcode: "Damage",
+          timing: "DelayPermanent",
+          duration: 18,
+          type: "Acid",
+          diceThrown: 1,
+          diceSize: 4,
+        },
+        {
+          opcode: "ProtectionFromSpell",
+          resource: digestiveEnzyme,
+          duration: 24,
+          timing: "InstantLimited",
+        },
+      ],
+    },
+  ],
+});
+cre.addSpell({
+  name: "Stream of acidic enzymes",
+  file: acidicEnzyme,
+  memorizedCount: 1,
+  stringRef: TraStringReferenceEnum.StreamOfAcidicEnzymes,
+  description: [
+    "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.",
+    "A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).",
+    "It uses this attack technique only when desperate.",
+  ],
+  secondaryType: "OffensiveDamage",
+  headers: [
+    {
+      type: "Ranged",
+      range: 30,
+      speed: 3,
+      projectile: "acidblob",
+      effects: [
+        {
+          opcode: "Damage",
+          type: "Acid",
+          diceThrown: 8,
+          diceSize: 4,
+          saveTypes: ["ParalyzePoisonDeath"],
+          flags: ["SaveForHalf"],
+        },
+      ],
+    },
+  ],
+});
+cre.addWeapon({
+  stringRef: TraStringReferenceEnum.Mandibles,
+  equippedSlot: "WEAPON1",
+  type: "Melee",
+  icon: MonsterItemIconEnum.Wolf,
+  diceThrown: 3,
+  diceSize: 6,
+  damageType: "Crushing",
+  speed: 3,
+  abilityFlags: ["AddStrengthBonus"],
+  effects: [
+    {
+      opcode: "CastSpell",
+      resource: digestiveEnzyme,
+      type: "CastInstantlyAtCasterLevel",
+    },
+  ],
+});
+
 export const ANKHEG: RawCreature = {
-  name: "Ankheg",
+  name: t.ankheg.name,
   bafFile: `lib/pnp-monster/ankheg/${script}`,
   tpaFile: "lib/pnp-monster/ankheg/main",
   tracking: true,
@@ -58,7 +159,7 @@ export const ANKHEG: RawCreature = {
   },
   abilities: [
     {
-      name: "Acidic Enzymes",
+      name: t.ankheg.acidicEnzymes.name,
       disableInterrupt: true,
       target: { name: "PCsPreferringWeak", random: true },
       triggers: [

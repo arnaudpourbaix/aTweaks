@@ -1081,13 +1081,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "spider",
     type: "trait",
     itemSlot: { file: ITEMS.Spider, slot: JEWEL_SLOTS },
-    // description: [
-    //   "Spider trait",
-    //   "",
-    //   "Web Walker. The spider ignores movement restrictions caused by webs, and it knows the location of any other creature in contact with the same web.",
-    //   "Darkvision out to 60 feet.",
-    // ],
-    immunities: ["vermin", "web", "poison", "infravision"],
+    immunities: ["web", "poison", "infravision", "vermin"],
   },
   {
     name: "ghostVisual1",

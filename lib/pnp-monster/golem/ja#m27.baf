@@ -1,3 +1,5 @@
+// Bone Golem
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)

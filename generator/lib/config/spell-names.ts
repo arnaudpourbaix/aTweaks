@@ -5,6 +5,7 @@ export const SPELLS = {
   ColorSpray: "SPWI105",
   ConeOfCold: "SPWI503",
   Darkness15Radius: "SPWI228",
+  DetectInvisibility: "SPWI203",
   DireCharm: "SPWI316",
   DimensionDoor: "SPWI402",
   Domination: "SPWI506",

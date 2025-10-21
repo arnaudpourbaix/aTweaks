@@ -1,3 +1,5 @@
+// Sirine
+
 // Initiate dialog
 IF
 	Global("JA#DIALOG","LOCALS",0)

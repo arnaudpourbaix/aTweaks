@@ -4,7 +4,7 @@ import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.SpectralHound;

@@ -14,7 +14,7 @@ import { EffectService } from "../../src/services/effect.service";
 import { bafFile, convertMovement, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { UtilsService } from "../../src/services/utils.service";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 const effects = EffectService.instance;
 const utils = UtilsService.instance;

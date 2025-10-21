@@ -1,3 +1,5 @@
+// Helmed Horror
+
 // Initiate dialog
 IF
 	Global("JA#DIALOG","LOCALS",0)

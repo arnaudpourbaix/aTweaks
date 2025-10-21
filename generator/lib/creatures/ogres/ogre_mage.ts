@@ -6,7 +6,7 @@ import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, convertMovement, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.OgreMage;

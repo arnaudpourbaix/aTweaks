@@ -1,8 +1,10 @@
 import { MonsterItemIconEnum } from "../../config/item";
+import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
+import { RawBaseEffect } from "../../src/model/raw/effect";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.HairySpider;
@@ -10,6 +12,13 @@ const id = MonsterEnum.HairySpider;
 const script = bafFile(id);
 // Items
 const mainWeapon = file(1, id);
+// Spells
+const poison = file(1, id);
+
+const baseEffect: RawBaseEffect = {
+  timing: "InstantLimited",
+  duration: 30,
+};
 
 const name = "Hairy Spider";
 export const SPIDER_HAIRY: RawCreature = {
@@ -54,6 +63,7 @@ export const SPIDER_HAIRY: RawCreature = {
       "BPASIGHT",
       "DVMELEE",
     ],
+    memorizedSpells: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
     immunities: ["spider"],
   },
   items: [
@@ -63,19 +73,80 @@ export const SPIDER_HAIRY: RawCreature = {
       icon: MonsterItemIconEnum.Jaws,
       equippedSlot: "WEAPON1",
       type: "Melee",
-      damageBonus: 1,
-      damageType: "Piercing",
       speed: 2,
-      abilityFlags: ["AddStrengthBonus"],
       effects: [
-        // TODO: If the saving throw fails, the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 with respect to Dexterity checks.
-        // These effects begin one round after the bite and last for 1d4+1 rounds.
         {
-          opcode: "PoisonTypeEffects",
-          poisonType: "A",
+          opcode: "Damage",
+          type: "Piercing",
+          amount: 1,
+        },
+        {
+          opcode: "CastSpell",
+          type: "CastInstantlyAtCasterLevel",
+          resource: poison,
+          saveTypes: ["ParalyzePoisonDeath"],
           saveBonus: 2,
         },
       ],
+    },
+  ],
+  spells: [
+    {
+      file: poison,
+      name: "Hairy Spider Poison",
+      stringRef: TraStringReferenceEnum.HairySpiderPoison,
+      description: [
+        "If the saving throw fails, the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 with respect to Dexterity checks.",
+        "These effects begin one round after the bite and last for 5 rounds.",
+      ],
+      secondaryType: "Disabling",
+      headers: [
+        {
+          type: "Melee",
+          range: 5,
+          effects: [
+            {
+              opcode: "ArmorClassBonus",
+              bonusTo: "AllWeapons",
+              value: -1,
+              ...baseEffect,
+            },
+            {
+              opcode: "Thac0Bonus",
+              type: "Increment",
+              value: -1,
+              ...baseEffect,
+            },
+            {
+              opcode: "DexterityBonus",
+              type: "Increment",
+              value: -3,
+              ...baseEffect,
+            },
+            {
+              opcode: "DisplayPortraitIcon",
+              icon: "AbilityScoreDrained",
+              timing: "InstantLimited",
+              ...baseEffect,
+            },
+            {
+              opcode: "ProtectionFromSpell",
+              resource: poison,
+              ...baseEffect,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  abilities: [
+    {
+      preset: SPELLS.DetectInvisibility,
+      spell: {
+        type: "force",
+        probability: 30,
+      },
+      requireVocal: false,
     },
   ],
   files: [

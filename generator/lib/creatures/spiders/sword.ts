@@ -7,7 +7,7 @@ import { DamageEffect, RawEffect } from "../../src/model/raw/effect";
 import { RawItem } from "../../src/model/raw/item";
 import { RawSpell } from "../../src/model/raw/spell";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.SwordSpider;

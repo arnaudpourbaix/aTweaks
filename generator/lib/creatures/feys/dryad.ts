@@ -12,7 +12,7 @@ import { EffectService } from "../../src/services/effect.service";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 const factory = FactoryService.instance;
 const effects = EffectService.instance;

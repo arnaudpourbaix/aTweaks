@@ -22,7 +22,7 @@ import {
 import { createTraitItem } from "../../src/services/creature-helper";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 import {
   abilityDryadDireCharm,
   abilitySpeakWithPlants,

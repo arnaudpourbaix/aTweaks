@@ -1,3 +1,5 @@
+// Vampiric Wolf
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -185,6 +187,13 @@ THEN
 	RESPONSE #100
 		Continue()
 END
+
+    // defaultWeaponSlot: "SLOT_WEAPON",
+    // targetStatusWeaponSlot: [
+    //   { status: ["Sleep"], slot: "SLOT_WEAPON1" },
+    //   { status: ["Grabbed"], slot: "SLOT_WEAPON2" },
+    // ],
+
 
 IF
 	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLED)

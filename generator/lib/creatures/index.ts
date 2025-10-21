@@ -1,10 +1,10 @@
 import { RawCreature } from "../src/model/raw/creature";
-import { ANKHEG } from "./ankheg";
+import { ANKHEG } from "./ankheg/ankheg";
 import { Basilisks } from "./basilisks";
 import { Bears } from "./bears";
 import { Cats } from "./cats";
 import { Constructs } from "./constructs";
-import { CARRION_CRAWLER } from "./crawler_carrion";
+import { CARRION_CRAWLER } from "./carrion/crawler_carrion";
 import { Dogs } from "./dogs";
 import { Feys } from "./feys";
 import { Golems } from "./golems";

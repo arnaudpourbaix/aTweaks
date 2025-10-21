@@ -3,7 +3,7 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.HuntingSpider;
@@ -48,7 +48,10 @@ export const SPIDER_HUNTING: RawCreature = {
   additionalData: {
     removeItems: ["D5SMSPID", "ANTIWEB"],
     removeScripts: ["DW1MELMO"],
-    immunities: ["spider", "seeInvisible"],
+    immunities: [
+      "spider",
+      "seeInvisible", // their vision gives them the natural ability of true seeing
+    ],
   },
   items: [
     {

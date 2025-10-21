@@ -1,3 +1,5 @@
+// Phase Spider
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)

@@ -3,7 +3,7 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawSaveType } from "../../src/model/raw/enum";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 import { polarBearMainWeapon, polarBearOffhandWeapon } from "./polar";
 
 // Creature Id

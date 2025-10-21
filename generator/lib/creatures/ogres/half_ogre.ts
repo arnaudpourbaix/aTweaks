@@ -1,7 +1,7 @@
 import { SPELLS } from "../../config/spell-names";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.HalfOgre;

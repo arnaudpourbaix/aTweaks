@@ -1,4 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
+import { TranslationKeys } from "../../translations/en";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";

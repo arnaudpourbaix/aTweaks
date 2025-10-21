@@ -1,3 +1,5 @@
+// Ghostwalk Spider
+
 // Initiate dialog
 IF
 	Global("JA#DIALOG","LOCALS",0)
@@ -268,6 +270,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 
@@ -412,6 +415,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 
@@ -490,6 +494,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 
@@ -568,6 +573,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 
@@ -635,6 +641,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 
@@ -682,6 +689,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 

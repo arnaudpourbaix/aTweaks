@@ -27,9 +27,10 @@ export class BafGeneratorService {
       creature,
       { summon: false }
     );
-    const content = statements
+    const code = statements
       .map((statement) => this.generateStatement(statement))
       .join("");
+    const content = `// ${creature.name}${CR}${CR}${code}`;
     fs.writeFileSync(
       `${path.join(State.modFolder, creature.bafFile as string)}.baf`,
       content

@@ -1,3 +1,20 @@
+export enum MonsterFamilyEnum {
+  Ankheg = "ankheg",
+  Basilisk = "basilisk",
+  Bear = "bear",
+  Carrion = "carrion",
+  Cat = "cat",
+  Construct = "construct",
+  Dog = "dog",
+  Fey = "fey",
+  Golem = "golem",
+  Ogre = "ogre",
+  Plant = "plant",
+  Slime = "slime",
+  Spider = "spider",
+  Wolf = "wolf",
+}
+
 export enum MonsterEnum {
   Ankheg = 1,
   LesserBasilisk = 2,

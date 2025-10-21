@@ -5,7 +5,7 @@ import { createCreatureSplit } from "../../spells/slime_split";
 import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 import { puddingTraits } from "./black_pudding";
 
 // Creature Id

@@ -1,9 +1,10 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { createTraitItem } from "../../src/services/creature-helper";
+import { RawItem } from "../../src/model/raw/item";
+import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.GhostwalkSpider;
@@ -11,7 +12,28 @@ const id = MonsterEnum.GhostwalkSpider;
 const script = bafFile(id);
 // Items
 const biteWeapon = file(1, id);
+const ghostBiteWeapon = file(2, id);
 const traits = file(2, id);
+// Spells
+const ghostwalk = file(1, id);
+
+const factory = FactoryService.instance;
+
+const baseWeapon: RawItem = {
+  file: biteWeapon,
+  stringRef: TraStringReferenceEnum.Jaws,
+  icon: MonsterItemIconEnum.Jaws,
+  equippedSlot: "WEAPON1",
+  type: "Melee",
+  // diceThrown: 3,
+  // diceSize: 10,
+  diceThrown: 1,
+  diceSize: 2,
+  range: 5,
+  damageType: "Piercing",
+  speed: 2,
+  abilityFlags: ["AddStrengthBonus"],
+};
 
 const name = "Ghostwalk Spider";
 export const SPIDER_GHOSTWALK: RawCreature = {
@@ -43,28 +65,17 @@ export const SPIDER_GHOSTWALK: RawCreature = {
     gender: "NIETHER",
     size: "Large",
   },
+  attack: {
+    defaultWeaponSlot: "SLOT_WEAPON1",
+  },
   additionalData: {
     removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
-    removeScripts: ["INITDLG", "C#LCCENS", "PSPIDER", "DW1MELMO"],
+    removeScripts: ["INITDLG", "C#LCCENS", "PSPIDER", "DW1MELMO", "L#ULCSP"],
     immunities: ["spider"],
   },
   items: [
-    //TODO:
-    // Multiattack. The ghostwalk spider makes one Bite attack and one Ghostly Snare attack, or it makes two Bite attacks.
-    // Bite. reach 5 ft., 3d10 piercing damage. If the ghostwalk spider is in its true form, the target must make a DC 15 Constitution saving throw, taking 3d8 poison damage on a failed save, or half as much damage on a successful one.
-    // Ghostly Snare (Ghostwalk Form Only, Recharge 4–6). Ranged Weapon Attack: range 30, one target. Hit: The target is restrained by invisible webbing. While restrained in this way, the target is invisible.
     {
-      file: biteWeapon,
-      stringRef: TraStringReferenceEnum.Jaws,
-      icon: MonsterItemIconEnum.Jaws,
-      equippedSlot: "WEAPON1",
-      type: "Melee",
-      diceThrown: 3,
-      diceSize: 10,
-      range: 5,
-      damageType: "Piercing",
-      speed: 2,
-      abilityFlags: ["AddStrengthBonus"],
+      ...baseWeapon,
       effects: [
         {
           opcode: "PoisonTypeEffects",
@@ -73,9 +84,13 @@ export const SPIDER_GHOSTWALK: RawCreature = {
         },
       ],
     },
-    createTraitItem({
-      name,
-      file: traits,
+    //TODO:
+    // Multiattack. The ghostwalk spider makes one Bite attack and one Ghostly Snare attack, or it makes two Bite attacks.
+    // Ghostly Snare (Ghostwalk Form Only, Recharge 4–6). Ranged Weapon Attack: range 30, one target. Hit: The target is restrained by invisible webbing. While restrained in this way, the target is invisible.
+    {
+      ...baseWeapon,
+      file: ghostBiteWeapon,
+      equippedSlot: "WEAPON2",
       immunities: [
         "acidResistance",
         "coldResistance",
@@ -91,10 +106,81 @@ export const SPIDER_GHOSTWALK: RawCreature = {
         { opcode: "NoCollisionDetection", passWalls: true },
         { opcode: "ModifyCollisionBehavior" },
       ],
-    }),
+    },
+    // createTraitItem({
+    //   name,
+    //   file: traits,
+    //   immunities: [
+    //     "acidResistance",
+    //     "coldResistance",
+    //     "fireResistance",
+    //     "electricityResistance",
+    //     "normalWeapons",
+    //     "hold",
+    //     "stun",
+    //     "petrification",
+    //     "ghostVisual1",
+    //   ],
+    //   effects: [
+    //     { opcode: "NoCollisionDetection", passWalls: true },
+    //     { opcode: "ModifyCollisionBehavior" },
+    //   ],
+    // }),
   ],
-  abilities: [
-    // TODO: Ghostwalk. The ghostwalk spider magically takes on a ghostly form or returns to its true, tangible form.
+  // spells: [
+  //   {
+  //     file: ghostwalk,
+  //     name: "Ghostwalk",
+  //     stringRef: TraStringReferenceEnum.Ghostwalk,
+  //     description: [
+  //       "This poison remains active for 2-5 rounds and drains 1 point of Constitution each round it is active.",
+  //       "The victim must roll a successful saving throw vs. poison each round to escape the poison's effects for that round.",
+  //       "Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.",
+  //     ],
+  //     // A neutralize poison spell alleviates the effects of the poison entirely, removing it from the victim's system and restoring any lost Constitution points.
+  //     // A slow poison delays the effects of the poison for the duration of the spell but will not restore Constitution points already lost.
+  //     //
+  //     secondaryType: "Disabling",
+  //     headers: [
+  //       {
+  //         type: "Melee",
+  //         range: 5,
+  //         immunities: [
+  //           "acidResistance",
+  //           "coldResistance",
+  //           "fireResistance",
+  //           "electricityResistance",
+  //           "normalWeapons",
+  //           "hold",
+  //           "stun",
+  //           "petrification",
+  //           "ghostVisual1",
+  //         ],
+  //         effects: [
+  //           { opcode: "NoCollisionDetection", passWalls: true },
+  //           { opcode: "ModifyCollisionBehavior" },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // ],
+  customCode: [
+    // {
+    //   // TODO: Ghostwalk. The ghostwalk spider magically takes on a ghostly form or returns to its true, tangible form.
+    //   // should stay in Ghostwalk form and switch to tangible form in melee to attack a non-poisoned target
+    //   location: "attack",
+    //   type: "insertBefore",
+    //   statements: [
+    //     {
+    //       triggers: [factory.globalRoundTimerExpired()],
+    //       responses: factory.response([
+    //         { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
+    //         factory.setGlobalRoundTimer(),
+    //         { name: "Continue" },
+    //       ]),
+    //     },
+    //   ],
+    // },
   ],
   files: [
     "C#LCCENS", // Ghostly Spirit

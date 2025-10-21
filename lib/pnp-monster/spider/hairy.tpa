@@ -2,6 +2,23 @@
 
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m62.baf~
 
+// Hairy Spider Poison
+CREATE SPL "ja#1m62"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m62.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4043)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	SAY UNIDENTIFIED_DESC ~If the saving throw fails, the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 with respect to Dexterity checks.
+These effects begin one round after the bite and last for 1d4+1 rounds.~
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=0 target=2 power=1 parameter1="-1" duration=30 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=2 power=1 parameter1="-1" duration=30 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=15 target=2 power=1 parameter1="-3" duration=30 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=91 duration=30 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=30 probability1=100 STR_VAR resource="ja#1m62" END
+	
 CREATE ITM "ja#1m62"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -13,9 +30,11 @@ CREATE ITM "ja#1m62"
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
 
-Melee damage: 1 (Piercing)
 Speed Factor: 2
-Poison: deals one damage per 40 seconds for 10 turns (saves vs poison/death at +2).~)
+
+Cast spell Hairy Spider Poison (saves vs poison/death at +2)
+If the saving throw fails, the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 with respect to Dexterity checks.
+These effects begin one round after the bite and last for 1d4+1 rounds.~)
 COPY_EXISTING ~ja#1m62.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -23,14 +42,12 @@ COPY_EXISTING ~ja#1m62.itm~ ~override~
 		WRITE_ASCII 0x76 ~SPPR416B~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_BYTE 0x84 2
-		WRITE_SHORT 0x8c 1
-		WRITE_SHORT 0x8e 1
 		WRITE_SHORT 0x9e 34
 		WRITE_SHORT 0xa0 33
 		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
 	END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=40 parameter2=3 duration=600 probability1=100 savingthrow=4 savebonus="2" special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=12 target=2 parameter1=1 parameter2=1048576 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 savebonus="2" STR_VAR resource="ja#1m62" END
 
 ACTION_FOR_EACH ~file~ IN
 	BDSPIDER
@@ -48,6 +65,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			REPLACE_CRE_ITEM ~ja#1m62~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_MEMORIZED_SPELL ~SPWI203~ #1 ~wizard~ (1)
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR

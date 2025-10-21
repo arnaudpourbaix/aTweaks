@@ -7,10 +7,10 @@ import { StateService } from "./services/state.service";
 const clear = require("clear");
 const figlet = require("figlet");
 
-clear();
-console.log(
-  figlet.textSync("script BAF generator", { horizontalLayout: "full" })
-);
+// clear();
+// console.log(
+//   figlet.textSync("script BAF generator", { horizontalLayout: "full" })
+// );
 
 program
   .version("0.0.1")
@@ -19,19 +19,21 @@ program
 
 async function main() {
   const stateService = new StateService();
-  return stateService.init().then(() => {
-    const mainService = new MainService();
-    let chain: Promise<any> = Promise.resolve();
-    CREATURES.forEach((creature) => {
-      chain = chain.then(() => mainService.processCreature(creature));
-    });
-    return chain
-      .then(() => mainService.generateCommonCode())
-      .then(() => {
-        console.log(chalk.green(`\nFinished!`));
+  return Promise.resolve()
+    .then(() => stateService.init())
+    .then(() => {
+      const mainService = new MainService();
+      let chain: Promise<any> = Promise.resolve();
+      CREATURES.forEach((creature) => {
+        chain = chain.then(() => mainService.processCreature(creature));
       });
-    //.catch(error => { console.trace(chalk.red(error)); });
-  });
+      return chain
+        .then(() => mainService.generateCommonCode())
+        .then(() => {
+          console.log(chalk.green(`\nFinished!`));
+        });
+      //.catch(error => { console.trace(chalk.red(error)); });
+    });
 }
 
 main();

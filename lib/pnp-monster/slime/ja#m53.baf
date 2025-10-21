@@ -1,3 +1,5 @@
+// Slithering Tracker
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)

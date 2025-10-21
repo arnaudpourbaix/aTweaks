@@ -1,3 +1,5 @@
+// Hairy Spider
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -101,6 +103,20 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
+END
+
+// Detect Invisibility
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpell(WIZARD_DETECT_INVISIBILITY)
+	!See([PC])
+	Detect([PC])
+	!CheckSpellState(Myself,DETECT_INVISIBILITY)
+	RandomNumGT(800,561)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpell(Myself,WIZARD_DETECT_INVISIBILITY)
 END
 
 // Attack NoCheck enemy

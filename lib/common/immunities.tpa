@@ -705,10 +705,10 @@ END
 
 DEFINE_PATCH_FUNCTION spider_immunity
 BEGIN
-	LPF vermin_immunity END
 	LPF web_immunity END
 	LPF poison_immunity END
 	LPF infravision_immunity END
+	LPF vermin_immunity END
 END
 
 DEFINE_PATCH_FUNCTION ghostVisual1_immunity

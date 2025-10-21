@@ -28,6 +28,7 @@ export interface BaseCreature {
 }
 
 export interface Creature extends BaseCreature {
+  name: string;
   /**
    * String reference, must be referenced in TRA files
    */

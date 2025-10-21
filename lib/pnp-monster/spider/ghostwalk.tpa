@@ -14,7 +14,7 @@ CREATE ITM "ja#1m58"
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
 
-Melee damage: 3D10 (Piercing)
+Melee damage: 1D2 (Piercing)
 Speed Factor: 2
 Enchantment: 4
 Range: 5 feet
@@ -35,8 +35,8 @@ COPY_EXISTING ~ja#1m58.itm~ ~override~
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 5
 		WRITE_BYTE 0x84 2
-		WRITE_BYTE 0x88 10
-		WRITE_BYTE 0x8a 3
+		WRITE_BYTE 0x88 2
+		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1
 		WRITE_SHORT 0x9e 34
 		WRITE_SHORT 0xa0 33
@@ -54,12 +54,20 @@ COPY_EXISTING ~ja#1m58.itm~ ~override~
 
 CREATE ITM "ja#2m58"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Ghostwalk Spider traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Ghostwalk Spider traits~)
-	WRITE_SHORT 0x1c 10
-	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Ghostwalk Spider traits
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
 
+Melee damage: 1D2 (Piercing)
+Speed Factor: 2
+Enchantment: 4
+Range: 5 feet
 Acid Resistance: 50%
 Cold Resistance: 50%
 Magical Cold Resistance: 50%
@@ -71,13 +79,25 @@ Hold immunity
 Stun immunity
 Petrification immunity
 Blur (visual effect only)~)
+	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#2m58.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
-		WRITE_ASCII 0x76 ~IRING15~ #8
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 5
+		WRITE_BYTE 0x84 2
+		WRITE_BYTE 0x88 2
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 1
+		WRITE_SHORT 0x9e 34
+		WRITE_SHORT 0xa0 33
+		WRITE_SHORT 0xa2 33
+		WRITE_LONG 0x98 1
 	END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=184 target=1 global=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=300 target=1 global=1 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=184 target=2 probability1=100 END
+	LPF ADD_EFFECT INT_VAR opcode=300 target=2 parameter2=1 probability1=100 END
 	LPF acidResistance_immunity END
 	LPF coldResistance_immunity END
 	LPF fireResistance_immunity END
@@ -90,6 +110,7 @@ COPY_EXISTING ~ja#2m58.itm~ ~override~
 
 ACTION_FOR_EACH ~file~ IN
 	C#LCCENS
+	L#ULCSP
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -101,7 +122,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			REMOVE_CRE_ITEM ~GHOST2~
 			REPLACE_CRE_ITEM ~ja#1m58~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#2m58~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#2m58~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_CRE_ITEM ~ja#i14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
@@ -135,7 +156,7 @@ BEGIN
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN INITDLG C#LCCENS END
+			DEFINE_ARRAY removeScripts BEGIN INITDLG C#LCCENS PSPIDER DW1MELMO L#ULCSP END
 			LPF patchCreatureScript STR_VAR script=ja#m58 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

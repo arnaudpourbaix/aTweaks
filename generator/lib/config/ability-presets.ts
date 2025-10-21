@@ -571,4 +571,25 @@ export const ABILITY_PRESETS: {
       requireVocal: true,
     },
   },
+  {
+    preset: SPELLS.DetectInvisibility,
+    ability: {
+      name: "Detect Invisibility",
+      spell: {
+        id: "WIZARD_DETECT_INVISIBILITY",
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      triggers: [
+        { name: "See", params: ["PC"], negation: true },
+        { name: "Detect", params: ["PC"] },
+        {
+          name: "CheckSpellState",
+          params: ["Myself", "DETECT_INVISIBILITY"],
+          negation: true,
+        },
+      ],
+      requireVocal: true,
+    },
+  },
 ];

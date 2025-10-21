@@ -9,7 +9,7 @@ import { RawSaveType } from "../../src/model/raw/enum";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { bafFile, file } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster.enum";
+import { MonsterEnum } from "../monster";
 import { abilityAnimalFriendship } from "./hamadryad";
 
 const effects = EffectService.instance;

@@ -1,3 +1,5 @@
+// Sword Spider
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -402,6 +404,7 @@ THEN
 		Continue()
 END
 
+// defaultWeaponSlot: "SLOT_WEAPON",
 IF
 	StateCheck(LastSeenBy(Myself),STATE_SLOWED)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
