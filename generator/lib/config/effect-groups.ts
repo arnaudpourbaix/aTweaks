@@ -8,7 +8,6 @@ import {
 import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
 import { PoisonService } from "../src/services/poison.service";
 import { RawEffectGroupName } from "./effect-group-name";
-import { TraStringReferenceEnum } from "./stringRef";
 
 export const EFFECT_GROUPS: {
   group: RawEffectGroupName;
@@ -28,7 +27,7 @@ export const EFFECT_GROUPS: {
       const rawEffects: RawEffect[] = [
         {
           opcode: "DisplayString",
-          stringRef: TraStringReferenceEnum.Restrained,
+          stringRef: "common.spell.restrained",
           timing: "InstantPermanentUntilDeath",
           ...base,
         },

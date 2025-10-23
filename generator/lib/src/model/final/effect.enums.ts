@@ -1,4 +1,26 @@
-import { RawCastSpellOnConditionType } from "../raw/enum";
+export type CastSpellOnConditionType =
+  | "HitBy([ANYONE])"
+  | "See([EVILCUTOFF])"
+  | "HPPercentLT(Myself,50)"
+  | "HPPercentLT(Myself,25)"
+  | "HPPercentLT(Myself,10)"
+  | "StateCheck(Myself,STATE_HELPLESS)"
+  | "StateCheck(Myself,STATE_POISONED)"
+  | "AttackedBy([ANYONE])"
+  | "PersonalSpaceDistance([ANYONE],4)"
+  | "PersonalSpaceDistance([ANYONE],10)"
+  | "Delay(Extra)"
+  | "TookDamage()"
+  | "Killed([ANYONE])"
+  | "TimeOfDay(Extra)"
+  | "PersonalSpaceDistance([ANYONE],Extra)"
+  | "StateCheck([ANYONE],Extra)"
+  | "Die()"
+  | "Died([ANYONE])"
+  | "TurnedBy([ANYONE])"
+  | "HPLT(Myself,Extra)"
+  | "HPPercentLT(Myself,Extra)"
+  | "CheckSpellState(Myself,Extra)";
 
 export enum SummonCreatureModeEnum {
   MatchTarget0 = 0,
@@ -103,9 +125,7 @@ export enum CastSpellOnConditionTargetEnum {
   Nearest = 3,
 }
 
-export function getCastSpellOnConditionValue(
-  text: RawCastSpellOnConditionType
-) {
+export function getCastSpellOnConditionValue(text: CastSpellOnConditionType) {
   let value: number = 0;
   switch (text) {
     case "HitBy([ANYONE])":
@@ -841,6 +861,16 @@ export enum SpellTypeEnum {
   BardSong = 5,
 }
 
+export const spellTypes = [
+  { value: 0, label: "Special" },
+  { value: 1, label: "Wizard" },
+  { value: 2, label: "Priest" },
+  { value: 3, label: "Psionic" },
+  { value: 4, label: "Innate" },
+  { value: 5, label: "BardSong" },
+] as const;
+type SpellTypes = (typeof spellTypes)[number]["label"];
+
 export enum ItemFlagEnum {
   CriticalItem = 0,
   TwoHanded = 1,
@@ -865,7 +895,6 @@ export enum ItemAbilityFlagEnum {
   BreakSanctuary = 9,
   Hostile = 10,
   RechargeAfterResting = 11,
-  BypassArmor = 16,
 }
 
 export enum SpellFlagEnum {
@@ -1294,3 +1323,60 @@ export enum WingBuffetDirectionEnum {
   TowardsTargetPoint = 3,
   TowardsSource = 4,
 }
+
+export type CreatureSize =
+  | "Tiny"
+  | "Small"
+  | "Medium"
+  | "Large"
+  | "Huge"
+  | "Gargantuan"
+  | "Colossal";
+
+export type PnPPoisonType =
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P";
+
+export type ItemSlot =
+  | "HELMET"
+  | "ARMOR"
+  | "SHIELD"
+  | "GLOVES"
+  | "LRING"
+  | "RRING"
+  | "AMULET"
+  | "BELT"
+  | "BOOTS"
+  | "WEAPON1"
+  | "WEAPON2"
+  | "WEAPON3"
+  | "WEAPON4"
+  | "QUIVER1"
+  | "QUIVER2"
+  | "QUIVER3"
+  | "QUIVER4"
+  | "CLOAK"
+  | "QITEM1"
+  | "QITEM2"
+  | "QITEM3";
+
+export const WEAPON_SLOTS: ItemSlot[] = [
+  "WEAPON1",
+  "WEAPON2",
+  "WEAPON3",
+  "WEAPON4",
+];

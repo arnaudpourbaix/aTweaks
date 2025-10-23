@@ -18,6 +18,7 @@ export const CARRION_CRAWLER: RawCreature = {
   tracking: true,
   combatWalk: true,
   attack: {
+    //TODO:
     targetPriorities: [
       {
         status: ["Able"],

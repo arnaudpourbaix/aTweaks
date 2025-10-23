@@ -1,6 +1,4 @@
 import { SPELLS } from "../config/spell-names";
-import { TraStringReferenceEnum } from "../config/stringRef";
-import { StringReference } from "../src/model/misc";
 import {
   DamageEffect,
   RawBaseEffect,
@@ -12,6 +10,7 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../src/model/raw/spell-protection";
+import { TranslationKey } from "../src/translations/i18n";
 
 export const createSingleTargetWeb = ({
   file,
@@ -22,9 +21,9 @@ export const createSingleTargetWeb = ({
   damageEffect,
 }: {
   file: string;
-  stringRef?: StringReference;
+  stringRef?: TranslationKey;
   duration: number;
-  description: string[];
+  description: TranslationKey;
   saveBonus?: number;
   damageEffect?: DamageEffect;
 }): RawSpell => {
@@ -115,8 +114,7 @@ export const createSingleTargetWeb = ({
     file,
     memorizedCount: 1,
     infiniteUse: 1,
-    name: "Web Tangle",
-    stringRef: stringRef ?? TraStringReferenceEnum.WebTangle,
+    stringRef: stringRef ?? "monster.spider.webTangle",
     icon: SPELLS.Web,
     description,
     secondaryType: "Disabling",

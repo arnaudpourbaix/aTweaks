@@ -3,7 +3,7 @@ import { SpellGroupName } from "../../../config/spell-group-name";
 import { RawItemSlot } from "../raw/item";
 import { Effect } from "./effect";
 import { EffectTypeEnum } from "./effect.type";
-import { PortraitIconEnum } from "./enums";
+import { PortraitIconEnum } from "./effect.enums";
 
 export interface ImmunityConfig {
   name: ImmunityName | string;

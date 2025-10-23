@@ -1,7 +1,7 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { EffectTypeEnum } from "../final/effect.type";
-import { PortraitIconEnum } from "../final/enums";
+import { PortraitIconEnum } from "../final/effect.enums";
 import { RawEffect } from "./effect";
 import { RawItemSlot } from "./item";
 

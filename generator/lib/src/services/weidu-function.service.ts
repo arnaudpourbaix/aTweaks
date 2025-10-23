@@ -6,7 +6,7 @@ import { SPELL_FUNCTIONS } from "../../spells";
 import { CR, TAB } from "../model/constants";
 import { Effect } from "../model/final/effect";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Spell } from "../model/final/spell";
+import { Spell } from "../model/final/spell-item";
 import { CodeLine } from "../model/misc";
 import { SpellGroup } from "../model/raw/spell-group";
 import { State } from "../state";

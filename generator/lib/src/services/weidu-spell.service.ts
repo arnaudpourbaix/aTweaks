@@ -1,5 +1,5 @@
 import { CR } from "../model/constants";
-import { Spell, SpellHeader } from "../model/final/spell";
+import { Spell, SpellHeader } from "../model/final/spell-item";
 import { CodeLine } from "../model/misc";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import { WeiduEffectService } from "./weidu-effect.service";

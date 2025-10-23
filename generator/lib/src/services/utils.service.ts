@@ -1,9 +1,9 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { SpellGroupName } from "../../config/spell-group-name";
-import { SpellTypeEnum } from "../model/final/enums";
+import { SpellTypeEnum } from "../model/final/effect.enums";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Response } from "../model/final/script";
-import { Spell } from "../model/final/spell";
+import { Spell } from "../model/final/spell-item";
 import { StringReference } from "../model/misc";
 import { Actions } from "../model/raw/actions";
 import { ItemSlot } from "../model/raw/enum";
@@ -89,14 +89,14 @@ export class UtilsService {
   getStringReference(value: StringReference): string {
     if (typeof value === "string" && /^\d+$/.test(value)) return value;
     else if (typeof value === "string") return `~${value}~`;
-    else return `@${value}`;
+    else return `@${value}`; //FIXME:
   }
 
   resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;
     else if (typeof value === "string" && /^\d+$/.test(value)) return value;
     else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
-    else return `RESOLVE_STR_REF(@${value})`;
+    else return `RESOLVE_STR_REF(@${value})`; //FIXME
   }
 
   getSpellProtectionIndex(protection: SpellProtection): number {
@@ -121,7 +121,7 @@ export class UtilsService {
   }
 
   getSpellFunctionName(spell: Spell) {
-    return `create_spell_${spell.name}`;
+    return `create_spell_${spell.name}`; //FIXME:
   }
 
   getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {

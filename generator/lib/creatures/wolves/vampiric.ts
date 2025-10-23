@@ -103,6 +103,7 @@ export const WOLF_VAMPIRIC: RawCreature = {
       { status: ["Grabbed"], slot: "SLOT_WEAPON2" },
     ],
     grab: {
+      //TODO:
       file: grab,
       weaponFile: proneBiteWeapon,
       onlyGrabProneTarget: true,

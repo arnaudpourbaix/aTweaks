@@ -9,7 +9,7 @@ import {
   ItemCategoryEnum,
   ItemFlagEnum,
   ProficiencyTypeEnum,
-} from "../model/final/enums";
+} from "../model/final/effect.enums";
 import { Item } from "../model/final/item";
 import {
   RawAlterItem,

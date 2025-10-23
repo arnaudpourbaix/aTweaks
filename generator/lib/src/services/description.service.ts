@@ -7,7 +7,7 @@ import {
   AbilityDamageTypeEnum,
   ItemAbilityTypeEnum,
   SaveTypeEnum,
-} from "../model/final/enums";
+} from "../model/final/effect.enums";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Item } from "../model/final/item";
 import {

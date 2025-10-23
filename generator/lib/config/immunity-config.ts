@@ -1,6 +1,6 @@
 import { JEWEL_SLOTS } from "../src/model/constants";
 import { EffectTypeEnum } from "../src/model/final/effect.type";
-import { PortraitIconEnum } from "../src/model/final/enums";
+import { PortraitIconEnum } from "../src/model/final/effect.enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
 import { RawEffect } from "../src/model/raw/effect";
 import { RawImmunityConfig } from "../src/model/raw/immunity";

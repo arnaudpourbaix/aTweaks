@@ -3,7 +3,7 @@ import path from "path";
 import { SPELL_STATES } from "../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CR, JEWEL_SLOTS, TAB } from "../model/constants";
-import { ItemFlagEnum } from "../model/final/enums";
+import { ItemFlagEnum } from "../model/final/effect.enums";
 import { ImmunityConfig } from "../model/final/immunity";
 import { RawItemSlot } from "../model/raw/item";
 import { State } from "../state";

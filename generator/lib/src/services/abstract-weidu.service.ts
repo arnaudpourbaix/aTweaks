@@ -100,7 +100,7 @@ export class AbstractWeiduService {
   protected writeStringRef(
     lines: CodeLine[],
     offset: number,
-    stringRef: StringReference | undefined,
+    stringRef: StringReference | undefined, //FIXME:
     tab?: number
   ) {
     if (!stringRef) return;

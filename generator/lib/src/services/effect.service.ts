@@ -51,7 +51,7 @@ import {
   SummonCreatureModeEnum,
   TranslucencyTypeEnum,
   WingBuffetDirectionEnum,
-} from "../model/final/enums";
+} from "../model/final/effect.enums";
 import { StringReference } from "../model/misc";
 import {
   AnimationChangeEffect,
@@ -222,7 +222,7 @@ export class EffectService {
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
         if ((<StringRefEffect>effect).stringRef) {
           result.parameter1 = `${this.utils.resolveStringRef(
-            (<StringRefEffect>effect).stringRef as StringReference
+            (<StringRefEffect>effect).stringRef as StringReference //FIXME:
           )}`;
         }
         break;

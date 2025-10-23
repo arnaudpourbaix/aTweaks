@@ -1,5 +1,5 @@
-import { TraStringReferenceEnum } from "../../../config/stringRef";
-import { EffectDamageTypeEnum } from "../final/enums";
+import { TranslationKey } from "../../translations/i18n";
+import { EffectDamageTypeEnum } from "../final/effect.enums";
 import { RawSaveType } from "./enum";
 
 export interface GrabSharedConfig {
@@ -20,8 +20,8 @@ export interface GrabSharedConfig {
 export interface GrabGlobalConfig extends GrabSharedConfig {
   grabbedState: string;
   grabbingState: string;
-  grabStringRef: TraStringReferenceEnum;
-  grabbedStringRef: TraStringReferenceEnum;
+  grabStringRef: TranslationKey;
+  grabbedStringRef: TranslationKey;
   startSound: string;
   endSound: string;
   visualEffect: string;

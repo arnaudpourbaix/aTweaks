@@ -263,9 +263,6 @@ export class StatementService {
       // this.factory.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
       this.factory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
     ];
-    for (const action of creature.initActions) {
-      actions.push(action);
-    }
     statements.push({
       comment: "Init",
       triggers: [this.factory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0)],

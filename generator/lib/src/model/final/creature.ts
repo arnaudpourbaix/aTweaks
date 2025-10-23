@@ -1,4 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
+import { TranslationKey } from "../../translations/i18n";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -6,20 +7,14 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
-import { StringReference } from "../misc";
-import { Actions } from "../raw/actions";
-import { RawCreatureAutoGenerate, RawScriptLocation } from "../raw/creature";
-import { CreatureSize, RawProficiencyType } from "../raw/enum";
-import { RawItemSlot } from "../raw/item";
-import { RawMemorizedSpell } from "../raw/spell";
 import { CreatureAbility } from "./ability";
 import { CreatureAttack } from "./attack";
 import { Effect, EffectFile } from "./effect";
+import { CreatureSize, ItemSlot, ProficiencyTypeEnum } from "./effect.enums";
 import { EffectTypeEnum } from "./effect.type";
-import { Item } from "./item";
 import { Projectile } from "./projectile";
 import { AdditionalCode, CustomCode } from "./script";
-import { Spell } from "./spell";
+import { Item, Spell } from "./spell-item";
 
 export interface BaseCreature {
   files: string[];
@@ -28,11 +23,7 @@ export interface BaseCreature {
 }
 
 export interface Creature extends BaseCreature {
-  name: string;
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef?: StringReference;
+  name: TranslationKey;
 
   /**
    * Filename for BAF file (without extension, relative path from mod folder)
@@ -92,8 +83,6 @@ export interface Creature extends BaseCreature {
   attack: CreatureAttack;
   canPolymorph: boolean;
 
-  initActions: Actions.Action[];
-
   customCode: CustomCode[];
   additionalCode: AdditionalCode[];
 
@@ -116,7 +105,31 @@ export interface Creature extends BaseCreature {
   /**
    * Auto-generate some creature data (true by default)
    */
-  autoGenerate: RawCreatureAutoGenerate;
+  autoGenerate: CreatureAutoGenerate;
+}
+
+export interface MemorizedSpell {
+  /**
+   * Filename for SPL file (without extension)
+   */
+  file: string;
+
+  memorizedCount?: number;
+}
+
+export type ScriptLocation =
+  | "Override"
+  | "Class"
+  | "Race"
+  | "General"
+  | "Default";
+
+export interface CreatureAutoGenerate {
+  thac0?: boolean;
+  hitPoints?: boolean;
+  savingThrows?: boolean;
+  enchantment?: boolean;
+  meleeRange?: boolean;
 }
 
 export interface CreatureAdjustment extends BaseCreature {
@@ -155,24 +168,9 @@ export interface CreatureData {
    */
   specialBonusHp?: number;
   ac?: number;
-  crushingAC?: number;
-  missileAC?: number;
-  piercingAC?: number;
-  slashingAC?: number;
-  resistFire?: number;
-  resistCold?: number;
-  resistElectricity?: number;
-  resistAcid?: number;
-  resistMagic?: number;
-  resistSlashing?: number;
-  resistCrushing?: number;
-  resistPiercing?: number;
-  resistMissile?: number;
   thac0?: number;
   apr?: number;
   xpv?: number;
-  hideShadow?: number;
-  moveSilent?: number;
   alignment?: AlignIdentifier;
   saveDeath?: number;
   saveWand?: number;
@@ -180,8 +178,6 @@ export interface CreatureData {
   saveBreath?: number;
   saveSpell?: number;
   morale?: number;
-  moraleBreak?: number;
-  moraleRecovery?: number;
   general?: GeneralIdentifier;
   race?: RaceIdentifier;
   class?: ClassIdentifier;
@@ -197,8 +193,25 @@ export interface CreatureData {
   leatherColor?: number;
   armorColor?: number;
   hairColor?: number;
-  doubleApr?: boolean;
   movement?: number;
+  // doubleApr?: boolean;
+  // crushingAC?: number;
+  // missileAC?: number;
+  // piercingAC?: number;
+  // slashingAC?: number;
+  // resistFire?: number;
+  // resistCold?: number;
+  // resistElectricity?: number;
+  // resistAcid?: number;
+  // resistMagic?: number;
+  // resistSlashing?: number;
+  // resistCrushing?: number;
+  // resistPiercing?: number;
+  // resistMissile?: number;
+  // hideShadow?: number;
+  // moveSilent?: number;
+  // moraleBreak?: number;
+  // moraleRecovery?: number;
 }
 
 export interface CreatureAdditionalData {
@@ -210,79 +223,22 @@ export interface CreatureAdditionalData {
    * BAF Script location. Auto if empty, at the top tier possible.
    * Will raise an error at install if location was not empty (safety measure)
    */
-  scriptLocation?: RawScriptLocation;
+  scriptLocation?: ScriptLocation;
 
-  proficiencies: { type: RawProficiencyType; value: number }[];
+  proficiencies: { type: ProficiencyTypeEnum; value: number }[];
 
   removeItems: string[];
-  itemSlots: RawItemSlot[];
+  itemSlots: ItemSlot[];
   immunities: ImmunityName[];
 
-  removeEffects: boolean;
   removeKnownSpells: boolean;
   removeMemorizedSpells?: boolean;
-  memorizedSpells: RawMemorizedSpell[];
+  memorizedSpells: MemorizedSpell[];
+
   deleteEffectOpcodes: EffectTypeEnum[];
+  removeEffects: boolean;
   effects: Effect[];
 }
-
-export const CREATURE_DATA_KEYS: (keyof CreatureData)[] = [
-  "level1",
-  "level2",
-  "level3",
-  "strength",
-  "exceptionalStrength",
-  "dexterity",
-  "constitution",
-  "intelligence",
-  "wisdom",
-  "charisma",
-  "movement",
-  "hp",
-  "ac",
-  "crushingAC",
-  "missileAC",
-  "piercingAC",
-  "slashingAC",
-  "resistFire",
-  "resistCold",
-  "resistElectricity",
-  "resistAcid",
-  "resistMagic",
-  "resistSlashing",
-  "resistCrushing",
-  "resistPiercing",
-  "resistMissile",
-  "thac0",
-  "apr",
-  "doubleApr",
-  "xpv",
-  "hideShadow",
-  "moveSilent",
-  "alignment",
-  "saveDeath",
-  "saveWand",
-  "savePolymorph",
-  "saveBreath",
-  "saveSpell",
-  "morale",
-  "moraleBreak",
-  "moraleRecovery",
-  "general",
-  "race",
-  "class",
-  "kit",
-  "gender",
-  "animation",
-  "modAnimation",
-  "metalColor",
-  "minorColor",
-  "majorColor",
-  "skinColor",
-  "leatherColor",
-  "armorColor",
-  "hairColor",
-];
 
 export const CREATURE_DATA: {
   key: keyof CreatureData;
@@ -303,10 +259,10 @@ export const CREATURE_DATA: {
       { index: 0x48, size: 2 },
     ],
   },
-  { key: "crushingAC", fields: [{ index: 0x4a, size: 2 }] },
-  { key: "missileAC", fields: [{ index: 0x4c, size: 2 }] },
-  { key: "piercingAC", fields: [{ index: 0x4e, size: 2 }] },
-  { key: "slashingAC", fields: [{ index: 0x50, size: 2 }] },
+  // { key: "crushingAC", fields: [{ index: 0x4a, size: 2 }] },
+  // { key: "missileAC", fields: [{ index: 0x4c, size: 2 }] },
+  // { key: "piercingAC", fields: [{ index: 0x4e, size: 2 }] },
+  // { key: "slashingAC", fields: [{ index: 0x50, size: 2 }] },
   { key: "thac0", fields: [{ index: 0x52, size: 1 }] },
   { key: "apr", fields: [{ index: 0x53, size: 1 }] },
   { key: "saveDeath", fields: [{ index: 0x54, size: 1 }] },
@@ -314,27 +270,27 @@ export const CREATURE_DATA: {
   { key: "savePolymorph", fields: [{ index: 0x56, size: 1 }] },
   { key: "saveBreath", fields: [{ index: 0x57, size: 1 }] },
   { key: "saveSpell", fields: [{ index: 0x58, size: 1 }] },
-  {
-    key: "resistFire",
-    fields: [
-      { index: 0x59, size: 1 },
-      { index: 0x5e, size: 1 },
-    ],
-  },
-  {
-    key: "resistCold",
-    fields: [
-      { index: 0x5a, size: 1 },
-      { index: 0x5f, size: 1 },
-    ],
-  },
-  { key: "resistElectricity", fields: [{ index: 0x5b, size: 1 }] },
-  { key: "resistAcid", fields: [{ index: 0x5c, size: 1 }] },
-  { key: "resistMagic", fields: [{ index: 0x5d, size: 1 }] },
-  { key: "resistSlashing", fields: [{ index: 0x60, size: 1 }] },
-  { key: "resistCrushing", fields: [{ index: 0x61, size: 1 }] },
-  { key: "resistPiercing", fields: [{ index: 0x62, size: 1 }] },
-  { key: "resistMissile", fields: [{ index: 0x63, size: 1 }] },
+  // {
+  //   key: "resistFire",
+  //   fields: [
+  //     { index: 0x59, size: 1 },
+  //     { index: 0x5e, size: 1 },
+  //   ],
+  // },
+  // {
+  //   key: "resistCold",
+  //   fields: [
+  //     { index: 0x5a, size: 1 },
+  //     { index: 0x5f, size: 1 },
+  //   ],
+  // },
+  // { key: "resistElectricity", fields: [{ index: 0x5b, size: 1 }] },
+  // { key: "resistAcid", fields: [{ index: 0x5c, size: 1 }] },
+  // { key: "resistMagic", fields: [{ index: 0x5d, size: 1 }] },
+  // { key: "resistSlashing", fields: [{ index: 0x60, size: 1 }] },
+  // { key: "resistCrushing", fields: [{ index: 0x61, size: 1 }] },
+  // { key: "resistPiercing", fields: [{ index: 0x62, size: 1 }] },
+  // { key: "resistMissile", fields: [{ index: 0x63, size: 1 }] },
   { key: "level1", fields: [{ index: 0x234, size: 1 }] },
   { key: "level2", fields: [{ index: 0x235, size: 1 }] },
   { key: "level3", fields: [{ index: 0x236, size: 1 }] },
@@ -353,15 +309,15 @@ export const CREATURE_DATA: {
   { key: "constitution", fields: [{ index: 0x23d, size: 1 }] },
   { key: "charisma", fields: [{ index: 0x23e, size: 1 }] },
   { key: "morale", fields: [{ index: 0x23f, size: 1 }] },
-  { key: "moraleBreak", fields: [{ index: 0x240, size: 1 }] },
-  { key: "moraleRecovery", fields: [{ index: 0x242, size: 1 }] },
+  // { key: "moraleBreak", fields: [{ index: 0x240, size: 1 }] },
+  // { key: "moraleRecovery", fields: [{ index: 0x242, size: 1 }] },
   { key: "general", fields: [{ index: 0x271, size: 1 }] },
   { key: "race", fields: [{ index: 0x272, size: 1 }] },
   { key: "class", fields: [{ index: 0x273, size: 1 }] },
   { key: "kit", fields: [{ index: 0x246, size: 2 }] },
   { key: "alignment", fields: [{ index: 0x27b, size: 1 }] },
-  { key: "hideShadow", fields: [{ index: 0x45, size: 1 }] },
-  { key: "moveSilent", fields: [{ index: 0x68, size: 1 }] },
+  // { key: "hideShadow", fields: [{ index: 0x45, size: 1 }] },
+  // { key: "moveSilent", fields: [{ index: 0x68, size: 1 }] },
   { key: "animation", fields: [{ index: 0x28, size: 4 }] },
   { key: "modAnimation", fields: [{ index: 0x28, size: 4 }] },
   { key: "metalColor", fields: [{ index: 0x2c, size: 1 }] },

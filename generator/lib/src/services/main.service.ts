@@ -11,7 +11,7 @@ import {
 } from "../model/final/creature";
 import { EffectFile } from "../model/final/effect";
 import { EffectTypeEnum } from "../model/final/effect.type";
-import { EffectIDSFileEnum } from "../model/final/enums";
+import { EffectIDSFileEnum } from "../model/final/effect.enums";
 import {
   AreaProjectileEnum,
   BamProjectileFlagsEnum,
@@ -49,6 +49,7 @@ import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
+import { t, translation } from "../translations/i18n";
 
 export class MainService {
   private effectService = EffectService.instance;
@@ -77,7 +78,7 @@ export class MainService {
   }
 
   processCreature(rawCreature: RawCreature): Promise<void> {
-    console.log(chalk.bold(`\nProcessing ${rawCreature.name}...`));
+    console.log(chalk.bold(`\nProcessing ${translation(rawCreature.name)}...`));
     const creature = this.getCreature(rawCreature);
     if (creature.bafFile) {
       this.bafService.generateBafScript(creature);
@@ -105,7 +106,6 @@ export class MainService {
       useKitAbilities: false,
       hideInShadows: false,
       canPolymorph: false,
-      initActions: [],
       ...rawCreature,
       autoGenerate: rawCreature.autoGenerate
         ? { ...autoGenerate, ...rawCreature.autoGenerate }

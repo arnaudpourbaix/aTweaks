@@ -11,7 +11,7 @@ import {
 } from "../model/final/creature";
 import { EffectTypeEnum } from "../model/final/effect.type";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Spell } from "../model/final/spell";
+import { Spell } from "../model/final/spell-item";
 import { CodeLine } from "../model/misc";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";
 import { WEAPON_SLOTS } from "../model/raw/enum";

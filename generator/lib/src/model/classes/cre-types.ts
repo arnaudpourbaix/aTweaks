@@ -1,4 +1,6 @@
-import { ImmunityName } from "../../../config/immunity-name";
+import { CreatureAttack } from "../final/attack";
+import { CreatureSize } from "../final/effect.enums";
+import { Item, Spell } from "../final/spell-item";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -6,21 +8,62 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
-import { StringReference } from "../misc";
-import { RawEffect } from "../raw/effect";
-import {
-  CreatureSize,
-  ItemSlot,
-  RawAbilityDamageType,
-  RawItemAbilityFlag,
-  RawItemAbilityLocation,
-  RawItemAbilityTarget,
-  RawItemAbilityType,
-  RawItemAnimation,
-  RawItemCategory,
-  RawItemFlag,
-  RawProficiencyType,
-} from "../raw/enum";
+import { RawCreatureAbility } from "../raw/ability";
+import { RawAdditionalCode, RawCustomCode } from "../raw/script";
+import { PartialBy } from "../utility-types";
+
+export interface CreBehavior {
+  /**
+   * Will initiate dialog (values are creature script name)
+   */
+  dialog: string[];
+
+  /**
+   * Asking or responding to help shouts (default: true)
+   */
+  help: boolean;
+
+  /**
+   * Can track enemies when no one in sight ? (default: true)
+   */
+  tracking: boolean;
+
+  /**
+   * Random walk outside of combat (default: false)
+   */
+  walk: boolean;
+
+  /**
+   * Random walk within combat when nothing else to do (default: true)
+   */
+  combatWalk: boolean;
+
+  /**
+   * Fully heal while resting (default: false)
+   */
+  restHeal: boolean;
+
+  /**
+   * Can use potions (default: false)
+   */
+  usePotions: boolean;
+
+  /**
+   * Can use kit abilities (default: false)
+   */
+  useKitAbilities: boolean;
+
+  /**
+   * Able to hide in shadows (default: false)
+   */
+  hideInShadows: boolean;
+
+  canPolymorph: boolean;
+
+  abilities: RawCreatureAbility[];
+  customCode: RawCustomCode[];
+  additionalCode: RawAdditionalCode[];
+}
 
 export interface CreData {
   level1?: number;
@@ -75,73 +118,12 @@ export interface CreData {
   hairColor?: number;
 }
 
-export interface CreItem {
-  /**
-   * Filename for ITM file (without extension)
-   */
-  file: string;
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef?: StringReference;
-  description?: string[];
-  immunities?: ImmunityName[];
-  equippedSlot?: ItemSlot | ItemSlot[];
-  enchantment?: number;
-  weight?: number;
-  animation?: RawItemAnimation;
-  category?: RawItemCategory;
-  proficiency?: RawProficiencyType;
-  icon?: string;
-  animationSwing?: { overhand: number; backhand: number; thrust: number };
-  flags?: RawItemFlag[];
-  type?: RawItemAbilityType;
-  /**
-   * Range (feet)
-   */
-  range?: number;
-  speed?: number;
-  target?: RawItemAbilityTarget;
-  location?: RawItemAbilityLocation;
-  diceSize?: number;
-  diceThrown?: number;
-  bonusToHit?: number;
-  damageBonus?: number;
-  damageType?: RawAbilityDamageType;
-  projectile?: string;
-  abilityFlags?: RawItemAbilityFlag[];
-  effects?: RawEffect[];
-}
+export type CreSpell = PartialBy<
+  Omit<Spell, "file">,
+  "icon" | "effects" | "headers"
+>;
 
-export interface CreWeapon {
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef?: StringReference;
-  description?: string[];
-  equippedSlot?: "WEAPON1" | "WEAPON2" | "WEAPON3" | "WEAPON4" | "SHIELD";
-  enchantment?: number;
-  animation?: RawItemAnimation;
-  category?: RawItemCategory;
-  proficiency?: RawProficiencyType;
-  icon?: string;
-  animationSwing?: { overhand: number; backhand: number; thrust: number };
-  flags?: RawItemFlag[];
-  type?: RawItemAbilityType;
-  /**
-   * Range (feet)
-   */
-  range?: number;
-  speed?: number;
-  target?: RawItemAbilityTarget;
-  location?: RawItemAbilityLocation;
-  diceSize?: number;
-  diceThrown?: number;
-  bonusToHit?: number;
-  damageBonus?: number;
-  damageType?: RawAbilityDamageType;
-  projectile?: string;
-  abilityFlags?: RawItemAbilityFlag[];
-  effects?: RawEffect[];
-  immunities?: ImmunityName[];
-}
+export type CreItem = PartialBy<
+  Omit<Item, "file">,
+  "immunities" | "effects" | "equippedSlot"
+>;

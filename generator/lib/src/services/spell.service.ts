@@ -9,8 +9,8 @@ import {
   SpellExclusionFlagEnum,
   SpellFlagEnum,
   SpellTypeEnum,
-} from "../model/final/enums";
-import { Spell, SpellHeader } from "../model/final/spell";
+} from "../model/final/effect.enums";
+import { Spell, SpellHeader } from "../model/final/spell-item";
 import { RawEffect, RawEffectFile } from "../model/raw/effect";
 import {
   RawMemorizedSpell,
@@ -86,7 +86,6 @@ export class SpellService {
     const result: Spell = {
       file: spell.file,
       copyFrom: spell.copyFrom,
-      name: spell.name,
       stringRef: spell.stringRef,
       description: spell.description,
       spellbookIcon: spell.icon ? `${spell.icon}C` : undefined,

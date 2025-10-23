@@ -2,7 +2,6 @@ import { RawEffect } from "../src/model/raw/effect";
 import { CreatureSize } from "../src/model/raw/enum";
 import { GrabConfig, GrabGlobalConfig } from "../src/model/raw/grab";
 import { SPELL_STATES } from "./ability-presets";
-import { TraStringReferenceEnum } from "./stringRef";
 
 /**
  * Grab attack:
@@ -27,8 +26,8 @@ export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   duration: 12,
   saveType: "ParalyzePoisonDeath",
   saveBonus: 99, // will be calculated
-  grabStringRef: TraStringReferenceEnum.Grab,
-  grabbedStringRef: TraStringReferenceEnum.Grabbed,
+  grabStringRef: "common.grab.grab",
+  grabbedStringRef: "common.grab.grabbed",
   startSound: "CRE_P01",
   endSound: "EFF_M22A",
   visualEffect: "rr#cnstr",

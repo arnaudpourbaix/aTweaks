@@ -147,6 +147,7 @@ export const SPIDER_SWORD: RawCreature = {
   tracking: true,
   combatWalk: true,
   attack: {
+    //TODO:
     dualWielding: true,
     defaultWeaponSlot: "SLOT_WEAPON",
     maxRange: 5,

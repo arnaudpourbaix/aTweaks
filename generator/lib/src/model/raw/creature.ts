@@ -1,5 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
-import { TranslationKeys } from "../../translations/en";
+import { TranslationKey } from "../../translations/i18n";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -7,7 +7,6 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
-import { StringReference } from "../misc";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
 import { RawCreatureAttack } from "./attack";
@@ -20,12 +19,7 @@ import { RawAdditionalCode, RawCustomCode } from "./script";
 import { RawMemorizedSpell, RawSpell } from "./spell";
 
 export interface RawCreature {
-  name: string;
-
-  /**
-   * String reference, must be referenced in TRA files
-   */
-  stringRef?: StringReference;
+  name: TranslationKey;
 
   /**
    * Filename for BAF file (without extension)
@@ -84,8 +78,6 @@ export interface RawCreature {
 
   attack?: RawCreatureAttack;
   canPolymorph?: boolean;
-
-  initActions?: Actions.Action[];
 
   customCode?: RawCustomCode[];
   additionalCode?: RawAdditionalCode[];

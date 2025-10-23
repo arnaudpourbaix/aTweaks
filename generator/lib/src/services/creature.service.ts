@@ -4,7 +4,10 @@ import { CONSTRUCT_BONUS_HIT_POINT } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { SAVING_THROWS } from "../model/constants";
 import { Creature, CreatureData } from "../model/final/creature";
-import { ItemAbilityLocationEnum, ItemFlagEnum } from "../model/final/enums";
+import {
+  ItemAbilityLocationEnum,
+  ItemFlagEnum,
+} from "../model/final/effect.enums";
 import { Item } from "../model/final/item";
 import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import { RawCreatureAutoGenerate } from "../model/raw/creature";

@@ -1,5 +1,5 @@
-import { StringReference } from "../misc";
-import { EffectIDSFileEnum } from "./enums";
+import { TranslationKey } from "../../translations/i18n";
+import { EffectIDSFileEnum } from "./effect.enums";
 
 export enum ProjectileExplosionEffectEnum {
   FIRE = 0,
@@ -162,7 +162,13 @@ export interface Projectile {
   particleColor?: ParticleColorEnum;
   projectileWidth?: number;
   extendedFlags: ProjectileExtendedFlagsEnum[];
-  stringRef?: StringReference;
+  stringRef?: TranslationKey;
+  //TODO: create helper function to build it
+  // color?: {
+  //   red: number;
+  //   green: number;
+  //   blue: number;
+  // };
   color?: number;
   colorSpeed?: number;
   screenShakeAmount?: number;

@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { program } from "commander";
-import { CREATURES } from "../creatures";
+import { ANKHEG } from "../creatures/ankheg/ankheg";
 import { MainService } from "./services/main.service";
 import { StateService } from "./services/state.service";
 
@@ -24,7 +24,8 @@ async function main() {
     .then(() => {
       const mainService = new MainService();
       let chain: Promise<any> = Promise.resolve();
-      CREATURES.forEach((creature) => {
+      [ANKHEG].forEach((creature) => {
+        //CREATURES.forEach((creature) => {
         chain = chain.then(() => mainService.processCreature(creature));
       });
       return chain

@@ -1,6 +1,6 @@
 import { CR } from "../model/constants";
 import { Creature } from "../model/final/creature";
-import { ItemAbilityTypeEnum } from "../model/final/enums";
+import { ItemAbilityTypeEnum } from "../model/final/effect.enums";
 import { CodeLine } from "../model/misc";
 import { State } from "../state";
 import { AbstractWeiduService } from "./abstract-weidu.service";
