@@ -30,43 +30,14 @@ import {
   RawCreatureAdjustment,
   RawCreatureAutoGenerate,
 } from "../model/raw/creature";
-import { RawEffectFile } from "../model/raw/effect";
-import { RawItem } from "../model/raw/item";
-import { RawProjectile } from "../model/raw/projectile";
 import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
-import { RawSpell } from "../model/raw/spell";
-import { AbilityService } from "./ability.service";
-import { BafGeneratorService } from "./baf-generator.service";
-import { CreatureService } from "./creature.service";
-import { DescriptionService } from "./description.service";
 import { EffectService } from "./effect.service";
-import { GrabService } from "./grab.service";
-import { ImmunityService } from "./immunity.service";
-import { ItemService } from "./item.service";
-import { SpellService } from "./spell.service";
-import { TargetService } from "./target.service";
-import { UtilsService } from "./utils.service";
 import { WeiduCoreService } from "./weidu-core.service";
 import { WeiduCreatureService } from "./weidu-creature.service";
 import { WeiduFunctionService } from "./weidu-function.service";
 import { t, translation } from "../translations/i18n";
 
-export class MainService {
-  private effectService = EffectService.instance;
-  private spellService = SpellService.instance;
-  private itemService = ItemService.instance;
-  private bafService = BafGeneratorService.instance;
-  private weiduCreatureService = WeiduCreatureService.instance;
-  private weiduFunctionService = WeiduFunctionService.instance;
-  private weiduCoreService = WeiduCoreService.instance;
-  private immunityService = ImmunityService.instance;
-  private creatureService = CreatureService.instance;
-  private targerService = TargetService.instance;
-  private abilityService = AbilityService.instance;
-  private descriptionService = DescriptionService.instance;
-  private grabService = GrabService.instance;
-  private utils = UtilsService.instance;
-
+class MainService {
   generateCommonCode(): Promise<void> {
     this.weiduCoreService.generateSpellStates();
     this.weiduCoreService.generateProtectionSpells();
@@ -398,3 +369,6 @@ export class MainService {
     return results;
   }
 }
+
+const mainService = new MainService();
+export default mainService;

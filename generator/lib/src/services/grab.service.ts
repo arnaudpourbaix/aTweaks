@@ -8,22 +8,14 @@ import {
   GRAB_EFFECTS_FUNCTION,
 } from "../../config/grab";
 import { Creature } from "../model/final/creature";
-import { Effect } from "../model/final/effect";
-import { CastSpellEffect, RawEffect } from "../model/raw/effect";
+import { CastSpellEffect, Effect } from "../model/final/effect";
 import { GrabConfig } from "../model/raw/grab";
-import { CreatureService } from "./creature.service";
-import { DescriptionService } from "./description.service";
-import { EffectService } from "./effect.service";
-import { SpellService } from "./spell.service";
+import creatureService from "./creature.service";
+import descriptionService from "./description.service";
+import effectService from "./effect.service";
+import spellService from "./spell.service";
 
-export class GrabService {
-  static instance = new GrabService();
-
-  private effectService = EffectService.instance;
-  private creatureService = CreatureService.instance;
-  private spellService = SpellService.instance;
-  private descriptionService = DescriptionService.instance;
-
+class GrabService {
   addGrabEffects(creature: Creature) {
     if (!creature.attack.grab) return;
     const grab = creature.attack.grab;
@@ -36,11 +28,11 @@ export class GrabService {
     const effectFile = this.getGrabProtectionEffect(grab);
     creature.effectFiles.push({ ...effectFile, file: grab.file });
     // const saveText = this.descriptionService.getSaveText(grabEffect);
-    const spell = this.spellService.mapSpell(
+    const spell = spellService.mapSpell(
       {
         name: "Grab",
         description: [
-          `Grab and hold your target for ${this.descriptionService.getDuration(
+          `Grab and hold your target for ${descriptionService.getDuration(
             grab.duration
           )}.`,
           "Grabbed creature will suffer these effects:",
@@ -66,7 +58,7 @@ export class GrabService {
   }
 
   private getGrabEffect(creature: Creature, grab: GrabConfig): Effect {
-    const strModifier = this.creatureService.getStrengthModifier(creature.data);
+    const strModifier = creatureService.getStrengthModifier(creature.data);
     const sizeModifier = GRAB_CHECK_CREATURE_SIZE.find(
       (s) => s.size === creature.data.size
     )?.bonus as number;
@@ -82,7 +74,7 @@ export class GrabService {
       saveBonus,
       resource: grab.file,
     };
-    const effect = this.effectService.getEffect(rawEffect);
+    const effect = effectService.getEffect(rawEffect);
     return effect;
   }
 
@@ -92,13 +84,13 @@ export class GrabService {
       resource: grab.file,
       duration: 1,
     };
-    const effect = this.effectService.getEffect(rawEffect);
+    const effect = effectService.getEffect(rawEffect);
     return effect;
   }
 
   private getGrabbedEffects(creature: Creature, grab: GrabConfig): Effect[] {
     const rawEffects: RawEffect[] = GRAB_EFFECTS_FUNCTION(grab);
-    const effects = this.effectService.getEffects(rawEffects);
+    const effects = effectService.getEffects(rawEffects);
     const immunityEffects = this.getGrabImmuneEffects(creature, grab);
     return [...immunityEffects, ...effects];
   }
@@ -121,7 +113,10 @@ export class GrabService {
       target: "PresetTarget",
       resource: grab.file,
     }));
-    const effects = this.effectService.getEffects(rawEffects);
+    const effects = effectService.getEffects(rawEffects);
     return effects;
   }
 }
+
+const grabService = new GrabService();
+export default grabService;

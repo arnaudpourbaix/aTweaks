@@ -27,12 +27,13 @@ export interface Spell {
    */
   file: string;
 
+  name: TranslationKey;
+
   /**
    * Create a spell from another one
    */
   copyFrom?: string;
 
-  stringRef?: TranslationKey;
   /**
    * Spellbook icon
    */
@@ -67,6 +68,10 @@ export interface Item {
    * Filename for ITM file (without extension)
    */
   file: string;
+  /**
+   * Create a spell from another one
+   */
+  copyFrom?: string;
   stringRef?: TranslationKey;
   description?: TranslationKey;
   immunities: ImmunityName[];
@@ -107,4 +112,26 @@ export interface ItemHeader extends ItemSpellHeader {
   damageType?: AbilityDamageTypeEnum;
   abilityflags?: ItemAbilityFlagEnum[];
   animationSwing?: { overhand: number; backhand: number; thrust: number };
+}
+
+export type MemorizedSpellType = "priest" | "wizard" | "innate";
+
+export interface EquippedItem {
+  /**
+   * Filename for ITM file (without extension)
+   */
+  file: string;
+  slot: ItemSlot | ItemSlot[];
+  /**
+   * default: 1
+   */
+  quantity?: number;
+  /**
+   * default: false
+   */
+  unstealable?: boolean;
+  /**
+   * default: true
+   */
+  undroppable?: boolean;
 }

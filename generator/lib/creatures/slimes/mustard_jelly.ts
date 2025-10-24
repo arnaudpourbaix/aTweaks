@@ -113,7 +113,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
       file: mustardJellyTraits,
       name,
       immunities: [
-        "electricity",
+        "lightning",
         "normalWeapons",
         "magicMissile",
         "coldResistance",

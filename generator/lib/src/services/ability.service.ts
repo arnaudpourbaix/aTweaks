@@ -9,9 +9,7 @@ import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { ABILITY_PRESETS } from "../../config/ability-presets";
 
-export class AbilityService {
-  static instance = new AbilityService();
-
+class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
     if (!abilities) return [];
     let randomPool = 800;
@@ -142,3 +140,6 @@ export class AbilityService {
     throw new Error("getSpellAction: unexpected combination");
   }
 }
+
+const abilityService = new AbilityService();
+export default abilityService;

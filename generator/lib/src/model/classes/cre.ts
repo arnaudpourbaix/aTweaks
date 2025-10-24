@@ -1,4 +1,5 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import CreatureFactory from "../../factories/cre.factory";
 import { TranslationKey } from "../../translations/i18n";
 import { CreatureAttack } from "../final/attack";
 import { CreatureAdditionalData, CreatureData } from "../final/creature";
@@ -43,4 +44,16 @@ export class Cre {
     enchantment: true,
     meleeRange: true,
   };
+
+  setAdditionalData(additionalData: Partial<CreatureAdditionalData>) {
+    CreatureFactory.setAdditionalData(this, additionalData);
+  }
+
+  setBehavior(behavior: Partial<CreBehavior>) {
+    CreatureFactory.setBehavior(this, behavior);
+  }
+
+  setAttack(attack: Partial<CreatureAttack>) {
+    CreatureFactory.setAttack(this, attack);
+  }
 }

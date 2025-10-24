@@ -3,13 +3,10 @@ import figureSet from "figures";
 import { Creature, CreatureAdditionalData } from "../model/final/creature";
 import { ImmunityConfig } from "../model/final/immunity";
 import { State } from "../state";
-import { RawItemSlot } from "../model/raw/item";
-import { UtilsService } from "./utils.service";
+import { EquippedItem } from "../model/final/spell-item";
+import utils from "./utils.service";
 
-export class ImmunityService {
-  static instance = new ImmunityService();
-  private utils = UtilsService.instance;
-
+class ImmunityService {
   handleImmunities(creature: Creature): void {
     this.checkImmunities(creature.additionalData, creature);
     for (const a of creature.adjustments) {
@@ -39,13 +36,13 @@ export class ImmunityService {
   }
 
   private checkImmunity(
-    itemSlot: RawItemSlot,
+    itemSlot: EquippedItem,
     immunity: ImmunityConfig,
     additionalData: CreatureAdditionalData,
     creature: Creature
   ): void {
-    const hasCriticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
-    const hasHelmet = this.utils.isSlotIncluded(
+    const hasCriticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
+    const hasHelmet = utils.isSlotIncluded(
       [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
       "HELMET"
     );
@@ -60,7 +57,7 @@ export class ImmunityService {
     const overwrittingItem = creature.items.find(
       (i) => i.copyFrom === immunity.name
     );
-    const overwrittingSlot = this.utils.isSlotIncluded(
+    const overwrittingSlot = utils.isSlotIncluded(
       [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
       itemSlot.slot
     );
@@ -83,3 +80,6 @@ export class ImmunityService {
       });
   }
 }
+
+const immunityService = new ImmunityService();
+export default immunityService;

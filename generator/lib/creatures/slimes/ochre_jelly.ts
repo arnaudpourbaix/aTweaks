@@ -78,7 +78,7 @@ export const SLIME_OCHRE_JELLY: RawCreature = {
     createTraitItem({
       file: traits,
       name,
-      immunities: ["electricity"],
+      immunities: ["lightning"],
       // 5e: Damage Resistances: Acid. Damage Immunities: Slashing
     }),
   ],

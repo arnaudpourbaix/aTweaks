@@ -52,100 +52,32 @@ import {
   TranslucencyTypeEnum,
   WingBuffetDirectionEnum,
 } from "../model/final/effect.enums";
-import { StringReference } from "../model/misc";
-import {
-  AnimationChangeEffect,
-  ArmorClassBonusEffect,
-  BerserkEffect,
-  CastingFailureEffect,
-  CastingTimeModifierEffect,
-  CastSpellEffect,
-  CastSpellOnConditionEffect,
-  CharmCreatureEffect,
-  ColorPulseEffect,
-  CreateItemInSlotEffect,
-  CreateWeaponEffect,
-  CreatureRGBColorFadeEffect,
-  CurrentHPbonusEffect,
-  DamageEffect,
-  DisableButtonEffect,
-  DisableSpellcastingEffect,
-  DiseaseEffect,
-  DispelEffectsEffect,
-  HasteEffect,
-  IconEffect,
-  IdsEffect,
-  InvisibilityEffect,
-  KillTargetEffect,
-  LevelDrainEffect,
-  LightingEffectsEffect,
-  MakeUnselectableEffect,
-  MinimumHPEffect,
-  MirrorImageEffect,
-  ModifierTypeEffect,
-  ModifyAttacksPerRoundEffect,
-  NoCollisionDetectionEffect,
-  OverrideCreatureDataEffect,
-  PlayVisualEffect,
-  PoisonEffect,
-  PolymorphIntoSpecificEffect,
-  ProficiencyModifierEffect,
-  ProtectionFromOpcodeEffect,
-  ProtectionFromProjectileEffect,
-  ProtectionFromResourceEffect,
-  ProtectionFromWeaponsEffect,
-  RawEffect,
-  RawEffectGroup,
-  RegenerationEffect,
-  RemoveEffectsByResource,
-  RemoveOpcodeEffect,
-  RemoveSpellTypeProtectionsEffect,
-  ScriptingStateModifierEffect,
-  SetAnimationSequenceEffect,
-  SetColorEffect,
-  SetExtendedSpellStateEffect,
-  SleepEffect,
-  StatisticModifierEffect,
-  StringRefEffect,
-  SummonCreatureEffect,
-  TeleportEffect,
-  TranslucencyEffect,
-  WingBuffetEffect,
-} from "../model/raw/effect";
 import { RawEffectOpcode } from "../model/raw/effect.type";
-import {
-  RawCharmType,
-  RawEffectDispelResistance,
-  RawPortraitIcon,
-  RawSaveType,
-} from "../model/raw/enum";
 import {
   SpellProtection,
   SpellProtectionStat,
 } from "../model/raw/spell-protection";
 import { CreatureService } from "./creature.service";
 import { StringRefUtils } from "./string-ref.utils";
-import { UtilsService } from "./utils.service";
+import utilsService from "./utils.service";
 
 export class EffectService {
-  static instance = new EffectService();
-
   private creatureService = CreatureService.instance;
-  private utils = UtilsService.instance;
+  private utils = utilsService;
 
-  getEffects(effects: RawEffect[]): Effect[] {
+  getEffects(effects: Effect[]): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
-      if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
-        acc.push(...this.getGroupEffects(effect as RawEffectGroup));
-        return acc;
-      }
+      // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
+      //   acc.push(...this.getGroupEffects(effect as RawEffectGroup));
+      //   return acc;
+      // }
       acc.push(this.getEffect(effect));
       return acc;
     }, [] as Effect[]);
     return results;
   }
 
-  getEffect(effect: RawEffect): Effect {
+  getEffect(effect: Effect): Effect {
     if (EFFECT_GROUP_NAMES.includes(effect.opcode))
       throw new Error(
         `Effects group ${effect.opcode} can't be processed in getEffect`
@@ -795,3 +727,6 @@ export class EffectService {
     return result;
   }
 }
+
+const effectService = new EffectService();
+export default effectService;

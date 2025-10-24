@@ -1,4 +1,157 @@
 export default {
+  immunity: {
+    poison: "Immune to poison",
+    disease: "Immune to all diseases",
+    bleeding: "Immune to bleeding",
+    hold: "Immune to hold",
+    stun: "Immune to stun",
+    sleep: "Immune to sleep",
+    fear: "Immune to fear and morale failure",
+    charm: "Immune to charm",
+    confusion: "Immune to confusion",
+    fatigue: "Immune to fatigue",
+    abilityDrain: "Immune to ability drain",
+    energyDrain: "Immune to level drain",
+    blindness: "Immune to blindness",
+    fireSpells: "Immune to fire spells",
+    fire: "Immune to fire",
+    coldSpells: "Immune to cold spells",
+    cold: "Immune to cold",
+    lightningSpells: "Immune to lightning spells",
+    lightning: "Immune to lightning",
+    acidSpells: "Immune to acid spells",
+    acid: "Immune to acid",
+    magic: "Immune to magic",
+    magicDamage: "Immune to magic damage",
+    cureAndCauseWoundSpells: "Immune to healing and cause wounds spells",
+    cloudSpells: "Immune to cloud spells",
+    web: "Immune to web effects",
+    entangle: "Immune to entangle effects",
+    insectSpells: "Immune to insects spells",
+    petrification: "Immune to petrification",
+    gazeAttacks: "Immune to gaze attacks",
+    polymorph: "Immune to polymorph spells",
+    vorpal: "Immune to vorpal effects",
+    physicalDamage: "Immune to physical damage",
+    slashingDamage: "Immune to slashing damage",
+    crushingDamage: "Immune to crushing damage",
+    piercingDamage: "Immune to piercing damage",
+    missileDamage: "Immune to missile damage",
+    missileWeapons: "Immune to missile weapons",
+    turnUndead: "Immune to turn undead",
+    illusion: "Immune to illusion spells",
+    necromancyEffects: "Immune to necromancy effects",
+    deathEffects: "Immune to death effects",
+    deathSpell: "Immune to death spell",
+    mindSpells:
+      "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
+    normalWeapons: "Immune to normal weapons",
+    backstab: "Immune to backstab",
+    criticalHit: "Immune to critical hits",
+    devourBrain: "Immune to devour brain ability",
+    magicMissile: "Immune to magic missiles spell",
+    earthquakeSpells: "Immune to earthquake spell",
+    fireballSpell: "Immune to fireball spell",
+    lightningBoltSpell: "Immune to lightning bolt spell",
+    flameArrowSpell: "Immune to flame arrow spell",
+  },
+  traits: {
+    hover: {
+      name: "Hover (flight)",
+      desc:
+        "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.\n" +
+        "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.",
+    },
+    construct: {
+      name: "Construct",
+      desc:
+        "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).\n" +
+        "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\n" +
+        "Darkvision out to 60 feet.",
+    },
+    undead: {
+      name: "Undead",
+      desc:
+        "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).\n" +
+        "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.\n" +
+        "Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.\n" +
+        "Negative energy (such as an inflict wounds spell) can heal undead creatures.\n" +
+        "Hit Die: d12\n" +
+        "Darkvision out to 60 feet.",
+    },
+    fey: {
+      name: "Fey",
+      desc:
+        "Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.\n" +
+        "In all other aspects, spell-like abilities function exactly like the spells which they mimic.",
+    },
+    elemental: {
+      name: "Elemental",
+      desc:
+        "Immunity to poison, sleep effects, paralysis, bleeding, and stunning.\n" +
+        "Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack.\n" +
+        "They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet.",
+    },
+    airAffinity: {
+      name: "Air affinity",
+      desc: "Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents.",
+    },
+    earthAffinity: {
+      name: "Earth affinity",
+      desc: "Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell.",
+    },
+    skeletal: {
+      name: "Skeletal",
+      desc: "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
+    },
+    extraplanar: {
+      name: "Extraplanar",
+      desc: "Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.",
+    },
+    plant: {
+      name: "Plant",
+      desc:
+        "Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).\n" +
+        "Immunity to poison, sleep effects, paralysis, polymorph, and stunning.\n" +
+        "Not subject to critical hits and backstab.\n" +
+        "Infravision.",
+    },
+    infravision: "Infravision",
+    seeInvisible: "True sight (see invisible creatures)",
+    incorporeal: {
+      name: "Incorporeal",
+      desc:
+        "An incorporeal creature has no physical body.\n" +
+        "Immune to backstab and critical hits\n" +
+        "Immune to all nonmagical attacks.\n" +
+        "Has a 50% resistance to every damages.\n" +
+        "Deflection bonus (+3 AC).\n" +
+        "Attacks pass through armor (+4 THAC0).\n",
+      // "Do not set off traps that are triggered by weight. (not implemented)",
+    },
+    blindsight: {
+      name: "blindsight",
+      desc:
+        "Invisibility, darkness, and most kinds of concealment are irrelevant.\n" +
+        "Blindsight does not subject a creature to gaze attacks.",
+    },
+    ooze: {
+      name: "Ooze",
+      desc:
+        "Blindsight (can see invisible, not subject to gaze attacks).\n" +
+        "Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).\n" +
+        "Not subject to critical hits, backstab.\n" +
+        "Darkvision out to 60 feet.\n" +
+        "Translucent\n" +
+        "10-sided Hit Dice",
+    },
+    vermin: {
+      name: "Vermin",
+      desc:
+        "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)\n" +
+        "Darkvision out to 60 feet.",
+    },
+  },
   spell: {
     outdoorCast: "This spell can only be cast outdoor",
     restrained: "Restrained",

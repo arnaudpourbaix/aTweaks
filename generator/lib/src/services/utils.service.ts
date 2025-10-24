@@ -1,25 +1,20 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { SpellGroupName } from "../../config/spell-group-name";
-import { SpellTypeEnum } from "../model/final/effect.enums";
+import { ItemSlot, SpellTypeEnum } from "../model/final/effect.enums";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Response } from "../model/final/script";
-import { Spell } from "../model/final/spell-item";
-import { StringReference } from "../model/misc";
-import { Actions } from "../model/raw/actions";
-import { ItemSlot } from "../model/raw/enum";
-import { RawItemSlot } from "../model/raw/item";
-import { RawMemorizedSpellType } from "../model/raw/spell";
-import { SpellGroup } from "../model/raw/spell-group";
 import {
-  SpellProtection,
-  SpellProtectionStat,
-} from "../model/raw/spell-protection";
+  EquippedItem,
+  MemorizedSpellType,
+  Spell,
+} from "../model/final/spell-item";
+import { Actions } from "../model/raw/actions";
+import { SpellGroup } from "../model/raw/spell-group";
+import { SpellProtectionStat } from "../model/raw/spell-protection";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 
-export class UtilsService {
-  static instance = new UtilsService();
-
+class UtilsService {
   replaceParamTokens(
     params: (string | number)[],
     tokens: { key: string; value: string }[]
@@ -86,22 +81,18 @@ export class UtilsService {
     }, [] as Triggers.Trigger[]);
   }
 
-  getStringReference(value: StringReference): string {
-    if (typeof value === "string" && /^\d+$/.test(value)) return value;
-    else if (typeof value === "string") return `~${value}~`;
-    else return `@${value}`; //FIXME:
-  }
+  // getStringReference(value: StringReference): string {
+  //   if (typeof value === "string" && /^\d+$/.test(value)) return value;
+  //   else if (typeof value === "string") return `~${value}~`;
+  //   else return `@${value}`; //FIXME:
+  // }
 
-  resolveStringRef(value: StringReference | undefined): string | undefined {
-    if (value === undefined) return;
-    else if (typeof value === "string" && /^\d+$/.test(value)) return value;
-    else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
-    else return `RESOLVE_STR_REF(@${value})`; //FIXME
-  }
-
-  getSpellProtectionIndex(protection: SpellProtection): number {
-    return 0;
-  }
+  // resolveStringRef(value: StringReference | undefined): string | undefined {
+  //   if (value === undefined) return;
+  //   else if (typeof value === "string" && /^\d+$/.test(value)) return value;
+  //   else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
+  //   else return `RESOLVE_STR_REF(@${value})`; //FIXME
+  // }
 
   getSpellResourceFromIds(ids: string): string {
     const type = ids.substring(0, 1);
@@ -121,7 +112,7 @@ export class UtilsService {
   }
 
   getSpellFunctionName(spell: Spell) {
-    return `create_spell_${spell.name}`; //FIXME:
+    return `create_spell_${spell.name.replace(/\./g, "")}`;
   }
 
   getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {
@@ -208,7 +199,7 @@ export class UtilsService {
   getSpellInfos(
     file: string,
     spells: Spell[]
-  ): { type: RawMemorizedSpellType; level: number } {
+  ): { type: MemorizedSpellType; level: number } {
     let result = this.getSpellInfosByFilename(file);
     if (result) return result;
     const spell = spells.find((s) => s.file === file);
@@ -225,9 +216,7 @@ export class UtilsService {
     return { type: type ?? "innate", level: spell.spellLevel ?? 1 };
   }
 
-  getMemorizedSpellType(
-    spellType?: SpellTypeEnum
-  ): RawMemorizedSpellType | null {
+  getMemorizedSpellType(spellType?: SpellTypeEnum): MemorizedSpellType | null {
     switch (spellType) {
       case SpellTypeEnum.Wizard:
         return "wizard";
@@ -241,9 +230,9 @@ export class UtilsService {
 
   getSpellInfosByFilename(
     filename: string
-  ): { type: RawMemorizedSpellType; level: number } | null {
+  ): { type: MemorizedSpellType; level: number } | null {
     const name = filename.toUpperCase();
-    let result: { type: RawMemorizedSpellType; level: number } | null = null;
+    let result: { type: MemorizedSpellType; level: number } | null = null;
     if (name.startsWith("SPWI"))
       result = { type: "wizard", level: +(name.at(4) as string) };
     else if (name.startsWith("SPPR"))
@@ -272,7 +261,7 @@ export class UtilsService {
   }
 
   isSlotIncluded(
-    itemSlots: RawItemSlot[],
+    itemSlots: EquippedItem[],
     includedSlot: ItemSlot | ItemSlot[]
   ): boolean {
     if (Array.isArray(includedSlot)) return false;
@@ -280,3 +269,6 @@ export class UtilsService {
     return list.includes(includedSlot);
   }
 }
+
+const utils = new UtilsService();
+export default utils;

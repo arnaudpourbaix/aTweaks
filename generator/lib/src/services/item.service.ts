@@ -10,22 +10,9 @@ import {
   ItemFlagEnum,
   ProficiencyTypeEnum,
 } from "../model/final/effect.enums";
-import { Item } from "../model/final/item";
-import {
-  RawAlterItem,
-  RawCreateItem,
-  RawItem,
-  RawItemSlot,
-} from "../model/raw/item";
 import { EffectService } from "./effect.service";
-import { UtilsService } from "./utils.service";
 
-export class ItemService {
-  static instance = new ItemService();
-
-  private utils = UtilsService.instance;
-  private effectService = EffectService.instance;
-
+class ItemService {
   mapItemSlots(
     itemSlots: RawItemSlot[] | undefined,
     items: RawItem[] | undefined
@@ -136,3 +123,6 @@ export class ItemService {
     return result;
   }
 }
+
+const itemService = new ItemService();
+export default itemService;

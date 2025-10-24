@@ -11,19 +11,9 @@ import {
   SpellTypeEnum,
 } from "../model/final/effect.enums";
 import { Spell, SpellHeader } from "../model/final/spell-item";
-import { RawEffect, RawEffectFile } from "../model/raw/effect";
-import {
-  RawMemorizedSpell,
-  RawSpell,
-  RawSpellHeader,
-} from "../model/raw/spell";
 import { EffectService } from "./effect.service";
 
-export class SpellService {
-  static instance = new SpellService();
-
-  private effectService = EffectService.instance;
-
+class SpellService {
   mapMemorizedSpells(
     memorizedSpells: RawMemorizedSpell[] | undefined,
     spells: RawSpell[] | undefined
@@ -86,7 +76,7 @@ export class SpellService {
     const result: Spell = {
       file: spell.file,
       copyFrom: spell.copyFrom,
-      stringRef: spell.stringRef,
+      name: spell.stringRef,
       description: spell.description,
       spellbookIcon: spell.icon ? `${spell.icon}C` : undefined,
       castingSound: spell.castingSound,
@@ -182,3 +172,6 @@ export class SpellService {
     return result;
   }
 }
+
+const spellService = new SpellService();
+export default spellService;

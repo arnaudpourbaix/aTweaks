@@ -1,14 +1,16 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { SpellGroupName } from "../../../config/spell-group-name";
-import { RawItemSlot } from "../raw/item";
+import { TranslationKey } from "../../translations/i18n";
 import { Effect } from "./effect";
-import { EffectTypeEnum } from "./effect.type";
 import { PortraitIconEnum } from "./effect.enums";
+import { EffectTypeEnum } from "./effect.type";
+import { EquippedItem } from "./spell-item";
 
 export interface ImmunityConfig {
   name: ImmunityName | string;
-  type: "trait" | "immunity";
-  description: string[];
+  type: "trait" | "immunity" | "resistance";
+  stringRef: TranslationKey;
+  description?: TranslationKey;
   immunities: ImmunityName[];
   preventEffects: EffectTypeEnum[];
   preventIcons: PortraitIconEnum[];
@@ -24,5 +26,5 @@ export interface ImmunityConfig {
   /**
    * Will create an item and add it into chosen slot
    */
-  itemSlot?: RawItemSlot;
+  itemSlot?: EquippedItem;
 }

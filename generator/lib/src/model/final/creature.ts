@@ -14,7 +14,7 @@ import { CreatureSize, ItemSlot, ProficiencyTypeEnum } from "./effect.enums";
 import { EffectTypeEnum } from "./effect.type";
 import { Projectile } from "./projectile";
 import { AdditionalCode, CustomCode } from "./script";
-import { Item, Spell } from "./spell-item";
+import { EquippedItem, Item, Spell } from "./spell-item";
 
 export interface BaseCreature {
   files: string[];
@@ -228,7 +228,7 @@ export interface CreatureAdditionalData {
   proficiencies: { type: ProficiencyTypeEnum; value: number }[];
 
   removeItems: string[];
-  itemSlots: ItemSlot[];
+  itemSlots: EquippedItem[];
   immunities: ImmunityName[];
 
   removeKnownSpells: boolean;

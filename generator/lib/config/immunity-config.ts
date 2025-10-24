@@ -1,48 +1,51 @@
 import { JEWEL_SLOTS } from "../src/model/constants";
 import { EffectTypeEnum } from "../src/model/final/effect.type";
-import { PortraitIconEnum } from "../src/model/final/effect.enums";
+import {
+  CastingTimeModifierTypeEnum,
+  EffectBonusToEnum,
+  EffectColorLocationEnum,
+  EffectModifierTypeEnum,
+  EffectStatisticModifierEnum,
+  PortraitIconEnum,
+  ProtectionFromWeaponsTypeEnum,
+  TranslucencyTypeEnum,
+} from "../src/model/final/effect.enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
-import { RawEffect } from "../src/model/raw/effect";
-import { RawImmunityConfig } from "../src/model/raw/immunity";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
+import { ImmunityConfig } from "../src/model/final/immunity";
+import { AtLeast } from "../src/model/utility-types";
+import { Effect } from "../src/model/final/effect";
 
-export const IMMUNITIES: RawImmunityConfig[] = [
+export const IMMUNITIES: (AtLeast<
+  ImmunityConfig,
+  "name" | "type" | "stringRef"
+> & { type: "immunity" })[] = [
   {
     name: "poison",
     type: "immunity",
-    description: ["Poison immunity"],
+    stringRef: "common.immunity.poison",
     preventEffects: [EffectTypeEnum.Poison],
     preventIcons: [PortraitIconEnum.Poisoned],
     displayIcons: [PortraitIconEnum.ProtectionFromPoison],
     strings: StringRefUtils.getStringIds("poison"),
     effects: [
       {
-        opcode: "PoisonResistanceModifier",
+        opcode: EffectTypeEnum.PoisonResistanceModifier,
         value: 100,
       },
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "ITEM_POISON",
       },
     ],
     spellGroups: ["poison"],
   },
   {
-    name: "poisonResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "PoisonResistanceModifier",
-        value: 50,
-      },
-    ],
-  },
-  {
     name: "disease",
     type: "immunity",
-    description: ["Disease immunity"],
+    stringRef: "common.immunity.disease",
     preventEffects: [EffectTypeEnum.Disease],
     preventIcons: [PortraitIconEnum.Diseased],
     strings: StringRefUtils.getStringIds("disease"),
@@ -51,7 +54,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "bleeding",
     type: "immunity",
-    description: ["Bleeding immunity"],
+    stringRef: "common.immunity.bleeding",
     preventIcons: [PortraitIconEnum.Bleeding],
     strings: StringRefUtils.getStringIds("bleed"),
     spellGroups: ["bleeding"],
@@ -59,7 +62,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "abilityDrain",
     type: "immunity",
-    description: ["Ability drain immunity"],
+    stringRef: "common.immunity.abilityDrain",
     preventEffects: [
       EffectTypeEnum.IntelligenceBonus,
       EffectTypeEnum.DexterityBonus,
@@ -71,7 +74,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "hold",
     type: "immunity",
-    description: ["Hold immunity"],
+    stringRef: "common.immunity.hold",
     preventEffects: [EffectTypeEnum.Paralyze, EffectTypeEnum.Hold],
     preventIcons: [PortraitIconEnum.Held],
     spellGroups: ["hold"],
@@ -79,7 +82,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     animations: ["SPFLAYER", "SPMINDAT"],
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "HOLD_IMMUNITY",
       },
     ],
@@ -87,13 +90,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "stun",
     type: "immunity",
-    description: ["Stun immunity"],
+    stringRef: "common.immunity.stun",
     preventEffects: [EffectTypeEnum.Stun, EffectTypeEnum.Stun90HP],
     preventIcons: [PortraitIconEnum.Stun],
     strings: StringRefUtils.getStringIds("stun"),
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "STUN_IMMUNITY",
       },
     ],
@@ -101,12 +104,12 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "energyDrain",
     type: "immunity",
-    description: ["Energy drain immunity"],
+    stringRef: "common.immunity.energyDrain",
     preventEffects: [EffectTypeEnum.LevelDrain],
     strings: StringRefUtils.getStringIds("levelDrain"),
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "ITEM_LEVELDRAIN",
       },
     ],
@@ -114,13 +117,13 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "sleep",
     type: "immunity",
-    description: ["Sleep immunity"],
+    stringRef: "common.immunity.sleep",
     preventEffects: [EffectTypeEnum.Sleep, EffectTypeEnum.Sleep20HP],
     preventIcons: [PortraitIconEnum.Sleep, PortraitIconEnum.Unconscious],
     strings: StringRefUtils.getStringIds("sleep"),
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "SLEEP_IMMUNITY",
       },
     ],
@@ -128,7 +131,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "charm",
     type: "immunity",
-    description: ["Charm immunity"],
+    stringRef: "common.immunity.charm",
     preventEffects: [
       EffectTypeEnum.CharmCreature,
       EffectTypeEnum.CharmControlCreature,
@@ -142,15 +145,32 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     animations: ["SPNWCHRM"],
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "CHARM_IMMUNITY",
+      },
+    ],
+  },
+  {
+    name: "confusion",
+    type: "immunity",
+    stringRef: "common.immunity.confusion",
+    preventEffects: [EffectTypeEnum.Confusion],
+    preventIcons: [PortraitIconEnum.Confused],
+    strings: StringRefUtils.getStringIds(["rigidThinking", "confusion"]),
+    animations: ["SPCONFUS"],
+    spellGroups: ["confusion"],
+    displaySpellIneffective: true,
+    effects: [
+      {
+        opcode: EffectTypeEnum.SetExtendedSpellState,
+        state: "CONFUSION_IMMUNITY",
       },
     ],
   },
   {
     name: "fear",
     type: "immunity",
-    description: ["Fear immunity"],
+    stringRef: "common.immunity.fear",
     preventEffects: [
       EffectTypeEnum.Panic,
       EffectTypeEnum.MoraleModifier,
@@ -163,11 +183,11 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     displaySpellIneffective: true,
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "RESIST_FEAR",
       },
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "PANIC_IMMUNITY",
       },
     ],
@@ -175,41 +195,22 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "fatigue",
     type: "immunity",
-    description: ["Fatigue immunity"],
+    stringRef: "common.immunity.fatigue",
     preventEffects: [EffectTypeEnum.FatigueBonus],
-    preventIcons: [],
-    strings: [],
     spellGroups: ["fatigue"],
     displaySpellIneffective: true,
   },
   {
-    name: "confusion",
-    type: "immunity",
-    description: ["Confusion immunity"],
-    preventEffects: [EffectTypeEnum.Confusion],
-    preventIcons: [PortraitIconEnum.Confused],
-    strings: StringRefUtils.getStringIds(["rigidThinking", "confusion"]),
-    animations: ["SPCONFUS"],
-    spellGroups: ["confusion"],
-    displaySpellIneffective: true,
-    effects: [
-      {
-        opcode: "SetExtendedSpellState",
-        state: "CONFUSION_IMMUNITY",
-      },
-    ],
-  },
-  {
     name: "magicMissile",
     type: "immunity",
-    description: ["Magic missiles immunity"],
+    stringRef: "common.immunity.magicMissile",
     spellGroups: ["magicMissile"],
     displaySpellIneffective: true,
   },
   {
     name: "blindness",
     type: "immunity",
-    description: ["Blindness immunity"],
+    stringRef: "common.immunity.blindness",
     preventEffects: [EffectTypeEnum.Blindness],
     preventIcons: [PortraitIconEnum.Blind],
     spellGroups: ["blindness"],
@@ -217,189 +218,113 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "fireSpells",
     type: "immunity",
-    description: ["Fire spells immunity"],
+    stringRef: "common.immunity.fireSpells",
     spellGroups: ["fire"],
   },
   {
     name: "fire",
     type: "immunity",
-    description: ["Fire and magical fire immunity"],
+    stringRef: "common.immunity.fire",
     effects: [
       {
-        opcode: "FireResistanceModifier",
+        opcode: EffectTypeEnum.FireResistanceModifier,
         value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
       {
-        opcode: "MagicalFireResistanceModifier",
+        opcode: EffectTypeEnum.MagicalFireResistanceModifier,
         value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "fireResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "FireResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MagicalFireResistanceModifier",
-        value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "coldSpells",
     type: "immunity",
-    description: ["Cold spells immunity"],
+    stringRef: "common.immunity.coldSpells",
     spellGroups: ["cold"],
   },
   {
     name: "cold",
     type: "immunity",
-    description: ["Cold and magical cold immunity"],
+    stringRef: "common.immunity.cold",
     effects: [
       {
-        opcode: "ColdResistanceModifier",
+        opcode: EffectTypeEnum.ColdResistanceModifier,
         value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
       {
-        opcode: "MagicalColdResistanceModifier",
+        opcode: EffectTypeEnum.MagicalColdResistanceModifier,
         value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
-    name: "coldResistance",
+    name: "lightningSpells",
     type: "immunity",
-    effects: [
-      {
-        opcode: "ColdResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MagicalColdResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "electricalSpells",
-    type: "immunity",
-    description: ["Electrical spells immunity"],
+    stringRef: "common.immunity.lightningSpells",
     spellGroups: ["electrical"],
   },
   {
-    name: "electricity",
+    name: "lightning",
     type: "immunity",
-    description: ["Electricity immunity"],
+    stringRef: "common.immunity.lightning",
     effects: [
       {
-        opcode: "ElectricityResistanceModifier",
+        opcode: EffectTypeEnum.ElectricityResistanceModifier,
         value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "electricityResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "ElectricityResistanceModifier",
-        value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "magic",
     type: "immunity",
-    description: ["Magic immunity"],
+    stringRef: "common.immunity.magic",
     effects: [
       {
-        opcode: "MagicResistanceModifier",
+        opcode: EffectTypeEnum.MagicResistanceModifier,
         value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "magicResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "MagicResistanceModifier",
-        value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "magicDamage",
     type: "immunity",
-    description: ["Magic damage immunity"],
+    stringRef: "common.immunity.magicDamage",
     effects: [
       {
-        opcode: "MagicDamageResistanceModifier",
+        opcode: EffectTypeEnum.MagicDamageResistanceModifier,
         value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "magicDamageResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "MagicDamageResistanceModifier",
-        value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "acid",
     type: "immunity",
-    description: ["Acid immunity"],
+    stringRef: "common.immunity.acid",
     effects: [
       {
-        opcode: "AcidResistanceModifier",
+        opcode: EffectTypeEnum.AcidResistanceModifier,
         value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "acidResistance",
-    type: "immunity",
-    effects: [
-      {
-        opcode: "AcidResistanceModifier",
-        value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "acidSpells",
     type: "immunity",
-    description: ["Acid spells immunity"],
+    stringRef: "common.immunity.acidSpells",
     spellGroups: ["acidSpells"],
   },
   {
-    name: "cureSpells",
+    name: "cureAndCauseWoundSpells",
     type: "immunity",
-    description: ["Cure spells immunity"],
+    stringRef: "common.immunity.cureAndCauseWoundSpells",
     spellGroups: ["cure"],
     displaySpellIneffective: true,
   },
@@ -407,20 +332,20 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "cloudSpells",
     type: "immunity",
     itemSlot: { file: ITEMS.CloudSpells, slot: JEWEL_SLOTS },
-    description: ["Cloud spells immunity"],
+    stringRef: "common.immunity.cloudSpells",
     spellGroups: ["cloud"],
     displaySpellIneffective: true,
   },
   {
     name: "web",
     type: "immunity",
-    description: ["Web immunity"],
+    stringRef: "common.immunity.web",
     preventEffects: [EffectTypeEnum.Web],
     preventIcons: [PortraitIconEnum.Webbed],
     spellGroups: ["web"],
     effects: [
       {
-        opcode: "ProtectionFromProjectile",
+        opcode: EffectTypeEnum.ProtectionFromProjectile,
         projectile: 319, // webtrav
       },
     ],
@@ -429,7 +354,7 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "entangle",
     type: "immunity",
-    description: ["Entangle immunity"],
+    stringRef: "common.immunity.entangle",
     preventEffects: [EffectTypeEnum.EntangleOverlay],
     preventIcons: [PortraitIconEnum.Entangled],
     spellGroups: ["entangle"],
@@ -439,39 +364,29 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "insectSpells",
     type: "immunity",
-    description: ["Insect spells immunity"],
+    stringRef: "common.immunity.insectSpells",
     spellGroups: ["insect"],
-    //TODO: why: LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells duration=120 resist_dispel=3 power=3 displaySpellIneffective=1 END
     displaySpellIneffective: true,
   },
   {
     name: "petrification",
     type: "immunity",
-    description: ["Petrification immunity"],
+    stringRef: "common.immunity.petrification",
     preventEffects: [EffectTypeEnum.Petrification],
     strings: StringRefUtils.getStringIds("petrified"),
     spellGroups: ["petrification"],
     displaySpellIneffective: true,
     effects: [
       {
-        opcode: "SetExtendedSpellState",
+        opcode: EffectTypeEnum.SetExtendedSpellState,
         state: "PETRIFY_IMMUNITY",
       },
     ],
   },
   {
-    name: "missileWeapons",
-    type: "immunity",
-    description: ["Missile weapons immunity"],
-    effects: MISSILE_WEAPONS.map((w) => ({
-      opcode: "ProtectionFromProjectile",
-      projectile: w,
-    })),
-  },
-  {
     name: "polymorph",
     type: "immunity",
-    description: ["Polymorph immunity"],
+    stringRef: "common.immunity.polymorph",
     //preventEffects: [EffectTypeEnum.PolymorphIntoSpecific], // not used anymore
     preventIcons: [PortraitIconEnum.Polymorphed],
     strings: StringRefUtils.getStringIds("polymorph"),
@@ -481,21 +396,21 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "vorpal",
     type: "immunity",
-    description: ["Vorpal immunity"],
+    stringRef: "common.immunity.vorpal",
     preventEffects: [EffectTypeEnum.KillTarget, EffectTypeEnum.Slay],
     strings: StringRefUtils.getStringIds("death"),
   },
   {
     name: "earthquake",
     type: "immunity",
-    description: ["Earthquake spells immunity"],
+    stringRef: "common.immunity.earthquakeSpells",
     spellGroups: ["earthquake"],
     displaySpellIneffective: true,
   },
   {
     name: "physicalDamage",
     type: "immunity",
-    description: ["Physical damage immunity"],
+    stringRef: "common.immunity.physicalDamage",
     immunities: [
       "slashingDamage",
       "crushingDamage",
@@ -504,8 +419,264 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
-    name: "physicalDamageResistance",
+    name: "slashingDamage",
     type: "immunity",
+    stringRef: "common.immunity.slashingDamage",
+    effects: [
+      {
+        opcode: EffectTypeEnum.SlashingResistanceModifier,
+        value: 100,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "crushingDamage",
+    type: "immunity",
+    stringRef: "common.immunity.crushingDamage",
+    effects: [
+      {
+        opcode: EffectTypeEnum.CrushingResistanceModifier,
+        value: 100,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "piercingDamage",
+    type: "immunity",
+    stringRef: "common.immunity.piercingDamage",
+    effects: [
+      {
+        opcode: EffectTypeEnum.PiercingResistanceModifier,
+        value: 100,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "missileDamage",
+    type: "immunity",
+    stringRef: "common.immunity.missileDamage",
+    effects: [
+      {
+        opcode: EffectTypeEnum.MissilesResistanceModifier,
+        value: 100,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "missileWeapons",
+    type: "immunity",
+    stringRef: "common.immunity.missileWeapons",
+    effects: MISSILE_WEAPONS.map((w) => ({
+      opcode: EffectTypeEnum.ProtectionFromProjectile,
+      projectile: w,
+    })),
+  },
+  {
+    name: "turnUndead",
+    type: "immunity",
+    stringRef: "common.immunity.turnUndead",
+    effects: [{ opcode: EffectTypeEnum.ImmunityToTurnUndead }],
+  },
+  {
+    name: "illusion",
+    type: "immunity",
+    stringRef: "common.immunity.illusion",
+    spellGroups: ["illusion"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "necromancyEffects",
+    type: "immunity",
+    stringRef: "common.immunity.necromancyEffects",
+    immunities: ["cureAndCauseWoundSpells"],
+    spellGroups: ["necromancyEffects"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "deathEffects",
+    type: "immunity",
+    stringRef: "common.immunity.deathEffects",
+    preventEffects: [
+      EffectTypeEnum.DeathKill60HP,
+      EffectTypeEnum.KillTarget,
+      EffectTypeEnum.Slay,
+    ],
+    effects: [
+      {
+        opcode: EffectTypeEnum.SetExtendedSpellState,
+        state: "DEATH_IMMUNITY",
+      },
+    ],
+  },
+  {
+    name: "deathSpell",
+    type: "immunity",
+    stringRef: "common.immunity.deathSpell",
+    spellGroups: ["death"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "mindSpells",
+    type: "immunity",
+    stringRef: "common.immunity.mindSpells",
+    preventEffects: [EffectTypeEnum.Berserk],
+    immunities: ["charm", "fear", "confusion", "illusion", "hold", "stun"],
+  },
+  {
+    name: "normalWeapons",
+    type: "immunity",
+    stringRef: "common.immunity.normalWeapons",
+    effects: [
+      {
+        opcode: EffectTypeEnum.ProtectionFromWeapons,
+        type: ProtectionFromWeaponsTypeEnum.NonMagical,
+        enchantment: 0,
+      },
+    ],
+  },
+  {
+    name: "backstab",
+    type: "immunity",
+    stringRef: "common.immunity.backstab",
+    effects: [{ opcode: EffectTypeEnum.ProtectionFromBackstab }],
+  },
+  {
+    name: "criticalHit",
+    type: "immunity",
+    itemSlot: { file: ITEMS.CriticalHitImmunity, slot: "HELMET" },
+    stringRef: "common.immunity.criticalHit",
+  },
+  {
+    name: "devourBrain",
+    type: "immunity",
+    stringRef: "common.immunity.devourBrain",
+    preventEffects: [EffectTypeEnum.IntelligenceBonus],
+  },
+  {
+    name: "fireballSpell",
+    type: "immunity",
+    stringRef: "common.immunity.fireballSpell",
+    spellGroups: ["fireball"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "lightningBoltSpell",
+    type: "immunity",
+    stringRef: "common.immunity.lightningBoltSpell",
+    spellGroups: ["lightningBolt"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "flameArrowSpell",
+    type: "immunity",
+    stringRef: "common.immunity.flameArrowSpell",
+    spellGroups: ["flameArrow"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "gazeAttacks",
+    type: "immunity",
+    stringRef: "common.immunity.gazeAttacks",
+    immunities: ["petrification"],
+  },
+];
+
+export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
+  type: "resistance";
+})[] = [
+  {
+    name: "poisonResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.PoisonResistanceModifier,
+        value: 50,
+      },
+    ],
+  },
+  {
+    name: "fireResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.FireResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+      {
+        opcode: EffectTypeEnum.MagicalFireResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "coldResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.ColdResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+      {
+        opcode: EffectTypeEnum.MagicalColdResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "electricityResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.ElectricityResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "magicResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.MagicResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "magicDamageResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.MagicDamageResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "acidResistance",
+    type: "resistance",
+    effects: [
+      {
+        opcode: EffectTypeEnum.AcidResistanceModifier,
+        value: 50,
+        type: EffectStatisticModifierEnum.Set,
+      },
+    ],
+  },
+  {
+    name: "physicalDamageResistance",
+    type: "resistance",
     immunities: [
       "slashingDamageResistance",
       "crushingDamageResistance",
@@ -514,200 +685,70 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
   },
   {
-    name: "slashingDamage",
-    type: "immunity",
-    description: ["Slashing damage immunity"],
-    effects: [
-      {
-        opcode: "SlashingResistanceModifier",
-        value: 100,
-        type: "Set",
-      },
-    ],
-  },
-  {
     name: "slashingDamageResistance",
-    type: "immunity",
+    type: "resistance",
     effects: [
       {
-        opcode: "SlashingResistanceModifier",
+        opcode: EffectTypeEnum.SlashingResistanceModifier,
         value: 50,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "crushingDamage",
-    type: "immunity",
-    description: ["Crushing damage immunity"],
-    effects: [
-      {
-        opcode: "CrushingResistanceModifier",
-        value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "crushingDamageResistance",
-    type: "immunity",
+    type: "resistance",
     effects: [
       {
-        opcode: "CrushingResistanceModifier",
+        opcode: EffectTypeEnum.CrushingResistanceModifier,
         value: 50,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "piercingDamage",
-    type: "immunity",
-    description: ["Piercing damage immunity"],
-    effects: [
-      {
-        opcode: "PiercingResistanceModifier",
-        value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "piercingDamageResistance",
-    type: "immunity",
+    type: "resistance",
     effects: [
       {
-        opcode: "PiercingResistanceModifier",
+        opcode: EffectTypeEnum.PiercingResistanceModifier,
         value: 50,
-        type: "Set",
-      },
-    ],
-  },
-  {
-    name: "missileDamage",
-    type: "immunity",
-    description: ["Missile damage immunity"],
-    effects: [
-      {
-        opcode: "MissilesResistanceModifier",
-        value: 100,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
   {
     name: "missileDamageResistance",
-    type: "immunity",
+    type: "resistance",
     effects: [
       {
-        opcode: "MissilesResistanceModifier",
+        opcode: EffectTypeEnum.MissilesResistanceModifier,
         value: 50,
-        type: "Set",
+        type: EffectStatisticModifierEnum.Set,
       },
     ],
   },
-  {
-    name: "unturnable",
-    type: "immunity",
-    description: ["Turn undead immunity"],
-    effects: [{ opcode: "ImmunityToTurnUndead" }],
-  },
-  {
-    name: "illusion",
-    type: "immunity",
-    description: ["Illusion spells immunity"],
-    spellGroups: ["illusion"],
-    displaySpellIneffective: true,
-  },
-  {
-    name: "necromancyEffects",
-    type: "immunity",
-    description: ["Necromancy effects immunity"],
-    immunities: ["cureSpells"],
-    spellGroups: ["necromancyEffects"],
-    displaySpellIneffective: true,
-  },
-  {
-    name: "deathEffects",
-    type: "immunity",
-    description: ["Death effects immunity"],
-    preventEffects: [
-      EffectTypeEnum.DeathKill60HP,
-      EffectTypeEnum.KillTarget,
-      EffectTypeEnum.Slay,
-    ],
-    effects: [
-      {
-        opcode: "SetExtendedSpellState",
-        state: "DEATH_IMMUNITY",
-      },
-    ],
-  },
-  {
-    name: "deathSpell",
-    type: "immunity",
-    description: ["Death spell immunity"],
-    spellGroups: ["death"],
-    displaySpellIneffective: true,
-  },
-  {
-    name: "mindSpells",
-    type: "immunity",
-    description: [
-      "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
-    ],
-    preventEffects: [EffectTypeEnum.Berserk],
-    immunities: ["charm", "fear", "confusion", "illusion", "hold", "stun"],
-  },
+];
+
+export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
+  type: "trait";
+})[] = [
   {
     name: "hover",
     type: "trait",
     itemSlot: { file: ITEMS.Hover, slot: "BOOTS" },
-    description: [
-      "Hover (flight)",
-      "This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.",
-      "Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.",
-    ],
+    stringRef: "common.traits.hover.name",
+    description: "common.traits.hover.desc",
     immunities: ["entangle", "web"],
     spellGroups: ["ground"],
     displaySpellIneffective: true,
   },
   {
-    name: "normalWeapons",
-    type: "immunity",
-    description: ["Immunity to normal weapons"],
-    effects: [
-      { opcode: "ProtectionFromWeapons", type: "NonMagical", enchantment: 0 },
-    ],
-  },
-  {
-    name: "backstab",
-    type: "immunity",
-    description: ["Immunity to backstab"],
-    effects: [{ opcode: "ProtectionFromBackstab" }],
-  },
-  {
-    name: "criticalHit",
-    type: "immunity",
-    itemSlot: { file: ITEMS.CriticalHitImmunity, slot: "HELMET" },
-    description: ["Immunity to critical hits"],
-  },
-  {
-    name: "devourBrain",
-    type: "immunity",
-    description: ["Immunity to Devour Brain ability (Mind Flayer)"],
-    preventEffects: [EffectTypeEnum.IntelligenceBonus],
-  },
-  {
     name: "construct",
     type: "trait",
     itemSlot: { file: ITEMS.Construct, slot: JEWEL_SLOTS },
-    description: [
-      "Construct trait",
-      "",
-      "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
-      "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.",
-      "Darkvision out to 60 feet.",
-    ],
+    stringRef: "common.traits.construct.name",
+    description: "common.traits.construct.desc",
     immunities: [
       "poison",
       "sleep",
@@ -732,16 +773,8 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "undead",
     type: "trait",
     itemSlot: { file: ITEMS.Undead, slot: JEWEL_SLOTS },
-    description: [
-      "Undead trait",
-      "",
-      "Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
-      "Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.",
-      "Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.",
-      "Negative energy (such as an inflict wounds spell) can heal undead creatures.",
-      "Hit Die: d12",
-      "Darkvision out to 60 feet.",
-    ],
+    stringRef: "common.traits.undead.name",
+    description: "common.traits.undead.desc",
     immunities: [
       "poison",
       "sleep",
@@ -766,28 +799,21 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "fey",
     type: "trait",
     itemSlot: { file: ITEMS.Fey, slot: JEWEL_SLOTS },
-    description: [
-      "Fey trait",
-      "",
-      "Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.",
-      "In all other aspects, spell-like abilities function exactly like the spells which they mimic.",
-    ],
+    stringRef: "common.traits.fey.name",
+    description: "common.traits.fey.desc",
     effects: [
       {
-        opcode: "CastingTimeModifier",
+        opcode: EffectTypeEnum.CastingTimeModifier,
         value: 1,
-        type: "Set",
+        type: CastingTimeModifierTypeEnum.Set,
       },
     ],
   },
   {
     name: "elemental",
     type: "trait",
-    description: [
-      "Immunity to poison, sleep effects, paralysis, bleeding, and stunning.",
-      "Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack.",
-      "They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet.",
-    ],
+    stringRef: "common.traits.elemental.name",
+    description: "common.traits.elemental.desc",
     immunities: [
       "poison",
       "sleep",
@@ -805,18 +831,17 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "airAffinity",
     type: "trait",
-    description: [
-      "Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents.",
-    ],
-    effects: AIR_CREATURES.map(([f, e]): RawEffect[] => [
+    stringRef: "common.traits.airAffinity.name",
+    description: "common.traits.airAffinity.desc",
+    effects: AIR_CREATURES.map(([f, e]): Effect[] => [
       {
-        opcode: "DamageVsCreatureTypeModifier",
+        opcode: EffectTypeEnum.DamageVsCreatureTypeModifier,
         idsFile: f,
         idsEntry: e,
         special: 4,
       },
       {
-        opcode: "Thac0VsCreatureTypeModifier",
+        opcode: EffectTypeEnum.Thac0VsCreatureTypeModifier,
         idsFile: f,
         idsEntry: e,
         special: 1,
@@ -826,20 +851,19 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "earthAffinity",
     type: "trait",
-    description: [
-      "Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell.",
-    ],
+    stringRef: "common.traits.earthAffinity.name",
+    description: "common.traits.earthAffinity.desc",
     immunities: ["earthquake"],
     effects: [...AIR_CREATURES, ...WATER_CREATURES]
-      .map(([f, e]): RawEffect[] => [
+      .map(([f, e]): Effect[] => [
         {
-          opcode: "DamageVsCreatureTypeModifier",
+          opcode: EffectTypeEnum.DamageVsCreatureTypeModifier,
           idsFile: f,
           idsEntry: e,
           special: -2,
         },
         {
-          opcode: "Thac0VsCreatureTypeModifier",
+          opcode: EffectTypeEnum.Thac0VsCreatureTypeModifier,
           idsFile: f,
           idsEntry: e,
           special: -2,
@@ -851,47 +875,28 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     name: "skeletal",
     type: "trait",
     itemSlot: { file: ITEMS.Sketetal, slot: JEWEL_SLOTS },
-    description: [
-      "Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.",
-    ],
-    immunities: ["cold", "coldSpells"],
-    effects: [
-      {
-        opcode: "SlashingResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "MissilesResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
-      {
-        opcode: "PiercingResistanceModifier",
-        value: 50,
-        type: "Set",
-      },
+    stringRef: "common.traits.skeletal.name",
+    description: "common.traits.skeletal.desc",
+    immunities: [
+      "cold",
+      "coldSpells",
+      "slashingDamageResistance",
+      "missileDamageResistance",
+      "piercingDamageResistance",
     ],
   },
   {
     name: "extraplanar",
     type: "trait",
-    description: [
-      "Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.",
-    ],
-    immunities: ["cureSpells", "deathSpell"],
+    stringRef: "common.traits.extraplanar.name",
+    description: "common.traits.extraplanar.desc",
+    immunities: ["cureAndCauseWoundSpells", "deathSpell"],
   },
   {
     name: "plant",
     type: "trait",
-    description: [
-      "Plants' traits",
-      "",
-      "Infravision.",
-      "Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).",
-      "Immunity to poison, sleep effects, paralysis, polymorph, and stunning.",
-      "Not subject to critical hits and backstab.",
-    ],
+    stringRef: "common.traits.plant.name",
+    description: "common.traits.plant.desc",
     itemSlot: { file: ITEMS.Plant, slot: JEWEL_SLOTS },
     immunities: [
       "mindSpells",
@@ -913,55 +918,27 @@ export const IMMUNITIES: RawImmunityConfig[] = [
   {
     name: "infravision",
     type: "trait",
-    description: ["Infravision"],
-    effects: [{ opcode: "Infravision" }],
+    stringRef: "common.traits.infravision",
+    effects: [{ opcode: EffectTypeEnum.Infravision }],
   },
   {
     name: "seeInvisible",
     type: "trait",
-    description: ["See invisible creatures"],
-    effects: [{ opcode: "InvisibilityDetection" }],
-  },
-  {
-    name: "fireballSpell",
-    type: "immunity",
-    description: ["Fireball spell immunity"],
-    spellGroups: ["fireball"],
-    displaySpellIneffective: true,
-  },
-  {
-    name: "lightningBoltSpell",
-    type: "immunity",
-    description: ["Lightning Bolt spell immunity"],
-    spellGroups: ["lightningBolt"],
-    displaySpellIneffective: true,
-  },
-  {
-    name: "flameArrowSpell",
-    type: "immunity",
-    description: ["Flame Arrow spell immunity"],
-    spellGroups: ["flameArrow"],
-    displaySpellIneffective: true,
+    stringRef: "common.traits.seeInvisible",
+    effects: [{ opcode: EffectTypeEnum.InvisibilityDetection }],
   },
   {
     name: "incorporeal",
     itemSlot: { file: ITEMS.Incorporeal, slot: JEWEL_SLOTS },
     type: "trait",
-    description: [
-      "An incorporeal creature has no physical body.",
-      "Immune to backstab and critical hits",
-      "Immune to all nonmagical attacks.",
-      "Has a 50% resistance to every damages.",
-      "Deflection bonus (+3 AC).",
-      "Attacks pass through armor (+4 THAC0).",
-      // "Do not set off traps that are triggered by weight. (not implemented)",
-    ],
+    stringRef: "common.traits.incorporeal.name",
+    description: "common.traits.incorporeal.desc",
     immunities: [
       "backstab",
       "criticalHit",
       "fireResistance",
       "coldResistance",
-      "electricalSpells",
+      "lightningSpells",
       "acidResistance",
       "poisonResistance",
       "magicDamageResistance",
@@ -969,77 +946,60 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: "Translucency",
+        opcode: EffectTypeEnum.Translucency,
         amount: 99,
-        type: "DrawInstantly",
+        type: TranslucencyTypeEnum.DrawInstantly,
       },
       {
-        opcode: "SetColorGlowPulse",
+        opcode: EffectTypeEnum.SetColorGlowPulse,
         color: { red: 125, green: 125, blue: 125 },
-        location: "CharacterColor",
+        location: EffectColorLocationEnum.CharacterColor,
         cycleSpeed: 30,
       },
       {
-        opcode: "CreatureRGBColorFade",
+        opcode: EffectTypeEnum.CreatureRGBColorFade,
         color: { red: 90, green: 30, blue: 90 },
         fadeSpeed: 25,
       },
-      { opcode: "NoCollisionDetection", passWalls: true },
-      { opcode: "ModifyCollisionBehavior" },
-      // { opcode: "OverrideCreatureData", field: "PersonalSpace", value: 0 }, // Create 2 issues: creature can attack from range and can't move at all
-      // { opcode: "MakeUnselectable", disableDialog: false },
-      // { opcode: "SelectionCircleRemoval" },
+      { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
+      { opcode: EffectTypeEnum.ModifyCollisionBehavior },
+      // { opcode: EffectTypeEnum.OverrideCreatureData, field: "PersonalSpace", value: 0 }, // Create 2 issues: creature can attack from range and can't move at all
+      // { opcode: EffectTypeEnum.MakeUnselectable, disableDialog: false },
+      // { opcode: EffectTypeEnum.SelectionCircleRemoval },
       {
-        opcode: "ProtectionFromWeapons",
+        opcode: EffectTypeEnum.ProtectionFromWeapons,
         enchantment: 0,
-        type: "NonMagical",
+        type: ProtectionFromWeaponsTypeEnum.NonMagical,
       },
       {
-        opcode: "DisplayPortraitIcon",
-        icon: "Invulnerable",
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        icon: PortraitIconEnum.Invulnerable,
       },
       {
-        opcode: "ArmorClassBonus",
+        opcode: EffectTypeEnum.ArmorClassBonus,
         value: 3,
-        bonusTo: "AllWeapons",
+        bonusTo: EffectBonusToEnum.AllWeapons,
       },
       {
-        opcode: "Thac0Bonus",
+        opcode: EffectTypeEnum.Thac0Bonus,
         value: 4,
-        type: "Increment",
+        type: EffectModifierTypeEnum.Increment,
       },
     ],
-  },
-  {
-    name: "gazeAttacks",
-    type: "immunity",
-    description: ["Gaze attacks immunity."],
-    immunities: ["petrification"], //TODO:
   },
   {
     name: "blindsight",
     type: "trait",
-    description: [
-      "Blindsight trait.",
-      "Invisibility, darkness, and most kinds of concealment are irrelevant.",
-      "Blindsight does not subject a creature to gaze attacks.",
-    ],
+    stringRef: "common.traits.blindsight.name",
+    description: "common.traits.blindsight.desc",
     immunities: ["gazeAttacks", "seeInvisible"],
   },
   {
     name: "ooze",
     type: "trait",
     itemSlot: { file: ITEMS.Ooze, slot: JEWEL_SLOTS },
-    description: [
-      "Ooze trait",
-      "",
-      "Blindsight (can see invisible, not subject to gaze attacks).",
-      "Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).",
-      "Not subject to critical hits, backstab.",
-      "Darkvision out to 60 feet.",
-      "Translucent",
-      "10-sided Hit Dice",
-    ],
+    stringRef: "common.traits.ooze.name",
+    description: "common.traits.ooze.desc",
     immunities: [
       "mindSpells",
       "backstab",
@@ -1057,23 +1017,19 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     ],
     effects: [
       {
-        opcode: "Translucency",
+        opcode: EffectTypeEnum.Translucency,
         amount: 100,
-        type: "DrawInstantly",
+        type: TranslucencyTypeEnum.DrawInstantly,
       },
-      { opcode: "NoCollisionDetection", passWalls: true },
-      { opcode: "ModifyCollisionBehavior" },
+      { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
+      { opcode: EffectTypeEnum.ModifyCollisionBehavior },
     ],
   },
   {
     name: "vermin",
     type: "trait",
-    description: [
-      "Vermin trait",
-      "",
-      "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
-      "Darkvision out to 60 feet.",
-    ],
+    stringRef: "common.traits.vermin.name",
+    description: "common.traits.vermin.desc",
     itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
     immunities: ["infravision", "mindSpells"],
   },
@@ -1089,31 +1045,31 @@ export const IMMUNITIES: RawImmunityConfig[] = [
     itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
     effects: [
       {
-        opcode: "SetColorGlowPulse",
+        opcode: EffectTypeEnum.SetColorGlowPulse,
         color: { red: 222, green: 201, blue: 255 },
-        location: "ArmorBlueArmorTrimming",
+        location: EffectColorLocationEnum.ArmorBlueArmorTrimming,
         cycleSpeed: 43,
       },
       {
-        opcode: "SetColorGlowPulse",
+        opcode: EffectTypeEnum.SetColorGlowPulse,
         color: { red: 183, green: 222, blue: 255 },
-        location: "WeaponBlueHeadBladeMinor",
+        location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
         cycleSpeed: 47,
       },
       {
-        opcode: "SetColorGlowPulse",
+        opcode: EffectTypeEnum.SetColorGlowPulse,
         color: { red: 174, green: 219, blue: 255 },
-        location: "HelmetBlueExterior",
+        location: EffectColorLocationEnum.HelmetBlueExterior,
         cycleSpeed: 40,
       },
       {
-        opcode: "SetColorGlowPulse",
+        opcode: EffectTypeEnum.SetColorGlowPulse,
         color: { red: 223, green: 223, blue: 249 },
-        location: "ShieldBlueBodyTrim",
+        location: EffectColorLocationEnum.ShieldBlueBodyTrim,
         cycleSpeed: 42,
       },
       {
-        opcode: "Blur",
+        opcode: EffectTypeEnum.Blur,
       },
     ],
   },

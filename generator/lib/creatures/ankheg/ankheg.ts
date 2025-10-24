@@ -18,18 +18,6 @@ import { bafFile, file } from "../../src/services/misc.func";
 import { t } from "../../src/translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-// Creature Id
-// const id = MonsterEnum.Ankheg;
-// // Script
-// const script = bafFile(id);
-// // Spells
-// const digestiveEnzyme = file(1, id);
-// const acidicEnzyme = file(2, id);
-// const grab = file(3, id);
-// // Items
-// const mainWeapon = file(1, id);
-// const rangedWeapon = file(2, id);
-
 const cre = CreatureFactory.create({
   monster: MonsterEnum.Ankheg,
   family: MonsterFamilyEnum.Ankheg,
@@ -66,43 +54,15 @@ const cre = CreatureFactory.create({
     gender: "NIETHER",
     size: "Huge",
   },
-  additionalData: {
-    removeScripts: ["ANKHEG"],
-    removeItems: ["ANKHEG1", "ANKHEG2"],
-  },
-  behavior: {
-    tracking: true,
-    combatWalk: true,
-    abilities: [
-      {
-        name: t.monster.ankheg.enzymeStream.name,
-        disableInterrupt: true,
-        target: { name: "PCsPreferringWeak", random: true },
-        triggers: [
-          { name: "HPPercentLT", params: ["Myself", 50] },
-          { name: "HaveSpellRES", params: [acidicEnzyme] },
-        ],
-        actionsAfter: [
-          { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
-          { name: "AttackOneRound", params: ["LastSeenBy"] },
-        ],
-        range: 30,
-      },
-    ],
-  },
 });
 
-CreatureFactory.setAttack(cre, {
-  actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
-  grab: {
-    file: grab,
-    weaponFile: mainWeapon,
-    duration: 18,
-  },
+cre.setAdditionalData({
+  removeScripts: ["ANKHEG"],
+  removeItems: ["ANKHEG1", "ANKHEG2"],
 });
 
 const enzyme = CreatureFactory.addSpell(cre, {
-  stringRef: "monster.ankheg.digestiveEnzyme.name",
+  name: "monster.ankheg.digestiveEnzyme.name",
   description: "monster.ankheg.digestiveEnzyme.description",
   secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
   headers: [
@@ -178,7 +138,7 @@ CreatureFactory.addWeapon(cre, {
 
 const stream = CreatureFactory.addSpell(cre, {
   memorizedCount: 1,
-  stringRef: "monster.ankheg.enzymeStream.name",
+  name: "monster.ankheg.enzymeStream.name",
   description: "monster.ankheg.enzymeStream.description",
   secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
   headers: [
@@ -222,6 +182,36 @@ CreatureFactory.addWeapon(cre, {
         resource: stream.file,
       },
     ],
+  },
+});
+
+cre.setBehavior({
+  tracking: true,
+  combatWalk: true,
+  abilities: [
+    {
+      name: t.monster.ankheg.enzymeStream.name,
+      disableInterrupt: true,
+      target: { name: "PCsPreferringWeak", random: true },
+      triggers: [
+        { name: "HPPercentLT", params: ["Myself", 50] },
+        { name: "HaveSpellRES", params: [stream.file] },
+      ],
+      actionsAfter: [
+        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
+        { name: "AttackOneRound", params: ["LastSeenBy"] },
+      ],
+      range: 30,
+    },
+  ],
+});
+
+cre.setAttack({
+  actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
+  grab: {
+    file: grab,
+    weaponFile: mainWeapon,
+    duration: 18,
   },
 });
 

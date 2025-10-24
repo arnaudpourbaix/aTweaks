@@ -81,7 +81,7 @@ export const SLIME_OLIVE_CREATURE: RawCreature = {
       // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
       file: traits,
       name,
-      immunities: ["electricity", "entangle", "normalWeapons"],
+      immunities: ["lightning", "entangle", "normalWeapons"],
     }),
   ],
   files: [

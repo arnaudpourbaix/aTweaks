@@ -5,13 +5,10 @@ import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 import { DescriptionService } from "./description.service";
-import { EffectService } from "./effect.service";
+import effectService from "./effect.service";
 
-export class StateService {
-  static instance = new StateService();
-
+class StateService {
   private descriptionService = DescriptionService.instance;
-  private effectService = EffectService.instance;
 
   init(): Promise<void> {
     try {
@@ -53,7 +50,6 @@ export class StateService {
     State.immunities = IMMUNITIES.map((i) => {
       const result: ImmunityConfig = {
         ...i,
-        description: i.description ?? [],
         immunities: i.immunities ?? [],
         preventEffects: i.preventEffects ?? [],
         preventIcons: i.preventIcons ?? [],
@@ -62,11 +58,8 @@ export class StateService {
         animations: i.animations ?? [],
         spellGroups: i.spellGroups ?? [],
         displaySpellIneffective: !!i.displaySpellIneffective,
-        effects: this.effectService.getEffects(i.effects ?? []),
+        effects: effectService.getEffects(i.effects ?? []),
       };
-      for (const effect of result.effects) {
-        effect.global = true;
-      }
       return result;
     });
     for (const i of State.immunities) {
@@ -74,3 +67,6 @@ export class StateService {
     }
   }
 }
+
+const stateService = new StateService();
+export default stateService;

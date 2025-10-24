@@ -4,6 +4,7 @@ import {
   TARGET_STATUS,
 } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
+import { Creature } from "../model/final/creature";
 import { TargetPriority } from "../model/final/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
@@ -13,16 +14,11 @@ import { GeneralIdentifier } from "../model/ids/general";
 import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
-import { RawCreature } from "../model/raw/creature";
 import { RawTargetList, TargetStatus } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
-import { UtilsService } from "./utils.service";
+import utils from "./utils.service";
 
-export class TargetService {
-  static instance = new TargetService();
-
-  utils = UtilsService.instance;
-
+class TargetService {
   targetObject(p: {
     ea?: AllegianceIdentifier;
     general?: GeneralIdentifier;
@@ -76,14 +72,12 @@ export class TargetService {
     for (const name of target.excludeStatus ?? []) {
       const status = statuses.find((s) => s.status === name) as TargetStatus;
       triggers.push(...status.triggers);
-      targetTriggers.push(
-        ...this.utils.inverseNegations(status.targetTriggers)
-      );
+      targetTriggers.push(...utils.inverseNegations(status.targetTriggers));
     }
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(creature: RawCreature): TargetPriority[] {
+  getTargetPriorities(creature: Creature): TargetPriority[] {
     const defaults = this.getDefaultStatus(creature);
     const targetPriorities = creature.attack?.targetPriorities ?? [];
     const results: TargetPriority[] = [];
@@ -149,7 +143,7 @@ export class TargetService {
     return list.value;
   }
 
-  private getDefaultStatus(creature: RawCreature): {
+  private getDefaultStatus(creature: Creature): {
     allStatus: TargetStatusName[];
     targetStatus: TargetStatusName[];
     playerStatus: TargetStatusName[];
@@ -199,3 +193,6 @@ export class TargetService {
     });
   }
 }
+
+const targetService = new TargetService();
+export default targetService;

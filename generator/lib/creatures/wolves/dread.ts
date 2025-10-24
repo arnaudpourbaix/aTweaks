@@ -116,7 +116,7 @@ export const WOLF_DREAD: RawCreature = {
         "poison",
         "disease",
         "cold",
-        "electricity",
+        "lightning",
         "magicDamage",
         "physicalDamage",
       ],

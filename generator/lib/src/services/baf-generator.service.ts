@@ -8,7 +8,6 @@ import { GENERAL_IDENTIFIERS } from "../model/ids/general";
 import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
 import { RACE_IDENTIFIERS } from "../model/ids/race";
 import { State } from "../state";
-import { StatementService } from "./statement-builder.service";
 import { CLASS_IDENTIFIERS } from "../model/ids/class";
 import { SPECIFIC_IDENTIFIERS } from "../model/ids/specific";
 import { GENDER_IDENTIFIER } from "../model/ids/gender";
@@ -16,17 +15,13 @@ import { ALIGN_IDENTIFIERS } from "../model/ids/align";
 import { Triggers } from "../model/raw/triggers";
 import { Actions } from "../model/raw/actions";
 import { ConditionalStatement, Statements } from "../model/final/script";
+import statementService from "./statement-builder.service";
 
-export class BafGeneratorService {
-  static instance = new BafGeneratorService();
-
-  private statementService = StatementService.instance;
-
+class BafGeneratorService {
   generateBafScript(creature: Creature): void {
-    const statements: Statements = this.statementService.buildStatements(
-      creature,
-      { summon: false }
-    );
+    const statements: Statements = statementService.buildStatements(creature, {
+      summon: false,
+    });
     const code = statements
       .map((statement) => this.generateStatement(statement))
       .join("");
@@ -36,7 +31,7 @@ export class BafGeneratorService {
       content
     );
     if (creature.adjustments.some((a) => !!a.summon)) {
-      const statements: Statements = this.statementService.buildStatements(
+      const statements: Statements = statementService.buildStatements(
         creature,
         { summon: true }
       );
@@ -203,3 +198,6 @@ export class BafGeneratorService {
     return objectParam.endsWith("Of") || objectParam.endsWith("By");
   }
 }
+
+const bafGeneratorService = new BafGeneratorService();
+export default bafGeneratorService;

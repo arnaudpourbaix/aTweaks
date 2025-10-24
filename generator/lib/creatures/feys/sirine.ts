@@ -13,11 +13,11 @@ import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { bafFile, convertMovement, file } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
-import { UtilsService } from "../../src/services/utils.service";
+import { instance } from "../../src/services/utils.service";
 import { MonsterEnum } from "../monster";
 
 const effects = EffectService.instance;
-const utils = UtilsService.instance;
+const utils = instance.instance;
 
 // Creature Id
 const id = MonsterEnum.Sirine;

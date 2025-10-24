@@ -1,10 +1,10 @@
 import { EffectTypeEnum } from "../model/final/effect.type";
 import { CodeLine, StringReference } from "../model/misc";
 import { GrabService } from "./grab.service";
-import { UtilsService } from "./utils.service";
+import { instance } from "./utils.service";
 
 export class AbstractWeiduService {
-  protected utils = UtilsService.instance;
+  protected utils = instance.instance;
   protected grabService = GrabService.instance;
 
   protected initLines() {

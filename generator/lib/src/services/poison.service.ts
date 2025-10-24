@@ -3,21 +3,21 @@ import {
   PoisonModel,
   POISONS,
 } from "../../config/poison";
+import { Effect } from "../model/final/effect";
 import {
-  RawBaseEffect,
-  RawEffect,
-  RawPoisonTypeEffectGroup,
-} from "../model/raw/effect";
-import { RawPoisonType } from "../model/raw/enum";
+  EffectTimingEnum,
+  PortraitIconEnum,
+} from "../model/final/effect.enums";
+import { EffectTypeEnum } from "../model/final/effect.type";
 
 export class PoisonService {
   static instance = new PoisonService();
 
-  getEffects(effect: RawPoisonTypeEffectGroup): RawEffect[] {
+  getEffects(effect: PoisonTypeEffectGroup): Effect[] {
     const poison = POISONS.find(
       (p) => p.type === effect.poisonType
     ) as PoisonModel;
-    const effects: RawEffect[] = [];
+    const effects: Effect[] = [];
     if (poison.saveDamage) {
       effects.push(this.getSaveEffect(poison));
     }
@@ -27,23 +27,23 @@ export class PoisonService {
     return effects;
   }
 
-  getSaveEffect(poison: PoisonModel): RawEffect {
+  getSaveEffect(poison: PoisonModel): Effect {
     return {
-      opcode: "Poison",
-      icon: "Poisoned",
+      opcode: EffectTypeEnum.Poison,
+      icon: PortraitIconEnum.Poisoned,
       ...this.getEffect({
         label: "save",
         damage: poison.saveDamage,
         duration: poison.duration,
       }),
-      timing: "InstantLimited",
+      timing: EffectTimingEnum.InstantLimited,
     };
   }
 
   getImmediateDeathEffects(
     effect: RawPoisonTypeEffectGroup,
     poison: PoisonModel
-  ): RawEffect[] {
+  ): Effect[] {
     const levels = [
       { min: 1, max: 2 },
       { min: 3, max: 4 },
@@ -79,7 +79,7 @@ export class PoisonService {
   getTimeEffects(
     poison: PoisonModel,
     effect: RawPoisonTypeEffectGroup
-  ): RawEffect[] {
+  ): Effect[] {
     return [
       {
         opcode: "Poison",
@@ -175,3 +175,6 @@ export class PoisonService {
     };
   }
 }
+
+const poisonService = new PoisonService();
+export default poisonService;

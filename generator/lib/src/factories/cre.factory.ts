@@ -1,21 +1,19 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
 import { Cre } from "../model/classes/cre";
 import { CreBehavior, CreItem, CreSpell } from "../model/classes/cre-types";
-import { CreatureAttack } from "../model/final/attack";
+import { CreatureAttack, CreatureAttackAction } from "../model/final/attack";
 import { CreatureAdditionalData, CreatureData } from "../model/final/creature";
 import { Item, Spell } from "../model/final/spell-item";
 import { file } from "../services/misc.func";
 import { TranslationKey } from "../translations/i18n";
 
-class Factory {
+class CreatureFactory {
   create(p: {
     name: TranslationKey;
     monster: MonsterEnum;
     family: MonsterFamilyEnum;
     files: string[];
     data: CreatureData;
-    additionalData: Partial<CreatureAdditionalData>;
-    behavior: Partial<CreBehavior>;
   }): Cre {
     const cre = new Cre();
     cre.name = p.name;
@@ -23,8 +21,6 @@ class Factory {
     cre.family = p.family;
     cre.files = p.files;
     cre.data = p.data;
-    this.setAdditionalData(cre, p.additionalData);
-    this.setBehavior(cre, p.behavior);
     return cre;
   }
 
@@ -65,14 +61,30 @@ class Factory {
   }
 
   setAttack(cre: Cre, attack: Partial<CreatureAttack>) {
+    const defaultAction: CreatureAttackAction = {
+      disableInterrupt: false,
+      responseWeight: 100,
+    };
+    const actions: CreatureAttackAction[] = (attack.actions ?? []).map((a) => ({
+      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
+      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
+      weaponSlot: a.weaponSlot,
+    }));
+    const result: CreatureAttack = {
+      grab: creature.attack.grab
+        ? { ...GRAB_DEFAULT_CONFIG, ...creature.attack.grab }
+        : undefined,
+      targetPriorities: this.targerService.getTargetPriorities(creature),
+      targetStatusWeaponSlot: creature.attack.targetStatusWeaponSlot ?? [],
+    };
+
     cre.attack = {
-      actions: [],
-      dualWielding: false,
-      melee: true,
-      ranged: false,
+      actions: actions.length ? actions : [defaultAction],
+      dualWielding: attack.dualWielding ?? false,
+      melee: attack.melee ?? true,
+      ranged: attack.ranged ?? false,
       targetPriorities: [],
-      targetStatusWeaponSlot: [],
-      ...attack,
+      targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
     };
   }
 
@@ -102,6 +114,5 @@ class Factory {
   addWeapon(creature: Cre, weapon: CreItem) {}
 }
 
-const CreatureFactory = new Factory();
-
-export default CreatureFactory;
+const creatureFactory = new CreatureFactory();
+export default creatureFactory;

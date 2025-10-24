@@ -6,13 +6,10 @@ import { SlotIdentifier, WeaponSlot } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
-import { UtilsService } from "./utils.service";
+import utils from "../services/utils.service";
+import utilsService from "../services/utils.service";
 
-export class FactoryService {
-  static instance = new FactoryService();
-
-  private utils = UtilsService.instance;
-
+class FactoryService {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
     { weight, actions },
   ];
@@ -259,7 +256,7 @@ export class FactoryService {
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
     const max = 1000;
     for (const [index, target] of targets.entries()) {
-      const triggers = this.utils.replaceTriggerTokens(p.triggers, [
+      const triggers = utils.replaceTriggerTokens(p.triggers, [
         { key: GLOBAL_CONFIG.tokens.target, value: target },
       ]);
       if (p.random && index < targets.length - 1)
@@ -271,7 +268,7 @@ export class FactoryService {
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
-        responses: this.utils.replaceResponseTokens(p.responses, [
+        responses: utils.replaceResponseTokens(p.responses, [
           { key: GLOBAL_CONFIG.tokens.target, value: actionTarget },
         ]),
       });
@@ -297,11 +294,11 @@ export class FactoryService {
     for (const [index, target] of targets.entries()) {
       const orTrigger: Triggers.Trigger = {
         name: "Or",
-        triggers: this.utils
+        triggers: utils
           .replaceTriggerTokens(p.targetTriggers, [
             { key: GLOBAL_CONFIG.tokens.target, value: target },
           ])
-          .map(this.utils.inverseNegation),
+          .map(utils.inverseNegation),
       };
       if (p.random && index < targets.length - 1)
         orTrigger.triggers.push({
@@ -317,15 +314,18 @@ export class FactoryService {
     });
     if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
     const lastSeenBy: ObjectIdentifier = "LastSeenBy";
-    const responses = this.utils.replaceResponseTokens(p.responses, [
+    const responses = utils.replaceResponseTokens(p.responses, [
       { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
     ]);
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     p.statements.push({
-      triggers: this.utils.replaceTriggerTokens(finalTriggers, [
+      triggers: utilsService.replaceTriggerTokens(finalTriggers, [
         { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
       ]),
       responses,
     });
   };
 }
+
+const factoryService = new FactoryService();
+export default factoryService;

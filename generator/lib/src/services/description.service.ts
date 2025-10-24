@@ -1,37 +1,35 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { Creature } from "../model/final/creature";
-import { Effect } from "../model/final/effect";
-import { EffectTypeEnum } from "../model/final/effect.type";
-import {
-  AbilityDamageTypeEnum,
-  ItemAbilityTypeEnum,
-  SaveTypeEnum,
-} from "../model/final/effect.enums";
-import { ImmunityConfig } from "../model/final/immunity";
-import { Item } from "../model/final/item";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
   CurrentHPbonusEffect,
   DamageEffect,
+  Effect,
   IdsEffect,
   InvisibilityEffect,
   LevelDrainEffect,
   PoisonEffect,
-  RawEffect,
   RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
-} from "../model/raw/effect";
+} from "../model/final/effect";
+import {
+  AbilityDamageTypeEnum,
+  EffectBonusToEnum,
+  InvisibilityTypeEnum,
+  ItemAbilityTypeEnum,
+  PoisonTypeEnum,
+  RegenerationTypeEnum,
+  SaveTypeEnum,
+} from "../model/final/effect.enums";
+import { EffectTypeEnum } from "../model/final/effect.type";
+import { ImmunityConfig } from "../model/final/immunity";
+import { Item } from "../model/final/spell-item";
 import { State } from "../state";
-import { EffectService } from "./effect.service";
 
-export class DescriptionService {
-  static instance = new DescriptionService();
-
-  private effectService = EffectService.instance;
-
+class DescriptionService {
   generateCreatureItems(creature: Creature): void {
     for (const item of creature.items) {
       if (!item.description) this.generateItemDescription(item, creature);
@@ -39,38 +37,48 @@ export class DescriptionService {
   }
 
   generateImmunity(immunity: ImmunityConfig): void {
-    if (immunity.description.length) return; // don't override
+    if (immunity.description) return; // don't override
     const results: string[] = [];
     results.push(...this.getImmunitiesDescription(immunity.immunities));
     for (const effect of immunity.effects ?? []) {
       results.push(...this.getEffectDescription(effect));
     }
-    immunity.description = results;
+    // immunity.description = results; //FIXME:
   }
 
   private generateItemDescription(item: Item, creature?: Creature) {
     const desc: string[] = [];
-    const type = item.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
-    if (item.bonusToHit) {
-      desc.push(`THAC0: ${this.getSignedNumber(item.bonusToHit)}`);
+    const type =
+      item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
+    if (item.header.bonusToHit) {
+      desc.push(`THAC0: ${this.getSignedNumber(item.header.bonusToHit)}`);
     }
-    const damage = this.getDiceValue({ ...item, value: item.damageBonus });
+    const damage = this.getDiceValue({
+      ...item,
+      value: item.header.damageBonus,
+    });
     if (damage) {
       desc.push(
-        `${type} damage: ${damage} (${AbilityDamageTypeEnum[item.damageType!]})`
+        `${type} damage: ${damage} (${
+          AbilityDamageTypeEnum[item.header.damageType!]
+        })`
       );
     }
-    const damageEffects = item.effects.filter((e) => e.raw.opcode === "Damage");
-    const otherEffects = item.effects.filter((e) => e.raw.opcode !== "Damage");
+    const damageEffects = item.effects.filter(
+      (e) => e.opcode === EffectTypeEnum.Damage
+    );
+    const otherEffects = item.effects.filter(
+      (e) => e.opcode !== EffectTypeEnum.Damage
+    );
     desc.push(...this.getItemEffectsDescription(damageEffects, creature));
-    if ((damage || damageEffects.length) && item.speed !== undefined) {
-      desc.push(`Speed Factor: ${item.speed}`);
+    if ((damage || damageEffects.length) && item.header.speed !== undefined) {
+      desc.push(`Speed Factor: ${item.header.speed}`);
     }
     if (item.enchantment && item.enchantment > 0) {
       desc.push(`Enchantment: ${item.enchantment}`);
     }
-    if (item.range) {
-      desc.push(`Range: ${item.range} feet`);
+    if (item.header.range) {
+      desc.push(`Range: ${item.header.range} feet`);
     }
     desc.push(...this.getImmunitiesDescription(item.immunities));
     desc.push(...this.getItemEffectsDescription(otherEffects, creature));
@@ -79,7 +87,7 @@ export class DescriptionService {
     } else if (desc.length && typeof item.stringRef === "number") {
       desc.unshift(TraStringReferenceEnum[item.stringRef], "");
     }
-    item.description = desc;
+    // item.description = desc; //TODO:
   }
 
   private getImmunitiesDescription(immunities: ImmunityName[]): string[] {
@@ -87,8 +95,8 @@ export class DescriptionService {
     for (const name of immunities) {
       const immunity = State.immunities.find((i) => i.name === name);
       if (immunity) {
-        if (!immunity.description.length) this.generateImmunity(immunity);
-        results.push(...immunity.description);
+        if (!immunity.description) this.generateImmunity(immunity);
+        // results.push(immunity.description); //TODO:
       }
     }
     return results;
@@ -128,59 +136,50 @@ export class DescriptionService {
 
   private getEffectDescription(effect: Effect): string[] {
     const results: string[] = [];
-    if (effect.raw.opcode === "Damage") {
-      results.push(...this.getDamage(effect.raw));
-    } else if (effect.raw.opcode === "Poison") {
-      results.push(...this.getPoison(effect.raw));
-    } else if (effect.raw.opcode === "ArmorClassBonus") {
-      results.push(...this.getArmorClassBonus(effect.raw));
-    } else if (effect.raw.opcode === "Paralyze") {
-      results.push(...this.getParalyze(effect.raw));
-    } else if (effect.raw.opcode === "InvisibilityDetection") {
+    if (effect.opcode === EffectTypeEnum.Damage) {
+      results.push(...this.getDamage(effect));
+    } else if (effect.opcode === EffectTypeEnum.Poison) {
+      results.push(...this.getPoison(effect));
+    } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
+      results.push(...this.getArmorClassBonus(effect));
+    } else if (effect.opcode === EffectTypeEnum.Paralyze) {
+      results.push(...this.getParalyze(effect));
+    } else if (effect.opcode === EffectTypeEnum.InvisibilityDetection) {
       results.push("Can see invisible creatures.");
-    } else if (effect.raw.opcode === "Blur") {
+    } else if (effect.opcode === EffectTypeEnum.Blur) {
       results.push("Blur (visual effect only)");
-    } else if (effect.raw.opcode === "Translucency") {
+    } else if (effect.opcode === EffectTypeEnum.Translucency) {
       results.push("Translucent");
-    } else if (effect.raw.opcode === "CurrentHPbonus") {
-      results.push(...this.getCurrentHPbonus(effect.raw));
-    } else if (effect.raw.opcode === "LevelDrain") {
-      results.push(...this.getLevelDrain(effect.raw));
-    } else if (effect.raw.opcode === "Sleep") {
-      results.push(...this.getSleep(effect.raw));
-    } else if (effect.raw.opcode === "MirrorImageEffect") {
-      results.push(`Mirror image (${effect.raw.amount})`);
-    } else if (effect.raw.opcode === "Invisibility") {
-      results.push(...this.getInvisibility(effect.raw));
-    } else if (effect.raw.opcode === "Regeneration") {
-      results.push(...this.getRegeneration(effect.raw));
-    } else if (effect.raw.opcode === "CastingTimeModifier") {
-      results.push(...this.getCastingTimeModifier(effect.raw));
-    } else if (this.getStatisticText(effect.raw)) {
+    } else if (effect.opcode === EffectTypeEnum.CurrentHPbonus) {
+      results.push(...this.getCurrentHPbonus(effect));
+    } else if (effect.opcode === EffectTypeEnum.LevelDrain) {
+      results.push(...this.getLevelDrain(effect));
+    } else if (effect.opcode === EffectTypeEnum.Sleep) {
+      results.push(...this.getSleep(effect));
+    } else if (effect.opcode === EffectTypeEnum.MirrorImageEffect) {
+      results.push(`Mirror image (${effect.amount})`);
+    } else if (effect.opcode === EffectTypeEnum.Invisibility) {
+      results.push(...this.getInvisibility(effect));
+    } else if (effect.opcode === EffectTypeEnum.Regeneration) {
+      results.push(...this.getRegeneration(effect));
+    } else if (effect.opcode === EffectTypeEnum.CastingTimeModifier) {
+      results.push(...this.getCastingTimeModifier(effect));
+    } else if (this.getStatisticText(effect)) {
       results.push(
-        ...this.getStatisticModifier(effect.raw as StatisticModifierEffect)
+        ...this.getStatisticModifier(effect as StatisticModifierEffect)
       );
     }
     return results;
   }
 
-  getSaveText(effect: Effect | RawEffect): string {
+  getSaveText(effect: Effect): string {
     let save = "";
     const type = effect.saveTypes?.[0];
-    if (
-      type === "ParalyzePoisonDeath" ||
-      type === SaveTypeEnum.ParalyzePoisonDeath
-    )
-      save = "poison/death";
-    else if (type === "Breath" || type === SaveTypeEnum.Breath) save = "breath";
-    else if (
-      type === "PetrifyPolymorph" ||
-      type === SaveTypeEnum.PetrifyPolymorph
-    )
-      save = "petrify/polymorph";
-    else if (type === "RodStaffWand" || type === SaveTypeEnum.RodStaffWand)
-      save = "wand";
-    else if (type === "Spell" || type === SaveTypeEnum.Spell) save = "spell";
+    if (type === SaveTypeEnum.ParalyzePoisonDeath) save = "poison/death";
+    else if (type === SaveTypeEnum.Breath) save = "breath";
+    else if (type === SaveTypeEnum.PetrifyPolymorph) save = "petrify/polymorph";
+    else if (type === SaveTypeEnum.RodStaffWand) save = "wand";
+    else if (type === SaveTypeEnum.Spell) save = "spell";
     let bonus = effect.saveBonus
       ? ` at ${this.getSignedNumber(effect.saveBonus)}`
       : "";
@@ -188,7 +187,7 @@ export class DescriptionService {
     return saveText;
   }
 
-  getProbability(effect: Effect | RawEffect): string {
+  getProbability(effect: Effect): string {
     //TODO: handle probability2
     return effect.probability1 && effect.probability1 < 100
       ? ` (${effect.probability1}%)`
@@ -203,14 +202,18 @@ export class DescriptionService {
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
-    if (effect.bonusTo === "SetBaseArmorClassToValue")
+    if (effect.bonusTo === EffectBonusToEnum.SetBaseArmorClassToValue)
       return [`${effect.value} base AC`];
     const results: string[] = [];
     let suffix = "";
-    if (effect.bonusTo === "CrushingWeapons") suffix = "crushing";
-    else if (effect.bonusTo === "SlashingWeapons") suffix = "slashing";
-    else if (effect.bonusTo === "PiercingWeapons") suffix = "piercing";
-    else if (effect.bonusTo === "MissileWeapons") suffix = "missile";
+    if (effect.bonusTo === EffectBonusToEnum.CrushingWeapons)
+      suffix = "crushing";
+    else if (effect.bonusTo === EffectBonusToEnum.SlashingWeapons)
+      suffix = "slashing";
+    else if (effect.bonusTo === EffectBonusToEnum.PiercingWeapons)
+      suffix = "piercing";
+    else if (effect.bonusTo === EffectBonusToEnum.MissileWeapons)
+      suffix = "missile";
     if (suffix) suffix = ` vs. ${suffix} attacks`;
     results.push(`${this.getSignedNumber(effect.value)} AC${suffix}`);
     return results;
@@ -218,15 +221,21 @@ export class DescriptionService {
 
   private getInvisibility(effect: InvisibilityEffect): string[] {
     const results: string[] = [];
-    if (effect.type === "Improved") results.push("Improved invisibility");
+    if (effect.type === InvisibilityTypeEnum.Improved)
+      results.push("Improved invisibility");
     else results.push(`Invisibility`);
     return results;
   }
 
   private getRegeneration(effect: RegenerationEffect): string[] {
-    if (["AmountHPperSecond", "AmountHPperSecondBis"].includes(effect.type))
+    if (
+      [
+        RegenerationTypeEnum.AmountHPperSecond,
+        RegenerationTypeEnum.AmountHPperSecondBis,
+      ].includes(effect.type)
+    )
       return [`Regeneration: ${effect.amount} hp/second`];
-    else if (effect.type === "AmountHPpercentagePerSecond")
+    else if (effect.type === RegenerationTypeEnum.AmountHPpercentagePerSecond)
       return [`Regeneration: ${effect.amount}% hp/second`];
     else if (effect.amount === 6) return [`Regeneration: 1 hp/round`];
     const rounds = effect.amount / 6;
@@ -297,7 +306,7 @@ export class DescriptionService {
 
   private getPoison(effect: PoisonEffect): string[] {
     let text = "one damage per second";
-    if (effect.type === "AmountDamagePerSecond")
+    if (effect.type === PoisonTypeEnum.AmountDamagePerSecond)
       text = `${effect.amount} per second`;
     else text = `one damage per ${effect.amount} seconds`;
     const results: string[] = [];
@@ -332,67 +341,85 @@ export class DescriptionService {
     return `+${value}`;
   }
 
-  getStatisticText(effect: RawEffect) {
+  getStatisticText(effect: Effect) {
     const opcodes = [
-      { opcode: "DexterityBonus", label: "Dexterity" },
-      { opcode: "IntelligenceBonus", label: "Intelligence" },
-      { opcode: "StrengthBonus", label: "Strength" },
-      { opcode: "ConstitutionBonus", label: "Constitution" },
+      { opcode: EffectTypeEnum.DexterityBonus, label: "Dexterity" },
+      { opcode: EffectTypeEnum.IntelligenceBonus, label: "Intelligence" },
+      { opcode: EffectTypeEnum.StrengthBonus, label: "Strength" },
+      { opcode: EffectTypeEnum.ConstitutionBonus, label: "Constitution" },
       {
-        opcode: "SlashingResistanceModifier",
+        opcode: EffectTypeEnum.SlashingResistanceModifier,
         label: "Slashing Resistance",
       },
       {
-        opcode: "CrushingResistanceModifier",
+        opcode: EffectTypeEnum.CrushingResistanceModifier,
         label: "Crushing Resistance",
       },
       {
-        opcode: "PiercingResistanceModifier",
+        opcode: EffectTypeEnum.PiercingResistanceModifier,
         label: "Piercing Resistance",
       },
       {
-        opcode: "MissilesResistanceModifier",
+        opcode: EffectTypeEnum.MissilesResistanceModifier,
         label: "Missiles Resistance",
       },
-      { opcode: "FireResistanceModifier", label: "Fire Resistance" },
-      { opcode: "ColdResistanceModifier", label: "Cold Resistance" },
-      { opcode: "MagicResistanceModifier", label: "Magic Resistance" },
       {
-        opcode: "MagicalColdResistanceModifier",
+        opcode: EffectTypeEnum.FireResistanceModifier,
+        label: "Fire Resistance",
+      },
+      {
+        opcode: EffectTypeEnum.ColdResistanceModifier,
+        label: "Cold Resistance",
+      },
+      {
+        opcode: EffectTypeEnum.MagicResistanceModifier,
+        label: "Magic Resistance",
+      },
+      {
+        opcode: EffectTypeEnum.MagicalColdResistanceModifier,
         label: "Magical Cold Resistance",
       },
       {
-        opcode: "MagicalFireResistanceModifier",
+        opcode: EffectTypeEnum.MagicalFireResistanceModifier,
         label: "Magical Fire Resistance",
       },
-      { opcode: "AcidResistanceModifier", label: "Acid Resistance" },
       {
-        opcode: "ElectricityResistanceModifier",
+        opcode: EffectTypeEnum.AcidResistanceModifier,
+        label: "Acid Resistance",
+      },
+      {
+        opcode: EffectTypeEnum.ElectricityResistanceModifier,
         label: "Electricity Resistance",
       },
       {
-        opcode: "MagicDamageResistanceModifier",
+        opcode: EffectTypeEnum.MagicDamageResistanceModifier,
         label: "Magic Damage Resistance",
       },
-      { opcode: "MaximumHPModifier", label: "Maximum HP" },
-      { opcode: "MoraleModifier", label: "Morale" },
-      { opcode: "MoraleBreakModifier", label: "Morale Break" },
-      { opcode: "FatigueBonus", label: "Fatigue Bonus" },
-      { opcode: "AllSavingThrowsBonus", label: "All Saving Throws" },
-      { opcode: "SaveVsBreathModifier", label: "Save vs Breath" },
-      { opcode: "SaveVsDeathModifier", label: "Save vs Death" },
+      { opcode: EffectTypeEnum.MaximumHPModifier, label: "Maximum HP" },
+      { opcode: EffectTypeEnum.MoraleModifier, label: "Morale" },
+      { opcode: EffectTypeEnum.MoraleBreakModifier, label: "Morale Break" },
+      { opcode: EffectTypeEnum.FatigueBonus, label: "Fatigue Bonus" },
       {
-        opcode: "SaveVsPetrificationModifier",
+        opcode: EffectTypeEnum.AllSavingThrowsBonus,
+        label: "All Saving Throws",
+      },
+      { opcode: EffectTypeEnum.SaveVsBreathModifier, label: "Save vs Breath" },
+      { opcode: EffectTypeEnum.SaveVsDeathModifier, label: "Save vs Death" },
+      {
+        opcode: EffectTypeEnum.SaveVsPetrificationModifier,
         label: "Save vs Petrification",
       },
-      { opcode: "SaveVsSpellModifier", label: "Save vs Spell" },
-      { opcode: "SaveVsWandModifier", label: "Save vs Wand" },
+      { opcode: EffectTypeEnum.SaveVsSpellModifier, label: "Save vs Spell" },
+      { opcode: EffectTypeEnum.SaveVsWandModifier, label: "Save vs Wand" },
     ];
     const opcode = opcodes.find((o) => o.opcode === effect.opcode);
     if (!opcode) return;
     const eff = effect as StatisticModifierEffect;
-    return opcode.opcode.includes("Resistance")
+    return EffectTypeEnum[opcode.opcode].includes("Resistance")
       ? `${opcode.label}: ${eff.value}%`
       : `${opcode.label}: ${this.getSignedNumber(eff.value)}`;
   }
 }
+
+const descriptionService = new DescriptionService();
+export default descriptionService;
