@@ -1,7 +1,10 @@
-import { Creature } from "../model/final/creature";
-import { Projectile, ProjectileTypeEnum } from "../model/final/projectile";
-import { CodeLine } from "../model/misc";
-import { AbstractWeiduService } from "./abstract-weidu.service";
+import { Creature } from "../../model/creature/creature";
+import {
+  Projectile,
+  ProjectileTypeEnum,
+} from "../../model/spell-item/projectile";
+import { CodeLine } from "../../model/misc";
+import { AbstractWeiduService } from "../abstract-weidu.service";
 
 export class WeiduProjectileService extends AbstractWeiduService {
   static instance = new WeiduProjectileService();

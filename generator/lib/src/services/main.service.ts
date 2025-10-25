@@ -1,17 +1,17 @@
 import chalk from "chalk";
 import figureSet from "figures";
 import { GRAB_DEFAULT_CONFIG } from "../../config/grab";
-import { CreatureAttack, CreatureAttackAction } from "../model/final/attack";
+import { CreatureAttack, CreatureAttackAction } from "../model/creature/attack";
 import {
   BaseCreature,
   Creature,
   CreatureAdditionalData,
   CreatureAdjustment,
   CreatureData,
-} from "../model/final/creature";
-import { EffectFile } from "../model/final/effect";
-import { EffectTypeEnum } from "../model/final/effect.type";
-import { EffectIDSFileEnum } from "../model/final/effect.enums";
+} from "../model/creature/creature";
+import { EffectFile } from "../model/spell-item/effect";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
+import { EffectIDSFileEnum } from "../model/spell-item/effect.enums";
 import {
   AreaProjectileEnum,
   BamProjectileFlagsEnum,
@@ -22,8 +22,8 @@ import {
   ProjectileExplosionEffectEnum,
   ProjectileExtendedFlagsEnum,
   ProjectileTypeEnum,
-} from "../model/final/projectile";
-import { AdditionalCode, CustomCode } from "../model/final/script";
+} from "../model/spell-item/projectile";
+import { AdditionalCode, CustomCode } from "../model/script/script";
 import {
   RawCreature,
   RawCreatureAdditionalData,
@@ -32,9 +32,9 @@ import {
 } from "../model/raw/creature";
 import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
 import { EffectService } from "./effect.service";
-import { WeiduCoreService } from "./weidu-core.service";
-import { WeiduCreatureService } from "./weidu-creature.service";
-import { WeiduFunctionService } from "./weidu-function.service";
+import { WeiduCoreService } from "./weidu/weidu-core.service";
+import { WeiduCreatureService } from "./weidu/weidu-creature.service";
+import { WeiduFunctionService } from "./weidu/weidu-function.service";
 import { t, translation } from "../translations/i18n";
 
 class MainService {
@@ -245,7 +245,7 @@ class MainService {
       removeKnownSpells: p.additionalData.removeKnownSpells ?? true,
       removeMemorizedSpells,
       immunities: p.additionalData.immunities ?? [],
-      itemSlots: this.itemService.mapItemSlots(
+      equippedItems: this.itemService.mapItemSlots(
         p.additionalData.itemSlots,
         p.items
       ),

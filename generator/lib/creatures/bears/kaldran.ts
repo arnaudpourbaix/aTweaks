@@ -2,7 +2,7 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawSaveType } from "../../src/model/raw/enum";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import { polarBearMainWeapon, polarBearOffhandWeapon } from "./polar";
 
@@ -11,9 +11,9 @@ const id = MonsterEnum.PolarBearKaldran;
 // Script
 const script = bafFile(id);
 // Spells
-const improvedStreamOfFrost = file(1, id);
+const improvedStreamOfFrost = getFilename(1, id);
 // Projectile
-const improvedStreamOfFrostProjectile = file(1, id);
+const improvedStreamOfFrostProjectile = getFilename(1, id);
 
 const paralyzeSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
   saveTypes: ["ParalyzePoisonDeath"],

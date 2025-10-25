@@ -1,5 +1,3 @@
-import { ImmunityName } from "../../../config/immunity-name";
-import { TranslationKey } from "../../translations/i18n";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -7,145 +5,7 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
-import { CreatureAbility } from "./ability";
-import { CreatureAttack } from "./attack";
-import { Effect, EffectFile } from "./effect";
-import { CreatureSize, ItemSlot, ProficiencyTypeEnum } from "./effect.enums";
-import { EffectTypeEnum } from "./effect.type";
-import { Projectile } from "./projectile";
-import { AdditionalCode, CustomCode } from "./script";
-import { EquippedItem, Item, Spell } from "./spell-item";
-
-export interface BaseCreature {
-  files: string[];
-  data: CreatureData;
-  additionalData: CreatureAdditionalData;
-}
-
-export interface Creature extends BaseCreature {
-  name: TranslationKey;
-
-  /**
-   * Filename for BAF file (without extension, relative path from mod folder)
-   */
-  bafFile?: string;
-
-  /**
-   * Filename for TPA file (without extension, relative path from mod folder)
-   */
-  tpaFile: string;
-
-  /**
-   * Asking or responding to help shouts (default: true)
-   */
-  help: boolean;
-
-  /**
-   * Will initiate dialog (values are creature script name)
-   */
-  dialog: string[];
-
-  /**
-   * Can track enemies when no one in sight ? (default: true)
-   */
-  tracking: boolean;
-
-  /**
-   * Random walk outside of combat (default: false)
-   */
-  walk: boolean;
-
-  /**
-   * Random walk within combat when nothing else to do (default: true)
-   */
-  combatWalk: boolean;
-
-  /**
-   * Fully heal while resting (default: false)
-   */
-  restHeal: boolean;
-
-  /**
-   * Can use potions (default: false)
-   */
-  usePotions: boolean;
-
-  /**
-   * Can use kit abilities (default: false)
-   */
-  useKitAbilities: boolean;
-
-  /**
-   * Able to hide in shadows (default: false)
-   */
-  hideInShadows: boolean;
-
-  attack: CreatureAttack;
-  canPolymorph: boolean;
-
-  customCode: CustomCode[];
-  additionalCode: AdditionalCode[];
-
-  data: CreatureData;
-  additionalData: CreatureAdditionalData;
-
-  /**
-   * For these files, keep existing creature values if they are better
-   */
-  notEnforceFiles: string[];
-  adjustments: CreatureAdjustment[];
-
-  abilities: CreatureAbility[];
-  items: Item[];
-  spells: Spell[];
-  projectiles: Projectile[];
-  effectFiles: EffectFile[];
-  newFiles: { files: string[]; copyFrom: string }[];
-
-  /**
-   * Auto-generate some creature data (true by default)
-   */
-  autoGenerate: CreatureAutoGenerate;
-}
-
-export interface MemorizedSpell {
-  /**
-   * Filename for SPL file (without extension)
-   */
-  file: string;
-
-  memorizedCount?: number;
-}
-
-export type ScriptLocation =
-  | "Override"
-  | "Class"
-  | "Race"
-  | "General"
-  | "Default";
-
-export interface CreatureAutoGenerate {
-  thac0?: boolean;
-  hitPoints?: boolean;
-  savingThrows?: boolean;
-  enchantment?: boolean;
-  meleeRange?: boolean;
-}
-
-export interface CreatureAdjustment extends BaseCreature {
-  /**
-   * Is it a summon ?
-   */
-  summon: boolean;
-  /**
-   * Don't assign a script
-   */
-  noScript: boolean;
-  /**
-   * Don't assign a weapon
-   */
-  noWeapon: boolean;
-}
+import { CreatureSize } from "../spell-item/effect.enums";
 
 export interface CreatureData {
   level1?: number;
@@ -212,32 +72,6 @@ export interface CreatureData {
   // moveSilent?: number;
   // moraleBreak?: number;
   // moraleRecovery?: number;
-}
-
-export interface CreatureAdditionalData {
-  /**
-   * BAF scripts to remove from CRE
-   */
-  removeScripts: string[];
-  /**
-   * BAF Script location. Auto if empty, at the top tier possible.
-   * Will raise an error at install if location was not empty (safety measure)
-   */
-  scriptLocation?: ScriptLocation;
-
-  proficiencies: { type: ProficiencyTypeEnum; value: number }[];
-
-  removeItems: string[];
-  itemSlots: EquippedItem[];
-  immunities: ImmunityName[];
-
-  removeKnownSpells: boolean;
-  removeMemorizedSpells?: boolean;
-  memorizedSpells: MemorizedSpell[];
-
-  deleteEffectOpcodes: EffectTypeEnum[];
-  removeEffects: boolean;
-  effects: Effect[];
 }
 
 export const CREATURE_DATA: {

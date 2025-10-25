@@ -1,7 +1,7 @@
 import { Actions } from "../raw/actions";
 import { RawTargetList } from "../raw/target";
 import { Triggers } from "../raw/triggers";
-import { CreatureAbility } from "./ability";
+import { CreatureAbility } from "../creature/ability";
 
 export type Statements = ConditionalStatement[];
 

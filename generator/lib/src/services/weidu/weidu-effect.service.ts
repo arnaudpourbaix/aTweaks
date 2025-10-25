@@ -1,7 +1,7 @@
-import { Effect, EffectFile } from "../model/final/effect";
-import { EffectTypeEnum } from "../model/final/effect.type";
-import { CodeLine } from "../model/misc";
-import { AbstractWeiduService } from "./abstract-weidu.service";
+import { Effect, EffectFile } from "../../model/spell-item/effect";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import { CodeLine } from "../../model/misc";
+import { AbstractWeiduService } from "../abstract-weidu.service";
 
 export class WeiduEffectService extends AbstractWeiduService {
   static instance = new WeiduEffectService();

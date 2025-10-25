@@ -3,7 +3,11 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, convertMovement, file } from "../../src/services/misc.func";
+import {
+  bafFile,
+  convertMovement,
+  getFilename,
+} from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -11,10 +15,10 @@ const id = MonsterEnum.JuggernautGolem;
 // Script
 const script = bafFile(id);
 // Spells
-const charge = file(1, id);
+const charge = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
 
 const name = "Juggernaut Golem";
 

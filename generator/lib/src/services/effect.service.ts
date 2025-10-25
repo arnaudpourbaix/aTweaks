@@ -1,70 +1,28 @@
-import { EFFECT_GROUP_NAMES } from "../../config/effect-group-name";
-import { EFFECT_GROUPS } from "../../config/effect-groups";
-import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import { EXISTING_SPELL_PROTECTIONS } from "../../config/spell-protection";
 import { SpellProtectionName } from "../../config/spell-protection-name";
-import { BaseEffect, Effect } from "../model/final/effect";
-import { EffectTypeEnum } from "../model/final/effect.type";
 import {
-  AnimationChangeTypeEnum,
-  AttackModifierTypeEnum,
-  CastingFailureTypeEnum,
-  CastingTimeModifierTypeEnum,
-  CastSpellOnConditionTargetEnum,
-  CharmTypeEnum,
-  ColorEnum,
-  DisableButtonEnum,
-  DisableSpellcastingTypeEnum,
-  DiseaseTypeEnum,
+  DamageEffect,
+  Effect,
+  ProtectionFromResourceEffect,
+  ScriptingStateModifierEffect,
+} from "../model/spell-item/effect";
+import {
   DispelEffectTypeEnum,
   DispelEffectWeaponTypeEnum,
-  EffectBonusToEnum,
-  EffectCastSpellTypeEnum,
-  EffectColorLocationEnum,
   EffectDamageModeEnum,
-  EffectDamageTypeEnum,
   EffectDispelResistanceEnum,
-  EffectFlagsEnum,
-  EffectHasteTypeEnum,
-  EffectIDSFileEnum,
-  EffectModifierTypeEnum,
-  EffectStatisticModifierEnum,
-  EffectTargetEnum,
-  EffectTeleportTypeEnum,
   EffectTimingEnum,
-  EffectVisualEffectLocationEnum,
   getCastSpellOnConditionValue,
-  InvisibilityTypeEnum,
-  KillTargetDeathTypeEnum,
-  LightingEffectEnum,
-  LightingEffectTargetEnum,
-  OverrideCreatureDataFieldEnum,
-  PoisonTypeEnum,
-  PolymorphTypeEnum,
-  PortraitIconEnum,
-  ProficiencyTypeEnum,
-  ProtectionFromWeaponsTypeEnum,
-  RegenerationTypeEnum,
-  RemoveEffectsByResourceTypeEnum,
-  SaveTypeEnum,
-  SetAnimationSequenceEnum,
-  SummonCreatureModeEnum,
-  TranslucencyTypeEnum,
-  WingBuffetDirectionEnum,
-} from "../model/final/effect.enums";
-import { RawEffectOpcode } from "../model/raw/effect.type";
+} from "../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import {
   SpellProtection,
   SpellProtectionStat,
 } from "../model/raw/spell-protection";
-import { CreatureService } from "./creature.service";
-import { StringRefUtils } from "./string-ref.utils";
-import utilsService from "./utils.service";
+import creatureService from "./creature.service";
+import utils from "./utils.service";
 
 export class EffectService {
-  private creatureService = CreatureService.instance;
-  private utils = utilsService;
-
   getEffects(effects: Effect[]): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
       // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
@@ -78,31 +36,22 @@ export class EffectService {
   }
 
   getEffect(effect: Effect): Effect {
-    if (EFFECT_GROUP_NAMES.includes(effect.opcode))
-      throw new Error(
-        `Effects group ${effect.opcode} can't be processed in getEffect`
-      );
-    const result: Effect = {
-      ...this.getBaseEffect(effect),
-      opcode: EffectTypeEnum[effect.opcode as RawEffectOpcode],
-      parameter1: "0",
-      parameter2: "0",
-    };
-    switch (result.opcode) {
+    // if (EFFECT_GROUP_NAMES.includes(effect.opcode))
+    //   throw new Error(
+    //     `Effects group ${effect.opcode} can't be processed in getEffect`
+    //   );
+    this.setDefaultEffectValues(effect);
+    switch (effect.opcode) {
       case EffectTypeEnum.ArmorClassBonus:
-        result.parameter1 = `${(<ArmorClassBonusEffect>effect).value}`;
-        result.parameter2 = `${
-          EffectBonusToEnum[(<ArmorClassBonusEffect>effect).bonusTo]
-        }`;
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.bonusTo}`;
         break;
       case EffectTypeEnum.CastSpell:
-        result.parameter1 = `${(<CastSpellEffect>effect).castingLevel ?? 0}`;
-        result.parameter2 = `${
-          EffectCastSpellTypeEnum[(<CastSpellEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.castingLevel ?? 0}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.Damage:
-        this.damage(result, effect as DamageEffect);
+        this.damage(effect);
         break;
       case EffectTypeEnum.DexterityBonus:
       case EffectTypeEnum.IntelligenceBonus:
@@ -130,55 +79,37 @@ export class EffectService {
       case EffectTypeEnum.SaveVsPetrificationModifier:
       case EffectTypeEnum.SaveVsSpellModifier:
       case EffectTypeEnum.SaveVsWandModifier:
-        result.parameter1 = `${(<StatisticModifierEffect>effect).value}`;
-        result.parameter2 = `${
-          EffectStatisticModifierEnum[(<StatisticModifierEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.AttackDamageBonus:
       case EffectTypeEnum.MovementRateBonus:
       case EffectTypeEnum.MovementRateBonus2:
       case EffectTypeEnum.Thac0Bonus:
       case EffectTypeEnum.OffhandThac0Bonus:
-        result.parameter1 = `${(<ModifierTypeEffect>effect).value}`;
-        result.parameter2 = `${
-          EffectModifierTypeEnum[(<ModifierTypeEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.DisplayPortraitIcon:
       case EffectTypeEnum.PreventPortraitIcon:
-        result.parameter2 = `${PortraitIconEnum[(<IconEffect>effect).icon]}`;
+        effect.parameter2 = `${effect.icon}`;
         break;
       case EffectTypeEnum.DisplayString:
       case EffectTypeEnum.ProtectionFromSpell:
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
-        if ((<StringRefEffect>effect).stringRef) {
-          result.parameter1 = `${this.utils.resolveStringRef(
-            (<StringRefEffect>effect).stringRef as StringReference //FIXME:
-          )}`;
+        if (effect.stringRef) {
+          effect.parameter1 = `${utils.resolveStringRef(effect.stringRef)}`;
         }
         break;
       case EffectTypeEnum.LightingEffects:
-        result.parameter1 = `${
-          LightingEffectTargetEnum[
-            (<LightingEffectsEffect>effect).lightingTarget
-          ]
-        }`;
-        result.parameter2 = `${
-          LightingEffectEnum[(<LightingEffectsEffect>effect).effect]
-        }`;
+        effect.parameter1 = `${effect.lightingTarget}`;
+        effect.parameter2 = `${effect.effect}`;
         break;
       case EffectTypeEnum.PlayVisualEffect:
-        result.parameter2 = `${
-          EffectVisualEffectLocationEnum[(<PlayVisualEffect>effect).playWhere]
-        }`;
+        effect.parameter2 = `${effect.playWhere}`;
         break;
       case EffectTypeEnum.RemoveEffectsByResource:
-        result.parameter2 = `${
-          RemoveEffectsByResourceTypeEnum[
-            (<RemoveEffectsByResource>effect).type
-          ]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.Slay:
       case EffectTypeEnum.UseEFFFile:
@@ -186,360 +117,240 @@ export class EffectService {
       case EffectTypeEnum.Hold:
       case EffectTypeEnum.DamageVsCreatureTypeModifier:
       case EffectTypeEnum.Thac0VsCreatureTypeModifier:
-        result.parameter1 = `IDS_OF_SYMBOL (~${(<IdsEffect>effect).idsFile}~ ~${
-          (<IdsEffect>effect).idsEntry
-        }~)`;
-        result.parameter2 = `${EffectIDSFileEnum[(<IdsEffect>effect).idsFile]}`;
+        effect.parameter1 = `IDS_OF_SYMBOL (~${effect.idsFile}~ ~${effect.idsEntry}~)`;
+        effect.parameter2 = `${effect.idsFile}`;
         break;
       case EffectTypeEnum.CharacterColorPulse:
       case EffectTypeEnum.SetColorGlowPulse:
-        result.parameter1 = `${
-          ((<ColorPulseEffect>effect).color.red << 8) +
-          ((<ColorPulseEffect>effect).color.green << 16) +
-          ((<ColorPulseEffect>effect).color.blue << 24)
+        effect.parameter1 = `${
+          (effect.color.red << 8) +
+          (effect.color.green << 16) +
+          (effect.color.blue << 24)
         }`;
-        result.parameter2 = `${
-          EffectColorLocationEnum[(<ColorPulseEffect>effect).location] +
-          ((<ColorPulseEffect>effect).cycleSpeed << 16)
-        }`;
+        effect.parameter2 = `${effect.location + (effect.cycleSpeed << 16)}`;
         break;
       case EffectTypeEnum.SetColor:
-        result.parameter1 = `${ColorEnum[(<SetColorEffect>effect).color]}`;
-        result.parameter2 = `${
-          EffectColorLocationEnum[(<SetColorEffect>effect).location]
-        }`;
+        effect.parameter1 = `${effect.color}`;
+        effect.parameter2 = `${effect.location}`;
         break;
       case EffectTypeEnum.SetColorGlowSolid:
-        result.parameter1 = `${
-          ((<ColorPulseEffect>effect).color.red << 8) +
-          ((<ColorPulseEffect>effect).color.green << 16) +
-          ((<ColorPulseEffect>effect).color.blue << 24)
+        effect.parameter1 = `${
+          (effect.color.red << 8) +
+          (effect.color.green << 16) +
+          (effect.color.blue << 24)
         }`;
-        result.parameter2 = `${
-          EffectColorLocationEnum[(<SetColorEffect>effect).location]
-        }`;
+        effect.parameter2 = `${effect.location}`;
         break;
       case EffectTypeEnum.Haste:
-        result.parameter2 = `${
-          EffectHasteTypeEnum[(<HasteEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.ProtectionFromOpcode:
-        result.parameter2 = `${
-          EffectTypeEnum[(<ProtectionFromOpcodeEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.Poison:
-        result.parameter1 = `${(<PoisonEffect>effect).amount}`;
-        result.parameter2 = `${PoisonTypeEnum[(<PoisonEffect>effect).type]}`;
-        if ((<PoisonEffect>effect).icon)
-          result.special =
-            PortraitIconEnum[(<PoisonEffect>effect).icon as RawPortraitIcon];
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
+        if (effect.icon) effect.special = effect.icon;
         break;
       case EffectTypeEnum.PoisonResistanceModifier:
-        result.parameter1 = `${(<ArmorClassBonusEffect>effect).value}`;
+        effect.parameter1 = `${effect.value}`;
         break;
       case EffectTypeEnum.ProtectionFromResource:
       case EffectTypeEnum.ProtectionFromResourceAndMessage:
-        this.protectionFromResource(
-          result,
-          effect as ProtectionFromResourceEffect
-        );
+        this.protectionFromResource(effect);
         break;
       case EffectTypeEnum.ScriptingStateModifier:
-        this.scriptingStateModifier(
-          result,
-          effect as ScriptingStateModifierEffect
-        );
+        this.scriptingStateModifier(effect);
         break;
       case EffectTypeEnum.SetExtendedSpellState:
-        result.parameter2 = `(IDS_OF_SYMBOL (~splstate~ ~${
-          (effect as SetExtendedSpellStateEffect).state
-        }~))`;
-        result.special = 1;
+        effect.parameter2 = `(IDS_OF_SYMBOL (~splstate~ ~${effect.state}~))`;
+        effect.special = 1;
         break;
       case EffectTypeEnum.CreatureRGBColorFade:
-        result.parameter1 = `${
-          ((<CreatureRGBColorFadeEffect>effect).color.red << 8) +
-          ((<CreatureRGBColorFadeEffect>effect).color.green << 16) +
-          ((<CreatureRGBColorFadeEffect>effect).color.blue << 24)
+        effect.parameter1 = `${
+          (effect.color.red << 8) +
+          (effect.color.green << 16) +
+          (effect.color.blue << 24)
         }`;
-        result.parameter2 = `${
-          (<CreatureRGBColorFadeEffect>effect).fadeSpeed << 16
-        }`;
+        effect.parameter2 = `${effect.fadeSpeed << 16}`;
         break;
       case EffectTypeEnum.Teleport:
-        result.parameter2 = `${
-          EffectTeleportTypeEnum[(<TeleportEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.MinimumHP:
-        result.parameter1 = `${(<MinimumHPEffect>effect).value}`;
+        effect.parameter1 = `${effect.value}`;
         break;
       case EffectTypeEnum.Disease:
-        result.parameter1 = `${(<DiseaseEffect>effect).amount}`;
-        result.parameter2 = `${DiseaseTypeEnum[(<DiseaseEffect>effect).type]}`;
-        if ((<DiseaseEffect>effect).icon)
-          result.special =
-            PortraitIconEnum[(<DiseaseEffect>effect).icon as RawPortraitIcon];
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
+        if (effect.icon) effect.special = effect.icon;
         break;
       case EffectTypeEnum.Regeneration:
-        result.parameter1 = `${(<RegenerationEffect>effect).amount}`;
-        result.parameter2 = `${
-          RegenerationTypeEnum[(<RegenerationEffect>effect).type]
-        }`;
-        if ((<RegenerationEffect>effect).icon)
-          result.special =
-            PortraitIconEnum[
-              (<RegenerationEffect>effect).icon as RawPortraitIcon
-            ];
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
+        if (effect.icon) effect.special = effect.icon;
         break;
       case EffectTypeEnum.Sleep:
       case EffectTypeEnum.Sleep20HP:
-        result.parameter2 = `${(<SleepEffect>effect).wakeOnDamage ? 0 : 1}`;
+        effect.parameter2 = `${effect.wakeOnDamage ? 0 : 1}`;
         break;
       case EffectTypeEnum.CharmCreature:
       case EffectTypeEnum.CharmControlCreature:
-        result.parameter1 = `IDS_OF_SYMBOL (~GENERAL~ ~${
-          (<CharmCreatureEffect>effect).generalType
-        }~)`;
-        result.parameter2 = `${
-          CharmTypeEnum[(<CharmCreatureEffect>effect).charmType]
-        }`;
+        effect.parameter1 = `IDS_OF_SYMBOL (~GENERAL~ ~${effect.generalType}~)`;
+        effect.parameter2 = `${effect.charmType}`;
         break;
       case EffectTypeEnum.ProtectionFromProjectile:
-        result.parameter2 = `${
-          (<ProtectionFromProjectileEffect>effect).projectile
-        }`;
+        effect.opcode;
+        effect.parameter2 = `${effect.projectile}`;
         break;
       case EffectTypeEnum.PolymorphIntoSpecific:
-        result.parameter2 = `${
-          PolymorphTypeEnum[(<PolymorphIntoSpecificEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.KillTarget:
-        result.parameter1 = `${(<KillTargetEffect>effect).displayText ? 0 : 1}`;
-        result.parameter2 = `${
-          KillTargetDeathTypeEnum[(<KillTargetEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.displayText ? 0 : 1}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.LevelDrain:
-        result.parameter1 = `${(<LevelDrainEffect>effect).amount}`;
+        effect.parameter1 = `${effect.amount}`;
         break;
       case EffectTypeEnum.Berserk:
-        result.parameter2 = `${(<BerserkEffect>effect).type}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.ProficiencyModifier:
-        result.parameter1 = `${(<ProficiencyModifierEffect>effect).amount}`;
-        result.parameter2 = `${
-          ProficiencyTypeEnum[(<ProficiencyModifierEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.DispelEffects:
-        if ((<DispelEffectsEffect>effect).dispelType)
-          result.parameter1 = `${
-            DispelEffectTypeEnum[(<DispelEffectsEffect>effect).dispelType ?? 0]
-          }`;
-        if ((<DispelEffectsEffect>effect).magicWeaponDispelType)
-          result.parameter2 = `${
-            DispelEffectWeaponTypeEnum[
-              (<DispelEffectsEffect>effect).magicWeaponDispelType ?? 0
-            ]
+        if (effect.dispelType)
+          effect.parameter1 = `${DispelEffectTypeEnum[effect.dispelType ?? 0]}`;
+        if (effect.magicWeaponDispelType)
+          effect.parameter2 = `${
+            DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType ?? 0]
           }`;
         break;
       case EffectTypeEnum.ProtectionFromWeapons:
-        result.parameter1 = `${
-          (<ProtectionFromWeaponsEffect>effect).enchantment
-        }`;
-        result.parameter2 = `${
-          ProtectionFromWeaponsTypeEnum[
-            (<ProtectionFromWeaponsEffect>effect).type
-          ]
-        }`;
+        effect.parameter1 = `${effect.enchantment}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.Translucency:
-        result.parameter1 = `${(<TranslucencyEffect>effect).amount}`;
-        result.parameter2 = `${
-          TranslucencyTypeEnum[(<TranslucencyEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.CastSpellOnCondition:
-        result.parameter1 = `${
-          CastSpellOnConditionTargetEnum[
-            (<CastSpellOnConditionEffect>effect).conditionTarget
-          ]
-        }`;
-        result.parameter2 = `${getCastSpellOnConditionValue(
-          (<CastSpellOnConditionEffect>effect).condition
-        )}`;
+        effect.parameter1 = `${effect.conditionTarget}`;
+        effect.parameter2 = `${getCastSpellOnConditionValue(effect.condition)}`;
         break;
       case EffectTypeEnum.RemoveSpellTypeProtections:
-        result.parameter1 = `${
-          (<RemoveSpellTypeProtectionsEffect>effect).maximumLevel
-        }`;
-        result.parameter2 = `${
-          (<RemoveSpellTypeProtectionsEffect>effect).type
-        }`;
+        effect.parameter1 = `${effect.maximumLevel}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.CurrentHPbonus:
-        result.parameter1 = `${(<CurrentHPbonusEffect>effect).value}`;
-        result.parameter2 = `${
-          EffectModifierTypeEnum[(<CurrentHPbonusEffect>effect).type]
-        }`; //TODO: handle flag if necessary
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.type}`; //TODO: handle flag if necessary
         break;
       case EffectTypeEnum.CreateItemInSlot:
-        result.parameter1 = `IDS_OF_SYMBOL (~slots~ ~${
-          (<CreateItemInSlotEffect>effect).slot
-        }~)`;
+        effect.parameter1 = `IDS_OF_SYMBOL (~slots~ ~${effect.slot}~)`;
         break;
       case EffectTypeEnum.RemoveOpcode:
-        result.parameter1 = (<RemoveOpcodeEffect>effect).param;
-        result.parameter2 = `${
-          EffectTypeEnum[(<RemoveOpcodeEffect>effect).opcodeToRemove]
-        }`;
+        effect.parameter1 = effect.param;
+        effect.parameter2 = `${effect.opcodeToRemove}`;
         break;
       case EffectTypeEnum.Invisibility:
-        result.parameter2 = `${
-          InvisibilityTypeEnum[(<InvisibilityEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.MakeUnselectable:
-        if (!(<MakeUnselectableEffect>effect).disableDialog)
-          result.parameter1 = `1`;
-        result.parameter2 = `1`;
+        if (!effect.disableDialog) effect.parameter1 = `1`;
+        effect.parameter2 = `1`;
         break;
       case EffectTypeEnum.NoCollisionDetection:
-        if (!(<NoCollisionDetectionEffect>effect).passWalls)
-          result.parameter2 = `1`;
+        if (!effect.passWalls) effect.parameter2 = `1`;
         break;
       case EffectTypeEnum.OverrideCreatureData:
-        result.parameter1 = `${(<OverrideCreatureDataEffect>effect).value}`;
-        result.parameter2 = `${
-          OverrideCreatureDataFieldEnum[
-            (<OverrideCreatureDataEffect>effect).field
-          ]
-        }`;
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.field}`;
         break;
       case EffectTypeEnum.AnimationChange:
-        result.parameter1 = `IDS_OF_SYMBOL (~animate~ ~${
-          (<AnimationChangeEffect>effect).animationId
-        }~)`;
-        result.parameter2 = `${
-          AnimationChangeTypeEnum[(<AnimationChangeEffect>effect).animationType]
-        }`;
+        effect.parameter1 = `IDS_OF_SYMBOL (~animate~ ~${effect.animationId}~)`;
+        effect.parameter2 = `${effect.animationType}`;
         break;
       case EffectTypeEnum.ModifyAttacksPerRound:
-        result.parameter1 = `${this.creatureService.getAttacksPerRound(
-          (<ModifyAttacksPerRoundEffect>effect).value
+        effect.parameter1 = `${creatureService.getAttacksPerRound(
+          effect.value
         )}`;
-        result.parameter2 = `${
-          AttackModifierTypeEnum[(<ModifyAttacksPerRoundEffect>effect).type]
-        }`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.DisableSpellcasting:
-        result.parameter2 = `${
-          DisableSpellcastingTypeEnum[(<DisableSpellcastingEffect>effect).type]
-        }`;
-        if ((<DisableSpellcastingEffect>effect).showMessage === false)
-          effect.special = 1;
+        effect.parameter2 = `${effect.type}`;
+        if (effect.showMessage === false) effect.special = 1;
         break;
       case EffectTypeEnum.CastingFailure:
-        result.parameter1 = `${(<CastingFailureEffect>effect).amount}`;
-        result.parameter2 = `${
-          CastingFailureTypeEnum[(<CastingFailureEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.amount}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.MirrorImageEffect:
-        result.parameter1 = `${(<MirrorImageEffect>effect).amount}`;
+        effect.parameter1 = `${effect.amount}`;
         break;
       case EffectTypeEnum.DisableButton:
-        result.parameter2 = `${
-          DisableButtonEnum[(<DisableButtonEffect>effect).button]
-        }`;
+        effect.parameter2 = `${effect.button}`;
         break;
       case EffectTypeEnum.CreateWeapon:
-        result.parameter1 = `${(<CreateWeaponEffect>effect).amount}`;
+        effect.parameter1 = `${effect.amount}`;
         break;
       case EffectTypeEnum.ImmunityToTurnUndead:
       case EffectTypeEnum.ProtectionFromBackstab:
       case EffectTypeEnum.InvisibilityDetection:
       case EffectTypeEnum.ModifyCollisionBehavior:
-        result.parameter2 = `1`;
+        effect.parameter2 = `1`;
         break;
       case EffectTypeEnum.CastingTimeModifier:
-        result.parameter1 = `${(<CastingTimeModifierEffect>effect).value}`;
-        result.parameter2 = `${
-          CastingTimeModifierTypeEnum[(<CastingTimeModifierEffect>effect).type]
-        }`;
+        effect.parameter1 = `${effect.value}`;
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.SummonCreature:
-        result.parameter2 = `${
-          SummonCreatureModeEnum[(<SummonCreatureEffect>effect).mode]
-        }`;
+        effect.parameter2 = `${effect.mode}`;
         break;
       case EffectTypeEnum.SetAnimationSequence:
-        result.parameter2 = `${
-          SetAnimationSequenceEnum[
-            (<SetAnimationSequenceEffect>effect).sequence
-          ]
-        }`;
+        effect.parameter2 = `${effect.sequence}`;
         break;
       case EffectTypeEnum.WingBuffet:
-        result.parameter1 = `${(<WingBuffetEffect>effect).speed}`;
-        result.parameter2 = `${
-          WingBuffetDirectionEnum[(<WingBuffetEffect>effect).direction]
-        }`;
+        effect.parameter1 = `${effect.speed}`;
+        effect.parameter2 = `${effect.direction}`;
         break;
     }
-    return result;
+    return effect;
   }
 
-  private damage(result: Effect, effect: DamageEffect) {
+  private damage(effect: DamageEffect) {
     const mode = effect.damageMode
-      ? EffectDamageModeEnum[effect.damageMode]
+      ? effect.damageMode
       : EffectDamageModeEnum.Normal;
-    const type = EffectDamageTypeEnum[effect.type];
-    result.parameter1 = `${effect.amount ?? 0}`;
-    result.parameter2 = `${mode + (type << 16)}`;
+    const type = effect.type;
+    effect.parameter1 = `${effect.amount ?? 0}`;
+    effect.parameter2 = `${mode + (type << 16)}`;
   }
 
-  private protectionFromResource(
-    result: Effect,
-    effect: ProtectionFromResourceEffect
-  ) {
+  private protectionFromResource(effect: ProtectionFromResourceEffect) {
     const isValueString =
       typeof effect.value === "string" && !/\d+/.test(effect.value);
     if (effect.value !== undefined && !isValueString)
-      result.parameter1 = `${effect.value}`;
+      effect.parameter1 = `${effect.value}`;
     if (typeof effect.type === "string")
-      this.protectionFromResourceFromName(
-        result,
-        effect,
-        effect.type,
-        isValueString
-      );
+      this.protectionFromResourceFromName(effect, effect.type, isValueString);
     else
-      this.protectionFromResourceFromObject(
-        result,
-        effect,
-        effect.type,
-        isValueString
-      );
+      this.protectionFromResourceFromObject(effect, effect.type, isValueString);
   }
 
   private protectionFromResourceFromName(
-    result: Effect,
     effect: ProtectionFromResourceEffect,
     type: SpellProtectionName,
     isValueString: boolean
   ) {
-    result.parameter2 = type;
+    effect.parameter2 = type;
     if (isValueString)
       throw new Error(`Can't determine param1 in ${JSON.stringify(effect)}`);
   }
 
   private protectionFromResourceFromObject(
-    result: Effect,
     effect: ProtectionFromResourceEffect,
     type: SpellProtection,
     isValueString: boolean
@@ -553,178 +364,171 @@ export class EffectService {
     );
     if (!prot)
       throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
-    result.parameter2 = `${prot.index}`;
+    effect.parameter2 = `${prot.index}`;
     if (!isValueString) return;
-    let file = this.utils.getIdsFileFromSpellProtectionStat(
+    let file = utils.getIdsFileFromSpellProtectionStat(
       prot.stat as SpellProtectionStat
     );
     if (!file)
       throw new Error(`Can't find IDS file for: ${JSON.stringify(type)}`);
-    result.parameter1 = `IDS_OF_SYMBOL (~${file}~ ~${effect.value}~)`;
+    effect.parameter1 = `IDS_OF_SYMBOL (~${file}~ ~${effect.value}~)`;
   }
 
-  private scriptingStateModifier(
-    result: Effect,
-    effect: ScriptingStateModifierEffect
-  ): void {
+  private scriptingStateModifier(effect: ScriptingStateModifierEffect): void {
     if (effect.value < 0 || effect.value > 35)
       throw new Error(
         `Value for opcode ${EffectTypeEnum.ScriptingStateModifier} must be between 0 and 35, found: ${effect.value}`
       );
-    result.parameter1 = `${effect.value}`;
-    result.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
+    effect.parameter1 = `${effect.value}`;
+    effect.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
   }
 
-  getGroupEffects(effect: RawEffectGroup) {
-    const groupEffects = EFFECT_GROUPS.find((g) => g.group === effect.opcode);
-    if (!groupEffects)
-      throw new Error(`Effects group ${effect.opcode} not found`);
-    return this.getEffects(groupEffects.effectsFn(effect));
-  }
-
-  getCharmEffects(params: {
-    charmType: RawCharmType;
-    duration: number;
-    saveType?: RawSaveType;
-    saveBonus?: number;
-    dispelResistance?: RawEffectDispelResistance;
-  }) {
-    const effects: RawEffect[] = [
-      {
-        opcode: "CharmCreature",
-        generalType: "HUMANOID",
-        charmType: params.charmType,
-        timing: "InstantLimited",
-        duration: params.duration,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "DisplayString",
-        stringRef: StringRefUtils.getStringId("Dire charmed"),
-        timing: "InstantPermanentUntilDeath",
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "CharacterColorPulse",
-        color: { red: 255, green: 144, blue: 147 },
-        location: "ArmorGreyBeltAmulet",
-        cycleSpeed: 30,
-        timing: "InstantLimited",
-        duration: 1,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "PlayVisualEffect",
-        playWhere: "OverTargetAttached",
-        resource: "SPNWCHRM",
-        timing: "InstantLimited",
-        duration: 3,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "PlaySound",
-        resource: "EFF_E07",
-        timing: "DelayLimited",
-        duration: params.duration,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
+  getDamageOverTime(rounds: number, effect: DamageEffect): DamageEffect[] {
+    const results: DamageEffect[] = [
+      { ...effect, timing: EffectTimingEnum.InstantPermanent },
     ];
-    return effects;
+    for (let i = 1; i < rounds; i++) {
+      results.push({
+        ...effect,
+        timing: EffectTimingEnum.DelayPermanent,
+        duration: i * 6,
+      });
+    }
+    return results;
   }
 
-  getBlindnessEffects(params: {
-    duration: number;
-    saveType?: RawSaveType;
-    saveBonus?: number;
-    dispelResistance?: RawEffectDispelResistance;
-  }) {
-    const effects: RawEffect[] = [
-      ATWEAKS_SPELLS.ColorSpray,
-      ATWEAKS_SPELLS.ColorSprayRadiant,
-      SPELLS.ColorSpray,
-      SPELLS.MephitColorSpray,
-    ].map((s) => ({
-      opcode: "ProtectionFromSpell",
-      resource: s,
-      timing: "InstantLimited",
-      duration: params.duration,
-      dispelResistance: params.dispelResistance,
-      saveTypes: params.saveType ? [params.saveType] : undefined,
-      saveBonus: params.saveBonus,
-    }));
-    effects.push(
-      {
-        opcode: "Blindness",
-        timing: "InstantLimited",
-        duration: params.duration,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "DisplayPortraitIcon",
-        icon: "Blind",
-        timing: "InstantLimited",
-        duration: params.duration,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
-        opcode: "DisplayString",
-        stringRef: StringRefUtils.getStringId("blinded"),
-        timing: "InstantPermanentUntilDeath",
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      }
-    );
-    return effects;
-  }
+  // getGroupEffects(effect: RawEffectGroup) {
+  //   const groupEffects = EFFECT_GROUPS.find((g) => g.group === effect.opcode);
+  //   if (!groupEffects)
+  //     throw new Error(`Effects group ${effect.opcode} not found`);
+  //   return this.getEffects(groupEffects.effectsFn(effect));
+  // }
 
-  getBaseEffect(effect: RawEffect): BaseEffect {
-    const defaultTarget = !!effect.global
-      ? EffectTargetEnum.Self
-      : EffectTargetEnum.PresetTarget;
-    const defaultTiming = !!effect.global
-      ? EffectTimingEnum.InstantWhileEquipped
-      : EffectTimingEnum.InstantLimited;
-    const result: BaseEffect = {
-      opcode: EffectTypeEnum.ArmorClassBonus,
-      target: effect.target ? EffectTargetEnum[effect.target] : defaultTarget,
-      power: effect.power,
-      timing: effect.timing ? EffectTimingEnum[effect.timing] : defaultTiming,
-      dispelResistance: effect.dispelResistance
-        ? EffectDispelResistanceEnum[effect.dispelResistance]
-        : EffectDispelResistanceEnum.NaturalNonMagical,
-      duration: effect.duration,
-      probability1: effect.probability1 ?? 100,
-      probability2: effect.probability2,
-      diceThrown: effect.diceThrown ?? effect.maxLevel,
-      diceSize: effect.diceSize ?? effect.minLevel,
-      saveTypes: effect.saveTypes
-        ? effect.saveTypes.map((s) => SaveTypeEnum[s])
-        : undefined,
-      saveBonus: effect.saveBonus,
-      resource: effect.resource,
-      flags: effect.flags
-        ? effect.flags.map((f) => EffectFlagsEnum[f])
-        : undefined,
-      special: effect.special,
-      global: effect.global ?? false,
-      raw: effect,
-    };
-    return result;
+  // getCharmEffects(params: {
+  //   charmType: RawCharmType;
+  //   duration: number;
+  //   saveType?: RawSaveType;
+  //   saveBonus?: number;
+  //   dispelResistance?: RawEffectDispelResistance;
+  // }) {
+  //   const effects: RawEffect[] = [
+  //     {
+  //       opcode: "CharmCreature",
+  //       generalType: "HUMANOID",
+  //       charmType: params.charmType,
+  //       timing: "InstantLimited",
+  //       duration: params.duration,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "DisplayString",
+  //       stringRef: StringRefUtils.getStringId("Dire charmed"),
+  //       timing: "InstantPermanentUntilDeath",
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "CharacterColorPulse",
+  //       color: { red: 255, green: 144, blue: 147 },
+  //       location: "ArmorGreyBeltAmulet",
+  //       cycleSpeed: 30,
+  //       timing: "InstantLimited",
+  //       duration: 1,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "PlayVisualEffect",
+  //       playWhere: "OverTargetAttached",
+  //       resource: "SPNWCHRM",
+  //       timing: "InstantLimited",
+  //       duration: 3,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "PlaySound",
+  //       resource: "EFF_E07",
+  //       timing: "DelayLimited",
+  //       duration: params.duration,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //   ];
+  //   return effects;
+  // }
+
+  // getBlindnessEffects(params: {
+  //   duration: number;
+  //   saveType?: RawSaveType;
+  //   saveBonus?: number;
+  //   dispelResistance?: RawEffectDispelResistance;
+  // }) {
+  //   const effects: RawEffect[] = [
+  //     ATWEAKS_SPELLS.ColorSpray,
+  //     ATWEAKS_SPELLS.ColorSprayRadiant,
+  //     SPELLS.ColorSpray,
+  //     SPELLS.MephitColorSpray,
+  //   ].map((s) => ({
+  //     opcode: "ProtectionFromSpell",
+  //     resource: s,
+  //     timing: "InstantLimited",
+  //     duration: params.duration,
+  //     dispelResistance: params.dispelResistance,
+  //     saveTypes: params.saveType ? [params.saveType] : undefined,
+  //     saveBonus: params.saveBonus,
+  //   }));
+  //   effects.push(
+  //     {
+  //       opcode: "Blindness",
+  //       timing: "InstantLimited",
+  //       duration: params.duration,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "DisplayPortraitIcon",
+  //       icon: "Blind",
+  //       timing: "InstantLimited",
+  //       duration: params.duration,
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     },
+  //     {
+  //       opcode: "DisplayString",
+  //       stringRef: StringRefUtils.getStringId("blinded"),
+  //       timing: "InstantPermanentUntilDeath",
+  //       dispelResistance: params.dispelResistance,
+  //       saveTypes: params.saveType ? [params.saveType] : undefined,
+  //       saveBonus: params.saveBonus,
+  //     }
+  //   );
+  //   return effects;
+  // }
+
+  setDefaultEffectValues(effect: Effect) {
+    //TODO:
+    // const defaultTarget = !!effect.global
+    //   ? EffectTargetEnum.Self
+    //   : EffectTargetEnum.PresetTarget;
+    // const defaultTiming = !!effect.global
+    //   ? EffectTimingEnum.InstantWhileEquipped
+    //   : EffectTimingEnum.InstantLimited;
+    // target: effect.target ?? defaultTarget,
+    // timing: effect.timing ?? defaultTiming,
+    if (effect.dispelResistance === undefined)
+      effect.dispelResistance = EffectDispelResistanceEnum.NaturalNonMagical;
+    if (effect.probability1 === undefined) effect.probability1 = 100;
+    if (effect.diceSize === undefined) effect.diceThrown = effect.minLevel;
+    if (effect.diceThrown === undefined) effect.diceThrown = effect.maxLevel;
   }
 }
 

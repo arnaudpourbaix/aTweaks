@@ -4,16 +4,16 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createCreatureSplit } from "../../spells/slime_split";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.BlackPudding;
 // Spells
-const split = file(1, id);
+const split = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-export const puddingTraits = file(2, id);
+const mainWeapon = getFilename(1, id);
+export const puddingTraits = getFilename(2, id);
 // Script
 const script = bafFile(id);
 

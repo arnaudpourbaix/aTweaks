@@ -1,15 +1,15 @@
 import * as fs from "fs";
 import path from "path";
-import { SPELL_STATES } from "../../config/ability-presets";
-import { GLOBAL_CONFIG } from "../../config/generate";
-import { CR, JEWEL_SLOTS, TAB } from "../model/constants";
-import { ItemFlagEnum } from "../model/final/effect.enums";
-import { ImmunityConfig } from "../model/final/immunity";
-import { RawItemSlot } from "../model/raw/item";
-import { State } from "../state";
-import { AbstractWeiduService } from "./abstract-weidu.service";
-import { SPELL_PROTECTIONS } from "../../config/spell-protection";
-import { SpellProtectionStat } from "../model/raw/spell-protection";
+import { SPELL_STATES } from "../../../config/ability-presets";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import { CR, JEWEL_SLOTS, TAB } from "../../model/constants";
+import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { EquippedItem } from "../../model/raw/item";
+import { State } from "../../state";
+import { AbstractWeiduService } from "../abstract-weidu.service";
+import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { SpellProtectionStat } from "../../model/raw/spell-protection";
 
 export class WeiduCoreService extends AbstractWeiduService {
   static instance = new WeiduCoreService();
@@ -62,7 +62,7 @@ export class WeiduCoreService extends AbstractWeiduService {
     this.add(this.lines, ``, 0);
   }
 
-  generateItem(itemSlot: RawItemSlot, immunity: ImmunityConfig) {
+  generateItem(itemSlot: EquippedItem, immunity: ImmunityConfig) {
     const criticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
     this.write(this.lines, 0x64, 4, "0x72", 1);
@@ -93,7 +93,7 @@ export class WeiduCoreService extends AbstractWeiduService {
     this.add(this.lines, "", 0);
   }
 
-  getIcon(itemSlot: RawItemSlot) {
+  getIcon(itemSlot: EquippedItem) {
     if (itemSlot.slot === JEWEL_SLOTS) return "IRING16";
     switch (itemSlot.slot) {
       case "ARMOR":

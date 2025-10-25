@@ -1,18 +1,16 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { SpellGroupName } from "../../config/spell-group-name";
-import { ItemSlot, SpellTypeEnum } from "../model/final/effect.enums";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Response } from "../model/final/script";
-import {
-  EquippedItem,
-  MemorizedSpellType,
-  Spell,
-} from "../model/final/spell-item";
+import { Response } from "../model/script/script";
+import { MemorizedSpellType, Spell } from "../model/spell-item/spell-item";
 import { Actions } from "../model/raw/actions";
 import { SpellGroup } from "../model/raw/spell-group";
 import { SpellProtectionStat } from "../model/raw/spell-protection";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
+import { TranslationKey } from "../translations/i18n";
+import { SpellTypeEnum } from "../model/spell-item/effect.enums";
+import { EquippedItem, ItemSlot } from "../model/creature/item";
 
 class UtilsService {
   replaceParamTokens(
@@ -87,12 +85,15 @@ class UtilsService {
   //   else return `@${value}`; //FIXME:
   // }
 
-  // resolveStringRef(value: StringReference | undefined): string | undefined {
-  //   if (value === undefined) return;
-  //   else if (typeof value === "string" && /^\d+$/.test(value)) return value;
-  //   else if (typeof value === "string") return `RESOLVE_STR_REF(~${value}~)`;
-  //   else return `RESOLVE_STR_REF(@${value})`; //FIXME
-  // }
+  resolveStringRef(value: TranslationKey | undefined): string | undefined {
+    if (value === undefined) return;
+    return value; // TODO:
+    // else if (typeof value === "string" && /^\d+$/.test(value))
+    //   return value; // existing string ref
+    // else if (typeof value === "string")
+    //   return `RESOLVE_STR_REF(~${value}~)`; // create a new string ref from value
+    // else return `RESOLVE_STR_REF(@${value})`; // create a new string ref from language key
+  }
 
   getSpellResourceFromIds(ids: string): string {
     const type = ids.substring(0, 1);
@@ -206,8 +207,8 @@ class UtilsService {
     if (!spell) return { type: "innate", level: 1 }; // unknown case, returns innate
     if (spell?.copyFrom) result = this.getSpellInfosByFilename(spell.copyFrom);
     let type = this.getMemorizedSpellType(spell.spellType);
-    if (!type && spell.changes?.spellType)
-      type = this.getMemorizedSpellType(spell.changes.spellType);
+    if (!type && spell.options?.spellType)
+      type = this.getMemorizedSpellType(spell.options.spellType);
     if (!type && result) {
       // console.log(`${file} => fallback to copyFrom ${JSON.stringify(result)}`);
       return result;

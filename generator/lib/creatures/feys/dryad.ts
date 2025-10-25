@@ -4,13 +4,13 @@ import { ITEMS } from "../../config/item";
 import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createDimensionDoor } from "../../spells/dimension_door";
-import { ConditionalStatement } from "../../src/model/final/script";
+import { ConditionalStatement } from "../../src/model/script/script";
 import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
 import { FactoryService } from "../../src/services/factory.service";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { MonsterEnum } from "../monster";
 
@@ -20,7 +20,7 @@ const effects = EffectService.instance;
 // Creature Id
 const id = MonsterEnum.Dryad;
 // Items
-const traits = file(1, id);
+const traits = getFilename(1, id);
 // Script
 const script = bafFile(id);
 

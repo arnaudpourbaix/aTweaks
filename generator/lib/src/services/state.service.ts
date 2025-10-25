@@ -1,15 +1,13 @@
 import { IMMUNITIES } from "../../config/immunity-config";
-import { GenericScriptParameterData } from "../model/final/data";
+import { GenericScriptParameterData } from "../model/script/data";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
-import { DescriptionService } from "./description.service";
+import descriptionService from "./description.service";
 import effectService from "./effect.service";
 
 class StateService {
-  private descriptionService = DescriptionService.instance;
-
   init(): Promise<void> {
     try {
       State.modFolder = "..";
@@ -63,7 +61,7 @@ class StateService {
       return result;
     });
     for (const i of State.immunities) {
-      this.descriptionService.generateImmunity(i);
+      descriptionService.generateImmunity(i);
     }
   }
 }

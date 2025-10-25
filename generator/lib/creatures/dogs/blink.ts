@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,9 +10,9 @@ const id = MonsterEnum.BlinkDog;
 // Script
 const script = bafFile(id);
 // Spells
-const blink = file(1, id);
+const blink = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 
 export const DOG_BLINK: RawCreature = {
   name: "Blink Dog",

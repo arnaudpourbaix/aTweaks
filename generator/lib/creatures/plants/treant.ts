@@ -2,7 +2,7 @@ import { ATWEAKS_CREATURES } from "../../config/creatures";
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,9 +10,9 @@ const id = MonsterEnum.Treant;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon7hd = file(1, id);
-const mainWeapon9hd = file(2, id);
-const mainWeapon11hd = file(3, id);
+const mainWeapon7hd = getFilename(1, id);
+const mainWeapon9hd = getFilename(2, id);
+const mainWeapon11hd = getFilename(3, id);
 
 export const PLANT_TREANT: RawCreature = {
   name: "Treant",

@@ -1,0 +1,106 @@
+import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import creatureFactory from "../../factories/creature.factory";
+import { TranslationKey } from "../../translations/i18n";
+import { CastSpellEffect } from "../spell-item/effect";
+import { Projectile } from "../spell-item/projectile";
+import {
+  Item,
+  PartialItem,
+  PartialSpell,
+  PartialWeapon,
+  Spell,
+  Weapon,
+  WeaponCastSpell,
+} from "../spell-item/spell-item";
+import { CreatureAdditionalData } from "./additional-data";
+import { CreatureAttack } from "./attack";
+import { CreatureBehavior } from "./behavior";
+import { CreatureData } from "./data";
+
+export interface BaseCreature {
+  files: string[];
+  data: CreatureData;
+  additionalData: CreatureAdditionalData;
+}
+
+export class Creature implements BaseCreature {
+  name!: TranslationKey;
+  monster!: MonsterEnum;
+  family!: MonsterFamilyEnum;
+  data!: CreatureData;
+  additionalData!: CreatureAdditionalData;
+  behavior!: CreatureBehavior;
+  attack!: CreatureAttack;
+  files: string[] = [];
+  newFiles: { files: string[]; copyFrom: string }[] = [];
+
+  /**
+   * For these files, keep existing creature values if they are better
+   */
+  notEnforceFiles: string[] = [];
+  adjustments: CreatureAdjustment[] = [];
+
+  weapons: Weapon[] = [];
+  items: Item[] = [];
+  spells: Spell[] = [];
+  projectiles: Projectile[] = [];
+  // effectFiles: EffectFile[] = [];
+
+  /**
+   * Auto-generate some creature data (true by default)
+   */
+  autoGenerate: CreatureAutoGenerate = {
+    thac0: true,
+    hitPoints: true,
+    savingThrows: true,
+    enchantment: true,
+    meleeRange: true,
+  };
+
+  setAdditionalData(additionalData: Partial<CreatureAdditionalData>) {
+    creatureFactory.setAdditionalData(this, additionalData);
+  }
+
+  setBehavior(behavior: Partial<CreatureBehavior>) {
+    creatureFactory.setBehavior(this, behavior);
+  }
+
+  setAttack(attack: Partial<CreatureAttack>) {
+    creatureFactory.setAttack(this, attack);
+  }
+
+  addSpell(spell: PartialSpell): Spell {
+    return creatureFactory.addSpell(this, spell);
+  }
+
+  addItem(item: PartialItem) {
+    return creatureFactory.addItem(this, item);
+  }
+
+  addWeapon(weapon: PartialWeapon, castSpell?: WeaponCastSpell) {
+    return creatureFactory.addWeapon(this, weapon, castSpell);
+  }
+}
+
+export interface CreatureAutoGenerate {
+  thac0?: boolean;
+  hitPoints?: boolean;
+  savingThrows?: boolean;
+  enchantment?: boolean;
+  meleeRange?: boolean;
+}
+
+export interface CreatureAdjustment extends BaseCreature {
+  /**
+   * Is it a summon ?
+   */
+  summon: boolean;
+  /**
+   * Don't assign a script
+   */
+  noScript: boolean;
+  /**
+   * Don't assign a weapon
+   */
+  noWeapon: boolean;
+}

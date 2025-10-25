@@ -11,7 +11,11 @@ import {
 } from "../../src/model/raw/spell-protection";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
-import { bafFile, convertMovement, file } from "../../src/services/misc.func";
+import {
+  bafFile,
+  convertMovement,
+  getFilename,
+} from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { instance } from "../../src/services/utils.service";
 import { MonsterEnum } from "../monster";
@@ -22,12 +26,12 @@ const utils = instance.instance;
 // Creature Id
 const id = MonsterEnum.Sirine;
 // Spells
-const improvedInvisibility = file(1, id);
-const polymorphSelf = file(2, id);
+const improvedInvisibility = getFilename(1, id);
+const polymorphSelf = getFilename(2, id);
 // Items
-const mainWeapon = file(1, id);
-const movementBoots = file(2, id);
-const traits = file(3, id);
+const mainWeapon = getFilename(1, id);
+const movementBoots = getFilename(2, id);
+const traits = getFilename(3, id);
 // Script
 const script = bafFile(id);
 

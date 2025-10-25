@@ -4,7 +4,7 @@ export function convertMovement(movement: number): number {
   return result;
 }
 
-export function file(num: number, creatureId: number): string {
+export function getFilename(num: number, creatureId: number): string {
   return `ja#${num}m${creatureId}`;
 }
 

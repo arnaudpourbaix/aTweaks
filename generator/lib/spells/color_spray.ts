@@ -1,6 +1,6 @@
 import { SPELLS } from "../config/spell-names";
 import { TraStringReferenceEnum } from "../config/stringRef";
-import { PortraitIconEnum } from "../src/model/final/effect.enums";
+import { PortraitIconEnum } from "../src/model/spell-item/effect.enums";
 import { RawBaseEffect, RawEffect } from "../src/model/raw/effect";
 import { RawSpell, RawSpellHeader } from "../src/model/raw/spell";
 import { StringRefUtils } from "../src/services/string-ref.utils";

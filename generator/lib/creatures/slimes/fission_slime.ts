@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import {
   mustardJellyTraits,
@@ -13,7 +13,7 @@ import {
 // Creature Id
 const id = MonsterEnum.FissionSlime;
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 // Script
 const script = bafFile(id);
 

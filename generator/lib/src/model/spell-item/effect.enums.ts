@@ -861,16 +861,6 @@ export enum SpellTypeEnum {
   BardSong = 5,
 }
 
-export const spellTypes = [
-  { value: 0, label: "Special" },
-  { value: 1, label: "Wizard" },
-  { value: 2, label: "Priest" },
-  { value: 3, label: "Psionic" },
-  { value: 4, label: "Innate" },
-  { value: 5, label: "BardSong" },
-] as const;
-type SpellTypes = (typeof spellTypes)[number]["label"];
-
 export enum ItemFlagEnum {
   CriticalItem = 0,
   TwoHanded = 1,
@@ -1324,15 +1314,6 @@ export enum WingBuffetDirectionEnum {
   TowardsSource = 4,
 }
 
-export type CreatureSize =
-  | "Tiny"
-  | "Small"
-  | "Medium"
-  | "Large"
-  | "Huge"
-  | "Gargantuan"
-  | "Colossal";
-
 export type PnPPoisonType =
   | "A"
   | "B"
@@ -1350,33 +1331,3 @@ export type PnPPoisonType =
   | "N"
   | "O"
   | "P";
-
-export type ItemSlot =
-  | "HELMET"
-  | "ARMOR"
-  | "SHIELD"
-  | "GLOVES"
-  | "LRING"
-  | "RRING"
-  | "AMULET"
-  | "BELT"
-  | "BOOTS"
-  | "WEAPON1"
-  | "WEAPON2"
-  | "WEAPON3"
-  | "WEAPON4"
-  | "QUIVER1"
-  | "QUIVER2"
-  | "QUIVER3"
-  | "QUIVER4"
-  | "CLOAK"
-  | "QITEM1"
-  | "QITEM2"
-  | "QITEM3";
-
-export const WEAPON_SLOTS: ItemSlot[] = [
-  "WEAPON1",
-  "WEAPON2",
-  "WEAPON3",
-  "WEAPON4",
-];

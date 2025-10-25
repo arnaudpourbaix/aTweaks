@@ -7,8 +7,8 @@ import {
   GRAB_CHECK_CREATURE_SIZE,
   GRAB_EFFECTS_FUNCTION,
 } from "../../config/grab";
-import { Creature } from "../model/final/creature";
-import { CastSpellEffect, Effect } from "../model/final/effect";
+import { Creature } from "../model/creature/creature";
+import { CastSpellEffect, Effect } from "../model/spell-item/effect";
 import { GrabConfig } from "../model/raw/grab";
 import creatureService from "./creature.service";
 import descriptionService from "./description.service";
@@ -28,7 +28,7 @@ class GrabService {
     const effectFile = this.getGrabProtectionEffect(grab);
     creature.effectFiles.push({ ...effectFile, file: grab.file });
     // const saveText = this.descriptionService.getSaveText(grabEffect);
-    const spell = spellService.mapSpell(
+    const spell = spellService.checkSpell(
       {
         name: "Grab",
         description: [

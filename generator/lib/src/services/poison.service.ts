@@ -3,12 +3,12 @@ import {
   PoisonModel,
   POISONS,
 } from "../../config/poison";
-import { Effect } from "../model/final/effect";
+import { Effect } from "../model/spell-item/effect";
 import {
   EffectTimingEnum,
   PortraitIconEnum,
-} from "../model/final/effect.enums";
-import { EffectTypeEnum } from "../model/final/effect.type";
+} from "../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
 
 export class PoisonService {
   static instance = new PoisonService();

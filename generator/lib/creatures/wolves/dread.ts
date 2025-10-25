@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,11 +10,11 @@ const id = MonsterEnum.DreadWolf;
 // Script
 const script = bafFile(id);
 // Spells
-const downState = file(1, id);
+const downState = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
-const downResistances = file(3, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
+const downResistances = getFilename(3, id);
 
 const name = "Dread Wolf";
 

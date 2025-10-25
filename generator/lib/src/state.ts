@@ -1,4 +1,4 @@
-import { GenericScriptData } from "./model/final/data";
+import { GenericScriptData } from "./model/script/data";
 import { ImmunityConfig } from "./model/final/immunity";
 
 export class State {

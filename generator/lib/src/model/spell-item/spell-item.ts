@@ -1,6 +1,8 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { TranslationKey } from "../../translations/i18n";
-import { Effect } from "./effect";
+import { ItemSlot } from "../creature/item";
+import { PartialBy, WithRequired } from "../utility-types";
+import { Effect, EffectFile } from "./effect";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityCastingAnimationEnum,
@@ -13,8 +15,8 @@ import {
   ItemAnimationEnum,
   ItemCategoryEnum,
   ItemFlagEnum,
-  ItemSlot,
   ProficiencyTypeEnum,
+  SaveTypeEnum,
   SpellExclusionFlagEnum,
   SpellFlagEnum,
   SpellTypeEnum,
@@ -54,13 +56,20 @@ export interface Spell {
    */
   deleteHeaders?: number[] | boolean;
   deleteOpcodes?: EffectTypeEnum[];
-  changes?: {
+  /**
+   * Options are applied last using a WEIDU function
+   */
+  options?: {
     spellType?: SpellTypeEnum;
     castingTime?: number;
     removeInvisbilityOnCast?: boolean;
+    /**
+     * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
+     */
     renew?: boolean;
   };
   memorizedCount?: number;
+  effectFiles: EffectFile[];
 }
 
 export interface Item {
@@ -82,12 +91,12 @@ export interface Item {
   icon?: string;
   flags?: ItemFlagEnum[];
   effects: Effect[];
-  header: ItemHeader;
+  header?: ItemHeader;
   equippedSlot: ItemSlot[];
 }
 
 export interface ItemSpellHeader {
-  type?: ItemAbilityTypeEnum;
+  type: ItemAbilityTypeEnum;
   range?: number;
   speed?: number;
   target?: ItemAbilityTargetEnum;
@@ -102,6 +111,7 @@ export interface ItemSpellHeader {
 
 export interface SpellHeader extends ItemSpellHeader {
   minLevel?: number;
+  // racialResistances?: boolean;
 }
 
 export interface ItemHeader extends ItemSpellHeader {
@@ -116,22 +126,35 @@ export interface ItemHeader extends ItemSpellHeader {
 
 export type MemorizedSpellType = "priest" | "wizard" | "innate";
 
-export interface EquippedItem {
+export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
+
+export type PartialSpell = PartialBy<
+  Omit<Spell, "file">,
+  "icon" | "effects" | "headers" | "effectFiles"
+> & { headers?: PartialSpellHeader[] };
+
+export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
+
+export type PartialItem = PartialBy<
+  Omit<Item, "file" | "header">,
+  "immunities" | "effects" | "equippedSlot"
+> & { header?: PartialItemHeader };
+
+export type PartialWeapon = PartialBy<
+  Omit<Item, "file" | "header">,
+  "immunities" | "effects"
+> & { header: PartialItemHeader };
+
+export type Weapon = WithRequired<Item, "header">;
+
+export interface WeaponCastSpell {
+  spell: PartialSpell;
+  probability1?: number;
+  probability2?: number;
+  saveTypes?: SaveTypeEnum[];
+  saveBonus?: number;
   /**
-   * Filename for ITM file (without extension)
+   * removes after cast
    */
-  file: string;
-  slot: ItemSlot | ItemSlot[];
-  /**
-   * default: 1
-   */
-  quantity?: number;
-  /**
-   * default: false
-   */
-  unstealable?: boolean;
-  /**
-   * default: true
-   */
-  undroppable?: boolean;
+  remove?: boolean;
 }

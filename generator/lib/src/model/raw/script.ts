@@ -2,7 +2,7 @@ import {
   ConditionalStatement,
   CustomCodeLocation,
   CustomCodeType,
-} from "../final/script";
+} from "../script/script";
 import { RawCreatureAbility } from "./ability";
 import { Actions } from "./actions";
 import { Triggers } from "./triggers";

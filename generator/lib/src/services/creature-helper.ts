@@ -1,8 +1,8 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { MonsterItemIconEnum } from "../../config/item";
-import { JEWEL_SLOTS } from "../model/constants";
-import { RawEffect } from "../model/raw/effect";
-import { RawItem } from "../model/raw/item";
+import { JEWEL_SLOTS } from "../model/creature/item";
+import { Effect } from "../model/spell-item/effect";
+import { Item } from "../model/spell-item/spell-item";
 
 export const createTraitItem = ({
   file,
@@ -15,8 +15,8 @@ export const createTraitItem = ({
   name: string;
   description?: string[];
   immunities?: ImmunityName[];
-  effects?: RawEffect[];
-}): RawItem => {
+  effects?: Effect[];
+}): Item => {
   const stringRef = `${name} traits`;
   if (description) {
     description.unshift(stringRef, "");
@@ -26,7 +26,7 @@ export const createTraitItem = ({
       effect.global = true;
     }
   }
-  const item: RawItem = {
+  const item: Item = {
     file,
     stringRef,
     description,

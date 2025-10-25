@@ -3,7 +3,7 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createSingleTargetWeb } from "../../spells/web";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -11,9 +11,9 @@ const id = MonsterEnum.GargantuanSpider;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 // Spells
-const web = file(1, id);
+const web = getFilename(1, id);
 
 const name = "Gargantuan Spider";
 export const SPIDER_GARGANTUAN: RawCreature = {

@@ -1,7 +1,7 @@
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -9,7 +9,7 @@ const id = MonsterEnum.BerserkerOgre;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 
 export const OGRE_BERSERKER: RawCreature = {
   name: "Berserker Ogre",

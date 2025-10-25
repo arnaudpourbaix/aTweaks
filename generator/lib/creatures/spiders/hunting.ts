@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,9 +10,9 @@ const id = MonsterEnum.HuntingSpider;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 // Spells
-const leap = file(1, id);
+const leap = getFilename(1, id);
 
 const name = "Hunting Spider";
 export const SPIDER_HUNTING: RawCreature = {

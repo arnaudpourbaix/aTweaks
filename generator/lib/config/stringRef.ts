@@ -1,4 +1,4 @@
-import { ExistingStringReference } from "../src/model/raw/stringref";
+import { ExistingStringReference } from "../src/model/final/stringref";
 
 export enum TraStringReferenceEnum {
   AcidicDigestiveEnzymes = 4001,

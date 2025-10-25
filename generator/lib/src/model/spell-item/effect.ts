@@ -44,7 +44,7 @@ import {
   SummonCreatureModeEnum,
   TranslucencyTypeEnum,
   WingBuffetDirectionEnum,
-} from "../final/effect.enums";
+} from "./effect.enums";
 import { AnimationIdentifiers } from "../ids/animate";
 import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifier } from "../ids/slot";
@@ -61,7 +61,7 @@ import {
 import { EffectTypeEnum } from "./effect.type";
 
 export interface BaseEffect {
-  // opcode: EffectTypeEnum;
+  opcode: EffectTypeEnum;
   target?: EffectTargetEnum;
   power?: number;
   timing?: EffectTimingEnum;
@@ -73,16 +73,13 @@ export interface BaseEffect {
   probability2?: number;
   diceThrown?: number;
   diceSize?: number;
+  minLevel?: number;
+  maxLevel?: number;
   saveTypes?: SaveTypeEnum[];
   saveBonus?: number;
   flags?: EffectFlagsEnum[] | number;
   resource?: string;
   special?: number;
-  /**
-   * Global effect
-   */
-  // global: boolean;
-  // raw: RawEffect;
 }
 
 export type ArmorClassBonusEffect = BaseEffect & {
@@ -503,7 +500,6 @@ export type ParamLessEffect = BaseEffect & {
     | EffectTypeEnum.PlaySound
     | EffectTypeEnum.ProtectionFromAnimation
     | EffectTypeEnum.ProtectionFromBackstab
-    | EffectTypeEnum.ProtectionFromProjectile
     | EffectTypeEnum.RemoveCreature
     | EffectTypeEnum.RemoveFear
     | EffectTypeEnum.RemoveItem

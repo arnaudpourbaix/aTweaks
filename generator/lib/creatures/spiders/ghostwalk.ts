@@ -3,7 +3,7 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawItem } from "../../src/model/raw/item";
 import { FactoryService } from "../../src/services/factory.service";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -11,11 +11,11 @@ const id = MonsterEnum.GhostwalkSpider;
 // Script
 const script = bafFile(id);
 // Items
-const biteWeapon = file(1, id);
-const ghostBiteWeapon = file(2, id);
-const traits = file(2, id);
+const biteWeapon = getFilename(1, id);
+const ghostBiteWeapon = getFilename(2, id);
+const traits = getFilename(2, id);
 // Spells
-const ghostwalk = file(1, id);
+const ghostwalk = getFilename(1, id);
 
 const factory = FactoryService.instance;
 

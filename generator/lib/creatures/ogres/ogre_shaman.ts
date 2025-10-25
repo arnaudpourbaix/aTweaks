@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,7 +10,7 @@ const id = MonsterEnum.OgreShaman;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 
 export const OGRE_SHAMAN: RawCreature = {
   // Shaman: a fighter/priest with 5+3 Hit Dice and the spells of a 4th-level priest

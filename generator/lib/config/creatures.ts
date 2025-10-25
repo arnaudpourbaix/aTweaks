@@ -1,7 +1,18 @@
+import { EffectIDSFileEnum } from "../src/model/spell-item/effect.enums";
 import { ClassIdentifier } from "../src/model/ids/class";
 import { GeneralIdentifier } from "../src/model/ids/general";
 import { RaceIdentifier } from "../src/model/ids/race";
-import { CreatureSize, RawEffectIDSFile } from "../src/model/raw/enum";
+
+export const creatureSizes = [
+  { size: "Tiny", range: 0 },
+  { size: "Small", range: 1 },
+  { size: "Medium", range: 1 },
+  { size: "Large", range: 2 },
+  { size: "Huge", range: 2 },
+  { size: "Gargantuan", range: 3 },
+  { size: "Colossal", range: 4 },
+] as const;
+export type CreatureSize = (typeof creatureSizes)[number]["size"];
 
 export const ATWEAKS_CREATURES = {
   Treant5hd: "ja#trea1",
@@ -16,133 +27,133 @@ export const ATWEAKS_CREATURES = {
 };
 
 export const VAPOR_IMMUNE_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier | GeneralIdentifier
 ][] = [
-  ["RACE", "SLIME"],
-  ["RACE", "ELEMENTAL"],
-  ["RACE", "GOLEM"],
-  ["GENERAL", "UNDEAD"],
+  [EffectIDSFileEnum.RACE, "SLIME"],
+  [EffectIDSFileEnum.RACE, "ELEMENTAL"],
+  [EffectIDSFileEnum.RACE, "GOLEM"],
+  [EffectIDSFileEnum.GENERAL, "UNDEAD"],
 ];
 
 export const EARTH_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
-][] = [["CLASS", "ELEMENTAL_EARTH"]];
+][] = [[EffectIDSFileEnum.CLASS, "ELEMENTAL_EARTH"]];
 
 export const AIR_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "WYVERN"],
-  ["RACE", "BEHOLDER"],
-  ["RACE", "MIST"],
-  ["RACE", "MEPHIT"],
-  ["RACE", "DRAGON"],
-  ["RACE", "SOLAR"],
-  ["RACE", "ANTISOLAR"],
-  ["RACE", "PLANATAR"],
-  ["RACE", "DARKPLANATAR"],
-  ["CLASS", "ELEMENTAL_AIR"],
-  ["CLASS", "GENIE_DJINNI"],
-  ["CLASS", "GENIE_NOBLE_DJINNI"],
+  [EffectIDSFileEnum.RACE, "WYVERN"],
+  [EffectIDSFileEnum.RACE, "BEHOLDER"],
+  [EffectIDSFileEnum.RACE, "MIST"],
+  [EffectIDSFileEnum.RACE, "MEPHIT"],
+  [EffectIDSFileEnum.RACE, "DRAGON"],
+  [EffectIDSFileEnum.RACE, "SOLAR"],
+  [EffectIDSFileEnum.RACE, "ANTISOLAR"],
+  [EffectIDSFileEnum.RACE, "PLANATAR"],
+  [EffectIDSFileEnum.RACE, "DARKPLANATAR"],
+  [EffectIDSFileEnum.CLASS, "ELEMENTAL_AIR"],
+  [EffectIDSFileEnum.CLASS, "GENIE_DJINNI"],
+  [EffectIDSFileEnum.CLASS, "GENIE_NOBLE_DJINNI"],
 ];
 
 export const WATER_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "SAHUAGIN"],
-  ["RACE", "KUO-TOA"],
-  ["CLASS", "ELEMENTAL_WATER"],
-  ["CLASS", "FAIRY_NEREID"],
+  [EffectIDSFileEnum.RACE, "SAHUAGIN"],
+  [EffectIDSFileEnum.RACE, "KUO-TOA"],
+  [EffectIDSFileEnum.CLASS, "ELEMENTAL_WATER"],
+  [EffectIDSFileEnum.CLASS, "FAIRY_NEREID"],
 ];
 
 export const FLYING_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "WILL-O-WISP"],
-  ["RACE", "WYVERN"],
+  [EffectIDSFileEnum.RACE, "WILL-O-WISP"],
+  [EffectIDSFileEnum.RACE, "WYVERN"],
 ];
 
 export const INCORPOREAL_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "MIST"],
-  ["RACE", "SHADOW"],
-  ["RACE", "SPECTRAL_UNDEAD"],
-  ["RACE", "SPECTRE"],
-  ["RACE", "WILL-O-WISP"],
-  ["RACE", "WRAITH"],
-  ["CLASS", "SPECTRAL_TROLL"],
-  ["CLASS", "SPIDER_WRAITH"],
+  [EffectIDSFileEnum.RACE, "MIST"],
+  [EffectIDSFileEnum.RACE, "SHADOW"],
+  [EffectIDSFileEnum.RACE, "SPECTRAL_UNDEAD"],
+  [EffectIDSFileEnum.RACE, "SPECTRE"],
+  [EffectIDSFileEnum.RACE, "WILL-O-WISP"],
+  [EffectIDSFileEnum.RACE, "WRAITH"],
+  [EffectIDSFileEnum.CLASS, "SPECTRAL_TROLL"],
+  [EffectIDSFileEnum.CLASS, "SPIDER_WRAITH"],
 ];
 
 export const GARGANTUAN_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "DRAGON"],
-  ["CLASS", "NEOTHELID"],
+  [EffectIDSFileEnum.RACE, "DRAGON"],
+  [EffectIDSFileEnum.CLASS, "NEOTHELID"],
 ];
 
 export const GRAB_IMMUNE_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "MIMIC"],
-  ["RACE", "SLIME"],
+  [EffectIDSFileEnum.RACE, "MIMIC"],
+  [EffectIDSFileEnum.RACE, "SLIME"],
   ...FLYING_CREATURES,
   ...INCORPOREAL_CREATURES,
   ...GARGANTUAN_CREATURES,
 ];
 
 export const HUGE_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "ANKHEG"],
-  ["RACE", "ELEMENTAL"],
-  ["RACE", "ETTIN"],
-  ["RACE", "GIANT"],
-  ["RACE", "LIZARDMAN"],
-  ["RACE", "TREANT"],
-  ["CLASS", "BEAR_CAVE"],
-  ["CLASS", "BEAR_POLAR"],
-  ["CLASS", "SPIDER_PHASE"],
-  ["CLASS", "SPIDER_SWORD"],
+  [EffectIDSFileEnum.RACE, "ANKHEG"],
+  [EffectIDSFileEnum.RACE, "ELEMENTAL"],
+  [EffectIDSFileEnum.RACE, "ETTIN"],
+  [EffectIDSFileEnum.RACE, "GIANT"],
+  [EffectIDSFileEnum.RACE, "LIZARDMAN"],
+  [EffectIDSFileEnum.RACE, "TREANT"],
+  [EffectIDSFileEnum.CLASS, "BEAR_CAVE"],
+  [EffectIDSFileEnum.CLASS, "BEAR_POLAR"],
+  [EffectIDSFileEnum.CLASS, "SPIDER_PHASE"],
+  [EffectIDSFileEnum.CLASS, "SPIDER_SWORD"],
 ];
 
 export const LARGE_CREATURES: [
-  RawEffectIDSFile,
+  EffectIDSFileEnum,
   ClassIdentifier | RaceIdentifier
 ][] = [
-  ["RACE", "BUGBEAR"],
-  ["RACE", "CARRIONCRAWLER"],
-  ["RACE", "CHIMERA"],
-  ["RACE", "DARKPLANATAR"],
-  ["RACE", "GENIE"],
-  ["RACE", "GNOLL"],
-  ["RACE", "GOLEM"],
-  ["RACE", "HOOK_HORROR"],
-  ["RACE", "MINOTAUR"],
-  ["RACE", "MYCONID"],
-  ["RACE", "OGRE"],
-  ["RACE", "OTYUGH"],
-  ["RACE", "PLANATAR"],
-  ["RACE", "SALAMANDER"],
-  ["RACE", "SHAMBLING_MOUND"],
-  ["RACE", "SOLAR"],
-  ["RACE", "TROLL"],
-  ["RACE", "UMBERHULK"],
-  ["RACE", "YETI"],
-  ["CLASS", "BASILISK_GREATER"],
-  ["CLASS", "BEAR_BROWN"],
-  ["CLASS", "SPIDER_GIANT"],
-  ["CLASS", "WOLF_DIRE"],
-  ["CLASS", "WOLF_WINTER"],
+  [EffectIDSFileEnum.RACE, "BUGBEAR"],
+  [EffectIDSFileEnum.RACE, "CARRIONCRAWLER"],
+  [EffectIDSFileEnum.RACE, "CHIMERA"],
+  [EffectIDSFileEnum.RACE, "DARKPLANATAR"],
+  [EffectIDSFileEnum.RACE, "GENIE"],
+  [EffectIDSFileEnum.RACE, "GNOLL"],
+  [EffectIDSFileEnum.RACE, "GOLEM"],
+  [EffectIDSFileEnum.RACE, "HOOK_HORROR"],
+  [EffectIDSFileEnum.RACE, "MINOTAUR"],
+  [EffectIDSFileEnum.RACE, "MYCONID"],
+  [EffectIDSFileEnum.RACE, "OGRE"],
+  [EffectIDSFileEnum.RACE, "OTYUGH"],
+  [EffectIDSFileEnum.RACE, "PLANATAR"],
+  [EffectIDSFileEnum.RACE, "SALAMANDER"],
+  [EffectIDSFileEnum.RACE, "SHAMBLING_MOUND"],
+  [EffectIDSFileEnum.RACE, "SOLAR"],
+  [EffectIDSFileEnum.RACE, "TROLL"],
+  [EffectIDSFileEnum.RACE, "UMBERHULK"],
+  [EffectIDSFileEnum.RACE, "YETI"],
+  [EffectIDSFileEnum.CLASS, "BASILISK_GREATER"],
+  [EffectIDSFileEnum.CLASS, "BEAR_BROWN"],
+  [EffectIDSFileEnum.CLASS, "SPIDER_GIANT"],
+  [EffectIDSFileEnum.CLASS, "WOLF_DIRE"],
+  [EffectIDSFileEnum.CLASS, "WOLF_WINTER"],
 ];
 
 // Because its body is a mass of unliving matter, a construct is hard to destroy.

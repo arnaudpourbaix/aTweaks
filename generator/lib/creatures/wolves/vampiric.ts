@@ -3,7 +3,7 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawItem } from "../../src/model/raw/item";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -11,12 +11,12 @@ const id = MonsterEnum.VampiricWolf;
 // Script
 const script = bafFile(id);
 // Spells
-const grab = file(1, id);
+const grab = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const proneBiteWeapon = file(2, id);
-const autoHitWeapon = file(3, id);
-const traits = file(4, id);
+const mainWeapon = getFilename(1, id);
+const proneBiteWeapon = getFilename(2, id);
+const autoHitWeapon = getFilename(3, id);
+const traits = getFilename(4, id);
 
 const baseWeapon: RawItem = {
   file: mainWeapon,

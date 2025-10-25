@@ -1,6 +1,5 @@
 import { ImmunityName } from "../../config/immunity-name";
 import { TraStringReferenceEnum } from "../../config/stringRef";
-import { Creature } from "../model/final/creature";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
@@ -14,7 +13,7 @@ import {
   RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
-} from "../model/final/effect";
+} from "../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectBonusToEnum,
@@ -23,16 +22,17 @@ import {
   PoisonTypeEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
-} from "../model/final/effect.enums";
-import { EffectTypeEnum } from "../model/final/effect.type";
+} from "../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Item } from "../model/final/spell-item";
+import { Item } from "../model/spell-item/spell-item";
 import { State } from "../state";
+import { Creature } from "../model/creature/creature";
 
 class DescriptionService {
   generateCreatureItems(creature: Creature): void {
     for (const item of creature.items) {
-      if (!item.description) this.generateItemDescription(item, creature);
+      if (!item.description) this.generateWeaponDescription(item, creature);
     }
   }
 
@@ -46,8 +46,9 @@ class DescriptionService {
     // immunity.description = results; //FIXME:
   }
 
-  private generateItemDescription(item: Item, creature?: Creature) {
+  private generateWeaponDescription(item: Item, creature?: Creature) {
     const desc: string[] = [];
+    if (!item.header) throw new Error(`not a weapon: ${item.file}`);
     const type =
       item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
     if (item.header.bonusToHit) {

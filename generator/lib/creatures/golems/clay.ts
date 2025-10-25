@@ -2,7 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { MonsterEnum } from "../monster";
 
@@ -11,10 +11,10 @@ const id = MonsterEnum.ClayGolem;
 // Script
 const script = bafFile(id);
 // Spells
-const haste = file(1, id);
+const haste = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
 
 const name = "Clay Golem";
 

@@ -108,7 +108,7 @@ INT_VAR
   level  = 99 // spell level
   ctime  = 99 // new casting time
   rinvs  = 0  // spell removes invisibility when cast
-  renew  = 0  // spell renews after being cast
+  renew  = 0  // spell renews after being cast, value is the number of rounds delay
 BEGIN
   READ_LONG  0x64 abil_off
   READ_SHORT 0x68 abil_num
@@ -133,9 +133,9 @@ BEGIN
   PATCH_IF rinvs = 1 BEGIN // if the spell should remove invisibility
     LPF ADD_SPELL_EFFECT INT_VAR opcode=136 target=1 timing=1 END
   END
-  PATCH_IF renew = 1 BEGIN // if the spell should be renewed after being cast
+  PATCH_IF renew > 0 BEGIN // if the spell should be renewed after being cast
     LPF ADD_SPELL_EFFECT INT_VAR opcode=172 target=1 timing=1 STR_VAR resource=EVAL %DEST_RES% END
-    LPF ADD_SPELL_EFFECT INT_VAR opcode=171 target=1 timing=1 STR_VAR resource=EVAL %DEST_RES% END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=171 target=1 timing=4 duration=(renew*6) STR_VAR resource=EVAL %DEST_RES% END
   END
   LPF FJ_SPL_ITM_REINDEX END
 END

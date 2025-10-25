@@ -8,7 +8,7 @@ import { RawBaseEffect } from "../../src/model/raw/effect";
 import { RawSaveType } from "../../src/model/raw/enum";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effect.service";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import { abilityAnimalFriendship } from "./hamadryad";
 
@@ -17,16 +17,16 @@ const effects = EffectService.instance;
 // Creature Id
 const id = MonsterEnum.Nymph;
 // Spells
-const cureLightWounds = file(1, id);
-const bless = file(2, id);
-const entangle = file(3, id);
-const barkskin = file(4, id);
-const charmPersonOrAnimal = file(5, id);
-const callLightning = file(6, id);
-const summonInsects = file(7, id);
-const callWoodlandBeeings = file(8, id);
+const cureLightWounds = getFilename(1, id);
+const bless = getFilename(2, id);
+const entangle = getFilename(3, id);
+const barkskin = getFilename(4, id);
+const charmPersonOrAnimal = getFilename(5, id);
+const callLightning = getFilename(6, id);
+const summonInsects = getFilename(7, id);
+const callWoodlandBeeings = getFilename(8, id);
 // Items
-const traits = file(1, id);
+const traits = getFilename(1, id);
 // Script
 const script = bafFile(id);
 

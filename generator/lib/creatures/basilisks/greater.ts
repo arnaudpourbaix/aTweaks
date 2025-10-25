@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import { petrification2e, petrificationAbility } from "./lesser";
 
@@ -10,12 +10,12 @@ const id = MonsterEnum.GreaterBasilisk;
 // Script
 const script = bafFile(id);
 // Spells
-const foulBreath = file(1, id);
+const foulBreath = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const offhandWeapon = file(2, id);
+const mainWeapon = getFilename(1, id);
+const offhandWeapon = getFilename(2, id);
 // Projectiles
-const foulBreathProjectile = file(1, id);
+const foulBreathProjectile = getFilename(1, id);
 
 export const BASILISK_GREATER: RawCreature = {
   name: "Greater Basilisk",

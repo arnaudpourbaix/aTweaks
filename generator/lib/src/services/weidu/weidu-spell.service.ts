@@ -1,7 +1,7 @@
-import { CR } from "../model/constants";
-import { Spell, SpellHeader } from "../model/final/spell-item";
-import { CodeLine } from "../model/misc";
-import { AbstractWeiduService } from "./abstract-weidu.service";
+import { CR } from "../../model/constants";
+import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
+import { CodeLine } from "../../model/misc";
+import { AbstractWeiduService } from "../abstract-weidu.service";
 import { WeiduEffectService } from "./weidu-effect.service";
 
 export class WeiduSpellService extends AbstractWeiduService {
@@ -50,15 +50,15 @@ export class WeiduSpellService extends AbstractWeiduService {
     }
     this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     this.createSpellCommon(lines, spell, tab + 1);
-    if (spell.changes) {
+    if (spell.options) {
       const type =
-        spell.changes.spellType !== undefined
-          ? `type=${spell.changes.spellType}`
+        spell.options.spellType !== undefined
+          ? `type=${spell.options.spellType}`
           : "";
-      const ctime = spell.changes.castingTime !== undefined ? "ctime=1" : "";
+      const ctime = spell.options.castingTime !== undefined ? "ctime=1" : "";
       const rinvs =
-        spell.changes.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
-      const renew = spell.changes.renew !== undefined ? "renew=1" : "";
+        spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
+      const renew = spell.options.renew !== undefined ? "renew=1" : "";
       this.add(
         lines,
         `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`,

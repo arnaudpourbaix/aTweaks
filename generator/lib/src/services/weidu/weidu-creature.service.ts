@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "path";
-import { CR, TAB } from "../model/constants";
+import { CR, TAB } from "../../model/constants";
 import {
   Creature,
   CREATURE_DATA,
@@ -8,16 +8,16 @@ import {
   CreatureAdditionalData,
   CreatureAdjustment,
   CreatureData,
-} from "../model/final/creature";
-import { EffectTypeEnum } from "../model/final/effect.type";
-import { ImmunityConfig } from "../model/final/immunity";
-import { Spell } from "../model/final/spell-item";
-import { CodeLine } from "../model/misc";
-import { RawCreatureAutoGenerate } from "../model/raw/creature";
-import { WEAPON_SLOTS } from "../model/raw/enum";
-import { State } from "../state";
-import { AbstractWeiduService } from "./abstract-weidu.service";
-import { EffectService } from "./effect.service";
+} from "../../model/creature/creature";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { Spell } from "../../model/spell-item/spell-item";
+import { CodeLine } from "../../model/misc";
+import { RawCreatureAutoGenerate } from "../../model/raw/creature";
+import { WEAPON_SLOTS } from "../../model/raw/enum";
+import { State } from "../../state";
+import { AbstractWeiduService } from "../abstract-weidu.service";
+import { EffectService } from "../effect.service";
 import { WeiduEffectService } from "./weidu-effect.service";
 import { WeiduItemService } from "./weidu-item.service";
 import { WeiduProjectileService } from "./weidu-projectile.service";
@@ -218,7 +218,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
     creature?: Creature;
   }) {
     let isEquip = false;
-    for (const item of p.additionalData.itemSlots) {
+    for (const item of p.additionalData.equippedItems) {
       const noWeaponFiles = (p.creature ? p.creature.adjustments : []).reduce(
         (acc, a) => {
           if (a.noWeapon) acc.push(...a.files);
@@ -423,7 +423,7 @@ export class WeiduCreatureService extends AbstractWeiduService {
           throw new Error(`Unknown adjustment file ${f}`);
       if (
         adjustment.data ||
-        adjustment.additionalData.itemSlots.length ||
+        adjustment.additionalData.equippedItems.length ||
         adjustment.additionalData.memorizedSpells.length ||
         adjustment.additionalData.removeItems.length ||
         adjustment.additionalData.memorizedSpells.length ||

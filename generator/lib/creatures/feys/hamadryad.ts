@@ -21,7 +21,7 @@ import {
 } from "../../src/model/raw/spell-protection";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { FactoryService } from "../../src/services/factory.service";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import {
   abilityDryadDireCharm,
@@ -34,7 +34,7 @@ const factory = FactoryService.instance;
 // Creature Id
 const id = MonsterEnum.Hamadryad;
 // Items
-const traits = file(1, id);
+const traits = getFilename(1, id);
 // Script
 const script = bafFile(id);
 

@@ -1,6 +1,6 @@
 import deepmerge from "deepmerge";
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { CreatureAbility } from "../model/final/ability";
+import { CreatureAbility } from "../model/creature/ability";
 import {
   RawCreatureAbility,
   RawCreatureAbilitySpell,

@@ -4,8 +4,8 @@ import {
   TARGET_STATUS,
 } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
-import { Creature } from "../model/final/creature";
-import { TargetPriority } from "../model/final/target";
+import { Creature } from "../model/creature/creature";
+import { TargetPriority } from "../model/script/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";

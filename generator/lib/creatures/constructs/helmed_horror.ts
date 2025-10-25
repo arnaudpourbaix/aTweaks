@@ -2,7 +2,7 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -10,10 +10,10 @@ const id = MonsterEnum.HelmedHorror;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
-const armor = file(2, id);
-const helmet = file(3, id);
-const traits = file(4, id);
+const mainWeapon = getFilename(1, id);
+const armor = getFilename(2, id);
+const helmet = getFilename(3, id);
+const traits = getFilename(4, id);
 
 const name = "Helmed Horror";
 

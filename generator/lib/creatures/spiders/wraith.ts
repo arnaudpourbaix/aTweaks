@@ -4,7 +4,7 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createSingleTargetWeb } from "../../spells/web";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { MonsterEnum } from "../monster";
 
@@ -13,11 +13,11 @@ const id = MonsterEnum.WraithSpider;
 // Script
 const script = bafFile(id);
 // Items
-const biteWeapon = file(1, id);
-const traits = file(2, id);
+const biteWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
 // Spells
-const poison = file(1, id);
-const web = file(2, id);
+const poison = getFilename(1, id);
+const web = getFilename(2, id);
 
 const name = "Wraith Spider";
 export const SPIDER_WRAITH: RawCreature = {

@@ -1,8 +1,7 @@
 import chalk from "chalk";
 import { program } from "commander";
+import stateService from "./services/state.service";
 import { ANKHEG } from "../creatures/ankheg/ankheg";
-import { MainService } from "./services/main.service";
-import { StateService } from "./services/state.service";
 
 const clear = require("clear");
 const figlet = require("figlet");
@@ -14,26 +13,25 @@ const figlet = require("figlet");
 
 program
   .version("0.0.1")
-  .description("Generate script BAF files for IE games")
+  .description("Generate WEIDU code and BAF files for IE games")
   .parse(process.argv);
 
 async function main() {
-  const stateService = new StateService();
   return Promise.resolve()
     .then(() => stateService.init())
     .then(() => {
-      const mainService = new MainService();
-      let chain: Promise<any> = Promise.resolve();
+      // let chain: Promise<any> = Promise.resolve();
       [ANKHEG].forEach((creature) => {
+        console.log(creature);
         //CREATURES.forEach((creature) => {
-        chain = chain.then(() => mainService.processCreature(creature));
+        // chain = chain.then(() => mainService.processCreature(creature));
       });
-      return chain
-        .then(() => mainService.generateCommonCode())
-        .then(() => {
-          console.log(chalk.green(`\nFinished!`));
-        });
-      //.catch(error => { console.trace(chalk.red(error)); });
+      //   return chain
+      //     .then(() => mainService.generateCommonCode())
+      //     .then(() => {
+      //       console.log(chalk.green(`\nFinished!`));
+      //     });
+      //   //.catch(error => { console.trace(chalk.red(error)); });
     });
 }
 

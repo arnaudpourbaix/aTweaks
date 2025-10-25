@@ -2,17 +2,17 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { file } from "../../src/services/misc.func";
+import { getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.Hellcat;
 // Items
-const mainWeapon = file(1, id);
-const offhandWeapon = file(2, id);
-const traits = file(3, id);
+const mainWeapon = getFilename(1, id);
+const offhandWeapon = getFilename(2, id);
+const traits = getFilename(3, id);
 // Spells
-const rearClawsAttack = file(1, id);
+const rearClawsAttack = getFilename(1, id);
 
 const name = "Hellcat";
 

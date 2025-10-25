@@ -1,5 +1,4 @@
-import { JEWEL_SLOTS } from "../src/model/constants";
-import { EffectTypeEnum } from "../src/model/final/effect.type";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import {
   CastingTimeModifierTypeEnum,
   EffectBonusToEnum,
@@ -9,14 +8,15 @@ import {
   PortraitIconEnum,
   ProtectionFromWeaponsTypeEnum,
   TranslucencyTypeEnum,
-} from "../src/model/final/effect.enums";
+} from "../src/model/spell-item/effect.enums";
 import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
 import { ImmunityConfig } from "../src/model/final/immunity";
 import { AtLeast } from "../src/model/utility-types";
-import { Effect } from "../src/model/final/effect";
+import { Effect } from "../src/model/spell-item/effect";
+import { JEWEL_SLOTS } from "../src/model/creature/item";
 
 export const IMMUNITIES: (AtLeast<
   ImmunityConfig,

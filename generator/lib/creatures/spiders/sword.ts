@@ -6,7 +6,7 @@ import { RawCreature } from "../../src/model/raw/creature";
 import { DamageEffect, RawEffect } from "../../src/model/raw/effect";
 import { RawItem } from "../../src/model/raw/item";
 import { RawSpell } from "../../src/model/raw/spell";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -14,15 +14,15 @@ const id = MonsterEnum.SwordSpider;
 // Script
 const script = bafFile(id);
 // Items
-const legWeapon = file(1, id);
-const impaleWeapon = file(2, id);
-const jawWeapon = file(4, id);
+const legWeapon = getFilename(1, id);
+const impaleWeapon = getFilename(2, id);
+const jawWeapon = getFilename(4, id);
 // special lightning sword spider
-const lightningLegWeapon = file(5, id);
-const lightningImpaleWeapon = file(6, id);
+const lightningLegWeapon = getFilename(5, id);
+const lightningImpaleWeapon = getFilename(6, id);
 // Spells
-const leap = file(1, id);
-const lightningLeap = file(2, id);
+const leap = getFilename(1, id);
+const lightningLeap = getFilename(2, id);
 
 const createLegWeapon = (
   file: string,

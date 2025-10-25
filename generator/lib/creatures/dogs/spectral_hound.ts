@@ -3,16 +3,16 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { file } from "../../src/services/misc.func";
+import { getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.SpectralHound;
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
 // Spells
-const astralPlaneShift = file(1, id);
+const astralPlaneShift = getFilename(1, id);
 
 const shiftEffect: RawBaseEffect = {
   timing: "InstantLimited",

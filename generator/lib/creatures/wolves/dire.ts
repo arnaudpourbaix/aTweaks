@@ -1,13 +1,13 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { file } from "../../src/services/misc.func";
+import { getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.DireWolf;
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 export const WOLF_DIRE: RawCreature = {
   name: "Dire Wolf",
   tpaFile: "lib/pnp-monster/wolf/dire",

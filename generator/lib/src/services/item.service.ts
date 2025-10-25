@@ -1,125 +1,53 @@
-import figureSet from "figures";
 import {
   AbilityDamageTypeEnum,
-  ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
   ItemAbilityTargetEnum,
-  ItemAbilityTypeEnum,
-  ItemAnimationEnum,
-  ItemCategoryEnum,
-  ItemFlagEnum,
-  ProficiencyTypeEnum,
-} from "../model/final/effect.enums";
-import { EffectService } from "./effect.service";
+} from "../model/spell-item/effect.enums";
+import { Item, PartialItem } from "../model/spell-item/spell-item";
+import effectService from "./effect.service";
+import utils from "./utils.service";
 
 class ItemService {
-  mapItemSlots(
-    itemSlots: RawItemSlot[] | undefined,
-    items: RawItem[] | undefined
-  ): RawItemSlot[] {
-    const results: RawItemSlot[] = itemSlots ?? [];
-    if (!items) return results;
-    for (const item of items) {
-      if (item.equippedSlot) {
-        results.push({ file: item.file, slot: item.equippedSlot });
-      }
-    }
-    return results;
-  }
-
-  mapItems(items: RawItem[] | undefined): Item[] {
-    if (!items) return [];
-    const results: Item[] = [];
-    for (const i of items) {
-      const item =
-        "copyFrom" in i ? this.mapAlterItem(i) : this.mapCreateItem(i);
-      if (!!item.diceSize && !item.speed) {
-        item.speed = 3;
-        console.log(
-          `${figureSet.warning} default speed of ${item.speed} from item ${item.file}.`
-        );
-      }
-      if (results.some((r) => r.file === item.file))
-        throw new Error(`Duplicate item file detected: ${item.file}`);
-      results.push(item);
-    }
-    return results;
-  }
-
-  private mapAlterItem(item: RawAlterItem): Item {
-    return {
-      ...item,
-      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
-      immunities: item.immunities ?? [],
-      diceSize: item.diceSize ?? 0,
-      diceThrown: item.diceThrown ?? 0,
-      damageBonus: item.damageBonus,
-      bonusToHit: item.bonusToHit,
-      speed: item.speed ?? 0,
-      type: item.type ? ItemAbilityTypeEnum[item.type] : undefined,
-      range: item.range,
-      projectile: item.projectile,
-      flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
-      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
-      category: item.category ? ItemCategoryEnum[item.category] : undefined,
-      proficiency: item.proficiency
-        ? ProficiencyTypeEnum[item.proficiency]
-        : undefined,
-      location: item.location
-        ? ItemAbilityLocationEnum[item.location]
-        : undefined,
-      target: item.target ? ItemAbilityTargetEnum[item.target] : undefined,
-      damageType: item.damageType
-        ? AbilityDamageTypeEnum[item.damageType]
-        : undefined,
-      abilityflags: item.abilityFlags
-        ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
-        : undefined,
-      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
-    };
-  }
-
-  private mapCreateItem(item: RawCreateItem): Item {
+  getItem(item: PartialItem, file: string): Item {
     const result: Item = {
-      file: item.file,
+      file,
+      copyFrom: item.copyFrom,
       stringRef: item.stringRef,
       description: item.description,
-      equippedSlot: this.utils.getItemSlots(item.equippedSlot),
-      icon: item.icon,
-      weight: item.weight,
       immunities: item.immunities ?? [],
-      flags: item.flags ? item.flags.map((f) => ItemFlagEnum[f]) : undefined,
-      animation: item.animation ? ItemAnimationEnum[item.animation] : undefined,
-      category: item.category ? ItemCategoryEnum[item.category] : undefined,
-      proficiency: item.proficiency
-        ? ProficiencyTypeEnum[item.proficiency]
-        : undefined,
-      abilityflags: item.abilityFlags
-        ? item.abilityFlags.map((f) => ItemAbilityFlagEnum[f])
-        : undefined,
-      effects: item.effects ? this.effectService.getEffects(item.effects) : [],
+      enchantment: item.enchantment,
+      animation: item.animation,
+      category: item.category,
+      proficiency: item.proficiency,
+      icon: item.icon,
+      flags: item.flags,
+      effects: item.effects ?? [],
+      equippedSlot: item.equippedSlot ?? [],
     };
-    if (item.type) {
-      result.type = item.type ? ItemAbilityTypeEnum[item.type] : undefined;
-      result.range = item.range;
-      result.projectile = item.projectile;
-      result.diceSize = item.diceSize ?? 0;
-      result.diceThrown = item.diceThrown ?? 0;
-      result.speed = item.speed ?? 0;
-      result.damageBonus = item.damageBonus;
-      result.bonusToHit = item.bonusToHit;
-      result.animationSwing = item.animationSwing;
-      result.enchantment = item.enchantment;
-      result.location = item.location
-        ? ItemAbilityLocationEnum[item.location]
-        : ItemAbilityLocationEnum.Weapon;
-      result.target = item.target
-        ? ItemAbilityTargetEnum[item.target]
-        : ItemAbilityTargetEnum.LivingActor;
-      result.damageType = item.damageType
-        ? AbilityDamageTypeEnum[item.damageType]
-        : AbilityDamageTypeEnum.None;
-    }
+    if (item.header) result.header = { effects: [], ...item.header };
+    if (result.equippedSlot)
+      result.equippedSlot = utils.getItemSlots(result.equippedSlot);
+    if (result.header && !result.header.diceSize) result.header.diceSize = 0;
+    if (result.header && !result.header.diceThrown)
+      result.header.diceThrown = 0;
+    if (result.header && !result.header.speed) result.header.speed = 0;
+    if (
+      result.header &&
+      result.header.location === undefined &&
+      !result.copyFrom
+    )
+      result.header.location = ItemAbilityLocationEnum.Weapon;
+    if (result.header && result.header.target === undefined && !result.copyFrom)
+      result.header.target = ItemAbilityTargetEnum.LivingActor;
+    if (
+      result.header &&
+      result.header.damageType === undefined &&
+      !result.copyFrom
+    )
+      result.header.damageType = AbilityDamageTypeEnum.None;
+    result.effects = effectService.getEffects(result.effects);
+    if (result.header?.effects)
+      result.header.effects = effectService.getEffects(result.header.effects);
     return result;
   }
 }

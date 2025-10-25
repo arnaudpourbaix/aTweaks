@@ -1,7 +1,7 @@
 import { TargetStatusName } from "../../../config/target-name";
-import { WeaponSlot } from "../ids/slot";
+import { WeaponSlot } from "../classes/cre-types";
 import { GrabConfig } from "../raw/grab";
-import { TargetPriority } from "./target";
+import { TargetPriority } from "../script/target";
 
 export interface CreatureAttack {
   /**

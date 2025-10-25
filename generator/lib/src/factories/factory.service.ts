@@ -1,13 +1,16 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { CreatureAttackAction } from "../model/final/attack";
-import { Response, Statements } from "../model/final/script";
+import { CreatureAttackAction } from "../model/creature/attack";
+import { Response, Statements } from "../model/script/script";
 import { ObjectIdentifier } from "../model/ids/object";
-import { SlotIdentifier, WeaponSlot } from "../model/ids/slot";
+import { SlotIdentifier } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
-import utils from "../services/utils.service";
-import utilsService from "../services/utils.service";
+import {
+  default as utils,
+  default as utilsService,
+} from "../services/utils.service";
+import { ScriptWeaponSlot } from "../model/creature/item";
 
 class FactoryService {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
@@ -88,7 +91,7 @@ class FactoryService {
     attacks: CreatureAttackAction[];
     oncePerRound: boolean;
     optActions?: Actions.Action[];
-    weaponAttackSlot?: WeaponSlot;
+    weaponAttackSlot?: ScriptWeaponSlot;
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];

@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import figureSet from "figures";
-import { Creature, CreatureAdditionalData } from "../model/final/creature";
+import { Creature, CreatureAdditionalData } from "../model/creature/creature";
 import { ImmunityConfig } from "../model/final/immunity";
 import { State } from "../state";
-import { EquippedItem } from "../model/final/spell-item";
+import { EquippedItem } from "../model/spell-item/spell-item";
 import utils from "./utils.service";
 
 class ImmunityService {
@@ -43,7 +43,10 @@ class ImmunityService {
   ): void {
     const hasCriticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
     const hasHelmet = utils.isSlotIncluded(
-      [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
+      [
+        ...additionalData.equippedItems,
+        ...creature.additionalData.equippedItems,
+      ],
       "HELMET"
     );
     if (hasCriticalHitImmunity && itemSlot.slot !== "HELMET" && !hasHelmet) {
@@ -58,7 +61,10 @@ class ImmunityService {
       (i) => i.copyFrom === immunity.name
     );
     const overwrittingSlot = utils.isSlotIncluded(
-      [...additionalData.itemSlots, ...creature.additionalData.itemSlots],
+      [
+        ...additionalData.equippedItems,
+        ...creature.additionalData.equippedItems,
+      ],
       itemSlot.slot
     );
     if (overwrittingItem)
@@ -74,7 +80,7 @@ class ImmunityService {
         )
       );
     else
-      additionalData.itemSlots.push({
+      additionalData.equippedItems.push({
         file: itemSlot.file,
         slot: itemSlot.slot,
       });

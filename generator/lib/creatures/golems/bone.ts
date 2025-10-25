@@ -5,7 +5,7 @@ import { JEWEL_SLOTS } from "../../src/model/constants";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -13,10 +13,10 @@ const id = MonsterEnum.BoneGolem;
 // Script
 const script = bafFile(id);
 // Spells
-const hideousLaugh = file(1, id);
+const hideousLaugh = getFilename(1, id);
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
 
 const laughEffect: RawBaseEffect = {
   timing: "InstantLimited",

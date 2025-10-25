@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -9,9 +9,9 @@ const id = MonsterEnum.Ogre;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
-const leaderWeapon = file(2, id);
-const chiefWeapon = file(3, id);
+const mainWeapon = getFilename(1, id);
+const leaderWeapon = getFilename(2, id);
+const chiefWeapon = getFilename(3, id);
 
 export const OGRE: RawCreature = {
   name: "Ogre",

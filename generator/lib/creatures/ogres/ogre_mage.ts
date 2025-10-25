@@ -4,7 +4,11 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, convertMovement, file } from "../../src/services/misc.func";
+import {
+  bafFile,
+  convertMovement,
+  getFilename,
+} from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
 import { MonsterEnum } from "../monster";
 
@@ -13,17 +17,17 @@ const id = MonsterEnum.OgreMage;
 // Script
 const script = bafFile(id);
 // Spells
-const coneOfCold = file(1, id);
-const fly = file(2, id);
-const gaseousForm = file(3, id);
+const coneOfCold = getFilename(1, id);
+const fly = getFilename(2, id);
+const gaseousForm = getFilename(3, id);
 
 const flyDuration = 72;
 const gaseousFormDuration = 12;
 
 // Items
-const mainWeapon = file(1, id);
-const gaseousFormWeapon = file(2, id);
-const traits = file(3, id);
+const mainWeapon = getFilename(1, id);
+const gaseousFormWeapon = getFilename(2, id);
+const traits = getFilename(3, id);
 
 const name = "Ogre Mage";
 

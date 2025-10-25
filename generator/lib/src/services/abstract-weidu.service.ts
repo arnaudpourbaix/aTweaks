@@ -1,4 +1,4 @@
-import { EffectTypeEnum } from "../model/final/effect.type";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import { CodeLine, StringReference } from "../model/misc";
 import { GrabService } from "./grab.service";
 import { instance } from "./utils.service";

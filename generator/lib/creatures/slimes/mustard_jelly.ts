@@ -10,19 +10,19 @@ import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
 import { IdsEffect, RawBaseEffect } from "../../src/model/raw/effect";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.MustardJelly;
 // Items
-const mainWeapon = file(1, id);
-export const mustardJellyTraits = file(2, id);
+const mainWeapon = getFilename(1, id);
+export const mustardJellyTraits = getFilename(2, id);
 // Spells
-export const toxicVapors = file(1, id);
-const split = file(2, id);
+export const toxicVapors = getFilename(1, id);
+const split = getFilename(2, id);
 // Projectile
-const toxicVaporsProjectile = file(1, id);
+const toxicVaporsProjectile = getFilename(1, id);
 // Script
 const script = bafFile(id);
 

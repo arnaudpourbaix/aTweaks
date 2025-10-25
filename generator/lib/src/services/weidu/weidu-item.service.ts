@@ -1,9 +1,9 @@
-import { CR } from "../model/constants";
-import { Creature } from "../model/final/creature";
-import { ItemAbilityTypeEnum } from "../model/final/effect.enums";
-import { CodeLine } from "../model/misc";
-import { State } from "../state";
-import { AbstractWeiduService } from "./abstract-weidu.service";
+import { CR } from "../../model/constants";
+import { Creature } from "../../model/creature/creature";
+import { ItemAbilityTypeEnum } from "../../model/spell-item/effect.enums";
+import { CodeLine } from "../../model/misc";
+import { State } from "../../state";
+import { AbstractWeiduService } from "../abstract-weidu.service";
 import { WeiduEffectService } from "./weidu-effect.service";
 
 export class WeiduItemService extends AbstractWeiduService {

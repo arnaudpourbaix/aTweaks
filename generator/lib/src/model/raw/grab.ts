@@ -1,5 +1,5 @@
 import { TranslationKey } from "../../translations/i18n";
-import { EffectDamageTypeEnum } from "../final/effect.enums";
+import { EffectDamageTypeEnum } from "../spell-item/effect.enums";
 import { RawSaveType } from "./enum";
 
 export interface GrabSharedConfig {

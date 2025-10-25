@@ -1,16 +1,16 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { file } from "../../src/services/misc.func";
+import { getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
 const id = MonsterEnum.Lion;
 // Items
-const mainWeapon = file(1, id);
-const offhandWeapon = file(2, id);
+const mainWeapon = getFilename(1, id);
+const offhandWeapon = getFilename(2, id);
 // Spells
-const rearClawsAttack = file(1, id);
+const rearClawsAttack = getFilename(1, id);
 
 export const CAT_LION: RawCreature = {
   name: "Lion",

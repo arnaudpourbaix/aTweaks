@@ -27,34 +27,3 @@ export type ExtendedStatsIdentifiers =
   | "STATE_SHROUD_OF_FLAME"
   | "STATE_STATIC_CHARGE"
   | "STATE_DOESNT_AWAKEN_ON_DAMAGE";
-
-// export const extendedStatIds = [
-//     { id: '0x00000001', value: 'STATE_PRAYER' },
-//     { id: '0x00000002', value: 'STATE_PRAYER_BAD' },
-//     { id: '0x00000004', value: 'STATE_RECITATION' },
-//     { id: '0x00000008', value: 'STATE_RECITATION_BAD' },
-//     { id: '0x00000010', value: 'STATE_EYE_OF_THE_MIND' },
-//     { id: '0x00000020', value: 'STATE_EYE_OF_THE_SWORD' },
-//     { id: '0x00000040', value: 'STATE_EYE_OF_THE_MAGE' },
-//     { id: '0x00000080', value: 'STATE_EYE_OF_VENOM' },
-//     { id: '0x00000100', value: 'STATE_EYE_OF_THE_SPIRIT' },
-//     { id: '0x00000200', value: 'STATE_EYE_OF_FORTITUDE' },
-//     { id: '0x00000400', value: 'STATE_EYE_OF_STONE' },
-//     { id: '0x00000800', value: 'STATE_ANIMAL_RAGE' },
-//     { id: '0x00001000', value: 'STATE_SUPPRESS_HP_INFO' },
-//     { id: '0x00002000', value: 'STATE_BERSERK_ALWAYS_ACTIVE' },
-//     { id: '0x00004000', value: 'STATE_SNEAK_ATTACK_IMMUNITY' },
-//     { id: '0x00008000', value: 'STATE_CYNICISM_EQUIPPED' },
-//     { id: '0x00010000', value: 'STATE_UNSTUN_ON_DAMAGE' },
-//     { id: '0x00020000', value: 'STATE_DEAFENED' },
-//     { id: '0x00040000', value: 'STATE_CHAOTIC_COMMANDS' },
-//     { id: '0x00080000', value: 'STATE_MISCAST_MAGIC' },
-//     { id: '0x00100000', value: 'STATE_PAIN' },
-//     { id: '0x00200000', value: 'STATE_MALISON' },
-//     { id: '0x00400000', value: 'STATE_BLOOD_RAGE' },
-//     { id: '0x00800000', value: 'STATE_CATS_GRACE' },
-//     { id: '0x01000000', value: 'STATE_MOLD_TOUCH' },
-//     { id: '0x02000000', value: 'STATE_SHROUD_OF_FLAME' },
-//     { id: '0x04000000', value: 'STATE_STATIC_CHARGE' },
-//     { id: '0x08000000', value: 'STATE_DOESNT_AWAKEN_ON_DAMAGE' },
-// ];

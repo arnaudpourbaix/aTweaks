@@ -1,7 +1,7 @@
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -9,10 +9,10 @@ const id = MonsterEnum.DoomGuard;
 // Script
 const script = bafFile(id);
 // Items
-const mainWeapon = file(1, id);
-const traits = file(2, id);
-const armor = file(3, id);
-const helmet = file(4, id);
+const mainWeapon = getFilename(1, id);
+const traits = getFilename(2, id);
+const armor = getFilename(3, id);
+const helmet = getFilename(4, id);
 
 const name = "Doom Guard";
 

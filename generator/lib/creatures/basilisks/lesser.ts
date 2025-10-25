@@ -5,7 +5,7 @@ import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
 import { RawSaveType } from "../../src/model/raw/enum";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -13,13 +13,13 @@ const id = MonsterEnum.LesserBasilisk;
 // Script
 const script = bafFile(id);
 // Spells
-export const petrification2e = file(1, id);
-export const petrification5e = file(2, id);
-const petrification5eTechnical = file(3, id);
+export const petrification2e = getFilename(1, id);
+export const petrification5e = getFilename(2, id);
+const petrification5eTechnical = getFilename(3, id);
 // Items
-const mainWeapon = file(1, id);
+const mainWeapon = getFilename(1, id);
 // Projectiles
-export const basiliskGazeProjectile = file(1, id);
+export const basiliskGazeProjectile = getFilename(1, id);
 
 const petrificationSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
   saveTypes: ["PetrifyPolymorph"],

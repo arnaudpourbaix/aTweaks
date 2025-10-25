@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { RawCreature } from "../../src/model/raw/creature";
-import { bafFile, file } from "../../src/services/misc.func";
+import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
@@ -9,10 +9,10 @@ const id = MonsterEnum.PolarBear;
 // Script
 const script = bafFile(id);
 // Items
-export const polarBearMainWeapon = file(1, id);
-export const polarBearOffhandWeapon = file(2, id);
+export const polarBearMainWeapon = getFilename(1, id);
+export const polarBearOffhandWeapon = getFilename(2, id);
 // Spells
-const hug = file(1, id);
+const hug = getFilename(1, id);
 
 export const BEAR_POLAR: RawCreature = {
   name: "Polar Bear",

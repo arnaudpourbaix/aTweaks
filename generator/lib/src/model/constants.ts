@@ -1,5 +1,3 @@
-import { ItemSlot } from "./raw/enum";
-
 export const CR = "\r\n";
 export const TAB = "\t";
 
@@ -187,12 +185,3 @@ export const SAVING_THROWS = {
     },
   ],
 };
-
-export const JEWEL_SLOTS: ItemSlot[] = [
-  "LRING",
-  "RRING",
-  "AMULET",
-  "BELT",
-  "GLOVES",
-  "CLOAK",
-];
