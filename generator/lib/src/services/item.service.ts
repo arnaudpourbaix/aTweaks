@@ -45,9 +45,12 @@ class ItemService {
       !result.copyFrom
     )
       result.header.damageType = AbilityDamageTypeEnum.None;
-    result.effects = effectService.getEffects(result.effects);
+    result.effects = effectService.getEffects(result.effects, file);
     if (result.header?.effects)
-      result.header.effects = effectService.getEffects(result.header.effects);
+      result.header.effects = effectService.getEffects(
+        result.header.effects,
+        file
+      );
     return result;
   }
 }

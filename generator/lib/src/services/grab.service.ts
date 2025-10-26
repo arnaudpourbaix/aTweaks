@@ -1,117 +1,204 @@
+import figureSet from "figures";
 import {
+  creatureSizes,
   GRAB_IMMUNE_CREATURES,
   HUGE_CREATURES,
   LARGE_CREATURES,
 } from "../../config/creatures";
-import {
-  GRAB_CHECK_CREATURE_SIZE,
-  GRAB_EFFECTS_FUNCTION,
-} from "../../config/grab";
 import { Creature } from "../model/creature/creature";
-import { CastSpellEffect, Effect } from "../model/spell-item/effect";
-import { GrabConfig } from "../model/raw/grab";
+import {
+  CreatureGrabConfig,
+  GRAB_DEFAULT_CONFIG,
+} from "../model/creature/grab";
+import { Effect, IdsEffect } from "../model/spell-item/effect";
+import {
+  EffectBonusToEnum,
+  EffectCastSpellTypeEnum,
+  EffectModifierTypeEnum,
+  EffectStatisticModifierEnum,
+  EffectTargetEnum,
+  EffectTimingEnum,
+  EffectVisualEffectLocationEnum,
+  ItemAbilityTargetEnum,
+  ItemAbilityTypeEnum,
+  PortraitIconEnum,
+} from "../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../model/spell-item/effect.type";
+import { Spell, Weapon } from "../model/spell-item/spell-item";
 import creatureService from "./creature.service";
-import descriptionService from "./description.service";
 import effectService from "./effect.service";
+import { getFilename } from "./misc.func";
 import spellService from "./spell.service";
 
 class GrabService {
-  addGrabEffects(creature: Creature) {
-    if (!creature.attack.grab) return;
-    const grab = creature.attack.grab;
-    const item = creature.items.find((i) => i.file === grab.weaponFile);
-    if (!item) {
-      throw new Error(`grab: item ${grab.weaponFile} not found!`);
-    }
-    const grabEffect = this.getGrabEffect(creature, creature.attack.grab);
-    item.effects.push(grabEffect);
-    const effectFile = this.getGrabProtectionEffect(grab);
-    creature.effectFiles.push({ ...effectFile, file: grab.file });
-    // const saveText = this.descriptionService.getSaveText(grabEffect);
-    const spell = spellService.checkSpell(
+  attachGrabToWeapon(
+    creature: Creature,
+    weapon: Weapon,
+    grab: CreatureGrabConfig
+  ) {
+    const spell = this.createGrabSpell(creature, grab);
+    this.updateWeapon(creature, grab, weapon, spell);
+  }
+
+  private createGrabSpell(creature: Creature, grab: CreatureGrabConfig): Spell {
+    const file = getFilename(creature.spells.length + 1, creature.monster);
+    const effectFile = effectService.getEffect({
+      opcode: EffectTypeEnum.ProtectionFromSpell,
+      resource: file,
+      duration: 1,
+    });
+    creature.effectFiles.push({ ...effectFile, file });
+    const spell = spellService.getSpell(
       {
-        name: "Grab",
-        description: [
-          `Grab and hold your target for ${descriptionService.getDuration(
-            grab.duration
-          )}.`,
-          "Grabbed creature will suffer these effects:",
-          "- can not move",
-          "- loose armor class from dexterity bonus",
-          `- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)`,
-          "- -4 THAC0",
-        ],
-        stringRef: grab.grabStringRef,
-        file: grab.file,
+        name: GRAB_DEFAULT_CONFIG.grabStringRef,
+        // description: [
+        //   `Grab and hold your target for ${descriptionService.getDuration(
+        //     grab.duration
+        //   )}.`,
+        //   "Grabbed creature will suffer these effects:",
+        //   "- can not move",
+        //   "- loose armor class from dexterity bonus",
+        //   `- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)`,
+        //   "- -4 THAC0",
+        // ],
         headers: [
           {
-            type: "Melee",
-            target: "LivingActor",
+            type: ItemAbilityTypeEnum.Melee,
+            target: ItemAbilityTargetEnum.LivingActor,
             range: 5,
+            effects: this.getGrabbedEffects(creature, grab, file),
           },
         ],
       },
-      []
+      file
     );
-    spell.headers[0].effects = this.getGrabbedEffects(creature, grab);
     creature.spells.push(spell);
+    return spell;
   }
 
-  private getGrabEffect(creature: Creature, grab: GrabConfig): Effect {
+  private updateWeapon(
+    creature: Creature,
+    grab: CreatureGrabConfig,
+    weapon: Weapon,
+    spell: Spell
+  ): void {
     const strModifier = creatureService.getStrengthModifier(creature.data);
-    const sizeModifier = GRAB_CHECK_CREATURE_SIZE.find(
+    const sizeModifier = creatureSizes.find(
       (s) => s.size === creature.data.size
-    )?.bonus as number;
+    )!.grabModifier;
     const calculatedSaveBonus =
       (strModifier + sizeModifier + (grab.onlyGrabProneTarget ? 4 : 0)) * -1;
     const saveBonus =
-      grab.saveBonus === 99 ? calculatedSaveBonus : grab.saveBonus;
-    const rawEffect: CastSpellEffect = {
-      opcode: "CastSpell",
-      type: "CastInstantlyAtCasterLevel",
-      probability1: grab.probability,
-      saveTypes: [grab.saveType],
+      grab.saveBonus === undefined ? calculatedSaveBonus : grab.saveBonus;
+    const effect = effectService.getEffect({
+      opcode: EffectTypeEnum.CastSpell,
+      type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+      probability1: grab.probability ?? GRAB_DEFAULT_CONFIG.probability,
+      saveTypes: [grab.saveType ? grab.saveType : GRAB_DEFAULT_CONFIG.saveType],
       saveBonus,
-      resource: grab.file,
-    };
-    const effect = effectService.getEffect(rawEffect);
-    return effect;
+      resource: spell.file,
+    });
+    weapon.header.effects.push(effect);
   }
 
-  private getGrabProtectionEffect(grab: GrabConfig): Effect {
-    const rawEffect: RawEffect = {
-      opcode: "ProtectionFromSpell",
-      resource: grab.file,
-      duration: 1,
-    };
-    const effect = effectService.getEffect(rawEffect);
-    return effect;
+  private getGrabbedEffects(
+    creature: Creature,
+    grab: CreatureGrabConfig,
+    file: string
+  ): Effect[] {
+    const duration = (grab.rounds ?? GRAB_DEFAULT_CONFIG.rounds) * 6;
+    const grabEffects: Effect[] = [
+      {
+        opcode: EffectTypeEnum.SetExtendedSpellState,
+        state: GRAB_DEFAULT_CONFIG.grabbedState,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayString,
+        stringRef: GRAB_DEFAULT_CONFIG.grabbedStringRef,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+      },
+      {
+        opcode: EffectTypeEnum.MovementRateBonus2,
+        type: EffectModifierTypeEnum.Set,
+        value: 0,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.DexterityBonus,
+        value: 8, // Grabbed creature loose AC from their dexterity bonus
+        type: EffectStatisticModifierEnum.Set,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.ArmorClassBonus,
+        bonusTo: EffectBonusToEnum.AllWeapons,
+        value: -4, // Opponents get +4 bonus on their attack rolls against grabbed target
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.Thac0Bonus,
+        type: EffectModifierTypeEnum.Increment,
+        value: -4,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        icon: PortraitIconEnum.Entangled,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.PlaySound,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        resource: GRAB_DEFAULT_CONFIG.startSound,
+      },
+      {
+        opcode: EffectTypeEnum.PlaySound,
+        timing: EffectTimingEnum.DelayPermanent,
+        resource: GRAB_DEFAULT_CONFIG.endSound,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.PlayVisualEffect,
+        playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+        resource: GRAB_DEFAULT_CONFIG.visualEffect,
+        duration,
+      },
+      {
+        opcode: EffectTypeEnum.ProtectionFromSpell,
+        resource: file,
+        duration,
+      },
+    ];
+    const immunityEffects = this.getGrabImmuneEffects(creature, grab, file);
+    return [...immunityEffects, ...grabEffects];
   }
 
-  private getGrabbedEffects(creature: Creature, grab: GrabConfig): Effect[] {
-    const rawEffects: RawEffect[] = GRAB_EFFECTS_FUNCTION(grab);
-    const effects = effectService.getEffects(rawEffects);
-    const immunityEffects = this.getGrabImmuneEffects(creature, grab);
-    return [...immunityEffects, ...effects];
-  }
-
-  private getGrabImmuneEffects(creature: Creature, grab: GrabConfig): Effect[] {
-    if (!creature.data.size)
-      throw new Error(`Creature size is needed to add grab immunities`);
+  private getGrabImmuneEffects(
+    creature: Creature,
+    grab: CreatureGrabConfig,
+    file: string
+  ): Effect[] {
     const list = [...GRAB_IMMUNE_CREATURES];
-    if (["Huge", "Large"].includes(creature.data.size)) {
-      list.push(...HUGE_CREATURES);
+    if (!creature.data.size) {
+      console.log(
+        `${figureSet.warning} Creature size is needed to add grab immunities!`
+      );
+    } else {
+      if (["Huge", "Large"].includes(creature.data.size)) {
+        list.push(...HUGE_CREATURES);
+      }
+      if (creature.data.size === "Large") {
+        list.push(...LARGE_CREATURES);
+      }
     }
-    if (creature.data.size === "Large") {
-      list.push(...LARGE_CREATURES);
-    }
-    const rawEffects: RawEffect[] = list.map((i) => ({
-      opcode: "UseEFFFile",
+    const rawEffects: IdsEffect[] = list.map((i) => ({
+      opcode: EffectTypeEnum.UseEFFFile,
       idsFile: i[0],
       idsEntry: i[1],
       duration: 1,
-      target: "PresetTarget",
-      resource: grab.file,
+      target: EffectTargetEnum.PresetTarget,
+      resource: file,
     }));
     const effects = effectService.getEffects(rawEffects);
     return effects;

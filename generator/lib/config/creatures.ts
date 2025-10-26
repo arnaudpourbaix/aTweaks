@@ -4,14 +4,15 @@ import { GeneralIdentifier } from "../src/model/ids/general";
 import { RaceIdentifier } from "../src/model/ids/race";
 
 export const creatureSizes = [
-  { size: "Tiny", range: 0 },
-  { size: "Small", range: 1 },
-  { size: "Medium", range: 1 },
-  { size: "Large", range: 2 },
-  { size: "Huge", range: 2 },
-  { size: "Gargantuan", range: 3 },
-  { size: "Colossal", range: 4 },
+  { size: "Tiny", attackRange: 0, grabModifier: -8 },
+  { size: "Small", attackRange: 1, grabModifier: -4 },
+  { size: "Medium", attackRange: 1, grabModifier: 0 },
+  { size: "Large", attackRange: 2, grabModifier: 4 },
+  { size: "Huge", attackRange: 2, grabModifier: 8 },
+  { size: "Gargantuan", attackRange: 3, grabModifier: 12 },
+  { size: "Colossal", attackRange: 4, grabModifier: 16 },
 ] as const;
+
 export type CreatureSize = (typeof creatureSizes)[number]["size"];
 
 export const ATWEAKS_CREATURES = {

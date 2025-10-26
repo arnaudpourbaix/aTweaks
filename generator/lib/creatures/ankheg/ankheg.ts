@@ -13,13 +13,13 @@ import {
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
 import effectService from "../../src/services/effect.service";
-import { t } from "../../src/translations/i18n";
+import translationService from "../../src/services/translation.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 const cre = CreatureFactory.create({
   monster: MonsterEnum.Ankheg,
   family: MonsterFamilyEnum.Ankheg,
-  name: "monster.ankheg.weapon",
+  name: "monster.ankheg.name",
   files: [
     "BDNEO",
     "ANKHEG",
@@ -60,8 +60,8 @@ cre.setAdditionalData({
   removeItems: ["ANKHEG1", "ANKHEG2"],
 });
 
-cre.addWeapon(
-  {
+cre.addWeapon({
+  weapon: {
     stringRef: "monster.ankheg.weapon",
     equippedSlot: ["WEAPON1"],
     icon: MonsterItemIconEnum.Wolf,
@@ -74,7 +74,8 @@ cre.addWeapon(
       abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
     },
   },
-  {
+  grab: { rounds: 3 },
+  castSpell: {
     spell: {
       name: "monster.ankheg.digestiveEnzyme.name",
       description: "monster.ankheg.digestiveEnzyme.description",
@@ -104,35 +105,11 @@ cre.addWeapon(
         },
       ],
     },
-  }
-);
+  },
+});
 
-// const stream = CreatureFactory.addSpell(cre, {
-//   memorizedCount: 1,
-//   name: "monster.ankheg.enzymeStream.name",
-//   description: "monster.ankheg.enzymeStream.description",
-//   secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-//   headers: [
-//     {
-//       type: ItemAbilityTypeEnum.Ranged,
-//       range: 30,
-//       speed: 3,
-//       projectile: "acidblob",
-//       effects: [
-//         {
-//           opcode: EffectTypeEnum.Damage,
-//           type: EffectDamageTypeEnum.Acid,
-//           diceThrown: 8,
-//           diceSize: 4,
-//           saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-//           flags: [EffectFlagsEnum.SaveForHalf],
-//         },
-//       ],
-//     },
-//   ],
-// });
-const stream = cre.addWeapon(
-  {
+const stream = cre.addWeapon({
+  weapon: {
     stringRef: "monster.ankheg.enzymeStream.name",
     equippedSlot: ["WEAPON2"],
     icon: "SPWI211B",
@@ -144,7 +121,8 @@ const stream = cre.addWeapon(
       projectile: "acidblob",
     },
   },
-  {
+  castSpell: {
+    remove: true,
     spell: {
       memorizedCount: 1,
       name: "monster.ankheg.enzymeStream.name",
@@ -169,15 +147,15 @@ const stream = cre.addWeapon(
         },
       ],
     },
-  }
-);
+  },
+});
 
 cre.setBehavior({
   tracking: true,
   combatWalk: true,
   abilities: [
     {
-      name: t.monster.ankheg.enzymeStream.name,
+      name: translationService.t.monster.ankheg.enzymeStream.name,
       disableInterrupt: true,
       target: { name: "PCsPreferringWeak", random: true },
       triggers: [

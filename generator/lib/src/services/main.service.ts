@@ -35,7 +35,7 @@ import { EffectService } from "./effect.service";
 import { WeiduCoreService } from "./weidu/weidu-core.service";
 import { WeiduCreatureService } from "./weidu/weidu-creature.service";
 import { WeiduFunctionService } from "./weidu/weidu-function.service";
-import { t, translation } from "../translations/i18n";
+import { t, translation } from "../../translations/i18n";
 
 class MainService {
   generateCommonCode(): Promise<void> {

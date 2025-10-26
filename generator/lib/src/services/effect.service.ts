@@ -23,19 +23,19 @@ import creatureService from "./creature.service";
 import utils from "./utils.service";
 
 export class EffectService {
-  getEffects(effects: Effect[]): Effect[] {
+  getEffects(effects: Effect[], file?: string): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
       // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
       //   acc.push(...this.getGroupEffects(effect as RawEffectGroup));
       //   return acc;
       // }
-      acc.push(this.getEffect(effect));
+      acc.push(this.getEffect(effect, file));
       return acc;
     }, [] as Effect[]);
     return results;
   }
 
-  getEffect(effect: Effect): Effect {
+  getEffect(effect: Effect, file?: string): Effect {
     // if (EFFECT_GROUP_NAMES.includes(effect.opcode))
     //   throw new Error(
     //     `Effects group ${effect.opcode} can't be processed in getEffect`
@@ -99,6 +99,13 @@ export class EffectService {
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
         if (effect.stringRef) {
           effect.parameter1 = `${utils.resolveStringRef(effect.stringRef)}`;
+        }
+        if (
+          effect.opcode === EffectTypeEnum.ProtectionFromSpell &&
+          !effect.resource &&
+          !!file
+        ) {
+          effect.resource = file;
         }
         break;
       case EffectTypeEnum.LightingEffects:

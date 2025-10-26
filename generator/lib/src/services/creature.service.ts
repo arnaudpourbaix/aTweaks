@@ -84,8 +84,10 @@ class CreatureService {
     ) {
       const range = creatureSizes.find((c) => c.size === creature.data.size);
       if (range) {
-        console.log(`${figureSet.arrowRight} Melee range: ${range.range}`);
-        weapon.header.range = range.range;
+        console.log(
+          `${figureSet.arrowRight} Melee range: ${range.attackRange}`
+        );
+        weapon.header.range = range.attackRange;
       }
     }
   }

@@ -1,6 +1,7 @@
 import deepmerge from "deepmerge";
 import figureSet from "figures";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
+import { TranslationKey } from "../../translations/i18n";
 import { CreatureAdditionalData } from "../model/creature/additional-data";
 import { CreatureAttack, CreatureAttackAction } from "../model/creature/attack";
 import { CreatureBehavior } from "../model/creature/behavior";
@@ -10,23 +11,27 @@ import { BaseEffect } from "../model/spell-item/effect";
 import {
   EffectCastSpellTypeEnum,
   EffectTargetEnum,
-  ItemAbilityTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import {
   Item,
-  ItemHeader,
   PartialItem,
   PartialSpell,
   PartialWeapon,
   Spell,
+  Weapon,
   WeaponCastSpell,
 } from "../model/spell-item/spell-item";
 import { WithRequired } from "../model/utility-types";
 import itemService from "../services/item.service";
 import { getFilename } from "../services/misc.func";
 import spellService from "../services/spell.service";
-import { TranslationKey } from "../translations/i18n";
+import { CreatureGrabConfig } from "../model/creature/grab";
+import chalk from "chalk";
+import translationService from "../services/translation.service";
+import { ItemSlot } from "../model/creature/item";
+import grabService from "../services/grab.service";
+import effectService from "../services/effect.service";
 
 class CreatureFactory {
   create(p: {
@@ -55,6 +60,9 @@ class CreatureFactory {
       removeEffects: true,
       effects: [],
     };
+    console.log(
+      chalk.bold(`\nCreating ${translationService.fromKey(cre.name)}...`)
+    );
     return cre;
   }
 
@@ -136,39 +144,79 @@ class CreatureFactory {
     return result;
   }
 
-  addWeapon(cre: Creature, weapon: PartialWeapon, castSpell?: WeaponCastSpell) {
+  addWeapon({
+    cre,
+    weapon,
+    grab,
+    castSpell,
+  }: {
+    cre: Creature;
+    weapon: PartialWeapon;
+    grab?: CreatureGrabConfig;
+    castSpell?: WeaponCastSpell;
+  }) {
     const file = getFilename(cre.items.length + 1, cre.monster);
+    if (weapon.equippedSlot)
+      this.equipItem(cre, cre.additionalData, file, weapon.equippedSlot);
     if (!weapon.header.speed) {
       weapon.header.speed = 3;
       console.log(
         `${figureSet.warning} default speed of ${weapon.header.speed} from item ${file}.`
       );
     }
-    const result = this.addItem(cre, weapon);
-    if (castSpell) {
-      const spell = this.addSpell(cre, castSpell.spell);
-      const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
-        resource: spell.file,
-        probability1: castSpell.probability1,
-        probability2: castSpell.probability2,
-        saveTypes: castSpell.saveTypes,
-        saveBonus: castSpell.saveBonus,
-      };
-      result.effects.push({
+    const result = itemService.getItem(weapon, file) as Weapon;
+    if (castSpell) this.attachSpellToWeapon(cre, result, castSpell);
+    if (grab) grabService.attachGrabToWeapon(cre, result, grab);
+    cre.items.push(result);
+    return result;
+  }
+
+  attachSpellToWeapon(cre: Creature, item: Weapon, cast: WeaponCastSpell) {
+    const spell = this.addSpell(cre, cast.spell);
+    const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
+      resource: spell.file,
+      probability1: cast.probability1,
+      probability2: cast.probability2,
+      saveTypes: cast.saveTypes,
+      saveBonus: cast.saveBonus,
+    };
+    item.header.effects.push(
+      effectService.getEffect({
         opcode: EffectTypeEnum.CastSpell,
         type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
         ...baseEffect,
-      });
-      if (castSpell.remove) {
-        result.effects.push({
+      })
+    );
+    if (cast.remove) {
+      item.header.effects.push(
+        effectService.getEffect({
           opcode: EffectTypeEnum.RemoveSpell,
           target: EffectTargetEnum.Self,
           ...baseEffect,
-        });
-      }
+        })
+      );
     }
-    cre.items.push(result);
-    return result;
+  }
+
+  equipItem(
+    cre: Creature,
+    data: CreatureAdditionalData,
+    file: string,
+    slots: ItemSlot[]
+  ) {
+    const equippedItem = data.equippedItems.find(
+      (e) => slots.length === 1 && e.slot[0] === slots[0]
+    );
+    const item = cre.items.find((i) => i.file === equippedItem?.file);
+    if (equippedItem && item) {
+      console.log(
+        `${figureSet.warning} Slot ${equippedItem.slot} is already attributed to ${item.stringRef}.`
+      );
+    }
+    data.equippedItems.push({
+      file,
+      slot: slots,
+    });
   }
 }
 

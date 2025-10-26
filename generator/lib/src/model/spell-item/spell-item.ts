@@ -1,5 +1,5 @@
 import { ImmunityName } from "../../../config/immunity-name";
-import { TranslationKey } from "../../translations/i18n";
+import { TranslationKey } from "../../../translations/i18n";
 import { ItemSlot } from "../creature/item";
 import { PartialBy, WithRequired } from "../utility-types";
 import { Effect, EffectFile } from "./effect";
@@ -129,8 +129,8 @@ export type MemorizedSpellType = "priest" | "wizard" | "innate";
 export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
-  Omit<Spell, "file">,
-  "icon" | "effects" | "headers" | "effectFiles"
+  Omit<Spell, "file" | "headers">,
+  "icon" | "effects" | "effectFiles"
 > & { headers?: PartialSpellHeader[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;

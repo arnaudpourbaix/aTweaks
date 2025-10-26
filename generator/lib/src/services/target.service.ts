@@ -5,7 +5,11 @@ import {
 } from "../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../config/target-name";
 import { Creature } from "../model/creature/creature";
-import { TargetPriority } from "../model/script/target";
+import {
+  TargetList,
+  TargetPriority,
+  TargetStatus,
+} from "../model/script/target";
 import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { ClassIdentifier } from "../model/ids/class";
@@ -14,7 +18,6 @@ import { GeneralIdentifier } from "../model/ids/general";
 import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
-import { RawTargetList, TargetStatus } from "../model/raw/target";
 import { Triggers } from "../model/raw/triggers";
 import utils from "./utils.service";
 
@@ -57,7 +60,7 @@ class TargetService {
     }
   }
 
-  getTriggersFromTargetList(target: RawTargetList): {
+  getTriggersFromTargetList(target: TargetList): {
     triggers: Triggers.Trigger[];
     targetTriggers: Triggers.Trigger[];
   } {

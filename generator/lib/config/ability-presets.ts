@@ -1,10 +1,8 @@
+import factoryService from "../src/factories/factory.service";
 import { RawCreatureAbility } from "../src/model/raw/ability";
-import { RawTargetList } from "../src/model/raw/target";
-import { FactoryService } from "../src/services/factory.service";
+import { TargetList } from "../src/model/script/target";
 import { GLOBAL_CONFIG } from "./generate";
 import { SPELLS } from "./spell-names";
-
-const factory = FactoryService.instance;
 
 export const SPELL_STATES = {
   flying: "JA_FLYING",
@@ -15,7 +13,7 @@ export const SPELL_STATES = {
 
 export const DEFAULT_SPELL_PROBABILITY = 70;
 
-const CHARM_TARGET_LISTS: RawTargetList[] = [
+const CHARM_TARGET_LISTS: TargetList[] = [
   {
     name: "PCsFighters",
     randomOrder: true,
@@ -73,9 +71,9 @@ export const PRESET_NAMES = {
   DimensionDoorOffscreen: "DimensionDoorOffscreen",
 };
 
-const SLEEP_TARGET_LISTS: RawTargetList[] = [...CHARM_TARGET_LISTS];
+const SLEEP_TARGET_LISTS: TargetList[] = [...CHARM_TARGET_LISTS];
 
-const HOLD_TARGET_LISTS: RawTargetList[] = [
+const HOLD_TARGET_LISTS: TargetList[] = [
   {
     name: "PCs",
     includeStatus: ["Able"],
@@ -464,7 +462,7 @@ export const ABILITY_PRESETS: {
       target: {
         name: "NearestEnemies",
         includeStatus: ["Able"],
-        triggers: [factory.checkStat(0, "ENTANGLE")],
+        triggers: [factoryService.checkStat(0, "ENTANGLE")],
       },
       spell: {
         id: "CLERIC_ENTANGLE",

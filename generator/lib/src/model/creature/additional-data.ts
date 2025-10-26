@@ -2,7 +2,7 @@ import { ImmunityName } from "../../../config/immunity-name";
 import { Effect } from "../spell-item/effect";
 import { ProficiencyTypeEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
-import { EquippedItem } from "../spell-item/spell-item";
+import { EquippedItem } from "./item";
 
 export interface CreatureAdditionalData {
   /**

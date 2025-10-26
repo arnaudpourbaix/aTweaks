@@ -8,7 +8,7 @@ import { SpellGroup } from "../model/raw/spell-group";
 import { SpellProtectionStat } from "../model/raw/spell-protection";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
-import { TranslationKey } from "../translations/i18n";
+import { TranslationKey } from "../../translations/i18n";
 import { SpellTypeEnum } from "../model/spell-item/effect.enums";
 import { EquippedItem, ItemSlot } from "../model/creature/item";
 

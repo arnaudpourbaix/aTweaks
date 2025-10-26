@@ -1,7 +1,7 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import creatureFactory from "../../factories/creature.factory";
-import { TranslationKey } from "../../translations/i18n";
-import { CastSpellEffect } from "../spell-item/effect";
+import { TranslationKey } from "../../../translations/i18n";
+import { CastSpellEffect, EffectFile } from "../spell-item/effect";
 import { Projectile } from "../spell-item/projectile";
 import {
   Item,
@@ -16,6 +16,7 @@ import { CreatureAdditionalData } from "./additional-data";
 import { CreatureAttack } from "./attack";
 import { CreatureBehavior } from "./behavior";
 import { CreatureData } from "./data";
+import { CreatureGrabConfig } from "./grab";
 
 export interface BaseCreature {
   files: string[];
@@ -40,11 +41,10 @@ export class Creature implements BaseCreature {
   notEnforceFiles: string[] = [];
   adjustments: CreatureAdjustment[] = [];
 
-  weapons: Weapon[] = [];
-  items: Item[] = [];
+  items: (Item | Weapon)[] = [];
   spells: Spell[] = [];
   projectiles: Projectile[] = [];
-  // effectFiles: EffectFile[] = [];
+  effectFiles: EffectFile[] = [];
 
   /**
    * Auto-generate some creature data (true by default)
@@ -77,8 +77,16 @@ export class Creature implements BaseCreature {
     return creatureFactory.addItem(this, item);
   }
 
-  addWeapon(weapon: PartialWeapon, castSpell?: WeaponCastSpell) {
-    return creatureFactory.addWeapon(this, weapon, castSpell);
+  addWeapon({
+    weapon,
+    grab,
+    castSpell,
+  }: {
+    weapon: PartialWeapon;
+    grab?: CreatureGrabConfig;
+    castSpell?: WeaponCastSpell;
+  }) {
+    return creatureFactory.addWeapon({ cre: this, weapon, grab, castSpell });
   }
 }
 

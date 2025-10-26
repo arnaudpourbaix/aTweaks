@@ -1,3 +1,5 @@
+import { SlotIdentifier } from "../ids/slot";
+
 export type ItemSlot =
   | "HELMET"
   | "ARMOR"
@@ -21,12 +23,12 @@ export type ItemSlot =
   | "QITEM2"
   | "QITEM3";
 
-export const WEAPON_SLOTS: ItemSlot[] = [
-  "WEAPON1",
-  "WEAPON2",
-  "WEAPON3",
-  "WEAPON4",
-  "SHIELD",
+export const WEAPON_SLOTS: { slot: ItemSlot; id: SlotIdentifier }[] = [
+  { slot: "WEAPON1", id: "SLOT_WEAPON0" },
+  { slot: "WEAPON2", id: "SLOT_WEAPON1" },
+  { slot: "WEAPON3", id: "SLOT_WEAPON2" },
+  { slot: "WEAPON4", id: "SLOT_WEAPON3" },
+  { slot: "SHIELD", id: "SLOT_SHIELD" },
 ];
 
 export const JEWEL_SLOTS: ItemSlot[] = [

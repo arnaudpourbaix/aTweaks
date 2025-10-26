@@ -22,7 +22,7 @@ async function main() {
     .then(() => {
       // let chain: Promise<any> = Promise.resolve();
       [ANKHEG].forEach((creature) => {
-        console.log(creature);
+        console.log(creature.behavior);
         //CREATURES.forEach((creature) => {
         // chain = chain.then(() => mainService.processCreature(creature));
       });

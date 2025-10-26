@@ -1,4 +1,4 @@
-import { TranslationKey } from "../../translations/i18n";
+import { TranslationKey } from "../../../translations/i18n";
 import { EffectIDSFileEnum } from "./effect.enums";
 
 export enum ProjectileExplosionEffectEnum {

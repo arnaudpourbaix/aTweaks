@@ -1,13 +1,14 @@
-import { Actions } from "../raw/actions";
-import { RawTargetList } from "../raw/target";
-import { Triggers } from "../raw/triggers";
 import { CreatureAbility } from "../creature/ability";
+import { Actions } from "../raw/actions";
+import { Triggers } from "../raw/triggers";
+import { PartialBy } from "../utility-types";
+import { TargetList } from "./target";
 
 export type Statements = ConditionalStatement[];
 
 export interface ConditionalStatement {
   comment?: string;
-  target?: RawTargetList;
+  target?: TargetList;
   triggers: Triggers.Trigger[];
   responses: Response[];
 }
@@ -24,11 +25,21 @@ export interface CustomCode {
   abilities: CreatureAbility[];
 }
 
+export type PartialCustomCode = PartialBy<
+  CustomCode,
+  "statements" | "abilities"
+>;
+
 export interface AdditionalCode {
   location: CustomCodeLocation;
   triggers: Triggers.Trigger[];
   actions: Actions.Action[];
 }
+
+export type PartialAdditionalCode = PartialBy<
+  AdditionalCode,
+  "triggers" | "actions"
+>;
 
 export type CustomCodeLocation =
   | "destroyUponDeath"

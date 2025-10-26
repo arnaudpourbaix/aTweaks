@@ -1,6 +1,6 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { SpellGroupName } from "../../../config/spell-group-name";
-import { TranslationKey } from "../../translations/i18n";
+import { TranslationKey } from "../../../translations/i18n";
 import { Effect } from "../spell-item/effect";
 import { PortraitIconEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";

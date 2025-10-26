@@ -1,10 +1,10 @@
 import { Actions } from "../raw/actions";
-import { RawTargetList } from "../raw/target";
 import { Triggers } from "../raw/triggers";
+import { TargetList } from "../script/target";
 
 export interface CreatureAbility {
   name: string;
-  target?: RawTargetList[];
+  target?: TargetList[];
   isSpell: boolean;
   /**
    * Ability maximum range (if applicable)

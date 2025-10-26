@@ -1,5 +1,5 @@
 import { SpellProtectionName } from "../../../config/spell-protection-name";
-import { TranslationKey } from "../../translations/i18n";
+import { TranslationKey } from "../../../translations/i18n";
 import {
   AnimationChangeTypeEnum,
   AttackModifierTypeEnum,

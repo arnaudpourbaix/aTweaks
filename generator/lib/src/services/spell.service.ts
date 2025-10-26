@@ -1,4 +1,4 @@
-import { Effect, EffectFile } from "../model/spell-item/effect";
+import { Effect } from "../model/spell-item/effect";
 import {
   EffectIDSFileEnum,
   EffectTimingEnum,
@@ -9,6 +9,7 @@ import {
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import {
   PartialSpell,
+  PartialSpellHeader,
   Spell,
   SpellHeader,
 } from "../model/spell-item/spell-item";
@@ -16,15 +17,16 @@ import effectService from "./effect.service";
 
 class SpellService {
   getSpell(spell: PartialSpell, file: string): Spell {
+    const { headers, ...others } = spell;
     const result: Spell = {
       file,
       effects: [],
       headers: [],
       effectFiles: [],
-      ...spell,
+      ...others,
     };
-    for (const header of result.headers ?? []) {
-      this.checkHeader(header, result);
+    for (const header of spell.headers ?? []) {
+      this.addHeader(header, result, file);
     }
     if (result.icon && /\d{3}$/.test(result.icon)) {
       result.icon = `${result.icon}C`;
@@ -34,25 +36,31 @@ class SpellService {
     if (result.deleteHeaders === undefined) result.deleteHeaders = false;
     if (result.spellLevel === undefined && !result.copyFrom)
       result.spellLevel = 1;
-    result.effects = this.getEffects(result.effects, result);
+    result.effects = this.getEffects(result.effects, result, file);
     return result;
   }
 
-  private checkHeader(header: SpellHeader, spell: Spell): void {
-    if (!header.type) throw new Error(`Header type is required!`);
-    if (!header.icon && spell.icon && /\d{3}$/.test(spell.icon)) {
+  private addHeader(
+    header: PartialSpellHeader,
+    spell: Spell,
+    file: string
+  ): void {
+    const result: SpellHeader = { ...header, effects: header.effects ?? [] };
+    if (!result.type) throw new Error(`Header type is required!`);
+    if (!result.icon && spell.icon && /\d{3}$/.test(spell.icon)) {
       header.icon = `${spell.icon}B`;
     }
-    if (header.range === undefined) header.range = 0;
-    if (header.speed === undefined) header.speed = 0;
-    if (header.minLevel === undefined) header.minLevel = 0;
-    if (header.location === undefined)
-      header.location = ItemAbilityLocationEnum.Ability;
-    if (header.target === undefined)
-      header.target = ItemAbilityTargetEnum.LivingActor;
-    header.effects = header.effects ?? [];
-    this.addRacialResistances(header, spell);
-    header.effects = this.getEffects(header.effects ?? [], spell);
+    if (result.range === undefined) result.range = 0;
+    if (result.speed === undefined) result.speed = 0;
+    if (result.minLevel === undefined) result.minLevel = 0;
+    if (result.location === undefined)
+      result.location = ItemAbilityLocationEnum.Ability;
+    if (result.target === undefined)
+      result.target = ItemAbilityTargetEnum.LivingActor;
+    result.effects = result.effects ?? [];
+    result.effects = this.getEffects(result.effects ?? [], spell, file);
+    this.addRacialResistances(result, spell);
+    spell.headers.push(result);
   }
 
   private addRacialResistances(header: SpellHeader, spell: Spell): void {
@@ -89,8 +97,8 @@ class SpellService {
     }
   }
 
-  private getEffects(effects: Effect[], spell: Spell): Effect[] {
-    const results = effectService.getEffects(effects);
+  private getEffects(effects: Effect[], spell: Spell, file: string): Effect[] {
+    const results = effectService.getEffects(effects, file);
     for (const effect of results) {
       if (
         effect.opcode === EffectTypeEnum.ProtectionFromSpell &&

@@ -1,5 +1,5 @@
 import { RawCreatureAbility } from "../raw/ability";
-import { RawAdditionalCode, RawCustomCode } from "../raw/script";
+import { PartialAdditionalCode, PartialCustomCode } from "../script/script";
 
 export interface CreatureBehavior {
   /**
@@ -50,6 +50,6 @@ export interface CreatureBehavior {
   canPolymorph: boolean;
 
   abilities: RawCreatureAbility[];
-  customCode: RawCustomCode[];
-  additionalCode: RawAdditionalCode[];
+  customCode: PartialCustomCode[];
+  additionalCode: PartialAdditionalCode[];
 }

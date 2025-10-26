@@ -1,8 +1,8 @@
 import { SpellIdentifier } from "../ids/spell";
 import { StateIdentifier } from "../ids/state";
 import { StatsIdentifier } from "../ids/stats";
+import { TargetList } from "../script/target";
 import { Actions } from "./actions";
-import { RawTargetList } from "./target";
 import { Triggers } from "./triggers";
 
 export interface RawCreatureAbility {
@@ -11,7 +11,7 @@ export interface RawCreatureAbility {
    * Will check for preset in ABILITIES_PRESETS
    */
   preset?: string;
-  target?: RawTargetList | RawTargetList[];
+  target?: TargetList | TargetList[];
   spell?: RawCreatureAbilitySpell;
   /**
    * Ability maximum range (if applicable)

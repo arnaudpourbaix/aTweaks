@@ -10,7 +10,7 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../src/model/raw/spell-protection";
-import { TranslationKey } from "../src/translations/i18n";
+import { TranslationKey } from "../translations/i18n";
 
 export const createSingleTargetWeb = ({
   file,
