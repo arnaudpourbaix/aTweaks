@@ -3,6 +3,8 @@ import { SPELLS } from "../../config/spell-names";
 import { TraStringReferenceEnum } from "../../config/stringRef";
 import { createSingleTargetWeb } from "../../spells/web";
 import { RawCreature } from "../../src/model/raw/creature";
+import { EffectDamageTypeEnum } from "../../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { bafFile, getFilename } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";
@@ -157,13 +159,10 @@ export const SPIDER_WRAITH: RawCreature = {
       file: web,
       duration: 24,
       // saveBonus: -2,
-      description: [
-        "These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.",
-        "Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.",
-      ],
+      description: "monster.spider.webTangle.wraithDesc",
       damageEffect: {
-        opcode: "Damage",
-        type: "Cold",
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Cold,
         diceThrown: 1,
         diceSize: 4,
       },

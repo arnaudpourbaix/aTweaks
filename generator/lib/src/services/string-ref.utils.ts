@@ -13,13 +13,13 @@ export namespace StringRefUtils {
       .flat();
     return results;
   }
-  export function getStringId(str: string): string {
+  export function getStringId(str: string): number {
     const result = EXISTING_STRING_REFERENCES.find(
       (s) => s.str.toLowerCase() === str.toLowerCase()
     );
     if (!result) throw new Error(`Stringref ${str} not found !`);
     if (!result.id[0])
       throw new Error(`Stringref ${str} has been found but no id configured !`);
-    return `${result.id[0]}`;
+    return result.id[0];
   }
 }

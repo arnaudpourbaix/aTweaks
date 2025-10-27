@@ -94,10 +94,7 @@ export const SPIDER_GARGANTUAN: RawCreature = {
       file: web,
       duration: 18,
       // saveBonus: -2,
-      description: [
-        "The spider can shoot web strands up to 5 feet to bind a foe.",
-        "Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.",
-      ],
+      description: "monster.spider.webTangle.standardDesc",
     }),
   ],
   abilities: [

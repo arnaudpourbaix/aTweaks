@@ -16,6 +16,12 @@ export default {
     },
   },
   spider: {
-    webTangle: "Web Tangle",
+    webTangle: {
+      name: "Web Tangle",
+      standardDesc: `The spider can shoot web strands up to 5 feet to bind a foe.
+Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.`,
+      wraithDesc: `These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
+Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.`,
+    },
   },
 };

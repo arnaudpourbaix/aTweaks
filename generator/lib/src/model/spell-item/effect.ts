@@ -59,9 +59,9 @@ import {
   SaveTypeEnum,
 } from "./effect.enums";
 import { EffectTypeEnum } from "./effect.type";
+import { StringReference } from "../final/stringref";
 
 export interface BaseEffect {
-  opcode: EffectTypeEnum;
   target?: EffectTargetEnum;
   power?: number;
   timing?: EffectTimingEnum;
@@ -189,7 +189,7 @@ export type StringRefEffect = BaseEffect & {
     | EffectTypeEnum.DisplayString
     | EffectTypeEnum.ProtectionFromSpell
     | EffectTypeEnum.ProtectionFromDisplaySpecificString;
-  stringRef?: TranslationKey;
+  stringRef?: StringReference;
 };
 
 export type LightingEffectsEffect = BaseEffect & {

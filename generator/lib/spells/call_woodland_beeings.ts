@@ -1,115 +1,127 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
 import { SPELLS } from "../config/spell-names";
-import { TraStringReferenceEnum } from "../config/stringRef";
-import { RawEffect } from "../src/model/raw/effect";
-import { RawSpell } from "../src/model/raw/spell";
+import { Effect } from "../src/model/spell-item/effect";
+import {
+  EffectDispelResistanceEnum,
+  EffectIDSFileEnum,
+  EffectTargetEnum,
+  EffectTimingEnum,
+  ItemAbilityLocationEnum,
+  ItemAbilityTargetEnum,
+  ItemAbilityTypeEnum,
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { Spell } from "../src/model/spell-item/spell-item";
+import spellService from "../src/services/spell.service";
 
-const baseEffect: RawEffect = {
-  opcode: "UseEFFFile",
-  target: "Self",
-  idsFile: "EA",
+const baseEffect: Effect = {
+  opcode: EffectTypeEnum.UseEFFFile,
+  target: EffectTargetEnum.Self,
+  idsFile: EffectIDSFileEnum.EA,
   idsEntry: "ANYONE",
-  timing: "InstantLimited",
+  timing: EffectTimingEnum.InstantLimited,
   duration: 120,
-  dispelResistance: "NotDispelBypassResistance",
+  dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
 };
 
-export const SPELL_CALL_WOODLAND_BEEINGS: RawSpell = {
-  name: "CallWoodlandBeeings",
-  file: SPELLS.CallWoodlandBeeings,
-  copyFrom: SPELLS.CallWoodlandBeeings,
-  description: TraStringReferenceEnum.CallWoodlandBeeingsDescription,
-  icon: SPELLS.CallWoodlandBeeings,
-  deleteHeaders: true,
-  effects: [
-    {
-      opcode: "ProtectionFromResourceAndMessage",
-      target: "Self",
-      type: "JA_NOT_OUTDOOR_CHECK",
-      timing: "InstantLimited",
-      dispelResistance: "NaturalNonMagical",
-      duration: 1,
-      resource: SPELLS.CallWoodlandBeeings,
-    },
-  ],
-  headers: [
-    {
-      type: "Melee",
-      minLevel: 7,
-      location: "Spell",
-      target: "AnyPointWithinRange",
-      range: 25,
-      effects: [
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.DryadSummon,
-          probability1: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.HamadryadSummon,
-          probability1: 85,
-          probability2: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant5hd,
-          probability1: 100,
-          probability2: 85,
-        },
-      ],
-    },
-    {
-      type: "Melee",
-      minLevel: 10,
-      location: "Spell",
-      target: "AnyPointWithinRange",
-      range: 25,
-      effects: [
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.HamadryadSummon,
-          probability1: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant5hd,
-          probability1: 85,
-          probability2: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant7hd,
-          probability1: 100,
-          probability2: 85,
-        },
-      ],
-    },
-    {
-      type: "Melee",
-      minLevel: 13,
-      location: "Spell",
-      target: "AnyPointWithinRange",
-      range: 25,
-      effects: [
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant7hd,
-          probability1: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant9hd,
-          probability1: 85,
-          probability2: 55,
-        },
-        {
-          ...baseEffect,
-          resource: ATWEAKS_CREATURES.Treant11hd,
-          probability1: 100,
-          probability2: 85,
-        },
-      ],
-    },
-  ],
-};
+export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
+  {
+    name: "common.spell.callWoodlandBeeings.name",
+    description: "common.spell.callWoodlandBeeings.description",
+    copyFrom: SPELLS.CallWoodlandBeeings,
+    icon: SPELLS.CallWoodlandBeeings,
+    deleteHeaders: true,
+    effects: [
+      {
+        opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+        target: EffectTargetEnum.Self,
+        type: "JA_NOT_OUTDOOR_CHECK",
+        timing: EffectTimingEnum.InstantLimited,
+        dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+        duration: 1,
+        resource: SPELLS.CallWoodlandBeeings,
+      },
+    ],
+    headers: [
+      {
+        type: ItemAbilityTypeEnum.Melee,
+        minLevel: 7,
+        location: ItemAbilityLocationEnum.Spell,
+        target: ItemAbilityTargetEnum.AnyPointWithinRange,
+        range: 25,
+        effects: [
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.DryadSummon,
+            probability1: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.HamadryadSummon,
+            probability1: 85,
+            probability2: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant5hd,
+            probability1: 100,
+            probability2: 85,
+          },
+        ],
+      },
+      {
+        type: ItemAbilityTypeEnum.Melee,
+        minLevel: 10,
+        location: ItemAbilityLocationEnum.Spell,
+        target: ItemAbilityTargetEnum.AnyPointWithinRange,
+        range: 25,
+        effects: [
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.HamadryadSummon,
+            probability1: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant5hd,
+            probability1: 85,
+            probability2: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant7hd,
+            probability1: 100,
+            probability2: 85,
+          },
+        ],
+      },
+      {
+        type: ItemAbilityTypeEnum.Melee,
+        minLevel: 13,
+        location: ItemAbilityLocationEnum.Spell,
+        target: ItemAbilityTargetEnum.AnyPointWithinRange,
+        range: 25,
+        effects: [
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant7hd,
+            probability1: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant9hd,
+            probability1: 85,
+            probability2: 55,
+          },
+          {
+            ...baseEffect,
+            resource: ATWEAKS_CREATURES.Treant11hd,
+            probability1: 100,
+            probability2: 85,
+          },
+        ],
+      },
+    ],
+  },
+  SPELLS.CallWoodlandBeeings
+);

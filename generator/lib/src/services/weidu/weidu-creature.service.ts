@@ -23,15 +23,7 @@ import { WeiduItemService } from "./weidu-item.service";
 import { WeiduProjectileService } from "./weidu-projectile.service";
 import { WeiduSpellService } from "./weidu-spell.service";
 
-export class WeiduCreatureService extends AbstractWeiduService {
-  static instance = new WeiduCreatureService();
-
-  private effectService = EffectService.instance;
-  private weiduSpellService = WeiduSpellService.instance;
-  private weiduItemService = WeiduItemService.instance;
-  private weiduEffectService = WeiduEffectService.instance;
-  private weiduProjectileService = WeiduProjectileService.instance;
-
+class WeiduCreatureService extends AbstractWeiduService {
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
     if (creature.bafFile) this.compileScripts(lines, creature);
@@ -558,3 +550,6 @@ export class WeiduCreatureService extends AbstractWeiduService {
     return filename.substring(start);
   }
 }
+
+const weiduCreatureService = new WeiduCreatureService();
+export default weiduCreatureService;

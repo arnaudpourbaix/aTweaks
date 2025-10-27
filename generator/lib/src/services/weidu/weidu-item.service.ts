@@ -3,14 +3,11 @@ import { Creature } from "../../model/creature/creature";
 import { ItemAbilityTypeEnum } from "../../model/spell-item/effect.enums";
 import { CodeLine } from "../../model/misc";
 import { State } from "../../state";
-import { AbstractWeiduService } from "../abstract-weidu.service";
-import { WeiduEffectService } from "./weidu-effect.service";
+import weiduEffectService, { WeiduEffectService } from "./weidu-effect.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
+import utils from "../utils.service";
 
-export class WeiduItemService extends AbstractWeiduService {
-  static instance = new WeiduItemService();
-
-  private weiduEffectService = WeiduEffectService.instance;
-
+class WeiduItemService extends AbstractWeiduService {
   createItems(lines: CodeLine[], creature: Creature) {
     for (const item of creature.items) {
       if (item.copyFrom) {
@@ -41,7 +38,6 @@ export class WeiduItemService extends AbstractWeiduService {
       this.writeAscii(lines, 0x22, 2, item.animation, 1);
       this.write(lines, 0x31, 1, item.proficiency, 1);
       this.writeAscii(lines, 0x3a, 8, item.icon, 1);
-      this.write(lines, 0x4c, 4, item.weight, 1);
       this.writeStringRef(lines, 0x50, (item.description ?? []).join(CR), 1);
       this.write(lines, 0x60, 4, item.enchantment, 1);
       //this.add(lines, `LPF set_enchantment INT_VAR enchantment = ${item.enchantment} END`, 1);
@@ -82,7 +78,7 @@ export class WeiduItemService extends AbstractWeiduService {
           throw new Error(
             `Can't add a non-global effect to an item without extended header: ${item.file} -> ${effect.opcode}`
           );
-        this.weiduEffectService.addEffect({
+        weiduEffectService.addEffect({
           lines,
           tab: 1,
           effect,
@@ -90,13 +86,12 @@ export class WeiduItemService extends AbstractWeiduService {
         });
       }
       for (const name of item.immunities) {
-        this.add(
-          lines,
-          `LPF ${this.utils.getImmunityFunctionName(name)} END`,
-          1
-        );
+        this.add(lines, `LPF ${utils.getImmunityFunctionName(name)} END`, 1);
       }
       this.add(lines, "", 0);
     }
   }
 }
+
+const weiduItemService = new WeiduItemService();
+export default weiduItemService;

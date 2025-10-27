@@ -1,14 +1,12 @@
 import { Creature } from "../../model/creature/creature";
+import { CodeLine } from "../../model/misc";
 import {
   Projectile,
   ProjectileTypeEnum,
 } from "../../model/spell-item/projectile";
-import { CodeLine } from "../../model/misc";
-import { AbstractWeiduService } from "../abstract-weidu.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
 
-export class WeiduProjectileService extends AbstractWeiduService {
-  static instance = new WeiduProjectileService();
-
+class WeiduProjectileService extends AbstractWeiduService {
   createProjectiles(lines: CodeLine[], creature: Creature) {
     for (const projectile of creature.projectiles) {
       this.createProjectile(lines, projectile);
@@ -80,3 +78,6 @@ export class WeiduProjectileService extends AbstractWeiduService {
     this.add(lines, "", 0);
   }
 }
+
+const weiduProjectileService = new WeiduProjectileService();
+export default weiduProjectileService;

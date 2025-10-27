@@ -1,10 +1,10 @@
 import { ImmunityName } from "../../../config/immunity-name";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { TranslationKey } from "../../../translations/i18n";
+import { EquippedItem } from "../creature/item";
 import { Effect } from "../spell-item/effect";
 import { PortraitIconEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
-import { EquippedItem } from "../spell-item/spell-item";
 
 export interface ImmunityConfig {
   name: ImmunityName | string;

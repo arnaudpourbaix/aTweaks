@@ -1,7 +1,6 @@
-import { TargetStatus } from "../src/model/raw/target";
-import { SPELL_STATES } from "./ability-presets";
+import { GRAB_DEFAULT_CONFIG } from "../src/model/creature/grab";
+import { TargetStatus } from "../src/model/script/target";
 import { GLOBAL_CONFIG } from "./generate";
-import { GRAB_DEFAULT_CONFIG } from "./grab";
 import { TargetListName, TargetStatusName } from "./target-name";
 
 export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [

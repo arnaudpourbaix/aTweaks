@@ -1,11 +1,9 @@
+import { CodeLine } from "../../model/misc";
 import { Effect, EffectFile } from "../../model/spell-item/effect";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
-import { CodeLine } from "../../model/misc";
-import { AbstractWeiduService } from "../abstract-weidu.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
 
-export class WeiduEffectService extends AbstractWeiduService {
-  static instance = new WeiduEffectService();
-
+class WeiduEffectService extends AbstractWeiduService {
   createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
     for (const effect of effectFiles) {
       this.add(lines, `CREATE EFF "${effect.file}"`, 0);
@@ -128,3 +126,6 @@ export class WeiduEffectService extends AbstractWeiduService {
     return true;
   }
 }
+
+const weiduEffectService = new WeiduEffectService();
+export default weiduEffectService;

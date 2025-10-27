@@ -22,7 +22,7 @@ import {
 import creatureService from "./creature.service";
 import utils from "./utils.service";
 
-export class EffectService {
+class EffectService {
   getEffects(effects: Effect[], file?: string): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
       // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {

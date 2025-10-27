@@ -1,18 +1,37 @@
 import { SPELLS } from "../config/spell-names";
-import { TraStringReferenceEnum } from "../config/stringRef";
-import { PortraitIconEnum } from "../src/model/spell-item/effect.enums";
-import { RawBaseEffect, RawEffect } from "../src/model/raw/effect";
-import { RawSpell, RawSpellHeader } from "../src/model/raw/spell";
+import { BaseEffect, Effect } from "../src/model/spell-item/effect";
+import {
+  ColorEnum,
+  EffectColorLocationEnum,
+  EffectDispelResistanceEnum,
+  EffectTargetEnum,
+  EffectTimingEnum,
+  EffectVisualEffectLocationEnum,
+  ItemAbilityCastingAnimationEnum,
+  ItemAbilityLocationEnum,
+  ItemAbilityPrimaryTypeEnum,
+  ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTargetEnum,
+  ItemAbilityTypeEnum,
+  PortraitIconEnum,
+  SaveTypeEnum,
+  SpellExclusionFlagEnum,
+  SpellFlagEnum,
+  SpellTypeEnum,
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { Spell, SpellHeader } from "../src/model/spell-item/spell-item";
+import spellService from "../src/services/spell.service";
 import { StringRefUtils } from "../src/services/string-ref.utils";
 
-const baseEffect: RawBaseEffect = {
-  dispelResistance: "DispelNotBypassResistance",
-  saveTypes: ["Spell"],
+const baseEffect: BaseEffect = {
+  dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
+  saveTypes: [SaveTypeEnum.Spell],
 };
-const header: (level: number) => RawSpellHeader = (level: number) => ({
-  type: "Melee",
-  location: "Spell",
-  target: "AnyPointWithinRange",
+const header: (level: number) => SpellHeader = (level: number) => ({
+  type: ItemAbilityTypeEnum.Melee,
+  location: ItemAbilityLocationEnum.Spell,
+  target: ItemAbilityTargetEnum.AnyPointWithinRange,
   minLevel: level,
   range: 30,
   projectile: "CSPRAY",
@@ -23,85 +42,85 @@ const header: (level: number) => RawSpellHeader = (level: number) => ({
     ...confusionEffects(level),
   ],
 });
-const colorEffects: RawEffect[] = [
+const colorEffects: Effect[] = [
   {
-    opcode: "PauseTarget",
-    timing: "InstantLimited",
-    target: "Self",
+    opcode: EffectTypeEnum.PauseTarget,
+    timing: EffectTimingEnum.InstantLimited,
+    target: EffectTargetEnum.Self,
     duration: 1,
-    dispelResistance: "NaturalNonMagical",
+    dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
   },
   {
-    opcode: "SetColor",
-    color: "GhostlyGreen",
-    location: "ArmorBlueArmorTrimming",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.GhostlyGreen,
+    location: EffectColorLocationEnum.ArmorBlueArmorTrimming,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "DarkGhostlyPink",
-    location: "ArmorGreenHair",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.DarkGhostlyPink,
+    location: EffectColorLocationEnum.ArmorGreenHair,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "GhostlyGreen",
-    location: "ArmorYellowSkinColor",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.GhostlyGreen,
+    location: EffectColorLocationEnum.ArmorYellowSkinColor,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "DarkGhostlyPink",
-    location: "ArmorRedStrapLeather",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.DarkGhostlyPink,
+    location: EffectColorLocationEnum.ArmorRedStrapLeather,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "GhostlyGreen",
-    location: "ArmorGreyBeltAmulet",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.GhostlyGreen,
+    location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "DarkGhostlyPink",
-    location: "ArmorPinkMajorColor",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.DarkGhostlyPink,
+    location: EffectColorLocationEnum.ArmorPinkMajorColor,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
   {
-    opcode: "SetColor",
-    color: "GhostlyGreen",
-    location: "ArmorTealMinorColor",
-    timing: "InstantLimited",
+    opcode: EffectTypeEnum.SetColor,
+    color: ColorEnum.GhostlyGreen,
+    location: EffectColorLocationEnum.ArmorTealMinorColor,
+    timing: EffectTimingEnum.InstantLimited,
     duration: 6,
     ...baseEffect,
   },
 ];
-const sleepEffects: (level: number) => RawEffect[] = (level: number) => {
-  const effects: RawEffect[] = [
+const sleepEffects: (level: number) => Effect[] = (level: number) => {
+  const effects: Effect[] = [
     {
-      opcode: "Sleep",
+      opcode: EffectTypeEnum.Sleep,
       wakeOnDamage: true,
-      timing: "InstantLimited",
+      timing: EffectTimingEnum.InstantLimited,
       duration: 24,
       minLevel: 0,
       maxLevel: level,
-      dispelResistance: "DispelNotBypassResistance",
+      dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
       special: PortraitIconEnum.Sleep,
     },
   ];
-  const results: RawEffect[] = [...effects];
+  const results: Effect[] = [...effects];
   if (level > 5) {
     for (const effect of results) {
       effect.maxLevel = 5;
@@ -111,54 +130,54 @@ const sleepEffects: (level: number) => RawEffect[] = (level: number) => {
         ...effect,
         minLevel: Math.min(6, level),
         maxLevel: level,
-        saveTypes: ["Spell"],
+        saveTypes: [SaveTypeEnum.Spell],
       });
     }
   }
   return results;
 };
-const blindEffects: (level: number) => RawEffect[] = (level: number) => {
-  const effects: RawEffect[] = [
+const blindEffects: (level: number) => Effect[] = (level: number) => {
+  const effects: Effect[] = [
     {
-      opcode: "Blindness",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.Blindness,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 12,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
     },
     {
-      opcode: "DisplayPortraitIcon",
-      icon: "Blind",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.DisplayPortraitIcon,
+      icon: PortraitIconEnum.Blind,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 12,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
     },
     {
-      opcode: "CharacterColorPulse",
+      opcode: EffectTypeEnum.CharacterColorPulse,
       color: { red: 127, green: 127, blue: 127 },
-      location: "ArmorGreyBeltAmulet",
+      location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
       cycleSpeed: 20,
-      timing: "InstantLimited",
+      timing: EffectTimingEnum.InstantLimited,
       duration: 1,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
     },
     {
-      opcode: "DisplayString",
+      opcode: EffectTypeEnum.DisplayString,
       stringRef: StringRefUtils.getStringId("Blinded"),
-      timing: "InstantPermanentUntilDeath",
+      timing: EffectTimingEnum.InstantPermanentUntilDeath,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
     },
     {
-      opcode: "PlayVisualEffect",
-      playWhere: "OverTargetAttached",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.PlayVisualEffect,
+      playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 3,
       resource: "SPH1HI01",
       minLevel: level + 1,
@@ -166,9 +185,9 @@ const blindEffects: (level: number) => RawEffect[] = (level: number) => {
       ...baseEffect,
     },
     {
-      opcode: "PlayVisualEffect",
-      playWhere: "OverTargetAttached",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.PlayVisualEffect,
+      playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 3,
       resource: "SPHLHI02",
       minLevel: level + 1,
@@ -178,46 +197,46 @@ const blindEffects: (level: number) => RawEffect[] = (level: number) => {
   ];
   return effects;
 };
-const confusionEffects: (level: number) => RawEffect[] = (level: number) => {
-  const effects: RawEffect[] = [
+const confusionEffects: (level: number) => Effect[] = (level: number) => {
+  const effects: Effect[] = [
     {
-      opcode: "Confusion",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.Confusion,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 6,
       minLevel: level + 3,
       ...baseEffect,
     },
     {
-      opcode: "DisplayPortraitIcon",
-      icon: "Confused",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.DisplayPortraitIcon,
+      icon: PortraitIconEnum.Confused,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 6,
       minLevel: level + 3,
       ...baseEffect,
     },
     {
-      opcode: "PlayVisualEffect",
-      playWhere: "OverTargetAttached",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.PlayVisualEffect,
+      playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+      timing: EffectTimingEnum.InstantLimited,
       duration: 6,
       resource: "SPCONFUS",
       minLevel: level + 3,
       ...baseEffect,
     },
     {
-      opcode: "CharacterColorPulse",
+      opcode: EffectTypeEnum.CharacterColorPulse,
       color: { red: 255, green: 183, blue: 0 },
-      location: "ArmorGreyBeltAmulet",
+      location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
       cycleSpeed: -96,
-      timing: "InstantLimited",
+      timing: EffectTimingEnum.InstantLimited,
       duration: 1,
       minLevel: level + 3,
       ...baseEffect,
     },
     {
-      opcode: "DisplayString",
+      opcode: EffectTypeEnum.DisplayString,
       stringRef: StringRefUtils.getStringId("Confused"),
-      timing: "InstantPermanentUntilDeath",
+      timing: EffectTimingEnum.InstantPermanentUntilDeath,
       minLevel: level + 3,
       ...baseEffect,
     },
@@ -225,19 +244,20 @@ const confusionEffects: (level: number) => RawEffect[] = (level: number) => {
   return effects;
 };
 
-export const SPELL_COLOR_SPRAY: RawSpell = {
-  name: "ColorSpray",
-  file: SPELLS.ColorSpray,
-  stringRef: TraStringReferenceEnum.ColorSpray,
-  description: TraStringReferenceEnum.ColorSprayDescription,
-  castingSound: "CAS_M08",
-  flags: ["Hostile"],
-  spellType: "Wizard",
-  exclusionFlags: ["Abjurer"],
-  castingAnimation: "Alteration",
-  primaryType: "Transmuter",
-  secondaryType: "Disabling",
-  spellLevel: 1,
-  icon: SPELLS.ColorSpray,
-  headers: [...Array(20).keys()].map((i) => header(i + 1)),
-};
+export const SPELL_COLOR_SPRAY: Spell = spellService.getSpell(
+  {
+    name: "common.spell.colorSpray.name",
+    description: "common.spell.colorSpray.description",
+    castingSound: "CAS_M08",
+    flags: [SpellFlagEnum.Hostile],
+    spellType: SpellTypeEnum.Wizard,
+    exclusionFlags: [SpellExclusionFlagEnum.Abjurer],
+    castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
+    primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
+    secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+    spellLevel: 1,
+    icon: SPELLS.ColorSpray,
+    headers: [...Array(20).keys()].map((i) => header(i + 1)),
+  },
+  SPELLS.ColorSpray
+);

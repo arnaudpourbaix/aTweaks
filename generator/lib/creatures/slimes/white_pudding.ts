@@ -82,10 +82,7 @@ export const SLIME_WHITE_PUDDING: RawCreature = {
   spells: [
     createCreatureSplit({
       file: split,
-      description: [
-        "Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.",
-        "Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.",
-      ],
+      description: "common.spell.slimeSplit.puddingDescription",
       resource: ATWEAKS_CREATURES.SplitWhitePudding,
       visualEffect: "BDGOOYAA",
     }),

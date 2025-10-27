@@ -10,9 +10,7 @@ import {
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 
-export class PoisonService {
-  static instance = new PoisonService();
-
+class PoisonService {
   getEffects(effect: PoisonTypeEffectGroup): Effect[] {
     const poison = POISONS.find(
       (p) => p.type === effect.poisonType

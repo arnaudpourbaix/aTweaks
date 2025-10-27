@@ -66,7 +66,7 @@ export interface Spell {
     /**
      * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
      */
-    renew?: boolean;
+    renew?: number;
   };
   memorizedCount?: number;
   effectFiles: EffectFile[];

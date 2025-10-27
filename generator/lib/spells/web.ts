@@ -1,60 +1,71 @@
 import { SPELLS } from "../config/spell-names";
 import {
-  DamageEffect,
-  RawBaseEffect,
-  RawEffect,
-} from "../src/model/raw/effect";
-import { RawSpell } from "../src/model/raw/spell";
-import {
   SpellProtection,
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../src/model/raw/spell-protection";
+import {
+  BaseEffect,
+  DamageEffect,
+  Effect,
+} from "../src/model/spell-item/effect";
+import {
+  EffectIDSFileEnum,
+  EffectTimingEnum,
+  ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTypeEnum,
+  PortraitIconEnum,
+  SaveTypeEnum,
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { Spell } from "../src/model/spell-item/spell-item";
+import effectService from "../src/services/effect.service";
+import spellService from "../src/services/spell.service";
 import { TranslationKey } from "../translations/i18n";
 
 export const createSingleTargetWeb = ({
   file,
-  stringRef,
+  name,
   duration,
   saveBonus,
   description,
   damageEffect,
 }: {
   file: string;
-  stringRef?: TranslationKey;
+  name?: TranslationKey;
   duration: number;
   description: TranslationKey;
   saveBonus?: number;
   damageEffect?: DamageEffect;
-}): RawSpell => {
-  const saves: RawBaseEffect = {
-    saveTypes: ["ParalyzePoisonDeath"],
+}): Spell => {
+  const saves: BaseEffect = {
+    saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
     saveBonus: saveBonus ?? 0,
   };
-  const effects: RawEffect[] = [
+  const effects: Effect[] = [
     {
-      opcode: "Web",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.Web,
+      timing: EffectTimingEnum.InstantLimited,
       duration,
       ...saves,
     },
     {
-      opcode: "Paralyze",
-      timing: "InstantLimited",
-      idsFile: "EA",
+      opcode: EffectTypeEnum.Paralyze,
+      timing: EffectTimingEnum.InstantLimited,
+      idsFile: EffectIDSFileEnum.EA,
       idsEntry: "ANYONE",
       duration,
       ...saves,
     },
     {
-      opcode: "DisplayPortraitIcon",
-      icon: "Webbed",
-      timing: "InstantLimited",
+      opcode: EffectTypeEnum.DisplayPortraitIcon,
+      icon: PortraitIconEnum.Webbed,
+      timing: EffectTimingEnum.InstantLimited,
       duration,
       ...saves,
     },
     {
-      opcode: "PlaySound",
+      opcode: EffectTypeEnum.PlaySound,
       resource: "EFF_P27",
       ...saves,
     },
@@ -87,45 +98,38 @@ export const createSingleTargetWeb = ({
   for (const protection of protections) {
     for (const value of protection.values) {
       effects.unshift({
-        opcode: "ProtectionFromResourceAndMessage",
+        opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
         type: protection.type,
         value,
-        timing: "InstantLimited",
+        timing: EffectTimingEnum.InstantLimited,
         duration: 1,
         resource: file,
       });
     }
   }
   if (damageEffect) {
-    effects.push({
-      ...damageEffect,
-      ...saves,
-    });
-    for (let i = 6; i < duration; i += 6) {
-      effects.push({
-        ...damageEffect,
-        timing: "DelayPermanent",
-        duration: i,
-        ...saves,
-      });
-    }
+    effects.push(
+      ...effectService.getDamageOverTime(1, { ...damageEffect, ...saves })
+    );
   }
-  const spell: RawSpell = {
-    file,
-    memorizedCount: 1,
-    infiniteUse: 1,
-    stringRef: stringRef ?? "monster.spider.webTangle",
-    icon: SPELLS.Web,
-    description,
-    secondaryType: "Disabling",
-    headers: [
-      {
-        type: "Ranged",
-        range: 5,
-        projectile: "WEB1P",
-        effects,
-      },
-    ],
-  };
+  const spell = spellService.getSpell(
+    {
+      memorizedCount: 1,
+      name: name ?? "monster.spider.webTangle.name",
+      description,
+      icon: SPELLS.Web,
+      options: { renew: 1 },
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Ranged,
+          range: 5,
+          projectile: "WEB1P",
+          effects,
+        },
+      ],
+    },
+    file
+  );
   return spell;
 };

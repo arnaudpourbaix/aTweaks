@@ -1,6 +1,15 @@
 import { SPELLS } from "../config/spell-names";
-import { TraStringReferenceEnum } from "../config/stringRef";
-import { RawSpell } from "../src/model/raw/spell";
+import {
+  EffectTimingEnum,
+  EffectVisualEffectLocationEnum,
+  ItemAbilityTargetEnum,
+  ItemAbilityTypeEnum,
+  SummonCreatureModeEnum,
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { Spell } from "../src/model/spell-item/spell-item";
+import spellService from "../src/services/spell.service";
+import { TranslationKey } from "../translations/i18n";
 
 export const createCreatureSplit = ({
   file,
@@ -9,44 +18,46 @@ export const createCreatureSplit = ({
   visualEffect,
 }: {
   file: string;
-  description: string[];
+  description: TranslationKey;
   resource: string;
   visualEffect: string;
-}): RawSpell => ({
-  name: "Split",
-  file,
-  memorizedCount: 1,
-  stringRef: TraStringReferenceEnum.Split,
-  icon: SPELLS.MirrorImages,
-  description,
-  headers: [
+}): Spell =>
+  spellService.getSpell(
     {
-      type: "Magical",
-      target: "Caster",
-      effects: [
+      name: "common.spell.slimeSplit.name",
+      description,
+      memorizedCount: 1,
+      icon: SPELLS.MirrorImages,
+      headers: [
         {
-          opcode: "PlayVisualEffect",
-          playWhere: "OverTargetAttached",
-          resource: visualEffect,
-          timing: "InstantPermanentUntilDeath",
-        },
-        {
-          opcode: "SummonCreature",
-          mode: "MatchTarget3",
-          timing: "InstantPermanentUntilDeath",
-          resource,
-        },
-        {
-          opcode: "SummonCreature",
-          mode: "MatchTarget3",
-          timing: "InstantPermanentUntilDeath",
-          resource,
-        },
-        {
-          opcode: "RemoveCreature",
-          timing: "InstantPermanentUntilDeath",
+          type: ItemAbilityTypeEnum.Magical,
+          target: ItemAbilityTargetEnum.Caster,
+          effects: [
+            {
+              opcode: EffectTypeEnum.PlayVisualEffect,
+              playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+              resource: visualEffect,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+            {
+              opcode: EffectTypeEnum.SummonCreature,
+              mode: SummonCreatureModeEnum.MatchTarget3,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              resource,
+            },
+            {
+              opcode: EffectTypeEnum.SummonCreature,
+              mode: SummonCreatureModeEnum.MatchTarget3,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              resource,
+            },
+            {
+              opcode: EffectTypeEnum.RemoveCreature,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+          ],
         },
       ],
     },
-  ],
-});
+    file
+  );

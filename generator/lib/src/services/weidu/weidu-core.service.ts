@@ -2,18 +2,17 @@ import * as fs from "fs";
 import path from "path";
 import { SPELL_STATES } from "../../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { CR, JEWEL_SLOTS, TAB } from "../../model/constants";
-import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
-import { ImmunityConfig } from "../../model/final/immunity";
-import { EquippedItem } from "../../model/raw/item";
-import { State } from "../../state";
-import { AbstractWeiduService } from "../abstract-weidu.service";
 import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { CR, TAB } from "../../model/constants";
+import { EquippedItem, JEWEL_SLOTS } from "../../model/creature/item";
+import { ImmunityConfig } from "../../model/final/immunity";
 import { SpellProtectionStat } from "../../model/raw/spell-protection";
+import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
+import { State } from "../../state";
+import utils from "../utils.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
 
-export class WeiduCoreService extends AbstractWeiduService {
-  static instance = new WeiduCoreService();
-
+class WeiduCoreService extends AbstractWeiduService {
   private lines = this.initLines();
 
   writeFile(): void {
@@ -28,7 +27,7 @@ export class WeiduCoreService extends AbstractWeiduService {
 
   generateProtectionSpells() {
     for (const sp of SPELL_PROTECTIONS) {
-      let file = this.utils.getIdsFileFromSpellProtectionStat(
+      let file = utils.getIdsFileFromSpellProtectionStat(
         sp.stat as SpellProtectionStat
       );
       let value: string | number | undefined = sp.value;
@@ -63,7 +62,7 @@ export class WeiduCoreService extends AbstractWeiduService {
   }
 
   generateItem(itemSlot: EquippedItem, immunity: ImmunityConfig) {
-    const criticalHitImmunity = this.utils.hasCriticalHitImmunity(immunity);
+    const criticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
     this.write(this.lines, 0x64, 4, "0x72", 1);
     let flags = 2 ** ItemFlagEnum.NotCopyable;
@@ -79,15 +78,16 @@ export class WeiduCoreService extends AbstractWeiduService {
       `SAY NAME1 ~${immunity.name} ${immunity.type}~ SAY NAME2 ~${immunity.name} ${immunity.type}~`,
       1
     );
-    this.add(
-      this.lines,
-      `SAY UNIDENTIFIED_DESC ~${immunity.description.join(CR)}~`,
-      1
-    );
+    //TODO:
+    // this.add(
+    //   this.lines,
+    //   `SAY UNIDENTIFIED_DESC ~${immunity.description.join(CR)}~`,
+    //   1
+    // );
     this.add(this.lines, `COPY_EXISTING ~${itemSlot.file}.itm~ ~override~`, 0);
     this.add(
       this.lines,
-      `LPF ${this.utils.getImmunityFunctionName(immunity.name)} END`,
+      `LPF ${utils.getImmunityFunctionName(immunity.name)} END`,
       1
     );
     this.add(this.lines, "", 0);
@@ -110,3 +110,6 @@ export class WeiduCoreService extends AbstractWeiduService {
     }
   }
 }
+
+const weiduCoreService = new WeiduCoreService();
+export default weiduCoreService;

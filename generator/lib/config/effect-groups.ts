@@ -1,73 +1,80 @@
+import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
-  RawBaseEffect,
-  RawEffect,
-  RawEffectGroup,
-  RawParalyzeEffectGroup,
-  RawPoisonTypeEffectGroup,
-} from "../src/model/raw/effect";
-import { RawEffectTiming, RawSaveType } from "../src/model/raw/enum";
+  EffectBonusToEnum,
+  EffectColorLocationEnum,
+  EffectIDSFileEnum,
+  EffectModifierTypeEnum,
+  EffectStatisticModifierEnum,
+  EffectTargetEnum,
+  EffectTimingEnum,
+  LightingEffectEnum,
+  LightingEffectTargetEnum,
+  PortraitIconEnum,
+  SaveTypeEnum,
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { PoisonService } from "../src/services/poison.service";
-import { RawEffectGroupName } from "./effect-group-name";
+import { EffectGroupName } from "./effect-group-name";
 
 export const EFFECT_GROUPS: {
-  group: RawEffectGroupName;
-  effectsFn: (effect: RawEffectGroup) => RawEffect[];
+  group: EffectGroupName;
+  effectsFn: (effect: RawEffectGroup) => Effect[];
 }[] = [
   {
     group: "RestrainedEffects",
     effectsFn: (effect) => {
-      const base: { saveTypes?: RawSaveType[]; saveBonus?: number } = {
+      const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
         saveTypes: effect.saveTypes,
         saveBonus: effect.saveBonus,
       };
-      const duration: { timing?: RawEffectTiming; duration?: number } = {
-        timing: "InstantLimited",
+      const duration: { timing?: EffectTimingEnum; duration?: number } = {
+        timing: EffectTimingEnum.InstantLimited,
         duration: effect.duration,
       };
-      const rawEffects: RawEffect[] = [
+      const rawEffects: Effect[] = [
         {
-          opcode: "DisplayString",
+          opcode: EffectTypeEnum.DisplayString,
           stringRef: "common.spell.restrained",
-          timing: "InstantPermanentUntilDeath",
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
           ...base,
         },
         {
-          opcode: "LightingEffects",
-          timing: "InstantPermanentUntilDeath",
-          lightingTarget: "SpellTarget",
-          effect: "AbjurationEarth",
+          opcode: EffectTypeEnum.LightingEffects,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
+          lightingTarget: LightingEffectTargetEnum.SpellTarget,
+          effect: LightingEffectEnum.AbjurationEarth,
           ...base,
         },
         {
-          opcode: "Slow",
+          opcode: EffectTypeEnum.Slow,
           ...duration,
           ...base,
         },
         {
-          opcode: "MovementRateBonus2",
-          type: "Set",
+          opcode: EffectTypeEnum.MovementRateBonus2,
+          type: EffectModifierTypeEnum.Set,
           value: 0,
           ...duration,
           ...base,
         },
         {
-          opcode: "Thac0Bonus",
-          type: "Increment",
+          opcode: EffectTypeEnum.Thac0Bonus,
+          type: EffectModifierTypeEnum.Increment,
           value: -4,
           ...duration,
           ...base,
         },
         {
-          opcode: "ArmorClassBonus",
+          opcode: EffectTypeEnum.ArmorClassBonus,
           value: -4,
-          bonusTo: "AllWeapons",
+          bonusTo: EffectBonusToEnum.AllWeapons,
           ...duration,
           ...base,
         },
         {
-          opcode: "SaveVsBreathModifier",
+          opcode: EffectTypeEnum.SaveVsBreathModifier,
           value: -4,
-          type: "Increment",
+          type: EffectStatisticModifierEnum.Increment,
           ...duration,
           ...base,
         },
@@ -78,53 +85,53 @@ export const EFFECT_GROUPS: {
   {
     group: "CureAllEffects",
     effectsFn: (effect) => {
-      const base: RawBaseEffect = {
-        timing: "InstantPermanentUntilDeath",
-        target: "Self",
+      const base: BaseEffect = {
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        target: EffectTargetEnum.Self,
       };
-      const rawEffects: RawEffect[] = [
+      const rawEffects: Effect[] = [
         {
-          opcode: "CureBerserk",
+          opcode: EffectTypeEnum.CureBerserk,
           ...base,
         },
         {
-          opcode: "CureBlindness",
+          opcode: EffectTypeEnum.CureBlindness,
           ...base,
         },
         {
-          opcode: "CureConfusion",
+          opcode: EffectTypeEnum.CureConfusion,
           ...base,
         },
         {
-          opcode: "CureDeafness",
+          opcode: EffectTypeEnum.CureDeafness,
           ...base,
         },
         {
-          opcode: "CureDisease",
+          opcode: EffectTypeEnum.CureDisease,
           ...base,
         },
         {
-          opcode: "CureFeeblemindedness",
+          opcode: EffectTypeEnum.CureFeeblemindedness,
           ...base,
         },
         {
-          opcode: "CurePoison",
+          opcode: EffectTypeEnum.CurePoison,
           ...base,
         },
         {
-          opcode: "CureSleep",
+          opcode: EffectTypeEnum.CureSleep,
           ...base,
         },
         {
-          opcode: "CureStun",
+          opcode: EffectTypeEnum.CureStun,
           ...base,
         },
         {
-          opcode: "RemoveParalysis",
+          opcode: EffectTypeEnum.RemoveParalysis,
           ...base,
         },
         {
-          opcode: "RemoveFear",
+          opcode: EffectTypeEnum.RemoveFear,
           ...base,
         },
       ];
@@ -135,53 +142,53 @@ export const EFFECT_GROUPS: {
     group: "ParalyzeEffects",
     effectsFn: (eff) => {
       const effect = eff as RawParalyzeEffectGroup;
-      const base: { saveTypes?: RawSaveType[]; saveBonus?: number } = {
+      const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
         saveTypes: effect.saveTypes,
         saveBonus: effect.saveBonus,
       };
-      const duration: { timing?: RawEffectTiming; duration?: number } = {
-        timing: "InstantLimited",
+      const duration: { timing?: EffectTimingEnum; duration?: number } = {
+        timing: EffectTimingEnum.InstantLimited,
         duration: effect.duration,
       };
-      const rawEffects: RawEffect[] = [
+      const rawEffects: Effect[] = [
         {
-          opcode: "Paralyze",
-          idsFile: "EA",
+          opcode: EffectTypeEnum.Paralyze,
+          idsFile: EffectIDSFileEnum.EA,
           idsEntry: "ANYONE",
           ...duration,
           ...base,
         },
         {
-          opcode: "DisplayPortraitIcon",
-          icon: "Held",
+          opcode: EffectTypeEnum.DisplayPortraitIcon,
+          icon: PortraitIconEnum.Held,
           ...duration,
           ...base,
         },
         {
-          opcode: "PlaySound",
-          timing: "InstantPermanentUntilDeath",
+          opcode: EffectTypeEnum.PlaySound,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
           resource: "EFF_P11",
           ...base,
         },
         {
-          opcode: "PlaySound",
+          opcode: EffectTypeEnum.PlaySound,
           resource: "EFF_E05",
           ...duration,
-          timing: "DelayPermanent",
+          timing: EffectTimingEnum.DelayPermanent,
           ...base,
         },
         {
-          opcode: "CharacterColorPulse",
-          timing: "InstantPermanentUntilDeath",
+          opcode: EffectTypeEnum.CharacterColorPulse,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
           color: { blue: 0, green: 57, red: 87 },
-          location: "ArmorGreyBeltAmulet",
+          location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
           cycleSpeed: 25,
           ...base,
         },
         {
-          opcode: "LightingEffects",
-          timing: "InstantPermanentUntilDeath",
-          lightingTarget: "SpellTarget",
+          opcode: EffectTypeEnum.LightingEffects,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
+          lightingTarget: LightingEffectTargetEnum.SpellTarget,
           effect: effect.lightningEffect,
           ...base,
         },

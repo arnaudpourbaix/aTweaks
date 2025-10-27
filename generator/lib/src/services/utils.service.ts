@@ -11,6 +11,7 @@ import { State } from "../state";
 import { TranslationKey } from "../../translations/i18n";
 import { SpellTypeEnum } from "../model/spell-item/effect.enums";
 import { EquippedItem, ItemSlot } from "../model/creature/item";
+import { StringReference } from "../model/final/stringref";
 
 class UtilsService {
   replaceParamTokens(
@@ -85,9 +86,9 @@ class UtilsService {
   //   else return `@${value}`; //FIXME:
   // }
 
-  resolveStringRef(value: TranslationKey | undefined): string | undefined {
+  resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;
-    return value; // TODO:
+    return `${value}`; // TODO:
     // else if (typeof value === "string" && /^\d+$/.test(value))
     //   return value; // existing string ref
     // else if (typeof value === "string")

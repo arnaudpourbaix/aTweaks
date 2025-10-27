@@ -1,7 +1,7 @@
-import { RawPnPPoisonType } from "../src/model/raw/enum";
+import { PnPPoisonType } from "../src/model/spell-item/effect.enums";
 
 export interface PoisonModel {
-  type: RawPnPPoisonType;
+  type: PnPPoisonType;
   damage: number;
   saveDamage: number;
   duration: number;

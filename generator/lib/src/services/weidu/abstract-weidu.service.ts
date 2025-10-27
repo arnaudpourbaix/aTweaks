@@ -1,12 +1,9 @@
-import { EffectTypeEnum } from "../model/spell-item/effect.type";
-import { CodeLine, StringReference } from "../model/misc";
-import { GrabService } from "./grab.service";
-import { instance } from "./utils.service";
+import { TranslationKey } from "../../../translations/i18n";
+import { CodeLine } from "../../model/misc";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import utils from "../utils.service";
 
 export class AbstractWeiduService {
-  protected utils = instance.instance;
-  protected grabService = GrabService.instance;
-
   protected initLines() {
     const lines: CodeLine[] = [];
     this.add(lines, "// Generated file (don't edit)");
@@ -100,11 +97,11 @@ export class AbstractWeiduService {
   protected writeStringRef(
     lines: CodeLine[],
     offset: number,
-    stringRef: StringReference | undefined, //FIXME:
+    stringRef: TranslationKey | undefined, //FIXME:
     tab?: number
   ) {
     if (!stringRef) return;
-    const value = this.utils.resolveStringRef(stringRef);
+    const value = utils.resolveStringRef(stringRef);
     this.write(lines, offset, 4, value, tab);
   }
 

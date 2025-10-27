@@ -227,10 +227,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     },
     createCreatureSplit({
       file: split,
-      description: [
-        "This large creature can divide itself at will into two smaller, faster halves (movement rate 18).",
-        "Each is capable of attacking, but has only half the hit points the creature had before dividing.",
-      ],
+      description: "common.spell.slimeSplit.mustardDescription",
       resource: ATWEAKS_CREATURES.SplitMustardJelly,
       visualEffect: "TRGOOYAA",
     }),

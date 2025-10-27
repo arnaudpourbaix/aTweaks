@@ -1,14 +1,10 @@
 import { CR } from "../../model/constants";
-import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
 import { CodeLine } from "../../model/misc";
-import { AbstractWeiduService } from "../abstract-weidu.service";
-import { WeiduEffectService } from "./weidu-effect.service";
+import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
+import { AbstractWeiduService } from "./abstract-weidu.service";
+import weiduEffectService from "./weidu-effect.service";
 
-export class WeiduSpellService extends AbstractWeiduService {
-  static instance = new WeiduSpellService();
-
-  private weiduEffectService = WeiduEffectService.instance;
-
+class WeiduSpellService extends AbstractWeiduService {
   createSpells(lines: CodeLine[], spells: Spell[]) {
     for (const spell of spells) {
       this.add(lines, `// ${spell.name}`);
@@ -87,7 +83,7 @@ export class WeiduSpellService extends AbstractWeiduService {
         tab
       );
     for (const effect of spell.effects) {
-      this.weiduEffectService.addEffect({
+      weiduEffectService.addEffect({
         lines,
         tab,
         effect,
@@ -126,7 +122,7 @@ export class WeiduSpellService extends AbstractWeiduService {
       tab
     );
     for (const effect of header.effects) {
-      this.weiduEffectService.addEffect({
+      weiduEffectService.addEffect({
         lines,
         tab,
         effect,
@@ -137,3 +133,6 @@ export class WeiduSpellService extends AbstractWeiduService {
     }
   }
 }
+
+const weiduSpellService = new WeiduSpellService();
+export default weiduSpellService;

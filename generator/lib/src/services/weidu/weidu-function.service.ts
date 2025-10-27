@@ -4,26 +4,19 @@ import { GLOBAL_CONFIG } from "../../../config/generate";
 import { SPELL_GROUPS } from "../../../config/spell-group";
 import { SPELL_FUNCTIONS } from "../../../spells";
 import { CR, TAB } from "../../model/constants";
-import { Effect } from "../../model/spell-item/effect";
 import { ImmunityConfig } from "../../model/final/immunity";
-import { Spell } from "../../model/spell-item/spell-item";
 import { CodeLine } from "../../model/misc";
 import { SpellGroup } from "../../model/raw/spell-group";
+import { Effect } from "../../model/spell-item/effect";
+import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
-import { AbstractWeiduService } from "../abstract-weidu.service";
-import { EffectService } from "../effect.service";
-import { SpellService } from "../spell.service";
+import utils from "../utils.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
 import { WeiduCoreService } from "./weidu-core.service";
-import { WeiduSpellService } from "./weidu-spell.service";
+import weiduSpellService from "./weidu-spell.service";
+import spellService from "../spell.service";
 
-export class WeiduFunctionService extends AbstractWeiduService {
-  static instance = new WeiduFunctionService();
-
-  private effectService = EffectService.instance;
-  private weiduCoreService = WeiduCoreService.instance;
-  private spellService = SpellService.instance;
-  private weiduSpellService = WeiduSpellService.instance;
-
+class WeiduFunctionService extends AbstractWeiduService {
   generateSpellResources(): void {
     const lines = this.initLines();
     for (const group of SPELL_GROUPS) {
@@ -38,7 +31,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
 
   generateSpellFunctions(): void {
     const lines = this.initLines();
-    const spells = this.spellService.mapSpells(SPELL_FUNCTIONS, []); //FIXME: can't handle effect file creation
+    const spells = spellService.mapSpells(SPELL_FUNCTIONS, []); //FIXME: can't handle effect file creation
     for (const spell of spells) {
       this.generateSpellFunction(lines, spell, 0);
     }
@@ -68,10 +61,10 @@ export class WeiduFunctionService extends AbstractWeiduService {
   ): void {
     this.add(
       lines,
-      `DEFINE_ACTION_FUNCTION ${this.utils.getSpellFunctionName(spell)} BEGIN`,
+      `DEFINE_ACTION_FUNCTION ${utils.getSpellFunctionName(spell)} BEGIN`,
       tab
     );
-    this.weiduSpellService.createSpell(lines, spell, 1);
+    weiduSpellService.createSpell(lines, spell, 1);
     this.add(lines, `END`, tab);
     this.add(lines, ``, tab);
   }
@@ -85,7 +78,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
     const idsSpells = group.idsSpells ?? [];
     this.add(
       lines,
-      `DEFINE_ACTION_FUNCTION ${this.utils.getSpellResourceFunctionName(
+      `DEFINE_ACTION_FUNCTION ${utils.getSpellResourceFunctionName(
         group
       )} RET_ARRAY resources BEGIN`,
       tab
@@ -135,7 +128,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
   ): void {
     this.add(
       lines,
-      `DEFINE_PATCH_FUNCTION ${this.utils.getImmunityFunctionName(immunity)}`,
+      `DEFINE_PATCH_FUNCTION ${utils.getImmunityFunctionName(immunity)}`,
       tab
     );
     this.add(lines, `BEGIN`, tab);
@@ -153,14 +146,14 @@ export class WeiduFunctionService extends AbstractWeiduService {
     for (const type of immunity.immunities) {
       this.add(
         lines,
-        `LPF ${this.utils.getImmunityFunctionName(type)} END`,
+        `LPF ${utils.getImmunityFunctionName(type)} END`,
         tab + 1
       );
     }
     this.add(lines, `END`, tab);
     this.add(lines, ``);
     if (immunity.itemSlot)
-      this.weiduCoreService.generateItem(immunity.itemSlot, immunity);
+      WeiduCoreService.generateItem(immunity.itemSlot, immunity);
   }
 
   callImmunityFunction(
@@ -222,7 +215,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
     if (immunity.spellGroups.length === 1) {
       this.add(
         lines,
-        `LAF ${this.utils.getSpellResourceFunctionName(
+        `LAF ${utils.getSpellResourceFunctionName(
           immunity.spellGroups[0]
         )} RET_ARRAY spells=resources END`,
         tab + 1
@@ -233,7 +226,7 @@ export class WeiduFunctionService extends AbstractWeiduService {
         arrays.push(array);
         this.add(
           lines,
-          `LAF ${this.utils.getSpellResourceFunctionName(
+          `LAF ${utils.getSpellResourceFunctionName(
             groupName
           )} RET_ARRAY ${array}=resources END`,
           tab + 1
@@ -251,3 +244,6 @@ export class WeiduFunctionService extends AbstractWeiduService {
     return " spells";
   }
 }
+
+const weiduFunctionService = new WeiduFunctionService();
+export default weiduFunctionService;
