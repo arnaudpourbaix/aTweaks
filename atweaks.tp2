@@ -17,35 +17,47 @@ END
 
 LANGUAGE ~English~ ~english~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
+                             ~%MOD_FOLDER%/tra/english/generated.tra~
 
 LANGUAGE ~Francais~ ~french~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
+                             ~%MOD_FOLDER%/tra/english/generated.tra~
                              ~%MOD_FOLDER%/tra/french/setup-%WEIDU_OS%.tra~
                              ~%MOD_FOLDER%/tra/french/game.tra~
+                             ~%MOD_FOLDER%/tra/french/generated.tra~
 
 LANGUAGE ~Espanol~ ~spanish~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
+                             ~%MOD_FOLDER%/tra/english/generated.tra~
                              ~%MOD_FOLDER%/tra/spanish/setup-%WEIDU_OS%.tra~
                              ~%MOD_FOLDER%/tra/spanish/game.tra~
+                             ~%MOD_FOLDER%/tra/spanish/generated.tra~
 
 LANGUAGE ~Deutsch~ ~german~ ~%MOD_FOLDER%/tra/english/setup.tra~
                             ~%MOD_FOLDER%/tra/english/game.tra~
+                            ~%MOD_FOLDER%/tra/english/generated.tra~
                             ~%MOD_FOLDER%/tra/german/setup-%WEIDU_OS%.tra~
                             ~%MOD_FOLDER%/tra/german/game.tra~
+                            ~%MOD_FOLDER%/tra/german/generated.tra~
 
 LANGUAGE ~Italian~ ~italian~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
+                             ~%MOD_FOLDER%/tra/english/generated.tra~
                              ~%MOD_FOLDER%/tra/italian/setup-%WEIDU_OS%.tra~
                              ~%MOD_FOLDER%/tra/italian/game.tra~
+                             ~%MOD_FOLDER%/tra/italian/generated.tra~
 
 LANGUAGE ~Russian~ ~russian~ ~%MOD_FOLDER%/tra/english/setup.tra~
                              ~%MOD_FOLDER%/tra/english/game.tra~
                              ~%MOD_FOLDER%/tra/russian/game.tra~
+                             ~%MOD_FOLDER%/tra/russian/generated.tra~
 
 LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
                            ~%MOD_FOLDER%/tra/english/game.tra~
+                           ~%MOD_FOLDER%/tra/english/generated.tra~
                            ~%MOD_FOLDER%/tra/polish/setup.tra~
                            ~%MOD_FOLDER%/tra/polish/game.tra~
+                           ~%MOD_FOLDER%/tra/polish/generated.tra~
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +81,7 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"

@@ -4,19 +4,31 @@ import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 
 class WeiduEffectService extends AbstractWeiduService {
-  createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[]) {
+  createEffectFiles(lines: CodeLine[], effectFiles: EffectFile[], tab = 0) {
     for (const effect of effectFiles) {
-      this.add(lines, `CREATE EFF "${effect.file}"`, 0);
-      this.write(lines, 0x10, 4, effect.opcode, 1);
-      this.write(lines, 0x14, 4, effect.target, 1);
-      this.write(lines, 0x1c, 4, this.getIntegerValue(effect.parameter1), 1);
-      this.write(lines, 0x24, 4, effect.timing, 1);
-      this.write(lines, 0x20, 4, this.getIntegerValue(effect.parameter2), 1);
-      this.write(lines, 0x5c, 4, effect.dispelResistance, 1);
-      this.write(lines, 0x28, 4, effect.duration, 1);
-      this.write(lines, 0x2c, 2, effect.probability1, 1);
-      this.writeAscii(lines, 0x30, 8, effect.resource, 1);
-      this.add(lines, "", 0);
+      this.add(lines, `CREATE EFF "${effect.file}"`, tab);
+      this.write(lines, 0x10, 4, effect.opcode, tab + 1);
+      this.write(lines, 0x14, 4, effect.target, tab + 1);
+      this.write(
+        lines,
+        0x1c,
+        4,
+        this.getIntegerValue(effect.parameter1),
+        tab + 1
+      );
+      this.write(lines, 0x24, 4, effect.timing, tab + 1);
+      this.write(
+        lines,
+        0x20,
+        4,
+        this.getIntegerValue(effect.parameter2),
+        tab + 1
+      );
+      this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
+      this.write(lines, 0x28, 4, effect.duration, tab + 1);
+      this.write(lines, 0x2c, 2, effect.probability1, tab + 1);
+      this.writeAscii(lines, 0x30, 8, effect.resource, tab + 1);
+      this.add(lines, "", tab);
     }
   }
 
@@ -27,6 +39,7 @@ class WeiduEffectService extends AbstractWeiduService {
     power,
     header,
     type,
+    global,
   }: {
     lines: CodeLine[];
     tab: number;
@@ -34,20 +47,21 @@ class WeiduEffectService extends AbstractWeiduService {
     power?: number;
     header?: number;
     type: "SPL" | "ITM" | "CRE";
+    global: boolean;
   }) {
     const has2da = this.has2daLookup({ lines, tab, effect });
     if (has2da) {
       this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab++);
     }
     let fn = "ADD_EFFECT";
-    if (effect.global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
+    if (global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";
     else if (type === "CRE") fn = "ADD_CRE_EFFECT";
     const intVars: string[] = [
       `opcode=${effect.opcode}`,
       `target=${effect.target}`,
     ];
     if (header) intVars.unshift(`header=${header}`);
-    if (effect.global) intVars.push("global=1");
+    if (global) intVars.push("global=1");
     if (!!effect.power || !!power)
       intVars.push(`power=${effect.power ?? power}`);
     if (effect.parameter1 && effect.parameter1 !== "0")
@@ -109,7 +123,7 @@ class WeiduEffectService extends AbstractWeiduService {
       file = "msectype";
     } else if (
       effect.opcode === EffectTypeEnum.ProtectionFromResourceAndMessage &&
-      !/\d+/.test(effect.parameter2)
+      !/\d+/.test(effect.parameter2 as string)
     ) {
       file = "splprot";
     }

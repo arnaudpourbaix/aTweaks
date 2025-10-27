@@ -3,34 +3,32 @@ import path from "path";
 import { CR, TAB } from "../../model/constants";
 import {
   Creature,
-  CREATURE_DATA,
-  CREATURE_DATA_KEYS,
-  CreatureAdditionalData,
   CreatureAdjustment,
-  CreatureData,
+  CreatureAutoGenerate,
 } from "../../model/creature/creature";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { Spell } from "../../model/spell-item/spell-item";
 import { CodeLine } from "../../model/misc";
-import { RawCreatureAutoGenerate } from "../../model/raw/creature";
-import { WEAPON_SLOTS } from "../../model/raw/enum";
 import { State } from "../../state";
-import { AbstractWeiduService } from "../abstract-weidu.service";
-import { EffectService } from "../effect.service";
-import { WeiduEffectService } from "./weidu-effect.service";
-import { WeiduItemService } from "./weidu-item.service";
-import { WeiduProjectileService } from "./weidu-projectile.service";
-import { WeiduSpellService } from "./weidu-spell.service";
+import { AbstractWeiduService } from "./abstract-weidu.service";
+import weiduProjectileService from "./weidu-projectile.service";
+import weiduEffectService from "./weidu-effect.service";
+import weiduSpellService from "./weidu-spell.service";
+import weiduItemService from "./weidu-item.service";
+import { CreatureAdditionalData } from "../../model/creature/additional-data";
+import utils from "../utils.service";
+import { WEAPON_SLOTS } from "../../model/creature/item";
+import { CreatureData } from "../../model/creature/data";
 
 class WeiduCreatureService extends AbstractWeiduService {
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
     if (creature.bafFile) this.compileScripts(lines, creature);
-    this.weiduProjectileService.createProjectiles(lines, creature);
-    this.weiduEffectService.createEffectFiles(lines, creature.effectFiles);
-    this.weiduSpellService.createSpells(lines, creature.spells);
-    this.weiduItemService.createItems(lines, creature);
+    weiduProjectileService.createProjectiles(lines, creature);
+    weiduEffectService.createEffectFiles(lines, creature.effectFiles);
+    weiduSpellService.createSpells(lines, creature.spells);
+    weiduItemService.createItems(lines, creature);
     this.createNewFiles(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
@@ -89,7 +87,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.addProficiencies(lines, 3, creature.additionalData);
     this.addImmunities(lines, 3, creature.additionalData);
     for (const effect of creature.additionalData.effects) {
-      this.weiduEffectService.addEffect({
+      weiduEffectService.addEffect({
         lines,
         tab: 3,
         effect,
@@ -194,11 +192,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         (i) => i.name === name
       ) as ImmunityConfig;
       if (!immunity.itemSlot) {
-        this.add(
-          lines,
-          `LPF ${this.utils.getImmunityFunctionName(name)} END`,
-          tab
-        );
+        this.add(lines, `LPF ${utils.getImmunityFunctionName(name)} END`, tab);
       }
     }
   }
@@ -218,7 +212,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         },
         [] as string[]
       );
-      const slots = this.utils.getItemSlots(item.slot);
+      const slots = utils.getItemSlots(item.slot);
       const isWeapon = slots.every((slot) => WEAPON_SLOTS.includes(slot));
       const flagsArray: string[] = [];
       if (item.undroppable === true || item.undroppable === undefined)
@@ -461,7 +455,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     tab: number;
     data: CreatureData;
     parent?: CreatureData;
-    autoGenerate: RawCreatureAutoGenerate;
+    autoGenerate: CreatureAutoGenerate;
     summon: boolean;
     creature: Creature;
   }) {
@@ -514,7 +508,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     );
     this.addProficiencies(lines, tab, adjustment.additionalData);
     for (const effect of adjustment.additionalData.effects) {
-      this.weiduEffectService.addEffect({
+      weiduEffectService.addEffect({
         lines,
         tab,
         effect,

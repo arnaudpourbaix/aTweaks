@@ -12,9 +12,8 @@ import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import utils from "../utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
-import { WeiduCoreService } from "./weidu-core.service";
+import weiduCoreService from "./weidu-core.service";
 import weiduSpellService from "./weidu-spell.service";
-import spellService from "../spell.service";
 
 class WeiduFunctionService extends AbstractWeiduService {
   generateSpellResources(): void {
@@ -31,7 +30,7 @@ class WeiduFunctionService extends AbstractWeiduService {
 
   generateSpellFunctions(): void {
     const lines = this.initLines();
-    const spells = spellService.mapSpells(SPELL_FUNCTIONS, []); //FIXME: can't handle effect file creation
+    const spells = SPELL_FUNCTIONS;
     for (const spell of spells) {
       this.generateSpellFunction(lines, spell, 0);
     }
@@ -153,7 +152,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     this.add(lines, `END`, tab);
     this.add(lines, ``);
     if (immunity.itemSlot)
-      WeiduCoreService.generateItem(immunity.itemSlot, immunity);
+      weiduCoreService.generateItem(immunity.itemSlot, immunity);
   }
 
   callImmunityFunction(
@@ -185,14 +184,12 @@ class WeiduFunctionService extends AbstractWeiduService {
   }
 
   generateEffect(lines: CodeLine[], effect: Effect, tab: number): void {
-    const parameter1 =
-      effect.parameter1 !== "0"
-        ? ` parameter1=${this.getIntegerValue(effect.parameter1)}`
-        : "";
-    const parameter2 =
-      effect.parameter2 !== "0"
-        ? ` parameter2=${this.getIntegerValue(effect.parameter2)}`
-        : "";
+    const parameter1 = effect.parameter1
+      ? ` parameter1=${this.getIntegerValue(effect.parameter1)}`
+      : "";
+    const parameter2 = effect.parameter2
+      ? ` parameter2=${this.getIntegerValue(effect.parameter2)}`
+      : "";
     const special = !!effect.special
       ? ` special=${this.getIntegerValue(effect.special)}`
       : "";

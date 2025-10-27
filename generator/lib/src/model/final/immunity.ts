@@ -7,9 +7,9 @@ import { PortraitIconEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
 
 export interface ImmunityConfig {
-  name: ImmunityName | string;
+  name: ImmunityName;
   type: "trait" | "immunity" | "resistance";
-  stringRef: TranslationKey;
+  stringRef?: TranslationKey;
   description?: TranslationKey;
   immunities: ImmunityName[];
   preventEffects: EffectTypeEnum[];

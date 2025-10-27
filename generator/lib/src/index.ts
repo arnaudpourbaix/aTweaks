@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { program } from "commander";
+import mainService from "./services/main.service";
 import stateService from "./services/state.service";
-import { ANKHEG } from "../creatures/ankheg/ankheg";
 
 const clear = require("clear");
 const figlet = require("figlet");
@@ -20,18 +20,10 @@ async function main() {
   return Promise.resolve()
     .then(() => stateService.init())
     .then(() => {
-      // let chain: Promise<any> = Promise.resolve();
-      [ANKHEG].forEach((creature) => {
-        console.log(creature.behavior);
-        //CREATURES.forEach((creature) => {
-        // chain = chain.then(() => mainService.processCreature(creature));
-      });
-      //   return chain
-      //     .then(() => mainService.generateCommonCode())
-      //     .then(() => {
-      //       console.log(chalk.green(`\nFinished!`));
-      //     });
-      //   //.catch(error => { console.trace(chalk.red(error)); });
+      mainService.generateTranslations();
+      const creatures = mainService.getCreatures();
+      mainService.generateCommonCode();
+      console.log(chalk.green(`\nFinished!`));
     });
 }
 

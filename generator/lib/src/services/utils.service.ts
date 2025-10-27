@@ -12,6 +12,9 @@ import { TranslationKey } from "../../translations/i18n";
 import { SpellTypeEnum } from "../model/spell-item/effect.enums";
 import { EquippedItem, ItemSlot } from "../model/creature/item";
 import { StringReference } from "../model/final/stringref";
+import translationService from "./translation.service";
+import chalk from "chalk";
+import figureSet from "figures";
 
 class UtilsService {
   replaceParamTokens(
@@ -88,12 +91,18 @@ class UtilsService {
 
   resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;
-    return `${value}`; // TODO:
-    // else if (typeof value === "string" && /^\d+$/.test(value))
-    //   return value; // existing string ref
-    // else if (typeof value === "string")
-    //   return `RESOLVE_STR_REF(~${value}~)`; // create a new string ref from value
-    // else return `RESOLVE_STR_REF(@${value})`; // create a new string ref from language key
+    else if (typeof value === "number") return `${value}`;
+    try {
+      const ref = translationService.stringRef(value as TranslationKey);
+      return `RESOLVE_STR_REF(@${ref})`; // create a new string ref from language key
+    } catch {
+      console.log(
+        chalk.yellowBright(
+          `${figureSet.warning} unexpected string reference ${value}`
+        )
+      );
+      return `RESOLVE_STR_REF(~${value}~)`; // create a new string ref from value
+    }
   }
 
   getSpellResourceFromIds(ids: string): string {
@@ -107,14 +116,19 @@ class UtilsService {
     return `${prefix}${num}`;
   }
 
-  getImmunityFunctionName(immunity: ImmunityConfig | ImmunityName | string) {
-    return `${
-      typeof immunity === "string" ? immunity : immunity.name
-    }_immunity`;
+  getImmunityFunctionName(immunity: ImmunityConfig | ImmunityName) {
+    immunity =
+      typeof immunity === "string"
+        ? (State.immunities.find((i) => i.name === immunity) as ImmunityConfig)
+        : immunity;
+    return `${immunity.name}_${immunity.type}`;
   }
 
   getSpellFunctionName(spell: Spell) {
-    return `create_spell_${spell.name.replace(/\./g, "")}`;
+    const names = spell.name.split(".");
+    let name = names.pop();
+    if (name === "name") name = names.pop();
+    return `create_spell_${name}`;
   }
 
   getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {

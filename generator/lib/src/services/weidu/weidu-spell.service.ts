@@ -14,6 +14,8 @@ class WeiduSpellService extends AbstractWeiduService {
   }
 
   createSpell(lines: CodeLine[], spell: Spell, tab: number) {
+    if (spell.effectFiles)
+      weiduEffectService.createEffectFiles(lines, spell.effectFiles, tab);
     if (spell.copyFrom) {
       this.add(
         lines,
@@ -34,7 +36,7 @@ class WeiduSpellService extends AbstractWeiduService {
             tab + 1
           );
       }
-      for (const opcode of spell.deleteOpcodes)
+      for (const opcode of spell.deleteOpcodes ?? [])
         this.add(
           lines,
           `LPF DELETE_EFFECT INT_VAR match_opcode = ${opcode} END`,
@@ -73,15 +75,8 @@ class WeiduSpellService extends AbstractWeiduService {
     this.write(lines, 0x25, 1, spell.primaryType, tab);
     this.write(lines, 0x27, 1, spell.secondaryType, tab);
     this.write(lines, 0x34, 4, spell.spellLevel, tab);
-    this.write(lines, 0x3a, 8, spell.spellbookIcon, tab);
-    if (spell.description && typeof spell.description === "number")
-      this.writeStringRef(lines, 0x50, spell.description, tab);
-    else if (spell.description && Array.isArray(spell.description))
-      this.add(
-        lines,
-        `SAY UNIDENTIFIED_DESC ~${spell.description.join(CR)}~`,
-        tab
-      );
+    this.write(lines, 0x3a, 8, spell.icon, tab);
+    this.writeStringRef(lines, 0x50, spell.description, tab);
     for (const effect of spell.effects) {
       weiduEffectService.addEffect({
         lines,
@@ -89,6 +84,7 @@ class WeiduSpellService extends AbstractWeiduService {
         effect,
         power: spell.spellLevel ?? 0,
         type: "SPL",
+        global: true,
       });
     }
     for (const [index, header] of spell.headers.entries()) {
@@ -113,9 +109,7 @@ class WeiduSpellService extends AbstractWeiduService {
       intVars.push(
         `projectile=(IDS_OF_SYMBOL (~projectl~ ~${header.projectile}~)) + 1`
       );
-    const icon = header.memorizedIcon
-      ? ` STR_VAR icon="${header.memorizedIcon}"`
-      : "";
+    const icon = header.icon ? ` STR_VAR icon="${header.icon}"` : "";
     this.add(
       lines,
       `LPF ADD_SPELL_HEADER INT_VAR ${intVars.join(" ")}${icon} END`,
@@ -129,6 +123,7 @@ class WeiduSpellService extends AbstractWeiduService {
         power: spell.spellLevel ?? 0,
         header: index + 1,
         type: "SPL",
+        global: false,
       });
     }
   }

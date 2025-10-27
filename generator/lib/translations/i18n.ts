@@ -2,15 +2,26 @@ import { Leaves } from "../src/model/utility-types";
 import commonEn from "./en/common";
 import monsterEn from "./en/monster";
 
-export const getTranslationKeys = (language: string) => {
-  switch (language.substring(0, 2).toLowerCase()) {
+export const LANGUAGES = [
+  "english",
+  "french",
+  "german",
+  "italian",
+  "polish",
+  "russian",
+  "spanish",
+] as const;
+export type Language = (typeof LANGUAGES)[number];
+
+export const getTranslationKeys = (language: Language) => {
+  switch (language) {
     default:
-    case "en":
+    case "english":
       return { common: commonEn, monster: monsterEn };
   }
 };
 
-const t = getTranslationKeys("en"); // typings is based on reference language
+const t = getTranslationKeys("english"); // typings is based on reference language
 export type TranslationKey = Leaves<typeof t>;
 
-export const LANG = "en";
+export const LANG: Language = "english";

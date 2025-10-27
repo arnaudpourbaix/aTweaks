@@ -57,9 +57,9 @@ class SpellService {
       result.location = ItemAbilityLocationEnum.Ability;
     if (result.target === undefined)
       result.target = ItemAbilityTargetEnum.LivingActor;
-    result.effects = result.effects ?? [];
-    result.effects = this.getEffects(result.effects ?? [], spell, file);
-    this.addRacialResistances(result, spell);
+    if (spell.options?.addRacialResistances !== false)
+      this.addRacialResistances(result, spell);
+    result.effects = this.getEffects(result.effects, spell, file);
     spell.headers.push(result);
   }
 
@@ -88,8 +88,7 @@ class SpellService {
           resource: spell.file,
         });
       }
-      spell.effectFiles.push({
-        file: spell.file,
+      this.addEffectFiles(spell, {
         opcode: EffectTypeEnum.ProtectionFromSpell,
         resource: spell.file,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
@@ -97,8 +96,17 @@ class SpellService {
     }
   }
 
+  private addEffectFiles(spell: Spell, effect: Effect) {
+    if (!spell.effectFiles.some((e) => e.file === spell.file)) {
+      spell.effectFiles.push({
+        file: spell.file,
+        ...effect,
+      });
+    }
+  }
+
   private getEffects(effects: Effect[], spell: Spell, file: string): Effect[] {
-    const results = effectService.getEffects(effects, file);
+    const results = effectService.getEffects(effects, { file });
     for (const effect of results) {
       if (
         effect.opcode === EffectTypeEnum.ProtectionFromSpell &&

@@ -67,6 +67,10 @@ export interface Spell {
      * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
      */
     renew?: number;
+    /**
+     * add racial resistances when it is relevant (default: true)
+     */
+    addRacialResistances?: boolean;
   };
   memorizedCount?: number;
   effectFiles: EffectFile[];

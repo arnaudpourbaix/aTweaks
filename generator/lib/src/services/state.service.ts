@@ -1,4 +1,4 @@
-import { IMMUNITIES } from "../../config/immunity-config";
+import { IMMUNITIES, RESISTANCES, TRAITS } from "../../config/immunity-config";
 import { GenericScriptParameterData } from "../model/script/data";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Actions } from "../model/raw/actions";
@@ -6,6 +6,10 @@ import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 import descriptionService from "./description.service";
 import effectService from "./effect.service";
+import {
+  EffectTargetEnum,
+  EffectTimingEnum,
+} from "../model/spell-item/effect.enums";
 
 class StateService {
   init(): Promise<void> {
@@ -45,7 +49,7 @@ class StateService {
   }
 
   private loadImmunities(): void {
-    State.immunities = IMMUNITIES.map((i) => {
+    State.immunities = [...IMMUNITIES, ...RESISTANCES, ...TRAITS].map((i) => {
       const result: ImmunityConfig = {
         ...i,
         immunities: i.immunities ?? [],
@@ -56,7 +60,12 @@ class StateService {
         animations: i.animations ?? [],
         spellGroups: i.spellGroups ?? [],
         displaySpellIneffective: !!i.displaySpellIneffective,
-        effects: effectService.getEffects(i.effects ?? []),
+        effects: effectService.getEffects(i.effects ?? [], {
+          base: {
+            target: EffectTargetEnum.Self,
+            timing: EffectTimingEnum.InstantWhileEquipped,
+          },
+        }),
       };
       return result;
     });

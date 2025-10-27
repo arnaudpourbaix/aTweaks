@@ -11,6 +11,7 @@ import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
 import { State } from "../../state";
 import utils from "../utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
+import translationService from "../translation.service";
 
 class WeiduCoreService extends AbstractWeiduService {
   private lines = this.initLines();
@@ -63,6 +64,7 @@ class WeiduCoreService extends AbstractWeiduService {
 
   generateItem(itemSlot: EquippedItem, immunity: ImmunityConfig) {
     const criticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
+    this.add(this.lines, `// ${immunity.name}`);
     this.add(this.lines, `CREATE ITM "${itemSlot.file}"`, 0);
     this.write(this.lines, 0x64, 4, "0x72", 1);
     let flags = 2 ** ItemFlagEnum.NotCopyable;
@@ -73,17 +75,29 @@ class WeiduCoreService extends AbstractWeiduService {
     }
     this.write(this.lines, 0x18, 4, flags, 1);
     this.write(this.lines, 0x3a, 8, this.getIcon(itemSlot), 1);
-    this.add(
-      this.lines,
-      `SAY NAME1 ~${immunity.name} ${immunity.type}~ SAY NAME2 ~${immunity.name} ${immunity.type}~`,
-      1
-    );
-    //TODO:
-    // this.add(
-    //   this.lines,
-    //   `SAY UNIDENTIFIED_DESC ~${immunity.description.join(CR)}~`,
-    //   1
-    // );
+    if (immunity.stringRef) {
+      this.writeStringRef(this.lines, 0x8, immunity.stringRef, 1);
+      //TODO:
+      // this.writeStringRef(this.lines, 0xc, immunity.stringRef, 1);
+      // const stringRef = utils.resolveStringRef(immunity.stringRef);
+      // this.add(
+      //   this.lines,
+      //   `SAY NAME1 ~${stringRef}~ SAY NAME2 ~${stringRef}~`,
+      //   1
+      // );
+    }
+    if (immunity.description) {
+      this.writeStringRef(this.lines, 0x50, immunity.description, 1);
+      //TODO:
+      // this.writeStringRef(this.lines, 0x54, immunity.description, 1);
+      // this.add(
+      //   this.lines,
+      //   `SAY UNIDENTIFIED_DESC ~${utils.resolveStringRef(
+      //     immunity.description
+      //   )}~`,
+      //   1
+      // );
+    }
     this.add(this.lines, `COPY_EXISTING ~${itemSlot.file}.itm~ ~override~`, 0);
     this.add(
       this.lines,

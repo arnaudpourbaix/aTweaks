@@ -1,6 +1,7 @@
 import { EXISTING_SPELL_PROTECTIONS } from "../../config/spell-protection";
 import { SpellProtectionName } from "../../config/spell-protection-name";
 import {
+  BaseEffect,
   DamageEffect,
   Effect,
   ProtectionFromResourceEffect,
@@ -11,6 +12,7 @@ import {
   DispelEffectWeaponTypeEnum,
   EffectDamageModeEnum,
   EffectDispelResistanceEnum,
+  EffectTargetEnum,
   EffectTimingEnum,
   getCastSpellOnConditionValue,
 } from "../model/spell-item/effect.enums";
@@ -23,24 +25,36 @@ import creatureService from "./creature.service";
 import utils from "./utils.service";
 
 class EffectService {
-  getEffects(effects: Effect[], file?: string): Effect[] {
+  getEffects(
+    effects: Effect[],
+    options?: {
+      base?: Required<Pick<BaseEffect, "target" | "timing">>;
+      file?: string;
+    }
+  ): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
       // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
       //   acc.push(...this.getGroupEffects(effect as RawEffectGroup));
       //   return acc;
       // }
-      acc.push(this.getEffect(effect, file));
+      acc.push(this.getEffect(effect, options));
       return acc;
     }, [] as Effect[]);
     return results;
   }
 
-  getEffect(effect: Effect, file?: string): Effect {
+  getEffect(
+    effect: Effect,
+    options?: {
+      base?: Required<Pick<BaseEffect, "target" | "timing">>;
+      file?: string;
+    }
+  ): Effect {
     // if (EFFECT_GROUP_NAMES.includes(effect.opcode))
     //   throw new Error(
     //     `Effects group ${effect.opcode} can't be processed in getEffect`
     //   );
-    this.setDefaultEffectValues(effect);
+    this.setDefaultEffectValues(effect, options?.base);
     switch (effect.opcode) {
       case EffectTypeEnum.ArmorClassBonus:
         effect.parameter1 = `${effect.value}`;
@@ -103,9 +117,9 @@ class EffectService {
         if (
           effect.opcode === EffectTypeEnum.ProtectionFromSpell &&
           !effect.resource &&
-          !!file
+          !!options?.file
         ) {
-          effect.resource = file;
+          effect.resource = options.file;
         }
         break;
       case EffectTypeEnum.LightingEffects:
@@ -521,16 +535,12 @@ class EffectService {
   //   return effects;
   // }
 
-  setDefaultEffectValues(effect: Effect) {
-    //TODO:
-    // const defaultTarget = !!effect.global
-    //   ? EffectTargetEnum.Self
-    //   : EffectTargetEnum.PresetTarget;
-    // const defaultTiming = !!effect.global
-    //   ? EffectTimingEnum.InstantWhileEquipped
-    //   : EffectTimingEnum.InstantLimited;
-    // target: effect.target ?? defaultTarget,
-    // timing: effect.timing ?? defaultTiming,
+  setDefaultEffectValues(
+    effect: Effect,
+    base?: Required<Pick<BaseEffect, "target" | "timing">>
+  ) {
+    effect.target = base?.target ?? EffectTargetEnum.PresetTarget;
+    effect.timing = base?.timing ?? EffectTimingEnum.InstantLimited;
     if (effect.dispelResistance === undefined)
       effect.dispelResistance = EffectDispelResistanceEnum.NaturalNonMagical;
     if (effect.probability1 === undefined) effect.probability1 = 100;

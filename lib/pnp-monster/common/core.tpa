@@ -8,171 +8,136 @@ LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "JA_GASEOUSFORM"
 OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)
 APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%%value%%TAB%9~ UNLESS ~JA_NOT_OUTDOOR_CHECK~
 
+// cloudSpells
 CREATE ITM "ja#i1"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~cloudSpells immunity~ SAY NAME2 ~cloudSpells immunity~
-	SAY UNIDENTIFIED_DESC ~Cloud spells immunity~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10024)
 COPY_EXISTING ~ja#i1.itm~ ~override~
 	LPF cloudSpells_immunity END
 
+// entangle
 CREATE ITM "ja#i4"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~entangle immunity~ SAY NAME2 ~entangle immunity~
-	SAY UNIDENTIFIED_DESC ~Entangle immunity~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10026)
 COPY_EXISTING ~ja#i4.itm~ ~override~
 	LPF entangle_immunity END
 
-CREATE ITM "ja#i9"
-	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x18 32
-	WRITE_ASCII 0x3a ~IBOOT01~ #8
-	SAY NAME1 ~hover trait~ SAY NAME2 ~hover trait~
-	SAY UNIDENTIFIED_DESC ~Hover (flight)
-This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
-Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
-COPY_EXISTING ~ja#i9.itm~ ~override~
-	LPF hover_immunity END
-
+// criticalHit
 CREATE ITM "ja#i3"
 	WRITE_LONG 0x64 0x72
 	WRITE_SHORT 0x1c 72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IHELM01~ #8
-	SAY NAME1 ~criticalHit immunity~ SAY NAME2 ~criticalHit immunity~
-	SAY UNIDENTIFIED_DESC ~Immunity to critical hits~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10046)
 COPY_EXISTING ~ja#i3.itm~ ~override~
 	LPF criticalHit_immunity END
 
+// hover
+CREATE ITM "ja#i9"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x18 32
+	WRITE_ASCII 0x3a ~IBOOT01~ #8
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10053)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10054)
+COPY_EXISTING ~ja#i9.itm~ ~override~
+	LPF hover_trait END
+
+// construct
 CREATE ITM "ja#i2"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~construct trait~ SAY NAME2 ~construct trait~
-	SAY UNIDENTIFIED_DESC ~Construct trait
-
-Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
-Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
-Darkvision out to 60 feet.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10055)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10056)
 COPY_EXISTING ~ja#i2.itm~ ~override~
-	LPF construct_immunity END
+	LPF construct_trait END
 
+// undead
 CREATE ITM "ja#i15"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~undead trait~ SAY NAME2 ~undead trait~
-	SAY UNIDENTIFIED_DESC ~Undead trait
-
-Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
-Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
-Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.
-Negative energy (such as an inflict wounds spell) can heal undead creatures.
-Hit Die: d12
-Darkvision out to 60 feet.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10057)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10058)
 COPY_EXISTING ~ja#i15.itm~ ~override~
-	LPF undead_immunity END
+	LPF undead_trait END
 
+// fey
 CREATE ITM "ja#i5"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~fey trait~ SAY NAME2 ~fey trait~
-	SAY UNIDENTIFIED_DESC ~Fey trait
-
-Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.
-In all other aspects, spell-like abilities function exactly like the spells which they mimic.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10059)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10060)
 COPY_EXISTING ~ja#i5.itm~ ~override~
-	LPF fey_immunity END
+	LPF fey_trait END
 
+// skeletal
 CREATE ITM "ja#i13"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~skeletal trait~ SAY NAME2 ~skeletal trait~
-	SAY UNIDENTIFIED_DESC ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10067)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10068)
 COPY_EXISTING ~ja#i13.itm~ ~override~
-	LPF skeletal_immunity END
+	LPF skeletal_trait END
 
+// plant
 CREATE ITM "ja#i12"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~plant trait~ SAY NAME2 ~plant trait~
-	SAY UNIDENTIFIED_DESC ~Plants' traits
-
-Infravision.
-Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).
-Immunity to poison, sleep effects, paralysis, polymorph, and stunning.
-Not subject to critical hits and backstab.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10071)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10072)
 COPY_EXISTING ~ja#i12.itm~ ~override~
-	LPF plant_immunity END
+	LPF plant_trait END
 
+// incorporeal
 CREATE ITM "ja#i10"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~incorporeal trait~ SAY NAME2 ~incorporeal trait~
-	SAY UNIDENTIFIED_DESC ~An incorporeal creature has no physical body.
-Immune to backstab and critical hits
-Immune to all nonmagical attacks.
-Has a 50% resistance to every damages.
-Deflection bonus (+3 AC).
-Attacks pass through armor (+4 THAC0).~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10075)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10076)
 COPY_EXISTING ~ja#i10.itm~ ~override~
-	LPF incorporeal_immunity END
+	LPF incorporeal_trait END
 
+// ooze
 CREATE ITM "ja#i11"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 33554464
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~ooze trait~ SAY NAME2 ~ooze trait~
-	SAY UNIDENTIFIED_DESC ~Ooze trait
-
-Blindsight (can see invisible, not subject to gaze attacks).
-Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
-Not subject to critical hits, backstab.
-Darkvision out to 60 feet.
-Translucent
-10-sided Hit Dice~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10079)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10080)
 COPY_EXISTING ~ja#i11.itm~ ~override~
-	LPF ooze_immunity END
+	LPF ooze_trait END
 
+// vermin
 CREATE ITM "ja#i16"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~vermin trait~ SAY NAME2 ~vermin trait~
-	SAY UNIDENTIFIED_DESC ~Vermin trait
-
-Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
-Darkvision out to 60 feet.~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10081)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10082)
 COPY_EXISTING ~ja#i16.itm~ ~override~
-	LPF vermin_immunity END
+	LPF vermin_trait END
 
+// spider
 CREATE ITM "ja#i14"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~spider trait~ SAY NAME2 ~spider trait~
-	SAY UNIDENTIFIED_DESC ~Web immunity
-Poison immunity
-Infravision
-Vermin trait
-
-Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
-Darkvision out to 60 feet.~
 COPY_EXISTING ~ja#i14.itm~ ~override~
-	LPF spider_immunity END
+	LPF spider_trait END
 
+// ghostVisual1
 CREATE ITM "ja#i16"
 	WRITE_LONG 0x64 0x72
 	WRITE_LONG 0x18 32
 	WRITE_ASCII 0x3a ~IRING16~ #8
-	SAY NAME1 ~ghostVisual1 trait~ SAY NAME2 ~ghostVisual1 trait~
-	SAY UNIDENTIFIED_DESC ~Blur (visual effect only)~
 COPY_EXISTING ~ja#i16.itm~ ~override~
-	LPF ghostVisual1_immunity END
+	LPF ghostVisual1_trait END

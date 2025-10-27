@@ -1,0 +1,199 @@
+// Generated file (don't edit)
+
+@10000 = ~Immune to poison~
+@10001 = ~Immune to all diseases~
+@10002 = ~Immune to bleeding~
+@10003 = ~Immune to hold~
+@10004 = ~Immune to stun~
+@10005 = ~Immune to sleep~
+@10006 = ~Immune to fear and morale failure~
+@10007 = ~Immune to charm~
+@10008 = ~Immune to confusion~
+@10009 = ~Immune to fatigue~
+@10010 = ~Immune to ability drain~
+@10011 = ~Immune to level drain~
+@10012 = ~Immune to blindness~
+@10013 = ~Immune to fire spells~
+@10014 = ~Immune to fire~
+@10015 = ~Immune to cold spells~
+@10016 = ~Immune to cold~
+@10017 = ~Immune to lightning spells~
+@10018 = ~Immune to lightning~
+@10019 = ~Immune to acid spells~
+@10020 = ~Immune to acid~
+@10021 = ~Immune to magic~
+@10022 = ~Immune to magic damage~
+@10023 = ~Immune to healing and cause wounds spells~
+@10024 = ~Immune to cloud spells~
+@10025 = ~Immune to web effects~
+@10026 = ~Immune to entangle effects~
+@10027 = ~Immune to insects spells~
+@10028 = ~Immune to petrification~
+@10029 = ~Immune to gaze attacks~
+@10030 = ~Immune to polymorph spells~
+@10031 = ~Immune to vorpal effects~
+@10032 = ~Immune to physical damage~
+@10033 = ~Immune to slashing damage~
+@10034 = ~Immune to crushing damage~
+@10035 = ~Immune to piercing damage~
+@10036 = ~Immune to missile damage~
+@10037 = ~Immune to missile weapons~
+@10038 = ~Immune to turn undead~
+@10039 = ~Immune to illusion spells~
+@10040 = ~Immune to necromancy effects~
+@10041 = ~Immune to death effects~
+@10042 = ~Immune to death spell~
+@10043 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)~
+@10044 = ~Immune to normal weapons~
+@10045 = ~Immune to backstab~
+@10046 = ~Immune to critical hits~
+@10047 = ~Immune to devour brain ability~
+@10048 = ~Immune to magic missiles spell~
+@10049 = ~Immune to earthquake spell~
+@10050 = ~Immune to fireball spell~
+@10051 = ~Immune to lightning bolt spell~
+@10052 = ~Immune to flame arrow spell~
+@10053 = ~Hover (flight)~
+@10054 = ~This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.~
+@10055 = ~Construct~
+@10056 = ~Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
+Darkvision out to 60 feet.~
+@10057 = ~Undead~
+@10058 = ~Immunity to poison, sleep effects, paralysis, stunning, disease, death effects, necromancy effects, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
+Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.
+Negative energy (such as an inflict wounds spell) can heal undead creatures.
+Hit Die: d12
+Darkvision out to 60 feet.~
+@10059 = ~Fey~
+@10060 = ~Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.
+In all other aspects, spell-like abilities function exactly like the spells which they mimic.~
+@10061 = ~Elemental~
+@10062 = ~Immunity to poison, sleep effects, paralysis, bleeding, and stunning.
+Not subject to critical hits or backstab. Due to their unique physiology, elementals are not subject to the Mind Flayers' Devour Brain attack.
+They are also unaffected by Flesh to Stone, Insect Plague and similar spells. Darkvision out to 60 feet.~
+@10063 = ~Air affinity~
+@10064 = ~Creatures with this trait receive a +1 bonus to hit and a +4 bonus to damage when fighting airborne opponents.~
+@10065 = ~Earth affinity~
+@10066 = ~Creatures with this trait receive a -2 penalty to hit and damage when fighting airborne and waterborne opponents. They are also unaffected by the Earthquake spell.~
+@10067 = ~Skeletal~
+@10068 = ~Skeletal undead suffer no damage from cold-based attacks. Due to their bony frames, edged and piercing weapons inflict only half damage.~
+@10069 = ~Extraplanar~
+@10070 = ~Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.~
+@10071 = ~Plant~
+@10072 = ~Immunity to all mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).
+Immunity to poison, sleep effects, paralysis, polymorph, and stunning.
+Not subject to critical hits and backstab.
+Infravision.~
+@10073 = ~Infravision~
+@10074 = ~True sight (see invisible creatures)~
+@10075 = ~Incorporeal~
+@10076 = ~An incorporeal creature has no physical body.
+Immune to backstab and critical hits
+Immune to all nonmagical attacks.
+Has a 50% resistance to every damages.
+Deflection bonus (+3 AC).
+Attacks pass through armor (+4 THAC0).~
+@10077 = ~blindsight~
+@10078 = ~Invisibility, darkness, and most kinds of concealment are irrelevant.
+Blindsight does not subject a creature to gaze attacks.~
+@10079 = ~Ooze~
+@10080 = ~Blindsight (can see invisible, not subject to gaze attacks).
+Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects).
+Not subject to critical hits, backstab.
+Darkvision out to 60 feet.
+Translucent
+10-sided Hit Dice~
+@10081 = ~Vermin~
+@10082 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+Darkvision out to 60 feet.~
+@10083 = ~This spell can only be cast outdoor~
+@10084 = ~Restrained~
+@10085 = ~Call Woodland Beeings~
+@10086 = ~Call Woodland Beings
+(Conjuration, Summoning)
+Level: 4
+Sphere: Animal, Summoning
+Range: Visual Range of Caster
+Duration: 2 turns
+Casting Time: 9
+Area of Effect: Special
+Saving Throw: None
+
+By means of this spell, the caster is able to summon certain woodland creatures to his location. Naturally, this spell works only outdoors, but not necessarily only in wooded areas.
+
+7th: Dryad (55%), Hamadryad (30%), 5HD Treant (15%)
+10th: Hamadryad (55%), 5HD Treant (30%), 7HD Treant (15%)
+13th: 7HD Treant (55%), 9HD Treant (30%), 11HD Treant (15%)
+
+The summoned creatures aid the caster by whatever means they possess, staying until they are slain or the spell duration expires.
+
+Dryad (2 Hit Dice):
+STR 10, DEX 12, CON 11, INT 14, WIS 15, CHA 18
+HP 16, AC 9, THAC0 19, 50% magic resistance
+Dimension Door (at will) in wilderness area only.
+Dire Charm (x3), saves vs spell at -3.
+
+5HD Treant:
+STR 19, DEX 8, CON 19, INT 12, WIS 16, CHA 12
+HP 65, AC 0, THAC0 15, -25% fire resistance
+2 Attacks Per Round, 2d8 crushing
+
+7HD Treant:
+STR 20, DEX 8, CON 20, INT 12, WIS 16, CHA 12
+HP 91, AC 0, THAC0 13, -25% fire resistance
+2 Attacks Per Round, 2d8 crushing
+
+9HD Treant:
+STR 21, DEX 8, CON 20, INT 12, WIS 16, CHA 12
+HP 117, AC 0, THAC0 11, -25% fire resistance
+2 Attacks Per Round, 3d6 crushing
+
+11HD Treant:
+STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
+HP 142, AC 0, THAC0 9, -25% fire resistance
+2 Attacks Per Round, 4d6 crushing~
+@10087 = ~Color Spray~
+@10088 = ~Color Spray (Alteration)
+Level: 1
+Range: 30 feet
+Duration: Special
+Casting Time: 1
+Area of Effect: 60 degree arc
+Saving Throw: Special
+
+Upon the casting of this spell, a vivid, fan-shaped spray of clashing colors spring forth in front of the caster. All creatures in the area of effect are entitled a saving throw vs. spell to avoid the effects, if they are above the 6th level or above the level of the caster. Blind or unseeing creatures are not affected. Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds; those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds; those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.~
+@10089 = ~Dimension Door~
+@10090 = ~Dimension Door (Alteration)
+Level: 4
+Range: 900
+Duration: Instant
+Casting Time: 1
+Area of Effect: The caster
+Saving Throw: None
+
+This spell transports the caster to any designated place that is already known to him. The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with. When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.  Upon passing through the portal, the caster finds himself at his chosen destination.~
+@10091 = ~Slime Split~
+@10092 = ~Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.
+Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.~
+@10093 = ~This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
+Each is capable of attacking, but has only half the hit points the creature had before dividing.~
+@10094 = ~Grab~
+@10095 = ~Grabbed~
+@10096 = ~*quaffs a potion*~
+@10097 = ~Paws~
+@10098 = ~Ankheg~
+@10099 = ~Mandibles~
+@10100 = ~Digestive Enzymes~
+@10101 = ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round for 4 rounds.~
+@10102 = ~Stream of acidic enzymes~
+@10103 = ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
+A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
+It uses this attack technique only when desperate.~
+@10104 = ~Web Tangle~
+@10105 = ~The spider can shoot web strands up to 5 feet to bind a foe.
+Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.~
+@10106 = ~These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
+Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.~
