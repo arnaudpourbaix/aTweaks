@@ -12,6 +12,7 @@ import {
   DispelEffectWeaponTypeEnum,
   EffectDamageModeEnum,
   EffectDispelResistanceEnum,
+  EffectIDSFileEnum,
   EffectTargetEnum,
   EffectTimingEnum,
   getCastSpellOnConditionValue,
@@ -138,7 +139,9 @@ class EffectService {
       case EffectTypeEnum.Hold:
       case EffectTypeEnum.DamageVsCreatureTypeModifier:
       case EffectTypeEnum.Thac0VsCreatureTypeModifier:
-        effect.parameter1 = `IDS_OF_SYMBOL (~${effect.idsFile}~ ~${effect.idsEntry}~)`;
+        effect.parameter1 = `IDS_OF_SYMBOL (~${
+          EffectIDSFileEnum[effect.idsFile]
+        }~ ~${effect.idsEntry}~)`;
         effect.parameter2 = `${effect.idsFile}`;
         break;
       case EffectTypeEnum.CharacterColorPulse:

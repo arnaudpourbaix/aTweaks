@@ -227,7 +227,7 @@ export const SLIME_MUSTARD_JELLY: RawCreature = {
     },
     createCreatureSplit({
       file: split,
-      description: "common.spell.slimeSplit.mustardDescription",
+      description: "spell.slimeSplit.mustardDescription",
       resource: ATWEAKS_CREATURES.SplitMustardJelly,
       visualEffect: "TRGOOYAA",
     }),

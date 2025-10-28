@@ -543,66 +543,66 @@ END
 
 DEFINE_PATCH_FUNCTION airAffinity_trait
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~WYVERN~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~WYVERN~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~BEHOLDER~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~BEHOLDER~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~MIST~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~MIST~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~MEPHIT~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~MEPHIT~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~DRAGON~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~DRAGON~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~SOLAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~SOLAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~ANTISOLAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~ANTISOLAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~PLANATAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~PLANATAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~DARKPLANATAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~DARKPLANATAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_AIR~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_AIR~) parameter2=5 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_DJINNI~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_DJINNI~) parameter2=5 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=1 END
 END
 
 DEFINE_PATCH_FUNCTION earthAffinity_trait
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~WYVERN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~WYVERN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~BEHOLDER~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~BEHOLDER~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~MIST~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~MIST~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~MEPHIT~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~MEPHIT~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~DRAGON~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~DRAGON~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~SOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~SOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~ANTISOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~ANTISOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~PLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~PLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~DARKPLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~DARKPLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~SAHUAGIN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~SAHUAGIN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~4~ ~KUO-TOA~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~4~ ~KUO-TOA~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~5~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~5~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
 	LPF earthquake_immunity END
 END
 
@@ -707,7 +707,6 @@ DEFINE_PATCH_FUNCTION spider_trait
 BEGIN
 	LPF web_immunity END
 	LPF poison_immunity END
-	LPF infravision_trait END
 	LPF vermin_trait END
 END
 

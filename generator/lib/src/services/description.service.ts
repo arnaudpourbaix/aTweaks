@@ -1,5 +1,6 @@
-import { ImmunityName } from "../../config/immunity-name";
-import { TraStringReferenceEnum } from "../../config/stringRef";
+import { ImmunityName } from "../../config/immunity-config";
+import { Creature } from "../model/creature/creature";
+import { ImmunityConfig } from "../model/final/immunity";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
@@ -24,38 +25,53 @@ import {
   SaveTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
-import { ImmunityConfig } from "../model/final/immunity";
-import { Item } from "../model/spell-item/spell-item";
+import { Weapon } from "../model/spell-item/spell-item";
 import { State } from "../state";
-import { Creature } from "../model/creature/creature";
+import translationService from "./translation.service";
 
 class DescriptionService {
   generateCreatureItems(creature: Creature): void {
     for (const item of creature.items) {
-      if (!item.description) this.generateWeaponDescription(item, creature);
+      if (!item.description && !!item.header)
+        this.generateWeaponDescription(item as Weapon, creature);
     }
   }
 
   generateImmunity(immunity: ImmunityConfig): void {
-    if (immunity.description) return; // don't override
+    if (immunity.stringRef || immunity.description) return; // don't override
     const results: string[] = [];
     results.push(...this.getImmunitiesDescription(immunity.immunities));
     for (const effect of immunity.effects ?? []) {
       results.push(...this.getEffectDescription(effect));
     }
-    // immunity.description = results; //FIXME:
+    immunity.description = translationService.addCustomTranslation(results);
   }
 
-  private generateWeaponDescription(item: Item, creature?: Creature) {
+  private getImmunitiesDescription(immunities: ImmunityName[]): string[] {
+    const results: string[] = [];
+    for (const name of immunities) {
+      const immunity = State.immunities.find(
+        (i) => i.name === name
+      ) as ImmunityConfig;
+      if (!immunity.stringRef && !immunity.description)
+        this.generateImmunity(immunity);
+      if (!!immunity.description)
+        results.push(translationService.from(immunity.description));
+      else if (immunity.stringRef)
+        results.push(translationService.from(immunity.stringRef));
+    }
+    return results;
+  }
+
+  private generateWeaponDescription(item: Weapon, creature?: Creature) {
     const desc: string[] = [];
-    if (!item.header) throw new Error(`not a weapon: ${item.file}`);
     const type =
       item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
     if (item.header.bonusToHit) {
       desc.push(`THAC0: ${this.getSignedNumber(item.header.bonusToHit)}`);
     }
     const damage = this.getDiceValue({
-      ...item,
+      ...item.header,
       value: item.header.damageBonus,
     });
     if (damage) {
@@ -65,10 +81,10 @@ class DescriptionService {
         })`
       );
     }
-    const damageEffects = item.effects.filter(
+    const damageEffects = item.header.effects.filter(
       (e) => e.opcode === EffectTypeEnum.Damage
     );
-    const otherEffects = item.effects.filter(
+    const otherEffects = item.header.effects.filter(
       (e) => e.opcode !== EffectTypeEnum.Damage
     );
     desc.push(...this.getItemEffectsDescription(damageEffects, creature));
@@ -82,25 +98,17 @@ class DescriptionService {
       desc.push(`Range: ${item.header.range} feet`);
     }
     desc.push(...this.getImmunitiesDescription(item.immunities));
-    desc.push(...this.getItemEffectsDescription(otherEffects, creature));
-    if (desc.length && typeof item.stringRef === "string") {
-      desc.unshift(item.stringRef, "");
-    } else if (desc.length && typeof item.stringRef === "number") {
-      desc.unshift(TraStringReferenceEnum[item.stringRef], "");
+    desc.push(
+      ...this.getItemEffectsDescription(
+        [...item.effects, ...otherEffects],
+        creature
+      )
+    );
+    if (desc.length && item.stringRef) {
+      desc.unshift(translationService.from(item.stringRef), "");
     }
-    // item.description = desc; //TODO:
-  }
-
-  private getImmunitiesDescription(immunities: ImmunityName[]): string[] {
-    const results: string[] = [];
-    for (const name of immunities) {
-      const immunity = State.immunities.find((i) => i.name === name);
-      if (immunity) {
-        if (!immunity.description) this.generateImmunity(immunity);
-        // results.push(immunity.description); //TODO:
-      }
-    }
-    return results;
+    console.log("generateWeaponDescription", item.file, desc);
+    item.description = translationService.addCustomTranslation(desc);
   }
 
   private getItemEffectsDescription(
@@ -125,12 +133,14 @@ class DescriptionService {
     const spell = (creature?.spells ?? []).find(
       (s) => s.file === effect.resource
     );
-    let text = `Cast spell ${spell ? spell.name : effect.resource}`;
+    let text = `Cast spell ${
+      spell ? translationService.from(spell.name) : effect.resource
+    }`;
     const condition = this.getSaveText(effect) ?? this.getProbability(effect);
     if (condition) text = `${text}${condition}`;
     const results: string[] = ["", text];
-    if (spell && Array.isArray(spell.description)) {
-      results.push(...spell.description);
+    if (spell && spell.description) {
+      results.push(translationService.from(spell.description));
     }
     return results;
   }
@@ -387,6 +397,10 @@ class DescriptionService {
       {
         opcode: EffectTypeEnum.AcidResistanceModifier,
         label: "Acid Resistance",
+      },
+      {
+        opcode: EffectTypeEnum.PoisonResistanceModifier,
+        label: "Poison Resistance",
       },
       {
         opcode: EffectTypeEnum.ElectricityResistanceModifier,

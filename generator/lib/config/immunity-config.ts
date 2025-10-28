@@ -583,7 +583,7 @@ export const IMMUNITIES: (AtLeast<
     stringRef: "common.immunity.gazeAttacks",
     immunities: ["petrification"],
   },
-];
+] as const;
 
 export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   type: "resistance";
@@ -728,7 +728,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
       },
     ],
   },
-];
+] as const;
 
 export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
   type: "trait";
@@ -1037,7 +1037,7 @@ export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
     name: "spider",
     type: "trait",
     itemSlot: { file: ITEMS.Spider, slot: JEWEL_SLOTS },
-    immunities: ["web", "poison", "infravision", "vermin"],
+    immunities: ["web", "poison", "vermin"],
   },
   {
     name: "ghostVisual1",
@@ -1073,4 +1073,9 @@ export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
       },
     ],
   },
-];
+] as const;
+
+export type ImmunityName =
+  | (typeof IMMUNITIES)[number]["name"]
+  | (typeof RESISTANCES)[number]["name"]
+  | (typeof TRAITS)[number]["name"];

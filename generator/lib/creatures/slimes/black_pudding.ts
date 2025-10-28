@@ -100,7 +100,7 @@ export const SLIME_BLACK_PUDDING: RawCreature = {
   spells: [
     createCreatureSplit({
       file: split,
-      description: "common.spell.slimeSplit.puddingDescription",
+      description: "spell.slimeSplit.puddingDescription",
       resource: ATWEAKS_CREATURES.SplitBlackPudding,
       visualEffect: "BDGOOYAA",
     }),

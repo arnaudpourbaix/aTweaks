@@ -24,7 +24,7 @@ export const createCreatureSplit = ({
 }): Spell =>
   spellService.getSpell(
     {
-      name: "common.spell.slimeSplit.name",
+      name: "spell.slimeSplit.name",
       description,
       memorizedCount: 1,
       icon: SPELLS.MirrorImages,

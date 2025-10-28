@@ -34,7 +34,7 @@ export const EFFECT_GROUPS: {
       const rawEffects: Effect[] = [
         {
           opcode: EffectTypeEnum.DisplayString,
-          stringRef: "common.spell.restrained",
+          stringRef: "spell.restrained",
           timing: EffectTimingEnum.InstantPermanentUntilDeath,
           ...base,
         },

@@ -1,22 +1,24 @@
-import { ImmunityName } from "../../config/immunity-name";
+import { ImmunityName } from "../../config/immunity-config";
 import { SpellGroupName } from "../../config/spell-group-name";
+import { TranslationKey } from "../../translations/i18n";
+import { EquippedItem, ItemSlot } from "../model/creature/item";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Response } from "../model/script/script";
-import { MemorizedSpellType, Spell } from "../model/spell-item/spell-item";
+import { StringReference } from "../model/final/stringref";
 import { Actions } from "../model/raw/actions";
 import { SpellGroup } from "../model/raw/spell-group";
 import { SpellProtectionStat } from "../model/raw/spell-protection";
 import { Triggers } from "../model/raw/triggers";
-import { State } from "../state";
-import { TranslationKey } from "../../translations/i18n";
+import { Response } from "../model/script/script";
 import { SpellTypeEnum } from "../model/spell-item/effect.enums";
-import { EquippedItem, ItemSlot } from "../model/creature/item";
-import { StringReference } from "../model/final/stringref";
+import { MemorizedSpellType, Spell } from "../model/spell-item/spell-item";
+import { State } from "../state";
 import translationService from "./translation.service";
-import chalk from "chalk";
-import figureSet from "figures";
 
 class UtilsService {
+  objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
+    return Object.keys(obj) as (keyof T)[];
+  };
+
   replaceParamTokens(
     params: (string | number)[],
     tokens: { key: string; value: string }[]
@@ -91,17 +93,15 @@ class UtilsService {
 
   resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;
-    else if (typeof value === "number") return `${value}`;
-    try {
+    else if (typeof value === "string") {
       const ref = translationService.stringRef(value as TranslationKey);
       return `RESOLVE_STR_REF(@${ref})`; // create a new string ref from language key
+    }
+    try {
+      translationService.from(value);
+      return `RESOLVE_STR_REF(@${value})`; // create a new string ref from generated language
     } catch {
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.warning} unexpected string reference ${value}`
-        )
-      );
-      return `RESOLVE_STR_REF(~${value}~)`; // create a new string ref from value
+      return `${value}`;
     }
   }
 

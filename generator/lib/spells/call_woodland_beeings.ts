@@ -26,8 +26,8 @@ const baseEffect: Effect = {
 
 export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
   {
-    name: "common.spell.callWoodlandBeeings.name",
-    description: "common.spell.callWoodlandBeeings.description",
+    name: "spell.callWoodlandBeeings.name",
+    description: "spell.callWoodlandBeeings.description",
     copyFrom: SPELLS.CallWoodlandBeeings,
     icon: SPELLS.CallWoodlandBeeings,
     deleteHeaders: true,

@@ -1,4 +1,5 @@
 import { TranslationKey } from "../../../translations/i18n";
+import { StringReference } from "../../model/final/stringref";
 import { CodeLine } from "../../model/misc";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import utils from "../utils.service";
@@ -97,7 +98,7 @@ export class AbstractWeiduService {
   protected writeStringRef(
     lines: CodeLine[],
     offset: number,
-    stringRef: TranslationKey | undefined,
+    stringRef: StringReference | undefined,
     tab?: number
   ) {
     if (!stringRef) return;

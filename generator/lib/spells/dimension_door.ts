@@ -40,8 +40,8 @@ export const createDimensionDoor = ({
 }): Spell =>
   spellService.getSpell(
     {
-      name: "common.spell.dimensionDoor.name",
-      description: "common.spell.dimensionDoor.description",
+      name: "spell.dimensionDoor.name",
+      description: "spell.dimensionDoor.description",
       memorizedCount,
       castingSound: "CAS_M08",
       flags: [SpellFlagEnum.NoLOSRequired],

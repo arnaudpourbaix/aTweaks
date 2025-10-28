@@ -246,8 +246,8 @@ const confusionEffects: (level: number) => Effect[] = (level: number) => {
 
 export const SPELL_COLOR_SPRAY: Spell = spellService.getSpell(
   {
-    name: "common.spell.colorSpray.name",
-    description: "common.spell.colorSpray.description",
+    name: "spell.colorSpray.name",
+    description: "spell.colorSpray.description",
     castingSound: "CAS_M08",
     flags: [SpellFlagEnum.Hostile],
     spellType: SpellTypeEnum.Wizard,

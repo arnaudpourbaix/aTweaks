@@ -66,8 +66,8 @@ export const GRAB_DEFAULT_CONFIG: GrabGlobalConfig = {
   rounds: 2,
   saveType: SaveTypeEnum.ParalyzePoisonDeath,
   saveBonus: 99, // will be calculated
-  grabStringRef: "common.grab.grab",
-  grabbedStringRef: "common.grab.grabbed",
+  grabStringRef: "spell.grab.grab",
+  grabbedStringRef: "spell.grab.grabbed",
   startSound: "CRE_P01",
   endSound: "EFF_M22A",
   visualEffect: "rr#cnstr",

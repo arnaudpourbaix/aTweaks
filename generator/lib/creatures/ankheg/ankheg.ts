@@ -171,14 +171,14 @@ cre.setBehavior({
   ],
 });
 
-// cre.setAttack({
-//   actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
-//   grab: {
-//     file: grab,
-//     weaponFile: mainWeapon,
-//     duration: 18,
-//   },
-// });
+cre.setAttack({
+  // actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
+  // grab: {
+  //   file: grab,
+  //   weaponFile: mainWeapon,
+  //   duration: 18,
+  // },
+});
 
 //   abilities: [
 //     {

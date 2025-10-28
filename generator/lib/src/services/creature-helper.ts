@@ -1,4 +1,4 @@
-import { ImmunityName } from "../../config/immunity-name";
+import { ImmunityName } from "../../config/immunity-config";
 import { MonsterItemIconEnum } from "../../config/item";
 import { JEWEL_SLOTS } from "../model/creature/item";
 import { Effect } from "../model/spell-item/effect";

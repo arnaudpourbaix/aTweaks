@@ -29,6 +29,7 @@ import creatureService from "./creature.service";
 import effectService from "./effect.service";
 import { getFilename } from "./misc.func";
 import spellService from "./spell.service";
+import translationService from "./translation.service";
 
 class GrabService {
   attachGrabToWeapon(
@@ -48,19 +49,15 @@ class GrabService {
       duration: 1,
     });
     creature.effectFiles.push({ ...effectFile, file });
+    grab.rounds ??= GRAB_DEFAULT_CONFIG.rounds;
+    const description = translationService.t.spell.grab.description.replace(
+      "[duration]",
+      `${grab.rounds!}`
+    );
     const spell = spellService.getSpell(
       {
         name: GRAB_DEFAULT_CONFIG.grabStringRef,
-        // description: [
-        //   `Grab and hold your target for ${descriptionService.getDuration(
-        //     grab.duration
-        //   )}.`,
-        //   "Grabbed creature will suffer these effects:",
-        //   "- can not move",
-        //   "- loose armor class from dexterity bonus",
-        //   `- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)`,
-        //   "- -4 THAC0",
-        // ],
+        description: translationService.addCustomTranslation([description]),
         headers: [
           {
             type: ItemAbilityTypeEnum.Melee,
@@ -170,15 +167,11 @@ class GrabService {
         duration,
       },
     ];
-    const immunityEffects = this.getGrabImmuneEffects(creature, grab, file);
+    const immunityEffects = this.getGrabImmuneEffects(creature, file);
     return [...immunityEffects, ...grabEffects];
   }
 
-  private getGrabImmuneEffects(
-    creature: Creature,
-    grab: CreatureGrabConfig,
-    file: string
-  ): Effect[] {
+  private getGrabImmuneEffects(creature: Creature, file: string): Effect[] {
     const list = [...GRAB_IMMUNE_CREATURES];
     if (!creature.data.size) {
       console.log(

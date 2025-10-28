@@ -20,9 +20,9 @@ async function main() {
   return Promise.resolve()
     .then(() => stateService.init())
     .then(() => {
-      mainService.generateTranslations();
       const creatures = mainService.getCreatures();
       mainService.generateCommonCode();
+      mainService.generateTranslations();
       console.log(chalk.green(`\nFinished!`));
     });
 }

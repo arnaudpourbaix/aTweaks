@@ -61,7 +61,7 @@ class CreatureFactory {
       effects: [],
     };
     console.log(
-      chalk.bold(`\nCreating ${translationService.fromKey(cre.name)}...`)
+      chalk.bold(`\nCreating ${translationService.from(cre.name)}...`)
     );
     return cre;
   }
@@ -217,6 +217,23 @@ class CreatureFactory {
       file,
       slot: slots,
     });
+  }
+
+  isValid(cre: Creature) {
+    let valid = true;
+    if (!cre.attack) {
+      console.log(`${figureSet.warning} No attack defined`);
+      valid = false;
+    }
+    if (!cre.additionalData) {
+      console.log(`${figureSet.warning} No additional data defined`);
+      valid = false;
+    }
+    if (!cre.behavior) {
+      console.log(`${figureSet.warning} No behavior defined`);
+      valid = false;
+    }
+    return valid;
   }
 }
 

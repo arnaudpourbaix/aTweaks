@@ -1,16 +1,17 @@
-import { ImmunityName } from "../../../config/immunity-name";
+import { ImmunityName } from "../../../config/immunity-config";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { TranslationKey } from "../../../translations/i18n";
 import { EquippedItem } from "../creature/item";
 import { Effect } from "../spell-item/effect";
 import { PortraitIconEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
+import { StringReference } from "./stringref";
 
 export interface ImmunityConfig {
-  name: ImmunityName;
+  name: string;
   type: "trait" | "immunity" | "resistance";
   stringRef?: TranslationKey;
-  description?: TranslationKey;
+  description?: StringReference;
   immunities: ImmunityName[];
   preventEffects: EffectTypeEnum[];
   preventIcons: PortraitIconEnum[];

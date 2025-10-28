@@ -1,7 +1,7 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
-import creatureFactory from "../../factories/creature.factory";
 import { TranslationKey } from "../../../translations/i18n";
-import { CastSpellEffect, EffectFile } from "../spell-item/effect";
+import creatureFactory from "../../factories/creature.factory";
+import { EffectFile } from "../spell-item/effect";
 import { Projectile } from "../spell-item/projectile";
 import {
   Item,
@@ -88,6 +88,10 @@ export class Creature implements BaseCreature {
   }) {
     return creatureFactory.addWeapon({ cre: this, weapon, grab, castSpell });
   }
+
+  isValid(): boolean {
+    return creatureFactory.isValid(this);
+  }
 }
 
 export interface CreatureAutoGenerate {
@@ -103,10 +107,6 @@ export interface CreatureAdjustment extends BaseCreature {
    * Is it a summon ?
    */
   summon: boolean;
-  /**
-   * Don't assign a script
-   */
-  noScript: boolean;
   /**
    * Don't assign a weapon
    */

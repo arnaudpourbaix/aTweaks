@@ -9,10 +9,9 @@ export default {
     },
     enzymeStream: {
       name: "Stream of acidic enzymes",
-      description:
-        "The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.\n" +
-        "A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).\n" +
-        "It uses this attack technique only when desperate.",
+      description: `The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
+A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
+It uses this attack technique only when desperate.`,
     },
   },
   spider: {

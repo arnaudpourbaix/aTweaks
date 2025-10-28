@@ -1,4 +1,4 @@
-import { ImmunityName } from "../../../config/immunity-name";
+import { ImmunityName } from "../../../config/immunity-config";
 import { Effect } from "../spell-item/effect";
 import { ProficiencyTypeEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
@@ -12,6 +12,7 @@ export interface CreatureAdditionalData {
   /**
    * BAF Script location. Auto if empty, at the top tier possible.
    * Will raise an error at install if location was not empty (safety measure)
+   * Use None to prevent from assigning a script
    */
   scriptLocation?: ScriptLocation;
 
@@ -44,4 +45,5 @@ export type ScriptLocation =
   | "Class"
   | "Race"
   | "General"
-  | "Default";
+  | "Default"
+  | "None";

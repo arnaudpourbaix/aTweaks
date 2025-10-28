@@ -10,10 +10,12 @@ import {
 import { CR, TAB } from "../model/constants";
 import { State } from "../state";
 import { AbstractWeiduService } from "./weidu/abstract-weidu.service";
+import { StringReference } from "../model/final/stringref";
 
 class TranslationService extends AbstractWeiduService {
   private availableStringRef = 10000;
   private translations: { key: TranslationKey; stringRef: number }[] = [];
+  private customTranslations: { text: string; stringRef: number }[] = [];
 
   t = getTranslationKeys(LANG);
 
@@ -22,18 +24,38 @@ class TranslationService extends AbstractWeiduService {
     this.generateStringRefs();
   }
 
+  addCustomTranslation(text: string[]): number {
+    const stringRef = this.availableStringRef++;
+    this.customTranslations.push({ text: text.join(CR), stringRef });
+    return stringRef;
+  }
+
   stringRef(key: TranslationKey): number {
     const t = this.translations.find((v) => v.key === key);
     if (!t) throw new Error(`key ${key} not registered`);
     return t.stringRef;
   }
 
-  fromKey(path: TranslationKey, lang = LANG): string {
+  from(ref: StringReference, lang = LANG): string {
+    return typeof ref === "string"
+      ? this.fromKey(ref, lang)
+      : this.fromStringRef(ref, lang);
+  }
+
+  private fromKey(path: TranslationKey, lang = LANG): string {
     let value = getTranslationKeys(lang) as any;
     for (let i = 0, p = path.split("."), len = p.length; i < len; i++) {
       value = value[p[i]];
     }
     return value;
+  }
+
+  private fromStringRef(stringRef: number, lang = LANG): string {
+    const translation = this.customTranslations.find(
+      (t) => t.stringRef === stringRef
+    );
+    if (!translation) throw new Error(`stringRef not found: ${stringRef}`);
+    return translation.text;
   }
 
   generateStringRefs() {
@@ -64,6 +86,9 @@ class TranslationService extends AbstractWeiduService {
     for (const t of this.translations) {
       const text = this.fromKey(t.key, lang);
       this.add(lines, `@${t.stringRef} = ~${text}~`);
+    }
+    for (const t of this.customTranslations) {
+      this.add(lines, `@${t.stringRef} = ~${t.text}~`);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(

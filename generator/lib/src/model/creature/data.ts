@@ -1,3 +1,4 @@
+import { CreatureSize } from "../../../config/creatures";
 import { AlignIdentifier } from "../ids/align";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
@@ -5,7 +6,6 @@ import { GenderIdentifier } from "../ids/gender";
 import { GeneralIdentifier } from "../ids/general";
 import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
-import { CreatureSize } from "../spell-item/effect.enums";
 
 export interface CreatureData {
   level1?: number;

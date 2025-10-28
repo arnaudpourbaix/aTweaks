@@ -1,19 +1,19 @@
-import { CR } from "../../model/constants";
 import { CodeLine } from "../../model/misc";
 import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
+import translationService from "../translation.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 
 class WeiduSpellService extends AbstractWeiduService {
   createSpells(lines: CodeLine[], spells: Spell[]) {
     for (const spell of spells) {
-      this.add(lines, `// ${spell.name}`);
       this.createSpell(lines, spell, 0);
       this.add(lines, "");
     }
   }
 
   createSpell(lines: CodeLine[], spell: Spell, tab: number) {
+    this.add(lines, `// ${translationService.from(spell.name)}`);
     if (spell.effectFiles)
       weiduEffectService.createEffectFiles(lines, spell.effectFiles, tab);
     if (spell.copyFrom) {

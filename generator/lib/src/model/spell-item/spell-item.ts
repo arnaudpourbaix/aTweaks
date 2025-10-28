@@ -1,6 +1,7 @@
-import { ImmunityName } from "../../../config/immunity-name";
+import { ImmunityName } from "../../../config/immunity-config";
 import { TranslationKey } from "../../../translations/i18n";
 import { ItemSlot } from "../creature/item";
+import { StringReference } from "../final/stringref";
 import { PartialBy, WithRequired } from "../utility-types";
 import { Effect, EffectFile } from "./effect";
 import {
@@ -40,7 +41,7 @@ export interface Spell {
    * Spellbook icon
    */
   icon?: string;
-  description?: TranslationKey;
+  description?: StringReference;
   spellType?: SpellTypeEnum;
   castingSound?: string;
   castingAnimation?: ItemAbilityCastingAnimationEnum;
@@ -86,7 +87,7 @@ export interface Item {
    */
   copyFrom?: string;
   stringRef?: TranslationKey;
-  description?: TranslationKey;
+  description?: StringReference;
   immunities: ImmunityName[];
   enchantment?: number;
   animation?: ItemAnimationEnum;
@@ -115,7 +116,6 @@ export interface ItemSpellHeader {
 
 export interface SpellHeader extends ItemSpellHeader {
   minLevel?: number;
-  // racialResistances?: boolean;
 }
 
 export interface ItemHeader extends ItemSpellHeader {
