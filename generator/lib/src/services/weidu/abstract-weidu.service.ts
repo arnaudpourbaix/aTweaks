@@ -1,8 +1,7 @@
-import { TranslationKey } from "../../../translations/i18n";
 import { StringReference } from "../../model/final/stringref";
 import { CodeLine } from "../../model/misc";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
-import utils from "../utils.service";
+import utils from "../utils/utils.service";
 
 export class AbstractWeiduService {
   protected initLines() {

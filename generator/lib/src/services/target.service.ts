@@ -19,7 +19,7 @@ import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
 import { Triggers } from "../model/raw/triggers";
-import utils from "./utils.service";
+import utils from "./utils/utils.service";
 
 class TargetService {
   targetObject(p: {

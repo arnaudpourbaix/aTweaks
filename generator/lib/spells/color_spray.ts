@@ -22,7 +22,7 @@ import {
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { Spell, SpellHeader } from "../src/model/spell-item/spell-item";
 import spellService from "../src/services/spell.service";
-import { StringRefUtils } from "../src/services/string-ref.utils";
+import { StringRefUtils } from "../src/services/utils/string-ref.utils";
 
 const baseEffect: BaseEffect = {
   dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,

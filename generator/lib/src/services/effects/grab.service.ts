@@ -4,13 +4,13 @@ import {
   GRAB_IMMUNE_CREATURES,
   HUGE_CREATURES,
   LARGE_CREATURES,
-} from "../../config/creatures";
-import { Creature } from "../model/creature/creature";
+} from "../../../config/creatures";
+import { Creature } from "../../model/creature/creature";
 import {
   CreatureGrabConfig,
   GRAB_DEFAULT_CONFIG,
-} from "../model/creature/grab";
-import { Effect, IdsEffect } from "../model/spell-item/effect";
+} from "../../model/creature/grab";
+import { Effect, IdsEffect } from "../../model/spell-item/effect";
 import {
   EffectBonusToEnum,
   EffectCastSpellTypeEnum,
@@ -22,14 +22,14 @@ import {
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
   PortraitIconEnum,
-} from "../model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../model/spell-item/effect.type";
-import { Spell, Weapon } from "../model/spell-item/spell-item";
-import creatureService from "./creature.service";
+} from "../../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import { Spell, Weapon } from "../../model/spell-item/spell-item";
+import creatureService from "../creature.service";
 import effectService from "./effect.service";
-import { getFilename } from "./misc.func";
-import spellService from "./spell.service";
-import translationService from "./translation.service";
+import spellService from "../spell.service";
+import translationService from "../translation.service";
+import { getFilename } from "../utils/misc.func";
 
 class GrabService {
   attachGrabToWeapon(
@@ -50,9 +50,11 @@ class GrabService {
     });
     creature.effectFiles.push({ ...effectFile, file });
     grab.rounds ??= GRAB_DEFAULT_CONFIG.rounds;
-    const description = translationService.t.spell.grab.description.replace(
-      "[duration]",
-      `${grab.rounds!}`
+    const description = translationService.interpolate(
+      "spell.grab.description",
+      {
+        duration: grab.rounds!,
+      }
     );
     const spell = spellService.getSpell(
       {

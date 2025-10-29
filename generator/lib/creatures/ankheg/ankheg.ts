@@ -12,7 +12,7 @@ import {
   SaveTypeEnum,
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import effectService from "../../src/services/effect.service";
+import effectService from "../../src/services/effects/effect.service";
 import translationService from "../../src/services/translation.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 

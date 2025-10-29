@@ -10,7 +10,7 @@ import {
   SpellProtectionStat,
 } from "../../src/model/raw/spell-protection";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { EffectService } from "../../src/services/effect.service";
+import { EffectService } from "../../src/services/effects/effect.service";
 import {
   bafFile,
   convertMovement,

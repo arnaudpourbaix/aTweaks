@@ -13,7 +13,7 @@ import {
   Spell,
   SpellHeader,
 } from "../model/spell-item/spell-item";
-import effectService from "./effect.service";
+import effectService from "./effects/effect.service";
 
 class SpellService {
   getSpell(spell: PartialSpell, file: string): Spell {

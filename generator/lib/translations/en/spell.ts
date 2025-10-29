@@ -4,7 +4,7 @@ export default {
   grab: {
     grab: "Grab",
     grabbed: "Grabbed",
-    description: `Grab and hold your target for [duration] rounds.
+    description: `Grab and hold your target for {{duration}} rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus

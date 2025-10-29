@@ -7,7 +7,7 @@ import { RawCreature } from "../../src/model/raw/creature";
 import { RawBaseEffect } from "../../src/model/raw/effect";
 import { RawSaveType } from "../../src/model/raw/enum";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { EffectService } from "../../src/services/effect.service";
+import { EffectService } from "../../src/services/effects/effect.service";
 import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 import { abilityAnimalFriendship } from "./hamadryad";

@@ -1,18 +1,18 @@
-import { ImmunityName } from "../../config/immunity-config";
-import { SpellGroupName } from "../../config/spell-group-name";
-import { TranslationKey } from "../../translations/i18n";
-import { EquippedItem, ItemSlot } from "../model/creature/item";
-import { ImmunityConfig } from "../model/final/immunity";
-import { StringReference } from "../model/final/stringref";
-import { Actions } from "../model/raw/actions";
-import { SpellGroup } from "../model/raw/spell-group";
-import { SpellProtectionStat } from "../model/raw/spell-protection";
-import { Triggers } from "../model/raw/triggers";
-import { Response } from "../model/script/script";
-import { SpellTypeEnum } from "../model/spell-item/effect.enums";
-import { MemorizedSpellType, Spell } from "../model/spell-item/spell-item";
-import { State } from "../state";
-import translationService from "./translation.service";
+import { ImmunityName } from "../../../config/immunity-config";
+import { SpellGroupName } from "../../../config/spell-group-name";
+import { TranslationKey } from "../../../translations/i18n";
+import { EquippedItem, ItemSlot } from "../../model/creature/item";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { StringReference } from "../../model/final/stringref";
+import { Actions } from "../../model/raw/actions";
+import { SpellGroup } from "../../model/raw/spell-group";
+import { SpellProtectionStat } from "../../model/raw/spell-protection";
+import { Triggers } from "../../model/raw/triggers";
+import { Response } from "../../model/script/script";
+import { SpellTypeEnum } from "../../model/spell-item/effect.enums";
+import { MemorizedSpellType, Spell } from "../../model/spell-item/spell-item";
+import { State } from "../../state";
+import translationService from "./../translation.service";
 
 class UtilsService {
   objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
@@ -84,12 +84,6 @@ class UtilsService {
       return acc;
     }, [] as Triggers.Trigger[]);
   }
-
-  // getStringReference(value: StringReference): string {
-  //   if (typeof value === "string" && /^\d+$/.test(value)) return value;
-  //   else if (typeof value === "string") return `~${value}~`;
-  //   else return `@${value}`; //FIXME:
-  // }
 
   resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;

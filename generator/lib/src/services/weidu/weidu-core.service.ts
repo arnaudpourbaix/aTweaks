@@ -9,9 +9,8 @@ import { ImmunityConfig } from "../../model/final/immunity";
 import { SpellProtectionStat } from "../../model/raw/spell-protection";
 import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
 import { State } from "../../state";
-import utils from "../utils.service";
+import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
-import translationService from "../translation.service";
 
 class WeiduCoreService extends AbstractWeiduService {
   private lines = this.initLines();

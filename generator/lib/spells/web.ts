@@ -19,7 +19,7 @@ import {
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { Spell } from "../src/model/spell-item/spell-item";
-import effectService from "../src/services/effect.service";
+import effectService from "../src/services/effects/effect.service";
 import spellService from "../src/services/spell.service";
 import { TranslationKey } from "../translations/i18n";
 

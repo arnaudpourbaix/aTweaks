@@ -1,12 +1,12 @@
-import { EXISTING_SPELL_PROTECTIONS } from "../../config/spell-protection";
-import { SpellProtectionName } from "../../config/spell-protection-name";
+import { EXISTING_SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { SpellProtectionName } from "../../../config/spell-protection-name";
 import {
   BaseEffect,
   DamageEffect,
   Effect,
   ProtectionFromResourceEffect,
   ScriptingStateModifierEffect,
-} from "../model/spell-item/effect";
+} from "../../model/spell-item/effect";
 import {
   DispelEffectTypeEnum,
   DispelEffectWeaponTypeEnum,
@@ -16,14 +16,14 @@ import {
   EffectTargetEnum,
   EffectTimingEnum,
   getCastSpellOnConditionValue,
-} from "../model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../model/spell-item/effect.type";
+} from "../../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import {
   SpellProtection,
   SpellProtectionStat,
-} from "../model/raw/spell-protection";
-import creatureService from "./creature.service";
-import utils from "./utils.service";
+} from "../../model/raw/spell-protection";
+import creatureService from "../creature.service";
+import utils from "../utils/utils.service";
 
 class EffectService {
   getEffects(
@@ -542,11 +542,10 @@ class EffectService {
     effect: Effect,
     base?: Required<Pick<BaseEffect, "target" | "timing">>
   ) {
-    effect.target = base?.target ?? EffectTargetEnum.PresetTarget;
-    effect.timing = base?.timing ?? EffectTimingEnum.InstantLimited;
-    if (effect.dispelResistance === undefined)
-      effect.dispelResistance = EffectDispelResistanceEnum.NaturalNonMagical;
-    if (effect.probability1 === undefined) effect.probability1 = 100;
+    effect.target ??= base?.target ?? EffectTargetEnum.PresetTarget;
+    effect.timing ??= base?.timing ?? EffectTimingEnum.InstantLimited;
+    effect.dispelResistance ??= EffectDispelResistanceEnum.NaturalNonMagical;
+    effect.probability1 ??= 100;
     if (effect.diceSize === undefined) effect.diceThrown = effect.minLevel;
     if (effect.diceThrown === undefined) effect.diceThrown = effect.maxLevel;
   }

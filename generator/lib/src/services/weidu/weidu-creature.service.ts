@@ -13,12 +13,12 @@ import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
-import utils from "../utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
+import utils from "../utils/utils.service";
 
 class WeiduCreatureService extends AbstractWeiduService {
   generateWeiduScript(creature: Creature): void {

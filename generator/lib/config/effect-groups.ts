@@ -13,7 +13,7 @@ import {
   SaveTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
-import { PoisonService } from "../src/services/poison.service";
+import poisonService from "../src/services/effects/poison.service";
 import { EffectGroupName } from "./effect-group-name";
 
 export const EFFECT_GROUPS: {
@@ -199,6 +199,6 @@ export const EFFECT_GROUPS: {
   {
     group: "PoisonTypeEffects",
     effectsFn: (eff) =>
-      PoisonService.instance.getEffects(eff as RawPoisonTypeEffectGroup),
+      poisonService.getEffects(eff as RawPoisonTypeEffectGroup),
   },
 ];

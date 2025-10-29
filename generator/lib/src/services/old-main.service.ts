@@ -31,7 +31,7 @@ import {
   RawCreatureAutoGenerate,
 } from "../model/raw/creature";
 import { RawAdditionalCode, RawCustomCode } from "../model/raw/script";
-import { EffectService } from "./effect.service";
+import { EffectService } from "./effects/effect.service";
 import { WeiduCoreService } from "./weidu/weidu-core.service";
 import { WeiduCreatureService } from "./weidu/weidu-creature.service";
 import { WeiduFunctionService } from "./weidu/weidu-function.service";

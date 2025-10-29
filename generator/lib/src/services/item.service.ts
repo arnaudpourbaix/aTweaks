@@ -4,8 +4,8 @@ import {
   ItemAbilityTargetEnum,
 } from "../model/spell-item/effect.enums";
 import { Item, PartialItem } from "../model/spell-item/spell-item";
-import effectService from "./effect.service";
-import utils from "./utils.service";
+import effectService from "./effects/effect.service";
+import utils from "./utils/utils.service";
 
 class ItemService {
   getItem(item: PartialItem, file: string): Item {

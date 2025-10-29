@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import figureSet from "figures";
-import { ImmunityConfig } from "../model/final/immunity";
-import { State } from "../state";
-import utils from "./utils.service";
-import { Creature } from "../model/creature/creature";
-import { CreatureAdditionalData } from "../model/creature/additional-data";
-import { EquippedItem } from "../model/creature/item";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { State } from "../../state";
+import { Creature } from "../../model/creature/creature";
+import { CreatureAdditionalData } from "../../model/creature/additional-data";
+import { EquippedItem } from "../../model/creature/item";
+import utils from "../utils/utils.service";
 
 class ImmunityService {
   handleImmunities(creature: Creature): void {

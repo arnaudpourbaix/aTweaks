@@ -6,11 +6,8 @@ import { SlotIdentifier } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
-import {
-  default as utils,
-  default as utilsService,
-} from "../services/utils.service";
 import { ScriptWeaponSlot } from "../model/creature/item";
+import utils from "../services/utils/utils.service";
 
 class FactoryService {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
@@ -322,7 +319,7 @@ class FactoryService {
     ]);
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     p.statements.push({
-      triggers: utilsService.replaceTriggerTokens(finalTriggers, [
+      triggers: utils.replaceTriggerTokens(finalTriggers, [
         { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
       ]),
       responses,

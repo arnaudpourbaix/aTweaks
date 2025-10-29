@@ -1,5 +1,5 @@
-import { EXISTING_STRING_REFERENCES } from "../../config/stringRef";
-import { StringReferenceGroup } from "../../config/stringRef-groups";
+import { EXISTING_STRING_REFERENCES } from "../../../config/stringRef";
+import { StringReferenceGroup } from "../../../config/stringRef-groups";
 
 export namespace StringRefUtils {
   export function getStringIds(

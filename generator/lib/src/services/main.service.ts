@@ -2,7 +2,8 @@ import { ANKHEG } from "../../creatures/ankheg/ankheg";
 import { Creature } from "../model/creature/creature";
 import creatureService from "./creature.service";
 import descriptionService from "./description.service";
-import immunityService from "./immunity.service";
+import documentationService from "./documentation.service";
+import immunityService from "./effects/immunity.service";
 import translationService from "./translation.service";
 import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
@@ -17,6 +18,7 @@ class MainService {
       descriptionService.generateCreatureItems(creature);
       if (creature.isValid()) {
         weiduCreatureService.generateWeiduScript(creature);
+        documentationService.generate(creature);
       }
     });
     return creatures;

@@ -11,6 +11,7 @@ import { CR, TAB } from "../model/constants";
 import { State } from "../state";
 import { AbstractWeiduService } from "./weidu/abstract-weidu.service";
 import { StringReference } from "../model/final/stringref";
+import utils from "./utils/utils.service";
 
 class TranslationService extends AbstractWeiduService {
   private availableStringRef = 10000;
@@ -42,6 +43,17 @@ class TranslationService extends AbstractWeiduService {
       : this.fromStringRef(ref, lang);
   }
 
+  interpolate(
+    key: TranslationKey,
+    vars: Record<string, string | number>
+  ): string {
+    let text = this.fromKey(key);
+    for (const key of utils.objectKeys(vars)) {
+      text = text.replace(new RegExp(`{{${key}}}`, "g"), `${vars[key]}`);
+    }
+    return text;
+  }
+
   private fromKey(path: TranslationKey, lang = LANG): string {
     let value = getTranslationKeys(lang) as any;
     for (let i = 0, p = path.split("."), len = p.length; i < len; i++) {
@@ -66,12 +78,12 @@ class TranslationService extends AbstractWeiduService {
   browseTranslations(obj: Object, key: string) {
     for (const [k, v] of Object.entries(obj)) {
       const newKey = [key, k].filter((k) => !!k).join(".");
-      if (typeof v === "string") {
+      if (typeof v === "string" && !v.includes("{{")) {
         this.translations.push({
           key: newKey as TranslationKey,
           stringRef: this.availableStringRef++,
         });
-      } else this.browseTranslations(v, newKey);
+      } else if (typeof v !== "string") this.browseTranslations(v, newKey);
     }
   }
 

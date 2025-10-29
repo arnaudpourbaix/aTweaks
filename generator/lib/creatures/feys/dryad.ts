@@ -8,7 +8,7 @@ import { ConditionalStatement } from "../../src/model/script/script";
 import { RawCreatureAbility } from "../../src/model/raw/ability";
 import { RawCreature } from "../../src/model/raw/creature";
 import { createTraitItem } from "../../src/services/creature-helper";
-import { EffectService } from "../../src/services/effect.service";
+import { EffectService } from "../../src/services/effects/effect.service";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, getFilename } from "../../src/services/misc.func";
 import { StringRefUtils } from "../../src/services/string-ref.utils";

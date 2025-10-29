@@ -24,14 +24,14 @@ import {
 } from "../model/spell-item/spell-item";
 import { WithRequired } from "../model/utility-types";
 import itemService from "../services/item.service";
-import { getFilename } from "../services/misc.func";
 import spellService from "../services/spell.service";
 import { CreatureGrabConfig } from "../model/creature/grab";
 import chalk from "chalk";
 import translationService from "../services/translation.service";
 import { ItemSlot } from "../model/creature/item";
-import grabService from "../services/grab.service";
-import effectService from "../services/effect.service";
+import grabService from "../services/effects/grab.service";
+import effectService from "../services/effects/effect.service";
+import { getFilename } from "../services/utils/misc.func";
 
 class CreatureFactory {
   create(p: {

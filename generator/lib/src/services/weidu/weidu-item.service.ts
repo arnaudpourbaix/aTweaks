@@ -4,7 +4,7 @@ import { ItemAbilityTypeEnum } from "../../model/spell-item/effect.enums";
 import { Item, ItemHeader } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import translationService from "../translation.service";
-import utils from "../utils.service";
+import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 

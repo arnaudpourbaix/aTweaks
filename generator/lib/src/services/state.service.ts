@@ -5,7 +5,7 @@ import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
 import { State } from "../state";
 import descriptionService from "./description.service";
-import effectService from "./effect.service";
+import effectService from "./effects/effect.service";
 import {
   EffectTargetEnum,
   EffectTimingEnum,

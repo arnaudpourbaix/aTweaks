@@ -107,7 +107,6 @@ class DescriptionService {
     if (desc.length && item.stringRef) {
       desc.unshift(translationService.from(item.stringRef), "");
     }
-    console.log("generateWeaponDescription", item.file, desc);
     item.description = translationService.addCustomTranslation(desc);
   }
 

@@ -1,15 +1,3 @@
-import {
-  poisonImmediateDeathDuration,
-  PoisonModel,
-  POISONS,
-} from "../../config/poison";
-import { Effect } from "../model/spell-item/effect";
-import {
-  EffectTimingEnum,
-  PortraitIconEnum,
-} from "../model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../model/spell-item/effect.type";
-
 class PoisonService {
   getEffects(effect: PoisonTypeEffectGroup): Effect[] {
     const poison = POISONS.find(

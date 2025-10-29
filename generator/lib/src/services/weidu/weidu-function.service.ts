@@ -10,7 +10,7 @@ import { SpellGroup } from "../../model/raw/spell-group";
 import { Effect } from "../../model/spell-item/effect";
 import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
-import utils from "../utils.service";
+import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduCoreService from "./weidu-core.service";
 import weiduSpellService from "./weidu-spell.service";
