@@ -56,6 +56,7 @@ const cre = CreatureFactory.create({
 export const ANKHEG = cre;
 
 cre.setAdditionalData({
+  immunities: ["magicalBeast", "spider"],
   removeScripts: ["ANKHEG"],
   removeItems: ["ANKHEG1", "ANKHEG2"],
 });
@@ -79,6 +80,7 @@ cre.addWeapon({
     spell: {
       name: "monster.ankheg.digestiveEnzyme.name",
       description: "monster.ankheg.digestiveEnzyme.description",
+      doc: false,
       secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
       headers: [
         {
@@ -111,6 +113,7 @@ cre.addWeapon({
 const stream = cre.addWeapon({
   weapon: {
     stringRef: "monster.ankheg.enzymeStream.name",
+    doc: false,
     equippedSlot: ["WEAPON2"],
     icon: "SPWI211B",
     header: {

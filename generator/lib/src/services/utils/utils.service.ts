@@ -263,21 +263,6 @@ class UtilsService {
     }
     return result;
   }
-
-  getItemSlots(slot: ItemSlot | ItemSlot[] | undefined): ItemSlot[] {
-    const results: ItemSlot[] = Array.isArray(slot) ? slot : [];
-    if (typeof slot === "string") results.push(slot);
-    return results;
-  }
-
-  isSlotIncluded(
-    itemSlots: EquippedItem[],
-    includedSlot: ItemSlot | ItemSlot[]
-  ): boolean {
-    if (Array.isArray(includedSlot)) return false;
-    const list = itemSlots.map((i) => this.getItemSlots(i.slot)).flat(1);
-    return list.includes(includedSlot);
-  }
 }
 
 const utils = new UtilsService();

@@ -19,6 +19,7 @@ import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
 import utils from "../utils/utils.service";
+import itemService from "../item.service";
 
 class WeiduCreatureService extends AbstractWeiduService {
   generateWeiduScript(creature: Creature): void {
@@ -227,7 +228,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         },
         [] as string[]
       );
-      const slots = utils.getItemSlots(item.slot);
+      const slots = itemService.getItemSlots(item.slot);
       const isWeapon = slots.every((slot) =>
         WEAPON_SLOTS.some((s) => s.slot === slot)
       );

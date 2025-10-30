@@ -38,13 +38,14 @@ class DescriptionService {
   }
 
   generateImmunity(immunity: ImmunityConfig): void {
-    if (immunity.stringRef || immunity.description) return; // don't override
+    if (immunity.description) return; // don't override
     const results: string[] = [];
     results.push(...this.getImmunitiesDescription(immunity.immunities));
     for (const effect of immunity.effects ?? []) {
       results.push(...this.getEffectDescription(effect));
     }
-    immunity.description = translationService.addCustomTranslation(results);
+    if (results.length)
+      immunity.description = translationService.addCustomTranslation(results);
   }
 
   private getImmunitiesDescription(immunities: ImmunityName[]): string[] {
@@ -168,6 +169,8 @@ class DescriptionService {
       results.push(...this.getSleep(effect));
     } else if (effect.opcode === EffectTypeEnum.MirrorImageEffect) {
       results.push(`Mirror image (${effect.amount})`);
+    } else if (effect.opcode === EffectTypeEnum.Infravision) {
+      results.push(`Darkvision out to 60 feet`);
     } else if (effect.opcode === EffectTypeEnum.Invisibility) {
       results.push(...this.getInvisibility(effect));
     } else if (effect.opcode === EffectTypeEnum.Regeneration) {
@@ -433,6 +436,8 @@ class DescriptionService {
       ? `${opcode.label}: ${eff.value}%`
       : `${opcode.label}: ${this.getSignedNumber(eff.value)}`;
   }
+
+  push() {}
 }
 
 const descriptionService = new DescriptionService();

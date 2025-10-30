@@ -710,6 +710,11 @@ BEGIN
 	LPF vermin_trait END
 END
 
+DEFINE_PATCH_FUNCTION magicalBeast_trait
+BEGIN
+	LPF infravision_trait END
+END
+
 DEFINE_PATCH_FUNCTION ghostVisual1_trait
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-3547648" parameter2=2818053 END

@@ -9,12 +9,13 @@ export const ITEMS = {
   GhostVisuals3: "ja#8",
   Hover: "ja#i9",
   Incorporeal: "ja#i10",
-  Ooze: "ja#i11",
-  Plant: "ja#i12",
-  Sketetal: "ja#i13",
-  Spider: "ja#i14",
-  Undead: "ja#i15",
-  Vermin: "ja#i16",
+  MagicalBeast: "ja#i11",
+  Ooze: "ja#i12",
+  Plant: "ja#i13",
+  Sketetal: "ja#i14",
+  Spider: "ja#i15",
+  Undead: "ja#i16",
+  Vermin: "ja#i17",
 };
 
 export enum MonsterItemIconEnum {

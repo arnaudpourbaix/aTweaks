@@ -38,6 +38,11 @@ export interface Spell {
   copyFrom?: string;
 
   /**
+   * Will appear in documentation (default: true)
+   */
+  doc: boolean;
+
+  /**
    * Spellbook icon
    */
   icon?: string;
@@ -86,7 +91,11 @@ export interface Item {
    * Create a spell from another one
    */
   copyFrom?: string;
-  stringRef?: TranslationKey;
+  /**
+   * Will appear in documentation (default: true)
+   */
+  doc: boolean;
+  stringRef?: StringReference;
   description?: StringReference;
   immunities: ImmunityName[];
   enchantment?: number;
@@ -134,19 +143,19 @@ export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
   Omit<Spell, "file" | "headers">,
-  "icon" | "effects" | "effectFiles"
+  "icon" | "effects" | "effectFiles" | "doc"
 > & { headers?: PartialSpellHeader[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
 
 export type PartialItem = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "equippedSlot"
+  "immunities" | "effects" | "equippedSlot" | "doc"
 > & { header?: PartialItemHeader };
 
 export type PartialWeapon = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects"
+  "immunities" | "effects" | "doc"
 > & { header: PartialItemHeader };
 
 export type Weapon = WithRequired<Item, "header">;

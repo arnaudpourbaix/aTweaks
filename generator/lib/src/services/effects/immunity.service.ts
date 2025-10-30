@@ -6,6 +6,7 @@ import { Creature } from "../../model/creature/creature";
 import { CreatureAdditionalData } from "../../model/creature/additional-data";
 import { EquippedItem } from "../../model/creature/item";
 import utils from "../utils/utils.service";
+import itemService from "../item.service";
 
 class ImmunityService {
   handleImmunities(creature: Creature): void {
@@ -43,7 +44,7 @@ class ImmunityService {
     creature: Creature
   ): void {
     const hasCriticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
-    const hasHelmet = utils.isSlotIncluded(
+    const hasHelmet = itemService.isSlotIncluded(
       [
         ...additionalData.equippedItems,
         ...creature.additionalData.equippedItems,
@@ -61,7 +62,7 @@ class ImmunityService {
     const overwrittingItem = creature.items.find(
       (i) => i.copyFrom === immunity.name
     );
-    const overwrittingSlot = utils.isSlotIncluded(
+    const overwrittingSlot = itemService.isSlotIncluded(
       [
         ...additionalData.equippedItems,
         ...creature.additionalData.equippedItems,

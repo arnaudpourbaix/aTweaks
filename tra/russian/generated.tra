@@ -110,26 +110,30 @@ Translucent
 @10081 = ~Vermin~
 @10082 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-@10083 = ~Paws~
-@10084 = ~Ankheg~
-@10085 = ~Mandibles~
-@10086 = ~Digestive Enzymes~
-@10087 = ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round for 4 rounds.~
-@10088 = ~Stream of acidic enzymes~
-@10089 = ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
+@10083 = ~Spider~
+@10084 = ~Magical Beast~
+@10085 = ~Darkvision out to 60 feet.~
+@10086 = ~Ghosly appearance~
+@10087 = ~Paws~
+@10088 = ~Ankheg~
+@10089 = ~Mandibles~
+@10090 = ~Digestive Enzymes~
+@10091 = ~The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round for 4 rounds.~
+@10092 = ~Stream of acidic enzymes~
+@10093 = ~The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
 A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
 It uses this attack technique only when desperate.~
-@10090 = ~Web Tangle~
-@10091 = ~The spider can shoot web strands up to 5 feet to bind a foe.
+@10094 = ~Web Tangle~
+@10095 = ~The spider can shoot web strands up to 5 feet to bind a foe.
 Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.~
-@10092 = ~These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
+@10096 = ~These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
 Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.~
-@10093 = ~This spell can only be cast outdoor~
-@10094 = ~Restrained~
-@10095 = ~Grab~
-@10096 = ~Grabbed~
-@10097 = ~Call Woodland Beeings~
-@10098 = ~Call Woodland Beings
+@10097 = ~This spell can only be cast outdoor~
+@10098 = ~Restrained~
+@10099 = ~Grab~
+@10100 = ~Grabbed~
+@10101 = ~Call Woodland Beeings~
+@10102 = ~Call Woodland Beings
 (Conjuration, Summoning)
 Level: 4
 Sphere: Animal, Summoning
@@ -172,8 +176,8 @@ HP 117, AC 0, THAC0 11, -25% fire resistance
 STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
 HP 142, AC 0, THAC0 9, -25% fire resistance
 2 Attacks Per Round, 4d6 crushing~
-@10099 = ~Color Spray~
-@10100 = ~Color Spray (Alteration)
+@10103 = ~Color Spray~
+@10104 = ~Color Spray (Alteration)
 Level: 1
 Range: 30 feet
 Duration: Special
@@ -182,8 +186,8 @@ Area of Effect: 60 degree arc
 Saving Throw: Special
 
 Upon the casting of this spell, a vivid, fan-shaped spray of clashing colors spring forth in front of the caster. All creatures in the area of effect are entitled a saving throw vs. spell to avoid the effects, if they are above the 6th level or above the level of the caster. Blind or unseeing creatures are not affected. Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds; those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds; those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.~
-@10101 = ~Dimension Door~
-@10102 = ~Dimension Door (Alteration)
+@10105 = ~Dimension Door~
+@10106 = ~Dimension Door (Alteration)
 Level: 4
 Range: 900
 Duration: Instant
@@ -192,110 +196,137 @@ Area of Effect: The caster
 Saving Throw: None
 
 This spell transports the caster to any designated place that is already known to him. The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with. When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.  Upon passing through the portal, the caster finds himself at his chosen destination.~
-@10103 = ~Slime Split~
-@10104 = ~Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.
+@10107 = ~Slime Split~
+@10108 = ~Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.
 Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.~
-@10105 = ~This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
+@10109 = ~This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
 Each is capable of attacking, but has only half the hit points the creature had before dividing.~
-@10106 = ~Melee~
-@10107 = ~Ranged~
-@10108 = ~THAC0~
-@10109 = ~damage~
-@10110 = ~Speed Factor~
-@10111 = ~Enchantment~
-@10112 = ~Range~
-@10113 = ~feet~
-@10114 = ~bonus to~
-@10115 = ~Cast spell~
-@10116 = ~Can see invisible creatures~
-@10117 = ~Blur~
-@10118 = ~Translucent~
-@10119 = ~Mirror image~
-@10120 = ~Invisibility~
-@10121 = ~Improved invisibility~
-@10122 = ~Regeneration~
-@10123 = ~hp/second~
-@10124 = ~%/second~
-@10125 = ~hp/round~
-@10126 = ~1 hp/[value] rounds~
-@10127 = ~1 hp/[value] seconds~
-@10128 = ~paralyzes the target for [value] rounds~
-@10129 = ~drain [value] life energy levels~
-@10130 = ~Casting time~
-@10131 = ~Heal~
-@10132 = ~Fall asleep for [value]~
-@10133 = ~wake on damage~
-@10134 = ~Strength~
-@10135 = ~Dexterity~
-@10136 = ~Intelligence~
-@10137 = ~Constitution~
-@10138 = ~Slashing Resistance~
-@10139 = ~Crushing Resistance~
-@10140 = ~Piercing Resistance~
-@10141 = ~Missiles Resistance~
-@10142 = ~Fire Resistance~
-@10143 = ~Cold Resistance~
-@10144 = ~Magic Resistance~
-@10145 = ~Magical Cold Resistance~
-@10146 = ~Magical Fire Resistance~
-@10147 = ~Acid Resistance~
-@10148 = ~Poison Resistance~
-@10149 = ~Electricity Resistance~
-@10150 = ~Magic Damage Resistance~
-@10151 = ~Maximum HP~
-@10152 = ~Morale~
-@10153 = ~Morale Break~
-@10154 = ~Fatigue Bonus~
-@10155 = ~All Saving Throws~
-@10156 = ~Save vs Breath~
-@10157 = ~Save vs Death~
-@10158 = ~Save vs Petrification~
-@10159 = ~Save vs Spell~
-@10160 = ~Save vs Wand~
-@10161 = ~paralyze/poison/death~
-@10162 = ~breath~
-@10163 = ~petrify/polymorph~
-@10164 = ~wand~
-@10165 = ~spell~
-@10166 = ~saves vs~
-@10167 = ~turns~
-@10168 = ~rounds~
-@10169 = ~base AC~
-@10170 = ~vs. [damageType] attacks~
-@10171 = ~crushing~
-@10172 = ~slashing~
-@10173 = ~piercing~
-@10174 = ~missile~
-@10175 = ~*quaffs a potion*~
-@10176 = ~Grab and hold your target for 3 rounds.
+@10110 = ~Melee~
+@10111 = ~Ranged~
+@10112 = ~THAC0~
+@10113 = ~damage~
+@10114 = ~Speed Factor~
+@10115 = ~Enchantment~
+@10116 = ~Range~
+@10117 = ~feet~
+@10118 = ~bonus to~
+@10119 = ~Cast spell~
+@10120 = ~Can see invisible creatures~
+@10121 = ~Blur~
+@10122 = ~Translucent~
+@10123 = ~Mirror image~
+@10124 = ~Invisibility~
+@10125 = ~Improved invisibility~
+@10126 = ~Regeneration~
+@10127 = ~hp/second~
+@10128 = ~%/second~
+@10129 = ~hp/round~
+@10130 = ~1 hp/[value] rounds~
+@10131 = ~1 hp/[value] seconds~
+@10132 = ~paralyzes the target for [value] rounds~
+@10133 = ~drain [value] life energy levels~
+@10134 = ~Casting time~
+@10135 = ~Heal~
+@10136 = ~Fall asleep for [value]~
+@10137 = ~wake on damage~
+@10138 = ~Strength~
+@10139 = ~Dexterity~
+@10140 = ~Intelligence~
+@10141 = ~Constitution~
+@10142 = ~Slashing Resistance~
+@10143 = ~Crushing Resistance~
+@10144 = ~Piercing Resistance~
+@10145 = ~Missiles Resistance~
+@10146 = ~Fire Resistance~
+@10147 = ~Cold Resistance~
+@10148 = ~Magic Resistance~
+@10149 = ~Magical Cold Resistance~
+@10150 = ~Magical Fire Resistance~
+@10151 = ~Acid Resistance~
+@10152 = ~Poison Resistance~
+@10153 = ~Electricity Resistance~
+@10154 = ~Magic Damage Resistance~
+@10155 = ~Maximum HP~
+@10156 = ~Morale~
+@10157 = ~Morale Break~
+@10158 = ~Fatigue Bonus~
+@10159 = ~All Saving Throws~
+@10160 = ~Save vs Breath~
+@10161 = ~Save vs Death~
+@10162 = ~Save vs Petrification~
+@10163 = ~Save vs Spell~
+@10164 = ~Save vs Wand~
+@10165 = ~paralyze/poison/death~
+@10166 = ~breath~
+@10167 = ~petrify/polymorph~
+@10168 = ~wand~
+@10169 = ~spell~
+@10170 = ~saves vs~
+@10171 = ~turns~
+@10172 = ~rounds~
+@10173 = ~base AC~
+@10174 = ~vs. [damageType] attacks~
+@10175 = ~crushing~
+@10176 = ~slashing~
+@10177 = ~piercing~
+@10178 = ~missile~
+@10179 = ~*quaffs a potion*~
+@10180 = ~Grab and hold your target for 3 rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10177 = ~Poison Resistance: 50%~
-@10178 = ~Fire Resistance: 50%
+@10181 = ~Poison Resistance: 100%~
+@10182 = ~Fire Resistance: 100%
+Magical Fire Resistance: 100%~
+@10183 = ~Cold Resistance: 100%
+Magical Cold Resistance: 100%~
+@10184 = ~Electricity Resistance: 100%~
+@10185 = ~Magic Resistance: 100%~
+@10186 = ~Magic Damage Resistance: 100%~
+@10187 = ~Acid Resistance: 100%~
+@10188 = ~Immune to slashing damage
+Immune to crushing damage
+Immune to piercing damage
+Immune to missile damage~
+@10189 = ~Slashing Resistance: 100%~
+@10190 = ~Crushing Resistance: 100%~
+@10191 = ~Piercing Resistance: 100%~
+@10192 = ~Missiles Resistance: 100%~
+@10193 = ~Immune to healing and cause wounds spells~
+@10194 = ~Immune to charm
+Immune to fear and morale failure
+Immune to confusion
+Immune to illusion spells
+Immune to hold
+Immune to stun~
+@10195 = ~Immune to petrification~
+@10196 = ~Poison Resistance: 50%~
+@10197 = ~Fire Resistance: 50%
 Magical Fire Resistance: 50%~
-@10179 = ~Cold Resistance: 50%
+@10198 = ~Cold Resistance: 50%
 Magical Cold Resistance: 50%~
-@10180 = ~Electricity Resistance: 50%~
-@10181 = ~Magic Resistance: 50%~
-@10182 = ~Magic Damage Resistance: 50%~
-@10183 = ~Acid Resistance: 50%~
-@10184 = ~Slashing Resistance: 50%~
-@10185 = ~Crushing Resistance: 50%~
-@10186 = ~Piercing Resistance: 50%~
-@10187 = ~Missiles Resistance: 50%~
-@10188 = ~Slashing Resistance: 50%
+@10199 = ~Electricity Resistance: 50%~
+@10200 = ~Magic Resistance: 50%~
+@10201 = ~Magic Damage Resistance: 50%~
+@10202 = ~Acid Resistance: 50%~
+@10203 = ~Slashing Resistance: 50%~
+@10204 = ~Crushing Resistance: 50%~
+@10205 = ~Piercing Resistance: 50%~
+@10206 = ~Missiles Resistance: 50%~
+@10207 = ~Slashing Resistance: 50%
 Crushing Resistance: 50%
 Piercing Resistance: 50%
 Missiles Resistance: 50%~
-@10189 = ~Immune to web effects
-Immune to poison
+@10208 = ~Darkvision out to 60 feet~
+@10209 = ~Can see invisible creatures.~
+@10210 = ~Immune to web effects
+Poison Resistance: 100%
 Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-@10190 = ~Blur (visual effect only)~
-@10191 = ~Mandibles
+@10211 = ~Blur (visual effect only)~
+@10212 = ~Mandibles
 
 Melee damage: 3D6 (Crushing)
 Speed Factor: 5
@@ -312,7 +343,7 @@ Grabbed creature will suffer these effects:
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10192 = ~Stream of acidic enzymes
+@10213 = ~Stream of acidic enzymes
 
 THAC0: +20
 Enchantment: 2

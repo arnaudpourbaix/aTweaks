@@ -1,3 +1,4 @@
+import { EquippedItem, ItemSlot, WEAPON_SLOTS } from "../model/creature/item";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityLocationEnum,
@@ -5,12 +6,12 @@ import {
 } from "../model/spell-item/effect.enums";
 import { Item, PartialItem } from "../model/spell-item/spell-item";
 import effectService from "./effects/effect.service";
-import utils from "./utils/utils.service";
 
 class ItemService {
   getItem(item: PartialItem, file: string): Item {
     const result: Item = {
       file,
+      doc: item.doc ?? true,
       copyFrom: item.copyFrom,
       stringRef: item.stringRef,
       description: item.description,
@@ -26,7 +27,7 @@ class ItemService {
     };
     if (item.header) result.header = { effects: [], ...item.header };
     if (result.equippedSlot)
-      result.equippedSlot = utils.getItemSlots(result.equippedSlot);
+      result.equippedSlot = this.getItemSlots(result.equippedSlot);
     if (result.header && !result.header.diceSize) result.header.diceSize = 0;
     if (result.header && !result.header.diceThrown)
       result.header.diceThrown = 0;
@@ -51,6 +52,27 @@ class ItemService {
         file,
       });
     return result;
+  }
+
+  getItemSlots(slot: ItemSlot | ItemSlot[] | undefined): ItemSlot[] {
+    const results: ItemSlot[] = Array.isArray(slot) ? slot : [];
+    if (typeof slot === "string") results.push(slot);
+    return results;
+  }
+
+  isSlotIncluded(
+    itemSlots: EquippedItem[],
+    includedSlot: ItemSlot | ItemSlot[]
+  ): boolean {
+    if (Array.isArray(includedSlot)) return false;
+    const list = itemSlots.map((i) => this.getItemSlots(i.slot)).flat(1);
+    return list.includes(includedSlot);
+  }
+
+  isEquippedWeapon(item: EquippedItem): boolean {
+    if (Array.isArray(item.slot) && item.slot.length !== 1) return false;
+    const slot = Array.isArray(item.slot) ? item.slot[0] : item.slot;
+    return WEAPON_SLOTS.map((s) => s.slot).includes(slot);
   }
 }
 

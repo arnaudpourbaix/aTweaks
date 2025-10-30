@@ -20,6 +20,7 @@ class SpellService {
     const { headers, ...others } = spell;
     const result: Spell = {
       file,
+      doc: spell.doc ?? true,
       effects: [],
       headers: [],
       effectFiles: [],

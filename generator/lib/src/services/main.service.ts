@@ -13,14 +13,27 @@ class MainService {
   getCreatures(): Creature[] {
     const creatures = [ANKHEG]; //CREATURES
     creatures.forEach((creature) => {
+      creatureService.checkData({
+        creature,
+        base: creature,
+        isAdjustment: false,
+      });
+      for (const a of creature.adjustments) {
+        creatureService.checkData({
+          creature,
+          base: a,
+          isAdjustment: true,
+        });
+      }
       immunityService.handleImmunities(creature);
       creatureService.checkWeapons(creature);
       descriptionService.generateCreatureItems(creature);
       if (creature.isValid()) {
         weiduCreatureService.generateWeiduScript(creature);
-        documentationService.generate(creature);
+        documentationService.addCreature(creature);
       }
     });
+    documentationService.generate();
     return creatures;
   }
 

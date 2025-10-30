@@ -15,8 +15,8 @@ import { ITEMS } from "./item";
 import { ImmunityConfig } from "../src/model/final/immunity";
 import { AtLeast } from "../src/model/utility-types";
 import { Effect } from "../src/model/spell-item/effect";
-import { JEWEL_SLOTS } from "../src/model/creature/item";
 import { StringRefUtils } from "../src/services/utils/string-ref.utils";
+import { JEWEL_SLOTS } from "../src/model/creature/item";
 
 export const IMMUNITIES: (AtLeast<
   ImmunityConfig,
@@ -730,7 +730,10 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
 ] as const;
 
-export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
+export const TRAITS: (AtLeast<
+  ImmunityConfig,
+  "name" | "type" | "stringRef" | "description"
+> & {
   type: "trait";
 })[] = [
   {
@@ -1036,12 +1039,22 @@ export const TRAITS: (AtLeast<ImmunityConfig, "name" | "type"> & {
   {
     name: "spider",
     type: "trait",
+    stringRef: "common.traits.spider",
     itemSlot: { file: ITEMS.Spider, slot: JEWEL_SLOTS },
     immunities: ["web", "poison", "vermin"],
   },
   {
+    name: "magicalBeast",
+    type: "trait",
+    stringRef: "common.traits.magicalBeast.name",
+    description: "common.traits.magicalBeast.desc",
+    itemSlot: { file: ITEMS.MagicalBeast, slot: JEWEL_SLOTS },
+    immunities: ["infravision"],
+  },
+  {
     name: "ghostVisual1",
     type: "trait",
+    stringRef: "common.traits.ghostVisual1",
     itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
     effects: [
       {

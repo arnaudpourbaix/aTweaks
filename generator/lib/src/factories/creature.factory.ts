@@ -1,5 +1,8 @@
+import chalk from "chalk";
 import deepmerge from "deepmerge";
 import figureSet from "figures";
+import { ImmunityName } from "../../config/immunity-config";
+import { MonsterItemIconEnum } from "../../config/item";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
 import { TranslationKey } from "../../translations/i18n";
 import { CreatureAdditionalData } from "../model/creature/additional-data";
@@ -7,10 +10,14 @@ import { CreatureAttack, CreatureAttackAction } from "../model/creature/attack";
 import { CreatureBehavior } from "../model/creature/behavior";
 import { Creature } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
-import { BaseEffect } from "../model/spell-item/effect";
+import { CreatureGrabConfig } from "../model/creature/grab";
+import { ItemSlot, JEWEL_SLOTS } from "../model/creature/item";
+import { StringReference } from "../model/final/stringref";
+import { BaseEffect, Effect } from "../model/spell-item/effect";
 import {
   EffectCastSpellTypeEnum,
   EffectTargetEnum,
+  ItemCategoryEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import {
@@ -23,14 +30,11 @@ import {
   WeaponCastSpell,
 } from "../model/spell-item/spell-item";
 import { WithRequired } from "../model/utility-types";
+import effectService from "../services/effects/effect.service";
+import grabService from "../services/effects/grab.service";
 import itemService from "../services/item.service";
 import spellService from "../services/spell.service";
-import { CreatureGrabConfig } from "../model/creature/grab";
-import chalk from "chalk";
 import translationService from "../services/translation.service";
-import { ItemSlot } from "../model/creature/item";
-import grabService from "../services/effects/grab.service";
-import effectService from "../services/effects/effect.service";
 import { getFilename } from "../services/utils/misc.func";
 
 class CreatureFactory {
@@ -234,6 +238,35 @@ class CreatureFactory {
       valid = false;
     }
     return valid;
+  }
+
+  createTraitItem(
+    cre: Creature,
+    {
+      stringRef,
+      description,
+      immunities,
+      effects,
+    }: {
+      stringRef: StringReference;
+      description?: StringReference;
+      immunities?: ImmunityName[];
+      effects?: Effect[];
+    }
+  ): Item {
+    // const stringRef = `${name} traits`;
+    // if (description) {
+    //   description.unshift(stringRef, "");
+    // }
+    return this.addItem(cre, {
+      stringRef,
+      description,
+      effects,
+      immunities,
+      equippedSlot: JEWEL_SLOTS,
+      category: ItemCategoryEnum.Rings,
+      icon: MonsterItemIconEnum.Traits,
+    });
   }
 }
 

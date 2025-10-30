@@ -142,6 +142,12 @@ Translucent
       desc: `Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.`,
     },
+    spider: "Spider",
+    magicalBeast: {
+      name: "Magical Beast",
+      desc: "Darkvision out to 60 feet.",
+    },
+    ghostVisual1: "Ghosly appearance",
   },
   weapon: { paws: "Paws" },
 };

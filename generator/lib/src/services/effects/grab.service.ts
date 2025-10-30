@@ -60,6 +60,7 @@ class GrabService {
       {
         name: GRAB_DEFAULT_CONFIG.grabStringRef,
         description: translationService.addCustomTranslation([description]),
+        doc: false,
         headers: [
           {
             type: ItemAbilityTypeEnum.Melee,

@@ -6,8 +6,8 @@ import { SlotIdentifier } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/raw/actions";
 import { Triggers } from "../model/raw/triggers";
-import { ScriptWeaponSlot } from "../model/creature/item";
 import utils from "../services/utils/utils.service";
+import { WeaponSlot } from "../model/creature/item";
 
 class FactoryService {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
@@ -88,7 +88,7 @@ class FactoryService {
     attacks: CreatureAttackAction[];
     oncePerRound: boolean;
     optActions?: Actions.Action[];
-    weaponAttackSlot?: ScriptWeaponSlot;
+    weaponAttackSlot?: WeaponSlot;
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];

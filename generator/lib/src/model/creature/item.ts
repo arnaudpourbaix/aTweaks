@@ -3,7 +3,6 @@ import { SlotIdentifier } from "../ids/slot";
 export type ItemSlot =
   | "HELMET"
   | "ARMOR"
-  | "SHIELD"
   | "GLOVES"
   | "LRING"
   | "RRING"
@@ -14,6 +13,7 @@ export type ItemSlot =
   | "WEAPON2"
   | "WEAPON3"
   | "WEAPON4"
+  | "SHIELD"
   | "QUIVER1"
   | "QUIVER2"
   | "QUIVER3"
@@ -29,7 +29,7 @@ export const WEAPON_SLOTS: { slot: ItemSlot; id: SlotIdentifier }[] = [
   { slot: "WEAPON3", id: "SLOT_WEAPON2" },
   { slot: "WEAPON4", id: "SLOT_WEAPON3" },
   { slot: "SHIELD", id: "SLOT_SHIELD" },
-];
+] as const;
 
 export const JEWEL_SLOTS: ItemSlot[] = [
   "LRING",
@@ -40,7 +40,12 @@ export const JEWEL_SLOTS: ItemSlot[] = [
   "CLOAK",
 ];
 
-export type ScriptWeaponSlot = "SLOT_WEAPON" | "SLOT_WEAPON1" | "SLOT_WEAPON2";
+export type WeaponSlot =
+  | "WEAPON1"
+  | "WEAPON2"
+  | "WEAPON3"
+  | "WEAPON4"
+  | "SHIELD";
 
 export interface EquippedItem {
   /**
