@@ -20,8 +20,22 @@ import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
 import utils from "../utils/utils.service";
 import itemService from "../item.service";
+import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 
 class WeiduCreatureService extends AbstractWeiduService {
+  createOrUpdateMainFile(family: MonsterFamilyEnum, monster?: MonsterEnum) {
+    const file = path.join(
+      State.modFolder,
+      `lib/pnp-monster/${family}/main.tpa`
+    );
+    if (!monster) fs.writeFileSync(file, "");
+    else
+      fs.appendFileSync(
+        file,
+        `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${monster}.tpa"`
+      );
+  }
+
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
     if (creature.additionalData.scriptLocation !== "None")
@@ -33,13 +47,11 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.createNewFiles(lines, creature);
     this.patchCreatures(lines, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
-    fs.writeFileSync(
-      path.join(
-        State.modFolder,
-        `lib/pnp-monster/${creature.family}/${creature.monster}.tpa`
-      ),
+    this.writeFile(
+      `lib/pnp-monster/${creature.family}/${creature.monster}.tpa`,
       content
     );
+    this.createOrUpdateMainFile(creature.family, creature.monster);
   }
 
   private compileScripts(lines: CodeLine[], creature: Creature) {

@@ -1,4 +1,5 @@
 import { ANKHEG } from "../../creatures/ankheg/ankheg";
+import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
 import creatureService from "./creature.service";
 import descriptionService from "./description.service";
@@ -12,11 +13,16 @@ import weiduFunctionService from "./weidu/weidu-function.service";
 class MainService {
   getCreatures(): Creature[] {
     const creatures = [ANKHEG]; //CREATURES
+    const families: MonsterFamilyEnum[] = [];
     creatures.forEach((creature) => {
       creatureService.check(creature);
       immunityService.handleImmunities(creature);
       creatureService.checkWeapons(creature);
       descriptionService.generateCreatureItems(creature);
+      if (!families.includes(creature.family)) {
+        families.push(creature.family);
+        weiduCreatureService.createOrUpdateMainFile(creature.family);
+      }
       if (creature.isValid()) {
         weiduCreatureService.generateWeiduScript(creature);
         documentationService.addCreature(creature);
