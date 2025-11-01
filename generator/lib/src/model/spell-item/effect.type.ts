@@ -50,6 +50,7 @@ export enum EffectTypeEnum {
   ForceVisible = 136,
   GiveAbility = 171,
   Haste = 16,
+  Haste2 = 317,
   Hold = 175,
   ImmunityToTurnUndead = 297,
   Infravision = 63,

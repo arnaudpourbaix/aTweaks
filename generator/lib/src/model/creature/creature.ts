@@ -12,6 +12,7 @@ import {
   Weapon,
   WeaponCastSpell,
 } from "../spell-item/spell-item";
+import { AtLeast, PartialBy, WithRequired } from "../utility-types";
 import { CreatureAdditionalData } from "./additional-data";
 import { CreatureAttack } from "./attack";
 import { CreatureBehavior } from "./behavior";
@@ -57,7 +58,12 @@ export class Creature implements BaseCreature {
     meleeRange: true,
   };
 
-  setAdditionalData(additionalData: Partial<CreatureAdditionalData>) {
+  setAdditionalData(
+    additionalData: AtLeast<
+      WithRequired<CreatureAdditionalData, "movement">,
+      "movement"
+    >
+  ) {
     creatureFactory.setAdditionalData(this, additionalData);
   }
 
@@ -67,6 +73,10 @@ export class Creature implements BaseCreature {
 
   setAttack(attack: Partial<CreatureAttack>) {
     creatureFactory.setAttack(this, attack);
+  }
+
+  setAdjustments(adjustments: PartialCreatureAdjustment[]) {
+    creatureFactory.setAdjustments(this, adjustments);
   }
 
   addSpell(spell: PartialSpell): Spell {
@@ -112,3 +122,8 @@ export interface CreatureAdjustment extends BaseCreature {
    */
   noWeapon: boolean;
 }
+
+export type PartialCreatureAdjustment = PartialBy<
+  CreatureAdjustment,
+  "summon" | "noWeapon" | "data" | "additionalData"
+>;

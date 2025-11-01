@@ -1,4 +1,4 @@
-import { ImmunityName } from "../../../config/immunity-config";
+import { ImmunityName } from "../final/immunity";
 import { Effect } from "../spell-item/effect";
 import { ProficiencyTypeEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
@@ -29,6 +29,7 @@ export interface CreatureAdditionalData {
   deleteEffectOpcodes: EffectTypeEnum[];
   removeEffects: boolean;
   effects: Effect[];
+  movement?: { value: number };
 }
 
 export interface MemorizedSpell {
@@ -47,3 +48,24 @@ export type ScriptLocation =
   | "General"
   | "Default"
   | "None";
+
+export const ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
+  removeScripts: [],
+  proficiencies: [],
+  removeItems: [],
+  equippedItems: [],
+  immunities: [],
+  removeKnownSpells: true,
+  removeMemorizedSpells: true,
+  memorizedSpells: [],
+  deleteEffectOpcodes: [],
+  removeEffects: true,
+  effects: [],
+};
+
+export const ADJUSTMENT_ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
+  ...ADDITIONAL_DATA_DEFAULT,
+  removeKnownSpells: false,
+  removeMemorizedSpells: false,
+  removeEffects: false,
+};

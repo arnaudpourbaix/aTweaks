@@ -132,3 +132,8 @@ li {
   white-space: pre;
   overflow-wrap: break-word;
 }
+
+.abilities p, .traits p {
+  white-space: pre;
+  overflow-wrap: break-word;
+}

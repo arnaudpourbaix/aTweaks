@@ -217,7 +217,7 @@ export type IdsEffect = BaseEffect & {
 };
 
 export type HasteEffect = BaseEffect & {
-  opcode: EffectTypeEnum.Haste;
+  opcode: EffectTypeEnum.Haste | EffectTypeEnum.Haste2;
   type: EffectHasteTypeEnum;
 };
 

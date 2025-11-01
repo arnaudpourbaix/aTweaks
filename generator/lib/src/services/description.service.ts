@@ -1,6 +1,5 @@
-import { ImmunityName } from "../../config/immunity-config";
 import { Creature } from "../model/creature/creature";
-import { ImmunityConfig } from "../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../model/final/immunity";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,

@@ -16,6 +16,7 @@ export const SPELLS = {
   ImprovedInvisibility: "SPWI405",
   Invisibility: "SPWI206",
   MagicMissiles: "SPWI112",
+  MelfAcidArrow: "SPWI211",
   MinorGlobeOfInvulnerability: "SPWI406",
   MirrorImages: "SPWI212",
   PolymorphSelf: "SPWI416",

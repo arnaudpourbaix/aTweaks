@@ -52,6 +52,7 @@ class StateService {
     State.immunities = [...IMMUNITIES, ...RESISTANCES, ...TRAITS].map((i) => {
       const result: ImmunityConfig = {
         ...i,
+        doc: i.doc ?? true,
         immunities: i.immunities ?? [],
         preventEffects: i.preventEffects ?? [],
         preventIcons: i.preventIcons ?? [],

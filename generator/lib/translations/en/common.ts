@@ -112,7 +112,7 @@ Not subject to critical hits and backstab.
 Infravision.`,
     },
     infravision: "Infravision",
-    seeInvisible: "True sight (see invisible creatures)",
+    seeInvisible: "True sight",
     incorporeal: {
       name: "Incorporeal",
       desc: `An incorporeal creature has no physical body.
@@ -124,7 +124,7 @@ Attacks pass through armor (+4 THAC0).`,
       // "Do not set off traps that are triggered by weight. (not implemented)",
     },
     blindsight: {
-      name: "blindsight",
+      name: "Blindsight",
       desc: `Invisibility, darkness, and most kinds of concealment are irrelevant.
 Blindsight does not subject a creature to gaze attacks.`,
     },

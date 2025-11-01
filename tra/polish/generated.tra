@@ -89,7 +89,7 @@ Immunity to poison, sleep effects, paralysis, polymorph, and stunning.
 Not subject to critical hits and backstab.
 Infravision.~
 @10073 = ~Infravision~
-@10074 = ~True sight (see invisible creatures)~
+@10074 = ~True sight~
 @10075 = ~Incorporeal~
 @10076 = ~An incorporeal creature has no physical body.
 Immune to backstab and critical hits
@@ -97,7 +97,7 @@ Immune to all nonmagical attacks.
 Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
 Attacks pass through armor (+4 THAC0).~
-@10077 = ~blindsight~
+@10077 = ~Blindsight~
 @10078 = ~Invisibility, darkness, and most kinds of concealment are irrelevant.
 Blindsight does not subject a creature to gaze attacks.~
 @10079 = ~Ooze~
@@ -343,13 +343,3 @@ Grabbed creature will suffer these effects:
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10213 = ~Stream of acidic enzymes
-
-THAC0: +20
-Enchantment: 2
-Range: 30 feet
-
-Cast spell Stream of acidic enzymes
-The ankheg can squirt a stream of acidic enzymes once every six hours to a distance of 30 feet.
-A victim struck by the stream of acidic enzymes suffers 8d4 points of damage (half damage if the victim rolls a successful saving throw vs. poison).
-It uses this attack technique only when desperate.~

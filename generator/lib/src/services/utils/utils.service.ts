@@ -1,8 +1,6 @@
-import { ImmunityName } from "../../../config/immunity-config";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { TranslationKey } from "../../../translations/i18n";
-import { EquippedItem, ItemSlot } from "../../model/creature/item";
-import { ImmunityConfig } from "../../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { StringReference } from "../../model/final/stringref";
 import { Actions } from "../../model/raw/actions";
 import { SpellGroup } from "../../model/raw/spell-group";

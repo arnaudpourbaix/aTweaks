@@ -1,6 +1,6 @@
-import { ImmunityName } from "../../../config/immunity-config";
 import { TranslationKey } from "../../../translations/i18n";
 import { ItemSlot } from "../creature/item";
+import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { PartialBy, WithRequired } from "../utility-types";
 import { Effect, EffectFile } from "./effect";

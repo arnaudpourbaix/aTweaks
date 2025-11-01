@@ -1,4 +1,5 @@
 import { MonsterItemIconEnum } from "../../config/item";
+import { SPELLS } from "../../config/spell-names";
 import CreatureFactory from "../../src/factories/creature.factory";
 import {
   AbilityDamageTypeEnum,
@@ -40,7 +41,6 @@ const cre = CreatureFactory.create({
     intelligence: 1,
     wisdom: 13,
     charisma: 6,
-    movement: 6,
     ac: 2,
     apr: 1,
     xpv: 975,
@@ -56,7 +56,8 @@ const cre = CreatureFactory.create({
 export const ANKHEG = cre;
 
 cre.setAdditionalData({
-  immunities: ["magicalBeast", "spider"],
+  movement: { value: 6 },
+  immunities: ["magicalBeast"],
   removeScripts: ["ANKHEG"],
   removeItems: ["ANKHEG1", "ANKHEG2"],
 });
@@ -110,47 +111,30 @@ cre.addWeapon({
   },
 });
 
-const stream = cre.addWeapon({
-  weapon: {
-    stringRef: "monster.ankheg.enzymeStream.name",
-    doc: false,
-    equippedSlot: ["WEAPON2"],
-    icon: "SPWI211B",
-    header: {
+const stream = cre.addSpell({
+  memorizedCount: 1,
+  name: "monster.ankheg.enzymeStream.name",
+  description: "monster.ankheg.enzymeStream.description",
+  secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+  icon: SPELLS.MelfAcidArrow,
+  headers: [
+    {
       type: ItemAbilityTypeEnum.Ranged,
       range: 30,
       speed: 3,
-      bonusToHit: 20,
       projectile: "acidblob",
-    },
-  },
-  castSpell: {
-    remove: true,
-    spell: {
-      memorizedCount: 1,
-      name: "monster.ankheg.enzymeStream.name",
-      description: "monster.ankheg.enzymeStream.description",
-      secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-      headers: [
+      effects: [
         {
-          type: ItemAbilityTypeEnum.Ranged,
-          range: 30,
-          speed: 3,
-          projectile: "acidblob",
-          effects: [
-            {
-              opcode: EffectTypeEnum.Damage,
-              type: EffectDamageTypeEnum.Acid,
-              diceThrown: 8,
-              diceSize: 4,
-              saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-              flags: [EffectFlagsEnum.SaveForHalf],
-            },
-          ],
+          opcode: EffectTypeEnum.Damage,
+          type: EffectDamageTypeEnum.Acid,
+          diceThrown: 8,
+          diceSize: 4,
+          saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+          flags: [EffectFlagsEnum.SaveForHalf],
         },
       ],
     },
-  },
+  ],
 });
 
 cre.setBehavior({
@@ -160,15 +144,13 @@ cre.setBehavior({
     {
       name: translationService.t.monster.ankheg.enzymeStream.name,
       disableInterrupt: true,
+      spell: {
+        resource: stream.file,
+        type: "force",
+        remove: true,
+      },
       target: { name: "PCsPreferringWeak", random: true },
-      triggers: [
-        { name: "HPPercentLT", params: ["Myself", 50] },
-        { name: "HaveSpellRES", params: [stream.file] }, //FIXME: stream is item instead of spell
-      ],
-      actionsAfter: [
-        { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
-      ],
+      triggers: [{ name: "HPPercentLT", params: ["Myself", 50] }],
       range: 30,
     },
   ],
@@ -183,24 +165,7 @@ cre.setAttack({
   // },
 });
 
-//   abilities: [
-//     {
-//       name: t.monster.ankheg.enzymeStream.name,
-//       disableInterrupt: true,
-//       target: { name: "PCsPreferringWeak", random: true },
-//       triggers: [
-//         { name: "HPPercentLT", params: ["Myself", 50] },
-//         { name: "HaveSpellRES", params: [acidicEnzyme] },
-//       ],
-//       actionsAfter: [
-//         { name: "SelectWeaponAbility", params: ["SLOT_WEAPON1", 0] },
-//         { name: "AttackOneRound", params: ["LastSeenBy"] },
-//       ],
-//       range: 30,
-//     },
-//   ],
-//   adjustments: [
-//     { files: ["BDANKH01"], data: { level1: 10, xpv: 1400 } },
-//     { files: ["BDANKHSU"], summon: true },
-//   ],
-// };
+cre.setAdjustments([
+  { files: ["BDANKH01"], data: { level1: 10, xpv: 1400 } },
+  { files: ["BDANKHSU"], summon: true },
+]);

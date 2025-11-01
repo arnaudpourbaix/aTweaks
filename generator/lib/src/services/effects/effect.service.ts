@@ -166,6 +166,7 @@ class EffectService {
         effect.parameter2 = `${effect.location}`;
         break;
       case EffectTypeEnum.Haste:
+      case EffectTypeEnum.Haste2:
         effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.ProtectionFromOpcode:

@@ -1,21 +1,59 @@
 // Generated file (don't edit)
 
-DEFINE_PATCH_FUNCTION poison_immunity
+DEFINE_PATCH_FUNCTION abilityDrain_immunity
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_poison_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="25" prevent_icons="6" strings="14017 26215 14662 25425" spells END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=100 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_POISON~)) special=1 END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791 26184" END
 END
 
-DEFINE_PATCH_FUNCTION disease_immunity
+DEFINE_PATCH_FUNCTION acid_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION acidResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=50 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION acidSpells_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_disease_resources RET_ARRAY spells=resources END
+		LAF get_acidSpells_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="78" prevent_icons="7" strings="31238" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION airAffinity_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=4 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=1 END
+END
+
+DEFINE_PATCH_FUNCTION backstab_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=292 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION bleeding_immunity
@@ -26,42 +64,52 @@ BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR prevent_icons="137" strings="25137" spells END
 END
 
-DEFINE_PATCH_FUNCTION abilityDrain_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791 26184" END
-END
-
-DEFINE_PATCH_FUNCTION hold_immunity
+DEFINE_PATCH_FUNCTION blindness_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_hold_resources RET_ARRAY spells=resources END
+		LAF get_blindness_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="109 175" prevent_icons="13" strings="14650 14102 25866 25866 31799" animations="SPFLAYER SPMINDAT" spells END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~HOLD_IMMUNITY~)) special=1 END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="74" prevent_icons="8" spells END
 END
 
-DEFINE_PATCH_FUNCTION stun_immunity
+DEFINE_PATCH_FUNCTION blindsight_trait
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="45 210" prevent_icons="55" strings="14043 25862 26050" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~STUN_IMMUNITY~)) special=1 END
-END
-
-DEFINE_PATCH_FUNCTION energyDrain_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="216" strings="25802 25803 25804 25805 25806" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_LEVELDRAIN~)) special=1 END
-END
-
-DEFINE_PATCH_FUNCTION sleep_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="39 217" prevent_icons="14 130" strings="12047 12958 13027 14001 17405 26040 26371 20438 25130" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~SLEEP_IMMUNITY~)) special=1 END
+	LPF gazeAttacks_immunity END
+	LPF seeInvisible_trait END
 END
 
 DEFINE_PATCH_FUNCTION charm_immunity
 BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="5 241" prevent_icons="0 1 43" strings="26206 14672 31787 14780 158915" animations="SPNWCHRM" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION cloudSpells_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_cloud_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION cold_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION coldResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=50 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=50 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION coldSpells_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_cold_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
 
 DEFINE_PATCH_FUNCTION confusion_immunity
@@ -71,6 +119,164 @@ BEGIN
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791 26184 14782 25807" animations="SPCONFUS" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CONFUSION_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION construct_trait
+BEGIN
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF bleeding_immunity END
+	LPF stun_immunity END
+	LPF disease_immunity END
+	LPF deathEffects_immunity END
+	LPF necromancyEffects_immunity END
+	LPF mindSpells_immunity END
+	LPF backstab_immunity END
+	LPF criticalHit_immunity END
+	LPF abilityDrain_immunity END
+	LPF energyDrain_immunity END
+	LPF fatigue_immunity END
+	LPF petrification_immunity END
+	LPF insectSpells_immunity END
+	LPF infravision_trait END
+END
+
+DEFINE_PATCH_FUNCTION criticalHit_immunity
+BEGIN
+END
+
+DEFINE_PATCH_FUNCTION crushingDamage_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION crushingDamageResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=50 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION cureAndCauseWoundSpells_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_cure_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION deathEffects_immunity
+BEGIN
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="209 13 55" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~DEATH_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION deathSpell_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_death_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION devourBrain_immunity
+BEGIN
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19" END
+END
+
+DEFINE_PATCH_FUNCTION disease_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_disease_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="78" prevent_icons="7" strings="31238" spells END
+END
+
+DEFINE_PATCH_FUNCTION earthAffinity_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
+	LPF earthquake_immunity END
+END
+
+DEFINE_PATCH_FUNCTION earthquake_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_earthquake_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION elemental_trait
+BEGIN
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF bleeding_immunity END
+	LPF stun_immunity END
+	LPF criticalHit_immunity END
+	LPF backstab_immunity END
+	LPF devourBrain_immunity END
+	LPF petrification_immunity END
+	LPF insectSpells_immunity END
+	LPF infravision_trait END
+END
+
+DEFINE_PATCH_FUNCTION energyDrain_immunity
+BEGIN
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="216" strings="25802 25803 25804 25805 25806" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_LEVELDRAIN~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION entangle_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_entangle_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="154" prevent_icons="144" spells END
+END
+
+DEFINE_PATCH_FUNCTION extraplanar_trait
+BEGIN
+	LPF cureAndCauseWoundSpells_immunity END
+	LPF deathSpell_immunity END
+END
+
+DEFINE_PATCH_FUNCTION fatigue_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_fatigue_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="93" spells END
 END
 
 DEFINE_PATCH_FUNCTION fear_immunity
@@ -83,28 +289,21 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~PANIC_IMMUNITY~)) special=1 END
 END
 
-DEFINE_PATCH_FUNCTION fatigue_immunity
+DEFINE_PATCH_FUNCTION fey_trait
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_fatigue_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="93" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=189 parameter1=1 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION magicMissile_immunity
+DEFINE_PATCH_FUNCTION fire_immunity
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_magicMissile_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=100 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION blindness_immunity
+DEFINE_PATCH_FUNCTION fireResistance_resistance
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_blindness_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="74" prevent_icons="8" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=50 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION fireSpells_immunity
@@ -115,24 +314,114 @@ BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
 END
 
-DEFINE_PATCH_FUNCTION fire_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=100 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=100 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION coldSpells_immunity
+DEFINE_PATCH_FUNCTION fireballSpell_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_cold_resources RET_ARRAY spells=resources END
+		LAF get_fireball_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
 
-DEFINE_PATCH_FUNCTION cold_immunity
+DEFINE_PATCH_FUNCTION flameArrowSpell_immunity
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=100 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=100 parameter2=1 END
+	INNER_ACTION BEGIN
+		LAF get_flameArrow_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION gazeAttacks_immunity
+BEGIN
+	LPF petrification_immunity END
+END
+
+DEFINE_PATCH_FUNCTION ghostVisual1_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-3547648" parameter2=2818053 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2181376" parameter2=3080213 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2380288" parameter2=2621493 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-102768896" parameter2=2752549 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=65 END
+END
+
+DEFINE_PATCH_FUNCTION hold_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_hold_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="109 175" prevent_icons="13" strings="14650 14102 25866 25866 31799" animations="SPFLAYER SPMINDAT" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~HOLD_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION hover_trait
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_ground_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+	LPF entangle_immunity END
+	LPF web_immunity END
+END
+
+DEFINE_PATCH_FUNCTION illusion_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_illusion_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION incorporeal_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=99 parameter2=0 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1=2105376000 parameter2=1966335 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=61 parameter1=1511938560 parameter2=1638400 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=2 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=23 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=0 parameter1=3 parameter2=0 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=278 parameter1=4 parameter2=0 END
+	LPF backstab_immunity END
+	LPF criticalHit_immunity END
+	LPF fireResistance_resistance END
+	LPF coldResistance_resistance END
+	LPF lightningSpells_immunity END
+	LPF acidResistance_resistance END
+	LPF poisonResistance_resistance END
+	LPF magicDamageResistance_resistance END
+	LPF physicalDamageResistance_resistance END
+END
+
+DEFINE_PATCH_FUNCTION infravision_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=63 END
+END
+
+DEFINE_PATCH_FUNCTION insectSpells_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_insect_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION lightning_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION lightningBoltSpell_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_lightningBolt_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+END
+
+DEFINE_PATCH_FUNCTION lightningResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION lightningSpells_immunity
@@ -141,11 +430,6 @@ BEGIN
 		LAF get_electrical_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION lightning_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=100 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION magic_immunity
@@ -158,116 +442,48 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=100 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION acid_immunity
+DEFINE_PATCH_FUNCTION magicDamageResistance_resistance
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=100 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=50 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION acidSpells_immunity
+DEFINE_PATCH_FUNCTION magicMissile_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_acidSpells_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION cureAndCauseWoundSpells_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_cure_resources RET_ARRAY spells=resources END
+		LAF get_magicMissile_resources RET_ARRAY spells=resources END
 	END
 	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
 END
 
-DEFINE_PATCH_FUNCTION cloudSpells_immunity
+DEFINE_PATCH_FUNCTION magicResistance_resistance
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_cloud_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=166 parameter1=50 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION web_immunity
+DEFINE_PATCH_FUNCTION magicalBeast_trait
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_web_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="157" prevent_icons="129" spells END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=83 parameter2=319 END
+	LPF infravision_trait END
 END
 
-DEFINE_PATCH_FUNCTION entangle_immunity
+DEFINE_PATCH_FUNCTION mindSpells_immunity
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_entangle_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="154" prevent_icons="144" spells END
-END
-
-DEFINE_PATCH_FUNCTION insectSpells_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_insect_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION petrification_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_petrification_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="134" strings="14665 25863" spells END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~PETRIFY_IMMUNITY~)) special=1 END
-END
-
-DEFINE_PATCH_FUNCTION polymorph_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_polymorph_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR prevent_icons="124" strings="14128 25124 31729 31732 31757" spells END
-END
-
-DEFINE_PATCH_FUNCTION vorpal_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="13 55" strings="14026" END
-END
-
-DEFINE_PATCH_FUNCTION earthquake_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_earthquake_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION physicalDamage_immunity
-BEGIN
-	LPF slashingDamage_immunity END
-	LPF crushingDamage_immunity END
-	LPF piercingDamage_immunity END
-	LPF missileDamage_immunity END
-END
-
-DEFINE_PATCH_FUNCTION slashingDamage_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=100 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION crushingDamage_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=100 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION piercingDamage_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=100 parameter2=1 END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="3" END
+	LPF charm_immunity END
+	LPF fear_immunity END
+	LPF confusion_immunity END
+	LPF illusion_immunity END
+	LPF hold_immunity END
+	LPF stun_immunity END
 END
 
 DEFINE_PATCH_FUNCTION missileDamage_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION missileDamageResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=50 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION missileWeapons_immunity
@@ -309,19 +525,6 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=83 parameter2=232 END
 END
 
-DEFINE_PATCH_FUNCTION turnUndead_immunity
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=297 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION illusion_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_illusion_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
 DEFINE_PATCH_FUNCTION necromancyEffects_immunity
 BEGIN
 	INNER_ACTION BEGIN
@@ -331,114 +534,46 @@ BEGIN
 	LPF cureAndCauseWoundSpells_immunity END
 END
 
-DEFINE_PATCH_FUNCTION deathEffects_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="209 13 55" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~DEATH_IMMUNITY~)) special=1 END
-END
-
-DEFINE_PATCH_FUNCTION deathSpell_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_death_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION mindSpells_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="3" END
-	LPF charm_immunity END
-	LPF fear_immunity END
-	LPF confusion_immunity END
-	LPF illusion_immunity END
-	LPF hold_immunity END
-	LPF stun_immunity END
-END
-
 DEFINE_PATCH_FUNCTION normalWeapons_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=2 END
 END
 
-DEFINE_PATCH_FUNCTION backstab_immunity
+DEFINE_PATCH_FUNCTION ooze_trait
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=292 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=100 parameter2=0 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
+	LPF mindSpells_immunity END
+	LPF backstab_immunity END
+	LPF poison_immunity END
+	LPF sleep_immunity END
+	LPF hold_immunity END
+	LPF stun_immunity END
+	LPF bleeding_immunity END
+	LPF criticalHit_immunity END
+	LPF backstab_immunity END
+	LPF infravision_trait END
+	LPF polymorph_immunity END
+	LPF blindsight_trait END
+	LPF blindness_immunity END
 END
 
-DEFINE_PATCH_FUNCTION criticalHit_immunity
-BEGIN
-END
-
-DEFINE_PATCH_FUNCTION devourBrain_immunity
-BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19" END
-END
-
-DEFINE_PATCH_FUNCTION fireballSpell_immunity
+DEFINE_PATCH_FUNCTION petrification_immunity
 BEGIN
 	INNER_ACTION BEGIN
-		LAF get_fireball_resources RET_ARRAY spells=resources END
+		LAF get_petrification_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="134" strings="14665 25863" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~PETRIFY_IMMUNITY~)) special=1 END
 END
 
-DEFINE_PATCH_FUNCTION lightningBoltSpell_immunity
+DEFINE_PATCH_FUNCTION physicalDamage_immunity
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_lightningBolt_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION flameArrowSpell_immunity
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_flameArrow_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-END
-
-DEFINE_PATCH_FUNCTION gazeAttacks_immunity
-BEGIN
-	LPF petrification_immunity END
-END
-
-DEFINE_PATCH_FUNCTION poisonResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=50 END
-END
-
-DEFINE_PATCH_FUNCTION fireResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=30 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=84 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION coldResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=28 parameter1=50 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=85 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION electricityResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=29 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION magicResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=166 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION magicDamageResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=31 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION acidResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=27 parameter1=50 parameter2=1 END
+	LPF slashingDamage_immunity END
+	LPF crushingDamage_immunity END
+	LPF piercingDamage_immunity END
+	LPF missileDamage_immunity END
 END
 
 DEFINE_PATCH_FUNCTION physicalDamageResistance_resistance
@@ -449,14 +584,9 @@ BEGIN
 	LPF missileDamageResistance_resistance END
 END
 
-DEFINE_PATCH_FUNCTION slashingDamageResistance_resistance
+DEFINE_PATCH_FUNCTION piercingDamage_immunity
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION crushingDamageResistance_resistance
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=87 parameter1=50 parameter2=1 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=100 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION piercingDamageResistance_resistance
@@ -464,40 +594,93 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=88 parameter1=50 parameter2=1 END
 END
 
-DEFINE_PATCH_FUNCTION missileDamageResistance_resistance
+DEFINE_PATCH_FUNCTION plant_trait
 BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=89 parameter1=50 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION hover_trait
-BEGIN
-	INNER_ACTION BEGIN
-		LAF get_ground_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR spells END
-	LPF entangle_immunity END
-	LPF web_immunity END
-END
-
-DEFINE_PATCH_FUNCTION construct_trait
-BEGIN
+	LPF mindSpells_immunity END
 	LPF poison_immunity END
 	LPF sleep_immunity END
 	LPF hold_immunity END
-	LPF bleeding_immunity END
+	LPF polymorph_immunity END
 	LPF stun_immunity END
-	LPF disease_immunity END
-	LPF deathEffects_immunity END
-	LPF necromancyEffects_immunity END
-	LPF mindSpells_immunity END
-	LPF backstab_immunity END
 	LPF criticalHit_immunity END
-	LPF abilityDrain_immunity END
-	LPF energyDrain_immunity END
-	LPF fatigue_immunity END
+	LPF backstab_immunity END
+	LPF disease_immunity END
+	LPF bleeding_immunity END
 	LPF petrification_immunity END
 	LPF insectSpells_immunity END
+	LPF entangle_immunity END
 	LPF infravision_trait END
+END
+
+DEFINE_PATCH_FUNCTION poison_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_poison_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="25" prevent_icons="6" strings="14017 26215 14662 25425" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=100 END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_POISON~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION poisonResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=173 parameter1=50 END
+END
+
+DEFINE_PATCH_FUNCTION polymorph_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_polymorph_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR prevent_icons="124" strings="14128 25124 31729 31732 31757" spells END
+END
+
+DEFINE_PATCH_FUNCTION seeInvisible_trait
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=193 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION skeletal_trait
+BEGIN
+	LPF cold_immunity END
+	LPF coldSpells_immunity END
+	LPF slashingDamageResistance_resistance END
+	LPF missileDamageResistance_resistance END
+	LPF piercingDamageResistance_resistance END
+END
+
+DEFINE_PATCH_FUNCTION slashingDamage_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=100 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION slashingDamageResistance_resistance
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=86 parameter1=50 parameter2=1 END
+END
+
+DEFINE_PATCH_FUNCTION sleep_immunity
+BEGIN
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="39 217" prevent_icons="14 130" strings="12047 12958 13027 14001 17405 26040 26371 20438 25130" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~SLEEP_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION spider_trait
+BEGIN
+	LPF web_immunity END
+	LPF poison_immunity END
+	LPF vermin_trait END
+END
+
+DEFINE_PATCH_FUNCTION stun_immunity
+BEGIN
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="45 210" prevent_icons="55" strings="14043 25862 26050" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~STUN_IMMUNITY~)) special=1 END
+END
+
+DEFINE_PATCH_FUNCTION turnUndead_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=297 parameter2=1 END
 END
 
 DEFINE_PATCH_FUNCTION undead_trait
@@ -521,205 +704,22 @@ BEGIN
 	LPF infravision_trait END
 END
 
-DEFINE_PATCH_FUNCTION fey_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=189 parameter1=1 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION elemental_trait
-BEGIN
-	LPF poison_immunity END
-	LPF sleep_immunity END
-	LPF hold_immunity END
-	LPF bleeding_immunity END
-	LPF stun_immunity END
-	LPF criticalHit_immunity END
-	LPF backstab_immunity END
-	LPF devourBrain_immunity END
-	LPF petrification_immunity END
-	LPF insectSpells_immunity END
-	LPF infravision_trait END
-END
-
-DEFINE_PATCH_FUNCTION airAffinity_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=4 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special=1 END
-END
-
-DEFINE_PATCH_FUNCTION earthAffinity_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~WYVERN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~BEHOLDER~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~MEPHIT~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~ANTISOLAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~PLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~DARKPLANATAR~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_AIR~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~GENIE_NOBLE_DJINNI~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~SAHUAGIN~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~RACE~ ~KUO-TOA~) parameter2=4 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~ELEMENTAL_WATER~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=179 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=178 parameter1=IDS_OF_SYMBOL (~CLASS~ ~FAIRY_NEREID~) parameter2=5 special="-2" END
-	LPF earthquake_immunity END
-END
-
-DEFINE_PATCH_FUNCTION skeletal_trait
-BEGIN
-	LPF cold_immunity END
-	LPF coldSpells_immunity END
-	LPF slashingDamageResistance_resistance END
-	LPF missileDamageResistance_resistance END
-	LPF piercingDamageResistance_resistance END
-END
-
-DEFINE_PATCH_FUNCTION extraplanar_trait
-BEGIN
-	LPF cureAndCauseWoundSpells_immunity END
-	LPF deathSpell_immunity END
-END
-
-DEFINE_PATCH_FUNCTION plant_trait
-BEGIN
-	LPF mindSpells_immunity END
-	LPF poison_immunity END
-	LPF sleep_immunity END
-	LPF hold_immunity END
-	LPF polymorph_immunity END
-	LPF stun_immunity END
-	LPF criticalHit_immunity END
-	LPF backstab_immunity END
-	LPF disease_immunity END
-	LPF bleeding_immunity END
-	LPF petrification_immunity END
-	LPF insectSpells_immunity END
-	LPF entangle_immunity END
-	LPF infravision_trait END
-END
-
-DEFINE_PATCH_FUNCTION infravision_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=63 END
-END
-
-DEFINE_PATCH_FUNCTION seeInvisible_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=193 parameter2=1 END
-END
-
-DEFINE_PATCH_FUNCTION incorporeal_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=99 parameter2=0 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1=2105376000 parameter2=1966335 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=61 parameter1=1511938560 parameter2=1638400 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=2 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=23 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=0 parameter1=3 parameter2=0 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=278 parameter1=4 parameter2=0 END
-	LPF backstab_immunity END
-	LPF criticalHit_immunity END
-	LPF fireResistance_resistance END
-	LPF coldResistance_resistance END
-	LPF lightningSpells_immunity END
-	LPF acidResistance_resistance END
-	LPF poisonResistance_resistance END
-	LPF magicDamageResistance_resistance END
-	LPF physicalDamageResistance_resistance END
-END
-
-DEFINE_PATCH_FUNCTION blindsight_trait
-BEGIN
-	LPF gazeAttacks_immunity END
-	LPF seeInvisible_trait END
-END
-
-DEFINE_PATCH_FUNCTION ooze_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=66 parameter1=100 parameter2=0 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
-	LPF mindSpells_immunity END
-	LPF backstab_immunity END
-	LPF poison_immunity END
-	LPF sleep_immunity END
-	LPF hold_immunity END
-	LPF stun_immunity END
-	LPF bleeding_immunity END
-	LPF criticalHit_immunity END
-	LPF backstab_immunity END
-	LPF infravision_trait END
-	LPF polymorph_immunity END
-	LPF blindsight_trait END
-	LPF blindness_immunity END
-END
-
 DEFINE_PATCH_FUNCTION vermin_trait
 BEGIN
 	LPF infravision_trait END
 	LPF mindSpells_immunity END
 END
 
-DEFINE_PATCH_FUNCTION spider_trait
+DEFINE_PATCH_FUNCTION vorpal_immunity
 BEGIN
-	LPF web_immunity END
-	LPF poison_immunity END
-	LPF vermin_trait END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="13 55" strings="14026" END
 END
 
-DEFINE_PATCH_FUNCTION magicalBeast_trait
+DEFINE_PATCH_FUNCTION web_immunity
 BEGIN
-	LPF infravision_trait END
-END
-
-DEFINE_PATCH_FUNCTION ghostVisual1_trait
-BEGIN
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-3547648" parameter2=2818053 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2181376" parameter2=3080213 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-2380288" parameter2=2621493 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=9 parameter1="-102768896" parameter2=2752549 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=65 END
+	INNER_ACTION BEGIN
+		LAF get_web_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="157" prevent_icons="129" spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=83 parameter2=319 END
 END

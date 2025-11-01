@@ -1,17 +1,25 @@
 import chalk from "chalk";
 import deepmerge from "deepmerge";
 import figureSet from "figures";
-import { ImmunityName } from "../../config/immunity-config";
 import { MonsterItemIconEnum } from "../../config/item";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
 import { TranslationKey } from "../../translations/i18n";
-import { CreatureAdditionalData } from "../model/creature/additional-data";
+import {
+  ADDITIONAL_DATA_DEFAULT,
+  ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
+  CreatureAdditionalData,
+} from "../model/creature/additional-data";
 import { CreatureAttack, CreatureAttackAction } from "../model/creature/attack";
 import { CreatureBehavior } from "../model/creature/behavior";
-import { Creature } from "../model/creature/creature";
+import {
+  Creature,
+  CreatureAdjustment,
+  PartialCreatureAdjustment,
+} from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
 import { CreatureGrabConfig } from "../model/creature/grab";
 import { ItemSlot, JEWEL_SLOTS } from "../model/creature/item";
+import { ImmunityName } from "../model/final/immunity";
 import { StringReference } from "../model/final/stringref";
 import { BaseEffect, Effect } from "../model/spell-item/effect";
 import {
@@ -29,7 +37,7 @@ import {
   Weapon,
   WeaponCastSpell,
 } from "../model/spell-item/spell-item";
-import { WithRequired } from "../model/utility-types";
+import { AtLeast, WithRequired } from "../model/utility-types";
 import effectService from "../services/effects/effect.service";
 import grabService from "../services/effects/grab.service";
 import itemService from "../services/item.service";
@@ -43,7 +51,7 @@ class CreatureFactory {
     monster: MonsterEnum;
     family: MonsterFamilyEnum;
     files: string[];
-    data: CreatureData;
+    data: Omit<CreatureData, "movement">;
   }): Creature {
     const cre = new Creature();
     cre.name = p.name;
@@ -51,19 +59,7 @@ class CreatureFactory {
     cre.family = p.family;
     cre.files = p.files;
     cre.data = p.data;
-    cre.additionalData = {
-      removeScripts: [],
-      proficiencies: [],
-      removeItems: [],
-      equippedItems: [],
-      immunities: [],
-      removeKnownSpells: true,
-      removeMemorizedSpells: true,
-      memorizedSpells: [],
-      deleteEffectOpcodes: [],
-      removeEffects: true,
-      effects: [],
-    };
+    cre.additionalData = ADDITIONAL_DATA_DEFAULT;
     console.log(
       chalk.bold(`\nCreating ${translationService.from(cre.name)}...`)
     );
@@ -72,57 +68,28 @@ class CreatureFactory {
 
   setAdditionalData(
     cre: Creature,
-    additionalData: Partial<CreatureAdditionalData>
+    additionalData: AtLeast<
+      WithRequired<CreatureAdditionalData, "movement">,
+      "movement"
+    >
   ) {
-    cre.additionalData = deepmerge(cre.additionalData, additionalData);
+    cre.additionalData = deepmerge(ADDITIONAL_DATA_DEFAULT, additionalData);
   }
 
-  setBehavior(cre: Creature, behavior: Partial<CreatureBehavior>) {
-    cre.behavior = {
-      dialog: [],
-      help: true,
-      tracking: true,
-      walk: false,
-      combatWalk: true,
-      restHeal: false,
-      usePotions: false,
-      useKitAbilities: false,
-      hideInShadows: false,
-      canPolymorph: false,
-      abilities: [],
-      customCode: [],
-      additionalCode: [],
-      ...behavior,
-    };
-  }
-
-  setAttack(cre: Creature, attack: Partial<CreatureAttack>) {
-    const defaultAction: CreatureAttackAction = {
-      disableInterrupt: false,
-      responseWeight: 100,
-    };
-    const actions: CreatureAttackAction[] = (attack.actions ?? []).map((a) => ({
-      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
-      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
-      weaponSlot: a.weaponSlot,
-    }));
-    //TODO:
-    // const result: CreatureAttack = {
-    //   grab: cre.attack.grab
-    //     ? { ...GRAB_DEFAULT_CONFIG, ...cre.attack.grab }
-    //     : undefined,
-    //   targetPriorities: targetService.getTargetPriorities(cre),
-    //   targetStatusWeaponSlot: cre.attack.targetStatusWeaponSlot ?? [],
-    // };
-
-    cre.attack = {
-      actions: actions.length ? actions : [defaultAction],
-      dualWielding: attack.dualWielding ?? false,
-      melee: attack.melee ?? true,
-      ranged: attack.ranged ?? false,
-      targetPriorities: [],
-      targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
-    };
+  setAdjustments(cre: Creature, adjustments: PartialCreatureAdjustment[]) {
+    for (const adjustment of adjustments) {
+      const result: CreatureAdjustment = {
+        ...adjustment,
+        noWeapon: adjustment.noWeapon ?? false,
+        summon: adjustment.summon ?? false,
+        data: adjustment.data ?? {},
+        additionalData: deepmerge(
+          ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
+          adjustment.additionalData ?? {}
+        ),
+      };
+      cre.adjustments.push(result);
+    }
   }
 
   addSpell(cre: Creature, spell: PartialSpell): Spell {
@@ -254,6 +221,7 @@ class CreatureFactory {
       effects?: Effect[];
     }
   ): Item {
+    // TODO:
     // const stringRef = `${name} traits`;
     // if (description) {
     //   description.unshift(stringRef, "");
@@ -267,6 +235,54 @@ class CreatureFactory {
       category: ItemCategoryEnum.Rings,
       icon: MonsterItemIconEnum.Traits,
     });
+  }
+
+  setBehavior(cre: Creature, behavior: Partial<CreatureBehavior>) {
+    cre.behavior = {
+      dialog: [],
+      help: true,
+      tracking: true,
+      walk: false,
+      combatWalk: true,
+      restHeal: false,
+      usePotions: false,
+      useKitAbilities: false,
+      hideInShadows: false,
+      canPolymorph: false,
+      abilities: [],
+      customCode: [],
+      additionalCode: [],
+      ...behavior,
+    };
+  }
+
+  setAttack(cre: Creature, attack: Partial<CreatureAttack>) {
+    const defaultAction: CreatureAttackAction = {
+      disableInterrupt: false,
+      responseWeight: 100,
+    };
+    const actions: CreatureAttackAction[] = (attack.actions ?? []).map((a) => ({
+      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
+      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
+      weaponSlot: a.weaponSlot,
+    }));
+    //TODO:
+    // const result: CreatureAttack = {
+    //   grab: cre.attack.grab
+    //     ? { ...GRAB_DEFAULT_CONFIG, ...cre.attack.grab }
+    //     : undefined,
+    //   targetPriorities: targetService.getTargetPriorities(cre),
+    //   targetStatusWeaponSlot: cre.attack.targetStatusWeaponSlot ?? [],
+    // };
+
+    cre.attack = {
+      actions: actions.length ? actions : [defaultAction],
+      dualWielding: attack.dualWielding ?? false,
+      melee: attack.melee ?? true,
+      ranged: attack.ranged ?? false,
+      targetPriorities: [],
+      targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
+    };
   }
 }
 

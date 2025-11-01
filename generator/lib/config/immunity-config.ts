@@ -21,7 +21,9 @@ import { JEWEL_SLOTS } from "../src/model/creature/item";
 export const IMMUNITIES: (AtLeast<
   ImmunityConfig,
   "name" | "type" | "stringRef"
-> & { type: "immunity" })[] = [
+> & {
+  type: "immunity";
+})[] = [
   {
     name: "poison",
     type: "immunity",
@@ -583,7 +585,7 @@ export const IMMUNITIES: (AtLeast<
     stringRef: "common.immunity.gazeAttacks",
     immunities: ["petrification"],
   },
-] as const;
+];
 
 export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   type: "resistance";
@@ -631,7 +633,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
     ],
   },
   {
-    name: "electricityResistance",
+    name: "lightningResistance",
     type: "resistance",
     effects: [
       {
@@ -728,7 +730,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
       },
     ],
   },
-] as const;
+];
 
 export const TRAITS: (AtLeast<
   ImmunityConfig,
@@ -1054,6 +1056,7 @@ export const TRAITS: (AtLeast<
   {
     name: "ghostVisual1",
     type: "trait",
+    doc: false,
     stringRef: "common.traits.ghostVisual1",
     itemSlot: { file: ITEMS.Vermin, slot: JEWEL_SLOTS },
     effects: [
@@ -1086,9 +1089,4 @@ export const TRAITS: (AtLeast<
       },
     ],
   },
-] as const;
-
-export type ImmunityName =
-  | (typeof IMMUNITIES)[number]["name"]
-  | (typeof RESISTANCES)[number]["name"]
-  | (typeof TRAITS)[number]["name"];
+];

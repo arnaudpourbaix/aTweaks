@@ -13,18 +13,7 @@ class MainService {
   getCreatures(): Creature[] {
     const creatures = [ANKHEG]; //CREATURES
     creatures.forEach((creature) => {
-      creatureService.checkData({
-        creature,
-        base: creature,
-        isAdjustment: false,
-      });
-      for (const a of creature.adjustments) {
-        creatureService.checkData({
-          creature,
-          base: a,
-          isAdjustment: true,
-        });
-      }
+      creatureService.check(creature);
       immunityService.handleImmunities(creature);
       creatureService.checkWeapons(creature);
       descriptionService.generateCreatureItems(creature);
