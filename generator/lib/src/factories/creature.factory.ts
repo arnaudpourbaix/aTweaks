@@ -9,8 +9,11 @@ import {
   ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
   CreatureAdditionalData,
 } from "../model/creature/additional-data";
-import { CreatureAttack, CreatureAttackAction } from "../model/creature/attack";
-import { CreatureBehavior } from "../model/creature/behavior";
+import {
+  CreatureAttackAction,
+  PartialCreatureAttack,
+} from "../model/creature/attack";
+import { PartialCreatureBehavior } from "../model/creature/behavior";
 import {
   Creature,
   CreatureAdjustment,
@@ -42,6 +45,7 @@ import effectService from "../services/effects/effect.service";
 import grabService from "../services/effects/grab.service";
 import itemService from "../services/item.service";
 import spellService from "../services/spell.service";
+import targetService from "../services/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
 
@@ -126,6 +130,7 @@ class CreatureFactory {
     grab?: CreatureGrabConfig;
     castSpell?: WeaponCastSpell;
   }) {
+    if (cre.attack) throw new Error("Add weapons before setting up attack");
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (weapon.equippedSlot)
       this.equipItem(cre, cre.additionalData, file, weapon.equippedSlot);
@@ -237,7 +242,7 @@ class CreatureFactory {
     });
   }
 
-  setBehavior(cre: Creature, behavior: Partial<CreatureBehavior>) {
+  setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
     cre.behavior = {
       dialog: [],
       help: true,
@@ -249,14 +254,14 @@ class CreatureFactory {
       useKitAbilities: false,
       hideInShadows: false,
       canPolymorph: false,
-      abilities: [],
       customCode: [],
       additionalCode: [],
       ...behavior,
+      abilities: [],
     };
   }
 
-  setAttack(cre: Creature, attack: Partial<CreatureAttack>) {
+  setAttack(cre: Creature, attack: PartialCreatureAttack) {
     const defaultAction: CreatureAttackAction = {
       disableInterrupt: false,
       responseWeight: 100,
@@ -266,22 +271,15 @@ class CreatureFactory {
       disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
       weaponSlot: a.weaponSlot,
     }));
-    //TODO:
-    // const result: CreatureAttack = {
-    //   grab: cre.attack.grab
-    //     ? { ...GRAB_DEFAULT_CONFIG, ...cre.attack.grab }
-    //     : undefined,
-    //   targetPriorities: targetService.getTargetPriorities(cre),
-    //   targetStatusWeaponSlot: cre.attack.targetStatusWeaponSlot ?? [],
-    // };
 
     cre.attack = {
       actions: actions.length ? actions : [defaultAction],
-      dualWielding: attack.dualWielding ?? false,
       melee: attack.melee ?? true,
       ranged: attack.ranged ?? false,
-      targetPriorities: [],
+      dualWielding: false,
+      targetPriorities: targetService.getTargetPriorities(cre),
       targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
+      selectWeapons: attack.selectWeapons ?? [],
     };
   }
 }

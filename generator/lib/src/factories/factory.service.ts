@@ -4,10 +4,10 @@ import { Response, Statements } from "../model/script/script";
 import { ObjectIdentifier } from "../model/ids/object";
 import { SlotIdentifier } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
-import { Actions } from "../model/raw/actions";
-import { Triggers } from "../model/raw/triggers";
+import { Actions } from "../model/script/actions";
+import { Triggers } from "../model/script/triggers";
 import utils from "../services/utils/utils.service";
-import { WeaponSlot } from "../model/creature/item";
+import { WEAPON_SLOTS, WeaponSlot } from "../model/creature/item";
 
 class FactoryService {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
@@ -92,10 +92,12 @@ class FactoryService {
   }): Response[] => {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];
-      if (a.weaponSlot || p.weaponAttackSlot) {
+      let slot = WEAPON_SLOTS.find((s) => s.slot === a.weaponSlot);
+      if (!slot) slot = WEAPON_SLOTS.find((s) => s.slot === p.weaponAttackSlot);
+      if (slot) {
         actions.push({
           name: "SelectWeaponAbility",
-          params: [a.weaponSlot || (p.weaponAttackSlot as SlotIdentifier), 0],
+          params: [slot.id, 0],
         });
       }
       actions.push({
@@ -107,7 +109,7 @@ class FactoryService {
         actions.push(this.enableInterrupt());
       }
       return {
-        weight: a.responseWeight,
+        weight: a.responseWeight ?? 100,
         actions,
       };
     });

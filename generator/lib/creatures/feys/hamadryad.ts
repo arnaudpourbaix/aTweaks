@@ -18,7 +18,7 @@ import { IdsEffect, RawBaseEffect } from "../../src/model/raw/effect";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../../src/model/raw/spell-protection";
+} from "../../src/model/spell-item/spell-protection";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { FactoryService } from "../../src/services/factory.service";
 import { bafFile, getFilename } from "../../src/services/misc.func";

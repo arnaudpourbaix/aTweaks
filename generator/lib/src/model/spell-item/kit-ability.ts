@@ -1,5 +1,5 @@
-import { Actions } from "./actions";
-import { Triggers } from "./triggers";
+import { Actions } from "../script/actions";
+import { Triggers } from "../script/triggers";
 
 export interface KitAbilityConfig {
   name: string;

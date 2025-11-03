@@ -18,8 +18,9 @@ import { GeneralIdentifier } from "../model/ids/general";
 import { ObjectIdentifier } from "../model/ids/object";
 import { RaceIdentifier } from "../model/ids/race";
 import { SpecificIdentifier } from "../model/ids/specific";
-import { Triggers } from "../model/raw/triggers";
+import { Triggers } from "../model/script/triggers";
 import utils from "./utils/utils.service";
+import { GRAB_DEFAULT_CONFIG } from "../model/creature/grab";
 
 class TargetService {
   targetObject(p: {
@@ -155,11 +156,15 @@ class TargetService {
       const statusDetails = TARGET_STATUS.find(
         (t) => t.status === status
       ) as TargetStatus;
-      const grab = status !== "Grabbed" || !!creature.attack?.grab;
+      const validStatus =
+        status !== "Grabbed" ||
+        creature.spells.some(
+          (s) => s.name === GRAB_DEFAULT_CONFIG.grabStringRef
+        );
       const intelligence =
         !statusDetails.requireIntelligence ||
         (!!creature.data.intelligence && creature.data.intelligence >= 8);
-      return grab && intelligence;
+      return validStatus && intelligence;
     });
     const targetStatus = this.getFilteredStatusNameList(allStatus, false);
     const playerStatus = this.getFilteredStatusNameList(allStatus, true);

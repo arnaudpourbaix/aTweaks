@@ -1,4 +1,4 @@
-import { SpellGroup } from "../src/model/raw/spell-group";
+import { SpellGroup } from "../src/model/spell-item/spell-group";
 import { ATWEAKS_SPELLS } from "./spell-names";
 
 export const SPELL_GROUPS: SpellGroup[] = [

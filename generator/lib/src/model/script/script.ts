@@ -1,6 +1,6 @@
 import { CreatureAbility } from "../creature/ability";
-import { Actions } from "../raw/actions";
-import { Triggers } from "../raw/triggers";
+import { Actions } from "./actions";
+import { Triggers } from "./triggers";
 import { PartialBy } from "../utility-types";
 import { TargetList } from "./target";
 

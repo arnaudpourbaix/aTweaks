@@ -8,7 +8,7 @@ import { RawBaseEffect } from "../../src/model/raw/effect";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../../src/model/raw/spell-protection";
+} from "../../src/model/spell-item/spell-protection";
 import { createTraitItem } from "../../src/services/creature-helper";
 import { EffectService } from "../../src/services/effects/effect.service";
 import {

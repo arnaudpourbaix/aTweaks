@@ -1,33 +1,37 @@
 import * as fs from "fs";
 import path from "path";
-import { CR, TAB } from "../model/constants";
-import { Creature } from "../model/final/creature";
-import { GenericScriptParameterData } from "../model/final/data";
-import { ALLEGIANCE_IDENTIFIERS } from "../model/ids/allegiance";
-import { GENERAL_IDENTIFIERS } from "../model/ids/general";
-import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../model/ids/object";
-import { RACE_IDENTIFIERS } from "../model/ids/race";
-import { State } from "../state";
-import { CLASS_IDENTIFIERS } from "../model/ids/class";
-import { SPECIFIC_IDENTIFIERS } from "../model/ids/specific";
-import { GENDER_IDENTIFIER } from "../model/ids/gender";
-import { ALIGN_IDENTIFIERS } from "../model/ids/align";
-import { Triggers } from "../model/raw/triggers";
-import { Actions } from "../model/raw/actions";
-import { ConditionalStatement, Statements } from "../model/final/script";
 import statementService from "./statement-builder.service";
+import { Creature } from "../../model/creature/creature";
+import { ConditionalStatement, Statements } from "../../model/script/script";
+import { CR, TAB } from "../../model/constants";
+import { State } from "../../state";
+import { Triggers } from "../../model/script/triggers";
+import { Actions } from "../../model/script/actions";
+import { GenericScriptParameterData } from "../../model/script/data";
+import { OBJECT_IDENTIFIERS, ObjectIdentifier } from "../../model/ids/object";
+import { ALLEGIANCE_IDENTIFIERS } from "../../model/ids/allegiance";
+import { GENERAL_IDENTIFIERS } from "../../model/ids/general";
+import { RACE_IDENTIFIERS } from "../../model/ids/race";
+import { CLASS_IDENTIFIERS } from "../../model/ids/class";
+import { SPECIFIC_IDENTIFIERS } from "../../model/ids/specific";
+import { GENDER_IDENTIFIER } from "../../model/ids/gender";
+import { ALIGN_IDENTIFIERS } from "../../model/ids/align";
+import translationService from "../translation.service";
 
 class BafGeneratorService {
-  generateBafScript(creature: Creature): void {
+  generate(creature: Creature): void {
     const statements: Statements = statementService.buildStatements(creature, {
       summon: false,
     });
     const code = statements
       .map((statement) => this.generateStatement(statement))
       .join("");
-    const content = `// ${creature.name}${CR}${CR}${code}`;
+    const content = `// ${translationService.from(
+      creature.name
+    )}${CR}${CR}${code}`;
+    const folder = `lib/pnp-monster/${creature.family}/`;
     fs.writeFileSync(
-      `${path.join(State.modFolder, creature.bafFile as string)}.baf`,
+      path.join(State.modFolder, folder, `${creature.monster}.baf`),
       content
     );
     if (creature.adjustments.some((a) => !!a.summon)) {
@@ -39,7 +43,7 @@ class BafGeneratorService {
         .map((statement) => this.generateStatement(statement))
         .join("");
       fs.writeFileSync(
-        `${path.join(State.modFolder, `${creature.bafFile}su.baf`)}`,
+        path.join(State.modFolder, folder, `${creature.monster}su.baf`),
         content
       );
     }
@@ -176,9 +180,9 @@ class BafGeneratorService {
       return `${value}(Myself)`;
     else if (
       Object.values(OBJECT_IDENTIFIERS).includes(value as ObjectIdentifier)
-    )
+    ) {
       return value;
-    // return value;
+    }
     return `"${value}"`;
   }
 

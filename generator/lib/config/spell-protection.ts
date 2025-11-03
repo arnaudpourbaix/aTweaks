@@ -2,7 +2,7 @@ import {
   SpellProtection,
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../src/model/raw/spell-protection";
+} from "../src/model/spell-item/spell-protection";
 
 /**
  * If value is not set, it will generate -1

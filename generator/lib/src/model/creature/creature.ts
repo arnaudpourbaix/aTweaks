@@ -14,8 +14,8 @@ import {
 } from "../spell-item/spell-item";
 import { AtLeast, PartialBy, WithRequired } from "../utility-types";
 import { CreatureAdditionalData } from "./additional-data";
-import { CreatureAttack } from "./attack";
-import { CreatureBehavior } from "./behavior";
+import { CreatureAttack, PartialCreatureAttack } from "./attack";
+import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
 import { CreatureData } from "./data";
 import { CreatureGrabConfig } from "./grab";
 
@@ -67,11 +67,11 @@ export class Creature implements BaseCreature {
     creatureFactory.setAdditionalData(this, additionalData);
   }
 
-  setBehavior(behavior: Partial<CreatureBehavior>) {
+  setBehavior(behavior: PartialCreatureBehavior) {
     creatureFactory.setBehavior(this, behavior);
   }
 
-  setAttack(attack: Partial<CreatureAttack>) {
+  setAttack(attack: PartialCreatureAttack) {
     creatureFactory.setAttack(this, attack);
   }
 

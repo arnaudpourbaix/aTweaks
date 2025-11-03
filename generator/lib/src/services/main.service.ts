@@ -1,6 +1,7 @@
 import { ANKHEG } from "../../creatures/ankheg/ankheg";
 import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
+import bafGeneratorService from "./baf/baf-generator.service";
 import creatureService from "./creature.service";
 import descriptionService from "./description.service";
 import documentationService from "./documentation.service";
@@ -24,6 +25,7 @@ class MainService {
         weiduCreatureService.createOrUpdateMainFile(creature.family);
       }
       if (creature.isValid()) {
+        bafGeneratorService.generate(creature);
         weiduCreatureService.generateWeiduScript(creature);
         documentationService.addCreature(creature);
       }

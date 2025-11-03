@@ -1,21 +1,21 @@
-import { GLOBAL_CONFIG } from "../../config/generate";
-import { KIT_ABILITIES } from "../../config/kit-ability";
-import { POTIONS } from "../../config/potion";
-import { TraStringReferenceEnum } from "../../config/stringRef";
-import { TARGET_STATUS } from "../../config/target-config";
-import { TargetListName, TargetStatusName } from "../../config/target-name";
-import factoryService from "../factories/factory.service";
-import { CreatureAbility } from "../model/final/ability";
-import { Creature } from "../model/final/creature";
-import { CustomCodeLocation, Statements } from "../model/final/script";
-import { AllegianceIdentifier } from "../model/ids/allegiance";
-import { RaceIdentifier } from "../model/ids/race";
-import { BuilderOptions } from "../model/misc";
-import { Actions } from "../model/raw/actions";
-import { RawTargetList } from "../model/raw/target";
-import { Triggers } from "../model/raw/triggers";
-import targetService from "./target.service";
-import utils from "./utils.service";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import { KIT_ABILITIES } from "../../../config/kit-ability";
+import { POTIONS } from "../../../config/potion";
+import { TraStringReferenceEnum } from "../../../config/stringRef";
+import { TARGET_STATUS } from "../../../config/target-config";
+import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import factoryService from "../../factories/factory.service";
+import { CreatureAbility } from "../../model/creature/ability";
+import { Creature } from "../../model/creature/creature";
+import { AllegianceIdentifier } from "../../model/ids/allegiance";
+import { RaceIdentifier } from "../../model/ids/race";
+import { BuilderOptions } from "../../model/misc";
+import { Actions } from "../../model/script/actions";
+import { Triggers } from "../../model/script/triggers";
+import { CustomCodeLocation, Statements } from "../../model/script/script";
+import { TargetList } from "../../model/script/target";
+import targetService from "../target.service";
+import utils from "../utils/utils.service";
 
 class StatementService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
@@ -117,7 +117,9 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ) {
-    const custom = creature.customCode.find((c) => c.location === location);
+    const custom = creature.behavior.customCode.find(
+      (c) => c.location === location
+    );
     if (custom && custom.type === "insertBefore") {
       this.processStatements(statements, custom.statements ?? []);
       this.parseAbilities(
@@ -170,9 +172,9 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.dialog.length) return;
+    if (!creature.behavior.dialog.length) return;
     const nameTriggers: Triggers.Trigger[] = [];
-    for (const name of creature.dialog) {
+    for (const name of creature.behavior.dialog) {
       nameTriggers.push({
         name: "Name",
         params: [name, "Myself"],
@@ -275,7 +277,7 @@ class StatementService {
       factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
       { name: "Rest" },
     ];
-    if (creature.restHeal)
+    if (creature.behavior.restHeal)
       actions.push({
         name: "ApplySpell",
         params: ["Myself", "RESTORE_FULL_HEALTH"],
@@ -434,7 +436,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.help) return;
+    if (!creature.behavior.help) return;
     const shoutId = options.summon
       ? GLOBAL_CONFIG.bafConstants.summonerShoutId
       : GLOBAL_CONFIG.bafConstants.monsterShoutId;
@@ -558,7 +560,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.tracking) return;
+    if (!creature.behavior.tracking) return;
     const additionals = this.getAdditionals(creature, "trackTargets");
     const allegiance: Triggers.Trigger = {
       name: "Allegiance",
@@ -651,7 +653,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.combatWalk) return;
+    if (!creature.behavior.combatWalk) return;
     this.randomWalk(statements, true, creature, options);
     this.avoidMeleeCombat(statements, creature, options);
   }
@@ -661,7 +663,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.walk) return;
+    if (!creature.behavior.walk) return;
     this.randomWalk(statements, false, creature, options);
   }
 
@@ -878,7 +880,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.usePotions) return;
+    if (!creature.behavior.usePotions) return;
     for (const potion of POTIONS) {
       for (const file of potion.files) {
         const triggers: Triggers.Trigger[] = [
@@ -909,7 +911,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.useKitAbilities) return;
+    if (!creature.behavior.useKitAbilities) return;
     for (const ability of KIT_ABILITIES) {
       for (const file of ability.files) {
         const triggers: Triggers.Trigger[] = [
@@ -936,7 +938,12 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    this.parseAbilities(statements, creature, options, creature.abilities);
+    this.parseAbilities(
+      statements,
+      creature,
+      options,
+      creature.behavior.abilities
+    );
   }
 
   private parseAbilities(
@@ -946,12 +953,12 @@ class StatementService {
     abilities: CreatureAbility[]
   ): void {
     for (const ability of abilities) {
-      if (ability.target)
+      if (ability.targets)
         this.creatureTargetsAbility(
           statements,
           creature,
           ability,
-          ability.target,
+          ability.targets,
           options
         );
       else this.creatureSelfAbility(statements, creature, ability, options);
@@ -962,7 +969,7 @@ class StatementService {
     statements: Statements,
     creature: Creature,
     ability: CreatureAbility,
-    targets: RawTargetList[],
+    targets: TargetList[],
     options: BuilderOptions
   ): void {
     for (const [index, target] of targets.entries()) {
@@ -980,7 +987,7 @@ class StatementService {
     statements: Statements,
     creature: Creature,
     ability: CreatureAbility,
-    target: RawTargetList,
+    target: TargetList,
     options: BuilderOptions
   ): void {
     const { triggers, targetTriggers } =
@@ -1038,7 +1045,7 @@ class StatementService {
         negation: true,
       });
     }
-    if (!ability.canUseWhenPolymorphed && creature.canPolymorph) {
+    if (!ability.canUseWhenPolymorphed && creature.behavior.canPolymorph) {
       triggers.unshift({
         name: "CheckStat",
         params: ["Myself", 0, "POLYMORPHED"],
@@ -1087,7 +1094,7 @@ class StatementService {
         negation: true,
       });
     }
-    if (!ability.canUseWhenPolymorphed && creature.canPolymorph) {
+    if (!ability.canUseWhenPolymorphed && creature.behavior.canPolymorph) {
       triggers.unshift({
         name: "CheckStat",
         params: ["Myself", 0, "POLYMORPHED"],
@@ -1108,7 +1115,7 @@ class StatementService {
     creature: Creature,
     location: CustomCodeLocation
   ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] } {
-    const additionals = creature.additionalCode.find(
+    const additionals = creature.behavior.additionalCode.find(
       (a) => a.location === location
     );
     return additionals ?? { triggers: [], actions: [] };

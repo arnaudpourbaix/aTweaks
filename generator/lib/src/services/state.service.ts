@@ -1,8 +1,8 @@
 import { IMMUNITIES, RESISTANCES, TRAITS } from "../../config/immunity-config";
 import { GenericScriptParameterData } from "../model/script/data";
 import { ImmunityConfig } from "../model/final/immunity";
-import { Actions } from "../model/raw/actions";
-import { Triggers } from "../model/raw/triggers";
+import { Actions } from "../model/script/actions";
+import { Triggers } from "../model/script/triggers";
 import { State } from "../state";
 import descriptionService from "./description.service";
 import effectService from "./effects/effect.service";

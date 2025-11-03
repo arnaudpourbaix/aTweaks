@@ -21,7 +21,7 @@ import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import {
   SpellProtection,
   SpellProtectionStat,
-} from "../../model/raw/spell-protection";
+} from "../../model/spell-item/spell-protection";
 import creatureService from "../creature.service";
 import utils from "../utils/utils.service";
 

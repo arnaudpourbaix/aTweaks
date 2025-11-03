@@ -3,7 +3,7 @@ import {
   SpellProtection,
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../src/model/raw/spell-protection";
+} from "../src/model/spell-item/spell-protection";
 import {
   BaseEffect,
   DamageEffect,

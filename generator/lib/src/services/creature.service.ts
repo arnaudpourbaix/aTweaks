@@ -46,7 +46,7 @@ class CreatureService {
     const data = p.base.data;
     const additionalData = p.base.additionalData;
     console.log(p.base.files);
-    if (p.creature.attack.dualWielding && !p.isAdjustment) {
+    if (p.creature.attack?.dualWielding && !p.isAdjustment) {
       if (!data.apr)
         throw new Error(
           "Attacks per round need to be set for dual wielding flag"

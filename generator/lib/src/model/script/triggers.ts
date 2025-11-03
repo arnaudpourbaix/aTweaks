@@ -1,4 +1,4 @@
-import { GenericScriptRawData } from "../script/data";
+import { GenericScriptRawData } from "./data";
 import { AlignIdentifier } from "../ids/align";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { AStylesIdentifiers } from "../ids/astyles";

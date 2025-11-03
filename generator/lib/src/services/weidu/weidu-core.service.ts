@@ -6,7 +6,7 @@ import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
 import { CR, TAB } from "../../model/constants";
 import { EquippedItem, JEWEL_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
-import { SpellProtectionStat } from "../../model/raw/spell-protection";
+import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
 import { State } from "../../state";
 import utils from "../utils/utils.service";

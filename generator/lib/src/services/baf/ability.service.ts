@@ -5,8 +5,8 @@ import {
   RawCreatureAbility,
   RawCreatureAbilitySpell,
 } from "../../model/raw/ability";
-import { Actions } from "../../model/raw/actions";
-import { Triggers } from "../../model/raw/triggers";
+import { Actions } from "../../model/script/actions";
+import { Triggers } from "../../model/script/triggers";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
 
 class AbilityService {
@@ -29,7 +29,7 @@ class AbilityService {
         disableInterrupt: false,
         canUseWhenPolymorphed: false,
         ...ability,
-        target: targets,
+        targets: targets,
         name: ability.name ?? "",
         isSpell: !!ability.spell && !ability.spell.isAttack,
         triggers,

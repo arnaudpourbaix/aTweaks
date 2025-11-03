@@ -1,5 +1,5 @@
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
-import { Triggers } from "../raw/triggers";
+import { Triggers } from "./triggers";
 
 export interface TargetList {
   name: TargetListName;

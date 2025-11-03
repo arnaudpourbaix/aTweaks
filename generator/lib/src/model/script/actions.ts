@@ -1,4 +1,4 @@
-import { GenericScriptRawData } from "../script/data";
+import { GenericScriptRawData } from "./data";
 import { ClassIdentifier } from "../ids/class";
 import { DamageIdentifier } from "../ids/damage";
 import { SlotIdentifier } from "../ids/slot";

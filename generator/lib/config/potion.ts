@@ -1,6 +1,6 @@
-import { RawPotionConfig } from "../src/model/raw/potion";
+import { PotionConfig } from "../src/model/spell-item/potion";
 
-export const POTIONS: RawPotionConfig[] = [
+export const POTIONS: PotionConfig[] = [
   {
     name: "Potion of extra healing (40hp)",
     files: ["POTN55"],

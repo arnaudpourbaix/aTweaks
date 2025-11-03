@@ -1,4 +1,4 @@
-import { KitAbilityConfig } from "../src/model/raw/kit-ability";
+import { KitAbilityConfig } from "../src/model/spell-item/kit-ability";
 import { SPELLS } from "./spell-names";
 
 export const KIT_ABILITIES: KitAbilityConfig[] = [

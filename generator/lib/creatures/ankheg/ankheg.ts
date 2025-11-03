@@ -137,6 +137,10 @@ const stream = cre.addSpell({
   ],
 });
 
+cre.setAttack({
+  actions: [{ disableInterrupt: true }],
+});
+
 cre.setBehavior({
   tracking: true,
   combatWalk: true,
@@ -149,20 +153,11 @@ cre.setBehavior({
         type: "force",
         remove: true,
       },
-      target: { name: "PCsPreferringWeak", random: true },
+      targets: [{ name: "PCsPreferringWeak", random: true }],
       triggers: [{ name: "HPPercentLT", params: ["Myself", 50] }],
       range: 30,
     },
   ],
-});
-
-cre.setAttack({
-  // actions: [{ weaponSlot: "SLOT_WEAPON", disableInterrupt: true }],
-  // grab: {
-  //   file: grab,
-  //   weaponFile: mainWeapon,
-  //   duration: 18,
-  // },
 });
 
 cre.setAdjustments([

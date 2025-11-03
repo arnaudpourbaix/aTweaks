@@ -50,7 +50,7 @@ import { GeneralIdentifier } from "../ids/general";
 import { SlotIdentifier } from "../ids/slot";
 import { SplStateIdentifier } from "../ids/splstate";
 import { StatsIdentifier } from "../ids/stats";
-import { SpellProtection } from "../raw/spell-protection";
+import { SpellProtection } from "./spell-protection";
 import {
   EffectDispelResistanceEnum,
   EffectFlagsEnum,

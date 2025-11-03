@@ -21,23 +21,27 @@ import weiduSpellService from "./weidu-spell.service";
 import utils from "../utils/utils.service";
 import itemService from "../item.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import translationService from "../translation.service";
 
 class WeiduCreatureService extends AbstractWeiduService {
-  createOrUpdateMainFile(family: MonsterFamilyEnum, monster?: MonsterEnum) {
+  createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
     const file = path.join(
       State.modFolder,
       `lib/pnp-monster/${family}/main.tpa`
     );
-    if (!monster) fs.writeFileSync(file, "");
+    if (!creature) fs.writeFileSync(file, "");
     else
       fs.appendFileSync(
         file,
-        `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${monster}.tpa"`
+        `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${
+          creature.monster
+        }.tpa" // ${translationService.from(creature.name)}`
       );
   }
 
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
+    this.add(lines, `// ${translationService.from(creature.name)}`);
     if (creature.additionalData.scriptLocation !== "None")
       this.compileScripts(lines, creature);
     weiduProjectileService.createProjectiles(lines, creature);
@@ -51,7 +55,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       `lib/pnp-monster/${creature.family}/${creature.monster}.tpa`,
       content
     );
-    this.createOrUpdateMainFile(creature.family, creature.monster);
+    this.createOrUpdateMainFile(creature.family, creature);
   }
 
   private compileScripts(lines: CodeLine[], creature: Creature) {
@@ -309,7 +313,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     if (p.enforce) this.add(p.lines, `enforce=1`, p.tab + 2);
-    if (p.creature.attack.dualWielding)
+    if (p.creature.attack?.dualWielding)
       this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
     if (p.creature.notEnforceFiles.length) {
       this.add(p.lines, "STR_VAR", p.tab + 1);
