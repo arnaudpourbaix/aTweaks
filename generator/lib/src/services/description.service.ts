@@ -209,8 +209,12 @@ class DescriptionService {
   getDuration(duration?: number): string {
     if (!duration) return "";
     const rounds = Math.round(duration / 6);
-    const turns = duration / 60;
-    return duration % 60 === 0 ? `${turns} turns` : `${rounds} rounds`;
+    const roundsModulo = duration % 6;
+    const turns = Math.round(duration / 60);
+    const turnsModulo = duration % 60;
+    if (turnsModulo === 0 || turns > 1) return `${turns} turns`;
+    else if (roundsModulo === 0 || rounds > 1) return `${rounds} rounds`;
+    return `${duration} seconds`;
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
@@ -320,7 +324,7 @@ class DescriptionService {
     let text = "one damage per second";
     if (effect.type === PoisonTypeEnum.AmountDamagePerSecond)
       text = `${effect.amount} per second`;
-    else text = `one damage per ${effect.amount} seconds`;
+    else text = `one damage per ${this.getDuration(effect.amount)}`;
     const results: string[] = [];
     const level =
       effect.diceSize && effect.diceThrown

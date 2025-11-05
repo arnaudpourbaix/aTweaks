@@ -1,15 +1,33 @@
+import {
+  poisonImmediateDeathDuration,
+  PoisonModel,
+  POISONS,
+} from "../../../config/poison";
+import { Effect } from "../../model/spell-item/effect";
+import {
+  EffectTimingEnum,
+  PnPPoisonType,
+  PoisonTypeEnum,
+  PortraitIconEnum,
+  SaveTypeEnum,
+} from "../../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+
 class PoisonService {
-  getEffects(effect: PoisonTypeEffectGroup): Effect[] {
+  getEffects(payload: {
+    poisonType: PnPPoisonType;
+    saveBonus?: number;
+  }): Effect[] {
     const poison = POISONS.find(
-      (p) => p.type === effect.poisonType
+      (p) => p.type === payload.poisonType
     ) as PoisonModel;
     const effects: Effect[] = [];
     if (poison.saveDamage) {
       effects.push(this.getSaveEffect(poison));
     }
     if (poison.duration === poisonImmediateDeathDuration)
-      effects.push(...this.getImmediateDeathEffects(effect, poison));
-    else effects.push(...this.getTimeEffects(poison, effect));
+      effects.push(...this.getImmediateDeathEffects(poison, payload.saveBonus));
+    else effects.push(...this.getTimeEffects(poison, payload.saveBonus));
     return effects;
   }
 
@@ -26,10 +44,7 @@ class PoisonService {
     };
   }
 
-  getImmediateDeathEffects(
-    effect: RawPoisonTypeEffectGroup,
-    poison: PoisonModel
-  ): Effect[] {
+  getImmediateDeathEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
     const levels = [
       { min: 1, max: 2 },
       { min: 3, max: 4 },
@@ -46,8 +61,8 @@ class PoisonService {
         5 * Math.min(level.max, 9) -
         poison.saveDamage;
       return {
-        opcode: "Poison",
-        icon: "Poisoned",
+        opcode: EffectTypeEnum.Poison,
+        icon: PortraitIconEnum.Poisoned,
         ...this.getEffect({
           label: "death",
           damage: maxHP,
@@ -55,29 +70,26 @@ class PoisonService {
         }),
         diceSize: level.min,
         diceThrown: level.max,
-        timing: "InstantLimited",
-        saveTypes: ["ParalyzePoisonDeath"],
-        saveBonus: effect.saveBonus,
+        timing: EffectTimingEnum.InstantLimited,
+        saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+        saveBonus,
       };
     });
   }
 
-  getTimeEffects(
-    poison: PoisonModel,
-    effect: RawPoisonTypeEffectGroup
-  ): Effect[] {
+  getTimeEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
     return [
       {
-        opcode: "Poison",
-        icon: "Poisoned",
+        opcode: EffectTypeEnum.Poison,
+        icon: PortraitIconEnum.Poisoned,
         ...this.getEffect({
           label: "normal",
           damage: poison.damage - poison.saveDamage,
           duration: poison.duration,
         }),
-        timing: "InstantLimited",
-        saveTypes: ["ParalyzePoisonDeath"],
-        saveBonus: effect.saveBonus,
+        timing: EffectTimingEnum.InstantLimited,
+        saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+        saveBonus,
       },
     ];
   }
@@ -91,7 +103,7 @@ class PoisonService {
     damage: number;
     duration: number;
   }): {
-    type: RawPoisonType;
+    type: PoisonTypeEnum;
     amount: number;
     duration: number;
   } {
@@ -114,11 +126,11 @@ class PoisonService {
     damage: number;
     duration: number;
   }): {
-    type: RawPoisonType;
+    type: PoisonTypeEnum;
     amount: number;
     duration: number;
   } {
-    const type: RawPoisonType = "OneDamagePerAmountSecond";
+    const type = PoisonTypeEnum.OneDamagePerAmountSecond;
     const amount = Math.floor(duration / damage);
     let newDuration = duration;
     while (damage > newDuration / amount) newDuration++;
@@ -140,11 +152,11 @@ class PoisonService {
     damage: number;
     duration: number;
   }): {
-    type: RawPoisonType;
+    type: PoisonTypeEnum;
     amount: number;
     duration: number;
   } {
-    const type: RawPoisonType = "AmountDamagePerSecond";
+    const type = PoisonTypeEnum.AmountDamagePerSecond;
     const amount = Math.floor(damage / duration);
     let newDuration = duration;
     while (damage > amount * newDuration) newDuration++;

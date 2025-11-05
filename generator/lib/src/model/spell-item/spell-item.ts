@@ -23,6 +23,7 @@ import {
   SpellTypeEnum,
 } from "./effect.enums";
 import { EffectTypeEnum } from "./effect.type";
+import { PartialProjectile, Projectile } from "./projectile";
 
 export interface Spell {
   /**
@@ -80,6 +81,7 @@ export interface Spell {
   };
   memorizedCount?: number;
   effectFiles: EffectFile[];
+  projectiles: Projectile[];
 }
 
 export interface Item {
@@ -107,6 +109,7 @@ export interface Item {
   effects: Effect[];
   header?: ItemHeader;
   equippedSlot: ItemSlot[];
+  projectiles: Projectile[];
 }
 
 export interface ItemSpellHeader {
@@ -115,7 +118,7 @@ export interface ItemSpellHeader {
   speed?: number;
   target?: ItemAbilityTargetEnum;
   location?: ItemAbilityLocationEnum;
-  projectile?: string;
+  projectile?: string | PartialProjectile;
   /**
    * Memorized icon for spells
    */
@@ -143,19 +146,19 @@ export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
   Omit<Spell, "file" | "headers">,
-  "icon" | "effects" | "effectFiles" | "doc"
+  "icon" | "effects" | "effectFiles" | "projectiles" | "doc"
 > & { headers?: PartialSpellHeader[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
 
 export type PartialItem = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "equippedSlot" | "doc"
+  "immunities" | "effects" | "projectiles" | "equippedSlot" | "doc"
 > & { header?: PartialItemHeader };
 
 export type PartialWeapon = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "doc"
+  "immunities" | "effects" | "projectiles" | "doc"
 > & { header: PartialItemHeader };
 
 export type Weapon = WithRequired<Item, "header">;

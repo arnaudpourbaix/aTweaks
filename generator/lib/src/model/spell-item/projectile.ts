@@ -149,26 +149,68 @@ export enum BamProjectileFlagsEnum {
   HighLevelBrighten = 9,
 }
 
+export interface ProjectileInfo {
+  bamProjectileFlags: BamProjectileFlagsEnum[];
+  projectileSmokeAnimation: ProjectileAnimationEnum;
+  lightSpotIntensity: number;
+  lightSpotWidth: number;
+  lightSpotHeight: number;
+}
+
+export interface ProjectileAreaEffectInfo {
+  areaProjectileFlags: AreaProjectileEnum[];
+  rayCount: number;
+  /**
+   * divide by approx 8.5 to receive diameter in feet
+   */
+  triggerRadius: number;
+  /**
+   * divide by approx 8.5 to receive diameter in feet
+   */
+  areaOfEffect: number;
+  explosionSound: string;
+  explosionDelay: number;
+  fragmentAnimation: ProjectileAnimationEnum;
+  secondaryProjectile: number;
+  triggerCount: number;
+  explosionEffect: ProjectileExplosionEffectEnum;
+  explosionColor: number;
+  explosionProjectile: number;
+  explosionAnimation: number;
+  coneWidth: number;
+
+  travelingProjectileAnimation: string;
+  shadowAnimation: string;
+  lightSpotIntensity: number;
+  lightSpotWidth: number;
+  lightSpotHeight: number;
+  palette: string;
+  projectileColours: string;
+  smokePuffDelay: number;
+  smokeColours: string;
+  faceTargetGranularity: number;
+  trailingAnimation1: string;
+  trailingAnimation2: string;
+  trailingAnimation3: string;
+  trailingNumber1: number;
+  trailingNumber2: number;
+  trailingNumber3: number;
+}
+
 export interface Projectile {
   file: string;
-  description: string;
-  copyFromFile: string;
+  copyFromFile?: string;
+  name: string;
   type?: ProjectileTypeEnum;
   speed?: number;
-  behaviorFlags: ProjectileBehaviorEnum[];
+  behaviorFlags?: ProjectileBehaviorEnum[];
   fireSound?: string;
   impactSound?: string;
   sourceAnimation?: string;
   particleColor?: ParticleColorEnum;
   projectileWidth?: number;
-  extendedFlags: ProjectileExtendedFlagsEnum[];
+  extendedFlags?: ProjectileExtendedFlagsEnum[];
   stringRef?: TranslationKey;
-  //TODO: create helper function to build it
-  // color?: {
-  //   red: number;
-  //   green: number;
-  //   blue: number;
-  // };
   color?: number;
   colorSpeed?: number;
   screenShakeAmount?: number;
@@ -176,55 +218,7 @@ export interface Projectile {
   idsTarget2?: EffectIDSFileEnum;
   defaultSpell?: string;
   successSpell?: string;
-
-  projectileInfo?: ProjectileInfo;
-  areaEffectInfo?: ProjectileAreaEffectInfo;
+  projectileInfo?: Partial<ProjectileInfo>;
+  areaEffectInfo?: Partial<ProjectileAreaEffectInfo>;
 }
-
-export interface ProjectileInfo {
-  bamProjectileFlags: BamProjectileFlagsEnum[];
-  projectileSmokeAnimation?: ProjectileAnimationEnum;
-  lightSpotIntensity?: number;
-  lightSpotWidth?: number;
-  lightSpotHeight?: number;
-}
-
-export interface ProjectileAreaEffectInfo {
-  areaProjectileFlags: AreaProjectileEnum[];
-  rayCount?: number;
-  /**
-   * divide by approx 8.5 to receive diameter in feet
-   */
-  triggerRadius?: number;
-  /**
-   * divide by approx 8.5 to receive diameter in feet
-   */
-  areaOfEffect?: number;
-  explosionSound?: string;
-  explosionDelay?: number;
-  fragmentAnimation?: ProjectileAnimationEnum;
-  secondaryProjectile?: number;
-  triggerCount?: number;
-  explosionEffect?: ProjectileExplosionEffectEnum;
-  explosionColor?: number;
-  explosionProjectile?: number;
-  explosionAnimation?: number;
-  coneWidth?: number;
-
-  travelingProjectileAnimation?: string;
-  shadowAnimation?: string;
-  lightSpotIntensity?: number;
-  lightSpotWidth?: number;
-  lightSpotHeight?: number;
-  palette?: string;
-  projectileColours?: string;
-  smokePuffDelay?: number;
-  smokeColours?: string;
-  faceTargetGranularity?: number;
-  trailingAnimation1?: string;
-  trailingAnimation2?: string;
-  trailingAnimation3?: string;
-  trailingNumber1?: number;
-  trailingNumber2?: number;
-  trailingNumber3?: number;
-}
+export type PartialProjectile = Omit<Projectile, "file">;

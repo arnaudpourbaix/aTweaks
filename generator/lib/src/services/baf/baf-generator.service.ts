@@ -31,7 +31,7 @@ class BafGeneratorService {
     )}${CR}${CR}${code}`;
     const folder = `lib/pnp-monster/${creature.family}/`;
     fs.writeFileSync(
-      path.join(State.modFolder, folder, `${creature.monster}.baf`),
+      path.join(State.modFolder, folder, `ja#m${creature.monster}.baf`),
       content
     );
     if (creature.adjustments.some((a) => !!a.summon)) {
@@ -43,7 +43,7 @@ class BafGeneratorService {
         .map((statement) => this.generateStatement(statement))
         .join("");
       fs.writeFileSync(
-        path.join(State.modFolder, folder, `${creature.monster}su.baf`),
+        path.join(State.modFolder, folder, `ja#m${creature.monster}su.baf`),
         content
       );
     }

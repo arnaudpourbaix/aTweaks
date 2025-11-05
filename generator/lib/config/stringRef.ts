@@ -1,5 +1,3 @@
-import { ExistingStringReference } from "../src/model/final/stringref";
-
 export enum TraStringReferenceEnum {
   AcidicDigestiveEnzymes = 4001,
   AnimalFriendship = 1900,
@@ -67,9 +65,9 @@ export enum BafExistingStringReference {
   LeaveMyWood = 5184,
 }
 
-export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [
-  { id: [14023], str: "Hasted" },
-  { id: [26492], str: "Cone of Cold" },
+export const EXISTING_STRING_REFERENCES = [
+  { id: [14023], str: "Hasted", group: "haste" },
+  { id: [26492], str: "Cone of Cold", group: "coneOfCold" },
   { id: [14017, 26215], str: "Poison", group: "poison" },
   { id: [14662, 25425], str: "Poisoned", group: "poison" },
   { id: [31238], str: "Diseased", group: "disease" },
@@ -89,18 +87,22 @@ export const EXISTING_STRING_REFERENCES: ExistingStringReference[] = [
     group: "sleep",
   },
   { id: [20438, 25130], str: "Unconscious", group: "sleep" },
-  { id: [26328], str: "Dire Charm" },
+  { id: [26328], str: "Dire Charm", group: "charm" },
   { id: [26206], str: "Dominated", group: "charm" },
   { id: [14672, 31787], str: "Charmed", group: "charm" },
   { id: [14780, 158915], str: "Dire charmed", group: "charm" },
   { id: [14007, 17427, 25818], str: "Panic", group: "panic" },
   { id: [20568], str: "Morale Failure: Panic", group: "panic" },
   { id: [14791, 26184], str: "Rigid Thinking", group: "rigidThinking" },
-  { id: [23744], str: "Feebleminded" },
+  { id: [23744], str: "Feebleminded", group: "rigidThinking" },
   { id: [14782, 25807], str: "Confused", group: "confusion" },
   { id: [14665, 25863], str: "Petrified", group: "petrified" },
   { id: [14128], str: "Polymorph", group: "polymorph" },
   { id: [25124, 31729, 31732, 31757], str: "Polymorphed", group: "polymorph" },
   { id: [14026], str: "Death", group: "death" },
   { id: [14674], str: "Blinded", group: "blind" },
-];
+] as const;
+export type ExistingStringReference =
+  (typeof EXISTING_STRING_REFERENCES)[number]["str"];
+export type StringReferenceGroup =
+  (typeof EXISTING_STRING_REFERENCES)[number]["group"];

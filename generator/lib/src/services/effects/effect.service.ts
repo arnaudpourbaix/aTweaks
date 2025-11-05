@@ -34,10 +34,6 @@ class EffectService {
     }
   ): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
-      // if (EFFECT_GROUP_NAMES.includes(effect.opcode)) {
-      //   acc.push(...this.getGroupEffects(effect as RawEffectGroup));
-      //   return acc;
-      // }
       acc.push(this.getEffect(effect, options));
       return acc;
     }, [] as Effect[]);
@@ -51,10 +47,6 @@ class EffectService {
       file?: string;
     }
   ): Effect {
-    // if (EFFECT_GROUP_NAMES.includes(effect.opcode))
-    //   throw new Error(
-    //     `Effects group ${effect.opcode} can't be processed in getEffect`
-    //   );
     this.setDefaultEffectValues(effect, options?.base);
     switch (effect.opcode) {
       case EffectTypeEnum.ArmorClassBonus:
@@ -407,137 +399,6 @@ class EffectService {
     effect.parameter1 = `${effect.value}`;
     effect.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
   }
-
-  getDamageOverTime(rounds: number, effect: DamageEffect): DamageEffect[] {
-    const results: DamageEffect[] = [
-      { ...effect, timing: EffectTimingEnum.InstantPermanent },
-    ];
-    for (let i = 1; i < rounds; i++) {
-      results.push({
-        ...effect,
-        timing: EffectTimingEnum.DelayPermanent,
-        duration: i * 6,
-      });
-    }
-    return results;
-  }
-
-  // getGroupEffects(effect: RawEffectGroup) {
-  //   const groupEffects = EFFECT_GROUPS.find((g) => g.group === effect.opcode);
-  //   if (!groupEffects)
-  //     throw new Error(`Effects group ${effect.opcode} not found`);
-  //   return this.getEffects(groupEffects.effectsFn(effect));
-  // }
-
-  // getCharmEffects(params: {
-  //   charmType: RawCharmType;
-  //   duration: number;
-  //   saveType?: RawSaveType;
-  //   saveBonus?: number;
-  //   dispelResistance?: RawEffectDispelResistance;
-  // }) {
-  //   const effects: RawEffect[] = [
-  //     {
-  //       opcode: "CharmCreature",
-  //       generalType: "HUMANOID",
-  //       charmType: params.charmType,
-  //       timing: "InstantLimited",
-  //       duration: params.duration,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "DisplayString",
-  //       stringRef: StringRefUtils.getStringId("Dire charmed"),
-  //       timing: "InstantPermanentUntilDeath",
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "CharacterColorPulse",
-  //       color: { red: 255, green: 144, blue: 147 },
-  //       location: "ArmorGreyBeltAmulet",
-  //       cycleSpeed: 30,
-  //       timing: "InstantLimited",
-  //       duration: 1,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "PlayVisualEffect",
-  //       playWhere: "OverTargetAttached",
-  //       resource: "SPNWCHRM",
-  //       timing: "InstantLimited",
-  //       duration: 3,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "PlaySound",
-  //       resource: "EFF_E07",
-  //       timing: "DelayLimited",
-  //       duration: params.duration,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //   ];
-  //   return effects;
-  // }
-
-  // getBlindnessEffects(params: {
-  //   duration: number;
-  //   saveType?: RawSaveType;
-  //   saveBonus?: number;
-  //   dispelResistance?: RawEffectDispelResistance;
-  // }) {
-  //   const effects: RawEffect[] = [
-  //     ATWEAKS_SPELLS.ColorSpray,
-  //     ATWEAKS_SPELLS.ColorSprayRadiant,
-  //     SPELLS.ColorSpray,
-  //     SPELLS.MephitColorSpray,
-  //   ].map((s) => ({
-  //     opcode: "ProtectionFromSpell",
-  //     resource: s,
-  //     timing: "InstantLimited",
-  //     duration: params.duration,
-  //     dispelResistance: params.dispelResistance,
-  //     saveTypes: params.saveType ? [params.saveType] : undefined,
-  //     saveBonus: params.saveBonus,
-  //   }));
-  //   effects.push(
-  //     {
-  //       opcode: "Blindness",
-  //       timing: "InstantLimited",
-  //       duration: params.duration,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "DisplayPortraitIcon",
-  //       icon: "Blind",
-  //       timing: "InstantLimited",
-  //       duration: params.duration,
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     },
-  //     {
-  //       opcode: "DisplayString",
-  //       stringRef: StringRefUtils.getStringId("blinded"),
-  //       timing: "InstantPermanentUntilDeath",
-  //       dispelResistance: params.dispelResistance,
-  //       saveTypes: params.saveType ? [params.saveType] : undefined,
-  //       saveBonus: params.saveBonus,
-  //     }
-  //   );
-  //   return effects;
-  // }
 
   setDefaultEffectValues(
     effect: Effect,

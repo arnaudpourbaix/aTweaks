@@ -332,7 +332,7 @@ BEGIN
 
   PATCH_IF doubleApr = 1 BEGIN // Double Attack per round
     LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=16 END
-    LPF ADD_CRE_EFFECT INT_VAR opcode=16 target=1 timing=9 parameter2=1 END
+    LPF ADD_CRE_EFFECT INT_VAR opcode=317 target=1 timing=9 parameter2=1 END
   END
 
   PATCH_IF seeInvisible = 1 BEGIN // See Invisible creatures

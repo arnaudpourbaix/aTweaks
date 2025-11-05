@@ -1,4 +1,6 @@
+import { CREATURES } from "../../creatures";
 import { ANKHEG } from "../../creatures/ankheg/ankheg";
+import { CARRION_CRAWLER } from "../../creatures/carrion/crawler_carrion";
 import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
@@ -13,7 +15,7 @@ import weiduFunctionService from "./weidu/weidu-function.service";
 
 class MainService {
   getCreatures(): Creature[] {
-    const creatures = [ANKHEG]; //CREATURES
+    const creatures = CREATURES;
     const families: MonsterFamilyEnum[] = [];
     creatures.forEach((creature) => {
       creatureService.check(creature);

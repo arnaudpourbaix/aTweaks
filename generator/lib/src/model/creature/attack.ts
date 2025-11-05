@@ -1,6 +1,6 @@
 import { TargetStatusName } from "../../../config/target-name";
-import { Triggers } from "../script/triggers";
 import { TargetPriority } from "../script/target";
+import { Triggers } from "../script/triggers";
 import { WeaponSlot } from "./item";
 
 export interface CreatureAttack {
@@ -69,5 +69,7 @@ export interface CreatureAttackAction {
 }
 
 export type PartialCreatureAttack = Partial<
-  Omit<CreatureAttack, "dualWielding">
+  Omit<CreatureAttack, "dualWielding" | "targetPriorities"> & {
+    targetPriorities?: Partial<TargetPriority>[];
+  }
 >;

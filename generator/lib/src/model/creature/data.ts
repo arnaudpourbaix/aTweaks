@@ -54,7 +54,7 @@ export interface CreatureData {
   armorColor?: number;
   hairColor?: number;
   movement?: number;
-  // doubleApr?: boolean;
+  doubleApr?: boolean;
   // crushingAC?: number;
   // missileAC?: number;
   // piercingAC?: number;

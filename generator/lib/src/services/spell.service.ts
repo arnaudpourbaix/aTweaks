@@ -7,6 +7,7 @@ import {
   SpellTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
+import { PartialProjectile, Projectile } from "../model/spell-item/projectile";
 import {
   PartialSpell,
   PartialSpellHeader,
@@ -24,6 +25,7 @@ class SpellService {
       effects: [],
       headers: [],
       effectFiles: [],
+      projectiles: [],
       ...others,
     };
     for (const header of spell.headers ?? []) {
@@ -60,6 +62,9 @@ class SpellService {
       result.target = ItemAbilityTargetEnum.LivingActor;
     if (spell.options?.addRacialResistances !== false)
       this.addRacialResistances(result, spell);
+    if (typeof result.projectile === "object") {
+      this.addProjectile(spell, result, result.projectile);
+    }
     result.effects = this.getEffects(result.effects, spell, file);
     spell.headers.push(result);
   }
@@ -89,7 +94,7 @@ class SpellService {
           resource: spell.file,
         });
       }
-      this.addEffectFiles(spell, {
+      this.addEffectFile(spell, {
         opcode: EffectTypeEnum.ProtectionFromSpell,
         resource: spell.file,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
@@ -97,12 +102,25 @@ class SpellService {
     }
   }
 
-  private addEffectFiles(spell: Spell, effect: Effect) {
+  private addEffectFile(spell: Spell, effect: Effect) {
     if (!spell.effectFiles.some((e) => e.file === spell.file)) {
+      console.log(`adding effect file ${spell.file} for spell ${spell.name}`);
       spell.effectFiles.push({
         file: spell.file,
         ...effect,
       });
+    }
+  }
+
+  private addProjectile(
+    spell: Spell,
+    header: SpellHeader,
+    projectile: PartialProjectile
+  ) {
+    if (!spell.projectiles.some((p) => p.file === spell.file)) {
+      console.log(`adding projectile ${spell.file} for spell ${spell.name}`);
+      spell.projectiles.push({ file: spell.file, ...projectile });
+      header.projectile = spell.file;
     }
   }
 

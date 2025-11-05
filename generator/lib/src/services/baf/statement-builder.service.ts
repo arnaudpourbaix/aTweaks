@@ -4,7 +4,7 @@ import { POTIONS } from "../../../config/potion";
 import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
-import factoryService from "../../factories/factory.service";
+import bafFactory from "../../factories/factory.service";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import { AllegianceIdentifier } from "../../model/ids/allegiance";
@@ -154,7 +154,7 @@ class StatementService {
           statement.target.limit,
           statement.target.randomOrder
         ) as string[];
-        factoryService.addStatementsFromTargetList({
+        bafFactory.addStatementsFromTargetList({
           statements,
           comment: statement.comment,
           triggers: [...statement.triggers, ...triggers, ...targetTriggers],
@@ -187,13 +187,13 @@ class StatementService {
     statements.push({
       comment: "Initiate dialog",
       triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.dialog, 0),
+        bafFactory.global(GLOBAL_CONFIG.bafConstants.dialog, 0),
         finalNameTrigger,
         { name: "NumTimesTalkedTo", params: [0] },
         { name: "See", params: ["PC"] },
       ],
-      responses: factoryService.response([
-        factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.dialog, 1),
+      responses: bafFactory.response([
+        bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.dialog, 1),
         { name: "FaceObject", params: ["PC"] },
         { name: "StartDialogueNoSet", params: ["PC"] },
       ]),
@@ -218,7 +218,7 @@ class StatementService {
           params: ["NearestEnemyOf", 10],
         },
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 15] },
       ]),
     });
@@ -229,7 +229,7 @@ class StatementService {
           params: ["Myself", "STATE_PANIC"],
         },
       ],
-      responses: factoryService.response([{ name: "RandomWalkContinuous" }]),
+      responses: bafFactory.response([{ name: "RandomWalkContinuous" }]),
     });
   }
 
@@ -242,7 +242,7 @@ class StatementService {
     statements.push({
       comment: "Summons are destroyed on death",
       triggers: [{ name: "Die" }],
-      responses: factoryService.response([{ name: "DestroySelf" }]),
+      responses: bafFactory.response([{ name: "DestroySelf" }]),
     });
   }
 
@@ -253,17 +253,15 @@ class StatementService {
   ): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
-      factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
-      factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+      bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
+      bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
       // factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
-      factoryService.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
+      bafFactory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
     ];
     statements.push({
       comment: "Init",
-      triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
-      ],
-      responses: factoryService.response(actions),
+      triggers: [bafFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0)],
+      responses: bafFactory.response(actions),
     });
   }
 
@@ -274,7 +272,7 @@ class StatementService {
   ): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
-      factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
+      bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
       { name: "Rest" },
     ];
     if (creature.behavior.restHeal)
@@ -285,8 +283,8 @@ class StatementService {
     statements.push({
       comment: "Rest (reset everything and heal if applicable)",
       triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
-        factoryService.globalTimerReallyExpired(
+        bafFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
+        bafFactory.globalTimerReallyExpired(
           GLOBAL_CONFIG.bafConstants.restTimer
         ),
         {
@@ -295,7 +293,7 @@ class StatementService {
           negation: true,
         },
       ],
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
     });
   }
 
@@ -337,7 +335,7 @@ class StatementService {
           ],
         },
       ],
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
     });
     if (["BEAR"].includes(creature.data.race as RaceIdentifier)) {
       statements.push({
@@ -389,7 +387,7 @@ class StatementService {
             params: ["Myself", "NEUTRAL"],
           },
         ],
-        responses: factoryService.response([{ name: "Enemy" }]),
+        responses: bafFactory.response([{ name: "Enemy" }]),
       });
     }
   }
@@ -400,7 +398,7 @@ class StatementService {
     options: BuilderOptions
   ): void {
     const actions: Actions.Action[] = [
-      factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+      bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
     const allegiances: {
       myself: AllegianceIdentifier;
@@ -419,14 +417,14 @@ class StatementService {
       statements.push({
         comment: "Detect combat",
         triggers: [
-          factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+          bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
           {
             name: "Allegiance",
             params: ["Myself", ea.myself],
           },
           { name: "See", params: [ea.enemy] },
         ],
-        responses: factoryService.response(actions),
+        responses: bafFactory.response(actions),
       });
     }
   }
@@ -443,15 +441,15 @@ class StatementService {
     statements.push({
       comment: "Shouts every 3 rounds",
       triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
-        factoryService.globalTimerExpired(GLOBAL_CONFIG.bafConstants.helpTimer),
+        bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+        bafFactory.globalTimerExpired(GLOBAL_CONFIG.bafConstants.helpTimer),
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         {
           name: "Shout",
           params: [shoutId],
         },
-        factoryService.setGlobalTimer(GLOBAL_CONFIG.bafConstants.helpTimer, 18),
+        bafFactory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.helpTimer, 18),
       ]),
     });
     const heardObject = options.summon
@@ -460,23 +458,23 @@ class StatementService {
     statements.push({
       comment: "React to shouts",
       triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+        bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
         { name: "Heard", params: [heardObject, shoutId] },
         { name: "InMyArea", params: [heardObject] },
       ],
-      responses: factoryService.response([
-        factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+      responses: bafFactory.response([
+        bafFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
         { name: "MoveToObject", params: ["LastHeardBy"] },
       ]),
     });
     statements.push({
       triggers: [
-        factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
+        bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
         { name: "Heard", params: [heardObject, shoutId] },
         { name: "InMyArea", params: [heardObject] },
         { name: "See", params: ["GOODCUTOFF"], negation: true },
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "MoveToObject", params: ["LastHeardBy"] },
       ]),
     });
@@ -487,14 +485,14 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    const responses = factoryService.response([{ name: "NoAction" }]);
+    const responses = bafFactory.response([{ name: "NoAction" }]);
     statements.push({
       comment: "Do nothing if...",
       triggers: [
         {
           name: "Or",
           triggers: [
-            factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+            bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
             {
               name: "Allegiance",
               params: ["Myself", "EVILCUTOFF"],
@@ -523,7 +521,7 @@ class StatementService {
   ): void {
     if (!options.summon) return;
     const triggers: Triggers.Trigger[] = [
-      factoryService.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+      bafFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
       {
         name: "StateCheck",
         params: ["Myself", "STATE_BLIND"],
@@ -549,7 +547,7 @@ class StatementService {
     statements.push({
       comment: "Summon follow summoner",
       triggers,
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "MoveToObject", params: ["LastSummonerOf"] },
       ]),
     });
@@ -590,13 +588,13 @@ class StatementService {
       { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
       ...additionals.actions,
     ];
-    factoryService.addStatementsFromTargetList({
+    bafFactory.addStatementsFromTargetList({
       statements,
       comment: "Track players if allegiance is not GOODCUTOFF",
       triggers: [
         allegiance,
         ...triggers,
-        ...factoryService.validTrackTarget({
+        ...bafFactory.validTrackTarget({
           isTargetPlayer: true,
           seeInvisible: utils.hasImmunity(
             creature.additionalData.immunities,
@@ -604,16 +602,16 @@ class StatementService {
           ),
         }),
       ],
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
       targets: targetService.getList("Players"),
     });
-    factoryService.addStatementsFromTargetList({
+    bafFactory.addStatementsFromTargetList({
       statements,
       comment: "Track last seen enemy if allegiance is GOODCUTOFF",
       triggers: [
         { ...allegiance, negation: false },
         ...triggers,
-        ...factoryService.validTrackTarget({
+        ...bafFactory.validTrackTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
             creature.additionalData.immunities,
@@ -621,7 +619,7 @@ class StatementService {
           ),
         }),
       ],
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
       targets: ["LastSeenBy"],
       random: false,
     });
@@ -629,18 +627,14 @@ class StatementService {
       statements.push({
         comment: "Open door",
         triggers: [
-          factoryService.global(
-            GLOBAL_CONFIG.bafConstants.noOpenDoor,
-            0,
-            "GLOBAL"
-          ),
+          bafFactory.global(GLOBAL_CONFIG.bafConstants.noOpenDoor, 0, "GLOBAL"),
           { name: "Allegiance", params: ["Myself", "EVILCUTOFF"] },
           { name: "AreaType", params: ["OUTDOOR"], negation: true },
           { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
           { name: "Range", params: ["NearestDoor", 15] },
           { name: "OpenState", params: ["NearestDoor", "FALSE"] },
         ],
-        responses: factoryService.response([
+        responses: bafFactory.response([
           { name: "MoveToObject", params: ["NearestDoor"] },
           { name: "OpenDoor", params: ["NearestDoor"] },
         ]),
@@ -674,7 +668,7 @@ class StatementService {
     options: BuilderOptions
   ): void {
     const triggers: Triggers.Trigger[] = [
-      factoryService.global(
+      bafFactory.global(
         GLOBAL_CONFIG.bafConstants.combatStarted,
         combat ? 1 : 0
       ),
@@ -688,7 +682,7 @@ class StatementService {
     statements.push({
       comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       triggers,
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "RandomWalk" },
         { name: "Wait", params: [2] },
       ]),
@@ -710,7 +704,7 @@ class StatementService {
           negation: true,
         },
       ],
-      responses: factoryService.response([{ name: "RandomTurn" }]),
+      responses: bafFactory.response([{ name: "RandomTurn" }]),
     });
   }
 
@@ -727,7 +721,7 @@ class StatementService {
           params: ["NearestEnemyOf", 20],
         },
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
       ]),
     });
@@ -751,9 +745,9 @@ class StatementService {
         {
           weight: 50,
           actions: [
-            factoryService.disableInterrupt(),
+            bafFactory.disableInterrupt(),
             { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
-            factoryService.enableInterrupt(),
+            bafFactory.enableInterrupt(),
           ],
         },
         { weight: 50, actions: [{ name: "Continue" }] },
@@ -805,7 +799,7 @@ class StatementService {
       const targets = targetService.getList(targetListName);
       const targetTriggers = [
         ...(statusDetails.targetTriggers as Triggers.Trigger[]),
-        ...factoryService.validAttackTarget({
+        ...bafFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
           seeInvisible: utils.hasImmunity(
             creature.additionalData.immunities,
@@ -825,12 +819,12 @@ class StatementService {
           ? this.selectWeaponStatements(creature, options)
           : [];
 
-      const responses = factoryService.attackResponses({
+      const responses = bafFactory.attackResponses({
         attacks: creature.attack.actions,
         oncePerRound: false,
         weaponAttackSlot,
       });
-      factoryService.addOneBlockTargetList({
+      bafFactory.addOneBlockTargetList({
         statements,
         comment: `Attack ${statusDetails.status} enemy`,
         targetTriggers,
@@ -855,7 +849,7 @@ class StatementService {
           negation: true,
         },
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "EquipRanged" },
         { name: "Continue" },
       ]),
@@ -867,7 +861,7 @@ class StatementService {
           params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
         },
       ],
-      responses: factoryService.response([
+      responses: bafFactory.response([
         { name: "EquipMostDamagingMelee" },
         { name: "Continue" },
       ]),
@@ -885,7 +879,7 @@ class StatementService {
       for (const file of potion.files) {
         const triggers: Triggers.Trigger[] = [
           { name: "HasItem", params: [file, "Myself"] },
-          factoryService.globalRoundTimerExpired(),
+          bafFactory.globalRoundTimerExpired(),
           ...(potion.triggers ?? []),
         ];
         const actions: Actions.Action[] = [
@@ -894,13 +888,13 @@ class StatementService {
             name: "DisplayStringHead",
             params: ["Myself", `@${TraStringReferenceEnum.QuaffPotion}`],
           },
-          factoryService.setGlobalRoundTimer(),
+          bafFactory.setGlobalRoundTimer(),
           { name: "UseItem", params: [file, "Myself"] },
         ];
         statements.push({
           comment: potion.name,
           triggers,
-          responses: factoryService.response(actions),
+          responses: bafFactory.response(actions),
         });
       }
     }
@@ -916,18 +910,18 @@ class StatementService {
       for (const file of ability.files) {
         const triggers: Triggers.Trigger[] = [
           { name: "HaveSpellRES", params: [file] },
-          factoryService.globalRoundTimerExpired(),
+          bafFactory.globalRoundTimerExpired(),
           ...(ability.triggers ?? []),
         ];
         const actions: Actions.Action[] = [
           ...(ability.actions ?? []),
-          factoryService.setGlobalRoundTimer(),
+          bafFactory.setGlobalRoundTimer(),
           { name: "SpellRES", params: [file, "Myself"] },
         ];
         statements.push({
           comment: ability.name,
           triggers,
-          responses: factoryService.response(actions),
+          responses: bafFactory.response(actions),
         });
       }
     }
@@ -995,7 +989,7 @@ class StatementService {
     triggers.unshift(...ability.triggers);
     if (ability.isSpell) {
       targetTriggers.push(
-        ...factoryService.validSpellTarget({
+        ...bafFactory.validSpellTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
             creature.additionalData.immunities,
@@ -1005,7 +999,7 @@ class StatementService {
       );
     } else {
       targetTriggers.push(
-        ...factoryService.validAttackTarget({
+        ...bafFactory.validAttackTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
             creature.additionalData.immunities,
@@ -1016,14 +1010,14 @@ class StatementService {
     }
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
-      triggers.unshift(factoryService.globalTimerExpired(ability.timer.name));
+      triggers.unshift(bafFactory.globalTimerExpired(ability.timer.name));
       actions.unshift(
-        factoryService.setGlobalTimer(ability.timer.name, ability.timer.value)
+        bafFactory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
     if (!ability.noRoundTimer) {
-      triggers.push(factoryService.globalRoundTimerExpired());
-      actions.unshift(factoryService.setGlobalRoundTimer());
+      triggers.push(bafFactory.globalRoundTimerExpired());
+      actions.unshift(bafFactory.setGlobalRoundTimer());
     }
     if (ability.range) {
       targetTriggers.unshift({
@@ -1052,19 +1046,19 @@ class StatementService {
       });
     }
     if (ability.disableInterrupt) {
-      actions.unshift(factoryService.disableInterrupt());
-      actions.push(factoryService.enableInterrupt());
+      actions.unshift(bafFactory.disableInterrupt());
+      actions.push(bafFactory.enableInterrupt());
     }
     const targets = targetService.getTargetFromAbility(
       target.name,
       target.limit,
       target.randomOrder
     ) as string[];
-    factoryService.addStatementsFromTargetList({
+    bafFactory.addStatementsFromTargetList({
       statements,
       comment: ability.name,
       triggers: [...triggers, ...targetTriggers],
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
       targets,
       random: target.random,
       reverse: target.reverse,
@@ -1080,13 +1074,13 @@ class StatementService {
     const triggers = [...ability.triggers];
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
-      triggers.unshift(factoryService.globalTimerExpired(ability.timer.name));
+      triggers.unshift(bafFactory.globalTimerExpired(ability.timer.name));
       actions.push(
-        factoryService.setGlobalTimer(ability.timer.name, ability.timer.value)
+        bafFactory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
-    triggers.unshift(factoryService.globalRoundTimerExpired());
-    actions.unshift(factoryService.setGlobalRoundTimer());
+    triggers.unshift(bafFactory.globalRoundTimerExpired());
+    actions.unshift(bafFactory.setGlobalRoundTimer());
     if (ability.requireVocal) {
       triggers.unshift({
         name: "StateCheck",
@@ -1101,13 +1095,13 @@ class StatementService {
       });
     }
     if (ability.disableInterrupt) {
-      actions.unshift(factoryService.disableInterrupt());
-      actions.push(factoryService.enableInterrupt());
+      actions.unshift(bafFactory.disableInterrupt());
+      actions.push(bafFactory.enableInterrupt());
     }
     statements.push({
       comment: ability.name,
       triggers,
-      responses: factoryService.response(actions),
+      responses: bafFactory.response(actions),
     });
   }
 

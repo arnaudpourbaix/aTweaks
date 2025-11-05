@@ -96,9 +96,9 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, 1);
     this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, 2);
     this.add(lines, `LPF FJ_CRE_VALIDITY END`, 3);
-    this.removeEffects(lines, 3, creature);
-    this.removeKnownSpells(lines, 3, creature);
-    this.removeMemorizedSpells(lines, 3, creature);
+    this.add(lines, `REMOVE_CRE_EFFECTS`, 3);
+    this.add(lines, `REMOVE_KNOWN_SPELLS`, 3);
+    this.add(lines, `REMOVE_MEMORIZED_SPELLS`, 3);
     this.removeItems(lines, 3, creature.additionalData);
     this.addItemSlots({
       lines,
@@ -143,55 +143,6 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "PRINT ~====> CRE %file% not found!~", 2);
     this.add(lines, "END", 1);
     this.add(lines, "END", 0);
-  }
-
-  private removeEffects(lines: CodeLine[], tab: number, creature: Creature) {
-    const files = [
-      ...creature.adjustments.reduce((acc, adjustement) => {
-        if (adjustement.additionalData?.removeEffects === false) {
-          for (const f of adjustement.files) acc.add(f);
-        }
-        return acc;
-      }, new Set<string>()),
-    ];
-    this.executeCodeWithExcludedFiles(lines, tab, `REMOVE_CRE_EFFECTS`, files);
-  }
-
-  private removeKnownSpells(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature
-  ) {
-    const files = [
-      ...creature.adjustments.reduce((acc, adjustement) => {
-        if (adjustement.additionalData?.removeKnownSpells === false) {
-          for (const f of adjustement.files) acc.add(f);
-        }
-        return acc;
-      }, new Set<string>()),
-    ];
-    this.executeCodeWithExcludedFiles(lines, tab, `REMOVE_KNOWN_SPELLS`, files);
-  }
-
-  private removeMemorizedSpells(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature
-  ) {
-    const files = [
-      ...creature.adjustments.reduce((acc, adjustement) => {
-        if (adjustement.additionalData?.removeMemorizedSpells === false) {
-          for (const f of adjustement.files) acc.add(f);
-        }
-        return acc;
-      }, new Set<string>()),
-    ];
-    this.executeCodeWithExcludedFiles(
-      lines,
-      tab,
-      `REMOVE_MEMORIZED_SPELLS`,
-      files
-    );
   }
 
   private removeItems(
@@ -374,7 +325,10 @@ class WeiduCreatureService extends AbstractWeiduService {
       });
     }
     for (const adjustment of creature.adjustments) {
-      if (adjustment.additionalData.scriptLocation) {
+      if (
+        adjustment.additionalData.scriptLocation &&
+        adjustment.additionalData.scriptLocation !== "None"
+      ) {
         this.patchScript({
           lines,
           tab,
@@ -403,7 +357,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     let removeScripts = "";
     let skipFiles = "";
     let files = "";
-    if (p.removeScripts.length) {
+    if (p.removeScripts.length && !p.files.length) {
       this.add(
         p.lines,
         `DEFINE_ARRAY removeScripts BEGIN ${p.removeScripts.join(" ")} END`,
@@ -411,7 +365,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       );
       removeScripts = " removeScripts";
     }
-    if (p.skipFiles.length) {
+    if (p.skipFiles.length && !p.files.length) {
       this.add(
         p.lines,
         `DEFINE_ARRAY skipFiles BEGIN ${p.skipFiles.join(" ")} END`,

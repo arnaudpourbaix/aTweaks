@@ -2,7 +2,7 @@
 
 DEFINE_PATCH_FUNCTION abilityDrain_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791 26184" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="19 15 44 10" strings="14791 26184 23744" END
 END
 
 DEFINE_PATCH_FUNCTION acid_immunity
@@ -80,7 +80,7 @@ END
 
 DEFINE_PATCH_FUNCTION charm_immunity
 BEGIN
-	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="5 241" prevent_icons="0 1 43" strings="26206 14672 31787 14780 158915" animations="SPNWCHRM" END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="5 241" prevent_icons="0 1 43" strings="26328 26206 14672 31787 14780 158915" animations="SPNWCHRM" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)) special=1 END
 END
 
@@ -117,7 +117,7 @@ BEGIN
 	INNER_ACTION BEGIN
 		LAF get_confusion_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791 26184 14782 25807" animations="SPCONFUS" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR displaySpellIneffective=1 STR_VAR effects="128" prevent_icons="3" strings="14791 26184 23744 14782 25807" animations="SPCONFUS" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~CONFUSION_IMMUNITY~)) special=1 END
 END
 

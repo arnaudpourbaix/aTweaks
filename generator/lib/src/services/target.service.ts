@@ -21,6 +21,7 @@ import { SpecificIdentifier } from "../model/ids/specific";
 import { Triggers } from "../model/script/triggers";
 import utils from "./utils/utils.service";
 import { GRAB_DEFAULT_CONFIG } from "../model/creature/grab";
+import { PartialCreatureAttack } from "../model/creature/attack";
 
 class TargetService {
   targetObject(p: {
@@ -81,9 +82,12 @@ class TargetService {
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(creature: Creature): TargetPriority[] {
+  getTargetPriorities(
+    creature: Creature,
+    attack: PartialCreatureAttack
+  ): TargetPriority[] {
     const defaults = this.getDefaultStatus(creature);
-    const targetPriorities = creature.attack?.targetPriorities ?? [];
+    const targetPriorities = attack.targetPriorities ?? [];
     const results: TargetPriority[] = [];
     for (const t of targetPriorities) {
       if (!t.status && !t.targets)

@@ -29,7 +29,7 @@ export interface CreatureAdditionalData {
   deleteEffectOpcodes: EffectTypeEnum[];
   removeEffects: boolean;
   effects: Effect[];
-  movement?: { value: number };
+  movement: { value: number };
 }
 
 export interface MemorizedSpell {
@@ -61,6 +61,7 @@ export const ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
   deleteEffectOpcodes: [],
   removeEffects: true,
   effects: [],
+  movement: { value: -1 },
 };
 
 export const ADJUSTMENT_ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {

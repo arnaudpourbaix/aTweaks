@@ -72,7 +72,7 @@ class WeiduProjectileService extends AbstractWeiduService {
     }
     this.add(
       lines,
-      `ADD_PROJECTILE ~override/${projectile.file}.pro~ ~${projectile.description}~`,
+      `ADD_PROJECTILE ~override/${projectile.file}.pro~ ~${projectile.name}~`,
       0
     );
     this.add(lines, "", 0);

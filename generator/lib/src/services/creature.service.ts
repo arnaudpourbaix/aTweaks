@@ -56,10 +56,6 @@ class CreatureService {
         `${figureSet.arrowRight} setting dual wield: ${data.apr} APR +1 offhand`
       );
     }
-    if (additionalData.movement) {
-      data.movement = this.convertMovement(additionalData.movement.value);
-      console.log(`${figureSet.arrowRight} movement set to ${data.movement}`);
-    }
     if (data.dexterity !== undefined && data.ac !== undefined) {
       const bonus = this.getDexterityArmorClassBonus(data);
       if (bonus) {
@@ -71,14 +67,8 @@ class CreatureService {
         data.ac -= bonus;
       }
     }
-    this.transformAttackPerRound(p.creature.data); //TODO: doc needs to show real APR value
-    const movement = data.movement ?? p.creature.data.movement;
-    if (data.kit === "BARBARIAN" && movement) {
-      data.movement = movement + 2;
-      console.log(
-        `${figureSet.arrowRight} movement increased to ${data.movement} (barbarian): `
-      );
-    }
+    this.checkMovement(p);
+    this.transformAttackPerRound(p.creature.data);
     if (data.kit === "BARBARIAN") {
       additionalData.immunities.push("backstab");
     }
@@ -90,30 +80,52 @@ class CreatureService {
     });
   }
 
-  private transformAttackPerRound(creature?: CreatureData) {
-    if (!creature || !creature.apr) return;
+  private checkMovement(p: {
+    creature: Creature;
+    base: BaseCreature;
+    isAdjustment: boolean;
+  }) {
+    const data = p.base.data;
+    const additionalData = p.base.additionalData;
+    if (additionalData.movement.value === -1 && !p.isAdjustment)
+      throw new Error("movement not set !");
+    if (additionalData.movement.value > -1) {
+      data.movement = this.convertMovement(additionalData.movement.value);
+      console.log(`${figureSet.arrowRight} movement set to ${data.movement}`);
+    }
+    const movement = data.movement ?? p.creature.data.movement;
+    if (data.kit === "BARBARIAN" && movement) {
+      data.movement = movement + 2;
+      console.log(
+        `${figureSet.arrowRight} movement increased to ${data.movement} (barbarian): `
+      );
+    }
+  }
+
+  private transformAttackPerRound(data?: CreatureData) {
+    if (!data || !data.apr) return;
     try {
-      return this.getAttacksPerRound(creature.apr);
+      return this.getAttacksPerRound(data.apr);
     } catch {
-      // creature.doubleApr = true; // TODO:
-      if (creature.movement) {
-        creature.movement = Math.round(creature.movement / 2);
+      data.doubleApr = true;
+      if (data.movement) {
+        data.movement = Math.round(data.movement / 2);
       }
-      switch (creature.apr) {
+      switch (data.apr) {
         case 6:
-          creature.apr = 3;
+          data.apr = 3;
           break;
         case 7:
-          creature.apr = 9;
+          data.apr = 9;
           break;
         case 8:
-          creature.apr = 4;
+          data.apr = 4;
           break;
         case 9:
-          creature.apr = 10;
+          data.apr = 10;
           break;
         case 10:
-          creature.apr = 5;
+          data.apr = 5;
           break;
       }
     }

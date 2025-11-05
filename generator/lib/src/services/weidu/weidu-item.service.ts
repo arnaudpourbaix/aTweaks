@@ -66,10 +66,14 @@ class WeiduItemService extends AbstractWeiduService {
       this.write(lines, 0x8a, 1, item.header.diceThrown, 2);
       this.write(lines, 0x8c, 2, item.header.damageBonus, 2);
       this.write(lines, 0x8e, 2, item.header.damageType, 2);
-      const projectile = item.header.projectile
-        ? `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`
-        : "";
-      this.write(lines, 0x9c, 2, projectile, 2);
+      if (item.header.projectile) {
+        if (typeof item.header.projectile !== "string")
+          throw new Error(`Unhandled projectile!`);
+        const projectile = item.header.projectile
+          ? `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`
+          : "";
+        this.write(lines, 0x9c, 2, projectile, 2);
+      }
     }
     if (item.header) this.createItemHeader(lines, item.header, 1);
     this.add(lines, `END`, 1);

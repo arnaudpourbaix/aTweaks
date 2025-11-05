@@ -1,5 +1,10 @@
 import { SpellProtectionName } from "../../../config/spell-protection-name";
-import { TranslationKey } from "../../../translations/i18n";
+import { StringReference } from "../final/stringref";
+import { AnimationIdentifiers } from "../ids/animate";
+import { GeneralIdentifier } from "../ids/general";
+import { SlotIdentifier } from "../ids/slot";
+import { SplStateIdentifier } from "../ids/splstate";
+import { StatsIdentifier } from "../ids/stats";
 import {
   AnimationChangeTypeEnum,
   AttackModifierTypeEnum,
@@ -21,18 +26,21 @@ import {
   EffectColorLocationEnum,
   EffectDamageModeEnum,
   EffectDamageTypeEnum,
+  EffectDispelResistanceEnum,
+  EffectFlagsEnum,
   EffectHasteTypeEnum,
   EffectIDSFileEnum,
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
+  EffectTargetEnum,
   EffectTeleportTypeEnum,
+  EffectTimingEnum,
   EffectVisualEffectLocationEnum,
   InvisibilityTypeEnum,
   KillTargetDeathTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
   OverrideCreatureDataFieldEnum,
-  PnPPoisonType,
   PoisonTypeEnum,
   PolymorphTypeEnum,
   PortraitIconEnum,
@@ -40,26 +48,14 @@ import {
   ProtectionFromWeaponsTypeEnum,
   RegenerationTypeEnum,
   RemoveEffectsByResourceTypeEnum,
+  SaveTypeEnum,
   SetAnimationSequenceEnum,
   SummonCreatureModeEnum,
   TranslucencyTypeEnum,
   WingBuffetDirectionEnum,
 } from "./effect.enums";
-import { AnimationIdentifiers } from "../ids/animate";
-import { GeneralIdentifier } from "../ids/general";
-import { SlotIdentifier } from "../ids/slot";
-import { SplStateIdentifier } from "../ids/splstate";
-import { StatsIdentifier } from "../ids/stats";
-import { SpellProtection } from "./spell-protection";
-import {
-  EffectDispelResistanceEnum,
-  EffectFlagsEnum,
-  EffectTargetEnum,
-  EffectTimingEnum,
-  SaveTypeEnum,
-} from "./effect.enums";
 import { EffectTypeEnum } from "./effect.type";
-import { StringReference } from "../final/stringref";
+import { SpellProtection } from "./spell-protection";
 
 export interface BaseEffect {
   target?: EffectTargetEnum;
@@ -513,27 +509,7 @@ export type ParamLessEffect = BaseEffect & {
     | EffectTypeEnum.Web;
 };
 
-// export type ParamlessEffectGroup = BaseEffect & {
-//   opcode: "RestrainedEffects" | "CureAllEffects";
-// };
-
-// export type ParalyzeEffectGroup = BaseEffect & {
-//   opcode: EffectTypeEnum.ParalyzeEffects;
-//   lightningEffect: LightingEffectEnum;
-// };
-
-// export type PoisonTypeEffectGroup = BaseEffect & {
-//   opcode: EffectTypeEnum.PoisonTypeEffects;
-//   poisonType: PnPPoisonType;
-// };
-
-// export type EffectGroup =
-//   | ParamlessEffectGroup
-//   | ParalyzeEffectGroup
-//   | PoisonTypeEffectGroup;
-
 export type Effect =
-  // | EffectGroup
   | ParamLessEffect
   | AnimationChangeEffect
   | ArmorClassBonusEffect

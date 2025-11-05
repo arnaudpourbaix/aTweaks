@@ -124,6 +124,6 @@ export interface CreatureAdjustment extends BaseCreature {
 }
 
 export type PartialCreatureAdjustment = PartialBy<
-  CreatureAdjustment,
-  "summon" | "noWeapon" | "data" | "additionalData"
->;
+  Omit<CreatureAdjustment, "additionalData">,
+  "summon" | "noWeapon" | "data"
+> & { additionalData?: Partial<CreatureAdditionalData> };

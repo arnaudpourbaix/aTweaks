@@ -1,15 +1,14 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { CreatureAttackAction } from "../model/creature/attack";
-import { Response, Statements } from "../model/script/script";
+import { WEAPON_SLOTS, WeaponSlot } from "../model/creature/item";
 import { ObjectIdentifier } from "../model/ids/object";
-import { SlotIdentifier } from "../model/ids/slot";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Actions } from "../model/script/actions";
+import { Response, Statements } from "../model/script/script";
 import { Triggers } from "../model/script/triggers";
 import utils from "../services/utils/utils.service";
-import { WEAPON_SLOTS, WeaponSlot } from "../model/creature/item";
 
-class FactoryService {
+class BafFactory {
   response = (actions: Actions.Action[], weight = 100): Response[] => [
     { weight, actions },
   ];
@@ -329,5 +328,5 @@ class FactoryService {
   };
 }
 
-const factoryService = new FactoryService();
-export default factoryService;
+const bafFactory = new BafFactory();
+export default bafFactory;

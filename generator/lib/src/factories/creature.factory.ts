@@ -197,10 +197,11 @@ class CreatureFactory {
 
   isValid(cre: Creature) {
     let valid = true;
-    if (!cre.attack) {
-      console.log(`${figureSet.warning} No attack defined`);
-      valid = false;
-    }
+    cre.attack = cre.attack ?? {};
+    // if (!cre.attack) {
+    //   console.log(`${figureSet.warning} No attack defined`);
+    //   valid = false;
+    // }
     if (!cre.additionalData) {
       console.log(`${figureSet.warning} No additional data defined`);
       valid = false;
@@ -277,7 +278,7 @@ class CreatureFactory {
       melee: attack.melee ?? true,
       ranged: attack.ranged ?? false,
       dualWielding: false,
-      targetPriorities: targetService.getTargetPriorities(cre),
+      targetPriorities: targetService.getTargetPriorities(cre, attack),
       targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
       selectWeapons: attack.selectWeapons ?? [],
     };

@@ -1,5 +1,8 @@
-import { EXISTING_STRING_REFERENCES } from "../../../config/stringRef";
-import { StringReferenceGroup } from "../../../config/stringRef-groups";
+import {
+  EXISTING_STRING_REFERENCES,
+  ExistingStringReference,
+  StringReferenceGroup,
+} from "../../../config/stringRef";
 
 export namespace StringRefUtils {
   export function getStringIds(
@@ -13,10 +16,8 @@ export namespace StringRefUtils {
       .flat();
     return results;
   }
-  export function getStringId(str: string): number {
-    const result = EXISTING_STRING_REFERENCES.find(
-      (s) => s.str.toLowerCase() === str.toLowerCase()
-    );
+  export function getStringId(str: ExistingStringReference): number {
+    const result = EXISTING_STRING_REFERENCES.find((s) => s.str === str);
     if (!result) throw new Error(`Stringref ${str} not found !`);
     if (!result.id[0])
       throw new Error(`Stringref ${str} has been found but no id configured !`);

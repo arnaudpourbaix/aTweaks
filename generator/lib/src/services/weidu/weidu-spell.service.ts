@@ -3,6 +3,7 @@ import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
 import translationService from "../translation.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
+import weiduProjectileService from "./weidu-projectile.service";
 
 class WeiduSpellService extends AbstractWeiduService {
   createSpells(lines: CodeLine[], spells: Spell[]) {
@@ -14,8 +15,10 @@ class WeiduSpellService extends AbstractWeiduService {
 
   createSpell(lines: CodeLine[], spell: Spell, tab: number) {
     this.add(lines, `// ${translationService.from(spell.name)}`);
-    if (spell.effectFiles)
-      weiduEffectService.createEffectFiles(lines, spell.effectFiles, tab);
+    weiduEffectService.createEffectFiles(lines, spell.effectFiles, tab);
+    for (const projectile of spell.projectiles) {
+      weiduProjectileService.createProjectile(lines, projectile);
+    }
     if (spell.copyFrom) {
       this.add(
         lines,
@@ -105,10 +108,13 @@ class WeiduSpellService extends AbstractWeiduService {
     if (header.range) intVars.push(`range=${header.range}`);
     if (header.minLevel) intVars.push(`required_level=${header.minLevel}`);
     if (header.speed) intVars.push(`speed=${header.speed}`);
-    if (header.projectile)
+    if (header.projectile) {
+      if (typeof header.projectile !== "string")
+        throw new Error(`Unhandled projectile!`);
       intVars.push(
         `projectile=(IDS_OF_SYMBOL (~projectl~ ~${header.projectile}~)) + 1`
       );
+    }
     const icon = header.icon ? ` STR_VAR icon="${header.icon}"` : "";
     this.add(
       lines,

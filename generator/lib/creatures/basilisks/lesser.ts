@@ -1,77 +1,18 @@
-import { GLOBAL_CONFIG } from "../../config/generate";
 import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import { TraStringReferenceEnum } from "../../config/stringRef";
-import { RawCreatureAbility } from "../../src/model/raw/ability";
-import { RawCreature } from "../../src/model/raw/creature";
-import { RawSaveType } from "../../src/model/raw/enum";
-import { bafFile, getFilename } from "../../src/services/misc.func";
-import { MonsterEnum } from "../monster";
+import creatureFactory from "../../src/factories/creature.factory";
+import {
+  AbilityDamageTypeEnum,
+  ItemAbilityFlagEnum,
+  ItemAbilityTypeEnum,
+} from "../../src/model/spell-item/effect.enums";
+import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+import { petrification2e, createPetrificationAbility } from "./petrification";
 
-// Creature Id
-const id = MonsterEnum.LesserBasilisk;
-// Script
-const script = bafFile(id);
-// Spells
-export const petrification2e = getFilename(1, id);
-export const petrification5e = getFilename(2, id);
-const petrification5eTechnical = getFilename(3, id);
-// Items
-const mainWeapon = getFilename(1, id);
-// Projectiles
-export const basiliskGazeProjectile = getFilename(1, id);
-
-const petrificationSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
-  saveTypes: ["PetrifyPolymorph"],
-  saveBonus: -4,
-};
-
-export const petrificationAbility: RawCreatureAbility = {
-  name: "Petrification (2e)",
-  target: {
-    name: "NearestEnemies",
-    random: true,
-  },
-  spell: {
-    resource: petrification2e,
-    type: "force",
-  },
-};
-
-export const petrification5eAbility: RawCreatureAbility = {
-  name: "Petrification (5e)",
-  target: {
-    name: "NearestEnemies",
-    random: true,
-    triggers: [
-      {
-        name: "HaveSpellRES",
-        params: [petrification5e],
-      },
-      {
-        name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-        negation: true,
-      },
-      {
-        name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-        negation: true,
-      },
-    ],
-  },
-  spell: {
-    resource: petrification5e,
-    type: "force",
-  },
-};
-
-export const BASILISK_LESSER: RawCreature = {
-  name: "Lesser Basilisk",
-  bafFile: `lib/pnp-monster/basilisk/${script}`,
-  tpaFile: "lib/pnp-monster/basilisk/lesser",
-  tracking: true,
-  combatWalk: true,
+const cre = creatureFactory.create({
+  monster: MonsterEnum.LesserBasilisk,
+  family: MonsterFamilyEnum.Basilisk,
+  name: "monster.basilisk.lesser",
+  files: ["BASILL", "BASILLSU", "BPBASL01"],
   data: {
     level1: 6,
     bonusHp: 1,
@@ -81,195 +22,52 @@ export const BASILISK_LESSER: RawCreature = {
     intelligence: 2,
     wisdom: 8,
     charisma: 7,
-    movement: 6,
     ac: 4,
     apr: 1,
     xpv: 1400,
     alignment: "NEUTRAL",
     morale: 12,
-    moraleBreak: 4,
-    moraleRecovery: 15,
     general: "MONSTER",
     race: "BASILISK",
     class: "BASILISK",
     gender: "NIETHER",
     size: "Medium",
   },
-  additionalData: {
-    removeItems: ["BASILL1", "BASILL2"],
-    removeScripts: ["LBASILSK"],
-  },
-  abilities: [petrificationAbility],
-  items: [
-    {
-      file: mainWeapon,
-      equippedSlot: "WEAPON1",
-      icon: MonsterItemIconEnum.Wolf,
-      type: "Melee",
+});
+export const BASILISK_LESSER = cre;
+
+cre.setAdditionalData({
+  movement: { value: 6 },
+  immunities: ["magicalBeast"],
+  removeItems: ["BASILL1", "BASILL2"],
+  removeScripts: ["LBASILSK"],
+});
+
+cre.addWeapon({
+  weapon: {
+    stringRef: "monster.basilisk.weapon.jaws",
+    equippedSlot: ["WEAPON1"],
+    icon: MonsterItemIconEnum.Jaws,
+    header: {
+      type: ItemAbilityTypeEnum.Melee,
       diceThrown: 1,
       diceSize: 10,
-      damageType: "Slashing",
-      speed: 3,
-      abilityFlags: ["AddStrengthBonus"],
+      damageType: AbilityDamageTypeEnum.Piercing,
+      speed: 5,
+      abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
     },
-  ],
-  projectiles: [
-    {
-      file: basiliskGazeProjectile,
-      copyFromFile: "gaze",
-      description: "Basilisk petrifying gaze",
-      type: "AreaOfEffect",
-      areaEffectInfo: {
-        areaProjectileFlags: ["AffectOnlyEnemies", "Coneshaped"],
-        triggerRadius: 255,
-        areaOfEffect: 255,
-        coneWidth: 60,
-        fragmentAnimation: "NULL_ANIMATION",
-        explosionEffect: "NONE",
-      },
-    },
-  ],
-  spells: [
-    {
-      name: "Petrification (2e)",
-      file: petrification2e,
-      memorizedCount: 1,
-      stringRef: TraStringReferenceEnum.PetrifyingGaze,
-      description: [
-        "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
-      ],
-      secondaryType: "Disabling",
-      infiniteUse: 1,
-      icon: SPELLS.FleshToStone,
-      headers: [
-        {
-          type: "Ranged",
-          projectile: basiliskGazeProjectile,
-          range: 30,
-          effects: [
-            {
-              opcode: "Petrification",
-              ...petrificationSave,
-            },
-            {
-              opcode: "DisplayString",
-              stringRef: TraStringReferenceEnum.Petrified,
-              ...petrificationSave,
-            },
-            {
-              opcode: "PlaySound",
-              resource: "MISC_06B",
-              ...petrificationSave,
-            },
-            {
-              opcode: "PlayVisualEffect",
-              playWhere: "OverTargetUnattached",
-              resource: "SPFLESHS.VVC",
-              ...petrificationSave,
-            },
-            {
-              opcode: "CreatureRGBColorFade",
-              color: { blue: 120, red: 120, green: 120 },
-              fadeSpeed: 25,
-              ...petrificationSave,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Petrification (5e)",
-      file: petrification5e,
-      //memorizedCount: 1,
-      infiniteUse: 1,
-      icon: SPELLS.FleshToStone,
-      stringRef: TraStringReferenceEnum.PetrifyingGaze,
-      description: [
-        "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4.",
-        "On a failed save, the creature magically begins to turn to stone and is restrained.",
-        "It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.",
-      ],
-      secondaryType: "Disabling",
-      headers: [
-        {
-          type: "Ranged",
-          projectile: basiliskGazeProjectile,
-          range: 30,
-          effects: [
-            {
-              opcode: "DisplayString",
-              stringRef: TraStringReferenceEnum.TurningToStone,
-              ...petrificationSave,
-            },
-            {
-              opcode: "RestrainedEffects",
-              duration: 12,
-              ...petrificationSave,
-            },
-            {
-              opcode: "CastSpell",
-              timing: "DelayLimited",
-              duration: 12,
-              type: "CastInstantlyAtCasterLevel",
-              resource: petrification5eTechnical,
-              ...petrificationSave,
-            },
-            {
-              opcode: "ProtectionFromSpell",
-              timing: "DelayLimited",
-              duration: 12,
-              resource: petrification5e,
-              ...petrificationSave,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Petrification (5e, technical)",
-      stringRef: TraStringReferenceEnum.PetrifyingGaze,
-      file: petrification5eTechnical,
-      secondaryType: "Disabling",
-      headers: [
-        {
-          type: "Ranged",
-          effects: [
-            {
-              opcode: "Petrification",
-              timing: "InstantPermanent",
-              ...petrificationSave,
-            },
-            {
-              opcode: "DisplayString",
-              stringRef: TraStringReferenceEnum.Petrified,
-              timing: "InstantPermanent",
-              ...petrificationSave,
-            },
-            {
-              opcode: "PlaySound",
-              resource: "MISC_06B",
-              timing: "InstantPermanent",
-              ...petrificationSave,
-            },
-            {
-              opcode: "PlayVisualEffect",
-              playWhere: "OverTargetUnattached",
-              resource: "SPFLESHS.VVC",
-              timing: "InstantPermanent",
-              ...petrificationSave,
-            },
-            {
-              opcode: "CreatureRGBColorFade",
-              color: { blue: 120, red: 120, green: 120 },
-              fadeSpeed: 25,
-              timing: "InstantPermanent",
-              ...petrificationSave,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  files: ["BASILL", "BASILLSU", "BPBASL01"],
-  adjustments: [{ files: ["BASILLSU"], summon: true }],
-};
+  },
+});
+
+export const petrificationSpell = cre.addSpell(petrification2e);
+export const petrificationAbility = createPetrificationAbility(
+  petrificationSpell.file
+);
+
+cre.setBehavior({
+  tracking: true,
+  combatWalk: true,
+  abilities: [petrificationAbility],
+});
+
+cre.setAdjustments([{ files: ["BASILLSU"], summon: true }]);

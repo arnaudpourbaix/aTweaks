@@ -6,9 +6,12 @@ import { State } from "../state";
 import itemService from "./item.service";
 import translationService from "./translation.service";
 import creatureService from "./creature.service";
+import { Item, Spell } from "../model/spell-item/spell-item";
 
 class DocumentationService {
   private monsters: string[] = [];
+  private spells: Spell[] = [];
+  private items: Item[] = [];
 
   generate() {
     let content = fs.readFileSync("lib/templates/index.html").toString();
@@ -22,6 +25,8 @@ class DocumentationService {
   }
 
   addCreature(creature: Creature) {
+    this.spells.push(...creature.spells);
+    this.items.push(...creature.items);
     let content = fs.readFileSync("lib/templates/monster.html").toString();
     let template = { text: content };
     let str = `${creature.data.strength}`;
@@ -40,7 +45,11 @@ class DocumentationService {
     this.replace(template, "level", creature.data.level1);
     this.replace(template, "hp", creature.data.hp);
     this.replace(template, "thac0", creature.data.thac0);
-    this.replace(template, "apr", creature.data.apr);
+    this.replace(
+      template,
+      "apr",
+      creature.data.apr! * (creature.data.doubleApr ? 2 : 1)
+    );
     this.replace(template, "size", creature.data.size);
     this.replace(template, "morale", creature.data.morale);
     this.replace(template, "xp", creature.data.xpv);
@@ -58,7 +67,7 @@ class DocumentationService {
         if (weapon && weapon.doc) {
           attacks += `<div class="weapon">${translationService.from(
             weapon.description!
-          )}</div>`;
+          )}</div><hr/>`;
         }
       }
     }
@@ -90,13 +99,20 @@ class DocumentationService {
   getCreatureSpells(template: { text: string }, creature: Creature) {
     let spells = "";
     for (const memorized of creature.additionalData.memorizedSpells) {
-      const spell = creature.spells.find((s) => s.file === memorized.file);
+      const spell = this.spells.find((s) => s.file === memorized.file);
       if (spell && spell.doc) {
-        spells += `<h5>${translationService.from(spell.name!)} (${
-          memorized.memorizedCount
-        }/day)</h5>`;
+        const quantity =
+          spell.options?.renew !== undefined
+            ? "at will"
+            : `${memorized.memorizedCount}/day`;
+        spells += `<h5>${translationService.from(
+          spell.name!
+        )} (${quantity})</h5>`;
         spells += `<p>${translationService.from(spell.description!)}</p>`;
       }
+    }
+    if (spells) {
+      spells = `<h4>Abilities</h4><div class="abilities">${spells}</div>`;
     }
     this.replace(template, "abilities", spells);
   }

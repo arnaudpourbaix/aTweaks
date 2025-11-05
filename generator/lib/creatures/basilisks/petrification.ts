@@ -1,115 +1,225 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { SPELLS } from "../../config/spell-names";
-import { TraStringReferenceEnum } from "../../config/stringRef";
-import { RawCreatureAbility } from "../../src/model/raw/ability";
-import { RawSaveType } from "../../src/model/raw/enum";
-import { RawProjectile } from "../../src/model/raw/projectile";
-import { RawSpell } from "../../src/model/raw/spell";
+import effectFactory from "../../src/factories/effect.factory";
+import { RawCreatureAbility } from "../../src/model/creature/ability";
+import {
+  EffectCastSpellTypeEnum,
+  EffectTimingEnum,
+  EffectVisualEffectLocationEnum,
+  ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTypeEnum,
+  SaveTypeEnum,
+} from "../../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
+import {
+  AreaProjectileEnum,
+  PartialProjectile,
+  ProjectileAnimationEnum,
+  ProjectileExplosionEffectEnum,
+  ProjectileTypeEnum,
+} from "../../src/model/spell-item/projectile";
+import { PartialSpell } from "../../src/model/spell-item/spell-item";
 
-// const petrificationSave: { saveTypes: RawSaveType[]; saveBonus: number } = {
-//   saveTypes: ["PetrifyPolymorph"],
-//   saveBonus: -4,
-// };
+const petrificationSave: { saveTypes: SaveTypeEnum[]; saveBonus: number } = {
+  saveTypes: [SaveTypeEnum.PetrifyPolymorph],
+  saveBonus: -4,
+};
 
-// const projectile: RawProjectile = {
-//   file: basiliskGazeProjectile,
-//   copyFromFile: "gaze",
-//   description: "Basilisk petrifying gaze",
-//   type: "AreaOfEffect",
-//   areaEffectInfo: {
-//     areaProjectileFlags: ["AffectOnlyEnemies", "Coneshaped"],
-//     triggerRadius: 255,
-//     areaOfEffect: 255,
-//     coneWidth: 60,
-//     fragmentAnimation: "NULL_ANIMATION",
-//     explosionEffect: "NONE",
-//   },
-// };
+const projectile: PartialProjectile = {
+  copyFromFile: "gaze",
+  name: "Basilisk petrifying gaze",
+  type: ProjectileTypeEnum.AreaOfEffect,
+  areaEffectInfo: {
+    areaProjectileFlags: [
+      AreaProjectileEnum.AffectOnlyEnemies,
+      AreaProjectileEnum.Coneshaped,
+    ],
+    triggerRadius: 255,
+    areaOfEffect: 255,
+    coneWidth: 60,
+    fragmentAnimation: ProjectileAnimationEnum.NULL_ANIMATION,
+    explosionEffect: ProjectileExplosionEffectEnum.NONE,
+  },
+};
 
-// export const petrificationAbility: RawCreatureAbility = {
-//   name: "Petrification (2e)",
-//   target: {
-//     name: "NearestEnemies",
-//     random: true,
-//   },
-//   spell: {
-//     resource: petrification2e,
-//     type: "force",
-//   },
-// };
+export const petrification2e: PartialSpell = {
+  name: "monster.basilisk.petrifyingGaze.name",
+  description: "monster.basilisk.petrifyingGaze.description",
+  secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+  memorizedCount: 1,
+  options: {
+    renew: 1,
+  },
+  icon: SPELLS.FleshToStone,
+  headers: [
+    {
+      type: ItemAbilityTypeEnum.Ranged,
+      projectile,
+      range: 30,
+      effects: [
+        {
+          opcode: EffectTypeEnum.Petrification,
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.DisplayString,
+          stringRef: "monster.basilisk.petrifyingGaze.petrified",
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.PlaySound,
+          resource: "MISC_06B",
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.PlayVisualEffect,
+          playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
+          resource: "SPFLESHS.VVC",
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.CreatureRGBColorFade,
+          color: { blue: 120, red: 120, green: 120 },
+          fadeSpeed: 25,
+          ...petrificationSave,
+        },
+      ],
+    },
+  ],
+};
 
-// export const petrification5eAbility: RawCreatureAbility = {
-//   name: "Petrification (5e)",
-//   target: {
-//     name: "NearestEnemies",
-//     random: true,
-//     triggers: [
-//       {
-//         name: "HaveSpellRES",
-//         params: [petrification5e],
-//       },
-//       {
-//         name: "CheckStatGT",
-//         params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-//         negation: true,
-//       },
-//       {
-//         name: "StateCheck",
-//         params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-//         negation: true,
-//       },
-//     ],
-//   },
-//   spell: {
-//     resource: petrification5e,
-//     type: "force",
-//   },
-// };
+export const petrification5eTechnical: PartialSpell = {
+  memorizedCount: 1,
+  name: "monster.basilisk.petrifyingGaze.name",
+  description: "monster.basilisk.petrifyingGaze.description",
+  secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+  icon: SPELLS.FleshToStone,
+  headers: [
+    {
+      type: ItemAbilityTypeEnum.Ranged,
+      projectile,
+      range: 30,
+      effects: [
+        {
+          opcode: EffectTypeEnum.Petrification,
+          timing: EffectTimingEnum.InstantPermanent,
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.DisplayString,
+          stringRef: "monster.basilisk.petrifyingGaze.petrified",
+          timing: EffectTimingEnum.InstantPermanent,
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.PlaySound,
+          resource: "MISC_06B",
+          timing: EffectTimingEnum.InstantPermanent,
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.PlayVisualEffect,
+          playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
+          resource: "SPFLESHS.VVC",
+          timing: EffectTimingEnum.InstantPermanent,
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.CreatureRGBColorFade,
+          color: { blue: 120, red: 120, green: 120 },
+          fadeSpeed: 25,
+          timing: EffectTimingEnum.InstantPermanent,
+          ...petrificationSave,
+        },
+      ],
+    },
+  ],
+};
 
-// export const petrification2e: RawSpell = {
-//   name: "Petrification (2e)",
-//   file: petrification2e,
-//   memorizedCount: 1,
-//   stringRef: TraStringReferenceEnum.PetrifyingGaze,
-//   description: [
-//     "Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.",
-//   ],
-//   secondaryType: "Disabling",
-//   infiniteUse: 1,
-//   icon: SPELLS.FleshToStone,
-//   headers: [
-//     {
-//       type: "Ranged",
-//       projectile: basiliskGazeProjectile,
-//       range: 30,
-//       effects: [
-//         {
-//           opcode: "Petrification",
-//           ...petrificationSave,
-//         },
-//         {
-//           opcode: "DisplayString",
-//           stringRef: TraStringReferenceEnum.Petrified,
-//           ...petrificationSave,
-//         },
-//         {
-//           opcode: "PlaySound",
-//           resource: "MISC_06B",
-//           ...petrificationSave,
-//         },
-//         {
-//           opcode: "PlayVisualEffect",
-//           playWhere: "OverTargetUnattached",
-//           resource: "SPFLESHS.VVC",
-//           ...petrificationSave,
-//         },
-//         {
-//           opcode: "CreatureRGBColorFade",
-//           color: { blue: 120, red: 120, green: 120 },
-//           fadeSpeed: 25,
-//           ...petrificationSave,
-//         },
-//       ],
-//     },
-//   ],
-// };
+export const petrification5e: PartialSpell = {
+  memorizedCount: 1,
+  name: "monster.basilisk.petrifyingGaze.name",
+  description: "monster.basilisk.petrifyingGaze.description",
+  secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+  options: {
+    renew: 1,
+  },
+  icon: SPELLS.FleshToStone,
+  headers: [
+    {
+      type: ItemAbilityTypeEnum.Ranged,
+      projectile,
+      range: 30,
+      effects: [
+        {
+          opcode: EffectTypeEnum.DisplayString,
+          stringRef: "monster.basilisk.petrifyingGaze.turningToStone",
+          ...petrificationSave,
+        },
+        ...effectFactory.restrained({ duration: 12, ...petrificationSave }),
+        {
+          opcode: EffectTypeEnum.CastSpell,
+          timing: EffectTimingEnum.DelayLimited,
+          duration: 12,
+          type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+          //   resource: petrification5eTechnical.file, //FIXME:
+          ...petrificationSave,
+        },
+        {
+          opcode: EffectTypeEnum.ProtectionFromSpell,
+          timing: EffectTimingEnum.DelayLimited,
+          duration: 12,
+          ...petrificationSave,
+        },
+      ],
+    },
+  ],
+};
+
+export const createPetrificationAbility = (
+  resource: string
+): RawCreatureAbility => ({
+  name: "Petrification (2e)",
+  targets: [
+    {
+      name: "NearestEnemies",
+      random: true,
+    },
+  ],
+  spell: {
+    resource,
+    type: "force",
+  },
+});
+
+export const createPetrification5eAbility = (
+  resource: string
+): RawCreatureAbility => ({
+  name: "Petrification (5e)",
+  targets: [
+    {
+      name: "NearestEnemies",
+      random: true,
+      triggers: [
+        // {
+        //   name: "HaveSpellRES",
+        //   params: [resource],
+        // },
+        {
+          name: "CheckStatGT",
+          params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+          negation: true,
+        },
+        {
+          name: "StateCheck",
+          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+          negation: true,
+        },
+      ],
+    },
+  ],
+  spell: {
+    resource,
+    type: "force",
+  },
+});
