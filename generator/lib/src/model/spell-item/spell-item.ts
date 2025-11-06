@@ -1,4 +1,5 @@
 import { TranslationKey } from "../../../translations/i18n";
+import { RawCreatureAbility } from "../creature/ability";
 import { ItemSlot } from "../creature/item";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
@@ -82,6 +83,7 @@ export interface Spell {
   memorizedCount?: number;
   effectFiles: EffectFile[];
   projectiles: Projectile[];
+  ability?: RawCreatureAbility;
 }
 
 export interface Item {

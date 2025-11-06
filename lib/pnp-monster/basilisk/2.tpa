@@ -31,7 +31,7 @@ COPY_EXISTING ~ja#1m2.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI604C~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10100)
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 END
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m2~)) + 1 STR_VAR icon="SPWI604C" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=134 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10101) probability1=100 savingthrow=16 savebonus="-4" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=16 savebonus="-4" STR_VAR resource="MISC_06B" END
@@ -119,8 +119,9 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN LBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILLSU END
 			LPF patchCreatureScript STR_VAR script=ja#m2 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN LBASILSK END
 			DEFINE_ARRAY files BEGIN BASILLSU END
-			LPF patchCreatureScript STR_VAR script=ja#m2su files END
+			LPF patchCreatureScript STR_VAR script=ja#m2su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILLSU~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
 				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender

@@ -131,11 +131,11 @@ BEGIN
   END
 
   PATCH_IF rinvs = 1 BEGIN // if the spell should remove invisibility
-    LPF ADD_SPELL_EFFECT INT_VAR opcode=136 target=1 timing=1 END
+    LPF ADD_EFFECT INT_VAR global=1 opcode=136 target=1 timing=1 END
   END
   PATCH_IF renew > 0 BEGIN // if the spell should be renewed after being cast
-    LPF ADD_SPELL_EFFECT INT_VAR opcode=172 target=1 timing=1 STR_VAR resource=EVAL %DEST_RES% END
-    LPF ADD_SPELL_EFFECT INT_VAR opcode=171 target=1 timing=4 duration=(renew*6) STR_VAR resource=EVAL %DEST_RES% END
+    LPF ADD_EFFECT INT_VAR global=1 opcode=172 target=1 timing=1 STR_VAR resource=EVAL %DEST_RES% END
+    LPF ADD_EFFECT INT_VAR global=1 opcode=171 target=1 timing=4 duration=(renew*6) STR_VAR resource=EVAL %DEST_RES% END
   END
   LPF FJ_SPL_ITM_REINDEX END
 END

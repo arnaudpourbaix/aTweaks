@@ -107,6 +107,206 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Stream of acidic enzymes
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.MAGE],30)
+	!General([PC.0.0.MAGE],WEAPON)
+	!StateCheck([PC.0.0.MAGE],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.MAGE],0,SANCTUARY)
+	!StateCheck([PC.0.0.MAGE],STATE_REALLY_DEAD)
+	See([PC.0.0.MAGE])
+	RandomNumGT(1000,100)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.MAGE_THIEF],30)
+	!General([PC.0.0.MAGE_THIEF],WEAPON)
+	!StateCheck([PC.0.0.MAGE_THIEF],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.MAGE_THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.MAGE_THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.MAGE_THIEF])
+	RandomNumGT(1000,111)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.MAGE_ALL],30)
+	!General([PC.0.0.MAGE_ALL],WEAPON)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
+	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
+	See([PC.0.0.MAGE_ALL])
+	RandomNumGT(1000,125)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.THIEF],30)
+	!General([PC.0.0.THIEF],WEAPON)
+	!StateCheck([PC.0.0.THIEF],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
+	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
+	See([PC.0.0.THIEF])
+	RandomNumGT(1000,143)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.BARD],30)
+	!General([PC.0.0.BARD],WEAPON)
+	!StateCheck([PC.0.0.BARD],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
+	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
+	See([PC.0.0.BARD])
+	RandomNumGT(1000,167)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.THIEF_ALL],30)
+	!General([PC.0.0.THIEF_ALL],WEAPON)
+	!StateCheck([PC.0.0.THIEF_ALL],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.THIEF_ALL],0,SANCTUARY)
+	!StateCheck([PC.0.0.THIEF_ALL],STATE_REALLY_DEAD)
+	See([PC.0.0.THIEF_ALL])
+	RandomNumGT(1000,200)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC.0.0.CLERIC],30)
+	!General([PC.0.0.CLERIC],WEAPON)
+	!StateCheck([PC.0.0.CLERIC],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC.0.0.CLERIC],0,SANCTUARY)
+	!StateCheck([PC.0.0.CLERIC],STATE_REALLY_DEAD)
+	See([PC.0.0.CLERIC])
+	RandomNumGT(1000,250)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range([PC],30)
+	!General([PC],WEAPON)
+	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT([PC],0,SANCTUARY)
+	!StateCheck([PC],STATE_REALLY_DEAD)
+	See([PC])
+	RandomNumGT(1000,333)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(SecondNearest([PC]),30)
+	!General(SecondNearest([PC]),WEAPON)
+	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
+	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
+	See(SecondNearest([PC]))
+	RandomNumGT(1000,500)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
+IF
+	HaveSpellRES("ja#3m1")
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(ThirdNearest([PC]),30)
+	!General(ThirdNearest([PC]),WEAPON)
+	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
+	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
+	See(ThirdNearest([PC]))
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3m1")
+		SetInterrupt(TRUE)
+END
+
 // Attack Grabbed enemy
 IF
 	OR(5)

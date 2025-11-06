@@ -1,7 +1,6 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { SPELLS } from "../../config/spell-names";
 import effectFactory from "../../src/factories/effect.factory";
-import { RawCreatureAbility } from "../../src/model/creature/ability";
 import {
   EffectCastSpellTypeEnum,
   EffectTimingEnum,
@@ -86,6 +85,18 @@ export const petrification2e: PartialSpell = {
       ],
     },
   ],
+  ability: {
+    name: "Petrification (2e)",
+    targets: [
+      {
+        name: "NearestEnemies",
+        random: true,
+      },
+    ],
+    spell: {
+      type: "force",
+    },
+  },
 };
 
 export const petrification5eTechnical: PartialSpell = {
@@ -174,52 +185,18 @@ export const petrification5e: PartialSpell = {
       ],
     },
   ],
+  ability: {
+    name: "Petrification (5e)",
+    targets: [
+      {
+        name: "NearestEnemies",
+        random: true,
+      },
+    ],
+    spell: {
+      excludeStateChecks: ["STATE_SLOWED"],
+      excludeStatsChecks: ["HELD"],
+      type: "force",
+    },
+  },
 };
-
-export const createPetrificationAbility = (
-  resource: string
-): RawCreatureAbility => ({
-  name: "Petrification (2e)",
-  targets: [
-    {
-      name: "NearestEnemies",
-      random: true,
-    },
-  ],
-  spell: {
-    resource,
-    type: "force",
-  },
-});
-
-export const createPetrification5eAbility = (
-  resource: string
-): RawCreatureAbility => ({
-  name: "Petrification (5e)",
-  targets: [
-    {
-      name: "NearestEnemies",
-      random: true,
-      triggers: [
-        // {
-        //   name: "HaveSpellRES",
-        //   params: [resource],
-        // },
-        {
-          name: "CheckStatGT",
-          params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
-          negation: true,
-        },
-        {
-          name: "StateCheck",
-          params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
-          negation: true,
-        },
-      ],
-    },
-  ],
-  spell: {
-    resource,
-    type: "force",
-  },
-});

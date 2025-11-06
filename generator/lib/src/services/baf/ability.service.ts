@@ -1,10 +1,10 @@
 import deepmerge from "deepmerge";
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { CreatureAbility } from "../../model/creature/ability";
 import {
+  CreatureAbility,
+  CreatureAbilitySpell,
   RawCreatureAbility,
-  RawCreatureAbilitySpell,
-} from "../../model/raw/ability";
+} from "../../model/creature/ability";
 import { Actions } from "../../model/script/actions";
 import { Triggers } from "../../model/script/triggers";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
@@ -18,24 +18,24 @@ class AbilityService {
       if (ability.preset) ability = this.applyPreset(ability, ability.preset);
       const triggers: Triggers.Trigger[] = ability.triggers ?? [];
       let targets =
-        !ability.target || Array.isArray(ability.target)
-          ? ability.target
+        !ability.targets || Array.isArray(ability.targets)
+          ? ability.targets
           : undefined;
-      if (!!ability.target && !Array.isArray(ability.target))
-        targets = [ability.target];
+      if (!!ability.targets && !Array.isArray(ability.targets))
+        targets = [ability.targets];
       const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
       const result: CreatureAbility = {
         requireVocal: false,
         disableInterrupt: false,
         canUseWhenPolymorphed: false,
         ...ability,
-        targets: targets,
+        targets: targets ?? [],
         name: ability.name ?? "",
         isSpell: !!ability.spell && !ability.spell.isAttack,
         triggers,
         actions: ability.actionsBefore ?? [],
       };
-      const target = ability.target ? GLOBAL_CONFIG.tokens.target : "Myself";
+      const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
       if (!ability.spell) return result;
       ability.spell.type = ability.spell.type ?? "normal";
       if (ability.spell.id) {
@@ -51,6 +51,13 @@ class AbilityService {
         triggers.push({
           name: "StateCheck",
           params: [target, state],
+          negation: true,
+        });
+      }
+      for (const stat of ability.spell.excludeStatsChecks ?? []) {
+        triggers.push({
+          name: "CheckStatGT",
+          params: [target, 0, stat],
           negation: true,
         });
       }
@@ -117,7 +124,7 @@ class AbilityService {
   }
 
   private getSpellAction(
-    spell: RawCreatureAbilitySpell,
+    spell: CreatureAbilitySpell,
     target: string
   ): Actions.Action {
     if (spell.resource && spell.type === "normal")

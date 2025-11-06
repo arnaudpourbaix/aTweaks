@@ -18,8 +18,7 @@ import {
 } from "../../src/model/spell-item/projectile";
 import poisonService from "../../src/services/effects/poison.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
-import { petrificationAbility, petrificationSpell } from "./lesser";
-import { petrification2e } from "./petrification";
+import { petrificationSpell } from "./lesser";
 
 const cre = creatureFactory.create({
   monster: MonsterEnum.GreaterBasilisk,
@@ -149,9 +148,7 @@ cre.addWeapon({
 });
 
 cre.setBehavior({
-  tracking: true,
-  combatWalk: true,
-  abilities: [petrificationAbility],
+  abilities: [petrificationSpell.ability!],
 });
 
 cre.setAdjustments([{ files: ["BASILGSU"], summon: true }]);

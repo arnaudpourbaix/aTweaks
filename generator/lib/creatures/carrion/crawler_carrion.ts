@@ -71,11 +71,6 @@ cre.setAttack({
   targetPriorities: [{ status: ["Able"] }],
 });
 
-cre.setBehavior({
-  tracking: true,
-  combatWalk: true,
-});
-
 cre.setAdjustments([
   { files: ["BDCCRAW1"], additionalData: { scriptLocation: "None" } },
   { files: ["CARRIOSU"], summon: true },

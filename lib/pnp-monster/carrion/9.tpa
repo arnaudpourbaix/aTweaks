@@ -90,8 +90,9 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN ccrawler END
 			DEFINE_ARRAY skipFiles BEGIN CARRIOSU BDCCRAW1 END
 			LPF patchCreatureScript STR_VAR script=ja#m9 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN ccrawler END
 			DEFINE_ARRAY files BEGIN CARRIOSU END
-			LPF patchCreatureScript STR_VAR script=ja#m9su files END
+			LPF patchCreatureScript STR_VAR script=ja#m9su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDCCRAW1~) BEGIN 
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CARRIOSU~) BEGIN 

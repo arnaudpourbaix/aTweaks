@@ -6,7 +6,7 @@ import {
   ItemAbilityTypeEnum,
 } from "../../src/model/spell-item/effect.enums";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
-import { petrification2e, createPetrificationAbility } from "./petrification";
+import { petrification2e } from "./petrification";
 
 const cre = creatureFactory.create({
   monster: MonsterEnum.LesserBasilisk,
@@ -60,14 +60,9 @@ cre.addWeapon({
 });
 
 export const petrificationSpell = cre.addSpell(petrification2e);
-export const petrificationAbility = createPetrificationAbility(
-  petrificationSpell.file
-);
 
 cre.setBehavior({
-  tracking: true,
-  combatWalk: true,
-  abilities: [petrificationAbility],
+  abilities: [petrificationSpell.ability!],
 });
 
 cre.setAdjustments([{ files: ["BASILLSU"], summon: true }]);

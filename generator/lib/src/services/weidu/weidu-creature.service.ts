@@ -357,7 +357,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     let removeScripts = "";
     let skipFiles = "";
     let files = "";
-    if (p.removeScripts.length && !p.files.length) {
+    if (p.removeScripts.length) {
       this.add(
         p.lines,
         `DEFINE_ARRAY removeScripts BEGIN ${p.removeScripts.join(" ")} END`,

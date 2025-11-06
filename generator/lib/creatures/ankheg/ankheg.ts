@@ -142,8 +142,6 @@ cre.setAttack({
 });
 
 cre.setBehavior({
-  tracking: true,
-  combatWalk: true,
   abilities: [
     {
       name: translationService.t.monster.ankheg.enzymeStream.name,

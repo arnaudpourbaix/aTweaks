@@ -148,8 +148,9 @@ BEGIN
 			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY skipFiles BEGIN BASILGSU END
 			LPF patchCreatureScript STR_VAR script=ja#m3 skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN GBASILSK END
 			DEFINE_ARRAY files BEGIN BASILGSU END
-			LPF patchCreatureScript STR_VAR script=ja#m3su files END
+			LPF patchCreatureScript STR_VAR script=ja#m3su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BASILGSU~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
 				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender

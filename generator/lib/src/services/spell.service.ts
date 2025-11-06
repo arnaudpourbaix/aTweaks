@@ -40,6 +40,9 @@ class SpellService {
     if (result.spellLevel === undefined && !result.copyFrom)
       result.spellLevel = 1;
     result.effects = this.getEffects(result.effects, result, file);
+    if (result.ability?.spell) {
+      result.ability.spell.resource = file;
+    }
     return result;
   }
 
@@ -51,7 +54,7 @@ class SpellService {
     const result: SpellHeader = { ...header, effects: header.effects ?? [] };
     if (!result.type) throw new Error(`Header type is required!`);
     if (!result.icon && spell.icon && /\d{3}$/.test(spell.icon)) {
-      header.icon = `${spell.icon}B`;
+      result.icon = `${spell.icon}C`;
     }
     if (result.range === undefined) result.range = 0;
     if (result.speed === undefined) result.speed = 0;

@@ -48,6 +48,7 @@ import spellService from "../services/spell.service";
 import targetService from "../services/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
+import abilityService from "../services/baf/ability.service";
 
 class CreatureFactory {
   create(p: {
@@ -197,18 +198,17 @@ class CreatureFactory {
 
   isValid(cre: Creature) {
     let valid = true;
-    cre.attack = cre.attack ?? {};
-    // if (!cre.attack) {
-    //   console.log(`${figureSet.warning} No attack defined`);
-    //   valid = false;
-    // }
     if (!cre.additionalData) {
       console.log(`${figureSet.warning} No additional data defined`);
       valid = false;
     }
+    if (!cre.attack) {
+      console.log(`${figureSet.warning} No attack defined, using defaults`);
+      this.setAttack(cre, {});
+    }
     if (!cre.behavior) {
-      console.log(`${figureSet.warning} No behavior defined`);
-      valid = false;
+      console.log(`${figureSet.warning} No behavior defined, using defaults`);
+      this.setBehavior(cre, {});
     }
     return valid;
   }
@@ -255,10 +255,10 @@ class CreatureFactory {
       useKitAbilities: false,
       hideInShadows: false,
       canPolymorph: false,
-      customCode: [],
-      additionalCode: [],
+      customCode: [], //TODO:
+      additionalCode: [], //TODO:
       ...behavior,
-      abilities: [],
+      abilities: abilityService.getAbilities(behavior.abilities),
     };
   }
 
