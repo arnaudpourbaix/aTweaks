@@ -1,4 +1,10 @@
-import { EquippedItem, ItemSlot, WEAPON_SLOTS } from "../model/creature/item";
+import { Creature } from "../model/creature/creature";
+import {
+  EquippedItem,
+  ItemSlot,
+  WEAPON_SLOTS,
+  WeaponSlot,
+} from "../model/creature/item";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityLocationEnum,
@@ -31,6 +37,7 @@ class ItemService {
       effects: item.effects ?? [],
       equippedSlot: item.equippedSlot ?? [],
       projectiles: [],
+      trait: false,
     };
     if (result.equippedSlot)
       result.equippedSlot = this.getItemSlots(result.equippedSlot);

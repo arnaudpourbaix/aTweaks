@@ -112,6 +112,10 @@ export interface Item {
   header?: ItemHeader;
   equippedSlot: ItemSlot[];
   projectiles: Projectile[];
+  /**
+   * Creature's trait (use for documentation)
+   */
+  trait: boolean;
 }
 
 export interface ItemSpellHeader {
@@ -155,12 +159,12 @@ export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
 
 export type PartialItem = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "projectiles" | "equippedSlot" | "doc"
+  "immunities" | "effects" | "projectiles" | "equippedSlot" | "doc" | "trait"
 > & { header?: PartialItemHeader };
 
 export type PartialWeapon = PartialBy<
   Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "projectiles" | "doc"
+  "immunities" | "effects" | "projectiles" | "doc" | "trait"
 > & { header: PartialItemHeader };
 
 export type Weapon = WithRequired<Item, "header">;

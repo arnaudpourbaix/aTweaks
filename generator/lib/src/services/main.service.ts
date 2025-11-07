@@ -1,6 +1,5 @@
-import { CREATURES } from "../../creatures";
-import { ANKHEG } from "../../creatures/ankheg/ankheg";
-import { CARRION_CRAWLER } from "../../creatures/carrion/crawler_carrion";
+import figureSet from "figures";
+import { creatureFactories } from "../../creatures";
 import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
@@ -14,26 +13,36 @@ import weiduCreatureService from "./weidu/weidu-creature.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
 
 class MainService {
-  getCreatures(): Creature[] {
-    const creatures = CREATURES;
+  generateCreatures() {
     const families: MonsterFamilyEnum[] = [];
-    creatures.forEach((creature) => {
-      creatureService.check(creature);
-      immunityService.handleImmunities(creature);
-      creatureService.checkWeapons(creature);
-      descriptionService.generateCreatureItems(creature);
-      if (!families.includes(creature.family)) {
-        families.push(creature.family);
-        weiduCreatureService.createOrUpdateMainFile(creature.family);
+    for (const factory of creatureFactories) {
+      const creatures = factory();
+      for (const creature of creatures) {
+        if (creature.valid === undefined) {
+          console.log(
+            `${figureSet.warning} ${translationService.from(
+              creature.name
+            )} has not been validated, you must call validate`
+          );
+        } else if (creature.valid === false) {
+          console.log(
+            `${figureSet.warning} ${translationService.from(
+              creature.name
+            )} is not valid, please fix it !`
+          );
+        }
+        if (creature.valid) {
+          if (!families.includes(creature.family)) {
+            families.push(creature.family);
+            weiduCreatureService.createOrUpdateMainFile(creature.family);
+          }
+          bafGeneratorService.generate(creature);
+          weiduCreatureService.generateWeiduScript(creature);
+          documentationService.addCreature(creature);
+        }
       }
-      if (creature.isValid()) {
-        bafGeneratorService.generate(creature);
-        weiduCreatureService.generateWeiduScript(creature);
-        documentationService.addCreature(creature);
-      }
-    });
+    }
     documentationService.generate();
-    return creatures;
   }
 
   generateTranslations() {

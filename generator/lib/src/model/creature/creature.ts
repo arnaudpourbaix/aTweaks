@@ -1,7 +1,9 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
-import { EffectFile } from "../spell-item/effect";
+import { ImmunityName } from "../final/immunity";
+import { StringReference } from "../final/stringref";
+import { Effect, EffectFile } from "../spell-item/effect";
 import { Projectile } from "../spell-item/projectile";
 import {
   Item,
@@ -57,6 +59,7 @@ export class Creature implements BaseCreature {
     enchantment: true,
     meleeRange: true,
   };
+  valid?: boolean;
 
   setAdditionalData(
     additionalData: AtLeast<
@@ -99,8 +102,17 @@ export class Creature implements BaseCreature {
     return creatureFactory.addWeapon({ cre: this, weapon, grab, castSpell });
   }
 
-  isValid(): boolean {
-    return creatureFactory.isValid(this);
+  addTrait(payload: {
+    stringRef: StringReference;
+    description?: StringReference;
+    immunities?: ImmunityName[];
+    effects?: Effect[];
+  }): Item {
+    return creatureFactory.addTrait(this, payload);
+  }
+
+  validate() {
+    creatureFactory.validate(this);
   }
 }
 

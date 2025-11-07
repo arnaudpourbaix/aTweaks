@@ -39,6 +39,9 @@ class EffectFactory {
     duration: number;
     lightingEffect?: LightingEffectEnum;
     saveBonus?: number;
+    startSound?: string;
+    endSound?: string;
+    pulse?: { blue: number; green: number; red: number; speed: number };
   }) {
     const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
@@ -65,12 +68,12 @@ class EffectFactory {
       {
         opcode: EffectTypeEnum.PlaySound,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
-        resource: "EFF_P11",
+        resource: payload.startSound ?? "EFF_P11",
         ...base,
       },
       {
         opcode: EffectTypeEnum.PlaySound,
-        resource: "EFF_E05",
+        resource: payload.endSound ?? "EFF_E05",
         ...duration,
         timing: EffectTimingEnum.DelayPermanent,
         ...base,
@@ -78,9 +81,13 @@ class EffectFactory {
       {
         opcode: EffectTypeEnum.CharacterColorPulse,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
-        color: { blue: 0, green: 57, red: 87 },
+        color: {
+          blue: payload.pulse?.blue ?? 0,
+          green: payload.pulse?.green ?? 57,
+          red: payload.pulse?.red ?? 87,
+        },
         location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
-        cycleSpeed: 25,
+        cycleSpeed: payload.pulse?.speed ?? 25,
         ...base,
       },
       {

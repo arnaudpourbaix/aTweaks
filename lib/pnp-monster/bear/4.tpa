@@ -1,5 +1,6 @@
 // Generated file (don't edit)
 
+// Brown Bear
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4su.baf~
 
@@ -7,139 +8,130 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m4su.baf~
 CREATE SPL "ja#1m4"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#1m4.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4007)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10114)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~Hug target for 2d4 points of additional crushing damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicesize=4 dicenumber=2 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicesize=6 dicenumber=2 END
 	
+	// Paws
 CREATE ITM "ja#1m4"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10112)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10112)
+	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Claws
-
-Melee damage: 1D3 (Slashing)
-Speed Factor: 3
-Range: 1 feet
-
-Cast spell Hug
-Hug target for 2d4 points of additional crushing damage.~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10241)
+	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#1m4.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
 		WRITE_ASCII 0x76 ~IWOLF~ #8
 		WRITE_BYTE 0x7e 1
-		WRITE_SHORT 0x80 1
-		WRITE_BYTE 0x84 3
-		WRITE_BYTE 0x88 3
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 5
+		WRITE_BYTE 0x88 6
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 3
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
-	END
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=10 STR_VAR resource="ja#1m4" END
+	END
 
+// Jaws
 CREATE ITM "ja#2m4"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10113)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10113)
+	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10242)
+	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#2m4.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 		WRITE_BYTE 0x74 1
 		WRITE_ASCII 0x76 ~SPPR416B~ #8
 		WRITE_BYTE 0x7e 1
-		WRITE_SHORT 0x80 1
+		WRITE_SHORT 0x80 2
 		WRITE_BYTE 0x84 3
-		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x88 8
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	END
 
 ACTION_FOR_EACH ~file~ IN
-	BDBEARBL
-	BEARBL
-	BEARBLSU
-	PLYBEAR2
-	RSBEARBL
-	UBDBEAR
+	BDBEARBN
+	BDBEARBR
+	BDGRIZHU
+	BEARBR
+	BEARBRSU
+	PLYBEAR1
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBLSU~ BEGIN
-				REMOVE_CRE_EFFECTS
-			END
+			REMOVE_CRE_EFFECTS
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
-			REMOVE_CRE_ITEM ~B1-6~
+			REMOVE_CRE_ITEM ~B1-8~
 			REPLACE_CRE_ITEM ~ja#1m4~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m4~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=3
-					strength=15
+					level1=5
+					bonusHp=5
+					strength=19
 					dexterity=10
-					constitution=15
+					constitution=16
 					intelligence=4
-					wisdom=12
+					wisdom=13
 					charisma=7
-					movement=10
-					hp=27
-					ac=7
-					thac0=17
-					apr=2
-					xpv=175
+					ac=6
+					apr=3
+					xpv=420
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
 					morale=9
-					moraleBreak=4
-					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
 					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
-					class=IDS_OF_SYMBOL (~class~ ~BEAR_BLACK~)
+					class=IDS_OF_SYMBOL (~class~ ~BEAR_BROWN~)
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					movement=10
+					hp=58
+					thac0=15
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
 					enforce=1
 					perfect2weapon=1
 			END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY skipFiles BEGIN BEARBLSU END
+			DEFINE_ARRAY skipFiles BEGIN BEARBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m4 skipFiles removeScripts END
 			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR END
-			DEFINE_ARRAY files BEGIN BEARBLSU END
+			DEFINE_ARRAY files BEGIN BEARBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m4su files removeScripts END
-			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBLSU~) BEGIN 
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARBRSU~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
 				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender

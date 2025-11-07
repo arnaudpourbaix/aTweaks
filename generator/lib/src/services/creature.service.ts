@@ -12,15 +12,16 @@ import {
   Creature,
   CreatureAutoGenerate,
 } from "../model/creature/creature";
+import { CreatureData } from "../model/creature/data";
+import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import {
   ItemAbilityLocationEnum,
   ItemFlagEnum,
 } from "../model/spell-item/effect.enums";
-import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
-import { CreatureData } from "../model/creature/data";
 import { Weapon } from "../model/spell-item/spell-item";
-import utils from "./utils/utils.service";
+import itemService from "./item.service";
 import { convertMovement } from "./utils/misc.func";
+import utils from "./utils/utils.service";
 
 class CreatureService {
   check(creature: Creature) {
@@ -67,6 +68,10 @@ class CreatureService {
         data.ac -= bonus;
       }
     }
+    if (!p.isAdjustment && this.hasOffhandWeapon(p.creature)) {
+      console.log(`${figureSet.arrowRight} dual wielding detected`);
+      p.creature.attack.dualWielding = true;
+    }
     this.checkMovement(p);
     this.transformAttackPerRound(p.creature.data);
     if (data.kit === "BARBARIAN") {
@@ -78,6 +83,14 @@ class CreatureService {
       creature: p.creature,
       parent: p.isAdjustment ? p.creature.data : undefined,
     });
+  }
+
+  hasOffhandWeapon(creature: Creature): boolean {
+    const equippedItem = creature.additionalData.equippedItems.find((i) =>
+      itemService.isSlotIncluded([i], "SHIELD")
+    );
+    const item = creature.items.find((i) => i.file === equippedItem?.file);
+    return item?.header?.location === ItemAbilityLocationEnum.Weapon;
   }
 
   private checkMovement(p: {

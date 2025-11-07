@@ -49,6 +49,12 @@ import targetService from "../services/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
 import abilityService from "../services/baf/ability.service";
+import creatureService from "../services/creature.service";
+import immunityService from "../services/effects/immunity.service";
+import descriptionService from "../services/description.service";
+import weiduCreatureService from "../services/weidu/weidu-creature.service";
+import bafGeneratorService from "../services/baf/baf-generator.service";
+import documentationService from "../services/documentation.service";
 
 class CreatureFactory {
   create(p: {
@@ -110,7 +116,7 @@ class CreatureFactory {
     return result;
   }
 
-  addItem(cre: Creature, item: PartialItem) {
+  addItem(cre: Creature, item: PartialItem): Item {
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (item.equippedSlot) {
       cre.additionalData.equippedItems.push({ file, slot: item.equippedSlot });
@@ -150,6 +156,7 @@ class CreatureFactory {
 
   attachSpellToWeapon(cre: Creature, item: Weapon, cast: WeaponCastSpell) {
     const spell = this.addSpell(cre, cast.spell);
+    spell.doc = false;
     const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
       resource: spell.file,
       probability1: cast.probability1,
@@ -196,24 +203,7 @@ class CreatureFactory {
     });
   }
 
-  isValid(cre: Creature) {
-    let valid = true;
-    if (!cre.additionalData) {
-      console.log(`${figureSet.warning} No additional data defined`);
-      valid = false;
-    }
-    if (!cre.attack) {
-      console.log(`${figureSet.warning} No attack defined, using defaults`);
-      this.setAttack(cre, {});
-    }
-    if (!cre.behavior) {
-      console.log(`${figureSet.warning} No behavior defined, using defaults`);
-      this.setBehavior(cre, {});
-    }
-    return valid;
-  }
-
-  createTraitItem(
+  addTrait(
     cre: Creature,
     {
       stringRef,
@@ -232,7 +222,7 @@ class CreatureFactory {
     // if (description) {
     //   description.unshift(stringRef, "");
     // }
-    return this.addItem(cre, {
+    const item = this.addItem(cre, {
       stringRef,
       description,
       effects,
@@ -241,6 +231,8 @@ class CreatureFactory {
       category: ItemCategoryEnum.Rings,
       icon: MonsterItemIconEnum.Traits,
     });
+    item.trait = true;
+    return item;
   }
 
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
@@ -282,6 +274,27 @@ class CreatureFactory {
       targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
       selectWeapons: attack.selectWeapons ?? [],
     };
+  }
+
+  validate(creature: Creature) {
+    let valid = true;
+    if (!creature.additionalData) {
+      console.log(`${figureSet.warning} No additional data defined`);
+      valid = false;
+    }
+    if (!creature.attack) {
+      console.log(`${figureSet.warning} No attack defined, using defaults`);
+      this.setAttack(creature, {});
+    }
+    if (!creature.behavior) {
+      console.log(`${figureSet.warning} No behavior defined, using defaults`);
+      this.setBehavior(creature, {});
+    }
+    creature.valid = valid;
+    creatureService.check(creature);
+    immunityService.handleImmunities(creature);
+    creatureService.checkWeapons(creature);
+    descriptionService.generateCreatureItems(creature);
   }
 }
 

@@ -1,5 +1,6 @@
 // Generated file (don't edit)
 
+// Cave Bear
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m6.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m6su.baf~
 
@@ -7,33 +8,25 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/bear/ja#m6su.baf~
 CREATE SPL "ja#1m6"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#1m6.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4007)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10114)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~Hug target for 2d6 points of additional crushing damage.~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicesize=6 dicenumber=2 END
 	
+	// Paws
 CREATE ITM "ja#1m6"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4020)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4020)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10112)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10112)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Claws
-
-Melee damage: 1D8 (Slashing)
-Speed Factor: 3
-Enchantment: 2
-Range: 2 feet
-
-Cast spell Hug
-Hug target for 2d6 points of additional crushing damage.~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10243)
 	WRITE_LONG 0x60 2
 COPY_EXISTING ~ja#1m6.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -42,33 +35,29 @@ COPY_EXISTING ~ja#1m6.itm~ ~override~
 		WRITE_ASCII 0x76 ~IWOLF~ #8
 		WRITE_BYTE 0x7e 1
 		WRITE_SHORT 0x80 2
-		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x84 5
 		WRITE_BYTE 0x88 8
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 3
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
-	END
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=10 STR_VAR resource="ja#1m6" END
+	END
 
+// Jaws
 CREATE ITM "ja#2m6"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10113)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10113)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
-
-Melee damage: 1D12 (Piercing)
-Speed Factor: 3
-Enchantment: 2
-Range: 2 feet~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10244)
 	WRITE_LONG 0x60 2
 COPY_EXISTING ~ja#2m6.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -81,10 +70,10 @@ COPY_EXISTING ~ja#2m6.itm~ ~override~
 		WRITE_BYTE 0x88 12
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -98,13 +87,9 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BEARCASU~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDBEARCA~ BEGIN
-				REMOVE_CRE_EFFECTS
-			END
+			REMOVE_CRE_EFFECTS
 			REMOVE_KNOWN_SPELLS
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDBEARCA~ BEGIN
-				REMOVE_MEMORIZED_SPELLS
-			END
+			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~B1-10~
 			REMOVE_CRE_ITEM ~BEARCASU~
 			REPLACE_CRE_ITEM ~ja#1m6~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
@@ -113,32 +98,31 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					level1=6
+					bonusHp=6
 					strength=20
 					dexterity=10
 					constitution=16
 					intelligence=4
 					wisdom=13
 					charisma=7
-					movement=10
-					hp=68
 					ac=6
-					thac0=13
-					apr=2
+					apr=3
 					xpv=650
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=11
-					saveWand=13
-					savePolymorph=12
-					saveBreath=13
-					saveSpell=14
 					morale=9
-					moraleBreak=4
-					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
 					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
 					class=IDS_OF_SYMBOL (~class~ ~BEAR_CAVE~)
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					movement=10
+					hp=68
+					thac0=13
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
 					enforce=1
 					perfect2weapon=1
 			END

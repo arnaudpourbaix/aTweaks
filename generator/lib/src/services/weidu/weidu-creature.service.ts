@@ -35,7 +35,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         file,
         `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${
           creature.monster
-        }.tpa" // ${translationService.from(creature.name)}`
+        }.tpa" // ${translationService.from(creature.name)}${CR}`
       );
   }
 

@@ -36,6 +36,22 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     name: "Carrion Crawler",
     weapon: "Tentacles",
   },
+  bear: {
+    name: {
+      black: "Black Bear",
+      brown: "Brown Bear",
+      cave: "Cave Bear",
+      polar: "Polar Bear",
+      kaldran: "Kaldran",
+    },
+    weapon: { claws: "Paws", jaws: "Jaws" },
+    hug: { name: "Hug" },
+    improvedStreamOfFrost: {
+      name: "Improved stream of frost",
+      description:
+        "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)",
+    },
+  },
   spider: {
     webTangle: {
       name: "Web Tangle",

@@ -87,6 +87,14 @@ class DocumentationService {
         )}</a>`
       );
     }
+    // for (const item of creature.items.filter((i) => i.trait)) {
+    //   //TODO:
+    //   traits.push(
+    //     `<a href="#${item.stringRef}">${translationService.from(
+    //       item.stringRef!
+    //     )}</a>`
+    //   );
+    // }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
     for (const immunity of immunities.filter((i) => i.type !== "trait")) {
       result += `<h5>${translationService.from(immunity.stringRef!)}</h5>`;
@@ -101,13 +109,12 @@ class DocumentationService {
     for (const memorized of creature.additionalData.memorizedSpells) {
       const spell = this.spells.find((s) => s.file === memorized.file);
       if (spell && spell.doc) {
-        const quantity =
-          spell.options?.renew !== undefined
-            ? "at will"
-            : `${memorized.memorizedCount}/day`;
         spells += `<h5>${translationService.from(
           spell.name!
-        )} (${quantity})</h5>`;
+        )} (${this.getSpellQuantity(
+          spell.memorizedCount,
+          spell.options?.renew
+        )})</h5>`;
         spells += `<p>${translationService.from(spell.description!)}</p>`;
       }
     }
@@ -131,6 +138,16 @@ class DocumentationService {
       }
     }
     return result;
+  }
+
+  getSpellQuantity(
+    memorizedCount: number | undefined,
+    renew: number | undefined
+  ): string {
+    if (!memorizedCount) return "unknown";
+    if (!renew) return `${memorizedCount}/day`;
+    if (renew <= 1) return "at will";
+    return `every ${renew} rounds`;
   }
 
   private replace(

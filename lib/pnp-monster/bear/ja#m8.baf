@@ -1,4 +1,4 @@
-// Polar Bear Kaldran
+// Kaldran
 
 // Init
 IF
@@ -8,15 +8,6 @@ THEN
 		SetGlobal("JA#INIT","LOCALS",1)
 		SetGlobal("JA#COMBAT","LOCALS",0)
 		SetGlobalTimer("JA#REST","LOCALS",2400)
-END
-
-IF
-	Global("Kaldran","GLOBAL",0)
-	See(NearestEnemyOf(Myself))
-	See([PC])
-THEN
-	RESPONSE #100
-		SetGlobal("Kaldran","GLOBAL",1)
 END
 
 // Rest (reset everything and heal if applicable)
@@ -145,7 +136,6 @@ END
 
 // Improved stream of frost
 IF
-	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -158,12 +148,10 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("StreamOfFrost","LOCALS",18)
 		ForceSpellRES("ja#1m8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -176,12 +164,10 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("StreamOfFrost","LOCALS",18)
 		ForceSpellRES("ja#1m8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("StreamOfFrost","LOCALS")
 	HaveSpellRES("ja#1m8")
 	RandomNumGT(800,641)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -194,7 +180,6 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("StreamOfFrost","LOCALS",18)
 		ForceSpellRES("ja#1m8",Myself)
 END
 
