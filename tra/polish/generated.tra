@@ -358,10 +358,10 @@ Speed Factor: 5
 Enchantment: 2
 Range: 2 feet
 
-Cast spell Digestive Enzymes
+Cast spell Digestive Enzymes:
 The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round for 4 rounds.
 
-Cast spell Grab (saves vs poison/death at -9)
+Cast spell Grab (saves vs poison/death at -9):
 Grab and hold your target for 3 rounds.
 Grabbed creature will suffer these effects:
 - can not move
@@ -388,63 +388,71 @@ Speed Factor: 5
 Enchantment: 3
 Range: 2 feet
 
-Cast spell Foul Breath
+Cast spell Foul Breath:
 All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
-@10239 = ~Paws
+@10239 = ~Crushing damage: 2D4~
+@10240 = ~Paws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
 Range: 1 feet
 
-Cast spell Hug~
-@10240 = ~Jaws
+Cast spell Hug (10%):
+Crushing damage: 2D4~
+@10241 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10241 = ~Paws
+@10242 = ~Crushing damage: 2D6~
+@10243 = ~Paws
 
 Melee damage: 1D6 (Slashing)
 Speed Factor: 5
 Enchantment: 1
 Range: 2 feet
 
-Cast spell Hug~
-@10242 = ~Jaws
+Cast spell Hug (10%):
+Crushing damage: 2D6~
+@10244 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10243 = ~Paws
+@10245 = ~Crushing damage: 2D6~
+@10246 = ~Paws
 
 Melee damage: 1D8 (Slashing)
 Speed Factor: 5
 Enchantment: 2
 Range: 2 feet
 
-Cast spell Hug~
-@10244 = ~Jaws
+Cast spell Hug (10%):
+Crushing damage: 2D6~
+@10247 = ~Jaws
 
 Melee damage: 1D12 (Piercing)
 Speed Factor: 3
 Enchantment: 2
 Range: 2 feet~
-@10245 = ~Paws
+@10248 = ~Crushing damage: 3D6~
+@10249 = ~Paws
 
 Melee damage: 1D10 (Slashing)
 Speed Factor: 5
 Enchantment: 3
 Range: 2 feet
 
-Cast spell Hug~
-@10246 = ~Jaws
+Cast spell Hug (10%):
+Crushing damage: 3D6~
+@10250 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
 Speed Factor: 3
 Enchantment: 3
 Range: 2 feet~
-@10247 = ~Tentacles
+@10251 = ~Tentacles
 
 Melee damage: 1D2 (Piercing)
 Speed Factor: 3

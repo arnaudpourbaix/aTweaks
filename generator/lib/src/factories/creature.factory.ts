@@ -247,9 +247,9 @@ class CreatureFactory {
       useKitAbilities: false,
       hideInShadows: false,
       canPolymorph: false,
-      customCode: [], //TODO:
-      additionalCode: [], //TODO:
       ...behavior,
+      customCode: behavior.customCode ?? [],
+      additionalCode: behavior.additionalCode ?? [],
       abilities: abilityService.getAbilities(behavior.abilities),
     };
   }
@@ -294,6 +294,7 @@ class CreatureFactory {
     creatureService.check(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);
+    descriptionService.generateCreatureSpells(creature);
     descriptionService.generateCreatureItems(creature);
   }
 }

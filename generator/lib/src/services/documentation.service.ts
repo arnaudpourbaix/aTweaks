@@ -63,7 +63,7 @@ class DocumentationService {
     let attacks = "";
     for (const equippedItem of creature.additionalData.equippedItems) {
       if (itemService.isEquippedWeapon(equippedItem)) {
-        const weapon = creature.items.find((i) => i.file === equippedItem.file);
+        const weapon = this.items.find((i) => i.file === equippedItem.file);
         if (weapon && weapon.doc) {
           attacks += `<div class="weapon">${translationService.from(
             weapon.description!

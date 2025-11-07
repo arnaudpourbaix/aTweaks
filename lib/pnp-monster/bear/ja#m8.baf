@@ -10,6 +10,15 @@ THEN
 		SetGlobalTimer("JA#REST","LOCALS",2400)
 END
 
+IF
+	Global("Kaldran","GLOBAL",0)
+	See(NearestEnemyOf(Myself))
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("Kaldran","GLOBAL",1)
+END
+
 // Rest (reset everything and heal if applicable)
 IF
 	Global("JA#INIT","LOCALS",1)

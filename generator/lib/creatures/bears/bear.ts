@@ -2,6 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import { CustomCode } from "../../src/model/script/script";
 import {
   AbilityDamageTypeEnum,
   EffectColorLocationEnum,
@@ -92,6 +93,9 @@ const createJaws = (payload: {
 });
 
 export const createBears = () => {
+  /**
+   * Black Bear
+   */
   const black = creatureFactory.create({
     monster: MonsterEnum.BlackBear,
     family: MonsterFamilyEnum.Bear,
@@ -137,8 +141,11 @@ export const createBears = () => {
   black.setAdjustments([{ files: ["BEARBLSU"], summon: true }]);
   black.validate();
 
+  /**
+   * Brown Bear
+   */
   const brown = creatureFactory.create({
-    monster: MonsterEnum.BlackBear,
+    monster: MonsterEnum.BrownBear,
     family: MonsterFamilyEnum.Bear,
     name: "monster.bear.name.brown",
     files: [
@@ -184,6 +191,9 @@ export const createBears = () => {
   brown.setAdjustments([{ files: ["BEARBRSU"], summon: true }]);
   brown.validate();
 
+  /**
+   * Cave Bear
+   */
   const cave = creatureFactory.create({
     monster: MonsterEnum.CaveBear,
     family: MonsterFamilyEnum.Bear,
@@ -233,6 +243,9 @@ export const createBears = () => {
   ]);
   cave.validate();
 
+  /**
+   * Polar Bear
+   */
   const polar = creatureFactory.create({
     monster: MonsterEnum.PolarBear,
     family: MonsterFamilyEnum.Bear,
@@ -294,6 +307,9 @@ export const createBears = () => {
   ]);
   polar.validate();
 
+  /**
+   * Kaldran (Polar Bear)
+   */
   const kaldran = creatureFactory.create({
     monster: MonsterEnum.PolarBearKaldran,
     family: MonsterFamilyEnum.Bear,
@@ -323,7 +339,7 @@ export const createBears = () => {
   kaldran.setAdditionalData({
     movement: { value: 12 },
     removeItems: ["KALDW1", "B1-12"],
-    removeScripts: ["kaldran", "dw1ranmo"],
+    removeScripts: ["kaldran"],
     immunities: ["cold", "coldSpells"],
     equippedItems: [
       { file: polar.items[0].file, slot: "WEAPON1" },
@@ -394,33 +410,37 @@ export const createBears = () => {
       range: 10,
     },
   });
+
+  const customCode: CustomCode[] = [
+    {
+      location: "init",
+      type: "insertAfter",
+      statements: [
+        {
+          triggers: [
+            { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
+            { name: "See", params: ["NearestEnemyOf"] },
+            { name: "See", params: ["PC"] },
+          ],
+          responses: [
+            {
+              weight: 100,
+              actions: [
+                { name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] },
+              ],
+            },
+          ],
+        },
+      ],
+      abilities: [],
+    },
+    // TODO: Get script code from BDGRSHTV, BDANIMN, BDNONIN, HUNTER
+  ];
+
   kaldran.setBehavior({
     abilities: [improvedStreamOfFrost.ability!],
+    customCode,
   });
-
-  // customCode: [
-  //   {
-  //     location: "init",
-  //     type: "insertAfter",
-  //     statements: [
-  //       {
-  //         triggers: [
-  //           { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
-  //           { name: "See", params: ["NearestEnemyOf"] },
-  //           { name: "See", params: ["PC"] },
-  //         ],
-  //         responses: [
-  //           {
-  //             weight: 100,
-  //             actions: [
-  //               { name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] },
-  //             ],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ],
 
   kaldran.validate();
 

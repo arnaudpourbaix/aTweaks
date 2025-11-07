@@ -22,12 +22,18 @@ export const GLOBAL_CONFIG = {
   },
   tpaConstants: {
     genericScriptsToRemove: [
+      "BDGRSHTV",
+      "BDANIMN",
+      "BDNONIN",
+      "DW#GPSHM",
+      "dw1ranmo",
+      "DW2MP0GE",
+      "DW2RC2MO",
+      "HUNTER",
       "SHOUT",
       "WTASIGHT",
       "WDASIGHT",
       "wtrunsgt",
-      "DW2MP0GE",
-      "DW2RC2MO",
     ],
   },
   tokens: {

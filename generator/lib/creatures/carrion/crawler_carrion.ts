@@ -9,6 +9,9 @@ import {
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 export const createCarrionCrawler = () => {
+  /**
+   * Carrion Crawler
+   */
   const carrionCrawler = creatureFactory.create({
     monster: MonsterEnum.CarrionCrawler,
     family: MonsterFamilyEnum.Carrion,

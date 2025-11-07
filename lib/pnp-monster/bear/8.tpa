@@ -79,7 +79,7 @@ BEGIN
 					saveSpell=10
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN kaldran dw1ranmo END
+			DEFINE_ARRAY removeScripts BEGIN kaldran BDGRSHTV BDANIMN BDNONIN DW#GPSHM dw1ranmo DW2MP0GE DW2RC2MO HUNTER SHOUT WTASIGHT WDASIGHT wtrunsgt END
 			LPF patchCreatureScript STR_VAR script=ja#m8 removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

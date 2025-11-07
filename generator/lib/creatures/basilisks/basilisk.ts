@@ -117,7 +117,7 @@ export const createBasilisks = () => {
   greater.setAdditionalData({
     movement: { value: 6 },
     immunities: ["magicalBeast"],
-    removeScripts: ["GBASILSK", "DW#GPSHM"],
+    removeScripts: ["GBASILSK"],
     removeItems: ["BASILG1", "BASILG2", "BASILG3"],
     memorizedSpells: [{ file: petrificationSpell.file, memorizedCount: 1 }],
   });

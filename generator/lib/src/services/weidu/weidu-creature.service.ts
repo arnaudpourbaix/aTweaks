@@ -22,6 +22,7 @@ import utils from "../utils/utils.service";
 import itemService from "../item.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import translationService from "../translation.service";
+import { GLOBAL_CONFIG } from "../../../config/generate";
 
 class WeiduCreatureService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
@@ -358,9 +359,13 @@ class WeiduCreatureService extends AbstractWeiduService {
     let skipFiles = "";
     let files = "";
     if (p.removeScripts.length) {
+      const scripts = [
+        ...p.removeScripts,
+        ...GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove,
+      ];
       this.add(
         p.lines,
-        `DEFINE_ARRAY removeScripts BEGIN ${p.removeScripts.join(" ")} END`,
+        `DEFINE_ARRAY removeScripts BEGIN ${scripts.join(" ")} END`,
         p.tab
       );
       removeScripts = " removeScripts";

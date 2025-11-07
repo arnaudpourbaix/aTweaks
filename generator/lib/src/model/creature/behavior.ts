@@ -56,5 +56,5 @@ export interface CreatureBehavior {
 
 export type PartialCreatureBehavior = Omit<
   Partial<CreatureBehavior>,
-  "abilities" | "customCode" | "additionalCode"
+  "abilities"
 > & { abilities?: RawCreatureAbility[] };
