@@ -27,6 +27,7 @@ export const GLOBAL_CONFIG = {
       "BDNONIN",
       "DW#GPSHM",
       "dw1ranmo",
+      "dw1melmo",
       "DW2MP0GE",
       "DW2RC2MO",
       "HUNTER",

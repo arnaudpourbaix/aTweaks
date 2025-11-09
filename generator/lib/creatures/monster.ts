@@ -23,7 +23,6 @@ export enum MonsterEnum {
   BrownBear = 5,
   CaveBear = 6,
   PolarBear = 7,
-  PolarBearKaldran = 8,
   CarrionCrawler = 9,
   Lion = 10,
   MountainLion = 11,

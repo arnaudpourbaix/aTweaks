@@ -164,19 +164,9 @@ class BafGeneratorService {
     const startsWithObject = OBJECT_IDENTIFIERS.some((v) =>
       value.startsWith(v)
     );
-    const containsObjectTypes =
-      ALLEGIANCE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1) ||
-      GENERAL_IDENTIFIERS.some((v) => value.indexOf(v) !== -1) ||
-      RACE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1) ||
-      CLASS_IDENTIFIERS.some((v) => value.indexOf(v) !== -1) ||
-      SPECIFIC_IDENTIFIERS.some((v) => value.indexOf(v) !== -1) ||
-      GENDER_IDENTIFIER.some((v) => value.indexOf(v) !== -1) ||
-      ALIGN_IDENTIFIERS.some((v) => value.indexOf(v) !== -1);
-    if (!startsWithObject && containsObjectTypes) return `[${value}]`;
-    else if (
-      this.requireParameter(value as ObjectIdentifier) &&
-      !containsObjectTypes
-    )
+    const objectType = this.getObjectType(value);
+    if (!startsWithObject && objectType) return objectType;
+    else if (this.requireParameter(value as ObjectIdentifier) && !objectType)
       return `${value}(Myself)`;
     else if (
       Object.values(OBJECT_IDENTIFIERS).includes(value as ObjectIdentifier)
@@ -184,6 +174,27 @@ class BafGeneratorService {
       return value;
     }
     return `"${value}"`;
+  }
+
+  getObjectType(value: string): string | undefined {
+    const tests = [
+      ALLEGIANCE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      GENERAL_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      RACE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      CLASS_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      SPECIFIC_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      GENDER_IDENTIFIER.some((v) => value.indexOf(v) !== -1),
+      ALIGN_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+    ];
+    if (!tests.some((t) => t)) return;
+    //[EA.GENERAL.RACE.CLASS.SPECIFIC.GENDER.ALIGN]
+    const result = tests
+      .reduce((acc, v) => {
+        if (!acc.some((i) => i !== "0")) acc.push(v ? value : "0");
+        return acc;
+      }, [] as string[])
+      .join(".");
+    return `[${result}]`;
   }
 
   getActionParameters(name: string): GenericScriptParameterData[] {

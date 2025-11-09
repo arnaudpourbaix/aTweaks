@@ -16,6 +16,8 @@ export namespace Actions {
     | "MoveToObject"
     | "MoveToObjectFollow"
     | "MoveToObjectNoInterrupt"
+    | "MoveToSavedLocation"
+    | "MoveToSavedLocationn"
     | "RunAwayFrom"
     | "RunAwayFromNoInterruptNoLeaveArea"
     | "RunAwayFromNoLeaveArea"
@@ -136,6 +138,16 @@ export namespace Actions {
   export interface MoveToObjectFollow {
     name: "MoveToObjectFollow";
     params: [ParamObject];
+  }
+
+  export interface MoveToSavedLocation {
+    name: "MoveToSavedLocation";
+    params: [ParamObject, string];
+  }
+
+  export interface MoveToSavedLocationn {
+    name: "MoveToSavedLocationn";
+    params: [ParamObject, string];
   }
 
   export interface RunAwayFrom {
@@ -443,6 +455,8 @@ export namespace Actions {
     | MoveToObject
     | MoveToObjectNoInterrupt
     | MoveToObjectFollow
+    | MoveToSavedLocation
+    | MoveToSavedLocationn
     | RunAwayFrom
     | RunAwayFromNoInterruptNoLeaveArea
     | RunAwayFromNoLeaveArea
@@ -567,6 +581,20 @@ export namespace Actions {
       parameters: "O:Object*",
       description:
         "This action instructs the active creature to move to the specified object. Once the active creature reaches the object, it will follow the target if it moves. This behaviour continues until a different action is issued or until the target creature travels between areas.",
+      section: "Movement",
+    },
+    {
+      name: "MoveToSavedLocation",
+      parameters: "S:GLOBAL*,S:Area*",
+      description:
+        "This action instructs the active creature to move to the previously saved specified location.",
+      section: "Movement",
+    },
+    {
+      name: "MoveToSavedLocationn",
+      parameters: "S:GLOBAL*,S:Area*",
+      description:
+        "This action instructs the active creature to move to the previously saved specified location.",
       section: "Movement",
     },
     {

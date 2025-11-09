@@ -1,5 +1,43 @@
 // Brown Bear
 
+IF
+	Allegiance(Myself,NEUTRAL)
+	!NearSavedLocation(Myself,"INITIAL",8)
+	!Class(Myself,HUNTER_CREATURE)
+	!Range([0.0.0.FOOD_CREATURE],30)
+THEN
+	RESPONSE #100
+		MoveToSavedLocationn("INITIAL","LOCALS")
+END
+
+IF
+	!GlobalTimerNotExpired("BD_Move","LOCALS")
+	Allegiance(Myself,NEUTRAL)
+	Detect([GOODCUTOFF])
+	NearSavedLocation(Myself,"INITIAL",8)
+	!Range([0.0.0.FOOD_CREATURE],30)
+THEN
+	RESPONSE #40
+		SetGlobalTimer("BD_Move","LOCALS",6)
+		RandomWalk()
+	RESPONSE #40
+		SetGlobalTimer("BD_Move","LOCALS",6)
+		RandomTurn()
+	RESPONSE #20
+		SetGlobalTimer("BD_Move","LOCALS",6)
+		NoAction()
+END
+
+IF
+	Allegiance(Myself,NEUTRAL)
+	Class(Myself,HUNTER_CREATURE)
+	Detect([PC])
+	See([0.0.0.FOOD_CREATURE])
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)

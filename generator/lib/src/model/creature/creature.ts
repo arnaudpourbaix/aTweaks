@@ -23,7 +23,7 @@ import { CreatureGrabConfig } from "./grab";
 
 export interface BaseCreature {
   files: string[];
-  data: CreatureData;
+  data: Partial<CreatureData>;
   additionalData: CreatureAdditionalData;
 }
 

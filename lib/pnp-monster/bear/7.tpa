@@ -16,6 +16,36 @@ COPY_EXISTING ~ja#1m7.SPL~  ~override~
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 probability1=100 dicesize=6 dicenumber=3 END
 	
+	// Improved stream of frost
+COPY_EXISTING "CONECOLD.pro" ~override/ja#2m7.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_LONG 0x200 80
+	WRITE_SHORT 0x204 180
+	WRITE_SHORT 0x206 180
+ADD_PROJECTILE ~override/ja#2m7.pro~ ~Improved stream of frost~
+
+CREATE SPL "ja#2m7"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m7.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10115)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI523C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10116)
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=4 range=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#2m7~)) + 1 STR_VAR icon="SPWI523C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=131072 timing=1 probability1=100 dicesize=4 dicenumber=6 savingthrow=2 special=256 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=60 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=13 duration=60 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=1 probability1=100 savingthrow=4 savebonus="-2" STR_VAR resource="MISC_04A" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=4 duration=60 probability1=100 savingthrow=4 savebonus="-2" STR_VAR resource="EFF_E03" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-2786560" parameter2=1310720 timing=1 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=6 timing=1 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF CHANGE_SPELL INT_VAR    renew=1 END
+	
 	// Paws
 CREATE ITM "ja#1m7"
 	WRITE_LONG 0x64 0x72
@@ -86,6 +116,7 @@ ACTION_FOR_EACH ~file~ IN
 	NTBEARPO
 	SPIRBEAR
 	BDGHBRSU
+	KALDRAN
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
@@ -95,6 +126,7 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~B1-12~
 			REMOVE_CRE_ITEM ~BEARPOSU~
+			REMOVE_CRE_ITEM ~KALDW1~
 			REPLACE_CRE_ITEM ~ja#1m7~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#2m7~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
 			LPF clear_proficiencies END
@@ -129,10 +161,10 @@ BEGIN
 					enforce=1
 					perfect2weapon=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR BDGRSHTV BDANIMN BDNONIN DW#GPSHM dw1ranmo DW2MP0GE DW2RC2MO HUNTER SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR kaldran BDGRSHTV BDANIMN BDNONIN DW#GPSHM dw1ranmo dw1melmo DW2MP0GE DW2RC2MO HUNTER SHOUT WTASIGHT WDASIGHT wtrunsgt END
 			DEFINE_ARRAY skipFiles BEGIN BEARPOSU BDGHBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m7 skipFiles removeScripts END
-			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR BDGRSHTV BDANIMN BDNONIN DW#GPSHM dw1ranmo DW2MP0GE DW2RC2MO HUNTER SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY removeScripts BEGIN CBEAR BEAR kaldran BDGRSHTV BDANIMN BDNONIN DW#GPSHM dw1ranmo dw1melmo DW2MP0GE DW2RC2MO HUNTER SHOUT WTASIGHT WDASIGHT wtrunsgt END
 			DEFINE_ARRAY files BEGIN BEARPOSU BDGHBRSU END
 			LPF patchCreatureScript STR_VAR script=ja#m7su files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BEARPOSU~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDGHBRSU~) BEGIN 
@@ -150,6 +182,22 @@ BEGIN
 				WRITE_BYTE 0x57 9 // saveBreath
 				WRITE_BYTE 0x58 11 // saveSpell
 				WRITE_BYTE 0x234 9 // level1
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~KALDRAN~) BEGIN 
+				WRITE_SHORT 0x24 114 // hp
+				WRITE_SHORT 0x26 114 // hp
+				WRITE_BYTE 0x52 9 // thac0
+				WRITE_BYTE 0x54 7 // saveDeath
+				WRITE_BYTE 0x55 9 // saveWand
+				WRITE_BYTE 0x56 8 // savePolymorph
+				WRITE_BYTE 0x57 8 // saveBreath
+				WRITE_BYTE 0x58 10 // saveSpell
+				WRITE_BYTE 0x234 12 // level1
+				WRITE_BYTE 0x23a 10 // intelligence
+				WRITE_BYTE 0x23f 15 // morale
+				LPF cold_immunity END
+				LPF coldSpells_immunity END
+				ADD_MEMORIZED_SPELL ~ja#2m7~ #0 ~innate~ (1)
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

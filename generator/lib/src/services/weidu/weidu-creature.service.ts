@@ -7,7 +7,11 @@ import {
   CreatureAdjustment,
   CreatureAutoGenerate,
 } from "../../model/creature/creature";
-import { CREATURE_DATA, CreatureData } from "../../model/creature/data";
+import {
+  CREATURE_DATA,
+  CreatureData,
+  PartialCreatureData,
+} from "../../model/creature/data";
 import { WEAPON_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
@@ -449,7 +453,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   private patchCreatureAdjustement(p: {
     lines: CodeLine[];
     tab: number;
-    data: CreatureData;
+    data: Partial<CreatureData>;
     parent?: CreatureData;
     autoGenerate: CreatureAutoGenerate;
     summon: boolean;
@@ -512,7 +516,10 @@ class WeiduCreatureService extends AbstractWeiduService {
     }
   }
 
-  private extractDataValue(key: keyof CreatureData, creature: CreatureData) {
+  private extractDataValue(
+    key: keyof CreatureData,
+    creature: Partial<CreatureData>
+  ) {
     if (
       [
         "alignment",

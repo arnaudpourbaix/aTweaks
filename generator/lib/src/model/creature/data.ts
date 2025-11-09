@@ -8,14 +8,14 @@ import { KitIdentifier } from "../ids/kit";
 import { RaceIdentifier } from "../ids/race";
 
 export interface CreatureData {
-  level1?: number;
+  level1: number;
   level2?: number;
   level3?: number;
-  strength?: number;
+  strength: number;
   exceptionalStrength?: number;
-  dexterity?: number;
-  constitution?: number;
-  intelligence?: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
   wisdom?: number;
   charisma?: number;
   hp?: number;
@@ -27,9 +27,9 @@ export interface CreatureData {
    * Specific case when creature have more HP or can fight when HP is below 0 like some bears.
    */
   specialBonusHp?: number;
-  ac?: number;
+  ac: number;
   thac0?: number;
-  apr?: number;
+  apr: number;
   xpv?: number;
   alignment?: AlignIdentifier;
   saveDeath?: number;
@@ -38,12 +38,12 @@ export interface CreatureData {
   saveBreath?: number;
   saveSpell?: number;
   morale?: number;
-  general?: GeneralIdentifier;
-  race?: RaceIdentifier;
-  class?: ClassIdentifier;
+  general: GeneralIdentifier;
+  race: RaceIdentifier;
+  class: ClassIdentifier;
   kit?: KitIdentifier;
   gender?: GenderIdentifier;
-  size?: CreatureSize;
+  size: CreatureSize;
   animation?: AnimationIdentifiers;
   modAnimation?: string;
   metalColor?: number;
@@ -73,6 +73,7 @@ export interface CreatureData {
   // moraleBreak?: number;
   // moraleRecovery?: number;
 }
+export type PartialCreatureData = Partial<Omit<CreatureData, "movement">>;
 
 export const CREATURE_DATA: {
   key: keyof CreatureData;

@@ -42,7 +42,6 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
       brown: "Brown Bear",
       cave: "Cave Bear",
       polar: "Polar Bear",
-      kaldran: "Kaldran",
     },
     weapon: { claws: "Paws", jaws: "Jaws" },
     hug: { name: "Hug" },

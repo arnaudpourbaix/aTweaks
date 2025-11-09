@@ -1,4 +1,5 @@
-import bafFactory from "../src/factories/factory.service";
+import bafFactory from "../src/factories/baf.factory";
+import triggerFactory from "../src/factories/trigger.factory";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { TargetList } from "../src/model/script/target";
 import { GLOBAL_CONFIG } from "./generate";
@@ -479,7 +480,7 @@ export const ABILITY_PRESETS: {
         {
           name: "NearestEnemies",
           includeStatus: ["Able"],
-          triggers: [bafFactory.checkStat(0, "ENTANGLE")],
+          triggers: [triggerFactory.checkStat(0, "ENTANGLE")],
         },
       ],
       spell: {

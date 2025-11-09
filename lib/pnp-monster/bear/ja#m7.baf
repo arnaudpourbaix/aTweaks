@@ -10,6 +10,16 @@ THEN
 		SetGlobalTimer("JA#REST","LOCALS",2400)
 END
 
+IF
+	Name("Myself","kaldran")
+	Global("Kaldran","GLOBAL",0)
+	See(NearestEnemyOf(Myself))
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("Kaldran","GLOBAL",1)
+END
+
 // Rest (reset everything and heal if applicable)
 IF
 	Global("JA#INIT","LOCALS",1)
@@ -132,6 +142,55 @@ IF
 THEN
 	RESPONSE #100
 		RandomWalkContinuous()
+END
+
+// Improved stream of frost
+IF
+	HaveSpellRES("ja#2m7")
+	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(NearestEnemyOf(Myself),10)
+	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m7",Myself)
+END
+
+IF
+	HaveSpellRES("ja#2m7")
+	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(SecondNearestEnemyOf(Myself),10)
+	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m7",Myself)
+END
+
+IF
+	HaveSpellRES("ja#2m7")
+	RandomNumGT(800,641)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	Range(ThirdNearestEnemyOf(Myself),10)
+	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m7",Myself)
 END
 
 // Attack NoCheck enemy

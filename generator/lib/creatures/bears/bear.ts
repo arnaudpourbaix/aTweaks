@@ -1,11 +1,12 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
+import actionFactory from "../../src/factories/action.factory";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import triggerFactory from "../../src/factories/trigger.factory";
 import { CustomCode } from "../../src/model/script/script";
 import {
   AbilityDamageTypeEnum,
-  EffectColorLocationEnum,
   EffectDamageModeEnum,
   EffectDamageTypeEnum,
   EffectFlagsEnum,
@@ -91,6 +92,89 @@ const createJaws = (payload: {
     },
   },
 });
+
+const hunterCode: CustomCode[] = [
+  {
+    location: "init",
+    type: "insertBefore",
+    statements: [
+      {
+        triggers: [
+          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+          {
+            name: "NearSavedLocation",
+            params: ["Myself", "INITIAL", 8],
+            negation: true,
+          },
+          {
+            name: "Class",
+            params: ["Myself", "HUNTER_CREATURE"],
+            negation: true,
+          },
+          { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
+        ],
+        responses: [
+          {
+            weight: 100,
+            actions: [
+              { name: "MoveToSavedLocationn", params: ["INITIAL", "LOCALS"] },
+            ],
+          },
+        ],
+      },
+      {
+        triggers: [
+          triggerFactory.globalTimerExpired("BD_Move"),
+          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+          { name: "Detect", params: ["GOODCUTOFF"] },
+          {
+            name: "NearSavedLocation",
+            params: ["Myself", "INITIAL", 8],
+          },
+          { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
+        ],
+        responses: [
+          {
+            weight: 40,
+            actions: [
+              actionFactory.setGlobalTimer("BD_Move", 6),
+              { name: "RandomWalk" },
+            ],
+          },
+          {
+            weight: 40,
+            actions: [
+              actionFactory.setGlobalTimer("BD_Move", 6),
+              { name: "RandomTurn" },
+            ],
+          },
+          {
+            weight: 20,
+            actions: [
+              actionFactory.setGlobalTimer("BD_Move", 6),
+              { name: "NoAction" },
+            ],
+          },
+        ],
+      },
+      {
+        triggers: [
+          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+          { name: "Class", params: ["Myself", "HUNTER_CREATURE"] },
+          { name: "Detect", params: ["PC"] },
+          { name: "See", params: ["FOOD_CREATURE"] },
+        ],
+        responses: [
+          {
+            weight: 100,
+            actions: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+          },
+        ],
+      },
+    ],
+    abilities: [],
+  },
+];
 
 export const createBears = () => {
   /**
@@ -188,7 +272,13 @@ export const createBears = () => {
     createPaws({ diceThrown: 1, diceSize: 6, hugDiceThrown: 2, hugDiceSize: 6 })
   );
   brown.addWeapon(createJaws({ diceThrown: 1, diceSize: 8 }));
-  brown.setAdjustments([{ files: ["BEARBRSU"], summon: true }]);
+  brown.setBehavior({
+    customCode: hunterCode,
+  });
+  brown.setAdjustments([
+    { files: ["BEARBRSU"], summon: true },
+    { files: ["BDGRIZHU"], data: { class: "HUNTER_CREATURE" } },
+  ]);
   brown.validate();
 
   /**
@@ -259,6 +349,7 @@ export const createBears = () => {
       "NTBEARPO",
       "SPIRBEAR",
       "BDGHBRSU", // Ghost Polar Bear
+      "KALDRAN",
       // "SPBEAR1", //TODO: Spirit Bear
       // "SPBEAR2", //TODO: Spirit Bear
       // "SPBEAR3", //TODO: Spirit Bear
@@ -289,8 +380,8 @@ export const createBears = () => {
   });
   polar.setAdditionalData({
     movement: { value: 12 },
-    removeItems: ["B1-12", "BEARPOSU"],
-    removeScripts: ["CBEAR", "BEAR"],
+    removeItems: ["B1-12", "BEARPOSU", "KALDW1"],
+    removeScripts: ["CBEAR", "BEAR", "kaldran"],
   });
   polar.addWeapon(
     createPaws({
@@ -301,54 +392,8 @@ export const createBears = () => {
     })
   );
   polar.addWeapon(createJaws({ diceThrown: 2, diceSize: 6 }));
-  polar.setAdjustments([
-    { files: ["BEARPOSU", "BDGHBRSU"], summon: true },
-    { files: ["BDGHBRSU"], data: { level1: 9 } },
-  ]);
-  polar.validate();
-
-  /**
-   * Kaldran (Polar Bear)
-   */
-  const kaldran = creatureFactory.create({
-    monster: MonsterEnum.PolarBearKaldran,
-    family: MonsterFamilyEnum.Bear,
-    name: "monster.bear.name.kaldran",
-    files: ["KALDRAN"],
-    data: {
-      level1: 12,
-      bonusHp: 8,
-      specialBonusHp: 12,
-      strength: 20,
-      dexterity: 10,
-      constitution: 16,
-      intelligence: 10,
-      wisdom: 13,
-      charisma: 7,
-      ac: 6,
-      apr: 3,
-      alignment: "NEUTRAL",
-      morale: 15,
-      general: "ANIMAL",
-      race: "BEAR",
-      class: "BEAR_POLAR",
-      gender: "NIETHER",
-      size: "Huge",
-    },
-  });
-  kaldran.setAdditionalData({
-    movement: { value: 12 },
-    removeItems: ["KALDW1", "B1-12"],
-    removeScripts: ["kaldran"],
-    immunities: ["cold", "coldSpells"],
-    equippedItems: [
-      { file: polar.items[0].file, slot: "WEAPON1" },
-      { file: polar.items[1].file, slot: "SHIELD" },
-    ],
-  });
-  const improvedStreamOfFrost = kaldran.addSpell({
+  const improvedStreamOfFrost = polar.addSpell({
     name: "monster.bear.improvedStreamOfFrost.name",
-    memorizedCount: 1,
     options: { renew: 3 },
     icon: SPELLS.Fireburst,
     description: "monster.bear.improvedStreamOfFrost.description",
@@ -411,13 +456,14 @@ export const createBears = () => {
     },
   });
 
-  const customCode: CustomCode[] = [
+  const polarCode: CustomCode[] = [
     {
       location: "init",
       type: "insertAfter",
       statements: [
         {
           triggers: [
+            { name: "Name", params: ["Myself", "kaldran"] },
             { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
             { name: "See", params: ["NearestEnemyOf"] },
             { name: "See", params: ["PC"] },
@@ -434,15 +480,31 @@ export const createBears = () => {
       ],
       abilities: [],
     },
-    // TODO: Get script code from BDGRSHTV, BDANIMN, BDNONIN, HUNTER
   ];
-
-  kaldran.setBehavior({
+  polar.setAdjustments([
+    { files: ["BEARPOSU", "BDGHBRSU"], summon: true },
+    { files: ["BDGHBRSU"], data: { level1: 9 } },
+    {
+      files: ["KALDRAN"],
+      data: {
+        level1: 12,
+        intelligence: 10,
+        morale: 15,
+      },
+      additionalData: {
+        immunities: ["cold", "coldSpells"],
+        memorizedSpells: [
+          { file: improvedStreamOfFrost.file, memorizedCount: 1 },
+        ],
+      },
+    },
+  ]);
+  polar.setBehavior({
     abilities: [improvedStreamOfFrost.ability!],
-    customCode,
+    customCode: polarCode,
   });
 
-  kaldran.validate();
+  polar.validate();
 
-  return [black, brown, cave, polar, kaldran];
+  return [black, brown, cave, polar];
 };

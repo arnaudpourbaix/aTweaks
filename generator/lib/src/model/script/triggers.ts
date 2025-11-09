@@ -149,7 +149,8 @@ export namespace Triggers {
     | "NumTimesTalkedTo"
     | "AreaCheck"
     | "InActiveArea"
-    | "OpenState";
+    | "OpenState"
+    | "NearSavedLocation";
 
   export interface BaseTrigger {
     negation?: boolean;
@@ -631,6 +632,11 @@ export namespace Triggers {
     params: [ParamObject, "TRUE" | "FALSE"];
   }
 
+  export interface NearSavedLocation extends BaseTrigger {
+    name: "NearSavedLocation";
+    params: [ParamObject, string, number];
+  }
+
   export interface Or extends BaseTrigger {
     name: "Or";
     triggers: Trigger[];
@@ -734,7 +740,8 @@ export namespace Triggers {
     | NumTimesTalkedTo
     | AreaCheck
     | InActiveArea
-    | OpenState;
+    | OpenState
+    | NearSavedLocation;
 
   export const TRIGGERS: GenericScriptRawData[] = [
     {
@@ -1643,6 +1650,13 @@ export namespace Triggers {
       parameters: "O:Object*,I:Open*BOOLEAN",
       description:
         "Returns true only if the open state of the specified door matches the state specified in the 2nd parameter.",
+      section: "Misc.",
+    },
+    {
+      name: "NearSavedLocation",
+      parameters: "O:Object*,S:Global*,I:Range*",
+      description:
+        "Returns true if the object is near its home location (in case the specified variable doesn't exist) or near a point marked by a variable. The default home location for creatures is equal to their default position in the ARE file.",
       section: "Misc.",
     },
   ];
