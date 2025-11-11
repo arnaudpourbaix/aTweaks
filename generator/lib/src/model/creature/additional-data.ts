@@ -22,12 +22,12 @@ export interface CreatureAdditionalData {
   equippedItems: EquippedItem[];
   immunities: ImmunityName[];
 
-  removeKnownSpells: boolean;
+  removeKnownSpells?: boolean;
   removeMemorizedSpells?: boolean;
   memorizedSpells: MemorizedSpell[];
 
   deleteEffectOpcodes: EffectTypeEnum[];
-  removeEffects: boolean;
+  removeEffects?: boolean;
   effects: Effect[];
   movement: { value: number };
 }
@@ -66,7 +66,7 @@ export const ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
 
 export const ADJUSTMENT_ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
   ...ADDITIONAL_DATA_DEFAULT,
-  removeKnownSpells: false,
-  removeMemorizedSpells: false,
-  removeEffects: false,
+  removeKnownSpells: undefined,
+  removeMemorizedSpells: undefined,
+  removeEffects: undefined,
 };

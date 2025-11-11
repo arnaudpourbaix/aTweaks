@@ -41,20 +41,17 @@ import {
   WeaponCastSpell,
 } from "../model/spell-item/spell-item";
 import { AtLeast, WithRequired } from "../model/utility-types";
+import abilityService from "../services/baf/ability.service";
+import creatureService from "../services/creature.service";
+import descriptionService from "../services/description.service";
 import effectService from "../services/effects/effect.service";
 import grabService from "../services/effects/grab.service";
+import immunityService from "../services/effects/immunity.service";
 import itemService from "../services/item.service";
 import spellService from "../services/spell.service";
 import targetService from "../services/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
-import abilityService from "../services/baf/ability.service";
-import creatureService from "../services/creature.service";
-import immunityService from "../services/effects/immunity.service";
-import descriptionService from "../services/description.service";
-import weiduCreatureService from "../services/weidu/weidu-creature.service";
-import bafGeneratorService from "../services/baf/baf-generator.service";
-import documentationService from "../services/documentation.service";
 
 class CreatureFactory {
   create(p: {

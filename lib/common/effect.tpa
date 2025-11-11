@@ -124,3 +124,14 @@ BEGIN
     END
   END
 END
+
+/**
+ * Remove most cre effects except visual or delay effects
+ */
+DEFINE_PATCH_FUNCTION REMOVE_MOST_CRE_EFFECTS BEGIN
+  // PATCH_FOR_EACH opcode IN 51 294 BEGIN
+  //   LPF DELETE_EFFECT INT_VAR	match_opcode = opcode END
+  // END
+  REMOVE_CRE_EFFECTS
+  // LPF DELETE_EFFECT INT_VAR	match_opcode = opcode END
+END

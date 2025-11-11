@@ -49,7 +49,7 @@ export const createCarrionCrawler = () => {
   carrionCrawler.setAdditionalData({
     movement: { value: 12 },
     removeItems: ["CARRIO1"],
-    removeScripts: ["ccrawler"],
+    removeScripts: ["ccrawler", "bdccrawl"],
   });
   carrionCrawler.addWeapon({
     weapon: {
@@ -71,7 +71,6 @@ export const createCarrionCrawler = () => {
     targetPriorities: [{ status: ["Able"] }],
   });
   carrionCrawler.setAdjustments([
-    { files: ["BDCCRAW1"], additionalData: { scriptLocation: "None" } },
     { files: ["CARRIOSU"], summon: true },
     { files: ["CRYPTCRA"], data: { level1: 6, thac0: 9, xpv: 650 } },
   ]);

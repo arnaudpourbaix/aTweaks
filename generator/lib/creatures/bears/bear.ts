@@ -1,9 +1,15 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import actionFactory from "../../src/factories/action.factory";
+import bafFactory from "../../src/factories/baf.factory";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import responseFactory from "../../src/factories/response.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
+import {
+  CreatureAbility,
+  RawCreatureAbility,
+} from "../../src/model/creature/ability";
 import { CustomCode } from "../../src/model/script/script";
 import {
   AbilityDamageTypeEnum,
@@ -24,6 +30,7 @@ import {
   PartialWeapon,
   WeaponCastSpell,
 } from "../../src/model/spell-item/spell-item";
+import targetService from "../../src/services/target.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 const createPaws = (payload: {
@@ -93,88 +100,151 @@ const createJaws = (payload: {
   },
 });
 
-const hunterCode: CustomCode[] = [
-  {
-    location: "init",
-    type: "insertBefore",
-    statements: [
-      {
-        triggers: [
-          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-          {
-            name: "NearSavedLocation",
-            params: ["Myself", "INITIAL", 8],
-            negation: true,
-          },
-          {
-            name: "Class",
-            params: ["Myself", "HUNTER_CREATURE"],
-            negation: true,
-          },
-          { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
-        ],
-        responses: [
-          {
-            weight: 100,
-            actions: [
-              { name: "MoveToSavedLocationn", params: ["INITIAL", "LOCALS"] },
-            ],
-          },
-        ],
-      },
-      {
-        triggers: [
-          triggerFactory.globalTimerExpired("BD_Move"),
-          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-          { name: "Detect", params: ["GOODCUTOFF"] },
-          {
-            name: "NearSavedLocation",
-            params: ["Myself", "INITIAL", 8],
-          },
-          { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
-        ],
-        responses: [
-          {
-            weight: 40,
-            actions: [
-              actionFactory.setGlobalTimer("BD_Move", 6),
-              { name: "RandomWalk" },
-            ],
-          },
-          {
-            weight: 40,
-            actions: [
-              actionFactory.setGlobalTimer("BD_Move", 6),
-              { name: "RandomTurn" },
-            ],
-          },
-          {
-            weight: 20,
-            actions: [
-              actionFactory.setGlobalTimer("BD_Move", 6),
-              { name: "NoAction" },
-            ],
-          },
-        ],
-      },
-      {
-        triggers: [
-          { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-          { name: "Class", params: ["Myself", "HUNTER_CREATURE"] },
-          { name: "Detect", params: ["PC"] },
-          { name: "See", params: ["FOOD_CREATURE"] },
-        ],
-        responses: [
-          {
-            weight: 100,
-            actions: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
-          },
-        ],
-      },
-    ],
-    abilities: [],
+const turningHostile: CustomCode = {
+  location: "turnHostile",
+  type: "insertAfter",
+  statements: [
+    {
+      comment: "Turn hostile if too close and not druid/ranger",
+      triggers: [
+        { name: "Range", params: ["GOODCUTOFF", 7] },
+        {
+          name: "See",
+          params: [targetService.targetObject({ ea: "PC", clazz: "DRUID" })],
+          negation: true,
+        },
+        {
+          name: "See",
+          params: [targetService.targetObject({ ea: "PC", clazz: "RANGER" })],
+          negation: true,
+        },
+        {
+          name: "See",
+          params: [
+            targetService.targetObject({ ea: "PC", clazz: "FIGHTER_DRUID" }),
+          ],
+          negation: true,
+        },
+        {
+          name: "See",
+          params: [
+            targetService.targetObject({ ea: "PC", clazz: "CLERIC_RANGER" }),
+          ],
+          negation: true,
+        },
+        {
+          name: "Allegiance",
+          params: ["Myself", "NEUTRAL"],
+        },
+      ],
+      responses: responseFactory.response([{ name: "Enemy" }]),
+    },
+  ],
+  abilities: [],
+};
+
+const hunter: CustomCode = {
+  location: "init",
+  type: "insertBefore",
+  statements: [
+    // FIXME: these statements don't work properly
+    // {
+    //   triggers: [
+    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+    //     {
+    //       name: "NearSavedLocation",
+    //       params: ["Myself", "INITIAL", 8],
+    //       negation: true,
+    //     },
+    //     {
+    //       name: "Class",
+    //       params: ["Myself", "HUNTER_CREATURE"],
+    //       negation: true,
+    //     },
+    //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
+    //   ],
+    //   responses: responseFactory.response([
+    //     { name: "MoveToSavedLocationn", params: ["INITIAL", "LOCALS"] },
+    //   ]),
+    // },
+    // {
+    //   triggers: [
+    //     triggerFactory.globalTimerExpired("BD_Move"),
+    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+    //     { name: "Detect", params: ["GOODCUTOFF"] },
+    //     {
+    //       name: "NearSavedLocation",
+    //       params: ["Myself", "INITIAL", 8],
+    //     },
+    //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
+    //   ],
+    //   responses: [
+    //     {
+    //       weight: 40,
+    //       actions: [
+    //         actionFactory.setGlobalTimer("BD_Move", 6),
+    //         { name: "RandomWalk" },
+    //       ],
+    //     },
+    //     {
+    //       weight: 40,
+    //       actions: [
+    //         actionFactory.setGlobalTimer("BD_Move", 6),
+    //         { name: "RandomTurn" },
+    //       ],
+    //     },
+    //     {
+    //       weight: 20,
+    //       actions: [
+    //         actionFactory.setGlobalTimer("BD_Move", 6),
+    //         { name: "NoAction" },
+    //       ],
+    //     },
+    //   ],
+    // },
+    {
+      triggers: [
+        { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+        { name: "Class", params: ["Myself", "HUNTER_CREATURE"] },
+        { name: "Detect", params: ["PC"] },
+        { name: "See", params: ["FOOD_CREATURE"] },
+      ],
+      responses: responseFactory.response([
+        { name: "AttackOneRound", params: ["LastSeenBy"] },
+      ]),
+    },
+  ],
+  abilities: [],
+};
+const fearFire: CustomCode = {
+  location: "handlePanic",
+  type: "insertAfter",
+  statements: [
+    {
+      triggers: [{ name: "HitBy", params: ["ANYONE", "FIRE"] }],
+      responses: responseFactory.response(
+        actionFactory.disableInterrupt([
+          { name: "RunAwayFromNoLeaveArea", params: ["LastAttackerOf", 200] },
+        ])
+      ),
+    },
+  ],
+  abilities: [],
+};
+
+const rage: RawCreatureAbility = {
+  name: "Rage",
+  spell: {
+    resource: SPELLS.BerserkerRage,
+    selfTarget: true,
+    probability: 50,
   },
-];
+  triggers: [
+    { name: "See", params: ["NearestEnemyOf"] },
+    { name: "CheckStat", params: ["Myself", 0, "OFFENSIVE_MODIFIER"] },
+    { name: "HPPercentLT", params: ["Myself", 75] },
+  ],
+};
 
 export const createBears = () => {
   /**
@@ -222,7 +292,11 @@ export const createBears = () => {
     createPaws({ diceThrown: 1, diceSize: 3, hugDiceThrown: 2, hugDiceSize: 4 })
   );
   black.addWeapon(createJaws({ diceThrown: 1, diceSize: 6 }));
-  black.setAdjustments([{ files: ["BEARBLSU"], summon: true }]);
+  black.setAdjustments([
+    { files: ["BEARBLSU"], summon: true },
+    { files: ["PLYBEAR2"], additionalData: { scriptLocation: "None" } },
+  ]);
+  black.setBehavior({ walk: true, customCode: [turningHostile, fearFire] });
   black.validate();
 
   /**
@@ -273,11 +347,18 @@ export const createBears = () => {
   );
   brown.addWeapon(createJaws({ diceThrown: 1, diceSize: 8 }));
   brown.setBehavior({
-    customCode: hunterCode,
+    walk: true,
+    customCode: [turningHostile, hunter],
+    abilities: [rage],
   });
   brown.setAdjustments([
     { files: ["BEARBRSU"], summon: true },
+    { files: ["PLYBEAR1"], additionalData: { scriptLocation: "None" } },
     { files: ["BDGRIZHU"], data: { class: "HUNTER_CREATURE" } },
+    // { do we want to give them rage? this is not RAW
+    //   files: ["BDBEARBN", "BDGRIZHU"],
+    //   additionalData: { removeMemorizedSpells: false },
+    // },
   ]);
   brown.validate();
 
@@ -320,16 +401,18 @@ export const createBears = () => {
     createPaws({ diceThrown: 1, diceSize: 8, hugDiceThrown: 2, hugDiceSize: 6 })
   );
   cave.addWeapon(createJaws({ diceThrown: 1, diceSize: 12 }));
+  cave.setBehavior({
+    customCode: [turningHostile],
+    walk: true,
+    abilities: [rage],
+  });
   cave.setAdjustments([
     { files: ["BEARCASU"], summon: true },
     { files: ["BD328OSO"], data: { level1: 8, xpv: 900 } },
-    {
-      files: ["BDBEARCA"],
-      additionalData: {
-        removeMemorizedSpells: false,
-        scriptLocation: "General",
-      },
-    },
+    // { do we want to give them rage? this is not RAW
+    //   files: ["BDBEARCA"],
+    //   additionalData: { removeMemorizedSpells: false },
+    // },
   ]);
   cave.validate();
 
@@ -455,32 +538,32 @@ export const createBears = () => {
       range: 10,
     },
   });
-
-  const polarCode: CustomCode[] = [
-    {
-      location: "init",
-      type: "insertAfter",
-      statements: [
-        {
-          triggers: [
-            { name: "Name", params: ["Myself", "kaldran"] },
-            { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
-            { name: "See", params: ["NearestEnemyOf"] },
-            { name: "See", params: ["PC"] },
-          ],
-          responses: [
-            {
-              weight: 100,
-              actions: [
-                { name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] },
-              ],
-            },
-          ],
-        },
-      ],
-      abilities: [],
-    },
-  ];
+  const kaldranInit: CustomCode = {
+    location: "init",
+    type: "insertAfter",
+    statements: [
+      {
+        triggers: [
+          { name: "Name", params: ["kaldran", "Myself"] },
+          { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
+          { name: "See", params: ["NearestEnemyOf"] },
+          { name: "See", params: ["PC"] },
+        ],
+        responses: [
+          {
+            weight: 100,
+            actions: [{ name: "SetGlobal", params: ["Kaldran", "GLOBAL", 1] }],
+          },
+        ],
+      },
+    ],
+    abilities: [],
+  };
+  polar.setBehavior({
+    walk: true,
+    abilities: [improvedStreamOfFrost.ability!],
+    customCode: [turningHostile, kaldranInit],
+  });
   polar.setAdjustments([
     { files: ["BEARPOSU", "BDGHBRSU"], summon: true },
     { files: ["BDGHBRSU"], data: { level1: 9 } },
@@ -499,11 +582,6 @@ export const createBears = () => {
       },
     },
   ]);
-  polar.setBehavior({
-    abilities: [improvedStreamOfFrost.ability!],
-    customCode: polarCode,
-  });
-
   polar.validate();
 
   return [black, brown, cave, polar];

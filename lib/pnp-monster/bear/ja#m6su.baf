@@ -6,6 +6,19 @@ THEN
 		DestroySelf()
 END
 
+// Turn hostile if too close and not druid/ranger
+IF
+	Range([GOODCUTOFF],7)
+	!See([PC.0.0.DRUID])
+	!See([PC.0.0.RANGER])
+	!See([PC.0.0.FIGHTER_DRUID])
+	!See([PC.0.0.CLERIC_RANGER])
+	Allegiance(Myself,NEUTRAL)
+THEN
+	RESPONSE #100
+		Enemy()
+END
+
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)
@@ -59,6 +72,7 @@ END
 
 // Summon follow summoner
 IF
+	ActionListEmpty()
 	Global("JA#COMBAT","LOCALS",0)
 	!StateCheck(Myself,STATE_BLIND)
 	ActionListEmpty()
@@ -73,6 +87,7 @@ END
 
 // Do nothing if...
 IF
+	ActionListEmpty()
 	OR(4)
 		Global("JA#COMBAT","LOCALS",0)
 		!Allegiance(Myself,EVILCUTOFF)
@@ -84,6 +99,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!InActiveArea(Myself)
 	!Range(NearestEnemyOf(Myself),30)
 THEN
@@ -107,8 +123,24 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Rage
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("SPCL321")
+	See(NearestEnemyOf(Myself))
+	CheckStat(Myself,0,OFFENSIVE_MODIFIER)
+	HPPercentLT(Myself,75)
+	RandomNumGT(800,401)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("SPCL321",Myself)
+END
+
 // Attack NoCheck enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		General(NearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
@@ -165,6 +197,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -176,6 +209,7 @@ END
 
 // Attack Sleep enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		!StateCheck(Player1,STATE_SLEEPING)
 		CheckStatGT(Player1,0,SANCTUARY)
@@ -212,6 +246,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -224,6 +259,7 @@ END
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
@@ -239,6 +275,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
@@ -254,6 +291,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
@@ -269,6 +307,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
@@ -284,6 +323,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
@@ -299,6 +339,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
@@ -315,6 +356,7 @@ END
 // Track last seen enemy if allegiance is GOODCUTOFF
 IF
 	Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
@@ -327,16 +369,5 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
-END
-
-// Random walking (in combat) 
-IF
-	Global("JA#COMBAT","LOCALS",1)
-	ActionListEmpty()
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		RandomWalk()
-		Wait(2)
 END
 

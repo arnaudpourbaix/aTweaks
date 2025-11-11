@@ -2,34 +2,42 @@ import { GLOBAL_CONFIG } from "../../config/generate";
 import { Actions } from "../model/script/actions";
 
 class ActionFactory {
-  setGlobal = (
-    name: string,
-    value: number,
-    area = "LOCALS"
-  ): Actions.Action => ({
-    name: "SetGlobal",
-    params: [name, area, value],
-  });
+  setGlobal(name: string, value: number, area = "LOCALS"): Actions.Action {
+    return {
+      name: "SetGlobal",
+      params: [name, area, value],
+    };
+  }
 
-  setGlobalTimer = (name: string, value: number): Actions.Action => ({
-    name: "SetGlobalTimer",
-    params: [name, "LOCALS", value],
-  });
+  setGlobalTimer(name: string, value: number): Actions.Action {
+    return {
+      name: "SetGlobalTimer",
+      params: [name, "LOCALS", value],
+    };
+  }
 
-  setGlobalRoundTimer = (): Actions.Action => ({
-    name: "SetGlobalTimer",
-    params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS", 6],
-  });
+  setGlobalRoundTimer(): Actions.Action {
+    return {
+      name: "SetGlobalTimer",
+      params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS", 6],
+    };
+  }
 
-  enableInterrupt = (): Actions.Action => ({
-    name: "SetInterrupt",
-    params: ["TRUE"],
-  });
+  enableInterrupt(): Actions.Action {
+    return {
+      name: "SetInterrupt",
+      params: ["TRUE"],
+    };
+  }
 
-  disableInterrupt = (): Actions.Action => ({
-    name: "SetInterrupt",
-    params: ["FALSE"],
-  });
+  disableInterrupt(actions: Actions.Action[]): Actions.Action[];
+  disableInterrupt(): Actions.Action;
+  disableInterrupt(
+    actions?: Actions.Action[]
+  ): Actions.Action | Actions.Action[] {
+    if (!actions) return { name: "SetInterrupt", params: ["FALSE"] };
+    return [this.disableInterrupt(), ...actions, this.enableInterrupt()];
+  }
 }
 
 const actionFactory = new ActionFactory();

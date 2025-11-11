@@ -59,6 +59,7 @@ export const createAnkheg = () => {
     immunities: ["magicalBeast"],
     removeScripts: ["ANKHEG"],
     removeItems: ["ANKHEG1", "ANKHEG2"],
+    scriptLocation: "Race",
   });
   ankheg.addWeapon({
     weapon: {

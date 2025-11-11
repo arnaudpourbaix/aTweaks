@@ -98,6 +98,17 @@ THEN
 		MoveToObject(LastHeardBy(Myself))
 END
 
+// Random walking (not in combat) 
+IF
+	Global("JA#COMBAT","LOCALS",0)
+	ActionListEmpty()
+	!See([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		RandomWalk()
+		Wait(2)
+END
+
 // Do nothing if...
 IF
 	OR(4)
@@ -132,6 +143,15 @@ IF
 THEN
 	RESPONSE #100
 		RandomWalkContinuous()
+END
+
+IF
+	HitBy([ANYONE],FIRE)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		RunAwayFromNoLeaveArea(LastAttackerOf(Myself),200)
+		SetInterrupt(TRUE)
 END
 
 // Attack NoCheck enemy

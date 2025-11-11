@@ -385,7 +385,7 @@ export namespace Actions {
 
   export interface SetInterrupt {
     name: "SetInterrupt";
-    params: [string];
+    params: ["TRUE" | "FALSE"];
   }
 
   export interface CreateCreatureOffScreen {

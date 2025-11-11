@@ -3,54 +3,64 @@ import { StatsIdentifier } from "../model/ids/stats";
 import { Triggers } from "../model/script/triggers";
 
 class TriggerFactory {
-  global = (
-    name: string,
-    value: number,
-    area = "LOCALS"
-  ): Triggers.Trigger => ({
-    name: "Global",
-    params: [name, area, value],
-  });
+  global(name: string, value: number, area = "LOCALS"): Triggers.Trigger {
+    return {
+      name: "Global",
+      params: [name, area, value],
+    };
+  }
 
-  globalTimerReallyExpired = (name: string): Triggers.Trigger => ({
-    name: "GlobalTimerExpired",
-    params: [name, "LOCALS"],
-  });
+  globalTimerReallyExpired(name: string): Triggers.Trigger {
+    return {
+      name: "GlobalTimerExpired",
+      params: [name, "LOCALS"],
+    };
+  }
 
-  globalTimerExpired = (name: string): Triggers.Trigger => ({
-    name: "GlobalTimerNotExpired",
-    params: [name, "LOCALS"],
-    negation: true,
-  });
+  globalTimerExpired(name: string): Triggers.Trigger {
+    return {
+      name: "GlobalTimerNotExpired",
+      params: [name, "LOCALS"],
+      negation: true,
+    };
+  }
 
-  globalRoundTimerExpired = (): Triggers.Trigger => ({
-    name: "GlobalTimerNotExpired",
-    params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS"],
-    negation: true,
-  });
+  globalRoundTimerExpired(): Triggers.Trigger {
+    return {
+      name: "GlobalTimerNotExpired",
+      params: [GLOBAL_CONFIG.bafConstants.roundTimer, "LOCALS"],
+      negation: true,
+    };
+  }
 
-  checkStatGT = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
-    name: "CheckStatGT",
-    params: [GLOBAL_CONFIG.tokens.target, value, stat],
-  });
+  checkStatGT(value: number, stat: StatsIdentifier): Triggers.Trigger {
+    return {
+      name: "CheckStatGT",
+      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+    };
+  }
 
-  checkStatLT = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
-    name: "CheckStatLT",
-    params: [GLOBAL_CONFIG.tokens.target, value, stat],
-  });
+  checkStatLT(value: number, stat: StatsIdentifier): Triggers.Trigger {
+    return {
+      name: "CheckStatLT",
+      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+    };
+  }
 
-  checkStat = (value: number, stat: StatsIdentifier): Triggers.Trigger => ({
-    name: "CheckStat",
-    params: [GLOBAL_CONFIG.tokens.target, value, stat],
-  });
+  checkStat(value: number, stat: StatsIdentifier): Triggers.Trigger {
+    return {
+      name: "CheckStat",
+      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+    };
+  }
 
-  validTrackTarget = ({
+  validTrackTarget({
     isTargetPlayer,
     seeInvisible,
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
-  }): Triggers.Trigger[] => {
+  }): Triggers.Trigger[] {
     const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
@@ -87,15 +97,15 @@ class TriggerFactory {
         negation: true,
       });
     return results;
-  };
+  }
 
-  validSpellTarget = ({
+  validSpellTarget({
     isTargetPlayer,
     seeInvisible,
   }: {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
-  }): Triggers.Trigger[] => {
+  }): Triggers.Trigger[] {
     const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
@@ -128,9 +138,9 @@ class TriggerFactory {
         negation: true,
       });
     return results;
-  };
+  }
 
-  validAttackTarget = ({
+  validAttackTarget({
     isTargetPlayer,
     seeInvisible,
     maxRange,
@@ -138,7 +148,7 @@ class TriggerFactory {
     isTargetPlayer: boolean;
     seeInvisible: boolean;
     maxRange?: number;
-  }): Triggers.Trigger[] => {
+  }): Triggers.Trigger[] {
     const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
@@ -170,7 +180,7 @@ class TriggerFactory {
       });
     }
     return results;
-  };
+  }
 }
 
 const triggerFactory = new TriggerFactory();

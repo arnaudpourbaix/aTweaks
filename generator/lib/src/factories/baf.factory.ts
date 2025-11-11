@@ -1,50 +1,11 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { CreatureAttackAction } from "../model/creature/attack";
-import { WEAPON_SLOTS, WeaponSlot } from "../model/creature/item";
 import { ObjectIdentifier } from "../model/ids/object";
-import { Actions } from "../model/script/actions";
 import { Response, Statements } from "../model/script/script";
 import { Triggers } from "../model/script/triggers";
 import utils from "../services/utils/utils.service";
-import actionFactory from "./action.factory";
+import responseFactory from "./response.factory";
 
 class BafFactory {
-  response = (actions: Actions.Action[], weight = 100): Response[] => [
-    { weight, actions },
-  ];
-
-  attackResponses = (p: {
-    attacks: CreatureAttackAction[];
-    oncePerRound: boolean;
-    optActions?: Actions.Action[];
-    weaponAttackSlot?: WeaponSlot;
-  }): Response[] => {
-    const responses: Response[] = p.attacks.map((a) => {
-      const actions: Actions.Action[] = [...(p.optActions ?? [])];
-      let slot = WEAPON_SLOTS.find((s) => s.slot === a.weaponSlot);
-      if (!slot) slot = WEAPON_SLOTS.find((s) => s.slot === p.weaponAttackSlot);
-      if (slot) {
-        actions.push({
-          name: "SelectWeaponAbility",
-          params: [slot.id, 0],
-        });
-      }
-      actions.push({
-        name: "AttackOneRound",
-        params: [GLOBAL_CONFIG.tokens.target],
-      });
-      if (a.disableInterrupt) {
-        actions.unshift(actionFactory.disableInterrupt());
-        actions.push(actionFactory.enableInterrupt());
-      }
-      return {
-        weight: a.responseWeight ?? 100,
-        actions,
-      };
-    });
-    return responses;
-  };
-
   addStatementsFromTargetList = (p: {
     statements: Statements;
     triggers: Triggers.Trigger[];
@@ -53,6 +14,7 @@ class BafFactory {
     reverse?: boolean;
     random?: boolean;
     comment?: string;
+    inBetweenStatements?: Statements;
   }): void => {
     p.reverse = p.reverse ?? false;
     p.random = p.random ?? false;
@@ -68,6 +30,7 @@ class BafFactory {
           params: [max, Math.round(max / (targets.length - index))],
         });
       const actionTarget = target === "Myself" ? "Myself" : "LastSeenBy";
+      //TODO: if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
@@ -113,7 +76,7 @@ class BafFactory {
     p.statements.push({
       comment: p.comment,
       triggers,
-      responses: this.response([{ name: "Continue" }]),
+      responses: responseFactory.response([{ name: "Continue" }]),
     });
     if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
     const lastSeenBy: ObjectIdentifier = "LastSeenBy";

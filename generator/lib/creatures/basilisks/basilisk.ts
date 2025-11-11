@@ -55,6 +55,7 @@ export const createBasilisks = () => {
     immunities: ["magicalBeast"],
     removeItems: ["BASILL1", "BASILL2"],
     removeScripts: ["LBASILSK"],
+    scriptLocation: "Race",
   });
   lesser.addWeapon({
     weapon: {
@@ -120,6 +121,7 @@ export const createBasilisks = () => {
     removeScripts: ["GBASILSK"],
     removeItems: ["BASILG1", "BASILG2", "BASILG3"],
     memorizedSpells: [{ file: petrificationSpell.file, memorizedCount: 1 }],
+    scriptLocation: "Race",
   });
   greater.addWeapon({
     weapon: {

@@ -4,20 +4,20 @@ import { POTIONS } from "../../../config/potion";
 import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import actionFactory from "../../factories/action.factory";
 import bafFactory from "../../factories/baf.factory";
+import responseFactory from "../../factories/response.factory";
+import triggerFactory from "../../factories/trigger.factory";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import { AllegianceIdentifier } from "../../model/ids/allegiance";
-import { RaceIdentifier } from "../../model/ids/race";
 import { BuilderOptions } from "../../model/misc";
 import { Actions } from "../../model/script/actions";
-import { Triggers } from "../../model/script/triggers";
 import { CustomCodeLocation, Statements } from "../../model/script/script";
 import { TargetList } from "../../model/script/target";
+import { Triggers } from "../../model/script/triggers";
 import targetService from "../target.service";
 import utils from "../utils/utils.service";
-import triggerFactory from "../../factories/trigger.factory";
-import actionFactory from "../../factories/action.factory";
 
 class StatementService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
@@ -194,7 +194,7 @@ class StatementService {
         { name: "NumTimesTalkedTo", params: [0] },
         { name: "See", params: ["PC"] },
       ],
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.dialog, 1),
         { name: "FaceObject", params: ["PC"] },
         { name: "StartDialogueNoSet", params: ["PC"] },
@@ -220,7 +220,7 @@ class StatementService {
           params: ["NearestEnemyOf", 10],
         },
       ],
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 15] },
       ]),
     });
@@ -231,7 +231,7 @@ class StatementService {
           params: ["Myself", "STATE_PANIC"],
         },
       ],
-      responses: bafFactory.response([{ name: "RandomWalkContinuous" }]),
+      responses: responseFactory.response([{ name: "RandomWalkContinuous" }]),
     });
   }
 
@@ -244,7 +244,7 @@ class StatementService {
     statements.push({
       comment: "Summons are destroyed on death",
       triggers: [{ name: "Die" }],
-      responses: bafFactory.response([{ name: "DestroySelf" }]),
+      responses: responseFactory.response([{ name: "DestroySelf" }]),
     });
   }
 
@@ -265,7 +265,7 @@ class StatementService {
       triggers: [
         triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
       ],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
     });
   }
 
@@ -297,7 +297,7 @@ class StatementService {
           negation: true,
         },
       ],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
     });
   }
 
@@ -339,61 +339,8 @@ class StatementService {
           ],
         },
       ],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
     });
-    if (["BEAR"].includes(creature.data.race)) {
-      statements.push({
-        comment: "Turn hostile if too close and not druid/ranger",
-        triggers: [
-          { name: "Range", params: ["GOODCUTOFF", 7] },
-          {
-            name: "See",
-            params: [
-              targetService.targetObject({
-                ea: "PC",
-                clazz: "DRUID",
-              }),
-            ],
-            negation: true,
-          },
-          {
-            name: "See",
-            params: [
-              targetService.targetObject({
-                ea: "PC",
-                clazz: "RANGER",
-              }),
-            ],
-            negation: true,
-          },
-          {
-            name: "See",
-            params: [
-              targetService.targetObject({
-                ea: "PC",
-                clazz: "FIGHTER_DRUID",
-              }),
-            ],
-            negation: true,
-          },
-          {
-            name: "See",
-            params: [
-              targetService.targetObject({
-                ea: "PC",
-                clazz: "CLERIC_RANGER",
-              }),
-            ],
-            negation: true,
-          },
-          {
-            name: "Allegiance",
-            params: ["Myself", "NEUTRAL"],
-          },
-        ],
-        responses: bafFactory.response([{ name: "Enemy" }]),
-      });
-    }
   }
 
   private detectCombat(
@@ -428,7 +375,7 @@ class StatementService {
           },
           { name: "See", params: [ea.enemy] },
         ],
-        responses: bafFactory.response(actions),
+        responses: responseFactory.response(actions),
       });
     }
   }
@@ -448,7 +395,7 @@ class StatementService {
         triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
         triggerFactory.globalTimerExpired(GLOBAL_CONFIG.bafConstants.helpTimer),
       ],
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         {
           name: "Shout",
           params: [shoutId],
@@ -466,7 +413,7 @@ class StatementService {
         { name: "Heard", params: [heardObject, shoutId] },
         { name: "InMyArea", params: [heardObject] },
       ],
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
         { name: "MoveToObject", params: ["LastHeardBy"] },
       ]),
@@ -478,7 +425,7 @@ class StatementService {
         { name: "InMyArea", params: [heardObject] },
         { name: "See", params: ["GOODCUTOFF"], negation: true },
       ],
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         { name: "MoveToObject", params: ["LastHeardBy"] },
       ]),
     });
@@ -489,31 +436,35 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    const responses = bafFactory.response([{ name: "NoAction" }]);
+    const responses = responseFactory.response([{ name: "NoAction" }]);
+    let triggers: Triggers.Trigger[] = [
+      {
+        name: "Or",
+        triggers: [
+          triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
+          {
+            name: "Allegiance",
+            params: ["Myself", "EVILCUTOFF"],
+            negation: true,
+          },
+          { name: "StateCheck", params: ["Myself", "STATE_IMMOBILE"] },
+          { name: "StateCheck", params: ["Myself", "STATE_REALLY_DEAD"] },
+        ],
+      },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       comment: "Do nothing if...",
-      triggers: [
-        {
-          name: "Or",
-          triggers: [
-            triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-            {
-              name: "Allegiance",
-              params: ["Myself", "EVILCUTOFF"],
-              negation: true,
-            },
-            { name: "StateCheck", params: ["Myself", "STATE_IMMOBILE"] },
-            { name: "StateCheck", params: ["Myself", "STATE_REALLY_DEAD"] },
-          ],
-        },
-      ],
+      triggers,
       responses,
     });
+    triggers = [
+      { name: "InActiveArea", params: ["Myself"], negation: true },
+      { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
-      triggers: [
-        { name: "InActiveArea", params: ["Myself"], negation: true },
-        { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
-      ],
+      triggers,
       responses,
     });
   }
@@ -548,10 +499,11 @@ class StatementService {
         params: ["LastSummonerOf", GLOBAL_CONFIG.bafConstants.trackingRange],
       },
     ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       comment: "Summon follow summoner",
       triggers,
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         { name: "MoveToObject", params: ["LastSummonerOf"] },
       ]),
     });
@@ -588,6 +540,7 @@ class StatementService {
       },
       ...additionals.triggers,
     ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     const actions: Actions.Action[] = [
       { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
       ...additionals.actions,
@@ -606,7 +559,7 @@ class StatementService {
           ),
         }),
       ],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
       targets: targetService.getList("Players"),
     });
     bafFactory.addStatementsFromTargetList({
@@ -623,7 +576,7 @@ class StatementService {
           ),
         }),
       ],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
       targets: ["LastSeenBy"],
       random: false,
     });
@@ -642,7 +595,7 @@ class StatementService {
           { name: "Range", params: ["NearestDoor", 15] },
           { name: "OpenState", params: ["NearestDoor", "FALSE"] },
         ],
-        responses: bafFactory.response([
+        responses: responseFactory.response([
           { name: "MoveToObject", params: ["NearestDoor"] },
           { name: "OpenDoor", params: ["NearestDoor"] },
         ]),
@@ -655,8 +608,8 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.behavior.combatWalk) return;
-    this.randomWalk(statements, true, creature, options);
+    if (!creature.behavior.combatWalk || options.summon) return;
+    this.randomWalk(statements, true, options);
     this.avoidMeleeCombat(statements, creature, options);
   }
 
@@ -665,14 +618,13 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (!creature.behavior.walk) return;
-    this.randomWalk(statements, false, creature, options);
+    if (!creature.behavior.walk || options.summon) return;
+    this.randomWalk(statements, false, options);
   }
 
   private randomWalk(
     statements: Statements,
     combat: boolean,
-    creature: Creature,
     options: BuilderOptions
   ): void {
     const triggers: Triggers.Trigger[] = [
@@ -690,7 +642,7 @@ class StatementService {
     statements.push({
       comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       triggers,
-      responses: bafFactory.response([
+      responses: responseFactory.response([
         { name: "RandomWalk" },
         { name: "Wait", params: [2] },
       ]),
@@ -712,7 +664,7 @@ class StatementService {
           negation: true,
         },
       ],
-      responses: bafFactory.response([{ name: "RandomTurn" }]),
+      responses: responseFactory.response([{ name: "RandomTurn" }]),
     });
   }
 
@@ -721,15 +673,17 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
+    const triggers: Triggers.Trigger[] = [
+      {
+        name: "Range",
+        params: ["NearestEnemyOf", 20],
+      },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       comment: `Run away from enemies`,
-      triggers: [
-        {
-          name: "Range",
-          params: ["NearestEnemyOf", 20],
-        },
-      ],
-      responses: bafFactory.response([
+      triggers,
+      responses: responseFactory.response([
         { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
       ]),
     });
@@ -740,15 +694,17 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
+    const triggers: Triggers.Trigger[] = [
+      { name: "CanEquipRanged" },
+      {
+        name: "Range",
+        params: ["NearestEnemyOf", GLOBAL_CONFIG.bafConstants.meleeRange],
+      },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       comment: `Try to reposition to use ranged attack`,
-      triggers: [
-        { name: "CanEquipRanged" },
-        {
-          name: "Range",
-          params: ["NearestEnemyOf", GLOBAL_CONFIG.bafConstants.meleeRange],
-        },
-      ],
+      triggers,
       responses: [
         {
           weight: 50,
@@ -816,6 +772,8 @@ class StatementService {
           maxRange: creature.attack.maxRange,
         }),
       ];
+      const triggers: Triggers.Trigger[] = [];
+      if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
       // if (creature.canPolymorph) {
       //   const poly: Triggers.Trigger = {
       //     name: "CheckStat",
@@ -827,7 +785,7 @@ class StatementService {
           ? this.selectWeaponStatements(creature, options)
           : [];
 
-      const responses = bafFactory.attackResponses({
+      const responses = responseFactory.attackResponses({
         attacks: creature.attack.actions,
         oncePerRound: false,
         weaponAttackSlot,
@@ -835,6 +793,7 @@ class StatementService {
       bafFactory.addOneBlockTargetList({
         statements,
         comment: `Attack ${statusDetails.status} enemy`,
+        triggers,
         targetTriggers,
         responses,
         targets,
@@ -848,28 +807,32 @@ class StatementService {
     options: BuilderOptions
   ): Statements {
     const statements: Statements = [];
+    let triggers: Triggers.Trigger[] = [
+      { name: "CanEquipRanged" },
+      {
+        name: "Range",
+        params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
+        negation: true,
+      },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
-      triggers: [
-        { name: "CanEquipRanged" },
-        {
-          name: "Range",
-          params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
-          negation: true,
-        },
-      ],
-      responses: bafFactory.response([
+      triggers,
+      responses: responseFactory.response([
         { name: "EquipRanged" },
         { name: "Continue" },
       ]),
     });
+    triggers = [
+      {
+        name: "Range",
+        params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
+      },
+    ];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
-      triggers: [
-        {
-          name: "Range",
-          params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
-        },
-      ],
-      responses: bafFactory.response([
+      triggers,
+      responses: responseFactory.response([
         { name: "EquipMostDamagingMelee" },
         { name: "Continue" },
       ]),
@@ -890,6 +853,7 @@ class StatementService {
           triggerFactory.globalRoundTimerExpired(),
           ...(potion.triggers ?? []),
         ];
+        if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
         const actions: Actions.Action[] = [
           ...(potion.actions ?? []),
           {
@@ -902,7 +866,7 @@ class StatementService {
         statements.push({
           comment: potion.name,
           triggers,
-          responses: bafFactory.response(actions),
+          responses: responseFactory.response(actions),
         });
       }
     }
@@ -921,6 +885,7 @@ class StatementService {
           triggerFactory.globalRoundTimerExpired(),
           ...(ability.triggers ?? []),
         ];
+        if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
         const actions: Actions.Action[] = [
           ...(ability.actions ?? []),
           actionFactory.setGlobalRoundTimer(),
@@ -929,7 +894,7 @@ class StatementService {
         statements.push({
           comment: ability.name,
           triggers,
-          responses: bafFactory.response(actions),
+          responses: responseFactory.response(actions),
         });
       }
     }
@@ -955,7 +920,7 @@ class StatementService {
     abilities: CreatureAbility[]
   ): void {
     for (const ability of abilities) {
-      if (ability.targets)
+      if (ability.targets.length)
         this.creatureTargetsAbility(
           statements,
           creature,
@@ -995,6 +960,7 @@ class StatementService {
     const { triggers, targetTriggers } =
       targetService.getTriggersFromTargetList(target);
     triggers.unshift(...ability.triggers);
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     if (ability.isSpell) {
       targetTriggers.push(
         ...triggerFactory.validSpellTarget({
@@ -1066,7 +1032,7 @@ class StatementService {
       statements,
       comment: ability.name,
       triggers: [...triggers, ...targetTriggers],
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
       targets,
       random: target.random,
       reverse: target.reverse,
@@ -1080,6 +1046,7 @@ class StatementService {
     options: BuilderOptions
   ): void {
     const triggers = [...ability.triggers];
+    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(triggerFactory.globalTimerExpired(ability.timer.name));
@@ -1109,7 +1076,7 @@ class StatementService {
     statements.push({
       comment: ability.name,
       triggers,
-      responses: bafFactory.response(actions),
+      responses: responseFactory.response(actions),
     });
   }
 
