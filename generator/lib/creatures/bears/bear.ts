@@ -1,15 +1,10 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import actionFactory from "../../src/factories/action.factory";
-import bafFactory from "../../src/factories/baf.factory";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import responseFactory from "../../src/factories/response.factory";
-import triggerFactory from "../../src/factories/trigger.factory";
-import {
-  CreatureAbility,
-  RawCreatureAbility,
-} from "../../src/model/creature/ability";
+import { RawCreatureAbility } from "../../src/model/creature/ability";
 import { CustomCode } from "../../src/model/script/script";
 import {
   AbilityDamageTypeEnum,
@@ -31,13 +26,16 @@ import {
   WeaponCastSpell,
 } from "../../src/model/spell-item/spell-item";
 import targetService from "../../src/services/target.service";
+import { hunterCustomCode } from "../common";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 const createPaws = (payload: {
   diceSize: number;
   diceThrown: number;
-  hugDiceSize: number;
-  hugDiceThrown: number;
+  hug: {
+    diceSize: number;
+    diceThrown: number;
+  };
 }): {
   weapon: PartialWeapon;
   castSpell: WeaponCastSpell;
@@ -59,7 +57,6 @@ const createPaws = (payload: {
     probability1: 10,
     spell: {
       name: "monster.bear.hug.name",
-      // description: "monster.ankheg.digestiveEnzyme.description",
       secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
       headers: [
         {
@@ -69,8 +66,8 @@ const createPaws = (payload: {
             {
               opcode: EffectTypeEnum.Damage,
               type: EffectDamageTypeEnum.Crushing,
-              diceThrown: payload.hugDiceThrown,
-              diceSize: payload.hugDiceSize,
+              diceThrown: payload.hug.diceThrown,
+              diceSize: payload.hug.diceSize,
             },
           ],
         },
@@ -143,79 +140,6 @@ const turningHostile: CustomCode = {
   abilities: [],
 };
 
-const hunter: CustomCode = {
-  location: "init",
-  type: "insertBefore",
-  statements: [
-    // FIXME: these statements don't work properly
-    // {
-    //   triggers: [
-    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-    //     {
-    //       name: "NearSavedLocation",
-    //       params: ["Myself", "INITIAL", 8],
-    //       negation: true,
-    //     },
-    //     {
-    //       name: "Class",
-    //       params: ["Myself", "HUNTER_CREATURE"],
-    //       negation: true,
-    //     },
-    //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
-    //   ],
-    //   responses: responseFactory.response([
-    //     { name: "MoveToSavedLocationn", params: ["INITIAL", "LOCALS"] },
-    //   ]),
-    // },
-    // {
-    //   triggers: [
-    //     triggerFactory.globalTimerExpired("BD_Move"),
-    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-    //     { name: "Detect", params: ["GOODCUTOFF"] },
-    //     {
-    //       name: "NearSavedLocation",
-    //       params: ["Myself", "INITIAL", 8],
-    //     },
-    //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
-    //   ],
-    //   responses: [
-    //     {
-    //       weight: 40,
-    //       actions: [
-    //         actionFactory.setGlobalTimer("BD_Move", 6),
-    //         { name: "RandomWalk" },
-    //       ],
-    //     },
-    //     {
-    //       weight: 40,
-    //       actions: [
-    //         actionFactory.setGlobalTimer("BD_Move", 6),
-    //         { name: "RandomTurn" },
-    //       ],
-    //     },
-    //     {
-    //       weight: 20,
-    //       actions: [
-    //         actionFactory.setGlobalTimer("BD_Move", 6),
-    //         { name: "NoAction" },
-    //       ],
-    //     },
-    //   ],
-    // },
-    {
-      triggers: [
-        { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-        { name: "Class", params: ["Myself", "HUNTER_CREATURE"] },
-        { name: "Detect", params: ["PC"] },
-        { name: "See", params: ["FOOD_CREATURE"] },
-      ],
-      responses: responseFactory.response([
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
-      ]),
-    },
-  ],
-  abilities: [],
-};
 const fearFire: CustomCode = {
   location: "handlePanic",
   type: "insertAfter",
@@ -289,7 +213,11 @@ export const createBears = () => {
     removeScripts: ["CBEAR", "BEAR"],
   });
   black.addWeapon(
-    createPaws({ diceThrown: 1, diceSize: 3, hugDiceThrown: 2, hugDiceSize: 4 })
+    createPaws({
+      diceThrown: 1,
+      diceSize: 3,
+      hug: { diceThrown: 2, diceSize: 4 },
+    })
   );
   black.addWeapon(createJaws({ diceThrown: 1, diceSize: 6 }));
   black.setAdjustments([
@@ -343,12 +271,16 @@ export const createBears = () => {
     removeScripts: ["CBEAR", "BEAR"],
   });
   brown.addWeapon(
-    createPaws({ diceThrown: 1, diceSize: 6, hugDiceThrown: 2, hugDiceSize: 6 })
+    createPaws({
+      diceThrown: 1,
+      diceSize: 6,
+      hug: { diceThrown: 2, diceSize: 6 },
+    })
   );
   brown.addWeapon(createJaws({ diceThrown: 1, diceSize: 8 }));
   brown.setBehavior({
     walk: true,
-    customCode: [turningHostile, hunter],
+    customCode: [turningHostile, hunterCustomCode],
     abilities: [rage],
   });
   brown.setAdjustments([
@@ -398,7 +330,11 @@ export const createBears = () => {
     removeScripts: ["CBEAR", "BEAR"],
   });
   cave.addWeapon(
-    createPaws({ diceThrown: 1, diceSize: 8, hugDiceThrown: 2, hugDiceSize: 6 })
+    createPaws({
+      diceThrown: 1,
+      diceSize: 8,
+      hug: { diceThrown: 2, diceSize: 6 },
+    })
   );
   cave.addWeapon(createJaws({ diceThrown: 1, diceSize: 12 }));
   cave.setBehavior({
@@ -470,8 +406,7 @@ export const createBears = () => {
     createPaws({
       diceThrown: 1,
       diceSize: 10,
-      hugDiceThrown: 3,
-      hugDiceSize: 6,
+      hug: { diceThrown: 3, diceSize: 6 },
     })
   );
   polar.addWeapon(createJaws({ diceThrown: 2, diceSize: 6 }));

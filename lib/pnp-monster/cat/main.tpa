@@ -1,6 +1,6 @@
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/jaguar.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/leopard.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/lion.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/mountain_lion.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/hellcat.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/displacer.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/34.tpa" // Jaguar
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/36.tpa" // Leopard
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/10.tpa" // Lion
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/11.tpa" // Mountain Lion
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/37.tpa" // Hellcat
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/38.tpa" // Displacer Beast

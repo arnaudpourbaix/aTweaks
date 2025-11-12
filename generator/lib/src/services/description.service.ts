@@ -20,12 +20,18 @@ import {
   EffectDamageTypeEnum,
   InvisibilityTypeEnum,
   ItemAbilityTypeEnum,
+  ItemAnimationEnum,
   PoisonTypeEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
-import { Spell, SpellHeader, Weapon } from "../model/spell-item/spell-item";
+import {
+  Item,
+  Spell,
+  SpellHeader,
+  Weapon,
+} from "../model/spell-item/spell-item";
 import { State } from "../state";
 import translationService from "./translation.service";
 
@@ -34,6 +40,8 @@ class DescriptionService {
     for (const item of creature.items) {
       if (!item.description && !!item.header)
         this.generateWeaponDescription(item as Weapon, creature);
+      else if (!item.description && item.trait)
+        this.generateItemTraitDescription(item, creature);
     }
   }
 
@@ -116,6 +124,14 @@ class DescriptionService {
       desc.unshift(translationService.from(item.stringRef), "");
     }
     item.description = translationService.addCustomTranslation(desc);
+  }
+
+  private generateItemTraitDescription(item: Item, creature?: Creature) {
+    const desc: string[] = [];
+    desc.push(...this.getImmunitiesDescription(item.immunities));
+    desc.push(...this.getEffectsDescription(item.effects, creature));
+    item.description = translationService.addCustomTranslation(desc);
+    console.log(creature?.name, item.description);
   }
 
   private generateSpellDescription(

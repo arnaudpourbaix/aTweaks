@@ -25,6 +25,9 @@ class DocumentationService {
   }
 
   addCreature(creature: Creature) {
+    console.log(
+      `Generating documentation for ${translationService.from(creature.name)}`
+    );
     this.spells.push(...creature.spells);
     this.items.push(...creature.items);
     let content = fs.readFileSync("lib/templates/monster.html").toString();
@@ -87,15 +90,10 @@ class DocumentationService {
         )}</a>`
       );
     }
-    // for (const item of creature.items.filter((i) => i.trait)) {
-    //   //TODO:
-    //   traits.push(
-    //     `<a href="#${item.stringRef}">${translationService.from(
-    //       item.stringRef!
-    //     )}</a>`
-    //   );
-    // }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
+    for (const item of creature.items.filter((i) => i.trait)) {
+      result += translationService.from(item.description!);
+    }
     for (const immunity of immunities.filter((i) => i.type !== "trait")) {
       result += `<h5>${translationService.from(immunity.stringRef!)}</h5>`;
       if (immunity.description)

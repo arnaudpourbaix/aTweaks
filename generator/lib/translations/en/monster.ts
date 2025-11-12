@@ -51,6 +51,19 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
         "Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage. Affected creatures are also paralyzed for one turn (saves vs paralyze at -2)",
     },
   },
+  cat: {
+    name: {
+      jaguar: "Jaguar",
+      leopard: "Leopard",
+      lion: "Lion",
+      mountainLion: "Mountain Lion",
+      wildTiger: "Wild Tiger",
+      hellcat: "Hellcat",
+      displacerBeast: "Displacer Beast",
+    },
+    weapon: { claws: "Paws", jaws: "Jaws" },
+    rearClawsAttack: { name: "Rear claws attack" },
+  },
   spider: {
     webTangle: {
       name: "Web Tangle",

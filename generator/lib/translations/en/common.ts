@@ -149,5 +149,5 @@ Darkvision out to 60 feet.`,
     },
     ghostVisual1: "Ghosly appearance",
   },
-  weapon: { paws: "Paws" },
+  creatureTraits: "traits",
 };

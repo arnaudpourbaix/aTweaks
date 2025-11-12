@@ -203,12 +203,10 @@ class CreatureFactory {
   addTrait(
     cre: Creature,
     {
-      stringRef,
       description,
       immunities,
       effects,
     }: {
-      stringRef: StringReference;
       description?: StringReference;
       immunities?: ImmunityName[];
       effects?: Effect[];
@@ -219,6 +217,11 @@ class CreatureFactory {
     // if (description) {
     //   description.unshift(stringRef, "");
     // }
+    const stringRef = translationService.addCustomTranslation([
+      `${translationService.from(cre.name)} ${translationService.from(
+        "common.creatureTraits"
+      )}`,
+    ]);
     const item = this.addItem(cre, {
       stringRef,
       description,

@@ -2,13 +2,15 @@ import { Creature } from "../src/model/creature/creature";
 import { createAnkheg } from "./ankheg/ankheg";
 import { createBasilisks } from "./basilisks/basilisk";
 import { createBears } from "./bears/bear";
-import { createCarrionCrawler } from "./carrion/crawler_carrion";
+import { createCats } from "./cats/cats";
+import { createCarrionCrawler } from "./crawler/crawler";
 
 export const creatureFactories: (() => Creature[])[] = [
   createAnkheg,
   createBasilisks,
   createBears,
   createCarrionCrawler,
+  createCats,
   // ...Cats,
   // ...Constructs,
   // ...Dogs,

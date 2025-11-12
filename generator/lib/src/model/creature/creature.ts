@@ -103,7 +103,6 @@ export class Creature implements BaseCreature {
   }
 
   addTrait(payload: {
-    stringRef: StringReference;
     description?: StringReference;
     immunities?: ImmunityName[];
     effects?: Effect[];
