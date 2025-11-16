@@ -155,10 +155,9 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Improved stream of frost
 IF
 	HaveSpellRES("ja#2m7")
-	RandomNumGT(800,641)
+	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -174,7 +173,7 @@ END
 
 IF
 	HaveSpellRES("ja#2m7")
-	RandomNumGT(800,641)
+	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -190,7 +189,7 @@ END
 
 IF
 	HaveSpellRES("ja#2m7")
-	RandomNumGT(800,641)
+	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)

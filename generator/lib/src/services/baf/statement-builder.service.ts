@@ -17,6 +17,7 @@ import { CustomCodeLocation, Statements } from "../../model/script/script";
 import { TargetList } from "../../model/script/target";
 import { Triggers } from "../../model/script/triggers";
 import targetService from "../target.service";
+import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 
 class StatementService {
@@ -76,6 +77,13 @@ class StatementService {
       options
     );
     this.execute(
+      this.thievesAbilities,
+      "thievesAbilities",
+      statements,
+      creature,
+      options
+    );
+    this.execute(
       this.creatureAbilities,
       "creatureAbilities",
       statements,
@@ -119,7 +127,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ) {
-    const custom = creature.behavior.customCode.find(
+    const custom = creature.behavior.customCodes.find(
       (c) => c.location === location
     );
     if (custom && custom.type === "insertBefore") {
@@ -649,6 +657,51 @@ class StatementService {
     });
   }
 
+  private thievesAbilities(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions
+  ): void {
+    if (!creature.data.hideShadow) return;
+    const hideTimer = "BD_HIDE";
+    statements.push({
+      comment: `Hide in shadow`,
+      triggers: [
+        {
+          name: "Allegiance",
+          params: ["Myself", "NEUTRAL"],
+          negation: true,
+        },
+        {
+          name: "Or",
+          triggers: [
+            { name: "Detect", params: ["NearestEnemyOf"], negation: true },
+            { name: "Kit", params: ["Myself", "SHADOWDANCER"] },
+          ],
+        },
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_INVISIBLE"],
+          negation: true,
+        },
+        {
+          name: "StateCheck",
+          params: ["Myself", "STATE_BLIND"],
+          negation: true,
+        },
+        { name: "CheckStatGT", params: ["Myself", 49, "HIDEINSHADOWS"] },
+        triggerFactory.globalTimerExpired(hideTimer),
+      ],
+      responses: responseFactory.response(
+        actionFactory.disableInterrupt([
+          actionFactory.setGlobalTimer(hideTimer, 6),
+          { name: "DisplayStringHead", params: ["Myself", 66968] }, // *attempts to hide in shadows*
+          { name: "Hide" },
+        ])
+      ),
+    });
+  }
+
   private avoidMeleeCombat(
     statements: Statements,
     creature: Creature,
@@ -1030,7 +1083,7 @@ class StatementService {
     ) as string[];
     bafFactory.addStatementsFromTargetList({
       statements,
-      comment: ability.name,
+      comment: translationService.from(ability.name),
       triggers: [...triggers, ...targetTriggers],
       responses: responseFactory.response(actions),
       targets,
@@ -1074,7 +1127,7 @@ class StatementService {
       actions.push(actionFactory.enableInterrupt());
     }
     statements.push({
-      comment: ability.name,
+      comment: translationService.from(ability.name),
       triggers,
       responses: responseFactory.response(actions),
     });
@@ -1084,7 +1137,7 @@ class StatementService {
     creature: Creature,
     location: CustomCodeLocation
   ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] } {
-    const additionals = creature.behavior.additionalCode.find(
+    const additionals = creature.behavior.additionalCodes.find(
       (a) => a.location === location
     );
     return additionals ?? { triggers: [], actions: [] };

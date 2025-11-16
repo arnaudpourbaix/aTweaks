@@ -128,10 +128,10 @@ class DescriptionService {
 
   private generateItemTraitDescription(item: Item, creature?: Creature) {
     const desc: string[] = [];
+    // desc.push(translationService.from(item.stringRef!), "");
     desc.push(...this.getImmunitiesDescription(item.immunities));
     desc.push(...this.getEffectsDescription(item.effects, creature));
     item.description = translationService.addCustomTranslation(desc);
-    console.log(creature?.name, item.description);
   }
 
   private generateSpellDescription(

@@ -1,4 +1,3 @@
-import bafFactory from "../src/factories/baf.factory";
 import triggerFactory from "../src/factories/trigger.factory";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { TargetList } from "../src/model/script/target";
@@ -89,7 +88,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Invisibility,
     ability: {
-      name: "Invisibility",
+      name: "ability.invisibility",
       spell: {
         id: "WIZARD_INVISIBILITY",
         excludeStateChecks: ["STATE_INVISIBLE"],
@@ -103,7 +102,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.ImprovedInvisibility,
     ability: {
-      name: "Improved Invisibility",
+      name: "ability.improvedInvisibility",
       spell: {
         id: "WIZARD_IMPROVED_INVISIBILITY",
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
@@ -116,7 +115,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Domination,
     ability: {
-      name: "Domination",
+      name: "ability.domination",
       targets: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_DOMINATION",
@@ -128,7 +127,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.DireCharm,
     ability: {
-      name: "Dire Charm",
+      name: "ability.direCharm",
       targets: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_DIRE_CHARM",
@@ -140,7 +139,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.CharmPerson,
     ability: {
-      name: "Charm Person",
+      name: "ability.charmPerson",
       targets: CHARM_TARGET_LISTS,
       spell: {
         id: "WIZARD_CHARM_PERSON",
@@ -152,7 +151,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.CharmPersonOrAnimal,
     ability: {
-      name: "Charm Person or Animal",
+      name: "ability.charmPersonOrAnimal",
       targets: CHARM_TARGET_LISTS,
       spell: {
         id: "CLERIC_CHARM_PERSON",
@@ -164,7 +163,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.PowerWordSleep,
     ability: {
-      name: "Power Word Sleep",
+      name: "ability.powerWordSleep",
       targets: SLEEP_TARGET_LISTS,
       spell: {
         id: "WIZARD_POWER_WORD_SLEEP",
@@ -176,7 +175,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Sleep,
     ability: {
-      name: "Sleep",
+      name: "ability.sleep",
       targets: SLEEP_TARGET_LISTS,
       spell: {
         id: "WIZARD_SLEEP",
@@ -188,7 +187,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Darkness15Radius,
     ability: {
-      name: "Darkness 15' Radius",
+      name: "ability.darkness15Radius",
       targets: [
         {
           name: "NearestEnemies",
@@ -207,7 +206,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.ConeOfCold,
     ability: {
-      name: "Cone of Cold",
+      name: "ability.coneOfCold",
       targets: [{ name: "NearestEnemies", random: true }],
       spell: {
         id: "WIZARD_CONE_OF_COLD",
@@ -219,7 +218,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.MagicMissiles,
     ability: {
-      name: "Magic Missiles",
+      name: "ability.magicMissiles",
       targets: [{ name: "PCSpellcasters", random: true }],
       spell: {
         id: "WIZARD_MAGIC_MISSILE",
@@ -231,7 +230,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Bless,
     ability: {
-      name: "Bless",
+      name: "ability.bless",
       spell: {
         id: "CLERIC_BLESS",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -243,7 +242,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Command,
     ability: {
-      name: "Command",
+      name: "ability.command",
       targets: SLEEP_TARGET_LISTS,
       spell: {
         id: "CLERIC_COMMAND",
@@ -255,7 +254,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.ResistFear,
     ability: {
-      name: "Resist fear",
+      name: "ability.resistFear",
       spell: {
         id: "CLERIC_REMOVE_FEAR",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -267,7 +266,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Chant,
     ability: {
-      name: "Chant",
+      name: "ability.chant",
       spell: {
         id: "CLERIC_CHANT",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -279,7 +278,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.HoldPerson,
     ability: {
-      name: "Hold person",
+      name: "ability.holdPerson",
       targets: HOLD_TARGET_LISTS,
       spell: {
         id: "CLERIC_HOLD_PERSON",
@@ -291,7 +290,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.HoldPersonOrAnimal,
     ability: {
-      name: "Hold person or animal",
+      name: "ability.HoldPersonOrAnimal",
       targets: HOLD_TARGET_LISTS,
       spell: {
         id: "CLERIC_HOLD_ANIMAL",
@@ -303,7 +302,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Silence,
     ability: {
-      name: "Silence",
+      name: "ability.silence",
       targets: [
         {
           name: "PCSpellcasters",
@@ -328,7 +327,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.CallLightning,
     ability: {
-      name: "Call lightning",
+      name: "ability.callLightning",
       targets: [
         {
           name: "NearestEnemies",
@@ -351,7 +350,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.GlyphOfWarding,
     ability: {
-      name: "Glyph of warding",
+      name: "ability.glyphOfWarding",
       targets: [
         {
           name: "FarthestEnemies",
@@ -368,7 +367,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.MiscastMagic,
     ability: {
-      name: "Miscast magic",
+      name: "ability.miscastMagic",
       targets: [
         {
           name: "PCSpellcasters",
@@ -386,7 +385,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.RigidThinking,
     ability: {
-      name: "Rigid thinking",
+      name: "ability.rigidThinking",
       targets: [
         {
           name: "NearestEnemies",
@@ -404,7 +403,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.SummonInsects,
     ability: {
-      name: "Summon insects",
+      name: "ability.summonInsects",
       targets: [
         {
           name: "PCSpellcasters",
@@ -422,7 +421,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.DimensionDoor,
     ability: {
-      name: "Dimension Door",
+      name: "ability.dimensionDoor",
       targets: [
         {
           name: "Players",
@@ -447,7 +446,7 @@ export const ABILITY_PRESETS: {
   {
     preset: PRESET_NAMES.DimensionDoorOffscreen,
     ability: {
-      name: "Dimension Door",
+      name: "ability.dimensionDoor",
       disableInterrupt: true,
       triggers: [
         {
@@ -475,7 +474,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Entangle,
     ability: {
-      name: "Entangle",
+      name: "ability.entangle",
       targets: [
         {
           name: "NearestEnemies",
@@ -493,7 +492,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.CureLightWounds,
     ability: {
-      name: "Cure Light Wounds",
+      name: "ability.cureLightWounds",
       //TODO: target
       spell: {
         id: "CLERIC_CURE_LIGHT_WOUNDS",
@@ -506,7 +505,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Barkskin,
     ability: {
-      name: "Barkskin",
+      name: "ability.barkskin",
       spell: {
         id: "CLERIC_BARKSKIN",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -516,27 +515,9 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.SummonInsects,
-    ability: {
-      name: "Summon Insects",
-      targets: [
-        {
-          name: "PCSpellcasters",
-          includeStatus: ["Able"],
-          randomOrder: true,
-        },
-      ],
-      spell: {
-        id: "CLERIC_SUMMON_INSECTS",
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      requireVocal: true,
-    },
-  },
-  {
     preset: SPELLS.AnimalSummoning4,
     ability: {
-      name: "Summon Insects",
+      name: "ability.animalSummoning4",
       targets: [
         {
           name: "PCsPreferringWeak",
@@ -554,7 +535,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.CallWoodlandBeeings,
     ability: {
-      name: "Call Woodland Beeings",
+      name: "ability.callWoodlandBeeings",
       spell: {
         id: "CLERIC_CALL_WOODLAND_BEINGS",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -571,7 +552,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Slow,
     ability: {
-      name: "Slow",
+      name: "ability.slow",
       targets: [{ name: "NearestEnemies", limit: 6 }],
       spell: {
         id: "WIZARD_SLOW",
@@ -583,7 +564,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.Web,
     ability: {
-      name: "Web",
+      name: "ability.web",
       targets: HOLD_TARGET_LISTS,
       spell: {
         id: "WIZARD_WEB",
@@ -595,7 +576,7 @@ export const ABILITY_PRESETS: {
   {
     preset: SPELLS.DetectInvisibility,
     ability: {
-      name: "Detect Invisibility",
+      name: "ability.detectInvisibility",
       spell: {
         id: "WIZARD_DETECT_INVISIBILITY",
         probability: DEFAULT_SPELL_PROBABILITY,

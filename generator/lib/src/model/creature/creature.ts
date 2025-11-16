@@ -1,6 +1,7 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
+import utils from "../../services/utils/utils.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { Effect, EffectFile } from "../spell-item/effect";
@@ -60,6 +61,10 @@ export class Creature implements BaseCreature {
     meleeRange: true,
   };
   valid?: boolean;
+
+  setData(data: Partial<CreatureData>) {
+    creatureFactory.setData(this, data);
+  }
 
   setAdditionalData(
     additionalData: AtLeast<

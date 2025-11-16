@@ -110,7 +110,6 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Petrification (2e)
 IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m2")

@@ -17,6 +17,12 @@ class UtilsService {
     return Object.keys(obj) as (keyof T)[];
   };
 
+  getKeyByValue(
+    object: Record<string, unknown>,
+    value: unknown
+  ): string | undefined {
+    return Object.keys(object).find((key) => object[key] === value);
+  }
   replaceParamTokens(
     params: (string | number)[],
     tokens: { key: string; value: string }[]

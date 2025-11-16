@@ -145,14 +145,14 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Rage
+// Enrage
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("SPCL321")
 	See(NearestEnemyOf(Myself))
 	CheckStat(Myself,0,OFFENSIVE_MODIFIER)
 	HPPercentLT(Myself,75)
-	RandomNumGT(800,401)
+	RandomNumGT(800,400)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

@@ -147,6 +147,21 @@ export class AbstractWeiduService {
     this.add(lines, "END", tab);
   }
 
+  protected executeCodeWithIncludedFiles(
+    lines: CodeLine[],
+    tab: number,
+    code: string,
+    files: string[]
+  ) {
+    if (!files.length) return;
+    const conditions = files.map(
+      (f) => `"%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~`
+    );
+    this.add(lines, `PATCH_IF ${conditions.join(" OR ")} BEGIN`, tab);
+    this.add(lines, code, tab + 1);
+    this.add(lines, "END", tab);
+  }
+
   protected getWrite(size: number) {
     if (size === 1) return "WRITE_BYTE";
     else if (size === 2) return "WRITE_SHORT";

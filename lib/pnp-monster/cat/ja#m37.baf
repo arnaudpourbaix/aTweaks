@@ -121,6 +121,25 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Hide in shadow
+IF
+	!Allegiance(Myself,NEUTRAL)
+	OR(2)
+		!Detect(NearestEnemyOf(Myself))
+		Kit(Myself,SHADOWDANCER)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!StateCheck(Myself,STATE_BLIND)
+	CheckStatGT(Myself,49,HIDEINSHADOWS)
+	!GlobalTimerNotExpired("BD_HIDE","LOCALS")
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		SetGlobalTimer("BD_HIDE","LOCALS",6)
+		DisplayStringHead(Myself,66968)
+		Hide()
+		SetInterrupt(TRUE)
+END
+
 // Attack Slowed enemy
 IF
 	OR(12)

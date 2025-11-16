@@ -13,7 +13,11 @@ import {
   CreatureAttackAction,
   PartialCreatureAttack,
 } from "../model/creature/attack";
-import { PartialCreatureBehavior } from "../model/creature/behavior";
+import {
+  BEHAVIOR_DEFAULT,
+  CreatureBehavior,
+  PartialCreatureBehavior,
+} from "../model/creature/behavior";
 import {
   Creature,
   CreatureAdjustment,
@@ -28,6 +32,7 @@ import { BaseEffect, Effect } from "../model/spell-item/effect";
 import {
   EffectCastSpellTypeEnum,
   EffectTargetEnum,
+  EffectTimingEnum,
   ItemCategoryEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
@@ -52,6 +57,7 @@ import spellService from "../services/spell.service";
 import targetService from "../services/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
+import { State } from "../state";
 
 class CreatureFactory {
   create(p: {
@@ -74,6 +80,42 @@ class CreatureFactory {
     return cre;
   }
 
+  createFrom(p: {
+    name: TranslationKey;
+    from: Creature;
+    files: string[];
+  }): Creature {
+    const cre = structuredClone(p.from);
+    Object.setPrototypeOf(cre, p.from);
+    cre.name = p.name;
+    cre.files = p.files;
+    cre.newFiles = [];
+    cre.items = [];
+    cre.spells = [];
+    cre.effectFiles = [];
+    cre.projectiles = [];
+    console.log(
+      chalk.bold(
+        `\nCreating ${translationService.from(
+          cre.name
+        )} from ${translationService.from(p.from.name)}...`
+      )
+    );
+    return cre;
+  }
+
+  setData(cre: Creature, data: Partial<CreatureData>) {
+    cre.data = deepmerge(cre.data, data);
+    if (!data.level1) return;
+    if (data.thac0 === undefined) cre.data.thac0 = undefined;
+    if (data.hp === undefined) cre.data.hp = undefined;
+    if (data.saveBreath === undefined) cre.data.saveBreath = undefined;
+    if (data.saveDeath === undefined) cre.data.saveDeath = undefined;
+    if (data.savePolymorph === undefined) cre.data.savePolymorph = undefined;
+    if (data.saveSpell === undefined) cre.data.saveSpell = undefined;
+    if (data.saveWand === undefined) cre.data.saveWand = undefined;
+  }
+
   setAdditionalData(
     cre: Creature,
     additionalData: AtLeast<
@@ -81,7 +123,11 @@ class CreatureFactory {
       "movement"
     >
   ) {
-    cre.additionalData = deepmerge(ADDITIONAL_DATA_DEFAULT, additionalData);
+    const current: CreatureAdditionalData = deepmerge(
+      ADDITIONAL_DATA_DEFAULT,
+      cre.additionalData
+    );
+    cre.additionalData = deepmerge(current, additionalData);
   }
 
   setAdjustments(cre: Creature, adjustments: PartialCreatureAdjustment[]) {
@@ -212,11 +258,6 @@ class CreatureFactory {
       effects?: Effect[];
     }
   ): Item {
-    // TODO:
-    // const stringRef = `${name} traits`;
-    // if (description) {
-    //   description.unshift(stringRef, "");
-    // }
     const stringRef = translationService.addCustomTranslation([
       `${translationService.from(cre.name)} ${translationService.from(
         "common.creatureTraits"
@@ -225,7 +266,14 @@ class CreatureFactory {
     const item = this.addItem(cre, {
       stringRef,
       description,
-      effects,
+      effects: (effects ?? []).map(
+        (e) =>
+          ({
+            ...e,
+            timing: EffectTimingEnum.InstantWhileEquipped,
+            target: EffectTargetEnum.Self,
+          } as Effect)
+      ),
       immunities,
       equippedSlot: JEWEL_SLOTS,
       category: ItemCategoryEnum.Rings,
@@ -236,22 +284,19 @@ class CreatureFactory {
   }
 
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
-    cre.behavior = {
-      dialog: [],
-      help: true,
-      tracking: true,
-      walk: false,
-      combatWalk: true,
-      restHeal: false,
-      usePotions: false,
-      useKitAbilities: false,
-      hideInShadows: false,
-      canPolymorph: false,
-      ...behavior,
-      customCode: behavior.customCode ?? [],
-      additionalCode: behavior.additionalCode ?? [],
-      abilities: abilityService.getAbilities(behavior.abilities),
-    };
+    const current: CreatureBehavior = deepmerge(
+      BEHAVIOR_DEFAULT,
+      cre.behavior ?? {}
+    );
+    cre.behavior = deepmerge(current, behavior, { arrayMerge: (t, s) => t });
+    cre.behavior.abilities.push(
+      ...abilityService.getAbilities(behavior.abilities)
+    );
+    if (behavior.additionalCodes)
+      cre.behavior.additionalCodes.push(...behavior.additionalCodes);
+    cre.behavior.customCodes.push(
+      ...abilityService.getCustomCodes(behavior.customCodes)
+    );
   }
 
   setAttack(cre: Creature, attack: PartialCreatureAttack) {
@@ -278,6 +323,23 @@ class CreatureFactory {
 
   validate(creature: Creature) {
     let valid = true;
+    if (!creature.files.length) {
+      console.log(`${figureSet.warning} No files defined`);
+      valid = false;
+    }
+    const existingFiles = creature.files.filter((f) =>
+      State.creatures.some((c) => c.files.includes(f))
+    );
+    if (existingFiles.length) {
+      console.log(
+        `${
+          figureSet.warning
+        } Those files are already declared in other creatures: ${existingFiles.join(
+          ", "
+        )}`
+      );
+      valid = false;
+    }
     if (!creature.additionalData) {
       console.log(`${figureSet.warning} No additional data defined`);
       valid = false;
@@ -291,6 +353,7 @@ class CreatureFactory {
       this.setBehavior(creature, {});
     }
     creature.valid = valid;
+    if (valid) State.creatures.push(creature);
     creatureService.check(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);

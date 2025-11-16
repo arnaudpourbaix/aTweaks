@@ -58,8 +58,7 @@ export default {
   traits: {
     hover: {
       name: "Hover (flight)",
-      desc: `This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
-Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.`,
+      desc: `Can flight and is immune to ground-based spells and effects (Earthquake, Entangle, Grease, Web, Lava, Acid pools)`,
     },
     construct: {
       name: "Construct",

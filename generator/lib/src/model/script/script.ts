@@ -1,4 +1,4 @@
-import { CreatureAbility } from "../creature/ability";
+import { CreatureAbility, RawCreatureAbility } from "../creature/ability";
 import { Actions } from "./actions";
 import { Triggers } from "./triggers";
 import { PartialBy } from "../utility-types";
@@ -25,10 +25,10 @@ export interface CustomCode {
   abilities: CreatureAbility[];
 }
 
-export type PartialCustomCode = PartialBy<
-  CustomCode,
-  "statements" | "abilities"
->;
+export type PartialCustomCode = Omit<
+  PartialBy<CustomCode, "statements">,
+  "abilities"
+> & { abilities?: RawCreatureAbility[] };
 
 export interface AdditionalCode {
   location: CustomCodeLocation;
@@ -42,22 +42,23 @@ export type PartialAdditionalCode = PartialBy<
 >;
 
 export type CustomCodeLocation =
-  | "destroyUponDeath"
-  | "dialog"
-  | "init"
-  | "rest"
-  | "turnHostile"
-  | "detectCombat"
-  | "shouts"
-  | "trackTargets"
   | "attack"
-  | "handlePanic"
-  | "followSummoner"
   | "creatureAbilities"
-  | "potions"
+  | "destroyUponDeath"
+  | "detectCombat"
+  | "dialog"
+  | "followSummoner"
+  | "handlePanic"
+  | "init"
   | "kitAbilities"
+  | "noActionOutsideOfCombat"
+  | "potions"
   | "randomWalkNoCombat"
   | "randomWalkCombat"
-  | "noActionOutsideOfCombat";
+  | "rest"
+  | "shouts"
+  | "thievesAbilities"
+  | "trackTargets"
+  | "turnHostile";
 
 export type CustomCodeType = "insertBefore" | "insertAfter" | "replace";

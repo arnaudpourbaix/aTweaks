@@ -61,8 +61,16 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
       hellcat: "Hellcat",
       displacerBeast: "Displacer Beast",
     },
-    weapon: { claws: "Paws", jaws: "Jaws" },
+    weapon: { claws: "Paws", jaws: "Jaws", tentacles: "Tentacles" },
     rearClawsAttack: { name: "Rear claws attack" },
+  },
+  construct: {
+    name: {
+      helmedHorror: "Helmed Horror",
+      battleHorror: "Battle Horror",
+    },
+    weapon: { flamingSword: "Flaming Greatsword" },
+    item: { plateMail: "Plate Mail", helmet: "Helmet" },
   },
   spider: {
     webTangle: {

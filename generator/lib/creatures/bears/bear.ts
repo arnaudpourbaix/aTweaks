@@ -157,7 +157,7 @@ const fearFire: CustomCode = {
 };
 
 const rage: RawCreatureAbility = {
-  name: "Rage",
+  name: "ability.enrage",
   spell: {
     resource: SPELLS.BerserkerRage,
     selfTarget: true,
@@ -224,7 +224,7 @@ export const createBears = () => {
     { files: ["BEARBLSU"], summon: true },
     { files: ["PLYBEAR2"], additionalData: { scriptLocation: "None" } },
   ]);
-  black.setBehavior({ walk: true, customCode: [turningHostile, fearFire] });
+  black.setBehavior({ walk: true, customCodes: [turningHostile, fearFire] });
   black.validate();
 
   /**
@@ -280,7 +280,7 @@ export const createBears = () => {
   brown.addWeapon(createJaws({ diceThrown: 1, diceSize: 8 }));
   brown.setBehavior({
     walk: true,
-    customCode: [turningHostile, hunterCustomCode],
+    customCodes: [turningHostile, hunterCustomCode],
     abilities: [rage],
   });
   brown.setAdjustments([
@@ -338,7 +338,7 @@ export const createBears = () => {
   );
   cave.addWeapon(createJaws({ diceThrown: 1, diceSize: 12 }));
   cave.setBehavior({
-    customCode: [turningHostile],
+    customCodes: [turningHostile],
     walk: true,
     abilities: [rage],
   });
@@ -497,7 +497,7 @@ export const createBears = () => {
   polar.setBehavior({
     walk: true,
     abilities: [improvedStreamOfFrost.ability!],
-    customCode: [turningHostile, kaldranInit],
+    customCodes: [turningHostile, kaldranInit],
   });
   polar.setAdjustments([
     { files: ["BEARPOSU", "BDGHBRSU"], summon: true },

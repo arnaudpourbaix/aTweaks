@@ -2,7 +2,10 @@ import { MonsterItemIconEnum } from "../../config/item";
 import creatureFactory from "../../src/factories/creature.factory";
 import {
   AbilityDamageTypeEnum,
+  CastSpellOnConditionTargetEnum,
+  EffectBonusToEnum,
   EffectDamageTypeEnum,
+  EffectDispelResistanceEnum,
   EffectStatisticModifierEnum,
   InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
@@ -147,7 +150,7 @@ export const createCats = () => {
     })
   );
   jaguar.addWeapon(createJaws({ diceThrown: 1, diceSize: 8 }));
-  jaguar.setBehavior({ customCode: [hunterCustomCode] });
+  jaguar.setBehavior({ customCodes: [hunterCustomCode] });
   jaguar.setAdjustments([{ files: ["BDHELP04"], summon: true }]);
   jaguar.validate();
 
@@ -303,7 +306,7 @@ export const createCats = () => {
     })
   );
   mountainLion.addWeapon(createJaws({ diceThrown: 1, diceSize: 6 }));
-  mountainLion.setBehavior({ customCode: [hunterCustomCode] });
+  mountainLion.setBehavior({ customCodes: [hunterCustomCode] });
   mountainLion.validate();
 
   /**
@@ -382,11 +385,14 @@ export const createCats = () => {
       class: "CAT",
       gender: "NIETHER",
       size: "Large",
+      hideShadow: 100,
+      moveSilent: 100,
     },
   });
   hellcat.setAdditionalData({
     movement: { value: 15 },
     removeItems: ["BDHELCAT", "RINGDEMN", "IPSION"],
+    removeScripts: ["BDHELCAT"],
     deleteEffectOpcodes: [
       EffectTypeEnum.Blur,
       EffectTypeEnum.ProtectionFromBackstab,
@@ -412,8 +418,8 @@ export const createCats = () => {
       diceSize: 4,
       damageBonus: 1,
       rear: {
-        diceThrown: 1,
-        diceSize: 6,
+        diceThrown: 2,
+        diceSize: 4,
         damageBonus: creatureService.getStrengthModifier(hellcat.data),
       },
     })
@@ -428,45 +434,96 @@ export const createCats = () => {
     monster: MonsterEnum.DisplacerBeast,
     family: MonsterFamilyEnum.Cat,
     name: "monster.cat.name.displacerBeast",
-    files: ["CATJAGSU"],
+    files: ["BDDISPBE", "BDDISPBP"],
     data: {
-      level1: 3,
-      bonusHp: 2,
-      strength: 16,
-      dexterity: 19,
-      constitution: 15,
+      level1: 6,
+      strength: 18,
+      dexterity: 15,
+      constitution: 16,
       intelligence: 4,
       wisdom: 12,
-      charisma: 6,
+      charisma: 8,
       ac: 6,
-      apr: 3,
-      xpv: 270,
-      alignment: "NEUTRAL",
-      morale: 9,
-      general: "ANIMAL",
+      apr: 2,
+      xpv: 975,
+      alignment: "LAWFUL_EVIL",
+      morale: 14,
+      general: "MONSTER",
       race: "CAT",
       class: "CAT",
       gender: "NIETHER",
-      size: "Medium",
+      size: "Large",
+      saveDeath: 7,
+      saveWand: 9,
+      savePolymorph: 8,
+      saveBreath: 8,
+      saveSpell: 10,
     },
   });
   displacer.setAdditionalData({
     movement: { value: 15 },
-    removeItems: ["CATJAGSU"],
+    removeItems: ["BDDISPBE"],
   });
-  displacer.addWeapon(
-    createPaws({
-      diceThrown: 1,
-      diceSize: 3,
-      rear: {
-        diceThrown: 1,
-        diceSize: 4,
-        damageBonus: creatureService.getStrengthModifier(displacer.data),
+  displacer.addTrait({
+    immunities: ["magic", "fire", "cold"],
+    effects: [
+      {
+        opcode: EffectTypeEnum.ArmorClassBonus,
+        bonusTo: EffectBonusToEnum.AllWeapons,
+        value: 2,
+        dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
       },
-    })
-  );
-  displacer.addWeapon(createJaws({ diceThrown: 1, diceSize: 6 }));
-  displacer.setAdjustments([{ files: ["CATJAGSU"], summon: true }]);
+      {
+        opcode: EffectTypeEnum.Blur,
+        dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
+      },
+      {
+        opcode: EffectTypeEnum.MirrorImageEffect,
+        amount: 1,
+        dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
+      },
+      {
+        opcode: EffectTypeEnum.CastSpellOnCondition,
+        condition: "AttackedBy([ANYONE])",
+        conditionTarget: CastSpellOnConditionTargetEnum.Myself,
+        resource: "BDDISPLC",
+        dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
+      },
+    ],
+  });
+  displacer.addWeapon({
+    weapon: {
+      stringRef: "monster.cat.weapon.tentacles",
+      icon: MonsterItemIconEnum.Jelly,
+      equippedSlot: ["WEAPON1"],
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+        range: 5,
+        diceThrown: 2,
+        diceSize: 4,
+        damageType: AbilityDamageTypeEnum.PiercingOrCrushing,
+        speed: 3,
+        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+      },
+    },
+  });
+  displacer.setAdjustments([
+    {
+      files: ["BDDISPBP"],
+      data: {
+        level1: 9,
+        xpv: 1200,
+        strength: 19,
+        constitution: 19,
+        ac: 2,
+        saveDeath: 7,
+        saveWand: 9,
+        savePolymorph: 8,
+        saveBreath: 8,
+        saveSpell: 10,
+      },
+    },
+  ]);
   displacer.validate();
 
   return [jaguar, leopard, lion, mountainLion, hellcat, displacer];

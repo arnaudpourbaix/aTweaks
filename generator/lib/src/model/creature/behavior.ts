@@ -1,4 +1,8 @@
-import { AdditionalCode, CustomCode } from "../script/script";
+import {
+  AdditionalCode,
+  CustomCode,
+  PartialCustomCode,
+} from "../script/script";
 import { CreatureAbility, RawCreatureAbility } from "./ability";
 
 export interface CreatureBehavior {
@@ -50,11 +54,27 @@ export interface CreatureBehavior {
   canPolymorph: boolean;
 
   abilities: CreatureAbility[];
-  customCode: CustomCode[];
-  additionalCode: AdditionalCode[];
+  customCodes: CustomCode[];
+  additionalCodes: AdditionalCode[];
 }
 
 export type PartialCreatureBehavior = Omit<
   Partial<CreatureBehavior>,
-  "abilities"
-> & { abilities?: RawCreatureAbility[] };
+  "abilities" | "customCodes"
+> & { abilities?: RawCreatureAbility[]; customCodes?: PartialCustomCode[] };
+
+export const BEHAVIOR_DEFAULT: CreatureBehavior = {
+  dialog: [],
+  help: true,
+  tracking: true,
+  walk: false,
+  combatWalk: true,
+  restHeal: false,
+  usePotions: false,
+  useKitAbilities: false,
+  hideInShadows: false,
+  canPolymorph: false,
+  customCodes: [],
+  additionalCodes: [],
+  abilities: [],
+};

@@ -55,6 +55,8 @@ export interface CreatureData {
   hairColor?: number;
   movement?: number;
   doubleApr?: boolean;
+  hideShadow?: number;
+  moveSilent?: number;
   // crushingAC?: number;
   // missileAC?: number;
   // piercingAC?: number;
@@ -68,8 +70,6 @@ export interface CreatureData {
   // resistCrushing?: number;
   // resistPiercing?: number;
   // resistMissile?: number;
-  // hideShadow?: number;
-  // moveSilent?: number;
   // moraleBreak?: number;
   // moraleRecovery?: number;
 }
@@ -151,8 +151,8 @@ export const CREATURE_DATA: {
   { key: "class", fields: [{ index: 0x273, size: 1 }] },
   { key: "kit", fields: [{ index: 0x246, size: 2 }] },
   { key: "alignment", fields: [{ index: 0x27b, size: 1 }] },
-  // { key: "hideShadow", fields: [{ index: 0x45, size: 1 }] },
-  // { key: "moveSilent", fields: [{ index: 0x68, size: 1 }] },
+  { key: "hideShadow", fields: [{ index: 0x45, size: 1 }] },
+  { key: "moveSilent", fields: [{ index: 0x68, size: 1 }] },
   { key: "animation", fields: [{ index: 0x28, size: 4 }] },
   { key: "modAnimation", fields: [{ index: 0x28, size: 4 }] },
   { key: "metalColor", fields: [{ index: 0x2c, size: 1 }] },

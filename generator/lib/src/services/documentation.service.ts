@@ -7,6 +7,12 @@ import itemService from "./item.service";
 import translationService from "./translation.service";
 import creatureService from "./creature.service";
 import { Item, Spell } from "../model/spell-item/spell-item";
+import { CreatureAbility } from "../model/creature/ability";
+import { SPELLS } from "../../config/spell-names";
+import utils from "./utils/utils.service";
+import { GLOBAL_CONFIG } from "../../config/generate";
+import { Triggers } from "../model/script/triggers";
+import { Actions } from "../model/script/actions";
 
 class DocumentationService {
   private monsters: string[] = [];
@@ -91,8 +97,12 @@ class DocumentationService {
       );
     }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
-    for (const item of creature.items.filter((i) => i.trait)) {
-      result += translationService.from(item.description!);
+    for (const equippedItem of creature.additionalData.equippedItems) {
+      const item = this.items.find((i) => i.file === equippedItem.file);
+      if (item?.trait) {
+        const desc = translationService.from(item.description!);
+        result += `<div>${desc}</div>`;
+      }
     }
     for (const immunity of immunities.filter((i) => i.type !== "trait")) {
       result += `<h5>${translationService.from(immunity.stringRef!)}</h5>`;
@@ -104,22 +114,45 @@ class DocumentationService {
 
   getCreatureSpells(template: { text: string }, creature: Creature) {
     let spells = "";
-    for (const memorized of creature.additionalData.memorizedSpells) {
-      const spell = this.spells.find((s) => s.file === memorized.file);
-      if (spell && spell.doc) {
-        spells += `<h5>${translationService.from(
-          spell.name!
-        )} (${this.getSpellQuantity(
-          spell.memorizedCount,
-          spell.options?.renew
-        )})</h5>`;
-        spells += `<p>${translationService.from(spell.description!)}</p>`;
-      }
+    for (const ability of creature.behavior.abilities.filter(
+      (a) => a.resource
+    )) {
+      spells += this.getCreatureSpell(creature, ability);
     }
     if (spells) {
       spells = `<h4>Abilities</h4><div class="abilities">${spells}</div>`;
     }
     this.replace(template, "abilities", spells);
+  }
+
+  getCreatureSpell(creature: Creature, ability: CreatureAbility) {
+    const memorized = creature.additionalData.memorizedSpells.find(
+      (m) => m.file === ability.resource
+    );
+    const spell = this.spells.find((s) => s.file === ability.resource);
+    let result = "";
+    if (spell && spell.doc && memorized) {
+      const title = `<h5>${translationService.from(
+        spell.name!
+      )} (${this.getSpellQuantity(
+        memorized.memorizedCount,
+        spell.options?.renew
+      )})</h5>`;
+      result = `${title}<p>${translationService.from(spell.description!)}</p>`;
+    } else if (memorized) {
+      const timer = ability.actions.find(
+        (t) =>
+          t.name === "SetGlobalTimer" &&
+          t.params[0] !== GLOBAL_CONFIG.bafConstants.roundTimer
+      ) as Actions.SetGlobalTimer | undefined;
+      const rounds = ability.timer
+        ? Math.round(ability.timer.value / 6)
+        : undefined;
+      result = `<h5>${translationService.from(
+        ability.name
+      )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
+    }
+    return result;
   }
 
   getTraits() {
@@ -138,10 +171,7 @@ class DocumentationService {
     return result;
   }
 
-  getSpellQuantity(
-    memorizedCount: number | undefined,
-    renew: number | undefined
-  ): string {
+  getSpellQuantity(memorizedCount: number | undefined, renew?: number): string {
     if (!memorizedCount) return "unknown";
     if (!renew) return `${memorizedCount}/day`;
     if (renew <= 1) return "at will";

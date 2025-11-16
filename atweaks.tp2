@@ -82,10 +82,12 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/bear/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/carrion/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/main.tpa"
+
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"

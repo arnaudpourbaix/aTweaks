@@ -161,15 +161,19 @@ class WeiduCreatureService extends AbstractWeiduService {
   }
 
   private removeEffects(lines: CodeLine[], tab: number, creature: Creature) {
-    const files = [
-      ...creature.adjustments.reduce((acc, adjustement) => {
-        if (adjustement.additionalData?.removeEffects === false) {
-          for (const f of adjustement.files) acc.add(f);
-        }
-        return acc;
-      }, new Set<string>()),
-    ];
-    this.executeCodeWithExcludedFiles(
+    const files = creature.files.reduce((acc, file) => {
+      const defaultValue = !!creature.additionalData.removeEffects;
+      const adj = creature.adjustments.find(
+        (a) =>
+          a.files.includes(file) &&
+          a.additionalData.removeEffects !== undefined &&
+          a.additionalData.removeEffects !== defaultValue
+      );
+      const remove = adj?.additionalData.removeEffects ?? defaultValue;
+      if (remove) acc.push(file);
+      return acc;
+    }, [] as string[]);
+    this.executeCodeWithIncludedFiles(
       lines,
       tab,
       `LPF REMOVE_MOST_CRE_EFFECTS END`,
@@ -416,7 +420,10 @@ class WeiduCreatureService extends AbstractWeiduService {
     let removeScripts = "";
     let skipFiles = "";
     let files = "";
-    if (p.removeScripts.length) {
+    if (
+      p.removeScripts.length ||
+      GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove
+    ) {
       const scripts = [
         ...p.removeScripts,
         ...GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove,

@@ -121,7 +121,6 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Petrification (2e)
 IF
 	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")

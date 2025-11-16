@@ -110,7 +110,6 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Stream of acidic enzymes
 IF
 	ActionListEmpty()
 	HaveSpellRES("ja#3m1")

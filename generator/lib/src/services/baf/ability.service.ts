@@ -8,101 +8,126 @@ import {
 import { Actions } from "../../model/script/actions";
 import { Triggers } from "../../model/script/triggers";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
+import { CustomCode, PartialCustomCode } from "../../model/script/script";
 
 class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
     if (!abilities) return [];
-    let randomPool = 800;
-    const results: CreatureAbility[] = abilities.map((abil) => {
-      let ability = structuredClone(abil);
-      if (ability.preset) ability = this.applyPreset(ability, ability.preset);
-      const triggers: Triggers.Trigger[] = ability.triggers ?? [];
-      let targets =
-        !ability.targets || Array.isArray(ability.targets)
-          ? ability.targets
-          : undefined;
-      if (!!ability.targets && !Array.isArray(ability.targets))
-        targets = [ability.targets];
-      const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
-      const result: CreatureAbility = {
-        requireVocal: false,
-        disableInterrupt: false,
-        canUseWhenPolymorphed: false,
-        ...ability,
-        targets: targets ?? [],
-        name: ability.name ?? "",
-        isSpell: !!ability.spell && !ability.spell.isAttack,
-        triggers,
-        actions: ability.actionsBefore ?? [],
-      };
-      const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
-      if (!ability.spell) return result;
-      ability.spell.type = ability.spell.type ?? "normal";
-      if (ability.spell.id) {
-        triggers.unshift({ name: "HaveSpell", params: [ability.spell.id] });
-      } else if (ability.spell.resource) {
-        triggers.unshift({
-          name: "HaveSpellRES",
-          params: [ability.spell.resource],
-        });
-      } else throw new Error(`No spell specified for ability ${ability.name}`);
-
-      for (const state of ability.spell.excludeStateChecks ?? []) {
-        triggers.push({
-          name: "StateCheck",
-          params: [target, state],
-          negation: true,
-        });
-      }
-      for (const stat of ability.spell.excludeStatsChecks ?? []) {
-        triggers.push({
-          name: "CheckStatGT",
-          params: [target, 0, stat],
-          negation: true,
-        });
-      }
-      for (const state of ability.spell.excludeSpellStates ?? []) {
-        triggers.push({
-          name: "CheckSpellState",
-          params: [target, state],
-          negation: true,
-        });
-      }
-      if (!!ability.spell.probability && ability.spell.probability < 100) {
-        triggers.push({
-          name: "RandomNumGT",
-          params: [
-            randomPool++,
-            Math.round(randomPool * (1 - ability.spell.probability / 100)),
-          ],
-        });
-      }
-      let spellTarget = ability.spell.selfTarget ? "Myself" : "LastSeenBy";
-      if (ability.spell.targetName) spellTarget = ability.spell.targetName;
-      result.actions.push(this.getSpellAction(ability.spell, spellTarget));
-      if (
-        ability.spell.remove &&
-        ability.spell.type !== "normal" &&
-        ability.spell.id
-      ) {
-        result.actions.push({
-          name: "RemoveSpell",
-          params: [ability.spell.id],
-        });
-      } else if (
-        ability.spell.remove &&
-        ability.spell.type !== "normal" &&
-        ability.spell.resource
-      ) {
-        result.actions.push({
-          name: "RemoveSpellRES",
-          params: [ability.spell.resource],
-        });
-      }
-      result.actions.push(...actionsAfter);
-      return result;
-    });
+    const randomGenerator = this.getNumberGenerator();
+    const results: CreatureAbility[] = abilities.map((abil) =>
+      this.getAbility(abil, randomGenerator)
+    );
     return results;
+  }
+
+  getCustomCodes(customCodes: PartialCustomCode[] | undefined): CustomCode[] {
+    if (!customCodes) return [];
+    const results: CustomCode[] = [];
+    for (const customCode of customCodes) {
+      results.push({
+        ...customCode,
+        statements: customCode.statements ?? [],
+        abilities: this.getAbilities(customCode.abilities),
+      });
+    }
+    return results;
+  }
+
+  private *getNumberGenerator() {
+    let num = 800;
+    while (num < 10000) yield num++;
+  }
+
+  private getAbility(
+    abil: RawCreatureAbility,
+    randomGenerator: Generator<number>
+  ): CreatureAbility {
+    let ability = structuredClone(abil);
+    if (ability.preset) ability = this.applyPreset(ability, ability.preset);
+    const triggers: Triggers.Trigger[] = ability.triggers ?? [];
+    let targets =
+      !ability.targets || Array.isArray(ability.targets)
+        ? ability.targets
+        : undefined;
+    if (!!ability.targets && !Array.isArray(ability.targets))
+      targets = [ability.targets];
+    const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
+    const result: CreatureAbility = {
+      requireVocal: false,
+      disableInterrupt: false,
+      canUseWhenPolymorphed: false,
+      ...ability,
+      targets: targets ?? [],
+      name: ability.name ?? "ability.unknown",
+      isSpell: !!ability.spell && !ability.spell.isAttack,
+      triggers,
+      actions: ability.actionsBefore ?? [],
+    };
+    const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
+    if (!ability.spell) return result;
+    result.resource = ability.spell.resource ?? ability.preset;
+    ability.spell.type = ability.spell.type ?? "normal";
+    if (ability.spell.id) {
+      triggers.unshift({ name: "HaveSpell", params: [ability.spell.id] });
+    } else if (ability.spell.resource) {
+      triggers.unshift({
+        name: "HaveSpellRES",
+        params: [ability.spell.resource],
+      });
+    } else throw new Error(`No spell specified for ability ${ability.name}`);
+
+    for (const state of ability.spell.excludeStateChecks ?? []) {
+      triggers.push({
+        name: "StateCheck",
+        params: [target, state],
+        negation: true,
+      });
+    }
+    for (const stat of ability.spell.excludeStatsChecks ?? []) {
+      triggers.push({
+        name: "CheckStatGT",
+        params: [target, 0, stat],
+        negation: true,
+      });
+    }
+    for (const state of ability.spell.excludeSpellStates ?? []) {
+      triggers.push({
+        name: "CheckSpellState",
+        params: [target, state],
+        negation: true,
+      });
+    }
+    if (!!ability.spell.probability && ability.spell.probability < 100) {
+      const num = randomGenerator.next().value;
+      triggers.push({
+        name: "RandomNumGT",
+        params: [num, Math.round(num * (1 - ability.spell.probability / 100))],
+      });
+    }
+    let spellTarget = ability.spell.selfTarget ? "Myself" : "LastSeenBy";
+    if (ability.spell.targetName) spellTarget = ability.spell.targetName;
+    result.actions.push(this.getSpellAction(ability.spell, spellTarget));
+    if (
+      ability.spell.remove &&
+      ability.spell.type !== "normal" &&
+      ability.spell.id
+    ) {
+      result.actions.push({
+        name: "RemoveSpell",
+        params: [ability.spell.id],
+      });
+    } else if (
+      ability.spell.remove &&
+      ability.spell.type !== "normal" &&
+      ability.spell.resource
+    ) {
+      result.actions.push({
+        name: "RemoveSpellRES",
+        params: [ability.spell.resource],
+      });
+    }
+    result.actions.push(...actionsAfter);
+    return result;
   }
 
   private applyPreset(

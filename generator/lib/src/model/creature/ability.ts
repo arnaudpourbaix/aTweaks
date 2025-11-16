@@ -4,9 +4,10 @@ import { StatsIdentifier } from "../ids/stats";
 import { Actions } from "../script/actions";
 import { Triggers } from "../script/triggers";
 import { TargetList } from "../script/target";
+import { StringReference } from "../final/stringref";
 
 export interface BaseCreatureAbility {
-  name: string;
+  name: StringReference;
   targets: TargetList[];
   triggers: Triggers.Trigger[];
   /**
@@ -42,6 +43,7 @@ export interface BaseCreatureAbility {
 export interface CreatureAbility extends BaseCreatureAbility {
   isSpell: boolean;
   actions: Actions.Action[];
+  resource?: string;
 }
 
 export type RawCreatureAbility = Partial<BaseCreatureAbility> & {

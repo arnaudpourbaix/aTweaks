@@ -121,7 +121,6 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Stream of acidic enzymes
 IF
 	HaveSpellRES("ja#3m1")
 	HPPercentLT(Myself,50)
