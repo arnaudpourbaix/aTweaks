@@ -7,11 +7,6 @@ import { CreatureAbility, RawCreatureAbility } from "./ability";
 
 export interface CreatureBehavior {
   /**
-   * Will initiate dialog (values are creature script name)
-   */
-  dialog: string[];
-
-  /**
    * Asking or responding to help shouts (default: true)
    */
   help: boolean;
@@ -53,6 +48,10 @@ export interface CreatureBehavior {
 
   canPolymorph: boolean;
 
+  /**
+   * Will initiate dialog (values are creature script name)
+   */
+  dialog: string[];
   abilities: CreatureAbility[];
   customCodes: CustomCode[];
   additionalCodes: AdditionalCode[];

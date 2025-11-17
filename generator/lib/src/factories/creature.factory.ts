@@ -83,10 +83,12 @@ class CreatureFactory {
   createFrom(p: {
     name: TranslationKey;
     from: Creature;
+    monster: MonsterEnum;
     files: string[];
   }): Creature {
     const cre = structuredClone(p.from);
     Object.setPrototypeOf(cre, p.from);
+    cre.monster = p.monster;
     cre.name = p.name;
     cre.files = p.files;
     cre.newFiles = [];
@@ -94,6 +96,7 @@ class CreatureFactory {
     cre.spells = [];
     cre.effectFiles = [];
     cre.projectiles = [];
+    cre.valid = undefined;
     console.log(
       chalk.bold(
         `\nCreating ${translationService.from(
@@ -105,6 +108,7 @@ class CreatureFactory {
   }
 
   setData(cre: Creature, data: Partial<CreatureData>) {
+    this.checkValidation(cre);
     cre.data = deepmerge(cre.data, data);
     if (!data.level1) return;
     if (data.thac0 === undefined) cre.data.thac0 = undefined;
@@ -123,6 +127,7 @@ class CreatureFactory {
       "movement"
     >
   ) {
+    this.checkValidation(cre);
     const current: CreatureAdditionalData = deepmerge(
       ADDITIONAL_DATA_DEFAULT,
       cre.additionalData
@@ -131,6 +136,7 @@ class CreatureFactory {
   }
 
   setAdjustments(cre: Creature, adjustments: PartialCreatureAdjustment[]) {
+    this.checkValidation(cre);
     for (const adjustment of adjustments) {
       const result: CreatureAdjustment = {
         ...adjustment,
@@ -147,6 +153,7 @@ class CreatureFactory {
   }
 
   addSpell(cre: Creature, spell: PartialSpell): Spell {
+    this.checkValidation(cre);
     const file = getFilename(cre.spells.length + 1, cre.monster);
     if (spell.memorizedCount) {
       cre.additionalData.memorizedSpells.push({
@@ -160,6 +167,7 @@ class CreatureFactory {
   }
 
   addItem(cre: Creature, item: PartialItem): Item {
+    this.checkValidation(cre);
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (item.equippedSlot) {
       cre.additionalData.equippedItems.push({ file, slot: item.equippedSlot });
@@ -167,6 +175,16 @@ class CreatureFactory {
     const result = itemService.getItem(item, file);
     cre.items.push(result);
     return result;
+  }
+
+  addExistingItem(cre: Creature, item: Item): void {
+    this.checkValidation(cre);
+    if (!item.equippedSlot)
+      throw new Error(`No slot defined for ${item.stringRef}`);
+    cre.additionalData.equippedItems.push({
+      file: item.file,
+      slot: item.equippedSlot,
+    });
   }
 
   addWeapon({
@@ -180,6 +198,7 @@ class CreatureFactory {
     grab?: CreatureGrabConfig;
     castSpell?: WeaponCastSpell;
   }) {
+    this.checkValidation(cre);
     if (cre.attack) throw new Error("Add weapons before setting up attack");
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (weapon.equippedSlot)
@@ -198,6 +217,7 @@ class CreatureFactory {
   }
 
   attachSpellToWeapon(cre: Creature, item: Weapon, cast: WeaponCastSpell) {
+    this.checkValidation(cre);
     const spell = this.addSpell(cre, cast.spell);
     spell.doc = false;
     const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
@@ -231,6 +251,7 @@ class CreatureFactory {
     file: string,
     slots: ItemSlot[]
   ) {
+    this.checkValidation(cre);
     const equippedItem = data.equippedItems.find(
       (e) => slots.length === 1 && e.slot[0] === slots[0]
     );
@@ -258,6 +279,7 @@ class CreatureFactory {
       effects?: Effect[];
     }
   ): Item {
+    this.checkValidation(cre);
     const stringRef = translationService.addCustomTranslation([
       `${translationService.from(cre.name)} ${translationService.from(
         "common.creatureTraits"
@@ -284,22 +306,26 @@ class CreatureFactory {
   }
 
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
-    const current: CreatureBehavior = deepmerge(
-      BEHAVIOR_DEFAULT,
-      cre.behavior ?? {}
-    );
-    cre.behavior = deepmerge(current, behavior, { arrayMerge: (t, s) => t });
+    this.checkValidation(cre);
+    const current: CreatureBehavior = cre.behavior ?? BEHAVIOR_DEFAULT;
+    const { abilities, customCodes, additionalCodes, dialog, ...others } =
+      behavior;
+    cre.behavior = {
+      ...current,
+      ...others,
+    };
     cre.behavior.abilities.push(
       ...abilityService.getAbilities(behavior.abilities)
     );
-    if (behavior.additionalCodes)
-      cre.behavior.additionalCodes.push(...behavior.additionalCodes);
     cre.behavior.customCodes.push(
       ...abilityService.getCustomCodes(behavior.customCodes)
     );
+    cre.behavior.additionalCodes.push(...(behavior.additionalCodes ?? []));
+    cre.behavior.dialog.push(...(behavior.dialog ?? []));
   }
 
   setAttack(cre: Creature, attack: PartialCreatureAttack) {
+    this.checkValidation(cre);
     const defaultAction: CreatureAttackAction = {
       disableInterrupt: false,
       responseWeight: 100,
@@ -319,6 +345,15 @@ class CreatureFactory {
       targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
       selectWeapons: attack.selectWeapons ?? [],
     };
+  }
+
+  checkValidation(creature: Creature) {
+    if (creature.valid !== undefined)
+      throw new Error(
+        `Creature ${translationService.from(
+          creature.name
+        )} has already been validated`
+      );
   }
 
   validate(creature: Creature) {

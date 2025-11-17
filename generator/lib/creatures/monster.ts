@@ -23,6 +23,7 @@ export enum MonsterEnum {
   BrownBear = 5,
   CaveBear = 6,
   PolarBear = 7,
+  BattleHorror = 8,
   CarrionCrawler = 9,
   Lion = 10,
   MountainLion = 11,
@@ -80,4 +81,5 @@ export enum MonsterEnum {
   VortexSpider = 63,
   GargantuanSpider = 64,
   HuntingSpider = 65,
+  DoomSayer = 66,
 }

@@ -27,6 +27,7 @@ import itemService from "../item.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import translationService from "../translation.service";
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 
 class WeiduCreatureService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
@@ -225,7 +226,11 @@ class WeiduCreatureService extends AbstractWeiduService {
   ) {
     if (!additionalData.proficiencies.length) return;
     for (const prof of additionalData.proficiencies)
-      this.add(lines, `SET_BG2_PROFICIENCY ~${prof.type}~ ${prof.value}`, tab);
+      this.add(
+        lines,
+        `SET_BG2_PROFICIENCY ~${ProficiencyTypeEnum[prof.type]}~ ${prof.value}`,
+        tab
+      );
   }
 
   private addImmunities(

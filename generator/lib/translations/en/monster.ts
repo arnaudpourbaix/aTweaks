@@ -68,8 +68,10 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     name: {
       helmedHorror: "Helmed Horror",
       battleHorror: "Battle Horror",
+      doomSayer: "Doom Sayer",
+      doomGuard: "Doom Guard",
     },
-    weapon: { flamingSword: "Flaming Greatsword" },
+    weapon: { flamingSword: "Flaming Greatsword", longSword: "Long Sword" },
     item: { plateMail: "Plate Mail", helmet: "Helmet" },
   },
   spider: {

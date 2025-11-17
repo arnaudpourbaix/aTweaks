@@ -59,7 +59,7 @@ export const ADDITIONAL_DATA_DEFAULT: CreatureAdditionalData = {
   removeMemorizedSpells: true,
   memorizedSpells: [],
   deleteEffectOpcodes: [],
-  removeEffects: false,
+  removeEffects: true,
   effects: [],
   movement: { value: -1 },
 };

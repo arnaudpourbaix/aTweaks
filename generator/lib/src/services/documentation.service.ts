@@ -114,9 +114,11 @@ class DocumentationService {
 
   getCreatureSpells(template: { text: string }, creature: Creature) {
     let spells = "";
-    for (const ability of creature.behavior.abilities.filter(
-      (a) => a.resource
-    )) {
+    const abilities = [
+      ...creature.behavior.abilities,
+      ...creature.behavior.customCodes.map((c) => c.abilities).flat(),
+    ].filter((a) => a.resource);
+    for (const ability of abilities) {
       spells += this.getCreatureSpell(creature, ability);
     }
     if (spells) {

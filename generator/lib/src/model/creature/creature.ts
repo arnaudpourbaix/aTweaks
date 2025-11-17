@@ -91,8 +91,12 @@ export class Creature implements BaseCreature {
     return creatureFactory.addSpell(this, spell);
   }
 
-  addItem(item: PartialItem) {
+  addItem(item: PartialItem): Item {
     return creatureFactory.addItem(this, item);
+  }
+
+  addExistingItem(item: Item): void {
+    creatureFactory.addExistingItem(this, item);
   }
 
   addWeapon({

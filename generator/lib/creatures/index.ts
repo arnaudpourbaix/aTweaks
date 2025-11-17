@@ -7,11 +7,11 @@ import { createConstructs } from "./constructs/constructs";
 import { createCarrionCrawler } from "./crawler/crawler";
 
 export const creatureFactories: (() => Creature[])[] = [
-  createAnkheg,
-  createBasilisks,
-  createBears,
-  createCarrionCrawler,
-  createCats,
+  // createAnkheg,
+  // createBasilisks,
+  // createBears,
+  // createCarrionCrawler,
+  // createCats,
   createConstructs,
   // ...Cats,
   // ...Constructs,

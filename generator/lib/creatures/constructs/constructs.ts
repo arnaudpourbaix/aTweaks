@@ -1,20 +1,13 @@
-import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import creatureFactory from "../../src/factories/creature.factory";
 import {
   AbilityDamageTypeEnum,
-  CastSpellOnConditionTargetEnum,
   ColorEnum,
-  EffectBonusToEnum,
   EffectColorLocationEnum,
   EffectDamageTypeEnum,
-  EffectDispelResistanceEnum,
-  EffectStatisticModifierEnum,
   EffectTargetEnum,
   EffectTimingEnum,
-  InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
-  ItemAbilitySecondaryTypeEnum,
   ItemAbilityTypeEnum,
   ItemAnimationEnum,
   ItemCategoryEnum,
@@ -22,152 +15,7 @@ import {
   ProficiencyTypeEnum,
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import {
-  PartialItem,
-  PartialWeapon,
-  WeaponCastSpell,
-} from "../../src/model/spell-item/spell-item";
-import creatureService from "../../src/services/creature.service";
-import { hunterCustomCode } from "../common";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
-
-const flamingSword: PartialWeapon = {
-  stringRef: "monster.construct.weapon.flamingSword",
-  equippedSlot: ["WEAPON1"],
-  enchantment: 1,
-  flags: [ItemFlagEnum.TwoHanded, ItemFlagEnum.Magical],
-  animation: ItemAnimationEnum.TwoHandedSword,
-  category: ItemCategoryEnum.Greatswords,
-  proficiency: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD,
-  header: {
-    type: ItemAbilityTypeEnum.Melee,
-    icon: "IFLAMS01",
-    animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
-    range: 2,
-    diceThrown: 2,
-    diceSize: 6,
-    damageType: AbilityDamageTypeEnum.Slashing,
-    speed: 10,
-    abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-    effects: [
-      {
-        opcode: EffectTypeEnum.Damage,
-        diceSize: 6,
-        diceThrown: 1,
-        type: EffectDamageTypeEnum.Fire,
-      },
-    ],
-  },
-  effects: [
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.ShinyGold,
-      location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.ShinyGold,
-      location: EffectColorLocationEnum.WeaponRedGripStaffMinor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.LightCarnationPink,
-      location: EffectColorLocationEnum.WeaponGreyHeadBladeStaffMajor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColorGlowSolid,
-      color: { red: 64, green: 0, blue: 0 },
-      location: EffectColorLocationEnum.WeaponGreyHeadBladeStaffMajor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-      duration: 3,
-    },
-    {
-      opcode: EffectTypeEnum.SetColorGlowSolid,
-      color: { red: 64, green: 0, blue: 0 },
-      location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-      duration: 3,
-    },
-    {
-      opcode: EffectTypeEnum.SetColorGlowSolid,
-      color: { red: 0, green: 0, blue: 0 },
-      location: EffectColorLocationEnum.WeaponRedGripStaffMinor,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-      duration: 3,
-    },
-  ],
-};
-
-const armor: PartialItem = {
-  stringRef: "monster.construct.item.plateMail",
-  equippedSlot: ["ARMOR"],
-  animation: ItemAnimationEnum.PlateMail,
-  icon: "IPLAT01",
-  category: ItemCategoryEnum.ArmorSlot,
-  effects: [
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.LeafGreen,
-      location: EffectColorLocationEnum.ArmorBlueArmorTrimming,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.RedTintedBlack,
-      location: EffectColorLocationEnum.ArmorRedStrapLeather,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.DarkPoopyBrown,
-      location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-  ],
-};
-
-const helmet: PartialItem = {
-  stringRef: "monster.construct.item.helmet",
-  equippedSlot: ["HELMET"],
-  animation: ItemAnimationEnum.HelmetFeatherSideburns,
-  category: ItemCategoryEnum.Headgear,
-  icon: "ihelm10",
-  effects: [
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.Silver,
-      location: EffectColorLocationEnum.HelmetBlueExterior,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.Silver,
-      location: EffectColorLocationEnum.HelmetRedFace,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-    {
-      opcode: EffectTypeEnum.SetColor,
-      color: ColorEnum.Silver,
-      location: EffectColorLocationEnum.HelmetGreyWings,
-      target: EffectTargetEnum.Self,
-      timing: EffectTimingEnum.InstantWhileEquipped,
-    },
-  ],
-};
 
 export const createConstructs = () => {
   /**
@@ -233,9 +81,143 @@ export const createConstructs = () => {
       "hover",
     ],
   });
-  helmedHorror.addWeapon({ weapon: flamingSword });
-  helmedHorror.addItem(armor);
-  helmedHorror.addItem(helmet);
+  helmedHorror.addWeapon({
+    weapon: {
+      stringRef: "monster.construct.weapon.flamingSword",
+      equippedSlot: ["WEAPON1"],
+      enchantment: 1,
+      flags: [ItemFlagEnum.TwoHanded, ItemFlagEnum.Magical],
+      animation: ItemAnimationEnum.TwoHandedSword,
+      category: ItemCategoryEnum.Greatswords,
+      proficiency: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD,
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+        icon: "IFLAMS01",
+        animationSwing: { backhand: 40, overhand: 40, thrust: 20 },
+        range: 2,
+        diceThrown: 2,
+        diceSize: 6,
+        damageType: AbilityDamageTypeEnum.Slashing,
+        speed: 10,
+        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        effects: [
+          {
+            opcode: EffectTypeEnum.Damage,
+            diceSize: 6,
+            diceThrown: 1,
+            type: EffectDamageTypeEnum.Fire,
+          },
+        ],
+      },
+      effects: [
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.ShinyGold,
+          location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.ShinyGold,
+          location: EffectColorLocationEnum.WeaponRedGripStaffMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.LightCarnationPink,
+          location: EffectColorLocationEnum.WeaponGreyHeadBladeStaffMajor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+        {
+          opcode: EffectTypeEnum.SetColorGlowSolid,
+          color: { red: 64, green: 0, blue: 0 },
+          location: EffectColorLocationEnum.WeaponGreyHeadBladeStaffMajor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+          duration: 3,
+        },
+        {
+          opcode: EffectTypeEnum.SetColorGlowSolid,
+          color: { red: 64, green: 0, blue: 0 },
+          location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+          duration: 3,
+        },
+        {
+          opcode: EffectTypeEnum.SetColorGlowSolid,
+          color: { red: 0, green: 0, blue: 0 },
+          location: EffectColorLocationEnum.WeaponRedGripStaffMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+          duration: 3,
+        },
+      ],
+    },
+  });
+  const armor = helmedHorror.addItem({
+    stringRef: "monster.construct.item.plateMail",
+    equippedSlot: ["ARMOR"],
+    animation: ItemAnimationEnum.PlateMail,
+    icon: "IPLAT01",
+    category: ItemCategoryEnum.ArmorSlot,
+    effects: [
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.LeafGreen,
+        location: EffectColorLocationEnum.ArmorBlueArmorTrimming,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.RedTintedBlack,
+        location: EffectColorLocationEnum.ArmorRedStrapLeather,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.DarkPoopyBrown,
+        location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+    ],
+  });
+  const helmet = helmedHorror.addItem({
+    stringRef: "monster.construct.item.helmet",
+    equippedSlot: ["HELMET"],
+    animation: ItemAnimationEnum.HelmetFeatherSideburns,
+    category: ItemCategoryEnum.Headgear,
+    icon: "ihelm10",
+    effects: [
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.Silver,
+        location: EffectColorLocationEnum.HelmetBlueExterior,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.Silver,
+        location: EffectColorLocationEnum.HelmetRedFace,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+      {
+        opcode: EffectTypeEnum.SetColor,
+        color: ColorEnum.Silver,
+        location: EffectColorLocationEnum.HelmetGreyWings,
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+    ],
+  });
   helmedHorror.setBehavior({
     restHeal: true,
   });
@@ -246,6 +228,7 @@ export const createConstructs = () => {
    */
   const battleHorror = creatureFactory.createFrom({
     name: "monster.construct.name.battleHorror",
+    monster: MonsterEnum.BattleHorror,
     from: helmedHorror,
     files: ["BATTHO", "dw#davho"],
   });
@@ -296,141 +279,122 @@ export const createConstructs = () => {
   battleHorror.validate();
 
   /**
+   * Doom Sayer
+   */
+  const doomSayer = creatureFactory.createFrom({
+    name: "monster.construct.name.doomSayer",
+    monster: MonsterEnum.DoomSayer,
+    from: battleHorror,
+    files: ["DOOMSA"],
+  });
+  doomSayer.setAdditionalData({
+    movement: { value: 12 },
+    immunities: ["incorporeal"],
+  });
+  doomSayer.setBehavior({ dialog: ["DOOMSAYER"] });
+  doomSayer.validate();
+
+  /**
    * Domm Guard
    */
   const doomGuard = creatureFactory.create({
-    monster: MonsterEnum.Lion,
-    family: MonsterFamilyEnum.Cat,
-    name: "monster.cat.name.lion",
-    files: [
-      "BDHELP02",
-      "CATLIOSU",
-      "CATLIOWP", // Joolon
-      // "SPIRLION", //TODO: Spirit Lion
-      // "SPLION1", //TODO: Spirit Lion
-      // "SPLION2", //TODO: Spirit Lion
-      // "SPLION3", //TODO: Spirit Lion
-      // "SPLION4", //TODO: Spirit Lion
-      // "SPLION5", //TODO: Spirit Lion
-    ],
+    monster: MonsterEnum.DoomGuard,
+    family: MonsterFamilyEnum.Construct,
+    name: "monster.construct.name.doomGuard",
+    files: ["DOOMGU", "DOOMDUR"],
     data: {
       level1: 5,
-      bonusHp: 2,
-      strength: 17,
-      dexterity: 15,
-      constitution: 13,
-      intelligence: 4,
-      wisdom: 12,
-      charisma: 8,
-      ac: 5,
-      apr: 3,
-      xpv: 650,
+      strength: 20,
+      dexterity: 10,
+      constitution: 9,
+      intelligence: 7,
+      wisdom: 11,
+      charisma: 1,
+      ac: 2,
+      apr: 1,
+      xpv: 2000,
       alignment: "NEUTRAL",
-      morale: 9,
-      general: "ANIMAL",
-      race: "CAT",
-      class: "CAT",
+      morale: 20,
+      general: "MONSTER",
+      race: "GOLEM",
+      class: "FIGHTER",
       gender: "NIETHER",
       size: "Medium",
     },
   });
   doomGuard.setAdditionalData({
     movement: { value: 12 },
-    removeItems: ["CATLIO"],
-  });
-  //   doomGuard.validate();
-
-  /**
-   * Dwarven Doom Guard
-   */
-  const dwarvenDoomGuard = creatureFactory.create({
-    monster: MonsterEnum.MountainLion,
-    family: MonsterFamilyEnum.Cat,
-    name: "monster.cat.name.mountainLion",
-    files: ["CATLIM01"],
-    data: {
-      level1: 3,
-      bonusHp: 1,
-      strength: 17,
-      dexterity: 15,
-      constitution: 13,
-      intelligence: 4,
-      wisdom: 12,
-      charisma: 8,
-      ac: 6,
-      apr: 3,
-      xpv: 270,
-      alignment: "NEUTRAL",
-      morale: 9,
-      general: "ANIMAL",
-      race: "CAT",
-      class: "CAT",
-      gender: "NIETHER",
-      size: "Medium",
-    },
-  });
-  dwarvenDoomGuard.setAdditionalData({
-    movement: { value: 12 },
-    removeItems: ["P1-6"],
-    removeScripts: [],
-  });
-  //   dwarvenDoomGuard.validate();
-
-  /**
-   * Doom Sayer
-   */
-  const doomSayer = creatureFactory.create({
-    monster: MonsterEnum.Hellcat,
-    family: MonsterFamilyEnum.Cat,
-    name: "monster.cat.name.hellcat",
-    files: ["BDHELCAT"],
-    data: {
-      level1: 7,
-      bonusHp: 2,
-      strength: 21,
-      dexterity: 21,
-      constitution: 19,
-      intelligence: 10,
-      wisdom: 14,
-      charisma: 10,
-      ac: 5,
-      apr: 3,
-      xpv: 5000,
-      alignment: "LAWFUL_EVIL",
-      morale: 13,
-      general: "MONSTER",
-      race: "DEMONIC",
-      class: "CAT",
-      gender: "NIETHER",
-      size: "Large",
-      hideShadow: 100,
-      moveSilent: 100,
-    },
-  });
-  doomSayer.setAdditionalData({
-    movement: { value: 15 },
-    removeItems: ["BDHELCAT", "RINGDEMN", "IPSION"],
-    removeScripts: ["BDHELCAT"],
-    deleteEffectOpcodes: [
-      EffectTypeEnum.Blur,
-      EffectTypeEnum.ProtectionFromBackstab,
+    immunities: ["construct"],
+    removeItems: ["HELM13", "PLAT07", "SW1H11", "RING95"],
+    proficiencies: [
+      { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 2 },
     ],
   });
-  doomSayer.addTrait({
-    immunities: ["mindSpells", "normalWeapons", "extraplanar"],
-    effects: [
-      {
-        opcode: EffectTypeEnum.MagicResistanceModifier,
-        value: 20,
-        type: EffectStatisticModifierEnum.Set,
-      },
-      {
-        opcode: EffectTypeEnum.Invisibility,
-        type: InvisibilityTypeEnum.Improved,
-      },
-    ],
+  doomGuard.addTrait({
+    immunities: ["mindSpells", "fireResistance", "coldResistance"],
   });
-  //   doomSayer.validate();
-  // doomGuard, dwarvenDoomGuard, doomSayer
-  return [helmedHorror, battleHorror];
+  doomGuard.addWeapon({
+    weapon: {
+      stringRef: "monster.construct.weapon.longSword",
+      equippedSlot: ["WEAPON1"],
+      flags: [ItemFlagEnum.Magical],
+      animation: ItemAnimationEnum.LongSword,
+      icon: "ISW1H04",
+      category: ItemCategoryEnum.LargeSwords,
+      proficiency: ProficiencyTypeEnum.PROFICIENCYLONGSWORD,
+      enchantment: 1,
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+        animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
+        range: 1,
+        diceThrown: 1,
+        diceSize: 8,
+        damageType: AbilityDamageTypeEnum.Slashing,
+        speed: 5,
+        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+      },
+      effects: [
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.Silver,
+          location: EffectColorLocationEnum.WeaponBlueHeadBladeMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.Rhubarb,
+          location: EffectColorLocationEnum.WeaponRedGripStaffMinor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+        {
+          opcode: EffectTypeEnum.SetColor,
+          color: ColorEnum.DarkSilver,
+          location: EffectColorLocationEnum.WeaponGreyHeadBladeStaffMajor,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantWhileEquipped,
+        },
+      ],
+    },
+  });
+  doomGuard.addExistingItem(armor);
+  doomGuard.addExistingItem(helmet);
+  doomGuard.setBehavior({
+    restHeal: true,
+  });
+  doomGuard.setAdjustments([
+    {
+      files: ["DOOMDUR"],
+      data: { level1: 8 },
+      additionalData: {
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 3 },
+        ],
+      },
+    },
+  ]);
+  doomGuard.validate();
+
+  return [helmedHorror, battleHorror, doomSayer, doomGuard];
 };

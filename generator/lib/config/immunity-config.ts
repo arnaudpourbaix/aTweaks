@@ -587,11 +587,15 @@ export const IMMUNITIES: (AtLeast<
   },
 ];
 
-export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
+export const RESISTANCES: (AtLeast<
+  ImmunityConfig,
+  "name" | "type" | "stringRef"
+> & {
   type: "resistance";
 })[] = [
   {
     name: "poisonResistance",
+    stringRef: "common.resistance.poison",
     type: "resistance",
     effects: [
       {
@@ -602,6 +606,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "fireResistance",
+    stringRef: "common.resistance.fire",
     type: "resistance",
     effects: [
       {
@@ -618,6 +623,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "coldResistance",
+    stringRef: "common.resistance.cold",
     type: "resistance",
     effects: [
       {
@@ -634,6 +640,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "lightningResistance",
+    stringRef: "common.resistance.lightning",
     type: "resistance",
     effects: [
       {
@@ -645,6 +652,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "magicResistance",
+    stringRef: "common.resistance.magic",
     type: "resistance",
     effects: [
       {
@@ -656,6 +664,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "magicDamageResistance",
+    stringRef: "common.resistance.magicDamage",
     type: "resistance",
     effects: [
       {
@@ -667,6 +676,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "acidResistance",
+    stringRef: "common.resistance.acid",
     type: "resistance",
     effects: [
       {
@@ -678,6 +688,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "physicalDamageResistance",
+    stringRef: "common.resistance.physicalDamage",
     type: "resistance",
     immunities: [
       "slashingDamageResistance",
@@ -688,6 +699,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "slashingDamageResistance",
+    stringRef: "common.resistance.slashingDamage",
     type: "resistance",
     effects: [
       {
@@ -699,6 +711,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "crushingDamageResistance",
+    stringRef: "common.resistance.crushingDamage",
     type: "resistance",
     effects: [
       {
@@ -710,6 +723,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "piercingDamageResistance",
+    stringRef: "common.resistance.piercingDamage",
     type: "resistance",
     effects: [
       {
@@ -721,6 +735,7 @@ export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type"> & {
   },
   {
     name: "missileDamageResistance",
+    stringRef: "common.resistance.missileDamage",
     type: "resistance",
     effects: [
       {

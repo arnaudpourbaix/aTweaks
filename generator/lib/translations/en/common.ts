@@ -55,6 +55,21 @@ export default {
     lightningBoltSpell: "Immune to lightning bolt spell",
     flameArrowSpell: "Immune to flame arrow spell",
   },
+  resistance: {
+    poison: "Resistance to poison (50%)",
+    fire: "Resistance to fire (50%)",
+    cold: "Resistance to cold (50%)",
+    lightning: "Resistance to lightning (50%)",
+    acid: "Resistance to acid (50%)",
+    magic: "Resistance to magic (50%)",
+    magicDamage: "Resistance to magic damage (50%)",
+    physicalDamage: "Resistance to physical damage (50%)",
+    slashingDamage: "Resistance to slashing damage (50%)",
+    crushingDamage: "Resistance to crushing damage (50%)",
+    piercingDamage: "Resistance to piercing damage (50%)",
+    missileDamage: "Resistance to missile damage (50%)",
+    missileWeapons: "Resistance to missile weapons (50%)",
+  },
   traits: {
     hover: {
       name: "Hover (flight)",

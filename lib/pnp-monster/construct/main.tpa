@@ -1,2 +1,4 @@
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/15.tpa" // Helmed Horror
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/15.tpa" // Battle Horror
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/8.tpa" // Battle Horror
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/66.tpa" // Doom Sayer
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/construct/16.tpa" // Doom Guard
