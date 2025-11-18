@@ -74,6 +74,19 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     weapon: { flamingSword: "Flaming Greatsword", longSword: "Long Sword" },
     item: { plateMail: "Plate Mail", helmet: "Helmet" },
   },
+  dog: {
+    name: {
+      wild: "Wild Dog",
+      war: "War Dog",
+      blink: "Blink Dog",
+      spectralHound: "Spectral Hound",
+    },
+    weapon: { jaws: "Jaws" },
+    ability: {
+      blink: "Blink",
+      astralPlaneShift: "Astral Plane Shift",
+    },
+  },
   spider: {
     webTangle: {
       name: "Web Tangle",

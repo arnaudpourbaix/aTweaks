@@ -9,15 +9,18 @@ import {
   IdsEffect,
   InvisibilityEffect,
   LevelDrainEffect,
+  ModifierTypeEffect,
   PoisonEffect,
   RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
+  TeleportEffect,
 } from "../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectBonusToEnum,
   EffectDamageTypeEnum,
+  EffectModifierTypeEnum,
   InvisibilityTypeEnum,
   ItemAbilityTypeEnum,
   ItemAnimationEnum,
@@ -194,14 +197,28 @@ class DescriptionService {
       results.push("Can see invisible creatures.");
     } else if (effect.opcode === EffectTypeEnum.Blur) {
       results.push("Blur (visual effect only)");
-    } else if (effect.opcode === EffectTypeEnum.Translucency) {
-      results.push("Translucent");
+      // } else if (effect.opcode === EffectTypeEnum.Translucency) {
+      //   results.push("Translucent");
     } else if (effect.opcode === EffectTypeEnum.CurrentHPbonus) {
       results.push(...this.getCurrentHPbonus(effect));
     } else if (effect.opcode === EffectTypeEnum.LevelDrain) {
       results.push(...this.getLevelDrain(effect));
     } else if (effect.opcode === EffectTypeEnum.Sleep) {
       results.push(...this.getSleep(effect));
+    } else if (effect.opcode === EffectTypeEnum.Slow) {
+      results.push(...this.getSlow(effect));
+    } else if (effect.opcode === EffectTypeEnum.Teleport) {
+      results.push(...this.getTeleport(effect));
+    } else if (
+      [
+        EffectTypeEnum.AttackDamageBonus,
+        EffectTypeEnum.MovementRateBonus,
+        EffectTypeEnum.MovementRateBonus2,
+        EffectTypeEnum.Thac0Bonus,
+        EffectTypeEnum.OffhandThac0Bonus,
+      ].includes(effect.opcode)
+    ) {
+      results.push(...this.getModifierType(effect as ModifierTypeEffect));
     } else if (effect.opcode === EffectTypeEnum.MirrorImageEffect) {
       results.push(`Mirror image (${effect.amount})`);
     } else if (effect.opcode === EffectTypeEnum.Infravision) {
@@ -343,6 +360,43 @@ class DescriptionService {
       )}`
     );
     return results;
+  }
+
+  private getSlow(effect: Effect): string[] {
+    return [
+      `Slow target for ${this.getDuration(effect.duration)}${this.getSaveText(
+        effect
+      )}`,
+    ];
+  }
+
+  private getTeleport(effect: TeleportEffect): string[] {
+    return [`Teleport to target`];
+  }
+
+  private getModifierType(effect: ModifierTypeEffect): string[] {
+    let type: string = "";
+    if (effect.opcode === EffectTypeEnum.AttackDamageBonus) type = "Damage";
+    else if (
+      effect.opcode === EffectTypeEnum.MovementRateBonus ||
+      effect.opcode === EffectTypeEnum.MovementRateBonus2
+    )
+      type = "Movement rate";
+    else if (effect.opcode === EffectTypeEnum.Thac0Bonus) type = "Thac0";
+    else if (effect.opcode === EffectTypeEnum.OffhandThac0Bonus)
+      type = "Offhand Thac0";
+    if (!type) return [];
+    const value = [
+      EffectModifierTypeEnum.MultiplyPercent,
+      EffectModifierTypeEnum.SetPercentOf,
+    ].includes(effect.type)
+      ? `${effect.value}%`
+      : this.getSignedNumber(effect.value);
+    return [
+      `${type}:${value} for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}`,
+    ];
   }
 
   private getDamage(effect: DamageEffect): string[] {

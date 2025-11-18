@@ -1,41 +1,36 @@
 // Generated file (don't edit)
 
+// Spectral Hound
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m39.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m39su.baf~
+
 // Astral Plane Shift
 CREATE SPL "ja#1m39"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#1m39.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4027)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10154)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
-	SAY UNIDENTIFIED_DESC ~
-Slow target for 6 rounds.~
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10316)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=40 target=2 power=1 resist_dispel=1 duration=36 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=66 target=2 power=1 parameter1=99 resist_dispel=1 duration=36 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=9 target=2 power=1 parameter1=2105376000 parameter2=1966335 resist_dispel=1 duration=36 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=61 target=2 power=1 parameter1=1511938560 parameter2=1638400 resist_dispel=1 duration=36 probability1=100 END
 	
+	// Jaws
 CREATE ITM "ja#1m39"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10137)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10137)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
-
-Melee damage: 2D6 (Piercing)
-Speed Factor: 3
-Enchantment: 1
-Range: 1 feet
-
-Cast spell Astral Plane Shift (saves vs spell)
-
-Slow target for 6 rounds.~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10317)
 	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#1m39.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -48,37 +43,12 @@ COPY_EXISTING ~ja#1m39.itm~ ~override~
 		WRITE_BYTE 0x88 6
 		WRITE_BYTE 0x8a 2
 		WRITE_SHORT 0x8e 1
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#1m39" END
 	END
-	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=1 STR_VAR resource="ja#1m39" END
-
-CREATE ITM "ja#2m39"
-	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(~Spectral Hound traits~)
-	WRITE_LONG 0xc RESOLVE_STR_REF(~Spectral Hound traits~)
-	WRITE_SHORT 0x1c 10
-	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Spectral Hound traits
-
-See invisible creatures
-Extraplanar creatures are immune to Death Spell and are unaffected by all Cure and Cause Wound spells including Heal and Harm.
-An incorporeal creature has no physical body.
-Immune to backstab and critical hits
-Immune to all nonmagical attacks.
-Has a 50% resistance to every damages.
-Deflection bonus (+3 AC).
-Attacks pass through armor (+4 THAC0).~)
-COPY_EXISTING ~ja#2m39.itm~ ~override~
-	READ_SHORT 0x68 abicount
-	PATCH_IF (%abicount% > 0) BEGIN
-		WRITE_ASCII 0x76 ~IRING15~ #8
-	END
-	LPF seeInvisible_immunity END
-	LPF extraplanar_immunity END
-	LPF incorporeal_immunity END
 
 ACTION_FOR_EACH ~file~ IN
 	BDSHA01C
@@ -87,8 +57,8 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDSHA01C~ BEGIN
-				REMOVE_CRE_EFFECTS
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~BDSHA01C~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWAWP~ BEGIN
+				LPF REMOVE_MOST_CRE_EFFECTS END
 			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
@@ -98,39 +68,43 @@ BEGIN
 			REMOVE_CRE_ITEM ~DOGWAWP~
 			REMOVE_CRE_ITEM ~BDSHA01C~
 			REPLACE_CRE_ITEM ~ja#1m39~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
-			ADD_CRE_ITEM ~ja#2m39~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					level1=5
+					bonusHp=0
 					strength=17
 					dexterity=15
 					constitution=14
 					intelligence=4
 					wisdom=14
 					charisma=12
-					movement=12
-					hp=40
-					ac="-1"
-					thac0=15
+					ac=0
 					apr=1
 					xpv=975
 					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
-					saveDeath=11
-					saveWand=13
-					savePolymorph=12
-					saveBreath=13
-					saveSpell=14
 					morale=19
-					moraleBreak=4
-					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
 					race=IDS_OF_SYMBOL (~race~ ~DOG~)
 					class=IDS_OF_SYMBOL (~class~ ~DOG_WAR~)
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					movement=12
+					hp=40
+					thac0=15
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
 					enforce=1
 			END
+			DEFINE_ARRAY removeScripts BEGIN WARDOG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY skipFiles BEGIN BDSHA01C END
+			LPF patchCreatureScript STR_VAR script=ja#m39 slot=Default skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN WARDOG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY files BEGIN BDSHA01C END
+			LPF patchCreatureScript STR_VAR script=ja#m39su slot=Default files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDSHA01C~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
 				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender

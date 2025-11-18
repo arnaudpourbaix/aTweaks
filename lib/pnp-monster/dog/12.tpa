@@ -1,19 +1,20 @@
 // Generated file (don't edit)
 
+// Wild Dog
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m12.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m12su.baf~
+
+// Jaws
 CREATE ITM "ja#1m12"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10137)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10137)
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
-
-Melee damage: 1D4 (Piercing)
-Speed Factor: 3
-Range: 1 feet~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10312)
 COPY_EXISTING ~ja#1m12.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -25,9 +26,10 @@ COPY_EXISTING ~ja#1m12.itm~ ~override~
 		WRITE_BYTE 0x88 4
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1
-		WRITE_SHORT 0x9e 50
-		WRITE_SHORT 0xa0 50
-		WRITE_LONG 0x98 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -43,8 +45,8 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWISU~ AND NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOG~ BEGIN
-				REMOVE_CRE_EFFECTS
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~BDBDOG~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDDEADOG~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWI~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWISU~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDCRUDOG~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOG~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~DW#RNDWI~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOGW01~ BEGIN
+				LPF REMOVE_MOST_CRE_EFFECTS END
 			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
@@ -54,34 +56,39 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					level1=1
+					bonusHp=1
 					strength=12
 					dexterity=17
 					constitution=15
 					intelligence=4
 					wisdom=13
 					charisma=11
-					movement=12
-					hp=9
 					ac=10
 					thac0=19
 					apr=1
 					xpv=35
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=14
-					saveWand=16
-					savePolymorph=15
-					saveBreath=17
-					saveSpell=17
 					morale=6
-					moraleBreak=4
-					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
 					race=IDS_OF_SYMBOL (~race~ ~DOG~)
 					class=IDS_OF_SYMBOL (~class~ ~DOG_WILD~)
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					movement=12
+					hp=9
+					saveDeath=14
+					saveWand=16
+					savePolymorph=15
+					saveBreath=17
+					saveSpell=17
 					enforce=1
 			END
+			DEFINE_ARRAY removeScripts BEGIN BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY skipFiles BEGIN DOGWISU BDDEADOG END
+			LPF patchCreatureScript STR_VAR script=ja#m12 slot=Default skipFiles removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY files BEGIN DOGWISU END
+			LPF patchCreatureScript STR_VAR script=ja#m12su slot=Default files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~DOGWISU~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
 				WRITE_BYTE 0x237 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
@@ -89,6 +96,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDOG~) BEGIN 
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~INNOCENT~) // class
+			END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDDEADOG~) BEGIN 
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN

@@ -1,37 +1,33 @@
 // Generated file (don't edit)
 
+// Blink Dog
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/dog/ja#m14.baf~
 
 // Blink
 CREATE SPL "ja#1m14"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#1m14.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4010)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10153)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI402C~ #8
-	SAY UNIDENTIFIED_DESC ~
-Blink to target location and get a +2 THAC0 bonus for 1 round.~
-	LPF ADD_EFFECT INT_VAR opcode=172 target=1 global=1 power=1 timing=1 probability1=100 STR_VAR resource="ja#1m14" END
-	LPF ADD_EFFECT INT_VAR opcode=171 target=1 global=1 power=1 timing=4 duration=6 probability1=100 STR_VAR resource="ja#1m14" END
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 STR_VAR icon="SPWI402B" END
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10314)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 STR_VAR icon="SPWI402C" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=1 power=1 parameter1=2 duration=6 probability1=75 END
+	LPF CHANGE_SPELL INT_VAR    renew=1 END
 	
+	// Jaws
 CREATE ITM "ja#1m14"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@4021)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@4021)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10137)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10137)
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10315)
 COPY_EXISTING ~ja#1m14.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -43,10 +39,10 @@ COPY_EXISTING ~ja#1m14.itm~ ~override~
 		WRITE_BYTE 0x88 6
 		WRITE_BYTE 0x8a 1
 		WRITE_SHORT 0x8e 1
-		WRITE_SHORT 0x9e 34
-		WRITE_SHORT 0xa0 33
-		WRITE_SHORT 0xa2 33
-		WRITE_LONG 0x98 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -55,7 +51,9 @@ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			REMOVE_CRE_EFFECTS
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~DOGBLINK~ BEGIN
+				LPF REMOVE_MOST_CRE_EFFECTS END
+			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~P1-6~
@@ -71,30 +69,28 @@ BEGIN
 					intelligence=9
 					wisdom=13
 					charisma=11
-					movement=10
-					hp=36
 					ac=8
-					thac0=17
 					apr=1
 					xpv=270
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					saveDeath=13
-					saveWand=15
-					savePolymorph=14
-					saveBreath=16
-					saveSpell=16
 					morale=12
-					moraleBreak=4
-					moraleRecovery=15
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
 					race=IDS_OF_SYMBOL (~race~ ~DOG~)
 					class=IDS_OF_SYMBOL (~class~ ~DOG_WILD~)
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					movement=10
+					hp=36
+					thac0=17
+					saveDeath=13
+					saveWand=15
+					savePolymorph=14
+					saveBreath=16
+					saveSpell=16
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN PSPIDER END
-			LPF patchCreatureScript STR_VAR script=ja#m14 removeScripts END
+			DEFINE_ARRAY removeScripts BEGIN PSPIDER BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			LPF patchCreatureScript STR_VAR script=ja#m14 slot=Default removeScripts END
 		BUT_ONLY_IF_IT_CHANGES
 	END ELSE BEGIN
 		PRINT ~====> CRE %file% not found!~

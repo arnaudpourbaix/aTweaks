@@ -26,6 +26,7 @@ export const GLOBAL_CONFIG = {
       "BDENRAGE",
       "BDENSHTV",
       "BDFIG00",
+      "BDFIGH01",
       "BDGRSHTV",
       "BDNONIN",
       "BDSUM00",

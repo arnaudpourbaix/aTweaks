@@ -1,4 +1,4 @@
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/wild.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/war.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/blink.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/spectral_hound.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/12.tpa" // Wild Dog
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/13.tpa" // War Dog
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/14.tpa" // Blink Dog
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/39.tpa" // Spectral Hound
