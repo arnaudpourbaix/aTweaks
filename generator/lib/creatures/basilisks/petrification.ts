@@ -86,7 +86,6 @@ export const petrification2e: PartialSpell = {
     },
   ],
   ability: {
-    name: "Petrification (2e)",
     targets: [
       {
         name: "NearestEnemies",
@@ -186,7 +185,6 @@ export const petrification5e: PartialSpell = {
     },
   ],
   ability: {
-    name: "Petrification (5e)",
     targets: [
       {
         name: "NearestEnemies",

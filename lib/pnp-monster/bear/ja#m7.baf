@@ -155,6 +155,7 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Improved stream of frost
 IF
 	HaveSpellRES("ja#2m7")
 	RandomNumGT(800,640)

@@ -87,6 +87,15 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
       astralPlaneShift: "Astral Plane Shift",
     },
   },
+  fey: {
+    name: {
+      dryad: "Dryad",
+      hamadryad: "Hamadryad",
+      sirine: "Sirine",
+      nymph: "Nymph",
+    },
+    ability: {},
+  },
   spider: {
     webTangle: {
       name: "Web Tangle",

@@ -110,6 +110,7 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Petrifying Gaze
 IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m2")

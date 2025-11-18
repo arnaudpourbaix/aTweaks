@@ -6,6 +6,7 @@ import { createCats } from "./cats/cats";
 import { createConstructs } from "./constructs/constructs";
 import { createCarrionCrawler } from "./crawler/crawler";
 import { createDogs } from "./dogs/dog";
+import { createFeys } from "./feys/feys";
 
 export const creatureFactories: (() => Creature[])[] = [
   createAnkheg,
@@ -15,7 +16,7 @@ export const creatureFactories: (() => Creature[])[] = [
   createCats,
   createConstructs,
   createDogs,
-  // ...Feys,
+  createFeys,
   // ...Golems,
   // ...Ogres,
   // ...Plants,

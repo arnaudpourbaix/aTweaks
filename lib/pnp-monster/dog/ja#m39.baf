@@ -1,18 +1,5 @@
 // Spectral Hound
 
-// Initiate dialog
-IF
-	Global("JA#DIALOG","LOCALS",0)
-	Name("BDDOGW01",Myself)
-	NumTimesTalkedTo(0)
-	See([PC])
-THEN
-	RESPONSE #100
-		SetGlobal("JA#DIALOG","LOCALS",1)
-		FaceObject([PC])
-		StartDialogueNoSet([PC])
-END
-
 // Init
 IF
 	Global("JA#INIT","LOCALS",0)
@@ -132,70 +119,6 @@ IF
 THEN
 	RESPONSE #100
 		RandomWalkContinuous()
-END
-
-// (unknown)
-IF
-	HaveSpellRES("ja#1m14")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(FarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FarthestEnemyOf(Myself))
-	RandomNumGT(1000,250)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
-		AttackOneRound(LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m14")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondFarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(SecondFarthestEnemyOf(Myself))
-	RandomNumGT(1000,333)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
-		AttackOneRound(LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m14")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(ThirdFarthestEnemyOf(Myself))
-	RandomNumGT(1000,500)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
-		AttackOneRound(LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m14")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FourthFarthestEnemyOf(Myself),WEAPON)
-	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FourthFarthestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
-	See(FourthFarthestEnemyOf(Myself))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
-		AttackOneRound(LastSeenBy(Myself))
 END
 
 // Attack NoCheck enemy

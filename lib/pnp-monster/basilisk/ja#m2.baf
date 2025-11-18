@@ -121,6 +121,7 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Petrifying Gaze
 IF
 	HaveSpellRES("ja#1m2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")

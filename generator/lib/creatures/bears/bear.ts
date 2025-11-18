@@ -458,7 +458,6 @@ export const createBears = () => {
       },
     ],
     ability: {
-      name: "Improved stream of frost",
       targets: [
         {
           name: "NearestEnemies",

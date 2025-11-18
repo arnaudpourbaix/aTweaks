@@ -133,6 +133,7 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Improved stream of frost
 IF
 	ActionListEmpty()
 	HaveSpellRES("ja#2m7")

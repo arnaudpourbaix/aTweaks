@@ -35,6 +35,7 @@ export const GLOBAL_CONFIG = {
       "DVMELEE",
       "DW#GPSHM",
       "DW#GPSHT",
+      "DW1MELGE",
       "DW#PRSHT",
       "dw1ranmo",
       "dw1melmo",

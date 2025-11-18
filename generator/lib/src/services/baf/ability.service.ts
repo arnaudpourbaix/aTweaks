@@ -1,14 +1,15 @@
 import deepmerge from "deepmerge";
+import { ABILITY_PRESETS } from "../../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { TranslationKey } from "../../../translations/i18n";
 import {
   CreatureAbility,
   CreatureAbilitySpell,
   RawCreatureAbility,
 } from "../../model/creature/ability";
 import { Actions } from "../../model/script/actions";
-import { Triggers } from "../../model/script/triggers";
-import { ABILITY_PRESETS } from "../../../config/ability-presets";
 import { CustomCode, PartialCustomCode } from "../../model/script/script";
+import { Triggers } from "../../model/script/triggers";
 
 class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {

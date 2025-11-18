@@ -42,6 +42,7 @@ class SpellService {
     result.effects = this.getEffects(result.effects, result, file);
     if (result.ability?.spell) {
       result.ability.spell.resource = file;
+      result.ability.name ??= spell.name;
     }
     return result;
   }

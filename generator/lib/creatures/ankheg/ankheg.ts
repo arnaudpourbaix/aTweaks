@@ -134,7 +134,6 @@ export const createAnkheg = () => {
       },
     ],
     ability: {
-      name: translationService.t.monster.ankheg.enzymeStream.name,
       disableInterrupt: true,
       spell: {
         type: "force",

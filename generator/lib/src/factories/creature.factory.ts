@@ -73,7 +73,7 @@ class CreatureFactory {
     cre.family = p.family;
     cre.files = p.files;
     cre.data = p.data;
-    cre.additionalData = ADDITIONAL_DATA_DEFAULT;
+    cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
     console.log(
       chalk.bold(`\nCreating ${translationService.from(cre.name)}...`)
     );
@@ -307,7 +307,8 @@ class CreatureFactory {
 
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
     this.checkValidation(cre);
-    const current: CreatureBehavior = cre.behavior ?? BEHAVIOR_DEFAULT;
+    const current: CreatureBehavior =
+      cre.behavior ?? structuredClone(BEHAVIOR_DEFAULT);
     const { abilities, customCodes, additionalCodes, dialog, ...others } =
       behavior;
     cre.behavior = {
