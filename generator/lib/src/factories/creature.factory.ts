@@ -21,6 +21,7 @@ import {
 import {
   Creature,
   CreatureAdjustment,
+  CreatureNewFile,
   PartialCreatureAdjustment,
 } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
@@ -65,6 +66,7 @@ class CreatureFactory {
     monster: MonsterEnum;
     family: MonsterFamilyEnum;
     files: string[];
+    newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
   }): Creature {
     const cre = new Creature();
@@ -72,6 +74,7 @@ class CreatureFactory {
     cre.monster = p.monster;
     cre.family = p.family;
     cre.files = p.files;
+    cre.newFiles = p.newFiles ?? [];
     cre.data = p.data;
     cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
     console.log(
@@ -152,9 +155,9 @@ class CreatureFactory {
     }
   }
 
-  addSpell(cre: Creature, spell: PartialSpell): Spell {
+  addSpell(cre: Creature, spell: PartialSpell, file?: string): Spell {
     this.checkValidation(cre);
-    const file = getFilename(cre.spells.length + 1, cre.monster);
+    file ??= getFilename(cre.spells.length + 1, cre.monster);
     if (spell.memorizedCount) {
       cre.additionalData.memorizedSpells.push({
         file,

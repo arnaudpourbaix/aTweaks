@@ -67,7 +67,12 @@ Casting Time: 1
 Area of Effect: 60 degree arc
 Saving Throw: Special
 
-Upon the casting of this spell, a vivid, fan-shaped spray of clashing colors spring forth in front of the caster. All creatures in the area of effect are entitled a saving throw vs. spell to avoid the effects, if they are above the 6th level or above the level of the caster. Blind or unseeing creatures are not affected. Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds; those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds; those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.`,
+Upon the casting of this spell, a vivid, fan-shaped spray of clashing colors spring forth in front of the caster.
+All creatures in the area of effect are entitled a saving throw vs. spell to avoid the effects, if they are above the 6th level or above the level of the caster.
+Blind or unseeing creatures are not affected.
+Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds;
+those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds;
+those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.`,
   },
   dimensionDoor: {
     name: "Dimension Door",
@@ -79,7 +84,10 @@ Casting Time: 1
 Area of Effect: The caster
 Saving Throw: None
 
-This spell transports the caster to any designated place that is already known to him. The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with. When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.  Upon passing through the portal, the caster finds himself at his chosen destination.`,
+This spell transports the caster to any designated place that is already known to him.
+The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with.
+When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.
+Upon passing through the portal, the caster finds himself at his chosen destination.`,
   },
   slimeSplit: {
     name: "Slime Split",

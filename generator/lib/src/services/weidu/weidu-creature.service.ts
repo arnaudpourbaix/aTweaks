@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import path from "path";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { CreatureAdditionalData } from "../../model/creature/additional-data";
 import {
@@ -7,27 +9,21 @@ import {
   CreatureAdjustment,
   CreatureAutoGenerate,
 } from "../../model/creature/creature";
-import {
-  CREATURE_DATA,
-  CreatureData,
-  PartialCreatureData,
-} from "../../model/creature/data";
+import { CREATURE_DATA, CreatureData } from "../../model/creature/data";
 import { WEAPON_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
+import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
+import itemService from "../item.service";
+import translationService from "../translation.service";
+import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
-import utils from "../utils/utils.service";
-import itemService from "../item.service";
-import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
-import translationService from "../translation.service";
-import { GLOBAL_CONFIG } from "../../../config/generate";
-import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 
 class WeiduCreatureService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
@@ -35,14 +31,24 @@ class WeiduCreatureService extends AbstractWeiduService {
       State.modFolder,
       `lib/pnp-monster/${family}/main.tpa`
     );
-    if (!creature) fs.writeFileSync(file, "");
-    else
+    if (!creature) {
+      let content = "";
+      const commonFile = path.join(
+        State.modFolder,
+        `lib/pnp-monster/${family}/common.tpa`
+      );
+      if (fs.existsSync(commonFile)) {
+        content = `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/common.tpa"${CR}`;
+      }
+      fs.writeFileSync(file, content);
+    } else {
       fs.appendFileSync(
         file,
         `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${
           creature.monster
         }.tpa" // ${translationService.from(creature.name)}${CR}`
       );
+    }
   }
 
   generateWeiduScript(creature: Creature): void {
@@ -54,8 +60,8 @@ class WeiduCreatureService extends AbstractWeiduService {
     weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     weiduSpellService.createSpells(lines, creature.spells);
     weiduItemService.createItems(lines, creature);
-    this.createNewFiles(lines, creature);
-    this.patchCreatures(lines, creature);
+    this.createNewFiles(lines, 0, creature);
+    this.patchCreatures(lines, 0, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     this.writeFile(
       `lib/pnp-monster/${creature.family}/${creature.monster}.tpa`,
@@ -84,49 +90,62 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "");
   }
 
-  private createNewFiles(lines: CodeLine[], creature: Creature) {
+  private createNewFiles(lines: CodeLine[], tab: number, creature: Creature) {
     for (const entry of creature.newFiles) {
       for (const file of entry.files) {
-        this.add(
-          lines,
-          `COPY_EXISTING ~${entry.copyFrom}.cre~ ~override/${file}.cre~`
-        );
+        const copy = entry.copyFromExisting
+          ? `COPY_EXISTING ~${entry.copyFromExisting}.cre~`
+          : `COPY ~%MOD_FOLDER%/lib/pnp-monster/${creature.family}/${entry.copyFrom}.cre~`;
+        this.add(lines, `${copy} ~override/${file}.cre~`, tab);
+        if (entry.stringRef) {
+          for (const offset of ["0x8", "0xc"])
+            this.add(
+              lines,
+              `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef)}`,
+              tab + 1
+            );
+        }
       }
     }
   }
 
-  private patchCreatures(lines: CodeLine[], creature: Creature) {
-    this.add(lines, "ACTION_FOR_EACH ~file~ IN");
-    for (const file of creature.files) this.add(lines, file, 1);
-    this.add(lines, "BEGIN", 0);
-    this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, 1);
-    this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, 2);
-    this.add(lines, `LPF FJ_CRE_VALIDITY END`, 3);
-    this.removeEffects(lines, 3, creature);
-    this.removeKnownSpells(lines, 3, creature);
-    this.removeMemorizedSpells(lines, 3, creature);
-    this.removeItems(lines, 3, creature.additionalData);
+  private patchCreatures(lines: CodeLine[], tab: number, creature: Creature) {
+    this.add(lines, "ACTION_FOR_EACH ~file~ IN", tab);
+    for (const file of creature.files) this.add(lines, file, tab + 1);
+    this.add(lines, "BEGIN", tab);
+    this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, ++tab);
+    this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, ++tab);
+    this.add(lines, `LPF FJ_CRE_VALIDITY END`, ++tab);
+    this.removeEffects(lines, tab, creature);
+    this.removeKnownSpells(lines, tab, creature);
+    this.removeMemorizedSpells(lines, tab, creature);
+    this.removeItems(lines, tab, creature.additionalData);
     this.addItemSlots({
       lines,
-      tab: 3,
+      tab,
       additionalData: creature.additionalData,
       creature,
     });
-    this.addMemorizedSpells(lines, 3, creature.additionalData, creature.spells);
-    this.add(lines, `LPF clear_proficiencies END`, 3);
+    this.addMemorizedSpells(
+      lines,
+      tab,
+      creature.additionalData,
+      creature.spells
+    );
+    this.add(lines, `LPF clear_proficiencies END`, tab);
     for (const opcode of creature.additionalData.deleteEffectOpcodes) {
       this.add(
         lines,
         `LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=${opcode} END`,
-        3
+        tab
       );
     }
-    this.addProficiencies(lines, 3, creature.additionalData);
-    this.addImmunities(lines, 3, creature.additionalData);
+    this.addProficiencies(lines, tab, creature.additionalData);
+    this.addImmunities(lines, tab, creature.additionalData);
     for (const effect of creature.additionalData.effects) {
       weiduEffectService.addEffect({
         lines,
-        tab: 3,
+        tab,
         effect,
         type: "CRE",
         global: true,
@@ -134,21 +153,21 @@ class WeiduCreatureService extends AbstractWeiduService {
     }
     this.patchCreature({
       lines,
-      tab: 3,
+      tab,
       data: creature.data,
       autoGenerate: creature.autoGenerate,
       enforce: true,
       creature,
     });
     if (creature.additionalData.scriptLocation !== "None") {
-      this.patchScripts(lines, 3, creature);
+      this.patchScripts(lines, tab, creature);
     }
-    this.handleAdjustments(lines, 3, creature);
-    this.add(lines, "BUT_ONLY_IF_IT_CHANGES", 2);
-    this.add(lines, "END ELSE BEGIN", 1);
-    this.add(lines, "PRINT ~====> CRE %file% not found!~", 2);
-    this.add(lines, "END", 1);
-    this.add(lines, "END", 0);
+    this.handleAdjustments(lines, tab, creature);
+    this.add(lines, "BUT_ONLY_IF_IT_CHANGES", --tab);
+    this.add(lines, "END ELSE BEGIN", --tab);
+    this.add(lines, "PRINT ~====> CRE %file% not found!~", ++tab);
+    this.add(lines, "END", --tab);
+    this.add(lines, "END", --tab);
   }
 
   private removeItems(

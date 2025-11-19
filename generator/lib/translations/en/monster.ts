@@ -94,7 +94,10 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
       sirine: "Sirine",
       nymph: "Nymph",
     },
-    ability: {},
+    ability: {
+      dryadDireCharm: "Dryad Dire Charm",
+      speakWithPlants: "Speak With Plants",
+    },
   },
   spider: {
     webTangle: {

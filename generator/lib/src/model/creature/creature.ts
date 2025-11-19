@@ -37,7 +37,7 @@ export class Creature implements BaseCreature {
   behavior!: CreatureBehavior;
   attack!: CreatureAttack;
   files: string[] = [];
-  newFiles: { files: string[]; copyFrom: string }[] = [];
+  newFiles: CreatureNewFile[] = [];
 
   /**
    * For these files, keep existing creature values if they are better
@@ -87,8 +87,8 @@ export class Creature implements BaseCreature {
     creatureFactory.setAdjustments(this, adjustments);
   }
 
-  addSpell(spell: PartialSpell): Spell {
-    return creatureFactory.addSpell(this, spell);
+  addSpell(spell: PartialSpell, file?: string): Spell {
+    return creatureFactory.addSpell(this, spell, file);
   }
 
   addItem(item: PartialItem): Item {
@@ -122,6 +122,13 @@ export class Creature implements BaseCreature {
   validate() {
     creatureFactory.validate(this);
   }
+}
+
+export interface CreatureNewFile {
+  files: string[];
+  copyFromExisting?: string;
+  copyFrom?: string;
+  stringRef?: StringReference;
 }
 
 export interface CreatureAutoGenerate {
