@@ -180,7 +180,7 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("rr#ddoor")
 	OR(2)
-		Range(NearestEnemyOf(Myself),10)
+		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
 THEN
 	RESPONSE #100

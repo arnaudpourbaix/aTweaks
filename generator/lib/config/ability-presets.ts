@@ -452,7 +452,7 @@ export const ABILITY_PRESETS: {
         {
           name: "Or",
           triggers: [
-            { name: "Range", params: ["NearestEnemyOf", 10] },
+            { name: "Range", params: ["NearestEnemyOf", 15] },
             { name: "AttackedBy", params: ["ANYONE", "DEFAULT"] },
           ],
         },

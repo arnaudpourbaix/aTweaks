@@ -59,7 +59,8 @@ class WeiduSpellService extends AbstractWeiduService {
       const ctime = spell.options.castingTime !== undefined ? "ctime=1" : "";
       const rinvs =
         spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
-      const renew = spell.options.renew !== undefined ? "renew=1" : "";
+      const renew =
+        spell.options.renew !== undefined ? `renew=${spell.options.renew}` : "";
       this.add(
         lines,
         `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`,

@@ -234,7 +234,8 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: payload.duration,
         dispelResistance: payload.dispelResistance,
-        saveTypes: payload.saveType ? [payload.saveType] : undefined,
+        saveTypes:
+          payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -242,7 +243,8 @@ class EffectFactory {
         stringRef: StringRefUtils.getStringId("Dire charmed"),
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         dispelResistance: payload.dispelResistance,
-        saveTypes: payload.saveType ? [payload.saveType] : undefined,
+        saveTypes:
+          payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -253,7 +255,8 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: 1,
         dispelResistance: payload.dispelResistance,
-        saveTypes: payload.saveType ? [payload.saveType] : undefined,
+        saveTypes:
+          payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -263,7 +266,8 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: 3,
         dispelResistance: payload.dispelResistance,
-        saveTypes: payload.saveType ? [payload.saveType] : undefined,
+        saveTypes:
+          payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -272,7 +276,8 @@ class EffectFactory {
         timing: EffectTimingEnum.DelayLimited,
         duration: payload.duration,
         dispelResistance: payload.dispelResistance,
-        saveTypes: payload.saveType ? [payload.saveType] : undefined,
+        saveTypes:
+          payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
     ];

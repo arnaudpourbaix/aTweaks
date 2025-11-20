@@ -1,2 +1,3 @@
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/41.tpa" // Dryad
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/42.tpa" // Hamadryad

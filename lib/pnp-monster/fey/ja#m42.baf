@@ -196,7 +196,7 @@ IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("rr#ddoor")
 	OR(2)
-		Range(NearestEnemyOf(Myself),10)
+		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
 THEN
 	RESPONSE #100
@@ -208,7 +208,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Speak with plants
+// Speak With Plants
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!GlobalTimerNotExpired("speakWithPlants","LOCALS")
@@ -226,7 +226,6 @@ END
 // Entangle
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -247,14 +246,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -275,14 +272,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -303,14 +298,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -331,14 +324,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -359,14 +350,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -387,14 +376,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -415,14 +402,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -443,14 +428,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -471,14 +454,12 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	!GlobalTimerNotExpired("entangle","LOCALS")
 	HaveSpellRES("RR#FENTG")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -499,16 +480,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SetGlobalTimer("entangle","LOCALS",18)
 		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
-// Dire Charm
+// Dryad Dire Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
 	!Race([PC.0.0.FIGHTER_ALL],HALF_ELF)
@@ -536,7 +516,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),HALF_ELF)
@@ -564,7 +544,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),HALF_ELF)
@@ -592,7 +572,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
 	!Race([PC.0.0.RANGER_ALL],HALF_ELF)
@@ -620,7 +600,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),HALF_ELF)
@@ -648,7 +628,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),HALF_ELF)
@@ -676,7 +656,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
 	!Race([PC.0.0.PALADIN_ALL],HALF_ELF)
@@ -704,7 +684,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),HALF_ELF)
@@ -732,7 +712,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),HALF_ELF)
@@ -757,11 +737,11 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dire Charm
+// Dryad Dire Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC],ELF)
 	!Race([PC],HALF_ELF)
@@ -789,7 +769,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC]),ELF)
 	!Race(SecondNearest([PC]),HALF_ELF)
@@ -817,7 +797,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC]),ELF)
 	!Race(ThirdNearest([PC]),HALF_ELF)
@@ -845,7 +825,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FourthNearest([PC]),ELF)
 	!Race(FourthNearest([PC]),HALF_ELF)
@@ -873,7 +853,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FifthNearest([PC]),ELF)
 	!Race(FifthNearest([PC]),HALF_ELF)
@@ -901,7 +881,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SixthNearest([PC]),ELF)
 	!Race(SixthNearest([PC]),HALF_ELF)
@@ -926,11 +906,11 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dire Charm
+// Dryad Dire Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
 	!CheckStatGT([PC.0.0.FIGHTER_ALL],0,HELD)
@@ -957,7 +937,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
 	!CheckStatGT(SecondNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -984,7 +964,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
 	!CheckStatGT(ThirdNearest([PC.0.0.FIGHTER_ALL]),0,HELD)
@@ -1011,7 +991,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
 	!CheckStatGT([PC.0.0.RANGER_ALL],0,HELD)
@@ -1038,7 +1018,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
 	!CheckStatGT(SecondNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -1065,7 +1045,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
 	!CheckStatGT(ThirdNearest([PC.0.0.RANGER_ALL]),0,HELD)
@@ -1092,7 +1072,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
 	!CheckStatGT([PC.0.0.PALADIN_ALL],0,HELD)
@@ -1119,7 +1099,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
 	!CheckStatGT(SecondNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -1146,7 +1126,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
 	!CheckStatGT(ThirdNearest([PC.0.0.PALADIN_ALL]),0,HELD)
@@ -1170,11 +1150,11 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dire Charm
+// Dryad Dire Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC],0,HELD)
 	!StateCheck([PC],STATE_STUNNED)
@@ -1200,7 +1180,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
 	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
@@ -1226,7 +1206,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
 	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
@@ -1252,7 +1232,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
 	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
@@ -1278,7 +1258,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
 	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
@@ -1304,7 +1284,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("rr#fchrm")
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
 	!StateCheck(SixthNearest([PC]),STATE_STUNNED)
@@ -1430,7 +1410,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Detect Snares And Pits
+// Detect snares and pits
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("rr#fdsnr")

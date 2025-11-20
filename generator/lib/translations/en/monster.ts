@@ -1,3 +1,6 @@
+import { describe } from "node:test";
+import description from "./description";
+
 export default {
   ankheg: {
     name: "Ankheg",
@@ -96,7 +99,24 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     },
     ability: {
       dryadDireCharm: "Dryad Dire Charm",
-      speakWithPlants: "Speak With Plants",
+      entangle: {
+        name: "Entangle",
+        description:
+          "Hamadryad can cast Entangle as the priest spell, but it won't affect its allies since her affinity with nature.",
+      },
+      speakWithPlants: {
+        name: "Speak With Plants",
+        description: `Immunity to entangle spell for 10 rounds.
+The caster can question plants as to whether or not creatures have passed through them, cause thickets to part to enable easy passage, require vines to entangle pursuers, and command similar services.`,
+      },
+      animalFriendship: {
+        name: "Animal Friendship",
+        description: `The caster can use this spell to attract up to 2 Hit Dice of animal(s) per experience level he possesses (save vs spell to negate).`,
+      },
+      detectTraps: {
+        name: "Detect snares and pits",
+        description: `When cast, all traps concealed -normally or magically- of magical or mechanical nature become apparent for 16 rounds.`,
+      },
     },
   },
   spider: {

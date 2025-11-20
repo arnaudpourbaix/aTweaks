@@ -98,12 +98,16 @@ class SpellService {
           resource: spell.file,
         });
       }
-      this.addEffectFile(spell, {
-        opcode: EffectTypeEnum.ProtectionFromSpell,
-        resource: spell.file,
-        timing: EffectTimingEnum.InstantPermanentUntilDeath,
-      });
+      this.addProtectionFromSpellEffect(spell);
     }
+  }
+
+  private addProtectionFromSpellEffect(spell: Spell) {
+    this.addEffectFile(spell, {
+      opcode: EffectTypeEnum.ProtectionFromSpell,
+      resource: spell.file,
+      timing: EffectTimingEnum.InstantPermanentUntilDeath,
+    });
   }
 
   private addEffectFile(spell: Spell, effect: Effect) {
@@ -130,13 +134,22 @@ class SpellService {
 
   private getEffects(effects: Effect[], spell: Spell, file: string): Effect[] {
     const results = effectService.getEffects(effects, { file });
+    let needEffectFile = false;
     for (const effect of results) {
       if (
-        effect.opcode === EffectTypeEnum.ProtectionFromSpell &&
+        [
+          EffectTypeEnum.ProtectionFromSpell,
+          EffectTypeEnum.UseEFFFile,
+        ].includes(effect.opcode) &&
         !effect.resource
       ) {
+        needEffectFile =
+          needEffectFile || effect.opcode === EffectTypeEnum.UseEFFFile;
         effect.resource = spell.file;
       }
+    }
+    if (needEffectFile) {
+      this.addProtectionFromSpellEffect(spell);
     }
     return results;
   }

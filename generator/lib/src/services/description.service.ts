@@ -3,6 +3,7 @@ import { ImmunityConfig, ImmunityName } from "../model/final/immunity";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
+  CharmCreatureEffect,
   CurrentHPbonusEffect,
   DamageEffect,
   Effect,
@@ -18,6 +19,7 @@ import {
 } from "../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
+  CharmTypeEnum,
   EffectBonusToEnum,
   EffectDamageTypeEnum,
   EffectModifierTypeEnum,
@@ -210,6 +212,11 @@ class DescriptionService {
     } else if (effect.opcode === EffectTypeEnum.Teleport) {
       results.push(...this.getTeleport(effect));
     } else if (
+      effect.opcode === EffectTypeEnum.CharmCreature ||
+      effect.opcode === EffectTypeEnum.CharmControlCreature
+    ) {
+      results.push(...this.getCharm(effect));
+    } else if (
       [
         EffectTypeEnum.AttackDamageBonus,
         EffectTypeEnum.MovementRateBonus,
@@ -318,6 +325,34 @@ class DescriptionService {
     //TODO: handle ids entry/id
     results.push(
       `Paralyze target for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}.`
+    );
+    return results;
+  }
+
+  private getCharm(effect: CharmCreatureEffect): string[] {
+    const results: string[] = [];
+    let type: string = "";
+    switch (effect.charmType) {
+      case CharmTypeEnum.NeutralCharm:
+      case CharmTypeEnum.NeutralCharmNoFeedback:
+      case CharmTypeEnum.ThrullCharm:
+      case CharmTypeEnum.ThrullCharmNoFeedback:
+        type = "Charm";
+        break;
+      case CharmTypeEnum.NeutralDireCharm:
+      case CharmTypeEnum.NeutralDomination:
+      case CharmTypeEnum.HostileDireCharm:
+      case CharmTypeEnum.HostileDomination:
+        type = "Dire Charm";
+        break;
+      case CharmTypeEnum.Controlled:
+        type = "Turn";
+        break;
+    }
+    results.push(
+      `${type} target for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
     );

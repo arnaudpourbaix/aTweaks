@@ -107,13 +107,6 @@ class EffectService {
         if (effect.stringRef) {
           effect.parameter1 = `${utils.resolveStringRef(effect.stringRef)}`;
         }
-        if (
-          effect.opcode === EffectTypeEnum.ProtectionFromSpell &&
-          !effect.resource &&
-          !!options?.file
-        ) {
-          effect.resource = options.file;
-        }
         break;
       case EffectTypeEnum.LightingEffects:
         effect.parameter1 = `${effect.lightingTarget}`;
