@@ -1,4 +1,3 @@
-import { Creature } from "../model/creature/creature";
 import { ImmunityConfig, ImmunityName } from "../model/final/immunity";
 import {
   ArmorClassBonusEffect,
@@ -25,7 +24,6 @@ import {
   EffectModifierTypeEnum,
   InvisibilityTypeEnum,
   ItemAbilityTypeEnum,
-  ItemAnimationEnum,
   PoisonTypeEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
@@ -41,19 +39,19 @@ import { State } from "../state";
 import translationService from "./translation.service";
 
 class DescriptionService {
-  generateCreatureItems(creature: Creature): void {
-    for (const item of creature.items) {
+  generateCreatureItems(items: Item[]): void {
+    for (const item of items) {
       if (!item.description && !!item.header)
-        this.generateWeaponDescription(item as Weapon, creature);
+        this.generateWeaponDescription(item as Weapon);
       else if (!item.description && item.trait)
-        this.generateItemTraitDescription(item, creature);
+        this.generateItemTraitDescription(item);
     }
   }
 
-  generateCreatureSpells(creature: Creature): void {
-    for (const spell of creature.spells) {
+  generateCreatureSpells(spells: Spell[]): void {
+    for (const spell of spells) {
       if (!spell.description && spell.headers.length === 1)
-        this.generateSpellDescription(spell, spell.headers[0], creature);
+        this.generateSpellDescription(spell, spell.headers[0]);
     }
   }
 
@@ -87,7 +85,7 @@ class DescriptionService {
     return results;
   }
 
-  private generateWeaponDescription(item: Weapon, creature?: Creature) {
+  private generateWeaponDescription(item: Weapon) {
     const desc: string[] = [];
     const type =
       item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
@@ -111,7 +109,7 @@ class DescriptionService {
     const otherEffects = item.header.effects.filter(
       (e) => e.opcode !== EffectTypeEnum.Damage
     );
-    desc.push(...this.getEffectsDescription(damageEffects, creature));
+    desc.push(...this.getEffectsDescription(damageEffects));
     if ((damage || damageEffects.length) && item.header.speed !== undefined) {
       desc.push(`Speed Factor: ${item.header.speed}`);
     }
@@ -123,10 +121,7 @@ class DescriptionService {
     }
     desc.push(...this.getImmunitiesDescription(item.immunities));
     desc.push(
-      ...this.getEffectsDescription(
-        [...item.effects, ...otherEffects],
-        creature
-      )
+      ...this.getEffectsDescription([...item.effects, ...otherEffects])
     );
     if (desc.length && item.stringRef) {
       desc.unshift(translationService.from(item.stringRef), "");
@@ -134,31 +129,24 @@ class DescriptionService {
     item.description = translationService.addCustomTranslation(desc);
   }
 
-  private generateItemTraitDescription(item: Item, creature?: Creature) {
+  private generateItemTraitDescription(item: Item) {
     const desc: string[] = [];
     // desc.push(translationService.from(item.stringRef!), "");
     desc.push(...this.getImmunitiesDescription(item.immunities, true));
-    desc.push(...this.getEffectsDescription(item.effects, creature));
+    desc.push(...this.getEffectsDescription(item.effects));
     item.description = translationService.addCustomTranslation(desc);
   }
 
-  private generateSpellDescription(
-    spell: Spell,
-    header: SpellHeader,
-    creature?: Creature
-  ) {
+  private generateSpellDescription(spell: Spell, header: SpellHeader) {
     const desc: string[] = this.getEffectsDescription(header.effects);
     spell.description = translationService.addCustomTranslation(desc);
   }
 
-  private getEffectsDescription(
-    effects: Effect[],
-    creature?: Creature
-  ): string[] {
+  private getEffectsDescription(effects: Effect[]): string[] {
     const results: string[] = [];
     for (const effect of effects) {
       if (effect.opcode === EffectTypeEnum.CastSpell) {
-        results.push(...this.getItemSpellDescription(effect, creature));
+        results.push(...this.getItemSpellDescription(effect));
       } else {
         results.push(...this.getEffectDescription(effect));
       }
@@ -166,13 +154,8 @@ class DescriptionService {
     return results;
   }
 
-  private getItemSpellDescription(
-    effect: Effect,
-    creature?: Creature
-  ): string[] {
-    const spell = (creature?.spells ?? []).find(
-      (s) => s.file === effect.resource
-    );
+  private getItemSpellDescription(effect: Effect): string[] {
+    const spell = State.spells.find((s) => s.file === effect.resource);
     let name = spell ? translationService.from(spell.name) : effect.resource;
     const saveText = this.getSaveText(effect);
     const probability = this.getProbability(effect);

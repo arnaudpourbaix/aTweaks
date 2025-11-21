@@ -4,109 +4,14 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m42su.baf~
 
-// Entangle
-CREATE EFF "RR#FENTG"
-	WRITE_LONG 0x10 206
-	WRITE_LONG 0x24 1
-	WRITE_ASCII 0x30 ~RR#FENTG~ #8
-
-COPY_EXISTING "ENTANG2.pro" ~override/RR#FENTG.pro~
-	READ_SHORT 0x08 type
-	PATCH_IF (%type% = 1) BEGIN
-		INSERT_BYTES 0x100 0x100
-	END
-	WRITE_LONG 0x200 64
-ADD_PROJECTILE ~override/RR#FENTG.pro~ ~Hamadryad Entangle~
-
-CREATE SPL "RR#FENTG"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~RR#FENTG.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10160)
-	WRITE_ASCII 0x10 ~CAS_P08~ #8
-	WRITE_SHORT 0x1c 4
-	WRITE_SHORT 0x22 10
-	WRITE_BYTE 0x25 8
-	WRITE_BYTE 0x27 11
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPPR105C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10161)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=4 range=30 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~RR#FENTG~)) + 1 STR_VAR icon="SPPR105C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~DRAGON~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~CLASS~ ~NEOTHELID~) parameter2=5 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIST~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~SHADOW~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~SPECTRAL_UNDEAD~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~SPECTRE~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~WILL-O-WISP~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~WRAITH~) parameter2=4 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~CLASS~ ~SPECTRAL_TROLL~) parameter2=5 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~CLASS~ ~SPIDER_WRAITH~) parameter2=5 duration=6 probability1=100 STR_VAR resource="RR#FENTG" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=126 target=2 power=1 parameter1=50 parameter2=2 resist_dispel=1 duration=6 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=126 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=278 target=2 power=1 parameter1="-2" resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=0 target=2 power=1 parameter1="-2" resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 resist_dispel=1 duration=1 probability1=100 savingthrow=1 STR_VAR resource="CRE_P01" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=4 resist_dispel=1 duration=6 probability1=100 savingthrow=1 STR_VAR resource="EFF_M22A" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=154 target=2 power=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=144 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-	LPF CHANGE_SPELL INT_VAR    renew=3 END
-	
-	// Animal Friendship
-CREATE EFF "rr#fafrn"
-	WRITE_LONG 0x10 206
-	WRITE_LONG 0x24 1
-	WRITE_ASCII 0x30 ~rr#fafrn~ #8
-
-CREATE SPL "rr#fafrn"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~rr#fafrn.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10164)
-	WRITE_ASCII 0x10 ~CORAN03~ #8
-	WRITE_LONG 0x18 33554432
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x25 4
-	WRITE_BYTE 0x27 11
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPPR204C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10165)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 STR_VAR icon="SPPR204C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fafrn" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fafrn" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~general~ ~ANIMAL~) parameter2=113 resist_dispel=1 duration=120 probability1=100 savingthrow=1 STR_VAR resource="rr#fafrn" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~ANIMAL~) resist_dispel=1 duration=120 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=509245440 parameter2=1638400 resist_dispel=1 duration=1 probability1=100 savingthrow=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 STR_VAR resource="SPNWCHRM" END
-	LPF CHANGE_SPELL INT_VAR    renew=1 END
-	
-	// Detect snares and pits
-CREATE SPL "rr#fdsnr"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~rr#fdsnr.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10166)
-	WRITE_ASCII 0x10 ~CAS_P04~ #8
-	WRITE_LONG 0x18 8192
-	WRITE_SHORT 0x1c 4
-	WRITE_SHORT 0x22 16
-	WRITE_BYTE 0x25 3
-	WRITE_BYTE 0x27 13
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPPR205C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10167)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~INAREANS~)) + 1 STR_VAR icon="SPPR205C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=150 target=1 power=1 duration=96 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=1 power=1 parameter2=109 duration=96 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=30 timing=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=1226851840 parameter2=1310720 duration=2 probability1=100 END
-	LPF CHANGE_SPELL INT_VAR    renew=16 END
-	
-	// Hamadryad traits
+// Hamadryad traits
 CREATE ITM "ja#1m42"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10372)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10372)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10323)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10323)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10373)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10324)
 COPY_EXISTING ~ja#1m42.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -138,12 +43,12 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			ADD_CRE_ITEM ~ja#1m42~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
-			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~RR#FENTG~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#fafrn~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#fdsnr~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1f8~ #0 ~innate~ (1) // Dimension Door
+			ADD_MEMORIZED_SPELL ~ja#4f8~ #0 ~innate~ (1) // Speak With Plants
+			ADD_MEMORIZED_SPELL ~ja#5f8~ #0 ~innate~ (1) // Entangle
+			ADD_MEMORIZED_SPELL ~ja#3f8~ #0 ~innate~ (3) // Dryad Dire Charm
+			ADD_MEMORIZED_SPELL ~ja#6f8~ #0 ~innate~ (1) // Animal Friendship
+			ADD_MEMORIZED_SPELL ~ja#7f8~ #0 ~innate~ (1) // Detect snares and pits
 			LPF clear_proficiencies END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=189 END
 			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END

@@ -396,8 +396,8 @@ class CreatureFactory {
     creatureService.check(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);
-    descriptionService.generateCreatureSpells(creature);
-    descriptionService.generateCreatureItems(creature);
+    descriptionService.generateCreatureSpells(creature.spells);
+    descriptionService.generateCreatureItems(creature.items);
   }
 }
 

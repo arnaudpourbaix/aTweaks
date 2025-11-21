@@ -65,6 +65,7 @@ THEN
 		Enemy()
 END
 
+// Cloakwood Hamadryad
 IF
 	Global("rr#chama","MYAREA",1)
 	Global("rr#hamat","LOCALS",0)
@@ -184,7 +185,7 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("rr#ddoor")
+	HaveSpellRES("ja#1f8")
 	OR(2)
 		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
@@ -193,7 +194,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
-		ForceSpellRES("rr#ddoor","RR#TRAT")
+		ForceSpellRES("ja#1f8","RR#TRAT")
 		Wait(1)
 		SetInterrupt(TRUE)
 END
@@ -203,13 +204,13 @@ IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!GlobalTimerNotExpired("speakWithPlants","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("rr#fspkp")
+	HaveSpellRES("ja#4f8")
 	CheckStatGT(Myself,0,ENTANGLE)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fspkp",LastSeenBy(Myself))
+		ForceSpellRES("ja#4f8",LastSeenBy(Myself))
 		SetGlobalTimer("speakWithPlants","LOCALS",60)
 		SetInterrupt(TRUE)
 END
@@ -218,7 +219,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(NearestEnemyOf(Myself),0,ENTANGLE)
@@ -250,14 +251,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(SecondNearestEnemyOf(Myself),0,ENTANGLE)
@@ -289,14 +290,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(ThirdNearestEnemyOf(Myself),0,ENTANGLE)
@@ -328,14 +329,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(FourthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -367,14 +368,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(FifthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -406,14 +407,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(SixthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -445,14 +446,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(SeventhNearestEnemyOf(Myself),0,ENTANGLE)
@@ -484,14 +485,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(EighthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -523,14 +524,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(NinthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -562,14 +563,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("RR#FENTG")
+	HaveSpellRES("ja#5f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	CheckStat(TenthNearestEnemyOf(Myself),0,ENTANGLE)
@@ -601,7 +602,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("RR#FENTG",LastSeenBy(Myself))
+		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -609,7 +610,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -642,15 +643,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -683,15 +684,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -724,15 +725,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -765,15 +766,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -806,15 +807,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -847,15 +848,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -888,15 +889,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -929,15 +930,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -970,8 +971,8 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
@@ -979,7 +980,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC],ELF)
@@ -1012,15 +1013,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC]),ELF)
@@ -1053,15 +1054,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC]),ELF)
@@ -1094,15 +1095,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FourthNearest([PC]),ELF)
@@ -1135,15 +1136,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(FifthNearest([PC]),ELF)
@@ -1176,15 +1177,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SixthNearest([PC]),ELF)
@@ -1217,8 +1218,8 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
@@ -1226,7 +1227,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.FIGHTER_ALL],ELF)
@@ -1258,15 +1259,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -1298,15 +1299,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.FIGHTER_ALL]),ELF)
@@ -1338,15 +1339,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.RANGER_ALL],ELF)
@@ -1378,15 +1379,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -1418,15 +1419,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.RANGER_ALL]),ELF)
@@ -1458,15 +1459,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race([PC.0.0.PALADIN_ALL],ELF)
@@ -1498,15 +1499,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(SecondNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -1538,15 +1539,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Race(ThirdNearest([PC.0.0.PALADIN_ALL]),ELF)
@@ -1578,8 +1579,8 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
@@ -1587,7 +1588,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC],0,HELD)
@@ -1606,15 +1607,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
@@ -1633,15 +1634,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
@@ -1660,15 +1661,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
@@ -1687,15 +1688,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
@@ -1714,15 +1715,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
@@ -1741,15 +1742,15 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fchrm",LastSeenBy(Myself))
-		RemoveSpellRES("rr#fchrm")
+		ForceSpellRES("ja#3f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#3f8")
 		SetInterrupt(TRUE)
 END
 
 // Animal Friendship
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -1761,13 +1762,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -1779,13 +1780,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -1797,13 +1798,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([NEUTRAL.ANIMAL],WEAPON)
@@ -1815,13 +1816,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearest([NEUTRAL.ANIMAL]),WEAPON)
@@ -1833,13 +1834,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("rr#fafrn")
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(802,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearest([NEUTRAL.ANIMAL]),WEAPON)
@@ -1851,7 +1852,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1859,13 +1860,13 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("rr#fdsnr")
+	HaveSpellRES("ja#7f8")
 	RandomNumGT(803,241)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fdsnr",LastSeenBy(Myself))
+		ForceSpellRES("ja#7f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -1885,7 +1886,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player1,STATE_INVISIBLE)
 	!CheckStatGT(Player1,0,SANCTUARY)
@@ -1902,7 +1903,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player2,STATE_INVISIBLE)
 	!CheckStatGT(Player2,0,SANCTUARY)
@@ -1919,7 +1920,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player3,STATE_INVISIBLE)
 	!CheckStatGT(Player3,0,SANCTUARY)
@@ -1936,7 +1937,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player4,STATE_INVISIBLE)
 	!CheckStatGT(Player4,0,SANCTUARY)
@@ -1953,7 +1954,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player5,STATE_INVISIBLE)
 	!CheckStatGT(Player5,0,SANCTUARY)
@@ -1970,7 +1971,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player6,STATE_INVISIBLE)
 	!CheckStatGT(Player6,0,SANCTUARY)
@@ -1988,7 +1989,7 @@ IF
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
-	HaveSpellRES("rr#fchrm")
+	HaveSpellRES("ja#3f8")
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)

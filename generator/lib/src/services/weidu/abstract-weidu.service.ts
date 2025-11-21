@@ -1,10 +1,7 @@
-import * as fs from "fs";
 import { StringReference } from "../../model/final/stringref";
 import { CodeLine } from "../../model/misc";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import utils from "../utils/utils.service";
-import path from "path";
-import { State } from "../../state";
 
 export class AbstractWeiduService {
   protected initLines() {
@@ -166,14 +163,5 @@ export class AbstractWeiduService {
     if (size === 1) return "WRITE_BYTE";
     else if (size === 2) return "WRITE_SHORT";
     else return "WRITE_LONG";
-  }
-
-  writeFile(file: string, content: string) {
-    const folder = path.join(
-      State.modFolder,
-      file.substring(0, file.lastIndexOf("/"))
-    );
-    if (!fs.existsSync(folder)) fs.mkdirSync(folder, { recursive: true });
-    fs.writeFileSync(path.join(State.modFolder, file), content);
   }
 }

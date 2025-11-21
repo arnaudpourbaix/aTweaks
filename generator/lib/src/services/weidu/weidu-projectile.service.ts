@@ -1,4 +1,3 @@
-import { Creature } from "../../model/creature/creature";
 import { CodeLine } from "../../model/misc";
 import {
   Projectile,
@@ -7,8 +6,8 @@ import {
 import { AbstractWeiduService } from "./abstract-weidu.service";
 
 class WeiduProjectileService extends AbstractWeiduService {
-  createProjectiles(lines: CodeLine[], creature: Creature) {
-    for (const projectile of creature.projectiles) {
+  createProjectiles(lines: CodeLine[], projectiles: Projectile[]) {
+    for (const projectile of projectiles) {
       this.createProjectile(lines, projectile);
     }
   }

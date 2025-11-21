@@ -1,20 +1,35 @@
 import figureSet from "figures";
-import { creatureFactories } from "../../creatures";
+import { familyFactories } from "../../creatures";
 import { MonsterFamilyEnum } from "../../creatures/monster";
+import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
 import documentationService from "./documentation.service";
 import translationService from "./translation.service";
 import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
-import { Creature } from "../model/creature/creature";
+import weiduFamilyService from "./weidu/weidu-family.service";
+import { State } from "../state";
+import descriptionService from "./description.service";
 
 class MainService {
   generateCreatures() {
     const families: MonsterFamilyEnum[] = [];
-    for (const factory of creatureFactories) {
-      const creatures = factory();
-      for (const creature of creatures) {
+    for (const factory of familyFactories) {
+      const family = factory();
+      State.spells.push(...family.spells);
+      State.items.push(...family.items);
+      descriptionService.generateCreatureSpells(family.spells);
+      descriptionService.generateCreatureItems(family.items);
+      if (families.includes(family.name)) {
+        throw new Error(
+          `Family '${MonsterFamilyEnum[family.name]}' already declared`
+        );
+      }
+      families.push(family.name);
+      weiduFamilyService.createOrUpdateMainFile(family.name);
+      weiduFamilyService.generateFamilyData(family);
+      for (const creature of family.creatures) {
         this.generateCreature(creature, families);
       }
     }
@@ -23,12 +38,10 @@ class MainService {
 
   generateCreature(creature: Creature, families: MonsterFamilyEnum[]) {
     if (!this.isCreatureValid(creature)) return;
-    if (!families.includes(creature.family)) {
-      families.push(creature.family);
-      weiduCreatureService.createOrUpdateMainFile(creature.family);
-    }
     bafGeneratorService.generate(creature);
     weiduCreatureService.generateWeiduScript(creature);
+    State.spells.push(...creature.spells);
+    State.items.push(...creature.items);
     documentationService.addCreature(creature);
   }
 

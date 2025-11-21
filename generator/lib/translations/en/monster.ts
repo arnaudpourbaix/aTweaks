@@ -117,6 +117,16 @@ The caster can question plants as to whether or not creatures have passed throug
         name: "Detect snares and pits",
         description: `When cast, all traps concealed -normally or magically- of magical or mechanical nature become apparent for 16 rounds.`,
       },
+      blindingBeauty: {
+        name: "Blinding Beauty",
+        description: `Looking at a nymph will cause permanent blindness unless the onlookers save versus spell.
+If the nymph is nude or disrobes, an onlooker will die unless a saving throw versus spell is successful.`,
+      },
+      charmSong: {
+        name: "Charm Song",
+        description: `The charm ability is used through the sirine's song, and all people within 30 feet are subject to it, even if they are hostile or attacking.
+Each victim can save vs spell to negate or be charmed for 3 turns.`,
+      },
     },
   },
   spider: {

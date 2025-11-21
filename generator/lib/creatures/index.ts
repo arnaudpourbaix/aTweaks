@@ -1,29 +1,24 @@
-import { Creature } from "../src/model/creature/creature";
-import { createAnkheg } from "./ankheg/ankheg";
-import { createBasilisks } from "./basilisks/basilisk";
-import { createBears } from "./bears/bear";
-import { createCats } from "./cats/cats";
-import { createConstructs } from "./constructs/constructs";
-import { createCarrionCrawler } from "./crawler/crawler";
-import { createDogs } from "./dogs/dog";
+import { CreatureFamily } from "../src/model/creature/family";
 import { createFeys } from "./feys/feys";
 
-export const creatureFactories: (() => Creature[])[] = [
-  createAnkheg,
-  createBasilisks,
-  createBears,
-  createCarrionCrawler,
-  createCats,
-  createConstructs,
-  createDogs,
-  createFeys,
-  // ...Golems,
-  // ...Ogres,
-  // ...Plants,
-  // ...Slimes,
-  // ...Spiders,
-  // ...Wolves,
-];
+// export const creatureFactories: (() => Creature[])[] = [
+//   createAnkheg,
+//   createBasilisks,
+//   createBears,
+//   createCarrionCrawler,
+//   createCats,
+//   createConstructs,
+//   createDogs,
+//   createFeys,
+//   // ...Golems,
+//   // ...Ogres,
+//   // ...Plants,
+//   // ...Slimes,
+//   // ...Spiders,
+//   // ...Wolves,
+// ];
+
+export const familyFactories: (() => CreatureFamily)[] = [createFeys];
 
 /*
 "SHOAL", // Shoal the Nereid

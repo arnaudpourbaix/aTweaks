@@ -18,7 +18,7 @@ import effectService from "./effects/effect.service";
 
 class SpellService {
   getSpell(spell: PartialSpell, file: string): Spell {
-    const { headers, ...others } = spell;
+    const { headers, effectFiles, ...others } = spell;
     const result: Spell = {
       file,
       doc: spell.doc ?? true,
@@ -28,6 +28,12 @@ class SpellService {
       projectiles: [],
       ...others,
     };
+    for (const effectFile of spell.effectFiles ?? []) {
+      result.effectFiles.push({
+        ...effectService.getEffect(effectFile),
+        file: effectFile.file ?? file,
+      });
+    }
     for (const header of spell.headers ?? []) {
       this.addHeader(header, result, file);
     }
@@ -115,7 +121,7 @@ class SpellService {
       console.log(`adding effect file ${spell.file} for spell ${spell.name}`);
       spell.effectFiles.push({
         file: spell.file,
-        ...effect,
+        ...effectService.getEffect(effect),
       });
     }
   }
@@ -138,6 +144,7 @@ class SpellService {
     for (const effect of results) {
       if (
         [
+          EffectTypeEnum.ProtectionFromResourceAndMessage,
           EffectTypeEnum.ProtectionFromSpell,
           EffectTypeEnum.UseEFFFile,
         ].includes(effect.opcode) &&

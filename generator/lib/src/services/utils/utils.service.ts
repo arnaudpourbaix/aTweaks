@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { TranslationKey } from "../../../translations/i18n";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
@@ -11,6 +12,8 @@ import { SpellTypeEnum } from "../../model/spell-item/effect.enums";
 import { MemorizedSpellType, Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import translationService from "./../translation.service";
+import { MonsterFamilyEnum } from "../../../creatures/monster";
+import path from "path";
 
 class UtilsService {
   objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
@@ -171,6 +174,18 @@ class UtilsService {
       name: file.substring(0, file.indexOf(".")),
       ext: file.substring(file.indexOf(".") + 1),
     };
+  }
+
+  writeFile(file: string, content: string) {
+    let index = file.lastIndexOf("/");
+    if (index === -1) index = file.lastIndexOf("\\");
+    const folder = path.join(State.modFolder, file.substring(0, index));
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(State.modFolder, file), content);
+  }
+
+  getFamilyFolder(family: MonsterFamilyEnum): string {
+    return `lib/pnp-monster/${MonsterFamilyEnum[family].toLowerCase()}`;
   }
 
   getIdsFileFromSpellProtectionStat(stat: SpellProtectionStat): string {

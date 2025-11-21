@@ -9,8 +9,8 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 
 class WeiduItemService extends AbstractWeiduService {
-  createItems(lines: CodeLine[], creature: Creature) {
-    for (const item of creature.items) {
+  createItems(lines: CodeLine[], items: Item[]) {
+    for (const item of items) {
       this.createItem(lines, item);
       this.add(lines, "", 0);
     }

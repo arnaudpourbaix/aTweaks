@@ -6,6 +6,42 @@ THEN
 		DestroySelf()
 END
 
+// Initiate dialog
+IF
+	Global("JA#DIALOG","LOCALS",0)
+	Name("VAELASA",Myself)
+	NumTimesTalkedTo(0)
+	See([PC])
+THEN
+	RESPONSE #100
+		SetGlobal("JA#DIALOG","LOCALS",1)
+		FaceObject([PC])
+		StartDialogueNoSet([PC])
+END
+
+// Can use dimension door and detect traps
+IF
+	Global("ja#wilderness","LOCALS",0)
+	AreaType(OUTDOOR)
+	!AreaType(CITY)
+	!AreaType(DUNGEON)
+THEN
+	RESPONSE #100
+		SetGlobal("ja#wilderness","LOCALS",1)
+END
+
+IF
+	Global("ja#wilderness","LOCALS",0)
+	OR(2)
+		HaveSpellRES("rr#ddoor")
+		HaveSpellRES("rr#fdsnr")
+THEN
+	RESPONSE #100
+		RemoveSpellRES("rr#ddoor")
+		RemoveSpellRES("rr#fdsnr")
+		SetGlobal("ja#wilderness","LOCALS",2)
+END
+
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)
@@ -59,6 +95,7 @@ END
 
 // Summon follow summoner
 IF
+	ActionListEmpty()
 	Global("JA#COMBAT","LOCALS",0)
 	!StateCheck(Myself,STATE_BLIND)
 	ActionListEmpty()
@@ -73,6 +110,7 @@ END
 
 // Do nothing if...
 IF
+	ActionListEmpty()
 	OR(4)
 		Global("JA#COMBAT","LOCALS",0)
 		!Allegiance(Myself,EVILCUTOFF)
@@ -84,6 +122,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!InActiveArea(Myself)
 	!Range(NearestEnemyOf(Myself),30)
 THEN
@@ -107,9 +146,11 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Blinding Beauty
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(NearestEnemyOf(Myself),STATE_BLIND)
 	General(NearestEnemyOf(Myself),HUMANOID)
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -124,13 +165,14 @@ IF
 	See(NearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_BLIND)
 	General(SecondNearestEnemyOf(Myself),HUMANOID)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -145,13 +187,14 @@ IF
 	See(SecondNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_BLIND)
 	General(ThirdNearestEnemyOf(Myself),HUMANOID)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -166,13 +209,14 @@ IF
 	See(ThirdNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_BLIND)
 	General(FourthNearestEnemyOf(Myself),HUMANOID)
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
@@ -187,13 +231,14 @@ IF
 	See(FourthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_BLIND)
 	General(FifthNearestEnemyOf(Myself),HUMANOID)
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
@@ -208,13 +253,14 @@ IF
 	See(FifthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_BLIND)
 	General(SixthNearestEnemyOf(Myself),HUMANOID)
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
@@ -229,13 +275,14 @@ IF
 	See(SixthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_BLIND)
 	General(SeventhNearestEnemyOf(Myself),HUMANOID)
 	!General(SeventhNearestEnemyOf(Myself),WEAPON)
@@ -250,13 +297,14 @@ IF
 	See(SeventhNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_BLIND)
 	General(EighthNearestEnemyOf(Myself),HUMANOID)
 	!General(EighthNearestEnemyOf(Myself),WEAPON)
@@ -271,13 +319,14 @@ IF
 	See(EighthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_BLIND)
 	General(NinthNearestEnemyOf(Myself),HUMANOID)
 	!General(NinthNearestEnemyOf(Myself),WEAPON)
@@ -292,13 +341,14 @@ IF
 	See(NinthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 IF
-	!GlobalTimerNotExpired("BlindingBeauty","LOCALS")
-	HaveSpellRES("rr#fbbea")
+	!GlobalTimerNotExpired("blindingBeauty","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#9f8")
 	!StateCheck(TenthNearestEnemyOf(Myself),STATE_BLIND)
 	General(TenthNearestEnemyOf(Myself),HUMANOID)
 	!General(TenthNearestEnemyOf(Myself),WEAPON)
@@ -313,24 +363,25 @@ IF
 	See(TenthNearestEnemyOf(Myself))
 THEN
 	RESPONSE #100
-		SetGlobalTimer("BlindingBeauty","LOCALS",6)
-		ReallyForceSpellRES("rr#fbbea",Myself)
+		SetGlobalTimer("blindingBeauty","LOCALS",6)
+		ReallyForceSpellRES("ja#9f8",Myself)
 END
 
 // Dimension Door
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpellRES("rr#ddoo2")
+	ActionListEmpty()
+	HaveSpellRES("ja#2f8")
 	OR(2)
-		Range(NearestEnemyOf(Myself),10)
+		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
-		ForceSpellRES("rr#ddoo2","RR#TRAT")
-		RemoveSpellRES("rr#ddoo2")
+		ForceSpellRES("ja#2f8","RR#TRAT")
+		RemoveSpellRES("ja#2f8")
 		Wait(1)
 		SetInterrupt(TRUE)
 END
@@ -339,6 +390,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_WOODLAND_BEINGS)
 	AreaType(OUTDOOR)
 	RandomNumGT(800,240)
@@ -353,8 +405,9 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
 	HaveSpell(CLERIC_BLESS)
-	RandomNumGT(801,241)
+	RandomNumGT(801,240)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -366,6 +419,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
 	HaveSpell(CLERIC_BARKSKIN)
 	RandomNumGT(802,241)
 THEN
@@ -375,9 +429,10 @@ THEN
 		RemoveSpell(CLERIC_BARKSKIN)
 END
 
-// Call lightning
+// Call Lightning
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -402,6 +457,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -426,6 +482,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -450,6 +507,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -474,6 +532,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -498,6 +557,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -522,6 +582,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -546,6 +607,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -570,6 +632,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -594,6 +657,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CALL_LIGHTNING)
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -615,11 +679,12 @@ THEN
 		RemoveSpell(CLERIC_CALL_LIGHTNING)
 END
 
-// Summon insects
+// Summon Insects
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_SUMMON_INSECTS)
-	RandomNumGT(804,242)
+	RandomNumGT(804,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,HELD)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_STUNNED)
@@ -643,8 +708,9 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_SUMMON_INSECTS)
-	RandomNumGT(804,242)
+	RandomNumGT(804,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,HELD)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_STUNNED)
@@ -668,8 +734,9 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_SUMMON_INSECTS)
-	RandomNumGT(804,242)
+	RandomNumGT(804,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,HELD)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_STUNNED)
@@ -693,8 +760,9 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_SUMMON_INSECTS)
-	RandomNumGT(804,242)
+	RandomNumGT(804,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC.0.0.BARD],0,HELD)
 	!StateCheck([PC.0.0.BARD],STATE_STUNNED)
@@ -718,6 +786,7 @@ END
 // Entangle
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -755,6 +824,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -792,6 +862,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -829,6 +900,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -866,6 +938,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -903,6 +976,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -940,6 +1014,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -977,6 +1052,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1014,6 +1090,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1051,6 +1128,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_ENTANGLE)
 	RandomNumGT(805,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1089,6 +1167,7 @@ END
 // Charm Person or Animal
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1127,6 +1206,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1165,6 +1245,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1203,6 +1284,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1241,6 +1323,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1279,6 +1362,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1317,6 +1401,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1355,6 +1440,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1393,6 +1479,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1432,6 +1519,7 @@ END
 // Charm Person or Animal
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1470,6 +1558,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1508,6 +1597,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1546,6 +1636,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1584,6 +1675,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1622,6 +1714,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1661,6 +1754,7 @@ END
 // Charm Person or Animal
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1698,6 +1792,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1735,6 +1830,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1772,6 +1868,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1809,6 +1906,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1846,6 +1944,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1883,6 +1982,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1920,6 +2020,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1957,6 +2058,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1995,6 +2097,7 @@ END
 // Charm Person or Animal
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2019,6 +2122,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2043,6 +2147,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2067,6 +2172,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2091,6 +2197,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2115,6 +2222,7 @@ END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
+	ActionListEmpty()
 	HaveSpell(CLERIC_CHARM_PERSON)
 	RandomNumGT(806,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -2139,7 +2247,8 @@ END
 
 // Animal Friendship
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -2151,12 +2260,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -2168,12 +2278,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOfType([0.ANIMAL]),WEAPON)
@@ -2185,12 +2296,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General([NEUTRAL.ANIMAL],WEAPON)
@@ -2202,12 +2314,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearest([NEUTRAL.ANIMAL]),WEAPON)
@@ -2219,12 +2332,13 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
 IF
-	HaveSpellRES("rr#fafrn")
+	ActionListEmpty()
+	HaveSpellRES("ja#6f8")
 	RandomNumGT(807,242)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearest([NEUTRAL.ANIMAL]),WEAPON)
@@ -2236,7 +2350,7 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("rr#fafrn",LastSeenBy(Myself))
+		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 
@@ -2244,9 +2358,10 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
 	HaveSpell(CLERIC_CURE_LIGHT_WOUNDS)
 	HPPercentLT(Myself,75)
-	RandomNumGT(808,243)
+	RandomNumGT(808,242)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2256,6 +2371,7 @@ END
 
 // Run away from enemies
 IF
+	ActionListEmpty()
 	Range(NearestEnemyOf(Myself),20)
 THEN
 	RESPONSE #100
@@ -2265,13 +2381,10 @@ END
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player1,STATE_INVISIBLE)
 	!CheckStatGT(Player1,0,SANCTUARY)
@@ -2284,13 +2397,10 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player2,STATE_INVISIBLE)
 	!CheckStatGT(Player2,0,SANCTUARY)
@@ -2303,13 +2413,10 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player3,STATE_INVISIBLE)
 	!CheckStatGT(Player3,0,SANCTUARY)
@@ -2322,13 +2429,10 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player4,STATE_INVISIBLE)
 	!CheckStatGT(Player4,0,SANCTUARY)
@@ -2341,13 +2445,10 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player5,STATE_INVISIBLE)
 	!CheckStatGT(Player5,0,SANCTUARY)
@@ -2360,13 +2461,10 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(Player6,STATE_INVISIBLE)
 	!CheckStatGT(Player6,0,SANCTUARY)
@@ -2380,13 +2478,10 @@ END
 // Track last seen enemy if allegiance is GOODCUTOFF
 IF
 	Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
-	OR(3)
-		HaveSpellRES("SPPR302")
-		HaveSpellRES("SPPR204")
-		HaveSpellRES("SPPR319")
 	!General(LastSeenBy(Myself),WEAPON)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
@@ -2410,24 +2505,5 @@ THEN
 	RESPONSE #100
 		MoveToObject(NearestDoor)
 		OpenDoor(NearestDoor)
-END
-
-// Random walking (in combat) 
-IF
-	Global("JA#COMBAT","LOCALS",1)
-	ActionListEmpty()
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		RandomWalk()
-		Wait(2)
-END
-
-// Random facing
-IF
-	!Range(NearestEnemyOf(Myself),30)
-THEN
-	RESPONSE #100
-		RandomTurn()
 END
 

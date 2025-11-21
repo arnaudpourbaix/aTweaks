@@ -1,7 +1,4 @@
-import * as fs from "fs";
-import path from "path";
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { CreatureAdditionalData } from "../../model/creature/additional-data";
 import {
@@ -16,58 +13,35 @@ import { CodeLine } from "../../model/misc";
 import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
+import documentationService from "../documentation.service";
 import itemService from "../item.service";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
+import weiduFamilyService from "./weidu-family.service";
 import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
 
 class WeiduCreatureService extends AbstractWeiduService {
-  createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
-    const file = path.join(
-      State.modFolder,
-      `lib/pnp-monster/${family}/main.tpa`
-    );
-    if (!creature) {
-      let content = "";
-      const commonFile = path.join(
-        State.modFolder,
-        `lib/pnp-monster/${family}/common.tpa`
-      );
-      if (fs.existsSync(commonFile)) {
-        content = `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/common.tpa"${CR}`;
-      }
-      fs.writeFileSync(file, content);
-    } else {
-      fs.appendFileSync(
-        file,
-        `INCLUDE "%MOD_FOLDER%/lib/pnp-monster/${family}/${
-          creature.monster
-        }.tpa" // ${translationService.from(creature.name)}${CR}`
-      );
-    }
-  }
-
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
     this.add(lines, `// ${translationService.from(creature.name)}`);
     if (creature.additionalData.scriptLocation !== "None")
       this.compileScripts(lines, creature);
-    weiduProjectileService.createProjectiles(lines, creature);
+    weiduProjectileService.createProjectiles(lines, creature.projectiles);
     weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     weiduSpellService.createSpells(lines, creature.spells);
-    weiduItemService.createItems(lines, creature);
+    weiduItemService.createItems(lines, creature.items);
     this.createNewFiles(lines, 0, creature);
     this.patchCreatures(lines, 0, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
-    this.writeFile(
-      `lib/pnp-monster/${creature.family}/${creature.monster}.tpa`,
+    utils.writeFile(
+      `${utils.getFamilyFolder(creature.family)}/${creature.monster}.tpa`,
       content
     );
-    this.createOrUpdateMainFile(creature.family, creature);
+    weiduFamilyService.createOrUpdateMainFile(creature.family, creature);
   }
 
   private compileScripts(lines: CodeLine[], creature: Creature) {
@@ -95,7 +69,9 @@ class WeiduCreatureService extends AbstractWeiduService {
       for (const file of entry.files) {
         const copy = entry.copyFromExisting
           ? `COPY_EXISTING ~${entry.copyFromExisting}.cre~`
-          : `COPY ~%MOD_FOLDER%/lib/pnp-monster/${creature.family}/${entry.copyFrom}.cre~`;
+          : `COPY ~%MOD_FOLDER%/${utils.getFamilyFolder(creature.family)}/${
+              entry.copyFrom
+            }.cre~`;
         this.add(lines, `${copy} ~override/${file}.cre~`, tab);
         if (entry.stringRef) {
           for (const offset of ["0x8", "0xc"])
@@ -312,7 +288,9 @@ class WeiduCreatureService extends AbstractWeiduService {
     for (const m of additionalData.memorizedSpells) {
       const infos = utils.getSpellInfos(m.file, spells);
       const level = infos.level - 1;
-      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${level} ~${infos.type}~ (${m.memorizedCount})`;
+      const spell = State.spells.find((s) => s.file === m.file);
+      const comment = spell ? `// ${translationService.from(spell.name)}` : "";
+      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${level} ~${infos.type}~ (${m.memorizedCount}) ${comment}`;
       if (m.memorizedCount === 0) code = `REMOVE_MEMORIZED_SPELL ~${m.file}~`;
       this.add(lines, code, tab);
     }
@@ -630,7 +608,9 @@ class WeiduCreatureService extends AbstractWeiduService {
     creature: Creature,
     options: { withPath?: boolean; summon?: boolean; ext?: boolean }
   ) {
-    const path = options.withPath ? `lib/pnp-monster/${creature.family}/` : "";
+    const path = options.withPath
+      ? `${utils.getFamilyFolder(creature.family)}/`
+      : "";
     const ext = options.ext === true ? ".baf" : "";
     const name = `ja#m${creature.monster}${options.summon ? "su" : ""}${ext}`;
     return `${path}${name}`;

@@ -4,7 +4,7 @@ import { ItemSlot } from "../creature/item";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { PartialBy, WithRequired } from "../utility-types";
-import { Effect, EffectFile } from "./effect";
+import { Effect, EffectFile, PartialEffectFile } from "./effect";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityCastingAnimationEnum,
@@ -151,9 +151,9 @@ export type MemorizedSpellType = "priest" | "wizard" | "innate";
 export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
-  Omit<Spell, "file" | "headers">,
-  "icon" | "effects" | "effectFiles" | "projectiles" | "doc"
-> & { headers?: PartialSpellHeader[] };
+  Omit<Spell, "file" | "headers" | "effectFiles">,
+  "icon" | "effects" | "projectiles" | "doc"
+> & { headers?: PartialSpellHeader[]; effectFiles?: PartialEffectFile[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
 

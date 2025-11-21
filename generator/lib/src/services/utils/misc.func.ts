@@ -4,8 +4,12 @@ export function convertMovement(movement: number): number {
   return result;
 }
 
-export function getFilename(num: number, creatureId: number): string {
-  return `ja#${num}m${creatureId}`;
+export function getFilename(
+  num: number,
+  creatureId: number,
+  type: "f" | "m" = "m"
+): string {
+  return `ja#${num}${type}${creatureId}`;
 }
 
 export function bafFile(creatureId: number): string {

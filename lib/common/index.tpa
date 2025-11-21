@@ -15,6 +15,3 @@ INCLUDE "%MOD_FOLDER%/lib/common/spell-functions.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/immunities.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/patch_creature.tph"
 INCLUDE "%MOD_FOLDER%/lib/common/patch_creature_script.tph"
-
-// FJ_CRE_REINDEX -> FL#FJ_CRE_REINDEX OR FJ_CRE_REINDEX
-// FJ_CRE_VALIDITY -> FL#FJ_CRE_VALIDITY OR FJ_CRE_VALIDITY

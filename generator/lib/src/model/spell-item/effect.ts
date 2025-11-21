@@ -570,3 +570,5 @@ export type Effect =
   | WingBuffetEffect;
 
 export type EffectFile = Effect & { file: string };
+
+export type PartialEffectFile = Effect & { file?: string };

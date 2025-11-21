@@ -1,23 +1,18 @@
 import * as fs from "fs";
 import path from "path";
+import { GLOBAL_CONFIG } from "../../config/generate";
+import { CreatureAbility } from "../model/creature/ability";
 import { Creature } from "../model/creature/creature";
 import { ImmunityConfig } from "../model/final/immunity";
+import { Actions } from "../model/script/actions";
+import { Item, Spell } from "../model/spell-item/spell-item";
 import { State } from "../state";
+import creatureService from "./creature.service";
 import itemService from "./item.service";
 import translationService from "./translation.service";
-import creatureService from "./creature.service";
-import { Item, Spell } from "../model/spell-item/spell-item";
-import { CreatureAbility } from "../model/creature/ability";
-import { SPELLS } from "../../config/spell-names";
-import utils from "./utils/utils.service";
-import { GLOBAL_CONFIG } from "../../config/generate";
-import { Triggers } from "../model/script/triggers";
-import { Actions } from "../model/script/actions";
 
 class DocumentationService {
   private monsters: string[] = [];
-  private spells: Spell[] = [];
-  private items: Item[] = [];
 
   generate() {
     let content = fs.readFileSync("lib/templates/index.html").toString();
@@ -34,8 +29,6 @@ class DocumentationService {
     console.log(
       `Generating documentation for ${translationService.from(creature.name)}`
     );
-    this.spells.push(...creature.spells);
-    this.items.push(...creature.items);
     let content = fs.readFileSync("lib/templates/monster.html").toString();
     let template = { text: content };
     let str = `${creature.data.strength}`;
@@ -72,7 +65,7 @@ class DocumentationService {
     let attacks = "";
     for (const equippedItem of creature.additionalData.equippedItems) {
       if (itemService.isEquippedWeapon(equippedItem)) {
-        const weapon = this.items.find((i) => i.file === equippedItem.file);
+        const weapon = State.items.find((i) => i.file === equippedItem.file);
         if (weapon && weapon.doc) {
           attacks += `<div class="weapon">${translationService.from(
             weapon.description!
@@ -98,7 +91,7 @@ class DocumentationService {
     }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
     for (const equippedItem of creature.additionalData.equippedItems) {
-      const item = this.items.find((i) => i.file === equippedItem.file);
+      const item = State.items.find((i) => i.file === equippedItem.file);
       if (item?.trait) {
         const desc = translationService.from(item.description!);
         result += `<div>${desc}</div>`;
@@ -131,7 +124,7 @@ class DocumentationService {
     const memorized = creature.additionalData.memorizedSpells.find(
       (m) => m.file === ability.resource
     );
-    const spell = this.spells.find((s) => s.file === ability.resource);
+    const spell = State.spells.find((s) => s.file === ability.resource);
     let result = "";
     if (spell && spell.doc && memorized) {
       const title = `<h5>${translationService.from(

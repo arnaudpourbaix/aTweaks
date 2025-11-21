@@ -17,6 +17,7 @@ import { SPECIFIC_IDENTIFIERS } from "../../model/ids/specific";
 import { GENDER_IDENTIFIER } from "../../model/ids/gender";
 import { ALIGN_IDENTIFIERS } from "../../model/ids/align";
 import translationService from "../translation.service";
+import utils from "../utils/utils.service";
 
 class BafGeneratorService {
   generate(creature: Creature): void {
@@ -29,11 +30,8 @@ class BafGeneratorService {
     const content = `// ${translationService.from(
       creature.name
     )}${CR}${CR}${code}`;
-    const folder = `lib/pnp-monster/${creature.family}/`;
-    fs.writeFileSync(
-      path.join(State.modFolder, folder, `ja#m${creature.monster}.baf`),
-      content
-    );
+    const folder = utils.getFamilyFolder(creature.family);
+    utils.writeFile(path.join(folder, `ja#m${creature.monster}.baf`), content);
     if (creature.adjustments.some((a) => !!a.summon)) {
       const statements: Statements = statementService.buildStatements(
         creature,
@@ -42,8 +40,8 @@ class BafGeneratorService {
       const content = statements
         .map((statement) => this.generateStatement(statement))
         .join("");
-      fs.writeFileSync(
-        path.join(State.modFolder, folder, `ja#m${creature.monster}su.baf`),
+      utils.writeFile(
+        path.join(folder, `ja#m${creature.monster}su.baf`),
         content
       );
     }

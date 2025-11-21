@@ -4,84 +4,14 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m41su.baf~
 
-// Dimension Door
-CREATE SPL "rr#ddoor"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~rr#ddoor.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10179)
-	WRITE_ASCII 0x10 ~CAS_M08~ #8
-	WRITE_LONG 0x18 2048
-	WRITE_SHORT 0x1c 4
-	WRITE_LONG 0x1e 64
-	WRITE_SHORT 0x22 10
-	WRITE_BYTE 0x25 8
-	WRITE_BYTE 0x27 13
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI402C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10180)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=4 range=900 speed=1 STR_VAR icon="SPWI402C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=1 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=124 target=1 power=1 timing=4 resist_dispel=1 duration=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=1 power=1 resist_dispel=1 duration=1 probability1=100 END
-	LPF CHANGE_SPELL INT_VAR    renew=1 END
-	
-	// Dryad Dire Charm
-CREATE EFF "rr#fchrm"
-	WRITE_LONG 0x10 206
-	WRITE_LONG 0x24 1
-	WRITE_ASCII 0x30 ~rr#fchrm~ #8
-
-CREATE SPL "rr#fchrm"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~rr#fchrm.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10159)
-	WRITE_ASCII 0x10 ~CAS_M05~ #8
-	WRITE_LONG 0x18 512
-	WRITE_SHORT 0x1c 4
-	WRITE_SHORT 0x22 11
-	WRITE_BYTE 0x25 4
-	WRITE_BYTE 0x27 11
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI316C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10370)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=30 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~SPARKLGO~)) + 1 STR_VAR icon="SPWI316C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="rr#fchrm" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="rr#fchrm" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=5 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~HUMANOID~) parameter2=2 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14780 timing=1 resist_dispel=1 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1="-1819214080" parameter2=1966080 resist_dispel=1 duration=1 probability1=100 savingthrow=1 savebonus="-3" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 savingthrow=1 savebonus="-3" STR_VAR resource="SPNWCHRM" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=3 resist_dispel=1 duration=180 probability1=100 savingthrow=1 savebonus="-3" STR_VAR resource="EFF_E07" END
-	
-	// Speak With Plants
-CREATE SPL "rr#fspkp"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~rr#fspkp.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10162)
-	WRITE_ASCII 0x10 ~CAS_P02~ #8
-	WRITE_SHORT 0x1c 4
-	WRITE_SHORT 0x22 10
-	WRITE_BYTE 0x25 8
-	WRITE_BYTE 0x27 13
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~RR#FSPKP~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10163)
-	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 range=30 speed=1 STR_VAR icon="RR#FSPKP" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=1 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_AMULET~) resist_dispel=3 duration=60 probability1=100 STR_VAR resource="ja#i4" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=1727219712 parameter2=1966080 resist_dispel=3 duration=1 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=3 duration=2 probability1=100 STR_VAR resource="SPRMCURS" END
-	LPF CHANGE_SPELL INT_VAR    renew=1 END
-	
-	// Dryad traits
+// Dryad traits
 CREATE ITM "ja#1m41"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10369)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10369)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10321)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10321)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10371)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10322)
 COPY_EXISTING ~ja#1m41.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -124,9 +54,9 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			ADD_CRE_ITEM ~ja#1m41~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_CRE_ITEM ~ja#i5~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_MEMORIZED_SPELL ~rr#ddoor~ #0 ~innate~ (1)
-			ADD_MEMORIZED_SPELL ~rr#fchrm~ #0 ~innate~ (3)
-			ADD_MEMORIZED_SPELL ~rr#fspkp~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1f8~ #0 ~innate~ (1) // Dimension Door
+			ADD_MEMORIZED_SPELL ~ja#4f8~ #0 ~innate~ (1) // Speak With Plants
+			ADD_MEMORIZED_SPELL ~ja#3f8~ #0 ~innate~ (3) // Dryad Dire Charm
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
