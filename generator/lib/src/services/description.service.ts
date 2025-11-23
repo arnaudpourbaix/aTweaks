@@ -160,10 +160,12 @@ class DescriptionService {
     const saveText = this.getSaveText(effect);
     const probability = this.getProbability(effect);
     const condition = saveText || probability;
-    const text = `Cast spell ${name}${condition}:`;
+    const description =
+      spell && spell.description && !spell.doc ? spell.description : "";
+    const text = `Cast spell ${name}${condition}${description ? ":" : ""}`;
     const results: string[] = ["", text];
-    if (spell && spell.description) {
-      results.push(translationService.from(spell.description));
+    if (description) {
+      results.push(translationService.from(description));
     }
     return results;
   }

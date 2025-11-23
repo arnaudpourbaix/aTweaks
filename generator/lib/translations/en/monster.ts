@@ -97,6 +97,7 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
       sirine: "Sirine",
       nymph: "Nymph",
     },
+    weapon: { sirineTouch: "Sirine Touch" },
     ability: {
       dryadDireCharm: "Dryad Dire Charm",
       entangle: {
@@ -126,6 +127,15 @@ If the nymph is nude or disrobes, an onlooker will die unless a saving throw ver
         name: "Charm Song",
         description: `The charm ability is used through the sirine's song, and all people within 30 feet are subject to it, even if they are hostile or attacking.
 Each victim can save vs spell to negate or be charmed for 3 turns.`,
+      },
+      fogCloud: {
+        name: "Fog Cloud",
+        description: `As a fog bank, this spell creates a fog of any size and shape up to a maximum 20-foot cube per caster level. The fog obscures all sight, normal and infravision, beyond 2 feet.
+Victims are blinded for one round, no save.`,
+      },
+      touchOfTranquility: {
+        name: "Touch of Tranquility",
+        description: `If the sirine touches an opponent, the victim must make a saving throw vs. poison; those failing to save are reduced to an Intelligence of 2.`,
       },
     },
   },

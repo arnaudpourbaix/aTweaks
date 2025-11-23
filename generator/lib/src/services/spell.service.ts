@@ -14,6 +14,7 @@ import {
   Spell,
   SpellHeader,
 } from "../model/spell-item/spell-item";
+import { State } from "../state";
 import effectService from "./effects/effect.service";
 
 class SpellService {
@@ -50,6 +51,7 @@ class SpellService {
       result.ability.spell.resource = file;
       result.ability.name ??= spell.name;
     }
+    State.spells.push(result);
     return result;
   }
 

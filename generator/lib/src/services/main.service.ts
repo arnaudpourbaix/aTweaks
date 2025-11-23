@@ -3,22 +3,19 @@ import { familyFactories } from "../../creatures";
 import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
+import descriptionService from "./description.service";
 import documentationService from "./documentation.service";
 import translationService from "./translation.service";
 import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
-import weiduFunctionService from "./weidu/weidu-function.service";
 import weiduFamilyService from "./weidu/weidu-family.service";
-import { State } from "../state";
-import descriptionService from "./description.service";
+import weiduFunctionService from "./weidu/weidu-function.service";
 
 class MainService {
   generateCreatures() {
     const families: MonsterFamilyEnum[] = [];
     for (const factory of familyFactories) {
       const family = factory();
-      State.spells.push(...family.spells);
-      State.items.push(...family.items);
       descriptionService.generateCreatureSpells(family.spells);
       descriptionService.generateCreatureItems(family.items);
       if (families.includes(family.name)) {
@@ -40,8 +37,6 @@ class MainService {
     if (!this.isCreatureValid(creature)) return;
     bafGeneratorService.generate(creature);
     weiduCreatureService.generateWeiduScript(creature);
-    State.spells.push(...creature.spells);
-    State.items.push(...creature.items);
     documentationService.addCreature(creature);
   }
 

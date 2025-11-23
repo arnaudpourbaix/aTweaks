@@ -30,12 +30,12 @@ END
 IF
 	Global("ja#wilderness","LOCALS",0)
 	OR(2)
-		HaveSpellRES("rr#ddoor")
-		HaveSpellRES("rr#fdsnr")
+		HaveSpellRES("ja#1f8")
+		HaveSpellRES("ja#7f8")
 THEN
 	RESPONSE #100
-		RemoveSpellRES("rr#ddoor")
-		RemoveSpellRES("rr#fdsnr")
+		RemoveSpellRES("ja#1f8")
+		RemoveSpellRES("ja#7f8")
 		SetGlobal("ja#wilderness","LOCALS",2)
 END
 
@@ -83,6 +83,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked

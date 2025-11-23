@@ -3,18 +3,29 @@ import {
   PRESET_NAMES,
 } from "../../config/ability-presets";
 import {
+  ATWEAKS_CREATURES,
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
-import { ITEMS } from "../../config/item";
-import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
+import { ITEMS, MonsterItemIconEnum } from "../../config/item";
+import { SPELLS } from "../../config/spell-names";
+import { BafExistingStringReference } from "../../config/stringRef";
 import { createDimensionDoor } from "../../spells/dimension_door";
+import abilityFactory from "../../src/factories/ability.factory";
+import actionFactory from "../../src/factories/action.factory";
+import CreatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import responseFactory from "../../src/factories/response.factory";
+import triggerFactory from "../../src/factories/trigger.factory";
 import { CreatureFamily } from "../../src/model/creature/family";
-import { AdditionalCode } from "../../src/model/script/script";
+import {
+  AdditionalCode,
+  ConditionalStatement,
+} from "../../src/model/script/script";
 import { BaseEffect, IdsEffect } from "../../src/model/spell-item/effect";
 import {
+  AbilityDamageTypeEnum,
   CharmTypeEnum,
   EffectBonusToEnum,
   EffectCastSpellTypeEnum,
@@ -22,10 +33,12 @@ import {
   EffectDispelResistanceEnum,
   EffectIDSFileEnum,
   EffectModifierTypeEnum,
+  EffectStatisticModifierEnum,
   EffectTargetEnum,
   EffectTimingEnum,
   EffectVisualEffectLocationEnum,
   ItemAbilityCastingAnimationEnum,
+  ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
   ItemAbilityPrimaryTypeEnum,
   ItemAbilitySecondaryTypeEnum,
@@ -34,6 +47,7 @@ import {
   LightingEffectEnum,
   LightingEffectTargetEnum,
   PortraitIconEnum,
+  ProficiencyTypeEnum,
   SaveTypeEnum,
   SpellFlagEnum,
   SpellTypeEnum,
@@ -47,50 +61,42 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../../src/model/spell-item/spell-protection";
-import { MonsterFamilyEnum } from "../monster";
-import { ATWEAKS_CREATURES } from "../../config/creatures";
-import { BafExistingStringReference } from "../../config/stringRef";
-import actionFactory from "../../src/factories/action.factory";
-import CreatureFactory from "../../src/factories/creature.factory";
-import responseFactory from "../../src/factories/response.factory";
-import triggerFactory from "../../src/factories/trigger.factory";
-import { ConditionalStatement } from "../../src/model/script/script";
-import {
-  EffectStatisticModifierEnum,
-  ProficiencyTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { MonsterEnum } from "../monster";
-import { Spell } from "../../src/model/spell-item/spell-item";
+import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
+import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+
+enum SpellIds {
+  InnateDimensionDoor,
+  PriestDimensionDoor,
+  DryadCharm,
+  SpeakWithPlants,
+  Entangle,
+  AnimalFriendship,
+  DetectTraps,
+  BlindingBeauty,
+  CharmSong,
+  FogCloud,
+  TouchOfTranquility,
+}
 
 export class FeyFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Fey);
+    this.createInnateDimensionDoor();
+    this.createPriestDimensionDoor();
+    this.createCharm();
+    this.createSpeakWithPlants();
+    this.createEntangle();
+    this.createAnimalFriendship();
+    this.createDetectTraps();
+    this.createBlindingBeauty();
+    this.createCharmSong();
+    this.createFogCloud();
+    this.createTouchOfTranquility();
     this.addCreature(this.dryad());
     this.addCreature(this.hamadryad());
     this.addCreature(this.nymph());
     this.addCreature(this.sirine());
   }
-
-  innateDimensionDoor = this.createInnateDimensionDoor();
-  priestDimensionDoor = this.createPriestDimensionDoor();
-  charm = this.createCharm();
-  speakWithPlants = this.createSpeakWithPlants();
-  entangle = this.createEntangle();
-  animalFriendship = this.createAnimalFriendship();
-  detectTraps = this.createDetectTraps();
-  blindingBeauty = this.createBlindingBeauty();
-  charmSong = this.createCharmSong();
-
-  additionalCode = {
-    dryadTrackTarget: this.dryadTrackTarget(this.charm),
-    nymphTrackTarget: this.nymphTrackTarget(),
-  };
-  statements = {
-    dryadWildernessAbilities: this.dryadWildernessAbilities(),
-    irenicusCode: this.irenicusCode(),
-    vaelasaFairyQueenCode: this.vaelasaFairyQueenCode(),
-    cloakwoodCodeCode: this.cloakwoodCode(),
-  };
 
   /**
    * Dryad
@@ -158,9 +164,18 @@ export class FeyFamily extends CreatureFamily {
       ],
       removeScripts: ["DRYAD"],
       memorizedSpells: [
-        { file: this.innateDimensionDoor.file, memorizedCount: 1 },
-        { file: this.speakWithPlants.file, memorizedCount: 1 },
-        { file: this.charm.file, memorizedCount: 3 },
+        {
+          file: this.spell(SpellIds.InnateDimensionDoor).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.SpeakWithPlants).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.DryadCharm).file,
+          memorizedCount: 3,
+        },
       ],
     });
     dryad.addTrait({ immunities: ["magicResistance"] });
@@ -169,18 +184,18 @@ export class FeyFamily extends CreatureFamily {
       restHeal: true,
       dialog: ["CDryad", "Ulene", "L#APEST"],
       abilities: [
-        this.innateDimensionDoor.ability!,
-        this.speakWithPlants.ability!,
-        this.charm.ability!,
+        this.ability(SpellIds.InnateDimensionDoor),
+        this.ability(SpellIds.SpeakWithPlants),
+        this.ability(SpellIds.DryadCharm),
       ],
-      additionalCodes: [this.additionalCode.dryadTrackTarget],
+      additionalCodes: [this.dryadTrackTarget()],
       customCodes: [
         {
           location: "init",
           type: "insertBefore",
           statements: [
-            ...this.statements.dryadWildernessAbilities,
-            ...this.statements.irenicusCode,
+            ...this.dryadWildernessAbilities(),
+            ...this.irenicusCode(),
           ],
         },
       ],
@@ -252,12 +267,30 @@ export class FeyFamily extends CreatureFamily {
       removeItems: ["ANTIWEB"],
       removeScripts: ["HAMA", "BDHAMADC"],
       memorizedSpells: [
-        { file: this.innateDimensionDoor.file, memorizedCount: 1 },
-        { file: this.speakWithPlants.file, memorizedCount: 1 },
-        { file: this.entangle.file, memorizedCount: 1 },
-        { file: this.charm.file, memorizedCount: 3 },
-        { file: this.animalFriendship.file, memorizedCount: 1 },
-        { file: this.detectTraps.file, memorizedCount: 1 },
+        {
+          file: this.spell(SpellIds.InnateDimensionDoor).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.SpeakWithPlants).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.DryadCharm).file,
+          memorizedCount: 3,
+        },
+        {
+          file: this.spell(SpellIds.Entangle).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.AnimalFriendship).file,
+          memorizedCount: 1,
+        },
+        {
+          file: this.spell(SpellIds.DetectTraps).file,
+          memorizedCount: 1,
+        },
       ],
       deleteEffectOpcodes: [
         EffectTypeEnum.CastingTimeModifier,
@@ -279,22 +312,22 @@ export class FeyFamily extends CreatureFamily {
       restHeal: true,
       dialog: ["VAELASA"],
       abilities: [
-        this.innateDimensionDoor.ability!,
-        this.speakWithPlants.ability!,
-        this.entangle.ability!,
-        this.charm.ability!,
-        this.animalFriendship.ability!,
-        // this.detectTraps.ability!, // probably useless most of the times, can still be cast manually
+        this.ability(SpellIds.InnateDimensionDoor),
+        this.ability(SpellIds.SpeakWithPlants),
+        this.ability(SpellIds.Entangle),
+        this.ability(SpellIds.DryadCharm),
+        this.ability(SpellIds.AnimalFriendship),
+        // this.ability(SpellIds.DetectTraps), // probably useless most of the times, can still be cast manually
       ],
-      additionalCodes: [this.additionalCode.dryadTrackTarget],
+      additionalCodes: [this.dryadTrackTarget()],
       customCodes: [
         {
           location: "init",
           type: "insertBefore",
           statements: [
-            ...this.statements.dryadWildernessAbilities,
-            ...this.statements.vaelasaFairyQueenCode,
-            ...this.statements.cloakwoodCodeCode,
+            ...this.dryadWildernessAbilities(),
+            ...this.vaelasaFairyQueenCode(),
+            ...this.cloakwoodCode(),
           ],
         },
       ],
@@ -367,9 +400,12 @@ export class FeyFamily extends CreatureFamily {
       removeItems: ["DAGG01", "B1-6"],
       removeScripts: ["BDNYMP01", "NYMPH"],
       memorizedSpells: [
-        { file: this.priestDimensionDoor.file, memorizedCount: 1 },
-        { file: this.animalFriendship.file, memorizedCount: 1 },
-        { file: this.blindingBeauty.file, memorizedCount: 1 },
+        {
+          file: this.spell(SpellIds.PriestDimensionDoor).file,
+          memorizedCount: 1,
+        },
+        { file: this.spell(SpellIds.AnimalFriendship).file, memorizedCount: 1 },
+        { file: this.spell(SpellIds.BlindingBeauty).file, memorizedCount: 1 },
         { file: SPELLS.CureLightWounds, memorizedCount: 1 },
         { file: SPELLS.Bless, memorizedCount: 1 },
         { file: SPELLS.Entangle, memorizedCount: 1 },
@@ -385,8 +421,8 @@ export class FeyFamily extends CreatureFamily {
     nymph.setAttack({ melee: false });
     nymph.setBehavior({
       abilities: [
-        this.blindingBeauty.ability!,
-        this.priestDimensionDoor.ability!,
+        this.ability(SpellIds.BlindingBeauty),
+        this.ability(SpellIds.PriestDimensionDoor),
         {
           preset: SPELLS.CallWoodlandBeeings,
           spell: {
@@ -436,7 +472,7 @@ export class FeyFamily extends CreatureFamily {
             remove: true,
           },
         },
-        this.animalFriendship.ability!,
+        this.ability(SpellIds.AnimalFriendship),
         {
           preset: SPELLS.CureLightWounds,
           spell: {
@@ -445,7 +481,7 @@ export class FeyFamily extends CreatureFamily {
           },
         },
       ],
-      additionalCodes: [this.additionalCode.nymphTrackTarget],
+      additionalCodes: [this.nymphTrackTarget()],
     });
     nymph.setAdjustments([
       {
@@ -490,18 +526,13 @@ export class FeyFamily extends CreatureFamily {
         level1: 11, // 5 HD but level 11 caster
         hp: 40,
         thac0: 15,
-        saveDeath: 9,
-        saveWand: 7,
-        savePolymorph: 9,
-        saveBreath: 11,
-        saveSpell: 8,
         strength: 10,
         dexterity: 18,
         constitution: 11,
         intelligence: 13,
         wisdom: 16,
         charisma: 17,
-        ac: 7, // -4 with dex bonus
+        ac: 3,
         apr: 1,
         xpv: 3000,
         alignment: "NEUTRAL",
@@ -512,6 +543,13 @@ export class FeyFamily extends CreatureFamily {
         gender: "FEMALE",
         size: "Medium",
       },
+      autoGenerate: {
+        savingThrows: {
+          level: 11,
+          classe: "MAGE",
+          bonus: { saveDeath: 2 },
+        },
+      },
     });
     sirine.setAdditionalData({
       movement: { value: 12 },
@@ -520,11 +558,7 @@ export class FeyFamily extends CreatureFamily {
         { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
       ],
       removeItems: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
-      removeScripts: [
-        // "J#SIRIN1",
-        "SIRSPELL",
-        "SIL",
-      ],
+      removeScripts: ["SIRSPELL", "SIL"],
       equippedItems: [
         { file: "BOW05", slot: "WEAPON2", undroppable: false },
         {
@@ -551,80 +585,111 @@ export class FeyFamily extends CreatureFamily {
       ],
       scriptLocation: "Race",
       memorizedSpells: [
+        { file: this.spell(SpellIds.CharmSong).file, memorizedCount: 1 },
+        { file: this.spell(SpellIds.FogCloud).file, memorizedCount: 1 },
+        { file: SPELLS.PolymorphSelf, memorizedCount: 1 },
         { file: SPELLS.ImprovedInvisibility, memorizedCount: 1 },
       ],
     });
-    sirine.addTrait({ immunities: ["cloudSpells"] });
+    sirine.addTrait({
+      immunities: ["cloudSpells"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          value: 20,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    sirine.addWeapon({
+      weapon: {
+        stringRef: "monster.fey.weapon.sirineTouch",
+        equippedSlot: ["WEAPON1"],
+        icon: MonsterItemIconEnum.Fist,
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: 1,
+          diceSize: 3,
+          damageType: AbilityDamageTypeEnum.Crushing,
+          speed: 2,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+          effects: [
+            {
+              opcode: EffectTypeEnum.CastSpell,
+              type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+              castingLevel: 1,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              resource: this.spell(SpellIds.TouchOfTranquility).file,
+            },
+          ],
+        },
+      },
+    });
     sirine.setAttack({ ranged: true });
     sirine.setBehavior({
       restHeal: true,
       canPolymorph: true,
-      // autoGenerate: {
-      //   savingThrows: false,
-      // },
       dialog: ["MEIALA", "NTSILUA", "SIL", "LARRIA"],
       abilities: [
-        this.blindingBeauty.ability!,
-        this.priestDimensionDoor.ability!,
         {
-          preset: SPELLS.CallWoodlandBeeings,
+          preset: SPELLS.ImprovedInvisibility,
           spell: {
             type: "force",
             remove: true,
           },
+          disableInterrupt: true,
         },
+        this.ability(SpellIds.CharmSong),
+        this.ability(SpellIds.TouchOfTranquility),
+        this.ability(SpellIds.FogCloud),
+        ...abilityFactory.polymorphSelf({
+          triggers: [
+            {
+              name: "HaveSpellRES",
+              params: [this.spell(SpellIds.CharmSong).file],
+              negation: true,
+            },
+            {
+              name: "HaveSpellRES",
+              params: [this.spell(SpellIds.FogCloud).file],
+              negation: true,
+            },
+            {
+              name: "HaveSpellRES",
+              params: [SPELLS.ImprovedInvisibility],
+              negation: true,
+            },
+          ],
+        }),
+      ],
+      customCodes: [
         {
-          preset: SPELLS.Bless,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        {
-          preset: SPELLS.Barkskin,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        {
-          preset: SPELLS.CallLightning,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        {
-          preset: SPELLS.SummonInsects,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        {
-          preset: SPELLS.Entangle,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        {
-          preset: SPELLS.CharmPersonOrAnimal,
-          spell: {
-            type: "force",
-            remove: true,
-          },
-        },
-        this.animalFriendship.ability!,
-        {
-          preset: SPELLS.CureLightWounds,
-          spell: {
-            type: "force",
-            remove: true,
-          },
+          location: "attack",
+          type: "insertBefore",
+          statements: [
+            {
+              comment: "Don't break invisibility when charm is available",
+              triggers: [
+                {
+                  name: "StateCheck",
+                  params: ["Myself", "STATE_INVISIBLE"],
+                },
+                {
+                  name: "HaveSpellRES",
+                  params: [this.spell(SpellIds.CharmSong).file],
+                },
+              ],
+              responses: [
+                {
+                  weight: 100,
+                  actions: [{ name: "NoAction" }],
+                },
+              ],
+            },
+          ],
         },
       ],
-      additionalCodes: [this.additionalCode.nymphTrackTarget],
     });
     sirine.setAdjustments([
       { files: ["SIL"], data: { level1: 7 } },
@@ -644,6 +709,7 @@ export class FeyFamily extends CreatureFamily {
         spellType: SpellTypeEnum.Innate,
         renew: 1,
       }),
+      id: SpellIds.InnateDimensionDoor,
       ability: {
         preset: PRESET_NAMES.DimensionDoorOffscreen,
         spell: {
@@ -659,6 +725,7 @@ export class FeyFamily extends CreatureFamily {
         spellLevel: 1,
         spellType: SpellTypeEnum.Priest,
       }),
+      id: SpellIds.PriestDimensionDoor,
       ability: {
         preset: PRESET_NAMES.DimensionDoorOffscreen,
         spell: {
@@ -676,6 +743,7 @@ export class FeyFamily extends CreatureFamily {
   private createCharm() {
     return this.addSpell({
       name: "monster.fey.ability.dryadDireCharm",
+      id: SpellIds.DryadCharm,
       icon: SPELLS.DireCharm,
       castingSound: "CAS_M05",
       flags: [SpellFlagEnum.BreakSanctuary],
@@ -719,6 +787,7 @@ export class FeyFamily extends CreatureFamily {
   private createSpeakWithPlants() {
     return this.addSpell({
       name: "monster.fey.ability.speakWithPlants.name",
+      id: SpellIds.SpeakWithPlants,
       description: "monster.fey.ability.speakWithPlants.description",
       icon: "RR#FSPKP",
       castingSound: "CAS_P02",
@@ -791,6 +860,7 @@ export class FeyFamily extends CreatureFamily {
     } satisfies BaseEffect;
     return this.addSpell({
       name: "monster.fey.ability.entangle.name",
+      id: SpellIds.Entangle,
       description: "monster.fey.ability.entangle.description",
       icon: SPELLS.Entangle,
       castingSound: "CAS_P08",
@@ -898,6 +968,7 @@ export class FeyFamily extends CreatureFamily {
     } satisfies BaseEffect;
     return this.addSpell({
       name: "monster.fey.ability.animalFriendship.name",
+      id: SpellIds.AnimalFriendship,
       description: "monster.fey.ability.animalFriendship.description",
       icon: SPELLS.CharmPersonOrAnimal,
       flags: [SpellFlagEnum.CastableWhenSilenced],
@@ -972,6 +1043,7 @@ export class FeyFamily extends CreatureFamily {
   private createDetectTraps() {
     return this.addSpell({
       name: "monster.fey.ability.detectTraps.name",
+      id: SpellIds.DetectTraps,
       description: "monster.fey.ability.detectTraps.description",
       castingSound: "CAS_P04",
       flags: [SpellFlagEnum.OutdoorsOnly],
@@ -1083,9 +1155,11 @@ export class FeyFamily extends CreatureFamily {
     });
     return this.addSpell({
       name: "monster.fey.ability.blindingBeauty.name",
+      id: SpellIds.BlindingBeauty,
       description: "monster.fey.ability.blindingBeauty.description",
       spellType: SpellTypeEnum.Innate,
       icon: SPELLS.BlindingBeauty,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: {
         renew: 1,
       },
@@ -1196,6 +1270,8 @@ export class FeyFamily extends CreatureFamily {
     });
     return this.addSpell({
       name: "monster.fey.ability.charmSong.name",
+      id: SpellIds.CharmSong,
+      description: "monster.fey.ability.charmSong.description",
       icon: SPELLS.DireCharm,
       castingSound: "SIRIN05",
       flags: [SpellFlagEnum.BreakSanctuary, SpellFlagEnum.IgnoreDead],
@@ -1203,7 +1279,6 @@ export class FeyFamily extends CreatureFamily {
       castingAnimation: ItemAbilityCastingAnimationEnum.Enchantment,
       primaryType: ItemAbilityPrimaryTypeEnum.Enchanter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      spellLevel: 1,
       options: {
         removeInvisbilityOnCast: true,
       },
@@ -1234,10 +1309,17 @@ export class FeyFamily extends CreatureFamily {
               opcode: EffectTypeEnum.UseEFFFile,
               idsFile: EffectIDSFileEnum.GENERAL,
               idsEntry: "HUMANOID",
-              resource: technical.file,
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
             },
           ],
+        },
+      ],
+      effectFiles: [
+        {
+          opcode: EffectTypeEnum.CastSpell,
+          type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+          resource: technical.file,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
         },
       ],
       ability: {
@@ -1251,10 +1333,168 @@ export class FeyFamily extends CreatureFamily {
     });
   }
 
-  private dryadTrackTarget(charm: Spell): AdditionalCode {
+  /**
+   * Fog Cloud
+   */
+  private createFogCloud() {
+    return this.addSpell({
+      name: "monster.fey.ability.fogCloud.name",
+      id: SpellIds.FogCloud,
+      description: "monster.fey.ability.fogCloud.description",
+      icon: "SPWI204",
+      castingSound: "CAS_M08",
+      spellType: SpellTypeEnum.Innate,
+      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
+      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Battleground,
+      spellLevel: 1,
+      options: {
+        removeInvisbilityOnCast: true,
+      },
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Ranged,
+          projectile: "CLOUD",
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          range: 30,
+          speed: 1,
+          effects: effectFactory.blindness({
+            duration: 7,
+            dispelResistance:
+              EffectDispelResistanceEnum.DispelNotBypassResistance,
+          }),
+        },
+      ],
+      ability: {
+        targets: [{ name: "NearestEnemies" }],
+        spell: {
+          excludeStateChecks: ["STATE_BLIND"],
+          type: "force",
+          remove: true,
+        },
+        requireVocal: true,
+        disableInterrupt: true,
+      },
+    });
+  }
+
+  /**
+   * Touch of Tranquility
+   */
+  private createTouchOfTranquility() {
+    const tranquilityBaseEffect = {
+      timing: EffectTimingEnum.InstantLimited,
+      duration: 300,
+      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+    } satisfies BaseEffect;
+    return this.addSpell({
+      name: "monster.fey.ability.touchOfTranquility.name",
+      id: SpellIds.TouchOfTranquility,
+      description: "monster.fey.ability.touchOfTranquility.description",
+      // options: { renew: 1 },
+      castingSound: "EFF_P11",
+      flags: [SpellFlagEnum.Hostile, SpellFlagEnum.IgnoreDead],
+      spellType: SpellTypeEnum.Innate,
+      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
+      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Battleground,
+      icon: SPELLS.Feeblemind,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.LivingActor,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.Splstate,
+                relation: SpellProtectionRelation.Equal,
+              },
+              value: "CHAOTIC_COMMANDS",
+              timing: EffectTimingEnum.InstantLimited,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              duration: 1,
+            },
+            {
+              opcode: EffectTypeEnum.Feeblemindedness,
+              ...tranquilityBaseEffect,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayPortraitIcon,
+              icon: PortraitIconEnum.Feebleminded,
+              ...tranquilityBaseEffect,
+            },
+            {
+              opcode: EffectTypeEnum.PlayVisualEffect,
+              playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
+              ...tranquilityBaseEffect,
+              duration: 2,
+              resource: "SPMINDAT",
+            },
+            {
+              opcode: EffectTypeEnum.CharacterColorPulse,
+              color: { red: 109, green: 73, blue: 0 },
+              location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
+              cycleSpeed: 20,
+              ...tranquilityBaseEffect,
+              duration: 1,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: StringRefUtils.getStringId("Feebleminded"),
+              ...tranquilityBaseEffect,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+            {
+              opcode: EffectTypeEnum.ProtectionFromSpell,
+              ...tranquilityBaseEffect,
+            },
+          ],
+        },
+      ],
+      ability: {
+        // touch is automatic for charmed individuals
+        spell: {
+          type: "force",
+          memorizedSpellCheck: false,
+        },
+        targets: [
+          {
+            name: "NearestAllies",
+            includeStatus: ["Able"],
+            triggers: [
+              {
+                name: "StateCheck",
+                params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+              },
+              {
+                name: "See",
+                params: ["NearestEnemyOf"],
+                negation: true,
+              },
+            ],
+          },
+        ],
+        noRoundTimer: true,
+        actionsBefore: [
+          { name: "EquipMostDamagingMelee" },
+          {
+            name: "MoveToObjectNoInterrupt",
+            params: [GLOBAL_CONFIG.tokens.target],
+          },
+        ],
+        disableInterrupt: true,
+      },
+    });
+  }
+
+  private dryadTrackTarget(): AdditionalCode {
+    const file = this.spell(SpellIds.DryadCharm).file;
     return {
       location: "trackTargets",
-      triggers: [{ name: "HaveSpellRES", params: [charm.file] }],
+      triggers: [{ name: "HaveSpellRES", params: [file] }],
       actions: [],
     };
   }
@@ -1301,11 +1541,11 @@ export class FeyFamily extends CreatureFamily {
             triggers: [
               {
                 name: "HaveSpellRES",
-                params: [ATWEAKS_SPELLS.DimensionDoorInfinite],
+                params: [this.spell(SpellIds.InnateDimensionDoor).file],
               },
               {
                 name: "HaveSpellRES",
-                params: [ATWEAKS_SPELLS.DetectSnaresAndPits],
+                params: [this.spell(SpellIds.DetectTraps).file],
               },
             ],
           },
@@ -1313,11 +1553,11 @@ export class FeyFamily extends CreatureFamily {
         responses: responseFactory.response([
           {
             name: "RemoveSpellRES",
-            params: [ATWEAKS_SPELLS.DimensionDoorInfinite],
+            params: [this.spell(SpellIds.InnateDimensionDoor).file],
           },
           {
             name: "RemoveSpellRES",
-            params: [ATWEAKS_SPELLS.DetectSnaresAndPits],
+            params: [this.spell(SpellIds.DetectTraps).file],
           },
           actionFactory.setGlobal(globals.Wilderness, 2),
         ]),

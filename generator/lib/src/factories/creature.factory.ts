@@ -21,6 +21,7 @@ import {
 import {
   Creature,
   CreatureAdjustment,
+  CreatureAutoGenerate,
   CreatureNewFile,
   PartialCreatureAdjustment,
 } from "../model/creature/creature";
@@ -68,7 +69,9 @@ class CreatureFactory {
     files: string[];
     newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
+    autoGenerate?: CreatureAutoGenerate;
   }): Creature {
+    console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
     const cre = new Creature();
     cre.name = p.name;
     cre.monster = p.monster;
@@ -77,9 +80,10 @@ class CreatureFactory {
     cre.newFiles = p.newFiles ?? [];
     cre.data = p.data;
     cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
-    console.log(
-      chalk.bold(`\nCreating ${translationService.from(cre.name)}...`)
-    );
+    if (p.autoGenerate) {
+      cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
+      console.log("autogenerate", cre.autoGenerate);
+    }
     return cre;
   }
 

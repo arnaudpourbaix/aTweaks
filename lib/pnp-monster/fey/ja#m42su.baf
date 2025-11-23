@@ -33,12 +33,12 @@ END
 IF
 	Global("ja#wilderness","LOCALS",0)
 	OR(2)
-		HaveSpellRES("rr#ddoor")
-		HaveSpellRES("rr#fdsnr")
+		HaveSpellRES("ja#1f8")
+		HaveSpellRES("ja#7f8")
 THEN
 	RESPONSE #100
-		RemoveSpellRES("rr#ddoor")
-		RemoveSpellRES("rr#fdsnr")
+		RemoveSpellRES("ja#1f8")
+		RemoveSpellRES("ja#7f8")
 		SetGlobal("ja#wilderness","LOCALS",2)
 END
 
@@ -1853,20 +1853,6 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#6f8",LastSeenBy(Myself))
-		SetInterrupt(TRUE)
-END
-
-// Detect snares and pits
-IF
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	ActionListEmpty()
-	HaveSpellRES("ja#7f8")
-	RandomNumGT(803,241)
-THEN
-	RESPONSE #100
-		SetInterrupt(FALSE)
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#7f8",LastSeenBy(Myself))
 		SetInterrupt(TRUE)
 END
 

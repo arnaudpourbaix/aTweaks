@@ -17,6 +17,7 @@ import {
   PartialItem,
   PartialItemHeader,
 } from "../model/spell-item/spell-item";
+import { State } from "../state";
 import effectService from "./effects/effect.service";
 
 class ItemService {
@@ -43,6 +44,7 @@ class ItemService {
       result.equippedSlot = this.getItemSlots(result.equippedSlot);
     result.effects = effectService.getEffects(result.effects, { file });
     if (item.header) this.setHeader(result, item.header, file);
+    State.items.push(result);
     return result;
   }
 

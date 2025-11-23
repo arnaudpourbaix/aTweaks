@@ -87,6 +87,10 @@ export interface CreatureAbilitySpell {
    */
   targetName?: string;
   /**
+   * Check if spell is memorized (default: true)
+   */
+  memorizedSpellCheck?: boolean;
+  /**
    * Remove spell after use, only relevant is type is different than normal
    */
   remove?: boolean;

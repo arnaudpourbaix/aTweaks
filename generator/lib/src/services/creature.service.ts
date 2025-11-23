@@ -13,7 +13,7 @@ import {
   CreatureAutoGenerate,
 } from "../model/creature/creature";
 import { CreatureData, PartialCreatureData } from "../model/creature/data";
-import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
+import { ClassIdentifier, PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import {
   ItemAbilityLocationEnum,
   ItemFlagEnum,
@@ -150,16 +150,23 @@ class CreatureService {
     creature: Creature;
     parent: CreatureData | undefined;
   }) {
-    if (p.autoGenerate.hitPoints && p.data.hp === undefined)
+    if (p.autoGenerate.hitPoints && p.data.hp === undefined) {
       this.autogenerateHitPoints({
         data: p.data,
         creature: p.creature,
         parent: p.parent,
       });
-    if (p.autoGenerate.thac0 && p.data.thac0 === undefined)
+    }
+    if (p.autoGenerate.thac0 && p.data.thac0 === undefined) {
       this.autogenerateThac0(p.data, p.parent);
-    if (p.autoGenerate.savingThrows && p.data.saveBreath === undefined)
-      this.autogenerateSavingThrows(p.data, p.parent);
+    }
+    if (p.data.saveBreath === undefined) {
+      this.autogenerateSavingThrows({
+        data: p.data,
+        parent: p.parent,
+        options: p.autoGenerate.savingThrows,
+      });
+    }
   }
 
   checkWeapons(creature: Creature) {
@@ -338,21 +345,13 @@ class CreatureService {
     return convertMovement(movement);
   }
 
-  private autogenerateSavingThrows(
-    data: PartialCreatureData,
-    parent?: CreatureData
-  ) {
-    const level = data.level1;
-    if (!level && !parent)
-      throw new Error(`Can't generate saving throws because level1 is unknown`);
-    else if (!level) return;
-    const classe = data.class ?? parent?.class ?? "";
+  getSavingThrows(p: Exclude<CreatureAutoGenerate["savingThrows"], undefined>) {
     let key: keyof typeof SAVING_THROWS = "fighter";
-    if (classe === "DRUID" || classe === "CLERIC") key = "priest";
-    else if (classe === "MAGE") key = "wizard";
+    if (p.classe === "DRUID" || p.classe === "CLERIC") key = "priest";
+    else if (p.classe === "MAGE") key = "wizard";
     const table = SAVING_THROWS[key];
     const saves = table.find(
-      (t) => level >= t.levels[0] && level <= t.levels[1]
+      (t) => p.level >= t.levels[0] && p.level <= t.levels[1]
     ) as {
       saveDeath: number;
       saveWand: number;
@@ -362,12 +361,38 @@ class CreatureService {
     };
     if (key !== "fighter")
       console.log(
-        `${
-          figureSet.arrowRight
-        } Level: ${level}, class: ${classe}, saving throws table: ${key}, ${JSON.stringify(
-          saves
-        )}`
+        `${figureSet.arrowRight} Level: ${p.level}, class: ${
+          p.classe
+        }, saving throws table: ${key}, ${JSON.stringify(saves)}`
       );
+    return {
+      saveDeath: saves.saveDeath - (p.bonus?.saveDeath ?? 0),
+      saveWand: saves.saveWand - (p.bonus?.saveWand ?? 0),
+      savePolymorph: saves.savePolymorph - (p.bonus?.savePolymorph ?? 0),
+      saveBreath: saves.saveBreath - (p.bonus?.saveBreath ?? 0),
+      saveSpell: saves.saveSpell - (p.bonus?.saveSpell ?? 0),
+    };
+  }
+
+  private autogenerateSavingThrows({
+    data,
+    parent,
+    options,
+  }: {
+    data: PartialCreatureData;
+    parent?: CreatureData;
+    options: CreatureAutoGenerate["savingThrows"];
+  }) {
+    const level = data.level1;
+    if (!level && !parent)
+      throw new Error(`Can't generate saving throws because level1 is unknown`);
+    else if (!level) return;
+    const classe = data.class ?? parent?.class;
+    const saves = this.getSavingThrows({
+      level: options?.level ?? level,
+      classe: options?.classe ?? classe,
+      bonus: options?.bonus,
+    });
     data.saveDeath = saves.saveDeath;
     data.saveWand = saves.saveWand;
     data.savePolymorph = saves.savePolymorph;

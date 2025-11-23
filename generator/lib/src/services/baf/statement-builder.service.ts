@@ -1107,8 +1107,10 @@ class StatementService {
         actionFactory.setGlobalTimer(ability.timer.name, ability.timer.value)
       );
     }
-    triggers.unshift(triggerFactory.globalRoundTimerExpired());
-    actions.unshift(actionFactory.setGlobalRoundTimer());
+    if (!ability.noRoundTimer) {
+      triggers.unshift(triggerFactory.globalRoundTimerExpired());
+      actions.unshift(actionFactory.setGlobalRoundTimer());
+    }
     if (ability.requireVocal) {
       triggers.unshift({
         name: "StateCheck",

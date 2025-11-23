@@ -1,9 +1,9 @@
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
-import utils from "../../services/utils/utils.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
+import { ClassIdentifier } from "../ids/class";
 import { Effect, EffectFile } from "../spell-item/effect";
 import { Projectile } from "../spell-item/projectile";
 import {
@@ -56,7 +56,6 @@ export class Creature implements BaseCreature {
   autoGenerate: CreatureAutoGenerate = {
     thac0: true,
     hitPoints: true,
-    savingThrows: true,
     enchantment: true,
     meleeRange: true,
   };
@@ -134,7 +133,17 @@ export interface CreatureNewFile {
 export interface CreatureAutoGenerate {
   thac0?: boolean;
   hitPoints?: boolean;
-  savingThrows?: boolean;
+  savingThrows?: {
+    level: number;
+    classe?: ClassIdentifier;
+    bonus?: {
+      saveDeath?: number;
+      saveWand?: number;
+      savePolymorph?: number;
+      saveBreath?: number;
+      saveSpell?: number;
+    };
+  };
   enchantment?: boolean;
   meleeRange?: boolean;
 }

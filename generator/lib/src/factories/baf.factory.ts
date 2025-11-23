@@ -26,7 +26,7 @@ class BafFactory {
       ]);
       if (p.random && index < targets.length - 1)
         triggers.push({
-          name: "RandomNumGT",
+          name: "RandomNumLT",
           params: [max, Math.round(max / (targets.length - index))],
         });
       const actionTarget = target === "Myself" ? "Myself" : "LastSeenBy";

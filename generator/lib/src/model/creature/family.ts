@@ -1,4 +1,5 @@
 import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { TranslationKey } from "../../../translations/i18n";
 import itemService from "../../services/item.service";
 import spellService from "../../services/spell.service";
 import { getFilename } from "../../services/utils/misc.func";
@@ -8,6 +9,7 @@ import {
   PartialSpell,
   Spell,
 } from "../spell-item/spell-item";
+import { RawCreatureAbility } from "./ability";
 import { Creature } from "./creature";
 
 export class CreatureFamily {
@@ -40,5 +42,17 @@ export class CreatureFamily {
     const result = itemService.getItem(item, file);
     this.items.push(result);
     return result;
+  }
+
+  spell(id: number): Spell {
+    const spell = this.spells.find((s) => s.id === id);
+    if (!spell) throw new Error(`No spell found with id ${id}`);
+    return spell;
+  }
+
+  ability(id: number): RawCreatureAbility {
+    const spell = this.spell(id);
+    if (!spell.ability) throw new Error(`No ability found for spell id ${id}`);
+    return spell.ability;
   }
 }

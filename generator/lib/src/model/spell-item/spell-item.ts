@@ -32,6 +32,11 @@ export interface Spell {
    */
   file: string;
 
+  /**
+   * Used for retrieving a spell inside family factories
+   */
+  id?: number;
+
   name: TranslationKey;
 
   /**

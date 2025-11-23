@@ -33,4 +33,5 @@ export default {
   web: "Web",
   detectInvisibility: "Detect Invisibility",
   enrage: "Enrage",
+  polymorphSelf: "Polymorph Self",
 };

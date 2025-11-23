@@ -67,15 +67,18 @@ class AbilityService {
     const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
     if (!ability.spell) return result;
     result.resource = ability.spell.resource ?? ability.preset;
-    ability.spell.type = ability.spell.type ?? "normal";
-    if (ability.spell.id) {
+    ability.spell.type ??= "normal";
+    ability.spell.memorizedSpellCheck ??= true;
+    if (!ability.spell.id && !ability.spell.resource)
+      throw new Error(`No spell specified for ability ${ability.name}`);
+    if (ability.spell.memorizedSpellCheck && ability.spell.id) {
       triggers.unshift({ name: "HaveSpell", params: [ability.spell.id] });
-    } else if (ability.spell.resource) {
+    } else if (ability.spell.memorizedSpellCheck && ability.spell.resource) {
       triggers.unshift({
         name: "HaveSpellRES",
         params: [ability.spell.resource],
       });
-    } else throw new Error(`No spell specified for ability ${ability.name}`);
+    }
 
     for (const state of ability.spell.excludeStateChecks ?? []) {
       triggers.push({
