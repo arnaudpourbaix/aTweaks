@@ -20,7 +20,7 @@ class DocumentationService {
     this.replace(template, "monsters", this.monsters.join(""));
     this.replace(template, "traits", this.getTraits());
     fs.writeFileSync(
-      path.join(State.modFolder, "doc/monsters.html"),
+      path.join(State.modFolder, "docs/monsters.html"),
       template.text
     );
   }
