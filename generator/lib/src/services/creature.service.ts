@@ -179,6 +179,12 @@ class CreatureService {
 
   private checkWeapon(creature: Creature, weapon: Weapon) {
     const level = creature.data.level1;
+    if (!weapon.header.speed) {
+      weapon.header.speed = 3;
+      console.log(
+        `${figureSet.warning} default speed of ${weapon.header.speed} from weapon ${weapon.file}.`
+      );
+    }
     const enchantments = [
       { hd: 4, hp: 1, enchant: 1 },
       { hd: 6, hp: 2, enchant: 2 },

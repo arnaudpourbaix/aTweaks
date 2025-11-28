@@ -27,6 +27,8 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     petrifyingGaze: {
       name: "Petrifying Gaze",
       description: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.`,
+      description5e: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained.
+It must repeat the saving throw on the next round. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.`,
       petrified: "Petrified",
       turningToStone: "Turning to stone",
     },

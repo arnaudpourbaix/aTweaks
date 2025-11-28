@@ -32,10 +32,10 @@ COPY_EXISTING ~ja#1m1.SPL~  ~override~
 CREATE SPL "ja#2m1"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#2m1.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10173)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10183)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10319)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10318)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~MIMIC~) parameter2=4 duration=1 probability1=100 STR_VAR resource="ja#2m1" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~SLIME~) parameter2=4 duration=1 probability1=100 STR_VAR resource="ja#2m1" END
@@ -62,7 +62,7 @@ COPY_EXISTING ~ja#2m1.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~CLASS~ ~SPIDER_PHASE~) parameter2=5 duration=1 probability1=100 STR_VAR resource="ja#2m1" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~CLASS~ ~SPIDER_SWORD~) parameter2=5 duration=1 probability1=100 STR_VAR resource="ja#2m1" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=328 target=2 power=1 parameter2=(IDS_OF_SYMBOL (~splstate~ ~JA_GRAPPLED~)) duration=18 probability1=100 special=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10174) timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10184) timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter2=1 duration=18 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=15 target=2 power=1 parameter1=8 parameter2=1 duration=18 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=0 target=2 power=1 parameter1="-4" duration=18 probability1=100 END
@@ -72,19 +72,6 @@ COPY_EXISTING ~ja#2m1.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=4 duration=18 probability1=100 STR_VAR resource="EFF_M22A" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 duration=18 probability1=100 STR_VAR resource="rr#cnstr" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=18 probability1=100 STR_VAR resource="ja#2m1" END
-	
-	// Stream of acidic enzymes
-CREATE SPL "ja#3m1"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~ja#3m1.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10105)
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI211C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10106)
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=30 speed=3 projectile=(IDS_OF_SYMBOL (~projectl~ ~acidblob~)) + 1 STR_VAR icon="SPWI211C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=65536 probability1=100 dicesize=4 dicenumber=8 savingthrow=4 special=256 END
 	
 	// Mandibles
 CREATE ITM "ja#1m1"
@@ -97,7 +84,7 @@ CREATE ITM "ja#1m1"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10102)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IWOLF~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10320)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10319)
 	WRITE_LONG 0x60 2
 COPY_EXISTING ~ja#1m1.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -142,7 +129,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANKHEG2~
 			REPLACE_CRE_ITEM ~ja#1m1~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i11~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_MEMORIZED_SPELL ~ja#3m1~ #0 ~innate~ (1)
+			ADD_MEMORIZED_SPELL ~ja#1f1~ #0 ~innate~ (1) // Stream of acidic enzymes
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
@@ -173,10 +160,10 @@ BEGIN
 					saveSpell=13
 					enforce=1
 			END
-			DEFINE_ARRAY removeScripts BEGIN ANKHEG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW1MELGE DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY removeScripts BEGIN ANKHEG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#MG84 DW#GPSHM DW#GPSHT DW1MELGE DW#PRSHT DW1RANGE dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
 			DEFINE_ARRAY skipFiles BEGIN BDANKHSU END
 			LPF patchCreatureScript STR_VAR script=ja#m1 slot=Race skipFiles removeScripts END
-			DEFINE_ARRAY removeScripts BEGIN ANKHEG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#GPSHM DW#GPSHT DW1MELGE DW#PRSHT dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			DEFINE_ARRAY removeScripts BEGIN ANKHEG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#MG84 DW#GPSHM DW#GPSHT DW1MELGE DW#PRSHT DW1RANGE dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
 			DEFINE_ARRAY files BEGIN BDANKHSU END
 			LPF patchCreatureScript STR_VAR script=ja#m1su slot=Race files removeScripts END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDANKH01~) BEGIN 

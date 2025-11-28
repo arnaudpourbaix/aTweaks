@@ -55,7 +55,9 @@ class TargetService {
   ): ObjectIdentifier | AllegianceIdentifier | string[] {
     try {
       let results = this.getList(target as TargetListName);
-      // if (randomOrder) results = this.utils.shuffleArray(results); // TODO: disable to prevent file changes (since generated sources are committed)
+      if (randomOrder) {
+        // results = utils.shuffleArray(results); // TODO: disable to prevent file changes (since generated sources are committed)
+      }
       return results.slice(0, limit ?? results.length);
     } catch {
       return target as ObjectIdentifier | AllegianceIdentifier;

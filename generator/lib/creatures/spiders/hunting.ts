@@ -103,7 +103,7 @@ export const SPIDER_HUNTING: RawCreature = {
   abilities: [
     {
       name: "Leap Attack",
-      target: { name: "FarthestEnemies", random: true },
+      target: { name: "FarthestEnemies", randomOrder: true },
       minRange: 5,
       range: 30,
       spell: {

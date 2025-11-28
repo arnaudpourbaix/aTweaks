@@ -3,15 +3,14 @@ import path from "path";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { Creature } from "../../model/creature/creature";
+import { CreatureFamily } from "../../model/creature/family";
 import { State } from "../../state";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
-import { CreatureFamily } from "../../model/creature/family";
-import weiduProjectileService from "./weidu-projectile.service";
-import weiduEffectService from "./weidu-effect.service";
-import weiduSpellService from "./weidu-spell.service";
 import weiduItemService from "./weidu-item.service";
+import weiduProjectileService from "./weidu-projectile.service";
+import weiduSpellService from "./weidu-spell.service";
 
 class WeiduFamilyService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
@@ -41,7 +40,7 @@ class WeiduFamilyService extends AbstractWeiduService {
 
   generateFamilyData(family: CreatureFamily) {
     const lines = this.initLines();
-    // weiduProjectileService.createProjectiles(lines, family);
+    weiduProjectileService.createProjectiles(lines, family.projectiles);
     // weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     weiduSpellService.createSpells(lines, family.spells);
     weiduItemService.createItems(lines, family.items);

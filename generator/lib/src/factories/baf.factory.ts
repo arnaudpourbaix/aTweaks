@@ -14,7 +14,6 @@ class BafFactory {
     reverse?: boolean;
     random?: boolean;
     comment?: string;
-    inBetweenStatements?: Statements;
   }): void => {
     p.reverse = p.reverse ?? false;
     p.random = p.random ?? false;
@@ -24,13 +23,18 @@ class BafFactory {
       const triggers = utils.replaceTriggerTokens(p.triggers, [
         { key: GLOBAL_CONFIG.tokens.target, value: target },
       ]);
-      if (p.random && index < targets.length - 1)
-        triggers.push({
-          name: "RandomNumLT",
-          params: [max, Math.round(max / (targets.length - index))],
-        });
+      if (p.random && index < targets.length - 1) {
+        // FIXME: random is disabled because it has a critical issue.
+        // let's say it targets 6 nearest enemies, each enemy has an equal chance to be selected
+        // if there are 6 enemies, this is working as intended
+        // if there are 3 enemies, there is 50% of no target selection, which is not intended
+        // NumCreatureGT could help but it would make code more complex
+        // triggers.push({
+        //   name: "RandomNumLT",
+        //   params: [max, Math.round(max / (targets.length - index))],
+        // });
+      }
       const actionTarget = target === "Myself" ? "Myself" : "LastSeenBy";
-      //TODO: if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,

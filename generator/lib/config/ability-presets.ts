@@ -193,7 +193,7 @@ export const ABILITY_PRESETS: {
           name: "NearestEnemies",
           includeStatus: ["Able"],
           limit: 6,
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -207,7 +207,7 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.ConeOfCold,
     ability: {
       name: "ability.coneOfCold",
-      targets: [{ name: "NearestEnemies", random: true }],
+      targets: [{ name: "NearestEnemies", randomOrder: true }],
       spell: {
         id: "WIZARD_CONE_OF_COLD",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -219,7 +219,7 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.MagicMissiles,
     ability: {
       name: "ability.magicMissiles",
-      targets: [{ name: "PCSpellcasters", random: true }],
+      targets: [{ name: "PCSpellcasters", randomOrder: true }],
       spell: {
         id: "WIZARD_MAGIC_MISSILE",
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -314,7 +314,7 @@ export const ABILITY_PRESETS: {
               negation: true,
             },
           ],
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -337,7 +337,7 @@ export const ABILITY_PRESETS: {
               params: ["OUTDOOR"],
             },
           ],
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -354,7 +354,7 @@ export const ABILITY_PRESETS: {
       targets: [
         {
           name: "FarthestEnemies",
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -372,7 +372,7 @@ export const ABILITY_PRESETS: {
         {
           name: "PCSpellcasters",
           includeStatus: ["Able"],
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -390,7 +390,7 @@ export const ABILITY_PRESETS: {
         {
           name: "NearestEnemies",
           includeStatus: ["Able"],
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -408,7 +408,7 @@ export const ABILITY_PRESETS: {
         {
           name: "PCSpellcasters",
           includeStatus: ["Able"],
-          random: true,
+          randomOrder: true,
         },
       ],
       spell: {
@@ -425,7 +425,7 @@ export const ABILITY_PRESETS: {
       targets: [
         {
           name: "Players",
-          random: true,
+          randomOrder: true,
         },
       ],
       range: 900,

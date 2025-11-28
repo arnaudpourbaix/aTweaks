@@ -23,12 +23,12 @@ class AbilityFactory {
     // Strong melee form in melee
     // Strong range in ranged
     const resources = [
-      "SPWI495", // Spider
-      "SPWI496", // Mustard Jelly
-      "DW-PSOM", // Ogre Mage
+      "SPWI495", // Spider, attack: 1-4 poison, apr: 2, ac: 4, dex: 17, str: 15, movement: 160%
+      "SPWI496", // Mustard Jelly, attack: 5-20 poison, ac: 4, dex: 17, str: 15, movement: 160%
+      "DW-PSOM", // Ogre Mage, attack: 1-10, ac: 4, dex: 12, str: 18/100
+      "DW-PSHG", // Hill Giant Barbarian, attack: 2-16, ac: 3, dex: 10, str: 19
+      "DW-PSHH", // Hell Hound, attack: 1-10 + 1-6 fire, ac: 4, dex: 15, str: 18, 100% resist fire, -50% resist cold
       "SPWI493", // Flind
-      "DW-PSHG", // Hill Giant Barbarian
-      "DW-PSHH", // Hell Hound
       "SPWI494", // Ogre
       "SPWI497", // Brown Bear
       "SPWI490", // Natural Form

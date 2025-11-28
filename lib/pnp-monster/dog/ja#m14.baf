@@ -123,55 +123,52 @@ END
 
 // Blink
 IF
-	HaveSpellRES("ja#1m14")
+	HaveSpellRES("ja#1f7")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FarthestEnemyOf(Myself),WEAPON)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1f7",LastSeenBy(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("ja#1m14")
+	HaveSpellRES("ja#1f7")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondFarthestEnemyOf(Myself),WEAPON)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1f7",LastSeenBy(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("ja#1m14")
+	HaveSpellRES("ja#1f7")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1f7",LastSeenBy(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 END
 
 IF
-	HaveSpellRES("ja#1m14")
+	HaveSpellRES("ja#1f7")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FourthFarthestEnemyOf(Myself),WEAPON)
 	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
@@ -181,7 +178,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m14",LastSeenBy(Myself))
+		ForceSpellRES("ja#1f7",LastSeenBy(Myself))
 		AttackOneRound(LastSeenBy(Myself))
 END
 

@@ -101,6 +101,10 @@ export interface Item {
    */
   copyFrom?: string;
   /**
+   * Used for retrieving an item inside family factories
+   */
+  id?: number;
+  /**
    * Will appear in documentation (default: true)
    */
   doc: boolean;

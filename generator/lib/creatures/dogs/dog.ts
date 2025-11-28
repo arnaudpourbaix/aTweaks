@@ -1,6 +1,8 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import creatureFactory from "../../src/factories/creature.factory";
+import { Creature } from "../../src/model/creature/creature";
+import { CreatureFamily } from "../../src/model/creature/family";
 import { BaseEffect } from "../../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -16,254 +18,220 @@ import {
   TranslucencyTypeEnum,
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { PartialWeapon } from "../../src/model/spell-item/spell-item";
+import { WeaponCastSpell } from "../../src/model/spell-item/spell-item";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-const createJaws = (payload: {
-  diceSize: number;
-  diceThrown: number;
-}): {
-  weapon: PartialWeapon;
-} => ({
-  weapon: {
-    stringRef: "monster.cat.weapon.jaws",
-    icon: MonsterItemIconEnum.Jaws,
-    equippedSlot: ["WEAPON1"],
-    header: {
-      type: ItemAbilityTypeEnum.Melee,
-      diceThrown: payload.diceThrown,
-      diceSize: payload.diceSize,
-      damageType: AbilityDamageTypeEnum.Piercing,
-      speed: 3,
-      abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-    },
-  },
-});
+enum Ids {
+  Blink,
+}
 
-export const createDogs = () => {
-  /**
-   * Wild dog
-   */
-  const wild = creatureFactory.create({
-    monster: MonsterEnum.WildDog,
-    family: MonsterFamilyEnum.Dog,
-    name: "monster.dog.name.wild",
-    files: [
-      "BDBDOG",
-      "BDDEADOG",
-      "DOGWI",
-      "DOGWISU",
-      "BDCRUDOG",
-      "BDDOG",
-      "DW#RNDWI",
-      "BDDOGW01", // Little Wanderer
-    ],
-    data: {
-      level1: 1,
-      bonusHp: 1,
-      strength: 12,
-      dexterity: 17,
-      constitution: 15,
-      intelligence: 4,
-      wisdom: 13,
-      charisma: 11,
-      ac: 7,
-      thac0: 19,
-      apr: 1,
-      xpv: 35,
-      alignment: "NEUTRAL",
-      morale: 6,
-      general: "MONSTER",
-      race: "DOG",
-      class: "DOG_WILD",
-      gender: "MALE",
-      size: "Small",
-    },
-  });
-  wild.setAdditionalData({
-    movement: { value: 15 },
-    removeItems: ["P1-4"],
-    scriptLocation: "Default",
-  });
-  wild.addWeapon(createJaws({ diceThrown: 1, diceSize: 4 }));
-  wild.setBehavior({ dialog: ["BDDOGW01"] });
-  wild.setAdjustments([
-    { files: ["DOGWISU"], summon: true },
-    { files: ["BDDOG"], data: { class: "INNOCENT" } },
-    { files: ["BDDEADOG"], additionalData: { scriptLocation: "None" } },
-  ]);
-  wild.validate();
+export class DogFamily extends CreatureFamily {
+  constructor() {
+    super(MonsterFamilyEnum.Dog);
+    this.createBlink();
+    this.addCreature(this.wildDog());
+    this.addCreature(this.warDog());
+    this.addCreature(this.blinkDog());
+    this.addCreature(this.spectralHound());
+  }
 
   /**
-   * War dog
+   * Wild Dog
    */
-  const war = creatureFactory.create({
-    monster: MonsterEnum.WarDog,
-    family: MonsterFamilyEnum.Dog,
-    name: "monster.dog.name.war",
-    files: [
-      "BDPRISD1",
-      "BDPRISD2",
-      "DOGWA",
-      "DOGWASU",
-      "DW#RNDWA",
-      "UBNIMDOG",
-      "NTPOOCH", // Pooch
-    ],
-    data: {
-      level1: 2,
-      bonusHp: 2,
-      strength: 12,
-      dexterity: 17,
-      constitution: 15,
-      intelligence: 4,
-      wisdom: 13,
-      charisma: 11,
-      ac: 6,
-      apr: 1,
-      xpv: 65,
-      alignment: "NEUTRAL",
-      morale: 9,
-      general: "MONSTER",
-      race: "DOG",
-      class: "DOG_WAR",
-      gender: "MALE",
-      size: "Medium",
-    },
-  });
-  war.setAdditionalData({
-    movement: { value: 12 },
-    removeItems: ["P2-8"],
-    scriptLocation: "Default",
-  });
-  war.addWeapon(createJaws({ diceThrown: 2, diceSize: 4 }));
-  war.setAdjustments([
-    { files: ["DOGWASU"], summon: true },
-    { files: ["UBNIMDOG"], additionalData: { scriptLocation: "None" } },
-  ]);
-  war.validate();
-
-  /**
-   * Blink dog
-   */
-  const blinkDog = creatureFactory.create({
-    monster: MonsterEnum.BlinkDog,
-    family: MonsterFamilyEnum.Dog,
-    name: "monster.dog.name.blink",
-    files: ["DOGBLINK"],
-    data: {
-      level1: 4,
-      strength: 12,
-      dexterity: 17,
-      constitution: 15,
-      intelligence: 9,
-      wisdom: 13,
-      charisma: 11,
-      ac: 5,
-      apr: 1,
-      xpv: 270,
-      alignment: "NEUTRAL",
-      morale: 12,
-      general: "MONSTER",
-      race: "DOG",
-      class: "DOG_WILD",
-      gender: "MALE",
-      size: "Medium",
-    },
-  });
-  blinkDog.setAdditionalData({
-    movement: { value: 12 },
-    removeItems: ["P1-6"],
-    removeScripts: ["PSPIDER"],
-    scriptLocation: "Default",
-  });
-  blinkDog.addWeapon(createJaws({ diceThrown: 1, diceSize: 6 }));
-  const blink = blinkDog.addSpell({
-    memorizedCount: 1,
-    icon: SPELLS.DimensionDoor,
-    options: {
-      renew: 1,
-    },
-    name: "monster.dog.ability.blink",
-    headers: [
-      {
-        type: ItemAbilityTypeEnum.Melee,
-        range: 30,
-        effects: [
-          {
-            opcode: EffectTypeEnum.Teleport,
-            type: EffectTeleportTypeEnum.Default,
-            target: EffectTargetEnum.Self,
-          },
-          {
-            opcode: EffectTypeEnum.Thac0Bonus,
-            timing: EffectTimingEnum.InstantLimited,
-            duration: 6,
-            type: EffectModifierTypeEnum.Increment,
-            probability1: 75,
-            value: 2,
-            target: EffectTargetEnum.Self,
-          },
-        ],
+  private wildDog() {
+    const wild = creatureFactory.create({
+      monster: MonsterEnum.WildDog,
+      family: MonsterFamilyEnum.Dog,
+      name: "monster.dog.name.wild",
+      files: [
+        "BDBDOG",
+        "BDDEADOG",
+        "DOGWI",
+        "DOGWISU",
+        "BDCRUDOG",
+        "BDDOG",
+        "DW#RNDWI",
+        "BDDOGW01", // Little Wanderer
+      ],
+      data: {
+        level1: 1,
+        bonusHp: 1,
+        strength: 12,
+        dexterity: 17,
+        constitution: 15,
+        intelligence: 4,
+        wisdom: 13,
+        charisma: 11,
+        ac: 7,
+        thac0: 19,
+        apr: 1,
+        xpv: 35,
+        alignment: "NEUTRAL",
+        morale: 6,
+        general: "MONSTER",
+        race: "DOG",
+        class: "DOG_WILD",
+        gender: "MALE",
+        size: "Small",
       },
-    ],
-    ability: {
-      targets: [{ name: "FarthestEnemies", random: true }],
-      spell: {
-        type: "force",
+    });
+    wild.setAdditionalData({
+      movement: { value: 15 },
+      removeItems: ["P1-4"],
+      scriptLocation: "Default",
+    });
+    this.createJaws(wild, 1, 4);
+    wild.setBehavior({ dialog: ["BDDOGW01"] });
+    wild.setAdjustments([
+      { files: ["DOGWISU"], summon: true },
+      { files: ["BDDOG"], data: { class: "INNOCENT" } },
+      { files: ["BDDEADOG"], additionalData: { scriptLocation: "None" } },
+    ]);
+    return wild;
+  }
+
+  /**
+   * War Dog
+   */
+  private warDog() {
+    const war = creatureFactory.create({
+      monster: MonsterEnum.WarDog,
+      family: MonsterFamilyEnum.Dog,
+      name: "monster.dog.name.war",
+      files: [
+        "BDPRISD1",
+        "BDPRISD2",
+        "DOGWA",
+        "DOGWASU",
+        "DW#RNDWA",
+        "UBNIMDOG",
+        "NTPOOCH", // Pooch
+      ],
+      data: {
+        level1: 2,
+        bonusHp: 2,
+        strength: 12,
+        dexterity: 17,
+        constitution: 15,
+        intelligence: 4,
+        wisdom: 13,
+        charisma: 11,
+        ac: 6,
+        apr: 1,
+        xpv: 65,
+        alignment: "NEUTRAL",
+        morale: 9,
+        general: "MONSTER",
+        race: "DOG",
+        class: "DOG_WAR",
+        gender: "MALE",
+        size: "Medium",
       },
-      actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
-    },
-  });
-  blinkDog.setBehavior({ abilities: [blink.ability!] });
-  blinkDog.validate();
+    });
+    war.setAdditionalData({
+      movement: { value: 12 },
+      removeItems: ["P2-8"],
+      scriptLocation: "Default",
+    });
+    this.createJaws(war, 2, 4);
+    war.setAdjustments([
+      { files: ["DOGWASU"], summon: true },
+      { files: ["UBNIMDOG"], additionalData: { scriptLocation: "None" } },
+    ]);
+    return war;
+  }
+
+  /**
+   * Blink Dog
+   */
+  private blinkDog() {
+    const blinkDog = creatureFactory.create({
+      monster: MonsterEnum.BlinkDog,
+      family: MonsterFamilyEnum.Dog,
+      name: "monster.dog.name.blink",
+      files: ["DOGBLINK"],
+      data: {
+        level1: 4,
+        strength: 12,
+        dexterity: 17,
+        constitution: 15,
+        intelligence: 9,
+        wisdom: 13,
+        charisma: 11,
+        ac: 5,
+        apr: 1,
+        xpv: 270,
+        alignment: "NEUTRAL",
+        morale: 12,
+        general: "MONSTER",
+        race: "DOG",
+        class: "DOG_WILD",
+        gender: "MALE",
+        size: "Medium",
+      },
+    });
+    blinkDog.setAdditionalData({
+      movement: { value: 12 },
+      removeItems: ["P1-6"],
+      removeScripts: ["PSPIDER"],
+      scriptLocation: "Default",
+      memorizedSpells: [
+        {
+          file: this.spell(Ids.Blink).file,
+          memorizedCount: 1,
+        },
+      ],
+    });
+    this.createJaws(blinkDog, 1, 6);
+    blinkDog.setBehavior({ abilities: [this.ability(Ids.Blink)] });
+    return blinkDog;
+  }
 
   /**
    * Spectral Hound
    */
-  const spectralHound = creatureFactory.create({
-    monster: MonsterEnum.SpectralHound,
-    family: MonsterFamilyEnum.Dog,
-    name: "monster.dog.name.spectralHound",
-    files: [
-      "BDSHA01C", // Hound Spirit
-      "DOGWAWP", // Astral Hound
-    ],
-    data: {
-      level1: 5,
-      bonusHp: 0,
-      strength: 17,
-      dexterity: 15,
-      constitution: 14,
-      intelligence: 4,
-      wisdom: 14,
-      charisma: 12,
-      ac: -1,
-      apr: 1,
-      xpv: 975,
-      alignment: "CHAOTIC_EVIL",
-      morale: 19,
-      general: "MONSTER",
-      race: "DOG",
-      class: "DOG_WAR",
-      gender: "MALE",
-      size: "Medium",
-    },
-  });
-  spectralHound.setAdditionalData({
-    movement: { value: 15 },
-    removeItems: ["FIGRING3", "IPSION", "BDSPIRIM", "DOGWAWP", "BDSHA01C"],
-    removeScripts: ["WARDOG"],
-    scriptLocation: "Default",
-  });
-  const shiftEffect: BaseEffect = {
-    timing: EffectTimingEnum.InstantLimited,
-    dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
-    duration: 36,
-  };
-  spectralHound.addWeapon({
-    ...createJaws({ diceThrown: 2, diceSize: 6 }),
-    castSpell: {
+  private spectralHound() {
+    const spectralHound = creatureFactory.create({
+      monster: MonsterEnum.SpectralHound,
+      family: MonsterFamilyEnum.Dog,
+      name: "monster.dog.name.spectralHound",
+      files: [
+        "BDSHA01C", // Hound Spirit
+        "DOGWAWP", // Astral Hound
+      ],
+      data: {
+        level1: 5,
+        bonusHp: 0,
+        strength: 17,
+        dexterity: 15,
+        constitution: 14,
+        intelligence: 4,
+        wisdom: 14,
+        charisma: 12,
+        ac: -1,
+        apr: 1,
+        xpv: 975,
+        alignment: "CHAOTIC_EVIL",
+        morale: 19,
+        general: "MONSTER",
+        race: "DOG",
+        class: "DOG_WAR",
+        gender: "MALE",
+        size: "Medium",
+      },
+    });
+    spectralHound.setAdditionalData({
+      movement: { value: 15 },
+      removeItems: ["FIGRING3", "IPSION", "BDSPIRIM", "DOGWAWP", "BDSHA01C"],
+      removeScripts: ["WARDOG"],
+      scriptLocation: "Default",
+    });
+    const shiftEffect: BaseEffect = {
+      timing: EffectTimingEnum.InstantLimited,
+      dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
+      duration: 36,
+    };
+    const astralPlaneShift: WeaponCastSpell = {
       spell: {
         name: "monster.dog.ability.astralPlaneShift",
         secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
@@ -306,10 +274,78 @@ export const createDogs = () => {
           },
         ],
       },
-    },
-  });
-  spectralHound.setAdjustments([{ files: ["BDSHA01C"], summon: true }]);
-  spectralHound.validate();
+    };
+    this.createJaws(spectralHound, 2, 6, astralPlaneShift);
+    spectralHound.setAdjustments([{ files: ["BDSHA01C"], summon: true }]);
+    return spectralHound;
+  }
 
-  return [wild, war, blinkDog, spectralHound];
-};
+  createJaws(
+    creature: Creature,
+    diceThrown: number,
+    diceSize: number,
+    castSpell?: WeaponCastSpell
+  ) {
+    return creature.addWeapon({
+      weapon: {
+        stringRef: "monster.dog.weapon.jaws",
+        icon: MonsterItemIconEnum.Jaws,
+        equippedSlot: ["WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: diceThrown,
+          diceSize: diceSize,
+          damageType: AbilityDamageTypeEnum.Piercing,
+          speed: 3,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+      castSpell,
+    });
+  }
+
+  /**
+   * Blink
+   */
+  private createBlink() {
+    return this.addSpell({
+      icon: SPELLS.DimensionDoor,
+      options: {
+        renew: 1,
+      },
+      name: "monster.dog.ability.blink",
+      id: Ids.Blink,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 30,
+          effects: [
+            {
+              opcode: EffectTypeEnum.Teleport,
+              type: EffectTeleportTypeEnum.Default,
+              target: EffectTargetEnum.Self,
+            },
+            {
+              opcode: EffectTypeEnum.Thac0Bonus,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 6,
+              type: EffectModifierTypeEnum.Increment,
+              probability1: 75,
+              value: 2,
+              target: EffectTargetEnum.Self,
+            },
+          ],
+        },
+      ],
+      ability: {
+        targets: [{ name: "FarthestEnemies", randomOrder: true }],
+        spell: {
+          type: "force",
+        },
+        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+      },
+    });
+  }
+}
+
+export const createDogs = () => new DogFamily();

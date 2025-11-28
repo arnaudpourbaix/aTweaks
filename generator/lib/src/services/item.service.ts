@@ -24,6 +24,7 @@ class ItemService {
   getItem(item: PartialItem, file: string): Item {
     const result: Item = {
       file,
+      id: item.id,
       doc: item.doc ?? true,
       copyFrom: item.copyFrom,
       stringRef: item.stringRef,

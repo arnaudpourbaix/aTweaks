@@ -64,7 +64,7 @@ import {
 import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-enum SpellIds {
+enum Ids {
   InnateDimensionDoor,
   PriestDimensionDoor,
   DryadCharm,
@@ -165,15 +165,15 @@ export class FeyFamily extends CreatureFamily {
       removeScripts: ["DRYAD"],
       memorizedSpells: [
         {
-          file: this.spell(SpellIds.InnateDimensionDoor).file,
+          file: this.spell(Ids.InnateDimensionDoor).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.SpeakWithPlants).file,
+          file: this.spell(Ids.SpeakWithPlants).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.DryadCharm).file,
+          file: this.spell(Ids.DryadCharm).file,
           memorizedCount: 3,
         },
       ],
@@ -184,9 +184,9 @@ export class FeyFamily extends CreatureFamily {
       restHeal: true,
       dialog: ["CDryad", "Ulene", "L#APEST"],
       abilities: [
-        this.ability(SpellIds.InnateDimensionDoor),
-        this.ability(SpellIds.SpeakWithPlants),
-        this.ability(SpellIds.DryadCharm),
+        this.ability(Ids.InnateDimensionDoor),
+        this.ability(Ids.SpeakWithPlants),
+        this.ability(Ids.DryadCharm),
       ],
       additionalCodes: [this.dryadTrackTarget()],
       customCodes: [
@@ -268,27 +268,27 @@ export class FeyFamily extends CreatureFamily {
       removeScripts: ["HAMA", "BDHAMADC"],
       memorizedSpells: [
         {
-          file: this.spell(SpellIds.InnateDimensionDoor).file,
+          file: this.spell(Ids.InnateDimensionDoor).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.SpeakWithPlants).file,
+          file: this.spell(Ids.SpeakWithPlants).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.DryadCharm).file,
+          file: this.spell(Ids.DryadCharm).file,
           memorizedCount: 3,
         },
         {
-          file: this.spell(SpellIds.Entangle).file,
+          file: this.spell(Ids.Entangle).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.AnimalFriendship).file,
+          file: this.spell(Ids.AnimalFriendship).file,
           memorizedCount: 1,
         },
         {
-          file: this.spell(SpellIds.DetectTraps).file,
+          file: this.spell(Ids.DetectTraps).file,
           memorizedCount: 1,
         },
       ],
@@ -312,11 +312,11 @@ export class FeyFamily extends CreatureFamily {
       restHeal: true,
       dialog: ["VAELASA"],
       abilities: [
-        this.ability(SpellIds.InnateDimensionDoor),
-        this.ability(SpellIds.SpeakWithPlants),
-        this.ability(SpellIds.Entangle),
-        this.ability(SpellIds.DryadCharm),
-        this.ability(SpellIds.AnimalFriendship),
+        this.ability(Ids.InnateDimensionDoor),
+        this.ability(Ids.SpeakWithPlants),
+        this.ability(Ids.Entangle),
+        this.ability(Ids.DryadCharm),
+        this.ability(Ids.AnimalFriendship),
         // this.ability(SpellIds.DetectTraps), // probably useless most of the times, can still be cast manually
       ],
       additionalCodes: [this.dryadTrackTarget()],
@@ -401,11 +401,11 @@ export class FeyFamily extends CreatureFamily {
       removeScripts: ["BDNYMP01", "NYMPH"],
       memorizedSpells: [
         {
-          file: this.spell(SpellIds.PriestDimensionDoor).file,
+          file: this.spell(Ids.PriestDimensionDoor).file,
           memorizedCount: 1,
         },
-        { file: this.spell(SpellIds.AnimalFriendship).file, memorizedCount: 1 },
-        { file: this.spell(SpellIds.BlindingBeauty).file, memorizedCount: 1 },
+        { file: this.spell(Ids.AnimalFriendship).file, memorizedCount: 1 },
+        { file: this.spell(Ids.BlindingBeauty).file, memorizedCount: 1 },
         { file: SPELLS.CureLightWounds, memorizedCount: 1 },
         { file: SPELLS.Bless, memorizedCount: 1 },
         { file: SPELLS.Entangle, memorizedCount: 1 },
@@ -421,8 +421,8 @@ export class FeyFamily extends CreatureFamily {
     nymph.setAttack({ melee: false });
     nymph.setBehavior({
       abilities: [
-        this.ability(SpellIds.BlindingBeauty),
-        this.ability(SpellIds.PriestDimensionDoor),
+        this.ability(Ids.BlindingBeauty),
+        this.ability(Ids.PriestDimensionDoor),
         {
           preset: SPELLS.CallWoodlandBeeings,
           spell: {
@@ -472,7 +472,7 @@ export class FeyFamily extends CreatureFamily {
             remove: true,
           },
         },
-        this.ability(SpellIds.AnimalFriendship),
+        this.ability(Ids.AnimalFriendship),
         {
           preset: SPELLS.CureLightWounds,
           spell: {
@@ -585,8 +585,8 @@ export class FeyFamily extends CreatureFamily {
       ],
       scriptLocation: "Race",
       memorizedSpells: [
-        { file: this.spell(SpellIds.CharmSong).file, memorizedCount: 1 },
-        { file: this.spell(SpellIds.FogCloud).file, memorizedCount: 1 },
+        { file: this.spell(Ids.CharmSong).file, memorizedCount: 1 },
+        { file: this.spell(Ids.FogCloud).file, memorizedCount: 1 },
         { file: SPELLS.PolymorphSelf, memorizedCount: 1 },
         { file: SPELLS.ImprovedInvisibility, memorizedCount: 1 },
       ],
@@ -620,7 +620,7 @@ export class FeyFamily extends CreatureFamily {
               castingLevel: 1,
               timing: EffectTimingEnum.InstantPermanentUntilDeath,
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-              resource: this.spell(SpellIds.TouchOfTranquility).file,
+              resource: this.spell(Ids.TouchOfTranquility).file,
             },
           ],
         },
@@ -640,19 +640,19 @@ export class FeyFamily extends CreatureFamily {
           },
           disableInterrupt: true,
         },
-        this.ability(SpellIds.CharmSong),
-        this.ability(SpellIds.TouchOfTranquility),
-        this.ability(SpellIds.FogCloud),
+        this.ability(Ids.CharmSong),
+        this.ability(Ids.TouchOfTranquility),
+        this.ability(Ids.FogCloud),
         ...abilityFactory.polymorphSelf({
           triggers: [
             {
               name: "HaveSpellRES",
-              params: [this.spell(SpellIds.CharmSong).file],
+              params: [this.spell(Ids.CharmSong).file],
               negation: true,
             },
             {
               name: "HaveSpellRES",
-              params: [this.spell(SpellIds.FogCloud).file],
+              params: [this.spell(Ids.FogCloud).file],
               negation: true,
             },
             {
@@ -677,7 +677,7 @@ export class FeyFamily extends CreatureFamily {
                 },
                 {
                   name: "HaveSpellRES",
-                  params: [this.spell(SpellIds.CharmSong).file],
+                  params: [this.spell(Ids.CharmSong).file],
                 },
               ],
               responses: [
@@ -709,7 +709,7 @@ export class FeyFamily extends CreatureFamily {
         spellType: SpellTypeEnum.Innate,
         renew: 1,
       }),
-      id: SpellIds.InnateDimensionDoor,
+      id: Ids.InnateDimensionDoor,
       ability: {
         preset: PRESET_NAMES.DimensionDoorOffscreen,
         spell: {
@@ -725,7 +725,7 @@ export class FeyFamily extends CreatureFamily {
         spellLevel: 1,
         spellType: SpellTypeEnum.Priest,
       }),
-      id: SpellIds.PriestDimensionDoor,
+      id: Ids.PriestDimensionDoor,
       ability: {
         preset: PRESET_NAMES.DimensionDoorOffscreen,
         spell: {
@@ -743,7 +743,7 @@ export class FeyFamily extends CreatureFamily {
   private createCharm() {
     return this.addSpell({
       name: "monster.fey.ability.dryadDireCharm",
-      id: SpellIds.DryadCharm,
+      id: Ids.DryadCharm,
       icon: SPELLS.DireCharm,
       castingSound: "CAS_M05",
       flags: [SpellFlagEnum.BreakSanctuary],
@@ -787,7 +787,7 @@ export class FeyFamily extends CreatureFamily {
   private createSpeakWithPlants() {
     return this.addSpell({
       name: "monster.fey.ability.speakWithPlants.name",
-      id: SpellIds.SpeakWithPlants,
+      id: Ids.SpeakWithPlants,
       description: "monster.fey.ability.speakWithPlants.description",
       icon: "RR#FSPKP",
       castingSound: "CAS_P02",
@@ -860,7 +860,7 @@ export class FeyFamily extends CreatureFamily {
     } satisfies BaseEffect;
     return this.addSpell({
       name: "monster.fey.ability.entangle.name",
-      id: SpellIds.Entangle,
+      id: Ids.Entangle,
       description: "monster.fey.ability.entangle.description",
       icon: SPELLS.Entangle,
       castingSound: "CAS_P08",
@@ -968,7 +968,7 @@ export class FeyFamily extends CreatureFamily {
     } satisfies BaseEffect;
     return this.addSpell({
       name: "monster.fey.ability.animalFriendship.name",
-      id: SpellIds.AnimalFriendship,
+      id: Ids.AnimalFriendship,
       description: "monster.fey.ability.animalFriendship.description",
       icon: SPELLS.CharmPersonOrAnimal,
       flags: [SpellFlagEnum.CastableWhenSilenced],
@@ -1043,7 +1043,7 @@ export class FeyFamily extends CreatureFamily {
   private createDetectTraps() {
     return this.addSpell({
       name: "monster.fey.ability.detectTraps.name",
-      id: SpellIds.DetectTraps,
+      id: Ids.DetectTraps,
       description: "monster.fey.ability.detectTraps.description",
       castingSound: "CAS_P04",
       flags: [SpellFlagEnum.OutdoorsOnly],
@@ -1155,7 +1155,7 @@ export class FeyFamily extends CreatureFamily {
     });
     return this.addSpell({
       name: "monster.fey.ability.blindingBeauty.name",
-      id: SpellIds.BlindingBeauty,
+      id: Ids.BlindingBeauty,
       description: "monster.fey.ability.blindingBeauty.description",
       spellType: SpellTypeEnum.Innate,
       icon: SPELLS.BlindingBeauty,
@@ -1270,7 +1270,7 @@ export class FeyFamily extends CreatureFamily {
     });
     return this.addSpell({
       name: "monster.fey.ability.charmSong.name",
-      id: SpellIds.CharmSong,
+      id: Ids.CharmSong,
       description: "monster.fey.ability.charmSong.description",
       icon: SPELLS.DireCharm,
       castingSound: "SIRIN05",
@@ -1339,7 +1339,7 @@ export class FeyFamily extends CreatureFamily {
   private createFogCloud() {
     return this.addSpell({
       name: "monster.fey.ability.fogCloud.name",
-      id: SpellIds.FogCloud,
+      id: Ids.FogCloud,
       description: "monster.fey.ability.fogCloud.description",
       icon: "SPWI204",
       castingSound: "CAS_M08",
@@ -1390,7 +1390,7 @@ export class FeyFamily extends CreatureFamily {
     } satisfies BaseEffect;
     return this.addSpell({
       name: "monster.fey.ability.touchOfTranquility.name",
-      id: SpellIds.TouchOfTranquility,
+      id: Ids.TouchOfTranquility,
       description: "monster.fey.ability.touchOfTranquility.description",
       // options: { renew: 1 },
       castingSound: "EFF_P11",
@@ -1491,7 +1491,7 @@ export class FeyFamily extends CreatureFamily {
   }
 
   private dryadTrackTarget(): AdditionalCode {
-    const file = this.spell(SpellIds.DryadCharm).file;
+    const file = this.spell(Ids.DryadCharm).file;
     return {
       location: "trackTargets",
       triggers: [{ name: "HaveSpellRES", params: [file] }],
@@ -1541,11 +1541,11 @@ export class FeyFamily extends CreatureFamily {
             triggers: [
               {
                 name: "HaveSpellRES",
-                params: [this.spell(SpellIds.InnateDimensionDoor).file],
+                params: [this.spell(Ids.InnateDimensionDoor).file],
               },
               {
                 name: "HaveSpellRES",
-                params: [this.spell(SpellIds.DetectTraps).file],
+                params: [this.spell(Ids.DetectTraps).file],
               },
             ],
           },
@@ -1553,11 +1553,11 @@ export class FeyFamily extends CreatureFamily {
         responses: responseFactory.response([
           {
             name: "RemoveSpellRES",
-            params: [this.spell(SpellIds.InnateDimensionDoor).file],
+            params: [this.spell(Ids.InnateDimensionDoor).file],
           },
           {
             name: "RemoveSpellRES",
-            params: [this.spell(SpellIds.DetectTraps).file],
+            params: [this.spell(Ids.DetectTraps).file],
           },
           actionFactory.setGlobal(globals.Wilderness, 2),
         ]),

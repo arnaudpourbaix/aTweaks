@@ -32,6 +32,10 @@ export class Creature implements BaseCreature {
   name!: TranslationKey;
   monster!: MonsterEnum;
   family!: MonsterFamilyEnum;
+  /**
+   * Used for retrieving an item inside family factories
+   */
+  id?: number;
   data!: CreatureData;
   additionalData!: CreatureAdditionalData;
   behavior!: CreatureBehavior;
@@ -118,8 +122,8 @@ export class Creature implements BaseCreature {
     return creatureFactory.addTrait(this, payload);
   }
 
-  validate() {
-    creatureFactory.validate(this);
+  validate(family: MonsterFamilyEnum) {
+    creatureFactory.validate(this, family);
   }
 }
 

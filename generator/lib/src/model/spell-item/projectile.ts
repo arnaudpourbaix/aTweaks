@@ -200,6 +200,7 @@ export interface ProjectileAreaEffectInfo {
 export interface Projectile {
   file: string;
   copyFromFile?: string;
+  id?: number;
   name: string;
   type?: ProjectileTypeEnum;
   speed?: number;

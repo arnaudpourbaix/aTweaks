@@ -7,7 +7,7 @@ import {
   SpellTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
-import { PartialProjectile, Projectile } from "../model/spell-item/projectile";
+import { PartialProjectile } from "../model/spell-item/projectile";
 import {
   PartialSpell,
   PartialSpellHeader,

@@ -71,7 +71,9 @@ class StateService {
       return result;
     });
     for (const i of State.immunities) {
-      descriptionService.generateImmunity(i);
+      if (i.type !== "resistance") {
+        descriptionService.generateImmunity(i);
+      }
     }
   }
 }

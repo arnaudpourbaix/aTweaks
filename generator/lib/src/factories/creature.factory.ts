@@ -66,6 +66,7 @@ class CreatureFactory {
     name: TranslationKey;
     monster: MonsterEnum;
     family: MonsterFamilyEnum;
+    id?: number;
     files: string[];
     newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
@@ -76,6 +77,7 @@ class CreatureFactory {
     cre.name = p.name;
     cre.monster = p.monster;
     cre.family = p.family;
+    cre.id = p.id;
     cre.files = p.files;
     cre.newFiles = p.newFiles ?? [];
     cre.data = p.data;
@@ -91,12 +93,14 @@ class CreatureFactory {
     name: TranslationKey;
     from: Creature;
     monster: MonsterEnum;
+    id?: number;
     files: string[];
   }): Creature {
     const cre = structuredClone(p.from);
     Object.setPrototypeOf(cre, p.from);
     cre.monster = p.monster;
     cre.name = p.name;
+    cre.id = p.id;
     cre.files = p.files;
     cre.newFiles = [];
     cre.items = [];
@@ -210,12 +214,6 @@ class CreatureFactory {
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (weapon.equippedSlot)
       this.equipItem(cre, cre.additionalData, file, weapon.equippedSlot);
-    if (!weapon.header.speed) {
-      weapon.header.speed = 3;
-      console.log(
-        `${figureSet.warning} default speed of ${weapon.header.speed} from item ${file}.`
-      );
-    }
     const result = itemService.getItem(weapon, file) as Weapon;
     if (castSpell) this.attachSpellToWeapon(cre, result, castSpell);
     if (grab) grabService.attachGrabToWeapon(cre, result, grab);
@@ -364,8 +362,14 @@ class CreatureFactory {
       );
   }
 
-  validate(creature: Creature) {
+  validate(creature: Creature, family: MonsterFamilyEnum) {
     let valid = true;
+    if (creature.family !== family) {
+      console.log(
+        `${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`
+      );
+      valid = false;
+    }
     if (!creature.files.length) {
       console.log(`${figureSet.warning} No files defined`);
       valid = false;

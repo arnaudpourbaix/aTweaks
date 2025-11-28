@@ -2,7 +2,7 @@ export enum MonsterFamilyEnum {
   Ankheg = 1,
   Basilisk = 2,
   Bear = 3,
-  Carrion = 4,
+  Crawler = 4,
   Cat = 5,
   Construct = 6,
   Dog = 7,

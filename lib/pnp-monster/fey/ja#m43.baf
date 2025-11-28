@@ -1413,19 +1413,8 @@ END
 // Polymorph Self
 IF
 	!GlobalTimerNotExpired("polymorph","LOCALS")
-	HaveSpellRES("SPWI493")
-	RandomNumLT(1000,167)
-THEN
-	RESPONSE #100
-		SpellRES("SPWI493",Myself)
-		SetGlobalTimer("polymorph","LOCALS",12)
-END
-
-// Polymorph Self
-IF
-	!GlobalTimerNotExpired("polymorph","LOCALS")
 	HaveSpellRES("DW-PSHG")
-	RandomNumLT(1000,200)
+	RandomNumLT(1000,167)
 THEN
 	RESPONSE #100
 		SpellRES("DW-PSHG",Myself)
@@ -1436,10 +1425,21 @@ END
 IF
 	!GlobalTimerNotExpired("polymorph","LOCALS")
 	HaveSpellRES("DW-PSHH")
-	RandomNumLT(1000,250)
+	RandomNumLT(1000,200)
 THEN
 	RESPONSE #100
 		SpellRES("DW-PSHH",Myself)
+		SetGlobalTimer("polymorph","LOCALS",12)
+END
+
+// Polymorph Self
+IF
+	!GlobalTimerNotExpired("polymorph","LOCALS")
+	HaveSpellRES("SPWI493")
+	RandomNumLT(1000,250)
+THEN
+	RESPONSE #100
+		SpellRES("SPWI493",Myself)
 		SetGlobalTimer("polymorph","LOCALS",12)
 END
 

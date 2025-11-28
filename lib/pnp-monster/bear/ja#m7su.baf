@@ -136,7 +136,7 @@ END
 // Improved stream of frost
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#2m7")
+	HaveSpellRES("ja#1f3")
 	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
@@ -148,12 +148,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#2m7",Myself)
+		ForceSpellRES("ja#1f3",Myself)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#2m7")
+	HaveSpellRES("ja#1f3")
 	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
@@ -165,12 +165,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#2m7",Myself)
+		ForceSpellRES("ja#1f3",Myself)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#2m7")
+	HaveSpellRES("ja#1f3")
 	RandomNumGT(800,640)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
@@ -182,7 +182,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#2m7",Myself)
+		ForceSpellRES("ja#1f3",Myself)
 END
 
 // Attack NoCheck enemy

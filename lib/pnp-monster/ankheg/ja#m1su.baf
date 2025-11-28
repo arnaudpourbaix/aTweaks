@@ -113,7 +113,7 @@ END
 // Stream of acidic enzymes
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.MAGE],30)
@@ -122,19 +122,18 @@ IF
 	!CheckStatGT([PC.0.0.MAGE],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE])
-	RandomNumGT(1000,100)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.MAGE_THIEF],30)
@@ -143,19 +142,18 @@ IF
 	!CheckStatGT([PC.0.0.MAGE_THIEF],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE_THIEF],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_THIEF])
-	RandomNumGT(1000,111)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.MAGE_ALL],30)
@@ -164,19 +162,18 @@ IF
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_ALL])
-	RandomNumGT(1000,125)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.THIEF],30)
@@ -185,19 +182,18 @@ IF
 	!CheckStatGT([PC.0.0.THIEF],0,SANCTUARY)
 	!StateCheck([PC.0.0.THIEF],STATE_REALLY_DEAD)
 	See([PC.0.0.THIEF])
-	RandomNumGT(1000,143)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.BARD],30)
@@ -206,19 +202,18 @@ IF
 	!CheckStatGT([PC.0.0.BARD],0,SANCTUARY)
 	!StateCheck([PC.0.0.BARD],STATE_REALLY_DEAD)
 	See([PC.0.0.BARD])
-	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.THIEF_ALL],30)
@@ -227,19 +222,18 @@ IF
 	!CheckStatGT([PC.0.0.THIEF_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.THIEF_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.THIEF_ALL])
-	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC.0.0.CLERIC],30)
@@ -248,19 +242,18 @@ IF
 	!CheckStatGT([PC.0.0.CLERIC],0,SANCTUARY)
 	!StateCheck([PC.0.0.CLERIC],STATE_REALLY_DEAD)
 	See([PC.0.0.CLERIC])
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range([PC],30)
@@ -269,19 +262,18 @@ IF
 	!CheckStatGT([PC],0,SANCTUARY)
 	!StateCheck([PC],STATE_REALLY_DEAD)
 	See([PC])
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearest([PC]),30)
@@ -290,19 +282,18 @@ IF
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#3m1")
+	HaveSpellRES("ja#1f1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearest([PC]),30)
@@ -315,8 +306,8 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#3m1")
+		ForceSpellRES("ja#1f1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1f1")
 		SetInterrupt(TRUE)
 END
 
@@ -397,9 +388,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
 		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Attack NoCheck enemy
@@ -468,9 +457,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
 		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Attack Sleep enemy
@@ -519,9 +506,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		SetInterrupt(FALSE)
 		AttackOneRound(LastSeenBy(Myself))
-		SetInterrupt(TRUE)
 END
 
 // Track players if allegiance is not GOODCUTOFF

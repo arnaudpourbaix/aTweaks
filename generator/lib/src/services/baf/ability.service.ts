@@ -1,7 +1,6 @@
 import deepmerge from "deepmerge";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { TranslationKey } from "../../../translations/i18n";
 import {
   CreatureAbility,
   CreatureAbilitySpell,

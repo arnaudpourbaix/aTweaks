@@ -411,7 +411,6 @@ IF
 	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NearestEnemyOf(Myself))
-	RandomNumLT(1000,100)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -436,7 +435,6 @@ IF
 	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOf(Myself))
-	RandomNumLT(1000,111)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -461,7 +459,6 @@ IF
 	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOf(Myself))
-	RandomNumLT(1000,125)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -486,7 +483,6 @@ IF
 	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthNearestEnemyOf(Myself))
-	RandomNumLT(1000,143)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -511,7 +507,6 @@ IF
 	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FifthNearestEnemyOf(Myself))
-	RandomNumLT(1000,167)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -536,7 +531,6 @@ IF
 	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SixthNearestEnemyOf(Myself))
-	RandomNumLT(1000,200)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -561,7 +555,6 @@ IF
 	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SeventhNearestEnemyOf(Myself))
-	RandomNumLT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -586,7 +579,6 @@ IF
 	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(EighthNearestEnemyOf(Myself))
-	RandomNumLT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -611,7 +603,6 @@ IF
 	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NinthNearestEnemyOf(Myself))
-	RandomNumLT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -662,7 +653,6 @@ IF
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_ALL])
-	RandomNumLT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -688,7 +678,6 @@ IF
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.CLERIC_ALL])
-	RandomNumLT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -714,7 +703,6 @@ IF
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.DRUID_ALL])
-	RandomNumLT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

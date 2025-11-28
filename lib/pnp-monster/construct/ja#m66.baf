@@ -131,7 +131,6 @@ IF
 	!CheckStatGT([PC.0.0.MAGE_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.MAGE_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.MAGE_ALL])
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -150,7 +149,6 @@ IF
 	!CheckStatGT([PC.0.0.CLERIC_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.CLERIC_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.CLERIC_ALL])
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -169,7 +167,6 @@ IF
 	!CheckStatGT([PC.0.0.DRUID_ALL],0,SANCTUARY)
 	!StateCheck([PC.0.0.DRUID_ALL],STATE_REALLY_DEAD)
 	See([PC.0.0.DRUID_ALL])
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -776,7 +773,6 @@ IF
 	!CheckStatGT(Player1,0,SANCTUARY)
 	!StateCheck(Player1,STATE_REALLY_DEAD)
 	See(Player1)
-	RandomNumGT(1000,167)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -794,7 +790,6 @@ IF
 	!CheckStatGT(Player2,0,SANCTUARY)
 	!StateCheck(Player2,STATE_REALLY_DEAD)
 	See(Player2)
-	RandomNumGT(1000,200)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -812,7 +807,6 @@ IF
 	!CheckStatGT(Player3,0,SANCTUARY)
 	!StateCheck(Player3,STATE_REALLY_DEAD)
 	See(Player3)
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -830,7 +824,6 @@ IF
 	!CheckStatGT(Player4,0,SANCTUARY)
 	!StateCheck(Player4,STATE_REALLY_DEAD)
 	See(Player4)
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -848,7 +841,6 @@ IF
 	!CheckStatGT(Player5,0,SANCTUARY)
 	!StateCheck(Player5,STATE_REALLY_DEAD)
 	See(Player5)
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
