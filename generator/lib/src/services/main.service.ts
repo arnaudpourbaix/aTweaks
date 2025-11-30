@@ -29,6 +29,7 @@ class MainService {
       for (const creature of family.creatures) {
         this.generateCreature(creature, families);
       }
+      documentationService.addFamily(family);
     }
     documentationService.generate();
   }
@@ -37,7 +38,6 @@ class MainService {
     if (!this.isCreatureValid(creature)) return;
     bafGeneratorService.generate(creature);
     weiduCreatureService.generateWeiduScript(creature);
-    documentationService.addCreature(creature);
   }
 
   isCreatureValid(creature: Creature) {

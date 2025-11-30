@@ -6,7 +6,7 @@ body {
 	background-image: url(./bkg_base.jpg);
 	padding: 0 10px;
 	margin: 0 auto;
-	max-width: 1125px;
+	max-width: 100rem;
 }
 
 h1 {
@@ -136,4 +136,20 @@ li {
 .abilities p, .traits p {
   white-space: pre;
   overflow-wrap: break-word;
+}
+
+.row {
+	display: flex;
+}
+
+.menu {
+	flex: 25%;
+  position: -webkit-sticky;
+  position: sticky !important;
+  top: 0 !important;
+  align-self: flex-start;
+}
+
+.main {
+	flex: 75%;
 }

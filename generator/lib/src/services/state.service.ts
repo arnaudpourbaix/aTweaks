@@ -67,6 +67,7 @@ class StateService {
             timing: EffectTimingEnum.InstantWhileEquipped,
           },
         }),
+        overrides: i.overrides ?? [],
       };
       return result;
     });

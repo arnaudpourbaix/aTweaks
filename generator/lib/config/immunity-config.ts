@@ -43,6 +43,7 @@ export const IMMUNITIES: (AtLeast<
       },
     ],
     spellGroups: ["poison"],
+    overrides: ["poisonResistance"],
   },
   {
     name: "disease",
@@ -239,6 +240,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["fireResistance"],
   },
   {
     name: "coldSpells",
@@ -262,6 +264,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["coldResistance"],
   },
   {
     name: "lightningSpells",
@@ -280,6 +283,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["lightningResistance"],
   },
   {
     name: "magic",
@@ -292,6 +296,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["magicResistance"],
   },
   {
     name: "magicDamage",
@@ -304,6 +309,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["magicDamageResistance"],
   },
   {
     name: "acid",
@@ -316,6 +322,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["acidResistance"],
   },
   {
     name: "acidSpells",
@@ -419,6 +426,7 @@ export const IMMUNITIES: (AtLeast<
       "piercingDamage",
       "missileDamage",
     ],
+    overrides: ["physicalDamageResistance"],
   },
   {
     name: "slashingDamage",
@@ -431,6 +439,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["slashingDamageResistance"],
   },
   {
     name: "crushingDamage",
@@ -443,6 +452,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["crushingDamageResistance"],
   },
   {
     name: "piercingDamage",
@@ -455,6 +465,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["piercingDamageResistance"],
   },
   {
     name: "missileDamage",
@@ -467,6 +478,7 @@ export const IMMUNITIES: (AtLeast<
         type: EffectStatisticModifierEnum.Set,
       },
     ],
+    overrides: ["missileDamageResistance"],
   },
   {
     name: "missileWeapons",

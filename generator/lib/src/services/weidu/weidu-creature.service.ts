@@ -8,12 +8,12 @@ import {
 } from "../../model/creature/creature";
 import { CREATURE_DATA, CreatureData } from "../../model/creature/data";
 import { WEAPON_SLOTS } from "../../model/creature/item";
-import { ImmunityConfig } from "../../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
-import documentationService from "../documentation.service";
+import immunityService from "../effects/immunity.service";
 import itemService from "../item.service";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
@@ -117,7 +117,12 @@ class WeiduCreatureService extends AbstractWeiduService {
       );
     }
     this.addProficiencies(lines, tab, creature.additionalData);
-    this.addImmunities(lines, tab, creature.additionalData);
+    this.addImmunities(
+      lines,
+      tab,
+      creature.additionalData.immunities,
+      creature.adjustments
+    );
     for (const effect of creature.additionalData.effects) {
       weiduEffectService.addEffect({
         lines,
@@ -231,14 +236,21 @@ class WeiduCreatureService extends AbstractWeiduService {
   private addImmunities(
     lines: CodeLine[],
     tab: number,
-    additionalData: CreatureAdditionalData
+    immunities: ImmunityName[],
+    adjustments: CreatureAdjustment[]
   ) {
-    for (const name of additionalData.immunities) {
+    for (const name of immunities) {
       const immunity = State.immunities.find(
         (i) => i.name === name
       ) as ImmunityConfig;
       if (!immunity.itemSlot) {
-        this.add(lines, `LPF ${utils.getImmunityFunctionName(name)} END`, tab);
+        const files = immunityService.getOverrides(name, adjustments);
+        this.executeCodeWithExcludedFiles(
+          lines,
+          tab,
+          `LPF ${utils.getImmunityFunctionName(name)} END`,
+          files
+        );
       }
     }
   }
@@ -560,7 +572,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     if (adjustment.additionalData.removeMemorizedSpells) {
       this.add(lines, `REMOVE_MEMORIZED_SPELLS`, tab);
     }
-    this.addImmunities(lines, tab, adjustment.additionalData);
+    this.addImmunities(lines, tab, adjustment.additionalData.immunities, []);
     this.addMemorizedSpells(
       lines,
       tab,

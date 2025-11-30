@@ -117,4 +117,5 @@ export interface ImmunityConfig {
    * Will create an item and add it into chosen slot
    */
   itemSlot?: EquippedItem;
+  overrides: ImmunityName[];
 }

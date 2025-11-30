@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import figureSet from "figures";
-import { ImmunityConfig } from "../../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { State } from "../../state";
-import { Creature } from "../../model/creature/creature";
+import { Creature, CreatureAdjustment } from "../../model/creature/creature";
 import { CreatureAdditionalData } from "../../model/creature/additional-data";
 import { EquippedItem } from "../../model/creature/item";
 import utils from "../utils/utils.service";
@@ -16,6 +16,26 @@ class ImmunityService {
         this.checkImmunities(a.additionalData, creature);
       }
     }
+  }
+
+  getOverrides(
+    immunity: ImmunityName,
+    adjustments: CreatureAdjustment[]
+  ): string[] {
+    const files = adjustments.reduce((acc, a) => {
+      const immunities = this.getImmunities(a.additionalData.immunities);
+      if (immunities.some((i) => i.overrides.includes(immunity))) {
+        acc.push(...a.files);
+      }
+      return acc;
+    }, [] as string[]);
+    return files;
+  }
+
+  private getImmunities(names: ImmunityName[]): ImmunityConfig[] {
+    return names.map(
+      (n) => State.immunities.find((i) => i.name === n) as ImmunityConfig
+    );
   }
 
   private checkImmunities(

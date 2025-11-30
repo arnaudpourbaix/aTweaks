@@ -10,19 +10,34 @@ import { State } from "../state";
 import creatureService from "./creature.service";
 import itemService from "./item.service";
 import translationService from "./translation.service";
+import { CreatureFamily } from "../model/creature/family";
+import { MonsterFamilyEnum } from "../../creatures/monster";
 
 class DocumentationService {
+  private families: string[] = [];
   private monsters: string[] = [];
 
   generate() {
     let content = fs.readFileSync("lib/templates/index.html").toString();
     const template = { text: content };
     this.replace(template, "monsters", this.monsters.join(""));
+    this.replace(template, "families", this.families.join(""));
     this.replace(template, "traits", this.getTraits());
     fs.writeFileSync(
       path.join(State.modFolder, "docs/monsters.html"),
       template.text
     );
+  }
+
+  addFamily(family: CreatureFamily) {
+    this.families.push(
+      `<li><a href="#m${family.creatures[0].monster}">${
+        MonsterFamilyEnum[family.name]
+      }</a></li>`
+    );
+    for (const creature of family.creatures) {
+      this.addCreature(creature);
+    }
   }
 
   addCreature(creature: Creature) {
@@ -32,6 +47,7 @@ class DocumentationService {
     let content = fs.readFileSync("lib/templates/monster.html").toString();
     let template = { text: content };
     let str = `${creature.data.strength}`;
+    this.replace(template, "id", `m${creature.monster}`);
     if (creature.data.exceptionalStrength)
       str += `/${creature.data.exceptionalStrength}`;
     this.replace(template, "name", translationService.from(creature.name));
