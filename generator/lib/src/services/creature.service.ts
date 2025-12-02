@@ -13,14 +13,13 @@ import {
   CreatureAutoGenerate,
 } from "../model/creature/creature";
 import { CreatureData, PartialCreatureData } from "../model/creature/data";
-import { ClassIdentifier, PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
+import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
 import {
   ItemAbilityLocationEnum,
   ItemFlagEnum,
 } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
 import itemService from "./item.service";
-import { convertMovement } from "./utils/misc.func";
 import utils from "./utils/utils.service";
 
 class CreatureService {
@@ -348,7 +347,9 @@ class CreatureService {
   }
 
   convertMovement(movement: number): number {
-    return convertMovement(movement);
+    // aVENGER was using a coef of 0.75
+    const result = Math.round(movement * 0.8);
+    return result;
   }
 
   getSavingThrows(p: Exclude<CreatureAutoGenerate["savingThrows"], undefined>) {

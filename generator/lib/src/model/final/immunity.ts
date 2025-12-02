@@ -82,6 +82,8 @@ export type ImmunityName =
   | "poison"
   | "poisonResistance"
   | "poisonSpells"
+  | "plusOneWeapons"
+  | "plusTwoWeapons"
   | "seeInvisible"
   | "skeletal"
   | "slashingDamage"

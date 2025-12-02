@@ -1,5 +1,7 @@
-import { EXISTING_SPELL_PROTECTIONS } from "../../../config/spell-protection";
-import { SpellProtectionName } from "../../../config/spell-protection-name";
+import {
+  EXISTING_SPELL_PROTECTIONS,
+  SpellProtectionName,
+} from "../../../config/spell-protection";
 import {
   BaseEffect,
   DamageEffect,

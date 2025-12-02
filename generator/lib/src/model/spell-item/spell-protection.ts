@@ -1,4 +1,4 @@
-import { SpellProtectionName } from "../../../config/spell-protection-name";
+import { SpellProtectionName } from "../../../config/spell-protection";
 import { AlignIdentifier } from "../ids/align";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { ClassIdentifier } from "../ids/class";
@@ -25,18 +25,18 @@ export type SpellProtection =
   | SpellProtectionSplstate
   | SpellProtectionNumber;
 // | SpellProtectionRow1OrRow2
-// | SpellProtectionNotRow1AndNotRow2
+// | SpellProtectionNotRow1AndNotRow2;
 
 export interface SpellProtectionRow1OrRow2 {
-  name?: SpellProtectionName;
-  row1: SpellProtectionName | number;
-  row2: SpellProtectionName | number;
+  stat: SpellProtectionStat.Row1OrRow2;
+  row1: number;
+  row2: number;
 }
 
 export interface SpellProtectionNotRow1AndNotRow2 {
-  name?: SpellProtectionName;
-  row1: SpellProtectionName | number;
-  row2: SpellProtectionName | number;
+  stat: SpellProtectionStat.NotRow1AndNotRow2;
+  row1: number;
+  row2: number;
 }
 
 export interface SpellProtectionStats extends BaseSpellProtection {
@@ -116,8 +116,8 @@ export enum SpellProtectionStat {
   SourceEqualsTarget = "0x100",
   SourceIsNotTarget = "0x101",
   CircleSize = "0x102",
-  // Row1OrRow2 = "0x103",
-  // NotRow1AndNotRow2 = "0x104",
+  Row1OrRow2 = "0x103",
+  NotRow1AndNotRow2 = "0x104",
   SourceAndTargetMoraleMatch = "0x105",
   Areatype = "0x106",
   Ea = "0x10a",
@@ -133,6 +133,7 @@ export enum SpellProtectionStat {
   SourceAndTargetEnemies = "0x114",
   SummonCreatureLimit = "0x115",
   ChapterCheck = "0x116",
+  Stat = "9999",
 }
 
 /**

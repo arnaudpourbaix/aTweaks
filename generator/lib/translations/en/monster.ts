@@ -141,6 +141,31 @@ Victims are blinded for one round, no save.`,
       },
     },
   },
+  golem: {
+    name: {
+      flesh: "Flesh Golem",
+      clay: "Clay Golem",
+      stone: "Stone Golem",
+      iron: "Iron Golem",
+      bone: "Bone Golem",
+      juggernaut: "Juggernaut Golem",
+    },
+    weapon: { fists: "Fists" },
+    ability: {
+      haste: "Haste",
+      hideousLaugh: "Hideous Laugh",
+      charge: {
+        name: "Charge",
+        description: `Gradually increases movement for 4 rounds. Peak speed is reached after 2 rounds.`,
+        end: "End charge",
+      },
+      cloudOfPoisonousGas: {
+        name: "Cloud Of Poisonous Gas",
+        description: `The gas cloud fills a 10-foot cube directly in front of it, which dissipates by the following round, assuming there is somewhere for the gas to go.
+`,
+      },
+    },
+  },
   spider: {
     webTangle: {
       name: "Web Tangle",

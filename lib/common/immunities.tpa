@@ -612,6 +612,18 @@ BEGIN
 	LPF infravision_trait END
 END
 
+DEFINE_PATCH_FUNCTION plusOneWeapons_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=1 parameter2=0 END
+	LPF normalWeapons_immunity END
+END
+
+DEFINE_PATCH_FUNCTION plusTwoWeapons_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=2 parameter2=0 END
+	LPF plusOneWeapons_immunity END
+END
+
 DEFINE_PATCH_FUNCTION poison_immunity
 BEGIN
 	INNER_ACTION BEGIN

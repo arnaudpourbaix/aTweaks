@@ -23,6 +23,7 @@ import {
   EffectDamageTypeEnum,
   EffectModifierTypeEnum,
   InvisibilityTypeEnum,
+  ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
   PoisonTypeEnum,
   RegenerationTypeEnum,
@@ -60,7 +61,9 @@ class DescriptionService {
     const results: string[] = [];
     results.push(...this.getImmunitiesDescription(immunity.immunities));
     for (const effect of immunity.effects ?? []) {
-      results.push(...this.getEffectDescription(effect));
+      results.push(
+        ...this.getEffectDescription(effect, ItemAbilityTargetEnum.Caster)
+      );
     }
     if (results.length)
       immunity.description = translationService.addCustomTranslation(results);
@@ -109,7 +112,9 @@ class DescriptionService {
     const otherEffects = item.header.effects.filter(
       (e) => e.opcode !== EffectTypeEnum.Damage
     );
-    desc.push(...this.getEffectsDescription(damageEffects));
+    desc.push(
+      ...this.getEffectsDescription(damageEffects, item.header.target!)
+    );
     if ((damage || damageEffects.length) && item.header.speed !== undefined) {
       desc.push(`Speed Factor: ${item.header.speed}`);
     }
@@ -121,7 +126,10 @@ class DescriptionService {
     }
     desc.push(...this.getImmunitiesDescription(item.immunities));
     desc.push(
-      ...this.getEffectsDescription([...item.effects, ...otherEffects])
+      ...this.getEffectsDescription(
+        [...item.effects, ...otherEffects],
+        item.header.target!
+      )
     );
     if (desc.length && item.stringRef) {
       desc.unshift(translationService.from(item.stringRef), "");
@@ -133,22 +141,30 @@ class DescriptionService {
     const desc: string[] = [];
     // desc.push(translationService.from(item.stringRef!), "");
     desc.push(...this.getImmunitiesDescription(item.immunities, true));
-    desc.push(...this.getEffectsDescription(item.effects));
+    desc.push(
+      ...this.getEffectsDescription(item.effects, ItemAbilityTargetEnum.Caster)
+    );
     item.description = translationService.addCustomTranslation(desc);
   }
 
   private generateSpellDescription(spell: Spell, header: SpellHeader) {
-    const desc: string[] = this.getEffectsDescription(header.effects);
+    const desc: string[] = this.getEffectsDescription(
+      header.effects,
+      header.target!
+    );
     spell.description = translationService.addCustomTranslation(desc);
   }
 
-  private getEffectsDescription(effects: Effect[]): string[] {
+  private getEffectsDescription(
+    effects: Effect[],
+    target: ItemAbilityTargetEnum
+  ): string[] {
     const results: string[] = [];
     for (const effect of effects) {
       if (effect.opcode === EffectTypeEnum.CastSpell) {
         results.push(...this.getItemSpellDescription(effect));
       } else {
-        results.push(...this.getEffectDescription(effect));
+        results.push(...this.getEffectDescription(effect, target));
       }
     }
     return results;
@@ -170,7 +186,10 @@ class DescriptionService {
     return results;
   }
 
-  private getEffectDescription(effect: Effect): string[] {
+  private getEffectDescription(
+    effect: Effect,
+    target: ItemAbilityTargetEnum
+  ): string[] {
     const results: string[] = [];
     if (effect.opcode === EffectTypeEnum.Damage) {
       results.push(...this.getDamage(effect));
@@ -179,7 +198,7 @@ class DescriptionService {
     } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
       results.push(...this.getArmorClassBonus(effect));
     } else if (effect.opcode === EffectTypeEnum.Paralyze) {
-      results.push(...this.getParalyze(effect));
+      results.push(...this.getParalyze(effect, target));
     } else if (effect.opcode === EffectTypeEnum.InvisibilityDetection) {
       results.push("Can see invisible creatures.");
     } else if (effect.opcode === EffectTypeEnum.Blur) {
@@ -193,14 +212,16 @@ class DescriptionService {
     } else if (effect.opcode === EffectTypeEnum.Sleep) {
       results.push(...this.getSleep(effect));
     } else if (effect.opcode === EffectTypeEnum.Slow) {
-      results.push(...this.getSlow(effect));
+      results.push(...this.getSlow(effect, target));
+    } else if (effect.opcode === EffectTypeEnum.Haste) {
+      results.push(...this.getHaste(effect, target));
     } else if (effect.opcode === EffectTypeEnum.Teleport) {
       results.push(...this.getTeleport(effect));
     } else if (
       effect.opcode === EffectTypeEnum.CharmCreature ||
       effect.opcode === EffectTypeEnum.CharmControlCreature
     ) {
-      results.push(...this.getCharm(effect));
+      results.push(...this.getCharm(effect, target));
     } else if (
       [
         EffectTypeEnum.AttackDamageBonus,
@@ -249,6 +270,19 @@ class DescriptionService {
     return effect.probability1 && effect.probability1 < 100
       ? ` (${effect.probability1}%)`
       : "";
+  }
+
+  getTarget(target: ItemAbilityTargetEnum): string {
+    switch (target) {
+      case ItemAbilityTargetEnum.Caster:
+        return "caster";
+      case ItemAbilityTargetEnum.LivingActor:
+        return "target";
+      case ItemAbilityTargetEnum.AnyPointWithinRange:
+        return "anyone within range";
+      default:
+        return "";
+    }
   }
 
   getDuration(duration?: number): string {
@@ -305,18 +339,24 @@ class DescriptionService {
     return [`Regeneration: 1 hp/${effect.amount} seconds`];
   }
 
-  private getParalyze(effect: IdsEffect): string[] {
+  private getParalyze(
+    effect: IdsEffect,
+    target: ItemAbilityTargetEnum
+  ): string[] {
     const results: string[] = [];
     //TODO: handle ids entry/id
     results.push(
-      `Paralyze target for ${this.getDuration(
+      `Paralyze ${this.getTarget(target)} for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
     );
     return results;
   }
 
-  private getCharm(effect: CharmCreatureEffect): string[] {
+  private getCharm(
+    effect: CharmCreatureEffect,
+    target: ItemAbilityTargetEnum
+  ): string[] {
     const results: string[] = [];
     let type: string = "";
     switch (effect.charmType) {
@@ -337,7 +377,7 @@ class DescriptionService {
         break;
     }
     results.push(
-      `${type} target for ${this.getDuration(
+      `${type} ${this.getTarget(target)} for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
     );
@@ -382,11 +422,19 @@ class DescriptionService {
     return results;
   }
 
-  private getSlow(effect: Effect): string[] {
+  private getSlow(effect: Effect, target: ItemAbilityTargetEnum): string[] {
     return [
-      `Slow target for ${this.getDuration(effect.duration)}${this.getSaveText(
-        effect
-      )}`,
+      `Slow ${this.getTarget(target)} for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}`,
+    ];
+  }
+
+  private getHaste(effect: Effect, target: ItemAbilityTargetEnum): string[] {
+    return [
+      `Haste ${this.getTarget(target)} for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}`,
     ];
   }
 

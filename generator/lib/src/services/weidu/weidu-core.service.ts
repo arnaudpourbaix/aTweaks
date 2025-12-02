@@ -39,11 +39,20 @@ class WeiduCoreService extends AbstractWeiduService {
         );
         value = "%value%";
       }
+      let stat: string | number = sp.stat;
+      if (typeof sp.stat === "string" && !sp.stat.startsWith("0x")) {
+        this.add(
+          this.lines,
+          `OUTER_SET stat=IDS_OF_SYMBOL (~stats~ ~${stat}~)`,
+          0
+        );
+        stat = "%stat%";
+      }
       this.add(
         this.lines,
-        `APPEND ~splprot.2da~ ~${sp.name}%TAB%${sp.stat}%TAB%${
-          value ?? -1
-        }%TAB%${sp.relation}~ UNLESS ~${sp.name}~`,
+        `APPEND ~splprot.2da~ ~${sp.name}%TAB%${stat}%TAB%${value ?? -1}%TAB%${
+          sp.relation
+        }~ UNLESS ~${sp.name}~`,
         0
       );
     }

@@ -364,6 +364,11 @@ class CreatureFactory {
 
   validate(creature: Creature, family: MonsterFamilyEnum) {
     let valid = true;
+    if (State.creatures.some((c) => c.monster === creature.monster)) {
+      throw new Error(
+        `Monster '${MonsterEnum[creature.monster]}' already declared`
+      );
+    }
     if (creature.family !== family) {
       console.log(
         `${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`

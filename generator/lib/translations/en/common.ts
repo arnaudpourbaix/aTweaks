@@ -46,6 +46,8 @@ export default {
     mindSpells:
       "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
     normalWeapons: "Immune to normal weapons",
+    plusOneWeapons: "Immune to all weapons of +1 or less enchantment",
+    plusTwoWeapons: "Immune to all weapons of +2 or less enchantment",
     backstab: "Immune to backstab",
     criticalHit: "Immune to critical hits",
     devourBrain: "Immune to devour brain ability",

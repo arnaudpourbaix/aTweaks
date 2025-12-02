@@ -73,6 +73,14 @@ export const PRESET_NAMES = {
 
 const SLEEP_TARGET_LISTS: TargetList[] = [...CHARM_TARGET_LISTS];
 
+const FEAR_TARGET_LISTS: TargetList[] = [
+  {
+    name: "PCs",
+    includeStatus: ["Able"],
+    randomOrder: true,
+  },
+];
+
 const HOLD_TARGET_LISTS: TargetList[] = [
   {
     name: "PCs",
@@ -246,6 +254,33 @@ export const ABILITY_PRESETS: {
       targets: SLEEP_TARGET_LISTS,
       spell: {
         id: "CLERIC_COMMAND",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Horror,
+    ability: {
+      name: "ability.horror",
+      targets: FEAR_TARGET_LISTS,
+      spell: {
+        id: "WIZARD_HORROR",
+        excludeStateChecks: ["STATE_PANIC"],
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.CloakOfFear,
+    ability: {
+      name: "ability.cloakOfFear",
+      targets: FEAR_TARGET_LISTS,
+      spell: {
+        id: "CLERIC_CLOAK_OF_FEAR",
+        excludeStateChecks: ["STATE_PANIC"],
+        selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,

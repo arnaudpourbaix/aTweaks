@@ -1,0 +1,109 @@
+// Generated file (don't edit)
+
+// Iron Golem
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/golem/ja#m26.baf~
+
+// Iron Golem traits
+CREATE ITM "ja#1m26"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10409)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10409)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING15~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10410)
+COPY_EXISTING ~ja#1m26.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+	END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=125 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=84 target=1 global=1 parameter1=125 parameter2=1 timing=2 probability1=100 END
+	LPF magic_immunity END
+	LPF plusTwoWeapons_immunity END
+	LPF lightning_immunity END
+
+// Fists
+CREATE ITM "ja#2m26"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10186)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10186)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IFIST~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10411)
+	WRITE_LONG 0x60 4
+COPY_EXISTING ~ja#2m26.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IFIST~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 4
+		WRITE_BYTE 0x88 10
+		WRITE_BYTE 0x8a 4
+		WRITE_SHORT 0x8e 2
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	END
+
+ACTION_FOR_EACH ~file~ IN
+	SHIRON
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~SHIRON~ BEGIN
+				LPF REMOVE_MOST_CRE_EFFECTS END
+			END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~GOLIRO~
+			REMOVE_CRE_ITEM ~IRONGOL~
+			REMOVE_CRE_ITEM ~IMMUNE3~
+			ADD_CRE_ITEM ~ja#1m26~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#2m26~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i2~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_MEMORIZED_SPELL ~ja#4f9~ #0 ~innate~ (1) // Cloud Of Poisonous Gas
+			LPF clear_proficiencies END
+			LPF patchCreature
+				INT_VAR
+					level1=18
+					strength=24
+					dexterity=9
+					constitution=20
+					intelligence=3
+					wisdom=11
+					charisma=1
+					ac=3
+					apr=1
+					xpv=13000
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					morale=20
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~GOLEM_IRON~)
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					movement=5
+					hp=174
+					thac0=3
+					saveDeath=3
+					saveWand=5
+					savePolymorph=4
+					saveBreath=4
+					saveSpell=6
+					enforce=1
+			END
+			DEFINE_ARRAY removeScripts BEGIN BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDGRSHTV BDNONIN BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#MG84 DW#GPSHM DW#GPSHT DW1MELGE DW#PRSHT DW1RANGE dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT WTASIGHT WDASIGHT wtrunsgt END
+			LPF patchCreatureScript STR_VAR script=ja#m26 removeScripts END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

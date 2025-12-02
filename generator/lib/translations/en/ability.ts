@@ -34,4 +34,6 @@ export default {
   detectInvisibility: "Detect Invisibility",
   enrage: "Enrage",
   polymorphSelf: "Polymorph Self",
+  cloakOfFear: "Cloak of Fear",
+  horror: "Horror",
 };

@@ -1,5 +1,10 @@
 import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
-import { BaseEffect, DamageEffect, Effect } from "../model/spell-item/effect";
+import {
+  BaseEffect,
+  DamageEffect,
+  Effect,
+  ModifierTypeEffect,
+} from "../model/spell-item/effect";
 import {
   CharmTypeEnum,
   EffectBonusToEnum,
@@ -17,6 +22,7 @@ import {
   SaveTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
+import creatureService from "../services/creature.service";
 import effectService from "../services/effects/effect.service";
 import { StringRefUtils } from "../services/utils/string-ref.utils";
 
@@ -332,6 +338,60 @@ class EffectFactory {
       }
     );
     return effectService.getEffects(effects);
+  }
+
+  fear(params: {
+    duration: number;
+    saveType?: SaveTypeEnum;
+    saveBonus?: number;
+    dispelResistance?: EffectDispelResistanceEnum;
+  }) {
+    const effects: Effect[] = [
+      {
+        opcode: EffectTypeEnum.Panic,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        timing: EffectTimingEnum.InstantLimited,
+        icon: PortraitIconEnum.Panic,
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: EffectTypeEnum.PlaySound,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        resource: "EFF_M07",
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: EffectTypeEnum.PlaySound,
+        timing: EffectTimingEnum.DelayPermanent,
+        resource: "EFF_E07",
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+    ];
+    return effectService.getEffects(effects);
+  }
+
+  naturalMovementSpeed(pnpValue: number): ModifierTypeEffect {
+    const effect: ModifierTypeEffect = {
+      opcode: EffectTypeEnum.MovementRateBonus2,
+      value: creatureService.convertMovement(pnpValue),
+      type: EffectModifierTypeEnum.Set,
+    };
+    return effect;
   }
 }
 

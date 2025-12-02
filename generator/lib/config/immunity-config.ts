@@ -553,6 +553,32 @@ export const IMMUNITIES: (AtLeast<
     ],
   },
   {
+    name: "plusOneWeapons",
+    type: "immunity",
+    stringRef: "common.immunity.plusOneWeapons",
+    immunities: ["normalWeapons"],
+    effects: [
+      {
+        opcode: EffectTypeEnum.ProtectionFromWeapons,
+        type: ProtectionFromWeaponsTypeEnum.Enchanted,
+        enchantment: 1,
+      },
+    ],
+  },
+  {
+    name: "plusTwoWeapons",
+    type: "immunity",
+    stringRef: "common.immunity.plusTwoWeapons",
+    immunities: ["plusOneWeapons"],
+    effects: [
+      {
+        opcode: EffectTypeEnum.ProtectionFromWeapons,
+        type: ProtectionFromWeaponsTypeEnum.Enchanted,
+        enchantment: 2,
+      },
+    ],
+  },
+  {
     name: "backstab",
     type: "immunity",
     stringRef: "common.immunity.backstab",

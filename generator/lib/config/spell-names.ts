@@ -2,6 +2,7 @@ export const SPELLS = {
   // Wizard
   Blur: "SPWI201",
   CharmPerson: "SPWI104",
+  Cloudkill: "SPWI502",
   ColorSpray: "SPWI105",
   ConeOfCold: "SPWI503",
   Darkness15Radius: "SPWI228",
@@ -13,6 +14,7 @@ export const SPELLS = {
   Fireburst: "SPWI523",
   FleshToStone: "SPWI604",
   Haste: "SPWI305",
+  Horror: "SPWI205",
   ImprovedInvisibility: "SPWI405",
   Invisibility: "SPWI206",
   MagicMissiles: "SPWI112",

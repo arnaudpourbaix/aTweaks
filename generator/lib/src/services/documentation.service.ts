@@ -1,17 +1,16 @@
 import * as fs from "fs";
 import path from "path";
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { MonsterFamilyEnum } from "../../creatures/monster";
 import { CreatureAbility } from "../model/creature/ability";
 import { Creature } from "../model/creature/creature";
+import { CreatureFamily } from "../model/creature/family";
 import { ImmunityConfig } from "../model/final/immunity";
 import { Actions } from "../model/script/actions";
-import { Item, Spell } from "../model/spell-item/spell-item";
 import { State } from "../state";
 import creatureService from "./creature.service";
 import itemService from "./item.service";
 import translationService from "./translation.service";
-import { CreatureFamily } from "../model/creature/family";
-import { MonsterFamilyEnum } from "../../creatures/monster";
 
 class DocumentationService {
   private families: string[] = [];
@@ -114,9 +113,13 @@ class DocumentationService {
       }
     }
     for (const immunity of immunities.filter((i) => i.type !== "trait")) {
-      result += `<h5>${translationService.from(immunity.stringRef!)}</h5>`;
-      if (immunity.description)
-        result += `<p>${translationService.from(immunity.description)}</p>`;
+      let text = translationService.from(immunity.stringRef!);
+      if (immunity.description) {
+        text = `<h5>${text}</h5><p>${translationService.from(
+          immunity.description
+        )}</p>`;
+      }
+      result += text;
     }
     this.replace(template, "traits", result);
   }
