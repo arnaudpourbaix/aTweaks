@@ -11,7 +11,6 @@ import { WEAPON_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
-import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import immunityService from "../effects/immunity.service";
 import itemService from "../item.service";
@@ -35,6 +34,9 @@ class WeiduCreatureService extends AbstractWeiduService {
     weiduSpellService.createSpells(lines, creature.spells);
     weiduItemService.createItems(lines, creature.items);
     this.createNewFiles(lines, 0, creature);
+    if (creature.additionalData.movement.itemFile) {
+      this.addMovementSpeedToItem(lines, 0, creature);
+    }
     this.patchCreatures(lines, 0, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     utils.writeFile(
@@ -83,6 +85,27 @@ class WeiduCreatureService extends AbstractWeiduService {
         }
       }
     }
+  }
+
+  private addMovementSpeedToItem(
+    lines: CodeLine[],
+    tab: number,
+    creature: Creature
+  ) {
+    this.add(lines, "// Attach movement speed to item", tab);
+    this.add(
+      lines,
+      `COPY_EXISTING ~${creature.additionalData.movement
+        .itemFile!}.ITM~  ~override~`,
+      tab
+    );
+    this.add(
+      lines,
+      `LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 timing=2 parameter1=${creature
+        .data.movement!} parameter2=1 global=1 END`,
+      tab + 1
+    );
+    this.add(lines, "", tab);
   }
 
   private patchCreatures(lines: CodeLine[], tab: number, creature: Creature) {
@@ -327,7 +350,10 @@ class WeiduCreatureService extends AbstractWeiduService {
     for (const key of keys) {
       const value = this.extractDataValue(key as keyof CreatureData, p.data);
       const intValue = this.getIntegerValue(value);
-      if (intValue !== undefined) {
+      if (
+        intValue !== undefined &&
+        (key !== "movement" || !p.creature.additionalData.movement.itemFile)
+      ) {
         this.add(p.lines, `${key}=${intValue}`, p.tab + 2);
         if (key === "gender") {
           this.add(p.lines, `sex=${value}`, p.tab + 2);

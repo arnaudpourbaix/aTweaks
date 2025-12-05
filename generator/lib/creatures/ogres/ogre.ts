@@ -562,7 +562,7 @@ export class OgreFamily extends CreatureFamily {
     });
     ogreMage.logging = true;
     ogreMage.setAdditionalData({
-      movement: { value: 9 },
+      movement: { value: 9, itemFile: this.item(Ids.Naginata).file },
       immunities: ["giant"],
       proficiencies: [
         { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 2 },
@@ -886,11 +886,6 @@ export class OgreFamily extends CreatureFamily {
           speed: 8,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
-        effects: [
-          {
-            ...effectFactory.naturalMovementSpeed(9),
-          },
-        ],
       },
     });
   }

@@ -18,6 +18,10 @@ COPY_EXISTING ~ja#1m32.itm~ ~override~
 	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=6 parameter2=3 timing=2 probability1=100 END
 
+// Attach movement speed to item
+COPY_EXISTING ~ja#5f10.ITM~  ~override~
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 timing=2 parameter1=7 parameter2=1 global=1 END
+
 ACTION_FOR_EACH ~file~ IN
 	BDOGRE03
 	BDWAVE16
@@ -103,7 +107,6 @@ BEGIN
 					kit=IDS_OF_SYMBOL (~kit~ ~TRUECLASS~)
 					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					movement=7
 					hp=55
 					thac0=15
 					saveDeath=11

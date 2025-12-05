@@ -216,7 +216,6 @@ COPY_EXISTING ~ja#5f10.itm~ ~override~
 	WRITE_SHORT 0xa0 50
 	WRITE_LONG 0x98 1
 	END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 global=1 parameter1=7 parameter2=1 timing=2 probability1=100 END
 
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/30.tpa" // Ogre
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/28.tpa" // Ogrillon
