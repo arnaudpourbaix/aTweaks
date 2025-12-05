@@ -115,7 +115,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ReallyForceSpellRES("ja#2f9",LastSeenBy(Myself))
+		ReallyForceSpellRES("ja#2f9",Myself)
 		RemoveSpellRES("ja#2f9")
 END
 

@@ -1107,6 +1107,14 @@ export const TRAITS: (AtLeast<
     immunities: ["infravision"],
   },
   {
+    name: "giant",
+    type: "trait",
+    stringRef: "common.traits.giant.name",
+    description: "common.traits.giant.desc",
+    itemSlot: { file: ITEMS.Giant, slot: JEWEL_SLOTS },
+    immunities: ["infravision"],
+  },
+  {
     name: "ghostVisual1",
     type: "trait",
     doc: false,

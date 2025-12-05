@@ -1,38 +1,9 @@
-// Bone Golem
-
-// Init
+// Summons are destroyed on death
 IF
-	Global("JA#INIT","LOCALS",0)
+	Die()
 THEN
 	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",1)
-		SetGlobal("JA#COMBAT","LOCALS",0)
-		SetGlobalTimer("JA#REST","LOCALS",2400)
-END
-
-// Rest (reset everything and heal if applicable)
-IF
-	Global("JA#INIT","LOCALS",1)
-	GlobalTimerExpired("JA#REST","LOCALS")
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",0)
-		Rest()
-		ApplySpell(Myself,RESTORE_FULL_HEALTH)
-END
-
-// Turn hostile if attacked
-IF
-	Allegiance(Myself,NEUTRAL)
-	OR(4)
-		AttackedBy([GOODCUTOFF],DEFAULT)
-		SpellCastOnMe([GOODCUTOFF],0)
-		TookDamage()
-		Heard([EVILCUTOFF.0.GOLEM],99)
-THEN
-	RESPONSE #100
-		Enemy()
+		DestroySelf()
 END
 
 // Detect combat
@@ -61,15 +32,15 @@ IF
 	!GlobalTimerNotExpired("JA#HELP","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(99)
+		Shout(98)
 		SetGlobalTimer("JA#HELP","LOCALS",18)
 END
 
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.GOLEM],99)
-	InMyArea([EVILCUTOFF.0.GOLEM])
+	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -78,16 +49,32 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.GOLEM],99)
-	InMyArea([EVILCUTOFF.0.GOLEM])
+	Heard(LastSummonerOf(Myself),98)
+	InMyArea(LastSummonerOf(Myself))
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
 		MoveToObject(LastHeardBy(Myself))
 END
 
+// Summon follow summoner
+IF
+	ActionListEmpty()
+	Global("JA#COMBAT","LOCALS",0)
+	!StateCheck(Myself,STATE_BLIND)
+	ActionListEmpty()
+	!See(NearestEnemyOf(Myself))
+	!See(LastSummonerOf(Myself))
+	HPGT(LastSummonerOf(Myself),0)
+	Range(LastSummonerOf(Myself),150)
+THEN
+	RESPONSE #100
+		MoveToObject(LastSummonerOf(Myself))
+END
+
 // Do nothing if...
 IF
+	ActionListEmpty()
 	OR(4)
 		Global("JA#COMBAT","LOCALS",0)
 		!Allegiance(Myself,EVILCUTOFF)
@@ -99,6 +86,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!InActiveArea(Myself)
 	!Range(NearestEnemyOf(Myself),30)
 THEN
@@ -106,159 +94,9 @@ THEN
 		NoAction()
 END
 
-// Hideous Laugh
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck([PC],STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT([PC],0,HELD)
-	!StateCheck([PC],STATE_STUNNED)
-	!StateCheck([PC],STATE_PANIC)
-	!StateCheck([PC],STATE_CONFUSED)
-	!StateCheck([PC],STATE_FEEBLEMINDED)
-	!StateCheck([PC],STATE_SLEEPING)
-	!StateCheck([PC],STATE_HELPLESS)
-	!General([PC],WEAPON)
-	!StateCheck([PC],STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_REALLY_DEAD)
-	See([PC])
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck(SecondNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT(SecondNearest([PC]),0,HELD)
-	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
-	!StateCheck(SecondNearest([PC]),STATE_PANIC)
-	!StateCheck(SecondNearest([PC]),STATE_CONFUSED)
-	!StateCheck(SecondNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(SecondNearest([PC]),STATE_SLEEPING)
-	!StateCheck(SecondNearest([PC]),STATE_HELPLESS)
-	!General(SecondNearest([PC]),WEAPON)
-	!StateCheck(SecondNearest([PC]),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
-	See(SecondNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT(ThirdNearest([PC]),0,HELD)
-	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
-	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
-	!StateCheck(ThirdNearest([PC]),STATE_CONFUSED)
-	!StateCheck(ThirdNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(ThirdNearest([PC]),STATE_SLEEPING)
-	!StateCheck(ThirdNearest([PC]),STATE_HELPLESS)
-	!General(ThirdNearest([PC]),WEAPON)
-	!StateCheck(ThirdNearest([PC]),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
-	See(ThirdNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck(FourthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT(FourthNearest([PC]),0,HELD)
-	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
-	!StateCheck(FourthNearest([PC]),STATE_PANIC)
-	!StateCheck(FourthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(FourthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(FourthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(FourthNearest([PC]),STATE_HELPLESS)
-	!General(FourthNearest([PC]),WEAPON)
-	!StateCheck(FourthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
-	See(FourthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck(FifthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT(FifthNearest([PC]),0,HELD)
-	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
-	!StateCheck(FifthNearest([PC]),STATE_PANIC)
-	!StateCheck(FifthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(FifthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(FifthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(FifthNearest([PC]),STATE_HELPLESS)
-	!General(FifthNearest([PC]),WEAPON)
-	!StateCheck(FifthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
-	See(FifthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
-IF
-	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#3f9")
-	!StateCheck(SixthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckStatGT(SixthNearest([PC]),0,HELD)
-	!StateCheck(SixthNearest([PC]),STATE_STUNNED)
-	!StateCheck(SixthNearest([PC]),STATE_PANIC)
-	!StateCheck(SixthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(SixthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(SixthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(SixthNearest([PC]),STATE_HELPLESS)
-	!General(SixthNearest([PC]),WEAPON)
-	!StateCheck(SixthNearest([PC]),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
-	See(SixthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f9",Myself)
-		RemoveSpellRES("ja#3f9")
-END
-
 // Attack NoCheck enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		General(NearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
@@ -315,6 +153,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -326,6 +165,7 @@ END
 
 // Attack Sleep enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		!StateCheck(Player1,STATE_SLEEPING)
 		CheckStatGT(Player1,0,SANCTUARY)
@@ -362,6 +202,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -374,6 +215,7 @@ END
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
@@ -389,6 +231,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
@@ -404,6 +247,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
@@ -419,6 +263,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
@@ -434,6 +279,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
@@ -449,6 +295,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
@@ -465,6 +312,7 @@ END
 // Track last seen enemy if allegiance is GOODCUTOFF
 IF
 	Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
@@ -477,16 +325,5 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
-END
-
-// Random walking (in combat) 
-IF
-	Global("JA#COMBAT","LOCALS",1)
-	ActionListEmpty()
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		RandomWalk()
-		Wait(2)
 END
 

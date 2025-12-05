@@ -5,7 +5,7 @@ import { bafFile, getFilename } from "../../src/services/misc.func";
 import { MonsterEnum } from "../monster";
 
 // Creature Id
-const id = MonsterEnum.BerserkerOgre;
+const id = MonsterEnum.OgreBerserker;
 // Script
 const script = bafFile(id);
 // Items

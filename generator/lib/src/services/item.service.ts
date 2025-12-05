@@ -7,6 +7,8 @@ import {
 } from "../model/creature/item";
 import {
   AbilityDamageTypeEnum,
+  EffectTargetEnum,
+  EffectTimingEnum,
   ItemAbilityLocationEnum,
   ItemAbilityTargetEnum,
 } from "../model/spell-item/effect.enums";
@@ -41,9 +43,16 @@ class ItemService {
       projectiles: [],
       trait: false,
     };
-    if (result.equippedSlot)
+    if (result.equippedSlot) {
       result.equippedSlot = this.getItemSlots(result.equippedSlot);
-    result.effects = effectService.getEffects(result.effects, { file });
+    }
+    result.effects = effectService.getEffects(result.effects, {
+      file,
+      base: {
+        target: EffectTargetEnum.Self,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+      },
+    });
     if (item.header) this.setHeader(result, item.header, file);
     State.items.push(result);
     return result;

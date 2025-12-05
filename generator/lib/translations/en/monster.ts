@@ -104,8 +104,7 @@ It must repeat the saving throw on the next round. On a success, the effect ends
       dryadDireCharm: "Dryad Dire Charm",
       entangle: {
         name: "Entangle",
-        description:
-          "Hamadryad can cast Entangle as the priest spell, but it won't affect its allies since her affinity with nature.",
+        description: `Hamadryad can cast Entangle as the priest spell, but it won't affect its allies since her affinity with nature.`,
       },
       speakWithPlants: {
         name: "Speak With Plants",
@@ -149,6 +148,7 @@ Victims are blinded for one round, no save.`,
       iron: "Iron Golem",
       bone: "Bone Golem",
       juggernaut: "Juggernaut Golem",
+      snow: "Snow Golem",
     },
     weapon: { fists: "Fists" },
     ability: {
@@ -161,9 +161,55 @@ Victims are blinded for one round, no save.`,
       },
       cloudOfPoisonousGas: {
         name: "Cloud Of Poisonous Gas",
-        description: `The gas cloud fills a 10-foot cube directly in front of it, which dissipates by the following round, assuming there is somewhere for the gas to go.
-`,
+        description: `The gas cloud fills a 10-foot cube directly in front of it, which dissipates by the following round, assuming there is somewhere for the gas to go.`,
       },
+      coneOfCold: `Cone of Cold
+Casting Time: 1
+Saving Throw: Breath half
+When this spell is cast, it causes a cone-shaped spray of extreme cold to spring forth.
+The cone is 30 feet long and spread out in a horizontal arc of 60 degrees in front of the caster.
+It drains heat and causes 10d4+10 cold damage, with a save vs. breath at -4 allowed for half damage.`,
+    },
+  },
+  ogre: {
+    name: {
+      ogre: "Ogre",
+      ogreBerserker: "Ogre Berserker",
+      ogreMage: "Ogre Mage",
+      halfOgre: "Half Ogre",
+      ogreShaman: "Ogre Shaman",
+      ogrillon: "Ogrillon",
+    },
+    weapon: {
+      fists: "Fists",
+      naginata: {
+        name: "Naginata",
+        description: `Similar to the glaive, the naginata is a pole weapon. Naginata were originally used by the samurai class.
+STATISTICS:
+Damage: 1D12
+Damage type: slashing
+Weight: 15
+Speed Factor: 8
+Proficiency Type: Halberds`,
+      },
+    },
+    ability: {
+      coneOfCold: `Cone of Cold
+Casting Time: 1
+Saving Throw: Breath half
+When this spell is cast, it causes a cone-shaped spray of extreme cold to spring forth.
+The cone is 60 feet long with a terminal diameter of 20 feet.
+It drains heat and causes 8d8 cold damage, with a save vs. breath at -4 allowed for half damage.`,
+    },
+    fly: {
+      name: "Fly",
+      description: `The creature affected is able to move vertically and horizontally at a rate of 18.
+This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
+Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.`,
+    },
+    gaseousForm: {
+      name: "Gaseous form",
+      description: `The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.`,
     },
   },
   spider: {

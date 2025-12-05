@@ -46,7 +46,7 @@ export enum MonsterEnum {
   Ogrillon = 28,
   HalfOgre = 29,
   Ogre = 30,
-  BerserkerOgre = 31,
+  OgreBerserker = 31,
   OgreMage = 32,
   JuggernautGolem = 33,
   Jaguar = 34,
@@ -82,4 +82,5 @@ export enum MonsterEnum {
   GargantuanSpider = 64,
   HuntingSpider = 65,
   DoomSayer = 66,
+  SnowGolem = 67,
 }

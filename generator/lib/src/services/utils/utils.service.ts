@@ -225,23 +225,22 @@ class UtilsService {
     return file;
   }
 
-  getSpellInfos(
-    file: string,
-    spells: Spell[]
-  ): { type: MemorizedSpellType; level: number } {
+  getSpellInfos(file: string): { type: MemorizedSpellType; level: number } {
     let result = this.getSpellInfosByFilename(file);
     if (result) return result;
-    const spell = spells.find((s) => s.file === file);
+    const spell = State.spells.find((s) => s.file === file);
     if (!spell) return { type: "innate", level: 1 }; // unknown case, returns innate
     if (spell?.copyFrom) result = this.getSpellInfosByFilename(spell.copyFrom);
     let type = this.getMemorizedSpellType(spell.spellType);
     if (!type && spell.options?.spellType)
       type = this.getMemorizedSpellType(spell.options.spellType);
     if (!type && result) {
-      // console.log(`${file} => fallback to copyFrom ${JSON.stringify(result)}`);
+      // console.log(`getSpellInfos: ${file} => fallback to copyFrom ${JSON.stringify(result)}`);
       return result;
     }
-    // console.log(`${file} => type: ${type}, level: ${spell.spellLevel}`);
+    // console.log(
+    //   `getSpellInfos: ${file} => type: ${type}, level: ${spell.spellLevel}`
+    // );
     return { type: type ?? "innate", level: spell.spellLevel ?? 1 };
   }
 

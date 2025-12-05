@@ -49,6 +49,7 @@ export type ImmunityName =
   | "ghostVisual1"
   | "ghostVisual2"
   | "ghostVisual3"
+  | "giant"
   | "hold"
   | "hover"
   | "incorporeal"

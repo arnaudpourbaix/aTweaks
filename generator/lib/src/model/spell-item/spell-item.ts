@@ -72,23 +72,25 @@ export interface Spell {
   /**
    * Options are applied last using a WEIDU function
    */
-  options?: {
-    spellType?: SpellTypeEnum;
-    castingTime?: number;
-    removeInvisbilityOnCast?: boolean;
-    /**
-     * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
-     */
-    renew?: number;
-    /**
-     * add racial resistances when it is relevant (default: true)
-     */
-    addRacialResistances?: boolean;
-  };
+  options?: SpellOptions;
   memorizedCount?: number;
   effectFiles: EffectFile[];
   projectiles: Projectile[];
   ability?: RawCreatureAbility;
+}
+
+export interface SpellOptions {
+  spellType?: SpellTypeEnum;
+  castingTime?: number;
+  removeInvisbilityOnCast?: boolean;
+  /**
+   * Spell will be removed and added again after set rounds, so you only need to memorize it once. (only work for innates)
+   */
+  renew?: number;
+  /**
+   * add racial resistances when it is relevant (default: true)
+   */
+  addRacialResistances?: boolean;
 }
 
 export interface Item {

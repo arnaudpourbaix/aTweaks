@@ -96,4 +96,7 @@ Because puddings do not use all of their mouth openings (which cover their expos
     mustardDesc: `This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
 Each is capable of attacking, but has only half the hit points the creature had before dividing.`,
   },
+  coneOfCold: {
+    name: "Cone of Cold",
+  },
 };

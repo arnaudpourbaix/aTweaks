@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
+import { createConeOfCold } from "../../spells/cone_of_cold";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import { Creature } from "../../src/model/creature/creature";
@@ -7,7 +8,6 @@ import { CreatureFamily } from "../../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   EffectDamageTypeEnum,
-  EffectFlagsEnum,
   EffectHasteTypeEnum,
   EffectIDSFileEnum,
   EffectStatisticModifierEnum,
@@ -28,16 +28,13 @@ import {
   ParticleColorEnum,
 } from "../../src/model/spell-item/projectile";
 import { WeaponCastSpell } from "../../src/model/spell-item/spell-item";
-import {
-  SpellProtectionRelation,
-  SpellProtectionStat,
-} from "../../src/model/spell-item/spell-protection";
 import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 enum Ids {
   Charge,
   CloudOfPoisonousGas,
+  ConeOfCold,
   Haste,
   HideousLaugh,
 }
@@ -49,12 +46,14 @@ export class GolemFamily extends CreatureFamily {
     this.createHaste();
     this.createHideousLaugh();
     this.createCloudOfPoisonousGas();
+    this.createConeOfCold();
     this.addCreature(this.flesh());
     this.addCreature(this.clay());
     this.addCreature(this.stone());
     this.addCreature(this.iron());
     this.addCreature(this.bone());
     this.addCreature(this.juggernaut());
+    this.addCreature(this.snow());
   }
 
   /**
@@ -107,6 +106,7 @@ export class GolemFamily extends CreatureFamily {
     flesh.setBehavior({
       restHeal: true,
     });
+    flesh.setAdjustments([{ files: ["TOMEGOL1"], summon: true }]);
     return flesh;
   }
 
@@ -144,7 +144,7 @@ export class GolemFamily extends CreatureFamily {
       movement: { value: 7 },
       immunities: ["construct"],
       removeScripts: ["GOLCLY01", "BPFHT"],
-      removeItems: ["GOLCLA", "RING95"],
+      removeItems: ["GOLCLA", "RING95", "IMMUNE1"],
       memorizedSpells: [
         {
           file: this.spell(Ids.Haste).file,
@@ -166,6 +166,7 @@ export class GolemFamily extends CreatureFamily {
       restHeal: true,
       abilities: [this.ability(Ids.Haste)],
     });
+    clay.setAdjustments([{ files: ["TOMEGOL2"], summon: true }]);
     return clay;
   }
 
@@ -225,6 +226,7 @@ export class GolemFamily extends CreatureFamily {
         },
       ],
     });
+    stone.setAdjustments([{ files: ["TOMEGOL3"], summon: true }]);
     return stone;
   }
 
@@ -392,7 +394,68 @@ export class GolemFamily extends CreatureFamily {
       restHeal: true,
       abilities: [this.ability(Ids.Charge)],
     });
+    juggernaut.setAdjustments([{ files: ["TOMEGOL4"], summon: true }]);
     return juggernaut;
+  }
+
+  /**
+   * Snow Golem
+   */
+  private snow() {
+    const snow = creatureFactory.create({
+      monster: MonsterEnum.SnowGolem,
+      family: MonsterFamilyEnum.Golem,
+      name: "monster.golem.name.snow",
+      files: ["UBSNOGOL"],
+      data: {
+        level1: 12,
+        strength: 19,
+        dexterity: 6,
+        constitution: 14,
+        intelligence: 3,
+        wisdom: 6,
+        charisma: 1,
+        ac: 1,
+        apr: 2,
+        xpv: 7000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_STONE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    snow.setAdditionalData({
+      movement: { value: 9 },
+      immunities: ["construct"],
+      removeItems: ["UBSNORNG", "UBSNOFST"],
+      memorizedSpells: [
+        { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
+      ],
+    });
+    snow.addTrait({
+      immunities: ["plusOneWeapons", "lightning"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ColdResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+        {
+          opcode: EffectTypeEnum.MagicalColdResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    this.createFists(snow, 2, 12, AbilityDamageTypeEnum.Crushing);
+    snow.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.ConeOfCold)],
+    });
+    return snow;
   }
 
   createFists(
@@ -494,6 +557,7 @@ export class GolemFamily extends CreatureFamily {
         spell: {
           type: "reallyForce",
           excludeStateChecks: ["STATE_HASTED"],
+          selfTarget: true,
           remove: true,
         },
         triggers: [{ name: "Delay", params: [6] }],
@@ -529,6 +593,7 @@ export class GolemFamily extends CreatureFamily {
         preset: SPELLS.CloakOfFear,
         spell: {
           type: "force",
+          remove: true,
         },
       },
     });
@@ -586,8 +651,9 @@ export class GolemFamily extends CreatureFamily {
       ],
       ability: {
         spell: {
-          selfTarget: true,
           type: "reallyForce",
+          selfTarget: true,
+          remove: true,
         },
         triggers: [
           { name: "Range", params: ["NearestEnemyOf", 5], negation: true },
@@ -611,9 +677,8 @@ export class GolemFamily extends CreatureFamily {
           type: ItemAbilityTypeEnum.Ranged,
           location: ItemAbilityLocationEnum.Ability,
           target: ItemAbilityTargetEnum.Caster,
-          //projectile: "GOLCLOUD", // The gas cloud fills a 10-foot cube directly in front of it, which dissipates by the following round
           projectile: {
-            copyFromFile: "GOLCLOUD", // dvstink
+            copyFromFile: "GOLCLOUD",
             name: "Golem poison cloud",
             particleColor: ParticleColorEnum.Green,
             areaEffectInfo: {
@@ -671,9 +736,30 @@ export class GolemFamily extends CreatureFamily {
         spell: {
           type: "reallyForce",
           selfTarget: true,
+          remove: true,
         },
       },
     });
+  }
+
+  /**
+   * Cone of cold
+   */
+  private createConeOfCold() {
+    // Snow golems are able to breathe a cone of cold once every five rounds.
+    // This functions as if the spell of that name were being cast by a 10th level wizard.
+    return this.addSpell(
+      createConeOfCold({
+        id: Ids.ConeOfCold,
+        description: "monster.golem.ability.coneOfCold",
+        options: { renew: 5 },
+        damage: {
+          diceThrown: 10,
+          diceSize: 4,
+          amount: 10,
+        },
+      })
+    );
   }
 }
 

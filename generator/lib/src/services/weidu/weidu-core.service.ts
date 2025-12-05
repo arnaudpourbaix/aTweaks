@@ -85,26 +85,10 @@ class WeiduCoreService extends AbstractWeiduService {
     this.write(this.lines, 0x3a, 8, this.getIcon(itemSlot), 1);
     if (immunity.stringRef) {
       this.writeStringRef(this.lines, 0x8, immunity.stringRef, 1);
-      //TODO:
-      // this.writeStringRef(this.lines, 0xc, immunity.stringRef, 1);
-      // const stringRef = utils.resolveStringRef(immunity.stringRef);
-      // this.add(
-      //   this.lines,
-      //   `SAY NAME1 ~${stringRef}~ SAY NAME2 ~${stringRef}~`,
-      //   1
-      // );
+      this.writeStringRef(this.lines, 0xc, immunity.stringRef, 1);
     }
     if (immunity.description) {
       this.writeStringRef(this.lines, 0x50, immunity.description, 1);
-      //TODO:
-      // this.writeStringRef(this.lines, 0x54, immunity.description, 1);
-      // this.add(
-      //   this.lines,
-      //   `SAY UNIDENTIFIED_DESC ~${utils.resolveStringRef(
-      //     immunity.description
-      //   )}~`,
-      //   1
-      // );
     }
     this.add(this.lines, `COPY_EXISTING ~${itemSlot.file}.itm~ ~override~`, 0);
     this.add(

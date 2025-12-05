@@ -29,6 +29,10 @@ export interface BaseCreature {
 }
 
 export class Creature implements BaseCreature {
+  /**
+   * Will produce usefull WEIDU logs (false by default)
+   */
+  logging!: boolean;
   name!: TranslationKey;
   monster!: MonsterEnum;
   family!: MonsterFamilyEnum;

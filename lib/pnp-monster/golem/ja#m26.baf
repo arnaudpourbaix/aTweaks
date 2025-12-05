@@ -120,6 +120,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ReallyForceSpellRES("ja#4f9",Myself)
+		RemoveSpellRES("ja#4f9")
 END
 
 IF
@@ -135,6 +136,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ReallyForceSpellRES("ja#4f9",Myself)
+		RemoveSpellRES("ja#4f9")
 END
 
 IF
@@ -150,6 +152,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ReallyForceSpellRES("ja#4f9",Myself)
+		RemoveSpellRES("ja#4f9")
 END
 
 // Attack NoCheck enemy

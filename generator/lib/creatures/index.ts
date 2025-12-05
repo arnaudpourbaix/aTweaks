@@ -8,6 +8,7 @@ import { createCarrionCrawlers } from "./crawler/crawler";
 import { createDogs } from "./dogs/dog";
 import { createFeys } from "./feys/feys";
 import { createGolems } from "./golems/golem";
+import { createOgres } from "./ogres/ogre";
 
 export const familyFactories: (() => CreatureFamily)[] = [
   createAnkhegs,
@@ -19,8 +20,7 @@ export const familyFactories: (() => CreatureFamily)[] = [
   createDogs,
   createFeys,
   createGolems,
-  //   // ...Golems,
-  //   // ...Ogres,
+  createOgres,
   //   // ...Plants,
   //   // ...Slimes,
   //   // ...Spiders,

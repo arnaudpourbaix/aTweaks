@@ -19,6 +19,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked
@@ -183,17 +184,6 @@ THEN
 		DisplayStringHead(Myself,@3002)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		UseItem("POTN14",Myself)
-END
-
-// Enrage
-IF
-	HaveSpellRES("SPCL321")
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!CheckSpellState(Myself,STATE_ENRAGED)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SpellRES("SPCL321",Myself)
 END
 
 // Attack Slowed enemy
