@@ -1,4 +1,4 @@
-import { ImmunityConfig, ImmunityName } from "../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
@@ -15,7 +15,7 @@ import {
   SleepEffect,
   StatisticModifierEffect,
   TeleportEffect,
-} from "../model/spell-item/effect";
+} from "../../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   CharmTypeEnum,
@@ -28,16 +28,16 @@ import {
   PoisonTypeEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
-} from "../model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../model/spell-item/effect.type";
+} from "../../model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import {
   Item,
   Spell,
   SpellHeader,
   Weapon,
-} from "../model/spell-item/spell-item";
-import { State } from "../state";
-import translationService from "./translation.service";
+} from "../../model/spell-item/spell-item";
+import { State } from "../../state";
+import translationService from "../translation.service";
 
 class DescriptionService {
   generateCreatureItems(items: Item[]): void {

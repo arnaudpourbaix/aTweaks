@@ -5,6 +5,7 @@ import { createConeOfCold } from "../../spells/cone_of_cold";
 import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import { CreatureFamily } from "../../src/model/creature/family";
+import { QUICK_SLOTS } from "../../src/model/creature/item";
 import {
   AbilityDamageTypeEnum,
   AnimationChangeTypeEnum,
@@ -35,13 +36,14 @@ import { AreaProjectileEnum } from "../../src/model/spell-item/projectile";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
 enum Ids {
+  ConeOfCold,
   Fly,
   GaseousForm,
+  GiantFlail,
   Naginata,
   Ogre,
   OgreLeader,
   Ogrillon,
-  ConeOfCold,
 }
 
 export class OgreFamily extends CreatureFamily {
@@ -54,12 +56,13 @@ export class OgreFamily extends CreatureFamily {
     this.createFists(Ids.OgreLeader, 2, 6);
     this.createFists(Ids.Ogrillon, 1, 6);
     this.createNaginata();
+    this.createGiantFlail();
     this.addCreature(this.ogre());
     this.addCreature(this.ogrillon());
     this.addCreature(this.halfOgre());
     this.addCreature(this.ogreMage());
-    // this.addCreature(this.berserker());
-    // this.addCreature(this.shaman());
+    this.addCreature(this.berserker());
+    this.addCreature(this.shaman());
   }
 
   /**
@@ -360,7 +363,7 @@ export class OgreFamily extends CreatureFamily {
     const halfOgre = creatureFactory.create({
       monster: MonsterEnum.HalfOgre,
       family: MonsterFamilyEnum.Ogre,
-      name: "monster.ogre.name.halfOgre",
+      name: "monster.ogre.name.half",
       files: [
         "OGREBJOR",
         "OGREHA",
@@ -399,6 +402,7 @@ export class OgreFamily extends CreatureFamily {
         general: "GIANTHUMANOID",
         race: "OGRE",
         class: "OGRE_HALFOGRE",
+        kit: "TRUECLASS",
         size: "Large",
       },
     });
@@ -466,26 +470,26 @@ export class OgreFamily extends CreatureFamily {
         },
       },
       {
-        // Tazok, level 9 berserker
+        // Tazok, level 9
         files: ["TAZOK", "TAZOK2"],
-        data: {
-          kit: "BERSERKER",
-        },
+        // data: {
+        //   kit: "BERSERKER",
+        // },
         additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 },
           ],
-          memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+          // memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
         },
       },
       {
-        // Tazok, level 11 berserker
+        // Tazok, level 11
         files: ["TAZOK2"],
         data: {
           level1: 11,
         },
         additionalData: {
-          immunities: ["fireResistance"],
+          equippedItems: [{ file: "POTN02", quantity: 1, slot: QUICK_SLOTS }],
         },
       },
       {
@@ -509,7 +513,7 @@ export class OgreFamily extends CreatureFamily {
     const ogreMage = creatureFactory.create({
       monster: MonsterEnum.OgreMage,
       family: MonsterFamilyEnum.Ogre,
-      name: "monster.ogre.name.ogreMage",
+      name: "monster.ogre.name.mage",
       files: [
         "BDOGRE03",
         "BDWAVE16",
@@ -560,7 +564,6 @@ export class OgreFamily extends CreatureFamily {
         size: "Large",
       },
     });
-    ogreMage.logging = true;
     ogreMage.setAdditionalData({
       movement: { value: 9, itemFile: this.item(Ids.Naginata).file },
       immunities: ["giant"],
@@ -615,22 +618,9 @@ export class OgreFamily extends CreatureFamily {
           },
         },
         this.ability(Ids.Fly),
-        {
-          preset: SPELLS.Domination,
-        },
-        {
-          preset: SPELLS.DireCharm,
-        },
-        {
-          preset: SPELLS.CharmPerson,
-        },
-        {
-          preset: SPELLS.PowerWordSleep,
-        },
-        {
-          preset: SPELLS.Sleep,
-        },
+        this.preset(SPELLS.Domination),
         this.ability(Ids.ConeOfCold),
+        this.preset(SPELLS.DireCharm),
         {
           preset: SPELLS.Darkness15Radius,
           spell: {
@@ -638,6 +628,10 @@ export class OgreFamily extends CreatureFamily {
           },
           timer: { name: "darkness", value: 60 },
         },
+        this.preset(SPELLS.PowerWordSleep),
+        this.preset(SPELLS.Sleep),
+        this.preset(SPELLS.CharmPerson),
+        this.ability(Ids.GaseousForm),
       ],
     });
     ogreMage.setAttack({
@@ -732,25 +726,44 @@ export class OgreFamily extends CreatureFamily {
     const berserker = creatureFactory.create({
       monster: MonsterEnum.OgreBerserker,
       family: MonsterFamilyEnum.Ogre,
-      name: "monster.ogre.name.ogre",
-      files: [],
+      name: "monster.ogre.name.berserker",
+      files: [
+        "BDOGRE02",
+        "BDOGREDS",
+        "NEOGRE",
+        "OGREBERZ",
+        "OGREGRSU",
+        "X3HOGREC", // Ogre Champion
+        "X3HOGREL", // Ogre King
+        "BDOGRE06", // Ogre Chieftain
+        "BDARBING", // Arbinge
+        "BDBERTOR", // Betror
+        "BDCHESKI", // Cheski
+        "BDEINER", // Einer
+        "BDSLUG", // Slug
+        "BDSLUG2", // Slug
+        "BDWAVE13", // Ogre Crusader
+        "BDYAROK", // Yarok
+      ],
       data: {
         level1: 4,
         bonusHp: 1,
         strength: 18,
+        exceptionalStrength: 100,
         dexterity: 8,
-        constitution: 16,
+        constitution: 17,
         intelligence: 8,
         wisdom: 7,
         charisma: 7,
-        ac: 5,
+        ac: 3,
         apr: 1,
-        xpv: 270,
+        xpv: 650,
         alignment: "CHAOTIC_EVIL",
         morale: 12,
         general: "GIANTHUMANOID",
         race: "OGRE",
-        class: "OGRE",
+        class: "FIGHTER",
+        kit: "BERSERKER",
         size: "Large",
       },
     });
@@ -758,15 +771,24 @@ export class OgreFamily extends CreatureFamily {
       movement: { value: 9 },
       immunities: ["giant"],
       proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
+        { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 3 },
       ],
-      removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
-      removeScripts: ["OGRE"],
+      removeItems: [
+        "BDOGRE02",
+        "BDOGRE06",
+        "BLUN06",
+        "SW2H01",
+        "OGREGRSU",
+        "OGRE1",
+        "BDSLUG",
+      ],
+      removeScripts: ["DVBRSKER"],
     });
-    berserker.addExistingItem(this.item(Ids.Ogre));
+    berserker.addExistingItem(this.item(Ids.GiantFlail));
     berserker.setBehavior({
       restHeal: true,
       usePotions: true,
+      useKitAbilities: true,
     });
     berserker.setAttack({
       targetPriorities: [
@@ -777,7 +799,78 @@ export class OgreFamily extends CreatureFamily {
       ],
     });
     berserker.setAdjustments([
-      //
+      { files: ["OGREGRSU"], summon: true },
+      {
+        // chieftain
+        files: [
+          "BDOGREDS",
+          "X3HOGREC",
+          "X3HOGREL",
+          "BDOGRE06",
+          "BDARBING",
+          "BDCHESKI",
+          "BDSLUG",
+          "BDSLUG2",
+          "BDBERTOR",
+          "BDEINER",
+          "BDWAVE13",
+          "BDYAROK",
+        ],
+        data: {
+          level1: 7,
+          xpv: 1400,
+          strength: 19,
+          exceptionalStrength: 0,
+        },
+        additionalData: {
+          proficiencies: [
+            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 },
+          ],
+        },
+      },
+      {
+        files: ["BDSLUG", "BDSLUG2"],
+        data: {
+          level1: 9,
+          xpv: 2000,
+        },
+        additionalData: {
+          proficiencies: [
+            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
+          ],
+        },
+      },
+      {
+        files: ["BDBERTOR", "BDEINER", "BDYAROK"],
+        data: {
+          level1: 11,
+          xpv: 2000,
+        },
+        additionalData: {
+          proficiencies: [
+            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
+          ],
+        },
+      },
+      {
+        files: ["BDYAROK"],
+        data: {
+          ac: 10,
+        },
+      },
+      {
+        // barbarian chieftain
+        files: ["BDOGRE06"],
+      },
+      {
+        files: ["X3HOGREL"],
+        data: {
+          level1: 8,
+        },
+        additionalData: {
+          scriptLocation: "Race",
+        },
+      },
     ]);
     return berserker;
   }
@@ -789,25 +882,26 @@ export class OgreFamily extends CreatureFamily {
     const shaman = creatureFactory.create({
       monster: MonsterEnum.OgreShaman,
       family: MonsterFamilyEnum.Ogre,
-      name: "monster.ogre.name.ogre",
-      files: [],
+      name: "monster.ogre.name.shaman",
+      files: ["BDOGRE05"],
       data: {
-        level1: 4,
-        bonusHp: 1,
+        level1: 5,
+        level2: 5,
+        bonusHp: 3,
         strength: 18,
         dexterity: 8,
         constitution: 16,
-        intelligence: 8,
-        wisdom: 7,
+        intelligence: 12,
+        wisdom: 13,
         charisma: 7,
         ac: 5,
         apr: 1,
-        xpv: 270,
+        xpv: 420,
         alignment: "CHAOTIC_EVIL",
         morale: 12,
         general: "GIANTHUMANOID",
         race: "OGRE",
-        class: "OGRE",
+        class: "FIGHTER_CLERIC",
         size: "Large",
       },
     });
@@ -817,13 +911,26 @@ export class OgreFamily extends CreatureFamily {
       proficiencies: [
         { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
       ],
-      removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
-      removeScripts: ["OGRE"],
+      removeItems: ["BLUN01"],
+      memorizedSpells: [
+        { file: SPELLS.Bless, memorizedCount: 1 },
+        { file: SPELLS.Command, memorizedCount: 2 },
+        { file: SPELLS.Chant, memorizedCount: 1 },
+        { file: SPELLS.HoldPerson, memorizedCount: 1 },
+      ],
     });
     shaman.addExistingItem(this.item(Ids.Ogre));
     shaman.setBehavior({
       restHeal: true,
       usePotions: true,
+      abilities: [
+        this.preset(SPELLS.Bless),
+        this.preset(SPELLS.Command),
+        this.preset(SPELLS.Chant),
+        this.preset(SPELLS.HoldPerson),
+        this.preset(SPELLS.ResistFear),
+        this.preset(SPELLS.CallLightning),
+      ],
     });
     shaman.setAttack({
       targetPriorities: [
@@ -833,9 +940,6 @@ export class OgreFamily extends CreatureFamily {
         },
       ],
     });
-    shaman.setAdjustments([
-      //
-    ]);
     return shaman;
   }
 
@@ -883,6 +987,33 @@ export class OgreFamily extends CreatureFamily {
           diceThrown: 1,
           diceSize: 12,
           damageType: AbilityDamageTypeEnum.Slashing,
+          speed: 8,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+
+  /**
+   * Giant Flail
+   */
+  createGiantFlail() {
+    return this.addWeapon({
+      weapon: {
+        id: Ids.GiantFlail,
+        stringRef: "monster.ogre.weapon.giantFlail",
+        equippedSlot: ["WEAPON1"],
+        flags: [ItemFlagEnum.Displayable],
+        animation: ItemAnimationEnum.Flail,
+        category: ItemCategoryEnum.Flails,
+        icon: "IBLUN13",
+        proficiency: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR,
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
+          diceThrown: 2,
+          diceSize: 8,
+          damageType: AbilityDamageTypeEnum.Crushing,
           speed: 8,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },

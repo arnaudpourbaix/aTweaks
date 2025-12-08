@@ -229,12 +229,15 @@ class WeiduCreatureService extends AbstractWeiduService {
         return acc;
       }, new Set<string>()),
     ];
-    this.executeCodeWithExcludedFiles(
-      lines,
-      tab,
-      `REMOVE_MEMORIZED_SPELLS`,
-      files
+    const code = this.removeMemorizedSpell(
+      creature.additionalData.removeMemorizedSpells
     );
+    this.executeCodeWithExcludedFiles(lines, tab, code, files);
+  }
+
+  private removeMemorizedSpell(value: string[] | boolean | undefined): string {
+    if (!Array.isArray(value)) return "REMOVE_MEMORIZED_SPELLS";
+    return `REMOVE_MEMORIZED_SPELL ${value.map((v) => `~${v}~`).join(" ")}`;
   }
 
   private addProficiencies(
@@ -602,7 +605,10 @@ class WeiduCreatureService extends AbstractWeiduService {
       additionalData: adjustment.additionalData,
     });
     if (adjustment.additionalData.removeMemorizedSpells) {
-      this.add(lines, `REMOVE_MEMORIZED_SPELLS`, tab);
+      const code = this.removeMemorizedSpell(
+        adjustment.additionalData.removeMemorizedSpells
+      );
+      this.add(lines, code, tab);
     }
     this.addImmunities(lines, tab, adjustment.additionalData.immunities, []);
     this.addMemorizedSpells(lines, tab, adjustment.additionalData);

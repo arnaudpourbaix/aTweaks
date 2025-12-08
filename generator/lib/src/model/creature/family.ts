@@ -20,7 +20,7 @@ import {
   WeaponCastSpell,
 } from "../spell-item/spell-item";
 import { WithRequired } from "../utility-types";
-import { RawCreatureAbility } from "./ability";
+import { CreatureAbilitySpell, RawCreatureAbility } from "./ability";
 import { Creature } from "./creature";
 
 export class CreatureFamily {
@@ -132,5 +132,11 @@ export class CreatureFamily {
     const proj = this.projectiles.find((s) => s.id === id);
     if (!proj) throw new Error(`No projectile found with id ${id}`);
     return proj;
+  }
+
+  preset(name: string) {
+    return {
+      preset: name,
+    };
   }
 }

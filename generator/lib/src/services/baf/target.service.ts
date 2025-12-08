@@ -2,26 +2,26 @@ import {
   DEFAULT_STATUS_ORDER,
   TARGET_LISTS,
   TARGET_STATUS,
-} from "../../config/target-config";
-import { TargetListName, TargetStatusName } from "../../config/target-name";
-import { Creature } from "../model/creature/creature";
+} from "../../../config/target-config";
+import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import { Creature } from "../../model/creature/creature";
 import {
   TargetList,
   TargetPriority,
   TargetStatus,
-} from "../model/script/target";
-import { AlignIdentifier } from "../model/ids/align";
-import { AllegianceIdentifier } from "../model/ids/allegiance";
-import { ClassIdentifier } from "../model/ids/class";
-import { GenderIdentifier } from "../model/ids/gender";
-import { GeneralIdentifier } from "../model/ids/general";
-import { ObjectIdentifier } from "../model/ids/object";
-import { RaceIdentifier } from "../model/ids/race";
-import { SpecificIdentifier } from "../model/ids/specific";
-import { Triggers } from "../model/script/triggers";
-import utils from "./utils/utils.service";
-import { GRAB_DEFAULT_CONFIG } from "../model/creature/grab";
-import { PartialCreatureAttack } from "../model/creature/attack";
+} from "../../model/script/target";
+import { AlignIdentifier } from "../../model/ids/align";
+import { AllegianceIdentifier } from "../../model/ids/allegiance";
+import { ClassIdentifier } from "../../model/ids/class";
+import { GenderIdentifier } from "../../model/ids/gender";
+import { GeneralIdentifier } from "../../model/ids/general";
+import { ObjectIdentifier } from "../../model/ids/object";
+import { RaceIdentifier } from "../../model/ids/race";
+import { SpecificIdentifier } from "../../model/ids/specific";
+import { Triggers } from "../../model/script/triggers";
+import utils from "../utils/utils.service";
+import { GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
+import { PartialCreatureAttack } from "../../model/creature/attack";
 
 class TargetService {
   targetObject(p: {

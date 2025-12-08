@@ -1,16 +1,16 @@
 import * as fs from "fs";
 import path from "path";
-import { GLOBAL_CONFIG } from "../../config/generate";
-import { MonsterFamilyEnum } from "../../creatures/monster";
-import { CreatureAbility } from "../model/creature/ability";
-import { Creature } from "../model/creature/creature";
-import { CreatureFamily } from "../model/creature/family";
-import { ImmunityConfig } from "../model/final/immunity";
-import { Actions } from "../model/script/actions";
-import { State } from "../state";
-import creatureService from "./creature.service";
-import itemService from "./item.service";
-import translationService from "./translation.service";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { CreatureAbility } from "../../model/creature/ability";
+import { Creature } from "../../model/creature/creature";
+import { CreatureFamily } from "../../model/creature/family";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { Actions } from "../../model/script/actions";
+import { State } from "../../state";
+import creatureService from "../creature.service";
+import itemService from "../item.service";
+import translationService from "../translation.service";
 
 class DocumentationService {
   private families: string[] = [];

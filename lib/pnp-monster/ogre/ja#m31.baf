@@ -1,4 +1,4 @@
-// Berserker Ogre
+// Ogre Berserker
 
 // Init
 IF
@@ -19,6 +19,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked
@@ -121,6 +122,17 @@ THEN
 		RandomWalkContinuous()
 END
 
+// Enrage
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpellRES("SPCL321")
+	!CheckSpellState(Myself,STATE_ENRAGED)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("SPCL321",Myself)
+END
+
 // Potion of extra healing (40hp)
 IF
 	HasItem("POTN55",Myself)
@@ -183,6 +195,18 @@ THEN
 		DisplayStringHead(Myself,@3002)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		UseItem("POTN14",Myself)
+END
+
+// Potion of fire resistance
+IF
+	HasItem("POTN02",Myself)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	RandomNumLT(888,100)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@3002)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN02",Myself)
 END
 
 // Attack Slowed enemy

@@ -40,6 +40,8 @@ export const JEWEL_SLOTS: ItemSlot[] = [
   "CLOAK",
 ];
 
+export const QUICK_SLOTS: ItemSlot[] = ["QITEM1", "QITEM2", "QITEM3"];
+
 export type WeaponSlot =
   | "WEAPON1"
   | "WEAPON2"

@@ -23,7 +23,7 @@ export interface CreatureAdditionalData {
   immunities: ImmunityName[];
 
   removeKnownSpells?: boolean;
-  removeMemorizedSpells?: boolean;
+  removeMemorizedSpells?: boolean | string[]; // TODO: new type!
   memorizedSpells: MemorizedSpell[];
 
   deleteEffectOpcodes: EffectTypeEnum[];

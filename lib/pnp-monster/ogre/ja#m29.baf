@@ -186,6 +186,18 @@ THEN
 		UseItem("POTN14",Myself)
 END
 
+// Potion of fire resistance
+IF
+	HasItem("POTN02",Myself)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	RandomNumLT(888,100)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@3002)
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		UseItem("POTN02",Myself)
+END
+
 // Attack Slowed enemy
 IF
 	OR(12)

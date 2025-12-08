@@ -50,16 +50,17 @@ import {
 import { AtLeast, WithRequired } from "../model/utility-types";
 import abilityService from "../services/baf/ability.service";
 import creatureService from "../services/creature.service";
-import descriptionService from "../services/description.service";
 import effectService from "../services/effects/effect.service";
 import grabService from "../services/effects/grab.service";
 import immunityService from "../services/effects/immunity.service";
 import itemService from "../services/item.service";
 import spellService from "../services/spell.service";
-import targetService from "../services/target.service";
+import targetService from "../services/baf/target.service";
 import translationService from "../services/translation.service";
 import { getFilename } from "../services/utils/misc.func";
 import { State } from "../state";
+import descriptionService from "../services/doc/description.service";
+import kitService from "../services/kit.service";
 
 class CreatureFactory {
   create(p: {
@@ -404,13 +405,13 @@ class CreatureFactory {
       console.log(`${figureSet.warning} No behavior defined, using defaults`);
       this.setBehavior(creature, {});
     }
-    creature.valid = valid;
     if (valid) State.creatures.push(creature);
     creatureService.check(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);
     descriptionService.generateCreatureSpells(creature.spells);
     descriptionService.generateCreatureItems(creature.items);
+    creature.valid = valid;
   }
 }
 

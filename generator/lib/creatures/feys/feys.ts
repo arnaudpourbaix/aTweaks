@@ -714,6 +714,7 @@ export class FeyFamily extends CreatureFamily {
         preset: PRESET_NAMES.DimensionDoorOffscreen,
         spell: {
           type: "force",
+          remove: true,
         },
         disableInterrupt: true,
       },
@@ -950,6 +951,7 @@ export class FeyFamily extends CreatureFamily {
         preset: SPELLS.Entangle,
         spell: {
           type: "force",
+          remove: true,
         },
         disableInterrupt: true,
       },

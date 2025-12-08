@@ -206,6 +206,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("ja#1f8","RR#TRAT")
+		RemoveSpellRES("ja#1f8")
 		Wait(1)
 		SetInterrupt(TRUE)
 END
@@ -249,6 +250,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -275,6 +277,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -301,6 +304,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -327,6 +331,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -353,6 +358,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -379,6 +385,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -405,6 +412,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -431,6 +439,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -457,6 +466,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 
@@ -483,6 +493,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#5f8",LastSeenBy(Myself))
+		RemoveSpellRES("ja#5f8")
 		SetInterrupt(TRUE)
 END
 

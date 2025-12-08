@@ -1,5 +1,4 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { KIT_ABILITIES } from "../../../config/kit-ability";
 import { POTIONS } from "../../../config/potion";
 import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { TARGET_STATUS } from "../../../config/target-config";
@@ -16,9 +15,9 @@ import { Actions } from "../../model/script/actions";
 import { CustomCodeLocation, Statements } from "../../model/script/script";
 import { TargetList } from "../../model/script/target";
 import { Triggers } from "../../model/script/triggers";
-import targetService from "../target.service";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
+import targetService from "./target.service";
 
 class StatementService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
@@ -91,13 +90,6 @@ class StatementService {
       options
     );
     this.execute(this.potions, "potions", statements, creature, options);
-    this.execute(
-      this.kitAbilities,
-      "kitAbilities",
-      statements,
-      creature,
-      options
-    );
     this.execute(this.attack, "attack", statements, creature, options);
     this.execute(
       this.trackTargets,
@@ -918,34 +910,6 @@ class StatementService {
         ];
         statements.push({
           comment: potion.name,
-          triggers,
-          responses: responseFactory.response(actions),
-        });
-      }
-    }
-  }
-
-  private kitAbilities(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions
-  ): void {
-    if (!creature.behavior.useKitAbilities) return;
-    for (const ability of KIT_ABILITIES) {
-      for (const file of ability.files) {
-        const triggers: Triggers.Trigger[] = [
-          { name: "HaveSpellRES", params: [file] },
-          triggerFactory.globalRoundTimerExpired(),
-          ...(ability.triggers ?? []),
-        ];
-        if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
-        const actions: Actions.Action[] = [
-          ...(ability.actions ?? []),
-          actionFactory.setGlobalRoundTimer(),
-          { name: "SpellRES", params: [file, "Myself"] },
-        ];
-        statements.push({
-          comment: ability.name,
           triggers,
           responses: responseFactory.response(actions),
         });

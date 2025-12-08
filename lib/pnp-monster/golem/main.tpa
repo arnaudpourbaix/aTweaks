@@ -4,28 +4,28 @@
 CREATE SPL "ja#1f9"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#1f9.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10192)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10193)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI305C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10193)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10194)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 speed=1 STR_VAR icon="SPWI305C" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter1=5 parameter2=1 duration=6 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter1=7 parameter2=1 timing=3 duration=6 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=1 parameter1=10 parameter2=1 timing=3 duration=12 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10194) timing=4 duration=24 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10195) timing=4 duration=24 probability1=100 END
 	LPF CHANGE_SPELL INT_VAR    renew=5 END
 	
 	// Haste
 CREATE SPL "ja#2f9"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#2f9.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10190)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10191)
 	WRITE_ASCII 0x10 ~CAS_P04~ #8
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI305C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10440)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10442)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 speed=1 STR_VAR icon="SPWI305C" END
 	LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~msectype~ entry_match=~K1#SLOW~ RET row col END
 	PATCH_IF row != "-1" BEGIN
@@ -43,12 +43,12 @@ COPY_EXISTING ~ja#2f9.SPL~  ~override~
 CREATE SPL "ja#3f9"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#3f9.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10191)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10192)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 11
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPPR416C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10441)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10443)
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=4 range=30 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~INAREANP~)) + 1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=24 target=2 power=1 duration=42 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=36 duration=42 probability1=100 END
@@ -80,11 +80,11 @@ ADD_PROJECTILE ~override/ja#4f9.pro~ ~Golem poison cloud~
 CREATE SPL "ja#4f9"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#4f9.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10195)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10196)
 	WRITE_SHORT 0x1c 4
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI502C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10196)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10197)
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=5 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#4f9~)) + 1 STR_VAR icon="SPWI502C" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~UNDEAD~) parameter2=3 timing=1 probability1=100 STR_VAR resource="ja#4f9" END
 	LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~JA_POISON_IMMUNITY~ RET row col END
@@ -100,7 +100,7 @@ COPY_EXISTING ~ja#4f9.SPL~  ~override~
 CREATE SPL "ja#5f9"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#5f9.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10228)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10230)
 	WRITE_ASCII 0x10 ~CAS_M06~ #8
 	WRITE_LONG 0x18 1536
 	WRITE_SHORT 0x1c 1
@@ -109,7 +109,7 @@ COPY_EXISTING ~ja#5f9.SPL~  ~override~
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 5
 	WRITE_ASCII 0x3a ~SPWI503C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10197)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10198)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 range=10 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~CONECOLD~)) + 1 STR_VAR icon="SPWI503C" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=5 parameter2=131072 probability1=100 dicesize=8 dicenumber=8 savingthrow=16777217 savebonus="-4" special=256 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=165 target=2 power=5 duration=1 probability1=100 END

@@ -174,14 +174,15 @@ It drains heat and causes 10d4+10 cold damage, with a save vs. breath at -4 allo
   ogre: {
     name: {
       ogre: "Ogre",
-      ogreBerserker: "Ogre Berserker",
-      ogreMage: "Ogre Mage",
-      halfOgre: "Half Ogre",
-      ogreShaman: "Ogre Shaman",
+      berserker: "Ogre Berserker",
+      mage: "Ogre Mage",
+      half: "Half Ogre",
+      shaman: "Ogre Shaman",
       ogrillon: "Ogrillon",
     },
     weapon: {
       fists: "Fists",
+      giantFlail: "Giant Flail",
       naginata: {
         name: "Naginata",
         description: `Similar to the glaive, the naginata is a pole weapon. Naginata were originally used by the samurai class.

@@ -112,6 +112,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 IF
@@ -131,6 +132,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 IF
@@ -150,6 +152,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 IF
@@ -169,6 +172,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 IF
@@ -188,6 +192,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 IF
@@ -207,6 +212,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SetGlobalTimer("Slow","LOCALS",12)
 		ReallyForceSpell(Myself,WIZARD_SLOW)
+		RemoveSpell(WIZARD_SLOW)
 END
 
 // Attack NoCheck enemy

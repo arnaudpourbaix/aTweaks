@@ -170,4 +170,7 @@ Darkvision out to 60 feet.`,
     ghostVisual1: "Ghosly appearance",
   },
   creatureTraits: "traits",
+  kitAbilities: {
+    enrage: "Enrage",
+  },
 };

@@ -4,12 +4,12 @@ import { ImmunityConfig } from "../model/final/immunity";
 import { Actions } from "../model/script/actions";
 import { Triggers } from "../model/script/triggers";
 import { State } from "../state";
-import descriptionService from "./description.service";
 import effectService from "./effects/effect.service";
 import {
   EffectTargetEnum,
   EffectTimingEnum,
 } from "../model/spell-item/effect.enums";
+import descriptionService from "./doc/description.service";
 
 class StateService {
   init(): Promise<void> {

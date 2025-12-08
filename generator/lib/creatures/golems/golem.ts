@@ -219,6 +219,7 @@ export class GolemFamily extends CreatureFamily {
           spell: {
             type: "reallyForce",
             selfTarget: true,
+            remove: true,
           },
           requireVocal: false,
           range: 10,

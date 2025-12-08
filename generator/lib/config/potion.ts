@@ -38,4 +38,9 @@ export const POTIONS: PotionConfig[] = [
     files: ["POTN14"],
     triggers: [{ name: "RandomNumLT", params: [888, 100] }],
   },
+  {
+    name: "Potion of fire resistance",
+    files: ["POTN02"],
+    triggers: [{ name: "RandomNumLT", params: [888, 100] }],
+  },
 ];
