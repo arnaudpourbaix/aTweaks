@@ -9,7 +9,7 @@ import {
 } from "../../src/model/spell-item/effect.enums";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-export class CrawlerFamily extends CreatureFamily {
+class CrawlerFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Crawler);
     this.addCreature(this.carrionCrawler());

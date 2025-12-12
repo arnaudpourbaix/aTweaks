@@ -31,7 +31,7 @@ enum Ids {
   ImprovedStreamOfFrost,
 }
 
-export class BearFamily extends CreatureFamily {
+class BearFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Bear);
     this.createImprovedStreamOfFrost();

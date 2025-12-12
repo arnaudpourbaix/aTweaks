@@ -78,7 +78,7 @@ enum Ids {
   TouchOfTranquility,
 }
 
-export class FeyFamily extends CreatureFamily {
+class FeyFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Fey);
     this.createInnateDimensionDoor();

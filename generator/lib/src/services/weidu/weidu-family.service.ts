@@ -26,7 +26,7 @@ class WeiduFamilyService extends AbstractWeiduService {
           family
         )}/common.tpa"${CR}`;
       }
-      fs.rmSync(file);
+      if (fs.existsSync(file)) fs.rmSync(file);
       utils.writeFile(file, content);
     } else {
       fs.appendFileSync(

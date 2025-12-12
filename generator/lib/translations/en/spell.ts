@@ -89,13 +89,6 @@ The caster always arrives at exactly the spot desired by simply visualizing an a
 When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.
 Upon passing through the portal, the caster finds himself at his chosen destination.`,
   },
-  slimeSplit: {
-    name: "Slime Split",
-    puddingDesc: `Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.
-Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.`,
-    mustardDesc: `This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
-Each is capable of attacking, but has only half the hit points the creature had before dividing.`,
-  },
   coneOfCold: {
     name: "Cone of Cold",
   },

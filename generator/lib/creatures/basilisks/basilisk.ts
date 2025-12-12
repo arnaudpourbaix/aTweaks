@@ -31,7 +31,7 @@ enum Ids {
   Petrification,
 }
 
-export class BasiliskFamily extends CreatureFamily {
+class BasiliskFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Basilisk);
     this.createPetrificationProjectile();

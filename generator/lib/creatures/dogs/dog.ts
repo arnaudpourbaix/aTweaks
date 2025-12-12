@@ -25,7 +25,7 @@ enum Ids {
   Blink,
 }
 
-export class DogFamily extends CreatureFamily {
+class DogFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Dog);
     this.createBlink();

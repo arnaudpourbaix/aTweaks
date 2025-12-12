@@ -1,5 +1,6 @@
 import { describe } from "node:test";
 import description from "./description";
+import ability from "./ability";
 
 export default {
   ankheg: {
@@ -201,16 +202,60 @@ Saving Throw: Breath half
 When this spell is cast, it causes a cone-shaped spray of extreme cold to spring forth.
 The cone is 60 feet long with a terminal diameter of 20 feet.
 It drains heat and causes 8d8 cold damage, with a save vs. breath at -4 allowed for half damage.`,
-    },
-    fly: {
-      name: "Fly",
-      description: `The creature affected is able to move vertically and horizontally at a rate of 18.
+      fly: {
+        name: "Fly",
+        description: `The creature affected is able to move vertically and horizontally at a rate of 18.
 This effectively prevents ground-based spells such as Earthquake, Entangle, Grease and Web from affecting the creature.
 Furthermore, creatures with this ability can cross lava and acid pools without taking damage by hovering above them.`,
+      },
+      gaseousForm: {
+        name: "Gaseous form",
+        description: `The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.`,
+      },
     },
-    gaseousForm: {
-      name: "Gaseous form",
-      description: `The gaseous form cannot be physically harmed except by magical fires or lightning, in which case damage is normal, but the gaseous creature may be affected by mind-related attacks such as charm, hold or suggestion spells.`,
+  },
+  plant: {
+    name: {
+      veryYoungTreant: "Very Young Treant",
+      youngTreant: "Young Treant",
+      treant: "Treant",
+      elderTreant: "Elder Treant",
+    },
+    weapon: {
+      branch: "Branch",
+    },
+  },
+  slime: {
+    name: {
+      black: "Black Pudding",
+      white: "White Pudding",
+      fission: "Fission Slime",
+      mustard: "Mustard Jelly",
+      gray: "Gray Ooze",
+      green: "Green Slime",
+      ochre: "Ochre Jelly",
+      olive: "Olive Slime Creature",
+      slitheringTracker: "Slithering Tracker",
+    },
+    weapon: {
+      pseudopod: "Pseudopod",
+    },
+    ability: {
+      split: {
+        name: "Slime Split",
+        puddingDesc: `Lightning bolts and blows from weapons divide them into smaller puddings, each able to attack exactly as the original pudding.
+Because puddings do not use all of their mouth openings (which cover their exposed surfaces), the smallest pudding does the same damage as the largest.`,
+        mustardDesc: `This large creature can divide itself at will into two smaller, faster halves (movement rate 18).
+Each is capable of attacking, but has only half the hit points the creature had before dividing.`,
+      },
+      toxicVapors: {
+        name: "Toxic Vapors",
+        description: `Unleash a toxic vapor over a 10-foot radius.
+Those near the jelly must roll a saving throw vs. poison each round.
+Those who fail the saving throw become lethargic.
+Lethargic characters are unable to attack or cast spells, but can still move at half-normal speed.
+The toxic effects last for two rounds.`,
+      },
     },
   },
   spider: {

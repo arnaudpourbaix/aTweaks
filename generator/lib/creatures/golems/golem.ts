@@ -39,7 +39,7 @@ enum Ids {
   HideousLaugh,
 }
 
-export class GolemFamily extends CreatureFamily {
+class GolemFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Golem);
     this.createCharge();

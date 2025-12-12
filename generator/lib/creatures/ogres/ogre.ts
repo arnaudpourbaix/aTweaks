@@ -46,7 +46,7 @@ enum Ids {
   Ogrillon,
 }
 
-export class OgreFamily extends CreatureFamily {
+class OgreFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Ogre);
     this.createConeOfCold();
@@ -1055,8 +1055,8 @@ export class OgreFamily extends CreatureFamily {
     const flyDuration = 72;
     return this.addSpell({
       id: Ids.Fly,
-      name: "monster.ogre.fly.name",
-      description: "monster.ogre.fly.description",
+      name: "monster.ogre.ability.fly.name",
+      description: "monster.ogre.ability.fly.description",
       icon: SPELLS.Haste,
       castingSound: "CAS_M08",
       spellType: SpellTypeEnum.Wizard,
@@ -1130,8 +1130,8 @@ export class OgreFamily extends CreatureFamily {
     const gaseousFormDuration = 12;
     this.createItemGaseousForm();
     return this.addSpell({
-      name: "monster.ogre.gaseousForm.name",
-      description: "monster.ogre.gaseousForm.description",
+      name: "monster.ogre.ability.gaseousForm.name",
+      description: "monster.ogre.ability.gaseousForm.description",
       id: Ids.GaseousForm,
       icon: SPELLS.PolymorphSelf,
       castingSound: "CAS_M08",
@@ -1209,8 +1209,8 @@ export class OgreFamily extends CreatureFamily {
   private createItemGaseousForm() {
     this.addItem({
       id: Ids.GaseousForm,
-      stringRef: "monster.ogre.gaseousForm.name",
-      description: "monster.ogre.gaseousForm.description",
+      stringRef: "monster.ogre.ability.gaseousForm.name",
+      description: "monster.ogre.ability.gaseousForm.description",
       immunities: ["poison", "cold", "magicDamage", "physicalDamage"],
       flags: [ItemFlagEnum.Displayable],
       header: {

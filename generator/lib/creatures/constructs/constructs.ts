@@ -27,7 +27,7 @@ enum Ids {
   BattleHorror,
 }
 
-export class ConstructFamily extends CreatureFamily {
+class ConstructFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Construct);
     this.createFlamingSword();

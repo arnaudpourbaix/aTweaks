@@ -19,7 +19,7 @@ import creatureService from "../../src/services/creature.service";
 import { hunterCustomCode } from "../common";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-export class CatFamily extends CreatureFamily {
+class CatFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Cat);
     this.addCreature(this.jaguar());

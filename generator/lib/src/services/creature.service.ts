@@ -270,7 +270,9 @@ class CreatureService {
         ? constitutionTable[constitution] ?? 0
         : 0;
     let hpPerHD = 8;
-    if (utils.hasImmunity(p.creature.additionalData.immunities, "ooze"))
+    if (utils.hasImmunity(p.creature.additionalData.immunities, "undead"))
+      hpPerHD = 12;
+    else if (utils.hasImmunity(p.creature.additionalData.immunities, "ooze"))
       hpPerHD = 10;
     const baseHP = level * hpPerHD;
     const constitutionHP =

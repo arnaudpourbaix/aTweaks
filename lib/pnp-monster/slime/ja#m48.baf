@@ -108,7 +108,7 @@ END
 
 // Toxic Vapors
 IF
-	HaveSpellRES("ja#1m46")
+	HaveSpellRES("ja#1f12")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -118,11 +118,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m46",Myself)
+		ForceSpellRES("ja#1f12",Myself)
 END
 
 IF
-	HaveSpellRES("ja#1m46")
+	HaveSpellRES("ja#1f12")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -132,11 +132,11 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m46",Myself)
+		ForceSpellRES("ja#1f12",Myself)
 END
 
 IF
-	HaveSpellRES("ja#1m46")
+	HaveSpellRES("ja#1f12")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -146,7 +146,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m46",Myself)
+		ForceSpellRES("ja#1f12",Myself)
 END
 
 // Attack Slowed enemy

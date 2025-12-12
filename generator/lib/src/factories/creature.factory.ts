@@ -96,6 +96,7 @@ class CreatureFactory {
     monster: MonsterEnum;
     id?: number;
     files: string[];
+    newFiles?: CreatureNewFile[];
   }): Creature {
     const cre = structuredClone(p.from);
     Object.setPrototypeOf(cre, p.from);
@@ -103,7 +104,7 @@ class CreatureFactory {
     cre.name = p.name;
     cre.id = p.id;
     cre.files = p.files;
-    cre.newFiles = [];
+    cre.newFiles = p.newFiles ?? [];
     cre.items = [];
     cre.spells = [];
     cre.effectFiles = [];
@@ -211,7 +212,7 @@ class CreatureFactory {
     castSpell?: WeaponCastSpell;
   }) {
     this.checkValidation(cre);
-    if (cre.attack) throw new Error("Add weapons before setting up attack");
+    // if (cre.attack) throw new Error("Add weapons before setting up attack");
     const file = getFilename(cre.items.length + 1, cre.monster);
     if (weapon.equippedSlot)
       this.equipItem(cre, cre.additionalData, file, weapon.equippedSlot);

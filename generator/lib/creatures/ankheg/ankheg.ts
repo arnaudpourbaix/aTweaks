@@ -21,7 +21,7 @@ enum Ids {
   Stream,
 }
 
-export class AnkhegFamily extends CreatureFamily {
+class AnkhegFamily extends CreatureFamily {
   constructor() {
     super(MonsterFamilyEnum.Ankheg);
     this.createStream();

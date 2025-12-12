@@ -89,7 +89,7 @@ Darkvision out to 60 feet.`,
 Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
 Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.
 Negative energy (such as an inflict wounds spell) can heal undead creatures.
-Hit Die: d12
+Hit Dice: d12
 Darkvision out to 60 feet.`,
     },
     fey: {
@@ -151,7 +151,7 @@ Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mi
 Not subject to critical hits, backstab.
 Darkvision out to 60 feet.
 Translucent
-10-sided Hit Dice`,
+Hit Dice: d10`,
     },
     vermin: {
       name: "Vermin",
