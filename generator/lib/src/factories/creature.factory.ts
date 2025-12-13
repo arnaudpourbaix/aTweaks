@@ -72,6 +72,7 @@ class CreatureFactory {
     newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
     autoGenerate?: CreatureAutoGenerate;
+    logging?: boolean;
   }): Creature {
     console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
     const cre = new Creature();
@@ -83,6 +84,7 @@ class CreatureFactory {
     cre.newFiles = p.newFiles ?? [];
     cre.data = p.data;
     cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
+    cre.logging = p.logging ?? false;
     if (p.autoGenerate) {
       cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
       console.log("autogenerate", cre.autoGenerate);

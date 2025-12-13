@@ -259,12 +259,30 @@ The toxic effects last for two rounds.`,
     },
   },
   spider: {
-    webTangle: {
-      name: "Web Tangle",
-      standardDesc: `The spider can shoot web strands up to 5 feet to bind a foe.
+    name: {
+      gargantuan: "Gargantuan Spider",
+      ghostwalk: "Ghostwalk Spider",
+      giant: "Giant Spider",
+      hairy: "Hairy Spider",
+      huge: "Huge Spider",
+      hunting: "Hunting Spider",
+      phase: "Phase Spider",
+      sword: "Sword Spider",
+      vortex: "Vortex Spider",
+      wraith: "Wraith Spider",
+    },
+    weapon: { jaws: "Jaws" },
+    ability: {
+      webTangle: {
+        name: "Web Tangle",
+        standardDesc: `The spider can shoot web strands up to 5 feet to bind a foe.
 Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.`,
-      wraithDesc: `These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
+        ghostwalkDesc: `The spider can shoot invisible web strands up to 5 feet to bind a foe.
+Characters in contact with the webs must make a saving throw vs. paralyzation at -2 or be immobilized by the web for 3 rounds.
+While restrained in this way, the target is invisible.`,
+        wraithDesc: `These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
 Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.`,
+      },
     },
   },
 };

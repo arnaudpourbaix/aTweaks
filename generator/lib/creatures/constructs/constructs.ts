@@ -1,12 +1,11 @@
 import { SPELLS } from "../../config/spell-names";
 import creatureFactory from "../../src/factories/creature.factory";
+import { CreatureFamily } from "../../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   ColorEnum,
   EffectColorLocationEnum,
   EffectDamageTypeEnum,
-  EffectTargetEnum,
-  EffectTimingEnum,
   ItemAbilityFlagEnum,
   ItemAbilityTypeEnum,
   ItemAnimationEnum,
@@ -16,7 +15,6 @@ import {
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
-import { CreatureFamily } from "../../src/model/creature/family";
 
 enum Ids {
   Helmet,

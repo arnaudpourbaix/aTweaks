@@ -11,6 +11,7 @@ import { createGolems } from "./golems/golem";
 import { createOgres } from "./ogres/ogre";
 import { createPlants } from "./plants/plant";
 import { createSlimes } from "./slimes/slime";
+import { createSpiders } from "./spiders/spider";
 
 export const familyFactories: (() => CreatureFamily)[] = [
   createAnkhegs,
@@ -25,7 +26,7 @@ export const familyFactories: (() => CreatureFamily)[] = [
   createOgres,
   createPlants,
   createSlimes,
-  //   // ...Spiders,
+  createSpiders,
   //   // ...Wolves,
 ];
 

@@ -79,7 +79,7 @@ Darkvision out to 60 feet.~
 Not subject to critical hits, backstab, nonlethal damage, ability damage, ability drain, fatigue, exhaustion, energy drain, flesh to Stone, insect Plague and similar spells.
 Undead with no Intelligence scores cannot heal damage on their own, though they can be healed.
 Negative energy (such as an inflict wounds spell) can heal undead creatures.
-Hit Die: d12
+Hit Dice: d12
 Darkvision out to 60 feet.~
 @10074 = ~Fey~
 @10075 = ~Fey creatures cannot be interrupted while using their spell-like abilities, all of which have a casting time of 1.
@@ -120,7 +120,7 @@ Immunity to poison, sleep effects, paralysis, stunning, polymorph, blindness, mi
 Not subject to critical hits, backstab.
 Darkvision out to 60 feet.
 Translucent
-10-sided Hit Dice~
+Hit Dice: d10~
 @10096 = ~Vermin~
 @10097 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
@@ -293,17 +293,31 @@ Those near the jelly must roll a saving throw vs. poison each round.
 Those who fail the saving throw become lethargic.
 Lethargic characters are unable to attack or cast spells, but can still move at half-normal speed.
 The toxic effects last for two rounds.~
-@10234 = ~Web Tangle~
-@10235 = ~The spider can shoot web strands up to 5 feet to bind a foe.
+@10234 = ~Gargantuan Spider~
+@10235 = ~Ghostwalk Spider~
+@10236 = ~Giant Spider~
+@10237 = ~Hairy Spider~
+@10238 = ~Huge Spider~
+@10239 = ~Hunting Spider~
+@10240 = ~Phase Spider~
+@10241 = ~Sword Spider~
+@10242 = ~Vortex Spider~
+@10243 = ~Wraith Spider~
+@10244 = ~Jaws~
+@10245 = ~Web Tangle~
+@10246 = ~The spider can shoot web strands up to 5 feet to bind a foe.
 Characters in contact with the webs must make a saving throw vs. paralyzation or be immobilized by the web for 3 rounds.~
-@10236 = ~These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
+@10247 = ~The spider can shoot invisible web strands up to 5 feet to bind a foe.
+Characters in contact with the webs must make a saving throw vs. paralyzation at -2 or be immobilized by the web for 3 rounds.
+While restrained in this way, the target is invisible.~
+@10248 = ~These creatures create webs that glow with an eerie dim green light. Anyope touching a web will sustain 1d4 points of damage from the numbing cold of the strands.
 Characters in contact with the webs must also make a saving throw vs. paralyzation or be immobilized by the web for 4 rounds, sustaining cold damage for each round in the web.~
-@10237 = ~This spell can only be cast outdoor~
-@10238 = ~Restrained~
-@10239 = ~Grab~
-@10240 = ~Grabbed~
-@10241 = ~Call Woodland Beeings~
-@10242 = ~Call Woodland Beings
+@10249 = ~This spell can only be cast outdoor~
+@10250 = ~Restrained~
+@10251 = ~Grab~
+@10252 = ~Grabbed~
+@10253 = ~Call Woodland Beeings~
+@10254 = ~Call Woodland Beings
 (Conjuration, Summoning)
 Level: 4
 Sphere: Animal, Summoning
@@ -346,8 +360,8 @@ HP 117, AC 0, THAC0 11, -25% fire resistance
 STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
 HP 142, AC 0, THAC0 9, -25% fire resistance
 2 Attacks Per Round, 4d6 crushing~
-@10243 = ~Color Spray~
-@10244 = ~Color Spray (Alteration)
+@10255 = ~Color Spray~
+@10256 = ~Color Spray (Alteration)
 Level: 1
 Range: 30 feet
 Duration: Special
@@ -361,8 +375,8 @@ Blind or unseeing creatures are not affected.
 Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds;
 those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds;
 those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.~
-@10245 = ~Dimension Door~
-@10246 = ~Dimension Door (Alteration)
+@10257 = ~Dimension Door~
+@10258 = ~Dimension Door (Alteration)
 Level: 4
 Range: 900
 Duration: Instant
@@ -374,653 +388,183 @@ This spell transports the caster to any designated place that is already known t
 The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with.
 When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.
 Upon passing through the portal, the caster finds himself at his chosen destination.~
-@10247 = ~Cone of Cold~
-@10248 = ~Melee~
-@10249 = ~Ranged~
-@10250 = ~THAC0~
-@10251 = ~damage~
-@10252 = ~Speed Factor~
-@10253 = ~Enchantment~
-@10254 = ~Range~
-@10255 = ~feet~
-@10256 = ~bonus to~
-@10257 = ~Cast spell~
-@10258 = ~Can see invisible creatures~
-@10259 = ~Blur~
-@10260 = ~Translucent~
-@10261 = ~Mirror image~
-@10262 = ~Invisibility~
-@10263 = ~Improved invisibility~
-@10264 = ~Regeneration~
-@10265 = ~hp/second~
-@10266 = ~%/second~
-@10267 = ~hp/round~
-@10268 = ~1 hp/[value] rounds~
-@10269 = ~1 hp/[value] seconds~
-@10270 = ~paralyzes the target for [value] rounds~
-@10271 = ~drain [value] life energy levels~
-@10272 = ~Casting time~
-@10273 = ~Heal~
-@10274 = ~Fall asleep for [value]~
-@10275 = ~wake on damage~
-@10276 = ~Strength~
-@10277 = ~Dexterity~
-@10278 = ~Intelligence~
-@10279 = ~Constitution~
-@10280 = ~Slashing Resistance~
-@10281 = ~Crushing Resistance~
-@10282 = ~Piercing Resistance~
-@10283 = ~Missiles Resistance~
-@10284 = ~Fire Resistance~
-@10285 = ~Cold Resistance~
-@10286 = ~Magic Resistance~
-@10287 = ~Magical Cold Resistance~
-@10288 = ~Magical Fire Resistance~
-@10289 = ~Acid Resistance~
-@10290 = ~Poison Resistance~
-@10291 = ~Electricity Resistance~
-@10292 = ~Magic Damage Resistance~
-@10293 = ~Maximum HP~
-@10294 = ~Morale~
-@10295 = ~Morale Break~
-@10296 = ~Fatigue Bonus~
-@10297 = ~All Saving Throws~
-@10298 = ~Save vs Breath~
-@10299 = ~Save vs Death~
-@10300 = ~Save vs Petrification~
-@10301 = ~Save vs Spell~
-@10302 = ~Save vs Wand~
-@10303 = ~paralyze/poison/death~
-@10304 = ~breath~
-@10305 = ~petrify/polymorph~
-@10306 = ~wand~
-@10307 = ~spell~
-@10308 = ~saves vs~
-@10309 = ~turns~
-@10310 = ~rounds~
-@10311 = ~base AC~
-@10312 = ~vs. [damageType] attacks~
-@10313 = ~crushing~
-@10314 = ~slashing~
-@10315 = ~piercing~
-@10316 = ~missile~
-@10317 = ~*quaffs a potion*~
-@10318 = ~(unknown)~
-@10319 = ~Invisibility~
-@10320 = ~Improved Invisibility~
-@10321 = ~Domination~
-@10322 = ~Dire Charm~
-@10323 = ~Charm Person~
-@10324 = ~Charm Person or Animal~
-@10325 = ~Power Word Sleep~
-@10326 = ~Sleep~
-@10327 = ~Darkness 15' Radius~
-@10328 = ~Cone Of Cold~
-@10329 = ~Magic Missiles~
-@10330 = ~Bless~
-@10331 = ~Command~
-@10332 = ~Resist fear~
-@10333 = ~Chant~
-@10334 = ~Hold Person~
-@10335 = ~Hold person or animal~
-@10336 = ~Silence~
-@10337 = ~Call Lightning~
-@10338 = ~Glyph of Warding~
-@10339 = ~Miscast Magic~
-@10340 = ~Rigid Thinking~
-@10341 = ~Summon Insects~
-@10342 = ~Dimension Door~
-@10343 = ~Entangle~
-@10344 = ~Cure Light Wounds~
-@10345 = ~Barkskin~
-@10346 = ~Animal Summoning 4~
-@10347 = ~Call Woodland Beeings~
-@10348 = ~Slow~
-@10349 = ~Web~
-@10350 = ~Detect Invisibility~
-@10351 = ~Enrage~
-@10352 = ~Polymorph Self~
-@10353 = ~Cloak of Fear~
-@10354 = ~Horror~
-@10355 = ~Poison Resistance: 100%~
-@10356 = ~Fire Resistance: 100%
+@10259 = ~Cone of Cold~
+@10260 = ~Melee~
+@10261 = ~Ranged~
+@10262 = ~THAC0~
+@10263 = ~damage~
+@10264 = ~Speed Factor~
+@10265 = ~Enchantment~
+@10266 = ~Range~
+@10267 = ~feet~
+@10268 = ~bonus to~
+@10269 = ~Cast spell~
+@10270 = ~Can see invisible creatures~
+@10271 = ~Blur~
+@10272 = ~Translucent~
+@10273 = ~Mirror image~
+@10274 = ~Invisibility~
+@10275 = ~Improved invisibility~
+@10276 = ~Regeneration~
+@10277 = ~hp/second~
+@10278 = ~%/second~
+@10279 = ~hp/round~
+@10280 = ~1 hp/[value] rounds~
+@10281 = ~1 hp/[value] seconds~
+@10282 = ~paralyzes the target for [value] rounds~
+@10283 = ~drain [value] life energy levels~
+@10284 = ~Casting time~
+@10285 = ~Heal~
+@10286 = ~Fall asleep for [value]~
+@10287 = ~wake on damage~
+@10288 = ~Strength~
+@10289 = ~Dexterity~
+@10290 = ~Intelligence~
+@10291 = ~Constitution~
+@10292 = ~Slashing Resistance~
+@10293 = ~Crushing Resistance~
+@10294 = ~Piercing Resistance~
+@10295 = ~Missiles Resistance~
+@10296 = ~Fire Resistance~
+@10297 = ~Cold Resistance~
+@10298 = ~Magic Resistance~
+@10299 = ~Magical Cold Resistance~
+@10300 = ~Magical Fire Resistance~
+@10301 = ~Acid Resistance~
+@10302 = ~Poison Resistance~
+@10303 = ~Electricity Resistance~
+@10304 = ~Magic Damage Resistance~
+@10305 = ~Maximum HP~
+@10306 = ~Morale~
+@10307 = ~Morale Break~
+@10308 = ~Fatigue Bonus~
+@10309 = ~All Saving Throws~
+@10310 = ~Save vs Breath~
+@10311 = ~Save vs Death~
+@10312 = ~Save vs Petrification~
+@10313 = ~Save vs Spell~
+@10314 = ~Save vs Wand~
+@10315 = ~paralyze/poison/death~
+@10316 = ~breath~
+@10317 = ~petrify/polymorph~
+@10318 = ~wand~
+@10319 = ~spell~
+@10320 = ~saves vs~
+@10321 = ~turns~
+@10322 = ~rounds~
+@10323 = ~base AC~
+@10324 = ~vs. [damageType] attacks~
+@10325 = ~crushing~
+@10326 = ~slashing~
+@10327 = ~piercing~
+@10328 = ~missile~
+@10329 = ~*quaffs a potion*~
+@10330 = ~(unknown)~
+@10331 = ~Invisibility~
+@10332 = ~Improved Invisibility~
+@10333 = ~Domination~
+@10334 = ~Dire Charm~
+@10335 = ~Charm Person~
+@10336 = ~Charm Person or Animal~
+@10337 = ~Power Word Sleep~
+@10338 = ~Sleep~
+@10339 = ~Darkness 15' Radius~
+@10340 = ~Cone Of Cold~
+@10341 = ~Magic Missiles~
+@10342 = ~Bless~
+@10343 = ~Command~
+@10344 = ~Resist fear~
+@10345 = ~Chant~
+@10346 = ~Hold Person~
+@10347 = ~Hold person or animal~
+@10348 = ~Silence~
+@10349 = ~Call Lightning~
+@10350 = ~Glyph of Warding~
+@10351 = ~Miscast Magic~
+@10352 = ~Rigid Thinking~
+@10353 = ~Summon Insects~
+@10354 = ~Dimension Door~
+@10355 = ~Entangle~
+@10356 = ~Cure Light Wounds~
+@10357 = ~Barkskin~
+@10358 = ~Animal Summoning 4~
+@10359 = ~Call Woodland Beeings~
+@10360 = ~Slow~
+@10361 = ~Web~
+@10362 = ~Detect Invisibility~
+@10363 = ~Enrage~
+@10364 = ~Polymorph Self~
+@10365 = ~Cloak of Fear~
+@10366 = ~Horror~
+@10367 = ~Poison Resistance: 100%~
+@10368 = ~Fire Resistance: 100%
 Magical Fire Resistance: 100%~
-@10357 = ~Cold Resistance: 100%
+@10369 = ~Cold Resistance: 100%
 Magical Cold Resistance: 100%~
-@10358 = ~Electricity Resistance: 100%~
-@10359 = ~Magic Resistance: 100%~
-@10360 = ~Magic Damage Resistance: 100%~
-@10361 = ~Acid Resistance: 100%~
-@10362 = ~Immune to slashing damage
+@10370 = ~Electricity Resistance: 100%~
+@10371 = ~Magic Resistance: 100%~
+@10372 = ~Magic Damage Resistance: 100%~
+@10373 = ~Acid Resistance: 100%~
+@10374 = ~Immune to slashing damage
 Immune to crushing damage
 Immune to piercing damage
 Immune to missile damage~
-@10363 = ~Slashing Resistance: 100%~
-@10364 = ~Crushing Resistance: 100%~
-@10365 = ~Piercing Resistance: 100%~
-@10366 = ~Missiles Resistance: 100%~
-@10367 = ~Immune to healing and cause wounds spells~
-@10368 = ~Immune to charm
+@10375 = ~Slashing Resistance: 100%~
+@10376 = ~Crushing Resistance: 100%~
+@10377 = ~Piercing Resistance: 100%~
+@10378 = ~Missiles Resistance: 100%~
+@10379 = ~Immune to healing and cause wounds spells~
+@10380 = ~Immune to charm
 Immune to fear and morale failure
 Immune to confusion
 Immune to illusion spells
 Immune to hold
 Immune to stun~
-@10369 = ~Immune to normal weapons~
-@10370 = ~Immune to normal weapons~
-@10371 = ~Immune to petrification~
-@10372 = ~Darkvision out to 60 feet~
-@10373 = ~Can see invisible creatures.~
-@10374 = ~Immune to web effects
+@10381 = ~Immune to normal weapons~
+@10382 = ~Immune to normal weapons~
+@10383 = ~Immune to petrification~
+@10384 = ~Darkvision out to 60 feet~
+@10385 = ~Can see invisible creatures.~
+@10386 = ~Immune to web effects
 Poison Resistance: 100%
 Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-@10375 = ~Blur (visual effect only)~
-@10376 = ~Grab and hold your target for 3 rounds.
-Grabbed creature will suffer these effects:
-- can not move
-- loose armor class from dexterity bonus
-- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
-- -4 THAC0~
-@10377 = ~Mandibles
-
-Melee damage: 3D6 (Crushing)
-Speed Factor: 5
-Enchantment: 2
-Range: 2 feet
-
-Cast spell Digestive Enzymes:
-The ankheg can secret acidic digestive enzymes to cause an additional 1d4 points of damage per round for 4 rounds.
-
-Cast spell Grab (saves vs poison/death at -9):
-Grab and hold your target for 3 rounds.
-Grabbed creature will suffer these effects:
-- can not move
-- loose armor class from dexterity bonus
-- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
-- -4 THAC0~
-@10378 = ~Jaws
-
-Melee damage: 1D10 (Piercing)
-Speed Factor: 5
-Enchantment: 1
-Range: 1 feet~
-@10379 = ~Claws
-
-Melee damage: 1D6 (Slashing)
-Speed Factor: 5
-Enchantment: 3
-Range: 2 feet
-Poison: deals one damage per 4 rounds for 2 turns (saves vs poison/death at +4).~
-@10380 = ~Jaws
-
-Melee damage: 2D8 (Piercing)
-Speed Factor: 5
-Enchantment: 3
-Range: 2 feet
-
-Cast spell Foul Breath:
-All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
-@10381 = ~Crushing damage: 2D4~
-@10382 = ~Paws
-
-Melee damage: 1D3 (Slashing)
-Speed Factor: 5
-Range: 1 feet
-
-Cast spell Hug (10%):
-Crushing damage: 2D4~
-@10383 = ~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10384 = ~Crushing damage: 2D6~
-@10385 = ~Paws
-
-Melee damage: 1D6 (Slashing)
-Speed Factor: 5
-Enchantment: 1
-Range: 2 feet
-
-Cast spell Hug (10%):
-Crushing damage: 2D6~
-@10386 = ~Jaws
-
-Melee damage: 1D8 (Piercing)
-Speed Factor: 3
-Enchantment: 1
-Range: 2 feet~
-@10387 = ~Crushing damage: 2D6~
-@10388 = ~Paws
-
-Melee damage: 1D8 (Slashing)
-Speed Factor: 5
-Enchantment: 2
-Range: 2 feet
-
-Cast spell Hug (10%):
-Crushing damage: 2D6~
-@10389 = ~Jaws
-
-Melee damage: 1D12 (Piercing)
-Speed Factor: 3
-Enchantment: 2
-Range: 2 feet~
-@10390 = ~Crushing damage: 3D6~
-@10391 = ~Paws
-
-Melee damage: 1D10 (Slashing)
-Speed Factor: 5
-Enchantment: 3
-Range: 2 feet
-
-Cast spell Hug (10%):
-Crushing damage: 3D6~
-@10392 = ~Jaws
+@10387 = ~Blur (visual effect only)~
+@10388 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
-Speed Factor: 3
+Speed Factor: 2
 Enchantment: 3
-Range: 2 feet~
-@10393 = ~Tentacles
+Range: 3 feet
+Sleep for 5 turns (saves vs poison/death at -2)~
+@10389 = ~Ghostwalk Spider traits~
+@10390 = ~True sight~
+@10391 = ~Jaws
 
-Melee damage: 1D2 (Piercing)
-Speed Factor: 3
-Range: 2 feet
-Paralyze target for 7 rounds (saves vs poison/death).~
-@10394 = ~Slashing damage: 1D4
-Slashing damage: 1D4~
-@10395 = ~Paws
-
-Melee damage: 1D3 (Slashing)
-Speed Factor: 5
-Enchantment: 1
-Range: 2 feet
-
-Cast spell Rear claws attack (20%):
-Slashing damage: 1D4
-Slashing damage: 1D4~
-@10396 = ~Jaws
-
-Melee damage: 1D8 (Piercing)
-Speed Factor: 3
-Enchantment: 1
-Range: 2 feet~
-@10397 = ~Slashing damage: 1D4
-Slashing damage: 1D4~
-@10398 = ~Paws
-
-Melee damage: 1D3 (Slashing)
-Speed Factor: 5
-Range: 1 feet
-
-Cast spell Rear claws attack (20%):
-Slashing damage: 1D4
-Slashing damage: 1D4~
-@10399 = ~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10400 = ~Slashing damage: 1D6+1
-Slashing damage: 1D6+1~
-@10401 = ~Paws
-
-Melee damage: 1D4 (Slashing)
-Speed Factor: 5
-Enchantment: 1
-Range: 1 feet
-
-Cast spell Rear claws attack (20%):
-Slashing damage: 1D6+1
-Slashing damage: 1D6+1~
-@10402 = ~Jaws
-
-Melee damage: 1D10 (Piercing)
-Speed Factor: 3
-Enchantment: 1
-Range: 1 feet~
-@10403 = ~Slashing damage: 1D4+1
-Slashing damage: 1D4+1~
-@10404 = ~Paws
-
-Melee damage: 1D3 (Slashing)
-Speed Factor: 5
-Range: 1 feet
-
-Cast spell Rear claws attack (20%):
-Slashing damage: 1D4+1
-Slashing damage: 1D4+1~
-@10405 = ~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10406 = ~Hellcat traits~
-@10407 = ~Slashing damage: 2D4+4
-Slashing damage: 2D4+4~
-@10408 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
-Immune to normal weapons
-Extraplanar
-Magic Resistance: 20%
-Improved invisibility~
-@10409 = ~Paws
-
-Melee damage: 1D4 (Slashing)
-Speed Factor: 5
-Enchantment: 2
-Range: 2 feet
-
-Cast spell Rear claws attack (20%):
-Slashing damage: 2D4+4
-Slashing damage: 2D4+4~
-@10410 = ~Jaws
-
-Melee damage: 2D6 (Piercing)
-Speed Factor: 3
-Enchantment: 2
-Range: 2 feet~
-@10411 = ~Displacer Beast traits~
-@10412 = ~Immune to magic
-Immune to fire
-Immune to cold
-+2 AC
-Blur (visual effect only)
-Mirror image (1)~
-@10413 = ~Tentacles
-
-Melee damage: 2D4 (PiercingOrCrushing)
-Speed Factor: 3
-Enchantment: 1
-Range: 5 feet~
-@10414 = ~Helmed Horror traits~
-@10415 = ~True sight
-Immune to fireball spell
-Immune to lightning bolt spell
-Immune to flame arrow spell
-Immune to magic missiles spell
-Hover (flight)~
-@10416 = ~Doom Guard traits~
-@10417 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
-Resistance to fire (50%)
-Resistance to cold (50%)~
-@10418 = ~Flaming Greatsword
-
-Melee damage: 2D6 (Slashing)
-Fire damage: 1D6
-Speed Factor: 10
-Enchantment: 1
-Range: 2 feet~
-@10419 = ~Long Sword
-
-Melee damage: 1D8 (Slashing)
-Speed Factor: 5
-Enchantment: 1
-Range: 1 feet~
-@10420 = ~Jaws
-
-Melee damage: 1D4 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10421 = ~Jaws
-
-Melee damage: 2D4 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10422 = ~Jaws
-
-Melee damage: 1D6 (Piercing)
-Speed Factor: 3
-Range: 1 feet~
-@10423 = ~Slow target for 6 rounds~
-@10424 = ~Jaws
-
-Melee damage: 2D6 (Piercing)
-Speed Factor: 3
-Enchantment: 1
-Range: 1 feet
-
-Cast spell Astral Plane Shift:
-Slow target for 6 rounds~
-@10425 = ~Teleport to target
-Thac0:+2 for 1 rounds~
-@10426 = ~Dryad traits~
-@10427 = ~Resistance to magic (50%)~
-@10428 = ~Hamadryad traits~
-@10429 = ~Immune to entangle effects
-Magic Resistance: 75%~
-@10430 = ~Nymph traits~
-@10431 = ~Resistance to magic (50%)~
-@10432 = ~Sirine traits~
-@10433 = ~Immune to cloud spells
-Magic Resistance: 20%~
-@10434 = ~Sirine Touch
-
-Melee damage: 1D3 (Crushing)
+Melee damage: 3D10 (Piercing)
 Speed Factor: 2
 Enchantment: 4
-Range: 1 feet
-
-Cast spell Touch of Tranquility~
-@10435 = ~Dire Charm target for 3 turns (saves vs spell at -3).~
-@10436 = ~~
-@10437 = ~Dire Charm target for 3 turns (saves vs spell).~
-@10438 = ~Flesh Golem traits~
-@10439 = ~Immune to magic
-Immune to fire
-Immune to cold
-Electricity Resistance: 125%~
-@10440 = ~Fists
-
-Melee damage: 2D8 (Crushing)
-Speed Factor: 4
-Enchantment: 3
-Range: 2 feet~
-@10441 = ~Clay Golem traits~
-@10442 = ~Immune to magic
-Immune to normal weapons
-Immune to slashing damage
-Immune to piercing damage
-Immune to missile damage~
-@10443 = ~Fists
-
-Melee damage: 3D10 (Crushing)
-Speed Factor: 4
-Enchantment: 4
-Range: 2 feet~
-@10444 = ~Stone Golem traits~
-@10445 = ~Immune to magic
-Immune to all weapons of +1 or less enchantment~
-@10446 = ~Fists
-
-Melee damage: 3D8 (Crushing)
-Speed Factor: 4
-Enchantment: 4
-Range: 2 feet~
-@10447 = ~Iron Golem traits~
-@10448 = ~Immune to magic
-Immune to all weapons of +2 or less enchantment
-Immune to lightning
-Fire Resistance: 125%
-Magical Fire Resistance: 125%~
-@10449 = ~Fists
-
-Melee damage: 4D10 (Crushing)
-Speed Factor: 4
-Enchantment: 4
-Range: 2 feet~
-@10450 = ~Bone Golem traits~
-@10451 = ~Immune to magic
-Immune to fire
-Immune to cold
-Electricity Resistance: 125%~
-@10452 = ~Fists
-
-Melee damage: 3D8 (Slashing)
-Speed Factor: 4
-Enchantment: 4
-Range: 1 feet~
-@10453 = ~Juggernaut Golem traits~
-@10454 = ~Immune to magic
-Immune to fire~
-@10455 = ~Fists
-
-Melee damage: 2D6 (Crushing)
-Speed Factor: 4
-Enchantment: 4
-Range: 2 feet~
-@10456 = ~Snow Golem traits~
-@10457 = ~Immune to all weapons of +1 or less enchantment
-Immune to lightning
-Cold Resistance: 125%
-Magical Cold Resistance: 125%~
-@10458 = ~Fists
-
-Melee damage: 2D12 (Crushing)
-Speed Factor: 4
-Enchantment: 4
-Range: 2 feet~
-@10459 = ~Haste caster for 3 rounds~
-@10460 = ~~
-@10461 = ~Ogre Mage traits~
-@10462 = ~Regeneration: 1 hp/round~
-@10463 = ~Fists
-
-Melee damage: 1D10 (Crushing)
-Speed Factor: 3~
-@10464 = ~Fists
-
-Melee damage: 2D6 (Crushing)
-Speed Factor: 3~
-@10465 = ~Fists
-
-Melee damage: 1D6 (Crushing)
-Speed Factor: 3~
-@10466 = ~Giant Flail
-
-Melee damage: 2D8 (Crushing)
-Speed Factor: 8~
-@10467 = ~Treant traits~
-@10468 = ~Branch
-
-Melee damage: 4D6 (Crushing)
-Speed Factor: 8
-Enchantment: 4
-Range: 5 feet~
-@10469 = ~Branch
-
-Melee damage: 3D6 (Crushing)
-Speed Factor: 8
-Enchantment: 4
-Range: 5 feet~
-@10470 = ~Branch
-
-Melee damage: 2D8 (Crushing)
-Speed Factor: 8
-Enchantment: 4
-Range: 5 feet~
-@10471 = ~Branch
-
-Melee damage: 2D6 (Crushing)
-Speed Factor: 8
-Enchantment: 4
-Range: 5 feet~
-@10472 = ~Fire Resistance: -25%
-Magical Fire Resistance: -25%~
-@10473 = ~Black Pudding traits~
-@10474 = ~Immune to acid
-Immune to cold
-Immune to poison
-Electricity Resistance: 90%~
-@10475 = ~Pseudopod
-
-Acid damage: 3D8
-Speed Factor: 4
-Enchantment: 3
-Range: 5 feet~
-@10476 = ~White Pudding traits~
-@10477 = ~Immune to acid
-Immune to cold
-Immune to poison
-Electricity Resistance: 90%~
-@10478 = ~Pseudopod
-
-Acid damage: 7D4
-Speed Factor: 4
-Enchantment: 3
-Range: 5 feet~
-@10479 = ~Mustard Jelly traits~
-@10480 = ~Immune to lightning
-Immune to normal weapons
-Immune to magic missiles spell
+Range: 2 feet
+Resistance to acid (50%)
 Resistance to cold (50%)
-Magic Resistance: 10%~
-@10481 = ~Pseudopod
-
-Melee damage: 2D4 (Crushing)
-Acid damage: 3D4
-Speed Factor: 4
-Enchantment: 2
-Range: 5 feet~
-@10482 = ~Fission Slime traits~
-@10483 = ~Immune to lightning
+Resistance to fire (50%)
+Resistance to lightning (50%)
 Immune to normal weapons
-Immune to magic missiles spell
-Resistance to cold (50%)
-Magic Resistance: 10%~
-@10484 = ~Pseudopod
+Immune to hold
+Immune to stun
+Immune to petrification
+Blur (visual effect only)~
+@10392 = ~Jaws
 
-Melee damage: 3D6 (Crushing)
-Acid damage: 3D6
-Speed Factor: 4
+Melee damage: 3D10 (Piercing)
+Speed Factor: 2
 Enchantment: 4
-Range: 5 feet~
-@10485 = ~Gray Ooze traits~
-@10486 = ~Immune to magic
-Immune to fire
-Immune to cold~
-@10487 = ~Pseudopod
-
-Acid damage: 2D8
-Speed Factor: 4
-Range: 5 feet~
-@10488 = ~Green Slime traits~
-@10489 = ~Immune to magic
-Immune to physical damage~
-@10490 = ~Pseudopod
-
-Acid damage: 1D4
-Speed Factor: 4
-Range: 5 feet~
-@10491 = ~Ochre Jelly traits~
-@10492 = ~Immune to lightning~
-@10493 = ~Pseudopod
-
-Acid damage: 1D10+2
-Speed Factor: 4
-Enchantment: 1
-Range: 5 feet~
-@10494 = ~Olive Slime Creature traits~
-@10495 = ~Immune to lightning
-Immune to entangle effects
-Immune to normal weapons~
-@10496 = ~Pseudopod
-
-Melee damage: 2D4 (Crushing)
-Acid damage: 2D4
-Speed Factor: 4
-Enchantment: 4
-Range: 5 feet~
-@10497 = ~Slithering Tracker traits~
-@10498 = ~Immune to lightning
-Immune to entangle effects
-Immune to normal weapons~
-@10499 = ~Pseudopod
-
-Melee damage: 1D6 (Crushing)
-Acid damage: 4D6
-Speed Factor: 4
-Enchantment: 1
-Range: 5 feet
-Paralyze target for 1 turns (saves vs poison/death).~
+Range: 2 feet
+Poison: deals 1 per second for 3 rounds.
+Level 1-2: Poison: deals one damage per 1 seconds for 3 rounds (saves vs poison/death at -2).
+Level 3-4: Poison: deals 2 per second for 4 rounds (saves vs poison/death at -2).
+Level 5-6: Poison: deals 4 per second for 4 rounds (saves vs poison/death at -2).
+Level 7-8: Poison: deals 6 per second for 3 rounds (saves vs poison/death at -2).
+Level 9-10: Poison: deals 7 per second for 3 rounds (saves vs poison/death at -2).
+Level 11-15: Poison: deals 8 per second for 3 rounds (saves vs poison/death at -2).
+Level 16-40: Poison: deals 12 per second for 3 rounds (saves vs poison/death at -2).~

@@ -135,11 +135,11 @@ class PoisonService {
     let newDuration = duration;
     while (damage > newDuration / amount) newDuration++;
     const total = newDuration / amount;
-    console.log(
-      `poison (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
-        newDuration - duration
-      })`
-    );
+    // console.log(
+    //   `poison (1dmg/x seconds) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
+    //     newDuration - duration
+    //   })`
+    // );
     return { type, amount, duration: newDuration };
   }
 
@@ -161,11 +161,11 @@ class PoisonService {
     let newDuration = duration;
     while (damage > amount * newDuration) newDuration++;
     const total = amount * newDuration;
-    console.log(
-      `poison (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
-        newDuration - duration
-      })`
-    );
+    // console.log(
+    //   `poison (x dmg per second) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
+    //     newDuration - duration
+    //   })`
+    // );
     return {
       type,
       amount,

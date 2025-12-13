@@ -9,6 +9,7 @@ import responseFactory from "../../factories/response.factory";
 import triggerFactory from "../../factories/trigger.factory";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
+import { WEAPON_SLOTS } from "../../model/creature/item";
 import { AllegianceIdentifier } from "../../model/ids/allegiance";
 import { BuilderOptions } from "../../model/misc";
 import { Actions } from "../../model/script/actions";
@@ -825,11 +826,19 @@ class StatementService {
       //     params: ["Myself", 0, "POLYMORPHED"],
       //   };
       // }
-      const selectWeaponStatements =
-        creature.attack.melee && creature.attack.ranged
-          ? this.selectWeaponStatements(creature, options)
-          : [];
-
+      let selectWeaponStatements: Statements = [];
+      if (creature.attack.selectWeapons) {
+        selectWeaponStatements = this.selectWeaponStatements(
+          creature,
+          targetTriggers,
+          options
+        );
+      } else if (creature.attack.melee && creature.attack.ranged) {
+        selectWeaponStatements = this.selectWeaponMeleeRangeStatements(
+          creature,
+          options
+        );
+      }
       const responses = responseFactory.attackResponses({
         attacks: creature.attack.actions,
         oncePerRound: false,
@@ -847,7 +856,7 @@ class StatementService {
     }
   }
 
-  private selectWeaponStatements(
+  private selectWeaponMeleeRangeStatements(
     creature: Creature,
     options: BuilderOptions
   ): Statements {
@@ -882,6 +891,32 @@ class StatementService {
         { name: "Continue" },
       ]),
     });
+    return statements;
+  }
+
+  private selectWeaponStatements(
+    creature: Creature,
+    targetTriggers: Triggers.Trigger[],
+    options: BuilderOptions
+  ): Statements {
+    const statements: Statements = [];
+    for (const select of creature.attack.selectWeapons) {
+      let triggers: Triggers.Trigger[] = [
+        ...utils.replaceTriggerTokens(targetTriggers, [
+          { key: GLOBAL_CONFIG.tokens.target, value: "lastSeenBy" },
+        ]),
+        ...select.triggers,
+      ];
+      if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
+      const slot = WEAPON_SLOTS.find((w) => w.slot === select.slot)!;
+      statements.push({
+        triggers,
+        responses: responseFactory.response([
+          { name: "SelectWeaponAbility", params: [slot.id, 0] },
+          { name: "Continue" },
+        ]),
+      });
+    }
     return statements;
   }
 

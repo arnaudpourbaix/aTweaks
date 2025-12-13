@@ -51,6 +51,9 @@ export class CreatureFamily {
   }
 
   addSpell(spell: Omit<PartialSpell, "memorizedCount">, file?: string): Spell {
+    if (spell.id !== undefined && this.spells.some((s) => s.id === spell.id)) {
+      throw new Error(`Spell id ${spell.id} already defined`);
+    }
     file ??= getFilename(this.spells.length + 1, this.name, "f");
     const result = spellService.getSpell(spell, file);
     this.spells.push(result);
@@ -58,6 +61,9 @@ export class CreatureFamily {
   }
 
   addItem(item: PartialItem): Item {
+    if (item.id !== undefined && this.items.some((i) => i.id === item.id)) {
+      throw new Error(`Item id ${item.id} already defined`);
+    }
     const file = getFilename(this.items.length + 1, this.name, "f");
     const result = itemService.getItem(item, file);
     this.items.push(result);
