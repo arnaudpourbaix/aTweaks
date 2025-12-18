@@ -1,6 +1,5 @@
 import { ATWEAKS_CREATURES } from "../../config/creatures";
 import { MonsterItemIconEnum } from "../../config/item";
-import CreatureFactory from "../../src/factories/creature.factory";
 import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import {
@@ -12,24 +11,41 @@ import {
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-enum Ids {
-  Treant,
+class Plant extends Creature {
+  createBranch(diceThrown: number, diceSize: number, equip = false) {
+    return this.addItem({
+      stringRef: "monster.plant.weapon.branch",
+      icon: MonsterItemIconEnum.Golem,
+      equippedSlot: equip ? ["WEAPON1"] : undefined,
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+        diceThrown: diceThrown,
+        diceSize: diceSize,
+        damageType: AbilityDamageTypeEnum.Crushing,
+        range: 5,
+        speed: 8,
+        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+      },
+    });
+  }
 }
 
-class PlantFamily extends CreatureFamily {
+class PlantFamily extends CreatureFamily<Plant> {
   constructor() {
     super(MonsterFamilyEnum.Plant);
     this.addCreature(this.treant());
+  }
+
+  createCreature(id: MonsterEnum): Plant {
+    return new Plant(id);
   }
 
   /**
    * Treant
    */
   private treant() {
-    const treant = CreatureFactory.create({
-      id: Ids.Treant,
+    const treant = this.create({
       monster: MonsterEnum.Treant,
-      family: MonsterFamilyEnum.Plant,
       name: "monster.plant.name.treant",
       files: [
         ATWEAKS_CREATURES.Treant11hd,
@@ -79,15 +95,14 @@ class PlantFamily extends CreatureFamily {
         size: "Huge",
       },
     });
-    const wp11 = this.createBranch(treant, 4, 6).file;
-    const wp9 = this.createBranch(treant, 3, 6).file;
-    const wp7 = this.createBranch(treant, 2, 8).file;
-    const wp5 = this.createBranch(treant, 2, 6).file;
+    treant.createBranch(4, 6, true);
+    const wp9 = treant.createBranch(3, 6).file;
+    const wp7 = treant.createBranch(2, 8).file;
+    const wp5 = treant.createBranch(2, 6).file;
     treant.setAdditionalData({
       movement: { value: 12 },
       removeItems: ["BDTREANT", "BDPLANT", "IPSION"],
       immunities: ["plant"],
-      equippedItems: [{ file: wp11, slot: "WEAPON1" }],
     });
     treant.addTrait({
       effects: [
@@ -142,22 +157,6 @@ class PlantFamily extends CreatureFamily {
       },
     ]);
     return treant;
-  }
-
-  createBranch(creature: Creature, diceThrown: number, diceSize: number) {
-    return creature.addItem({
-      stringRef: "monster.plant.weapon.branch",
-      icon: MonsterItemIconEnum.Golem,
-      header: {
-        type: ItemAbilityTypeEnum.Melee,
-        diceThrown: diceThrown,
-        diceSize: diceSize,
-        damageType: AbilityDamageTypeEnum.Crushing,
-        range: 5,
-        speed: 8,
-        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-      },
-    });
   }
 }
 

@@ -38,7 +38,7 @@ export const createDimensionDoor = ({
 }): PartialSpell => ({
   name: "spell.dimensionDoor.name",
   description: "spell.dimensionDoor.description",
-  doc: false,
+  doc: "name",
   memorizedCount,
   castingSound: "CAS_M08",
   flags: [SpellFlagEnum.NoLOSRequired],

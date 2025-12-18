@@ -22,20 +22,24 @@ It must repeat the saving throw at the end of its next turn. On a success, the e
     },
   },
   basilisk: {
-    lesser: "Lesser Basilisk",
-    greater: "Greater Basilisk",
-    weapon: { claws: "Claws", jaws: "Jaws" },
-    petrifyingGaze: {
-      name: "Petrifying Gaze",
-      description: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.`,
-      description5e: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained.
-It must repeat the saving throw on the next round. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.`,
-      petrified: "Petrified",
-      turningToStone: "Turning to stone",
+    name: {
+      lesser: "Lesser Basilisk",
+      greater: "Greater Basilisk",
     },
-    foulBreath: {
-      name: "Foul Breath",
-      description: `All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).`,
+    weapon: { claws: "Claws", jaws: "Jaws" },
+    ability: {
+      petrifyingGaze: {
+        name: "Petrifying Gaze",
+        description: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature is petrified until freed by the greater restoration spell or other magic.`,
+        description5e: `Any creature, that can see and within 30 feet of the basilisk, must save vs petrify at -4. On a failed save, the creature magically begins to turn to stone and is restrained.
+It must repeat the saving throw on the next round. On a success, the effect ends. On a failure, the creature is petrified until freed by the greater restoration spell or other magic.`,
+        petrified: "Petrified",
+        turningToStone: "Turning to stone",
+      },
+      foulBreath: {
+        name: "Foul Breath",
+        description: `All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).`,
+      },
     },
   },
   carrionCrawler: {
@@ -102,7 +106,7 @@ It must repeat the saving throw on the next round. On a success, the effect ends
     },
     weapon: { sirineTouch: "Sirine Touch" },
     ability: {
-      dryadDireCharm: "Dryad Dire Charm",
+      dryadDireCharm: "Dryad Charm",
       entangle: {
         name: "Entangle",
         description: `Hamadryad can cast Entangle as the priest spell, but it won't affect its allies since her affinity with nature.`,
@@ -271,8 +275,24 @@ The toxic effects last for two rounds.`,
       vortex: "Vortex Spider",
       wraith: "Wraith Spider",
     },
-    weapon: { jaws: "Jaws" },
+    weapon: { jaws: "Jaws", leg: "Leg" },
     ability: {
+      phase: {
+        name: "Phase out",
+        description: "",
+      },
+      leap: {
+        name: "Leap",
+        description: "Leaps horizontally as far as 30 feet.",
+      },
+      leapAttack: {
+        name: "Leap Attack",
+        description: `Leaps horizontally as far as 30 feet.
+Gains Impaling Attack ability for one round.`,
+      },
+      impale: {
+        name: "Impaling Attack",
+      },
       webTangle: {
         name: "Web Tangle",
         standardDesc: `The spider can shoot web strands up to 5 feet to bind a foe.

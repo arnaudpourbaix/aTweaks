@@ -1,148 +1,143 @@
-import { MonsterFamilyEnum } from "../../../creatures/monster";
-import effectService from "../../services/effects/effect.service";
-import itemService from "../../services/item.service";
-import spellService from "../../services/spell.service";
-import { getFilename } from "../../services/utils/misc.func";
-import { BaseEffect } from "../spell-item/effect";
-import {
-  EffectCastSpellTypeEnum,
-  EffectTargetEnum,
-} from "../spell-item/effect.enums";
-import { EffectTypeEnum } from "../spell-item/effect.type";
-import { PartialProjectile, Projectile } from "../spell-item/projectile";
-import {
-  Item,
-  PartialItem,
-  PartialSpell,
-  PartialWeapon,
-  Spell,
-  Weapon,
-  WeaponCastSpell,
-} from "../spell-item/spell-item";
-import { WithRequired } from "../utility-types";
-import { CreatureAbilitySpell, RawCreatureAbility } from "./ability";
-import { Creature } from "./creature";
+import chalk from "chalk";
+import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import { TranslationKey } from "../../../translations/i18n";
+import { AbstractCreature } from "./abstract-creature";
+import { Creature, CreatureAutoGenerate, CreatureNewFile } from "./creature";
+import { CreatureData } from "./data";
+import translationService from "../../services/translation.service";
+import { ADDITIONAL_DATA_DEFAULT } from "./additional-data";
+import { Item, Spell } from "../spell-item/spell-item";
+import { Projectile } from "../spell-item/projectile";
 
-export class CreatureFamily {
-  name: MonsterFamilyEnum;
-  creatures: Creature[];
+export interface Family {
+  id: number;
   items: Item[];
-  spells: Spell[];
   projectiles: Projectile[];
+  creatures: Creature[];
+  spells: Spell[];
+}
 
-  constructor(name: MonsterFamilyEnum) {
-    this.name = name;
+export abstract class CreatureFamily<T extends Creature>
+  extends AbstractCreature
+  implements Family
+{
+  fileType: "m" | "f" = "f";
+  creatures: T[];
+
+  constructor(id: MonsterFamilyEnum) {
+    super(id);
     this.creatures = [];
-    this.items = [];
-    this.spells = [];
-    this.projectiles = [];
   }
 
-  addCreature(creature: Creature) {
-    creature.validate(this.name);
-    this.creatures.push(creature);
-  }
+  abstract createCreature(id: MonsterEnum): T;
 
-  addProjectile(projectile: PartialProjectile, file?: string): Projectile {
-    file ??= getFilename(this.projectiles.length + 1, this.name, "f");
-    const result: Projectile = { ...projectile, file };
-    this.projectiles.push(result);
-    return result;
-  }
-
-  addSpell(spell: Omit<PartialSpell, "memorizedCount">, file?: string): Spell {
-    if (spell.id !== undefined && this.spells.some((s) => s.id === spell.id)) {
-      throw new Error(`Spell id ${spell.id} already defined`);
+  create(p: {
+    name: TranslationKey;
+    monster: MonsterEnum;
+    files: string[];
+    newFiles?: CreatureNewFile[];
+    data: Omit<CreatureData, "movement">;
+    autoGenerate?: CreatureAutoGenerate;
+    logging?: boolean;
+  }): T {
+    console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
+    const cre = this.createCreature(p.monster);
+    cre.name = p.name;
+    cre.family = this.id;
+    cre.files = p.files;
+    cre.newFiles = p.newFiles ?? [];
+    cre.data = p.data;
+    cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
+    cre.logging = p.logging ?? false;
+    if (p.autoGenerate) {
+      cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
+      console.log("autogenerate", cre.autoGenerate);
     }
-    file ??= getFilename(this.spells.length + 1, this.name, "f");
-    const result = spellService.getSpell(spell, file);
-    this.spells.push(result);
-    return result;
+    this.creatures.push(cre);
+    return cre;
   }
 
-  addItem(item: PartialItem): Item {
-    if (item.id !== undefined && this.items.some((i) => i.id === item.id)) {
-      throw new Error(`Item id ${item.id} already defined`);
-    }
-    const file = getFilename(this.items.length + 1, this.name, "f");
-    const result = itemService.getItem(item, file);
-    this.items.push(result);
-    return result;
-  }
-
-  addWeapon({
-    weapon,
-    castSpell,
-  }: {
-    weapon: PartialWeapon;
-    castSpell?: WeaponCastSpell;
-  }) {
-    const result = this.addItem(weapon) as Weapon;
-    if (castSpell) this.attachSpellToWeapon(result, castSpell);
-    return result;
-  }
-
-  private attachSpellToWeapon(weapon: Weapon, cast: WeaponCastSpell) {
-    const spell = this.addSpell(cast.spell);
-    spell.doc = false;
-    const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
-      resource: spell.file,
-      probability1: cast.probability1,
-      probability2: cast.probability2,
-      saveTypes: cast.saveTypes,
-      saveBonus: cast.saveBonus,
-    };
-    weapon.header.effects.push(
-      effectService.getEffect({
-        opcode: EffectTypeEnum.CastSpell,
-        type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
-        ...baseEffect,
-      })
+  createFrom(p: {
+    name: TranslationKey;
+    from: T;
+    monster: MonsterEnum;
+    files: string[];
+    newFiles?: CreatureNewFile[];
+  }): T {
+    const cre = structuredClone(p.from);
+    Object.setPrototypeOf(cre, p.from);
+    cre.id = p.monster;
+    cre.name = p.name;
+    cre.files = p.files;
+    cre.newFiles = p.newFiles ?? [];
+    cre.items = [];
+    cre.spells = [];
+    cre.effectFiles = [];
+    cre.projectiles = [];
+    cre.valid = undefined;
+    console.log(
+      chalk.bold(
+        `\nCreating ${translationService.from(
+          cre.name
+        )} from ${translationService.from(p.from.name)}...`
+      )
     );
-    if (cast.remove) {
-      weapon.header.effects.push(
-        effectService.getEffect({
-          opcode: EffectTypeEnum.RemoveSpell,
-          target: EffectTargetEnum.Self,
-          ...baseEffect,
-        })
-      );
-    }
+    this.creatures.push(cre);
+    return cre;
   }
 
-  item(id: number): Item {
-    const item = this.items.find((s) => s.id === id);
-    if (!item) throw new Error(`No item found with id ${id}`);
-    return item;
+  addCreature(creature: T) {
+    creature.validate(this.id);
   }
 
-  spell(id: number): Spell {
-    const spell = this.spells.find((s) => s.id === id);
-    if (!spell) throw new Error(`No spell found with id ${id}`);
-    return spell;
-  }
-
-  creature(id: number): Creature {
+  creature(id: MonsterEnum): T {
     const creature = this.creatures.find((s) => s.id === id);
     if (!creature) throw new Error(`No creature found with id ${id}`);
     return creature;
-  }
-
-  ability(id: number): RawCreatureAbility {
-    const spell = this.spell(id);
-    if (!spell.ability) throw new Error(`No ability found for spell id ${id}`);
-    return spell.ability;
-  }
-
-  projectile(id: number): Projectile {
-    const proj = this.projectiles.find((s) => s.id === id);
-    if (!proj) throw new Error(`No projectile found with id ${id}`);
-    return proj;
   }
 
   preset(name: string) {
     return {
       preset: name,
     };
+  }
+
+  override item(id: number): Item {
+    try {
+      return super.item(id);
+    } catch (e) {
+      let item: Item | undefined;
+      for (const creature of this.creatures) {
+        item = creature.items.find((s) => s.id === id);
+        if (item) return item;
+      }
+      throw e;
+    }
+  }
+
+  override spell(id: number): Spell {
+    try {
+      return super.spell(id);
+    } catch (e) {
+      let spell: Spell | undefined;
+      for (const creature of this.creatures) {
+        spell = creature.spells.find((s) => s.id === id);
+        if (spell) return spell;
+      }
+      throw e;
+    }
+  }
+
+  override projectile(id: number): Projectile {
+    try {
+      return super.projectile(id);
+    } catch (e) {
+      let proj: Projectile | undefined;
+      for (const creature of this.creatures) {
+        proj = creature.projectiles.find((s) => s.id === id);
+        if (proj) return proj;
+      }
+      throw e;
+    }
   }
 }

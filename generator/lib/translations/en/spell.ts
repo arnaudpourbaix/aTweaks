@@ -35,12 +35,20 @@ Dryad (2 Hit Dice):
 STR 10, DEX 12, CON 11, INT 14, WIS 15, CHA 18
 HP 16, AC 9, THAC0 19, 50% magic resistance
 Dimension Door (at will) in wilderness area only.
-Dire Charm (x3), saves vs spell at -3.
+Dryad Charm (x3), saves vs spell at -3.
+
+Hamadryad (4 Hit Dice):
+STR 10, DEX 18, CON 12, INT 14, WIS 14, CHA 18
+HP 32, AC 6, THAC0 17, 75% magic resistance
+Dimension Door (at will) in wilderness area only.
+Dryad Charm (x3), saves vs spell at -3.
+Entangle (at will)
+Animal Friendship (at will)
 
 5HD Treant:
 STR 19, DEX 8, CON 19, INT 12, WIS 16, CHA 12
 HP 65, AC 0, THAC0 15, -25% fire resistance
-2 Attacks Per Round, 2d8 crushing
+2 Attacks Per Round, 2d6 crushing
 
 7HD Treant:
 STR 20, DEX 8, CON 20, INT 12, WIS 16, CHA 12

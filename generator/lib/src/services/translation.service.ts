@@ -43,6 +43,11 @@ class TranslationService extends AbstractWeiduService {
       : this.fromStringRef(ref, lang);
   }
 
+  fromOptional(ref: StringReference | undefined): string {
+    if (!ref) return "";
+    return this.from(ref);
+  }
+
   interpolate(
     key: TranslationKey,
     vars: Record<string, string | number>

@@ -1,4 +1,4 @@
-import { CreatureFamily } from "../src/model/creature/family";
+import { Family } from "../src/model/creature/family";
 import { createAnkhegs } from "./ankheg/ankheg";
 import { createBasilisks } from "./basilisks/basilisk";
 import { createBears } from "./bears/bear";
@@ -13,7 +13,7 @@ import { createPlants } from "./plants/plant";
 import { createSlimes } from "./slimes/slime";
 import { createSpiders } from "./spiders/spider";
 
-export const familyFactories: (() => CreatureFamily)[] = [
+export const familyFactories: (() => Family)[] = [
   createAnkhegs,
   createBasilisks,
   createBears,

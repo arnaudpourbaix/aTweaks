@@ -59,6 +59,7 @@ END
 
 // Summon follow summoner
 IF
+	ActionListEmpty()
 	Global("JA#COMBAT","LOCALS",0)
 	!StateCheck(Myself,STATE_BLIND)
 	ActionListEmpty()
@@ -73,6 +74,7 @@ END
 
 // Do nothing if...
 IF
+	ActionListEmpty()
 	OR(4)
 		Global("JA#COMBAT","LOCALS",0)
 		!Allegiance(Myself,EVILCUTOFF)
@@ -84,6 +86,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!InActiveArea(Myself)
 	!Range(NearestEnemyOf(Myself),30)
 THEN
@@ -91,8 +94,9 @@ THEN
 		NoAction()
 END
 
-// Leap Attack
+// Leap
 IF
+	ActionListEmpty()
 	HaveSpellRES("ja#1m65")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Range(FarthestEnemyOf(Myself),5)
@@ -101,7 +105,6 @@ IF
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -112,6 +115,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	HaveSpellRES("ja#1m65")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Range(SecondFarthestEnemyOf(Myself),5)
@@ -120,7 +124,6 @@ IF
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -131,6 +134,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	HaveSpellRES("ja#1m65")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Range(ThirdFarthestEnemyOf(Myself),5)
@@ -139,7 +143,6 @@ IF
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -150,6 +153,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	HaveSpellRES("ja#1m65")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!Range(FourthFarthestEnemyOf(Myself),5)
@@ -169,6 +173,7 @@ END
 
 // Attack Slowed enemy
 IF
+	ActionListEmpty()
 	OR(12)
 		!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
 		CheckStatGT(NearestEnemyOf(Myself),0,HELD)
@@ -305,6 +310,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	StateCheck(LastSeenBy(Myself),STATE_SLOWED)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
@@ -324,6 +330,7 @@ END
 
 // Attack Able enemy
 IF
+	ActionListEmpty()
 	OR(11)
 		CheckStatGT(NearestEnemyOf(Myself),0,HELD)
 		StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
@@ -450,6 +457,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -468,6 +476,7 @@ END
 
 // Attack Held enemy
 IF
+	ActionListEmpty()
 	OR(5)
 		!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
 		General(NearestEnemyOf(Myself),WEAPON)
@@ -534,6 +543,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -546,6 +556,7 @@ END
 
 // Attack Stunned enemy
 IF
+	ActionListEmpty()
 	OR(5)
 		!StateCheck(NearestEnemyOf(Myself),STATE_STUNNED)
 		General(NearestEnemyOf(Myself),WEAPON)
@@ -612,6 +623,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
@@ -624,6 +636,7 @@ END
 
 // Attack NoCheck enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		General(NearestEnemyOf(Myself),WEAPON)
 		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
@@ -680,6 +693,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -691,6 +705,7 @@ END
 
 // Attack Sleep enemy
 IF
+	ActionListEmpty()
 	OR(4)
 		!StateCheck(Player1,STATE_SLEEPING)
 		CheckStatGT(Player1,0,SANCTUARY)
@@ -727,6 +742,7 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
@@ -739,6 +755,7 @@ END
 // Track players if allegiance is not GOODCUTOFF
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player1)
 	Range(Player1,150)
@@ -752,6 +769,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player2)
 	Range(Player2,150)
@@ -765,6 +783,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player3)
 	Range(Player3,150)
@@ -778,6 +797,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player4)
 	Range(Player4,150)
@@ -791,6 +811,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player5)
 	Range(Player5,150)
@@ -804,6 +825,7 @@ END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(Player6)
 	Range(Player6,150)
@@ -818,6 +840,7 @@ END
 // Track last seen enemy if allegiance is GOODCUTOFF
 IF
 	Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
 	!StateCheck(Myself,STATE_BLIND)
 	InMyArea(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),150)
@@ -828,16 +851,5 @@ IF
 THEN
 	RESPONSE #100
 		MoveToObject(LastSeenBy(Myself))
-END
-
-// Random walking (in combat) 
-IF
-	Global("JA#COMBAT","LOCALS",1)
-	ActionListEmpty()
-	!See([GOODCUTOFF])
-THEN
-	RESPONSE #100
-		RandomWalk()
-		Wait(2)
 END
 

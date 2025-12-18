@@ -1,5 +1,5 @@
 import { SPELLS } from "../../config/spell-names";
-import creatureFactory from "../../src/factories/creature.factory";
+import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
@@ -21,11 +21,11 @@ enum Ids {
   Armor,
   FlamingSword,
   Longsword,
-  HelmedHorror,
-  BattleHorror,
 }
 
-class ConstructFamily extends CreatureFamily {
+class Construct extends Creature {}
+
+class ConstructFamily extends CreatureFamily<Construct> {
   constructor() {
     super(MonsterFamilyEnum.Construct);
     this.createFlamingSword();
@@ -38,15 +38,17 @@ class ConstructFamily extends CreatureFamily {
     this.addCreature(this.doomGuard());
   }
 
+  createCreature(id: MonsterEnum): Construct {
+    return new Construct(id);
+  }
+
   /**
    * Helmed Horror
    */
   private helmedHorror() {
-    const helmedHorror = creatureFactory.create({
+    const helmedHorror = this.create({
       monster: MonsterEnum.HelmedHorror,
-      family: MonsterFamilyEnum.Construct,
       name: "monster.construct.name.helmedHorror",
-      id: Ids.HelmedHorror,
       files: ["HELMHO", "GLOWTEST"],
       data: {
         level1: 4,
@@ -103,9 +105,9 @@ class ConstructFamily extends CreatureFamily {
         "hover",
       ],
     });
-    helmedHorror.addExistingItem(this.item(Ids.FlamingSword));
-    helmedHorror.addExistingItem(this.item(Ids.Armor));
-    helmedHorror.addExistingItem(this.item(Ids.Helmet));
+    helmedHorror.equipItem(this.item(Ids.FlamingSword));
+    helmedHorror.equipItem(this.item(Ids.Armor));
+    helmedHorror.equipItem(this.item(Ids.Helmet));
     helmedHorror.setBehavior({
       restHeal: true,
     });
@@ -116,11 +118,10 @@ class ConstructFamily extends CreatureFamily {
    * Battle Horror
    */
   private battleHorror() {
-    const battleHorror = creatureFactory.createFrom({
+    const battleHorror = this.createFrom({
       name: "monster.construct.name.battleHorror",
       monster: MonsterEnum.BattleHorror,
-      id: Ids.BattleHorror,
-      from: this.creature(Ids.HelmedHorror),
+      from: this.creature(MonsterEnum.HelmedHorror),
       files: ["BATTHO", "dw#davho"],
     });
     battleHorror.setData({
@@ -174,10 +175,10 @@ class ConstructFamily extends CreatureFamily {
    * Doom Sayer
    */
   private doomSayer() {
-    const doomSayer = creatureFactory.createFrom({
+    const doomSayer = this.createFrom({
       name: "monster.construct.name.doomSayer",
       monster: MonsterEnum.DoomSayer,
-      from: this.creature(Ids.BattleHorror),
+      from: this.creature(MonsterEnum.BattleHorror),
       files: ["DOOMSA"],
     });
     doomSayer.setAdditionalData({
@@ -192,9 +193,8 @@ class ConstructFamily extends CreatureFamily {
    * Doom Guard
    */
   private doomGuard() {
-    const doomGuard = creatureFactory.create({
+    const doomGuard = this.create({
       monster: MonsterEnum.DoomGuard,
-      family: MonsterFamilyEnum.Construct,
       name: "monster.construct.name.doomGuard",
       files: ["DOOMGU", "DOOMDUR"],
       data: {
@@ -228,9 +228,9 @@ class ConstructFamily extends CreatureFamily {
     doomGuard.addTrait({
       immunities: ["mindSpells", "fireResistance", "coldResistance"],
     });
-    doomGuard.addExistingItem(this.item(Ids.Longsword));
-    doomGuard.addExistingItem(this.item(Ids.Armor));
-    doomGuard.addExistingItem(this.item(Ids.Helmet));
+    doomGuard.equipItem(this.item(Ids.Longsword));
+    doomGuard.equipItem(this.item(Ids.Armor));
+    doomGuard.equipItem(this.item(Ids.Helmet));
     doomGuard.setBehavior({
       restHeal: true,
     });

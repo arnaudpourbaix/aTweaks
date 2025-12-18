@@ -10,6 +10,7 @@
         "outDir": "dist",
         "rootDir": "lib",
         "strict": true,
+        "noImplicitOverride": true,
         "types": [
             "node"
         ],

@@ -108,15 +108,17 @@ END
 // Detect Invisibility
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!GlobalTimerNotExpired("detectInvisibility","LOCALS")
 	HaveSpell(WIZARD_DETECT_INVISIBILITY)
 	!See([PC])
 	Detect([PC])
 	!CheckSpellState(Myself,DETECT_INVISIBILITY)
-	RandomNumGT(800,561)
+	RandomNumGT(800,560)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpell(Myself,WIZARD_DETECT_INVISIBILITY)
+		SetGlobalTimer("detectInvisibility","LOCALS",18)
 END
 
 // Attack NoCheck enemy

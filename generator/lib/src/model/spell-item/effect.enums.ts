@@ -1330,4 +1330,7 @@ export type PnPPoisonType =
   | "M"
   | "N"
   | "O"
-  | "P";
+  | "P"
+  | "Q"
+  | "R"
+  | "S";

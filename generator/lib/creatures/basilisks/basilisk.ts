@@ -1,8 +1,9 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
-import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
+import { ItemSlot } from "../../src/model/creature/item";
 import {
   AbilityDamageTypeEnum,
   EffectCastSpellTypeEnum,
@@ -23,6 +24,7 @@ import {
   ProjectileExplosionEffectEnum,
   ProjectileTypeEnum,
 } from "../../src/model/spell-item/projectile";
+import { WeaponCastSpell } from "../../src/model/spell-item/spell-item";
 import poisonService from "../../src/services/effects/poison.service";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
@@ -31,7 +33,33 @@ enum Ids {
   Petrification,
 }
 
-class BasiliskFamily extends CreatureFamily {
+class Basilisk extends Creature {
+  createJaws(p: {
+    diceThrown: number;
+    diceSize: number;
+    slot?: ItemSlot;
+    castSpell?: WeaponCastSpell;
+  }) {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.spider.weapon.jaws",
+        icon: MonsterItemIconEnum.Jaws,
+        equippedSlot: [p.slot ?? "WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: p.diceThrown,
+          diceSize: p.diceSize,
+          damageType: AbilityDamageTypeEnum.Piercing,
+          speed: 5,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+      castSpell: p.castSpell,
+    });
+  }
+}
+
+class BasiliskFamily extends CreatureFamily<Basilisk> {
   constructor() {
     super(MonsterFamilyEnum.Basilisk);
     this.createPetrificationProjectile();
@@ -40,14 +68,17 @@ class BasiliskFamily extends CreatureFamily {
     this.addCreature(this.greater());
   }
 
+  createCreature(id: MonsterEnum): Basilisk {
+    return new Basilisk(id);
+  }
+
   /**
    * Lesser Basilisk
    */
   private lesser() {
-    const lesser = creatureFactory.create({
+    const lesser = this.create({
       monster: MonsterEnum.LesserBasilisk,
-      family: MonsterFamilyEnum.Basilisk,
-      name: "monster.basilisk.lesser",
+      name: "monster.basilisk.name.lesser",
       files: ["BASILL", "BASILLSU", "BPBASL01"],
       data: {
         level1: 6,
@@ -80,20 +111,9 @@ class BasiliskFamily extends CreatureFamily {
       removeScripts: ["LBASILSK"],
       scriptLocation: "Race",
     });
-    lesser.addWeapon({
-      weapon: {
-        stringRef: "monster.basilisk.weapon.jaws",
-        equippedSlot: ["WEAPON1"],
-        icon: MonsterItemIconEnum.Jaws,
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown: 1,
-          diceSize: 10,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 5,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
+    lesser.createJaws({
+      diceThrown: 1,
+      diceSize: 10,
     });
     lesser.setBehavior({
       abilities: [this.ability(Ids.Petrification)],
@@ -106,10 +126,9 @@ class BasiliskFamily extends CreatureFamily {
    * Greater Basilisk
    */
   private greater() {
-    const greater = creatureFactory.create({
+    const greater = this.create({
       monster: MonsterEnum.GreaterBasilisk,
-      family: MonsterFamilyEnum.Basilisk,
-      name: "monster.basilisk.greater",
+      name: "monster.basilisk.name.greater",
       files: [
         "AC#BASGR",
         "BASILG",
@@ -161,28 +180,18 @@ class BasiliskFamily extends CreatureFamily {
           damageType: AbilityDamageTypeEnum.Slashing,
           speed: 5,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects: poisonService.getEffects({ poisonType: "K", saveBonus: 4 }),
         },
       },
+      castSpell: poisonService.getSpell({ poisonType: "K", saveBonus: 4 }),
     });
-    greater.addWeapon({
-      weapon: {
-        stringRef: "monster.basilisk.weapon.jaws",
-        equippedSlot: ["SHIELD"],
-        icon: MonsterItemIconEnum.Jaws,
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown: 2,
-          diceSize: 8,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 5,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
+    greater.createJaws({
+      diceThrown: 2,
+      diceSize: 8,
+      slot: "SHIELD",
       castSpell: {
         spell: {
-          name: "monster.basilisk.foulBreath.name",
-          description: "monster.basilisk.foulBreath.description",
+          name: "monster.basilisk.ability.foulBreath.name",
+          description: "monster.basilisk.ability.foulBreath.description",
           secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
           headers: [
             {
@@ -269,9 +278,10 @@ class BasiliskFamily extends CreatureFamily {
         saveBonus: -4,
       };
     return this.addSpell({
-      name: "monster.basilisk.petrifyingGaze.name",
-      description: "monster.basilisk.petrifyingGaze.description",
+      name: "monster.basilisk.ability.petrifyingGaze.name",
+      description: "monster.basilisk.ability.petrifyingGaze.description",
       id: Ids.Petrification,
+      groups: ["petrification"],
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: {
         renew: 1,
@@ -289,7 +299,7 @@ class BasiliskFamily extends CreatureFamily {
             },
             {
               opcode: EffectTypeEnum.DisplayString,
-              stringRef: "monster.basilisk.petrifyingGaze.petrified",
+              stringRef: "monster.basilisk.ability.petrifyingGaze.petrified",
               ...petrificationSave,
             },
             {
@@ -336,8 +346,9 @@ class BasiliskFamily extends CreatureFamily {
         saveBonus: -4,
       };
     const technical = this.addSpell({
-      name: "monster.basilisk.petrifyingGaze.name",
-      description: "monster.basilisk.petrifyingGaze.description5e",
+      name: "monster.basilisk.ability.petrifyingGaze.name",
+      description: "monster.basilisk.ability.petrifyingGaze.description5e",
+      groups: ["petrification"],
       doc: false,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       icon: SPELLS.FleshToStone,
@@ -354,7 +365,7 @@ class BasiliskFamily extends CreatureFamily {
             },
             {
               opcode: EffectTypeEnum.DisplayString,
-              stringRef: "monster.basilisk.petrifyingGaze.petrified",
+              stringRef: "monster.basilisk.ability.petrifyingGaze.petrified",
               timing: EffectTimingEnum.InstantPermanent,
               ...petrificationSave,
             },
@@ -383,9 +394,10 @@ class BasiliskFamily extends CreatureFamily {
       ],
     });
     return this.addSpell({
-      name: "monster.basilisk.petrifyingGaze.name",
-      description: "monster.basilisk.petrifyingGaze.description5e",
+      name: "monster.basilisk.ability.petrifyingGaze.name",
+      description: "monster.basilisk.ability.petrifyingGaze.description5e",
       id: Ids.Petrification,
+      groups: ["petrification"],
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: {
         renew: 1,
@@ -399,7 +411,8 @@ class BasiliskFamily extends CreatureFamily {
           effects: [
             {
               opcode: EffectTypeEnum.DisplayString,
-              stringRef: "monster.basilisk.petrifyingGaze.turningToStone",
+              stringRef:
+                "monster.basilisk.ability.petrifyingGaze.turningToStone",
               ...petrificationSave,
             },
             ...effectFactory.restrained({ duration: 12, ...petrificationSave }),

@@ -3,14 +3,60 @@
 // Ghostwalk Spider
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m58.baf~
 
-// Ghostwalk Spider traits
+// Web Tangle
+CREATE SPL "ja#1m58"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m58.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10256)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI215C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10258)
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SLIME~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~ELEMENTAL~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SHADOW~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~MIST~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~WRAITH~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~FREE_ACTION~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~RED_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~BLUE_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter2=13 duration=1 probability1=100 STR_VAR resource="ja#1m58" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=157 target=2 power=1 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=129 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=4 savebonus="-2" STR_VAR resource="EFF_P27" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=2 power=1 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF CHANGE_SPELL INT_VAR    renew=2 END
+	
+	// Type E poison
+CREATE SPL "ja#2m58"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m58.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10527)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10528)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=1 parameter2=2 duration=20 probability1=100 special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=1 parameter2=3 duration=18 probability1=100 dicesize=1 dicenumber=2 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=2 parameter2=2 duration=24 probability1=100 dicesize=3 dicenumber=4 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=4 parameter2=2 duration=21 probability1=100 dicesize=5 dicenumber=6 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=6 parameter2=2 duration=20 probability1=100 dicesize=7 dicenumber=8 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=7 parameter2=2 duration=20 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=8 parameter2=2 duration=19 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=12 parameter2=2 duration=19 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 savebonus="-2" special=6 END
+	
+	// Ghostwalk Spider traits
 CREATE ITM "ja#1m58"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10389)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10389)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10526)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10526)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10390)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10529)
 COPY_EXISTING ~ja#1m58.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -24,11 +70,11 @@ CREATE ITM "ja#2m58"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10244)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10244)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10247)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10247)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10391)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10530)
 	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#2m58.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -45,18 +91,8 @@ COPY_EXISTING ~ja#2m58.itm~ ~override~
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-	LPF ADD_EFFECT INT_VAR opcode=184 target=2 probability1=100 END
-	LPF ADD_EFFECT INT_VAR opcode=300 target=2 parameter2=1 probability1=100 END
 	END
-	LPF acidResistance_resistance END
-	LPF coldResistance_resistance END
-	LPF fireResistance_resistance END
-	LPF lightningResistance_resistance END
-	LPF normalWeapons_immunity END
-	LPF hold_immunity END
-	LPF stun_immunity END
-	LPF petrification_immunity END
-	LPF ghostVisual1_trait END
+	LPF incorporeal_trait END
 
 // Jaws
 CREATE ITM "ja#3m58"
@@ -65,11 +101,11 @@ CREATE ITM "ja#3m58"
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10244)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10244)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10247)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10247)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10392)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10531)
 	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#3m58.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -86,14 +122,7 @@ COPY_EXISTING ~ja#3m58.itm~ ~override~
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=1 parameter2=2 duration=20 probability1=100 special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=1 parameter2=3 duration=18 probability1=100 dicesize=1 dicenumber=2 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=2 parameter2=2 duration=24 probability1=100 dicesize=3 dicenumber=4 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=4 parameter2=2 duration=21 probability1=100 dicesize=5 dicenumber=6 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=6 parameter2=2 duration=20 probability1=100 dicesize=7 dicenumber=8 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=7 parameter2=2 duration=20 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=8 parameter2=2 duration=19 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 savebonus="-2" special=6 END
-	LPF ADD_EFFECT INT_VAR opcode=25 target=2 parameter1=12 parameter2=2 duration=19 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 savebonus="-2" special=6 END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#2m58" END
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -115,7 +144,7 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#2m58~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			REPLACE_CRE_ITEM ~ja#3m58~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~ 
 			ADD_CRE_ITEM ~ja#i16~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_MEMORIZED_SPELL ~ja#2f13~ #0 ~innate~ (1) // Web Tangle
+			ADD_MEMORIZED_SPELL ~ja#1m58~ #0 ~innate~ (1) // Web Tangle
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR

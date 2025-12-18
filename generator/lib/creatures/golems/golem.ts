@@ -1,7 +1,6 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { createConeOfCold } from "../../spells/cone_of_cold";
-import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
@@ -39,434 +38,14 @@ enum Ids {
   HideousLaugh,
 }
 
-class GolemFamily extends CreatureFamily {
-  constructor() {
-    super(MonsterFamilyEnum.Golem);
-    this.createCharge();
-    this.createHaste();
-    this.createHideousLaugh();
-    this.createCloudOfPoisonousGas();
-    this.createConeOfCold();
-    this.addCreature(this.flesh());
-    this.addCreature(this.clay());
-    this.addCreature(this.stone());
-    this.addCreature(this.iron());
-    this.addCreature(this.bone());
-    this.addCreature(this.juggernaut());
-    this.addCreature(this.snow());
-  }
-
-  /**
-   * Flesh Golem
-   */
-  private flesh() {
-    const flesh = creatureFactory.create({
-      monster: MonsterEnum.FleshGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.flesh",
-      files: ["BPGOFL01", "FGOLEM", "GOLEMF", "GOLEMF2", "TOMEGOL1"],
-      data: {
-        level1: 9,
-        bonusHp: 0,
-        strength: 19,
-        dexterity: 9,
-        constitution: 18,
-        intelligence: 3,
-        wisdom: 10,
-        charisma: 5,
-        ac: 9,
-        apr: 2,
-        xpv: 2000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_FLESH",
-        gender: "NIETHER",
-        size: "Large",
-        modAnimation: "A7!GOLEM_FLESH_PST",
-      },
-    });
-    flesh.setAdditionalData({
-      movement: { value: 8 },
-      immunities: ["construct"],
-      removeItems: ["GOLFLE"],
-    });
-    flesh.addTrait({
-      immunities: ["magic", "fire", "cold"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.ElectricityResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createFists(flesh, 2, 8, AbilityDamageTypeEnum.Crushing);
-    flesh.setBehavior({
-      restHeal: true,
-    });
-    flesh.setAdjustments([{ files: ["TOMEGOL1"], summon: true }]);
-    return flesh;
-  }
-
-  /**
-   * Clay Golem
-   */
-  private clay() {
-    const clay = creatureFactory.create({
-      monster: MonsterEnum.ClayGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.clay",
-      files: ["AC#FPCLG", "AC#FPCLY", "BPCLAY", "TOMEGOL2", "WICLAYGO"],
-      data: {
-        level1: 11,
-        bonusHp: 0,
-        strength: 20,
-        dexterity: 9,
-        constitution: 18,
-        intelligence: 3,
-        wisdom: 8,
-        charisma: 1,
-        ac: 7,
-        apr: 1,
-        xpv: 5000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_CLAY",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    clay.setAdditionalData({
-      movement: { value: 7 },
-      immunities: ["construct"],
-      removeScripts: ["GOLCLY01", "BPFHT"],
-      removeItems: ["GOLCLA", "RING95", "IMMUNE1"],
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.Haste).file,
-          memorizedCount: 1,
-        },
-      ],
-    });
-    clay.addTrait({
-      immunities: [
-        "magic",
-        "normalWeapons",
-        "slashingDamage",
-        "piercingDamage",
-        "missileDamage",
-      ],
-    });
-    this.createFists(clay, 3, 10, AbilityDamageTypeEnum.Crushing);
-    clay.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.Haste)],
-    });
-    clay.setAdjustments([{ files: ["TOMEGOL2"], summon: true }]);
-    return clay;
-  }
-
-  /**
-   * Stone Golem
-   */
-  private stone() {
-    const stone = creatureFactory.create({
-      monster: MonsterEnum.StoneGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.stone",
-      files: ["BDGOLSTO", "BDMENGO", "NTGOLSTO", "TOMEGOL3", "WISTOGOL"],
-      data: {
-        level1: 14,
-        bonusHp: 0,
-        strength: 22,
-        dexterity: 9,
-        constitution: 20,
-        intelligence: 3,
-        wisdom: 11,
-        charisma: 1,
-        ac: 5,
-        apr: 1,
-        xpv: 8000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_STONE",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    stone.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["construct"],
-      removeScripts: ["GOLSTO01"],
-      removeItems: ["GOLSTO", "GOLSTONE", "IMMUNE2"],
-      memorizedSpells: [{ file: SPELLS.Slow, memorizedCount: 1 }],
-    });
-    stone.addTrait({
-      immunities: ["magic", "plusOneWeapons"],
-    });
-    this.createFists(stone, 3, 8, AbilityDamageTypeEnum.Crushing);
-    stone.setBehavior({
-      restHeal: true,
-      abilities: [
-        {
-          preset: SPELLS.Slow,
-          spell: {
-            type: "reallyForce",
-            selfTarget: true,
-            remove: true,
-          },
-          requireVocal: false,
-          range: 10,
-          timer: { name: "Slow", value: 12 },
-        },
-      ],
-    });
-    stone.setAdjustments([{ files: ["TOMEGOL3"], summon: true }]);
-    return stone;
-  }
-
-  /**
-   * Iron Golem
-   */
-  private iron() {
-    const iron = creatureFactory.create({
-      monster: MonsterEnum.IronGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.iron",
-      files: ["SHIRON"],
-      data: {
-        level1: 18,
-        strength: 24,
-        dexterity: 9,
-        constitution: 20,
-        intelligence: 3,
-        wisdom: 11,
-        charisma: 1,
-        ac: 3,
-        apr: 1,
-        xpv: 13000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_IRON",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    iron.setAdditionalData({
-      movement: { value: 6 },
-      removeItems: ["GOLIRO", "IRONGOL", "IMMUNE3"],
-      immunities: ["construct"],
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.CloudOfPoisonousGas).file,
-          memorizedCount: 1,
-        },
-      ],
-    });
-    iron.addTrait({
-      immunities: ["magic", "plusTwoWeapons", "lightning"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.FireResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-        {
-          opcode: EffectTypeEnum.MagicalFireResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createFists(iron, 4, 10, AbilityDamageTypeEnum.Crushing);
-    iron.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.CloudOfPoisonousGas)],
-    });
-    return iron;
-  }
-
-  /**
-   * Bone Golem
-   */
-  private bone() {
-    const bone = creatureFactory.create({
-      monster: MonsterEnum.BoneGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.bone",
-      files: ["NTGOLBON"],
-      data: {
-        level1: 14,
-        bonusHp: 0,
-        strength: 17,
-        dexterity: 13,
-        constitution: 16,
-        intelligence: 3,
-        wisdom: 8,
-        charisma: 1,
-        ac: 0,
-        apr: 1,
-        xpv: 18000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_STONE",
-        gender: "NIETHER",
-        size: "Medium",
-      },
-    });
-    bone.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["construct", "skeletal"],
-      removeItems: ["S3-8M3", "GOLCLA", "IMMUNE2", "HELMNOAN"],
-      memorizedSpells: [
-        { file: this.spell(Ids.HideousLaugh).file, memorizedCount: 1 },
-      ],
-    });
-    bone.addTrait({
-      immunities: ["magic", "fire", "cold"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.ElectricityResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createFists(bone, 3, 8, AbilityDamageTypeEnum.Slashing);
-    bone.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.HideousLaugh)],
-    });
-    return bone;
-  }
-
-  /**
-   * Juggernaut Golem
-   */
-  private juggernaut() {
-    const juggernaut = creatureFactory.create({
-      monster: MonsterEnum.JuggernautGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.juggernaut",
-      files: ["TOMEGOL4"],
-      data: {
-        level1: 18,
-        strength: 22,
-        dexterity: 9,
-        constitution: 20,
-        intelligence: 3,
-        wisdom: 11,
-        charisma: 1,
-        ac: 2,
-        apr: 2,
-        xpv: 11000,
-        alignment: "NEUTRAL",
-        morale: 16,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_STONE",
-        gender: "NIETHER",
-        size: "Large",
-        animation: "GOLEM_CLAY",
-      },
-    });
-    juggernaut.setAdditionalData({
-      movement: { value: 3 },
-      immunities: ["construct"],
-      removeScripts: ["GOLSTO01", "GOLIRO01", "TOMEGOL4"],
-      removeItems: ["IRONGOL"],
-      memorizedSpells: [
-        { file: this.spell(Ids.Charge).file, memorizedCount: 1 },
-      ],
-    });
-    juggernaut.addTrait({ immunities: ["magic", "fire"] });
-    this.createFists(juggernaut, 2, 6, AbilityDamageTypeEnum.Crushing);
-    juggernaut.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.Charge)],
-    });
-    juggernaut.setAdjustments([{ files: ["TOMEGOL4"], summon: true }]);
-    return juggernaut;
-  }
-
-  /**
-   * Snow Golem
-   */
-  private snow() {
-    const snow = creatureFactory.create({
-      monster: MonsterEnum.SnowGolem,
-      family: MonsterFamilyEnum.Golem,
-      name: "monster.golem.name.snow",
-      files: ["UBSNOGOL"],
-      data: {
-        level1: 12,
-        strength: 19,
-        dexterity: 6,
-        constitution: 14,
-        intelligence: 3,
-        wisdom: 6,
-        charisma: 1,
-        ac: 1,
-        apr: 2,
-        xpv: 7000,
-        alignment: "NEUTRAL",
-        morale: 20,
-        general: "GIANTHUMANOID",
-        race: "GOLEM",
-        class: "GOLEM_STONE",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    snow.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["construct"],
-      removeItems: ["UBSNORNG", "UBSNOFST"],
-      memorizedSpells: [
-        { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
-      ],
-    });
-    snow.addTrait({
-      immunities: ["plusOneWeapons", "lightning"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.ColdResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-        {
-          opcode: EffectTypeEnum.MagicalColdResistanceModifier,
-          value: 125,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createFists(snow, 2, 12, AbilityDamageTypeEnum.Crushing);
-    snow.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.ConeOfCold)],
-    });
-    return snow;
-  }
-
+class Golem extends Creature {
   createFists(
-    creature: Creature,
     diceThrown: number,
     diceSize: number,
     damageType: AbilityDamageTypeEnum,
     castSpell?: WeaponCastSpell
   ) {
-    return creature.addWeapon({
+    return this.addWeapon({
       weapon: {
         stringRef: "monster.golem.weapon.fists",
         icon: MonsterItemIconEnum.Fist,
@@ -487,10 +66,11 @@ class GolemFamily extends CreatureFamily {
   /**
    * Haste
    */
-  private createHaste() {
+  createHaste() {
     return this.addSpell({
       name: "monster.golem.ability.haste",
       id: Ids.Haste,
+      memorizedCount: 1,
       castingSound: "CAS_P04",
       icon: SPELLS.Haste,
       headers: [
@@ -569,10 +149,11 @@ class GolemFamily extends CreatureFamily {
   /**
    * Hideous Laugh
    */
-  private createHideousLaugh() {
+  createHideousLaugh() {
     return this.addSpell({
       name: "monster.golem.ability.hideousLaugh",
       id: Ids.HideousLaugh,
+      memorizedCount: 1,
       icon: SPELLS.CloakOfFear,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 3 },
@@ -603,7 +184,7 @@ class GolemFamily extends CreatureFamily {
   /**
    * Charge
    */
-  private createCharge() {
+  createCharge() {
     //TODO: this is a very basic idea of charge, many improvements can be done but since this golem is only used once by a mod, it is a low priority.
     // Anyone caught in the path of a juggernaut charge is run over by the thundering behemoth, though the juggernaut must make a normal attack roll if the victim can avoid the charge.
     // A hit indicates that the victim is crushed, suffering 10d10 points of damage
@@ -617,6 +198,7 @@ class GolemFamily extends CreatureFamily {
       name: "monster.golem.ability.charge.name",
       description: "monster.golem.ability.charge.description",
       id: Ids.Charge,
+      memorizedCount: 1,
       icon: SPELLS.Haste,
       options: { renew: 5 },
       headers: [
@@ -666,11 +248,12 @@ class GolemFamily extends CreatureFamily {
   /**
    * Cloud of poisonous gas
    */
-  private createCloudOfPoisonousGas() {
+  createCloudOfPoisonousGas() {
     return this.addSpell({
       name: "monster.golem.ability.cloudOfPoisonousGas.name",
       description: "monster.golem.ability.cloudOfPoisonousGas.description",
       id: Ids.CloudOfPoisonousGas,
+      memorizedCount: 1,
       icon: SPELLS.Cloudkill,
       options: { renew: 7 },
       headers: [
@@ -746,13 +329,14 @@ class GolemFamily extends CreatureFamily {
   /**
    * Cone of cold
    */
-  private createConeOfCold() {
+  createConeOfCold() {
     // Snow golems are able to breathe a cone of cold once every five rounds.
     // This functions as if the spell of that name were being cast by a 10th level wizard.
     return this.addSpell(
       createConeOfCold({
         id: Ids.ConeOfCold,
         description: "monster.golem.ability.coneOfCold",
+        memorizedCount: 1,
         options: { renew: 5 },
         damage: {
           diceThrown: 10,
@@ -761,6 +345,403 @@ class GolemFamily extends CreatureFamily {
         },
       })
     );
+  }
+}
+
+class GolemFamily extends CreatureFamily<Golem> {
+  constructor() {
+    super(MonsterFamilyEnum.Golem);
+    this.addCreature(this.flesh());
+    this.addCreature(this.clay());
+    this.addCreature(this.stone());
+    this.addCreature(this.iron());
+    this.addCreature(this.bone());
+    this.addCreature(this.juggernaut());
+    this.addCreature(this.snow());
+  }
+
+  createCreature(id: MonsterEnum): Golem {
+    return new Golem(id);
+  }
+
+  /**
+   * Flesh Golem
+   */
+  private flesh() {
+    const flesh = this.create({
+      monster: MonsterEnum.FleshGolem,
+      name: "monster.golem.name.flesh",
+      files: ["BPGOFL01", "FGOLEM", "GOLEMF", "GOLEMF2", "TOMEGOL1"],
+      data: {
+        level1: 9,
+        bonusHp: 0,
+        strength: 19,
+        dexterity: 9,
+        constitution: 18,
+        intelligence: 3,
+        wisdom: 10,
+        charisma: 5,
+        ac: 9,
+        apr: 2,
+        xpv: 2000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_FLESH",
+        gender: "NIETHER",
+        size: "Large",
+        modAnimation: "A7!GOLEM_FLESH_PST",
+      },
+    });
+    flesh.setAdditionalData({
+      movement: { value: 8 },
+      immunities: ["construct"],
+      removeItems: ["GOLFLE"],
+    });
+    flesh.addTrait({
+      immunities: ["magic", "fire", "cold"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ElectricityResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    flesh.createFists(2, 8, AbilityDamageTypeEnum.Crushing);
+    flesh.setBehavior({
+      restHeal: true,
+    });
+    flesh.setAdjustments([{ files: ["TOMEGOL1"], summon: true }]);
+    return flesh;
+  }
+
+  /**
+   * Clay Golem
+   */
+  private clay() {
+    const clay = this.create({
+      monster: MonsterEnum.ClayGolem,
+      name: "monster.golem.name.clay",
+      files: ["AC#FPCLG", "AC#FPCLY", "BPCLAY", "TOMEGOL2", "WICLAYGO"],
+      data: {
+        level1: 11,
+        bonusHp: 0,
+        strength: 20,
+        dexterity: 9,
+        constitution: 18,
+        intelligence: 3,
+        wisdom: 8,
+        charisma: 1,
+        ac: 7,
+        apr: 1,
+        xpv: 5000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_CLAY",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    clay.createHaste();
+    clay.setAdditionalData({
+      movement: { value: 7 },
+      immunities: ["construct"],
+      removeScripts: ["GOLCLY01", "BPFHT"],
+      removeItems: ["GOLCLA", "RING95", "IMMUNE1"],
+    });
+    clay.addTrait({
+      immunities: [
+        "magic",
+        "nonMagicalWeapons",
+        "slashingDamage",
+        "piercingDamage",
+        "missileDamage",
+      ],
+    });
+    clay.createFists(3, 10, AbilityDamageTypeEnum.Crushing);
+    clay.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.Haste)],
+    });
+    clay.setAdjustments([{ files: ["TOMEGOL2"], summon: true }]);
+    return clay;
+  }
+
+  /**
+   * Stone Golem
+   */
+  private stone() {
+    const stone = this.create({
+      monster: MonsterEnum.StoneGolem,
+      name: "monster.golem.name.stone",
+      files: ["BDGOLSTO", "BDMENGO", "NTGOLSTO", "TOMEGOL3", "WISTOGOL"],
+      data: {
+        level1: 14,
+        bonusHp: 0,
+        strength: 22,
+        dexterity: 9,
+        constitution: 20,
+        intelligence: 3,
+        wisdom: 11,
+        charisma: 1,
+        ac: 5,
+        apr: 1,
+        xpv: 8000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_STONE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    stone.setAdditionalData({
+      movement: { value: 6 },
+      immunities: ["construct"],
+      removeScripts: ["GOLSTO01"],
+      removeItems: ["GOLSTO", "GOLSTONE", "IMMUNE2"],
+      memorizedSpells: [{ file: SPELLS.Slow, memorizedCount: 1 }],
+    });
+    stone.addTrait({
+      immunities: ["magic", "plusOneWeapons"],
+    });
+    stone.createFists(3, 8, AbilityDamageTypeEnum.Crushing);
+    stone.setBehavior({
+      restHeal: true,
+      abilities: [
+        {
+          preset: SPELLS.Slow,
+          spell: {
+            type: "reallyForce",
+            selfTarget: true,
+            remove: true,
+          },
+          requireVocal: false,
+          range: 10,
+          timer: { name: "Slow", value: 12 },
+        },
+      ],
+    });
+    stone.setAdjustments([{ files: ["TOMEGOL3"], summon: true }]);
+    return stone;
+  }
+
+  /**
+   * Iron Golem
+   */
+  private iron() {
+    const iron = this.create({
+      monster: MonsterEnum.IronGolem,
+      name: "monster.golem.name.iron",
+      files: ["SHIRON"],
+      data: {
+        level1: 18,
+        strength: 24,
+        dexterity: 9,
+        constitution: 20,
+        intelligence: 3,
+        wisdom: 11,
+        charisma: 1,
+        ac: 3,
+        apr: 1,
+        xpv: 13000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_IRON",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    iron.createCloudOfPoisonousGas();
+    iron.setAdditionalData({
+      movement: { value: 6 },
+      removeItems: ["GOLIRO", "IRONGOL", "IMMUNE3"],
+      immunities: ["construct"],
+    });
+    iron.addTrait({
+      immunities: ["magic", "plusTwoWeapons", "lightning"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.FireResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+        {
+          opcode: EffectTypeEnum.MagicalFireResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    iron.createFists(4, 10, AbilityDamageTypeEnum.Crushing);
+    iron.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.CloudOfPoisonousGas)],
+    });
+    return iron;
+  }
+
+  /**
+   * Bone Golem
+   */
+  private bone() {
+    const bone = this.create({
+      monster: MonsterEnum.BoneGolem,
+      name: "monster.golem.name.bone",
+      files: ["NTGOLBON"],
+      data: {
+        level1: 14,
+        bonusHp: 0,
+        strength: 17,
+        dexterity: 13,
+        constitution: 16,
+        intelligence: 3,
+        wisdom: 8,
+        charisma: 1,
+        ac: 0,
+        apr: 1,
+        xpv: 18000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_STONE",
+        gender: "NIETHER",
+        size: "Medium",
+      },
+    });
+    bone.createHideousLaugh();
+    bone.setAdditionalData({
+      movement: { value: 12 },
+      immunities: ["construct", "skeletal"],
+      removeItems: ["S3-8M3", "GOLCLA", "IMMUNE2", "HELMNOAN"],
+    });
+    bone.addTrait({
+      immunities: ["magic", "fire", "cold"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ElectricityResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    bone.createFists(3, 8, AbilityDamageTypeEnum.Slashing);
+    bone.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.HideousLaugh)],
+    });
+    return bone;
+  }
+
+  /**
+   * Juggernaut Golem
+   */
+  private juggernaut() {
+    const juggernaut = this.create({
+      monster: MonsterEnum.JuggernautGolem,
+      name: "monster.golem.name.juggernaut",
+      files: ["TOMEGOL4"],
+      data: {
+        level1: 18,
+        strength: 22,
+        dexterity: 9,
+        constitution: 20,
+        intelligence: 3,
+        wisdom: 11,
+        charisma: 1,
+        ac: 2,
+        apr: 2,
+        xpv: 11000,
+        alignment: "NEUTRAL",
+        morale: 16,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_STONE",
+        gender: "NIETHER",
+        size: "Large",
+        animation: "GOLEM_CLAY",
+      },
+    });
+    juggernaut.createCharge();
+    juggernaut.setAdditionalData({
+      movement: { value: 3 },
+      immunities: ["construct"],
+      removeScripts: ["GOLSTO01", "GOLIRO01", "TOMEGOL4"],
+      removeItems: ["IRONGOL"],
+    });
+    juggernaut.addTrait({ immunities: ["magic", "fire"] });
+    juggernaut.createFists(2, 6, AbilityDamageTypeEnum.Crushing);
+    juggernaut.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.Charge)],
+    });
+    juggernaut.setAdjustments([{ files: ["TOMEGOL4"], summon: true }]);
+    return juggernaut;
+  }
+
+  /**
+   * Snow Golem
+   */
+  private snow() {
+    const snow = this.create({
+      monster: MonsterEnum.SnowGolem,
+      name: "monster.golem.name.snow",
+      files: ["UBSNOGOL"],
+      data: {
+        level1: 12,
+        strength: 19,
+        dexterity: 6,
+        constitution: 14,
+        intelligence: 3,
+        wisdom: 6,
+        charisma: 1,
+        ac: 1,
+        apr: 2,
+        xpv: 7000,
+        alignment: "NEUTRAL",
+        morale: 20,
+        general: "GIANTHUMANOID",
+        race: "GOLEM",
+        class: "GOLEM_STONE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    snow.createConeOfCold();
+    snow.setAdditionalData({
+      movement: { value: 9 },
+      immunities: ["construct"],
+      removeItems: ["UBSNORNG", "UBSNOFST"],
+    });
+    snow.addTrait({
+      immunities: ["plusOneWeapons", "lightning"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ColdResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+        {
+          opcode: EffectTypeEnum.MagicalColdResistanceModifier,
+          value: 125,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    snow.createFists(2, 12, AbilityDamageTypeEnum.Crushing);
+    snow.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.ConeOfCold)],
+    });
+    return snow;
   }
 }
 

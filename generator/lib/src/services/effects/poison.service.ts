@@ -1,20 +1,67 @@
 import {
+  poisonFatalDamage,
   poisonImmediateDeathDuration,
   PoisonModel,
   POISONS,
 } from "../../../config/poison";
-import { Effect } from "../../model/spell-item/effect";
+import { TranslationKey } from "../../../translations/i18n";
+import effectFactory from "../../factories/effect.factory";
+import { BaseEffect, Effect } from "../../model/spell-item/effect";
 import {
+  EffectBonusToEnum,
+  EffectColorLocationEnum,
+  EffectModifierTypeEnum,
+  EffectStatisticModifierEnum,
   EffectTimingEnum,
+  ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTypeEnum,
+  LightingEffectEnum,
+  LightingEffectTargetEnum,
   PnPPoisonType,
   PoisonTypeEnum,
   PortraitIconEnum,
   SaveTypeEnum,
 } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import { WeaponCastSpell } from "../../model/spell-item/spell-item";
+import descriptionService from "../doc/description.service";
+import translationService from "../translation.service";
 
 class PoisonService {
-  getEffects(payload: {
+  getSpell(payload: {
+    poisonType: PnPPoisonType;
+    saveBonus?: number;
+  }): WeaponCastSpell {
+    const effects = this.getEffects(payload);
+    const name = translationService.interpolate("common.poison.name", {
+      type: payload.poisonType,
+    });
+    const description = this.getSpellDescription(payload);
+    const result: WeaponCastSpell = {
+      spell: {
+        name: translationService.addCustomTranslation([name]),
+        description: translationService.addCustomTranslation([description]),
+        groups: ["poison"],
+        secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+        headers: [{ type: ItemAbilityTypeEnum.Melee, effects }],
+      },
+    };
+    if (payload.poisonType >= "O") {
+      result.saveTypes = [SaveTypeEnum.ParalyzePoisonDeath];
+      result.saveBonus = payload.saveBonus;
+    }
+    return result;
+  }
+
+  /**
+   * A poison has to be administered in the way it is required to work. Each would work separately, requiring separate saving throws.
+   * Effects from the source of the same name do not stack per rules. The stronger effect is what takes place.
+   * They can still stack in the sense that if one ends and the other continues, the second then takes over.
+   *
+   * This is not implemented currently. A poison could be protected from itself to prevent further apply, but what target cures poison?
+   * It would be immune to this poison for the remaining time, which is definitly not an option
+   */
+  private getEffects(payload: {
     poisonType: PnPPoisonType;
     saveBonus?: number;
   }): Effect[] {
@@ -25,13 +72,67 @@ class PoisonService {
     if (poison.saveDamage) {
       effects.push(this.getSaveEffect(poison));
     }
-    if (poison.duration === poisonImmediateDeathDuration)
+    if (poison.type === "O") {
+      effects.push(...this.getParalyticEffects(poison));
+    } else if (poison.type === "P") {
+      effects.push(...this.getWeakenEffects(poison));
+    } else if (poison.type === "Q") {
+      effects.push(...this.getComaEffects(poison));
+    } else if (poison.type === "R") {
+      effects.push(...this.getWeakDebilitativeEffects(poison));
+    } else if (poison.type === "S") {
+      effects.push(...this.getWraithSpiderEffects(poison));
+    } else if (poison.duration === poisonImmediateDeathDuration) {
       effects.push(...this.getImmediateDeathEffects(poison, payload.saveBonus));
-    else effects.push(...this.getTimeEffects(poison, payload.saveBonus));
+    } else {
+      effects.push(...this.getTimeEffects(poison, payload.saveBonus));
+    }
     return effects;
   }
 
-  getSaveEffect(poison: PoisonModel): Effect {
+  private getSpellDescription(payload: {
+    poisonType: PnPPoisonType;
+    saveBonus?: number;
+  }): string {
+    const poison = POISONS.find(
+      (p) => p.type === payload.poisonType
+    ) as PoisonModel;
+    const save = descriptionService.getSaveText({
+      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+      saveBonus: payload.saveBonus,
+    });
+    const duration = descriptionService.getDuration(poison.duration);
+    if (payload.poisonType >= "O") {
+      return translationService.interpolate(
+        `common.poison.type${payload.poisonType}` as TranslationKey,
+        { duration, save }
+      );
+    }
+    const death = translationService.interpolate("common.poison.death", {
+      duration,
+    });
+    const damage = translationService.interpolate("common.poison.damage", {
+      damage: poison.damage,
+      duration,
+    });
+    const saveDamage = translationService.interpolate(
+      "common.poison.saveDamage",
+      {
+        damage: poison.saveDamage,
+      }
+    );
+    const description = translationService.interpolate(
+      "common.poison.description",
+      {
+        damage: poison.damage === poisonFatalDamage ? death : damage,
+        save,
+        saveDamage: poison.saveDamage > 0 ? saveDamage : "",
+      }
+    );
+    return description;
+  }
+
+  private getSaveEffect(poison: PoisonModel): Effect {
     return {
       opcode: EffectTypeEnum.Poison,
       icon: PortraitIconEnum.Poisoned,
@@ -44,7 +145,10 @@ class PoisonService {
     };
   }
 
-  getImmediateDeathEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
+  private getImmediateDeathEffects(
+    poison: PoisonModel,
+    saveBonus?: number
+  ): Effect[] {
     const levels = [
       { min: 1, max: 2 },
       { min: 3, max: 4 },
@@ -77,7 +181,7 @@ class PoisonService {
     });
   }
 
-  getTimeEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
+  private getTimeEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
     return [
       {
         opcode: EffectTypeEnum.Poison,
@@ -94,7 +198,7 @@ class PoisonService {
     ];
   }
 
-  getEffect({
+  private getEffect({
     label,
     damage,
     duration,
@@ -117,7 +221,7 @@ class PoisonService {
       });
   }
 
-  getOneDamagePerAmountSecondEffect({
+  private getOneDamagePerAmountSecondEffect({
     label,
     damage,
     duration,
@@ -135,15 +239,15 @@ class PoisonService {
     let newDuration = duration;
     while (damage > newDuration / amount) newDuration++;
     const total = newDuration / amount;
-    // console.log(
-    //   `poison (1dmg/x seconds) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
-    //     newDuration - duration
-    //   })`
-    // );
+    console.log(
+      `poison (1dmg/x seconds) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
+        newDuration - duration
+      })`
+    );
     return { type, amount, duration: newDuration };
   }
 
-  getAmountDamagePerSecondEffect({
+  private getAmountDamagePerSecondEffect({
     label,
     damage,
     duration,
@@ -171,6 +275,122 @@ class PoisonService {
       amount,
       duration: newDuration,
     };
+  }
+
+  private getParalyticEffects(poison: PoisonModel): Effect[] {
+    return effectFactory.paralyze({ duration: poison.duration });
+  }
+
+  private getComaEffects(poison: PoisonModel): Effect[] {
+    return [
+      {
+        opcode: EffectTypeEnum.Sleep,
+        wakeOnDamage: false,
+        duration: poison.duration,
+      },
+      {
+        opcode: EffectTypeEnum.LightingEffects,
+        lightingTarget: LightingEffectTargetEnum.SpellTarget,
+        effect: LightingEffectEnum.InvocationEarth,
+      },
+      {
+        opcode: EffectTypeEnum.CharacterColorPulse,
+        color: { red: 119, green: 0, blue: 0 },
+        location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
+        cycleSpeed: 20,
+      },
+    ];
+  }
+
+  private getWeakenEffects(poison: PoisonModel): Effect[] {
+    const base: BaseEffect = {
+      timing: EffectTimingEnum.InstantLimited,
+      duration: poison.duration,
+    };
+    const opcodes = [
+      EffectTypeEnum.StrengthBonus,
+      EffectTypeEnum.DexterityBonus,
+      EffectTypeEnum.ConstitutionBonus,
+      EffectTypeEnum.IntelligenceBonus,
+      EffectTypeEnum.WisdomBonus,
+      EffectTypeEnum.CharismaBonus,
+    ];
+    return [
+      ...opcodes.map(
+        (o) =>
+          ({
+            opcode: o,
+            type: EffectStatisticModifierEnum.Percentage,
+            value: 50,
+            ...base,
+          } as Effect)
+      ),
+      {
+        opcode: EffectTypeEnum.MovementRateBonus2,
+        type: EffectModifierTypeEnum.SetPercentOf,
+        value: 50,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        icon: PortraitIconEnum.AbilityScoreDrained,
+        ...base,
+      },
+    ];
+  }
+
+  private getWeakDebilitativeEffects(poison: PoisonModel): Effect[] {
+    const base: BaseEffect = {
+      timing: EffectTimingEnum.InstantLimited,
+      duration: poison.duration,
+    };
+    return [
+      {
+        opcode: EffectTypeEnum.ArmorClassBonus,
+        bonusTo: EffectBonusToEnum.AllWeapons,
+        value: -1,
+        ...base,
+      },
+      {
+        opcode: EffectTypeEnum.Thac0Bonus,
+        type: EffectModifierTypeEnum.Increment,
+        value: -1,
+        ...base,
+      },
+      {
+        opcode: EffectTypeEnum.DexterityBonus,
+        type: EffectStatisticModifierEnum.Increment,
+        value: -3,
+        ...base,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        icon: PortraitIconEnum.AbilityScoreDrained,
+        ...base,
+      },
+    ];
+  }
+
+  private getWraithSpiderEffects(poison: PoisonModel): Effect[] {
+    return [
+      {
+        opcode: EffectTypeEnum.ConstitutionBonus,
+        type: EffectStatisticModifierEnum.Increment,
+        value: -5,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: 900,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayPortraitIcon,
+        icon: PortraitIconEnum.AbilityScoreDrained,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: 900,
+      },
+      {
+        opcode: EffectTypeEnum.ProtectionFromSpell,
+        duration: poison.duration, // should gradually loose constitution for 5 rounds
+        timing: EffectTimingEnum.InstantLimited,
+      },
+    ];
   }
 }
 

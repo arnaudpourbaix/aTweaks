@@ -13,6 +13,7 @@ export enum EffectTypeEnum {
   CastSpellOnCondition = 232,
   CharacterColorPulse = 50,
   CharmCreature = 5,
+  CharismaBonus = 6,
   CharmControlCreature = 241,
   ColdResistanceModifier = 28,
   Confusion = 128,
@@ -141,4 +142,5 @@ export enum EffectTypeEnum {
   UseEFFFile = 177,
   Web = 157,
   WingBuffet = 235,
+  WisdomBonus = 49,
 }

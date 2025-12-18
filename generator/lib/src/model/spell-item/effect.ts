@@ -129,7 +129,9 @@ export type StatisticModifierEffect = BaseEffect & {
     | EffectTypeEnum.DexterityBonus
     | EffectTypeEnum.IntelligenceBonus
     | EffectTypeEnum.StrengthBonus
+    | EffectTypeEnum.CharismaBonus
     | EffectTypeEnum.ConstitutionBonus
+    | EffectTypeEnum.WisdomBonus
     | EffectTypeEnum.SlashingResistanceModifier
     | EffectTypeEnum.CrushingResistanceModifier
     | EffectTypeEnum.PiercingResistanceModifier

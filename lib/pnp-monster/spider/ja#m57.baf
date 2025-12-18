@@ -105,6 +105,19 @@ THEN
 		NoAction()
 END
 
+// Phase out
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpellRES("ja#1m57")
+	Detect(NearestEnemyOf(Myself))
+	!StateCheck(Myself,STATE_INVISIBLE)
+	RandomNumGT(800,240)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#1m57",Myself)
+END
+
 // Attack NoCheck enemy
 IF
 	OR(4)

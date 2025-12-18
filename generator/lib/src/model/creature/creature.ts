@@ -1,26 +1,27 @@
-import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
+import grabService from "../../services/effects/grab.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { ClassIdentifier } from "../ids/class";
 import { Effect, EffectFile } from "../spell-item/effect";
-import { Projectile } from "../spell-item/projectile";
 import {
   Item,
   PartialItem,
   PartialSpell,
   PartialWeapon,
   Spell,
-  Weapon,
   WeaponCastSpell,
 } from "../spell-item/spell-item";
 import { AtLeast, PartialBy, WithRequired } from "../utility-types";
+import { AbstractCreature } from "./abstract-creature";
 import { CreatureAdditionalData } from "./additional-data";
 import { CreatureAttack, PartialCreatureAttack } from "./attack";
 import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
 import { CreatureData } from "./data";
 import { CreatureGrabConfig } from "./grab";
+import { ItemSlot } from "./item";
 
 export interface BaseCreature {
   files: string[];
@@ -28,18 +29,14 @@ export interface BaseCreature {
   additionalData: CreatureAdditionalData;
 }
 
-export class Creature implements BaseCreature {
+export class Creature extends AbstractCreature implements BaseCreature {
+  fileType: "m" | "f" = "m";
   /**
    * Will produce usefull WEIDU logs (false by default)
    */
   logging!: boolean;
   name!: TranslationKey;
-  monster!: MonsterEnum;
   family!: MonsterFamilyEnum;
-  /**
-   * Used for retrieving an item inside family factories
-   */
-  id?: number;
   data!: CreatureData;
   additionalData!: CreatureAdditionalData;
   behavior!: CreatureBehavior;
@@ -52,10 +49,6 @@ export class Creature implements BaseCreature {
    */
   notEnforceFiles: string[] = [];
   adjustments: CreatureAdjustment[] = [];
-
-  items: (Item | Weapon)[] = [];
-  spells: Spell[] = [];
-  projectiles: Projectile[] = [];
   effectFiles: EffectFile[] = [];
 
   /**
@@ -94,19 +87,33 @@ export class Creature implements BaseCreature {
     creatureFactory.setAdjustments(this, adjustments);
   }
 
-  addSpell(spell: PartialSpell, file?: string): Spell {
-    return creatureFactory.addSpell(this, spell, file);
+  override addSpell(spell: PartialSpell): Spell {
+    const result = super.addSpell(spell);
+    if (spell.memorizedCount) {
+      this.additionalData.memorizedSpells.push({
+        file: result.file,
+        memorizedCount: spell.memorizedCount,
+      });
+    }
+    return result;
   }
 
-  addItem(item: PartialItem): Item {
-    return creatureFactory.addItem(this, item);
+  override addItem(item: PartialItem): Item {
+    const result = super.addItem(item);
+    if (item.equippedSlot) {
+      this.additionalData.equippedItems.push({
+        file: result.file,
+        slot: item.equippedSlot,
+      });
+    }
+    return result;
   }
 
-  addExistingItem(item: Item): void {
-    creatureFactory.addExistingItem(this, item);
+  equipItem(item: Item, slot?: ItemSlot[]): void {
+    creatureFactory.equipItem(this, item, slot);
   }
 
-  addWeapon({
+  override addWeapon({
     weapon,
     grab,
     castSpell,
@@ -115,7 +122,9 @@ export class Creature implements BaseCreature {
     grab?: CreatureGrabConfig;
     castSpell?: WeaponCastSpell;
   }) {
-    return creatureFactory.addWeapon({ cre: this, weapon, grab, castSpell });
+    const result = super.addWeapon({ weapon, castSpell });
+    if (grab) grabService.attachGrabToWeapon(this, result, grab);
+    return result;
   }
 
   addTrait(payload: {

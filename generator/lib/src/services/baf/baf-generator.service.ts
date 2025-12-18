@@ -31,7 +31,7 @@ class BafGeneratorService {
       creature.name
     )}${CR}${CR}${code}`;
     const folder = utils.getFamilyFolder(creature.family);
-    utils.writeFile(path.join(folder, `ja#m${creature.monster}.baf`), content);
+    utils.writeFile(path.join(folder, `ja#m${creature.id}.baf`), content);
     if (creature.adjustments.some((a) => !!a.summon)) {
       const statements: Statements = statementService.buildStatements(
         creature,
@@ -40,10 +40,7 @@ class BafGeneratorService {
       const content = statements
         .map((statement) => this.generateStatement(statement))
         .join("");
-      utils.writeFile(
-        path.join(folder, `ja#m${creature.monster}su.baf`),
-        content
-      );
+      utils.writeFile(path.join(folder, `ja#m${creature.id}su.baf`), content);
     }
   }
 

@@ -24,6 +24,7 @@ import {
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import creatureService from "../services/creature.service";
 import effectService from "../services/effects/effect.service";
+import spellService from "../services/spell.service";
 import { StringRefUtils } from "../services/utils/string-ref.utils";
 
 class EffectFactory {
@@ -296,20 +297,17 @@ class EffectFactory {
     saveBonus?: number;
     dispelResistance?: EffectDispelResistanceEnum;
   }) {
-    const effects: Effect[] = [
-      ATWEAKS_SPELLS.ColorSpray,
-      ATWEAKS_SPELLS.ColorSprayRadiant,
-      SPELLS.ColorSpray,
-      SPELLS.MephitColorSpray,
-    ].map((s) => ({
-      opcode: EffectTypeEnum.ProtectionFromSpell,
-      resource: s,
-      timing: EffectTimingEnum.InstantLimited,
-      duration: params.duration,
-      dispelResistance: params.dispelResistance,
-      saveTypes: params.saveType ? [params.saveType] : undefined,
-      saveBonus: params.saveBonus,
-    }));
+    const effects: Effect[] = spellService
+      .getGroupRessources("colorSpray")
+      .map((s) => ({
+        opcode: EffectTypeEnum.ProtectionFromSpell,
+        resource: s,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: params.duration,
+        dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      }));
     effects.push(
       {
         opcode: EffectTypeEnum.Blindness,
@@ -378,6 +376,44 @@ class EffectFactory {
         resource: "EFF_E07",
         duration: params.duration,
         dispelResistance: params.dispelResistance,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+    ];
+    return effectService.getEffects(effects);
+  }
+
+  levelDrain(params: {
+    levels: number;
+    saveType?: SaveTypeEnum;
+    saveBonus?: number;
+  }) {
+    let stringRef = StringRefUtils.getStringId("One Level Drained");
+    if (params.levels === 2) {
+      stringRef = StringRefUtils.getStringId("Two Levels Drained");
+    } else if (params.levels === 3) {
+      stringRef = StringRefUtils.getStringId("Three Levels Drained");
+    }
+    const effects: Effect[] = [
+      {
+        opcode: EffectTypeEnum.LevelDrain,
+        amount: params.levels,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: EffectTypeEnum.DisplayString,
+        stringRef,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        saveTypes: params.saveType ? [params.saveType] : undefined,
+        saveBonus: params.saveBonus,
+      },
+      {
+        opcode: EffectTypeEnum.LightingEffects,
+        effect: LightingEffectEnum.NecromancyEarth,
+        lightingTarget: LightingEffectTargetEnum.SpellTarget,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
         saveTypes: params.saveType ? [params.saveType] : undefined,
         saveBonus: params.saveBonus,
       },

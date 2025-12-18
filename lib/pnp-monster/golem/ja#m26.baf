@@ -108,7 +108,7 @@ END
 
 // Cloud Of Poisonous Gas
 IF
-	HaveSpellRES("ja#4f9")
+	HaveSpellRES("ja#1m26")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(NearestEnemyOf(Myself),10)
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -119,12 +119,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ReallyForceSpellRES("ja#4f9",Myself)
-		RemoveSpellRES("ja#4f9")
+		ReallyForceSpellRES("ja#1m26",Myself)
+		RemoveSpellRES("ja#1m26")
 END
 
 IF
-	HaveSpellRES("ja#4f9")
+	HaveSpellRES("ja#1m26")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(SecondNearestEnemyOf(Myself),10)
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -135,12 +135,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ReallyForceSpellRES("ja#4f9",Myself)
-		RemoveSpellRES("ja#4f9")
+		ReallyForceSpellRES("ja#1m26",Myself)
+		RemoveSpellRES("ja#1m26")
 END
 
 IF
-	HaveSpellRES("ja#4f9")
+	HaveSpellRES("ja#1m26")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	Range(ThirdNearestEnemyOf(Myself),10)
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -151,8 +151,8 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ReallyForceSpellRES("ja#4f9",Myself)
-		RemoveSpellRES("ja#4f9")
+		ReallyForceSpellRES("ja#1m26",Myself)
+		RemoveSpellRES("ja#1m26")
 END
 
 // Attack NoCheck enemy

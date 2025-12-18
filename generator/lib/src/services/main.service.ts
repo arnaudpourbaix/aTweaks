@@ -18,13 +18,13 @@ class MainService {
       const family = factory();
       descriptionService.generateCreatureSpells(family.spells);
       descriptionService.generateCreatureItems(family.items);
-      if (families.includes(family.name)) {
+      if (families.includes(family.id)) {
         throw new Error(
-          `Family '${MonsterFamilyEnum[family.name]}' already declared`
+          `Family '${MonsterFamilyEnum[family.id]}' already declared`
         );
       }
-      families.push(family.name);
-      weiduFamilyService.createOrUpdateMainFile(family.name);
+      families.push(family.id);
+      weiduFamilyService.createOrUpdateMainFile(family.id);
       weiduFamilyService.generateFamilyData(family);
       for (const creature of family.creatures) {
         this.generateCreature(creature, families);

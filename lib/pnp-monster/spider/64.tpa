@@ -3,18 +3,67 @@
 // Gargantuan Spider
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/spider/ja#m64.baf~
 
-// Jaws
+// Web Tangle
+CREATE SPL "ja#1m64"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m64.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10256)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_ASCII 0x3a ~SPWI215C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10257)
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SLIME~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~ELEMENTAL~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SHADOW~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~MIST~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~WRAITH~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~FREE_ACTION~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~RED_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~BLUE_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter2=13 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=157 target=2 power=1 duration=18 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=129 duration=18 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_P27" END
+	LPF CHANGE_SPELL INT_VAR    renew=2 END
+	
+	// Type Q poison
+CREATE EFF "ja#2m64"
+	WRITE_LONG 0x10 206
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x24 1
+	WRITE_SHORT 0x2c 100
+	WRITE_ASCII 0x30 ~ja#2m64~ #8
+
+CREATE SPL "ja#2m64"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m64.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10523)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10524)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="ja#2m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="ja#2m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=39 target=2 power=1 parameter2=1 duration=240 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=25 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=30464 parameter2=1310720 probability1=100 END
+	
+	// Jaws
 CREATE ITM "ja#1m64"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
 	WRITE_SHORT 0x68 1
 	WRITE_SHORT 0x72 1
 	WRITE_LONG 0x6a 0xaa
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10244)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10244)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10247)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10247)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10388)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10525)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m64.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -31,9 +80,7 @@ COPY_EXISTING ~ja#1m64.itm~ ~override~
 	WRITE_SHORT 0xa0 33
 	WRITE_SHORT 0xa2 33
 	WRITE_LONG 0x98 1
-	LPF ADD_EFFECT INT_VAR opcode=39 target=2 parameter2=1 duration=300 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF ADD_EFFECT INT_VAR opcode=141 target=2 parameter2=25 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF ADD_EFFECT INT_VAR opcode=50 target=2 parameter1=30464 parameter2=1310720 probability1=100 savingthrow=4 savebonus="-2" END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 savebonus="-2" STR_VAR resource="ja#2m64" END
 	END
 
 ACTION_FOR_EACH ~file~ IN
@@ -51,7 +98,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~ANTIWEB~
 			REPLACE_CRE_ITEM ~ja#1m64~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i16~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
-			ADD_MEMORIZED_SPELL ~ja#1f13~ #0 ~innate~ (1) // Web Tangle
+			ADD_MEMORIZED_SPELL ~ja#1m64~ #0 ~innate~ (1) // Web Tangle
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR

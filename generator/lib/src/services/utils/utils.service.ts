@@ -126,6 +126,8 @@ class UtilsService {
   }
 
   getSpellFunctionName(spell: Spell) {
+    if (typeof spell.name === "number")
+      throw new Error("can't handle a number in name!");
     const names = spell.name.split(".");
     let name = names.pop();
     if (name === "name") name = names.pop();

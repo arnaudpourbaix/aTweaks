@@ -1,7 +1,6 @@
-import { ATWEAKS_CREATURES } from "../../config/creatures";
+import { pbkdf2 } from "crypto";
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
-import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
@@ -14,19 +13,22 @@ import {
 } from "../../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
-  EffectColorLocationEnum,
+  EffectCastSpellTypeEnum,
   EffectDamageTypeEnum,
   EffectIDSFileEnum,
+  EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
+  EffectTargetEnum,
   EffectTimingEnum,
   InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
   ItemAbilitySecondaryTypeEnum,
+  ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
-  LightingEffectEnum,
-  LightingEffectTargetEnum,
+  PnPPoisonType,
   PortraitIconEnum,
   SaveTypeEnum,
+  WingBuffetDirectionEnum,
 } from "../../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
 import {
@@ -37,722 +39,31 @@ import {
 import poisonService from "../../src/services/effects/poison.service";
 import { TranslationKey } from "../../translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
+import creatureService from "../../src/services/creature.service";
 
 enum Ids {
-  WebTangle,
   InvisibleWebTangle,
+  Leg,
+  LeapAttack,
+  LeapImpalingAttack,
+  LightningLeg,
+  LightningLeapImpalingAttack,
+  PhaseOut,
+  WebTangle,
 }
 
-class SpiderFamily extends CreatureFamily {
-  constructor() {
-    super(MonsterFamilyEnum.Spider);
-    this.addCreature(this.gargantuan());
-    this.addCreature(this.ghostwalk());
-    this.addCreature(this.giant());
-    // this.addCreature(this.hairy());
-    // this.addCreature(this.huge());
-    // this.addCreature(this.hunting());
-    // this.addCreature(this.phase());
-    // this.addCreature(this.sword());
-    // this.addCreature(this.vortex());
-    // this.addCreature(this.wraith());
-  }
-
-  /**
-   * Gargantuan
-   */
-  private gargantuan() {
-    const gargantuan = creatureFactory.create({
-      monster: MonsterEnum.GargantuanSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.gargantuan",
-      files: [
-        "BDSPIDGA", // Gargantuan Spider
-      ],
-      logging: true,
-      data: {
-        level1: 8,
-        bonusHp: 8,
-        thac0: 11,
-        strength: 18,
-        dexterity: 15,
-        constitution: 17,
-        intelligence: 7,
-        wisdom: 11,
-        charisma: 4,
-        ac: 4,
-        apr: 1,
-        xpv: 3000,
-        alignment: "CHAOTIC_EVIL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_GIANT",
-        gender: "NIETHER",
-        size: "Gargantuan",
-      },
-    });
-    this.createWeb({
-      id: Ids.WebTangle,
-      duration: 18,
-      // saveBonus: -2,
-      description: "monster.spider.ability.webTangle.standardDesc",
-    });
-    gargantuan.setAdditionalData({
-      movement: { value: 9 }, // Web 12
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGA", "ANTIWEB"],
-      removeScripts: ["BDSPIDGA"],
-      memorizedSpells: [
-        { file: this.spell(Ids.WebTangle).file, memorizedCount: 1 },
-      ],
-    });
-    const poison: BaseEffect = {
-      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-      saveBonus: -2,
-    };
-    this.createJaws({
-      creature: gargantuan,
-      diceThrown: 2,
-      diceSize: 6,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Sleep,
-          wakeOnDamage: false,
-          duration: 300,
-          ...poison,
-        },
-        {
-          opcode: EffectTypeEnum.LightingEffects,
-          lightingTarget: LightingEffectTargetEnum.SpellTarget,
-          effect: LightingEffectEnum.InvocationEarth,
-          ...poison,
-        },
-        {
-          opcode: EffectTypeEnum.CharacterColorPulse,
-          color: { red: 119, green: 0, blue: 0 },
-          location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
-          cycleSpeed: 20,
-          ...poison,
-        },
-      ],
-    });
-    gargantuan.setBehavior({
-      abilities: [this.ability(Ids.WebTangle)],
-    });
-    return gargantuan;
-  }
-
-  /**
-   * Ghostwalk
-   */
-  private ghostwalk() {
-    const ghostwalk = creatureFactory.create({
-      monster: MonsterEnum.GhostwalkSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.ghostwalk",
-      logging: true,
-      files: [
-        "C#LCCENS", // Ghostly Spirit
-        "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
-      ],
-      data: {
-        level1: 14,
-        strength: 15,
-        dexterity: 20,
-        constitution: 17,
-        intelligence: 9,
-        wisdom: 14,
-        charisma: 8,
-        ac: 6,
-        apr: 2,
-        xpv: 5000,
-        alignment: "CHAOTIC_EVIL",
-        morale: 13,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_WRAITH",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    this.createWeb({
-      id: Ids.InvisibleWebTangle,
-      duration: 18,
-      saveBonus: -2,
-      description: "monster.spider.ability.webTangle.ghostwalkDesc",
-      invisible: true,
-    });
-    ghostwalk.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["spider"],
-      removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
-      removeScripts: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
-      memorizedSpells: [
-        { file: this.spell(Ids.InvisibleWebTangle).file, memorizedCount: 1 },
-      ],
-    });
-    ghostwalk.addTrait({ immunities: ["seeInvisible"] });
-    this.createJaws({
-      creature: ghostwalk,
-      diceThrown: 3,
-      diceSize: 10,
-      slot: "WEAPON1",
-      effects: [
-        { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
-        { opcode: EffectTypeEnum.ModifyCollisionBehavior },
-      ],
-      immunities: [
-        "acidResistance",
-        "coldResistance",
-        "fireResistance",
-        "lightningResistance",
-        "normalWeapons",
-        "hold",
-        "stun",
-        "petrification",
-        "ghostVisual1",
-      ],
-    });
-    this.createJaws({
-      creature: ghostwalk,
-      diceThrown: 3,
-      diceSize: 10,
-      slot: "WEAPON2",
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    ghostwalk.setAttack({
-      selectWeapons: [
-        {
-          slot: "WEAPON1",
-          triggers: [
-            {
-              name: "Range",
-              params: ["LastSeenBy", 5],
-              negation: true,
-            },
-          ],
-        },
-        {
-          slot: "WEAPON2",
-          triggers: [
-            {
-              name: "Range",
-              params: ["LastSeenBy", 5],
-            },
-          ],
-        },
-      ],
-    });
-    ghostwalk.setBehavior({
-      dialog: ["C#LCCENS"],
-      abilities: [this.ability(Ids.InvisibleWebTangle)],
-    });
-    return ghostwalk;
-  }
-
-  /**
-   * Giant
-   */
-  private giant() {
-    const giant = creatureFactory.create({
-      monster: MonsterEnum.GiantSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.giant",
-      logging: true,
-      files: [
-        "BDJELLMU", // Mustard Jelly
-        "BPJLMU01", // Mustard Jelly
-        "JELLMU", // Mustard Jelly
-        "JELLMUL", // Mustard Jelly
-        "JELLMUSU", // Mustard Jelly
-        "JELLYMU", // Mustard Jelly
-        "PLYJELL1", // Mustard Jelly
-        ATWEAKS_CREATURES.SplitMustardJelly,
-      ],
-      data: {
-        level1: 7,
-        bonusHp: 14,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 4,
-        apr: 1,
-        xpv: 4000,
-        alignment: "NEUTRAL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "MUSTARD_JELLY",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    giant.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeItems: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
-      memorizedSpells: [],
-    });
-    giant.addTrait({
-      immunities: [
-        "lightning",
-        "normalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
-      // 5e: Immunity to magic damage
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 10,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createJaws({
-      creature: giant,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    giant.setBehavior({
-      abilities: [],
-    });
-    return giant;
-  }
-
-  /**
-   * Hairy
-   */
-  private hairy() {
-    const hairy = creatureFactory.create({
-      monster: MonsterEnum.HairySpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.hairy",
-      logging: true,
-      files: ["JELLSPA", "BPSLFS01", "BPSLFS02"],
-      data: {
-        level1: 12,
-        bonusHp: 14,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 4,
-        apr: 1,
-        xpv: 5000,
-        alignment: "NEUTRAL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "MUSTARD_JELLY",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    hairy.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
-      scriptLocation: "Race",
-      memorizedSpells: [],
-    });
-    hairy.addTrait({
-      immunities: [
-        "lightning",
-        "normalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
-      // 5e: Immunity to magic damage
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 10,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createJaws({
-      creature: hairy,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    hairy.setBehavior({
-      abilities: [],
-    });
-    return hairy;
-  }
-
-  /**
-   * Huge
-   */
-  private huge() {
-    const gray = creatureFactory.create({
-      monster: MonsterEnum.HugeSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.huge",
-      logging: true,
-      files: [
-        "BPJLGR01", // Gray Ooze
-        "JELLGR", // Gray Ooze
-      ],
-      data: {
-        level1: 3,
-        bonusHp: 3,
-        thac0: 17,
-        strength: 12,
-        dexterity: 6,
-        constitution: 16,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 2,
-        ac: 8,
-        apr: 1,
-        xpv: 270,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    gray.setAdditionalData({
-      movement: { value: 1 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "OOZEGR1", "DW#OOZEG"],
-    });
-    // 5e:
-    // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
-    // The ooze’s acidic touch deals 16 points of damage per round to wooden or metal objects, but the ooze must remain in contact with the object for 1 full round to deal this damage.
-    // Constrict (Ex): A gray ooze deals automatic slam and acid damage with a successful grapple check. The opponent’s clothing and armor take a –4 penalty on Reflex saves against the acid.
-    // Improved Grab (Ex): To use this ability, a gray ooze must hit with its slam attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity. If it wins the grapple check, it establishes a hold and can constrict.
-    gray.addTrait({
-      // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage.
-      // Note that weapons striking a gray ooze may corrode and break.
-      immunities: ["magic", "fire", "cold"],
-    });
-    this.createJaws({
-      creature: gray,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    gray.setBehavior({});
-    return gray;
-  }
-
-  /**
-   * Hunting
-   */
-  private hunting() {
-    const hunting = creatureFactory.create({
-      monster: MonsterEnum.HuntingSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.hunting",
-      logging: true,
-      files: [
-        "JELLGRSU", // Green Slime
-        "JELLYGR", // Green Slime
-        "JELLYGR2", // Green Slime
-        "X#JELLY", // Green Slime
-        "X#SLIME", // Green Slime
-      ],
-      data: {
-        level1: 2,
-        thac0: 19,
-        strength: 4,
-        dexterity: 12,
-        constitution: 8,
-        intelligence: 1,
-        wisdom: 3,
-        charisma: 1,
-        ac: 9,
-        apr: 1,
-        xpv: 65,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREEN_SLIME",
-        gender: "NIETHER",
-        size: "Small",
-      },
-    });
-    hunting.setAdditionalData({
-      movement: { value: 0 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLGR1", "JELLGRSU"],
-    });
-    hunting.addTrait({
-      // The horrid growth can be scraped off quickly, cut away, frozen, or burned.
-      // A cure disease spell kills green slime, but other attacks, including weapons and spells, have no effect.
-      immunities: ["magic", "physicalDamage"],
-    });
-    // Green slime attaches itself to living flesh and in 1-4 melee rounds turns the creature into green slime (no resurrection possible).
-    // 5e: Pseudopod. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) acid damage.
-    this.createJaws({
-      creature: hunting,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    hunting.setBehavior({});
-    hunting.setAdjustments([
-      {
-        files: ["JELLGRSU"],
-        summon: true,
-        additionalData: { scriptLocation: "None" },
-      },
-      {
-        files: ["X#JELLY", "X#SLIME"],
-        additionalData: { scriptLocation: "None" },
-      },
-    ]);
-    return hunting;
-  }
-
-  /**
-   * Phase
-   */
-  private phase() {
-    const phase = creatureFactory.create({
-      monster: MonsterEnum.PhaseSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.phase",
-      logging: true,
-      files: [
-        "BDJELLOC", // Ochre Jelly
-        "BDSHJELL", // Ochre Jelly
-        "BPJLOC01", // Ochre Jelly
-        "JELLOC", // Ochre Jelly
-        "JELLYCO", // Ochre Jelly
-      ],
-      data: {
-        level1: 6,
-        thac0: 15,
-        strength: 15,
-        dexterity: 6,
-        constitution: 14,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 1,
-        ac: 8,
-        apr: 1,
-        xpv: 270,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "OCRE_JELLY",
-        gender: "NIETHER",
-        size: "Medium",
-      },
-    });
-    phase.setAdditionalData({
-      movement: { value: 3 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLOC1", "DW#JELOC"],
-    });
-    phase.addTrait({
-      immunities: ["lightning"],
-      // 5e: Damage Resistances: Acid. Damage Immunities: Slashing
-    });
-    this.createJaws({
-      creature: phase,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    phase.setBehavior({});
-    return phase;
-  }
-
-  /**
-   * Sword
-   */
-  private sword() {
-    const sword = creatureFactory.create({
-      monster: MonsterEnum.SwordSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.sword",
-      logging: true,
-      files: [
-        "SCHLUM", // Schlumpsha the Sewer King. Note: is an olive slime, was a former mage that appears to have transformed itself into a slime.
-      ],
-      data: {
-        level1: 12,
-        bonusHp: 2,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 9,
-        apr: 1,
-        xpv: 2500,
-        alignment: "NEUTRAL",
-        morale: 9,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "OLIVE_SLIME",
-        gender: "NIETHER",
-        animation: "SLIME_OLIVE",
-        size: "Large",
-      },
-    });
-    sword.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["ooze"],
-      removeItems: ["SCHLUM1", "DW#SCHLU", "RING95", "IMMUNE1"],
-      removeScripts: ["SCHLUM"],
-    });
-    sword.addTrait({
-      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
-      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
-      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
-      immunities: ["lightning", "entangle", "normalWeapons"],
-    });
-    this.createJaws({
-      creature: sword,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    sword.setBehavior({
-      dialog: ["SCHLUMPSA"],
-    });
-    return sword;
-  }
-
-  /**
-   * Vortex
-   */
-  private vortex() {
-    const vortex = creatureFactory.create({
-      monster: MonsterEnum.VortexSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.vortex",
-      logging: true,
-      files: [
-        "AC#FPSLT", // Slithering Tracker
-      ],
-      data: {
-        level1: 5,
-        thac0: 15,
-        strength: 14,
-        dexterity: 8,
-        constitution: 18,
-        intelligence: 9,
-        wisdom: 7,
-        charisma: 2,
-        ac: 5,
-        apr: 1,
-        xpv: 975,
-        alignment: "NEUTRAL",
-        morale: 15,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        gender: "NIETHER",
-        size: "Small",
-      },
-    });
-    vortex.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "AC#FPSL2", "AC#FPSLT"],
-    });
-    vortex.addTrait({
-      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
-      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
-      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
-      immunities: ["lightning", "entangle", "normalWeapons"],
-    });
-    this.createJaws({
-      creature: vortex,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    vortex.setBehavior({});
-    return vortex;
-  }
-
-  /**
-   * Wraith
-   */
-  private wraith() {
-    const wraith = creatureFactory.create({
-      monster: MonsterEnum.WraithSpider,
-      family: MonsterFamilyEnum.Spider,
-      name: "monster.spider.name.wraith",
-      logging: true,
-      files: [
-        "AC#FPSLT", // Slithering Tracker
-      ],
-      data: {
-        level1: 5,
-        thac0: 15,
-        strength: 14,
-        dexterity: 8,
-        constitution: 18,
-        intelligence: 9,
-        wisdom: 7,
-        charisma: 2,
-        ac: 5,
-        apr: 1,
-        xpv: 975,
-        alignment: "NEUTRAL",
-        morale: 15,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        gender: "NIETHER",
-        size: "Small",
-      },
-    });
-    wraith.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "AC#FPSL2", "AC#FPSLT"],
-    });
-    wraith.addTrait({
-      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
-      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
-      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
-      immunities: ["lightning", "entangle", "normalWeapons"],
-    });
-    this.createJaws({
-      creature: wraith,
-      diceThrown: 1,
-      diceSize: 2,
-      effects: poisonService.getEffects({ poisonType: "E", saveBonus: -2 }),
-    });
-    wraith.setBehavior({});
-    return wraith;
-  }
-
+class Spider extends Creature {
   createJaws(p: {
-    creature: Creature;
     diceThrown: number;
     diceSize: number;
     effects?: Effect[];
     immunities?: ImmunityName[];
+    poisonType?: PnPPoisonType;
+    saveBonus?: number;
     slot?: ItemSlot;
   }) {
-    return p.creature.addWeapon({
+    return this.addWeapon({
       weapon: {
         stringRef: "monster.spider.weapon.jaws",
         icon: MonsterItemIconEnum.Jaws,
@@ -768,13 +79,67 @@ class SpiderFamily extends CreatureFamily {
           effects: p.effects,
         },
       },
+      castSpell: p.poisonType
+        ? poisonService.getSpell({
+            poisonType: p.poisonType,
+            saveBonus: p.saveBonus,
+          })
+        : undefined,
+    });
+  }
+
+  createLegWeapon(p: {
+    id: number;
+    impale?: boolean;
+    lightning?: boolean;
+    equipped?: boolean;
+  }) {
+    const effects: Effect[] = [];
+    if (p.impale) {
+      effects.push(
+        {
+          opcode: EffectTypeEnum.DisplayString,
+          stringRef: "monster.spider.ability.impale.name",
+        },
+        {
+          opcode: EffectTypeEnum.Thac0Bonus,
+          type: EffectModifierTypeEnum.Increment,
+          value: -4,
+          timing: EffectTimingEnum.InstantLimited,
+          duration: 12,
+        }
+      );
+    }
+    if (p.lightning) {
+      effects.push({
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Electricity,
+        amount: p.impale ? 8 : 2,
+      });
+    }
+    return this.addItem({
+      id: p.id,
+      stringRef: p.impale
+        ? "monster.spider.ability.impale.name"
+        : "monster.spider.weapon.leg",
+      icon: MonsterItemIconEnum.Wolf,
+      equippedSlot: p.equipped ? ["SHIELD"] : undefined,
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+        diceThrown: p.impale ? 4 : 1,
+        diceSize: 12,
+        damageType: AbilityDamageTypeEnum.Piercing,
+        speed: 1,
+        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        effects,
+      },
     });
   }
 
   /**
    * Single Target Web
    */
-  private createWeb({
+  createWeb({
     id,
     name,
     description,
@@ -878,6 +243,7 @@ class SpiderFamily extends CreatureFamily {
       id,
       name: name ?? "monster.spider.ability.webTangle.name",
       description,
+      memorizedCount: 1,
       icon: SPELLS.Web,
       options: { renew: 2 },
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
@@ -902,6 +268,856 @@ class SpiderFamily extends CreatureFamily {
         requireVocal: false,
       },
     });
+  }
+
+  /**
+   * Leap attack
+   */
+  createLeapSpell(p: {
+    id: number;
+    memorizedCount?: number;
+    effects?: Effect[];
+  }) {
+    const effects: Effect[] = [
+      {
+        opcode: EffectTypeEnum.WingBuffet,
+        target: EffectTargetEnum.Self,
+        speed: 150,
+        direction: WingBuffetDirectionEnum.TowardsTargetPoint,
+        duration: 2,
+      },
+      ...(p.effects ?? []),
+    ];
+    return this.addSpell({
+      id: p.id,
+      name: p.effects?.length
+        ? "monster.spider.ability.leapAttack.name"
+        : "monster.spider.ability.leap.name",
+      description: p.effects?.length
+        ? "monster.spider.ability.leapAttack.description"
+        : "monster.spider.ability.leap.description",
+      memorizedCount: p.memorizedCount,
+      icon: SPELLS.Haste,
+      options: { renew: 1 },
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 30,
+          effects,
+        },
+      ],
+      ability: {
+        targets: [{ name: "FarthestEnemies", randomOrder: true }],
+        minRange: 5,
+        range: 30,
+        spell: {
+          type: "force",
+          isAttack: true,
+        },
+        disableInterrupt: true,
+        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+      },
+    });
+  }
+
+  /**
+   * Leap attack
+   */
+  createLeapImpalingSpell(p: {
+    id: number;
+    lightning?: boolean;
+    memorizedCount?: number;
+  }) {
+    this.createLegWeapon({
+      id: p.id,
+      impale: true,
+      lightning: p.lightning,
+    });
+    return this.createLeapSpell({
+      id: p.id,
+      memorizedCount: p.memorizedCount,
+      effects: [
+        {
+          opcode: EffectTypeEnum.CreateWeapon,
+          amount: 1,
+          resource: this.item(p.id).file,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.InstantLimited,
+          duration: 6,
+        },
+      ],
+    });
+  }
+
+  /**
+   * Phase out
+   */
+  createPhaseOut() {
+    const base: BaseEffect = {
+      target: EffectTargetEnum.Self,
+      timing: EffectTimingEnum.InstantPermanent,
+    };
+    return this.addSpell({
+      id: Ids.PhaseOut,
+      name: "monster.spider.ability.phase.name",
+      description: "monster.spider.ability.phase.description",
+      memorizedCount: 1,
+      icon: SPELLS.Invisibility,
+      options: { renew: 1 },
+      headers: [
+        {
+          target: ItemAbilityTargetEnum.Caster,
+          type: ItemAbilityTypeEnum.Melee,
+          effects: [
+            {
+              opcode: EffectTypeEnum.Invisibility,
+              type: InvisibilityTypeEnum.Normal,
+              ...base,
+            },
+          ],
+        },
+      ],
+      ability: {
+        preset: SPELLS.Invisibility,
+        spell: {
+          type: "force",
+        },
+        requireVocal: false,
+      },
+    });
+  }
+}
+
+class SpiderFamily extends CreatureFamily<Spider> {
+  constructor() {
+    super(MonsterFamilyEnum.Spider);
+    this.addCreature(this.gargantuan());
+    this.addCreature(this.ghostwalk());
+    this.addCreature(this.giant());
+    this.addCreature(this.hairy());
+    this.addCreature(this.huge());
+    this.addCreature(this.hunting());
+    this.addCreature(this.phase());
+    this.addCreature(this.sword());
+    this.addCreature(this.vortex());
+    this.addCreature(this.wraith());
+  }
+
+  createCreature(id: MonsterEnum): Spider {
+    return new Spider(id);
+  }
+
+  /**
+   * Gargantuan
+   */
+  private gargantuan() {
+    const gargantuan = this.create({
+      monster: MonsterEnum.GargantuanSpider,
+      name: "monster.spider.name.gargantuan",
+      files: [
+        "BDSPIDGA", // Gargantuan Spider
+      ],
+      logging: true,
+      data: {
+        level1: 8,
+        bonusHp: 8,
+        thac0: 11,
+        strength: 18,
+        dexterity: 15,
+        constitution: 17,
+        intelligence: 7,
+        wisdom: 11,
+        charisma: 4,
+        ac: 4,
+        apr: 1,
+        xpv: 3000,
+        alignment: "CHAOTIC_EVIL",
+        morale: 14,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_GIANT",
+        gender: "NIETHER",
+        size: "Gargantuan",
+      },
+    });
+    gargantuan.createWeb({
+      id: Ids.WebTangle,
+      duration: 18,
+      // saveBonus: -2,
+      description: "monster.spider.ability.webTangle.standardDesc",
+    });
+    gargantuan.setAdditionalData({
+      movement: { value: 9 }, // Web 12
+      immunities: ["spider"],
+      removeItems: ["BDSPIDGA", "ANTIWEB"],
+      removeScripts: ["BDSPIDGA"],
+    });
+    gargantuan.createJaws({
+      diceThrown: 2,
+      diceSize: 6,
+      poisonType: "Q",
+      saveBonus: -2,
+    });
+    gargantuan.setBehavior({
+      abilities: [this.ability(Ids.WebTangle)],
+    });
+    return gargantuan;
+  }
+
+  /**
+   * Ghostwalk
+   */
+  private ghostwalk() {
+    const ghostwalk = this.create({
+      monster: MonsterEnum.GhostwalkSpider,
+      name: "monster.spider.name.ghostwalk",
+      logging: true,
+      files: [
+        "C#LCCENS", // Ghostly Spirit
+        "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
+      ],
+      data: {
+        level1: 14,
+        strength: 15,
+        dexterity: 20,
+        constitution: 17,
+        intelligence: 9,
+        wisdom: 14,
+        charisma: 8,
+        ac: 6,
+        apr: 2,
+        xpv: 5000,
+        alignment: "CHAOTIC_EVIL",
+        morale: 13,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_WRAITH",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    ghostwalk.createWeb({
+      id: Ids.InvisibleWebTangle,
+      duration: 18,
+      saveBonus: -2,
+      description: "monster.spider.ability.webTangle.ghostwalkDesc",
+      invisible: true,
+    });
+    ghostwalk.setAdditionalData({
+      movement: { value: 15 },
+      immunities: ["spider"],
+      removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
+      removeScripts: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
+    });
+    ghostwalk.addTrait({ immunities: ["seeInvisible"] });
+    ghostwalk.createJaws({
+      diceThrown: 3,
+      diceSize: 10,
+      slot: "WEAPON1",
+      immunities: ["incorporeal"],
+      // effects: [
+      //   { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
+      //   { opcode: EffectTypeEnum.ModifyCollisionBehavior },
+      // ],
+      // immunities: [
+      //   "acidResistance",
+      //   "coldResistance",
+      //   "fireResistance",
+      //   "lightningResistance",
+      //   "nonMagicalWeapons",
+      //   "hold",
+      //   "stun",
+      //   "petrification",
+      //   "ghostVisual1",
+      // ],
+    });
+    ghostwalk.createJaws({
+      diceThrown: 3,
+      diceSize: 10,
+      slot: "WEAPON2",
+      poisonType: "E",
+      saveBonus: -2,
+    });
+    ghostwalk.setAttack({
+      selectWeapons: [
+        {
+          slot: "WEAPON1",
+          triggers: [
+            {
+              name: "Range",
+              params: ["LastSeenBy", 5],
+              negation: true,
+            },
+          ],
+        },
+        {
+          slot: "WEAPON2",
+          triggers: [
+            {
+              name: "Range",
+              params: ["LastSeenBy", 5],
+            },
+          ],
+        },
+      ],
+    });
+    ghostwalk.setBehavior({
+      dialog: ["C#LCCENS"],
+      abilities: [this.ability(Ids.InvisibleWebTangle)],
+    });
+    return ghostwalk;
+  }
+
+  /**
+   * Giant
+   */
+  private giant() {
+    const giant = this.create({
+      monster: MonsterEnum.GiantSpider,
+      name: "monster.spider.name.giant",
+      logging: true,
+      files: [
+        "BDHELP01", // Giant Spider
+        "BDSPIDGI", // Giant Spider
+        "BDWISTAK", // Wistak
+        "BPSPID02", // Giant Spider
+        "PLYSPID2", // Giant Spider
+        "RSSPIDGI", // Giant Spider
+        "SPIDGI", // Giant Spider
+        "SPIDGISU", // Giant Spider
+        "SPIDFGSU", // Kitthix
+      ],
+      data: {
+        level1: 4,
+        bonusHp: 4,
+        thac0: 15,
+        strength: 14,
+        dexterity: 16,
+        constitution: 12,
+        intelligence: 7,
+        wisdom: 11,
+        charisma: 4,
+        ac: 4,
+        apr: 1,
+        xpv: 650,
+        alignment: "CHAOTIC_EVIL",
+        morale: 13,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_GIANT",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    giant.setAdditionalData({
+      movement: { value: 3 }, // Web 12
+      immunities: ["spider"],
+      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
+      removeScripts: ["DW#SPIDG", "SPIDFGSU"],
+    });
+    giant.createJaws({
+      diceThrown: 1,
+      diceSize: 8,
+      poisonType: "F",
+    });
+    giant.setAdjustments([
+      { files: ["SPIDGISU", "BDHELP01", "SPIDFGSU"], summon: true },
+      { files: ["PLYSPID2"], additionalData: { scriptLocation: "None" } },
+    ]);
+    return giant;
+  }
+
+  /**
+   * Hairy
+   */
+  private hairy() {
+    const hairy = this.create({
+      monster: MonsterEnum.HairySpider,
+      name: "monster.spider.name.hairy",
+      logging: true,
+      files: [
+        "BDSPIDER", // Small Spider
+        "SPIDSM01", // Small Spider
+      ],
+      data: {
+        level1: 1,
+        bonusHp: 1,
+        strength: 2,
+        dexterity: 14,
+        constitution: 8,
+        intelligence: 1,
+        wisdom: 10,
+        charisma: 2,
+        ac: 8,
+        apr: 1,
+        thac0: 20,
+        xpv: 65,
+        alignment: "NEUTRAL_EVIL",
+        morale: 10,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_HUGE",
+        gender: "NIETHER",
+        size: "Tiny",
+      },
+    });
+    hairy.setAdditionalData({
+      movement: { value: 6 }, // web 15
+      immunities: ["spider"],
+      removeItems: ["SPIDHU1", "ANTIWEB"],
+      removeScripts: ["DW#SPIDG"],
+      memorizedSpells: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
+    });
+    hairy.createJaws({
+      diceThrown: 1,
+      diceSize: 1,
+      poisonType: "R",
+      saveBonus: 2,
+    });
+    hairy.addTrait({ immunities: ["crushingDamageResistance"] });
+    hairy.setBehavior({
+      abilities: [
+        {
+          preset: SPELLS.DetectInvisibility,
+          spell: {
+            type: "force",
+            probability: 30,
+          },
+          timer: { name: "detectInvisibility", value: 18 },
+          requireVocal: false,
+        },
+      ],
+    });
+    hairy.setAdjustments([
+      { files: ["BDSPIDER"], additionalData: { scriptLocation: "None" } },
+    ]);
+    return hairy;
+  }
+
+  /**
+   * Huge
+   */
+  private huge() {
+    const huge = this.create({
+      monster: MonsterEnum.HugeSpider,
+      name: "monster.spider.name.huge",
+      logging: true,
+      files: [
+        "BDSPIDHU", // Huge Spider
+        "SPIDHU", // Huge Spider
+        "SPIDLAND", // Huge Spider
+      ],
+      data: {
+        level1: 2,
+        bonusHp: 2,
+        thac0: 19,
+        strength: 14,
+        dexterity: 16,
+        constitution: 12,
+        intelligence: 7,
+        wisdom: 11,
+        charisma: 4,
+        ac: 6,
+        apr: 1,
+        xpv: 270,
+        alignment: "NEUTRAL",
+        morale: 8,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_HUGE",
+        gender: "NIETHER",
+        size: "Medium",
+      },
+    });
+    huge.setAdditionalData({
+      movement: { value: 18 },
+      immunities: ["spider"],
+      removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
+      removeScripts: ["DW#SPIDS"],
+    });
+    huge.createJaws({
+      diceThrown: 1,
+      diceSize: 6,
+      poisonType: "A",
+      saveBonus: 1,
+    });
+    return huge;
+  }
+
+  /**
+   * Hunting
+   */
+  private hunting() {
+    const hunting = this.create({
+      monster: MonsterEnum.HuntingSpider,
+      name: "monster.spider.name.hunting",
+      logging: true,
+      files: [
+        "D5SMSPID", // Beetle Swarm (Faiths and Powers)
+      ],
+      data: {
+        level1: 3,
+        bonusHp: 3,
+        thac0: 17,
+        strength: 14,
+        dexterity: 16,
+        constitution: 12,
+        intelligence: 10,
+        wisdom: 11,
+        charisma: 4,
+        ac: 4,
+        apr: 1,
+        xpv: 650,
+        alignment: "NEUTRAL",
+        morale: 13,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_GIANT",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    hunting.createLeapSpell({ id: Ids.LeapAttack, memorizedCount: 1 });
+    hunting.setAdditionalData({
+      movement: { value: 8 },
+      immunities: [
+        "spider",
+        "seeInvisible", // their vision gives them the natural ability of true seeing
+      ],
+      removeItems: ["D5SMSPID", "ANTIWEB"],
+    });
+    hunting.createJaws({
+      diceThrown: 1,
+      diceSize: 3,
+      poisonType: "A",
+      saveBonus: 2,
+    });
+    hunting.setBehavior({ abilities: [this.ability(Ids.LeapAttack)] });
+    hunting.setAdjustments([{ files: ["D5SMSPID"], summon: true }]);
+    return hunting;
+  }
+
+  /**
+   * Phase
+   */
+  private phase() {
+    const phase = this.create({
+      monster: MonsterEnum.PhaseSpider,
+      name: "monster.spider.name.phase",
+      logging: true,
+      files: [
+        "SPIDPH", // Phase Spider
+        "SPIDPHSU", // Phase Spider
+        "SPIDPHAS", // Astral Phase Spider
+      ],
+      data: {
+        level1: 5,
+        bonusHp: 5,
+        strength: 15,
+        dexterity: 15,
+        constitution: 12,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 6,
+        ac: 7,
+        apr: 1,
+        xpv: 1400,
+        alignment: "NEUTRAL",
+        morale: 15,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_PHASE",
+        gender: "NIETHER",
+        size: "Huge",
+      },
+    });
+    phase.createPhaseOut();
+    phase.setAdditionalData({
+      movement: { value: 6 }, // Web 15
+      immunities: ["spider"],
+      removeItems: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
+      removeScripts: ["PSPIDER", "SPIDPHSU"],
+    });
+    phase.addTrait({
+      effects: [
+        {
+          opcode: EffectTypeEnum.Invisibility,
+          type: InvisibilityTypeEnum.Normal,
+        },
+      ],
+    });
+    // They phase in, attack, and phase out, all in a single round.
+    // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
+    // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
+    // Phase spiders flee to the Ethereal plane when outmatched
+    phase.createJaws({
+      diceThrown: 1,
+      diceSize: 6,
+      poisonType: "F",
+      saveBonus: -2,
+      effects: [
+        {
+          opcode: EffectTypeEnum.CastSpell,
+          type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+          target: EffectTargetEnum.Self,
+          timing: EffectTimingEnum.DelayPermanent,
+          duration: 2,
+          resource: this.spell(Ids.PhaseOut).file,
+        },
+      ],
+    });
+    phase.setBehavior({
+      abilities: [this.ability(Ids.PhaseOut)],
+    });
+    phase.setAdjustments([
+      { files: ["SPIDPHSU"], summon: true },
+      {
+        files: ["SPIDPHAS"],
+        data: {
+          level1: 12,
+          xpv: 4000,
+        },
+      },
+    ]);
+    return phase;
+  }
+
+  /**
+   * Sword
+   */
+  private sword() {
+    const sword = this.create({
+      monster: MonsterEnum.SwordSpider,
+      name: "monster.spider.name.sword",
+      logging: true,
+      files: [
+        "BDHELP03", // Sword Spider
+        "BDSPID7L", // Seven-Legged Spider
+        "BPSPID03", // Sword Spider
+        "PLYSPID", // Sword Spider
+        "SPIDSW", // Sword Spider
+        "SPIDSW01", // Sword Spider
+        "SPIDSWSU", // Sword Spider
+        "BPSPID01", // Spider
+        "GV#SPID", // Spider
+        "WISPID01", // Spider
+        "WISPID02", // Spider
+        "WISPID03", // Lightning Sword Spider (+2 electricity damage with leg)
+      ],
+      data: {
+        level1: 5,
+        bonusHp: 5,
+        thac0: 15,
+        strength: 16,
+        dexterity: 18,
+        constitution: 14,
+        intelligence: 9,
+        wisdom: 14,
+        charisma: 4,
+        ac: 3,
+        apr: 2,
+        xpv: 2000,
+        alignment: "CHAOTIC_EVIL",
+        morale: 13,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_SWORD",
+        gender: "NIETHER",
+        size: "Huge",
+      },
+    });
+    sword.createJaws({
+      diceThrown: 2,
+      diceSize: 4,
+    });
+    sword.createLegWeapon({ id: Ids.Leg, equipped: true });
+    sword.createLeapImpalingSpell({
+      id: Ids.LeapImpalingAttack,
+      memorizedCount: 1,
+    });
+    sword.createLegWeapon({ id: Ids.LightningLeg, lightning: true });
+    sword.createLeapImpalingSpell({
+      id: Ids.LightningLeapImpalingAttack,
+      lightning: true,
+    });
+    sword.setAdditionalData({
+      movement: { value: 6 }, // Web 8
+      immunities: ["spider"],
+      removeItems: ["SPIDSW1", "ANTIWEB", "SPIDSWSU", "WISPIDSW"],
+      removeScripts: ["DW#SPIDS"],
+    });
+    sword.setBehavior({
+      abilities: [
+        this.ability(Ids.LeapImpalingAttack),
+        this.ability(Ids.LightningLeapImpalingAttack),
+      ],
+    });
+    sword.setAdjustments([
+      { files: ["BDHELP03", "SPIDSWSU"], summon: true },
+      { files: ["PLYSPID"], additionalData: { scriptLocation: "None" } },
+      {
+        files: ["WISPID03"],
+        additionalData: {
+          removeMemorizedSpells: true,
+          equippedItems: [
+            { file: this.item(Ids.LightningLeg).file, slot: "SHIELD" },
+          ],
+          memorizedSpells: [
+            {
+              file: this.spell(Ids.LightningLeapImpalingAttack).file,
+              memorizedCount: 1,
+            },
+          ],
+        },
+      },
+    ]);
+    return sword;
+  }
+
+  /**
+   * Vortex
+   */
+  private vortex() {
+    const vortex = this.create({
+      monster: MonsterEnum.VortexSpider,
+      name: "monster.spider.name.vortex",
+      logging: true,
+      files: [
+        "SMSPID02", // Vortex Spider
+      ],
+      data: {
+        level1: 7,
+        bonusHp: 4,
+        strength: 15,
+        dexterity: 15,
+        constitution: 12,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 6,
+        ac: 4,
+        apr: 1,
+        xpv: 2700,
+        alignment: "CHAOTIC_EVIL",
+        morale: 10,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_PHASE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    vortex.setAdditionalData({
+      movement: { value: 15 }, // Normal: 9, Web: 15
+      immunities: ["spider"],
+      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
+      removeScripts: ["DW#SPIDG", "SPIDVO01"],
+      memorizedSpells: [{ file: SPELLS.VortexWeb, memorizedCount: 1 }],
+    });
+    vortex.addTrait({
+      effects: [
+        {
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          value: 15,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    vortex.createJaws({
+      diceThrown: 2,
+      diceSize: 4,
+      poisonType: "F",
+      saveBonus: -2,
+    });
+    vortex.setBehavior({
+      abilities: [
+        {
+          preset: SPELLS.Slow,
+          spell: {
+            resource: SPELLS.VortexWeb,
+            type: "force",
+          },
+          timer: { name: "VortexWeb", value: 30 },
+        },
+      ],
+    });
+    return vortex;
+  }
+
+  /**
+   * Wraith
+   */
+  private wraith() {
+    const wraith = this.create({
+      monster: MonsterEnum.WraithSpider,
+      name: "monster.spider.name.wraith",
+      logging: true,
+      files: [
+        "C#Q04009", // Wraith Spider
+        "SPIDWR", // Wraith Spider
+        "SPIDWR01", // Wraith Spider
+        "TTSPID", // Wraith Spider
+        // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
+        // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
+        // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
+        // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
+        // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
+      ],
+      data: {
+        level1: 3,
+        bonusHp: 2,
+        strength: 17,
+        dexterity: 15,
+        constitution: 9,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 1,
+        ac: 5,
+        apr: 1,
+        xpv: 1400,
+        alignment: "LAWFUL_EVIL",
+        morale: 15,
+        general: "MONSTER",
+        race: "SPIDER",
+        class: "SPIDER_WRAITH",
+        gender: "NIETHER",
+        size: "Medium",
+      },
+    });
+    wraith.setAdditionalData({
+      movement: { value: 12 },
+      immunities: ["spider", "undead"],
+      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
+      removeScripts: ["DW#SPIDG"],
+    });
+    wraith.addTrait({
+      immunities: ["cold", "nonSilverNonMagicalWeapons"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          value: 15,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    wraith.createJaws({
+      diceThrown: 0,
+      diceSize: 0,
+      effects: [
+        {
+          opcode: EffectTypeEnum.Damage,
+          type: EffectDamageTypeEnum.Cold,
+          diceThrown: 1,
+          diceSize: 4,
+          amount: creatureService.getStrengthDamageBonus(wraith.data),
+        },
+        ...effectFactory.levelDrain({ levels: 1 }),
+      ],
+      poisonType: "S",
+    });
+    wraith.setBehavior({
+      dialog: ["C#Q04009", "ttspid"],
+    });
+    return wraith;
   }
 }
 

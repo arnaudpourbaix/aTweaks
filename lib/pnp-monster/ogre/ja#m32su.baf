@@ -131,7 +131,7 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("ja#2f10")
+	HaveSpellRES("ja#2m32")
 	Detect(NearestEnemyOf(Myself))
 	StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,JA_FLYING)
@@ -139,7 +139,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SpellNoDecRES("ja#2f10",Myself)
+		SpellNoDecRES("ja#2m32",Myself)
 END
 
 // Domination
@@ -1196,7 +1196,7 @@ END
 // Cone of Cold
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -1207,13 +1207,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -1224,13 +1224,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -1241,13 +1241,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
@@ -1258,13 +1258,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
@@ -1275,13 +1275,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
@@ -1292,13 +1292,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SeventhNearestEnemyOf(Myself),WEAPON)
@@ -1309,13 +1309,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(EighthNearestEnemyOf(Myself),WEAPON)
@@ -1326,13 +1326,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NinthNearestEnemyOf(Myself),WEAPON)
@@ -1343,13 +1343,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1f10")
+	HaveSpellRES("ja#1m32")
 	RandomNumGT(803,241)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(TenthNearestEnemyOf(Myself),WEAPON)
@@ -1360,8 +1360,8 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1f10",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1f10")
+		ForceSpellRES("ja#1m32",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m32")
 END
 
 // Dire Charm
@@ -5729,9 +5729,9 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("ja#3f10")
+	HaveSpellRES("ja#3m32")
 	Detect(NearestEnemyOf(Myself))
-	!HaveSpellRES("ja#1f10")
+	!HaveSpellRES("ja#1m32")
 	!HaveSpellRES("SPWI116")
 	!HaveSpellRES("SPWI104")
 	HPPercentLT(Myself,25)
@@ -5739,7 +5739,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SpellRES("ja#3f10",LastSeenBy(Myself))
+		SpellRES("ja#3m32",LastSeenBy(Myself))
 END
 
 // Potion of extra healing (40hp)

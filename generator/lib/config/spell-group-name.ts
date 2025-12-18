@@ -4,6 +4,7 @@ export type SpellGroupName =
   | "blindness"
   | "cloud"
   | "cold"
+  | "colorSpray"
   | "confusion"
   | "cure"
   | "death"

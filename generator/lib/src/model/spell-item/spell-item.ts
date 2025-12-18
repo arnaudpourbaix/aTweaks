@@ -1,3 +1,4 @@
+import { SpellGroupName } from "../../../config/spell-group-name";
 import { TranslationKey } from "../../../translations/i18n";
 import { RawCreatureAbility } from "../creature/ability";
 import { ItemSlot } from "../creature/item";
@@ -37,7 +38,7 @@ export interface Spell {
    */
   id?: number;
 
-  name: TranslationKey;
+  name: StringReference;
 
   /**
    * Create a spell from another one
@@ -45,9 +46,14 @@ export interface Spell {
   copyFrom?: string;
 
   /**
-   * Will appear in documentation (default: true)
+   * Will appear in documentation (default: both)
    */
-  doc: boolean;
+  doc: "both" | "name" | "desc" | false;
+
+  /**
+   * Will be used to add these new spells to various immunities
+   */
+  groups: SpellGroupName[];
 
   /**
    * Spellbook icon
@@ -163,7 +169,7 @@ export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
   Omit<Spell, "file" | "headers" | "effectFiles">,
-  "icon" | "effects" | "projectiles" | "doc"
+  "icon" | "effects" | "projectiles" | "doc" | "groups"
 > & { headers?: PartialSpellHeader[]; effectFiles?: PartialEffectFile[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;

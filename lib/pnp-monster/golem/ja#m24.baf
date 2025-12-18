@@ -109,14 +109,14 @@ END
 // Haste
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpellRES("ja#2f9")
+	HaveSpellRES("ja#1m24")
 	Delay(6)
 	!StateCheck(Myself,STATE_HASTED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ReallyForceSpellRES("ja#2f9",Myself)
-		RemoveSpellRES("ja#2f9")
+		ReallyForceSpellRES("ja#1m24",Myself)
+		RemoveSpellRES("ja#1m24")
 END
 
 // Attack NoCheck enemy

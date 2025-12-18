@@ -105,6 +105,115 @@ THEN
 		NoAction()
 END
 
+// Slow
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(NearestEnemyOf(Myself),WEAPON)
+	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(SecondNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(ThirdNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(FourthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FourthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(FifthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(FifthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("VortexWeb","LOCALS")
+	HaveSpellRES("SPIN575")
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLOWED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(SixthNearestEnemyOf(Myself),WEAPON)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+	See(SixthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("VortexWeb","LOCALS",30)
+		ForceSpellRES("SPIN575",LastSeenBy(Myself))
+END
+
 // Attack NoCheck enemy
 IF
 	OR(4)

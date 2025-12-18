@@ -109,7 +109,7 @@ END
 // Slime Split
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpellRES("ja#3f12")
+	HaveSpellRES("ja#1m54")
 	OR(5)
 		HitBy([ANYONE],ELECTRICITY)
 		HitBy([ANYONE],SLASHING)
@@ -119,8 +119,8 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#3f12",Myself)
-		RemoveSpellRES("ja#3f12")
+		ForceSpellRES("ja#1m54",Myself)
+		RemoveSpellRES("ja#1m54")
 END
 
 // Attack NoCheck enemy

@@ -541,9 +541,9 @@ export const IMMUNITIES: (AtLeast<
     immunities: ["charm", "fear", "confusion", "illusion", "hold", "stun"],
   },
   {
-    name: "normalWeapons",
+    name: "nonMagicalWeapons",
     type: "immunity",
-    stringRef: "common.immunity.normalWeapons",
+    stringRef: "common.immunity.nonMagicalWeapons",
     effects: [
       {
         opcode: EffectTypeEnum.ProtectionFromWeapons,
@@ -553,10 +553,22 @@ export const IMMUNITIES: (AtLeast<
     ],
   },
   {
+    name: "nonSilverNonMagicalWeapons",
+    type: "immunity",
+    stringRef: "common.immunity.nonSilverNonMagicalWeapons",
+    effects: [
+      {
+        opcode: EffectTypeEnum.ProtectionFromWeapons,
+        type: ProtectionFromWeaponsTypeEnum.NonSilverNonMagical,
+        enchantment: 0,
+      },
+    ],
+  },
+  {
     name: "plusOneWeapons",
     type: "immunity",
     stringRef: "common.immunity.plusOneWeapons",
-    immunities: ["normalWeapons"],
+    immunities: ["nonMagicalWeapons"],
     effects: [
       {
         opcode: EffectTypeEnum.ProtectionFromWeapons,
@@ -1001,6 +1013,7 @@ export const TRAITS: (AtLeast<
       "poisonResistance",
       "magicDamageResistance",
       "physicalDamageResistance",
+      "nonMagicalWeapons",
     ],
     effects: [
       {
@@ -1024,11 +1037,6 @@ export const TRAITS: (AtLeast<
       // { opcode: EffectTypeEnum.OverrideCreatureData, field: "PersonalSpace", value: 0 }, // Create 2 issues: creature can attack from range and can't move at all
       // { opcode: EffectTypeEnum.MakeUnselectable, disableDialog: false },
       // { opcode: EffectTypeEnum.SelectionCircleRemoval },
-      {
-        opcode: EffectTypeEnum.ProtectionFromWeapons,
-        enchantment: 0,
-        type: ProtectionFromWeaponsTypeEnum.NonMagical,
-      },
       {
         opcode: EffectTypeEnum.DisplayPortraitIcon,
         icon: PortraitIconEnum.Invulnerable,

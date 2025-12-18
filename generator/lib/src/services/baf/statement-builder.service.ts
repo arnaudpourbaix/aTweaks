@@ -1,8 +1,8 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { POTIONS } from "../../../config/potion";
-import { TraStringReferenceEnum } from "../../../config/stringRef";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import { TranslationKey } from "../../../translations/i18n";
 import actionFactory from "../../factories/action.factory";
 import bafFactory from "../../factories/baf.factory";
 import responseFactory from "../../factories/response.factory";
@@ -938,7 +938,7 @@ class StatementService {
           ...(potion.actions ?? []),
           {
             name: "DisplayStringHead",
-            params: ["Myself", `@${TraStringReferenceEnum.QuaffPotion}`],
+            params: ["Myself", `@3002`], // TODO: should be "common.potion.use", but languages file are generated after
           },
           actionFactory.setGlobalRoundTimer(),
           { name: "UseItem", params: [file, "Myself"] },

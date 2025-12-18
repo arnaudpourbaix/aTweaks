@@ -383,7 +383,6 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=61 parameter1=1511938560 parameter2=1638400 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=184 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=300 parameter2=1 END
-	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=2 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=142 parameter2=23 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=0 parameter1=3 parameter2=0 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=278 parameter1=4 parameter2=0 END
@@ -396,6 +395,7 @@ BEGIN
 	LPF poisonResistance_resistance END
 	LPF magicDamageResistance_resistance END
 	LPF physicalDamageResistance_resistance END
+	LPF nonMagicalWeapons_immunity END
 END
 
 DEFINE_PATCH_FUNCTION infravision_trait
@@ -539,9 +539,14 @@ BEGIN
 	LPF cureAndCauseWoundSpells_immunity END
 END
 
-DEFINE_PATCH_FUNCTION normalWeapons_immunity
+DEFINE_PATCH_FUNCTION nonMagicalWeapons_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=2 END
+END
+
+DEFINE_PATCH_FUNCTION nonSilverNonMagicalWeapons_immunity
+BEGIN
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=0 parameter2=5 END
 END
 
 DEFINE_PATCH_FUNCTION ooze_trait
@@ -620,7 +625,7 @@ END
 DEFINE_PATCH_FUNCTION plusOneWeapons_immunity
 BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=120 parameter1=1 parameter2=0 END
-	LPF normalWeapons_immunity END
+	LPF nonMagicalWeapons_immunity END
 END
 
 DEFINE_PATCH_FUNCTION plusTwoWeapons_immunity

@@ -39,7 +39,6 @@ BEGIN
     LPF ADD_CRE_EFFECT INT_VAR opcode=296 STR_VAR resource=EVALUATE_BUFFER "%v%" END
   END
   PATCH_PHP_EACH spells AS _ => spell BEGIN
-    PATCH_IF FILE_EXISTS_IN_GAME ~%spell%.spl~ BEGIN
       // Protection from Spell
       SET stringref = 24534 // Spell Ineffective
       SET parameter1 = displaySpellIneffective ? %stringref% : 0
@@ -50,7 +49,6 @@ BEGIN
                                          duration
                                  STR_VAR resource=EVALUATE_BUFFER "%spell%" 
       END
-    END
   END
 END
 

@@ -1,6 +1,5 @@
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
-import creatureFactory from "../../src/factories/creature.factory";
 import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import { BaseEffect } from "../../src/model/spell-item/effect";
@@ -25,23 +24,94 @@ enum Ids {
   Blink,
 }
 
-class DogFamily extends CreatureFamily {
+class Dog extends Creature {
+  createJaws(
+    diceThrown: number,
+    diceSize: number,
+    castSpell?: WeaponCastSpell
+  ) {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.dog.weapon.jaws",
+        icon: MonsterItemIconEnum.Jaws,
+        equippedSlot: ["WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: diceThrown,
+          diceSize: diceSize,
+          damageType: AbilityDamageTypeEnum.Piercing,
+          speed: 3,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+      castSpell,
+    });
+  }
+
+  /**
+   * Blink
+   */
+  createBlink() {
+    return this.addSpell({
+      icon: SPELLS.DimensionDoor,
+      options: {
+        renew: 1,
+      },
+      name: "monster.dog.ability.blink",
+      id: Ids.Blink,
+      memorizedCount: 1,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 30,
+          effects: [
+            {
+              opcode: EffectTypeEnum.Teleport,
+              type: EffectTeleportTypeEnum.Default,
+              target: EffectTargetEnum.Self,
+            },
+            {
+              opcode: EffectTypeEnum.Thac0Bonus,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 6,
+              type: EffectModifierTypeEnum.Increment,
+              probability1: 75,
+              value: 2,
+              target: EffectTargetEnum.Self,
+            },
+          ],
+        },
+      ],
+      ability: {
+        targets: [{ name: "FarthestEnemies", randomOrder: true }],
+        spell: {
+          type: "force",
+        },
+        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+      },
+    });
+  }
+}
+
+class DogFamily extends CreatureFamily<Dog> {
   constructor() {
     super(MonsterFamilyEnum.Dog);
-    this.createBlink();
     this.addCreature(this.wildDog());
     this.addCreature(this.warDog());
     this.addCreature(this.blinkDog());
     this.addCreature(this.spectralHound());
   }
 
+  createCreature(id: MonsterEnum): Dog {
+    return new Dog(id);
+  }
+
   /**
    * Wild Dog
    */
   private wildDog() {
-    const wild = creatureFactory.create({
+    const wild = this.create({
       monster: MonsterEnum.WildDog,
-      family: MonsterFamilyEnum.Dog,
       name: "monster.dog.name.wild",
       files: [
         "BDBDOG",
@@ -80,7 +150,7 @@ class DogFamily extends CreatureFamily {
       removeItems: ["P1-4"],
       scriptLocation: "Default",
     });
-    this.createJaws(wild, 1, 4);
+    wild.createJaws(1, 4);
     wild.setBehavior({ dialog: ["BDDOGW01"] });
     wild.setAdjustments([
       { files: ["DOGWISU"], summon: true },
@@ -94,9 +164,8 @@ class DogFamily extends CreatureFamily {
    * War Dog
    */
   private warDog() {
-    const war = creatureFactory.create({
+    const war = this.create({
       monster: MonsterEnum.WarDog,
-      family: MonsterFamilyEnum.Dog,
       name: "monster.dog.name.war",
       files: [
         "BDPRISD1",
@@ -133,7 +202,7 @@ class DogFamily extends CreatureFamily {
       removeItems: ["P2-8"],
       scriptLocation: "Default",
     });
-    this.createJaws(war, 2, 4);
+    war.createJaws(2, 4);
     war.setAdjustments([
       { files: ["DOGWASU"], summon: true },
       { files: ["UBNIMDOG"], additionalData: { scriptLocation: "None" } },
@@ -145,9 +214,8 @@ class DogFamily extends CreatureFamily {
    * Blink Dog
    */
   private blinkDog() {
-    const blinkDog = creatureFactory.create({
+    const blinkDog = this.create({
       monster: MonsterEnum.BlinkDog,
-      family: MonsterFamilyEnum.Dog,
       name: "monster.dog.name.blink",
       files: ["DOGBLINK"],
       data: {
@@ -170,19 +238,14 @@ class DogFamily extends CreatureFamily {
         size: "Medium",
       },
     });
+    blinkDog.createBlink();
     blinkDog.setAdditionalData({
       movement: { value: 12 },
       removeItems: ["P1-6"],
       removeScripts: ["PSPIDER"],
       scriptLocation: "Default",
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.Blink).file,
-          memorizedCount: 1,
-        },
-      ],
     });
-    this.createJaws(blinkDog, 1, 6);
+    blinkDog.createJaws(1, 6);
     blinkDog.setBehavior({ abilities: [this.ability(Ids.Blink)] });
     return blinkDog;
   }
@@ -191,9 +254,8 @@ class DogFamily extends CreatureFamily {
    * Spectral Hound
    */
   private spectralHound() {
-    const spectralHound = creatureFactory.create({
+    const spectralHound = this.create({
       monster: MonsterEnum.SpectralHound,
-      family: MonsterFamilyEnum.Dog,
       name: "monster.dog.name.spectralHound",
       files: [
         "BDSHA01C", // Hound Spirit
@@ -275,76 +337,9 @@ class DogFamily extends CreatureFamily {
         ],
       },
     };
-    this.createJaws(spectralHound, 2, 6, astralPlaneShift);
+    spectralHound.createJaws(2, 6, astralPlaneShift);
     spectralHound.setAdjustments([{ files: ["BDSHA01C"], summon: true }]);
     return spectralHound;
-  }
-
-  createJaws(
-    creature: Creature,
-    diceThrown: number,
-    diceSize: number,
-    castSpell?: WeaponCastSpell
-  ) {
-    return creature.addWeapon({
-      weapon: {
-        stringRef: "monster.dog.weapon.jaws",
-        icon: MonsterItemIconEnum.Jaws,
-        equippedSlot: ["WEAPON1"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown: diceThrown,
-          diceSize: diceSize,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 3,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-      castSpell,
-    });
-  }
-
-  /**
-   * Blink
-   */
-  private createBlink() {
-    return this.addSpell({
-      icon: SPELLS.DimensionDoor,
-      options: {
-        renew: 1,
-      },
-      name: "monster.dog.ability.blink",
-      id: Ids.Blink,
-      headers: [
-        {
-          type: ItemAbilityTypeEnum.Melee,
-          range: 30,
-          effects: [
-            {
-              opcode: EffectTypeEnum.Teleport,
-              type: EffectTeleportTypeEnum.Default,
-              target: EffectTargetEnum.Self,
-            },
-            {
-              opcode: EffectTypeEnum.Thac0Bonus,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: 6,
-              type: EffectModifierTypeEnum.Increment,
-              probability1: 75,
-              value: 2,
-              target: EffectTargetEnum.Self,
-            },
-          ],
-        },
-      ],
-      ability: {
-        targets: [{ name: "FarthestEnemies", randomOrder: true }],
-        spell: {
-          type: "force",
-        },
-        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
-      },
-    });
   }
 }
 

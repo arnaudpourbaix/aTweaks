@@ -9,15 +9,15 @@ import {
 } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { ITEMS, MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
+import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import { BafExistingStringReference } from "../../config/stringRef";
 import { createDimensionDoor } from "../../spells/dimension_door";
 import abilityFactory from "../../src/factories/ability.factory";
 import actionFactory from "../../src/factories/action.factory";
-import CreatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
 import responseFactory from "../../src/factories/response.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
+import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import {
   AdditionalCode,
@@ -78,7 +78,9 @@ enum Ids {
   TouchOfTranquility,
 }
 
-class FeyFamily extends CreatureFamily {
+class Fey extends Creature {}
+
+class FeyFamily extends CreatureFamily<Fey> {
   constructor() {
     super(MonsterFamilyEnum.Fey);
     this.createInnateDimensionDoor();
@@ -98,13 +100,16 @@ class FeyFamily extends CreatureFamily {
     this.addCreature(this.sirine());
   }
 
+  createCreature(id: MonsterEnum): Fey {
+    return new Fey(id);
+  }
+
   /**
    * Dryad
    */
   private dryad() {
-    const dryad = CreatureFactory.create({
+    const dryad = this.create({
       monster: MonsterEnum.Dryad,
-      family: MonsterFamilyEnum.Fey,
       name: "monster.fey.name.dryad",
       files: [
         "DRYAD", // Dryad of the Cloudpeaks
@@ -217,9 +222,8 @@ class FeyFamily extends CreatureFamily {
    * Hamadryad
    */
   private hamadryad() {
-    const hamadryad = CreatureFactory.create({
+    const hamadryad = this.create({
       monster: MonsterEnum.Hamadryad,
-      family: MonsterFamilyEnum.Fey,
       name: "monster.fey.name.hamadryad",
       files: [
         "DRYADHA",
@@ -353,9 +357,8 @@ class FeyFamily extends CreatureFamily {
    * Nymph
    */
   private nymph() {
-    const nymph = CreatureFactory.create({
+    const nymph = this.create({
       monster: MonsterEnum.Nymph,
-      family: MonsterFamilyEnum.Fey,
       name: "monster.fey.name.nymph",
       files: [
         "BDNYMP01",
@@ -500,9 +503,8 @@ class FeyFamily extends CreatureFamily {
    * Sirine
    */
   private sirine() {
-    const sirine = CreatureFactory.create({
+    const sirine = this.create({
       monster: MonsterEnum.Sirine,
-      family: MonsterFamilyEnum.Fey,
       name: "monster.fey.name.sirine",
       files: [
         "ISLSIR", // Sirine Queen
@@ -1343,6 +1345,7 @@ class FeyFamily extends CreatureFamily {
       name: "monster.fey.ability.fogCloud.name",
       id: Ids.FogCloud,
       description: "monster.fey.ability.fogCloud.description",
+      groups: ["cloud", "blindness"],
       icon: "SPWI204",
       castingSound: "CAS_M08",
       spellType: SpellTypeEnum.Innate,

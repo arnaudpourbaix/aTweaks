@@ -98,12 +98,12 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("ja#4f12")
+	HaveSpellRES("ja#1m46")
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#4f12",Myself)
-		RemoveSpellRES("ja#4f12")
+		ForceSpellRES("ja#1m46",Myself)
+		RemoveSpellRES("ja#1m46")
 END
 
 // Toxic Vapors

@@ -4,7 +4,7 @@ import { GLOBAL_CONFIG } from "../../../config/generate";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
-import { CreatureFamily } from "../../model/creature/family";
+import { CreatureFamily, Family } from "../../model/creature/family";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { Actions } from "../../model/script/actions";
 import { State } from "../../state";
@@ -28,10 +28,10 @@ class DocumentationService {
     );
   }
 
-  addFamily(family: CreatureFamily) {
+  addFamily(family: Family) {
     this.families.push(
-      `<li><a href="#m${family.creatures[0].monster}">${
-        MonsterFamilyEnum[family.name]
+      `<li><a href="#m${family.creatures[0].id}">${
+        MonsterFamilyEnum[family.id]
       }</a></li>`
     );
     for (const creature of family.creatures) {
@@ -46,7 +46,7 @@ class DocumentationService {
     let content = fs.readFileSync("lib/templates/monster.html").toString();
     let template = { text: content };
     let str = `${creature.data.strength}`;
-    this.replace(template, "id", `m${creature.monster}`);
+    this.replace(template, "id", `m${creature.id}`);
     if (creature.data.exceptionalStrength)
       str += `/${creature.data.exceptionalStrength}`;
     this.replace(template, "name", translationService.from(creature.name));
@@ -152,7 +152,11 @@ class DocumentationService {
         memorized.memorizedCount,
         spell.options?.renew
       )})</h5>`;
-      result = `${title}<p>${translationService.from(spell.description!)}</p>`;
+      const desc =
+        spell.doc !== "name"
+          ? `<p>${translationService.from(spell.description!)}</p>`
+          : "";
+      result = `${title}${desc}`;
     } else if (memorized) {
       const timer = ability.actions.find(
         (t) =>

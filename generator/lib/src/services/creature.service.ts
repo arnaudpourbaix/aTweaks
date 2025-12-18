@@ -407,7 +407,7 @@ class CreatureService {
     data.saveSpell = saves.saveSpell;
   }
 
-  getStrengthModifier(data: CreatureData): number {
+  getStrengthDamageBonus(data: CreatureData): number {
     if (!data.strength || data.strength < 17) return 0;
     const table = [
       { str: 17, modifier: 1 },

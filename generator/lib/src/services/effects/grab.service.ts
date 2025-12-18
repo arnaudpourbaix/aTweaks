@@ -42,7 +42,7 @@ class GrabService {
   }
 
   private createGrabSpell(creature: Creature, grab: CreatureGrabConfig): Spell {
-    const file = getFilename(creature.spells.length + 1, creature.monster);
+    const file = getFilename(creature.spells.length + 1, creature.id);
     const effectFile = effectService.getEffect({
       opcode: EffectTypeEnum.ProtectionFromSpell,
       resource: file,
@@ -82,7 +82,7 @@ class GrabService {
     weapon: Weapon,
     spell: Spell
   ): void {
-    const strModifier = creatureService.getStrengthModifier(creature.data);
+    const strModifier = creatureService.getStrengthDamageBonus(creature.data);
     const sizeModifier = creatureSizes.find(
       (s) => s.size === creature.data.size
     )!.grabModifier;

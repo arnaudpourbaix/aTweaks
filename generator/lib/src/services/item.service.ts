@@ -21,6 +21,7 @@ import {
 } from "../model/spell-item/spell-item";
 import { State } from "../state";
 import effectService from "./effects/effect.service";
+import translationService from "./translation.service";
 
 class ItemService {
   getItem(item: PartialItem, file: string): Item {
@@ -70,10 +71,13 @@ class ItemService {
     if (result.header.damageType === undefined && !result.copyFrom)
       result.header.damageType = AbilityDamageTypeEnum.None;
     result.effects = effectService.getEffects(result.effects, { file });
-    if (result.header.effects)
+    if (result.header.effects) {
       result.header.effects = effectService.getEffects(result.header.effects, {
         file,
       });
+    } else {
+      result.header.effects = [];
+    }
     if (typeof header.projectile === "object") {
       this.addProjectile(result, result.header, header.projectile);
     }
@@ -86,7 +90,11 @@ class ItemService {
     projectile: PartialProjectile
   ) {
     if (!item.projectiles.some((p) => p.file === item.file)) {
-      console.log(`adding projectile ${item.file} for item ${item.stringRef}`);
+      console.log(
+        `adding projectile ${
+          item.file
+        } for item ${translationService.fromOptional(item.stringRef)}`
+      );
       item.projectiles.push({ file: item.file, ...projectile });
       header.projectile = item.file;
     }

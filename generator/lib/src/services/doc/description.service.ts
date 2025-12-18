@@ -250,7 +250,10 @@ class DescriptionService {
     return results;
   }
 
-  getSaveText(effect: Effect): string {
+  getSaveText(effect: {
+    saveTypes?: SaveTypeEnum[];
+    saveBonus?: number;
+  }): string {
     let save = "";
     const type = effect.saveTypes?.[0];
     if (type === SaveTypeEnum.ParalyzePoisonDeath) save = "poison/death";
@@ -310,7 +313,14 @@ class DescriptionService {
     else if (effect.bonusTo === EffectBonusToEnum.MissileWeapons)
       suffix = "missile";
     if (suffix) suffix = ` vs. ${suffix} attacks`;
-    results.push(`${this.getSignedNumber(effect.value)} AC${suffix}`);
+    const duration = effect.duration
+      ? ` for ${this.getDuration(effect.duration)}`
+      : "";
+    results.push(
+      `${this.getSignedNumber(
+        effect.value
+      )} AC${suffix}${duration}${this.getSaveText(effect)}`
+    );
     return results;
   }
 
@@ -523,6 +533,8 @@ class DescriptionService {
       { opcode: EffectTypeEnum.IntelligenceBonus, label: "Intelligence" },
       { opcode: EffectTypeEnum.StrengthBonus, label: "Strength" },
       { opcode: EffectTypeEnum.ConstitutionBonus, label: "Constitution" },
+      { opcode: EffectTypeEnum.WisdomBonus, label: "Wisdom" },
+      { opcode: EffectTypeEnum.CharismaBonus, label: "Charisma" },
       {
         opcode: EffectTypeEnum.SlashingResistanceModifier,
         label: "Slashing Resistance",
@@ -595,9 +607,13 @@ class DescriptionService {
     const opcode = opcodes.find((o) => o.opcode === effect.opcode);
     if (!opcode) return;
     const eff = effect as StatisticModifierEffect;
-    return EffectTypeEnum[opcode.opcode].includes("Resistance")
-      ? `${opcode.label}: ${eff.value}%`
-      : `${opcode.label}: ${this.getSignedNumber(eff.value)}`;
+    const duration = effect.duration
+      ? ` for ${this.getDuration(effect.duration)}`
+      : "";
+    const value = EffectTypeEnum[opcode.opcode].includes("Resistance")
+      ? `${eff.value}%`
+      : this.getSignedNumber(eff.value);
+    return `${opcode.label}: ${value}${duration}${this.getSaveText(effect)}`;
   }
 
   push() {}

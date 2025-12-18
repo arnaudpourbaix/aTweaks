@@ -2,8 +2,8 @@ import { SPELL_STATES } from "../../config/ability-presets";
 import { ITEMS, MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import { createConeOfCold } from "../../spells/cone_of_cold";
-import creatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import { QUICK_SLOTS } from "../../src/model/creature/item";
 import {
@@ -39,24 +39,332 @@ enum Ids {
   ConeOfCold,
   Fly,
   GaseousForm,
-  GiantFlail,
   Naginata,
   Ogre,
   OgreLeader,
-  Ogrillon,
 }
 
-class OgreFamily extends CreatureFamily {
+class Ogre extends Creature {
+  /**
+   * Ogre Fists
+   */
+  createFists(diceThrown: number, diceSize: number, id?: number) {
+    return this.addWeapon({
+      weapon: {
+        id,
+        stringRef: "monster.ogre.weapon.fists",
+        icon: MonsterItemIconEnum.Fist,
+        equippedSlot: ["WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown,
+          diceSize,
+          damageType: AbilityDamageTypeEnum.Crushing,
+          speed: 3,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+
+  /**
+   * Naginata
+   */
+  createNaginata() {
+    return this.addWeapon({
+      weapon: {
+        id: Ids.Naginata,
+        stringRef: "monster.ogre.weapon.naginata.name",
+        description: "monster.ogre.weapon.naginata.description",
+        equippedSlot: ["WEAPON1"],
+        flags: [ItemFlagEnum.Displayable, ItemFlagEnum.TwoHanded],
+        animation: ItemAnimationEnum.LongSword,
+        category: ItemCategoryEnum.Halberds,
+        icon: "ISW1H44",
+        proficiency: ProficiencyTypeEnum.PROFICIENCYHALBERD,
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
+          range: 2,
+          diceThrown: 1,
+          diceSize: 12,
+          damageType: AbilityDamageTypeEnum.Slashing,
+          speed: 8,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+
+  /**
+   * Giant Flail
+   */
+  createGiantFlail() {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.ogre.weapon.giantFlail",
+        equippedSlot: ["WEAPON1"],
+        flags: [ItemFlagEnum.Displayable],
+        animation: ItemAnimationEnum.Flail,
+        category: ItemCategoryEnum.Flails,
+        icon: "IBLUN13",
+        proficiency: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR,
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
+          diceThrown: 2,
+          diceSize: 8,
+          damageType: AbilityDamageTypeEnum.Crushing,
+          speed: 8,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+
+  /**
+   * Cone of cold
+   */
+  createConeOfCold() {
+    return this.addSpell(
+      createConeOfCold({
+        id: Ids.ConeOfCold,
+        description: "monster.ogre.ability.coneOfCold",
+        memorizedCount: 1,
+        damage: {
+          diceThrown: 8,
+          diceSize: 8,
+          amount: 0,
+        },
+        projectile: {
+          copyFromFile: "CONECOLD",
+          name: "Ogre-Mage Cone of Cold",
+          areaEffectInfo: {
+            areaProjectileFlags: [AreaProjectileEnum.Coneshaped], // FIXME: "AffectOnlyEnemies" to prevent them for killing their allies ?
+            areaOfEffect: 620,
+            triggerRadius: 620,
+            coneWidth: 60,
+          },
+        },
+      })
+    );
+  }
+
+  /**
+   * Fly
+   */
+  createFly() {
+    const flyDuration = 72;
+    return this.addSpell({
+      id: Ids.Fly,
+      name: "monster.ogre.ability.fly.name",
+      description: "monster.ogre.ability.fly.description",
+      memorizedCount: 1,
+      icon: SPELLS.Haste,
+      castingSound: "CAS_M08",
+      spellType: SpellTypeEnum.Wizard,
+      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
+      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
+      secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
+      spellLevel: 3,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Spell,
+          target: ItemAbilityTargetEnum.Caster,
+          speed: 3,
+          effects: [
+            {
+              ...effectFactory.naturalMovementSpeed(18),
+              timing: EffectTimingEnum.InstantLimited,
+              duration: flyDuration,
+            },
+            {
+              opcode: EffectTypeEnum.CreateItemInSlot,
+              slot: "SLOT_BOOTS",
+              resource: ITEMS.Hover,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: flyDuration,
+            },
+            {
+              opcode: EffectTypeEnum.SetExtendedSpellState,
+              state: SPELL_STATES.flying,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: flyDuration,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayPortraitIcon,
+              icon: PortraitIconEnum.Haste,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: flyDuration,
+            },
+            {
+              opcode: EffectTypeEnum.PlaySound,
+              resource: "EFF_M28",
+            },
+            {
+              opcode: EffectTypeEnum.PlaySound,
+              resource: "EFF_M29",
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: flyDuration,
+            },
+          ],
+        },
+      ],
+      ability: {
+        spell: {
+          type: "noDec",
+          excludeSpellStates: [SPELL_STATES.flying],
+          probability: 90,
+          selfTarget: true,
+        },
+        triggers: [
+          { name: "Detect", params: ["NearestEnemyOf"] },
+          { name: "StateCheck", params: ["Myself", "STATE_INVISIBLE"] },
+        ],
+      },
+    });
+  }
+
+  /**
+   * Gaseous Form
+   */
+  createGaseousForm() {
+    const gaseousFormDuration = 12;
+    this.createItemGaseousForm();
+    return this.addSpell({
+      name: "monster.ogre.ability.gaseousForm.name",
+      description: "monster.ogre.ability.gaseousForm.description",
+      memorizedCount: 1,
+      id: Ids.GaseousForm,
+      icon: SPELLS.PolymorphSelf,
+      castingSound: "CAS_M08",
+      spellType: SpellTypeEnum.Wizard,
+      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
+      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
+      secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
+      spellLevel: 4,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Spell,
+          target: ItemAbilityTargetEnum.Caster,
+          speed: 4,
+          effects: [
+            {
+              opcode: EffectTypeEnum.CreateWeapon,
+              amount: 1,
+              resource: this.item(Ids.GaseousForm).file,
+              target: EffectTargetEnum.Self,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: gaseousFormDuration,
+            },
+            {
+              opcode: EffectTypeEnum.PlayVisualEffect,
+              target: EffectTargetEnum.Self,
+              playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
+              resource: "SPDISPM3",
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 3,
+            },
+            {
+              opcode: EffectTypeEnum.PlayVisualEffect,
+              target: EffectTargetEnum.Self,
+              playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
+              resource: "SPDISPM3",
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: gaseousFormDuration,
+            },
+            {
+              opcode: EffectTypeEnum.PlaySound,
+              resource: "MSTCHNG",
+            },
+            {
+              opcode: EffectTypeEnum.PlaySound,
+              resource: "MSTCHNG",
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: gaseousFormDuration,
+            },
+          ],
+        },
+      ],
+      ability: {
+        spell: {
+          probability: 80,
+        },
+        triggers: [
+          { name: "Detect", params: ["NearestEnemyOf"] },
+          {
+            name: "HaveSpellRES",
+            params: [this.spell(Ids.ConeOfCold).file],
+            negation: true,
+          },
+          { name: "HaveSpellRES", params: [SPELLS.Sleep], negation: true },
+          {
+            name: "HaveSpellRES",
+            params: [SPELLS.CharmPerson],
+            negation: true,
+          },
+          { name: "HPPercentLT", params: ["Myself", 25] },
+        ],
+      },
+    });
+  }
+  createItemGaseousForm() {
+    this.addItem({
+      id: Ids.GaseousForm,
+      stringRef: "monster.ogre.ability.gaseousForm.name",
+      description: "monster.ogre.ability.gaseousForm.description",
+      immunities: ["poison", "cold", "magicDamage", "physicalDamage"],
+      flags: [ItemFlagEnum.Displayable],
+      header: {
+        type: ItemAbilityTypeEnum.Melee,
+      },
+      effects: [
+        {
+          opcode: EffectTypeEnum.DisplayPortraitIcon,
+          icon: PortraitIconEnum.Invulnerable,
+        },
+        {
+          opcode: EffectTypeEnum.FireResistanceModifier,
+          value: 100,
+          type: EffectStatisticModifierEnum.Set,
+        },
+        { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
+        { opcode: EffectTypeEnum.ModifyCollisionBehavior },
+        {
+          ...effectFactory.naturalMovementSpeed(3),
+        },
+        {
+          opcode: EffectTypeEnum.ModifyAttacksPerRound,
+          type: AttackModifierTypeEnum.Final,
+          value: 0,
+        },
+        {
+          opcode: EffectTypeEnum.DisableSpellcasting,
+          type: DisableSpellcastingTypeEnum.Wizard,
+        },
+        {
+          opcode: EffectTypeEnum.DisableButton,
+          button: DisableButtonEnum.SpellSelect,
+        },
+        {
+          opcode: EffectTypeEnum.AnimationChange,
+          animationId: "BLOB_MIST_CREATURE",
+          animationType: AnimationChangeTypeEnum.TemporaryChange,
+        },
+        {
+          opcode: EffectTypeEnum.SetExtendedSpellState,
+          state: SPELL_STATES.gaseousForm,
+        },
+      ],
+    });
+  }
+}
+
+class OgreFamily extends CreatureFamily<Ogre> {
   constructor() {
     super(MonsterFamilyEnum.Ogre);
-    this.createConeOfCold();
-    this.createFly();
-    this.createGaseousForm();
-    this.createFists(Ids.Ogre, 1, 10);
-    this.createFists(Ids.OgreLeader, 2, 6);
-    this.createFists(Ids.Ogrillon, 1, 6);
-    this.createNaginata();
-    this.createGiantFlail();
     this.addCreature(this.ogre());
     this.addCreature(this.ogrillon());
     this.addCreature(this.halfOgre());
@@ -65,13 +373,16 @@ class OgreFamily extends CreatureFamily {
     this.addCreature(this.shaman());
   }
 
+  createCreature(id: MonsterEnum): Ogre {
+    return new Ogre(id);
+  }
+
   /**
    * Ogre
    */
   private ogre() {
-    const ogre = creatureFactory.create({
+    const ogre = this.create({
       monster: MonsterEnum.Ogre,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.ogre",
       files: [
         "AC#FP2O1",
@@ -148,7 +459,8 @@ class OgreFamily extends CreatureFamily {
       removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
       removeScripts: ["OGRE"],
     });
-    ogre.addExistingItem(this.item(Ids.Ogre));
+    ogre.createFists(1, 10, Ids.Ogre);
+    ogre.createFists(2, 6, Ids.OgreLeader);
     ogre.setBehavior({
       restHeal: true,
       usePotions: true,
@@ -279,9 +591,8 @@ class OgreFamily extends CreatureFamily {
    * Ogrillon
    */
   private ogrillon() {
-    const ogrillon = creatureFactory.create({
+    const ogrillon = this.create({
       monster: MonsterEnum.Ogrillon,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.ogrillon",
       files: [
         "BDKORDEO",
@@ -326,7 +637,7 @@ class OgreFamily extends CreatureFamily {
       removeItems: ["B1-8", "SW1H01"],
       removeScripts: ["OGRILLON"],
     });
-    ogrillon.addExistingItem(this.item(Ids.Ogrillon));
+    ogrillon.createFists(1, 6);
     ogrillon.setBehavior({
       restHeal: true,
       usePotions: true,
@@ -360,9 +671,8 @@ class OgreFamily extends CreatureFamily {
    * Half-Ogre
    */
   private halfOgre() {
-    const halfOgre = creatureFactory.create({
+    const halfOgre = this.create({
       monster: MonsterEnum.HalfOgre,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.half",
       files: [
         "OGREBJOR",
@@ -510,9 +820,8 @@ class OgreFamily extends CreatureFamily {
    * Ogre-Mage
    */
   private ogreMage() {
-    const ogreMage = creatureFactory.create({
+    const ogreMage = this.create({
       monster: MonsterEnum.OgreMage,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.mage",
       files: [
         "BDOGRE03",
@@ -564,6 +873,10 @@ class OgreFamily extends CreatureFamily {
         size: "Large",
       },
     });
+    ogreMage.createNaginata();
+    ogreMage.createConeOfCold();
+    ogreMage.createFly();
+    ogreMage.createGaseousForm();
     ogreMage.setAdditionalData({
       movement: { value: 9, itemFile: this.item(Ids.Naginata).file },
       immunities: ["giant"],
@@ -602,7 +915,7 @@ class OgreFamily extends CreatureFamily {
         },
       ],
     });
-    ogreMage.addExistingItem(this.item(Ids.Naginata));
+    ogreMage.equipItem(this.item(Ids.Naginata));
     ogreMage.setBehavior({
       restHeal: true,
       usePotions: true,
@@ -723,9 +1036,8 @@ class OgreFamily extends CreatureFamily {
    * Ogre Berserker
    */
   private berserker() {
-    const berserker = creatureFactory.create({
+    const berserker = this.create({
       monster: MonsterEnum.OgreBerserker,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.berserker",
       files: [
         "BDOGRE02",
@@ -784,7 +1096,7 @@ class OgreFamily extends CreatureFamily {
       ],
       removeScripts: ["DVBRSKER"],
     });
-    berserker.addExistingItem(this.item(Ids.GiantFlail));
+    berserker.createGiantFlail();
     berserker.setBehavior({
       restHeal: true,
       usePotions: true,
@@ -879,9 +1191,8 @@ class OgreFamily extends CreatureFamily {
    * Ogre Shaman
    */
   private shaman() {
-    const shaman = creatureFactory.create({
+    const shaman = this.create({
       monster: MonsterEnum.OgreShaman,
-      family: MonsterFamilyEnum.Ogre,
       name: "monster.ogre.name.shaman",
       files: ["BDOGRE05"],
       data: {
@@ -919,7 +1230,7 @@ class OgreFamily extends CreatureFamily {
         { file: SPELLS.HoldPerson, memorizedCount: 1 },
       ],
     });
-    shaman.addExistingItem(this.item(Ids.Ogre));
+    shaman.equipItem(this.item(Ids.Ogre));
     shaman.setBehavior({
       restHeal: true,
       usePotions: true,
@@ -941,320 +1252,6 @@ class OgreFamily extends CreatureFamily {
       ],
     });
     return shaman;
-  }
-
-  /**
-   * Ogre Fists
-   */
-  createFists(id: number, diceThrown: number, diceSize: number) {
-    return this.addWeapon({
-      weapon: {
-        id,
-        stringRef: "monster.ogre.weapon.fists",
-        icon: MonsterItemIconEnum.Fist,
-        equippedSlot: ["WEAPON1"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown,
-          diceSize,
-          damageType: AbilityDamageTypeEnum.Crushing,
-          speed: 3,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-    });
-  }
-
-  /**
-   * Naginata
-   */
-  createNaginata() {
-    return this.addWeapon({
-      weapon: {
-        id: Ids.Naginata,
-        stringRef: "monster.ogre.weapon.naginata.name",
-        description: "monster.ogre.weapon.naginata.description",
-        equippedSlot: ["WEAPON1"],
-        flags: [ItemFlagEnum.Displayable, ItemFlagEnum.TwoHanded],
-        animation: ItemAnimationEnum.LongSword,
-        category: ItemCategoryEnum.Halberds,
-        icon: "ISW1H44",
-        proficiency: ProficiencyTypeEnum.PROFICIENCYHALBERD,
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
-          range: 2,
-          diceThrown: 1,
-          diceSize: 12,
-          damageType: AbilityDamageTypeEnum.Slashing,
-          speed: 8,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-    });
-  }
-
-  /**
-   * Giant Flail
-   */
-  createGiantFlail() {
-    return this.addWeapon({
-      weapon: {
-        id: Ids.GiantFlail,
-        stringRef: "monster.ogre.weapon.giantFlail",
-        equippedSlot: ["WEAPON1"],
-        flags: [ItemFlagEnum.Displayable],
-        animation: ItemAnimationEnum.Flail,
-        category: ItemCategoryEnum.Flails,
-        icon: "IBLUN13",
-        proficiency: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR,
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
-          diceThrown: 2,
-          diceSize: 8,
-          damageType: AbilityDamageTypeEnum.Crushing,
-          speed: 8,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-    });
-  }
-
-  /**
-   * Cone of cold
-   */
-  private createConeOfCold() {
-    return this.addSpell(
-      createConeOfCold({
-        id: Ids.ConeOfCold,
-        description: "monster.ogre.ability.coneOfCold",
-        damage: {
-          diceThrown: 8,
-          diceSize: 8,
-          amount: 0,
-        },
-        projectile: {
-          copyFromFile: "CONECOLD",
-          name: "Ogre-Mage Cone of Cold",
-          areaEffectInfo: {
-            areaProjectileFlags: [AreaProjectileEnum.Coneshaped], // FIXME: "AffectOnlyEnemies" to prevent them for killing their allies ?
-            areaOfEffect: 620,
-            triggerRadius: 620,
-            coneWidth: 60,
-          },
-        },
-      })
-    );
-  }
-
-  /**
-   * Fly
-   */
-  private createFly() {
-    const flyDuration = 72;
-    return this.addSpell({
-      id: Ids.Fly,
-      name: "monster.ogre.ability.fly.name",
-      description: "monster.ogre.ability.fly.description",
-      icon: SPELLS.Haste,
-      castingSound: "CAS_M08",
-      spellType: SpellTypeEnum.Wizard,
-      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
-      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
-      secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      spellLevel: 3,
-      headers: [
-        {
-          type: ItemAbilityTypeEnum.Melee,
-          location: ItemAbilityLocationEnum.Spell,
-          target: ItemAbilityTargetEnum.Caster,
-          speed: 3,
-          effects: [
-            {
-              ...effectFactory.naturalMovementSpeed(18),
-              timing: EffectTimingEnum.InstantLimited,
-              duration: flyDuration,
-            },
-            {
-              opcode: EffectTypeEnum.CreateItemInSlot,
-              slot: "SLOT_BOOTS",
-              resource: ITEMS.Hover,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: flyDuration,
-            },
-            {
-              opcode: EffectTypeEnum.SetExtendedSpellState,
-              state: SPELL_STATES.flying,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: flyDuration,
-            },
-            {
-              opcode: EffectTypeEnum.DisplayPortraitIcon,
-              icon: PortraitIconEnum.Haste,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: flyDuration,
-            },
-            {
-              opcode: EffectTypeEnum.PlaySound,
-              resource: "EFF_M28",
-            },
-            {
-              opcode: EffectTypeEnum.PlaySound,
-              resource: "EFF_M29",
-              timing: EffectTimingEnum.DelayPermanent,
-              duration: flyDuration,
-            },
-          ],
-        },
-      ],
-      ability: {
-        spell: {
-          type: "noDec",
-          excludeSpellStates: [SPELL_STATES.flying],
-          probability: 90,
-          selfTarget: true,
-        },
-        triggers: [
-          { name: "Detect", params: ["NearestEnemyOf"] },
-          { name: "StateCheck", params: ["Myself", "STATE_INVISIBLE"] },
-        ],
-      },
-    });
-  }
-
-  /**
-   * Gaseous Form
-   */
-  private createGaseousForm() {
-    const gaseousFormDuration = 12;
-    this.createItemGaseousForm();
-    return this.addSpell({
-      name: "monster.ogre.ability.gaseousForm.name",
-      description: "monster.ogre.ability.gaseousForm.description",
-      id: Ids.GaseousForm,
-      icon: SPELLS.PolymorphSelf,
-      castingSound: "CAS_M08",
-      spellType: SpellTypeEnum.Wizard,
-      castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
-      primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
-      secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      spellLevel: 4,
-      headers: [
-        {
-          type: ItemAbilityTypeEnum.Melee,
-          location: ItemAbilityLocationEnum.Spell,
-          target: ItemAbilityTargetEnum.Caster,
-          speed: 4,
-          effects: [
-            {
-              opcode: EffectTypeEnum.CreateWeapon,
-              amount: 1,
-              resource: this.item(Ids.GaseousForm).file,
-              target: EffectTargetEnum.Self,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: gaseousFormDuration,
-            },
-            {
-              opcode: EffectTypeEnum.PlayVisualEffect,
-              target: EffectTargetEnum.Self,
-              playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
-              resource: "SPDISPM3",
-              timing: EffectTimingEnum.InstantLimited,
-              duration: 3,
-            },
-            {
-              opcode: EffectTypeEnum.PlayVisualEffect,
-              target: EffectTargetEnum.Self,
-              playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
-              resource: "SPDISPM3",
-              timing: EffectTimingEnum.DelayPermanent,
-              duration: gaseousFormDuration,
-            },
-            {
-              opcode: EffectTypeEnum.PlaySound,
-              resource: "MSTCHNG",
-            },
-            {
-              opcode: EffectTypeEnum.PlaySound,
-              resource: "MSTCHNG",
-              timing: EffectTimingEnum.DelayPermanent,
-              duration: gaseousFormDuration,
-            },
-          ],
-        },
-      ],
-      ability: {
-        spell: {
-          probability: 80,
-        },
-        triggers: [
-          { name: "Detect", params: ["NearestEnemyOf"] },
-          {
-            name: "HaveSpellRES",
-            params: [this.spell(Ids.ConeOfCold).file],
-            negation: true,
-          },
-          { name: "HaveSpellRES", params: [SPELLS.Sleep], negation: true },
-          {
-            name: "HaveSpellRES",
-            params: [SPELLS.CharmPerson],
-            negation: true,
-          },
-          { name: "HPPercentLT", params: ["Myself", 25] },
-        ],
-      },
-    });
-  }
-  private createItemGaseousForm() {
-    this.addItem({
-      id: Ids.GaseousForm,
-      stringRef: "monster.ogre.ability.gaseousForm.name",
-      description: "monster.ogre.ability.gaseousForm.description",
-      immunities: ["poison", "cold", "magicDamage", "physicalDamage"],
-      flags: [ItemFlagEnum.Displayable],
-      header: {
-        type: ItemAbilityTypeEnum.Melee,
-      },
-      effects: [
-        {
-          opcode: EffectTypeEnum.DisplayPortraitIcon,
-          icon: PortraitIconEnum.Invulnerable,
-        },
-        {
-          opcode: EffectTypeEnum.FireResistanceModifier,
-          value: 100,
-          type: EffectStatisticModifierEnum.Set,
-        },
-        { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
-        { opcode: EffectTypeEnum.ModifyCollisionBehavior },
-        {
-          ...effectFactory.naturalMovementSpeed(3),
-        },
-        {
-          opcode: EffectTypeEnum.ModifyAttacksPerRound,
-          type: AttackModifierTypeEnum.Final,
-          value: 0,
-        },
-        {
-          opcode: EffectTypeEnum.DisableSpellcasting,
-          type: DisableSpellcastingTypeEnum.Wizard,
-        },
-        {
-          opcode: EffectTypeEnum.DisableButton,
-          button: DisableButtonEnum.SpellSelect,
-        },
-        {
-          opcode: EffectTypeEnum.AnimationChange,
-          animationId: "BLOB_MIST_CREATURE",
-          animationType: AnimationChangeTypeEnum.TemporaryChange,
-        },
-        {
-          opcode: EffectTypeEnum.SetExtendedSpellState,
-          state: SPELL_STATES.gaseousForm,
-        },
-      ],
-    });
   }
 }
 

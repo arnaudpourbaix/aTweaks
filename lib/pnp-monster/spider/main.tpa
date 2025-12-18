@@ -1,57 +1,12 @@
 // Generated file (don't edit)
 
-// Web Tangle
-CREATE SPL "ja#1f13"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~ja#1f13.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10245)
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 11
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI215C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10246)
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SLIME~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~ELEMENTAL~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SHADOW~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~MIST~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~WRAITH~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~FREE_ACTION~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~RED_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~BLUE_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter2=13 duration=1 probability1=100 STR_VAR resource="ja#1f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=157 target=2 power=1 duration=18 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=129 duration=18 probability1=100 savingthrow=4 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_P27" END
-	LPF CHANGE_SPELL INT_VAR    renew=2 END
-	
-	// Web Tangle
-CREATE SPL "ja#2f13"
-	WRITE_LONG 0x64 0x72
-COPY_EXISTING ~ja#2f13.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10245)
-	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 11
-	WRITE_LONG 0x34 1
-	WRITE_ASCII 0x3a ~SPWI215C~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10247)
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215C" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SLIME~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~ELEMENTAL~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SHADOW~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~MIST~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~WRAITH~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~FREE_ACTION~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~RED_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~splstate~ ~BLUE_FIRESHIELD~) parameter2=76 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter2=13 duration=1 probability1=100 STR_VAR resource="ja#2f13" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=157 target=2 power=1 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=129 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 probability1=100 savingthrow=4 savebonus="-2" STR_VAR resource="EFF_P27" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=20 target=2 power=1 duration=18 probability1=100 savingthrow=4 savebonus="-2" END
-	LPF CHANGE_SPELL INT_VAR    renew=2 END
-	
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/64.tpa" // Gargantuan Spider
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/58.tpa" // Ghostwalk Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/56.tpa" // Giant Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/62.tpa" // Hairy Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/55.tpa" // Huge Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/65.tpa" // Hunting Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/57.tpa" // Phase Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/59.tpa" // Sword Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/63.tpa" // Vortex Spider
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/60.tpa" // Wraith Spider

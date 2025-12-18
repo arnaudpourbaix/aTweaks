@@ -23,11 +23,13 @@ export const createConeOfCold = ({
   projectile,
   options,
   damage,
+  memorizedCount,
 }: {
   id: number;
   description: TranslationKey;
   projectile?: PartialProjectile;
   options?: SpellOptions;
+  memorizedCount?: number;
   damage: {
     diceThrown: number;
     diceSize: number;
@@ -37,6 +39,7 @@ export const createConeOfCold = ({
   id,
   name: "spell.coneOfCold.name",
   description,
+  memorizedCount,
   icon: SPELLS.ConeOfCold,
   options,
   castingSound: "CAS_M06",
@@ -58,9 +61,9 @@ export const createConeOfCold = ({
         {
           opcode: EffectTypeEnum.Damage,
           type: EffectDamageTypeEnum.Cold,
-          amount: 0,
-          diceSize: 8,
-          diceThrown: 8,
+          amount: damage.amount,
+          diceSize: damage.diceSize,
+          diceThrown: damage.diceThrown,
           saveTypes: [SaveTypeEnum.Spell, SaveTypeEnum.BypassMirrorImage],
           saveBonus: -4,
           flags: [EffectFlagsEnum.SaveForHalf],

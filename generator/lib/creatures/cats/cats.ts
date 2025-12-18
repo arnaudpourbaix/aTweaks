@@ -1,5 +1,4 @@
 import { MonsterItemIconEnum } from "../../config/item";
-import creatureFactory from "../../src/factories/creature.factory";
 import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import {
@@ -19,7 +18,82 @@ import creatureService from "../../src/services/creature.service";
 import { hunterCustomCode } from "../common";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
 
-class CatFamily extends CreatureFamily {
+class Cat extends Creature {
+  createPaws(
+    diceThrown: number,
+    diceSize: number,
+    rear: {
+      diceThrown: number;
+      diceSize: number;
+    }
+  ) {
+    const amount = creatureService.getStrengthDamageBonus(this.data);
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.cat.weapon.claws",
+        icon: MonsterItemIconEnum.Wolf,
+        equippedSlot: ["WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown,
+          diceSize,
+          damageType: AbilityDamageTypeEnum.Slashing,
+          speed: 5,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+      castSpell: {
+        probability1: 20,
+        spell: {
+          name: "monster.cat.rearClawsAttack.name",
+          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+          headers: [
+            {
+              type: ItemAbilityTypeEnum.Melee,
+              range: 5,
+              effects: [
+                {
+                  opcode: EffectTypeEnum.Damage,
+                  type: EffectDamageTypeEnum.Slashing,
+                  diceThrown: rear.diceThrown,
+                  diceSize: rear.diceSize,
+                  amount,
+                },
+                {
+                  opcode: EffectTypeEnum.Damage,
+                  type: EffectDamageTypeEnum.Slashing,
+                  diceThrown: rear.diceThrown,
+                  diceSize: rear.diceSize,
+                  amount,
+                },
+              ],
+            },
+          ],
+        },
+      },
+    });
+  }
+
+  createJaws(diceThrown: number, diceSize: number) {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.cat.weapon.jaws",
+        icon: MonsterItemIconEnum.Jaws,
+        equippedSlot: ["SHIELD"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: diceThrown,
+          diceSize: diceSize,
+          damageType: AbilityDamageTypeEnum.Piercing,
+          speed: 3,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+}
+
+class CatFamily extends CreatureFamily<Cat> {
   constructor() {
     super(MonsterFamilyEnum.Cat);
     this.addCreature(this.jaguar());
@@ -30,13 +104,16 @@ class CatFamily extends CreatureFamily {
     this.addCreature(this.displacerBeast());
   }
 
+  createCreature(id: MonsterEnum): Cat {
+    return new Cat(id);
+  }
+
   /**
    * Jaguar
    */
   private jaguar() {
-    const jaguar = creatureFactory.create({
+    const jaguar = this.create({
       monster: MonsterEnum.Jaguar,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.jaguar",
       files: [
         "BDHELP04",
@@ -66,10 +143,11 @@ class CatFamily extends CreatureFamily {
     });
     jaguar.setAdditionalData({
       movement: { value: 15 },
+      immunities: ["infravision"],
       removeItems: ["CATJAG"],
     });
-    this.createPaws(jaguar, 1, 3, { diceThrown: 1, diceSize: 4 });
-    this.createJaws(jaguar, 1, 8);
+    jaguar.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
+    jaguar.createJaws(1, 8);
     jaguar.setBehavior({ customCodes: [hunterCustomCode] });
     jaguar.setAdjustments([{ files: ["BDHELP04"], summon: true }]);
     return jaguar;
@@ -79,9 +157,8 @@ class CatFamily extends CreatureFamily {
    * Leopard
    */
   private leopard() {
-    const leopard = creatureFactory.create({
+    const leopard = this.create({
       monster: MonsterEnum.Leopard,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.leopard",
       files: ["CATJAGSU"],
       data: {
@@ -107,10 +184,11 @@ class CatFamily extends CreatureFamily {
     });
     leopard.setAdditionalData({
       movement: { value: 15 },
+      immunities: ["infravision"],
       removeItems: ["CATJAGSU"],
     });
-    this.createPaws(leopard, 1, 3, { diceThrown: 1, diceSize: 4 });
-    this.createJaws(leopard, 1, 6);
+    leopard.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
+    leopard.createJaws(1, 6);
     leopard.setAdjustments([{ files: ["CATJAGSU"], summon: true }]);
     return leopard;
   }
@@ -119,9 +197,8 @@ class CatFamily extends CreatureFamily {
    * Lion
    */
   private lion() {
-    const lion = creatureFactory.create({
+    const lion = this.create({
       monster: MonsterEnum.Lion,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.lion",
       files: [
         "BDHELP02",
@@ -157,10 +234,11 @@ class CatFamily extends CreatureFamily {
     });
     lion.setAdditionalData({
       movement: { value: 12 },
+      immunities: ["infravision"],
       removeItems: ["CATLIO"],
     });
-    this.createPaws(lion, 1, 4, { diceThrown: 1, diceSize: 6 });
-    this.createJaws(lion, 1, 10);
+    lion.createPaws(1, 4, { diceThrown: 1, diceSize: 6 });
+    lion.createJaws(1, 10);
     lion.setAdjustments([{ files: ["CATLIOSU"], summon: true }]);
     return lion;
   }
@@ -169,9 +247,8 @@ class CatFamily extends CreatureFamily {
    * Mountain Lion
    */
   private mountainLion() {
-    const mountainLion = creatureFactory.create({
+    const mountainLion = this.create({
       monster: MonsterEnum.MountainLion,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.mountainLion",
       files: ["CATLIM01"],
       data: {
@@ -197,11 +274,12 @@ class CatFamily extends CreatureFamily {
     });
     mountainLion.setAdditionalData({
       movement: { value: 12 },
+      immunities: ["infravision"],
       removeItems: ["P1-6"],
       removeScripts: [],
     });
-    this.createPaws(mountainLion, 1, 3, { diceThrown: 1, diceSize: 4 });
-    this.createJaws(mountainLion, 1, 6);
+    mountainLion.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
+    mountainLion.createJaws(1, 6);
     mountainLion.setBehavior({ customCodes: [hunterCustomCode] });
     return mountainLion;
   }
@@ -210,9 +288,8 @@ class CatFamily extends CreatureFamily {
    * Hellcat
    */
   private hellcat() {
-    const hellcat = creatureFactory.create({
+    const hellcat = this.create({
       monster: MonsterEnum.Hellcat,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.hellcat",
       files: ["BDHELCAT"],
       data: {
@@ -240,6 +317,7 @@ class CatFamily extends CreatureFamily {
     });
     hellcat.setAdditionalData({
       movement: { value: 15 },
+      immunities: ["infravision"],
       removeItems: ["BDHELCAT", "RINGDEMN", "IPSION"],
       removeScripts: ["BDHELCAT"],
       deleteEffectOpcodes: [
@@ -248,7 +326,7 @@ class CatFamily extends CreatureFamily {
       ],
     });
     hellcat.addTrait({
-      immunities: ["mindSpells", "normalWeapons", "extraplanar"],
+      immunities: ["mindSpells", "nonMagicalWeapons", "extraplanar"],
       effects: [
         {
           opcode: EffectTypeEnum.MagicResistanceModifier,
@@ -261,8 +339,8 @@ class CatFamily extends CreatureFamily {
         },
       ],
     });
-    this.createPaws(hellcat, 1, 4, { diceThrown: 2, diceSize: 4 });
-    this.createJaws(hellcat, 2, 6);
+    hellcat.createPaws(1, 4, { diceThrown: 2, diceSize: 4 });
+    hellcat.createJaws(2, 6);
     return hellcat;
   }
 
@@ -270,9 +348,8 @@ class CatFamily extends CreatureFamily {
    * Displacer Beast
    */
   private displacerBeast() {
-    const displacerBeast = creatureFactory.create({
+    const displacerBeast = this.create({
       monster: MonsterEnum.DisplacerBeast,
-      family: MonsterFamilyEnum.Cat,
       name: "monster.cat.name.displacerBeast",
       files: ["BDDISPBE", "BDDISPBP"],
       data: {
@@ -302,6 +379,7 @@ class CatFamily extends CreatureFamily {
     });
     displacerBeast.setAdditionalData({
       movement: { value: 15 },
+      immunities: ["infravision"],
       removeItems: ["BDDISPBE"],
     });
     displacerBeast.addTrait({
@@ -369,80 +447,6 @@ class CatFamily extends CreatureFamily {
       },
     ]);
     return displacerBeast;
-  }
-
-  createPaws(
-    creature: Creature,
-    diceThrown: number,
-    diceSize: number,
-    rear: {
-      diceThrown: number;
-      diceSize: number;
-    }
-  ) {
-    const amount = creatureService.getStrengthModifier(creature.data);
-    return creature.addWeapon({
-      weapon: {
-        stringRef: "monster.cat.weapon.claws",
-        icon: MonsterItemIconEnum.Wolf,
-        equippedSlot: ["WEAPON1"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown,
-          diceSize,
-          damageType: AbilityDamageTypeEnum.Slashing,
-          speed: 5,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-      castSpell: {
-        probability1: 20,
-        spell: {
-          name: "monster.cat.rearClawsAttack.name",
-          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-          headers: [
-            {
-              type: ItemAbilityTypeEnum.Melee,
-              range: 5,
-              effects: [
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Slashing,
-                  diceThrown: rear.diceThrown,
-                  diceSize: rear.diceSize,
-                  amount,
-                },
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Slashing,
-                  diceThrown: rear.diceThrown,
-                  diceSize: rear.diceSize,
-                  amount,
-                },
-              ],
-            },
-          ],
-        },
-      },
-    });
-  }
-
-  createJaws(creature: Creature, diceThrown: number, diceSize: number) {
-    return creature.addWeapon({
-      weapon: {
-        stringRef: "monster.cat.weapon.jaws",
-        icon: MonsterItemIconEnum.Jaws,
-        equippedSlot: ["SHIELD"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown: diceThrown,
-          diceSize: diceSize,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 3,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-    });
   }
 }
 

@@ -3,7 +3,7 @@ import path from "path";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { Creature } from "../../model/creature/creature";
-import { CreatureFamily } from "../../model/creature/family";
+import { CreatureFamily, Family } from "../../model/creature/family";
 import { State } from "../../state";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
@@ -32,13 +32,13 @@ class WeiduFamilyService extends AbstractWeiduService {
       fs.appendFileSync(
         file,
         `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(family)}/${
-          creature.monster
+          creature.id
         }.tpa" // ${translationService.from(creature.name)}${CR}`
       );
     }
   }
 
-  generateFamilyData(family: CreatureFamily) {
+  generateFamilyData(family: Family) {
     const lines = this.initLines();
     weiduProjectileService.createProjectiles(lines, family.projectiles);
     // weiduEffectService.createEffectFiles(lines, creature.effectFiles);
@@ -46,7 +46,7 @@ class WeiduFamilyService extends AbstractWeiduService {
     weiduItemService.createItems(lines, family.items);
     this.add(lines, "", 0);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
-    const file = this.getMainFilename(family.name);
+    const file = this.getMainFilename(family.id);
     fs.appendFileSync(file, content);
   }
 

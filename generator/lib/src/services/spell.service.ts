@@ -1,3 +1,5 @@
+import { SPELL_GROUPS } from "../../config/spell-group";
+import { SpellGroupName } from "../../config/spell-group-name";
 import { Effect } from "../model/spell-item/effect";
 import {
   EffectIDSFileEnum,
@@ -16,17 +18,19 @@ import {
 } from "../model/spell-item/spell-item";
 import { State } from "../state";
 import effectService from "./effects/effect.service";
+import translationService from "./translation.service";
 
 class SpellService {
   getSpell(spell: PartialSpell, file: string): Spell {
     const { headers, effectFiles, ...others } = spell;
     const result: Spell = {
       file,
-      doc: spell.doc ?? true,
+      doc: spell.doc ?? "both",
       effects: [],
       headers: [],
       effectFiles: [],
       projectiles: [],
+      groups: [],
       ...others,
     };
     for (const effectFile of spell.effectFiles ?? []) {
@@ -53,6 +57,12 @@ class SpellService {
     }
     State.spells.push(result);
     return result;
+  }
+
+  getGroupRessources(name: SpellGroupName): string[] {
+    const group = SPELL_GROUPS.find((g) => g.name === name);
+    if (!group) throw new Error(`Group ${name} is not defined !`);
+    return group.spells ?? [];
   }
 
   private addHeader(
@@ -134,7 +144,11 @@ class SpellService {
     projectile: PartialProjectile
   ) {
     if (!spell.projectiles.some((p) => p.file === spell.file)) {
-      console.log(`adding projectile ${spell.file} for spell ${spell.name}`);
+      console.log(
+        `adding projectile ${
+          spell.file
+        } for spell ${translationService.fromOptional(spell.name)}`
+      );
       spell.projectiles.push({ file: spell.file, ...projectile });
       header.projectile = spell.file;
     }

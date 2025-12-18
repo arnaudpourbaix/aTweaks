@@ -108,7 +108,7 @@ END
 
 // Cone of Cold
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NearestEnemyOf(Myself),WEAPON)
@@ -119,12 +119,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SecondNearestEnemyOf(Myself),WEAPON)
@@ -135,12 +135,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(ThirdNearestEnemyOf(Myself),WEAPON)
@@ -151,12 +151,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FourthNearestEnemyOf(Myself),WEAPON)
@@ -167,12 +167,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(FifthNearestEnemyOf(Myself),WEAPON)
@@ -183,12 +183,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SixthNearestEnemyOf(Myself),WEAPON)
@@ -199,12 +199,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(SeventhNearestEnemyOf(Myself),WEAPON)
@@ -215,12 +215,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(EighthNearestEnemyOf(Myself),WEAPON)
@@ -231,12 +231,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(NinthNearestEnemyOf(Myself),WEAPON)
@@ -247,12 +247,12 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 IF
-	HaveSpellRES("ja#5f9")
+	HaveSpellRES("ja#1m67")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(TenthNearestEnemyOf(Myself),WEAPON)
@@ -263,8 +263,8 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#5f9",LastSeenBy(Myself))
-		RemoveSpellRES("ja#5f9")
+		ForceSpellRES("ja#1m67",LastSeenBy(Myself))
+		RemoveSpellRES("ja#1m67")
 END
 
 // Attack NoCheck enemy

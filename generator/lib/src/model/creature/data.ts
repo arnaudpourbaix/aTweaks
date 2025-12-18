@@ -70,8 +70,6 @@ export interface CreatureData {
   // resistCrushing?: number;
   // resistPiercing?: number;
   // resistMissile?: number;
-  // moraleBreak?: number;
-  // moraleRecovery?: number;
 }
 export type PartialCreatureData = Partial<Omit<CreatureData, "movement">>;
 

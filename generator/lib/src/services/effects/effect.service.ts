@@ -64,6 +64,8 @@ class EffectService {
         break;
       case EffectTypeEnum.DexterityBonus:
       case EffectTypeEnum.IntelligenceBonus:
+      case EffectTypeEnum.CharismaBonus:
+      case EffectTypeEnum.WisdomBonus:
       case EffectTypeEnum.StrengthBonus:
       case EffectTypeEnum.ConstitutionBonus:
       case EffectTypeEnum.SlashingResistanceModifier:

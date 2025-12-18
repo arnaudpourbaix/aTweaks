@@ -4,22 +4,162 @@
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ogre/ja#m32.baf~
 COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ogre/ja#m32su.baf~
 
-// Ogre Mage traits
+// Cone of Cold
+COPY_EXISTING "CONECOLD.pro" ~override/ja#1m32.pro~
+	READ_SHORT 0x08 type
+	PATCH_IF (%type% = 1) BEGIN
+		INSERT_BYTES 0x100 0x100
+	END
+	WRITE_LONG 0x200 2048
+	WRITE_SHORT 0x204 620
+	WRITE_SHORT 0x206 620
+	WRITE_SHORT 0x224 60
+ADD_PROJECTILE ~override/ja#1m32.pro~ ~Ogre-Mage Cone of Cold~
+
+CREATE SPL "ja#1m32"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m32.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10270)
+	WRITE_ASCII 0x10 ~CAS_M06~ #8
+	WRITE_LONG 0x18 1536
+	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 15
+	WRITE_BYTE 0x25 6
+	WRITE_BYTE 0x27 10
+	WRITE_LONG 0x34 5
+	WRITE_ASCII 0x3a ~SPWI503C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10212)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 range=10 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m32~)) + 1 STR_VAR icon="SPWI503C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=5 parameter2=131072 probability1=100 dicesize=8 dicenumber=8 savingthrow=16777217 savebonus="-4" special=256 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=165 target=2 power=5 duration=1 probability1=100 END
+	
+	// Fly
+CREATE SPL "ja#2m32"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m32.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10213)
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
+	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 10
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 13
+	WRITE_LONG 0x34 3
+	WRITE_ASCII 0x3a ~SPWI305C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10214)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=3 STR_VAR icon="SPWI305C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=176 target=2 power=3 parameter1=14 parameter2=1 duration=72 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=143 target=2 power=3 parameter1=IDS_OF_SYMBOL (~slots~ ~SLOT_BOOTS~) duration=72 probability1=100 STR_VAR resource="ja#i10" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=328 target=2 power=3 parameter2=(IDS_OF_SYMBOL (~splstate~ ~JA_FLYING~)) duration=72 probability1=100 special=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=3 parameter2=38 duration=72 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=3 probability1=100 STR_VAR resource="EFF_M28" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=3 timing=4 duration=72 probability1=100 STR_VAR resource="EFF_M29" END
+	
+	// Gaseous form
+CREATE SPL "ja#3m32"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#3m32.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10215)
+	WRITE_ASCII 0x10 ~CAS_M08~ #8
+	WRITE_SHORT 0x1c 1
+	WRITE_SHORT 0x22 10
+	WRITE_BYTE 0x25 8
+	WRITE_BYTE 0x27 13
+	WRITE_LONG 0x34 4
+	WRITE_ASCII 0x3a ~SPWI416C~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10216)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=5 speed=4 STR_VAR icon="SPWI416C" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=111 target=1 power=4 parameter1=1 duration=12 probability1=100 STR_VAR resource="ja#2m32" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 duration=3 probability1=100 STR_VAR resource="SPDISPM3" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 timing=4 duration=12 probability1=100 STR_VAR resource="SPDISPM3" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=4 probability1=100 STR_VAR resource="MSTCHNG" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=4 timing=4 duration=12 probability1=100 STR_VAR resource="MSTCHNG" END
+	
+	// Naginata
 CREATE ITM "ja#1m32"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10473)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10473)
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10210)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10210)
+	WRITE_LONG 0x18 74
+	WRITE_SHORT 0x1c 30
+	WRITE_ASCII 0x22 ~S1~ #2
+	WRITE_BYTE 0x31 99
+	WRITE_ASCII 0x3a ~ISW1H44~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10211)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#1m32.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~ISW1H44~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 8
+		WRITE_BYTE 0x88 12
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 50
+	WRITE_SHORT 0xa0 50
+	WRITE_LONG 0x98 1
+	END
+
+// Gaseous form
+CREATE ITM "ja#2m32"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10215)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10215)
+	WRITE_LONG 0x18 72
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10216)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#2m32.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 2
+		WRITE_BYTE 0x84 3
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=142 target=1 global=1 parameter2=23 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=30 target=1 global=1 parameter1=100 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=184 target=1 global=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=300 target=1 global=1 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 global=1 parameter1=2 parameter2=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=1 target=1 global=1 parameter2=3 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=145 target=1 global=1 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=144 target=1 global=1 parameter2=2 timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=53 target=1 global=1 parameter1=IDS_OF_SYMBOL (~animate~ ~BLOB_MIST_CREATURE~) timing=2 probability1=100 END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=328 target=1 global=1 parameter2=(IDS_OF_SYMBOL (~splstate~ ~JA_GASEOUSFORM~)) timing=2 probability1=100 special=1 END
+	LPF poison_immunity END
+	LPF cold_immunity END
+	LPF magicDamage_immunity END
+	LPF physicalDamage_immunity END
+
+// Ogre Mage traits
+CREATE ITM "ja#3m32"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10489)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10489)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10474)
-COPY_EXISTING ~ja#1m32.itm~ ~override~
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10490)
+COPY_EXISTING ~ja#3m32.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
 	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=6 parameter2=3 timing=2 probability1=100 END
 
 // Attach movement speed to item
-COPY_EXISTING ~ja#5f10.ITM~  ~override~
+COPY_EXISTING ~ja#1m32.ITM~  ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 timing=2 parameter1=7 parameter2=1 global=1 END
 
 ACTION_FOR_EACH ~file~ IN
@@ -67,21 +207,27 @@ BEGIN
 			REMOVE_CRE_ITEM ~OGREMASU~
 			REMOVE_CRE_ITEM ~BLUN15~
 			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
-				ADD_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+				REPLACE_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			END
 			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
-				REPLACE_CRE_ITEM ~ja#5f10~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+				ADD_CRE_ITEM ~ja#3m32~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			END
+			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
+				REPLACE_CRE_ITEM ~ja#1m32~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ 
 			END
 			PATCH_IF (NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~KAHRK~) BEGIN 
 				ADD_CRE_ITEM ~ja#i9~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			END
+			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (1) // Cone of Cold
+			ADD_MEMORIZED_SPELL ~ja#2m32~ #2 ~wizard~ (1) // Fly
+			ADD_MEMORIZED_SPELL ~ja#3m32~ #3 ~wizard~ (1) // Gaseous form
 			ADD_MEMORIZED_SPELL ~SPWI206~ #1 ~wizard~ (1) 
 			ADD_MEMORIZED_SPELL ~SPWI228~ #1 ~wizard~ (1) 
 			ADD_MEMORIZED_SPELL ~SPWI104~ #0 ~wizard~ (1) 
 			ADD_MEMORIZED_SPELL ~SPWI116~ #0 ~wizard~ (1) 
-			ADD_MEMORIZED_SPELL ~ja#1f10~ #4 ~wizard~ (1) // Cone of Cold
-			ADD_MEMORIZED_SPELL ~ja#2f10~ #2 ~wizard~ (1) // Fly
-			ADD_MEMORIZED_SPELL ~ja#3f10~ #3 ~wizard~ (1) // Gaseous form
+			ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (1) // Cone of Cold
+			ADD_MEMORIZED_SPELL ~ja#2m32~ #2 ~wizard~ (1) // Fly
+			ADD_MEMORIZED_SPELL ~ja#3m32~ #3 ~wizard~ (1) // Gaseous form
 			LPF clear_proficiencies END
 			SET_BG2_PROFICIENCY ~PROFICIENCYHALBERD~ 2
 			LPF patchCreature
@@ -174,7 +320,7 @@ BEGIN
 				WRITE_BYTE 0x234 9 // level1
 				WRITE_BYTE 0x235 9 // level2
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~FIGHTER_MAGE~) // class
-				ADD_MEMORIZED_SPELL ~ja#1f10~ #4 ~wizard~ (1) // Cone of Cold
+				ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (1) // Cone of Cold
 				ADD_MEMORIZED_SPELL ~SPWI316~ #2 ~wizard~ (2) 
 				ADD_MEMORIZED_SPELL ~SPWI220~ #1 ~wizard~ (2) 
 				ADD_MEMORIZED_SPELL ~SPWI104~ #0 ~wizard~ (2) 
@@ -196,7 +342,7 @@ BEGIN
 				WRITE_BYTE 0x238 19 // strength
 				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~FIGHTER_MAGE~) // class
 				ADD_MEMORIZED_SPELL ~SPWI506~ #4 ~wizard~ (1) 
-				ADD_MEMORIZED_SPELL ~ja#1f10~ #4 ~wizard~ (2) // Cone of Cold
+				ADD_MEMORIZED_SPELL ~ja#1m32~ #4 ~wizard~ (2) // Cone of Cold
 				ADD_MEMORIZED_SPELL ~SPWI316~ #2 ~wizard~ (4) 
 				ADD_MEMORIZED_SPELL ~SPWI220~ #1 ~wizard~ (4) 
 				ADD_MEMORIZED_SPELL ~SPWI104~ #0 ~wizard~ (3) 

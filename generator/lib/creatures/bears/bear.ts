@@ -31,7 +31,73 @@ enum Ids {
   ImprovedStreamOfFrost,
 }
 
-class BearFamily extends CreatureFamily {
+class Bear extends Creature {
+  createPaws(
+    diceThrown: number,
+    diceSize: number,
+    hug: {
+      diceSize: number;
+      diceThrown: number;
+    }
+  ) {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.bear.weapon.claws",
+        icon: MonsterItemIconEnum.Wolf,
+        equippedSlot: ["WEAPON1"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown,
+          diceSize,
+          damageType: AbilityDamageTypeEnum.Slashing,
+          speed: 5,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+      castSpell: {
+        probability1: 10,
+        spell: {
+          name: "monster.bear.hug.name",
+          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+          headers: [
+            {
+              type: ItemAbilityTypeEnum.Melee,
+              range: 5,
+              effects: [
+                {
+                  opcode: EffectTypeEnum.Damage,
+                  type: EffectDamageTypeEnum.Crushing,
+                  diceThrown: hug.diceThrown,
+                  diceSize: hug.diceSize,
+                },
+              ],
+            },
+          ],
+        },
+      },
+    });
+  }
+
+  createJaws(diceThrown: number, diceSize: number) {
+    return this.addWeapon({
+      weapon: {
+        stringRef: "monster.bear.weapon.jaws",
+        icon: MonsterItemIconEnum.Jaws,
+        equippedSlot: ["SHIELD"],
+        header: {
+          type: ItemAbilityTypeEnum.Melee,
+          diceThrown: diceThrown,
+          diceSize: diceSize,
+          damageType: AbilityDamageTypeEnum.Piercing,
+          speed: 3,
+          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+        },
+      },
+    });
+  }
+}
+
+class BearFamily extends CreatureFamily<Bear> {
   constructor() {
     super(MonsterFamilyEnum.Bear);
     this.createImprovedStreamOfFrost();
@@ -41,13 +107,16 @@ class BearFamily extends CreatureFamily {
     this.addCreature(this.polar());
   }
 
+  createCreature(id: MonsterEnum): Bear {
+    return new Bear(id);
+  }
+
   /**
    * Black Bear
    */
   private black() {
-    const black = creatureFactory.create({
+    const black = this.create({
       monster: MonsterEnum.BlackBear,
-      family: MonsterFamilyEnum.Bear,
       name: "monster.bear.name.black",
       files: [
         "BDBEARBL",
@@ -83,8 +152,8 @@ class BearFamily extends CreatureFamily {
       removeItems: ["B1-6"],
       removeScripts: ["CBEAR", "BEAR"],
     });
-    this.createPaws(black, 1, 3, { diceThrown: 2, diceSize: 4 });
-    this.createJaws(black, 1, 6);
+    black.createPaws(1, 3, { diceThrown: 2, diceSize: 4 });
+    black.createJaws(1, 6);
     black.setBehavior({
       walk: true,
       customCodes: [this.turningHostile, this.fearFire],
@@ -100,9 +169,8 @@ class BearFamily extends CreatureFamily {
    * Brown Bear
    */
   private brown() {
-    const brown = creatureFactory.create({
+    const brown = this.create({
       monster: MonsterEnum.BrownBear,
-      family: MonsterFamilyEnum.Bear,
       name: "monster.bear.name.brown",
       files: [
         "BDBEARBN",
@@ -140,8 +208,8 @@ class BearFamily extends CreatureFamily {
       removeItems: ["B1-8"],
       removeScripts: ["CBEAR", "BEAR"],
     });
-    this.createPaws(brown, 1, 6, { diceThrown: 2, diceSize: 6 });
-    this.createJaws(brown, 1, 8);
+    brown.createPaws(1, 6, { diceThrown: 2, diceSize: 6 });
+    brown.createJaws(1, 8);
     brown.setBehavior({
       walk: true,
       customCodes: [this.turningHostile, hunterCustomCode],
@@ -163,9 +231,8 @@ class BearFamily extends CreatureFamily {
    * Cave Bear
    */
   private cave() {
-    const cave = creatureFactory.create({
+    const cave = this.create({
       monster: MonsterEnum.CaveBear,
-      family: MonsterFamilyEnum.Bear,
       name: "monster.bear.name.cave",
       files: ["BD328OSO", "BDBEARCA", "BEARCA", "BEARCASU", "CAVENE", "URSA"],
       data: {
@@ -195,8 +262,8 @@ class BearFamily extends CreatureFamily {
       removeItems: ["B1-10", "BEARCASU"],
       removeScripts: ["CBEAR", "BEAR"],
     });
-    this.createPaws(cave, 1, 8, { diceThrown: 2, diceSize: 6 });
-    this.createJaws(cave, 1, 12);
+    cave.createPaws(1, 8, { diceThrown: 2, diceSize: 6 });
+    cave.createJaws(1, 12);
     cave.setBehavior({
       customCodes: [this.turningHostile],
       walk: true,
@@ -217,9 +284,8 @@ class BearFamily extends CreatureFamily {
    * Polar Bear
    */
   private polar() {
-    const polar = creatureFactory.create({
+    const polar = this.create({
       monster: MonsterEnum.PolarBear,
-      family: MonsterFamilyEnum.Bear,
       name: "monster.bear.name.polar",
       files: [
         "BEARPO",
@@ -265,8 +331,8 @@ class BearFamily extends CreatureFamily {
       removeScripts: ["CBEAR", "BEAR", "kaldran"],
       immunities: ["coldResistance"],
     });
-    this.createPaws(polar, 1, 10, { diceThrown: 3, diceSize: 6 });
-    this.createJaws(polar, 2, 6);
+    polar.createPaws(1, 10, { diceThrown: 3, diceSize: 6 });
+    polar.createJaws(2, 6);
     polar.setBehavior({
       walk: true,
       abilities: [this.ability(Ids.ImprovedStreamOfFrost)],
@@ -361,71 +427,6 @@ class BearFamily extends CreatureFamily {
           selfTarget: true,
         },
         range: 10,
-      },
-    });
-  }
-
-  createPaws(
-    creature: Creature,
-    diceThrown: number,
-    diceSize: number,
-    hug: {
-      diceSize: number;
-      diceThrown: number;
-    }
-  ) {
-    return creature.addWeapon({
-      weapon: {
-        stringRef: "monster.bear.weapon.claws",
-        icon: MonsterItemIconEnum.Wolf,
-        equippedSlot: ["WEAPON1"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown,
-          diceSize,
-          damageType: AbilityDamageTypeEnum.Slashing,
-          speed: 5,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
-      },
-      castSpell: {
-        probability1: 10,
-        spell: {
-          name: "monster.bear.hug.name",
-          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-          headers: [
-            {
-              type: ItemAbilityTypeEnum.Melee,
-              range: 5,
-              effects: [
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Crushing,
-                  diceThrown: hug.diceThrown,
-                  diceSize: hug.diceSize,
-                },
-              ],
-            },
-          ],
-        },
-      },
-    });
-  }
-
-  createJaws(creature: Creature, diceThrown: number, diceSize: number) {
-    return creature.addWeapon({
-      weapon: {
-        stringRef: "monster.bear.weapon.jaws",
-        icon: MonsterItemIconEnum.Jaws,
-        equippedSlot: ["SHIELD"],
-        header: {
-          type: ItemAbilityTypeEnum.Melee,
-          diceThrown: diceThrown,
-          diceSize: diceSize,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 3,
-          abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        },
       },
     });
   }

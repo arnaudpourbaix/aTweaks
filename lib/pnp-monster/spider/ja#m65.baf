@@ -105,7 +105,7 @@ THEN
 		NoAction()
 END
 
-// Leap Attack
+// Leap
 IF
 	HaveSpellRES("ja#1m65")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -115,7 +115,6 @@ IF
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
-	RandomNumGT(1000,250)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -134,7 +133,6 @@ IF
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
-	RandomNumGT(1000,333)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -153,7 +151,6 @@ IF
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
-	RandomNumGT(1000,500)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)

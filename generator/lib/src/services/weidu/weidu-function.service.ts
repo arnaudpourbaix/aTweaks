@@ -74,6 +74,10 @@ class WeiduFunctionService extends AbstractWeiduService {
     tab: number
   ): void {
     const spells = group.spells ?? [];
+    // add new created spells when a group has been specified
+    for (const spell of State.spells) {
+      if (spell.groups.includes(group.name)) spells.push(spell.file);
+    }
     const idsSpells = group.idsSpells ?? [];
     this.add(
       lines,

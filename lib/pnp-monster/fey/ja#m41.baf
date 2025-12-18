@@ -219,7 +219,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#3f8")
@@ -472,7 +472,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#3f8")
@@ -641,7 +641,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#3f8")
@@ -885,7 +885,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#3f8")

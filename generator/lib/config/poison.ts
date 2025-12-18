@@ -127,6 +127,30 @@ export const POISONS: PoisonModel[] = [
     type: "P",
     damage: 0,
     saveDamage: 0,
-    duration: 60 * 60,
+    duration: 300 * 60,
+  },
+  {
+    // fall into a coma for 2d4 turns (used by Gargantuan spider)
+    type: "Q",
+    damage: 0,
+    saveDamage: 0,
+    duration: 4 * 60,
+  },
+  {
+    // the victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3.
+    // These effects begin one round after the bite and last for 1d4+1 rounds.
+    type: "R",
+    damage: 0,
+    saveDamage: 0,
+    duration: 24,
+  },
+  {
+    // This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
+    // The victim must roll a successful saving throw vs. poison each round to escape the poison's effects for that round.
+    // Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.
+    type: "S",
+    damage: 0,
+    saveDamage: 0,
+    duration: 30,
   },
 ];

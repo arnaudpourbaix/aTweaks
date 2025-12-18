@@ -2,6 +2,7 @@ import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import CreatureFactory from "../../src/factories/creature.factory";
 import effectFactory from "../../src/factories/effect.factory";
+import { Creature } from "../../src/model/creature/creature";
 import { CreatureFamily } from "../../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
@@ -21,20 +22,66 @@ enum Ids {
   Stream,
 }
 
-class AnkhegFamily extends CreatureFamily {
+class Ankheg extends Creature {
+  /**
+   * Stream
+   */
+  createStream() {
+    return this.addSpell({
+      name: "monster.ankheg.enzymeStream.name",
+      description: "monster.ankheg.enzymeStream.description",
+      memorizedCount: 1,
+      id: Ids.Stream,
+      secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+      icon: SPELLS.MelfAcidArrow,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Ranged,
+          range: 30,
+          speed: 3,
+          projectile: "acidblob",
+          effects: [
+            {
+              opcode: EffectTypeEnum.Damage,
+              type: EffectDamageTypeEnum.Acid,
+              diceThrown: 8,
+              diceSize: 4,
+              saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+              flags: [EffectFlagsEnum.SaveForHalf],
+            },
+          ],
+        },
+      ],
+      ability: {
+        disableInterrupt: true,
+        spell: {
+          type: "force",
+          remove: true,
+        },
+        targets: [{ name: "PCsPreferringWeak", randomOrder: true }],
+        triggers: [{ name: "HPPercentLT", params: ["Myself", 50] }],
+        range: 30,
+      },
+    });
+  }
+}
+
+class AnkhegFamily extends CreatureFamily<Ankheg> {
   constructor() {
     super(MonsterFamilyEnum.Ankheg);
-    this.createStream();
     this.addCreature(this.ankheg());
+  }
+
+  createCreature(id: MonsterEnum): Ankheg {
+    return new Ankheg(id);
   }
 
   /**
    * Ankheg
    */
   private ankheg() {
-    const ankheg = CreatureFactory.create({
+    const ankheg = this.create({
       monster: MonsterEnum.Ankheg,
-      family: MonsterFamilyEnum.Ankheg,
       name: "monster.ankheg.name",
       files: [
         "BDNEO",
@@ -68,18 +115,13 @@ class AnkhegFamily extends CreatureFamily {
         size: "Huge",
       },
     });
+    ankheg.createStream();
     ankheg.setAdditionalData({
       movement: { value: 6 },
       immunities: ["magicalBeast"],
       removeScripts: ["ANKHEG"],
       removeItems: ["ANKHEG1", "ANKHEG2"],
       scriptLocation: "Race",
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.Stream).file,
-          memorizedCount: 1,
-        },
-      ],
     });
     ankheg.addWeapon({
       weapon: {
@@ -136,47 +178,6 @@ class AnkhegFamily extends CreatureFamily {
       { files: ["BDANKHSU"], summon: true },
     ]);
     return ankheg;
-  }
-
-  /**
-   * Stream
-   */
-  private createStream() {
-    return this.addSpell({
-      name: "monster.ankheg.enzymeStream.name",
-      description: "monster.ankheg.enzymeStream.description",
-      id: Ids.Stream,
-      secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-      icon: SPELLS.MelfAcidArrow,
-      headers: [
-        {
-          type: ItemAbilityTypeEnum.Ranged,
-          range: 30,
-          speed: 3,
-          projectile: "acidblob",
-          effects: [
-            {
-              opcode: EffectTypeEnum.Damage,
-              type: EffectDamageTypeEnum.Acid,
-              diceThrown: 8,
-              diceSize: 4,
-              saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-              flags: [EffectFlagsEnum.SaveForHalf],
-            },
-          ],
-        },
-      ],
-      ability: {
-        disableInterrupt: true,
-        spell: {
-          type: "force",
-          remove: true,
-        },
-        targets: [{ name: "PCsPreferringWeak", randomOrder: true }],
-        triggers: [{ name: "HPPercentLT", params: ["Myself", 50] }],
-        range: 30,
-      },
-    });
   }
 }
 

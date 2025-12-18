@@ -3,8 +3,7 @@ import {
   VAPOR_IMMUNE_CREATURES,
 } from "../../config/creatures";
 import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import creatureFactory from "../../src/factories/creature.factory";
+import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
 import effectFactory from "../../src/factories/effect.factory";
 import { RawCreatureAbility } from "../../src/model/creature/ability";
 import { Creature } from "../../src/model/creature/creature";
@@ -50,721 +49,9 @@ enum Ids {
   ToxicVapors,
 }
 
-class SlimeFamily extends CreatureFamily {
-  constructor() {
-    super(MonsterFamilyEnum.Slime);
-    this.createToxicVapors();
-    this.addCreature(this.blackPudding());
-    this.addCreature(this.whitePudding());
-    this.addCreature(this.mustardJelly());
-    this.addCreature(this.fissionSlime());
-    this.addCreature(this.grayOoze());
-    this.addCreature(this.greenSlime());
-    this.addCreature(this.ochreJelly());
-    this.addCreature(this.oliveSlimeCreature());
-    this.addCreature(this.slitheringTracker());
-  }
-
-  /**
-   * Black Pudding
-   */
-  private blackPudding() {
-    const black = creatureFactory.create({
-      monster: MonsterEnum.BlackPudding,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.black",
-      files: [
-        "BDPUDDBL", // Black Pudding
-        ATWEAKS_CREATURES.SplitBlackPudding,
-      ],
-      newFiles: [
-        {
-          files: [ATWEAKS_CREATURES.SplitBlackPudding],
-          copyFromExisting: "BDPUDDBL",
-        },
-      ],
-      data: {
-        level1: 10,
-        thac0: 11,
-        strength: 16,
-        dexterity: 5,
-        constitution: 16,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 1,
-        ac: 6,
-        apr: 1,
-        xpv: 2000,
-        alignment: "NEUTRAL",
-        morale: 12,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        animation: "BLACK_PUDDING",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    this.createSplit({
-      id: Ids.BlackPuddingSplit,
-      description: "monster.slime.ability.split.puddingDesc",
-      resource: ATWEAKS_CREATURES.SplitBlackPudding,
-      visualEffect: "BDGOOYAA",
-      withTriggers: true,
-    });
-    black.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["HELMNOAN", "RING95", "BDPUDDBL"],
-      removeScripts: ["BDPUDDBL"],
-      scriptLocation: "General",
-      memorizedSpells: [
-        { file: this.spell(Ids.BlackPuddingSplit).file, memorizedCount: 1 },
-      ],
-    });
-    black.addTrait({
-      // 5e: Damage Immunities: Lightning, Slashing
-      immunities: ["acid", "cold", "poison"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.ElectricityResistanceModifier,
-          value: 90,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    // TODO: In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative −1 penalty to the AC it offers.
-    // The armor is destroyed if the penalty reduces its AC to 10.
-    this.createPseudopod(black, 0, 0, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 3,
-        diceSize: 8,
-      },
-    ]);
-    black.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.BlackPuddingSplit)],
-    });
-    black.setAdjustments([
-      {
-        files: [ATWEAKS_CREATURES.SplitBlackPudding],
-        data: {
-          hp: 50, // a little less than half hp since it splits after taking some damage
-          xpv: 1000,
-        },
-        additionalData: {
-          removeMemorizedSpells: true,
-        },
-      },
-    ]);
-    return black;
-  }
-
-  /**
-   * White Pudding
-   */
-  private whitePudding() {
-    const white = creatureFactory.create({
-      monster: MonsterEnum.WhitePudding,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.white",
-      files: [
-        "AC#FPWP2", // White Blob
-        "AC#FPWPU", // White Blob
-        ATWEAKS_CREATURES.SplitWhitePudding,
-      ],
-      newFiles: [
-        {
-          files: [ATWEAKS_CREATURES.SplitWhitePudding],
-          copyFromExisting: "AC#FPWPU",
-        },
-      ],
-      data: {
-        level1: 9,
-        thac0: 11,
-        strength: 16,
-        dexterity: 5,
-        constitution: 16,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 1,
-        ac: 8,
-        apr: 1,
-        xpv: 1400,
-        alignment: "NEUTRAL",
-        morale: 12,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        animation: "GRAY_OOZE",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    this.createSplit({
-      id: Ids.WhitePuddingSplit,
-      description: "monster.slime.ability.split.puddingDesc",
-      resource: ATWEAKS_CREATURES.SplitWhitePudding,
-      visualEffect: "BDGOOYAA",
-      withTriggers: true,
-    });
-    white.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["IMMUNE1", "RING95", "AC#FPWPU"],
-      memorizedSpells: [
-        { file: this.spell(Ids.WhitePuddingSplit).file, memorizedCount: 1 },
-      ],
-    });
-    white.addTrait({
-      // 5e: Damage Immunities: Lightning, Slashing
-      immunities: ["acid", "cold", "poison"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.ElectricityResistanceModifier,
-          value: 90,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createPseudopod(white, 0, 0, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 7,
-        diceSize: 4,
-      },
-    ]);
-    white.setBehavior({
-      restHeal: true,
-      abilities: [this.ability(Ids.WhitePuddingSplit)],
-    });
-    white.setAdjustments([
-      {
-        files: [ATWEAKS_CREATURES.SplitWhitePudding],
-        data: {
-          hp: 45, // a little less than half hp since it splits after taking some damage
-          xpv: 700,
-        },
-        additionalData: {
-          removeMemorizedSpells: true,
-        },
-      },
-    ]);
-    return white;
-  }
-
-  /**
-   * Mustard Jelly
-   */
-  private mustardJelly() {
-    const mustard = creatureFactory.create({
-      monster: MonsterEnum.MustardJelly,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.mustard",
-      files: [
-        "BDJELLMU", // Mustard Jelly
-        "BPJLMU01", // Mustard Jelly
-        "JELLMU", // Mustard Jelly
-        "JELLMUL", // Mustard Jelly
-        "JELLMUSU", // Mustard Jelly
-        "JELLYMU", // Mustard Jelly
-        "PLYJELL1", // Mustard Jelly
-        ATWEAKS_CREATURES.SplitMustardJelly,
-      ],
-      newFiles: [
-        {
-          files: [ATWEAKS_CREATURES.SplitMustardJelly],
-          copyFromExisting: "JELLMU",
-        },
-      ],
-      data: {
-        level1: 7,
-        bonusHp: 14,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 4,
-        apr: 1,
-        xpv: 4000,
-        alignment: "NEUTRAL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "MUSTARD_JELLY",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    this.createSplit({
-      id: Ids.MustardJellySplit,
-      description: "monster.slime.ability.split.mustardDesc",
-      resource: ATWEAKS_CREATURES.SplitMustardJelly,
-      visualEffect: "TRGOOYAA",
-      withTriggers: false,
-    });
-    mustard.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeItems: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
-      memorizedSpells: [
-        { file: this.spell(Ids.MustardJellySplit).file, memorizedCount: 1 },
-        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-      ],
-    });
-    mustard.addTrait({
-      immunities: [
-        "lightning",
-        "normalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
-      // 5e: Immunity to magic damage
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 10,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createPseudopod(mustard, 2, 4, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 3,
-        diceSize: 4,
-      },
-    ]);
-    mustard.setBehavior({
-      restHeal: true,
-      abilities: [
-        this.ability(Ids.MustardJellySplit),
-        this.ability(Ids.ToxicVapors),
-      ],
-    });
-    mustard.setAdjustments([
-      { files: ["JELLMUSU"], summon: true },
-      { files: ["PLYJELL1"], additionalData: { scriptLocation: "None" } },
-      {
-        files: [ATWEAKS_CREATURES.SplitMustardJelly],
-        data: {
-          hp: 56,
-          xpv: 2000,
-          movement: 18,
-        },
-        additionalData: {
-          removeMemorizedSpells: [this.spell(Ids.MustardJellySplit).file],
-        },
-      },
-    ]);
-    return mustard;
-  }
-
-  /**
-   * Fission Slime
-   */
-  private fissionSlime() {
-    const fission = creatureFactory.create({
-      monster: MonsterEnum.FissionSlime,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.fission",
-      files: ["JELLSPA", "BPSLFS01", "BPSLFS02"],
-      data: {
-        level1: 12,
-        bonusHp: 14,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 4,
-        apr: 1,
-        xpv: 5000,
-        alignment: "NEUTRAL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "MUSTARD_JELLY",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    fission.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
-      scriptLocation: "Race",
-      memorizedSpells: [
-        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-      ],
-    });
-    fission.addTrait({
-      immunities: [
-        "lightning",
-        "normalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
-      // 5e: Immunity to magic damage
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 10,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
-    });
-    this.createPseudopod(fission, 3, 6, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 3,
-        diceSize: 6,
-      },
-    ]);
-    fission.setBehavior({
-      restHeal: true,
-      // no split ability since it is handled by existing scripts
-      // fission slime is not an official monster, so no rule to follow
-      abilities: [this.ability(Ids.ToxicVapors)],
-    });
-    return fission;
-  }
-
-  /**
-   * Gray Ooze
-   */
-  private grayOoze() {
-    const gray = creatureFactory.create({
-      monster: MonsterEnum.GrayOoze,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.gray",
-      files: [
-        "BPJLGR01", // Gray Ooze
-        "JELLGR", // Gray Ooze
-      ],
-      data: {
-        level1: 3,
-        bonusHp: 3,
-        thac0: 17,
-        strength: 12,
-        dexterity: 6,
-        constitution: 16,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 2,
-        ac: 8,
-        apr: 1,
-        xpv: 270,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        gender: "NIETHER",
-        size: "Large",
-      },
-    });
-    gray.setAdditionalData({
-      movement: { value: 1 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "OOZEGR1", "DW#OOZEG"],
-    });
-    // 5e:
-    // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
-    // The ooze’s acidic touch deals 16 points of damage per round to wooden or metal objects, but the ooze must remain in contact with the object for 1 full round to deal this damage.
-    // Constrict (Ex): A gray ooze deals automatic slam and acid damage with a successful grapple check. The opponent’s clothing and armor take a –4 penalty on Reflex saves against the acid.
-    // Improved Grab (Ex): To use this ability, a gray ooze must hit with its slam attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity. If it wins the grapple check, it establishes a hold and can constrict.
-    gray.addTrait({
-      // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage.
-      // Note that weapons striking a gray ooze may corrode and break.
-      immunities: ["magic", "fire", "cold"],
-    });
-    this.createPseudopod(gray, 0, 0, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 2,
-        diceSize: 8,
-      },
-    ]);
-    gray.setBehavior({
-      restHeal: true,
-    });
-    return gray;
-  }
-
-  /**
-   * Green Slime
-   */
-  private greenSlime() {
-    const green = creatureFactory.create({
-      monster: MonsterEnum.GreenSlime,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.green",
-      files: [
-        "JELLGRSU", // Green Slime
-        "JELLYGR", // Green Slime
-        "JELLYGR2", // Green Slime
-        "X#JELLY", // Green Slime
-        "X#SLIME", // Green Slime
-      ],
-      data: {
-        level1: 2,
-        thac0: 19,
-        strength: 4,
-        dexterity: 12,
-        constitution: 8,
-        intelligence: 1,
-        wisdom: 3,
-        charisma: 1,
-        ac: 9,
-        apr: 1,
-        xpv: 65,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREEN_SLIME",
-        gender: "NIETHER",
-        size: "Small",
-      },
-    });
-    green.setAdditionalData({
-      movement: { value: 0 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLGR1", "JELLGRSU"],
-    });
-    green.addTrait({
-      // The horrid growth can be scraped off quickly, cut away, frozen, or burned.
-      // A cure disease spell kills green slime, but other attacks, including weapons and spells, have no effect.
-      immunities: ["magic", "physicalDamage"],
-    });
-    // Green slime attaches itself to living flesh and in 1-4 melee rounds turns the creature into green slime (no resurrection possible).
-    // 5e: Pseudopod. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) acid damage.
-    this.createPseudopod(green, 0, 0, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 1,
-        diceSize: 4,
-      },
-    ]);
-    green.setBehavior({
-      restHeal: true,
-    });
-    green.setAdjustments([
-      {
-        files: ["JELLGRSU"],
-        summon: true,
-        additionalData: { scriptLocation: "None" },
-      },
-      {
-        files: ["X#JELLY", "X#SLIME"],
-        additionalData: { scriptLocation: "None" },
-      },
-    ]);
-    return green;
-  }
-
-  /**
-   * Ochre Jelly
-   */
-  private ochreJelly() {
-    const ochre = creatureFactory.create({
-      monster: MonsterEnum.OchreJelly,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.ochre",
-      files: [
-        "BDJELLOC", // Ochre Jelly
-        "BDSHJELL", // Ochre Jelly
-        "BPJLOC01", // Ochre Jelly
-        "JELLOC", // Ochre Jelly
-        "JELLYCO", // Ochre Jelly
-      ],
-      data: {
-        level1: 6,
-        thac0: 15,
-        strength: 15,
-        dexterity: 6,
-        constitution: 14,
-        intelligence: 1,
-        wisdom: 6,
-        charisma: 1,
-        ac: 8,
-        apr: 1,
-        xpv: 270,
-        alignment: "NEUTRAL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "OCRE_JELLY",
-        gender: "NIETHER",
-        size: "Medium",
-      },
-    });
-    ochre.setAdditionalData({
-      movement: { value: 3 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLOC1", "DW#JELOC"],
-    });
-    ochre.addTrait({
-      immunities: ["lightning"],
-      // 5e: Damage Resistances: Acid. Damage Immunities: Slashing
-    });
-    this.createPseudopod(ochre, 0, 0, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 1,
-        diceSize: 10,
-        amount: 2,
-      },
-    ]);
-    ochre.setBehavior({
-      restHeal: true,
-    });
-    return ochre;
-  }
-
-  /**
-   * Olive Slime Creature
-   */
-  private oliveSlimeCreature() {
-    const olive = creatureFactory.create({
-      monster: MonsterEnum.OliveSlimeCreature,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.olive",
-      files: [
-        "SCHLUM", // Schlumpsha the Sewer King. Note: is an olive slime, was a former mage that appears to have transformed itself into a slime.
-      ],
-      data: {
-        level1: 12,
-        bonusHp: 2,
-        strength: 15,
-        dexterity: 10,
-        constitution: 21,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
-        ac: 9,
-        apr: 1,
-        xpv: 2500,
-        alignment: "NEUTRAL",
-        morale: 9,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "OLIVE_SLIME",
-        gender: "NIETHER",
-        animation: "SLIME_OLIVE",
-        size: "Large",
-      },
-    });
-    olive.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["ooze"],
-      removeItems: ["SCHLUM1", "DW#SCHLU", "RING95", "IMMUNE1"],
-      removeScripts: ["SCHLUM"],
-    });
-    olive.addTrait({
-      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
-      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
-      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
-      immunities: ["lightning", "entangle", "normalWeapons"],
-    });
-    this.createPseudopod(olive, 2, 4, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 2,
-        diceSize: 4,
-      },
-    ]);
-    olive.setBehavior({
-      dialog: ["SCHLUMPSA"],
-      restHeal: true,
-    });
-    return olive;
-  }
-
-  /**
-   * Slithering Tracker
-   */
-  private slitheringTracker() {
-    const tracker = creatureFactory.create({
-      monster: MonsterEnum.SlitheringTracker,
-      family: MonsterFamilyEnum.Slime,
-      name: "monster.slime.name.slitheringTracker",
-      files: [
-        "AC#FPSLT", // Slithering Tracker
-      ],
-      data: {
-        level1: 5,
-        thac0: 15,
-        strength: 14,
-        dexterity: 8,
-        constitution: 18,
-        intelligence: 9,
-        wisdom: 7,
-        charisma: 2,
-        ac: 5,
-        apr: 1,
-        xpv: 975,
-        alignment: "NEUTRAL",
-        morale: 15,
-        general: "MONSTER",
-        race: "SLIME",
-        class: "GREY_OOZE",
-        gender: "NIETHER",
-        size: "Small",
-      },
-    });
-    tracker.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "AC#FPSL2", "AC#FPSLT"],
-    });
-    tracker.addTrait({
-      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
-      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
-      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
-      immunities: ["lightning", "entangle", "normalWeapons"],
-    });
-    this.createPseudopod(tracker, 1, 6, [
-      {
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Acid,
-        diceThrown: 4,
-        diceSize: 6,
-      },
-      ...effectFactory.paralyze({
-        duration: 60,
-        lightingEffect: LightingEffectEnum.MushroomGray,
-      }),
-    ]);
-    tracker.setBehavior({
-      restHeal: true,
-    });
-    return tracker;
-  }
-
-  createPseudopod(
-    creature: Creature,
-    diceThrown: number,
-    diceSize: number,
-    effects?: Effect[]
-  ) {
-    return creature.addWeapon({
+class Slime extends Creature {
+  createPseudopod(diceThrown: number, diceSize: number, effects?: Effect[]) {
+    return this.addWeapon({
       weapon: {
         stringRef: "monster.slime.weapon.pseudopod",
         icon: MonsterItemIconEnum.Jelly,
@@ -788,7 +75,7 @@ class SlimeFamily extends CreatureFamily {
   /**
    * Split
    */
-  private createSplit({
+  createSplit({
     id,
     description,
     resource,
@@ -862,6 +149,697 @@ class SlimeFamily extends CreatureFamily {
       triggers: withTriggers ? triggers : [],
     };
   }
+}
+
+class SlimeFamily extends CreatureFamily<Slime> {
+  constructor() {
+    super(MonsterFamilyEnum.Slime);
+    this.createToxicVapors();
+    this.addCreature(this.blackPudding());
+    this.addCreature(this.whitePudding());
+    this.addCreature(this.mustardJelly());
+    this.addCreature(this.fissionSlime());
+    this.addCreature(this.grayOoze());
+    this.addCreature(this.greenSlime());
+    this.addCreature(this.ochreJelly());
+    this.addCreature(this.oliveSlimeCreature());
+    this.addCreature(this.slitheringTracker());
+  }
+
+  createCreature(id: MonsterEnum): Slime {
+    return new Slime(id);
+  }
+
+  /**
+   * Black Pudding
+   */
+  private blackPudding() {
+    const black = this.create({
+      monster: MonsterEnum.BlackPudding,
+      name: "monster.slime.name.black",
+      files: [
+        "BDPUDDBL", // Black Pudding
+        ATWEAKS_CREATURES.SplitBlackPudding,
+      ],
+      newFiles: [
+        {
+          files: [ATWEAKS_CREATURES.SplitBlackPudding],
+          copyFromExisting: "BDPUDDBL",
+        },
+      ],
+      data: {
+        level1: 10,
+        thac0: 11,
+        strength: 16,
+        dexterity: 5,
+        constitution: 16,
+        intelligence: 1,
+        wisdom: 6,
+        charisma: 1,
+        ac: 6,
+        apr: 1,
+        xpv: 2000,
+        alignment: "NEUTRAL",
+        morale: 12,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "GREY_OOZE",
+        animation: "BLACK_PUDDING",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    black.createSplit({
+      id: Ids.BlackPuddingSplit,
+      description: "monster.slime.ability.split.puddingDesc",
+      resource: ATWEAKS_CREATURES.SplitBlackPudding,
+      visualEffect: "BDGOOYAA",
+      withTriggers: true,
+    });
+    black.setAdditionalData({
+      movement: { value: 6 },
+      immunities: ["ooze"],
+      removeEffects: true,
+      removeItems: ["HELMNOAN", "RING95", "BDPUDDBL"],
+      removeScripts: ["BDPUDDBL"],
+      scriptLocation: "General",
+    });
+    black.addTrait({
+      // 5e: Damage Immunities: Lightning, Slashing
+      immunities: ["acid", "cold", "poison"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ElectricityResistanceModifier,
+          value: 90,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    // TODO: In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative −1 penalty to the AC it offers.
+    // The armor is destroyed if the penalty reduces its AC to 10.
+    black.createPseudopod(0, 0, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 3,
+        diceSize: 8,
+      },
+    ]);
+    black.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.BlackPuddingSplit)],
+    });
+    black.setAdjustments([
+      {
+        files: [ATWEAKS_CREATURES.SplitBlackPudding],
+        data: {
+          hp: 50, // a little less than half hp since it splits after taking some damage
+          xpv: 1000,
+        },
+        additionalData: {
+          removeMemorizedSpells: true,
+        },
+      },
+    ]);
+    return black;
+  }
+
+  /**
+   * White Pudding
+   */
+  private whitePudding() {
+    const white = this.create({
+      monster: MonsterEnum.WhitePudding,
+      name: "monster.slime.name.white",
+      files: [
+        "AC#FPWP2", // White Blob
+        "AC#FPWPU", // White Blob
+        ATWEAKS_CREATURES.SplitWhitePudding,
+      ],
+      newFiles: [
+        {
+          files: [ATWEAKS_CREATURES.SplitWhitePudding],
+          copyFromExisting: "AC#FPWPU",
+        },
+      ],
+      data: {
+        level1: 9,
+        thac0: 11,
+        strength: 16,
+        dexterity: 5,
+        constitution: 16,
+        intelligence: 1,
+        wisdom: 6,
+        charisma: 1,
+        ac: 8,
+        apr: 1,
+        xpv: 1400,
+        alignment: "NEUTRAL",
+        morale: 12,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "GREY_OOZE",
+        animation: "GRAY_OOZE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    white.createSplit({
+      id: Ids.WhitePuddingSplit,
+      description: "monster.slime.ability.split.puddingDesc",
+      resource: ATWEAKS_CREATURES.SplitWhitePudding,
+      visualEffect: "BDGOOYAA",
+      withTriggers: true,
+    });
+    white.setAdditionalData({
+      movement: { value: 9 },
+      immunities: ["ooze"],
+      removeEffects: true,
+      removeItems: ["IMMUNE1", "RING95", "AC#FPWPU"],
+    });
+    white.addTrait({
+      // 5e: Damage Immunities: Lightning, Slashing
+      immunities: ["acid", "cold", "poison"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.ElectricityResistanceModifier,
+          value: 90,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    white.createPseudopod(0, 0, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 7,
+        diceSize: 4,
+      },
+    ]);
+    white.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.WhitePuddingSplit)],
+    });
+    white.setAdjustments([
+      {
+        files: [ATWEAKS_CREATURES.SplitWhitePudding],
+        data: {
+          hp: 45, // a little less than half hp since it splits after taking some damage
+          xpv: 700,
+        },
+        additionalData: {
+          removeMemorizedSpells: true,
+        },
+      },
+    ]);
+    return white;
+  }
+
+  /**
+   * Mustard Jelly
+   */
+  private mustardJelly() {
+    const mustard = this.create({
+      monster: MonsterEnum.MustardJelly,
+      name: "monster.slime.name.mustard",
+      files: [
+        "BDJELLMU", // Mustard Jelly
+        "BPJLMU01", // Mustard Jelly
+        "JELLMU", // Mustard Jelly
+        "JELLMUL", // Mustard Jelly
+        "JELLMUSU", // Mustard Jelly
+        "JELLYMU", // Mustard Jelly
+        "PLYJELL1", // Mustard Jelly
+        ATWEAKS_CREATURES.SplitMustardJelly,
+      ],
+      newFiles: [
+        {
+          files: [ATWEAKS_CREATURES.SplitMustardJelly],
+          copyFromExisting: "JELLMU",
+        },
+      ],
+      data: {
+        level1: 7,
+        bonusHp: 14,
+        strength: 15,
+        dexterity: 10,
+        constitution: 21,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 10,
+        ac: 4,
+        apr: 1,
+        xpv: 4000,
+        alignment: "NEUTRAL",
+        morale: 14,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "MUSTARD_JELLY",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    mustard.createSplit({
+      id: Ids.MustardJellySplit,
+      description: "monster.slime.ability.split.mustardDesc",
+      resource: ATWEAKS_CREATURES.SplitMustardJelly,
+      visualEffect: "TRGOOYAA",
+      withTriggers: false,
+    });
+    mustard.setAdditionalData({
+      movement: { value: 9 },
+      immunities: ["ooze"],
+      removeItems: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
+      memorizedSpells: [
+        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
+      ],
+    });
+    mustard.addTrait({
+      immunities: [
+        "lightning",
+        "nonMagicalWeapons",
+        "magicMissile",
+        "coldResistance",
+      ],
+      // 5e: Immunity to magic damage
+      effects: [
+        {
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          value: 10,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    mustard.createPseudopod(2, 4, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 3,
+        diceSize: 4,
+      },
+    ]);
+    mustard.setBehavior({
+      restHeal: true,
+      abilities: [
+        this.ability(Ids.MustardJellySplit),
+        this.ability(Ids.ToxicVapors),
+      ],
+    });
+    mustard.setAdjustments([
+      { files: ["JELLMUSU"], summon: true },
+      { files: ["PLYJELL1"], additionalData: { scriptLocation: "None" } },
+      {
+        files: [ATWEAKS_CREATURES.SplitMustardJelly],
+        data: {
+          hp: 56,
+          xpv: 2000,
+          movement: 18,
+        },
+        additionalData: {
+          removeMemorizedSpells: [this.spell(Ids.MustardJellySplit).file],
+        },
+      },
+    ]);
+    return mustard;
+  }
+
+  /**
+   * Fission Slime
+   */
+  private fissionSlime() {
+    const fission = this.create({
+      monster: MonsterEnum.FissionSlime,
+      name: "monster.slime.name.fission",
+      files: ["JELLSPA", "BPSLFS01", "BPSLFS02"],
+      data: {
+        level1: 12,
+        bonusHp: 14,
+        strength: 15,
+        dexterity: 10,
+        constitution: 21,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 10,
+        ac: 4,
+        apr: 1,
+        xpv: 5000,
+        alignment: "NEUTRAL",
+        morale: 14,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "MUSTARD_JELLY",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    fission.setAdditionalData({
+      movement: { value: 9 },
+      immunities: ["ooze"],
+      removeEffects: true,
+      removeItems: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
+      scriptLocation: "Race",
+      memorizedSpells: [
+        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
+      ],
+    });
+    fission.addTrait({
+      immunities: [
+        "lightning",
+        "nonMagicalWeapons",
+        "magicMissile",
+        "coldResistance",
+      ],
+      // 5e: Immunity to magic damage
+      effects: [
+        {
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          value: 10,
+          type: EffectStatisticModifierEnum.Set,
+        },
+      ],
+    });
+    fission.createPseudopod(3, 6, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 3,
+        diceSize: 6,
+      },
+    ]);
+    fission.setBehavior({
+      restHeal: true,
+      // no split ability since it is handled by existing scripts
+      // fission slime is not an official monster, so no rule to follow
+      abilities: [this.ability(Ids.ToxicVapors)],
+    });
+    return fission;
+  }
+
+  /**
+   * Gray Ooze
+   */
+  private grayOoze() {
+    const gray = this.create({
+      monster: MonsterEnum.GrayOoze,
+      name: "monster.slime.name.gray",
+      files: [
+        "BPJLGR01", // Gray Ooze
+        "JELLGR", // Gray Ooze
+      ],
+      data: {
+        level1: 3,
+        bonusHp: 3,
+        thac0: 17,
+        strength: 12,
+        dexterity: 6,
+        constitution: 16,
+        intelligence: 1,
+        wisdom: 6,
+        charisma: 2,
+        ac: 8,
+        apr: 1,
+        xpv: 270,
+        alignment: "NEUTRAL",
+        morale: 10,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "GREY_OOZE",
+        gender: "NIETHER",
+        size: "Large",
+      },
+    });
+    gray.setAdditionalData({
+      movement: { value: 1 },
+      immunities: ["ooze"],
+      removeItems: ["RING95", "OOZEGR1", "DW#OOZEG"],
+    });
+    // 5e:
+    // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
+    // The ooze’s acidic touch deals 16 points of damage per round to wooden or metal objects, but the ooze must remain in contact with the object for 1 full round to deal this damage.
+    // Constrict (Ex): A gray ooze deals automatic slam and acid damage with a successful grapple check. The opponent’s clothing and armor take a –4 penalty on Reflex saves against the acid.
+    // Improved Grab (Ex): To use this ability, a gray ooze must hit with its slam attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity. If it wins the grapple check, it establishes a hold and can constrict.
+    gray.addTrait({
+      // Spells have no effect on this monster, nor do fire- or cold-based attacks. Lightning and blows from weapons cause full damage.
+      // Note that weapons striking a gray ooze may corrode and break.
+      immunities: ["magic", "fire", "cold"],
+    });
+    gray.createPseudopod(0, 0, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 2,
+        diceSize: 8,
+      },
+    ]);
+    gray.setBehavior({
+      restHeal: true,
+    });
+    return gray;
+  }
+
+  /**
+   * Green Slime
+   */
+  private greenSlime() {
+    const green = this.create({
+      monster: MonsterEnum.GreenSlime,
+      name: "monster.slime.name.green",
+      files: [
+        "JELLGRSU", // Green Slime
+        "JELLYGR", // Green Slime
+        "JELLYGR2", // Green Slime
+        "X#JELLY", // Green Slime
+        "X#SLIME", // Green Slime
+      ],
+      data: {
+        level1: 2,
+        thac0: 19,
+        strength: 4,
+        dexterity: 12,
+        constitution: 8,
+        intelligence: 1,
+        wisdom: 3,
+        charisma: 1,
+        ac: 9,
+        apr: 1,
+        xpv: 65,
+        alignment: "NEUTRAL",
+        morale: 10,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "GREEN_SLIME",
+        gender: "NIETHER",
+        size: "Small",
+      },
+    });
+    green.setAdditionalData({
+      movement: { value: 0 },
+      immunities: ["ooze"],
+      removeItems: ["RING95", "JELLGR1", "JELLGRSU"],
+    });
+    green.addTrait({
+      // The horrid growth can be scraped off quickly, cut away, frozen, or burned.
+      // A cure disease spell kills green slime, but other attacks, including weapons and spells, have no effect.
+      immunities: ["magic", "physicalDamage"],
+    });
+    // Green slime attaches itself to living flesh and in 1-4 melee rounds turns the creature into green slime (no resurrection possible).
+    // 5e: Pseudopod. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) acid damage.
+    green.createPseudopod(0, 0, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 1,
+        diceSize: 4,
+      },
+    ]);
+    green.setBehavior({
+      restHeal: true,
+    });
+    green.setAdjustments([
+      {
+        files: ["JELLGRSU"],
+        summon: true,
+        additionalData: { scriptLocation: "None" },
+      },
+      {
+        files: ["X#JELLY", "X#SLIME"],
+        additionalData: { scriptLocation: "None" },
+      },
+    ]);
+    return green;
+  }
+
+  /**
+   * Ochre Jelly
+   */
+  private ochreJelly() {
+    const ochre = this.create({
+      monster: MonsterEnum.OchreJelly,
+      name: "monster.slime.name.ochre",
+      files: [
+        "BDJELLOC", // Ochre Jelly
+        "BDSHJELL", // Ochre Jelly
+        "BPJLOC01", // Ochre Jelly
+        "JELLOC", // Ochre Jelly
+        "JELLYCO", // Ochre Jelly
+      ],
+      data: {
+        level1: 6,
+        thac0: 15,
+        strength: 15,
+        dexterity: 6,
+        constitution: 14,
+        intelligence: 1,
+        wisdom: 6,
+        charisma: 1,
+        ac: 8,
+        apr: 1,
+        xpv: 270,
+        alignment: "NEUTRAL",
+        morale: 10,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "OCRE_JELLY",
+        gender: "NIETHER",
+        size: "Medium",
+      },
+    });
+    ochre.setAdditionalData({
+      movement: { value: 3 },
+      immunities: ["ooze"],
+      removeItems: ["RING95", "JELLOC1", "DW#JELOC"],
+    });
+    ochre.addTrait({
+      immunities: ["lightning"],
+      // 5e: Damage Resistances: Acid. Damage Immunities: Slashing
+    });
+    ochre.createPseudopod(0, 0, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 1,
+        diceSize: 10,
+        amount: 2,
+      },
+    ]);
+    ochre.setBehavior({
+      restHeal: true,
+    });
+    return ochre;
+  }
+
+  /**
+   * Olive Slime Creature
+   */
+  private oliveSlimeCreature() {
+    const olive = this.create({
+      monster: MonsterEnum.OliveSlimeCreature,
+      name: "monster.slime.name.olive",
+      files: [
+        "SCHLUM", // Schlumpsha the Sewer King. Note: is an olive slime, was a former mage that appears to have transformed itself into a slime.
+      ],
+      data: {
+        level1: 12,
+        bonusHp: 2,
+        strength: 15,
+        dexterity: 10,
+        constitution: 21,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 10,
+        ac: 9,
+        apr: 1,
+        xpv: 2500,
+        alignment: "NEUTRAL",
+        morale: 9,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "OLIVE_SLIME",
+        gender: "NIETHER",
+        animation: "SLIME_OLIVE",
+        size: "Large",
+      },
+    });
+    olive.setAdditionalData({
+      movement: { value: 6 },
+      immunities: ["ooze"],
+      removeItems: ["SCHLUM1", "DW#SCHLU", "RING95", "IMMUNE1"],
+      removeScripts: ["SCHLUM"],
+    });
+    olive.addTrait({
+      // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
+      // Spells that affect plants will also affect them, although the effects of entangle are minimal at best.
+      // No other attacks, by weapons, lightning, or spells that affect the mind will kill a slime creature.
+      immunities: ["lightning", "entangle", "nonMagicalWeapons"],
+    });
+    olive.createPseudopod(2, 4, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 2,
+        diceSize: 4,
+      },
+    ]);
+    olive.setBehavior({
+      dialog: ["SCHLUMPSA"],
+      restHeal: true,
+    });
+    return olive;
+  }
+
+  /**
+   * Slithering Tracker
+   */
+  private slitheringTracker() {
+    const tracker = this.create({
+      monster: MonsterEnum.SlitheringTracker,
+      name: "monster.slime.name.slitheringTracker",
+      files: [
+        "AC#FPSLT", // Slithering Tracker
+      ],
+      data: {
+        level1: 5,
+        thac0: 15,
+        strength: 14,
+        dexterity: 8,
+        constitution: 18,
+        intelligence: 9,
+        wisdom: 7,
+        charisma: 2,
+        ac: 5,
+        apr: 1,
+        xpv: 975,
+        alignment: "NEUTRAL",
+        morale: 15,
+        general: "MONSTER",
+        race: "SLIME",
+        class: "GREY_OOZE",
+        gender: "NIETHER",
+        size: "Small",
+      },
+    });
+    tracker.setAdditionalData({
+      movement: { value: 12 },
+      immunities: ["ooze"],
+      removeItems: ["RING95", "AC#FPSL2", "AC#FPSLT"],
+    });
+    tracker.createPseudopod(1, 6, [
+      {
+        opcode: EffectTypeEnum.Damage,
+        type: EffectDamageTypeEnum.Acid,
+        diceThrown: 4,
+        diceSize: 6,
+      },
+      ...effectFactory.paralyze({
+        duration: 60,
+        lightingEffect: LightingEffectEnum.MushroomGray,
+      }),
+    ]);
+    tracker.setBehavior({
+      restHeal: true,
+    });
+    return tracker;
+  }
 
   /**
    * Toxic vapors
@@ -879,6 +857,7 @@ class SlimeFamily extends CreatureFamily {
       id: Ids.ToxicVapors,
       name: "monster.slime.ability.toxicVapors.name",
       description: "monster.slime.ability.toxicVapors.description",
+      groups: ["poison"],
       icon: SPELLS.StinkingCloud,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 1 },

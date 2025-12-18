@@ -209,7 +209,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
@@ -579,7 +579,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
@@ -826,7 +826,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()
@@ -1187,7 +1187,7 @@ THEN
 		SetInterrupt(TRUE)
 END
 
-// Dryad Dire Charm
+// Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	ActionListEmpty()

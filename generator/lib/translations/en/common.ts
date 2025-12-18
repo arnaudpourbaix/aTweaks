@@ -45,7 +45,8 @@ export default {
     deathSpell: "Immune to death spell",
     mindSpells:
       "Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)",
-    normalWeapons: "Immune to normal weapons",
+    nonMagicalWeapons: "Immune to non-magical weapons",
+    nonSilverNonMagicalWeapons: "Immune to non-magical and non-silver weapons",
     plusOneWeapons: "Immune to all weapons of +1 or less enchantment",
     plusTwoWeapons: "Immune to all weapons of +2 or less enchantment",
     backstab: "Immune to backstab",
@@ -133,7 +134,7 @@ Infravision.`,
       name: "Incorporeal",
       desc: `An incorporeal creature has no physical body.
 Immune to backstab and critical hits
-Immune to all nonmagical attacks.
+Immune to all non-magical attacks.
 Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
 Attacks pass through armor (+4 THAC0).`,
@@ -169,8 +170,28 @@ Darkvision out to 60 feet.`,
     },
     ghostVisual1: "Ghosly appearance",
   },
+  poison: {
+    name: "Type {{type}} poison",
+    description: `{{damage}}{{save}}{{saveDamage}}`,
+    damage: "Poison damage: {{damage}} over {{duration}}",
+    death: "Death within {{duration}}",
+    saveDamage: `; {{damage}} damage if the saving throw is successful`,
+    typeO: `Paralytic poisons leave the character unable to move for {{duration}}.`,
+    typeP: `Weaken the character for {{duration}}.
+All of the character's ability scores are reduced by half during this time.
+All appropriate adjustments to attack rolls, damage, Armor Class, etc., from the lowered ability scores are applied during the course of the illness.
+In addition, the character moves at one-half his normal movement rate.
+Finally, the character cannot heal by normal or magical means until the poison is neutralized or the duration of the debilitation is elapsed.`,
+    typeQ: `Fall into a coma for {{duration}}`,
+    typeR: `The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for {{duration}}`,
+    typeS: `This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
+Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.`,
+  },
   creatureTraits: "traits",
   kitAbilities: {
     enrage: "Enrage",
+  },
+  potion: {
+    use: "*quaffs a potion*",
   },
 };

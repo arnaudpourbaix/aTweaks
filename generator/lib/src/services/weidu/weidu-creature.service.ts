@@ -40,7 +40,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.patchCreatures(lines, 0, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     utils.writeFile(
-      `${utils.getFamilyFolder(creature.family)}/${creature.monster}.tpa`,
+      `${utils.getFamilyFolder(creature.family)}/${creature.id}.tpa`,
       content
     );
     weiduFamilyService.createOrUpdateMainFile(creature.family, creature);
@@ -292,6 +292,8 @@ class WeiduCreatureService extends AbstractWeiduService {
         [] as string[]
       );
       const slots = itemService.getItemSlots(item.slot);
+      if (!slots.length)
+        throw new Error(`No slot defined for equipped item ${item.file}`);
       const isWeapon = slots.every((slot) =>
         WEAPON_SLOTS.some((s) => s.slot === slot)
       );
@@ -657,7 +659,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       ? `${utils.getFamilyFolder(creature.family)}/`
       : "";
     const ext = options.ext === true ? ".baf" : "";
-    const name = `ja#m${creature.monster}${options.summon ? "su" : ""}${ext}`;
+    const name = `ja#m${creature.id}${options.summon ? "su" : ""}${ext}`;
     return `${path}${name}`;
   }
 }
