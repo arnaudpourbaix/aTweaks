@@ -1,4 +1,3 @@
-import { pbkdf2 } from "crypto";
 import { MonsterItemIconEnum } from "../../config/item";
 import { SPELLS } from "../../config/spell-names";
 import effectFactory from "../../src/factories/effect.factory";
@@ -36,11 +35,10 @@ import {
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../../src/model/spell-item/spell-protection";
+import creatureService from "../../src/services/creature.service";
 import poisonService from "../../src/services/effects/poison.service";
 import { TranslationKey } from "../../translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "../monster";
-import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
-import creatureService from "../../src/services/creature.service";
 
 enum Ids {
   InvisibleWebTangle,
@@ -417,7 +415,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
       files: [
         "BDSPIDGA", // Gargantuan Spider
       ],
-      logging: true,
       data: {
         level1: 8,
         bonusHp: 8,
@@ -471,7 +468,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const ghostwalk = this.create({
       monster: MonsterEnum.GhostwalkSpider,
       name: "monster.spider.name.ghostwalk",
-      logging: true,
       files: [
         "C#LCCENS", // Ghostly Spirit
         "L#ULCSP", // Ssimkh, the Ghost-Feeding Spider
@@ -575,7 +571,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const giant = this.create({
       monster: MonsterEnum.GiantSpider,
       name: "monster.spider.name.giant",
-      logging: true,
       files: [
         "BDHELP01", // Giant Spider
         "BDSPIDGI", // Giant Spider
@@ -634,7 +629,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const hairy = this.create({
       monster: MonsterEnum.HairySpider,
       name: "monster.spider.name.hairy",
-      logging: true,
       files: [
         "BDSPIDER", // Small Spider
         "SPIDSM01", // Small Spider
@@ -701,7 +695,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const huge = this.create({
       monster: MonsterEnum.HugeSpider,
       name: "monster.spider.name.huge",
-      logging: true,
       files: [
         "BDSPIDHU", // Huge Spider
         "SPIDHU", // Huge Spider
@@ -751,7 +744,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const hunting = this.create({
       monster: MonsterEnum.HuntingSpider,
       name: "monster.spider.name.hunting",
-      logging: true,
       files: [
         "D5SMSPID", // Beetle Swarm (Faiths and Powers)
       ],
@@ -804,7 +796,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const phase = this.create({
       monster: MonsterEnum.PhaseSpider,
       name: "monster.spider.name.phase",
-      logging: true,
       files: [
         "SPIDPH", // Phase Spider
         "SPIDPHSU", // Phase Spider
@@ -889,7 +880,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const sword = this.create({
       monster: MonsterEnum.SwordSpider,
       name: "monster.spider.name.sword",
-      logging: true,
       files: [
         "BDHELP03", // Sword Spider
         "BDSPID7L", // Seven-Legged Spider
@@ -981,7 +971,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const vortex = this.create({
       monster: MonsterEnum.VortexSpider,
       name: "monster.spider.name.vortex",
-      logging: true,
       files: [
         "SMSPID02", // Vortex Spider
       ],
@@ -1050,7 +1039,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
     const wraith = this.create({
       monster: MonsterEnum.WraithSpider,
       name: "monster.spider.name.wraith",
-      logging: true,
       files: [
         "C#Q04009", // Wraith Spider
         "SPIDWR", // Wraith Spider

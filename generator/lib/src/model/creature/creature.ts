@@ -1,11 +1,18 @@
+import { MonsterItemIconEnum } from "../../../config/item";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
 import grabService from "../../services/effects/grab.service";
+import translationService from "../../services/translation.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { ClassIdentifier } from "../ids/class";
 import { Effect, EffectFile } from "../spell-item/effect";
+import {
+  EffectTargetEnum,
+  EffectTimingEnum,
+  ItemCategoryEnum,
+} from "../spell-item/effect.enums";
 import {
   Item,
   PartialItem,
@@ -21,7 +28,7 @@ import { CreatureAttack, PartialCreatureAttack } from "./attack";
 import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
 import { CreatureData } from "./data";
 import { CreatureGrabConfig } from "./grab";
-import { ItemSlot } from "./item";
+import { ItemSlot, JEWEL_SLOTS } from "./item";
 
 export interface BaseCreature {
   files: string[];
@@ -128,11 +135,35 @@ export class Creature extends AbstractCreature implements BaseCreature {
   }
 
   addTrait(payload: {
+    id?: number;
     description?: StringReference;
     immunities?: ImmunityName[];
     effects?: Effect[];
   }): Item {
-    return creatureFactory.addTrait(this, payload);
+    const stringRef = translationService.addCustomTranslation([
+      `${translationService.from(this.name)} ${translationService.from(
+        "common.creatureTraits"
+      )}`,
+    ]);
+    const item = this.addItem({
+      id: payload.id,
+      stringRef,
+      description: payload.description,
+      effects: (payload.effects ?? []).map(
+        (e) =>
+          ({
+            ...e,
+            timing: EffectTimingEnum.InstantWhileEquipped,
+            target: EffectTargetEnum.Self,
+          } as Effect)
+      ),
+      immunities: payload.immunities,
+      equippedSlot: JEWEL_SLOTS,
+      category: ItemCategoryEnum.Rings,
+      icon: MonsterItemIconEnum.Traits,
+    });
+    item.trait = true;
+    return item;
   }
 
   validate(family: MonsterFamilyEnum) {

@@ -106,44 +106,6 @@ class CreatureFactory {
     });
   }
 
-  addTrait(
-    cre: Creature,
-    {
-      description,
-      immunities,
-      effects,
-    }: {
-      description?: StringReference;
-      immunities?: ImmunityName[];
-      effects?: Effect[];
-    }
-  ): Item {
-    this.checkValidation(cre);
-    const stringRef = translationService.addCustomTranslation([
-      `${translationService.from(cre.name)} ${translationService.from(
-        "common.creatureTraits"
-      )}`,
-    ]);
-    const item = cre.addItem({
-      stringRef,
-      description,
-      effects: (effects ?? []).map(
-        (e) =>
-          ({
-            ...e,
-            timing: EffectTimingEnum.InstantWhileEquipped,
-            target: EffectTargetEnum.Self,
-          } as Effect)
-      ),
-      immunities,
-      equippedSlot: JEWEL_SLOTS,
-      category: ItemCategoryEnum.Rings,
-      icon: MonsterItemIconEnum.Traits,
-    });
-    item.trait = true;
-    return item;
-  }
-
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
     this.checkValidation(cre);
     const current: CreatureBehavior =

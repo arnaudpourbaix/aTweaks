@@ -188,13 +188,6 @@ THEN
 		Continue()
 END
 
-    // defaultWeaponSlot: "SLOT_WEAPON",
-    // targetStatusWeaponSlot: [
-    //   { status: ["Sleep"], slot: "SLOT_WEAPON1" },
-    //   { status: ["Grabbed"], slot: "SLOT_WEAPON2" },
-    // ],
-
-
 IF
 	CheckSpellState(LastSeenBy(Myself),JA_GRAPPLED)
 	!General(LastSeenBy(Myself),WEAPON)
@@ -319,7 +312,6 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
-		SelectWeaponAbility(SLOT_WEAPON,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 

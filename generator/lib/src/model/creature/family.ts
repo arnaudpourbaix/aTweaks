@@ -35,6 +35,7 @@ export abstract class CreatureFamily<T extends Creature>
     name: TranslationKey;
     monster: MonsterEnum;
     files: string[];
+    notEnforceFiles?: string[];
     newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
     autoGenerate?: CreatureAutoGenerate;
@@ -46,6 +47,7 @@ export abstract class CreatureFamily<T extends Creature>
     cre.family = this.id;
     cre.files = p.files;
     cre.newFiles = p.newFiles ?? [];
+    cre.notEnforceFiles = p.notEnforceFiles ?? [];
     cre.data = p.data;
     cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
     cre.logging = p.logging ?? false;
@@ -62,6 +64,7 @@ export abstract class CreatureFamily<T extends Creature>
     from: T;
     monster: MonsterEnum;
     files: string[];
+    notEnforceFiles?: string[];
     newFiles?: CreatureNewFile[];
   }): T {
     const cre = structuredClone(p.from);
@@ -70,6 +73,7 @@ export abstract class CreatureFamily<T extends Creature>
     cre.name = p.name;
     cre.files = p.files;
     cre.newFiles = p.newFiles ?? [];
+    cre.notEnforceFiles = p.notEnforceFiles ?? [];
     cre.items = [];
     cre.spells = [];
     cre.effectFiles = [];

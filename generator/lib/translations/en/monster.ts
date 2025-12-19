@@ -305,4 +305,33 @@ Characters in contact with the webs must also make a saving throw vs. paralyzati
       },
     },
   },
+  wolf: {
+    name: {
+      wolf: "Wolf",
+      dire: "Dire Wolf",
+      dread: "Dread Wolf",
+      vampiric: "Vampiric Wolf",
+      winter: "Winter Wolf",
+      worg: "Worg",
+    },
+    weapon: { jaws: "Jaws" },
+    trait: {
+      dread: `Dread wolf regenerates like a troll, regaining 3 hp per round after the first combat round.
+Only acid, fire, or total dismemberment will inflict permanent damage.
+It is immune to charm, hold, and cold-based spells. Electricity-based spells cause only half damage.
+Total dismemberment occurs when the creature's negative hit-point total is equal to or greater than its full positive hit-point total.
+However, the creature continues to fight until it reaches -10 hp. It then goes down until it regenerates to at least 0 hit points.`,
+    },
+    ability: {
+      dreadWolfDownState: {
+        name: "Dread Wolf down state",
+        description:
+          "A down dread wolf is immune to everything but fire and acid.",
+      },
+      streamOfFrost: {
+        name: "Stream of frost",
+        description: `Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.`,
+      },
+    },
+  },
 };

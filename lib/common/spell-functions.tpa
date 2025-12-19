@@ -5,9 +5,9 @@ DEFINE_ACTION_FUNCTION create_spell_callWoodlandBeeings BEGIN
 	COPY_EXISTING ~SPPR410.SPL~  ~override/SPPR410.SPL~
 		LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END
 	COPY_EXISTING ~SPPR410.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10264)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10276)
 		WRITE_ASCII 0x3a ~SPPR410C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10265)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10277)
 		LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~JA_NOT_OUTDOOR_CHECK~ RET row col END
 		PATCH_IF row != "-1" BEGIN
 			LPF ADD_EFFECT INT_VAR opcode=324 target=1 global=1 parameter2=row duration=1 probability1=100 STR_VAR resource="SPPR410" END
@@ -38,7 +38,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 	CREATE SPL "SPWI105"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI105.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10266)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10278)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 1024
 		WRITE_SHORT 0x1c 1
@@ -48,7 +48,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		WRITE_BYTE 0x27 11
 		WRITE_LONG 0x34 1
 		WRITE_ASCII 0x3a ~SPWI105C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10267)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10279)
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
@@ -531,7 +531,7 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 	CREATE SPL "SPWI402"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI402.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10268)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10280)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 2048
 		WRITE_SHORT 0x1c 1
@@ -541,7 +541,7 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 		WRITE_BYTE 0x27 13
 		WRITE_LONG 0x34 4
 		WRITE_ASCII 0x3a ~SPWI402C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10269)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10281)
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402C" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END

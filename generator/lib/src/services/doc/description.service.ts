@@ -5,6 +5,7 @@ import {
   CharmCreatureEffect,
   CurrentHPbonusEffect,
   DamageEffect,
+  DiseaseEffect,
   Effect,
   IdsEffect,
   InvisibilityEffect,
@@ -19,6 +20,7 @@ import {
 import {
   AbilityDamageTypeEnum,
   CharmTypeEnum,
+  DiseaseTypeEnum,
   EffectBonusToEnum,
   EffectDamageTypeEnum,
   EffectModifierTypeEnum,
@@ -195,6 +197,8 @@ class DescriptionService {
       results.push(...this.getDamage(effect));
     } else if (effect.opcode === EffectTypeEnum.Poison) {
       results.push(...this.getPoison(effect));
+    } else if (effect.opcode === EffectTypeEnum.Disease) {
+      results.push(...this.getDisease(effect));
     } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
       results.push(...this.getArmorClassBonus(effect));
     } else if (effect.opcode === EffectTypeEnum.Paralyze) {
@@ -290,13 +294,30 @@ class DescriptionService {
 
   getDuration(duration?: number): string {
     if (!duration) return "";
-    const rounds = Math.round(duration / 6);
-    const roundsModulo = duration % 6;
-    const turns = Math.round(duration / 60);
-    const turnsModulo = duration % 60;
-    if (turnsModulo === 0 || turns > 1) return `${turns} turns`;
-    else if (roundsModulo === 0 || rounds > 1) return `${rounds} rounds`;
-    return `${duration} seconds`;
+    // 1 round = 6 seconds
+    // 1 turn	= 10 rounds
+    // 1 game hour	= 5 turns
+    // 1 game day	= 120 turns
+    const roundDuration = 6;
+    const turnDuration = 60;
+    const hourDuration = 300;
+    const time = [
+      { single: "day", plural: "days", duration: hourDuration * 24 },
+      { single: "hour", plural: "hours", duration: hourDuration },
+      { single: "turn", plural: "turns", duration: turnDuration },
+      { single: "round", plural: "rounds", duration: roundDuration },
+      { single: "second", plural: "seconds", duration: 1 },
+    ];
+    for (const t of time) {
+      const count = Math.round(duration / t.duration);
+      const modulo = duration % t.duration;
+      if (count === 1 && modulo === 0) {
+        return t.single;
+      } else if (count > 1 && modulo === 0) {
+        return `${count} ${t.plural}`;
+      }
+    }
+    throw new Error(`unknown duration ${duration}`);
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
@@ -502,6 +523,61 @@ class DescriptionService {
         : "";
     results.push(
       `${level}Poison: deals ${text} for ${this.getDuration(
+        effect.duration
+      )}${this.getSaveText(effect)}.`
+    );
+    return results;
+  }
+
+  private getDisease(effect: DiseaseEffect): string[] {
+    let text = "";
+    switch (effect.type) {
+      case DiseaseTypeEnum.OneDamagePerSecond:
+        text = `one damage per second`;
+        break;
+      case DiseaseTypeEnum.OneDamagePerAmountSeconds:
+        text = `one damage every ${this.getDuration(effect.amount)}`;
+        break;
+      case DiseaseTypeEnum.AmoundDamagePerRound:
+        text = `${effect.amount} damage per round`;
+        break;
+      case DiseaseTypeEnum.AmountDamagePerSecond:
+        text = `${effect.amount} damage per second`;
+        break;
+      case DiseaseTypeEnum.Contagion:
+        text = ``;
+        break;
+      case DiseaseTypeEnum.MoldTouchDecrement:
+        text = ``;
+        break;
+      case DiseaseTypeEnum.MoldTouchSingle:
+        text = ``;
+        break;
+      case DiseaseTypeEnum.ReduceCharismaByAmount:
+        text = `-${effect.amount} charisma`;
+        break;
+      case DiseaseTypeEnum.ReduceConstitutionByAmount:
+        text = `-${effect.amount} constitution`;
+        break;
+      case DiseaseTypeEnum.ReduceDexterityByAmount:
+        text = `-${effect.amount} dexterity`;
+        break;
+      case DiseaseTypeEnum.ReduceIntelligenceByAmount:
+        text = `-${effect.amount} intelligence`;
+        break;
+      case DiseaseTypeEnum.ReduceStrengthByAmount:
+        text = `-${effect.amount} strength`;
+        break;
+      case DiseaseTypeEnum.ReduceWisdomByAmount:
+        text = `-${effect.amount} wisdom`;
+        break;
+      case DiseaseTypeEnum.SlowEffect:
+        text = `slow`;
+        break;
+    }
+    const results: string[] = [];
+    results.push(
+      `Disease: ${text} for ${this.getDuration(
         effect.duration
       )}${this.getSaveText(effect)}.`
     );
