@@ -111,6 +111,7 @@ class Wolf extends Creature {
           ],
         },
       },
+      grab: p.grab,
     });
   }
 
@@ -431,6 +432,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const trait = dread.addTrait({
       id: Ids.DreadWolfTrait,
       description: "monster.wolf.trait.dread",
+      equippedSlot: "LRING",
       immunities: [
         "coldSpells",
         "cold",
@@ -455,6 +457,8 @@ class WolfFamily extends CreatureFamily<Wolf> {
         conditionTarget: CastSpellOnConditionTargetEnum.Myself,
         condition: "HPLT(Myself,Extra)",
         special: 6,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+        target: EffectTargetEnum.Self,
         resource: this.spell(Ids.DreadWolfDownState).file,
       })
     );
@@ -494,6 +498,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
         level1: 6,
         bonusHp: 4,
         strength: 18,
+        thac0: 10,
         dexterity: 13,
         constitution: 9,
         intelligence: 6,

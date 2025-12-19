@@ -1,16 +1,11 @@
 import deepmerge from "deepmerge";
 import figureSet from "figures";
-import { MonsterItemIconEnum } from "../../config/item";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
 import {
   ADDITIONAL_DATA_DEFAULT,
   ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
   CreatureAdditionalData,
 } from "../model/creature/additional-data";
-import {
-  CreatureAttackAction,
-  PartialCreatureAttack,
-} from "../model/creature/attack";
 import {
   BEHAVIOR_DEFAULT,
   CreatureBehavior,
@@ -22,19 +17,10 @@ import {
   PartialCreatureAdjustment,
 } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
-import { ItemSlot, JEWEL_SLOTS } from "../model/creature/item";
-import { ImmunityName } from "../model/final/immunity";
-import { StringReference } from "../model/final/stringref";
-import { Effect } from "../model/spell-item/effect";
-import {
-  EffectTargetEnum,
-  EffectTimingEnum,
-  ItemCategoryEnum,
-} from "../model/spell-item/effect.enums";
+import { ItemSlot } from "../model/creature/item";
 import { Item } from "../model/spell-item/spell-item";
 import { AtLeast, WithRequired } from "../model/utility-types";
 import abilityService from "../services/baf/ability.service";
-import targetService from "../services/baf/target.service";
 import creatureService from "../services/creature.service";
 import descriptionService from "../services/doc/description.service";
 import immunityService from "../services/effects/immunity.service";
@@ -126,29 +112,6 @@ class CreatureFactory {
     cre.behavior.dialog.push(...(behavior.dialog ?? []));
   }
 
-  setAttack(cre: Creature, attack: PartialCreatureAttack) {
-    this.checkValidation(cre);
-    const defaultAction: CreatureAttackAction = {
-      disableInterrupt: false,
-      responseWeight: 100,
-    };
-    const actions: CreatureAttackAction[] = (attack.actions ?? []).map((a) => ({
-      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
-      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
-      weaponSlot: a.weaponSlot,
-    }));
-
-    cre.attack = {
-      actions: actions.length ? actions : [defaultAction],
-      melee: attack.melee ?? true,
-      ranged: attack.ranged ?? false,
-      dualWielding: false,
-      targetPriorities: targetService.getTargetPriorities(cre, attack),
-      targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
-      selectWeapons: attack.selectWeapons ?? [],
-    };
-  }
-
   checkValidation(creature: Creature) {
     if (creature.valid !== undefined)
       throw new Error(
@@ -192,7 +155,7 @@ class CreatureFactory {
     }
     if (!creature.attack) {
       console.log(`${figureSet.warning} No attack defined, using defaults`);
-      this.setAttack(creature, {});
+      creature.setAttack({});
     }
     if (!creature.behavior) {
       console.log(`${figureSet.warning} No behavior defined, using defaults`);

@@ -312,6 +312,7 @@ IF
 	See(LastSeenBy(Myself))
 THEN
 	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON0,0)
 		AttackOneRound(LastSeenBy(Myself))
 END
 

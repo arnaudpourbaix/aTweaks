@@ -2,6 +2,7 @@ import { MonsterItemIconEnum } from "../../../config/item";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
+import targetService from "../../services/baf/target.service";
 import grabService from "../../services/effects/grab.service";
 import translationService from "../../services/translation.service";
 import { ImmunityName } from "../final/immunity";
@@ -24,7 +25,11 @@ import {
 import { AtLeast, PartialBy, WithRequired } from "../utility-types";
 import { AbstractCreature } from "./abstract-creature";
 import { CreatureAdditionalData } from "./additional-data";
-import { CreatureAttack, PartialCreatureAttack } from "./attack";
+import {
+  CreatureAttack,
+  CreatureAttackAction,
+  PartialCreatureAttack,
+} from "./attack";
 import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
 import { CreatureData } from "./data";
 import { CreatureGrabConfig } from "./grab";
@@ -87,7 +92,25 @@ export class Creature extends AbstractCreature implements BaseCreature {
   }
 
   setAttack(attack: PartialCreatureAttack) {
-    creatureFactory.setAttack(this, attack);
+    const defaultAction: CreatureAttackAction = {
+      disableInterrupt: false,
+      responseWeight: 100,
+    };
+    const actions: CreatureAttackAction[] = (attack.actions ?? []).map((a) => ({
+      responseWeight: a.responseWeight ?? defaultAction.responseWeight,
+      disableInterrupt: a.disableInterrupt ?? defaultAction.disableInterrupt,
+      weaponSlot: a.weaponSlot,
+    }));
+    this.attack = {
+      actions: actions.length ? actions : [defaultAction],
+      melee: attack.melee ?? true,
+      ranged: attack.ranged ?? false,
+      dualWielding: false,
+      targetPriorities: targetService.getTargetPriorities(this, attack),
+      targetStatusWeaponSlot: attack.targetStatusWeaponSlot ?? [],
+      defaultWeaponSlot: attack.defaultWeaponSlot,
+      selectWeapons: attack.selectWeapons ?? [],
+    };
   }
 
   setAdjustments(adjustments: PartialCreatureAdjustment[]) {
@@ -139,6 +162,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
     description?: StringReference;
     immunities?: ImmunityName[];
     effects?: Effect[];
+    equippedSlot?: ItemSlot;
   }): Item {
     const stringRef = translationService.addCustomTranslation([
       `${translationService.from(this.name)} ${translationService.from(
@@ -158,7 +182,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
           } as Effect)
       ),
       immunities: payload.immunities,
-      equippedSlot: JEWEL_SLOTS,
+      equippedSlot: payload.equippedSlot ? [payload.equippedSlot] : JEWEL_SLOTS,
       category: ItemCategoryEnum.Rings,
       icon: MonsterItemIconEnum.Traits,
     });

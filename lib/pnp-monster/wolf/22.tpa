@@ -53,7 +53,7 @@ COPY_EXISTING ~ja#1m22.itm~ ~override~
 	END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=98 target=1 global=1 parameter1=2 parameter2=3 timing=2 probability1=100 special=87 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=208 target=1 global=1 parameter1=1 timing=2 probability1=100 END
-	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=232 target=2 global=1 parameter2=19 probability1=100 special=6 STR_VAR resource="ja#1m22" END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=232 target=1 global=1 parameter2=19 timing=2 probability1=100 special=6 STR_VAR resource="ja#1m22" END
 	LPF coldSpells_immunity END
 	LPF cold_immunity END
 	LPF lightningResistance_resistance END
@@ -134,7 +134,7 @@ BEGIN
 			REMOVE_CRE_ITEM ~TROLLIMM~
 			REMOVE_CRE_ITEM ~BDWOLFD1~
 			REMOVE_CRE_ITEM ~BDWOLFDR~
-			ADD_CRE_ITEM ~ja#1m22~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#1m22~ #0 #0 #0 ~UNDROPPABLE~ ~LRING~ 
 			REPLACE_CRE_ITEM ~ja#3m22~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			LPF clear_proficiencies END
 			LPF patchCreature

@@ -1259,15 +1259,13 @@ Speed Factor: 3
 Enchantment: 1
 Range: 1 feet
 Disease: one damage every hour for 50 days (saves vs poison/death).~
-@10583 = ~Vampiric Wolf traits~
-@10584 = ~Jaws
-
-Melee damage: 8 (Piercing)
-Speed Factor: 3
-Enchantment: 2
-Range: 1 feet
-Heal: 9
-Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
+@10583 = ~Grab and hold your target for 5 rounds.
+Grabbed creature will suffer these effects:
+- can not move
+- loose armor class from dexterity bonus
+- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
+- -4 THAC0~
+@10584 = ~Vampiric Wolf traits~
 @10585 = ~Jaws
 
 Melee damage: 8 (Piercing)
@@ -1278,6 +1276,22 @@ Heal: 9
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
 @10586 = ~Jaws
 
+Melee damage: 8 (Piercing)
+Speed Factor: 3
+Enchantment: 2
+Range: 1 feet
+Heal: 9
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)
+
+Cast spell Grab (saves vs poison/death at -1):
+Grab and hold your target for 5 rounds.
+Grabbed creature will suffer these effects:
+- can not move
+- loose armor class from dexterity bonus
+- -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
+- -4 THAC0~
+@10587 = ~Jaws
+
 THAC0: +30
 Melee damage: 8 (Piercing)
 Speed Factor: 3
@@ -1285,21 +1299,21 @@ Enchantment: 2
 Range: 1 feet
 Heal: 9
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
-@10587 = ~Immune to sleep
+@10588 = ~Immune to sleep
 Immune to charm
 Immune to hold
 Immune to non-magical and non-silver weapons~
-@10588 = ~Winter Wolf traits~
-@10589 = ~Immune to cold
+@10589 = ~Winter Wolf traits~
+@10590 = ~Immune to cold
 Fire Resistance: -10%
 Magical Fire Resistance: -10%~
-@10590 = ~Jaws
+@10591 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10591 = ~Jaws
+@10592 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
