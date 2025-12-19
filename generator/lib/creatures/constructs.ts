@@ -1,6 +1,6 @@
-import { SPELLS } from "../../config/spell-names";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+import { SPELLS } from "../config/spell-names";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   ColorEnum,
@@ -12,9 +12,9 @@ import {
   ItemCategoryEnum,
   ItemFlagEnum,
   ProficiencyTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   Helmet,

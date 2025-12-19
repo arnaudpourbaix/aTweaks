@@ -1,15 +1,15 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
-import { ItemSlot } from "../../src/model/creature/item";
-import { ImmunityName } from "../../src/model/final/immunity";
+import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
+import { ItemSlot } from "../src/model/creature/item";
+import { ImmunityName } from "../src/model/final/immunity";
 import {
   BaseEffect,
   DamageEffect,
   Effect,
-} from "../../src/model/spell-item/effect";
+} from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectCastSpellTypeEnum,
@@ -28,17 +28,17 @@ import {
   PortraitIconEnum,
   SaveTypeEnum,
   WingBuffetDirectionEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import {
   SpellProtection,
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../../src/model/spell-item/spell-protection";
-import creatureService from "../../src/services/creature.service";
-import poisonService from "../../src/services/effects/poison.service";
-import { TranslationKey } from "../../translations/i18n";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/spell-protection";
+import creatureService from "../src/services/creature.service";
+import poisonService from "../src/services/effects/poison.service";
+import { TranslationKey } from "../translations/i18n";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   InvisibleWebTangle,

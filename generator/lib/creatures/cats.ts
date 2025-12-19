@@ -1,6 +1,6 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+import { MonsterItemIconEnum } from "../config/item";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   CastSpellOnConditionTargetEnum,
@@ -12,11 +12,11 @@ import {
   ItemAbilityFlagEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import creatureService from "../../src/services/creature.service";
-import { hunterCustomCode } from "../common";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import creatureService from "../src/services/creature.service";
+import { hunterCustomCode } from "./common";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 class Cat extends Creature {
   createPaws(

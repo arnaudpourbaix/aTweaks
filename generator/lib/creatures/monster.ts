@@ -13,6 +13,7 @@ export enum MonsterFamilyEnum {
   Slime = 12,
   Spider = 13,
   Wolf = 14,
+  Minotaur = 15,
 }
 
 export enum MonsterEnum {
@@ -83,4 +84,5 @@ export enum MonsterEnum {
   HuntingSpider = 65,
   DoomSayer = 66,
   SnowGolem = 67,
+  Minotaur = 68,
 }

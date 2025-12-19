@@ -1,9 +1,9 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import { createConeOfCold } from "../../spells/cone_of_cold";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import { createConeOfCold } from "../spells/cone_of_cold";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   EffectDamageTypeEnum,
@@ -20,15 +20,15 @@ import {
   LightingEffectTargetEnum,
   PortraitIconEnum,
   SaveTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import {
   AreaProjectileEnum,
   ParticleColorEnum,
-} from "../../src/model/spell-item/projectile";
-import { WeaponCastSpell } from "../../src/model/spell-item/spell-item";
-import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/projectile";
+import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
+import { StringRefUtils } from "../src/services/utils/string-ref.utils";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   Charge,

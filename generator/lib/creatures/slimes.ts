@@ -1,19 +1,12 @@
-import {
-  ATWEAKS_CREATURES,
-  VAPOR_IMMUNE_CREATURES,
-} from "../../config/creatures";
-import { MonsterItemIconEnum } from "../../config/item";
-import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
-import effectFactory from "../../src/factories/effect.factory";
-import { RawCreatureAbility } from "../../src/model/creature/ability";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
-import { Triggers } from "../../src/model/script/triggers";
-import {
-  BaseEffect,
-  Effect,
-  IdsEffect,
-} from "../../src/model/spell-item/effect";
+import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
+import { MonsterItemIconEnum } from "../config/item";
+import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import effectFactory from "../src/factories/effect.factory";
+import { RawCreatureAbility } from "../src/model/creature/ability";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
+import { Triggers } from "../src/model/script/triggers";
+import { BaseEffect, Effect, IdsEffect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   AttackModifierTypeEnum,
@@ -33,14 +26,14 @@ import {
   PortraitIconEnum,
   SaveTypeEnum,
   SummonCreatureModeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import {
   AreaProjectileEnum,
   ParticleColorEnum,
-} from "../../src/model/spell-item/projectile";
-import { TranslationKey } from "../../translations/i18n";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/projectile";
+import { TranslationKey } from "../translations/i18n";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   BlackPuddingSplit,

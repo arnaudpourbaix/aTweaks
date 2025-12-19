@@ -1,8 +1,8 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
-import { BaseEffect } from "../../src/model/spell-item/effect";
+import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
+import { BaseEffect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectColorLocationEnum,
@@ -15,10 +15,10 @@ import {
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTypeEnum,
   TranslucencyTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { WeaponCastSpell } from "../../src/model/spell-item/spell-item";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   Blink,

@@ -1,3 +1,4 @@
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/common.tpa"
 // Generated file (don't edit)
 
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/17.tpa" // Wolf

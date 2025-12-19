@@ -1,9 +1,9 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import CreatureFactory from "../../src/factories/creature.factory";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+import { MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import CreatureFactory from "../src/factories/creature.factory";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   EffectDamageTypeEnum,
@@ -14,9 +14,9 @@ import {
   ItemAbilityTypeEnum,
   PortraitIconEnum,
   SaveTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   Stream,

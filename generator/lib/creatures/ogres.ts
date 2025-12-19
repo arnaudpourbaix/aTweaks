@@ -1,11 +1,11 @@
-import { SPELL_STATES } from "../../config/ability-presets";
-import { ITEMS, MonsterItemIconEnum } from "../../config/item";
-import { SPELLS } from "../../config/spell-names";
-import { createConeOfCold } from "../../spells/cone_of_cold";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
-import { QUICK_SLOTS } from "../../src/model/creature/item";
+import { SPELL_STATES } from "../config/ability-presets";
+import { ITEMS, MonsterItemIconEnum } from "../config/item";
+import { SPELLS } from "../config/spell-names";
+import { createConeOfCold } from "../spells/cone_of_cold";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
+import { QUICK_SLOTS } from "../src/model/creature/item";
 import {
   AbilityDamageTypeEnum,
   AnimationChangeTypeEnum,
@@ -30,10 +30,10 @@ import {
   ProficiencyTypeEnum,
   RegenerationTypeEnum,
   SpellTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { AreaProjectileEnum } from "../../src/model/spell-item/projectile";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { AreaProjectileEnum } from "../src/model/spell-item/projectile";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   ConeOfCold,

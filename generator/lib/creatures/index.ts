@@ -1,18 +1,18 @@
 import { Family } from "../src/model/creature/family";
-import { createAnkhegs } from "./ankheg/ankheg";
-import { createBasilisks } from "./basilisks/basilisk";
-import { createBears } from "./bears/bear";
-import { createCats } from "./cats/cats";
-import { createConstructs } from "./constructs/constructs";
-import { createCarrionCrawlers } from "./crawler/crawler";
-import { createDogs } from "./dogs/dog";
-import { createFeys } from "./feys/feys";
-import { createGolems } from "./golems/golem";
-import { createOgres } from "./ogres/ogre";
-import { createPlants } from "./plants/plant";
-import { createSlimes } from "./slimes/slime";
-import { createSpiders } from "./spiders/spider";
-import { createWolves } from "./wolves/wolves";
+import { createAnkhegs } from "./ankhegs";
+import { createBasilisks } from "./basilisks";
+import { createBears } from "./bears";
+import { createCats } from "./cats";
+import { createConstructs } from "./constructs";
+import { createCarrionCrawlers } from "./crawlers";
+import { createDogs } from "./dogs";
+import { createFeys } from "./feys";
+import { createGolems } from "./golems";
+import { createOgres } from "./ogres";
+import { createPlants } from "./plants";
+import { createSlimes } from "./slimes";
+import { createSpiders } from "./spiders";
+import { createWolves } from "./wolves";
 
 export const familyFactories: (() => Family)[] = [
   createAnkhegs,

@@ -1,13 +1,13 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+import { MonsterItemIconEnum } from "../config/item";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityFlagEnum,
   ItemAbilityTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 class Crawler extends Creature {}
 

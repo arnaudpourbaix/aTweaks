@@ -1,10 +1,10 @@
-import { MonsterItemIconEnum } from "../../config/item";
-import effectFactory from "../../src/factories/effect.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
-import { CreatureGrabConfig } from "../../src/model/creature/grab";
-import { ItemSlot } from "../../src/model/creature/item";
-import { Effect } from "../../src/model/spell-item/effect";
+import { MonsterItemIconEnum } from "../config/item";
+import effectFactory from "../src/factories/effect.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
+import { CreatureGrabConfig } from "../src/model/creature/grab";
+import { ItemSlot } from "../src/model/creature/item";
+import { Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   CastSpellOnConditionTargetEnum,
@@ -25,12 +25,12 @@ import {
   PortraitIconEnum,
   RegenerationTypeEnum,
   SaveTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
-import { AreaProjectileEnum } from "../../src/model/spell-item/projectile";
-import creatureService from "../../src/services/creature.service";
-import effectService from "../../src/services/effects/effect.service";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { AreaProjectileEnum } from "../src/model/spell-item/projectile";
+import creatureService from "../src/services/creature.service";
+import effectService from "../src/services/effects/effect.service";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   DreadWolfDownState,
@@ -368,6 +368,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
     dire.setAdditionalData({
       movement: { value: 18 },
       removeItems: ["P1-8", "P2-8", "IMMUNE1", "RING95"],
+      removeScripts: ["DIREWOLF"],
     });
     dire.createJaws({
       diceThrown: 2,
@@ -498,7 +499,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
         level1: 6,
         bonusHp: 4,
         strength: 18,
-        thac0: 10,
         dexterity: 13,
         constitution: 9,
         intelligence: 6,

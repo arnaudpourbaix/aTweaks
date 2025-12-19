@@ -179,11 +179,14 @@ class UtilsService {
   }
 
   writeFile(file: string, content: string) {
+    if (!file.startsWith(State.modFolder)) {
+      file = path.join(State.modFolder, file);
+    }
     let index = file.lastIndexOf("/");
     if (index === -1) index = file.lastIndexOf("\\");
-    const folder = path.join(State.modFolder, file.substring(0, index));
+    let folder = file.substring(0, index);
     fs.mkdirSync(folder, { recursive: true });
-    fs.writeFileSync(path.join(State.modFolder, file), content);
+    fs.writeFileSync(file, content);
   }
 
   getFamilyFolder(family: MonsterFamilyEnum): string {

@@ -1,29 +1,29 @@
 import {
   DEFAULT_SPELL_PROBABILITY,
   PRESET_NAMES,
-} from "../../config/ability-presets";
+} from "../config/ability-presets";
 import {
   ATWEAKS_CREATURES,
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
-} from "../../config/creatures";
-import { GLOBAL_CONFIG } from "../../config/generate";
-import { ITEMS, MonsterItemIconEnum } from "../../config/item";
-import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
-import { BafExistingStringReference } from "../../config/stringRef";
-import { createDimensionDoor } from "../../spells/dimension_door";
-import abilityFactory from "../../src/factories/ability.factory";
-import actionFactory from "../../src/factories/action.factory";
-import effectFactory from "../../src/factories/effect.factory";
-import responseFactory from "../../src/factories/response.factory";
-import triggerFactory from "../../src/factories/trigger.factory";
-import { Creature } from "../../src/model/creature/creature";
-import { CreatureFamily } from "../../src/model/creature/family";
+} from "../config/creatures";
+import { GLOBAL_CONFIG } from "../config/generate";
+import { ITEMS, MonsterItemIconEnum } from "../config/item";
+import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { BafExistingStringReference } from "../config/stringRef";
+import { createDimensionDoor } from "../spells/dimension_door";
+import abilityFactory from "../src/factories/ability.factory";
+import actionFactory from "../src/factories/action.factory";
+import effectFactory from "../src/factories/effect.factory";
+import responseFactory from "../src/factories/response.factory";
+import triggerFactory from "../src/factories/trigger.factory";
+import { Creature } from "../src/model/creature/creature";
+import { CreatureFamily } from "../src/model/creature/family";
 import {
   AdditionalCode,
   ConditionalStatement,
-} from "../../src/model/script/script";
-import { BaseEffect, IdsEffect } from "../../src/model/spell-item/effect";
+} from "../src/model/script/script";
+import { BaseEffect, IdsEffect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   CharmTypeEnum,
@@ -51,18 +51,18 @@ import {
   SaveTypeEnum,
   SpellFlagEnum,
   SpellTypeEnum,
-} from "../../src/model/spell-item/effect.enums";
-import { EffectTypeEnum } from "../../src/model/spell-item/effect.type";
+} from "../src/model/spell-item/effect.enums";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import {
   AreaProjectileEnum,
   BamProjectileFlagsEnum,
-} from "../../src/model/spell-item/projectile";
+} from "../src/model/spell-item/projectile";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../../src/model/spell-item/spell-protection";
-import { StringRefUtils } from "../../src/services/utils/string-ref.utils";
-import { MonsterEnum, MonsterFamilyEnum } from "../monster";
+} from "../src/model/spell-item/spell-protection";
+import { StringRefUtils } from "../src/services/utils/string-ref.utils";
+import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   InnateDimensionDoor,

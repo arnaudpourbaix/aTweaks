@@ -70,6 +70,7 @@ export const GLOBAL_CONFIG = {
       "HUNTER",
       "initdlg",
       "SHOUT",
+      "TUTU_SCR",
       "WTASIGHT",
       "WDASIGHT",
       "wtrunsgt",
