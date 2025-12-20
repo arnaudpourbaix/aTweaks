@@ -14,6 +14,7 @@ import { createOgres } from "./ogres";
 import { createPlants } from "./plants";
 import { createSlimes } from "./slimes";
 import { createSpiders } from "./spiders";
+import { createUndeads } from "./undead";
 import { createWolves } from "./wolves";
 import { createWyverns } from "./wyvern";
 
@@ -35,6 +36,7 @@ export const familyFactories: (() => Family)[] = [
   createSpiders,
   createWolves,
   createWyverns,
+  createUndeads,
 ];
 
 /*

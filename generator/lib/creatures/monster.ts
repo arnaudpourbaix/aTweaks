@@ -16,6 +16,7 @@ export enum MonsterFamilyEnum {
   Minotaur = 15,
   Ettercap = 16,
   Wyvern = 17,
+  Undead = 18,
 }
 
 export enum MonsterEnum {
@@ -91,4 +92,20 @@ export enum MonsterEnum {
   Wyvern = 70,
   BabyWyvern = 71,
   GreaterWyvern = 72,
+  Banshee = 73,
+  DeathKnight = 74,
+  Ghast = 75,
+  Ghoul = 76,
+  GhoulLord = 77,
+  Mummy = 78,
+  GreaterMummy = 79,
+  Shadow = 80,
+  Skeleton = 81,
+  SkeletonWarrior = 82,
+  Spectre = 83,
+  Wight = 84,
+  Wraith = 85,
+  Zombie = 86,
+  ZombieJuju = 87,
+  ZombieSea = 88,
 }
