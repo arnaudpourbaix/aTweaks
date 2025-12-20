@@ -334,4 +334,31 @@ However, the creature continues to fight until it reaches -10 hp. It then goes d
       },
     },
   },
+  minotaur: {
+    name: {
+      minotaur: "Minotaur",
+    },
+    weapon: {
+      axe: {
+        name: "Huge Axe",
+        description: `Huge Axe
+STATISTICS:
+Damage: 1D12
+Damage type: slashing
+Weight: 15
+Speed Factor: 8
+Proficiency Type: Halberds`,
+      },
+      headbutt: {
+        name: "Headbutt",
+      },
+    },
+    ability: {
+      charge: {
+        name: "Charge",
+        description: `If a minotaur is 30 feet or more from its opponent, it can lower its head and charge against any creature that is at least 6 feet tall.
+If successful, the charge causes double head-butt damage`,
+      },
+    },
+  },
 };

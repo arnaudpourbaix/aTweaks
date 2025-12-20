@@ -420,6 +420,16 @@ DEFINE_ACTION_FUNCTION get_magicMissile_resources RET_ARRAY resources BEGIN
 	OUTER_SPRINT $resources(3) ~%res%B~
 END
 
+DEFINE_ACTION_FUNCTION get_maze_resources RET_ARRAY resources BEGIN
+	ACTION_DEFINE_ARRAY spells BEGIN
+		"SPIN774"
+		"SPWI813"
+		"BDZHADRO"
+	END
+	ACTION_DEFINE_ARRAY ids BEGIN  END
+	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END
+END
+
 DEFINE_ACTION_FUNCTION get_minorGlobeOfInvulnerability_resources RET_ARRAY resources BEGIN
 	ACTION_DEFINE_ARRAY spells BEGIN
 		"spwi406"

@@ -67,6 +67,7 @@ export type ImmunityName =
   | "magicMissile"
   | "magicDamage"
   | "magicDamageResistance"
+  | "maze"
   | "mindSpells"
   | "missileDamage"
   | "missileDamageResistance"

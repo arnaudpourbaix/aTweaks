@@ -95,7 +95,8 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/minotaur/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
 
 
@@ -199,6 +200,13 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
+
+// Minotaurs
+// BEGIN @5150 DESIGNATED 5150
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/minotaur/main.tpa"
 
 /*
 // PnP Fiends

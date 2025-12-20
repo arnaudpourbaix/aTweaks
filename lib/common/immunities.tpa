@@ -470,6 +470,14 @@ BEGIN
 	LPF infravision_trait END
 END
 
+DEFINE_PATCH_FUNCTION maze_immunity
+BEGIN
+	INNER_ACTION BEGIN
+		LAF get_maze_resources RET_ARRAY spells=resources END
+	END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="213" prevent_icons="78" spells END
+END
+
 DEFINE_PATCH_FUNCTION mindSpells_immunity
 BEGIN
 	LPF ADD_IMMUNITY_CRE_ITM_SPL STR_VAR effects="3" END

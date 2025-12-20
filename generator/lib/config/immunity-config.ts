@@ -105,6 +105,14 @@ export const IMMUNITIES: (AtLeast<
     ],
   },
   {
+    name: "maze",
+    type: "immunity",
+    stringRef: "common.immunity.maze",
+    preventEffects: [EffectTypeEnum.Maze],
+    preventIcons: [PortraitIconEnum.Maze],
+    spellGroups: ["maze"],
+  },
+  {
     name: "energyDrain",
     type: "immunity",
     stringRef: "common.immunity.energyDrain",

@@ -5,6 +5,7 @@ export default {
     bleeding: "Immune to bleeding",
     hold: "Immune to hold",
     stun: "Immune to stun",
+    maze: "Immune to maze spells",
     sleep: "Immune to sleep",
     fear: "Immune to fear and morale failure",
     charm: "Immune to charm",

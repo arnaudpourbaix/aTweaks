@@ -292,7 +292,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
         "WOLF",
         "WOLFSU",
       ],
-      logging: true,
       data: {
         level1: 3,
         bonusHp: 0,
@@ -333,7 +332,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const dire = this.create({
       monster: MonsterEnum.DireWolf,
       name: "monster.wolf.name.dire",
-      logging: true,
       files: [
         "BDWOLFDI",
         "P#WOLF02",
@@ -392,7 +390,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const dread = this.create({
       monster: MonsterEnum.DreadWolf,
       name: "monster.wolf.name.dread",
-      logging: true,
       files: [
         "BDWOLFDR",
         "D5WOLFD1",
@@ -487,7 +484,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const vampiric = this.create({
       monster: MonsterEnum.VampiricWolf,
       name: "monster.wolf.name.vampiric",
-      logging: true,
       files: [
         "BDWOLFVA",
         "P#WOLF04",
@@ -561,7 +557,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const winter = this.create({
       monster: MonsterEnum.WinterWolf,
       name: "monster.wolf.name.winter",
-      logging: true,
       files: [
         "P#WOLF01",
         "WOLFWI",
@@ -632,7 +627,6 @@ class WolfFamily extends CreatureFamily<Wolf> {
     const worg = this.create({
       monster: MonsterEnum.Worg,
       name: "monster.wolf.name.worg",
-      logging: true,
       files: ["WOLFCH", "BDWORG", "WORG", "WORGAR", "WORGSU"],
       data: {
         level1: 3,

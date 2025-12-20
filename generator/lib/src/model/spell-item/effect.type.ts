@@ -67,6 +67,7 @@ export enum EffectTypeEnum {
   MagicDamageResistanceModifier = 31,
   MakeUnselectable = 365,
   MaximumHPModifier = 18,
+  Maze = 213,
   MinimumHP = 208,
   MirrorImageEffect = 159,
   MissilesResistanceModifier = 89,

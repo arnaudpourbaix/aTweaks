@@ -474,6 +474,10 @@ export const SPELL_GROUPS: SpellGroup[] = [
     ],
   },
   {
+    name: "maze",
+    spells: ["SPIN774", "SPWI813", "BDZHADRO"],
+  },
+  {
     name: "minorGlobeOfInvulnerability",
     spells: [
       "spwi406",

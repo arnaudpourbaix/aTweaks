@@ -915,7 +915,6 @@ class OgreFamily extends CreatureFamily<Ogre> {
         },
       ],
     });
-    ogreMage.equipItem(this.item(Ids.Naginata));
     ogreMage.setBehavior({
       restHeal: true,
       usePotions: true,

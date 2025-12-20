@@ -24,6 +24,7 @@ export type SpellGroupName =
   | "insect"
   | "lightningBolt"
   | "magicMissile"
+  | "maze"
   | "minorGlobeOfInvulnerability"
   | "necromancyEffects"
   | "petrification"
