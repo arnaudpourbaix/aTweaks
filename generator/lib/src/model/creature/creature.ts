@@ -130,6 +130,15 @@ export class Creature extends AbstractCreature implements BaseCreature {
 
   override addItem(item: PartialItem): Item {
     const result = super.addItem(item);
+    if (!item.equippedSlot) return result;
+    const itemInSlot = this.additionalData.equippedItems.findIndex(
+      (i) => i.slot.length === 1 && i.slot[0] === item.equippedSlot![0]
+    );
+    if (itemInSlot !== -1) {
+      console.log(`replacing item in slot ${item.equippedSlot![0]}`);
+      this.additionalData.equippedItems.splice(itemInSlot, 1);
+    }
+
     if (item.equippedSlot) {
       this.additionalData.equippedItems.push({
         file: result.file,

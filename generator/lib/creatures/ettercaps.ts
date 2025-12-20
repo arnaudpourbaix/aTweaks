@@ -16,9 +16,11 @@ class EttercapFamily extends CreatureFamily<Ettercap> {
     super(MonsterFamilyEnum.Ettercap);
     this.addCreature(this.ettercap());
   }
+
   createCreature(id: MonsterEnum): Ettercap {
     return new Ettercap(id);
   }
+
   /**
    * Ettercap
    */

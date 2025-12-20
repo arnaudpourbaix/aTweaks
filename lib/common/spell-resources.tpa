@@ -488,6 +488,9 @@ DEFINE_ACTION_FUNCTION get_poison_resources RET_ARRAY resources BEGIN
 		"ja#2m57"
 		"ja#1m63"
 		"ja#1m60"
+		"ja#1m70"
+		"ja#1m71"
+		"ja#1m72"
 	END
 	ACTION_DEFINE_ARRAY ids BEGIN  END
 	LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END

@@ -72,8 +72,8 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 //             READ_STRREF 0x08 name
 //             // PATCH_IF class = 199 BEGIN
 //             // PATCH_IF race = 119 BEGIN
-//             PATCH_IF class = 115 OR animation = 0x7600 BEGIN
-//             // PATCH_IF race = 130 OR animation = 0x2000 BEGIN
+//             // PATCH_IF class = 115 OR animation = 0x7600 BEGIN
+//             PATCH_IF race = 118 OR animation = 0x1000 BEGIN
 //             // PATCH_IF animation = 0x7602 BEGIN
 //                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
 //             END
@@ -98,8 +98,8 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/minotaur/main.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ettercap/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // PnP monster tweaks
@@ -208,6 +208,13 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ettercap/main.tpa"
 // REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/minotaur/main.tpa"
+
+// Wyverns
+// BEGIN @5160 DESIGNATED 5160
+// GROUP @6
+// REQUIRE_PREDICATE ENGINE_IS ~bgee bg2ee~ @92
+// REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/main.tpa"
 
 /*
 // PnP Fiends

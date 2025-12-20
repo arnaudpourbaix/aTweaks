@@ -368,4 +368,13 @@ If successful, the charge causes double head-butt damage`,
     weapon: { claws: "Claws", jaws: "Jaws" },
     ability: {},
   },
+  wyvern: {
+    name: {
+      wyvern: "Wyvern",
+      baby: "Baby Wyvern",
+      greater: "Greater Wyvern",
+    },
+    weapon: { stinger: "Stinger", jaws: "Jaws" },
+    ability: {},
+  },
 };

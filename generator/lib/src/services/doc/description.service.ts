@@ -302,11 +302,11 @@ class DescriptionService {
     const turnDuration = 60;
     const hourDuration = 300;
     const time = [
-      { single: "day", plural: "days", duration: hourDuration * 24 },
-      { single: "hour", plural: "hours", duration: hourDuration },
-      { single: "turn", plural: "turns", duration: turnDuration },
-      { single: "round", plural: "rounds", duration: roundDuration },
-      { single: "second", plural: "seconds", duration: 1 },
+      { single: "a day", plural: "days", duration: hourDuration * 24 },
+      { single: "an hour", plural: "hours", duration: hourDuration },
+      { single: "a turn", plural: "turns", duration: turnDuration },
+      { single: "a round", plural: "rounds", duration: roundDuration },
+      { single: "a second", plural: "seconds", duration: 1 },
     ];
     for (const t of time) {
       const count = Math.round(duration / t.duration);

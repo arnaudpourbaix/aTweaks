@@ -23,6 +23,7 @@ export abstract class CreatureFamily<T extends Creature>
 {
   fileType: "m" | "f" = "f";
   creatures: T[];
+  logging = false;
 
   constructor(id: MonsterFamilyEnum) {
     super(id);
@@ -39,7 +40,6 @@ export abstract class CreatureFamily<T extends Creature>
     newFiles?: CreatureNewFile[];
     data: Omit<CreatureData, "movement">;
     autoGenerate?: CreatureAutoGenerate;
-    logging?: boolean;
   }): T {
     console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
     const cre = this.createCreature(p.monster);
@@ -50,7 +50,7 @@ export abstract class CreatureFamily<T extends Creature>
     cre.notEnforceFiles = p.notEnforceFiles ?? [];
     cre.data = p.data;
     cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
-    cre.logging = p.logging ?? false;
+    cre.logging = this.logging;
     if (p.autoGenerate) {
       cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
       console.log("autogenerate", cre.autoGenerate);
@@ -78,7 +78,9 @@ export abstract class CreatureFamily<T extends Creature>
     cre.spells = [];
     cre.effectFiles = [];
     cre.projectiles = [];
+    cre.adjustments = [];
     cre.valid = undefined;
+    if (p.from.attack.dualWielding) cre.data.apr++;
     console.log(
       chalk.bold(
         `\nCreating ${translationService.from(

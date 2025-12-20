@@ -15,6 +15,7 @@ import { createPlants } from "./plants";
 import { createSlimes } from "./slimes";
 import { createSpiders } from "./spiders";
 import { createWolves } from "./wolves";
+import { createWyverns } from "./wyvern";
 
 export const familyFactories: (() => Family)[] = [
   createAnkhegs,
@@ -33,6 +34,7 @@ export const familyFactories: (() => Family)[] = [
   createSlimes,
   createSpiders,
   createWolves,
+  createWyverns,
 ];
 
 /*
@@ -43,6 +45,18 @@ export const familyFactories: (() => Family)[] = [
 "NTINDFIG", // Succubus
 "KIRINH", // Kirinhale
 "AC#FPOX1", // Obliviax https://adnd2e.fandom.com/wiki/Obliviax
+
+"NTWYVERN", // Fire Wyvern
+"L#GNOWY", // Shade Wyvern
+"BDWYRML1", // Blind Albino Wyrmling
+"BDWYRMLI", // Blind Albino Wyrmling
+
+"AIRASPEC", // Air Aspect
+
+"FAMFAI25", // Fairy Dragon
+"FAMFAIR", // Fairy Dragon
+"FAMPSD", // Pseudo-dragon
+"FAMPSD25", // Pseudo-dragon
 */
 
 // Hunter class:
