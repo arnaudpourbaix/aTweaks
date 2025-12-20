@@ -14,6 +14,7 @@ export enum MonsterFamilyEnum {
   Spider = 13,
   Wolf = 14,
   Minotaur = 15,
+  Ettercap = 16,
 }
 
 export enum MonsterEnum {
@@ -85,4 +86,5 @@ export enum MonsterEnum {
   DoomSayer = 66,
   SnowGolem = 67,
   Minotaur = 68,
+  Ettercap = 69,
 }

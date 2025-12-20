@@ -37,7 +37,6 @@ class Minotaur extends Creature {
         header: {
           type: ItemAbilityTypeEnum.Melee,
           animationSwing: { backhand: 50, overhand: 50, thrust: 0 },
-          range: 2,
           diceThrown: 1,
           diceSize: 12,
           damageType: AbilityDamageTypeEnum.Slashing,

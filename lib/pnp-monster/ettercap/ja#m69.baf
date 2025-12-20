@@ -1,4 +1,4 @@
-// Gargantuan Spider
+// Ettercap
 
 // Init
 IF
@@ -28,7 +28,7 @@ IF
 		AttackedBy([GOODCUTOFF],DEFAULT)
 		SpellCastOnMe([GOODCUTOFF],0)
 		TookDamage()
-		Heard([EVILCUTOFF.0.SPIDER],99)
+		Heard([EVILCUTOFF.0.ETTERCAP],99)
 THEN
 	RESPONSE #100
 		Enemy()
@@ -67,8 +67,8 @@ END
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard([EVILCUTOFF.0.ETTERCAP],99)
+	InMyArea([EVILCUTOFF.0.ETTERCAP])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -77,8 +77,8 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard([EVILCUTOFF.0.ETTERCAP],99)
+	InMyArea([EVILCUTOFF.0.ETTERCAP])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -105,137 +105,20 @@ THEN
 		NoAction()
 END
 
-// Web Tangle
+// Handle Panic state
 IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC],6)
-	!CheckStatGT([PC],0,HELD)
-	!StateCheck([PC],STATE_STUNNED)
-	!StateCheck([PC],STATE_PANIC)
-	!StateCheck([PC],STATE_CONFUSED)
-	!StateCheck([PC],STATE_FEEBLEMINDED)
-	!StateCheck([PC],STATE_SLEEPING)
-	!StateCheck([PC],STATE_HELPLESS)
-	!General([PC],WEAPON)
-	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_REALLY_DEAD)
-	See([PC])
+	StateCheck(Myself,STATE_PANIC)
+	Range(NearestEnemyOf(Myself),10)
 THEN
 	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
+		RunAwayFromNoLeaveArea(NearestEnemyOf(Myself),15)
 END
 
 IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SecondNearest([PC]),6)
-	!CheckStatGT(SecondNearest([PC]),0,HELD)
-	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
-	!StateCheck(SecondNearest([PC]),STATE_PANIC)
-	!StateCheck(SecondNearest([PC]),STATE_CONFUSED)
-	!StateCheck(SecondNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(SecondNearest([PC]),STATE_SLEEPING)
-	!StateCheck(SecondNearest([PC]),STATE_HELPLESS)
-	!General(SecondNearest([PC]),WEAPON)
-	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
-	See(SecondNearest([PC]))
+	StateCheck(Myself,STATE_PANIC)
 THEN
 	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(ThirdNearest([PC]),6)
-	!CheckStatGT(ThirdNearest([PC]),0,HELD)
-	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
-	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
-	!StateCheck(ThirdNearest([PC]),STATE_CONFUSED)
-	!StateCheck(ThirdNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(ThirdNearest([PC]),STATE_SLEEPING)
-	!StateCheck(ThirdNearest([PC]),STATE_HELPLESS)
-	!General(ThirdNearest([PC]),WEAPON)
-	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
-	See(ThirdNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FourthNearest([PC]),6)
-	!CheckStatGT(FourthNearest([PC]),0,HELD)
-	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
-	!StateCheck(FourthNearest([PC]),STATE_PANIC)
-	!StateCheck(FourthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(FourthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(FourthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(FourthNearest([PC]),STATE_HELPLESS)
-	!General(FourthNearest([PC]),WEAPON)
-	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
-	See(FourthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FifthNearest([PC]),6)
-	!CheckStatGT(FifthNearest([PC]),0,HELD)
-	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
-	!StateCheck(FifthNearest([PC]),STATE_PANIC)
-	!StateCheck(FifthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(FifthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(FifthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(FifthNearest([PC]),STATE_HELPLESS)
-	!General(FifthNearest([PC]),WEAPON)
-	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
-	See(FifthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
-END
-
-IF
-	HaveSpellRES("ja#1m64")
-	RandomNumGT(800,240)
-	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SixthNearest([PC]),6)
-	!CheckStatGT(SixthNearest([PC]),0,HELD)
-	!StateCheck(SixthNearest([PC]),STATE_STUNNED)
-	!StateCheck(SixthNearest([PC]),STATE_PANIC)
-	!StateCheck(SixthNearest([PC]),STATE_CONFUSED)
-	!StateCheck(SixthNearest([PC]),STATE_FEEBLEMINDED)
-	!StateCheck(SixthNearest([PC]),STATE_SLEEPING)
-	!StateCheck(SixthNearest([PC]),STATE_HELPLESS)
-	!General(SixthNearest([PC]),WEAPON)
-	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
-	See(SixthNearest([PC]))
-THEN
-	RESPONSE #100
-		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m64",LastSeenBy(Myself))
+		RandomWalkContinuous()
 END
 
 // Attack HeldAndNotPoisoned enemy

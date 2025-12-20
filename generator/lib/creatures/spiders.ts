@@ -455,6 +455,9 @@ class SpiderFamily extends CreatureFamily<Spider> {
       poisonType: "Q",
       saveBonus: -2,
     });
+    gargantuan.setAttack({
+      targetPriorities: [{ status: ["HeldAndNotPoisoned"] }],
+    });
     gargantuan.setBehavior({
       abilities: [this.ability(Ids.WebTangle)],
     });
@@ -510,22 +513,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
       diceThrown: 3,
       diceSize: 10,
       slot: "WEAPON1",
-      immunities: ["incorporeal"],
-      // effects: [
-      //   { opcode: EffectTypeEnum.NoCollisionDetection, passWalls: true },
-      //   { opcode: EffectTypeEnum.ModifyCollisionBehavior },
-      // ],
-      // immunities: [
-      //   "acidResistance",
-      //   "coldResistance",
-      //   "fireResistance",
-      //   "lightningResistance",
-      //   "nonMagicalWeapons",
-      //   "hold",
-      //   "stun",
-      //   "petrification",
-      //   "ghostVisual1",
-      // ],
+      immunities: ["incorporeal", "ghostVisual1"],
     });
     ghostwalk.createJaws({
       diceThrown: 3,
@@ -535,6 +523,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
       saveBonus: -2,
     });
     ghostwalk.setAttack({
+      targetPriorities: [{ status: ["HeldAndNotPoisoned"] }],
       selectWeapons: [
         {
           slot: "WEAPON1",

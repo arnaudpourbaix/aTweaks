@@ -19,4 +19,5 @@ export type TargetStatusName =
   | "PanicConfused" // panic, confused, feebleminded
   | "Sleep"
   | "Able" // Not affected by any disabling status
+  | "HeldAndNotPoisoned"
   | "NoCheck";

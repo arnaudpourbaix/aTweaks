@@ -477,6 +477,7 @@ DEFINE_ACTION_FUNCTION get_poison_resources RET_ARRAY resources BEGIN
 		"SPIN979"
 		"SPIN642"
 		"ja#1m3"
+		"ja#1m69"
 		"ja#1f12"
 		"ja#2m64"
 		"ja#2m58"

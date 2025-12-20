@@ -361,4 +361,11 @@ If successful, the charge causes double head-butt damage`,
       },
     },
   },
+  ettercap: {
+    name: {
+      ettercap: "Ettercap",
+    },
+    weapon: { claws: "Claws", jaws: "Jaws" },
+    ability: {},
+  },
 };

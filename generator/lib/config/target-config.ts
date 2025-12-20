@@ -245,6 +245,23 @@ export const TARGET_STATUS: TargetStatus[] = [
     ],
   },
   {
+    status: "HeldAndNotPoisoned",
+    canOnlyTargetPlayer: false,
+    requireIntelligence: false,
+    triggers: [],
+    targetTriggers: [
+      {
+        name: "CheckStatGT",
+        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+      },
+      {
+        name: "StateCheck",
+        params: [GLOBAL_CONFIG.tokens.target, "STATE_POISONED"],
+        negation: true,
+      },
+    ],
+  },
+  {
     status: "Stunned",
     canOnlyTargetPlayer: false,
     requireIntelligence: true,

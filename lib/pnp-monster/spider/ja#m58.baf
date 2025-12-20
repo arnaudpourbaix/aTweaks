@@ -251,6 +251,123 @@ THEN
 		ForceSpellRES("ja#1m58",LastSeenBy(Myself))
 END
 
+// Attack HeldAndNotPoisoned enemy
+IF
+	OR(6)
+		!CheckStatGT(NearestEnemyOf(Myself),0,HELD)
+		StateCheck(NearestEnemyOf(Myself),STATE_POISONED)
+		General(NearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(NearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(SecondNearestEnemyOf(Myself),0,HELD)
+		StateCheck(SecondNearestEnemyOf(Myself),STATE_POISONED)
+		General(SecondNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(SecondNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(ThirdNearestEnemyOf(Myself),0,HELD)
+		StateCheck(ThirdNearestEnemyOf(Myself),STATE_POISONED)
+		General(ThirdNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(ThirdNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(FourthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(FourthNearestEnemyOf(Myself),STATE_POISONED)
+		General(FourthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(FourthNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(FifthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(FifthNearestEnemyOf(Myself),STATE_POISONED)
+		General(FifthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(FifthNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(SixthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(SixthNearestEnemyOf(Myself),STATE_POISONED)
+		General(SixthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(SixthNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(SeventhNearestEnemyOf(Myself),0,HELD)
+		StateCheck(SeventhNearestEnemyOf(Myself),STATE_POISONED)
+		General(SeventhNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(SeventhNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(EighthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(EighthNearestEnemyOf(Myself),STATE_POISONED)
+		General(EighthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(EighthNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(NinthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(NinthNearestEnemyOf(Myself),STATE_POISONED)
+		General(NinthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(NinthNearestEnemyOf(Myself))
+	OR(6)
+		!CheckStatGT(TenthNearestEnemyOf(Myself),0,HELD)
+		StateCheck(TenthNearestEnemyOf(Myself),STATE_POISONED)
+		General(TenthNearestEnemyOf(Myself),WEAPON)
+		CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
+		StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
+		!See(TenthNearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	CheckStatGT(lastSeenBy(Myself),0,HELD)
+	!StateCheck(lastSeenBy(Myself),STATE_POISONED)
+	!General(lastSeenBy(Myself),WEAPON)
+	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(lastSeenBy(Myself))
+	!Range(LastSeenBy(Myself),5)
+THEN
+	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON0,0)
+		Continue()
+END
+
+IF
+	CheckStatGT(lastSeenBy(Myself),0,HELD)
+	!StateCheck(lastSeenBy(Myself),STATE_POISONED)
+	!General(lastSeenBy(Myself),WEAPON)
+	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(lastSeenBy(Myself))
+	Range(LastSeenBy(Myself),5)
+THEN
+	RESPONSE #100
+		SelectWeaponAbility(SLOT_WEAPON1,0)
+		Continue()
+END
+
+IF
+	CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
 // Attack Slowed enemy
 IF
 	OR(12)
