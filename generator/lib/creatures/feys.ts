@@ -12,6 +12,7 @@ import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
 import { BafExistingStringReference } from "../config/stringRef";
 import { createDimensionDoor } from "../spells/dimension_door";
+import { CommonProjectileFiles } from "../spells/projectiles";
 import abilityFactory from "../src/factories/ability.factory";
 import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
@@ -371,14 +372,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         "WQXNYM", // White Queen
       ],
       data: {
-        level1: 7, // 3hd but can employ druidical priest spells at 7th ability level
-        hp: 24,
-        thac0: 17,
-        saveDeath: 10,
-        saveWand: 14,
-        savePolymorph: 13,
-        saveBreath: 16,
-        saveSpell: 15,
+        level1: 3,
         strength: 10,
         dexterity: 17,
         constitution: 12,
@@ -399,6 +393,7 @@ class FeyFamily extends CreatureFamily<Fey> {
     });
     nymph.setAdditionalData({
       movement: { value: 12 },
+      adjustedLevel: { level1: 7 }, // can employ druidical priest spells at 7th ability level
       immunities: ["fey"],
       removeItems: ["DAGG01", "B1-6"],
       removeScripts: ["BDNYMP01", "NYMPH"],
@@ -525,9 +520,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         "QSEROMOD", // Sirine (PofQuestPack)
       ],
       data: {
-        level1: 11, // 5 HD but level 11 caster
-        hp: 40,
-        thac0: 15,
+        level1: 5,
         strength: 10,
         dexterity: 18,
         constitution: 11,
@@ -555,6 +548,7 @@ class FeyFamily extends CreatureFamily<Fey> {
     });
     sirine.setAdditionalData({
       movement: { value: 12 },
+      adjustedLevel: { level1: 11 }, // level 11 caster
       immunities: ["fey"],
       proficiencies: [
         { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
@@ -1172,20 +1166,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           type: ItemAbilityTypeEnum.Melee,
           location: ItemAbilityLocationEnum.Ability,
           target: ItemAbilityTargetEnum.Caster,
-          projectile: {
-            copyFromFile: "BIGNAREA",
-            name: "Nymph Blinding Beauty",
-            speed: 60,
-            projectileInfo: {
-              lightSpotIntensity: 128,
-              lightSpotWidth: 15,
-              lightSpotHeight: 11,
-            },
-            areaEffectInfo: {
-              triggerRadius: 470,
-              areaOfEffect: 470,
-            },
-          },
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
           effects: [
             {
               opcode: EffectTypeEnum.PlayVisualEffect,

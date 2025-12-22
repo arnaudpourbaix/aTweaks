@@ -69,6 +69,7 @@
 @5140 = ~Spiders~
 @5150 = ~Minotaurs~
 @5160 = ~Wyverns~
+@5170 = ~Undead~
 
 @200 = ~Allow Breach to take down Stoneskin effects applied by items~
 @201 = ~Instant casting for warrior innates~

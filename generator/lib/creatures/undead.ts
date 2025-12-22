@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
+import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -21,6 +22,7 @@ import {
   EffectTimingEnum,
   InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
+  ItemAbilityLocationEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
@@ -30,6 +32,7 @@ import {
   WingBuffetDirectionEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { Projectile } from "../src/model/spell-item/projectile";
 import {
   SpellProtection,
   SpellProtectionRelation,
@@ -41,229 +44,71 @@ import { TranslationKey } from "../translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
-  InvisibleWebTangle,
-  Leg,
-  LeapAttack,
-  LeapImpalingAttack,
-  LightningLeg,
-  LightningLeapImpalingAttack,
-  PhaseOut,
-  WebTangle,
+  FearAura,
 }
 
 class Undead extends Creature {
-  createJaws(p: {
+  createTouch(p: {
     diceThrown: number;
     diceSize: number;
     effects?: Effect[];
-    immunities?: ImmunityName[];
-    poisonType?: PnPPoisonType;
-    saveBonus?: number;
     slot?: ItemSlot;
   }) {
     return this.addWeapon({
       weapon: {
-        stringRef: "monster.spider.weapon.jaws",
-        icon: MonsterItemIconEnum.Jaws,
+        stringRef: "monster.undead.weapon.touch",
+        icon: MonsterItemIconEnum.Fist,
         equippedSlot: [p.slot ?? "WEAPON1"],
-        immunities: p.immunities,
         header: {
           type: ItemAbilityTypeEnum.Melee,
           diceThrown: p.diceThrown,
           diceSize: p.diceSize,
-          damageType: AbilityDamageTypeEnum.Piercing,
-          speed: 2,
+          damageType: AbilityDamageTypeEnum.Crushing,
+          speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
           effects: p.effects,
         },
-      },
-      castSpell: p.poisonType
-        ? poisonService.getSpell({
-            poisonType: p.poisonType,
-            saveBonus: p.saveBonus,
-          })
-        : undefined,
-    });
-  }
-
-  createLegWeapon(p: {
-    id: number;
-    impale?: boolean;
-    lightning?: boolean;
-    equipped?: boolean;
-  }) {
-    const effects: Effect[] = [];
-    if (p.impale) {
-      effects.push(
-        {
-          opcode: EffectTypeEnum.DisplayString,
-          stringRef: "monster.spider.ability.impale.name",
-        },
-        {
-          opcode: EffectTypeEnum.Thac0Bonus,
-          type: EffectModifierTypeEnum.Increment,
-          value: -4,
-          timing: EffectTimingEnum.InstantLimited,
-          duration: 12,
-        }
-      );
-    }
-    if (p.lightning) {
-      effects.push({
-        opcode: EffectTypeEnum.Damage,
-        type: EffectDamageTypeEnum.Electricity,
-        amount: p.impale ? 8 : 2,
-      });
-    }
-    return this.addItem({
-      id: p.id,
-      stringRef: p.impale
-        ? "monster.spider.ability.impale.name"
-        : "monster.spider.weapon.leg",
-      icon: MonsterItemIconEnum.Wolf,
-      equippedSlot: p.equipped ? ["SHIELD"] : undefined,
-      header: {
-        type: ItemAbilityTypeEnum.Melee,
-        diceThrown: p.impale ? 4 : 1,
-        diceSize: 12,
-        damageType: AbilityDamageTypeEnum.Piercing,
-        speed: 1,
-        abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-        effects,
       },
     });
   }
 
   /**
-   * Single Target Web
+   * Death wail
    */
-  createWeb({
-    id,
-    name,
-    description,
-    duration,
-    saveBonus,
-    damageEffect,
-    invisible,
-  }: {
-    id: number;
-    name?: TranslationKey;
-    description: TranslationKey;
-    duration: number;
-    saveBonus?: number;
-    damageEffect?: DamageEffect;
-    invisible?: boolean;
-  }) {
-    const saves: BaseEffect = {
-      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-      saveBonus: saveBonus ?? 0,
-    };
-    const effects: Effect[] = [
-      {
-        opcode: EffectTypeEnum.Web,
-        timing: EffectTimingEnum.InstantLimited,
-        duration,
-        ...saves,
-      },
-      {
-        opcode: EffectTypeEnum.Paralyze,
-        timing: EffectTimingEnum.InstantLimited,
-        idsFile: EffectIDSFileEnum.EA,
-        idsEntry: "ANYONE",
-        duration,
-        ...saves,
-      },
-      {
-        opcode: EffectTypeEnum.DisplayPortraitIcon,
-        icon: PortraitIconEnum.Webbed,
-        timing: EffectTimingEnum.InstantLimited,
-        duration,
-        ...saves,
-      },
-      {
-        opcode: EffectTypeEnum.PlaySound,
-        resource: "EFF_P27",
-        ...saves,
-      },
-    ];
-    const protections: {
-      type: SpellProtection;
-      values: (string | number)[];
-    }[] = [
-      {
-        type: {
-          stat: SpellProtectionStat.CircleSize,
-          relation: SpellProtectionRelation.Greater,
-          value: 3,
-        },
-        values: [0],
-      },
-      {
-        type: {
-          stat: SpellProtectionStat.Splstate,
-          relation: SpellProtectionRelation.Equal,
-        },
-        values: ["BLUE_FIRESHIELD", "RED_FIRESHIELD", "FREE_ACTION"],
-      },
-      {
-        type: {
-          stat: SpellProtectionStat.Race,
-          relation: SpellProtectionRelation.Equal,
-        },
-        values: ["WRAITH", "MIST", "SHADOW", "ELEMENTAL", "SLIME"],
-      },
-    ];
-    for (const protection of protections) {
-      for (const value of protection.values) {
-        effects.unshift({
-          opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
-          type: protection.type,
-          value,
-          timing: EffectTimingEnum.InstantLimited,
-          duration: 1,
-        });
-      }
-    }
-    if (damageEffect) {
-      effects.push(
-        ...effectFactory.damageOverTime(1, { ...damageEffect, ...saves })
-      );
-    }
-    if (invisible) {
-      effects.push({
-        opcode: EffectTypeEnum.Invisibility,
-        type: InvisibilityTypeEnum.Normal,
-        duration,
-        ...saves,
-      });
-    }
+  createDeathWail() {}
+
+  /**
+   * Fear Aura
+   */
+  createFearAura() {
     return this.addSpell({
-      id,
-      name: name ?? "monster.spider.ability.webTangle.name",
-      description,
+      name: "monster.undead.ability.fearAura.name",
+      description: "monster.undead.ability.fearAura.description",
+      id: Ids.FearAura,
       memorizedCount: 1,
-      icon: SPELLS.Web,
-      options: { renew: 2 },
+      icon: SPELLS.CloakOfFear,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      options: { renew: 1 },
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,
-          range: 5,
-          projectile: "WEB1P",
-          effects,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          speed: 1,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 30,
+          effects: effectFactory.fear({
+            duration: 60,
+            saveType: SaveTypeEnum.Spell,
+          }),
         },
       ],
       ability: {
-        preset: SPELLS.Web,
+        preset: SPELLS.CloakOfFear,
         spell: {
-          // It can shoot web strands up to 2 feet to bind a foe.
-          // Either attack treats the spider's opponent as AC 10 and prevents the spider from making a melee attack that round.
           type: "force",
-          isAttack: true,
-          probability: 70,
+          remove: true,
         },
-        range: 6, // to fix issue with very close range since melee attack is 3 feet
-        requireVocal: false,
       },
     });
   }
@@ -289,11 +134,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
     // this.addCreature(this.zombieJuju());
     // this.addCreature(this.zombieSea());
   }
-
   createCreature(id: MonsterEnum): Undead {
     return new Undead(id);
   }
-
   /**
    * Banshee
    */
@@ -302,57 +145,59 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Banshee,
       name: "monster.undead.name.banshee",
       files: [
-        "BDSPIDGA", // Gargantuan Spider
+        "BD302BAN", // Banshee
+        "banshe01", //ToB Banshee
+        "firmon01", //Unused critter from Firkraag's
+        "dsbanshe", //DSotSC
+        "f_wailin", //Drizzt Saga
       ],
       data: {
-        level1: 8,
-        bonusHp: 8,
-        thac0: 11,
-        strength: 18,
-        dexterity: 15,
-        constitution: 17,
-        intelligence: 7,
+        level1: 7,
+        strength: 1,
+        dexterity: 14,
+        constitution: 10,
+        intelligence: 16,
         wisdom: 11,
-        charisma: 4,
-        ac: 4,
+        charisma: 17,
+        ac: 0,
         apr: 1,
-        xpv: 3000,
+        xpv: 4000,
         alignment: "CHAOTIC_EVIL",
-        morale: 14,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_GIANT",
+        morale: 13,
+        general: "UNDEAD",
+        race: "WRAITH",
+        class: "SPECTRE",
         gender: "NIETHER",
-        size: "Gargantuan",
+        size: "Medium",
       },
     });
-    banshee.createWeb({
-      id: Ids.WebTangle,
-      duration: 18,
-      // saveBonus: -2,
-      description: "monster.spider.ability.webTangle.standardDesc",
-    });
     banshee.setAdditionalData({
-      movement: { value: 9 }, // Web 12
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGA", "ANTIWEB"],
-      removeScripts: ["BDSPIDGA"],
+      movement: { value: 15 },
+      adjustedLevel: { level1: 17 }, // to approximate their "turned as special undead" from PnP
+      immunities: ["undead"],
+      removeItems: ["IMMUNE1", "B1-8M2", "IMMCHS"],
+      removeScripts: ["BDBANSH"],
     });
-    banshee.createJaws({
-      diceThrown: 2,
-      diceSize: 6,
-      poisonType: "Q",
-      saveBonus: -2,
+    banshee.createFearAura();
+    banshee.createDeathWail();
+    banshee.addTrait({
+      immunities: [
+        "nonMagicalWeapons",
+        "magicResistance",
+        "incorporeal",
+        "cold",
+        "lightning",
+      ],
     });
-    banshee.setAttack({
-      targetPriorities: [{ status: ["HeldAndNotPoisoned"] }],
+    banshee.createTouch({
+      diceThrown: 1,
+      diceSize: 8,
     });
     banshee.setBehavior({
-      abilities: [this.ability(Ids.WebTangle)],
+      abilities: [this.ability(Ids.FearAura)],
     });
     return banshee;
   }
-
   /**
    * Death Knight
    */
@@ -384,13 +229,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         size: "Large",
       },
     });
-    knight.createWeb({
-      id: Ids.InvisibleWebTangle,
-      duration: 18,
-      saveBonus: -2,
-      description: "monster.spider.ability.webTangle.ghostwalkDesc",
-      invisible: true,
-    });
     knight.setAdditionalData({
       movement: { value: 15 },
       immunities: ["spider"],
@@ -398,50 +236,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
       removeScripts: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
     });
     knight.addTrait({ immunities: ["seeInvisible"] });
-    knight.createJaws({
-      diceThrown: 3,
-      diceSize: 10,
-      slot: "WEAPON1",
-      immunities: ["incorporeal", "ghostVisual1"],
-    });
-    knight.createJaws({
-      diceThrown: 3,
-      diceSize: 10,
-      slot: "WEAPON2",
-      poisonType: "E",
-      saveBonus: -2,
-    });
-    knight.setAttack({
-      targetPriorities: [{ status: ["HeldAndNotPoisoned"] }],
-      selectWeapons: [
-        {
-          slot: "WEAPON1",
-          triggers: [
-            {
-              name: "Range",
-              params: ["LastSeenBy", 5],
-              negation: true,
-            },
-          ],
-        },
-        {
-          slot: "WEAPON2",
-          triggers: [
-            {
-              name: "Range",
-              params: ["LastSeenBy", 5],
-            },
-          ],
-        },
-      ],
-    });
     knight.setBehavior({
       dialog: ["C#LCCENS"],
-      abilities: [this.ability(Ids.InvisibleWebTangle)],
+      abilities: [this.ability(Ids.FearAura)],
     });
     return knight;
   }
-
   /**
    * Ghast
    */
@@ -488,18 +288,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
       removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
       removeScripts: ["DW#SPIDG", "SPIDFGSU"],
     });
-    ghast.createJaws({
-      diceThrown: 1,
-      diceSize: 8,
-      poisonType: "F",
-    });
     ghast.setAdjustments([
       { files: ["SPIDGISU", "BDHELP01", "SPIDFGSU"], summon: true },
       { files: ["PLYSPID2"], additionalData: { scriptLocation: "None" } },
     ]);
     return ghast;
   }
-
   /**
    * Ghoul
    */
@@ -540,12 +334,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
       removeScripts: ["DW#SPIDG"],
       memorizedSpells: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
     });
-    ghoul.createJaws({
-      diceThrown: 1,
-      diceSize: 1,
-      poisonType: "R",
-      saveBonus: 2,
-    });
     ghoul.addTrait({ immunities: ["crushingDamageResistance"] });
     ghoul.setBehavior({
       abilities: [
@@ -565,7 +353,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
     ]);
     return ghoul;
   }
-
   /**
    * Ghoul Lord
    */
@@ -606,15 +393,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
       removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
       removeScripts: ["DW#SPIDS"],
     });
-    lord.createJaws({
-      diceThrown: 1,
-      diceSize: 6,
-      poisonType: "A",
-      saveBonus: 1,
-    });
     return lord;
   }
-
   /**
    * Mummy
    */
@@ -655,17 +435,10 @@ class UndeadFamily extends CreatureFamily<Undead> {
       ],
       removeItems: ["D5SMSPID", "ANTIWEB"],
     });
-    hunting.createJaws({
-      diceThrown: 1,
-      diceSize: 3,
-      poisonType: "A",
-      saveBonus: 2,
-    });
-    hunting.setBehavior({ abilities: [this.ability(Ids.LeapAttack)] });
+    hunting.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
     hunting.setAdjustments([{ files: ["D5SMSPID"], summon: true }]);
     return hunting;
   }
-
   /**
    * Greater Mummy
    */
@@ -713,28 +486,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    // They phase in, attack, and phase out, all in a single round.
-    // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
-    // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
-    // Phase spiders flee to the Ethereal plane when outmatched
-    greater.createJaws({
-      diceThrown: 1,
-      diceSize: 6,
-      poisonType: "F",
-      saveBonus: -2,
-      effects: [
-        {
-          opcode: EffectTypeEnum.CastSpell,
-          type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
-          target: EffectTargetEnum.Self,
-          timing: EffectTimingEnum.DelayPermanent,
-          duration: 2,
-          resource: this.spell(Ids.PhaseOut).file,
-        },
-      ],
-    });
     greater.setBehavior({
-      abilities: [this.ability(Ids.PhaseOut)],
+      abilities: [this.ability(Ids.FearAura)],
     });
     greater.setAdjustments([
       { files: ["SPIDPHSU"], summon: true },
@@ -748,7 +501,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
     ]);
     return greater;
   }
-
   /**
    * Shadow
    */
@@ -792,7 +544,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         size: "Huge",
       },
     });
-    shadow.createJaws({
+    shadow.createTouch({
       diceThrown: 2,
       diceSize: 4,
     });
@@ -803,33 +555,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
       removeScripts: ["DW#SPIDS"],
     });
     shadow.setBehavior({
-      abilities: [
-        this.ability(Ids.LeapImpalingAttack),
-        this.ability(Ids.LightningLeapImpalingAttack),
-      ],
+      abilities: [this.ability(Ids.FearAura)],
     });
-    shadow.setAdjustments([
-      { files: ["BDHELP03", "SPIDSWSU"], summon: true },
-      { files: ["PLYSPID"], additionalData: { scriptLocation: "None" } },
-      {
-        files: ["WISPID03"],
-        additionalData: {
-          removeMemorizedSpells: true,
-          equippedItems: [
-            { file: this.item(Ids.LightningLeg).file, slot: "SHIELD" },
-          ],
-          memorizedSpells: [
-            {
-              file: this.spell(Ids.LightningLeapImpalingAttack).file,
-              memorizedCount: 1,
-            },
-          ],
-        },
-      },
-    ]);
+    shadow.setAdjustments([]);
     return shadow;
   }
-
   /**
    * Skeleton
    */
@@ -877,12 +607,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    skeleton.createJaws({
-      diceThrown: 2,
-      diceSize: 4,
-      poisonType: "F",
-      saveBonus: -2,
-    });
     skeleton.setBehavior({
       abilities: [
         {
@@ -897,7 +621,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     return skeleton;
   }
-
   /**
    * Skeleton Warrior
    */
@@ -953,32 +676,16 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    warrior.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(warrior.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
     warrior.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
     return warrior;
   }
-
   /**
    * Spectre
    */
   private spectre() {
-    const wraith = this.create({
+    const spectre = this.create({
       monster: MonsterEnum.Spectre,
       name: "monster.undead.name.spectre",
       files: [
@@ -1013,13 +720,13 @@ class UndeadFamily extends CreatureFamily<Undead> {
         size: "Medium",
       },
     });
-    wraith.setAdditionalData({
+    spectre.setAdditionalData({
       movement: { value: 12 },
       immunities: ["spider", "undead"],
       removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
       removeScripts: ["DW#SPIDG"],
     });
-    wraith.addTrait({
+    spectre.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
       effects: [
         {
@@ -1029,27 +736,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    wraith.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wraith.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
-    wraith.setBehavior({
+    spectre.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
-    return wraith;
+    return spectre;
   }
-
   /**
    * Wight
    */
@@ -1105,27 +796,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    wight.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wight.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
     wight.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
     return wight;
   }
-
   /**
    * Wraith
    */
@@ -1134,15 +809,13 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Wraith,
       name: "monster.undead.name.wraith",
       files: [
-        "C#Q04009", // Wraith Spider
-        "SPIDWR", // Wraith Spider
-        "SPIDWR01", // Wraith Spider
-        "TTSPID", // Wraith Spider
-        // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
+        "AC#FPWRA", // Wraith
+        "BDWRAI01", // Wraith
+        "BDWRAI02", // Wraith
+        "BDWRAIT1", // Wraith
+        "BPWRAI01", // Wraith
+        "DVWRAITH", // Why did you not speak before now?
+        "NTBPWATC", // Catacomb Warder
       ],
       data: {
         level1: 3,
@@ -1181,27 +854,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    wraith.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wraith.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
     wraith.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
     return wraith;
   }
-
   /**
    * Zombie
    */
@@ -1257,27 +914,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    zombie.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(zombie.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
     zombie.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
     return zombie;
   }
-
   /**
    * Zombie juju
    */
@@ -1333,27 +974,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    wraith.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wraith.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
-    });
     wraith.setBehavior({
       dialog: ["C#Q04009", "ttspid"],
     });
     return wraith;
   }
-
   /**
    * Zombie Sea
    */
@@ -1408,21 +1033,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
           type: EffectStatisticModifierEnum.Set,
         },
       ],
-    });
-    wraith.createJaws({
-      diceThrown: 0,
-      diceSize: 0,
-      effects: [
-        {
-          opcode: EffectTypeEnum.Damage,
-          type: EffectDamageTypeEnum.Cold,
-          diceThrown: 1,
-          diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wraith.data),
-        },
-        ...effectFactory.levelDrain({ levels: 1 }),
-      ],
-      poisonType: "S",
     });
     wraith.setBehavior({
       dialog: ["C#Q04009", "ttspid"],

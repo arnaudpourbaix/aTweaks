@@ -63,6 +63,7 @@ class MainService {
 
   generateCommonCode() {
     weiduCoreService.generateSpellStates();
+    weiduCoreService.generateProjectiles();
     weiduCoreService.generateProtectionSpells();
     weiduFunctionService.generateSpellResources();
     weiduFunctionService.generateSpellFunctions();

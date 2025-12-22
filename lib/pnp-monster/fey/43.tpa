@@ -6,11 +6,11 @@ COMPILE ~%MOD_FOLDER%/lib/pnp-monster/fey/ja#m43.baf~
 // Sirine traits
 CREATE ITM "ja#1m43"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10488)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10488)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10507)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10507)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10489)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10508)
 COPY_EXISTING ~ja#1m43.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -29,8 +29,8 @@ CREATE ITM "ja#2m43"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10169)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IFIST~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10490)
-	WRITE_LONG 0x60 4
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10509)
+	WRITE_LONG 0x60 1
 COPY_EXISTING ~ja#2m43.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -96,9 +96,7 @@ BEGIN
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=11
-					hp=40
-					thac0=15
+					level1=5
 					strength=10
 					dexterity=18
 					constitution=11
@@ -116,6 +114,8 @@ BEGIN
 					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
 					movement=10
+					hp=40
+					thac0=15
 					saveDeath=9
 					saveWand=7
 					savePolymorph=9

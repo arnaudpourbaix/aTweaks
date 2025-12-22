@@ -396,7 +396,13 @@ If successful, the charge causes double head-butt damage`,
       zombieJuju: "Zombie Juju",
       zombieSea: "Zombie Sea",
     },
-    weapon: {},
-    ability: {},
+    weapon: { touch: "Touch" },
+    ability: {
+      fearAura: {
+        name: "Fear Aura",
+        description: `The mere sight of one causes fear, unless a successful saving throw vs. spell is rolled.
+Those who fail must flee in terror for 10 rounds and are 50% likely to drop any items they were carrying in their hands.`,
+      },
+    },
   },
 };

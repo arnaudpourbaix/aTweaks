@@ -57,8 +57,6 @@ class Wyvern extends Creature {
 }
 
 class WyvernFamily extends CreatureFamily<Wyvern> {
-  private logging = false;
-
   constructor() {
     super(MonsterFamilyEnum.Wyvern);
     this.addCreature(this.wyvern());
@@ -75,7 +73,6 @@ class WyvernFamily extends CreatureFamily<Wyvern> {
    */
   private wyvern() {
     const wyvern = this.create({
-      logging: this.logging,
       monster: MonsterEnum.Wyvern,
       name: "monster.wyvern.name.wyvern",
       files: [

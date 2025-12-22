@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
+import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -163,7 +164,7 @@ class Golem extends Creature {
           location: ItemAbilityLocationEnum.Ability,
           target: ItemAbilityTargetEnum.AnyPointWithinRange,
           speed: 1,
-          projectile: "INAREANP",
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
           range: 30,
           effects: effectFactory.fear({
             duration: 42,

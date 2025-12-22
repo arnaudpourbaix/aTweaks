@@ -3,14 +3,16 @@ import path from "path";
 import { SPELL_STATES } from "../../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { COMMON_PROJECTILES } from "../../../spells/projectiles";
 import { CR, TAB } from "../../model/constants";
 import { EquippedItem, JEWEL_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
-import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
+import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { State } from "../../state";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
+import weiduProjectileService from "./weidu-projectile.service";
 
 class WeiduCoreService extends AbstractWeiduService {
   private lines = this.initLines();
@@ -68,6 +70,10 @@ class WeiduCoreService extends AbstractWeiduService {
       );
     }
     this.add(this.lines, ``, 0);
+  }
+
+  generateProjectiles() {
+    weiduProjectileService.createProjectiles(this.lines, COMMON_PROJECTILES);
   }
 
   generateItem(itemSlot: EquippedItem, immunity: ImmunityConfig) {

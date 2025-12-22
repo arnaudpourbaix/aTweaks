@@ -23,13 +23,17 @@ export interface CreatureAdditionalData {
   immunities: ImmunityName[];
 
   removeKnownSpells?: boolean;
-  removeMemorizedSpells?: boolean | string[]; // TODO: new type!
+  removeMemorizedSpells?: boolean | string[];
   memorizedSpells: MemorizedSpell[];
 
   deleteEffectOpcodes: EffectTypeEnum[];
   removeEffects?: boolean;
   effects: Effect[];
   movement: { value: number; itemFile?: string };
+  /**
+   * Some creatures have a higher level that their HD for casting or turning purpose
+   */
+  adjustedLevel?: { level1?: number; level2?: number };
 }
 
 export interface MemorizedSpell {
