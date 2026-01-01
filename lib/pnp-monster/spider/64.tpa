@@ -13,7 +13,7 @@ COPY_EXISTING ~ja#1m64.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_ASCII 0x3a ~SPWI215C~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10258)
-	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215C" END
+	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=1 range=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~WEB1P~)) + 1 STR_VAR icon="SPWI215B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SLIME~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~ELEMENTAL~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~race~ ~SHADOW~) parameter2=104 duration=1 probability1=100 STR_VAR resource="ja#1m64" END
@@ -40,11 +40,11 @@ CREATE EFF "ja#2m64"
 CREATE SPL "ja#2m64"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#2m64.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10576)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10579)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10577)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10580)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="ja#2m64" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="ja#2m64" END
@@ -63,7 +63,7 @@ CREATE ITM "ja#1m64"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10248)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10578)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10581)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m64.itm~ ~override~
 	READ_SHORT 0x68 abicount

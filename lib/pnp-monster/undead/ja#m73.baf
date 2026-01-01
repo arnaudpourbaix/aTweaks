@@ -105,12 +105,115 @@ THEN
 		NoAction()
 END
 
+// Death Wail
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player1,WEAPON)
+	!StateCheck(Player1,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player1,0,SANCTUARY)
+	!StateCheck(Player1,STATE_REALLY_DEAD)
+	See(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player2,WEAPON)
+	!StateCheck(Player2,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player2,0,SANCTUARY)
+	!StateCheck(Player2,STATE_REALLY_DEAD)
+	See(Player2)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player3,WEAPON)
+	!StateCheck(Player3,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player3,0,SANCTUARY)
+	!StateCheck(Player3,STATE_REALLY_DEAD)
+	See(Player3)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player4,WEAPON)
+	!StateCheck(Player4,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player4,0,SANCTUARY)
+	!StateCheck(Player4,STATE_REALLY_DEAD)
+	See(Player4)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player5,WEAPON)
+	!StateCheck(Player5,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player5,0,SANCTUARY)
+	!StateCheck(Player5,STATE_REALLY_DEAD)
+	See(Player5)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	HaveSpellRES("ja#2m73")
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	!General(Player6,WEAPON)
+	!StateCheck(Player6,STATE_IMPROVEDINVISIBILITY)
+	!CheckStatGT(Player6,0,SANCTUARY)
+	!StateCheck(Player6,STATE_REALLY_DEAD)
+	See(Player6)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#2m73",Myself)
+		RemoveSpellRES("ja#2m73")
+END
+
 // Fear Aura
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck([PC],STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT([PC],0,HELD)
 	!StateCheck([PC],STATE_STUNNED)
@@ -135,7 +238,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck(SecondNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
 	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
@@ -160,7 +263,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
 	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
@@ -185,7 +288,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck(FourthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
 	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
@@ -210,7 +313,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck(FifthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
 	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
@@ -235,7 +338,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpellRES("ja#1m73")
 	!StateCheck(SixthNearest([PC]),STATE_PANIC)
-	RandomNumGT(800,240)
+	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
 	!StateCheck(SixthNearest([PC]),STATE_STUNNED)

@@ -5,22 +5,22 @@ DEFINE_ACTION_FUNCTION create_spell_callWoodlandBeeings BEGIN
 	COPY_EXISTING ~SPPR410.SPL~  ~override/SPPR410.SPL~
 		LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END
 	COPY_EXISTING ~SPPR410.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10310)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10312)
 		WRITE_ASCII 0x3a ~SPPR410C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10311)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10313)
 		LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~JA_NOT_OUTDOOR_CHECK~ RET row col END
 		PATCH_IF row != "-1" BEGIN
 			LPF ADD_EFFECT INT_VAR opcode=324 target=1 global=1 parameter2=row duration=1 probability1=100 STR_VAR resource="SPPR410" END
 		END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=7 STR_VAR icon="SPPR410C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=7 STR_VAR icon="SPPR410B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=55 STR_VAR resource="ja#dryad" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=85 probability2=55 STR_VAR resource="ja#hama" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=100 probability2=85 STR_VAR resource="ja#trea1" END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=10 STR_VAR icon="SPPR410C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=10 STR_VAR icon="SPPR410B" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=55 STR_VAR resource="ja#hama" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=85 probability2=55 STR_VAR resource="ja#trea1" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=100 probability2=85 STR_VAR resource="ja#trea2" END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=13 STR_VAR icon="SPPR410C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=13 STR_VAR icon="SPPR410B" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=55 STR_VAR resource="ja#trea2" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=85 probability2=55 STR_VAR resource="ja#trea3" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=100 probability2=85 STR_VAR resource="ja#trea4" END
@@ -38,7 +38,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 	CREATE SPL "SPWI105"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI105.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10312)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10314)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 1024
 		WRITE_SHORT 0x1c 1
@@ -48,8 +48,8 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		WRITE_BYTE 0x27 11
 		WRITE_LONG 0x34 1
 		WRITE_ASCII 0x3a ~SPWI105C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10313)
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10315)
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -72,7 +72,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=4 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=4 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=2 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=2 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -95,7 +95,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=5 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=5 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=3 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=3 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -118,7 +118,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=6 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=6 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=4 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=4 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -141,7 +141,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=7 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=7 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -164,7 +164,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=8 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=8 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=6 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=6 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -188,7 +188,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=9 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=9 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=7 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=7 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -212,7 +212,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=10 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=10 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=8 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=8 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -236,7 +236,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=11 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=11 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=9 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=9 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -260,7 +260,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=12 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=12 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -284,7 +284,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=13 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=13 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=11 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=11 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -308,7 +308,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=14 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=14 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=12 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=12 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -332,7 +332,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=15 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=15 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=13 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=13 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -356,7 +356,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=16 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=16 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=14 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=14 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -380,7 +380,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=17 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=17 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=15 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=15 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -404,7 +404,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=18 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=18 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=16 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=16 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -428,7 +428,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=19 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=19 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=17 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=17 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -452,7 +452,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=20 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=20 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=18 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=18 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -476,7 +476,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=21 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=21 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=19 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=19 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -500,7 +500,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=22 savingthrow=1 STR_VAR resource="SPCONFUS" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=22 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=22 savingthrow=1 END
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=20 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105C" END
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=20 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=165 target=1 power=1 duration=1 probability1=100 END
@@ -531,7 +531,7 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 	CREATE SPL "SPWI402"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI402.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10314)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10316)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 2048
 		WRITE_SHORT 0x1c 1
@@ -541,8 +541,8 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 		WRITE_BYTE 0x27 13
 		WRITE_LONG 0x34 4
 		WRITE_ASCII 0x3a ~SPWI402C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10315)
-		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402C" END
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10317)
+		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=1 power=4 parameter2=2 resist_dispel=1 duration=1 probability1=100 STR_VAR resource="SPDIMNDR" END

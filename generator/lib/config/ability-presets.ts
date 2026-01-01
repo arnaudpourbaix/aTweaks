@@ -629,4 +629,17 @@ export const ABILITY_PRESETS: {
       requireVocal: true,
     },
   },
+  {
+    preset: SPELLS.WailOfTheBanshee,
+    ability: {
+      name: "ability.wailOfTheBanshee",
+      targets: [{ name: "Players" }],
+      spell: {
+        id: "WIZARD_WAIL_OF_THE_BANSHEE",
+        selfTarget: true,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
 ];

@@ -73,7 +73,7 @@ class SpellService {
     const result: SpellHeader = { ...header, effects: header.effects ?? [] };
     if (!result.type) throw new Error(`Header type is required!`);
     if (!result.icon && spell.icon && /\d{3}$/.test(spell.icon)) {
-      result.icon = `${spell.icon}C`;
+      result.icon = `${spell.icon}B`;
     }
     if (result.range === undefined) result.range = 0;
     if (result.speed === undefined) result.speed = 0;

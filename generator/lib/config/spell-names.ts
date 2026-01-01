@@ -28,6 +28,7 @@ export const SPELLS = {
   Slow: "SPWI312",
   StinkingCloud: "SPWI213",
   Stoneskin: "SPWI408",
+  WailOfTheBanshee: "SPWI913",
   Web: "SPWI215",
   // Priest
   AnimalSummoning4: "SPPR402",
@@ -38,7 +39,7 @@ export const SPELLS = {
   CallWoodlandBeeings: "SPPR410",
   Chant: "SPPR203",
   CharmPersonOrAnimal: "SPPR204",
-  CloakOfFear: "SPPR416C",
+  CloakOfFear: "SPPR416",
   Command: "SPPR102",
   CureLightWounds: "SPPR103",
   Entangle: "SPPR105",

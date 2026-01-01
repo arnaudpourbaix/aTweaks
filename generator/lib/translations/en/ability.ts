@@ -36,4 +36,5 @@ export default {
   polymorphSelf: "Polymorph Self",
   cloakOfFear: "Cloak of Fear",
   horror: "Horror",
+  wailOfTheBanshee: "Wail Of The Banshee",
 };

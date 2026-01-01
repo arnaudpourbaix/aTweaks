@@ -8,19 +8,24 @@ import { ItemSlot } from "../src/model/creature/item";
 import { Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
+  EffectIDSFileEnum,
   EffectStatisticModifierEnum,
+  EffectTimingEnum,
   InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
+  LightingEffectEnum,
+  LightingEffectTargetEnum,
   SaveTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
+  DeathWail,
   FearAura,
 }
 
@@ -50,11 +55,6 @@ class Undead extends Creature {
   }
 
   /**
-   * Death wail
-   */
-  createDeathWail() {}
-
-  /**
    * Fear Aura
    */
   createFearAura() {
@@ -68,7 +68,7 @@ class Undead extends Creature {
       options: { renew: 1 },
       headers: [
         {
-          type: ItemAbilityTypeEnum.Ranged,
+          type: ItemAbilityTypeEnum.Melee,
           location: ItemAbilityLocationEnum.Ability,
           target: ItemAbilityTargetEnum.AnyPointWithinRange,
           speed: 1,
@@ -82,6 +82,59 @@ class Undead extends Creature {
       ],
       ability: {
         preset: SPELLS.CloakOfFear,
+        spell: {
+          type: "force",
+          remove: true,
+        },
+      },
+    });
+  }
+
+  /**
+   * Death wail
+   */
+  createDeathWail() {
+    return this.addSpell({
+      name: "monster.undead.ability.deathWail.name",
+      description: "monster.undead.ability.deathWail.description",
+      id: Ids.DeathWail,
+      memorizedCount: 1,
+      icon: SPELLS.WailOfTheBanshee,
+      secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          speed: 1,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 30,
+          effects: [
+            {
+              opcode: EffectTypeEnum.Slay,
+              idsFile: EffectIDSFileEnum.EA,
+              idsEntry: "ANYONE",
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              saveTypes: [SaveTypeEnum.Spell],
+            },
+            {
+              opcode: EffectTypeEnum.LightingEffects,
+              effect: LightingEffectEnum.HitFingerOfDeath,
+              lightingTarget: LightingEffectTargetEnum.SpellTarget,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              saveTypes: [SaveTypeEnum.Spell],
+            },
+            {
+              opcode: EffectTypeEnum.PlaySound,
+              resource: "CAS_M07",
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              saveTypes: [SaveTypeEnum.Spell],
+            },
+          ],
+        },
+      ],
+      ability: {
+        preset: SPELLS.WailOfTheBanshee,
         spell: {
           type: "force",
           remove: true,
@@ -130,7 +183,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       ],
       data: {
         level1: { pnpValue: 7, value: 17, type: "turn" }, // to approximate their "turned as special undead" from PnP
-        strength: 1,
+        strength: 9,
         dexterity: 14,
         constitution: 10,
         intelligence: 16,
@@ -172,7 +225,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       diceSize: 8,
     });
     banshee.setBehavior({
-      abilities: [this.ability(Ids.FearAura)],
+      abilities: [this.ability(Ids.DeathWail), this.ability(Ids.FearAura)],
     });
     return banshee;
   }
