@@ -100,31 +100,30 @@ BEGIN
 			LPF web_immunity END
 			LPF patchCreature
 				INT_VAR
-					level1=5
-					strength=14
-					dexterity=15
-					constitution=13
-					intelligence=7
-					wisdom=12
-					charisma=8
-					ac=7
-					apr=3
 					xpv=650
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
-					morale=13
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~ETTERCAP~)
-					class=IDS_OF_SYMBOL (~class~ ~ETTERCAP~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=10
 					hp=40
+					ac=7
 					thac0=15
+					apr=3
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
 					saveBreath=13
 					saveSpell=14
+					level1=5
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=14
+					intelligence=7
+					wisdom=12
+					dexterity=15
+					constitution=13
+					charisma=8
+					morale=13
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~ETTERCAP~)
+					class=IDS_OF_SYMBOL (~class~ ~ETTERCAP~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
+					movement=10
 					enforce=1
 					perfect2weapon=1
 			END

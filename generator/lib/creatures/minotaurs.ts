@@ -154,11 +154,11 @@ class MinotaurFamily extends CreatureFamily<Minotaur> {
         class: "OGRE",
         gender: "MALE",
         size: "Large",
+        movement: 12,
+        items: {
+          remove: ["AX1H01"],
+        },
       },
-    });
-    minotaur.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["AX1H01"],
     });
     minotaur.addTrait({
       immunities: ["infravision", "maze"],

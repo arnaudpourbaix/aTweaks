@@ -393,12 +393,12 @@ class GolemFamily extends CreatureFamily<Golem> {
         gender: "NIETHER",
         size: "Large",
         modAnimation: "A7!GOLEM_FLESH_PST",
+        movement: 8,
+        immunities: ["construct"],
+        items: {
+          remove: ["GOLFLE"],
+        },
       },
-    });
-    flesh.setAdditionalData({
-      movement: { value: 8 },
-      immunities: ["construct"],
-      removeItems: ["GOLFLE"],
     });
     flesh.addTrait({
       immunities: ["magic", "fire", "cold"],
@@ -445,14 +445,15 @@ class GolemFamily extends CreatureFamily<Golem> {
         class: "GOLEM_CLAY",
         gender: "NIETHER",
         size: "Large",
+        movement: 7,
+        immunities: ["construct"],
+        items: {
+          remove: ["GOLCLA", "RING95", "IMMUNE1"],
+        },
+        script: {
+          remove: ["GOLCLY01", "BPFHT"],
+        },
       },
-    });
-    clay.createHaste();
-    clay.setAdditionalData({
-      movement: { value: 7 },
-      immunities: ["construct"],
-      removeScripts: ["GOLCLY01", "BPFHT"],
-      removeItems: ["GOLCLA", "RING95", "IMMUNE1"],
     });
     clay.addTrait({
       immunities: [
@@ -463,6 +464,7 @@ class GolemFamily extends CreatureFamily<Golem> {
         "missileDamage",
       ],
     });
+    clay.createHaste();
     clay.createFists(3, 10, AbilityDamageTypeEnum.Crushing);
     clay.setBehavior({
       restHeal: true,
@@ -499,14 +501,18 @@ class GolemFamily extends CreatureFamily<Golem> {
         class: "GOLEM_STONE",
         gender: "NIETHER",
         size: "Large",
+        movement: 6,
+        immunities: ["construct"],
+        items: {
+          remove: ["GOLSTO", "GOLSTONE", "IMMUNE2"],
+        },
+        script: {
+          remove: ["GOLSTO01"],
+        },
+        spells: {
+          memorized: [{ file: SPELLS.Slow, memorizedCount: 1 }],
+        },
       },
-    });
-    stone.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["construct"],
-      removeScripts: ["GOLSTO01"],
-      removeItems: ["GOLSTO", "GOLSTONE", "IMMUNE2"],
-      memorizedSpells: [{ file: SPELLS.Slow, memorizedCount: 1 }],
     });
     stone.addTrait({
       immunities: ["magic", "plusOneWeapons"],
@@ -558,13 +564,12 @@ class GolemFamily extends CreatureFamily<Golem> {
         class: "GOLEM_IRON",
         gender: "NIETHER",
         size: "Large",
+        movement: 6,
+        immunities: ["construct"],
+        items: {
+          remove: ["GOLIRO", "IRONGOL", "IMMUNE3"],
+        },
       },
-    });
-    iron.createCloudOfPoisonousGas();
-    iron.setAdditionalData({
-      movement: { value: 6 },
-      removeItems: ["GOLIRO", "IRONGOL", "IMMUNE3"],
-      immunities: ["construct"],
     });
     iron.addTrait({
       immunities: ["magic", "plusTwoWeapons", "lightning"],
@@ -581,6 +586,7 @@ class GolemFamily extends CreatureFamily<Golem> {
         },
       ],
     });
+    iron.createCloudOfPoisonousGas();
     iron.createFists(4, 10, AbilityDamageTypeEnum.Crushing);
     iron.setBehavior({
       restHeal: true,
@@ -616,13 +622,12 @@ class GolemFamily extends CreatureFamily<Golem> {
         class: "GOLEM_STONE",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        immunities: ["construct", "skeletal"],
+        items: {
+          remove: ["S3-8M3", "GOLCLA", "IMMUNE2", "HELMNOAN"],
+        },
       },
-    });
-    bone.createHideousLaugh();
-    bone.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["construct", "skeletal"],
-      removeItems: ["S3-8M3", "GOLCLA", "IMMUNE2", "HELMNOAN"],
     });
     bone.addTrait({
       immunities: ["magic", "fire", "cold"],
@@ -634,6 +639,7 @@ class GolemFamily extends CreatureFamily<Golem> {
         },
       ],
     });
+    bone.createHideousLaugh();
     bone.createFists(3, 8, AbilityDamageTypeEnum.Slashing);
     bone.setBehavior({
       restHeal: true,
@@ -669,16 +675,18 @@ class GolemFamily extends CreatureFamily<Golem> {
         gender: "NIETHER",
         size: "Large",
         animation: "GOLEM_CLAY",
+        movement: 3,
+        immunities: ["construct"],
+        items: {
+          remove: ["IRONGOL"],
+        },
+        script: {
+          remove: ["GOLSTO01", "GOLIRO01", "TOMEGOL4"],
+        },
       },
     });
-    juggernaut.createCharge();
-    juggernaut.setAdditionalData({
-      movement: { value: 3 },
-      immunities: ["construct"],
-      removeScripts: ["GOLSTO01", "GOLIRO01", "TOMEGOL4"],
-      removeItems: ["IRONGOL"],
-    });
     juggernaut.addTrait({ immunities: ["magic", "fire"] });
+    juggernaut.createCharge();
     juggernaut.createFists(2, 6, AbilityDamageTypeEnum.Crushing);
     juggernaut.setBehavior({
       restHeal: true,
@@ -714,13 +722,12 @@ class GolemFamily extends CreatureFamily<Golem> {
         class: "GOLEM_STONE",
         gender: "NIETHER",
         size: "Large",
+        movement: 9,
+        immunities: ["construct"],
+        items: {
+          remove: ["UBSNORNG", "UBSNOFST"],
+        },
       },
-    });
-    snow.createConeOfCold();
-    snow.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["construct"],
-      removeItems: ["UBSNORNG", "UBSNOFST"],
     });
     snow.addTrait({
       immunities: ["plusOneWeapons", "lightning"],
@@ -737,6 +744,7 @@ class GolemFamily extends CreatureFamily<Golem> {
         },
       ],
     });
+    snow.createConeOfCold();
     snow.createFists(2, 12, AbilityDamageTypeEnum.Crushing);
     snow.setBehavior({
       restHeal: true,

@@ -2,7 +2,6 @@ import { GLOBAL_CONFIG } from "../../../config/generate";
 import { POTIONS } from "../../../config/potion";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
-import { TranslationKey } from "../../../translations/i18n";
 import actionFactory from "../../factories/action.factory";
 import bafFactory from "../../factories/baf.factory";
 import responseFactory from "../../factories/response.factory";
@@ -208,7 +207,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions
   ): void {
-    if (utils.hasImmunity(creature.additionalData.immunities, "fear")) return;
+    if (utils.hasImmunity(creature.data.immunities, "fear")) return;
     statements.push({
       comment: "Handle Panic state",
       triggers: [
@@ -555,7 +554,7 @@ class StatementService {
         ...triggerFactory.validTrackTarget({
           isTargetPlayer: true,
           seeInvisible: utils.hasImmunity(
-            creature.additionalData.immunities,
+            creature.data.immunities,
             "seeInvisible"
           ),
         }),
@@ -572,7 +571,7 @@ class StatementService {
         ...triggerFactory.validTrackTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
-            creature.additionalData.immunities,
+            creature.data.immunities,
             "seeInvisible"
           ),
         }),
@@ -812,7 +811,7 @@ class StatementService {
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
           seeInvisible: utils.hasImmunity(
-            creature.additionalData.immunities,
+            creature.data.immunities,
             "seeInvisible"
           ),
           maxRange: creature.attack.maxRange,
@@ -1018,7 +1017,7 @@ class StatementService {
         ...triggerFactory.validSpellTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
-            creature.additionalData.immunities,
+            creature.data.immunities,
             "seeInvisible"
           ),
         })
@@ -1028,7 +1027,7 @@ class StatementService {
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: false,
           seeInvisible: utils.hasImmunity(
-            creature.additionalData.immunities,
+            creature.data.immunities,
             "seeInvisible"
           ),
         })

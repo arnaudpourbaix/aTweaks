@@ -76,32 +76,30 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=12
-					bonusHp=14
-					strength=15
-					dexterity=10
-					constitution=21
-					intelligence=10
-					wisdom=10
-					charisma=10
-					ac=4
-					apr=1
 					xpv=5000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=14
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
-					class=IDS_OF_SYMBOL (~class~ ~MUSTARD_JELLY~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=7
 					hp=174
+					ac=4
 					thac0=7
+					apr=1
 					saveDeath=7
 					saveWand=9
 					savePolymorph=8
 					saveBreath=8
 					saveSpell=10
+					level1=12
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=15
+					intelligence=10
+					wisdom=10
+					dexterity=10
+					constitution=21
+					charisma=10
+					morale=14
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
+					class=IDS_OF_SYMBOL (~class~ ~MUSTARD_JELLY~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=7
 					enforce=1
 			END
 			// Assigning ja#m48 to slot Race

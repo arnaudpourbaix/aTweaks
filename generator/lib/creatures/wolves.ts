@@ -311,11 +311,11 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF",
         gender: "MALE",
         size: "Small",
+        movement: 18,
+        items: {
+          remove: ["P1-6"],
+        },
       },
-    });
-    wolf.setAdditionalData({
-      movement: { value: 18 },
-      removeItems: ["P1-6"],
     });
     wolf.createJaws({
       diceThrown: 1,
@@ -361,12 +361,14 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF_DIRE",
         gender: "MALE",
         size: "Large",
+        movement: 18,
+        items: {
+          remove: ["P1-8", "P2-8", "IMMUNE1", "RING95"],
+        },
+        script: {
+          remove: ["DIREWOLF"],
+        },
       },
-    });
-    dire.setAdditionalData({
-      movement: { value: 18 },
-      removeItems: ["P1-8", "P2-8", "IMMUNE1", "RING95"],
-      removeScripts: ["DIREWOLF"],
     });
     dire.createJaws({
       diceThrown: 2,
@@ -376,8 +378,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
       { files: ["WOLFDISU"], summon: true },
       {
         files: ["SHAWOL01"],
-        data: { strength: 18, xpv: 450 },
-        additionalData: { immunities: ["incorporeal"] },
+        data: { strength: 18, xpv: 450, immunities: ["incorporeal"] },
       },
     ]);
     return dire;
@@ -421,11 +422,11 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF_DREAD",
         gender: "MALE",
         size: "Small",
+        movement: 18,
+        items: {
+          remove: ["P1-10", "RING95", "TROLLIMM", "BDWOLFD1", "BDWOLFDR"],
+        },
       },
-    });
-    dread.setAdditionalData({
-      movement: { value: 18 },
-      removeItems: ["P1-10", "RING95", "TROLLIMM", "BDWOLFD1", "BDWOLFDR"],
     });
     const trait = dread.addTrait({
       id: Ids.DreadWolfTrait,
@@ -510,12 +511,14 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF_VAMPIRIC",
         gender: "MALE",
         size: "Small",
+        movement: 24,
+        items: {
+          remove: ["WOLFVA1", "BDWOLFVA", "IMMUNE1", "RING95"],
+        },
+        script: {
+          remove: ["VAMPWOLF"],
+        },
       },
-    });
-    vampiric.setAdditionalData({
-      movement: { value: 24 },
-      removeItems: ["WOLFVA1", "BDWOLFVA", "IMMUNE1", "RING95"],
-      removeScripts: ["VAMPWOLF"],
     });
     vampiric.createVampiricJaws({ slot: "WEAPON1" });
     vampiric.createVampiricJaws({
@@ -589,12 +592,14 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF_WINTER",
         gender: "MALE",
         size: "Large",
+        movement: 18,
+        items: {
+          remove: ["WOLFWI1", "WOLFWI2"],
+        },
+        script: {
+          remove: ["WNTRWOLF"],
+        },
       },
-    });
-    winter.setAdditionalData({
-      movement: { value: 18 },
-      removeItems: ["WOLFWI1", "WOLFWI2"],
-      removeScripts: ["WNTRWOLF"],
     });
     winter.addTrait({
       immunities: ["cold"],
@@ -647,11 +652,11 @@ class WolfFamily extends CreatureFamily<Wolf> {
         class: "WOLF_WORG",
         gender: "MALE",
         size: "Medium",
+        movement: 18,
+        items: {
+          remove: ["P1-6"],
+        },
       },
-    });
-    worg.setAdditionalData({
-      movement: { value: 18 },
-      removeItems: ["P1-6"],
     });
     worg.createJaws({
       diceThrown: 2,

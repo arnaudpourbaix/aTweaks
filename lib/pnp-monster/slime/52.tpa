@@ -71,33 +71,31 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=12
-					bonusHp=2
-					strength=15
-					dexterity=10
-					constitution=21
-					intelligence=10
-					wisdom=10
-					charisma=10
-					ac=9
-					apr=1
 					xpv=2500
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=9
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
-					class=IDS_OF_SYMBOL (~class~ ~OLIVE_SLIME~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					animation=IDS_OF_SYMBOL (~animate~ ~SLIME_OLIVE~)
-					movement=5
 					hp=174
+					ac=9
 					thac0=9
+					apr=1
 					saveDeath=7
 					saveWand=9
 					savePolymorph=8
 					saveBreath=8
 					saveSpell=10
+					level1=12
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=15
+					intelligence=10
+					wisdom=10
+					dexterity=10
+					constitution=21
+					charisma=10
+					morale=9
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~SLIME~)
+					class=IDS_OF_SYMBOL (~class~ ~OLIVE_SLIME~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					animation=IDS_OF_SYMBOL (~animate~ ~SLIME_OLIVE~)
+					movement=5
 					enforce=1
 			END
 			// Assigning ja#m52

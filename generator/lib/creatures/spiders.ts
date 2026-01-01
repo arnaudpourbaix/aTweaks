@@ -435,6 +435,14 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_GIANT",
         gender: "NIETHER",
         size: "Gargantuan",
+        movement: 9, // Web 12
+        immunities: ["spider"],
+        items: {
+          remove: ["BDSPIDGA", "ANTIWEB"],
+        },
+        script: {
+          remove: ["BDSPIDGA"],
+        },
       },
     });
     gargantuan.createWeb({
@@ -442,12 +450,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
       duration: 18,
       // saveBonus: -2,
       description: "monster.spider.ability.webTangle.standardDesc",
-    });
-    gargantuan.setAdditionalData({
-      movement: { value: 9 }, // Web 12
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGA", "ANTIWEB"],
-      removeScripts: ["BDSPIDGA"],
     });
     gargantuan.createJaws({
       diceThrown: 2,
@@ -493,8 +495,17 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Large",
+        movement: 15,
+        immunities: ["spider"],
+        items: {
+          remove: ["SPIDPH1", "ANTIWEB", "GHOST2"],
+        },
+        script: {
+          remove: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
+        },
       },
     });
+    ghostwalk.addTrait({ immunities: ["seeInvisible"] });
     ghostwalk.createWeb({
       id: Ids.InvisibleWebTangle,
       duration: 18,
@@ -502,13 +513,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
       description: "monster.spider.ability.webTangle.ghostwalkDesc",
       invisible: true,
     });
-    ghostwalk.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["spider"],
-      removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
-      removeScripts: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
-    });
-    ghostwalk.addTrait({ immunities: ["seeInvisible"] });
     ghostwalk.createJaws({
       diceThrown: 3,
       diceSize: 10,
@@ -591,13 +595,15 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_GIANT",
         gender: "NIETHER",
         size: "Large",
+        movement: 3, // Web 12
+        immunities: ["spider"],
+        items: {
+          remove: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
+        },
+        script: {
+          remove: ["DW#SPIDG", "SPIDFGSU"],
+        },
       },
-    });
-    giant.setAdditionalData({
-      movement: { value: 3 }, // Web 12
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
-      removeScripts: ["DW#SPIDG", "SPIDFGSU"],
     });
     giant.createJaws({
       diceThrown: 1,
@@ -606,7 +612,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
     });
     giant.setAdjustments([
       { files: ["SPIDGISU", "BDHELP01", "SPIDFGSU"], summon: true },
-      { files: ["PLYSPID2"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYSPID2"], data: { script: { location: "None" } } },
     ]);
     return giant;
   }
@@ -642,14 +648,18 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_HUGE",
         gender: "NIETHER",
         size: "Tiny",
+        movement: 6, // web 15
+        immunities: ["spider"],
+        items: {
+          remove: ["SPIDHU1", "ANTIWEB"],
+        },
+        script: {
+          remove: ["DW#SPIDG"],
+        },
+        spells: {
+          memorized: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
+        },
       },
-    });
-    hairy.setAdditionalData({
-      movement: { value: 6 }, // web 15
-      immunities: ["spider"],
-      removeItems: ["SPIDHU1", "ANTIWEB"],
-      removeScripts: ["DW#SPIDG"],
-      memorizedSpells: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
     });
     hairy.createJaws({
       diceThrown: 1,
@@ -672,7 +682,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
       ],
     });
     hairy.setAdjustments([
-      { files: ["BDSPIDER"], additionalData: { scriptLocation: "None" } },
+      { files: ["BDSPIDER"], data: { script: { location: "None" } } },
     ]);
     return hairy;
   }
@@ -709,13 +719,15 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_HUGE",
         gender: "NIETHER",
         size: "Medium",
+        movement: 18,
+        immunities: ["spider"],
+        items: {
+          remove: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
+        },
+        script: {
+          remove: ["DW#SPIDS"],
+        },
       },
-    });
-    huge.setAdditionalData({
-      movement: { value: 18 },
-      immunities: ["spider"],
-      removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
-      removeScripts: ["DW#SPIDS"],
     });
     huge.createJaws({
       diceThrown: 1,
@@ -756,17 +768,17 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_GIANT",
         gender: "NIETHER",
         size: "Large",
+        movement: 8,
+        immunities: [
+          "spider",
+          "seeInvisible", // their vision gives them the natural ability of true seeing
+        ],
+        items: {
+          remove: ["D5SMSPID", "ANTIWEB"],
+        },
       },
     });
     hunting.createLeapSpell({ id: Ids.LeapAttack, memorizedCount: 1 });
-    hunting.setAdditionalData({
-      movement: { value: 8 },
-      immunities: [
-        "spider",
-        "seeInvisible", // their vision gives them the natural ability of true seeing
-      ],
-      removeItems: ["D5SMSPID", "ANTIWEB"],
-    });
     hunting.createJaws({
       diceThrown: 1,
       diceSize: 3,
@@ -809,14 +821,15 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_PHASE",
         gender: "NIETHER",
         size: "Huge",
+        movement: 6, // Web 15
+        immunities: ["spider"],
+        items: {
+          remove: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
+        },
+        script: {
+          remove: ["PSPIDER", "SPIDPHSU"],
+        },
       },
-    });
-    phase.createPhaseOut();
-    phase.setAdditionalData({
-      movement: { value: 6 }, // Web 15
-      immunities: ["spider"],
-      removeItems: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
-      removeScripts: ["PSPIDER", "SPIDPHSU"],
     });
     phase.addTrait({
       effects: [
@@ -826,6 +839,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
         },
       ],
     });
+    phase.createPhaseOut();
     // They phase in, attack, and phase out, all in a single round.
     // This gives them a -3 modifier on initiative rolls; if a phase spider wins initiative by more than 4, it attacks and phases out before its opponent has a chance to strike back.
     // Then too, a phase spider usually phases into existence behind its chosen victim, so they get a +4 modifier for attacking from behind.
@@ -903,6 +917,14 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_SWORD",
         gender: "NIETHER",
         size: "Huge",
+        movement: 6, // Web 8
+        immunities: ["spider"],
+        items: {
+          remove: ["SPIDSW1", "ANTIWEB", "SPIDSWSU", "WISPIDSW"],
+        },
+        script: {
+          remove: ["DW#SPIDS"],
+        },
       },
     });
     sword.createJaws({
@@ -919,12 +941,6 @@ class SpiderFamily extends CreatureFamily<Spider> {
       id: Ids.LightningLeapImpalingAttack,
       lightning: true,
     });
-    sword.setAdditionalData({
-      movement: { value: 6 }, // Web 8
-      immunities: ["spider"],
-      removeItems: ["SPIDSW1", "ANTIWEB", "SPIDSWSU", "WISPIDSW"],
-      removeScripts: ["DW#SPIDS"],
-    });
     sword.setBehavior({
       abilities: [
         this.ability(Ids.LeapImpalingAttack),
@@ -933,20 +949,24 @@ class SpiderFamily extends CreatureFamily<Spider> {
     });
     sword.setAdjustments([
       { files: ["BDHELP03", "SPIDSWSU"], summon: true },
-      { files: ["PLYSPID"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYSPID"], data: { script: { location: "None" } } },
       {
         files: ["WISPID03"],
-        additionalData: {
-          removeMemorizedSpells: true,
-          equippedItems: [
-            { file: this.item(Ids.LightningLeg).file, slot: "SHIELD" },
-          ],
-          memorizedSpells: [
-            {
-              file: this.spell(Ids.LightningLeapImpalingAttack).file,
-              memorizedCount: 1,
-            },
-          ],
+        data: {
+          spells: {
+            removeMemorized: true,
+            memorized: [
+              {
+                file: this.spell(Ids.LightningLeapImpalingAttack).file,
+                memorizedCount: 1,
+              },
+            ],
+          },
+          items: {
+            equipped: [
+              { file: this.item(Ids.LightningLeg).file, slot: "SHIELD" },
+            ],
+          },
         },
       },
     ]);
@@ -982,14 +1002,18 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_PHASE",
         gender: "NIETHER",
         size: "Large",
+        movement: 15, // Normal: 9, Web: 15
+        immunities: ["spider"],
+        items: {
+          remove: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
+        },
+        script: {
+          remove: ["DW#SPIDG", "SPIDVO01"],
+        },
+        spells: {
+          memorized: [{ file: SPELLS.VortexWeb, memorizedCount: 1 }],
+        },
       },
-    });
-    vortex.setAdditionalData({
-      movement: { value: 15 }, // Normal: 9, Web: 15
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
-      removeScripts: ["DW#SPIDG", "SPIDVO01"],
-      memorizedSpells: [{ file: SPELLS.VortexWeb, memorizedCount: 1 }],
     });
     vortex.addTrait({
       effects: [
@@ -1058,13 +1082,15 @@ class SpiderFamily extends CreatureFamily<Spider> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        immunities: ["spider", "undead"],
+        items: {
+          remove: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
+        },
+        script: {
+          remove: ["DW#SPIDG"],
+        },
       },
-    });
-    wraith.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     wraith.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],

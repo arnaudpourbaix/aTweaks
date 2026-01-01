@@ -91,32 +91,30 @@ BEGIN
 			LPF infravision_trait END
 			LPF patchCreature
 				INT_VAR
-					level1=3
-					bonusHp=1
-					strength=17
-					dexterity=15
-					constitution=13
-					intelligence=4
-					wisdom=12
-					charisma=8
-					ac=7
-					apr=3
 					xpv=270
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=9
-					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
-					race=IDS_OF_SYMBOL (~race~ ~CAT~)
-					class=IDS_OF_SYMBOL (~class~ ~CAT~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=10
 					hp=25
+					ac=7
 					thac0=17
+					apr=3
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=3
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=17
+					intelligence=4
+					wisdom=12
+					dexterity=15
+					constitution=13
+					charisma=8
+					morale=9
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~CAT~)
+					class=IDS_OF_SYMBOL (~class~ ~CAT~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=10
 					enforce=1
 					perfect2weapon=1
 			END

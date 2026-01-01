@@ -1,59 +1,78 @@
-import deepmerge from "deepmerge";
 import figureSet from "figures";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
 import {
-  ADDITIONAL_DATA_DEFAULT,
-  ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
-  CreatureAdditionalData,
-} from "../model/creature/additional-data";
+  CreatureAdjustment,
+  PartialCreatureAdjustment,
+} from "../model/creature/adjustment";
 import {
   BEHAVIOR_DEFAULT,
   CreatureBehavior,
   PartialCreatureBehavior,
 } from "../model/creature/behavior";
+import { BaseCreature, Creature } from "../model/creature/creature";
 import {
-  Creature,
-  CreatureAdjustment,
-  PartialCreatureAdjustment,
-} from "../model/creature/creature";
-import { CreatureData } from "../model/creature/data";
+  CREATURE_DATA_FIELDS,
+  CreatureData,
+  CreatureDataEffects,
+  CreatureDataItems,
+  CreatureDataProficiencies,
+  CreatureDataScript,
+  CreatureDataSpells,
+  MainCreatureData,
+} from "../model/creature/data";
+import { InputCreatureData } from "../model/creature/data-input";
 import { ItemSlot } from "../model/creature/item";
 import { Item } from "../model/spell-item/spell-item";
-import { AtLeast, WithRequired } from "../model/utility-types";
 import abilityService from "../services/baf/ability.service";
 import creatureService from "../services/creature.service";
 import descriptionService from "../services/doc/description.service";
 import immunityService from "../services/effects/immunity.service";
 import translationService from "../services/translation.service";
 import { State } from "../state";
+import { ImmunityName } from "../model/final/immunity";
 
 class CreatureFactory {
-  setData(cre: Creature, data: Partial<CreatureData>) {
+  setData(cre: Creature, data: InputCreatureData) {
     this.checkValidation(cre);
-    cre.data = deepmerge(cre.data, data);
-    if (!data.level1) return;
-    if (data.thac0 === undefined) cre.data.thac0 = undefined;
-    if (data.hp === undefined) cre.data.hp = undefined;
-    if (data.saveBreath === undefined) cre.data.saveBreath = undefined;
-    if (data.saveDeath === undefined) cre.data.saveDeath = undefined;
-    if (data.savePolymorph === undefined) cre.data.savePolymorph = undefined;
-    if (data.saveSpell === undefined) cre.data.saveSpell = undefined;
-    if (data.saveWand === undefined) cre.data.saveWand = undefined;
+    cre.data = this.getData(cre.data, data, false) as MainCreatureData;
   }
 
-  setAdditionalData(
-    cre: Creature,
-    additionalData: AtLeast<
-      WithRequired<CreatureAdditionalData, "movement">,
-      "movement"
-    >
-  ) {
-    this.checkValidation(cre);
-    const current: CreatureAdditionalData = deepmerge(
-      ADDITIONAL_DATA_DEFAULT,
-      cre.additionalData
-    );
-    cre.additionalData = deepmerge(current, additionalData);
+  getData(
+    data: CreatureData | undefined,
+    input: InputCreatureData,
+    isAdjustment: boolean
+  ): CreatureData {
+    data ??= this.createEmptyData();
+    if (!isAdjustment) {
+      data.spells.removeKnown = true;
+      data.spells.removeMemorized = true;
+      data.effects.remove = true;
+    }
+    for (const field of CREATURE_DATA_FIELDS) {
+      if (field.setter && input[field.key] !== undefined) {
+        field.setter(data, input[field.key]);
+      }
+      if (
+        !field.setter &&
+        field.key in input &&
+        input[field.key] !== undefined
+      ) {
+        (data as any)[field.key] = input[field.key];
+      }
+    }
+    return data;
+  }
+
+  createEmptyData(): CreatureData {
+    const data: CreatureData = {
+      script: new CreatureDataScript(),
+      proficiencies: [] as CreatureDataProficiencies,
+      immunities: [] as ImmunityName[],
+      items: new CreatureDataItems(),
+      spells: new CreatureDataSpells(),
+      effects: new CreatureDataEffects(),
+    };
+    return data;
   }
 
   setAdjustments(cre: Creature, adjustments: PartialCreatureAdjustment[]) {
@@ -63,11 +82,9 @@ class CreatureFactory {
         ...adjustment,
         noWeapon: adjustment.noWeapon ?? false,
         summon: adjustment.summon ?? false,
-        data: adjustment.data ?? {},
-        additionalData: deepmerge(
-          ADJUSTMENT_ADDITIONAL_DATA_DEFAULT,
-          adjustment.additionalData ?? {}
-        ),
+        data: adjustment.data
+          ? this.getData(undefined, adjustment.data, true)
+          : this.createEmptyData(),
       };
       cre.adjustments.push(result);
     }
@@ -77,7 +94,7 @@ class CreatureFactory {
     this.checkValidation(cre);
     slot ??= item.equippedSlot;
     if (!slot) throw new Error(`No slot defined for ${item.stringRef}`);
-    const equippedItem = cre.additionalData.equippedItems.find(
+    const equippedItem = cre.data.items.equipped.find(
       (e) => slot.length === 1 && e.slot[0] === slot[0]
     );
     const duplicate = cre.items.find((i) => i.file === equippedItem?.file);
@@ -86,7 +103,7 @@ class CreatureFactory {
         `${figureSet.warning} Slot ${equippedItem.slot} is already attributed to ${duplicate.stringRef}.`
       );
     }
-    cre.additionalData.equippedItems.push({
+    cre.data.items.equipped.push({
       file: item.file,
       slot,
     });
@@ -147,10 +164,6 @@ class CreatureFactory {
           ", "
         )}`
       );
-      valid = false;
-    }
-    if (!creature.additionalData) {
-      console.log(`${figureSet.warning} No additional data defined`);
       valid = false;
     }
     if (!creature.attack) {

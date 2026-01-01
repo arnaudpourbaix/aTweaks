@@ -38,31 +38,30 @@ BEGIN
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=2
-					bonusHp=6
-					strength=17
-					dexterity=10
-					constitution=14
-					intelligence=9
-					wisdom=9
-					charisma=10
-					ac=5
-					apr=1
 					xpv=175
-					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
-					morale=12
-					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
-					race=IDS_OF_SYMBOL (~race~ ~OGRE~)
-					class=IDS_OF_SYMBOL (~class~ ~OGRE_HALFOGRE~)
-					kit=IDS_OF_SYMBOL (~kit~ ~TRUECLASS~)
-					movement=10
 					hp=22
+					ac=5
 					thac0=17
+					apr=1
 					saveDeath=14
 					saveWand=16
 					savePolymorph=15
 					saveBreath=17
 					saveSpell=17
+					level1=2
+					strength=17
+					intelligence=9
+					wisdom=9
+					dexterity=10
+					constitution=14
+					charisma=10
+					morale=12
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~OGRE~)
+					class=IDS_OF_SYMBOL (~class~ ~OGRE_HALFOGRE~)
+					kit=IDS_OF_SYMBOL (~kit~ ~TRUECLASS~)
+					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
+					movement=10
 					enforce=1
 			END
 			// Assigning ja#m29

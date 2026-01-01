@@ -85,32 +85,31 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=18
-					strength=22
-					dexterity=9
-					constitution=20
-					intelligence=3
-					wisdom=11
-					charisma=1
-					ac=2
-					apr=2
 					xpv=11000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=16
-					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
-					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
-					class=IDS_OF_SYMBOL (~class~ ~GOLEM_STONE~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					animation=IDS_OF_SYMBOL (~animate~ ~GOLEM_CLAY~)
-					movement=2
 					hp=174
+					ac=2
 					thac0=3
+					apr=2
 					saveDeath=3
 					saveWand=5
 					savePolymorph=4
 					saveBreath=4
 					saveSpell=6
+					level1=18
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=22
+					intelligence=3
+					wisdom=11
+					dexterity=9
+					constitution=20
+					charisma=1
+					morale=16
+					general=IDS_OF_SYMBOL (~general~ ~GIANTHUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~GOLEM_STONE~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					animation=IDS_OF_SYMBOL (~animate~ ~GOLEM_CLAY~)
+					movement=2
 					enforce=1
 			END
 			// Assigning ja#m33

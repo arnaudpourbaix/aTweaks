@@ -50,40 +50,38 @@ BEGIN
 			SET_BG2_PROFICIENCY ~PROFICIENCYTWOHANDEDSWORD~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=4
-					bonusHp=10
-					strength=18
-					dexterity=13
-					constitution=9
-					intelligence=14
-					wisdom=10
-					charisma=10
-					ac=2
-					apr=1
 					xpv=2000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=20
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
-					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					animation=IDS_OF_SYMBOL (~animate~ ~FIGHTER_MALE_HUMAN~)
-					hairColor=63
-					armorColor=63
-					skinColor=63
-					majorColor=63
-					metalColor=63
-					minorColor=63
-					leatherColor=63
-					movement=10
 					hp=52
+					ac=2
 					thac0=15
+					apr=1
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=4
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=18
+					intelligence=14
+					wisdom=10
+					dexterity=13
+					constitution=9
+					charisma=10
+					morale=20
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					animation=IDS_OF_SYMBOL (~animate~ ~FIGHTER_MALE_HUMAN~)
+					metalColor=63
+					minorColor=63
+					majorColor=63
+					skinColor=63
+					leatherColor=63
+					armorColor=63
+					hairColor=63
+					movement=10
 					enforce=1
 			END
 			// Assigning ja#m15

@@ -22,6 +22,7 @@ import { Triggers } from "../../model/script/triggers";
 import utils from "../utils/utils.service";
 import { GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
 import { PartialCreatureAttack } from "../../model/creature/attack";
+import triggerFactory from "../../factories/trigger.factory";
 
 class TargetService {
   targetObject(p: {
@@ -79,7 +80,9 @@ class TargetService {
     for (const name of target.excludeStatus ?? []) {
       const status = statuses.find((s) => s.status === name) as TargetStatus;
       triggers.push(...status.triggers);
-      targetTriggers.push(...utils.inverseNegations(status.targetTriggers));
+      targetTriggers.push(
+        ...triggerFactory.inverseNegations(status.targetTriggers)
+      );
     }
     return { triggers, targetTriggers };
   }

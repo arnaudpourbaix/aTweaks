@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../../../config/item";
-import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import creatureFactory from "../../factories/creature.factory";
 import targetService from "../../services/baf/target.service";
@@ -22,23 +22,22 @@ import {
   Spell,
   WeaponCastSpell,
 } from "../spell-item/spell-item";
-import { AtLeast, PartialBy, WithRequired } from "../utility-types";
 import { AbstractCreature } from "./abstract-creature";
-import { CreatureAdditionalData } from "./additional-data";
+import { CreatureAdjustment, PartialCreatureAdjustment } from "./adjustment";
 import {
   CreatureAttack,
   CreatureAttackAction,
   PartialCreatureAttack,
 } from "./attack";
 import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
-import { CreatureData } from "./data";
+import { CreatureData, MainCreatureData } from "./data";
+import { InputCreatureData } from "./data-input";
 import { CreatureGrabConfig } from "./grab";
 import { ItemSlot, JEWEL_SLOTS } from "./item";
 
 export interface BaseCreature {
   files: string[];
-  data: Partial<CreatureData>;
-  additionalData: CreatureAdditionalData;
+  data: CreatureData;
 }
 
 export class Creature extends AbstractCreature implements BaseCreature {
@@ -49,8 +48,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
   logging!: boolean;
   name!: TranslationKey;
   family!: MonsterFamilyEnum;
-  data!: CreatureData;
-  additionalData!: CreatureAdditionalData;
+  data!: MainCreatureData;
   behavior!: CreatureBehavior;
   attack!: CreatureAttack;
   files: string[] = [];
@@ -74,17 +72,12 @@ export class Creature extends AbstractCreature implements BaseCreature {
   };
   valid?: boolean;
 
-  setData(data: Partial<CreatureData>) {
-    creatureFactory.setData(this, data);
+  constructor(id: MonsterEnum) {
+    super(id);
   }
 
-  setAdditionalData(
-    additionalData: AtLeast<
-      WithRequired<CreatureAdditionalData, "movement">,
-      "movement"
-    >
-  ) {
-    creatureFactory.setAdditionalData(this, additionalData);
+  setData(data: InputCreatureData) {
+    creatureFactory.setData(this, data);
   }
 
   setBehavior(behavior: PartialCreatureBehavior) {
@@ -120,7 +113,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
   override addSpell(spell: PartialSpell): Spell {
     const result = super.addSpell(spell);
     if (spell.memorizedCount) {
-      this.additionalData.memorizedSpells.push({
+      this.data.spells.memorized.push({
         file: result.file,
         memorizedCount: spell.memorizedCount,
       });
@@ -131,16 +124,16 @@ export class Creature extends AbstractCreature implements BaseCreature {
   override addItem(item: PartialItem): Item {
     const result = super.addItem(item);
     if (!item.equippedSlot) return result;
-    const itemInSlot = this.additionalData.equippedItems.findIndex(
+    const itemInSlot = this.data.items.equipped.findIndex(
       (i) => i.slot.length === 1 && i.slot[0] === item.equippedSlot![0]
     );
     if (itemInSlot !== -1) {
       console.log(`replacing item in slot ${item.equippedSlot![0]}`);
-      this.additionalData.equippedItems.splice(itemInSlot, 1);
+      this.data.items.equipped.splice(itemInSlot, 1);
     }
 
     if (item.equippedSlot) {
-      this.additionalData.equippedItems.push({
+      this.data.items.equipped.push({
         file: result.file,
         slot: item.equippedSlot,
       });
@@ -150,6 +143,10 @@ export class Creature extends AbstractCreature implements BaseCreature {
 
   equipItem(item: Item, slot?: ItemSlot[]): void {
     creatureFactory.equipItem(this, item, slot);
+  }
+
+  memorizeSpell(file: string, memorizedCount: number) {
+    this.data.spells.memorized.push({ file, memorizedCount });
   }
 
   override addWeapon({
@@ -228,19 +225,3 @@ export interface CreatureAutoGenerate {
   enchantment?: boolean;
   meleeRange?: boolean;
 }
-
-export interface CreatureAdjustment extends BaseCreature {
-  /**
-   * Is it a summon ?
-   */
-  summon: boolean;
-  /**
-   * Don't assign a weapon
-   */
-  noWeapon: boolean;
-}
-
-export type PartialCreatureAdjustment = PartialBy<
-  Omit<CreatureAdjustment, "additionalData">,
-  "summon" | "noWeapon" | "data"
-> & { additionalData?: Partial<CreatureAdditionalData> };

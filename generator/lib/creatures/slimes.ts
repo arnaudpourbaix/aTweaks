@@ -1,6 +1,6 @@
 import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
 import { MonsterItemIconEnum } from "../config/item";
-import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
@@ -200,6 +200,18 @@ class SlimeFamily extends CreatureFamily<Slime> {
         animation: "BLACK_PUDDING",
         gender: "NIETHER",
         size: "Large",
+        movement: 6,
+        immunities: ["ooze"],
+        items: {
+          remove: ["HELMNOAN", "RING95", "BDPUDDBL"],
+        },
+        script: {
+          remove: ["BDPUDDBL"],
+          location: "General",
+        },
+        effects: {
+          remove: true,
+        },
       },
     });
     black.createSplit({
@@ -208,14 +220,6 @@ class SlimeFamily extends CreatureFamily<Slime> {
       resource: ATWEAKS_CREATURES.SplitBlackPudding,
       visualEffect: "BDGOOYAA",
       withTriggers: true,
-    });
-    black.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["HELMNOAN", "RING95", "BDPUDDBL"],
-      removeScripts: ["BDPUDDBL"],
-      scriptLocation: "General",
     });
     black.addTrait({
       // 5e: Damage Immunities: Lightning, Slashing
@@ -248,9 +252,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
         data: {
           hp: 50, // a little less than half hp since it splits after taking some damage
           xpv: 1000,
-        },
-        additionalData: {
-          removeMemorizedSpells: true,
+          spells: { removeMemorized: true },
         },
       },
     ]);
@@ -295,20 +297,13 @@ class SlimeFamily extends CreatureFamily<Slime> {
         animation: "GRAY_OOZE",
         gender: "NIETHER",
         size: "Large",
+        movement: 9,
+        immunities: ["ooze"],
+        items: {
+          remove: ["IMMUNE1", "RING95", "AC#FPWPU"],
+        },
+        effects: { remove: true },
       },
-    });
-    white.createSplit({
-      id: Ids.WhitePuddingSplit,
-      description: "monster.slime.ability.split.puddingDesc",
-      resource: ATWEAKS_CREATURES.SplitWhitePudding,
-      visualEffect: "BDGOOYAA",
-      withTriggers: true,
-    });
-    white.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["IMMUNE1", "RING95", "AC#FPWPU"],
     });
     white.addTrait({
       // 5e: Damage Immunities: Lightning, Slashing
@@ -320,6 +315,13 @@ class SlimeFamily extends CreatureFamily<Slime> {
           type: EffectStatisticModifierEnum.Set,
         },
       ],
+    });
+    white.createSplit({
+      id: Ids.WhitePuddingSplit,
+      description: "monster.slime.ability.split.puddingDesc",
+      resource: ATWEAKS_CREATURES.SplitWhitePudding,
+      visualEffect: "BDGOOYAA",
+      withTriggers: true,
     });
     white.createPseudopod(0, 0, [
       {
@@ -339,9 +341,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
         data: {
           hp: 45, // a little less than half hp since it splits after taking some damage
           xpv: 700,
-        },
-        additionalData: {
-          removeMemorizedSpells: true,
+          spells: { removeMemorized: true },
         },
       },
     ]);
@@ -390,22 +390,17 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "MUSTARD_JELLY",
         gender: "NIETHER",
         size: "Large",
+        movement: 9,
+        immunities: ["ooze"],
+        items: {
+          remove: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
+        },
+        spells: {
+          memorized: [
+            { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
+          ],
+        },
       },
-    });
-    mustard.createSplit({
-      id: Ids.MustardJellySplit,
-      description: "monster.slime.ability.split.mustardDesc",
-      resource: ATWEAKS_CREATURES.SplitMustardJelly,
-      visualEffect: "TRGOOYAA",
-      withTriggers: false,
-    });
-    mustard.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeItems: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
-      memorizedSpells: [
-        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-      ],
     });
     mustard.addTrait({
       immunities: [
@@ -422,6 +417,13 @@ class SlimeFamily extends CreatureFamily<Slime> {
           type: EffectStatisticModifierEnum.Set,
         },
       ],
+    });
+    mustard.createSplit({
+      id: Ids.MustardJellySplit,
+      description: "monster.slime.ability.split.mustardDesc",
+      resource: ATWEAKS_CREATURES.SplitMustardJelly,
+      visualEffect: "TRGOOYAA",
+      withTriggers: false,
     });
     mustard.createPseudopod(2, 4, [
       {
@@ -440,16 +442,16 @@ class SlimeFamily extends CreatureFamily<Slime> {
     });
     mustard.setAdjustments([
       { files: ["JELLMUSU"], summon: true },
-      { files: ["PLYJELL1"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYJELL1"], data: { script: { location: "None" } } },
       {
         files: [ATWEAKS_CREATURES.SplitMustardJelly],
         data: {
           hp: 56,
           xpv: 2000,
           movement: 18,
-        },
-        additionalData: {
-          removeMemorizedSpells: [this.spell(Ids.MustardJellySplit).file],
+          spells: {
+            removeMemorized: [this.spell(Ids.MustardJellySplit).file],
+          },
         },
       },
     ]);
@@ -483,17 +485,23 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "MUSTARD_JELLY",
         gender: "NIETHER",
         size: "Large",
+        movement: 9,
+        immunities: ["ooze"],
+        items: {
+          remove: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
+        },
+        script: {
+          location: "Race",
+        },
+        spells: {
+          memorized: [
+            { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
+          ],
+        },
+        effects: {
+          remove: true,
+        },
       },
-    });
-    fission.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["ooze"],
-      removeEffects: true,
-      removeItems: ["IMMUNE1", "RING95", "JELLMU2", "DW#JELM2"],
-      scriptLocation: "Race",
-      memorizedSpells: [
-        { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-      ],
     });
     fission.addTrait({
       immunities: [
@@ -559,12 +567,12 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "GREY_OOZE",
         gender: "NIETHER",
         size: "Large",
+        movement: 1,
+        immunities: ["ooze"],
+        items: {
+          remove: ["RING95", "OOZEGR1", "DW#OOZEG"],
+        },
       },
-    });
-    gray.setAdditionalData({
-      movement: { value: 1 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "OOZEGR1", "DW#OOZEG"],
     });
     // 5e:
     // Acid (Ex): A gray ooze secretes a digestive acid that quickly dissolves organic material and metal, but not stone. Any melee hit or constrict attack deals acid damage. Armor or clothing dissolves and becomes useless immediately unless it succeeds on a DC 16 Reflex save. A metal or wooden weapon that strikes a gray ooze also dissolves immediately unless it succeeds on a DC 16 Reflex save. The save DCs are Constitution-based.
@@ -623,12 +631,12 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "GREEN_SLIME",
         gender: "NIETHER",
         size: "Small",
+        movement: 0,
+        immunities: ["ooze"],
+        items: {
+          remove: ["RING95", "JELLGR1", "JELLGRSU"],
+        },
       },
-    });
-    green.setAdditionalData({
-      movement: { value: 0 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLGR1", "JELLGRSU"],
     });
     green.addTrait({
       // The horrid growth can be scraped off quickly, cut away, frozen, or burned.
@@ -652,11 +660,11 @@ class SlimeFamily extends CreatureFamily<Slime> {
       {
         files: ["JELLGRSU"],
         summon: true,
-        additionalData: { scriptLocation: "None" },
+        data: { script: { location: "None" } },
       },
       {
         files: ["X#JELLY", "X#SLIME"],
-        additionalData: { scriptLocation: "None" },
+        data: { script: { location: "None" } },
       },
     ]);
     return green;
@@ -695,12 +703,12 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "OCRE_JELLY",
         gender: "NIETHER",
         size: "Medium",
+        movement: 3,
+        immunities: ["ooze"],
+        items: {
+          remove: ["RING95", "JELLOC1", "DW#JELOC"],
+        },
       },
-    });
-    ochre.setAdditionalData({
-      movement: { value: 3 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "JELLOC1", "DW#JELOC"],
     });
     ochre.addTrait({
       immunities: ["lightning"],
@@ -751,13 +759,15 @@ class SlimeFamily extends CreatureFamily<Slime> {
         gender: "NIETHER",
         animation: "SLIME_OLIVE",
         size: "Large",
+        movement: 6,
+        immunities: ["ooze"],
+        items: {
+          remove: ["SCHLUM1", "DW#SCHLU", "RING95", "IMMUNE1"],
+        },
+        script: {
+          remove: ["SCHLUM"],
+        },
       },
-    });
-    olive.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["ooze"],
-      removeItems: ["SCHLUM1", "DW#SCHLU", "RING95", "IMMUNE1"],
-      removeScripts: ["SCHLUM"],
     });
     olive.addTrait({
       // Olive slime zombies are harmed by acid, freezing cold, fire and magic missile spells.
@@ -809,12 +819,12 @@ class SlimeFamily extends CreatureFamily<Slime> {
         class: "GREY_OOZE",
         gender: "NIETHER",
         size: "Small",
+        movement: 12,
+        immunities: ["ooze"],
+        items: {
+          remove: ["RING95", "AC#FPSL2", "AC#FPSLT"],
+        },
       },
-    });
-    tracker.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["ooze"],
-      removeItems: ["RING95", "AC#FPSL2", "AC#FPSLT"],
     });
     tracker.createPseudopod(1, 6, [
       {

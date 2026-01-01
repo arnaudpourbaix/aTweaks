@@ -143,19 +143,21 @@ class DogFamily extends CreatureFamily<Dog> {
         class: "DOG_WILD",
         gender: "MALE",
         size: "Small",
+        movement: 15,
+        items: {
+          remove: ["P1-4"],
+        },
+        script: {
+          location: "Default",
+        },
       },
-    });
-    wild.setAdditionalData({
-      movement: { value: 15 },
-      removeItems: ["P1-4"],
-      scriptLocation: "Default",
     });
     wild.createJaws(1, 4);
     wild.setBehavior({ dialog: ["BDDOGW01"] });
     wild.setAdjustments([
       { files: ["DOGWISU"], summon: true },
       { files: ["BDDOG"], data: { class: "INNOCENT" } },
-      { files: ["BDDEADOG"], additionalData: { scriptLocation: "None" } },
+      { files: ["BDDEADOG"], data: { script: { location: "None" } } },
     ]);
     return wild;
   }
@@ -195,17 +197,15 @@ class DogFamily extends CreatureFamily<Dog> {
         class: "DOG_WAR",
         gender: "MALE",
         size: "Medium",
+        movement: 12,
+        items: { remove: ["P2-8"] },
+        script: { location: "Default" },
       },
-    });
-    war.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["P2-8"],
-      scriptLocation: "Default",
     });
     war.createJaws(2, 4);
     war.setAdjustments([
       { files: ["DOGWASU"], summon: true },
-      { files: ["UBNIMDOG"], additionalData: { scriptLocation: "None" } },
+      { files: ["UBNIMDOG"], data: { script: { location: "None" } } },
     ]);
     return war;
   }
@@ -236,15 +236,12 @@ class DogFamily extends CreatureFamily<Dog> {
         class: "DOG_WILD",
         gender: "MALE",
         size: "Medium",
+        movement: 12,
+        items: { remove: ["P1-6"] },
+        script: { remove: ["PSPIDER"], location: "Default" },
       },
     });
     blinkDog.createBlink();
-    blinkDog.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["P1-6"],
-      removeScripts: ["PSPIDER"],
-      scriptLocation: "Default",
-    });
     blinkDog.createJaws(1, 6);
     blinkDog.setBehavior({ abilities: [this.ability(Ids.Blink)] });
     return blinkDog;
@@ -280,13 +277,12 @@ class DogFamily extends CreatureFamily<Dog> {
         class: "DOG_WAR",
         gender: "MALE",
         size: "Medium",
+        movement: 15,
+        items: {
+          remove: ["FIGRING3", "IPSION", "BDSPIRIM", "DOGWAWP", "BDSHA01C"],
+        },
+        script: { remove: ["WARDOG"], location: "Default" },
       },
-    });
-    spectralHound.setAdditionalData({
-      movement: { value: 15 },
-      removeItems: ["FIGRING3", "IPSION", "BDSPIRIM", "DOGWAWP", "BDSHA01C"],
-      removeScripts: ["WARDOG"],
-      scriptLocation: "Default",
     });
     const shiftEffect: BaseEffect = {
       timing: EffectTimingEnum.InstantLimited,

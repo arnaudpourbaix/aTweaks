@@ -4,6 +4,7 @@ import { Response, Statements } from "../model/script/script";
 import { Triggers } from "../model/script/triggers";
 import utils from "../services/utils/utils.service";
 import responseFactory from "./response.factory";
+import triggerFactory from "./trigger.factory";
 
 class BafFactory {
   addStatementsFromTargetList = (p: {
@@ -68,7 +69,7 @@ class BafFactory {
           .replaceTriggerTokens(p.targetTriggers, [
             { key: GLOBAL_CONFIG.tokens.target, value: target },
           ])
-          .map(utils.inverseNegation),
+          .map(triggerFactory.inverseNegation),
       };
       if (p.random && index < targets.length - 1)
         orTrigger.triggers.push({

@@ -14,6 +14,7 @@ import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduCoreService from "./weidu-core.service";
 import weiduSpellService from "./weidu-spell.service";
+import weiduUtils from "../utils/weidu.utils";
 
 class WeiduFunctionService extends AbstractWeiduService {
   generateSpellResources(): void {
@@ -189,13 +190,13 @@ class WeiduFunctionService extends AbstractWeiduService {
 
   generateEffect(lines: CodeLine[], effect: Effect, tab: number): void {
     const parameter1 = effect.parameter1
-      ? ` parameter1=${this.getIntegerValue(effect.parameter1)}`
+      ? ` parameter1=${weiduUtils.getIntegerValue(effect.parameter1)}`
       : "";
     const parameter2 = effect.parameter2
-      ? ` parameter2=${this.getIntegerValue(effect.parameter2)}`
+      ? ` parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`
       : "";
     const special = !!effect.special
-      ? ` special=${this.getIntegerValue(effect.special)}`
+      ? ` special=${weiduUtils.getIntegerValue(effect.special)}`
       : "";
     const resource = !!effect.resource
       ? ` STR_VAR resource="${effect.resource}"`

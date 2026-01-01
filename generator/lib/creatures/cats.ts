@@ -139,12 +139,12 @@ class CatFamily extends CreatureFamily<Cat> {
         class: "CAT",
         gender: "NIETHER",
         size: "Large",
+        movement: 15,
+        items: {
+          remove: ["CATJAG"],
+        },
+        immunities: ["infravision"],
       },
-    });
-    jaguar.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["infravision"],
-      removeItems: ["CATJAG"],
     });
     jaguar.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
     jaguar.createJaws(1, 8);
@@ -180,12 +180,12 @@ class CatFamily extends CreatureFamily<Cat> {
         class: "CAT",
         gender: "NIETHER",
         size: "Medium",
+        movement: 15,
+        items: {
+          remove: ["CATJAGSU"],
+        },
+        immunities: ["infravision"],
       },
-    });
-    leopard.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["infravision"],
-      removeItems: ["CATJAGSU"],
     });
     leopard.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
     leopard.createJaws(1, 6);
@@ -230,12 +230,12 @@ class CatFamily extends CreatureFamily<Cat> {
         class: "CAT",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        items: {
+          remove: ["CATLIO"],
+        },
+        immunities: ["infravision"],
       },
-    });
-    lion.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["infravision"],
-      removeItems: ["CATLIO"],
     });
     lion.createPaws(1, 4, { diceThrown: 1, diceSize: 6 });
     lion.createJaws(1, 10);
@@ -270,13 +270,12 @@ class CatFamily extends CreatureFamily<Cat> {
         class: "CAT",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        items: {
+          remove: ["P1-6"],
+        },
+        immunities: ["infravision"],
       },
-    });
-    mountainLion.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["infravision"],
-      removeItems: ["P1-6"],
-      removeScripts: [],
     });
     mountainLion.createPaws(1, 3, { diceThrown: 1, diceSize: 4 });
     mountainLion.createJaws(1, 6);
@@ -313,17 +312,18 @@ class CatFamily extends CreatureFamily<Cat> {
         size: "Large",
         hideShadow: 100,
         moveSilent: 100,
+        movement: 15,
+        items: {
+          remove: ["BDHELCAT", "RINGDEMN", "IPSION"],
+        },
+        script: {
+          remove: ["BDHELCAT"],
+        },
+        effects: {
+          remove: [EffectTypeEnum.Blur, EffectTypeEnum.ProtectionFromBackstab],
+        },
+        immunities: ["infravision"],
       },
-    });
-    hellcat.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["infravision"],
-      removeItems: ["BDHELCAT", "RINGDEMN", "IPSION"],
-      removeScripts: ["BDHELCAT"],
-      deleteEffectOpcodes: [
-        EffectTypeEnum.Blur,
-        EffectTypeEnum.ProtectionFromBackstab,
-      ],
     });
     hellcat.addTrait({
       immunities: ["mindSpells", "nonMagicalWeapons", "extraplanar"],
@@ -370,17 +370,25 @@ class CatFamily extends CreatureFamily<Cat> {
         class: "CAT",
         gender: "NIETHER",
         size: "Large",
-        saveDeath: 7,
-        saveWand: 9,
-        savePolymorph: 8,
-        saveBreath: 8,
-        saveSpell: 10,
+        movement: 15,
+        items: {
+          remove: ["BDDISPBE"],
+        },
+        immunities: ["infravision"],
       },
-    });
-    displacerBeast.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["infravision"],
-      removeItems: ["BDDISPBE"],
+      autoGenerate: {
+        savingThrows: {
+          level: 12,
+          classe: "FIGHTER",
+          bonus: {
+            saveDeath: 2,
+            saveBreath: 2,
+            savePolymorph: 2,
+            saveSpell: 2,
+            saveWand: 2,
+          },
+        },
+      },
     });
     displacerBeast.addTrait({
       immunities: ["magic", "fire", "cold"],

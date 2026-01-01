@@ -96,31 +96,30 @@ BEGIN
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=5
-					strength=10
-					dexterity=18
-					constitution=11
-					intelligence=13
-					wisdom=16
-					charisma=17
-					ac=7
-					apr=1
 					xpv=3000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=12
-					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
-					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
-					class=IDS_OF_SYMBOL (~class~ ~FAIRY_SIRINE~)
-					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
-					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
-					movement=10
 					hp=40
+					ac=7
 					thac0=15
+					apr=1
 					saveDeath=9
 					saveWand=7
 					savePolymorph=9
 					saveBreath=11
 					saveSpell=8
+					level1=11
+					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					strength=10
+					intelligence=13
+					wisdom=16
+					dexterity=18
+					constitution=11
+					charisma=17
+					morale=12
+					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
+					class=IDS_OF_SYMBOL (~class~ ~FAIRY_SIRINE~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=10
 					enforce=1
 			END
 			// Assigning ja#m43 to slot Race

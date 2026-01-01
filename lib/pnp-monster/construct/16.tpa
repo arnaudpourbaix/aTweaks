@@ -44,31 +44,30 @@ BEGIN
 			SET_BG2_PROFICIENCY ~PROFICIENCYLONGSWORD~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=5
-					strength=20
-					dexterity=10
-					constitution=9
-					intelligence=7
-					wisdom=11
-					charisma=1
-					ac=2
-					apr=1
 					xpv=2000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=20
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
-					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=10
 					hp=60
+					ac=2
 					thac0=15
+					apr=1
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
 					saveBreath=13
 					saveSpell=14
+					level1=5
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=20
+					intelligence=7
+					wisdom=11
+					dexterity=10
+					constitution=9
+					charisma=1
+					morale=20
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~GOLEM~)
+					class=IDS_OF_SYMBOL (~class~ ~FIGHTER~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=10
 					enforce=1
 			END
 			// Assigning ja#m16

@@ -1,13 +1,12 @@
 import chalk from "chalk";
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
+import translationService from "../../services/translation.service";
+import { Projectile } from "../spell-item/projectile";
+import { Item, Spell } from "../spell-item/spell-item";
 import { AbstractCreature } from "./abstract-creature";
 import { Creature, CreatureAutoGenerate, CreatureNewFile } from "./creature";
-import { CreatureData } from "./data";
-import translationService from "../../services/translation.service";
-import { ADDITIONAL_DATA_DEFAULT } from "./additional-data";
-import { Item, Spell } from "../spell-item/spell-item";
-import { Projectile } from "../spell-item/projectile";
+import { InputMainCreatureData } from "./data-input";
 
 export interface Family {
   id: number;
@@ -38,7 +37,7 @@ export abstract class CreatureFamily<T extends Creature>
     files: string[];
     notEnforceFiles?: string[];
     newFiles?: CreatureNewFile[];
-    data: Omit<CreatureData, "movement">;
+    data: InputMainCreatureData;
     autoGenerate?: CreatureAutoGenerate;
   }): T {
     console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
@@ -48,8 +47,7 @@ export abstract class CreatureFamily<T extends Creature>
     cre.files = p.files;
     cre.newFiles = p.newFiles ?? [];
     cre.notEnforceFiles = p.notEnforceFiles ?? [];
-    cre.data = p.data;
-    cre.additionalData = structuredClone(ADDITIONAL_DATA_DEFAULT);
+    cre.setData(p.data);
     cre.logging = this.logging;
     if (p.autoGenerate) {
       cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
@@ -69,6 +67,7 @@ export abstract class CreatureFamily<T extends Creature>
   }): T {
     const cre = structuredClone(p.from);
     Object.setPrototypeOf(cre, p.from);
+    Object.setPrototypeOf(cre.data.movement, p.from.data.movement);
     cre.id = p.monster;
     cre.name = p.name;
     cre.files = p.files;

@@ -51,13 +51,15 @@ class EttercapFamily extends CreatureFamily<Ettercap> {
         class: "ETTERCAP",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        immunities: ["web"],
+        items: {
+          remove: ["ETTERC1", "ETTERC2", "ANTIWEB"],
+        },
+        script: {
+          remove: ["ETTERCAP"],
+        },
       },
-    });
-    ettercap.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["web"],
-      removeItems: ["ETTERC1", "ETTERC2", "ANTIWEB"],
-      removeScripts: ["ETTERCAP"],
     });
     ettercap.addWeapon({
       weapon: {

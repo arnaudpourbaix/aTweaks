@@ -34,7 +34,7 @@ export const WEREWOLF: RawCreature = {
     gender: "MALE",
     size: "Small",
   },
-  additionalData: { removeItems: ["P1-6"] },
+  data: { removeItems: ["P1-6"] },
   items: [
     {
       file: mainWeapon,

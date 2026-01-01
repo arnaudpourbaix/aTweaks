@@ -48,7 +48,6 @@ INT_VAR
   class=999             // class
   kit=999               // kit
   gender=999            // gender
-  sex=99                // sex
   alignment=99          // alignment
   hideShadow=999        // Hide in Shadows value
   moveSilent=999        // Move Silently value
@@ -104,7 +103,7 @@ BEGIN
   READ_BYTE  0x234 oldLevel1
   READ_BYTE  0x235 oldLevel2
   READ_BYTE  0x236 oldLevel3
-  READ_BYTE  0x237 oldSex
+  READ_BYTE  0x237 oldGender
   READ_BYTE  0x238 oldStrength
   READ_BYTE  0x239 oldExceptionalStrength
   READ_BYTE  0x23a oldIntelligence
@@ -222,8 +221,9 @@ BEGIN
   PATCH_IF oldLevel3 < level3 OR enforce = 1 BEGIN
     WRITE_BYTE 0x236 level3 // set new level (third class) value
   END
-  PATCH_IF sex != 99 AND (oldSex != sex OR enforce = 1) BEGIN
-    WRITE_BYTE 0x237 sex // set new Sex value
+  PATCH_IF gender != 999 BEGIN // AND (oldGender != gender OR enforce = 1)
+    WRITE_BYTE 0x237 gender
+    WRITE_BYTE 0x275 gender
   END
   PATCH_IF oldStrength < strength OR enforce = 1 BEGIN
     WRITE_BYTE 0x238 strength // set new strength value
@@ -269,9 +269,6 @@ BEGIN
   END
   PATCH_IF kit != 999 BEGIN
     WRITE_SHORT 0x246 kit // set new kit value
-  END
-  PATCH_IF gender != 999 BEGIN
-    WRITE_BYTE 0x275 gender // set new gender value
   END
   PATCH_IF alignment != 99 BEGIN
     WRITE_BYTE 0x27b alignment // set new alignment value

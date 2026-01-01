@@ -56,12 +56,14 @@ class CrawlerFamily extends CreatureFamily<Crawler> {
         gender: "NIETHER",
         size: "Large",
         xpv: 420,
+        movement: 12,
+        items: {
+          remove: ["CARRIO1"],
+        },
+        script: {
+          remove: ["ccrawler", "bdccrawl"],
+        },
       },
-    });
-    carrionCrawler.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["CARRIO1"],
-      removeScripts: ["ccrawler", "bdccrawl"],
     });
     carrionCrawler.addWeapon({
       weapon: {

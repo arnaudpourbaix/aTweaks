@@ -55,32 +55,30 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=6
-					bonusHp=1
-					strength=16
-					dexterity=8
-					constitution=15
-					intelligence=2
-					wisdom=8
-					charisma=7
-					ac=4
-					apr=1
 					xpv=1400
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=12
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~BASILISK~)
-					class=IDS_OF_SYMBOL (~class~ ~BASILISK~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=5
 					hp=54
+					ac=4
 					thac0=15
+					apr=1
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
 					saveBreath=13
 					saveSpell=14
+					level1=6
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=16
+					intelligence=2
+					wisdom=8
+					dexterity=8
+					constitution=15
+					charisma=7
+					morale=12
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~BASILISK~)
+					class=IDS_OF_SYMBOL (~class~ ~BASILISK~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=5
 					enforce=1
 			END
 			// Assigning ja#m2 to slot Race

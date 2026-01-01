@@ -99,18 +99,18 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
         class: "BASILISK",
         gender: "NIETHER",
         size: "Medium",
+        movement: 6,
+        immunities: ["magicalBeast"],
+        items: {
+          remove: ["BASILL1", "BASILL2"],
+        },
+        script: {
+          remove: ["LBASILSK"],
+          location: "Race",
+        },
       },
     });
-    lesser.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["magicalBeast"],
-      removeItems: ["BASILL1", "BASILL2"],
-      memorizedSpells: [
-        { file: this.spell(Ids.Petrification).file, memorizedCount: 1 },
-      ],
-      removeScripts: ["LBASILSK"],
-      scriptLocation: "Race",
-    });
+    lesser.memorizeSpell(this.spell(Ids.Petrification).file, 1);
     lesser.createJaws({
       diceThrown: 1,
       diceSize: 10,
@@ -156,18 +156,18 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
         class: "BASILISK_GREATER",
         gender: "NIETHER",
         size: "Large",
+        movement: 6,
+        immunities: ["magicalBeast"],
+        items: {
+          remove: ["BASILG1", "BASILG2", "BASILG3"],
+        },
+        script: {
+          remove: ["GBASILSK"],
+          location: "Race",
+        },
       },
     });
-    greater.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["magicalBeast"],
-      removeScripts: ["GBASILSK"],
-      removeItems: ["BASILG1", "BASILG2", "BASILG3"],
-      memorizedSpells: [
-        { file: this.spell(Ids.Petrification).file, memorizedCount: 1 },
-      ],
-      scriptLocation: "Race",
-    });
+    greater.memorizeSpell(this.spell(Ids.Petrification).file, 1);
     greater.addWeapon({
       weapon: {
         stringRef: "monster.basilisk.weapon.claws",

@@ -2,18 +2,19 @@ import chalk from "chalk";
 import figureSet from "figures";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { State } from "../../state";
-import { Creature, CreatureAdjustment } from "../../model/creature/creature";
-import { CreatureAdditionalData } from "../../model/creature/additional-data";
+import { Creature } from "../../model/creature/creature";
 import { EquippedItem } from "../../model/creature/item";
 import utils from "../utils/utils.service";
 import itemService from "../item.service";
+import { CreatureAdjustment } from "../../model/creature/adjustment";
+import { CreatureData } from "../../model/creature/data";
 
 class ImmunityService {
   handleImmunities(creature: Creature): void {
-    this.checkImmunities(creature.additionalData, creature);
+    this.checkImmunities(creature.data, creature);
     for (const a of creature.adjustments) {
-      if (a.additionalData?.immunities.length) {
-        this.checkImmunities(a.additionalData, creature);
+      if (a.data?.immunities.length) {
+        this.checkImmunities(a.data, creature);
       }
     }
   }
@@ -23,7 +24,7 @@ class ImmunityService {
     adjustments: CreatureAdjustment[]
   ): string[] {
     const files = adjustments.reduce((acc, a) => {
-      const immunities = this.getImmunities(a.additionalData.immunities);
+      const immunities = this.getImmunities(a.data.immunities);
       if (immunities.some((i) => i.overrides.includes(immunity))) {
         acc.push(...a.files);
       }
@@ -38,21 +39,13 @@ class ImmunityService {
     );
   }
 
-  private checkImmunities(
-    additionalData: CreatureAdditionalData,
-    creature: Creature
-  ): void {
-    for (const name of additionalData.immunities) {
+  private checkImmunities(data: CreatureData, creature: Creature): void {
+    for (const name of data.immunities) {
       const immunity = State.immunities.find(
         (i) => i.name === name
       ) as ImmunityConfig;
       if (immunity.itemSlot) {
-        this.checkImmunity(
-          immunity.itemSlot,
-          immunity,
-          additionalData,
-          creature
-        );
+        this.checkImmunity(immunity.itemSlot, immunity, data, creature);
       }
     }
   }
@@ -60,15 +53,12 @@ class ImmunityService {
   private checkImmunity(
     itemSlot: EquippedItem,
     immunity: ImmunityConfig,
-    additionalData: CreatureAdditionalData,
+    data: CreatureData,
     creature: Creature
   ): void {
     const hasCriticalHitImmunity = utils.hasCriticalHitImmunity(immunity);
     const hasHelmet = itemService.isSlotIncluded(
-      [
-        ...additionalData.equippedItems,
-        ...creature.additionalData.equippedItems,
-      ],
+      [...data.items.equipped, ...creature.data.items.equipped],
       "HELMET"
     );
     if (hasCriticalHitImmunity && itemSlot.slot !== "HELMET" && !hasHelmet) {
@@ -77,16 +67,13 @@ class ImmunityService {
           `${figureSet.arrowRight} ${immunity.name} needs a helmet to cover immunity from critical hits. Adding a helmet to cover it.`
         )
       );
-      additionalData.immunities.push("criticalHit");
+      data.immunities.push("criticalHit");
     }
     const overwrittingItem = creature.items.find(
       (i) => i.copyFrom === immunity.name
     );
     const overwrittingSlot = itemService.isSlotIncluded(
-      [
-        ...additionalData.equippedItems,
-        ...creature.additionalData.equippedItems,
-      ],
+      [...data.items.equipped, ...creature.data.items.equipped],
       itemSlot.slot
     );
     if (overwrittingItem)
@@ -102,7 +89,7 @@ class ImmunityService {
         )
       );
     else
-      additionalData.equippedItems.push({
+      data.items.equipped.push({
         file: itemSlot.file,
         slot: itemSlot.slot,
       });

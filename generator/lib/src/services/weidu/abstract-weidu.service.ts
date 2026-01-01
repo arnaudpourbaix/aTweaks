@@ -120,13 +120,6 @@ export class AbstractWeiduService {
     this.write(lines, offset, 4, value, tab);
   }
 
-  protected getIntegerValue(value: number | string | undefined) {
-    if (value === undefined || value === "") return;
-    const val = `${value}`.trim();
-    if (!val.startsWith("-")) return value;
-    return `"${val}"`;
-  }
-
   protected executeCodeWithExcludedFiles(
     lines: CodeLine[],
     tab: number,

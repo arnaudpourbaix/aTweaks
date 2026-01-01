@@ -140,7 +140,11 @@ class Ogre extends Creature {
           copyFromFile: "CONECOLD",
           name: "Ogre-Mage Cone of Cold",
           areaEffectInfo: {
-            areaProjectileFlags: [AreaProjectileEnum.Coneshaped], // FIXME: "AffectOnlyEnemies" to prevent them for killing their allies ?
+            areaProjectileFlags: [
+              AreaProjectileEnum.Coneshaped,
+              // we don't want ogres to kill each other, it can be seen as a cheat but humans have no problem to properly cast it
+              AreaProjectileEnum.AffectOnlyEnemies,
+            ],
             areaOfEffect: 620,
             triggerRadius: 620,
             coneWidth: 60,
@@ -448,16 +452,18 @@ class OgreFamily extends CreatureFamily<Ogre> {
         race: "OGRE",
         class: "OGRE",
         size: "Large",
+        movement: 9,
+        immunities: ["giant"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
+        ],
+        items: {
+          remove: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
+        },
+        script: {
+          remove: ["OGRE"],
+        },
       },
-    });
-    ogre.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["giant"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-      ],
-      removeItems: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
-      removeScripts: ["OGRE"],
     });
     ogre.createFists(1, 10, Ids.Ogre);
     ogre.createFists(2, 6, Ids.OgreLeader);
@@ -477,7 +483,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
       { files: ["OGRESU"], summon: true },
       {
         files: ["X3HOGRE", "X3HOGRE2", "X3HOGRED"],
-        additionalData: { scriptLocation: "None" },
+        data: { script: { location: "None" } },
       },
       { files: ["OOPAH", "WELT"], data: { class: "INNOCENT" } },
       { files: ["OOPAH", "OOPAH2"], data: { level1: 5 } },
@@ -490,11 +496,11 @@ class OgreFamily extends CreatureFamily<Ogre> {
           ac: 3,
           exceptionalStrength: 50,
           xpv: 650,
-        },
-        additionalData: {
-          equippedItems: [
-            { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
-          ],
+          items: {
+            equipped: [
+              { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
+            ],
+          },
         },
       },
       {
@@ -516,19 +522,17 @@ class OgreFamily extends CreatureFamily<Ogre> {
           ac: 2,
           exceptionalStrength: 100,
           xpv: 975,
-        },
-        additionalData: {
-          equippedItems: [
-            { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
-          ],
+          items: {
+            equipped: [
+              { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
+            ],
+          },
         },
       },
       {
         files: ["NTOGREDA"],
         data: {
           class: "FIGHTER",
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 4 },
           ],
@@ -538,8 +542,8 @@ class OgreFamily extends CreatureFamily<Ogre> {
         // will have morning star +1
         files: ["AC#FP2OT", "BDSOGR1", "BDSOGR2"],
         noWeapon: true,
-        additionalData: {
-          equippedItems: [{ file: "BLUN07", slot: "WEAPON1" }],
+        data: {
+          items: { equipped: [{ file: "BLUN07", slot: "WEAPON1" }] },
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 2 },
           ],
@@ -547,8 +551,8 @@ class OgreFamily extends CreatureFamily<Ogre> {
       },
       {
         files: ["BDSOGR1", "BDSOGR2"],
-        data: { class: "FIGHTER" },
-        additionalData: {
+        data: {
+          class: "FIGHTER",
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 },
           ],
@@ -563,8 +567,6 @@ class OgreFamily extends CreatureFamily<Ogre> {
           morale: 18,
           class: "FIGHTER",
           xpv: 2000,
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 },
             { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 5 },
@@ -629,13 +631,15 @@ class OgreFamily extends CreatureFamily<Ogre> {
         race: "OGRE",
         class: "OGRE_OGRILLON",
         size: "Medium",
+        movement: 12,
+        immunities: ["giant"],
+        items: {
+          remove: ["B1-8", "SW1H01"],
+        },
+        script: {
+          remove: ["OGRILLON"],
+        },
       },
-    });
-    ogrillon.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["giant"],
-      removeItems: ["B1-8", "SW1H01"],
-      removeScripts: ["OGRILLON"],
     });
     ogrillon.createFists(1, 6);
     ogrillon.setBehavior({
@@ -714,16 +718,16 @@ class OgreFamily extends CreatureFamily<Ogre> {
         class: "OGRE_HALFOGRE",
         kit: "TRUECLASS",
         size: "Large",
+        movement: 12,
+        immunities: ["giant"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYBASTARDSWORD, value: 2 },
+          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
+        ],
+        script: {
+          remove: ["HALFOGRE"],
+        },
       },
-    });
-    halfOgre.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["giant"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYBASTARDSWORD, value: 2 },
-        { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-      ],
-      removeScripts: ["HALFOGRE"],
     });
     halfOgre.setBehavior({
       restHeal: true,
@@ -785,7 +789,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         // data: {
         //   kit: "BERSERKER",
         // },
-        additionalData: {
+        data: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 },
           ],
@@ -797,15 +801,15 @@ class OgreFamily extends CreatureFamily<Ogre> {
         files: ["TAZOK2"],
         data: {
           level1: 11,
-        },
-        additionalData: {
-          equippedItems: [{ file: "POTN02", quantity: 1, slot: QUICK_SLOTS }],
+          items: {
+            equipped: [{ file: "POTN02", quantity: 1, slot: QUICK_SLOTS }],
+          },
         },
       },
       {
         // Eglarh, level 9 fighter
         files: ["L#CHIEN"],
-        additionalData: {
+        data: {
           immunities: ["fireResistance", "coldResistance", "missileDamage"],
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 5 },
@@ -871,41 +875,43 @@ class OgreFamily extends CreatureFamily<Ogre> {
         kit: "TRUECLASS",
         gender: "MALE",
         size: "Large",
+        movement: 9,
+        immunities: ["giant"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 2 },
+        ],
+        items: {
+          remove: [
+            "REGHP1",
+            "BDOGRE03",
+            "HELMNOAN",
+            "SW1H43",
+            "SW1H01",
+            "SW1H20",
+            "COMPS01",
+            "COMPS02",
+            "OGREMASU",
+            "BLUN15",
+          ],
+        },
+        script: {
+          remove: ["BDOGRE03", "OGREMASU"],
+        },
+        spells: {
+          memorized: [
+            { file: SPELLS.Invisibility, memorizedCount: 1 },
+            { file: SPELLS.Darkness15Radius, memorizedCount: 1 },
+            { file: SPELLS.CharmPerson, memorizedCount: 1 },
+            { file: SPELLS.Sleep, memorizedCount: 1 },
+          ],
+        },
       },
     });
     ogreMage.createNaginata();
+    ogreMage.data.movement.bindItem(this.item(Ids.Naginata).file);
     ogreMage.createConeOfCold();
     ogreMage.createFly();
     ogreMage.createGaseousForm();
-    ogreMage.setAdditionalData({
-      movement: { value: 9, itemFile: this.item(Ids.Naginata).file },
-      immunities: ["giant"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 2 },
-      ],
-      removeItems: [
-        "REGHP1",
-        "BDOGRE03",
-        "HELMNOAN",
-        "SW1H43",
-        "SW1H01",
-        "SW1H20",
-        "COMPS01",
-        "COMPS02",
-        "OGREMASU",
-        "BLUN15",
-      ],
-      removeScripts: ["BDOGRE03", "OGREMASU"],
-      memorizedSpells: [
-        { file: SPELLS.Invisibility, memorizedCount: 1 },
-        { file: SPELLS.Darkness15Radius, memorizedCount: 1 },
-        { file: SPELLS.CharmPerson, memorizedCount: 1 },
-        { file: SPELLS.Sleep, memorizedCount: 1 },
-        { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
-        { file: this.spell(Ids.Fly).file, memorizedCount: 1 },
-        { file: this.spell(Ids.GaseousForm).file, memorizedCount: 1 },
-      ],
-    });
     ogreMage.addTrait({
       effects: [
         {
@@ -961,34 +967,44 @@ class OgreFamily extends CreatureFamily<Ogre> {
       },
       {
         files: ["BDWAVE16", "WIOGMA01", "WIGENTLE", "DROTH"],
-        data: { level1: 7, level2: 7, xpv: 1400, class: "FIGHTER_MAGE" },
-        additionalData: {
-          scriptLocation: "General",
+        data: {
+          level1: 7,
+          level2: 7,
+          xpv: 1400,
+          class: "FIGHTER_MAGE",
+          script: { location: "General" },
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 4 },
           ],
-          memorizedSpells: [
-            { file: SPELLS.DireCharm, memorizedCount: 1 },
-            { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
-            { file: SPELLS.CharmPerson, memorizedCount: 1 },
-            { file: SPELLS.Sleep, memorizedCount: 1 },
-          ],
+          spells: {
+            memorized: [
+              { file: SPELLS.DireCharm, memorizedCount: 1 },
+              { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
+              { file: SPELLS.CharmPerson, memorizedCount: 1 },
+              { file: SPELLS.Sleep, memorizedCount: 1 },
+            ],
+          },
         },
       },
       {
         files: ["BDMURS", "BDMURS2"],
-        data: { level1: 9, level2: 9, xpv: 2000, class: "FIGHTER_MAGE" },
-        additionalData: {
+        data: {
+          level1: 9,
+          level2: 9,
+          xpv: 2000,
+          class: "FIGHTER_MAGE",
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 },
           ],
-          memorizedSpells: [
-            { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
-            { file: SPELLS.DireCharm, memorizedCount: 2 },
-            { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
-            { file: SPELLS.CharmPerson, memorizedCount: 2 },
-            { file: SPELLS.Sleep, memorizedCount: 2 },
-          ],
+          spells: {
+            memorized: [
+              { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
+              { file: SPELLS.DireCharm, memorizedCount: 2 },
+              { file: SPELLS.PowerWordSleep, memorizedCount: 2 },
+              { file: SPELLS.CharmPerson, memorizedCount: 2 },
+              { file: SPELLS.Sleep, memorizedCount: 2 },
+            ],
+          },
         },
       },
       {
@@ -999,25 +1015,25 @@ class OgreFamily extends CreatureFamily<Ogre> {
           strength: 19,
           class: "FIGHTER_MAGE",
           xpv: 3500,
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 },
           ],
-          memorizedSpells: [
-            { file: SPELLS.Domination, memorizedCount: 1 },
-            { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 2 },
-            { file: SPELLS.DireCharm, memorizedCount: 4 },
-            { file: SPELLS.PowerWordSleep, memorizedCount: 4 },
-            { file: SPELLS.CharmPerson, memorizedCount: 3 },
-            { file: SPELLS.Sleep, memorizedCount: 3 },
-          ],
+          spells: {
+            memorized: [
+              { file: SPELLS.Domination, memorizedCount: 1 },
+              { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 2 },
+              { file: SPELLS.DireCharm, memorizedCount: 4 },
+              { file: SPELLS.PowerWordSleep, memorizedCount: 4 },
+              { file: SPELLS.CharmPerson, memorizedCount: 3 },
+              { file: SPELLS.Sleep, memorizedCount: 3 },
+            ],
+          },
         },
       },
       {
         files: ["KAHRK"],
         noWeapon: true,
-        additionalData: {
+        data: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYKATANA, value: 5 },
           ],
@@ -1076,24 +1092,26 @@ class OgreFamily extends CreatureFamily<Ogre> {
         class: "FIGHTER",
         kit: "BERSERKER",
         size: "Large",
+        movement: 9,
+        immunities: ["giant"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 3 },
+        ],
+        items: {
+          remove: [
+            "BDOGRE02",
+            "BDOGRE06",
+            "BLUN06",
+            "SW2H01",
+            "OGREGRSU",
+            "OGRE1",
+            "BDSLUG",
+          ],
+        },
+        script: {
+          remove: ["DVBRSKER"],
+        },
       },
-    });
-    berserker.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["giant"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 3 },
-      ],
-      removeItems: [
-        "BDOGRE02",
-        "BDOGRE06",
-        "BLUN06",
-        "SW2H01",
-        "OGREGRSU",
-        "OGRE1",
-        "BDSLUG",
-      ],
-      removeScripts: ["DVBRSKER"],
     });
     berserker.createGiantFlail();
     berserker.setBehavior({
@@ -1132,8 +1150,6 @@ class OgreFamily extends CreatureFamily<Ogre> {
           xpv: 1400,
           strength: 19,
           exceptionalStrength: 0,
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 },
           ],
@@ -1144,8 +1160,6 @@ class OgreFamily extends CreatureFamily<Ogre> {
         data: {
           level1: 9,
           xpv: 2000,
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
           ],
@@ -1156,8 +1170,6 @@ class OgreFamily extends CreatureFamily<Ogre> {
         data: {
           level1: 11,
           xpv: 2000,
-        },
-        additionalData: {
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
           ],
@@ -1177,9 +1189,9 @@ class OgreFamily extends CreatureFamily<Ogre> {
         files: ["X3HOGREL"],
         data: {
           level1: 8,
-        },
-        additionalData: {
-          scriptLocation: "Race",
+          script: {
+            location: "Race",
+          },
         },
       },
     ]);
@@ -1213,21 +1225,23 @@ class OgreFamily extends CreatureFamily<Ogre> {
         race: "OGRE",
         class: "FIGHTER_CLERIC",
         size: "Large",
+        movement: 9,
+        immunities: ["giant"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
+        ],
+        items: {
+          remove: ["BLUN01"],
+        },
+        spells: {
+          memorized: [
+            { file: SPELLS.Bless, memorizedCount: 1 },
+            { file: SPELLS.Command, memorizedCount: 2 },
+            { file: SPELLS.Chant, memorizedCount: 1 },
+            { file: SPELLS.HoldPerson, memorizedCount: 1 },
+          ],
+        },
       },
-    });
-    shaman.setAdditionalData({
-      movement: { value: 9 },
-      immunities: ["giant"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-      ],
-      removeItems: ["BLUN01"],
-      memorizedSpells: [
-        { file: SPELLS.Bless, memorizedCount: 1 },
-        { file: SPELLS.Command, memorizedCount: 2 },
-        { file: SPELLS.Chant, memorizedCount: 1 },
-        { file: SPELLS.HoldPerson, memorizedCount: 1 },
-      ],
     });
     shaman.equipItem(this.item(Ids.Ogre));
     shaman.setBehavior({

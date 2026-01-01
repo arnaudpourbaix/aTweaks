@@ -1,6 +1,7 @@
 import { CodeLine } from "../../model/misc";
 import { Effect, EffectFile } from "../../model/spell-item/effect";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import weiduUtils from "../utils/weidu.utils";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 
 class WeiduEffectService extends AbstractWeiduService {
@@ -13,7 +14,7 @@ class WeiduEffectService extends AbstractWeiduService {
         lines,
         0x1c,
         4,
-        this.getIntegerValue(effect.parameter1),
+        weiduUtils.getIntegerValue(effect.parameter1),
         tab + 1
       );
       this.write(lines, 0x24, 4, effect.timing, tab + 1);
@@ -21,7 +22,7 @@ class WeiduEffectService extends AbstractWeiduService {
         lines,
         0x20,
         4,
-        this.getIntegerValue(effect.parameter2),
+        weiduUtils.getIntegerValue(effect.parameter2),
         tab + 1
       );
       this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
@@ -64,10 +65,16 @@ class WeiduEffectService extends AbstractWeiduService {
     if (global) intVars.push("global=1");
     if (!!effect.power || !!power)
       intVars.push(`power=${effect.power ?? power}`);
-    if (effect.parameter1 && effect.parameter1 !== "0")
-      intVars.push(`parameter1=${this.getIntegerValue(effect.parameter1)}`);
-    if (effect.parameter2 && effect.parameter2 !== "0")
-      intVars.push(`parameter2=${this.getIntegerValue(effect.parameter2)}`);
+    if (effect.parameter1 && effect.parameter1 !== "0") {
+      intVars.push(
+        `parameter1=${weiduUtils.getIntegerValue(effect.parameter1)}`
+      );
+    }
+    if (effect.parameter2 && effect.parameter2 !== "0") {
+      intVars.push(
+        `parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`
+      );
+    }
     if (effect.timing) intVars.push(`timing=${effect.timing}`);
     if (effect.dispelResistance)
       intVars.push(`resist_dispel=${effect.dispelResistance}`);

@@ -5,42 +5,19 @@ import effectFactory from "../src/factories/effect.factory";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
-import { ImmunityName } from "../src/model/final/immunity";
-import {
-  BaseEffect,
-  DamageEffect,
-  Effect,
-} from "../src/model/spell-item/effect";
+import { Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
-  EffectCastSpellTypeEnum,
-  EffectDamageTypeEnum,
-  EffectIDSFileEnum,
-  EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
-  EffectTargetEnum,
-  EffectTimingEnum,
   InvisibilityTypeEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
-  PnPPoisonType,
-  PortraitIconEnum,
   SaveTypeEnum,
-  WingBuffetDirectionEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
-import { Projectile } from "../src/model/spell-item/projectile";
-import {
-  SpellProtection,
-  SpellProtectionRelation,
-  SpellProtectionStat,
-} from "../src/model/spell-item/spell-protection";
-import creatureService from "../src/services/creature.service";
-import poisonService from "../src/services/effects/poison.service";
-import { TranslationKey } from "../translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
@@ -152,7 +129,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "f_wailin", //Drizzt Saga
       ],
       data: {
-        level1: 7,
+        level1: { pnpValue: 7, value: 17, type: "turn" }, // to approximate their "turned as special undead" from PnP
         strength: 1,
         dexterity: 14,
         constitution: 10,
@@ -169,14 +146,15 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPECTRE",
         gender: "NIETHER",
         size: "Medium",
+        movement: 15,
+        immunities: ["undead"],
+        items: {
+          remove: ["IMMUNE1", "B1-8M2", "IMMCHS"],
+        },
+        script: {
+          remove: ["BDBANSH"],
+        },
       },
-    });
-    banshee.setAdditionalData({
-      movement: { value: 15 },
-      adjustedLevel: { level1: 17 }, // to approximate their "turned as special undead" from PnP
-      immunities: ["undead"],
-      removeItems: ["IMMUNE1", "B1-8M2", "IMMCHS"],
-      removeScripts: ["BDBANSH"],
     });
     banshee.createFearAura();
     banshee.createDeathWail();
@@ -227,13 +205,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Large",
+        movement: 15,
       },
-    });
-    knight.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["spider"],
-      removeItems: ["SPIDPH1", "ANTIWEB", "GHOST2"],
-      removeScripts: ["C#LCCENS", "PSPIDER", "L#ULCSP"],
     });
     knight.addTrait({ immunities: ["seeInvisible"] });
     knight.setBehavior({
@@ -280,18 +253,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_GIANT",
         gender: "NIETHER",
         size: "Large",
+        movement: 12,
       },
     });
-    ghast.setAdditionalData({
-      movement: { value: 3 }, // Web 12
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
-      removeScripts: ["DW#SPIDG", "SPIDFGSU"],
-    });
-    ghast.setAdjustments([
-      { files: ["SPIDGISU", "BDHELP01", "SPIDFGSU"], summon: true },
-      { files: ["PLYSPID2"], additionalData: { scriptLocation: "None" } },
-    ]);
     return ghast;
   }
   /**
@@ -325,14 +289,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_HUGE",
         gender: "NIETHER",
         size: "Tiny",
+        movement: 12,
       },
-    });
-    ghoul.setAdditionalData({
-      movement: { value: 6 }, // web 15
-      immunities: ["spider"],
-      removeItems: ["SPIDHU1", "ANTIWEB"],
-      removeScripts: ["DW#SPIDG"],
-      memorizedSpells: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
     });
     ghoul.addTrait({ immunities: ["crushingDamageResistance"] });
     ghoul.setBehavior({
@@ -348,9 +306,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    ghoul.setAdjustments([
-      { files: ["BDSPIDER"], additionalData: { scriptLocation: "None" } },
-    ]);
     return ghoul;
   }
   /**
@@ -385,13 +340,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_HUGE",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    lord.setAdditionalData({
-      movement: { value: 18 },
-      immunities: ["spider"],
-      removeItems: ["BDSPIDHU", "SPIDHU1", "ANTIWEB", "D5SMSPID"],
-      removeScripts: ["DW#SPIDS"],
     });
     return lord;
   }
@@ -425,15 +375,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_GIANT",
         gender: "NIETHER",
         size: "Large",
+        movement: 12,
       },
-    });
-    hunting.setAdditionalData({
-      movement: { value: 8 },
-      immunities: [
-        "spider",
-        "seeInvisible", // their vision gives them the natural ability of true seeing
-      ],
-      removeItems: ["D5SMSPID", "ANTIWEB"],
     });
     hunting.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
     hunting.setAdjustments([{ files: ["D5SMSPID"], summon: true }]);
@@ -470,13 +413,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_PHASE",
         gender: "NIETHER",
         size: "Huge",
+        movement: 12,
       },
-    });
-    greater.setAdditionalData({
-      movement: { value: 6 }, // Web 15
-      immunities: ["spider"],
-      removeItems: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
-      removeScripts: ["PSPIDER", "SPIDPHSU"],
     });
     greater.addTrait({
       effects: [
@@ -542,17 +480,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_SWORD",
         gender: "NIETHER",
         size: "Huge",
+        movement: 12,
       },
     });
     shadow.createTouch({
       diceThrown: 2,
       diceSize: 4,
-    });
-    shadow.setAdditionalData({
-      movement: { value: 6 }, // Web 8
-      immunities: ["spider"],
-      removeItems: ["SPIDSW1", "ANTIWEB", "SPIDSWSU", "WISPIDSW"],
-      removeScripts: ["DW#SPIDS"],
     });
     shadow.setBehavior({
       abilities: [this.ability(Ids.FearAura)],
@@ -589,14 +522,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_PHASE",
         gender: "NIETHER",
         size: "Large",
+        movement: 12,
       },
-    });
-    skeleton.setAdditionalData({
-      movement: { value: 15 }, // Normal: 9, Web: 15
-      immunities: ["spider"],
-      removeItems: ["BDSPIDGI", "SPIDG1", "ANTIWEB", "PLYSPID"],
-      removeScripts: ["DW#SPIDG", "SPIDVO01"],
-      memorizedSpells: [{ file: SPELLS.VortexWeb, memorizedCount: 1 }],
     });
     skeleton.addTrait({
       effects: [
@@ -658,13 +585,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    warrior.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     warrior.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -718,13 +640,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    spectre.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     spectre.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -778,13 +695,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    wight.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     wight.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -836,13 +748,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    wraith.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     wraith.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -896,13 +803,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    zombie.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     zombie.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -956,13 +858,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    wraith.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     wraith.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],
@@ -1016,13 +913,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         class: "SPIDER_WRAITH",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
       },
-    });
-    wraith.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["spider", "undead"],
-      removeItems: ["IMMUNE1", "RING95", "ANTIWEB", "SPIDWR1"],
-      removeScripts: ["DW#SPIDG"],
     });
     wraith.addTrait({
       immunities: ["cold", "nonSilverNonMagicalWeapons"],

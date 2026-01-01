@@ -1,19 +1,19 @@
 import * as fs from "fs";
+import path from "path";
 import { SpellGroupName } from "../../../config/spell-group-name";
+import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { StringReference } from "../../model/final/stringref";
 import { Actions } from "../../model/script/actions";
-import { SpellGroup } from "../../model/spell-item/spell-group";
-import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
-import { Triggers } from "../../model/script/triggers";
 import { Response } from "../../model/script/script";
+import { Triggers } from "../../model/script/triggers";
 import { SpellTypeEnum } from "../../model/spell-item/effect.enums";
+import { SpellGroup } from "../../model/spell-item/spell-group";
 import { MemorizedSpellType, Spell } from "../../model/spell-item/spell-item";
+import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { State } from "../../state";
 import translationService from "./../translation.service";
-import { MonsterFamilyEnum } from "../../../creatures/monster";
-import path from "path";
 
 class UtilsService {
   objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
@@ -26,6 +26,7 @@ class UtilsService {
   ): string | undefined {
     return Object.keys(object).find((key) => object[key] === value);
   }
+
   replaceParamTokens(
     params: (string | number)[],
     tokens: { key: string; value: string }[]
@@ -73,23 +74,6 @@ class UtilsService {
       }
     }
     return results;
-  }
-
-  inverseNegation(trigger: Triggers.Trigger): Triggers.Trigger {
-    return { ...trigger, negation: !trigger.negation };
-  }
-
-  inverseNegations(triggers: Triggers.Trigger[]): Triggers.Trigger[] {
-    return triggers.reduce((acc, trigger) => {
-      if ("triggers" in trigger) {
-        acc.push(
-          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[])
-        );
-      } else {
-        acc.push(this.inverseNegation(trigger));
-      }
-      return acc;
-    }, [] as Triggers.Trigger[]);
   }
 
   resolveStringRef(value: StringReference | undefined): string | undefined {

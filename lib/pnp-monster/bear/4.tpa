@@ -95,32 +95,30 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=3
-					bonusHp=3
-					strength=15
-					dexterity=10
-					constitution=15
-					intelligence=4
-					wisdom=12
-					charisma=7
-					ac=7
-					apr=3
 					xpv=175
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=9
-					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
-					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
-					class=IDS_OF_SYMBOL (~class~ ~BEAR_BLACK~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=10
 					hp=27
+					ac=7
 					thac0=17
+					apr=3
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=3
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=15
+					intelligence=4
+					wisdom=12
+					dexterity=10
+					constitution=15
+					charisma=7
+					morale=9
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~BEAR~)
+					class=IDS_OF_SYMBOL (~class~ ~BEAR_BLACK~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=10
 					enforce=1
 					perfect2weapon=1
 			END

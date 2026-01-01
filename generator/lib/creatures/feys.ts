@@ -9,7 +9,7 @@ import {
 } from "../config/creatures";
 import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS, MonsterItemIconEnum } from "../config/item";
-import { ATWEAKS_SPELLS, SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spell-names";
 import { BafExistingStringReference } from "../config/stringRef";
 import { createDimensionDoor } from "../spells/dimension_door";
 import { CommonProjectileFiles } from "../spells/projectiles";
@@ -160,29 +160,32 @@ class FeyFamily extends CreatureFamily<Fey> {
         class: "FAIRY_DRYAD",
         gender: "FEMALE",
         size: "Medium",
+        movement: 12,
+        immunities: ["fey"],
+        items: {},
+        script: {
+          remove: ["DRYAD"],
+        },
+        spells: {
+          memorized: [
+            {
+              file: this.spell(Ids.InnateDimensionDoor).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.SpeakWithPlants).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.DryadCharm).file,
+              memorizedCount: 3,
+            },
+          ],
+        },
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
+        ],
       },
-    });
-    dryad.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["fey"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-      ],
-      removeScripts: ["DRYAD"],
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.InnateDimensionDoor).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.SpeakWithPlants).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.DryadCharm).file,
-          memorizedCount: 3,
-        },
-      ],
     });
     dryad.addTrait({ immunities: ["magicResistance"] });
     dryad.setAttack({ melee: false });
@@ -261,46 +264,48 @@ class FeyFamily extends CreatureFamily<Fey> {
         class: "FAIRY_DRYAD",
         gender: "FEMALE",
         size: "Medium",
+        movement: 15,
+        immunities: ["fey"],
+        items: { remove: ["ANTIWEB"] },
+        script: { remove: ["HAMA", "BDHAMADC"] },
+        spells: {
+          memorized: [
+            {
+              file: this.spell(Ids.InnateDimensionDoor).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.SpeakWithPlants).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.DryadCharm).file,
+              memorizedCount: 3,
+            },
+            {
+              file: this.spell(Ids.Entangle).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.AnimalFriendship).file,
+              memorizedCount: 1,
+            },
+            {
+              file: this.spell(Ids.DetectTraps).file,
+              memorizedCount: 1,
+            },
+          ],
+        },
+        effects: {
+          remove: [
+            EffectTypeEnum.CastingTimeModifier,
+            EffectTypeEnum.ProtectionFromSpell,
+          ],
+        },
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
+        ],
       },
-    });
-    hamadryad.setAdditionalData({
-      movement: { value: 15 },
-      immunities: ["fey"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-      ],
-      removeItems: ["ANTIWEB"],
-      removeScripts: ["HAMA", "BDHAMADC"],
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.InnateDimensionDoor).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.SpeakWithPlants).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.DryadCharm).file,
-          memorizedCount: 3,
-        },
-        {
-          file: this.spell(Ids.Entangle).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.AnimalFriendship).file,
-          memorizedCount: 1,
-        },
-        {
-          file: this.spell(Ids.DetectTraps).file,
-          memorizedCount: 1,
-        },
-      ],
-      deleteEffectOpcodes: [
-        EffectTypeEnum.CastingTimeModifier,
-        EffectTypeEnum.ProtectionFromSpell,
-      ],
     });
     hamadryad.addTrait({
       immunities: ["entangle"],
@@ -372,7 +377,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         "WQXNYM", // White Queen
       ],
       data: {
-        level1: 3,
+        level1: { pnpValue: 3, value: 7, type: "caster" }, // can employ druidical priest spells at 7th ability level
         strength: 10,
         dexterity: 17,
         constitution: 12,
@@ -389,31 +394,32 @@ class FeyFamily extends CreatureFamily<Fey> {
         class: "DRUID", // FAIRY_NYMPH
         gender: "FEMALE",
         size: "Medium",
-      },
-    });
-    nymph.setAdditionalData({
-      movement: { value: 12 },
-      adjustedLevel: { level1: 7 }, // can employ druidical priest spells at 7th ability level
-      immunities: ["fey"],
-      removeItems: ["DAGG01", "B1-6"],
-      removeScripts: ["BDNYMP01", "NYMPH"],
-      memorizedSpells: [
-        {
-          file: this.spell(Ids.PriestDimensionDoor).file,
-          memorizedCount: 1,
+        movement: 12,
+        immunities: ["fey"],
+        items: { remove: ["DAGG01", "B1-6"] },
+        script: { remove: ["BDNYMP01", "NYMPH"] },
+        spells: {
+          memorized: [
+            {
+              file: this.spell(Ids.PriestDimensionDoor).file,
+              memorizedCount: 1,
+            },
+            { file: this.spell(Ids.AnimalFriendship).file, memorizedCount: 1 },
+            { file: this.spell(Ids.BlindingBeauty).file, memorizedCount: 1 },
+            { file: SPELLS.CureLightWounds, memorizedCount: 1 },
+            { file: SPELLS.Bless, memorizedCount: 1 },
+            { file: SPELLS.Entangle, memorizedCount: 1 },
+            { file: SPELLS.Barkskin, memorizedCount: 1 },
+            { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
+            { file: SPELLS.CallLightning, memorizedCount: 1 },
+            { file: SPELLS.SummonInsects, memorizedCount: 1 },
+            { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
+          ],
         },
-        { file: this.spell(Ids.AnimalFriendship).file, memorizedCount: 1 },
-        { file: this.spell(Ids.BlindingBeauty).file, memorizedCount: 1 },
-        { file: SPELLS.CureLightWounds, memorizedCount: 1 },
-        { file: SPELLS.Bless, memorizedCount: 1 },
-        { file: SPELLS.Entangle, memorizedCount: 1 },
-        { file: SPELLS.Barkskin, memorizedCount: 1 },
-        { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
-        { file: SPELLS.CallLightning, memorizedCount: 1 },
-        { file: SPELLS.SummonInsects, memorizedCount: 1 },
-        { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
-      ],
-      deleteEffectOpcodes: [EffectTypeEnum.ProtectionFromSpell],
+        effects: {
+          remove: [EffectTypeEnum.ProtectionFromSpell],
+        },
+      },
     });
     nymph.addTrait({ immunities: ["magicResistance"] });
     nymph.setAttack({ melee: false });
@@ -520,7 +526,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         "QSEROMOD", // Sirine (PofQuestPack)
       ],
       data: {
-        level1: 5,
+        level1: { pnpValue: 5, value: 11, type: "caster" }, // level 11 caster
         strength: 10,
         dexterity: 18,
         constitution: 11,
@@ -537,6 +543,47 @@ class FeyFamily extends CreatureFamily<Fey> {
         class: "FAIRY_SIRINE",
         gender: "FEMALE",
         size: "Medium",
+        movement: 12,
+        immunities: ["fey"],
+        items: {
+          remove: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
+          equipped: [
+            { file: "BOW05", slot: "WEAPON2", undroppable: false },
+            {
+              file: "AROW10",
+              quantity: 10,
+              slot: "QUIVER1",
+              undroppable: false,
+              unstealable: true,
+            },
+            {
+              file: "AROW01",
+              quantity: 40,
+              slot: "QUIVER2",
+              undroppable: false,
+              unstealable: true,
+            },
+            {
+              file: "AROW01",
+              quantity: 40,
+              slot: "QUIVER3",
+              undroppable: false,
+              unstealable: true,
+            },
+          ],
+        },
+        script: { remove: ["SIRSPELL", "SIL"], location: "Race" },
+        spells: {
+          memorized: [
+            { file: this.spell(Ids.CharmSong).file, memorizedCount: 1 },
+            { file: this.spell(Ids.FogCloud).file, memorizedCount: 1 },
+            { file: SPELLS.PolymorphSelf, memorizedCount: 1 },
+            { file: SPELLS.ImprovedInvisibility, memorizedCount: 1 },
+          ],
+        },
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
+        ],
       },
       autoGenerate: {
         savingThrows: {
@@ -545,47 +592,6 @@ class FeyFamily extends CreatureFamily<Fey> {
           bonus: { saveDeath: 2 },
         },
       },
-    });
-    sirine.setAdditionalData({
-      movement: { value: 12 },
-      adjustedLevel: { level1: 11 }, // level 11 caster
-      immunities: ["fey"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-      ],
-      removeItems: ["COMPB05", "BOW01", "BOW05", "SIRINE1", "AROW01", "AROW05"],
-      removeScripts: ["SIRSPELL", "SIL"],
-      equippedItems: [
-        { file: "BOW05", slot: "WEAPON2", undroppable: false },
-        {
-          file: "AROW10",
-          quantity: 10,
-          slot: "QUIVER1",
-          undroppable: false,
-          unstealable: true,
-        },
-        {
-          file: "AROW01",
-          quantity: 40,
-          slot: "QUIVER2",
-          undroppable: false,
-          unstealable: true,
-        },
-        {
-          file: "AROW01",
-          quantity: 40,
-          slot: "QUIVER3",
-          undroppable: false,
-          unstealable: true,
-        },
-      ],
-      scriptLocation: "Race",
-      memorizedSpells: [
-        { file: this.spell(Ids.CharmSong).file, memorizedCount: 1 },
-        { file: this.spell(Ids.FogCloud).file, memorizedCount: 1 },
-        { file: SPELLS.PolymorphSelf, memorizedCount: 1 },
-        { file: SPELLS.ImprovedInvisibility, memorizedCount: 1 },
-      ],
     });
     sirine.addTrait({
       immunities: ["cloudSpells"],

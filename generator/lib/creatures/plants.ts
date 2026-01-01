@@ -93,17 +93,17 @@ class PlantFamily extends CreatureFamily<Plant> {
         class: "NO_CLASS",
         gender: "NIETHER",
         size: "Huge",
+        movement: 12,
+        immunities: ["plant"],
+        items: {
+          remove: ["BDTREANT", "BDPLANT", "IPSION"],
+        },
       },
     });
     treant.createBranch(4, 6, true);
     const wp9 = treant.createBranch(3, 6).file;
     const wp7 = treant.createBranch(2, 8).file;
     const wp5 = treant.createBranch(2, 6).file;
-    treant.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["BDTREANT", "BDPLANT", "IPSION"],
-      immunities: ["plant"],
-    });
     treant.addTrait({
       effects: [
         {
@@ -126,9 +126,7 @@ class PlantFamily extends CreatureFamily<Plant> {
           strength: 21,
           constitution: 20,
           xpv: 4000,
-        },
-        additionalData: {
-          equippedItems: [{ file: wp9, slot: "WEAPON1" }],
+          items: { equipped: [{ file: wp9, slot: "WEAPON1" }] },
         },
       },
       {
@@ -138,9 +136,7 @@ class PlantFamily extends CreatureFamily<Plant> {
           strength: 20,
           constitution: 20,
           xpv: 2000,
-        },
-        additionalData: {
-          equippedItems: [{ file: wp7, slot: "WEAPON1" }],
+          items: { equipped: [{ file: wp7, slot: "WEAPON1" }] },
         },
       },
       {
@@ -150,9 +146,7 @@ class PlantFamily extends CreatureFamily<Plant> {
           strength: 19,
           constitution: 19,
           xpv: 1400,
-        },
-        additionalData: {
-          equippedItems: [{ file: wp5, slot: "WEAPON1" }],
+          items: { equipped: [{ file: wp5, slot: "WEAPON1" }] },
         },
       },
     ]);

@@ -14,8 +14,8 @@ class KitService {
     }
     const level = base.data.level1 ?? creature.data.level1;
     const kit = childKit! ?? rootKit!;
-    this.applyKitImmunities(creature, base, kit.immunities(level));
-    this.applyKitAbilities(creature, base, kit.abilities, level);
+    this.applyKitImmunities(creature, base, kit.immunities(level.pnpValue));
+    this.applyKitAbilities(creature, base, kit.abilities, level.pnpValue);
   }
 
   applyKitImmunities(
@@ -23,10 +23,10 @@ class KitService {
     baseCreature: BaseCreature,
     immunities: ImmunityName[]
   ) {
-    baseCreature.additionalData.immunities ??= [];
+    baseCreature.data.immunities ??= [];
     for (const name of immunities) {
-      if (!creature.additionalData.immunities.includes(name)) {
-        baseCreature.additionalData.immunities.push(name);
+      if (!creature.data.immunities.includes(name)) {
+        baseCreature.data.immunities.push(name);
       }
     }
   }
@@ -40,10 +40,10 @@ class KitService {
     for (const ability of abilities) {
       let memorizedCount = ability.count(level);
       if (baseCreature && !baseCreature.data.kit) {
-        memorizedCount -= ability.count(creature.data.level1);
+        memorizedCount -= ability.count(creature.data.level1.pnpValue);
       }
       if (memorizedCount > 0) {
-        baseCreature.additionalData.memorizedSpells.push({
+        baseCreature.data.spells?.memorized.push({
           file: ability.resource,
           memorizedCount,
         });
@@ -62,15 +62,13 @@ class KitService {
   }
 
   removeKit(baseCreature: BaseCreature, kit: KitConfig) {
-    if (
-      typeof baseCreature.additionalData.removeMemorizedSpells === "boolean"
-    ) {
-      throw new Error(`removeMemorizedSpells already set`);
-    } else if (!baseCreature.additionalData.removeMemorizedSpells) {
-      baseCreature.additionalData.removeMemorizedSpells = [];
+    if (typeof baseCreature.data.spells?.removeMemorized === "boolean") {
+      throw new Error(`removeMemorized already set`);
+    } else if (!baseCreature.data.spells?.removeMemorized) {
+      baseCreature.data.spells.removeMemorized = [];
     }
     for (const ability of kit.abilities) {
-      baseCreature.additionalData.removeMemorizedSpells.push(ability.resource);
+      baseCreature.data.spells.removeMemorized.push(ability.resource);
     }
   }
 }

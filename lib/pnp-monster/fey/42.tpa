@@ -36,7 +36,7 @@ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
 			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~DRYADHA~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~ja#hama~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~VAELASA~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~WQXHAMA~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD1~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD2~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDHAMADC~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDHAMADR~ BEGIN
-				LPF REMOVE_MOST_CRE_EFFECTS END
+				LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=189 206 END
 			END
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
@@ -50,36 +50,33 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~ja#6f8~ #0 ~innate~ (1) // Animal Friendship
 			ADD_MEMORIZED_SPELL ~ja#7f8~ #0 ~innate~ (1) // Detect snares and pits
 			LPF clear_proficiencies END
-			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=189 END
-			LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=206 END
 			SET_BG2_PROFICIENCY ~PROFICIENCYDAGGER~ 2
 			LPF patchCreature
 				INT_VAR
-					level1=4
-					strength=10
-					dexterity=18
-					constitution=12
-					intelligence=14
-					wisdom=14
-					charisma=18
-					ac=10
-					apr=1
 					xpv=1400
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=12
-					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
-					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
-					class=IDS_OF_SYMBOL (~class~ ~FAIRY_DRYAD~)
-					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
-					sex=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
-					movement=12
 					hp=32
+					ac=10
 					thac0=17
+					apr=1
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=4
+					gender=IDS_OF_SYMBOL (~gender~ ~FEMALE~)
+					strength=10
+					intelligence=14
+					wisdom=14
+					dexterity=18
+					constitution=12
+					charisma=18
+					morale=12
+					general=IDS_OF_SYMBOL (~general~ ~HUMANOID~)
+					race=IDS_OF_SYMBOL (~race~ ~FAIRY~)
+					class=IDS_OF_SYMBOL (~class~ ~FAIRY_DRYAD~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=12
 					enforce=1
 			END
 			// Assigning ja#m42

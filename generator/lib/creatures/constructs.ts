@@ -77,23 +77,23 @@ class ConstructFamily extends CreatureFamily<Construct> {
         metalColor: 63,
         minorColor: 63,
         leatherColor: 63,
+        movement: 12,
+        items: {
+          remove: [
+            "HELM08",
+            "SHLD18",
+            "RING95",
+            "BLUN08",
+            "FBLADE",
+            "PLAT07",
+            "HELM13",
+          ],
+        },
+        immunities: ["construct"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
+        ],
       },
-    });
-    helmedHorror.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["construct"],
-      removeItems: [
-        "HELM08",
-        "SHLD18",
-        "RING95",
-        "BLUN08",
-        "FBLADE",
-        "PLAT07",
-        "HELM13",
-      ],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-      ],
     });
     helmedHorror.addTrait({
       immunities: [
@@ -132,13 +132,12 @@ class ConstructFamily extends CreatureFamily<Construct> {
       class: "FIGHTER_MAGE",
       alignment: "LAWFUL_EVIL",
       xpv: 4000,
-    });
-    battleHorror.setAdditionalData({
-      movement: { value: 12 },
-      memorizedSpells: [
-        { file: SPELLS.MagicMissiles, memorizedCount: 1 },
-        { file: SPELLS.DimensionDoor, memorizedCount: 1 },
-      ],
+      spells: {
+        memorized: [
+          { file: SPELLS.MagicMissiles, memorizedCount: 1 },
+          { file: SPELLS.DimensionDoor, memorizedCount: 1 },
+        ],
+      },
     });
     battleHorror.setBehavior({
       abilities: [
@@ -181,8 +180,7 @@ class ConstructFamily extends CreatureFamily<Construct> {
       from: this.creature(MonsterEnum.BattleHorror),
       files: ["DOOMSA"],
     });
-    doomSayer.setAdditionalData({
-      movement: { value: 12 },
+    doomSayer.setData({
       immunities: ["incorporeal"],
     });
     doomSayer.setBehavior({ dialog: ["DOOMSAYER"] });
@@ -215,15 +213,13 @@ class ConstructFamily extends CreatureFamily<Construct> {
         class: "FIGHTER",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        items: { remove: ["HELM13", "PLAT07", "SW1H11", "RING95"] },
+        immunities: ["construct"],
+        proficiencies: [
+          { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 2 },
+        ],
       },
-    });
-    doomGuard.setAdditionalData({
-      movement: { value: 12 },
-      immunities: ["construct"],
-      removeItems: ["HELM13", "PLAT07", "SW1H11", "RING95"],
-      proficiencies: [
-        { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 2 },
-      ],
     });
     doomGuard.addTrait({
       immunities: ["mindSpells", "fireResistance", "coldResistance"],
@@ -237,8 +233,8 @@ class ConstructFamily extends CreatureFamily<Construct> {
     doomGuard.setAdjustments([
       {
         files: ["DOOMDUR"],
-        data: { level1: 8 },
-        additionalData: {
+        data: {
+          level1: 8,
           proficiencies: [
             { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 3 },
           ],

@@ -1,7 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import actionFactory from "../src/factories/action.factory";
-import creatureFactory from "../src/factories/creature.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
 import { RawCreatureAbility } from "../src/model/creature/ability";
@@ -145,12 +144,14 @@ class BearFamily extends CreatureFamily<Bear> {
         class: "BEAR_BLACK",
         gender: "NIETHER",
         size: "Medium",
+        movement: 12,
+        items: {
+          remove: ["B1-6"],
+        },
+        script: {
+          remove: ["CBEAR", "BEAR"],
+        },
       },
-    });
-    black.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["B1-6"],
-      removeScripts: ["CBEAR", "BEAR"],
     });
     black.createPaws(1, 3, { diceThrown: 2, diceSize: 4 });
     black.createJaws(1, 6);
@@ -160,7 +161,7 @@ class BearFamily extends CreatureFamily<Bear> {
     });
     black.setAdjustments([
       { files: ["BEARBLSU"], summon: true },
-      { files: ["PLYBEAR2"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYBEAR2"], data: { script: { location: "None" } } },
     ]);
     return black;
   }
@@ -201,12 +202,14 @@ class BearFamily extends CreatureFamily<Bear> {
         class: "BEAR_BROWN",
         gender: "NIETHER",
         size: "Large",
+        movement: 12,
+        items: {
+          remove: ["B1-8"],
+        },
+        script: {
+          remove: ["CBEAR", "BEAR"],
+        },
       },
-    });
-    brown.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["B1-8"],
-      removeScripts: ["CBEAR", "BEAR"],
     });
     brown.createPaws(1, 6, { diceThrown: 2, diceSize: 6 });
     brown.createJaws(1, 8);
@@ -217,11 +220,11 @@ class BearFamily extends CreatureFamily<Bear> {
     });
     brown.setAdjustments([
       { files: ["BEARBRSU"], summon: true },
-      { files: ["PLYBEAR1"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYBEAR1"], data: { script: { location: "None" } } },
       { files: ["BDGRIZHU"], data: { class: "HUNTER_CREATURE" } },
       // { do we want to give them rage? this is not RAW
       //   files: ["BDBEARBN", "BDGRIZHU"],
-      //   additionalData: { removeMemorizedSpells: false },
+      //   data: { removeMemorizedSpells: false },
       // },
     ]);
     return brown;
@@ -255,12 +258,14 @@ class BearFamily extends CreatureFamily<Bear> {
         class: "BEAR_CAVE",
         gender: "NIETHER",
         size: "Huge",
+        movement: 12,
+        items: {
+          remove: ["B1-10", "BEARCASU"],
+        },
+        script: {
+          remove: ["CBEAR", "BEAR"],
+        },
       },
-    });
-    cave.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["B1-10", "BEARCASU"],
-      removeScripts: ["CBEAR", "BEAR"],
     });
     cave.createPaws(1, 8, { diceThrown: 2, diceSize: 6 });
     cave.createJaws(1, 12);
@@ -274,7 +279,7 @@ class BearFamily extends CreatureFamily<Bear> {
       { files: ["BD328OSO"], data: { level1: 8, xpv: 900 } },
       // { do we want to give them rage? this is not RAW
       //   files: ["BDBEARCA"],
-      //   additionalData: { removeMemorizedSpells: false },
+      //   data: { removeMemorizedSpells: false },
       // },
     ]);
     return cave;
@@ -323,13 +328,15 @@ class BearFamily extends CreatureFamily<Bear> {
         class: "BEAR_POLAR",
         gender: "NIETHER",
         size: "Huge",
+        movement: 12,
+        items: {
+          remove: ["B1-12", "BEARPOSU", "KALDW1"],
+        },
+        script: {
+          remove: ["CBEAR", "BEAR", "kaldran"],
+        },
+        immunities: ["coldResistance"],
       },
-    });
-    polar.setAdditionalData({
-      movement: { value: 12 },
-      removeItems: ["B1-12", "BEARPOSU", "KALDW1"],
-      removeScripts: ["CBEAR", "BEAR", "kaldran"],
-      immunities: ["coldResistance"],
     });
     polar.createPaws(1, 10, { diceThrown: 3, diceSize: 6 });
     polar.createJaws(2, 6);
@@ -347,15 +354,15 @@ class BearFamily extends CreatureFamily<Bear> {
           level1: 12,
           intelligence: 10,
           morale: 15,
-        },
-        additionalData: {
           immunities: ["cold", "coldSpells"],
-          memorizedSpells: [
-            {
-              file: this.spell(Ids.ImprovedStreamOfFrost).file,
-              memorizedCount: 1,
-            },
-          ],
+          spells: {
+            memorized: [
+              {
+                file: this.spell(Ids.ImprovedStreamOfFrost).file,
+                memorizedCount: 1,
+              },
+            ],
+          },
         },
       },
     ]);

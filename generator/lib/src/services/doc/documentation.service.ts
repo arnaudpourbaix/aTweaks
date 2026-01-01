@@ -58,9 +58,12 @@ class DocumentationService {
     this.replace(template, "cha", creature.data.charisma);
     this.replace(template, "align", creature.data.alignment);
     this.replace(template, "ac", creatureService.getFinalArmorClass(creature));
-    this.replace(template, "movement", creature.additionalData.movement?.value);
-    this.replace(template, "level", creature.data.level1);
-    this.replace(template, "hp", creature.data.hp);
+    this.replace(template, "movement", creature.data.movement.pnpValue);
+    this.replace(
+      template,
+      "hitDice",
+      `${creature.data.level1.pnpValue} (${creature.data.hp} hp)`
+    );
     this.replace(template, "thac0", creature.data.thac0);
     this.replace(
       template,
@@ -68,6 +71,7 @@ class DocumentationService {
       creature.data.apr! * (creature.data.doubleApr ? 2 : 1)
     );
     this.replace(template, "size", creature.data.size);
+    this.addSpecial(template, creature);
     this.replace(template, "morale", creature.data.morale);
     this.replace(template, "xp", creature.data.xpv);
     this.getCreatureAttacks(template, creature);
@@ -76,9 +80,22 @@ class DocumentationService {
     this.monsters.push(template.text);
   }
 
+  addSpecial(template: { text: string }, creature: Creature) {
+    let special = "";
+    if (creature.data.level1.type === "caster") {
+      special += `Cast spells as a level ${creature.data.level1.value} caster`;
+    } else if (creature.data.level1.type === "turn") {
+      special += `Turned as a level ${creature.data.level1.value} undead`;
+    }
+    if (special) {
+      special = `<tr><th>Special</th><td>${special}</td></tr>`;
+    }
+    this.replace(template, "special", special);
+  }
+
   getCreatureAttacks(template: { text: string }, creature: Creature) {
     let attacks = "";
-    for (const equippedItem of creature.additionalData.equippedItems) {
+    for (const equippedItem of creature.data.items.equipped) {
       if (itemService.isEquippedWeapon(equippedItem)) {
         const weapon = State.items.find((i) => i.file === equippedItem.file);
         if (weapon && weapon.doc) {
@@ -93,7 +110,7 @@ class DocumentationService {
 
   getCreatureTraits(template: { text: string }, creature: Creature) {
     let result = "";
-    const immunities = creature.additionalData.immunities.map(
+    const immunities = creature.data.immunities.map(
       (name) => State.immunities.find((i) => i.name === name) as ImmunityConfig
     );
     let traits: string[] = [];
@@ -105,7 +122,7 @@ class DocumentationService {
       );
     }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
-    for (const equippedItem of creature.additionalData.equippedItems) {
+    for (const equippedItem of creature.data.items.equipped) {
       const item = State.items.find((i) => i.file === equippedItem.file);
       if (item?.trait) {
         const desc = translationService.from(item.description!);
@@ -140,7 +157,7 @@ class DocumentationService {
   }
 
   getCreatureSpell(creature: Creature, ability: CreatureAbility) {
-    const memorized = creature.additionalData.memorizedSpells.find(
+    const memorized = creature.data.spells.memorized.find(
       (m) => m.file === ability.resource
     );
     const spell = State.spells.find((s) => s.file === ability.resource);
@@ -158,11 +175,6 @@ class DocumentationService {
           : "";
       result = `${title}${desc}`;
     } else if (memorized) {
-      const timer = ability.actions.find(
-        (t) =>
-          t.name === "SetGlobalTimer" &&
-          t.params[0] !== GLOBAL_CONFIG.bafConstants.roundTimer
-      ) as Actions.SetGlobalTimer | undefined;
       const rounds = ability.timer
         ? Math.round(ability.timer.value / 6)
         : undefined;

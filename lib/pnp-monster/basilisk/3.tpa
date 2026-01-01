@@ -132,31 +132,30 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=10
-					strength=20
-					dexterity=8
-					constitution=19
-					intelligence=7
-					wisdom=12
-					charisma=11
-					ac=2
-					apr=3
 					xpv=7000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=16
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~BASILISK~)
-					class=IDS_OF_SYMBOL (~class~ ~BASILISK_GREATER~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					movement=5
 					hp=125
+					ac=2
 					thac0=11
+					apr=3
 					saveDeath=8
 					saveWand=10
 					savePolymorph=9
 					saveBreath=9
 					saveSpell=11
+					level1=10
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=20
+					intelligence=7
+					wisdom=12
+					dexterity=8
+					constitution=19
+					charisma=11
+					morale=16
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~BASILISK~)
+					class=IDS_OF_SYMBOL (~class~ ~BASILISK_GREATER~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=5
 					enforce=1
 					perfect2weapon=1
 			END

@@ -60,33 +60,31 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=3
-					bonusHp=1
-					strength=14
-					dexterity=13
-					constitution=16
-					intelligence=1
-					wisdom=12
-					charisma=5
-					ac=3
-					apr=4
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=10
-					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
-					race=IDS_OF_SYMBOL (~race~ ~CARRIONCRAWLER~)
-					class=IDS_OF_SYMBOL (~class~ ~CARRIONCRAWLER~)
-					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
-					sex=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					xpv=420
-					movement=5
-					doubleApr=1
 					hp=30
+					ac=3
 					thac0=17
+					apr=4
+					doubleApr=1
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=3
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=14
+					intelligence=1
+					wisdom=12
+					dexterity=13
+					constitution=16
+					charisma=5
+					morale=10
+					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
+					race=IDS_OF_SYMBOL (~race~ ~CARRIONCRAWLER~)
+					class=IDS_OF_SYMBOL (~class~ ~CARRIONCRAWLER~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=5
 					enforce=1
 			END
 			// Assigning ja#m9

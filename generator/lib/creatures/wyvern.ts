@@ -100,12 +100,14 @@ class WyvernFamily extends CreatureFamily<Wyvern> {
         class: "WYVERN",
         gender: "NIETHER",
         size: "Gargantuan",
+        movement: 24,
+        items: {
+          remove: ["RING97", "BDWYV01", "WYVERN1", "WYVERN2", "WYVERNSU"],
+        },
+        script: {
+          remove: ["WYVERN"],
+        },
       },
-    });
-    wyvern.setAdditionalData({
-      movement: { value: 24 },
-      removeItems: ["RING97", "BDWYV01", "WYVERN1", "WYVERN2", "WYVERNSU"],
-      removeScripts: ["WYVERN"],
     });
     wyvern.addTrait({ immunities: ["hover"] });
     wyvern.createStinger("F", 0);
@@ -138,15 +140,15 @@ class WyvernFamily extends CreatureFamily<Wyvern> {
       morale: 12,
       xpv: 650,
       size: "Huge",
-    });
-    baby.setAdditionalData({
-      movement: { value: 24 },
-      removeItems: ["BDWYV02"],
+      movement: 24,
+      items: {
+        remove: ["BDWYV02"],
+      },
     });
     baby.createStinger("J", 0);
     baby.createJaws();
     baby.setAdjustments([
-      { files: ["PLYWYVRN"], additionalData: { scriptLocation: "None" } },
+      { files: ["PLYWYVRN"], data: { script: { location: "None" } } },
       { files: ["WYVBABSU"], summon: true },
     ]);
     return baby;
@@ -173,10 +175,10 @@ class WyvernFamily extends CreatureFamily<Wyvern> {
       morale: 16,
       xpv: 2000,
       size: "Gargantuan",
-    });
-    greater.setAdditionalData({
-      movement: { value: 24 },
-      removeItems: ["BDWYV03"],
+      movement: 24,
+      items: {
+        remove: ["BDWYV03"],
+      },
     });
     greater.createStinger("F", -2);
     greater.createJaws();

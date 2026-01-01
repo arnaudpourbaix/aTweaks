@@ -186,32 +186,30 @@ BEGIN
 			PATCH_DEFINE_ARRAY notEnforceFiles BEGIN DW#ULCWO END
 			LPF patchCreature
 				INT_VAR
-					level1=6
-					bonusHp=4
-					strength=18
-					dexterity=13
-					constitution=9
-					intelligence=6
-					wisdom=12
-					charisma=7
-					ac=2
-					apr=1
 					xpv=2000
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
-					morale=14
-					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
-					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
-					class=IDS_OF_SYMBOL (~class~ ~WOLF_VAMPIRIC~)
-					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					movement=19
 					hp=52
+					ac=2
 					thac0=13
+					apr=1
 					saveDeath=11
 					saveWand=13
 					savePolymorph=12
 					saveBreath=13
 					saveSpell=14
+					level1=6
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					strength=18
+					intelligence=6
+					wisdom=12
+					dexterity=13
+					constitution=9
+					charisma=7
+					morale=14
+					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
+					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
+					class=IDS_OF_SYMBOL (~class~ ~WOLF_VAMPIRIC~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL_EVIL~)
+					movement=19
 					enforce=1
 				STR_VAR
 					notEnforceFiles

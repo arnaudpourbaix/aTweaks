@@ -60,32 +60,30 @@ BEGIN
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
-					level1=4
-					bonusHp=4
-					strength=17
-					dexterity=15
-					constitution=15
-					intelligence=4
-					wisdom=12
-					charisma=7
-					ac=7
-					apr=1
 					xpv=175
-					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					morale=10
-					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
-					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
-					class=IDS_OF_SYMBOL (~class~ ~WOLF_DIRE~)
-					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					sex=IDS_OF_SYMBOL (~gender~ ~MALE~)
-					movement=14
 					hp=36
+					ac=7
 					thac0=15
+					apr=1
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
 					saveBreath=16
 					saveSpell=16
+					level1=4
+					gender=IDS_OF_SYMBOL (~gender~ ~MALE~)
+					strength=17
+					intelligence=4
+					wisdom=12
+					dexterity=15
+					constitution=15
+					charisma=7
+					morale=10
+					general=IDS_OF_SYMBOL (~general~ ~ANIMAL~)
+					race=IDS_OF_SYMBOL (~race~ ~WOLF~)
+					class=IDS_OF_SYMBOL (~class~ ~WOLF_DIRE~)
+					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
+					movement=14
 					enforce=1
 			END
 			// Assigning ja#m19

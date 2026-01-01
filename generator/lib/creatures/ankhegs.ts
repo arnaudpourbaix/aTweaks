@@ -1,6 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
-import CreatureFactory from "../src/factories/creature.factory";
 import effectFactory from "../src/factories/effect.factory";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -113,16 +112,18 @@ class AnkhegFamily extends CreatureFamily<Ankheg> {
         class: "ANKHEG",
         gender: "NIETHER",
         size: "Huge",
+        movement: 6,
+        immunities: ["magicalBeast"],
+        script: {
+          remove: ["ANKHEG"],
+          location: "Race",
+        },
+        items: {
+          remove: ["ANKHEG1", "ANKHEG2"],
+        },
       },
     });
     ankheg.createStream();
-    ankheg.setAdditionalData({
-      movement: { value: 6 },
-      immunities: ["magicalBeast"],
-      removeScripts: ["ANKHEG"],
-      removeItems: ["ANKHEG1", "ANKHEG2"],
-      scriptLocation: "Race",
-    });
     ankheg.addWeapon({
       weapon: {
         stringRef: "monster.ankheg.weapon",

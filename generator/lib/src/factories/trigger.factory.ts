@@ -181,6 +181,23 @@ class TriggerFactory {
     }
     return results;
   }
+
+  inverseNegation(trigger: Triggers.Trigger): Triggers.Trigger {
+    return { ...trigger, negation: !trigger.negation };
+  }
+
+  inverseNegations(triggers: Triggers.Trigger[]): Triggers.Trigger[] {
+    return triggers.reduce((acc, trigger) => {
+      if ("triggers" in trigger) {
+        acc.push(
+          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[])
+        );
+      } else {
+        acc.push(this.inverseNegation(trigger));
+      }
+      return acc;
+    }, [] as Triggers.Trigger[]);
+  }
 }
 
 const triggerFactory = new TriggerFactory();
