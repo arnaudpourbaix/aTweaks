@@ -42,6 +42,11 @@ export interface BaseCreatureAbility {
 
 export interface CreatureAbility extends BaseCreatureAbility {
   isSpell: boolean;
+  /**
+   * Is this ability has infinite use?
+   * Requires: noDec, force, reallyForce and no remove flag
+   */
+  infiniteUse: boolean;
   actions: Actions.Action[];
   resource?: string;
 }

@@ -396,7 +396,7 @@ If successful, the charge causes double head-butt damage`,
       zombieJuju: "Zombie Juju",
       zombieSea: "Zombie Sea",
     },
-    weapon: { touch: "Touch" },
+    weapon: { touch: "Touch", claws: "Claws", jaws: "Jaws" },
     ability: {
       fearAura: {
         name: "Fear Aura",
@@ -407,6 +407,11 @@ Those who fail must flee in terror for 10 rounds and are 50% likely to drop any 
         name: "Death Wail",
         description: `Any creature within 30 feet of a groaning spirit when she keens must roll a saving throw vs. death magic.
 Those who fail die immediately, their faces contorted in horror.`,
+      },
+      iceWall: {
+        name: "Wall of Ice",
+        description: `This causes a horizontal sheet to fall upon opponents. The sheet covers a 10-foot-square area per caster level.
+The sheet has the same effect as an ice storm's hail stones—3d10 points of damage inflicted to creatures beneath it.`,
       },
     },
   },

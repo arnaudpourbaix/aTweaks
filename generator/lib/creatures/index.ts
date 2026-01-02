@@ -115,3 +115,63 @@ export const familyFactories: (() => Family)[] = [
 // "RAT2", // Rat
 // "SQUIRR", // Squirrel
 // "X#WDOE", // White Doe
+
+// Demonic:
+// "ACQ17003", // Balor
+// "ALBERT", // Albert
+// "BALOR01", // Balor
+// "BDABIBLA", // Black Abishai
+// "BDABIGRE", // Green Abishai
+// "BDABIRED", // Red Abishai
+// "BDABIS1D", // Abishai
+// "BDABIS2D", // Abishai
+// "BDABIS3D", // Abishai
+// "BDBELHIF", // Belhifet
+// "BDBONEFI", // Bone Fiend
+// "BDCUT57A", // Green Abishai
+// "BDCUT57B", // Lemure
+// "BDCUT57C", // Black Abishai
+// "BDDCOR01", // Cornugon
+// "BDDEVIL1", // Red Abishai
+// "BDDEVIL2", // Green Abishai
+// "BDERINYE", // Erinyes
+// "BDFINHEP", // Hephernaan
+// "BDHAMATU", // Hamatula
+// "BDHELCAT", // Hellcat
+// "BDILLARU", // Illaruel
+// "BDIMPD", // Imp
+// "BDLEMURD", // Lemure
+// "BDLEMURE", // Lemure
+// "BDTHRIX", // Thrix
+// "BDUNSLGU", // Unsleeping Guardian
+// "BDXHOST", // Xhost
+// "BSGLABRE", // Glabrezu
+// "BSTANAR", // Nabassu Fledgling
+// "DEMGLASU", // Glabrezu
+// "DEMNABSU", // Nabassu
+// "DEMOSUM1", // Marilith
+// "DEMOSUM2", // Balor
+// "DEMOSUM3", // Glabrezu
+// "DEMOSUM4", // Cambion
+// "DEMPIT01", // Pit Fiend
+// "DEMPITSU", // Pit Fiend
+// "DEMSUC01", // Succubus
+// "GOODDEAT", // Mirror Fiend
+// "KIRINH", // Kirinhale
+// "L#CULGU", // Tanar'ri Bones
+// "L#SHADM", // Kimrayor, The Shard-Shatterer
+// "NTDEMON", // Doomsayer
+// "NTGGHOT1", // General Ghotal
+// "NTGGHOTA", // General Ghotal
+// "NTINDFI1", // Maurezhi
+// "NTINDFI2", // Maurezhi
+// "NTINDFIG", // Succubus
+// "NTROACH", // Lesser Tanar'ri
+// "SIMDEMON", // Thrall of Azothet
+// "SLAYSH01", // Slayer Shadow
+// "TANAR", // Aec'Letec
+// "TANAR2", // Aec'Letec
+// "TELALU1", // Alu-Fiend
+// "WITHARDE", // Dannimus Toth
+// "X#AMELIA", // Amelia
+// "X#TANARI", // Aravaata

@@ -7,6 +7,9 @@ export default {
   charmPerson: "Charm Person",
   charmPersonOrAnimal: "Charm Person or Animal",
   powerWordSleep: "Power Word Sleep",
+  powerWordBlind: "Power Word Blind",
+  powerWordStun: "Power Word Stun",
+  powerWordKill: "Power Word Kill",
   sleep: "Sleep",
   darkness15Radius: "Darkness 15' Radius",
   coneOfCold: "Cone Of Cold",
@@ -37,4 +40,6 @@ export default {
   cloakOfFear: "Cloak of Fear",
   horror: "Horror",
   wailOfTheBanshee: "Wail Of The Banshee",
+  iceStorm: "Ice Storm",
+  dispelMagic: "Dispel Magic",
 };

@@ -53,6 +53,7 @@ class AbilityService {
       targets = [ability.targets];
     const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
     const result: CreatureAbility = {
+      infiniteUse: false,
       requireVocal: false,
       disableInterrupt: false,
       canUseWhenPolymorphed: false,
@@ -65,6 +66,8 @@ class AbilityService {
     };
     const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
     if (!ability.spell) return result;
+    result.infiniteUse =
+      ability.spell.type !== "normal" && !ability.spell.remove;
     result.resource = ability.spell.resource ?? ability.preset;
     ability.spell.type ??= "normal";
     ability.spell.memorizedSpellCheck ??= true;

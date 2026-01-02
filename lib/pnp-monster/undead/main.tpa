@@ -1,3 +1,5 @@
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/common.tpa"
 // Generated file (don't edit)
 
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/73.tpa" // Banshee
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/74.tpa" // Death Knight

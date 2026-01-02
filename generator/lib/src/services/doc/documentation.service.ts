@@ -1,12 +1,10 @@
 import * as fs from "fs";
 import path from "path";
-import { GLOBAL_CONFIG } from "../../../config/generate";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
-import { CreatureFamily, Family } from "../../model/creature/family";
+import { Family } from "../../model/creature/family";
 import { ImmunityConfig } from "../../model/final/immunity";
-import { Actions } from "../../model/script/actions";
 import { State } from "../../state";
 import creatureService from "../creature.service";
 import itemService from "../item.service";
@@ -162,13 +160,12 @@ class DocumentationService {
     );
     const spell = State.spells.find((s) => s.file === ability.resource);
     let result = "";
+    const infiniteUse = ability.infiniteUse ? 1 : undefined;
     if (spell && spell.doc && memorized) {
+      const rounds = spell.options?.renew ?? infiniteUse;
       const title = `<h5>${translationService.from(
         spell.name!
-      )} (${this.getSpellQuantity(
-        memorized.memorizedCount,
-        spell.options?.renew
-      )})</h5>`;
+      )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
       const desc =
         spell.doc !== "name"
           ? `<p>${translationService.from(spell.description!)}</p>`
@@ -177,7 +174,7 @@ class DocumentationService {
     } else if (memorized) {
       const rounds = ability.timer
         ? Math.round(ability.timer.value / 6)
-        : undefined;
+        : infiniteUse;
       result = `<h5>${translationService.from(
         ability.name
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;

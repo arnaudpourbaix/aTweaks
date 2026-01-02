@@ -642,4 +642,76 @@ export const ABILITY_PRESETS: {
       requireVocal: true,
     },
   },
+  {
+    preset: SPELLS.IceStorm,
+    ability: {
+      name: "ability.iceStorm",
+      targets: [
+        {
+          name: "FarthestEnemies",
+          randomOrder: true,
+        },
+      ],
+      minRange: 20,
+      spell: {
+        id: "WIZARD_ICE_STORM",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  //TODO:
+  {
+    preset: SPELLS.DispelMagic,
+    ability: {
+      name: "ability.dispelMagic",
+      targets: [
+        {
+          name: "FarthestEnemies",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        id: "WIZARD_TRUE_DISPEL_MAGIC",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.PowerWordBlind,
+    ability: {
+      name: "ability.powerWordBlind",
+      targets: SLEEP_TARGET_LISTS,
+      spell: {
+        id: "WIZARD_POWER_WORD_BLIND",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.PowerWordStun,
+    ability: {
+      name: "ability.powerWordStun",
+      targets: SLEEP_TARGET_LISTS,
+      spell: {
+        id: "WIZARD_POWER_WORD_STUN",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.PowerWordKill,
+    ability: {
+      name: "ability.powerWordKill",
+      targets: SLEEP_TARGET_LISTS,
+      spell: {
+        id: "WIZARD_POWER_WORD_KILL",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
 ];

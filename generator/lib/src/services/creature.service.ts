@@ -6,6 +6,7 @@ import {
   creatureSizes,
 } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { MonsterEnum } from "../../creatures/monster";
 import { SAVING_THROWS } from "../model/constants";
 import {
   BaseCreature,
@@ -21,7 +22,6 @@ import {
 import { Weapon } from "../model/spell-item/spell-item";
 import itemService from "./item.service";
 import kitService from "./kit.service";
-import utils from "./utils/utils.service";
 
 class CreatureService {
   check(creature: Creature) {
@@ -263,10 +263,7 @@ class CreatureService {
       GLOBAL_CONFIG.constitutionAffectHitPoint && !isPlayerClass
         ? constitutionTable[constitution] ?? 0
         : 0;
-    let hpPerHD = 8;
-    if (utils.hasImmunity(p.creature.data.immunities, "undead")) hpPerHD = 12;
-    else if (utils.hasImmunity(p.creature.data.immunities, "ooze"))
-      hpPerHD = 10;
+    let hpPerHD = this.getHitDiceSize(p.creature);
     const baseHP = level * hpPerHD;
     const constitutionHP =
       constructBonusHP === 0 ? Math.min(level, 9) * conHPPerLevel : 0;
@@ -469,6 +466,14 @@ class CreatureService {
       return 10;
     } else if (value < 6) return value;
     throw new Error(`Can't set more than 5 attacks per round: ${value}`);
+  }
+
+  getHitDiceSize(creature: Creature): number {
+    let result = 8;
+    if (creature.data.general === "UNDEAD") result = 12; // 3e
+    else if (creature.data.race === "SLIME") result = 10; // 3e
+    else if (creature.id === MonsterEnum.DeathKnight) result = 10; // 2e
+    return result;
   }
 }
 
