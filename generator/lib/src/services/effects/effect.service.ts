@@ -197,6 +197,9 @@ class EffectService {
       case EffectTypeEnum.Disease:
         effect.parameter1 = `${effect.amount}`;
         effect.parameter2 = `${effect.type}`;
+        if (effect.frequencyMultiplier) {
+          effect.parameter4 = `${effect.frequencyMultiplier}`;
+        }
         if (effect.icon) effect.special = effect.icon;
         break;
       case EffectTypeEnum.Regeneration:

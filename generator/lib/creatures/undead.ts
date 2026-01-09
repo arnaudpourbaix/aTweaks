@@ -1,16 +1,24 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
-import { CommonProjectileFiles } from "../spells/projectiles";
+import {
+  COMMON_PROJECTILES,
+  CommonProjectileFiles,
+} from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
-import { Effect } from "../src/model/spell-item/effect";
+import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
+  DiseaseTypeEnum,
   EffectDamageTypeEnum,
+  EffectDispelResistanceEnum,
   EffectIDSFileEnum,
+  EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
+  EffectTargetEnum,
   EffectTimingEnum,
   InvisibilityTypeEnum,
   ItemAbilityCastingAnimationEnum,
@@ -22,6 +30,8 @@ import {
   ItemAbilityTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
+  PortraitIconEnum,
+  RemoveEffectsByResourceTypeEnum,
   SaveTypeEnum,
   SpellExclusionFlagEnum,
   SpellFlagEnum,
@@ -29,11 +39,22 @@ import {
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { ProjectileBehaviorEnum } from "../src/model/spell-item/projectile";
+import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
+import {
+  SpellProtectionRelation,
+  SpellProtectionStat,
+} from "../src/model/spell-item/spell-protection";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
+  AuraOfEvil,
+  CarrionStench,
   DeathWail,
   FearAura,
+  GhoulTouch,
+  GhoulLordTouch,
+  GhastTouch,
+  RottingDisease,
   WallOfIce,
 }
 
@@ -62,11 +83,15 @@ class Undead extends Creature {
     });
   }
 
-  createClaws(diceThrown: number, diceSize: number, effects?: Effect[]) {
+  createClaws(
+    diceThrown: number,
+    diceSize: number,
+    castSpell?: WeaponCastSpell
+  ) {
     return this.addWeapon({
       weapon: {
         stringRef: "monster.undead.weapon.claws",
-        icon: MonsterItemIconEnum.Wolf,
+        icon: MonsterItemIconEnum.Ghoul,
         equippedSlot: ["WEAPON1"],
         header: {
           type: ItemAbilityTypeEnum.Melee,
@@ -75,13 +100,17 @@ class Undead extends Creature {
           damageType: AbilityDamageTypeEnum.Slashing,
           speed: 5,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects,
         },
       },
+      castSpells: castSpell ? [castSpell] : undefined,
     });
   }
 
-  createJaws(diceThrown: number, diceSize: number, effects?: Effect[]) {
+  createJaws(
+    diceThrown: number,
+    diceSize: number,
+    castSpells?: WeaponCastSpell[]
+  ) {
     return this.addWeapon({
       weapon: {
         stringRef: "monster.undead.weapon.jaws",
@@ -94,9 +123,9 @@ class Undead extends Creature {
           damageType: AbilityDamageTypeEnum.Piercing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects,
         },
       },
+      castSpells,
     });
   }
 
@@ -254,6 +283,289 @@ class Undead extends Creature {
       },
     });
   }
+
+  /**
+   * Ghoul Touch
+   */
+  createGhoulTouch() {
+    const spell = this.addSpell({
+      name: "monster.undead.ability.ghoulTouch.name",
+      description: "monster.undead.ability.ghoulTouch.description",
+      id: Ids.GhoulTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.General,
+                relation: SpellProtectionRelation.NotEqual,
+              },
+              value: "HUMANOID",
+            },
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.Race,
+                relation: SpellProtectionRelation.Equal,
+              },
+              value: "ELF",
+            },
+            ...effectFactory.paralyze({ duration: 30 }),
+          ],
+        },
+      ],
+    });
+    return spell;
+  }
+
+  /**
+   * Ghast Touch
+   */
+  createGhastTouch() {
+    return this.addSpell({
+      name: "monster.undead.ability.ghastTouch.name",
+      description: "monster.undead.ability.ghastTouch.description",
+      id: Ids.GhastTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.General,
+                relation: SpellProtectionRelation.NotEqual,
+              },
+              value: "HUMANOID",
+            },
+            ...effectFactory.paralyze({ duration: 42 }),
+          ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Ghoul Lord Touch
+   */
+  createGhoulLordTouch() {
+    return this.addSpell({
+      name: "monster.undead.ability.ghoulLordTouch.name",
+      description: "monster.undead.ability.ghoulLordTouch.description",
+      id: Ids.GhoulLordTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.General,
+                relation: SpellProtectionRelation.NotEqual,
+              },
+              value: "HUMANOID",
+            },
+            ...effectFactory.paralyze({ duration: 60 }),
+          ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Carrion Stench
+   */
+  createCarrionStench() {
+    const base: BaseEffect = {
+      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+      saveBonus: -2,
+      timing: EffectTimingEnum.InstantLimited,
+      duration: 12,
+      dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+    };
+    return this.addSpell({
+      name: "monster.undead.ability.carrionStench.name",
+      description: "monster.undead.ability.carrionStench.description",
+      id: Ids.CarrionStench,
+      options: { renew: 1 },
+      memorizedCount: 1,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Ranged,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          projectile: "IDPRO282",
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.RemoveEffectsByResource,
+              type: RemoveEffectsByResourceTypeEnum.Default,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.Thac0Bonus,
+              type: EffectModifierTypeEnum.Increment,
+              value: -2,
+              ...base,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayPortraitIcon,
+              icon: PortraitIconEnum.Nauseated,
+              ...base,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: "monster.undead.ability.carrionStench.message",
+              ...base,
+            },
+          ],
+        },
+      ],
+      ability: {
+        targets: [
+          {
+            name: "NearestEnemies",
+            limit: 3,
+          },
+        ],
+        spell: {
+          type: "reallyForce",
+          selfTarget: true,
+        },
+        range: 5,
+      },
+    });
+  }
+
+  /**
+   * Rotting Disease
+   */
+  createRottingDisease() {
+    // PnP: Loose 10 hit points and 1 point from their Constitution and Charisma scores each day
+    // Disease can be cured and thus, we can't reapply disease each day
+    // Also, time is a bit different in game and I have replaced days by 8 hours (a rest)
+    // Instead of gradually loosing con and cha, I have set a one time disease with -4
+    return this.addSpell({
+      name: "monster.undead.ability.rottingDisease.name",
+      description: "monster.undead.ability.rottingDisease.description",
+      id: Ids.RottingDisease,
+      opcodeType: "disease",
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.RemoveEffectsByResource,
+              type: RemoveEffectsByResourceTypeEnum.Default,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.Disease,
+              type: DiseaseTypeEnum.OneDamagePerAmountSeconds,
+              amount: 100, // 10 every 8 hours
+              icon: PortraitIconEnum.Diseased,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 100 * Durations.day,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.Disease,
+              type: DiseaseTypeEnum.ReduceConstitutionByAmount,
+              amount: 4,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.Disease,
+              type: DiseaseTypeEnum.ReduceCharismaByAmount,
+              amount: 4,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+          ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Aura of Evil
+   */
+  createAuraOfEvil() {
+    // Ghoul lords do radiate an aura of evil. In fact, this effect is so potent that those of good alignment suffer a -4 on all attack rolls when within 30 feet of these creatures.
+    // In addition, all persons who are forced to make a fear or horror check because of an encounter with a ghoul lord must do so with a -2 penalty.
+    const base: BaseEffect = {
+      timing: EffectTimingEnum.InstantLimited,
+      duration: 6,
+      dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+    };
+    return this.addSpell({
+      name: "monster.undead.ability.auraOfEvil.name",
+      description: "monster.undead.ability.auraOfEvil.description",
+      id: Ids.AuraOfEvil,
+      options: { renew: 1 },
+      memorizedCount: 1,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 1,
+          effects: [
+            {
+              opcode: EffectTypeEnum.UseEFFFile,
+              idsFile: EffectIDSFileEnum.ALIGN,
+              idsEntry: "MASK_GOOD",
+              ...base,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayPortraitIcon,
+              icon: PortraitIconEnum.Nauseated,
+              ...base,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: "monster.undead.ability.auraOfEvil.message",
+              ...base,
+            },
+            {
+              opcode: EffectTypeEnum.ProtectionFromSpell,
+              ...base,
+            },
+          ],
+        },
+      ],
+      effectFiles: [
+        {
+          opcode: EffectTypeEnum.Thac0Bonus,
+          type: EffectModifierTypeEnum.Increment,
+          value: -4,
+          ...base,
+        },
+      ],
+      ability: {
+        targets: [
+          {
+            name: "NearestEnemies",
+            limit: 3,
+          },
+        ],
+        spell: {
+          type: "reallyForce",
+          selfTarget: true,
+        },
+      },
+    });
+  }
 }
 
 class UndeadFamily extends CreatureFamily<Undead> {
@@ -262,9 +574,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.banshee());
     // this.addCreature(this.deathKnight());
     this.addCreature(this.ghoul());
-    // this.addCreature(this.ghast());
-    // this.addCreature(this.ghoulLord());
-    // this.addCreature(this.mummy());
+    this.addCreature(this.ghast());
+    this.addCreature(this.ghoulLord());
+    this.addCreature(this.mummy());
     // this.addCreature(this.greaterMummy());
     // this.addCreature(this.shadow());
     // this.addCreature(this.skeleton());
@@ -429,6 +741,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     return knight;
   }
+
   /**
    * Ghast
    */
@@ -438,23 +751,31 @@ class UndeadFamily extends CreatureFamily<Undead> {
       name: "monster.undead.name.ghast",
       files: [
         "BDGHAST", // Ghast
-        "BDGHASTG", // Greater Ghast
-        "BDJUNIA2", // Junia
-        "BDYMORI", // Wight
-        "BPGHAS01", // Ghast
-        "BPGHGR01", // Greater Ghoul
         "BSGHAST1", // Ghast
+        "BPGHAS01", // Ghast
         "GHAST", // Ghast
-        "GHASTD", // Ghast
+        "GHASTD", // Durlag's Tower Ghast Trap Ghast
+        "GHASTS", // Tiax' summoned ghast
         "GHASTF01", // Fell Ghast
-        "GHASTS", // Ghast
-        "GHOULLOR", // Greater Ghoul
         "GRAEL", // Grael
-        "L#BHACO", // Ixjan, The Collector
-        "L#LIGWI", // Infesting Light
-        "L#ORMWIL", // Mountain Light
         "SEWERF3", // Sewerfolk
-        "MALKAL", // Mal-Kalen
+        "BHGHOUL2",
+        "BHGHOUL4",
+        "ghast01", // BG2 standard Ghast
+        "ghastgsu",
+        "gmayor", // Theshal
+        "nevm3", // Nev's undead trap Ghast
+        "theshal",
+        "besamen", // Quest Pack
+        "bpghast", // BP
+        "bsghast1", // BST mod
+        "CDI4GHST", // IWDification
+        "MH#GLGHA", // Made in heaven Q&E
+        "sghastgr", // Bonehill
+        "sk#algol", // Neh'taniel
+        "sk#ssp3", // Neh'taniel
+        "XGHAST1", // Mod added
+        "XGHAST2", // Mod added
       ],
       data: {
         level1: 4,
@@ -477,28 +798,47 @@ class UndeadFamily extends CreatureFamily<Undead> {
         movement: 15,
         immunities: ["undead"],
         items: {
-          remove: ["ring95", "ghoul1", "ringkora"],
+          remove: ["ring95", "ghast1"],
         },
         script: {
-          remove: ["ghoul"],
+          remove: ["movep1"],
         },
         effects: {
           remove: [EffectTypeEnum.ProtectionFromBackstab],
         },
       },
     });
-    const paralyze = effectFactory.paralyze({ duration: 42 });
-    ghast.createClaws(1, 4, paralyze);
-    ghast.createJaws(1, 8, paralyze);
+    ghast.createGhastTouch();
+    ghast.createClaws(1, 4, {
+      spell: this.spell(Ids.GhastTouch).file,
+    });
+    ghast.createJaws(1, 8, [
+      {
+        spell: this.spell(Ids.GhastTouch).file,
+      },
+    ]);
+    ghast.createCarrionStench();
     ghast.setBehavior({
       restHeal: true,
+      abilities: [this.ability(Ids.CarrionStench)],
     });
     ghast.setAdjustments([
-      // { files: ["GHOULSU"], summon: true },
-      // { files: ["KORAX", "MALKAL"], data: { level1: 4 } },
+      { files: ["GHASTS"], summon: true },
+      {
+        files: ["GRAEL"],
+        data: {
+          // he starts dialog with shoutdlg
+          level1: 11,
+          xpv: 5000,
+          strength: 18,
+          exceptionalStrength: 100,
+          ac: -4,
+        },
+      },
     ]);
     return ghast;
   }
+
   /**
    * Ghoul
    */
@@ -555,9 +895,15 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       },
     });
-    const paralyze = effectFactory.paralyze({ duration: 30 });
-    ghoul.createClaws(1, 3, paralyze);
-    ghoul.createJaws(1, 6, paralyze);
+    ghoul.createGhoulTouch();
+    ghoul.createClaws(1, 3, {
+      spell: this.spell(Ids.GhoulTouch).file,
+    });
+    ghoul.createJaws(1, 6, [
+      {
+        spell: this.spell(Ids.GhoulTouch).file,
+      },
+    ]);
     ghoul.setBehavior({
       restHeal: true,
     });
@@ -567,6 +913,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     ]);
     return ghoul;
   }
+
   /**
    * Ghoul Lord
    */
@@ -575,71 +922,193 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.GhoulLord,
       name: "monster.undead.name.ghoulLord",
       files: [
-        "BDSPIDHU", // Huge Spider
-        "SPIDHU", // Huge Spider
-        "SPIDLAND", // Huge Spider
+        "BPGHGR01", // Greater Ghoul
+        "GHOULLOR", // Greater Ghoul
+        "BDGHASTG", // Greater Ghast
+        "ghogr01",
+        "gholor01",
+        "riftcr01",
+        "lacedo02", //Sahuagin Greater Lacedon
+        "cmghau01", //Dark Horizons
+        "MALKAL", // Mal-Kalen
       ],
       data: {
-        level1: 2,
-        bonusHp: 2,
-        thac0: 19,
-        strength: 14,
-        dexterity: 16,
-        constitution: 12,
-        intelligence: 7,
+        level1: { pnpValue: 6, value: 7, type: "turn" },
+        strength: 18,
+        dexterity: 17,
+        constitution: 13,
+        intelligence: 14,
         wisdom: 11,
-        charisma: 4,
-        ac: 6,
-        apr: 1,
-        xpv: 270,
-        alignment: "NEUTRAL",
-        morale: 8,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_HUGE",
+        charisma: 13,
+        ac: 4,
+        apr: 3,
+        xpv: 3000,
+        alignment: "CHAOTIC_EVIL",
+        morale: 14,
+        general: "UNDEAD",
+        race: "GHOUL",
+        class: "GHOUL_GHAST",
         gender: "NIETHER",
+        animation: "GHOUL_GREATER",
         size: "Medium",
-        movement: 12,
+        movement: 15,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "ghast1", "BDGHASTG", "ghoul1"],
+        },
+        script: {
+          remove: ["ghoul", "BDGHASTG"],
+        },
+        effects: {
+          remove: [EffectTypeEnum.ProtectionFromBackstab],
+        },
       },
     });
+    lord.addTrait({ immunities: ["nonSilverNonMagicalWeapons"] });
+    lord.createGhoulLordTouch();
+    lord.createRottingDisease();
+    lord.createAuraOfEvil();
+    lord.createClaws(1, 6, {
+      spell: this.spell(Ids.GhoulLordTouch).file,
+    });
+    lord.createJaws(1, 10, [
+      {
+        spell: this.spell(Ids.GhoulLordTouch).file,
+      },
+      {
+        spell: this.spell(Ids.RottingDisease).file,
+        saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+      },
+    ]);
+    lord.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.AuraOfEvil)],
+    });
+    lord.setAdjustments([
+      {
+        files: [
+          "MALKAL", // Mal-Kalen
+        ],
+        data: { class: "GHOUL_REVEANT" },
+      },
+    ]);
     return lord;
   }
   /**
    * Mummy
    */
   private mummy() {
-    const hunting = this.create({
+    const mummy = this.create({
       monster: MonsterEnum.Mummy,
       name: "monster.undead.name.mummy",
       files: [
-        "D5SMSPID", // Beetle Swarm (Faiths and Powers)
+        "BDMUMM01", // Mummy
+        "BDMUMMY", // Fanegonorom
+        "AC#FPMMY", // Bog Mummy
+        "mummy",
+        "mummy01",
+        "F_MUMMY", // Drizzt Saga
+        "O#LLARU1", // Mod added
+        "O#LLARU2", // Mod added
+        "O#LLARU3", // Mod added
+        "O#LLARU4", // Mod added
+        "O#LLARU5", // Mod added
+        "O#LLARU6", // Mod added
+        "mumx1", // TDD
       ],
       data: {
-        level1: 3,
+        level1: 6,
         bonusHp: 3,
-        thac0: 17,
-        strength: 14,
-        dexterity: 16,
-        constitution: 12,
-        intelligence: 10,
-        wisdom: 11,
-        charisma: 4,
-        ac: 4,
+        strength: 16,
+        dexterity: 8,
+        constitution: 15,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 12,
+        ac: 3,
         apr: 1,
-        xpv: 650,
-        alignment: "NEUTRAL",
-        morale: 13,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_GIANT",
+        xpv: 3000,
+        alignment: "LAWFUL_EVIL",
+        morale: 15,
+        general: "UNDEAD",
+        race: "GHOUL",
+        class: "GHOUL_GHAST",
+        animation: "MUMMY",
         gender: "NIETHER",
-        size: "Large",
-        movement: 12,
+        size: "Medium",
+        movement: 6,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "immune1", "bdmumm01"],
+        },
+        script: {
+          remove: ["bdmumm01"],
+        },
+        effects: {
+          remove: [EffectTypeEnum.ProtectionFromBackstab],
+        },
       },
     });
-    hunting.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
-    hunting.setAdjustments([{ files: ["D5SMSPID"], summon: true }]);
-    return hunting;
+    mummy.addTrait({
+      immunities: ["physicalDamageResistance", "cold", "nonMagicalWeapons"],
+      effects: [
+        {
+          opcode: EffectTypeEnum.FireResistanceModifier,
+          type: EffectStatisticModifierEnum.Set,
+          value: -33,
+        },
+        {
+          opcode: EffectTypeEnum.MagicalFireResistanceModifier,
+          type: EffectStatisticModifierEnum.Set,
+          value: -33,
+        },
+      ],
+    });
+    mummy.createClaws(1, 12, {
+      spell: {
+        name: "monster.undead.ability.rottingDisease.name",
+        description: "monster.undead.ability.rottingDisease.description",
+        secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+        headers: [
+          {
+            type: ItemAbilityTypeEnum.Melee,
+            range: 5,
+            effects: [
+              {
+                opcode: EffectTypeEnum.RemoveEffectsByResource,
+                type: RemoveEffectsByResourceTypeEnum.Default,
+                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              },
+              {
+                opcode: EffectTypeEnum.Disease,
+                type: DiseaseTypeEnum.OneDamagePerAmountSeconds,
+                amount: 100, // 10 every 8 hours
+                icon: PortraitIconEnum.Diseased,
+                timing: EffectTimingEnum.InstantLimited,
+                duration: 100 * Durations.day,
+                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              },
+              {
+                opcode: EffectTypeEnum.Disease,
+                type: DiseaseTypeEnum.ReduceConstitutionByAmount,
+                amount: 4,
+                timing: EffectTimingEnum.InstantPermanentUntilDeath,
+                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              },
+              {
+                opcode: EffectTypeEnum.Disease,
+                type: DiseaseTypeEnum.ReduceCharismaByAmount,
+                amount: 4,
+                timing: EffectTimingEnum.InstantPermanentUntilDeath,
+                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              },
+            ],
+          },
+        ],
+      },
+    });
+    mummy.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
+    return mummy;
   }
   /**
    * Greater Mummy
@@ -925,6 +1394,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Wight,
       name: "monster.undead.name.wight",
       files: [
+        "BDYMORI", // Wight
         "BDJUNIA2", // Junia
       ],
       data: {

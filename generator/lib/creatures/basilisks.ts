@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
@@ -54,7 +55,7 @@ class Basilisk extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: p.castSpell,
+      castSpells: p.castSpell ? [p.castSpell] : undefined,
     });
   }
 }
@@ -182,7 +183,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: poisonService.getSpell({ poisonType: "K", saveBonus: 4 }),
+      castSpells: [poisonService.getSpell({ poisonType: "K", saveBonus: 4 })],
     });
     greater.createJaws({
       diceThrown: 2,
@@ -205,7 +206,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
                   explosionDelay: 12,
                   triggerCount: 6,
                   triggerRadius: 64,
-                  areaOfEffect: 64,
+                  areaOfEffect: 64, // 5 feet of its mouth
                 },
               },
               range: 5,
@@ -260,7 +261,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
           AreaProjectileEnum.Coneshaped,
         ],
         triggerRadius: 255,
-        areaOfEffect: 255,
+        areaOfEffect: 255, // cone from basilisk, every creature that can see its eyes
         coneWidth: 60,
         fragmentAnimation: ProjectileAnimationEnum.NULL_ANIMATION,
         explosionEffect: ProjectileExplosionEffectEnum.NONE,
@@ -415,11 +416,14 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
                 "monster.basilisk.ability.petrifyingGaze.turningToStone",
               ...petrificationSave,
             },
-            ...effectFactory.restrained({ duration: 12, ...petrificationSave }),
+            ...effectFactory.restrained({
+              duration: 2 * Durations.round,
+              ...petrificationSave,
+            }),
             {
               opcode: EffectTypeEnum.CastSpell,
               timing: EffectTimingEnum.DelayLimited,
-              duration: 12,
+              duration: 2 * Durations.round,
               type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
               resource: technical.file,
               ...petrificationSave,
@@ -427,7 +431,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
             {
               opcode: EffectTypeEnum.ProtectionFromSpell,
               timing: EffectTimingEnum.DelayLimited,
-              duration: 12,
+              duration: 2 * Durations.round,
               ...petrificationSave,
             },
           ],

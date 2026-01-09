@@ -42,35 +42,37 @@ class Cat extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: {
-        probability1: 20,
-        spell: {
-          name: "monster.cat.rearClawsAttack.name",
-          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-          headers: [
-            {
-              type: ItemAbilityTypeEnum.Melee,
-              range: 5,
-              effects: [
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Slashing,
-                  diceThrown: rear.diceThrown,
-                  diceSize: rear.diceSize,
-                  amount,
-                },
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Slashing,
-                  diceThrown: rear.diceThrown,
-                  diceSize: rear.diceSize,
-                  amount,
-                },
-              ],
-            },
-          ],
+      castSpells: [
+        {
+          probability1: 20,
+          spell: {
+            name: "monster.cat.rearClawsAttack.name",
+            secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+            headers: [
+              {
+                type: ItemAbilityTypeEnum.Melee,
+                range: 5,
+                effects: [
+                  {
+                    opcode: EffectTypeEnum.Damage,
+                    type: EffectDamageTypeEnum.Slashing,
+                    diceThrown: rear.diceThrown,
+                    diceSize: rear.diceSize,
+                    amount,
+                  },
+                  {
+                    opcode: EffectTypeEnum.Damage,
+                    type: EffectDamageTypeEnum.Slashing,
+                    diceThrown: rear.diceThrown,
+                    diceSize: rear.diceSize,
+                    amount,
+                  },
+                ],
+              },
+            ],
+          },
         },
-      },
+      ],
     });
   }
 

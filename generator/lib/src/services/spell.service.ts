@@ -101,23 +101,32 @@ class SpellService {
         ].includes(e.opcode)
       )
     ) {
-      const racials = [
-        ["ELF", 90],
-        ["HALF_ELF", 30],
-      ] as const;
-      for (const [idsEntry, probability1] of racials) {
-        header.effects.unshift({
-          opcode: EffectTypeEnum.UseEFFFile,
-          idsFile: EffectIDSFileEnum.RACE,
-          idsEntry,
-          probability1,
-          timing: EffectTimingEnum.InstantLimited,
-          duration: 1,
-          resource: spell.file,
-        });
-      }
-      this.addProtectionFromSpellEffect(spell);
+      this.useEffectFile(header, spell, [
+        { file: EffectIDSFileEnum.RACE, entry: "ELF", probability: 90 },
+        { file: EffectIDSFileEnum.RACE, entry: "HALF_ELF", probability: 30 },
+      ]);
     }
+  }
+
+  useEffectFile(
+    header: SpellHeader,
+    spell: Spell,
+    entries: { file: EffectIDSFileEnum; entry: string; probability: number }[]
+  ): void {
+    const effects: Effect[] = [];
+    for (const entry of entries) {
+      effects.push({
+        opcode: EffectTypeEnum.UseEFFFile,
+        idsFile: entry.file,
+        idsEntry: entry.entry,
+        probability1: entry.probability,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: 1,
+        resource: spell.file,
+      });
+    }
+    header.effects.unshift(...this.getEffects(effects, spell, spell.file));
+    this.addProtectionFromSpellEffect(spell);
   }
 
   private addProtectionFromSpellEffect(spell: Spell) {
@@ -162,6 +171,7 @@ class SpellService {
         [
           EffectTypeEnum.ProtectionFromResourceAndMessage,
           EffectTypeEnum.ProtectionFromSpell,
+          EffectTypeEnum.RemoveEffectsByResource,
           EffectTypeEnum.UseEFFFile,
         ].includes(effect.opcode) &&
         !effect.resource

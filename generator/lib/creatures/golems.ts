@@ -60,7 +60,7 @@ class Golem extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell,
+      castSpells: castSpell ? [castSpell] : undefined,
     });
   }
 
@@ -271,7 +271,7 @@ class Golem extends Creature {
               explosionDelay: 12,
               triggerCount: 10, // 6 or 10
               triggerRadius: 128,
-              areaOfEffect: 128,
+              areaOfEffect: 128, //  10-foot cube
             },
           },
           speed: 1,

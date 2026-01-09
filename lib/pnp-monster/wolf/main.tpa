@@ -1,9 +1,8 @@
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/common.tpa"
-// Generated file (don't edit)
-
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/17.tpa" // Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/19.tpa" // Dire Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/22.tpa" // Dread Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/21.tpa" // Vampiric Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/20.tpa" // Winter Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/18.tpa" // Worg
+LAF integrate_sectypes END

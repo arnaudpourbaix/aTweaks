@@ -63,6 +63,8 @@ export interface BaseEffect {
   timing?: EffectTimingEnum;
   parameter1?: string;
   parameter2?: string;
+  parameter3?: string;
+  parameter4?: string;
   dispelResistance?: EffectDispelResistanceEnum;
   duration?: number;
   probability1?: number;
@@ -274,6 +276,7 @@ export type DiseaseEffect = BaseEffect & {
   opcode: EffectTypeEnum.Disease;
   amount: number;
   type: DiseaseTypeEnum;
+  frequencyMultiplier?: number;
   icon?: PortraitIconEnum;
 };
 

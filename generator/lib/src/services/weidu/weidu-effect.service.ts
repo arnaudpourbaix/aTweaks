@@ -25,10 +25,33 @@ class WeiduEffectService extends AbstractWeiduService {
         weiduUtils.getIntegerValue(effect.parameter2),
         tab + 1
       );
-      this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
       this.write(lines, 0x28, 4, effect.duration, tab + 1);
       this.write(lines, 0x2c, 2, effect.probability1, tab + 1);
       this.writeAscii(lines, 0x30, 8, effect.resource, tab + 1);
+      if (typeof effect.special === "number") {
+        this.write(
+          lines,
+          0x48,
+          4,
+          weiduUtils.getIntegerValue(effect.special),
+          tab + 1
+        );
+      }
+      this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
+      this.write(
+        lines,
+        0x60,
+        4,
+        weiduUtils.getIntegerValue(effect.parameter3),
+        tab + 1
+      );
+      this.write(
+        lines,
+        0x64,
+        4,
+        weiduUtils.getIntegerValue(effect.parameter4),
+        tab + 1
+      );
       this.add(lines, "", tab);
     }
   }
@@ -73,6 +96,16 @@ class WeiduEffectService extends AbstractWeiduService {
     if (effect.parameter2 && effect.parameter2 !== "0") {
       intVars.push(
         `parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`
+      );
+    }
+    if (effect.parameter3 && effect.parameter3 !== "0") {
+      intVars.push(
+        `parameter3=${weiduUtils.getIntegerValue(effect.parameter3)}`
+      );
+    }
+    if (effect.parameter4 && effect.parameter4 !== "0") {
+      intVars.push(
+        `parameter4=${weiduUtils.getIntegerValue(effect.parameter4)}`
       );
     }
     if (effect.timing) intVars.push(`timing=${effect.timing}`);

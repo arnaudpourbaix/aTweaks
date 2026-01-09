@@ -1,4 +1,5 @@
 import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
+import { RaceIdentifier } from "../model/ids/race";
 import {
   BaseEffect,
   DamageEffect,
@@ -48,6 +49,7 @@ class EffectFactory {
     saveBonus?: number;
     startSound?: string;
     endSound?: string;
+    races?: RaceIdentifier[];
     pulse?: { blue: number; green: number; red: number; speed: number };
   }) {
     const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
@@ -59,13 +61,6 @@ class EffectFactory {
       duration: payload.duration,
     };
     const effects: Effect[] = [
-      {
-        opcode: EffectTypeEnum.Paralyze,
-        idsFile: EffectIDSFileEnum.EA,
-        idsEntry: "ANYONE",
-        ...duration,
-        ...base,
-      },
       {
         opcode: EffectTypeEnum.DisplayPortraitIcon,
         icon: PortraitIconEnum.Held,
@@ -105,6 +100,26 @@ class EffectFactory {
         ...base,
       },
     ];
+    if (payload.races) {
+      for (const race of payload.races) {
+        effects.unshift({
+          opcode: EffectTypeEnum.Paralyze,
+          idsFile: EffectIDSFileEnum.RACE,
+          idsEntry: race,
+          ...duration,
+          ...base,
+        });
+      }
+    } else {
+      effects.unshift({
+        opcode: EffectTypeEnum.Paralyze,
+        idsFile: EffectIDSFileEnum.EA,
+        idsEntry: "ANYONE",
+        ...duration,
+        ...base,
+      });
+    }
+
     return effectService.getEffects(effects);
   }
 

@@ -880,7 +880,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
               explosionDelay: 12,
               triggerCount: 6,
               triggerRadius: 180,
-              areaOfEffect: 180,
+              areaOfEffect: 180, // 10-foot radius
             },
           },
           effects: [

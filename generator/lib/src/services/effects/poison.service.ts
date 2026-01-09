@@ -37,16 +37,18 @@ class PoisonService {
       type: payload.poisonType,
     });
     const description = this.getSpellDescription(payload);
+    const isComplexPoison = payload.poisonType >= "O";
     const result: WeaponCastSpell = {
       spell: {
         name: translationService.addCustomTranslation([name]),
         description: translationService.addCustomTranslation([description]),
+        opcodeType: isComplexPoison ? "poison" : undefined,
         groups: ["poison"],
         secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
         headers: [{ type: ItemAbilityTypeEnum.Melee, effects }],
       },
     };
-    if (payload.poisonType >= "O") {
+    if (isComplexPoison) {
       result.saveTypes = [SaveTypeEnum.ParalyzePoisonDeath];
       result.saveBonus = payload.saveBonus;
     }
@@ -264,7 +266,7 @@ class PoisonService {
     const amount = Math.floor(damage / duration);
     let newDuration = duration;
     while (damage > amount * newDuration) newDuration++;
-    const total = amount * newDuration;
+    // const total = amount * newDuration;
     // console.log(
     //   `poison (x dmg per second) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
     //     newDuration - duration
@@ -377,13 +379,13 @@ class PoisonService {
         type: EffectStatisticModifierEnum.Increment,
         value: -5,
         timing: EffectTimingEnum.InstantLimited,
-        duration: 900,
+        duration: poison.duration,
       },
       {
         opcode: EffectTypeEnum.DisplayPortraitIcon,
         icon: PortraitIconEnum.AbilityScoreDrained,
         timing: EffectTimingEnum.InstantLimited,
-        duration: 900,
+        duration: poison.duration,
       },
       {
         opcode: EffectTypeEnum.ProtectionFromSpell,

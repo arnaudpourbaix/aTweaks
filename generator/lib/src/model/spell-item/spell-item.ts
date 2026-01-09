@@ -1,5 +1,4 @@
 import { SpellGroupName } from "../../../config/spell-group-name";
-import { TranslationKey } from "../../../translations/i18n";
 import { RawCreatureAbility } from "../creature/ability";
 import { ItemSlot } from "../creature/item";
 import { ImmunityName } from "../final/immunity";
@@ -65,6 +64,11 @@ export interface Spell {
   castingAnimation?: ItemAbilityCastingAnimationEnum;
   primaryType?: ItemAbilityPrimaryTypeEnum;
   secondaryType?: ItemAbilitySecondaryTypeEnum;
+  /**
+   * Type of the spell, not necessarily an applied opcode but it can be removed by spells that remove this opcode.
+   * For example, 'fear' spells will be removed by "Resist Fear" even if they don't apply fear opcode.
+   */
+  opcodeType?: "fear" | "disease" | "poison";
   spellLevel?: number;
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
@@ -187,7 +191,11 @@ export type PartialWeapon = PartialBy<
 export type Weapon = WithRequired<Item, "header">;
 
 export interface WeaponCastSpell {
-  spell: PartialSpell;
+  /**
+   * Creating a new spell
+   */
+  spell: PartialSpell | string;
+  resource?: string;
   probability1?: number;
   probability2?: number;
   saveTypes?: SaveTypeEnum[];

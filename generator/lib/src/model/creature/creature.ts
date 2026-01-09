@@ -152,13 +152,13 @@ export class Creature extends AbstractCreature implements BaseCreature {
   override addWeapon({
     weapon,
     grab,
-    castSpell,
+    castSpells,
   }: {
     weapon: PartialWeapon;
     grab?: CreatureGrabConfig;
-    castSpell?: WeaponCastSpell;
+    castSpells?: WeaponCastSpell[];
   }) {
-    const result = super.addWeapon({ weapon, castSpell });
+    const result = super.addWeapon({ weapon, castSpells });
     if (grab) grabService.attachGrabToWeapon(this, result, grab);
     return result;
   }

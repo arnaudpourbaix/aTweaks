@@ -63,22 +63,22 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Testing and Extracting
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-BEGIN ~Extraction~ DESIGNATED 9999
-    COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
-        PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
-            READ_BYTE 0x272 race
-            READ_BYTE 0x273 class
-            READ_LONG 0x28 animation
-            READ_STRREF 0x08 name
-            // PATCH_IF class = 199 BEGIN
-            // PATCH_IF race = 119 BEGIN
-            PATCH_IF class = 118 OR animation = 0x7702 BEGIN
-            // PATCH_IF race = 121 OR animation = 0x2300 BEGIN
-            // PATCH_IF animation = 0x7602 BEGIN
-                PATCH_PRINT ~"%SOURCE_RES%", // %name%~
-            END
-        END
-    BUT_ONLY
+// BEGIN ~Extraction~ DESIGNATED 9999
+//     COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+//         PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
+//             READ_BYTE 0x272 race
+//             READ_BYTE 0x273 class
+//             READ_LONG 0x28 animation
+//             READ_STRREF 0x08 name
+//             // PATCH_IF class = 199 BEGIN
+//             // PATCH_IF race = 119 BEGIN
+//             // PATCH_IF class = 118 OR animation = 0x7702 BEGIN
+//             // PATCH_IF race = 121 OR animation = 0x2300 BEGIN
+//             PATCH_IF animation = 0xE080 BEGIN
+//                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
+//             END
+//         END
+//     BUT_ONLY
 
 BEGIN ~Monsters test~ DESIGNATED 9998
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
@@ -94,12 +94,12 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/plant/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/main.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
-// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/main.tpa"
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/minotaur/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ettercap/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/main.tpa"
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/main.tpa"
+// INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-spell/woodland_beings/main.tpa"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

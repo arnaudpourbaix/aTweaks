@@ -29,6 +29,7 @@ class MainService {
       for (const creature of family.creatures) {
         this.generateCreature(creature, families);
       }
+      weiduFamilyService.generateFinalCode(family);
       documentationService.addFamily(family);
     }
     documentationService.generate();

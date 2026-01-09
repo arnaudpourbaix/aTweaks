@@ -332,6 +332,11 @@ However, the creature continues to fight until it reaches -10 hp. It then goes d
         name: "Stream of frost",
         description: `Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.`,
       },
+      rottingDisease: {
+        name: "Rotting Disease",
+        description: `Dread wolves cause a nasty rotting disease that can infect a bitten opponent who fails a save vs. poison within one hour of the fight.
+He loses 1 hp per hour until death.`,
+      },
     },
   },
   minotaur: {
@@ -412,6 +417,33 @@ Those who fail die immediately, their faces contorted in horror.`,
         name: "Wall of Ice",
         description: `This causes a horizontal sheet to fall upon opponents. The sheet covers a 10-foot-square area per caster level.
 The sheet has the same effect as an ice storm's hail stones—3d10 points of damage inflicted to creatures beneath it.`,
+      },
+      ghoulTouch: {
+        name: "Ghoul's Touch",
+        description: `Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.`,
+      },
+      ghastTouch: {
+        name: "Ghast's Touch",
+        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.`,
+      },
+      ghoulLordTouch: {
+        name: "Ghoul Lord's Touch",
+        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds or until negated by a priest.`,
+      },
+      carrionStench: {
+        name: "Carrion Stench",
+        description: `Ghasts exude a carrion stench in a 10' radius which causes retching and nausea unless a saving throw versus poison is made.
+Those failing to make this save will attack at a penalty of -2.`,
+        message: "Affected by Ghast's carrion stench",
+      },
+      rottingDisease: {
+        name: "Rotting Disease",
+        description: `Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.`,
+      },
+      auraOfEvil: {
+        name: "Aura of Evil",
+        description: `Ghoul lords do radiate an aura of evil. In fact, this effect is so potent that those of good alignment suffer a -4 on all attack rolls when within 30 feet of these creatures.`,
+        message: "Affected by Ghoul Lord's evil aura",
       },
     },
   },

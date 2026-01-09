@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -77,7 +78,7 @@ class CrawlerFamily extends CreatureFamily<Crawler> {
           damageType: AbilityDamageTypeEnum.Piercing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects: effectFactory.paralyze({ duration: 42 }),
+          effects: effectFactory.paralyze({ duration: 7 * Durations.round }),
         },
       },
     });

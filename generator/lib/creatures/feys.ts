@@ -18,6 +18,7 @@ import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
 import triggerFactory from "../src/factories/trigger.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -765,7 +766,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           speed: 1,
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
-            duration: 180,
+            duration: 30 * Durations.round,
             dispelResistance:
               EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
@@ -814,7 +815,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               slot: "SLOT_AMULET",
               resource: ITEMS.EntangleImmunity,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 60,
+              duration: 10 * Durations.round,
               dispelResistance:
                 EffectDispelResistanceEnum.DispelBypassResistance,
             },
@@ -966,7 +967,7 @@ class FeyFamily extends CreatureFamily<Fey> {
   private createAnimalFriendship() {
     const animalFriendshipCommonEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 120,
+      duration: 20 * Durations.round,
       dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
       saveTypes: [SaveTypeEnum.Spell],
     } satisfies BaseEffect;
@@ -1069,13 +1070,13 @@ class FeyFamily extends CreatureFamily<Fey> {
           effects: [
             {
               opcode: EffectTypeEnum.FindTraps,
-              duration: 96,
+              duration: 16 * Durations.round,
               target: EffectTargetEnum.Self,
             },
             {
               opcode: EffectTypeEnum.DisplayPortraitIcon,
               icon: PortraitIconEnum.DetectingTrapsIllusions,
-              duration: 96,
+              duration: 16 * Durations.round,
               target: EffectTargetEnum.Self,
             },
             {
@@ -1116,7 +1117,7 @@ class FeyFamily extends CreatureFamily<Fey> {
   private createBlindingBeauty() {
     const blindingBeautyEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 7200,
+      duration: Durations.day,
       dispelResistance: EffectDispelResistanceEnum.DispelBypassResistance,
       saveTypes: [SaveTypeEnum.Spell],
     } satisfies BaseEffect;
@@ -1251,7 +1252,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           speed: 1,
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
-            duration: 180,
+            duration: 30 * Durations.round,
             dispelResistance:
               EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
@@ -1276,21 +1277,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
-          projectile: {
-            copyFromFile: "SPARGONP",
-            name: "Sirine Charming Song",
-            speed: 40,
-            projectileInfo: {
-              bamProjectileFlags: [
-                BamProjectileFlagsEnum.EnableBrightenFlags,
-                BamProjectileFlagsEnum.HighLevelBrighten,
-              ],
-            },
-            areaEffectInfo: {
-              triggerRadius: 470,
-              areaOfEffect: 470,
-            },
-          },
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
           location: ItemAbilityLocationEnum.Ability,
           target: ItemAbilityTargetEnum.LivingActor,
           range: 30,
@@ -1377,7 +1364,7 @@ class FeyFamily extends CreatureFamily<Fey> {
   private createTouchOfTranquility() {
     const tranquilityBaseEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 300,
+      duration: 50 * Durations.round,
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
     } satisfies BaseEffect;
     return this.addSpell({

@@ -11,6 +11,7 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
+import { CodeLine } from "../../model/misc";
 
 class WeiduFamilyService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
@@ -39,7 +40,7 @@ class WeiduFamilyService extends AbstractWeiduService {
   }
 
   generateFamilyData(family: Family) {
-    const lines = this.initLines();
+    const lines: CodeLine[] = [];
     weiduProjectileService.createProjectiles(lines, family.projectiles);
     // weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     weiduSpellService.createSpells(lines, family.spells);
@@ -56,6 +57,20 @@ class WeiduFamilyService extends AbstractWeiduService {
       `${utils.getFamilyFolder(family)}/main.tpa`
     );
     return file;
+  }
+
+  generateFinalCode(family: Family) {
+    const lines: CodeLine[] = [];
+    if (
+      family.spells.some((s) => s.opcodeType) ||
+      family.creatures.some((c) => c.spells.some((s) => s.opcodeType))
+    ) {
+      this.add(lines, "LAF integrate_sectypes END", 0);
+    }
+    this.add(lines, "", 0);
+    const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
+    const file = this.getMainFilename(family.id);
+    fs.appendFileSync(file, content);
   }
 }
 

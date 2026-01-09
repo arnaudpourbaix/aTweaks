@@ -77,11 +77,13 @@ class Spider extends Creature {
           effects: p.effects,
         },
       },
-      castSpell: p.poisonType
-        ? poisonService.getSpell({
-            poisonType: p.poisonType,
-            saveBonus: p.saveBonus,
-          })
+      castSpells: p.poisonType
+        ? [
+            poisonService.getSpell({
+              poisonType: p.poisonType,
+              saveBonus: p.saveBonus,
+            }),
+          ]
         : undefined,
     });
   }

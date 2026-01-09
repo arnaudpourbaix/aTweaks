@@ -1,5 +1,6 @@
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/common.tpa"
-// Generated file (don't edit)
-
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/73.tpa" // Banshee
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/74.tpa" // Death Knight
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/76.tpa" // Ghoul
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/75.tpa" // Ghast
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/77.tpa" // Ghoul Lord
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/78.tpa" // Mummy

@@ -3,6 +3,7 @@ import { SPELLS } from "../config/spell-names";
 import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
+import { Durations } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -53,27 +54,29 @@ class Bear extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: {
-        probability1: 10,
-        spell: {
-          name: "monster.bear.hug.name",
-          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-          headers: [
-            {
-              type: ItemAbilityTypeEnum.Melee,
-              range: 5,
-              effects: [
-                {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Crushing,
-                  diceThrown: hug.diceThrown,
-                  diceSize: hug.diceSize,
-                },
-              ],
-            },
-          ],
+      castSpells: [
+        {
+          probability1: 10,
+          spell: {
+            name: "monster.bear.hug.name",
+            secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+            headers: [
+              {
+                type: ItemAbilityTypeEnum.Melee,
+                range: 5,
+                effects: [
+                  {
+                    opcode: EffectTypeEnum.Damage,
+                    type: EffectDamageTypeEnum.Crushing,
+                    diceThrown: hug.diceThrown,
+                    diceSize: hug.diceSize,
+                  },
+                ],
+              },
+            ],
+          },
         },
-      },
+      ],
     });
   }
 
@@ -393,7 +396,7 @@ class BearFamily extends CreatureFamily<Bear> {
                 AreaProjectileEnum.UseSecondaryProjectile,
               ],
               triggerRadius: 180,
-              areaOfEffect: 180,
+              areaOfEffect: 180, // within 10 feet
               coneWidth: 0,
             },
           },
@@ -411,7 +414,7 @@ class BearFamily extends CreatureFamily<Bear> {
               flags: [EffectFlagsEnum.SaveForHalf],
             },
             ...effectFactory.paralyze({
-              duration: 60,
+              duration: 10 * Durations.round,
               saveBonus: -2,
               startSound: "MISC_04A",
               endSound: "EFF_E03",

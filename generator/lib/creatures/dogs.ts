@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { BaseEffect } from "../src/model/spell-item/effect";
@@ -44,7 +45,7 @@ class Dog extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell,
+      castSpells: castSpell ? [castSpell] : undefined,
     });
   }
 
@@ -73,7 +74,7 @@ class Dog extends Creature {
             {
               opcode: EffectTypeEnum.Thac0Bonus,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 6,
+              duration: Durations.round,
               type: EffectModifierTypeEnum.Increment,
               probability1: 75,
               value: 2,
@@ -287,7 +288,7 @@ class DogFamily extends CreatureFamily<Dog> {
     const shiftEffect: BaseEffect = {
       timing: EffectTimingEnum.InstantLimited,
       dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
-      duration: 36,
+      duration: 6 * Durations.round,
     };
     const astralPlaneShift: WeaponCastSpell = {
       spell: {

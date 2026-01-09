@@ -1,0 +1,212 @@
+// Generated file (don't edit)
+
+// Ghoul Lord
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/undead/ja#m77.baf~
+
+// Ghoul Lord's Touch
+CREATE SPL "ja#1m77"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#1m77.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10318)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10319)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter1=IDS_OF_SYMBOL (~general~ ~HUMANOID~) parameter2=113 probability1=100 STR_VAR resource="ja#1m77" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=109 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=60 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=13 duration=60 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=1 probability1=100 savingthrow=4 STR_VAR resource="EFF_P11" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=2 power=1 timing=4 duration=60 probability1=100 savingthrow=4 STR_VAR resource="EFF_E05" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=3757824 parameter2=1638400 timing=1 probability1=100 savingthrow=4 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=1 timing=1 probability1=100 savingthrow=4 END
+	
+	// Rotting Disease
+CREATE SPL "ja#2m77"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#2m77.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10323)
+	WRITE_SHORT 0x1c 4
+	WRITE_BYTE 0x27 11
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10324)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=321 target=2 power=1 probability1=100 STR_VAR resource="ja#2m77" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=100 parameter2=3 duration=720000 probability1=100 special=7 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=4 parameter2=6 timing=1 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=4 parameter2=9 timing=1 probability1=100 END
+	
+	// Aura of Evil
+CREATE EFF "ja#3m77"
+	WRITE_LONG 0x10 278
+	WRITE_LONG 0x14 2
+	WRITE_LONG 0x1c "-4"
+	WRITE_LONG 0x20 0
+	WRITE_LONG 0x28 6
+	WRITE_SHORT 0x2c 100
+
+CREATE SPL "ja#3m77"
+	WRITE_LONG 0x64 0x72
+COPY_EXISTING ~ja#3m77.SPL~  ~override~
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10325)
+	WRITE_SHORT 0x1c 4
+	WRITE_LONG 0x34 1
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10326)
+	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=4 range=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#sight~)) + 1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~ALIGN~ ~MASK_GOOD~) parameter2=8 duration=6 probability1=100 STR_VAR resource="ja#3m77" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=126 duration=6 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=RESOLVE_STR_REF(@10327) duration=6 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=6 probability1=100 STR_VAR resource="ja#3m77" END
+	LPF CHANGE_SPELL INT_VAR    renew=1 END
+	
+	// Ghoul Lord traits
+CREATE ITM "ja#1m77"
+	WRITE_LONG 0x64 0x72
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10683)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10683)
+	WRITE_SHORT 0x1c 10
+	WRITE_ASCII 0x3a ~IRING15~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10684)
+COPY_EXISTING ~ja#1m77.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+	END
+	LPF nonSilverNonMagicalWeapons_immunity END
+
+// Claws
+CREATE ITM "ja#2m77"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10306)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10306)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~IGHOUL~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10685)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#2m77.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~IGHOUL~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 5
+		WRITE_BYTE 0x88 6
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 3
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#1m77" END
+	END
+
+// Jaws
+CREATE ITM "ja#3m77"
+	WRITE_LONG 0x64 0x72
+	INSERT_BYTES 0x72 0x38
+	WRITE_SHORT 0x68 1
+	WRITE_SHORT 0x72 1
+	WRITE_LONG 0x6a 0xaa
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10307)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10307)
+	WRITE_LONG 0x18 64
+	WRITE_ASCII 0x3a ~SPPR416B~ #8
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10686)
+	WRITE_LONG 0x60 1
+COPY_EXISTING ~ja#3m77.itm~ ~override~
+	READ_SHORT 0x68 abicount
+	PATCH_IF (%abicount% > 0) BEGIN
+		WRITE_BYTE 0x74 1
+		WRITE_ASCII 0x76 ~SPPR416B~ #8
+		WRITE_BYTE 0x7e 1
+		WRITE_SHORT 0x80 1
+		WRITE_BYTE 0x84 3
+		WRITE_BYTE 0x88 10
+		WRITE_BYTE 0x8a 1
+		WRITE_SHORT 0x8e 1
+	WRITE_SHORT 0x9e 34
+	WRITE_SHORT 0xa0 33
+	WRITE_SHORT 0xa2 33
+	WRITE_LONG 0x98 1
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 STR_VAR resource="ja#1m77" END
+	LPF ADD_EFFECT INT_VAR opcode=146 target=2 parameter2=1 probability1=100 savingthrow=4 STR_VAR resource="ja#2m77" END
+	END
+
+ACTION_FOR_EACH ~file~ IN
+	BPGHGR01
+	GHOULLOR
+	BDGHASTG
+	ghogr01
+	gholor01
+	riftcr01
+	lacedo02
+	cmghau01
+	MALKAL
+BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
+		COPY_EXISTING ~%file%.cre~ ~override~
+			LPF FJ_CRE_VALIDITY END
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~BPGHGR01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~GHOULLOR~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDGHASTG~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~ghogr01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~gholor01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~riftcr01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~lacedo02~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~cmghau01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~MALKAL~ BEGIN
+				LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=292 END
+			END
+			REMOVE_KNOWN_SPELLS
+			REMOVE_MEMORIZED_SPELLS
+			REMOVE_CRE_ITEM ~ring95~
+			REMOVE_CRE_ITEM ~ghast1~
+			REMOVE_CRE_ITEM ~BDGHASTG~
+			REMOVE_CRE_ITEM ~ghoul1~
+			ADD_CRE_ITEM ~ja#1m77~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#2m77~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			REPLACE_CRE_ITEM ~ja#3m77~ #0 #0 #0 ~UNDROPPABLE~ ~SHIELD~ 
+			ADD_CRE_ITEM ~ja#i17~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_MEMORIZED_SPELL ~ja#3m77~ #0 ~innate~ (1) // Aura of Evil
+			LPF clear_proficiencies END
+			LPF patchCreature
+				INT_VAR
+					xpv=3000
+					hp=72
+					ac=7
+					thac0=15
+					apr=3
+					saveDeath=11
+					saveWand=13
+					savePolymorph=12
+					saveBreath=13
+					saveSpell=14
+					level1=7
+					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
+					strength=18
+					intelligence=14
+					wisdom=11
+					dexterity=17
+					constitution=13
+					charisma=13
+					morale=14
+					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
+					race=IDS_OF_SYMBOL (~race~ ~GHOUL~)
+					class=IDS_OF_SYMBOL (~class~ ~GHOUL_GHAST~)
+					alignment=IDS_OF_SYMBOL (~align~ ~CHAOTIC_EVIL~)
+					animation=IDS_OF_SYMBOL (~animate~ ~GHOUL_GREATER~)
+					movement=12
+					enforce=1
+					perfect2weapon=1
+			END
+			// Assigning ja#m77
+			CLEAR_ARRAY skipFiles
+			CLEAR_ARRAY removeScripts
+			CLEAR_ARRAY files
+			PATCH_DEFINE_ARRAY removeScripts BEGIN ghoul BDGHASTG BDANIMN BDENRAGE BDENSHTV BDFIG00 BDFIGH01 BDFIGH42 BDFIGH43 BDFMAG01 BDFMAG23 BDGRSHTV BDNONIN BDSHM00 BDSUM00 BPASIGHT BPSIGHT DVMELEE DW#MG29 DW#MG56 DW#MG78 DW#MG84 DW#MG99 DW#MG101 DW#MG102 DW#MG103 DW#MG104 DW#MG105 DW#MG106 DW#MG107 DW#MG108 DW#MG131 DW#MG132 DW#MG137 DW#MG139 DW#GPSHM DW#GPSHT dw1melbe DW1MELGE DW#PRSHT DW1RANGE dw1ranmo dw1melmo DW2MP0GE DW2RC2MO GENSHT01 HUNTER initdlg SHOUT TUTU_SCR WTASIGHT WDASIGHT wtrunsgt END
+			LPF patchCreatureScript INT_VAR logging=0 STR_VAR removeScripts script=ja#m77 END
+			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~MALKAL~) BEGIN 
+				WRITE_BYTE 0x273 IDS_OF_SYMBOL (~class~ ~GHOUL_REVEANT~) // class
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END ELSE BEGIN
+		PRINT ~====> CRE %file% not found!~
+	END
+END

@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -139,37 +140,39 @@ class AnkhegFamily extends CreatureFamily<Ankheg> {
         },
       },
       grab: { rounds: 3 },
-      castSpell: {
-        spell: {
-          name: "monster.ankheg.digestiveEnzyme.name",
-          description: "monster.ankheg.digestiveEnzyme.description",
-          secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-          headers: [
-            {
-              type: ItemAbilityTypeEnum.Melee,
-              range: 5,
-              effects: [
-                {
-                  opcode: EffectTypeEnum.DisplayPortraitIcon,
-                  icon: PortraitIconEnum.Acid,
-                  duration: 24,
-                },
-                ...effectFactory.damageOverTime(4, {
-                  opcode: EffectTypeEnum.Damage,
-                  type: EffectDamageTypeEnum.Acid,
-                  diceThrown: 1,
-                  diceSize: 4,
-                }),
-                {
-                  opcode: EffectTypeEnum.ProtectionFromSpell,
-                  duration: 24,
-                  timing: EffectTimingEnum.InstantLimited,
-                },
-              ],
-            },
-          ],
+      castSpells: [
+        {
+          spell: {
+            name: "monster.ankheg.digestiveEnzyme.name",
+            description: "monster.ankheg.digestiveEnzyme.description",
+            secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
+            headers: [
+              {
+                type: ItemAbilityTypeEnum.Melee,
+                range: 5,
+                effects: [
+                  {
+                    opcode: EffectTypeEnum.DisplayPortraitIcon,
+                    icon: PortraitIconEnum.Acid,
+                    duration: 4 * Durations.round,
+                  },
+                  ...effectFactory.damageOverTime(4, {
+                    opcode: EffectTypeEnum.Damage,
+                    type: EffectDamageTypeEnum.Acid,
+                    diceThrown: 1,
+                    diceSize: 4,
+                  }),
+                  {
+                    opcode: EffectTypeEnum.ProtectionFromSpell,
+                    duration: 4 * Durations.round,
+                    timing: EffectTimingEnum.InstantLimited,
+                  },
+                ],
+              },
+            ],
+          },
         },
-      },
+      ],
     });
     ankheg.setBehavior({
       abilities: [this.ability(Ids.Stream)],

@@ -90,7 +90,7 @@ class EttercapFamily extends CreatureFamily<Ettercap> {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: poisonService.getSpell({ poisonType: "J" }),
+      castSpells: [poisonService.getSpell({ poisonType: "J" })],
     });
     ettercap.setAttack({
       targetPriorities: [{ status: ["HeldAndNotPoisoned"] }],

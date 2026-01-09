@@ -812,57 +812,9 @@ Saving Throw: None
 
 Upon casting a conjure air elemental spell, the caster opens a special gate to the elemental plane of Air, and an air elemental is summoned to the vicinity of the spellcaster.  One 12 hit dice elemental always answers the summons. Furthermore, there is a 35% chance that an additional 16 HD Greater Elemental appears and a 5% chance than an additional 20 hit dice Elder Elemental is summoned.  All of the commands given to the elemental are done telepathically, so there is no time lost due to miscommunication, and it is not necessary to know the language of the summoned creature. Priests do not have to engage in a battle of the wits to control their summoned elemental (unlike mages).  The elemental will remain under the caster's control until slain or until the spell duration expires.~
 
-@3000 = ~Grab~
-@3001 = ~Grabbed~
-@3002 = ~*quaffs a potion*~
-@3003 = ~This spell can only be cast outdoor~
-
-@4000 = ~Stream of acidic enzymes~
-@4001 = ~Acidic digestive enzymes~
-@4002 = ~Petrifying Gaze~
-@4003 = ~Restrained~
-@4004 = ~Petrified~
-@4005 = ~Turning to stone~
-@4006 = ~Foul breath~
-@4007 = ~Hug~
-@4008 = ~Improved stream of frost~
-@4009 = ~Rear claws attack~
-@4010 = ~Blink~
-@4011 = ~Stream of frost~
-@4012 = ~Haste~
-@4013 = ~Charge~
-@4014 = ~End charge~
-@4015 = ~Fly~
-@4016 = ~Gaseous form~
-@4017 = ~Entangle~
-@4018 = ~Fog Cloud~
-@4019 = ~Split~
-@4020 = ~Claws~
-@4021 = ~Jaws~
-@4022 = ~Paws~
-@4023 = ~Mandibles~
-@4024 = ~Pseudopod~
-@4025 = ~Tentacles~
-@4026 = ~Displacement~
-@4027 = ~Astral Plane Shift~
-@4028 = ~Long Sword~
-@4029 = ~Plate Mail~
-@4030 = ~Helmet~
-@4031 = ~Flaming Greatsword~
-@4032 = ~Lethal Fists~
-@4033 = ~Hideous Laugh~
-@4034 = ~Naganata~
-@4035 = ~Giant Flail~
-@4036 = ~White Pudding~
-@4037 = ~Legs~
-@4038 = ~Leap~
-@4039 = ~Impaling Attack~
-@4040 = ~Phase Out~
-@4041 = ~Wraith Spider Poison~
-@4042 = ~Web Tangle~
-@4043 = ~Hairy Spider Poison~
-@4044 = ~Ghostwalk~
-
+@3000 = ~Cure Disease~
+@3001 = ~Remove Fear~
+@3002 = ~Cure Poison~
 
 // Scribe Scrolls ability and assorted dialogue (8200-8300)
 // Note to translators: these strings are taken directly from my Rogue Rebalancing mod

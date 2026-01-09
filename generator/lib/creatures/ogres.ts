@@ -145,7 +145,7 @@ class Ogre extends Creature {
               // we don't want ogres to kill each other, it can be seen as a cheat but humans have no problem to properly cast it
               AreaProjectileEnum.AffectOnlyEnemies,
             ],
-            areaOfEffect: 620,
+            areaOfEffect: 620, // 60 feet long with a terminal diameter of 20 feet
             triggerRadius: 620,
             coneWidth: 60,
           },

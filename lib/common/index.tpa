@@ -10,6 +10,7 @@ INCLUDE "%MOD_FOLDER%/lib/common/effect.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/utils.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/alter_effect.tph"           // David W. improved effect functions
 INCLUDE "%MOD_FOLDER%/lib/common/functions.tpa"              // Common aTweaks functions
+INCLUDE "%MOD_FOLDER%/lib/common/sectypes.tpa"               // Secondary types functions
 INCLUDE "%MOD_FOLDER%/lib/common/spell-resources.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/spell-functions.tpa"
 INCLUDE "%MOD_FOLDER%/lib/common/immunities.tpa"

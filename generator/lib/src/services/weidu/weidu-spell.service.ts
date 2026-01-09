@@ -67,6 +67,20 @@ class WeiduSpellService extends AbstractWeiduService {
         tab + 1
       );
     }
+    if (spell.opcodeType) {
+      this.writeOpcodeType(lines, spell, 0);
+    }
+  }
+
+  private writeOpcodeType(lines: CodeLine[], spell: Spell, tab: number) {
+    let type = "PoisonSecType";
+    if (spell.opcodeType === "disease") type = "DiseaseSecType";
+    else if (spell.opcodeType === "fear") type = "FearSecType";
+    this.add(
+      lines,
+      `OUTER_SET $f_AddSecType(${spell.file}.spl) = ${type}`,
+      tab
+    );
   }
 
   private createSpellCommon(lines: CodeLine[], spell: Spell, tab: number) {

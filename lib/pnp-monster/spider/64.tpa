@@ -40,19 +40,20 @@ CREATE EFF "ja#2m64"
 CREATE SPL "ja#2m64"
 	WRITE_LONG 0x64 0x72
 COPY_EXISTING ~ja#2m64.SPL~  ~override~
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10582)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10604)
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 10
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10583)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10605)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="ja#2m64" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="ja#2m64" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=39 target=2 power=1 parameter2=1 duration=240 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="ja#2m64" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=39 target=2 power=1 parameter2=1 duration=300 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=2 power=1 parameter2=25 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=30464 parameter2=1310720 probability1=100 END
-	
-	// Jaws
+OUTER_SET $f_AddSecType(ja#2m64.spl) = PoisonSecType
+
+// Jaws
 CREATE ITM "ja#1m64"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38
@@ -63,7 +64,7 @@ CREATE ITM "ja#1m64"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10248)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~SPPR416B~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10584)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10606)
 	WRITE_LONG 0x60 3
 COPY_EXISTING ~ja#1m64.itm~ ~override~
 	READ_SHORT 0x68 abicount

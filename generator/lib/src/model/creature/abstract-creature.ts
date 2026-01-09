@@ -41,8 +41,10 @@ export abstract class AbstractCreature {
     return item;
   }
 
-  spell(id: number): Spell {
-    const spell = this.spells.find((s) => s.id === id);
+  spell(id: number | string): Spell {
+    const spell = this.spells.find((s) =>
+      typeof id === "string" ? s.file === id : s.id === id
+    );
     if (!spell) throw new Error(`No spell found with id ${id}`);
     return spell;
   }
@@ -88,18 +90,25 @@ export abstract class AbstractCreature {
 
   addWeapon({
     weapon,
-    castSpell,
+    castSpells,
   }: {
     weapon: PartialWeapon;
-    castSpell?: WeaponCastSpell;
+    castSpells?: WeaponCastSpell[];
   }) {
     const result = this.addItem(weapon) as Weapon;
-    if (castSpell) this.attachSpellToWeapon(result, castSpell);
+    if (castSpells) {
+      for (const castSpell of castSpells) {
+        this.attachSpellToWeapon(result, castSpell);
+      }
+    }
     return result;
   }
 
   protected attachSpellToWeapon(weapon: Weapon, cast: WeaponCastSpell) {
-    const spell = this.addSpell(cast.spell);
+    const spell =
+      typeof cast.spell === "string"
+        ? this.spell(cast.spell)
+        : this.addSpell(cast.spell);
     spell.doc = false;
     const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
       resource: spell.file,

@@ -1,5 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { CreatureGrabConfig } from "../src/model/creature/grab";
@@ -12,6 +13,7 @@ import {
   EffectColorLocationEnum,
   EffectDamageModeEnum,
   EffectDamageTypeEnum,
+  EffectDispelResistanceEnum,
   EffectFlagsEnum,
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
@@ -24,15 +26,18 @@ import {
   ItemCategoryEnum,
   PortraitIconEnum,
   RegenerationTypeEnum,
+  RemoveEffectsByResourceTypeEnum,
   SaveTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { AreaProjectileEnum } from "../src/model/spell-item/projectile";
+import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
 import creatureService from "../src/services/creature.service";
 import effectService from "../src/services/effects/effect.service";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
+  DreadWolfDisease,
   DreadWolfDownState,
   DreadWolfTrait,
   StreamOfFrost,
@@ -42,7 +47,7 @@ class Wolf extends Creature {
   createJaws(p: {
     diceThrown: number;
     diceSize: number;
-    effects?: Effect[];
+    castSpells?: WeaponCastSpell[];
     slot?: ItemSlot;
   }) {
     return this.addWeapon({
@@ -57,9 +62,9 @@ class Wolf extends Creature {
           damageType: AbilityDamageTypeEnum.Piercing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects: p.effects,
         },
       },
+      castSpells: p.castSpells,
     });
   }
 
@@ -217,7 +222,7 @@ class Wolf extends Creature {
                 AreaProjectileEnum.UseSecondaryProjectile,
               ],
               triggerRadius: 180,
-              areaOfEffect: 180,
+              areaOfEffect: 180, // within 10 feet
               coneWidth: 0,
             },
           },
@@ -257,6 +262,40 @@ class Wolf extends Creature {
         },
         range: 10,
       },
+    });
+  }
+
+  /**
+   * Dread Wolf Disease
+   */
+  createDreadWolfDisease() {
+    return this.addSpell({
+      name: "monster.wolf.ability.rottingDisease.name",
+      description: "monster.wolf.ability.rottingDisease.description",
+      id: Ids.DreadWolfDisease,
+      opcodeType: "disease",
+      doc: false,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.RemoveEffectsByResource,
+              type: RemoveEffectsByResourceTypeEnum.Default,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.Disease,
+              amount: 300,
+              type: DiseaseTypeEnum.OneDamagePerAmountSeconds,
+              duration: Durations.day * 30,
+              icon: PortraitIconEnum.Diseased,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+          ],
+        },
+      ],
     });
   }
 }
@@ -461,16 +500,13 @@ class WolfFamily extends CreatureFamily<Wolf> {
         resource: this.spell(Ids.DreadWolfDownState).file,
       })
     );
+    dread.createDreadWolfDisease();
     dread.createJaws({
       diceThrown: 1,
       diceSize: 10,
-      effects: [
+      castSpells: [
         {
-          opcode: EffectTypeEnum.Disease,
-          amount: 300,
-          type: DiseaseTypeEnum.OneDamagePerAmountSeconds,
-          duration: 360000,
-          icon: PortraitIconEnum.Diseased,
+          spell: this.spell(Ids.DreadWolfDisease).file,
           saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
         },
       ],

@@ -1,5 +1,3 @@
-// Generated file (don't edit)
-
 // Improved stream of frost
 COPY_EXISTING "CONECOLD.pro" ~override/ja#1f3.pro~
 	READ_SHORT 0x08 type

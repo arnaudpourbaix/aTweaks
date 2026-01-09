@@ -32,7 +32,7 @@ class Wyvern extends Creature {
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
       },
-      castSpell: poisonService.getSpell({ poisonType }),
+      castSpells: [poisonService.getSpell({ poisonType })],
     });
   }
 

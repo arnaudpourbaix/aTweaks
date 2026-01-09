@@ -6,6 +6,7 @@ import actionFactory from "../../factories/action.factory";
 import bafFactory from "../../factories/baf.factory";
 import responseFactory from "../../factories/response.factory";
 import triggerFactory from "../../factories/trigger.factory";
+import { Durations } from "../../model/constants";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import { WEAPON_SLOTS } from "../../model/creature/item";
@@ -258,7 +259,10 @@ class StatementService {
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
       // factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
-      actionFactory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, 2400), // EIGHT_HOURS
+      actionFactory.setGlobalTimer(
+        GLOBAL_CONFIG.bafConstants.restTimer,
+        Durations.eightHours
+      ),
     ];
     statements.push({
       comment: "Init",

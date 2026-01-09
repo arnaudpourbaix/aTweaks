@@ -1,3 +1,4 @@
+import { Durations } from "../../model/constants";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import {
   ArmorClassBonusEffect,
@@ -294,18 +295,11 @@ class DescriptionService {
 
   getDuration(duration?: number): string {
     if (!duration) return "";
-    // 1 round = 6 seconds
-    // 1 turn	= 10 rounds
-    // 1 game hour	= 5 turns
-    // 1 game day	= 120 turns
-    const roundDuration = 6;
-    const turnDuration = 60;
-    const hourDuration = 300;
     const time = [
-      { single: "a day", plural: "days", duration: hourDuration * 24 },
-      { single: "an hour", plural: "hours", duration: hourDuration },
-      { single: "a turn", plural: "turns", duration: turnDuration },
-      { single: "a round", plural: "rounds", duration: roundDuration },
+      { single: "a day", plural: "days", duration: Durations.day },
+      { single: "an hour", plural: "hours", duration: Durations.hour },
+      { single: "a turn", plural: "turns", duration: Durations.turn },
+      { single: "a round", plural: "rounds", duration: Durations.round },
       { single: "a second", plural: "seconds", duration: 1 },
     ];
     for (const t of time) {
