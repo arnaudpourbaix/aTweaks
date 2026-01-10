@@ -62,8 +62,10 @@ class WeiduFamilyService extends AbstractWeiduService {
   generateFinalCode(family: Family) {
     const lines: CodeLine[] = [];
     if (
-      family.spells.some((s) => s.opcodeType) ||
-      family.creatures.some((c) => c.spells.some((s) => s.opcodeType))
+      family.spells.some((s) => typeof s.secondaryType === "string") ||
+      family.creatures.some((c) =>
+        c.spells.some((s) => typeof s.secondaryType === "string")
+      )
     ) {
       this.add(lines, "LAF integrate_sectypes END", 0);
     }

@@ -1,1 +1,2 @@
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ettercap/69.tpa" // Ettercap
+LAF integrate_sectypes END

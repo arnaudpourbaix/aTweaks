@@ -150,7 +150,7 @@ class Undead extends Creature {
           projectile: CommonProjectileFiles.AreaOfSightNonParty,
           range: 30,
           effects: effectFactory.fear({
-            duration: 60,
+            duration: Durations.turn,
             saveType: SaveTypeEnum.Spell,
           }),
         },
@@ -314,7 +314,7 @@ class Undead extends Creature {
               },
               value: "ELF",
             },
-            ...effectFactory.paralyze({ duration: 30 }),
+            ...effectFactory.paralyze({ duration: 5 * Durations.round }),
           ],
         },
       ],
@@ -344,7 +344,7 @@ class Undead extends Creature {
               },
               value: "HUMANOID",
             },
-            ...effectFactory.paralyze({ duration: 42 }),
+            ...effectFactory.paralyze({ duration: 7 * Durations.round }),
           ],
         },
       ],
@@ -373,7 +373,7 @@ class Undead extends Creature {
               },
               value: "HUMANOID",
             },
-            ...effectFactory.paralyze({ duration: 60 }),
+            ...effectFactory.paralyze({ duration: Durations.turn }),
           ],
         },
       ],
@@ -388,7 +388,7 @@ class Undead extends Creature {
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
       saveBonus: -2,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 12,
+      duration: 2 * Durations.round,
       dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
     };
     return this.addSpell({
@@ -456,8 +456,7 @@ class Undead extends Creature {
       name: "monster.undead.ability.rottingDisease.name",
       description: "monster.undead.ability.rottingDisease.description",
       id: Ids.RottingDisease,
-      opcodeType: "disease",
-      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      secondaryType: "Disease",
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -505,7 +504,7 @@ class Undead extends Creature {
     // In addition, all persons who are forced to make a fear or horror check because of an encounter with a ghoul lord must do so with a -2 penalty.
     const base: BaseEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 6,
+      duration: Durations.round,
       dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
     };
     return this.addSpell({

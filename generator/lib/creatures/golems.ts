@@ -3,6 +3,7 @@ import { SPELLS } from "../config/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
 import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -86,19 +87,19 @@ class Golem extends Creature {
               maximumLevel: 9,
               type: "K1#SLOW",
               timing: EffectTimingEnum.InstantLimited,
-              duration: 18,
+              duration: 3 * Durations.round,
             },
             {
               opcode: EffectTypeEnum.Haste,
               type: EffectHasteTypeEnum.NormalHaste,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 18,
+              duration: 3 * Durations.round,
             },
             {
               opcode: EffectTypeEnum.DisplayPortraitIcon,
               icon: PortraitIconEnum.Haste,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 18,
+              duration: 3 * Durations.round,
             },
             {
               opcode: EffectTypeEnum.LightingEffects,
@@ -129,7 +130,7 @@ class Golem extends Creature {
             {
               opcode: EffectTypeEnum.PlaySound,
               timing: EffectTimingEnum.DelayPermanent,
-              duration: 18,
+              duration: 3 * Durations.round,
               resource: "EFF_M29",
             },
           ],
@@ -167,7 +168,7 @@ class Golem extends Creature {
           projectile: CommonProjectileFiles.AreaOfSightNonParty,
           range: 30,
           effects: effectFactory.fear({
-            duration: 42,
+            duration: 7 * Durations.round,
             saveType: SaveTypeEnum.Spell,
           }),
         },
@@ -212,23 +213,23 @@ class Golem extends Creature {
             {
               ...effectFactory.naturalMovementSpeed(6),
               timing: EffectTimingEnum.InstantLimited,
-              duration: 6,
+              duration: Durations.round,
             },
             {
               ...effectFactory.naturalMovementSpeed(9),
               timing: EffectTimingEnum.DelayLimited,
-              duration: 6,
+              duration: Durations.round,
             },
             {
               ...effectFactory.naturalMovementSpeed(12),
               timing: EffectTimingEnum.DelayLimited,
-              duration: 12,
+              duration: 2 * Durations.round,
             },
             {
               opcode: EffectTypeEnum.DisplayString,
               stringRef: "monster.golem.ability.charge.end",
               timing: EffectTimingEnum.DelayPermanent,
-              duration: 24,
+              duration: 4 * Durations.round,
             },
           ],
         },

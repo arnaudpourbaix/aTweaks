@@ -766,7 +766,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           speed: 1,
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
-            duration: 30 * Durations.round,
+            duration: 3 * Durations.turn,
             dispelResistance:
               EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
@@ -815,7 +815,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               slot: "SLOT_AMULET",
               resource: ITEMS.EntangleImmunity,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 10 * Durations.round,
+              duration: Durations.turn,
               dispelResistance:
                 EffectDispelResistanceEnum.DispelBypassResistance,
             },
@@ -967,7 +967,7 @@ class FeyFamily extends CreatureFamily<Fey> {
   private createAnimalFriendship() {
     const animalFriendshipCommonEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 20 * Durations.round,
+      duration: 2 * Durations.turn,
       dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
       saveTypes: [SaveTypeEnum.Spell],
     } satisfies BaseEffect;
@@ -1070,13 +1070,13 @@ class FeyFamily extends CreatureFamily<Fey> {
           effects: [
             {
               opcode: EffectTypeEnum.FindTraps,
-              duration: 16 * Durations.round,
+              duration: 2 * Durations.turn,
               target: EffectTargetEnum.Self,
             },
             {
               opcode: EffectTypeEnum.DisplayPortraitIcon,
               icon: PortraitIconEnum.DetectingTrapsIllusions,
-              duration: 16 * Durations.round,
+              duration: 2 * Durations.turn,
               target: EffectTargetEnum.Self,
             },
             {
@@ -1252,7 +1252,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           speed: 1,
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
-            duration: 30 * Durations.round,
+            duration: 3 * Durations.turn,
             dispelResistance:
               EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
@@ -1364,7 +1364,7 @@ class FeyFamily extends CreatureFamily<Fey> {
   private createTouchOfTranquility() {
     const tranquilityBaseEffect = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: 50 * Durations.round,
+      duration: 5 * Durations.turn,
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
     } satisfies BaseEffect;
     return this.addSpell({

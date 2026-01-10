@@ -1,6 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
@@ -106,7 +107,7 @@ class Spider extends Creature {
           type: EffectModifierTypeEnum.Increment,
           value: -4,
           timing: EffectTimingEnum.InstantLimited,
-          duration: 12,
+          duration: 2 * Durations.round,
         }
       );
     }
@@ -343,7 +344,7 @@ class Spider extends Creature {
           resource: this.item(p.id).file,
           target: EffectTargetEnum.Self,
           timing: EffectTimingEnum.InstantLimited,
-          duration: 6,
+          duration: Durations.round,
         },
       ],
     });
@@ -449,7 +450,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
     });
     gargantuan.createWeb({
       id: Ids.WebTangle,
-      duration: 18,
+      duration: 3 * Durations.round,
       // saveBonus: -2,
       description: "monster.spider.ability.webTangle.standardDesc",
     });
@@ -510,7 +511,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
     ghostwalk.addTrait({ immunities: ["seeInvisible"] });
     ghostwalk.createWeb({
       id: Ids.InvisibleWebTangle,
-      duration: 18,
+      duration: 3 * Durations.round,
       saveBonus: -2,
       description: "monster.spider.ability.webTangle.ghostwalkDesc",
       invisible: true,

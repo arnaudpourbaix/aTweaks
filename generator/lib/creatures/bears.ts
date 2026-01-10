@@ -414,7 +414,7 @@ class BearFamily extends CreatureFamily<Bear> {
               flags: [EffectFlagsEnum.SaveForHalf],
             },
             ...effectFactory.paralyze({
-              duration: 10 * Durations.round,
+              duration: 1 * Durations.turn,
               saveBonus: -2,
               startSound: "MISC_04A",
               endSound: "EFF_E03",

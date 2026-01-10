@@ -187,8 +187,8 @@ COPY_EXISTING ~ja#7f8.SPL~  ~override~
 	WRITE_ASCII 0x3a ~SPPR205C~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10178)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=5 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~INAREANS~)) + 1 STR_VAR icon="SPPR205B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=150 target=1 power=1 duration=96 probability1=100 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=1 power=1 parameter2=109 duration=96 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=150 target=1 power=1 duration=120 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=1 power=1 parameter2=109 duration=120 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=30 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=1226851840 parameter2=1310720 duration=2 probability1=100 END
 	LPF CHANGE_SPELL INT_VAR    renew=16 END

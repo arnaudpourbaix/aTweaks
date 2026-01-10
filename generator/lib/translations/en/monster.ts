@@ -122,7 +122,7 @@ The caster can question plants as to whether or not creatures have passed throug
       },
       detectTraps: {
         name: "Detect snares and pits",
-        description: `When cast, all traps concealed -normally or magically- of magical or mechanical nature become apparent for 16 rounds.`,
+        description: `When cast, all traps concealed -normally or magically- of magical or mechanical nature become apparent for 2 turns.`,
       },
       blindingBeauty: {
         name: "Blinding Beauty",

@@ -27,7 +27,7 @@ CREATE SPL "ja#2m77"
 COPY_EXISTING ~ja#2m77.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@10323)
 	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 11
+	WRITE_BYTE 0x27 fl#Disease
 	WRITE_LONG 0x34 1
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10324)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
@@ -35,8 +35,9 @@ COPY_EXISTING ~ja#2m77.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=100 parameter2=3 duration=720000 probability1=100 special=7 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=4 parameter2=6 timing=1 probability1=100 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=78 target=2 power=1 parameter1=4 parameter2=9 timing=1 probability1=100 END
-	
-	// Aura of Evil
+OUTER_SET $f_AddSecType(ja#2m77.spl) = DiseaseSecType
+
+// Aura of Evil
 CREATE EFF "ja#3m77"
 	WRITE_LONG 0x10 278
 	WRITE_LONG 0x14 2

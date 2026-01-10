@@ -9,13 +9,14 @@ CREATE SPL "ja#1m55"
 COPY_EXISTING ~ja#1m55.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@10621)
 	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
+	WRITE_BYTE 0x27 fl#Poison
 	WRITE_LONG 0x34 1
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10622)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=3 parameter2=3 duration=50 probability1=100 savingthrow=4 savebonus="1" special=6 END
-	
-	// Jaws
+OUTER_SET $f_AddSecType(ja#1m55.spl) = PoisonSecType
+
+// Jaws
 CREATE ITM "ja#1m55"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

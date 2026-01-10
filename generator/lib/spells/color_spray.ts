@@ -1,4 +1,5 @@
 import { SPELLS } from "../config/spell-names";
+import { Durations } from "../src/model/constants";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   ColorEnum,
@@ -55,7 +56,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.GhostlyGreen,
     location: EffectColorLocationEnum.ArmorBlueArmorTrimming,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -63,7 +64,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.DarkGhostlyPink,
     location: EffectColorLocationEnum.ArmorGreenHair,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -71,7 +72,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.GhostlyGreen,
     location: EffectColorLocationEnum.ArmorYellowSkinColor,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -79,7 +80,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.DarkGhostlyPink,
     location: EffectColorLocationEnum.ArmorRedStrapLeather,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -87,7 +88,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.GhostlyGreen,
     location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -95,7 +96,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.DarkGhostlyPink,
     location: EffectColorLocationEnum.ArmorPinkMajorColor,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
   {
@@ -103,7 +104,7 @@ const colorEffects: Effect[] = [
     color: ColorEnum.GhostlyGreen,
     location: EffectColorLocationEnum.ArmorTealMinorColor,
     timing: EffectTimingEnum.InstantLimited,
-    duration: 6,
+    duration: Durations.round,
     ...baseEffect,
   },
 ];
@@ -113,7 +114,7 @@ const sleepEffects: (level: number) => Effect[] = (level: number) => {
       opcode: EffectTypeEnum.Sleep,
       wakeOnDamage: true,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 24,
+      duration: 4 * Durations.round,
       minLevel: 0,
       maxLevel: level,
       dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
@@ -141,7 +142,7 @@ const blindEffects: (level: number) => Effect[] = (level: number) => {
     {
       opcode: EffectTypeEnum.Blindness,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 12,
+      duration: 2 * Durations.round,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
@@ -150,7 +151,7 @@ const blindEffects: (level: number) => Effect[] = (level: number) => {
       opcode: EffectTypeEnum.DisplayPortraitIcon,
       icon: PortraitIconEnum.Blind,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 12,
+      duration: 2 * Durations.round,
       minLevel: level + 1,
       maxLevel: level + 2,
       ...baseEffect,
@@ -202,7 +203,7 @@ const confusionEffects: (level: number) => Effect[] = (level: number) => {
     {
       opcode: EffectTypeEnum.Confusion,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 6,
+      duration: Durations.round,
       minLevel: level + 3,
       ...baseEffect,
     },
@@ -210,7 +211,7 @@ const confusionEffects: (level: number) => Effect[] = (level: number) => {
       opcode: EffectTypeEnum.DisplayPortraitIcon,
       icon: PortraitIconEnum.Confused,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 6,
+      duration: Durations.round,
       minLevel: level + 3,
       ...baseEffect,
     },
@@ -218,7 +219,7 @@ const confusionEffects: (level: number) => Effect[] = (level: number) => {
       opcode: EffectTypeEnum.PlayVisualEffect,
       playWhere: EffectVisualEffectLocationEnum.OverTargetAttached,
       timing: EffectTimingEnum.InstantLimited,
-      duration: 6,
+      duration: Durations.round,
       resource: "SPCONFUS",
       minLevel: level + 3,
       ...baseEffect,

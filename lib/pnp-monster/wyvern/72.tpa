@@ -9,7 +9,7 @@ CREATE SPL "ja#1m72"
 COPY_EXISTING ~ja#1m72.SPL~  ~override~
 	WRITE_LONG 0x8 RESOLVE_STR_REF(@10672)
 	WRITE_SHORT 0x1c 4
-	WRITE_BYTE 0x27 10
+	WRITE_BYTE 0x27 fl#Poison
 	WRITE_LONG 0x34 1
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10673)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 END
@@ -20,8 +20,9 @@ COPY_EXISTING ~ja#1m72.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=8 parameter2=2 duration=20 probability1=100 dicesize=9 dicenumber=10 savingthrow=4 special=6 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=9 parameter2=2 duration=19 probability1=100 dicesize=11 dicenumber=15 savingthrow=4 special=6 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=25 target=2 power=1 parameter1=13 parameter2=2 duration=19 probability1=100 dicesize=16 dicenumber=40 savingthrow=4 special=6 END
-	
-	// Stinger
+OUTER_SET $f_AddSecType(ja#1m72.spl) = PoisonSecType
+
+// Stinger
 CREATE ITM "ja#1m72"
 	WRITE_LONG 0x64 0x72
 	INSERT_BYTES 0x72 0x38

@@ -1,5 +1,6 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
 import { SPELLS } from "../config/spell-names";
+import { Durations } from "../src/model/constants";
 import { Effect } from "../src/model/spell-item/effect";
 import {
   EffectDispelResistanceEnum,
@@ -20,7 +21,7 @@ const baseEffect: Effect = {
   idsFile: EffectIDSFileEnum.EA,
   idsEntry: "ANYONE",
   timing: EffectTimingEnum.InstantLimited,
-  duration: 120,
+  duration: 20 * Durations.round,
   dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
 };
 

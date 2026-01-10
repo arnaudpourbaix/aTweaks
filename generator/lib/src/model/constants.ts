@@ -187,7 +187,6 @@ export const SAVING_THROWS = {
 };
 
 export const Durations = {
-  // 1 round = 6 seconds
   // 1 turn	= 10 rounds
   // 1 game hour	= 5 turns
   // 1 game day	= 120 turns

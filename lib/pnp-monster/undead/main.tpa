@@ -4,3 +4,4 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/76.tpa" // Ghoul
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/75.tpa" // Ghast
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/77.tpa" // Ghoul Lord
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/78.tpa" // Mummy
+LAF integrate_sectypes END

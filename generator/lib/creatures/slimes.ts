@@ -2,6 +2,7 @@ import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
+import { Durations } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -834,7 +835,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
         diceSize: 6,
       },
       ...effectFactory.paralyze({
-        duration: 60,
+        duration: Durations.turn,
         lightingEffect: LightingEffectEnum.MushroomGray,
       }),
     ]);
@@ -853,7 +854,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
     const vaporBaseEffect: BaseEffect = {
       timing: EffectTimingEnum.InstantLimited,
       dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-      duration: 12,
+      duration: 2 * Durations.round,
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
     };
     return this.addSpell({
@@ -925,7 +926,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
             {
               opcode: EffectTypeEnum.ProtectionFromSpell,
               timing: EffectTimingEnum.InstantLimited,
-              duration: 6,
+              duration: Durations.round,
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
             },
           ],

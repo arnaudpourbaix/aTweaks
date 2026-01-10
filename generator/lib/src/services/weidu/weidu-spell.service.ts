@@ -67,15 +67,15 @@ class WeiduSpellService extends AbstractWeiduService {
         tab + 1
       );
     }
-    if (spell.opcodeType) {
+    if (typeof spell.secondaryType === "string") {
       this.writeOpcodeType(lines, spell, 0);
     }
   }
 
   private writeOpcodeType(lines: CodeLine[], spell: Spell, tab: number) {
     let type = "PoisonSecType";
-    if (spell.opcodeType === "disease") type = "DiseaseSecType";
-    else if (spell.opcodeType === "fear") type = "FearSecType";
+    if (spell.secondaryType === "Disease") type = "DiseaseSecType";
+    else if (spell.secondaryType === "Fear") type = "FearSecType";
     this.add(
       lines,
       `OUTER_SET $f_AddSecType(${spell.file}.spl) = ${type}`,
@@ -91,7 +91,11 @@ class WeiduSpellService extends AbstractWeiduService {
     this.writeFlag(lines, 0x1e, 4, spell.exclusionFlags, tab);
     this.write(lines, 0x22, 2, spell.castingAnimation, tab);
     this.write(lines, 0x25, 1, spell.primaryType, tab);
-    this.write(lines, 0x27, 1, spell.secondaryType, tab);
+    if (typeof spell.secondaryType === "number") {
+      this.write(lines, 0x27, 1, spell.secondaryType, tab);
+    } else if (typeof spell.secondaryType === "string") {
+      this.write(lines, 0x27, 1, `fl#${spell.secondaryType}`, tab);
+    }
     this.write(lines, 0x34, 4, spell.spellLevel, tab);
     this.write(lines, 0x3a, 8, spell.icon, tab);
     this.writeStringRef(lines, 0x50, spell.description, tab);

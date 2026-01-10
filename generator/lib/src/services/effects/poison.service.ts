@@ -42,9 +42,8 @@ class PoisonService {
       spell: {
         name: translationService.addCustomTranslation([name]),
         description: translationService.addCustomTranslation([description]),
-        opcodeType: isComplexPoison ? "poison" : undefined,
+        secondaryType: "Poison",
         groups: ["poison"],
-        secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
         headers: [{ type: ItemAbilityTypeEnum.Melee, effects }],
       },
     };

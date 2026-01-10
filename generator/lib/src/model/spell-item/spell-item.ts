@@ -63,12 +63,7 @@ export interface Spell {
   castingSound?: string;
   castingAnimation?: ItemAbilityCastingAnimationEnum;
   primaryType?: ItemAbilityPrimaryTypeEnum;
-  secondaryType?: ItemAbilitySecondaryTypeEnum;
-  /**
-   * Type of the spell, not necessarily an applied opcode but it can be removed by spells that remove this opcode.
-   * For example, 'fear' spells will be removed by "Resist Fear" even if they don't apply fear opcode.
-   */
-  opcodeType?: "fear" | "disease" | "poison";
+  secondaryType?: ItemAbilitySecondaryTypeEnum | "Fear" | "Disease" | "Poison";
   spellLevel?: number;
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
