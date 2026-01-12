@@ -3,7 +3,8 @@ import path from "path";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { Creature } from "../../model/creature/creature";
-import { CreatureFamily, Family } from "../../model/creature/family";
+import { Family } from "../../model/creature/family";
+import { CodeLine } from "../../model/misc";
 import { State } from "../../state";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
@@ -11,19 +12,18 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduItemService from "./weidu-item.service";
 import weiduProjectileService from "./weidu-projectile.service";
 import weiduSpellService from "./weidu-spell.service";
-import { CodeLine } from "../../model/misc";
 
 class WeiduFamilyService extends AbstractWeiduService {
   createOrUpdateMainFile(family: MonsterFamilyEnum, creature?: Creature) {
     const file = this.getMainFilename(family);
     if (!creature) {
-      let content = "";
+      let content = `LAM load_secondary_types${CR}`;
       const commonFile = path.join(
         State.modFolder,
         `${utils.getFamilyFolder(family)}/common.tpa`
       );
       if (fs.existsSync(commonFile)) {
-        content = `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(
+        content += `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(
           family
         )}/common.tpa"${CR}`;
       }

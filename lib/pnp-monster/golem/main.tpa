@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/23.tpa" // Flesh Golem
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/24.tpa" // Clay Golem
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/golem/25.tpa" // Stone Golem

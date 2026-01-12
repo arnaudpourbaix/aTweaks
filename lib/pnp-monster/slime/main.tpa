@@ -1,3 +1,4 @@
+LAM load_secondary_types
 // Toxic Vapors
 CREATE EFF "ja#1f12"
 	WRITE_LONG 0x10 206

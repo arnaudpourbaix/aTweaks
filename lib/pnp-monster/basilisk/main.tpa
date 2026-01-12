@@ -1,3 +1,4 @@
+LAM load_secondary_types
 COPY_EXISTING "gaze.pro" ~override/ja#1f2.pro~
 	READ_SHORT 0x08 type
 	PATCH_IF (%type% = 1) BEGIN

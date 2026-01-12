@@ -1,3 +1,4 @@
+LAM load_secondary_types
 // Flaming Greatsword
 CREATE ITM "ja#1f6"
 	WRITE_LONG 0x64 0x72

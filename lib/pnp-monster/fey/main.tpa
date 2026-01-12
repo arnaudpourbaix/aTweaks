@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/fey/common.tpa"
 // Dimension Door
 CREATE SPL "ja#1f8"

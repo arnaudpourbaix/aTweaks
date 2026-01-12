@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/64.tpa" // Gargantuan Spider
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/58.tpa" // Ghostwalk Spider
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/spider/56.tpa" // Giant Spider

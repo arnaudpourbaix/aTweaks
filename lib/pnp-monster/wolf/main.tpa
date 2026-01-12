@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/17.tpa" // Wolf
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wolf/19.tpa" // Dire Wolf

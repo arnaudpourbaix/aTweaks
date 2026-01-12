@@ -5,15 +5,6 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/core.tpa"
 ADD_SECTYPE fl#Disease @3000
 ADD_SECTYPE fl#Fear @3001
 ADD_SECTYPE fl#Poison @3002
-OUTER_SET DiseaseSecType = fl#Disease
-OUTER_SET FearSecType = fl#Fear
-OUTER_SET PoisonSecType = fl#Poison
-OUTER_SET $f_ImmunitySecType(78) = DiseaseSecType
-OUTER_SET $f_ImmunitySecType(24) = FearSecType
-OUTER_SET $f_ImmunitySecType(25) = PoisonSecType
-OUTER_SET $f_RemoveSecType(79) = DiseaseSecType
-OUTER_SET $f_RemoveSecType(161) = FearSecType
-OUTER_SET $f_RemoveSecType(11) = PoisonSecType
 
 // Grab files
 COPY ~%MOD_FOLDER%/lib/pnp-monster/common/grab/rr#cnstr.vvc~ ~override~

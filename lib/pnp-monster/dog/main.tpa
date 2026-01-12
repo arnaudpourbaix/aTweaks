@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/12.tpa" // Wild Dog
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/13.tpa" // War Dog
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/dog/14.tpa" // Blink Dog

@@ -1,3 +1,28 @@
+DEFINE_ACTION_FUNCTION get_sectype STR_VAR f_Label = "" RET f_Value BEGIN
+  LAF get_from_file_by_row_count STR_VAR f_Label f_File = msectype.2da RET f_Value = f_Value END
+END
+
+DEFINE_ACTION_MACRO load_secondary_types BEGIN
+  ACTION_IF !VARIABLE_IS_SET fl#Disease OR !IS_AN_INT fl#Disease BEGIN
+    LAF get_sectype STR_VAR f_Label = fl#Disease RET fl#Disease = f_Value END
+  END
+  ACTION_IF !VARIABLE_IS_SET fl#Fear OR !IS_AN_INT fl#Fear BEGIN
+    LAF get_sectype STR_VAR f_Label = fl#Fear RET fl#Fear = f_Value END
+  END
+  ACTION_IF !VARIABLE_IS_SET fl#Poison OR !IS_AN_INT fl#Poison BEGIN
+    LAF get_sectype STR_VAR f_Label = fl#Poison RET fl#Poison = f_Value END
+  END
+  OUTER_SET DiseaseSecType = fl#Disease
+  OUTER_SET FearSecType = fl#Fear
+  OUTER_SET PoisonSecType = fl#Poison
+  OUTER_SET $f_ImmunitySecType(78) = DiseaseSecType
+  OUTER_SET $f_ImmunitySecType(24) = FearSecType
+  OUTER_SET $f_ImmunitySecType(25) = PoisonSecType
+  OUTER_SET $f_RemoveSecType(79) = DiseaseSecType
+  OUTER_SET $f_RemoveSecType(161) = FearSecType
+  OUTER_SET $f_RemoveSecType(11) = PoisonSecType
+END
+
 // Called from integrate_sectypes
 DEFINE_PATCH_FUNCTION integrate_sectypes_inner BEGIN
   READ_LONG  0x64 ao

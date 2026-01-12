@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/common.tpa"
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/73.tpa" // Banshee
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/76.tpa" // Ghoul

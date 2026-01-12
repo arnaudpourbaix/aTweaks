@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/34.tpa" // Jaguar
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/36.tpa" // Leopard
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/cat/10.tpa" // Lion

@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/30.tpa" // Ogre
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/28.tpa" // Ogrillon
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ogre/29.tpa" // Half Ogre

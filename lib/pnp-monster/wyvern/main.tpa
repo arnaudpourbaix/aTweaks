@@ -1,3 +1,4 @@
+LAM load_secondary_types
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/70.tpa" // Wyvern
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/71.tpa" // Baby Wyvern
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/wyvern/72.tpa" // Greater Wyvern
