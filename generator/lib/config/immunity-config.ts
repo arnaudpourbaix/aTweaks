@@ -339,10 +339,17 @@ export const IMMUNITIES: (AtLeast<
     spellGroups: ["acidSpells"],
   },
   {
-    name: "cureAndCauseWoundSpells",
+    name: "cureWoundSpells",
     type: "immunity",
-    stringRef: "common.immunity.cureAndCauseWoundSpells",
-    spellGroups: ["cure"],
+    stringRef: "common.immunity.cureWoundSpells",
+    spellGroups: ["cureWounds", "curePoison"],
+    displaySpellIneffective: true,
+  },
+  {
+    name: "causeWoundSpells",
+    type: "immunity",
+    stringRef: "common.immunity.causeWoundSpells",
+    spellGroups: ["causeWounds"],
     displaySpellIneffective: true,
   },
   {
@@ -514,8 +521,8 @@ export const IMMUNITIES: (AtLeast<
     name: "necromancyEffects",
     type: "immunity",
     stringRef: "common.immunity.necromancyEffects",
-    immunities: ["cureAndCauseWoundSpells"],
-    spellGroups: ["necromancyEffects"],
+    immunities: ["cureWoundSpells", "causeWoundSpells"],
+    spellGroups: ["necromancyEffects", "curePoison"],
     displaySpellIneffective: true,
   },
   {
@@ -968,7 +975,7 @@ export const TRAITS: (AtLeast<
     type: "trait",
     stringRef: "common.traits.extraplanar.name",
     description: "common.traits.extraplanar.desc",
-    immunities: ["cureAndCauseWoundSpells", "deathSpell"],
+    immunities: ["cureWoundSpells", "causeWoundSpells", "deathSpell"],
   },
   {
     name: "plant",

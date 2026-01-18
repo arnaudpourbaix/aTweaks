@@ -1,6 +1,7 @@
 import { CodeLine } from "../../model/misc";
 import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
 import translationService from "../translation.service";
+import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduEffectService from "./weidu-effect.service";
 import weiduProjectileService from "./weidu-projectile.service";
@@ -140,6 +141,17 @@ class WeiduSpellService extends AbstractWeiduService {
       `LPF ADD_SPELL_HEADER INT_VAR ${intVars.join(" ")}${icon} END`,
       tab
     );
+    if (header.immunityEffect) {
+      for (const name of header.immunityEffect.names) {
+        this.add(
+          lines,
+          `LPF ${utils.getImmunityFunctionName(name)} INT_VAR duration=${
+            header.immunityEffect.duration
+          } dispelResistance=${header.immunityEffect.dispelResistance} END`,
+          tab
+        );
+      }
+    }
     for (const effect of header.effects) {
       weiduEffectService.addEffect({
         lines,

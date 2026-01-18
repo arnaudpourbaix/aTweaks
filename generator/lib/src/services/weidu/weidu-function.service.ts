@@ -130,11 +130,11 @@ class WeiduFunctionService extends AbstractWeiduService {
     immunity: ImmunityConfig,
     tab: number
   ): void {
-    this.add(
-      lines,
-      `DEFINE_PATCH_FUNCTION ${utils.getImmunityFunctionName(immunity)}`,
-      tab
-    );
+    const fnName = utils.getImmunityFunctionName(immunity);
+    this.add(lines, `DEFINE_PATCH_FUNCTION ${fnName}`, tab);
+    this.add(lines, `INT_VAR`, tab);
+    this.add(lines, `resist_dispel=0`, tab + 1);
+    this.add(lines, `duration=0`, tab + 1);
     this.add(lines, `BEGIN`, tab);
     if (
       immunity.preventEffects.length ||
@@ -142,15 +142,19 @@ class WeiduFunctionService extends AbstractWeiduService {
       immunity.strings.length ||
       immunity.spellGroups.length ||
       immunity.animations.length
-    )
+    ) {
+      // this.add(lines, `PATCH_PRINT ~${fnName}~`, tab + 1);
       this.callImmunityFunction(lines, immunity, tab + 1);
+    }
     for (const effect of immunity.effects) {
       this.generateEffect(lines, effect, tab + 1);
     }
     for (const type of immunity.immunities) {
       this.add(
         lines,
-        `LPF ${utils.getImmunityFunctionName(type)} END`,
+        `LPF ${utils.getImmunityFunctionName(
+          type
+        )} INT_VAR resist_dispel duration END`,
         tab + 1
       );
     }
@@ -179,11 +183,11 @@ class WeiduFunctionService extends AbstractWeiduService {
       ? ` animations="${immunity.animations.join(" ")}"`
       : "";
     const display = immunity.displaySpellIneffective
-      ? " INT_VAR displaySpellIneffective=1"
+      ? " displaySpellIneffective=1"
       : "";
     this.add(
       lines,
-      `LPF ADD_IMMUNITY_CRE_ITM_SPL${display} STR_VAR${effects}${icons}${strings}${animations}${spells} END`,
+      `LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration ${display} STR_VAR${effects}${icons}${strings}${animations}${spells} END`,
       tab
     );
   }
@@ -201,7 +205,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     const resource = !!effect.resource
       ? ` STR_VAR resource="${effect.resource}"`
       : "";
-    const line = `LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR opcode=${effect.opcode}${parameter1}${parameter2}${special}${resource} END`;
+    const line = `LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=${effect.opcode}${parameter1}${parameter2}${special}${resource} END`;
     this.add(lines, line, tab);
   }
 

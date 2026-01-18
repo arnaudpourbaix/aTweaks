@@ -240,7 +240,7 @@ class Wolf extends Creature {
             },
             {
               opcode: EffectTypeEnum.CharacterColorPulse,
-              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              timing: EffectTimingEnum.InstantLimited,
               color: { blue: 255, green: 213, red: 123 },
               location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
               cycleSpeed: 20,

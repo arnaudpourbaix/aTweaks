@@ -7,6 +7,7 @@ import { PartialBy, WithRequired } from "../utility-types";
 import { Effect, EffectFile, PartialEffectFile } from "./effect";
 import {
   AbilityDamageTypeEnum,
+  EffectDispelResistanceEnum,
   ItemAbilityCastingAnimationEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
@@ -150,6 +151,13 @@ export interface ItemSpellHeader {
 
 export interface SpellHeader extends ItemSpellHeader {
   minLevel?: number;
+  immunityEffect?: {
+    names: ImmunityName[];
+    duration: number;
+    dispelResistance?: EffectDispelResistanceEnum;
+    // saveTypes?: SaveTypeEnum[];
+    // saveBonus?: number;
+  };
 }
 
 export interface ItemHeader extends ItemSpellHeader {

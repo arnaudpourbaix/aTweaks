@@ -436,9 +436,19 @@ The sheet has the same effect as an ice storm's hail stones—3d10 points of dam
 Those failing to make this save will attack at a penalty of -2.`,
         message: "Affected by Ghast's carrion stench",
       },
-      rottingDisease: {
+      ghoulRottingDisease: {
         name: "Rotting Disease",
         description: `Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.`,
+      },
+      mummyRottingDisease: {
+        name: "Rotting Disease",
+        description: `The scabrous touch infects the victim with a rotting disease which is fatal in 6 days.
+For each day the rot progresses, the victim permanently loses 2 points of Charisma.
+The disease can be cured only with a cure disease spell.
+Cure wounds spells have no effect on a person inflicted with mummy rot.`,
+        diseased: "Stricken by mummy rot",
+        warning: "Close to dying from mummy rot",
+        death: "Succumbs to mummy rot",
       },
       auraOfEvil: {
         name: "Aura of Evil",

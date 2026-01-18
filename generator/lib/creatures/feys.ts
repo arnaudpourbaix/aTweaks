@@ -1014,7 +1014,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
               cycleSpeed: 25,
               ...animalFriendshipCommonEffect,
-              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+              timing: EffectTimingEnum.InstantLimited,
               duration: 1,
             },
             {

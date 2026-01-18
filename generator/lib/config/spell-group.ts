@@ -139,13 +139,41 @@ export const SPELL_GROUPS: SpellGroup[] = [
     ],
   },
   {
-    name: "cure",
+    name: "curePoison",
+    idsSpells: [],
+    spells: [
+      "SPPR404", // Neutralize Poison
+      "cdilnps", // Neutralize Poison (mod)
+      "scrl08", // Neutralize Poison (IR)
+      "SPIN201", // Neutralize Poison
+    ],
+  },
+  {
+    name: "causeWounds",
     idsSpells: [
       { id: "CLERIC_CAUSE_MODERATE_WOUNDS" }, // Cause moderate Wounds (IWDification)
-      { id: "CLERIC_CURE_MODERATE_WOUNDS" }, // Cure moderate Wounds  (IWDification)
       { id: "CLERIC_CAUSE_LIGHT_WOUNDS" }, // Cause Light Wounds (IWDification)
       { id: "CLERIC_CAUSE_MEDIUM_WOUNDS" }, // Cause medium Wounds (IWDification)
       { id: "CLERIC_MASS_CAUSE_LIGHT_WOUNDS" }, // Mass Cause Light Wounds (IWDification)
+    ],
+    spells: [
+      "SPIN202", // Cause Serious Wounds
+      "SPIN551", // Cause Serious Wounds (Hive Mother)
+      "SPIN986", // Cause Serious Wounds (Beholder)
+      "SPPR414", // Cause Serious Wounds
+      "SPPR510", // Cause critical Wounds
+      "sppr608", // Harm
+      "sppr699", // Harm
+      // ATWEAKS_SPELLS.MarilithCauseSeriousWounds,
+      // ATWEAKS_SPELLS.CauseSeriousWounds,
+      // ATWEAKS_SPELLS.CauseCriticalWounds,
+      // ATWEAKS_SPELLS.Harm,
+    ],
+  },
+  {
+    name: "cureWounds",
+    idsSpells: [
+      { id: "CLERIC_CURE_MODERATE_WOUNDS" }, // Cure moderate Wounds  (IWDification)
       { id: "CLERIC_CURE_MEDIUM_WOUNDS" }, // Cure Medium Wounds  (Spell Revisions)
     ],
     spells: [
@@ -158,10 +186,6 @@ export const SPELL_GROUPS: SpellGroup[] = [
       "CA#CURSW", // Cure Serious Wounds (PnP Deva)
       "SPIN200", // Cure Serious Wounds
       "SPIN958", // Cure Serious Wounds
-      "SPPR404", // Neutralize Poison
-      "cdilnps", // Neutralize Poison (mod)
-      "scrl08", // Neutralize Poison (IR)
-      "SPIN201", // Neutralize Poison
       "SPPR502", // Cure Critical Wounds
       "SPPR514", // Mass Cure
       "A#RE11", // Mass Cure (Divine Remix)
@@ -173,21 +197,10 @@ export const SPELL_GROUPS: SpellGroup[] = [
       "spin679", // Heal
       "SPIN101", // Cure Light Wounds (Bhaalpower)
       "FINP101", // Cure Light Wounds (TOB Bhaalpower Ascension)
-      "SPIN202", // Cause Serious Wounds
-      "SPIN551", // Cause Serious Wounds (Hive Mother)
-      "SPIN986", // Cause Serious Wounds (Beholder)
-      "SPPR414", // Cause Serious Wounds
-      "SPPR510", // Cause critical Wounds
       "SPCL211", // Paladin Lay On Hands
       "BHAAL1A", // Mass Healing (Bhaalpower restored by Ascension/UB)
-      "sppr608", // Harm
-      "sppr699", // Harm
       // ATWEAKS_SPELLS.CureLightWounds,
       // ATWEAKS_SPELLS.TempleMassCure,
-      // ATWEAKS_SPELLS.MarilithCauseSeriousWounds,
-      // ATWEAKS_SPELLS.CauseSeriousWounds,
-      // ATWEAKS_SPELLS.CauseCriticalWounds,
-      // ATWEAKS_SPELLS.Harm,
     ],
   },
   {

@@ -13,6 +13,7 @@ import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   DiseaseTypeEnum,
+  EffectColorLocationEnum,
   EffectDamageTypeEnum,
   EffectDispelResistanceEnum,
   EffectIDSFileEnum,
@@ -28,6 +29,7 @@ import {
   ItemAbilitySecondaryTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
+  KillTargetDeathTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
   PortraitIconEnum,
@@ -54,7 +56,8 @@ enum Ids {
   GhoulTouch,
   GhoulLordTouch,
   GhastTouch,
-  RottingDisease,
+  GhoulRottingDisease,
+  MummyRottingDisease,
   WallOfIce,
 }
 
@@ -445,17 +448,17 @@ class Undead extends Creature {
   }
 
   /**
-   * Rotting Disease
+   * Ghoul Lord Rotting Disease
    */
-  createRottingDisease() {
+  createGhoulRottingDisease() {
     // PnP: Loose 10 hit points and 1 point from their Constitution and Charisma scores each day
     // Disease can be cured and thus, we can't reapply disease each day
     // Also, time is a bit different in game and I have replaced days by 8 hours (a rest)
     // Instead of gradually loosing con and cha, I have set a one time disease with -4
     return this.addSpell({
-      name: "monster.undead.ability.rottingDisease.name",
-      description: "monster.undead.ability.rottingDisease.description",
-      id: Ids.RottingDisease,
+      name: "monster.undead.ability.ghoulRottingDisease.name",
+      description: "monster.undead.ability.ghoulRottingDisease.description",
+      id: Ids.GhoulRottingDisease,
       secondaryType: "Disease",
       headers: [
         {
@@ -491,6 +494,89 @@ class Undead extends Creature {
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
             },
           ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Mummy Rotting Disease
+   */
+  createMummyRottingDisease() {
+    const count = 6;
+    const day = Durations.day;
+    const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) => ({
+      opcode: EffectTypeEnum.Disease,
+      type: DiseaseTypeEnum.ReduceCharismaByAmount,
+      amount: 2,
+      icon: PortraitIconEnum.Diseased,
+      timing: EffectTimingEnum.DelayPermanent,
+      duration: (i + 1) * day,
+      dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+    }));
+    // PnP is 1-6 months, replaced by 6 days in the game
+    return this.addSpell({
+      name: "monster.undead.ability.mummyRottingDisease.name",
+      description: "monster.undead.ability.mummyRottingDisease.description",
+      id: Ids.MummyRottingDisease,
+      secondaryType: "Disease",
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.CharacterColorPulse,
+              color: { red: 43, green: 79, blue: 0 },
+              cycleSpeed: 0,
+              location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 2,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: "monster.undead.ability.mummyRottingDisease.diseased",
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayPortraitIcon,
+              icon: PortraitIconEnum.Diseased,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: count * day,
+            },
+            ...diseaseEffects,
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: "monster.undead.ability.mummyRottingDisease.warning",
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: (count - 1) * day,
+            },
+            {
+              opcode: EffectTypeEnum.DisplayString,
+              stringRef: "monster.undead.ability.mummyRottingDisease.death",
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: count * day - 1,
+            },
+            {
+              opcode: EffectTypeEnum.KillTarget,
+              type: KillTargetDeathTypeEnum.Normal,
+              displayText: true,
+              timing: EffectTimingEnum.DelayPermanent,
+              duration: count * day,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+            {
+              opcode: EffectTypeEnum.ProtectionFromSpell,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: count * day,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+            },
+          ],
+          immunityEffect: {
+            names: ["cureWoundSpells"],
+            duration: count * day,
+            dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+          },
         },
       ],
     });
@@ -965,7 +1051,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     lord.addTrait({ immunities: ["nonSilverNonMagicalWeapons"] });
     lord.createGhoulLordTouch();
-    lord.createRottingDisease();
+    lord.createGhoulRottingDisease();
     lord.createAuraOfEvil();
     lord.createClaws(1, 6, {
       spell: this.spell(Ids.GhoulLordTouch).file,
@@ -975,7 +1061,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         spell: this.spell(Ids.GhoulLordTouch).file,
       },
       {
-        spell: this.spell(Ids.RottingDisease).file,
+        spell: this.spell(Ids.GhoulRottingDisease).file,
         saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
       },
     ]);
@@ -1031,7 +1117,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         morale: 15,
         general: "UNDEAD",
         race: "GHOUL",
-        class: "GHOUL_GHAST",
+        class: "GHOUL_REVEANT",
         animation: "MUMMY",
         gender: "NIETHER",
         size: "Medium",
@@ -1063,48 +1149,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
+    mummy.createMummyRottingDisease();
     mummy.createClaws(1, 12, {
-      spell: {
-        name: "monster.undead.ability.rottingDisease.name",
-        description: "monster.undead.ability.rottingDisease.description",
-        secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-        headers: [
-          {
-            type: ItemAbilityTypeEnum.Melee,
-            range: 5,
-            effects: [
-              {
-                opcode: EffectTypeEnum.RemoveEffectsByResource,
-                type: RemoveEffectsByResourceTypeEnum.Default,
-                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-              },
-              {
-                opcode: EffectTypeEnum.Disease,
-                type: DiseaseTypeEnum.OneDamagePerAmountSeconds,
-                amount: 100, // 10 every 8 hours
-                icon: PortraitIconEnum.Diseased,
-                timing: EffectTimingEnum.InstantLimited,
-                duration: 100 * Durations.day,
-                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-              },
-              {
-                opcode: EffectTypeEnum.Disease,
-                type: DiseaseTypeEnum.ReduceConstitutionByAmount,
-                amount: 4,
-                timing: EffectTimingEnum.InstantPermanentUntilDeath,
-                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-              },
-              {
-                opcode: EffectTypeEnum.Disease,
-                type: DiseaseTypeEnum.ReduceCharismaByAmount,
-                amount: 4,
-                timing: EffectTimingEnum.InstantPermanentUntilDeath,
-                dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-              },
-            ],
-          },
-        ],
-      },
+      spell: this.spell(Ids.MummyRottingDisease).file,
     });
     mummy.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
     return mummy;
