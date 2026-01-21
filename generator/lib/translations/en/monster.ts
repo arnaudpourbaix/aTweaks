@@ -403,7 +403,7 @@ If successful, the charge causes double head-butt damage`,
     },
     weapon: { touch: "Touch", claws: "Claws", jaws: "Jaws" },
     ability: {
-      fearAura: {
+      bansheeFearAura: {
         name: "Fear Aura",
         description: `The mere sight of one causes fear, unless a successful saving throw vs. spell is rolled.
 Those who fail must flee in terror for 10 rounds and are 50% likely to drop any items they were carrying in their hands.`,
@@ -446,9 +446,21 @@ Those failing to make this save will attack at a penalty of -2.`,
 For each day the rot progresses, the victim permanently loses 2 points of Charisma.
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.`,
+        greaterDescription: `The scabrous touch infects the victim with a rotting disease which is fatal in 48 hours.
+Every 8 hours, the victim permanently loses 2 points of Charisma and 1 point each of Strength and Constitution.
+The disease can be cured only with a cure disease spell.
+Cure wounds spells have no effect on a person inflicted with mummy rot.`,
         diseased: "Stricken by mummy rot",
         warning: "Close to dying from mummy rot",
         death: "Succumbs to mummy rot",
+      },
+      mummyFearAura: {
+        name: "Fear Aura",
+        description: `The mere sight of a mummy causes such terror in any creature that a saving throw versus spell must be made or the victim becomes paralyzed with fright for 3 rounds.
+Humans save against mummies at an additional +2.`,
+        greaterDescription: `The mere sight of a greater mummy causes such terror in any creature that a saving throw versus spell at -3 must be made or the victim becomes paralyzed with fright for 4 rounds.
+Humans save against mummies at an additional +2.`,
+        frightened: "Frightened",
       },
       auraOfEvil: {
         name: "Aura of Evil",

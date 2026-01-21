@@ -44,9 +44,10 @@ class EffectFactory {
     return results;
   }
 
-  paralyze(payload: {
+  paralyze(params: {
     duration: number;
     lightingEffect?: LightingEffectEnum;
+    saveType?: SaveTypeEnum;
     saveBonus?: number;
     startSound?: string;
     endSound?: string;
@@ -54,12 +55,12 @@ class EffectFactory {
     pulse?: { blue: number; green: number; red: number; speed: number };
   }) {
     const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
-      saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
-      saveBonus: payload.saveBonus,
+      saveTypes: params.saveType !== undefined ? [params.saveType] : undefined,
+      saveBonus: params.saveBonus,
     };
     const duration: { timing?: EffectTimingEnum; duration?: number } = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: payload.duration,
+      duration: params.duration,
     };
     const effects: Effect[] = [
       {
@@ -69,42 +70,46 @@ class EffectFactory {
         ...base,
       },
       {
-        opcode: EffectTypeEnum.PlaySound,
-        timing: EffectTimingEnum.InstantPermanentUntilDeath,
-        resource: payload.startSound ?? "EFF_P11",
-        ...base,
-      },
-      {
-        opcode: EffectTypeEnum.PlaySound,
-        resource: payload.endSound ?? "EFF_E05",
-        ...duration,
-        timing: EffectTimingEnum.DelayPermanent,
-        ...base,
-      },
-      {
         opcode: EffectTypeEnum.CharacterColorPulse,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         color: {
-          blue: payload.pulse?.blue ?? 0,
-          green: payload.pulse?.green ?? 57,
-          red: payload.pulse?.red ?? 87,
+          blue: params.pulse?.blue ?? 0,
+          green: params.pulse?.green ?? 57,
+          red: params.pulse?.red ?? 87,
         },
         location: EffectColorLocationEnum.ArmorGreyBeltAmulet,
-        cycleSpeed: payload.pulse?.speed ?? 25,
+        cycleSpeed: params.pulse?.speed ?? 25,
         ...base,
       },
       {
         opcode: EffectTypeEnum.LightingEffects,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         lightingTarget: LightingEffectTargetEnum.SpellTarget,
-        effect: payload.lightingEffect ?? LightingEffectEnum.NecromancyEarth,
+        effect: params.lightingEffect ?? LightingEffectEnum.NecromancyEarth,
         ...base,
       },
     ];
-    if (payload.races) {
-      for (const race of payload.races) {
+    if (params.startSound !== "") {
+      effects.push({
+        opcode: EffectTypeEnum.PlaySound,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        resource: params.startSound ?? "EFF_P11",
+        ...base,
+      });
+    }
+    if (params.endSound !== "") {
+      effects.push({
+        opcode: EffectTypeEnum.PlaySound,
+        resource: params.endSound ?? "EFF_E05",
+        ...duration,
+        timing: EffectTimingEnum.DelayPermanent,
+        ...base,
+      });
+    }
+    if (params.races) {
+      for (const race of params.races) {
         effects.unshift({
-          opcode: EffectTypeEnum.Paralyze,
+          opcode: EffectTypeEnum.Hold,
           idsFile: EffectIDSFileEnum.RACE,
           idsEntry: race,
           ...duration,
@@ -113,7 +118,7 @@ class EffectFactory {
       }
     } else {
       effects.unshift({
-        opcode: EffectTypeEnum.Paralyze,
+        opcode: EffectTypeEnum.Hold,
         idsFile: EffectIDSFileEnum.EA,
         idsEntry: "ANYONE",
         ...duration,
@@ -124,18 +129,18 @@ class EffectFactory {
     return effectService.getEffects(effects);
   }
 
-  restrained(payload: {
+  restrained(params: {
     duration: number;
     saveType?: SaveTypeEnum;
     saveBonus?: number;
   }) {
     const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
-      saveTypes: payload.saveType ? [payload.saveType] : undefined,
-      saveBonus: payload.saveBonus,
+      saveTypes: params.saveType ? [params.saveType] : undefined,
+      saveBonus: params.saveBonus,
     };
     const duration: { timing?: EffectTimingEnum; duration?: number } = {
       timing: EffectTimingEnum.InstantLimited,
-      duration: payload.duration,
+      duration: params.duration,
     };
     const effects: Effect[] = [
       {
@@ -359,15 +364,20 @@ class EffectFactory {
     saveType?: SaveTypeEnum;
     saveBonus?: number;
     dispelResistance?: EffectDispelResistanceEnum;
+    startSound?: string;
+    endSound?: string;
   }) {
+    const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
+      saveTypes: params.saveType !== undefined ? [params.saveType] : undefined,
+      saveBonus: params.saveBonus,
+    };
     const effects: Effect[] = [
       {
         opcode: EffectTypeEnum.Panic,
         timing: EffectTimingEnum.InstantLimited,
         duration: params.duration,
         dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
+        ...base,
       },
       {
         opcode: EffectTypeEnum.DisplayPortraitIcon,
@@ -375,27 +385,28 @@ class EffectFactory {
         icon: PortraitIconEnum.Panic,
         duration: params.duration,
         dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
+        ...base,
       },
-      {
+    ];
+    if (params.startSound !== "") {
+      effects.push({
         opcode: EffectTypeEnum.PlaySound,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         resource: "EFF_M07",
         dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-      {
+        ...base,
+      });
+    }
+    if (params.endSound !== "") {
+      effects.push({
         opcode: EffectTypeEnum.PlaySound,
         timing: EffectTimingEnum.DelayPermanent,
         resource: "EFF_E07",
         duration: params.duration,
         dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      },
-    ];
+        ...base,
+      });
+    }
     return effectService.getEffects(effects);
   }
 

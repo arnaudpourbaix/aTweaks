@@ -7,6 +7,7 @@ import {
   AbilityDamageTypeEnum,
   ItemAbilityFlagEnum,
   ItemAbilityTypeEnum,
+  SaveTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
@@ -78,7 +79,10 @@ class CrawlerFamily extends CreatureFamily<Crawler> {
           damageType: AbilityDamageTypeEnum.Piercing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects: effectFactory.paralyze({ duration: 7 * Durations.round }),
+          effects: effectFactory.paralyze({
+            duration: 7 * Durations.round,
+            saveType: SaveTypeEnum.ParalyzePoisonDeath,
+          }),
         },
       },
     });

@@ -837,6 +837,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
       ...effectFactory.paralyze({
         duration: Durations.turn,
         lightingEffect: LightingEffectEnum.MushroomGray,
+        saveType: SaveTypeEnum.ParalyzePoisonDeath,
       }),
     ]);
     tracker.setBehavior({

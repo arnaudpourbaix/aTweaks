@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { FNP_SPELLS, SPELLS } from "../config/spell-names";
 import {
   COMMON_PROJECTILES,
   CommonProjectileFiles,
@@ -9,10 +9,12 @@ import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
+import { StringReference } from "../src/model/final/stringref";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   DiseaseTypeEnum,
+  EffectCastSpellTypeEnum,
   EffectColorLocationEnum,
   EffectDamageTypeEnum,
   EffectDispelResistanceEnum,
@@ -41,7 +43,10 @@ import {
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { ProjectileBehaviorEnum } from "../src/model/spell-item/projectile";
-import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
+import {
+  PartialSpell,
+  WeaponCastSpell,
+} from "../src/model/spell-item/spell-item";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,
@@ -50,13 +55,16 @@ import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
 enum Ids {
   AuraOfEvil,
+  BansheeFearAura,
   CarrionStench,
   DeathWail,
-  FearAura,
   GhoulTouch,
   GhoulLordTouch,
   GhastTouch,
   GhoulRottingDisease,
+  GreaterMummyRottingDisease,
+  GreaterMummyFearAura,
+  MummyFearAura,
   MummyRottingDisease,
   WallOfIce,
 }
@@ -133,13 +141,13 @@ class Undead extends Creature {
   }
 
   /**
-   * Fear Aura
+   * Banshee Fear Aura
    */
-  createFearAura() {
+  createBansheeFearAura() {
     return this.addSpell({
-      name: "monster.undead.ability.fearAura.name",
-      description: "monster.undead.ability.fearAura.description",
-      id: Ids.FearAura,
+      name: "monster.undead.ability.bansheeFearAura.name",
+      description: "monster.undead.ability.bansheeFearAura.description",
+      id: Ids.BansheeFearAura,
       memorizedCount: 1,
       icon: SPELLS.CloakOfFear,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
@@ -291,7 +299,7 @@ class Undead extends Creature {
    * Ghoul Touch
    */
   createGhoulTouch() {
-    const spell = this.addSpell({
+    return this.addSpell({
       name: "monster.undead.ability.ghoulTouch.name",
       description: "monster.undead.ability.ghoulTouch.description",
       id: Ids.GhoulTouch,
@@ -317,12 +325,14 @@ class Undead extends Creature {
               },
               value: "ELF",
             },
-            ...effectFactory.paralyze({ duration: 5 * Durations.round }),
+            ...effectFactory.paralyze({
+              duration: 5 * Durations.round,
+              saveType: SaveTypeEnum.ParalyzePoisonDeath,
+            }),
           ],
         },
       ],
     });
-    return spell;
   }
 
   /**
@@ -347,7 +357,10 @@ class Undead extends Creature {
               },
               value: "HUMANOID",
             },
-            ...effectFactory.paralyze({ duration: 7 * Durations.round }),
+            ...effectFactory.paralyze({
+              duration: 7 * Durations.round,
+              saveType: SaveTypeEnum.ParalyzePoisonDeath,
+            }),
           ],
         },
       ],
@@ -376,7 +389,10 @@ class Undead extends Creature {
               },
               value: "HUMANOID",
             },
-            ...effectFactory.paralyze({ duration: Durations.turn }),
+            ...effectFactory.paralyze({
+              duration: Durations.turn,
+              saveType: SaveTypeEnum.ParalyzePoisonDeath,
+            }),
           ],
         },
       ],
@@ -502,23 +518,41 @@ class Undead extends Creature {
   /**
    * Mummy Rotting Disease
    */
-  createMummyRottingDisease() {
+  createMummyRottingDisease(greater: boolean) {
+    // Mummy: PnP is 1-6 months, replaced by 6 days in the game
+    // Greater Mummy: PnP is 1-6 days, replaced by 48 hours in the game
     const count = 6;
-    const day = Durations.day;
-    const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) => ({
-      opcode: EffectTypeEnum.Disease,
-      type: DiseaseTypeEnum.ReduceCharismaByAmount,
-      amount: 2,
-      icon: PortraitIconEnum.Diseased,
-      timing: EffectTimingEnum.DelayPermanent,
-      duration: (i + 1) * day,
-      dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-    }));
-    // PnP is 1-6 months, replaced by 6 days in the game
+    const interval = greater ? Durations.eightHours : Durations.day;
+    const description: StringReference = greater
+      ? "monster.undead.ability.mummyRottingDisease.greaterDescription"
+      : "monster.undead.ability.mummyRottingDisease.description";
+    const disease: { type: DiseaseTypeEnum; amount: number }[] = [
+      { type: DiseaseTypeEnum.ReduceCharismaByAmount, amount: 2 },
+    ];
+    if (greater) {
+      disease.push(
+        { type: DiseaseTypeEnum.ReduceStrengthByAmount, amount: 1 },
+        { type: DiseaseTypeEnum.ReduceConstitutionByAmount, amount: 1 }
+      );
+    }
+    const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) =>
+      disease.map(
+        (e) =>
+          ({
+            opcode: EffectTypeEnum.Disease,
+            type: e.type,
+            amount: e.amount,
+            icon: PortraitIconEnum.Diseased,
+            timing: EffectTimingEnum.DelayPermanent,
+            duration: (i + 1) * interval,
+            dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+          } as Effect)
+      )
+    ).flat();
     return this.addSpell({
       name: "monster.undead.ability.mummyRottingDisease.name",
-      description: "monster.undead.ability.mummyRottingDisease.description",
-      id: Ids.MummyRottingDisease,
+      description,
+      id: greater ? Ids.GreaterMummyRottingDisease : Ids.MummyRottingDisease,
       secondaryType: "Disease",
       headers: [
         {
@@ -542,44 +576,158 @@ class Undead extends Creature {
               opcode: EffectTypeEnum.DisplayPortraitIcon,
               icon: PortraitIconEnum.Diseased,
               timing: EffectTimingEnum.InstantLimited,
-              duration: count * day,
+              duration: count * interval,
             },
             ...diseaseEffects,
             {
               opcode: EffectTypeEnum.DisplayString,
               stringRef: "monster.undead.ability.mummyRottingDisease.warning",
               timing: EffectTimingEnum.DelayPermanent,
-              duration: (count - 1) * day,
+              duration: (count - 1) * interval,
             },
             {
               opcode: EffectTypeEnum.DisplayString,
               stringRef: "monster.undead.ability.mummyRottingDisease.death",
               timing: EffectTimingEnum.DelayPermanent,
-              duration: count * day - 1,
+              duration: count * interval - 1,
             },
             {
               opcode: EffectTypeEnum.KillTarget,
               type: KillTargetDeathTypeEnum.Normal,
               displayText: true,
               timing: EffectTimingEnum.DelayPermanent,
-              duration: count * day,
+              duration: count * interval,
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
             },
             {
               opcode: EffectTypeEnum.ProtectionFromSpell,
               timing: EffectTimingEnum.InstantLimited,
-              duration: count * day,
+              duration: count * interval,
               dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
             },
           ],
           immunityEffect: {
             names: ["cureWoundSpells"],
-            duration: count * day,
+            duration: count * interval,
             dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
           },
         },
       ],
     });
+  }
+
+  /**
+   * Mummy Fear Aura
+   */
+  createMummyFearAura(greater: boolean) {
+    const humanBonus = greater ? -1 : 2;
+    const othersBonus = greater ? -3 : 0;
+    const description: StringReference = greater
+      ? "monster.undead.ability.mummyFearAura.greaterDescription"
+      : "monster.undead.ability.mummyFearAura.description";
+    const humans = this.createMummyFearAuraTechnical(humanBonus, false);
+    const others = this.createMummyFearAuraTechnical(othersBonus, true);
+    return this.addSpell({
+      name: "monster.undead.ability.mummyFearAura.name",
+      description,
+      id: greater ? Ids.GreaterMummyFearAura : Ids.MummyFearAura,
+      memorizedCount: 1,
+      icon: SPELLS.CloakOfFear,
+      options: { renew: 2 },
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          speed: 1,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 30,
+          effects: [
+            {
+              opcode: EffectTypeEnum.CastSpell,
+              type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+              resource: others.file,
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+            {
+              opcode: EffectTypeEnum.UseEFFFile,
+              idsFile: EffectIDSFileEnum.RACE,
+              idsEntry: "HUMAN",
+              timing: EffectTimingEnum.InstantPermanentUntilDeath,
+            },
+          ],
+        },
+      ],
+      effectFiles: [
+        {
+          opcode: EffectTypeEnum.CastSpell,
+          type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
+          resource: humans.file,
+          timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        },
+      ],
+      ability: {
+        preset: SPELLS.CloakOfFear,
+        spell: {
+          type: "force",
+          remove: true,
+        },
+      },
+    });
+  }
+  createMummyFearAuraTechnical(saveBonus: number, excludeHumans: boolean) {
+    const duration = 3 * Durations.round;
+    const saveType = SaveTypeEnum.Spell;
+    const effects: Effect[] = [
+      ...effectFactory.paralyze({
+        duration,
+        saveType,
+        saveBonus,
+        pulse: {
+          red: 128,
+          green: 64,
+          blue: 0,
+          speed: 20,
+        },
+      }),
+      ...effectFactory.fear({
+        duration,
+        saveType,
+        saveBonus,
+        startSound: "",
+        endSound: "",
+      }),
+      {
+        opcode: EffectTypeEnum.DisplayString,
+        stringRef: "monster.undead.ability.mummyFearAura.frightened",
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
+        saveTypes: [saveType],
+        saveBonus,
+      },
+    ];
+    const spell: PartialSpell = {
+      name: "monster.undead.ability.mummyFearAura.name",
+      secondaryType: "Fear",
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Spell,
+          target: ItemAbilityTargetEnum.LivingActor,
+          effects,
+        },
+      ],
+      effectFiles: [],
+    };
+    if (excludeHumans) {
+      effects.unshift({
+        opcode: EffectTypeEnum.UseEFFFile,
+        idsFile: EffectIDSFileEnum.RACE,
+        idsEntry: "HUMAN",
+        timing: EffectTimingEnum.InstantLimited,
+        duration: 1,
+      });
+    }
+    return this.addSpell(spell);
   }
 
   /**
@@ -662,7 +810,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.ghast());
     this.addCreature(this.ghoulLord());
     this.addCreature(this.mummy());
-    // this.addCreature(this.greaterMummy());
+    this.addCreature(this.greaterMummy());
     // this.addCreature(this.shadow());
     // this.addCreature(this.skeleton());
     // this.addCreature(this.skeletonWarrior());
@@ -718,7 +866,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       },
     });
-    banshee.createFearAura();
+    banshee.createBansheeFearAura();
     banshee.createDeathWail();
     banshee.addTrait({
       immunities: [
@@ -735,7 +883,10 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     banshee.setBehavior({
       restHeal: true,
-      abilities: [this.ability(Ids.DeathWail), this.ability(Ids.FearAura)],
+      abilities: [
+        this.ability(Ids.DeathWail),
+        this.ability(Ids.BansheeFearAura),
+      ],
     });
     return banshee;
   }
@@ -1079,6 +1230,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     ]);
     return lord;
   }
+
   /**
    * Mummy
    */
@@ -1124,7 +1276,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         movement: 6,
         immunities: ["undead"],
         items: {
-          remove: ["ring95", "immune1", "bdmumm01"],
+          remove: ["ring95", "immune1", "bdmumm01", "mummyw"],
         },
         script: {
           remove: ["bdmumm01"],
@@ -1149,68 +1301,134 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       ],
     });
-    mummy.createMummyRottingDisease();
+    mummy.createMummyFearAura(false);
+    mummy.createMummyRottingDisease(false);
     mummy.createClaws(1, 12, {
       spell: this.spell(Ids.MummyRottingDisease).file,
     });
-    mummy.setBehavior({ abilities: [this.ability(Ids.FearAura)] });
+    mummy.setBehavior({ abilities: [this.ability(Ids.MummyFearAura)] });
     return mummy;
   }
   /**
    * Greater Mummy
    */
   private greaterMummy() {
+    // Age: 400-499
     const greater = this.create({
       monster: MonsterEnum.GreaterMummy,
       name: "monster.undead.name.greaterMummy",
       files: [
-        "SPIDPH", // Phase Spider
-        "SPIDPHSU", // Phase Spider
-        "SPIDPHAS", // Astral Phase Spider
+        "mumgre01",
+        "riftcr03",
+        "MUMMYX1", // TDD
       ],
       data: {
-        level1: 5,
-        bonusHp: 5,
+        level1: { pnpValue: 12, value: 20, type: "caster" },
+        bonusHp: 3,
         strength: 15,
-        dexterity: 15,
-        constitution: 12,
-        intelligence: 7,
-        wisdom: 10,
-        charisma: 6,
-        ac: 7,
+        dexterity: 16,
+        constitution: 15,
+        intelligence: 18,
+        wisdom: 22,
+        charisma: 20,
+        ac: -2,
         apr: 1,
-        xpv: 1400,
-        alignment: "NEUTRAL",
-        morale: 15,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_PHASE",
+        xpv: 16000,
+        alignment: "LAWFUL_EVIL",
+        morale: 18,
+        general: "UNDEAD",
+        race: "GHOUL",
+        class: "GHOUL_REVEANT",
+        animation: "MUMMY",
         gender: "NIETHER",
-        size: "Huge",
-        movement: 12,
+        size: "Medium",
+        movement: 9,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "immune2", "immune3", "mumgrew"],
+        },
+        script: {
+          remove: ["bdmumm01"],
+        },
+        effects: {
+          remove: [EffectTypeEnum.ProtectionFromBackstab],
+        },
+        spells: {
+          memorized: [
+            // level 1 (12):
+            { file: FNP_SPELLS.CauseDisease, memorizedCount: 3 },
+            { file: FNP_SPELLS.CauseLightWounds, memorizedCount: 3 },
+            { file: FNP_SPELLS.Doom, memorizedCount: 3 },
+            { file: FNP_SPELLS.FrostFingers, memorizedCount: 3 },
+            // level 2 (12):
+            { file: FNP_SPELLS.CauseModerateWounds, memorizedCount: 2 },
+            { file: FNP_SPELLS.Forbiddance, memorizedCount: 2 },
+            { file: FNP_SPELLS.MiscastMagic, memorizedCount: 3 },
+            { file: FNP_SPELLS.RigidThinking, memorizedCount: 2 },
+            { file: FNP_SPELLS.Shatter, memorizedCount: 2 },
+            { file: FNP_SPELLS.Shield, memorizedCount: 1 },
+            // level 3 (12):
+            { file: FNP_SPELLS.CircleOfBones, memorizedCount: 3 },
+            { file: FNP_SPELLS.CloakOfFear, memorizedCount: 3 },
+            { file: FNP_SPELLS.ShadowMonsters, memorizedCount: 3 },
+            { file: FNP_SPELLS.CauseSeriousWounds, memorizedCount: 3 },
+            // level 4 (11):
+            { file: FNP_SPELLS.AnimateDead, memorizedCount: 2 },
+            { file: FNP_SPELLS.CauseCriticalWounds, memorizedCount: 2 },
+            { file: FNP_SPELLS.DemiShadowMonsters, memorizedCount: 2 },
+            { file: FNP_SPELLS.Emotion, memorizedCount: 1 },
+            { file: FNP_SPELLS.GreaterMalison, memorizedCount: 1 },
+            { file: FNP_SPELLS.Poison, memorizedCount: 2 },
+            { file: FNP_SPELLS.WavesOfFatigue, memorizedCount: 1 },
+            // level 5 (9):
+            { file: FNP_SPELLS.Chaos, memorizedCount: 1 },
+            { file: FNP_SPELLS.CloudOfPestilence, memorizedCount: 1 },
+            { file: FNP_SPELLS.MassCauseLightWounds, memorizedCount: 1 },
+            { file: FNP_SPELLS.Shades, memorizedCount: 1 },
+            { file: FNP_SPELLS.SlayLiving, memorizedCount: 2 },
+            { file: FNP_SPELLS.WavesOfAgony, memorizedCount: 2 },
+            { file: FNP_SPELLS.GreaterCommand, memorizedCount: 1 },
+            // level 6 (5):
+            { file: FNP_SPELLS.DolorousDecay, memorizedCount: 2 },
+            { file: FNP_SPELLS.Harm, memorizedCount: 1 },
+            { file: FNP_SPELLS.MagicResistance, memorizedCount: 1 },
+            { file: FNP_SPELLS.SummonShadows, memorizedCount: 1 },
+            // level 7 (2):
+            { file: FNP_SPELLS.FingerOfDeath, memorizedCount: 1 },
+            { file: FNP_SPELLS.Wither, memorizedCount: 1 },
+          ],
+        },
       },
     });
     greater.addTrait({
+      immunities: ["physicalDamageResistance", "cold", "plusTwoWeapons"],
       effects: [
         {
-          opcode: EffectTypeEnum.Invisibility,
-          type: InvisibilityTypeEnum.Normal,
+          opcode: EffectTypeEnum.MagicResistanceModifier,
+          type: EffectStatisticModifierEnum.Set,
+          value: 20,
+        },
+        {
+          opcode: EffectTypeEnum.FireResistanceModifier,
+          type: EffectStatisticModifierEnum.Set,
+          value: 100,
+        },
+        {
+          opcode: EffectTypeEnum.ElectricityResistanceModifier,
+          type: EffectStatisticModifierEnum.Set,
+          value: -50,
         },
       ],
     });
-    greater.setBehavior({
-      abilities: [this.ability(Ids.FearAura)],
+    greater.createMummyFearAura(true);
+    greater.createMummyRottingDisease(true);
+    greater.createClaws(3, 6, {
+      spell: this.spell(Ids.GreaterMummyRottingDisease).file,
     });
-    greater.setAdjustments([
-      { files: ["SPIDPHSU"], summon: true },
-      {
-        files: ["SPIDPHAS"],
-        data: {
-          level1: 12,
-          xpv: 4000,
-        },
-      },
-    ]);
+    greater.setBehavior({
+      abilities: [this.ability(Ids.GreaterMummyFearAura)],
+      dialog: ["mumgre01"],
+    });
     return greater;
   }
   /**
@@ -1262,7 +1480,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       diceSize: 4,
     });
     shadow.setBehavior({
-      abilities: [this.ability(Ids.FearAura)],
+      abilities: [this.ability(Ids.BansheeFearAura)],
     });
     shadow.setAdjustments([]);
     return shadow;

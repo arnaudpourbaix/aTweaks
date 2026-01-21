@@ -108,7 +108,7 @@ END
 // Fear Aura
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck([PC],STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -127,13 +127,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck(SecondNearest([PC]),STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -152,13 +152,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -177,13 +177,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck(FourthNearest([PC]),STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -202,13 +202,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck(FifthNearest([PC]),STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -227,13 +227,13 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#1m73")
+	HaveSpellRES("ja#3m78")
 	!StateCheck(SixthNearest([PC]),STATE_PANIC)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -252,8 +252,8 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m73",Myself)
-		RemoveSpellRES("ja#1m73")
+		ForceSpellRES("ja#3m78",Myself)
+		RemoveSpellRES("ja#3m78")
 END
 
 // Attack NoCheck enemy

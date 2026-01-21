@@ -279,7 +279,10 @@ class PoisonService {
   }
 
   private getParalyticEffects(poison: PoisonModel): Effect[] {
-    return effectFactory.paralyze({ duration: poison.duration });
+    return effectFactory.paralyze({
+      duration: poison.duration,
+      saveType: SaveTypeEnum.ParalyzePoisonDeath,
+    });
   }
 
   private getComaEffects(poison: PoisonModel): Effect[] {

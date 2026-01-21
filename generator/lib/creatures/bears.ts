@@ -415,6 +415,7 @@ class BearFamily extends CreatureFamily<Bear> {
             },
             ...effectFactory.paralyze({
               duration: 1 * Durations.turn,
+              saveType: SaveTypeEnum.ParalyzePoisonDeath,
               saveBonus: -2,
               startSound: "MISC_04A",
               endSound: "EFF_E03",
