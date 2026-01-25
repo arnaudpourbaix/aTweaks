@@ -9,6 +9,7 @@ import {
 import { Actions } from "../../model/script/actions";
 import { CustomCode, PartialCustomCode } from "../../model/script/script";
 import { Triggers } from "../../model/script/triggers";
+import { ScriptTarget } from "../../model/constants";
 
 class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
@@ -64,7 +65,7 @@ class AbilityService {
       triggers,
       actions: ability.actionsBefore ?? [],
     };
-    const target = ability.targets ? GLOBAL_CONFIG.tokens.target : "Myself";
+    const target = ability.targets ? ScriptTarget.token : ScriptTarget.myself;
     if (!ability.spell) return result;
     result.infiniteUse =
       ability.spell.type !== "normal" && !ability.spell.remove;
@@ -110,7 +111,9 @@ class AbilityService {
         params: [num, Math.round(num * (1 - ability.spell.probability / 100))],
       });
     }
-    let spellTarget = ability.spell.selfTarget ? "Myself" : "LastSeenBy";
+    let spellTarget: string = ability.spell.selfTarget
+      ? ScriptTarget.myself
+      : ScriptTarget.lastSeen;
     if (ability.spell.targetName) spellTarget = ability.spell.targetName;
     result.actions.push(this.getSpellAction(ability.spell, spellTarget));
     if (

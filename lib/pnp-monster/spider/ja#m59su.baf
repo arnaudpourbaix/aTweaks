@@ -99,12 +99,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(FarthestEnemyOf(Myself),5)
-	Range(FarthestEnemyOf(Myself),30)
 	!General(FarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -118,12 +118,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(SecondFarthestEnemyOf(Myself),5)
-	Range(SecondFarthestEnemyOf(Myself),30)
 	!General(SecondFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -137,12 +137,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(ThirdFarthestEnemyOf(Myself),5)
-	Range(ThirdFarthestEnemyOf(Myself),30)
 	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -156,12 +156,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#1m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(FourthFarthestEnemyOf(Myself),5)
-	Range(FourthFarthestEnemyOf(Myself),30)
 	!General(FourthFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(FourthFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -176,12 +176,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#2m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(FarthestEnemyOf(Myself),5)
-	Range(FarthestEnemyOf(Myself),30)
 	!General(FarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(FarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -195,12 +195,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#2m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(SecondFarthestEnemyOf(Myself),5)
-	Range(SecondFarthestEnemyOf(Myself),30)
 	!General(SecondFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(SecondFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(SecondFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -214,12 +214,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#2m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(ThirdFarthestEnemyOf(Myself),5)
-	Range(ThirdFarthestEnemyOf(Myself),30)
 	!General(ThirdFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(ThirdFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(ThirdFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
@@ -233,12 +233,12 @@ IF
 	ActionListEmpty()
 	HaveSpellRES("ja#2m59")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!Range(FourthFarthestEnemyOf(Myself),5)
-	Range(FourthFarthestEnemyOf(Myself),30)
 	!General(FourthFarthestEnemyOf(Myself),WEAPON)
 	!CheckStatGT(FourthFarthestEnemyOf(Myself),0,SANCTUARY)
 	!StateCheck(FourthFarthestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthFarthestEnemyOf(Myself))
+	Range(LastSeenBy(Myself),30)
+	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)

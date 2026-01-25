@@ -1,7 +1,7 @@
 import { SPELLS } from "../config/spell-names";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
-import { Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectTargetEnum,
@@ -109,7 +109,9 @@ class Minotaur extends Creature {
           isAttack: true,
         },
         disableInterrupt: true,
-        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+        actionsAfter: [
+          { name: "AttackOneRound", params: [ScriptTarget.lastSeen] },
+        ],
       },
     });
   }

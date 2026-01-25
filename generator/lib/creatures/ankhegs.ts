@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
+import { Durations, ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -59,7 +59,7 @@ class Ankheg extends Creature {
           remove: true,
         },
         targets: [{ name: "PCsPreferringWeak", randomOrder: true }],
-        triggers: [{ name: "HPPercentLT", params: ["Myself", 50] }],
+        triggers: [{ name: "HPPercentLT", params: [ScriptTarget.myself, 50] }],
         range: 30,
       },
     });

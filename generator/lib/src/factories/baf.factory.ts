@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { ScriptTarget } from "../model/constants";
 import { ObjectIdentifier } from "../model/ids/object";
 import { Response, Statements } from "../model/script/script";
 import { Triggers } from "../model/script/triggers";
@@ -22,7 +23,7 @@ class BafFactory {
     const max = 1000;
     for (const [index, target] of targets.entries()) {
       const triggers = utils.replaceTriggerTokens(p.triggers, [
-        { key: GLOBAL_CONFIG.tokens.target, value: target },
+        { key: ScriptTarget.token, value: target },
       ]);
       if (p.random && index < targets.length - 1) {
         // FIXME: random is disabled because it has a critical issue.
@@ -35,12 +36,15 @@ class BafFactory {
         //   params: [max, Math.round(max / (targets.length - index))],
         // });
       }
-      const actionTarget = target === "Myself" ? "Myself" : "LastSeenBy";
+      const actionTarget =
+        target === ScriptTarget.myself
+          ? ScriptTarget.myself
+          : ScriptTarget.lastSeen;
       p.statements.push({
         comment: index === 0 ? p.comment : "",
         triggers,
         responses: utils.replaceResponseTokens(p.responses, [
-          { key: GLOBAL_CONFIG.tokens.target, value: actionTarget },
+          { key: ScriptTarget.token, value: actionTarget },
         ]),
       });
     }
@@ -67,7 +71,7 @@ class BafFactory {
         name: "Or",
         triggers: utils
           .replaceTriggerTokens(p.targetTriggers, [
-            { key: GLOBAL_CONFIG.tokens.target, value: target },
+            { key: ScriptTarget.token, value: target },
           ])
           .map(triggerFactory.inverseNegation),
       };
@@ -84,14 +88,14 @@ class BafFactory {
       responses: responseFactory.response([{ name: "Continue" }]),
     });
     if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);
-    const lastSeenBy: ObjectIdentifier = "LastSeenBy";
+    const lastSeenBy = ScriptTarget.lastSeen;
     const responses = utils.replaceResponseTokens(p.responses, [
-      { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
+      { key: ScriptTarget.token, value: lastSeenBy },
     ]);
     const finalTriggers = [...(p.triggers ?? []), ...p.targetTriggers];
     p.statements.push({
       triggers: utils.replaceTriggerTokens(finalTriggers, [
-        { key: GLOBAL_CONFIG.tokens.target, value: lastSeenBy },
+        { key: ScriptTarget.token, value: lastSeenBy },
       ]),
       responses,
     });

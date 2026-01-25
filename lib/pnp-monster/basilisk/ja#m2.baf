@@ -125,11 +125,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(NearestEnemyOf(Myself),WEAPON)
-	!StateCheck(NearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(NearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -139,11 +139,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SecondNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SecondNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SecondNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SecondNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -153,11 +153,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(ThirdNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(ThirdNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -167,11 +167,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FourthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FourthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FourthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FourthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -181,11 +181,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(FifthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(FifthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(FifthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(FifthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -195,11 +195,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SixthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SixthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SixthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SixthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -209,11 +209,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(SeventhNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(SeventhNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(SeventhNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(SeventhNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -223,11 +223,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(EighthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(EighthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(EighthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(EighthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -237,11 +237,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(NinthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(NinthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(NinthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(NinthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -251,11 +251,11 @@ END
 IF
 	HaveSpellRES("ja#1f2")
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!General(TenthNearestEnemyOf(Myself),WEAPON)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_IMPROVEDINVISIBILITY)
-	!CheckStatGT(TenthNearestEnemyOf(Myself),0,SANCTUARY)
-	!StateCheck(TenthNearestEnemyOf(Myself),STATE_REALLY_DEAD)
 	See(TenthNearestEnemyOf(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

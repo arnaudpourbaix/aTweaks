@@ -1,3 +1,4 @@
+import { ScriptTarget } from "../src/model/constants";
 import { PotionConfig } from "../src/model/spell-item/potion";
 
 export const POTIONS: PotionConfig[] = [
@@ -5,32 +6,48 @@ export const POTIONS: PotionConfig[] = [
     name: "Potion of extra healing (40hp)",
     files: ["POTN55"],
     triggers: [
-      { name: "General", params: ["Myself", "UNDEAD"], negation: true },
-      { name: "HPPercentLT", params: ["Myself", 30] },
+      {
+        name: "General",
+        params: [ScriptTarget.myself, "UNDEAD"],
+        negation: true,
+      },
+      { name: "HPPercentLT", params: [ScriptTarget.myself, 30] },
     ],
   },
   {
     name: "Potion of extra healing (30hp)",
     files: ["POTN52"],
     triggers: [
-      { name: "General", params: ["Myself", "UNDEAD"], negation: true },
-      { name: "HPPercentLT", params: ["Myself", 40] },
+      {
+        name: "General",
+        params: [ScriptTarget.myself, "UNDEAD"],
+        negation: true,
+      },
+      { name: "HPPercentLT", params: [ScriptTarget.myself, 40] },
     ],
   },
   {
     name: "Exilir of health (10hp)",
     files: ["POTN08"],
     triggers: [
-      { name: "General", params: ["Myself", "UNDEAD"], negation: true },
-      { name: "HPPercentLT", params: ["Myself", 75] },
+      {
+        name: "General",
+        params: [ScriptTarget.myself, "UNDEAD"],
+        negation: true,
+      },
+      { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
     ],
   },
   {
     name: "Potion of healing (10hp)",
     files: ["POTN08"],
     triggers: [
-      { name: "General", params: ["Myself", "UNDEAD"], negation: true },
-      { name: "HPPercentLT", params: ["Myself", 75] },
+      {
+        name: "General",
+        params: [ScriptTarget.myself, "UNDEAD"],
+        negation: true,
+      },
+      { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
     ],
   },
   {

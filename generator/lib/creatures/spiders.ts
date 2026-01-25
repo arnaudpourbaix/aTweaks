@@ -1,7 +1,7 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
+import { Durations, ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
@@ -316,7 +316,9 @@ class Spider extends Creature {
           isAttack: true,
         },
         disableInterrupt: true,
-        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+        actionsAfter: [
+          { name: "AttackOneRound", params: [ScriptTarget.lastSeen] },
+        ],
       },
     });
   }
@@ -537,7 +539,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
           triggers: [
             {
               name: "Range",
-              params: ["LastSeenBy", 5],
+              params: [ScriptTarget.lastSeen, 5],
               negation: true,
             },
           ],
@@ -547,7 +549,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
           triggers: [
             {
               name: "Range",
-              params: ["LastSeenBy", 5],
+              params: [ScriptTarget.lastSeen, 5],
             },
           ],
         },

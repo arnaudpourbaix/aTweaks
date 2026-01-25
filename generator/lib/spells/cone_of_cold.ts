@@ -44,11 +44,11 @@ export const createConeOfCold = ({
   options,
   castingSound: "CAS_M06",
   flags: [SpellFlagEnum.Hostile, SpellFlagEnum.BreakSanctuary],
-  spellType: SpellTypeEnum.Wizard,
+  type: SpellTypeEnum.Wizard,
   castingAnimation: ItemAbilityCastingAnimationEnum.Invocation,
   primaryType: ItemAbilityPrimaryTypeEnum.Invoker,
   secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-  spellLevel: 5,
+  level: 5,
   headers: [
     {
       type: ItemAbilityTypeEnum.Melee,

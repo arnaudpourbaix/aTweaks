@@ -11,7 +11,7 @@ COPY_EXISTING ~ja#1m79.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 fl#Fear
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10704)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10738)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=175 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=1 savebonus="-1" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=13 duration=18 probability1=100 savingthrow=1 savebonus="-1" END
@@ -39,7 +39,7 @@ COPY_EXISTING ~ja#2m79.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 fl#Fear
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10705)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10739)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HUMAN~) parameter2=4 duration=1 probability1=100 STR_VAR resource="ja#2m79" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=175 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=1 savebonus="-3" END
@@ -117,11 +117,11 @@ OUTER_SET $f_AddSecType(ja#4m79.spl) = DiseaseSecType
 // Greater Mummy traits
 CREATE ITM "ja#1m79"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10703)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10703)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10737)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10737)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10706)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10740)
 COPY_EXISTING ~ja#1m79.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -131,7 +131,7 @@ COPY_EXISTING ~ja#1m79.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=29 target=1 global=1 parameter1="-50" parameter2=1 timing=2 probability1=100 END
 	LPF physicalDamageResistance_resistance END
 	LPF cold_immunity END
-	LPF plusOneWeapons_immunity END
+	LPF plusTwoWeapons_immunity END
 
 // Claws
 CREATE ITM "ja#2m79"
@@ -144,7 +144,7 @@ CREATE ITM "ja#2m79"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10307)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IGHOUL~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10707)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10741)
 	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#2m79.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -168,11 +168,12 @@ ACTION_FOR_EACH ~file~ IN
 	mumgre01
 	riftcr03
 	MUMMYX1
+	BDMUMM01
 BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN
 		COPY_EXISTING ~%file%.cre~ ~override~
 			LPF FJ_CRE_VALIDITY END
-			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~mumgre01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~riftcr03~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~MUMMYX1~ BEGIN
+			PATCH_IF "%SOURCE_RES%" STRING_EQUAL_CASE ~mumgre01~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~riftcr03~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~MUMMYX1~ OR "%SOURCE_RES%" STRING_EQUAL_CASE ~BDMUMM01~ BEGIN
 				LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=292 END
 			END
 			REMOVE_KNOWN_SPELLS
@@ -185,20 +186,54 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#2m79~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i17~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
+			ADD_MEMORIZED_SPELL ~d5p1329~ #0 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~SPPR113~ #0 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~B_PR101~ #0 ~priest~ (6) 
+			ADD_MEMORIZED_SPELL ~SPPR220~ #1 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~b_c201~ #1 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f310~ #1 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~d5f1311~ #1 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~b_pr201~ #1 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5p2114~ #1 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~sppr332~ #2 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~d5f1416~ #2 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~d5f2433~ #2 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~d5f1322~ #2 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~d5f1301~ #3 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f1414~ #3 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f2527~ #3 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f2411~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f2412~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1411~ #3 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f2508~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1709~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1424~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1530~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f2632~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1511~ #4 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f1533~ #4 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f1512~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1610~ #5 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5f1608~ #5 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1509~ #5 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5ff422~ #5 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1708~ #6 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5f1740~ #6 ~priest~ (1) 
 			ADD_MEMORIZED_SPELL ~ja#3m79~ #0 ~innate~ (1) // Fear Aura
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					xpv=16000
-					hp=153
+					hp=147
 					ac=0
 					thac0=7
 					apr=1
-					saveDeath=7
-					saveWand=9
-					savePolymorph=8
-					saveBreath=8
-					saveSpell=10
+					saveDeath=6
+					saveWand=10
+					savePolymorph=9
+					saveBreath=12
+					saveSpell=11
 					level1=20
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					strength=15
@@ -210,7 +245,7 @@ BEGIN
 					morale=18
 					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
 					race=IDS_OF_SYMBOL (~race~ ~GHOUL~)
-					class=IDS_OF_SYMBOL (~class~ ~GHOUL_REVEANT~)
+					class=IDS_OF_SYMBOL (~class~ ~CLERIC~)
 					alignment=IDS_OF_SYMBOL (~align~ ~LAWFUL_EVIL~)
 					animation=IDS_OF_SYMBOL (~animate~ ~MUMMY~)
 					movement=7

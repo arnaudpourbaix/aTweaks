@@ -53,15 +53,22 @@ class TargetService {
     target: ObjectIdentifier | AllegianceIdentifier | TargetListName,
     limit: number | undefined,
     randomOrder: boolean | undefined
-  ): ObjectIdentifier | AllegianceIdentifier | string[] {
+  ): {
+    targets: ObjectIdentifier | AllegianceIdentifier | string[];
+    allegianceCheck: boolean;
+  } {
     try {
-      let results = this.getList(target as TargetListName);
+      let result = this.getList(target as TargetListName);
       if (randomOrder) {
-        // results = utils.shuffleArray(results); // TODO: disable to prevent file changes (since generated sources are committed)
+        // result.targets = utils.shuffleArray(result.targets); // TODO: disable to prevent file changes (since generated sources are committed)
       }
-      return results.slice(0, limit ?? results.length);
+      if (limit) result.targets = result.targets.slice(0, limit);
+      return result;
     } catch {
-      return target as ObjectIdentifier | AllegianceIdentifier;
+      return {
+        targets: target as ObjectIdentifier | AllegianceIdentifier,
+        allegianceCheck: false,
+      };
     }
   }
 
@@ -71,14 +78,17 @@ class TargetService {
   } {
     const targetTriggers: Triggers.Trigger[] = target.triggers ?? [];
     const triggers: Triggers.Trigger[] = [];
-    const statuses = TARGET_STATUS;
     for (const name of target.includeStatus ?? []) {
-      const status = statuses.find((s) => s.status === name) as TargetStatus;
+      const status = TARGET_STATUS.find(
+        (s) => s.status === name
+      ) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(...status.targetTriggers);
     }
     for (const name of target.excludeStatus ?? []) {
-      const status = statuses.find((s) => s.status === name) as TargetStatus;
+      const status = TARGET_STATUS.find(
+        (s) => s.status === name
+      ) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(
         ...triggerFactory.inverseNegations(status.targetTriggers)
@@ -150,10 +160,13 @@ class TargetService {
     return results;
   }
 
-  getList(name: TargetListName): string[] {
+  getList(name: TargetListName): {
+    targets: string[];
+    allegianceCheck: boolean;
+  } {
     const list = TARGET_LISTS.find((l) => l.name === name);
     if (!list) throw new Error(`Target list ${name} is not defined !`);
-    return list.value;
+    return { targets: list.value, allegianceCheck: list.allegianceCheck };
   }
 
   private getDefaultStatus(creature: Creature): {

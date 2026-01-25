@@ -1,4 +1,5 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { ScriptTarget } from "../model/constants";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Triggers } from "../model/script/triggers";
 
@@ -36,21 +37,21 @@ class TriggerFactory {
   checkStatGT(value: number, stat: StatsIdentifier): Triggers.Trigger {
     return {
       name: "CheckStatGT",
-      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+      params: [ScriptTarget.token, value, stat],
     };
   }
 
   checkStatLT(value: number, stat: StatsIdentifier): Triggers.Trigger {
     return {
       name: "CheckStatLT",
-      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+      params: [ScriptTarget.token, value, stat],
     };
   }
 
   checkStat(value: number, stat: StatsIdentifier): Triggers.Trigger {
     return {
       name: "CheckStat",
-      params: [GLOBAL_CONFIG.tokens.target, value, stat],
+      params: [ScriptTarget.token, value, stat],
     };
   }
 
@@ -64,36 +65,36 @@ class TriggerFactory {
     const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
+        params: [ScriptTarget.token, 0, "SANCTUARY"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+        params: [ScriptTarget.token, "STATE_CHARMED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
+        params: [ScriptTarget.token, "STATE_REALLY_DEAD"],
         negation: true,
       },
     ];
     if (!seeInvisible) {
       results.unshift({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_INVISIBLE"],
+        params: [ScriptTarget.token, "STATE_INVISIBLE"],
         negation: true,
       });
       results.unshift({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_IMPROVEDINVISIBILITY"],
+        params: [ScriptTarget.token, "STATE_IMPROVEDINVISIBILITY"],
         negation: true,
       });
     }
     if (!isTargetPlayer)
       results.unshift({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
+        params: [ScriptTarget.token, "WEAPON"],
         negation: true,
       });
     return results;
@@ -107,34 +108,34 @@ class TriggerFactory {
     seeInvisible: boolean;
   }): Triggers.Trigger[] {
     const results: Triggers.Trigger[] = [
+      { name: "See", params: [ScriptTarget.token] },
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
+        params: [ScriptTarget.lastSeen, 0, "SANCTUARY"],
         negation: true,
       },
       // {
       //   name: "StateCheck",
-      //   params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+      //   params: [ScriptTarget.token, "STATE_CHARMED"],
       //   negation: true,
       // },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
+        params: [ScriptTarget.lastSeen, "STATE_REALLY_DEAD"],
         negation: true,
       },
-      { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
     ];
     if (!seeInvisible) {
-      results.unshift({
+      results.push({
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_IMPROVEDINVISIBILITY"],
+        params: [ScriptTarget.lastSeen, "STATE_IMPROVEDINVISIBILITY"],
         negation: true,
       });
     }
     if (!isTargetPlayer)
-      results.unshift({
+      results.push({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
+        params: [ScriptTarget.lastSeen, "WEAPON"],
         negation: true,
       });
     return results;
@@ -152,31 +153,31 @@ class TriggerFactory {
     const results: Triggers.Trigger[] = [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "SANCTUARY"],
+        params: [ScriptTarget.token, 0, "SANCTUARY"],
         negation: true,
       },
       // {
       //   name: "StateCheck",
-      //   params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+      //   params: [ScriptTarget.token, "STATE_CHARMED"],
       //   negation: true,
       // },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_REALLY_DEAD"],
+        params: [ScriptTarget.token, "STATE_REALLY_DEAD"],
         negation: true,
       },
-      { name: "See", params: [GLOBAL_CONFIG.tokens.target] },
+      { name: "See", params: [ScriptTarget.token] },
     ];
     if (!isTargetPlayer)
       results.unshift({
         name: "General",
-        params: [GLOBAL_CONFIG.tokens.target, "WEAPON"],
+        params: [ScriptTarget.token, "WEAPON"],
         negation: true,
       });
     if (maxRange) {
       results.push({
         name: "Range",
-        params: [GLOBAL_CONFIG.tokens.target, maxRange],
+        params: [ScriptTarget.token, maxRange],
       });
     }
     return results;

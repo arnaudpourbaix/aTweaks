@@ -3,6 +3,7 @@ import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
 import effectFactory from "../src/factories/effect.factory";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { QUICK_SLOTS } from "../src/model/creature/item";
@@ -166,11 +167,11 @@ class Ogre extends Creature {
       memorizedCount: 1,
       icon: SPELLS.Haste,
       castingSound: "CAS_M08",
-      spellType: SpellTypeEnum.Wizard,
+      type: SpellTypeEnum.Wizard,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      spellLevel: 3,
+      level: 3,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -224,7 +225,10 @@ class Ogre extends Creature {
         },
         triggers: [
           { name: "Detect", params: ["NearestEnemyOf"] },
-          { name: "StateCheck", params: ["Myself", "STATE_INVISIBLE"] },
+          {
+            name: "StateCheck",
+            params: [ScriptTarget.myself, "STATE_INVISIBLE"],
+          },
         ],
       },
     });
@@ -243,11 +247,11 @@ class Ogre extends Creature {
       id: Ids.GaseousForm,
       icon: SPELLS.PolymorphSelf,
       castingSound: "CAS_M08",
-      spellType: SpellTypeEnum.Wizard,
+      type: SpellTypeEnum.Wizard,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      spellLevel: 4,
+      level: 4,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -309,7 +313,7 @@ class Ogre extends Creature {
             params: [SPELLS.CharmPerson],
             negation: true,
           },
-          { name: "HPPercentLT", params: ["Myself", 25] },
+          { name: "HPPercentLT", params: [ScriptTarget.myself, 25] },
         ],
       },
     });

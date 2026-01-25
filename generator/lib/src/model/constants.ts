@@ -1,3 +1,5 @@
+import { ObjectIdentifier } from "./ids/object";
+
 export const CR = "\r\n";
 export const TAB = "\t";
 
@@ -201,3 +203,9 @@ export const Durations = {
   eightHours: 2400,
   day: 7200,
 } as const;
+
+export const ScriptTarget = {
+  token: "{Target}",
+  myself: "Myself" as ObjectIdentifier,
+  lastSeen: "LastSeenBy" as ObjectIdentifier,
+};

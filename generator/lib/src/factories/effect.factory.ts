@@ -1,5 +1,3 @@
-import { ATWEAKS_SPELLS, SPELLS } from "../../config/spell-names";
-import { ImmunityName } from "../model/final/immunity";
 import { RaceIdentifier } from "../model/ids/race";
 import {
   BaseEffect,

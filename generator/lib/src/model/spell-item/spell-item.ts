@@ -27,12 +27,16 @@ import {
 import { EffectTypeEnum } from "./effect.type";
 import { PartialProjectile, Projectile } from "./projectile";
 
-export interface Spell {
+export interface BaseSpell {
   /**
    * Filename for SPL file (without extension)
    */
   file: string;
+  type: SpellTypeEnum;
+  level: number;
+}
 
+export interface Spell extends BaseSpell {
   /**
    * Used for retrieving a spell inside family factories
    */
@@ -60,12 +64,10 @@ export interface Spell {
    */
   icon?: string;
   description?: StringReference;
-  spellType?: SpellTypeEnum;
   castingSound?: string;
   castingAnimation?: ItemAbilityCastingAnimationEnum;
   primaryType?: ItemAbilityPrimaryTypeEnum;
   secondaryType?: ItemAbilitySecondaryTypeEnum | "Fear" | "Disease" | "Poison";
-  spellLevel?: number;
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
   effects: Effect[];
@@ -176,7 +178,7 @@ export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
 export type PartialSpell = PartialBy<
   Omit<Spell, "file" | "headers" | "effectFiles">,
-  "icon" | "effects" | "projectiles" | "doc" | "groups"
+  "icon" | "effects" | "projectiles" | "doc" | "groups" | "level" | "type"
 > & { headers?: PartialSpellHeader[]; effectFiles?: PartialEffectFile[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;

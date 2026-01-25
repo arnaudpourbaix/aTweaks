@@ -14,6 +14,7 @@ import { MemorizedSpellType, Spell } from "../../model/spell-item/spell-item";
 import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { State } from "../../state";
 import translationService from "./../translation.service";
+import { FNP_SPELLS } from "../../../config/spell-names";
 
 class UtilsService {
   objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
@@ -219,8 +220,8 @@ class UtilsService {
     if (result) return result;
     const spell = State.spells.find((s) => s.file === file);
     if (!spell) return { type: "innate", level: 1 }; // unknown case, returns innate
-    if (spell?.copyFrom) result = this.getSpellInfosByFilename(spell.copyFrom);
-    let type = this.getMemorizedSpellType(spell.spellType);
+    if (spell.copyFrom) result = this.getSpellInfosByFilename(spell.copyFrom);
+    let type = this.getMemorizedSpellType(spell.type);
     if (!type && spell.options?.spellType)
       type = this.getMemorizedSpellType(spell.options.spellType);
     if (!type && result) {
@@ -230,7 +231,7 @@ class UtilsService {
     // console.log(
     //   `getSpellInfos: ${file} => type: ${type}, level: ${spell.spellLevel}`
     // );
-    return { type: type ?? "innate", level: spell.spellLevel ?? 1 };
+    return { type: type ?? "innate", level: spell.level ?? 1 };
   }
 
   getMemorizedSpellType(spellType?: SpellTypeEnum): MemorizedSpellType | null {
@@ -250,13 +251,25 @@ class UtilsService {
   ): { type: MemorizedSpellType; level: number } | null {
     const name = filename.toUpperCase();
     let result: { type: MemorizedSpellType; level: number } | null = null;
-    if (name.startsWith("SPWI"))
+    const spell = this.getExternalSpell(filename);
+    if (spell)
+      result = {
+        type: this.getMemorizedSpellType(spell.type)!,
+        level: spell.level,
+      };
+    else if (name.startsWith("SPWI"))
       result = { type: "wizard", level: +(name.at(4) as string) };
     else if (name.startsWith("SPPR"))
       result = { type: "priest", level: +(name.at(4) as string) };
     else if (name.startsWith("SPIN") || name.startsWith("SPCL"))
       result = { type: "innate", level: 1 };
     return result;
+  }
+
+  getExternalSpell(filename: string) {
+    const spells = [...Object.values(FNP_SPELLS)];
+    const spell = spells.find((s) => s.file === filename);
+    return spell;
   }
 
   /**

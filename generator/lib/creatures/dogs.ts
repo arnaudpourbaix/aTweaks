@@ -1,6 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
-import { Durations } from "../src/model/constants";
+import { Durations, ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { BaseEffect } from "../src/model/spell-item/effect";
@@ -88,7 +88,9 @@ class Dog extends Creature {
         spell: {
           type: "force",
         },
-        actionsAfter: [{ name: "AttackOneRound", params: ["LastSeenBy"] }],
+        actionsAfter: [
+          { name: "AttackOneRound", params: [ScriptTarget.lastSeen] },
+        ],
       },
     });
   }

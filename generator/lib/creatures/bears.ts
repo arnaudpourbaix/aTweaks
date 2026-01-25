@@ -3,7 +3,7 @@ import { SPELLS } from "../config/spell-names";
 import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
-import { Durations } from "../src/model/constants";
+import { Durations, ScriptTarget } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -476,7 +476,7 @@ class BearFamily extends CreatureFamily<Bear> {
           },
           {
             name: "Allegiance",
-            params: ["Myself", "NEUTRAL"],
+            params: [ScriptTarget.myself, "NEUTRAL"],
           },
         ],
         responses: responseFactory.response([{ name: "Enemy" }]),
@@ -510,8 +510,11 @@ class BearFamily extends CreatureFamily<Bear> {
     },
     triggers: [
       { name: "See", params: ["NearestEnemyOf"] },
-      { name: "CheckStat", params: ["Myself", 0, "OFFENSIVE_MODIFIER"] },
-      { name: "HPPercentLT", params: ["Myself", 75] },
+      {
+        name: "CheckStat",
+        params: [ScriptTarget.myself, 0, "OFFENSIVE_MODIFIER"],
+      },
+      { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
     ],
   };
 
@@ -521,7 +524,7 @@ class BearFamily extends CreatureFamily<Bear> {
     statements: [
       {
         triggers: [
-          { name: "Name", params: ["kaldran", "Myself"] },
+          { name: "Name", params: ["kaldran", ScriptTarget.myself] },
           { name: "Global", params: ["Kaldran", "GLOBAL", 0] },
           { name: "See", params: ["NearestEnemyOf"] },
           { name: "See", params: ["PC"] },

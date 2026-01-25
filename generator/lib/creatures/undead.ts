@@ -244,8 +244,8 @@ class Undead extends Creature {
       castingAnimation: ItemAbilityCastingAnimationEnum.Invocation,
       exclusionFlags: [SpellExclusionFlagEnum.Enchanter],
       flags: [SpellFlagEnum.Hostile],
-      spellType: SpellTypeEnum.Wizard,
-      spellLevel: 4,
+      type: SpellTypeEnum.Wizard,
+      level: 4,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -1239,7 +1239,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Mummy,
       name: "monster.undead.name.mummy",
       files: [
-        "BDMUMM01", // Mummy
+        // "BDMUMM01", // Mummy //FIXME: just for test!
         "BDMUMMY", // Fanegonorom
         "AC#FPMMY", // Bog Mummy
         "mummy",
@@ -1321,6 +1321,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "mumgre01",
         "riftcr03",
         "MUMMYX1", // TDD
+        "BDMUMM01", //FIXME: just for test!
       ],
       data: {
         level1: { pnpValue: 12, value: 20, type: "caster" },
@@ -1338,7 +1339,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         morale: 18,
         general: "UNDEAD",
         race: "GHOUL",
-        class: "GHOUL_REVEANT",
+        class: "CLERIC",
         animation: "MUMMY",
         gender: "NIETHER",
         size: "Medium",
@@ -1356,46 +1357,46 @@ class UndeadFamily extends CreatureFamily<Undead> {
         spells: {
           memorized: [
             // level 1 (12):
-            { file: FNP_SPELLS.CauseDisease, memorizedCount: 3 },
-            { file: FNP_SPELLS.CauseLightWounds, memorizedCount: 3 },
-            { file: FNP_SPELLS.Doom, memorizedCount: 3 },
-            { file: FNP_SPELLS.FrostFingers, memorizedCount: 3 },
+            { file: FNP_SPELLS.CauseDisease.file, memorizedCount: 3 },
+            { file: SPELLS.Command, memorizedCount: 3 },
+            { file: FNP_SPELLS.Doom.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
             // level 2 (12):
-            { file: FNP_SPELLS.CauseModerateWounds, memorizedCount: 2 },
-            { file: FNP_SPELLS.Forbiddance, memorizedCount: 2 },
-            { file: FNP_SPELLS.MiscastMagic, memorizedCount: 3 },
-            { file: FNP_SPELLS.RigidThinking, memorizedCount: 2 },
-            { file: FNP_SPELLS.Shatter, memorizedCount: 2 },
-            { file: FNP_SPELLS.Shield, memorizedCount: 1 },
+            { file: FNP_SPELLS.CauseModerateWounds.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.MiscastMagic.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.RigidThinking.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Shatter.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Shield.file, memorizedCount: 1 },
             // level 3 (12):
-            { file: FNP_SPELLS.CircleOfBones, memorizedCount: 3 },
-            { file: FNP_SPELLS.CloakOfFear, memorizedCount: 3 },
-            { file: FNP_SPELLS.ShadowMonsters, memorizedCount: 3 },
-            { file: FNP_SPELLS.CauseSeriousWounds, memorizedCount: 3 },
+            { file: FNP_SPELLS.CircleOfBones.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.CloakOfFear.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.ShadowMonsters.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.CauseSeriousWounds.file, memorizedCount: 3 },
             // level 4 (11):
-            { file: FNP_SPELLS.AnimateDead, memorizedCount: 2 },
-            { file: FNP_SPELLS.CauseCriticalWounds, memorizedCount: 2 },
-            { file: FNP_SPELLS.DemiShadowMonsters, memorizedCount: 2 },
-            { file: FNP_SPELLS.Emotion, memorizedCount: 1 },
-            { file: FNP_SPELLS.GreaterMalison, memorizedCount: 1 },
-            { file: FNP_SPELLS.Poison, memorizedCount: 2 },
-            { file: FNP_SPELLS.WavesOfFatigue, memorizedCount: 1 },
+            { file: FNP_SPELLS.AnimateDead.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.CauseCriticalWounds.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.DemiShadowMonsters.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Emotion.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.GreaterMalison.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.Poison.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.WavesOfFatigue.file, memorizedCount: 1 },
             // level 5 (9):
-            { file: FNP_SPELLS.Chaos, memorizedCount: 1 },
-            { file: FNP_SPELLS.CloudOfPestilence, memorizedCount: 1 },
-            { file: FNP_SPELLS.MassCauseLightWounds, memorizedCount: 1 },
-            { file: FNP_SPELLS.Shades, memorizedCount: 1 },
-            { file: FNP_SPELLS.SlayLiving, memorizedCount: 2 },
-            { file: FNP_SPELLS.WavesOfAgony, memorizedCount: 2 },
-            { file: FNP_SPELLS.GreaterCommand, memorizedCount: 1 },
+            { file: FNP_SPELLS.Chaos.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.CloudOfPestilence.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.MassCauseLightWounds.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.Shades.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.SlayLiving.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.WavesOfAgony.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.GreaterCommand.file, memorizedCount: 1 },
             // level 6 (5):
-            { file: FNP_SPELLS.DolorousDecay, memorizedCount: 2 },
-            { file: FNP_SPELLS.Harm, memorizedCount: 1 },
-            { file: FNP_SPELLS.MagicResistance, memorizedCount: 1 },
-            { file: FNP_SPELLS.SummonShadows, memorizedCount: 1 },
+            { file: FNP_SPELLS.DolorousDecay.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Harm.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.MagicResistance.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.SummonShadows.file, memorizedCount: 1 },
             // level 7 (2):
-            { file: FNP_SPELLS.FingerOfDeath, memorizedCount: 1 },
-            { file: FNP_SPELLS.Wither, memorizedCount: 1 },
+            { file: FNP_SPELLS.FingerOfDeath.file, memorizedCount: 1 },
+            { file: FNP_SPELLS.Wither.file, memorizedCount: 1 },
           ],
         },
       },
@@ -1426,7 +1427,13 @@ class UndeadFamily extends CreatureFamily<Undead> {
       spell: this.spell(Ids.GreaterMummyRottingDisease).file,
     });
     greater.setBehavior({
-      abilities: [this.ability(Ids.GreaterMummyFearAura)],
+      abilities: [
+        this.ability(Ids.GreaterMummyFearAura),
+        this.preset(FNP_SPELLS.CauseDisease.file),
+        this.preset(FNP_SPELLS.Doom.file),
+        this.preset(FNP_SPELLS.FrostFingers.file),
+        this.preset(SPELLS.Command),
+      ],
       dialog: ["mumgre01"],
     });
     return greater;

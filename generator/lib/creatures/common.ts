@@ -1,4 +1,5 @@
 import responseFactory from "../src/factories/response.factory";
+import { ScriptTarget } from "../src/model/constants";
 import { CustomCode } from "../src/model/script/script";
 
 export const hunterCustomCode: CustomCode = {
@@ -8,15 +9,15 @@ export const hunterCustomCode: CustomCode = {
     // FIXME: these statements don't work properly
     // {
     //   triggers: [
-    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+    //     { name: "Allegiance", params: [ScriptTarget.myself, "NEUTRAL"] },
     //     {
     //       name: "NearSavedLocation",
-    //       params: ["Myself", "INITIAL", 8],
+    //       params: [ScriptTarget.myself, "INITIAL", 8],
     //       negation: true,
     //     },
     //     {
     //       name: "Class",
-    //       params: ["Myself", "HUNTER_CREATURE"],
+    //       params: [ScriptTarget.myself, "HUNTER_CREATURE"],
     //       negation: true,
     //     },
     //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
@@ -28,11 +29,11 @@ export const hunterCustomCode: CustomCode = {
     // {
     //   triggers: [
     //     triggerFactory.globalTimerExpired("BD_Move"),
-    //     { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
+    //     { name: "Allegiance", params: [ScriptTarget.myself, "NEUTRAL"] },
     //     { name: "Detect", params: ["GOODCUTOFF"] },
     //     {
     //       name: "NearSavedLocation",
-    //       params: ["Myself", "INITIAL", 8],
+    //       params: [ScriptTarget.myself, "INITIAL", 8],
     //     },
     //     { name: "Range", params: ["FOOD_CREATURE", 30], negation: true },
     //   ],
@@ -62,13 +63,13 @@ export const hunterCustomCode: CustomCode = {
     // },
     {
       triggers: [
-        { name: "Allegiance", params: ["Myself", "NEUTRAL"] },
-        { name: "Class", params: ["Myself", "HUNTER_CREATURE"] },
+        { name: "Allegiance", params: [ScriptTarget.myself, "NEUTRAL"] },
+        { name: "Class", params: [ScriptTarget.myself, "HUNTER_CREATURE"] },
         { name: "Detect", params: ["PC"] },
         { name: "See", params: ["FOOD_CREATURE"] },
       ],
       responses: responseFactory.response([
-        { name: "AttackOneRound", params: ["LastSeenBy"] },
+        { name: "AttackOneRound", params: [ScriptTarget.lastSeen] },
       ]),
     },
   ],

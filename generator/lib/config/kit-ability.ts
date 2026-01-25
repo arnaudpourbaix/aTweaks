@@ -1,3 +1,4 @@
+import { ScriptTarget } from "../src/model/constants";
 import { KitConfig } from "../src/model/creature/kit";
 import { SPELLS } from "./spell-names";
 
@@ -16,7 +17,7 @@ export const KITS: KitConfig[] = [
           triggers: [
             {
               name: "CheckSpellState",
-              params: ["Myself", "STATE_ENRAGED"],
+              params: [ScriptTarget.myself, "STATE_ENRAGED"],
               negation: true,
             },
           ],
@@ -38,7 +39,7 @@ export const KITS: KitConfig[] = [
           triggers: [
             {
               name: "CheckSpellState",
-              params: ["Myself", "STATE_ENRAGED"],
+              params: [ScriptTarget.myself, "STATE_ENRAGED"],
               negation: true,
             },
           ],

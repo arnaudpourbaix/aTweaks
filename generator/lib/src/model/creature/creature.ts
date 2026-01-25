@@ -5,6 +5,7 @@ import creatureFactory from "../../factories/creature.factory";
 import targetService from "../../services/baf/target.service";
 import grabService from "../../services/effects/grab.service";
 import translationService from "../../services/translation.service";
+import utils from "../../services/utils/utils.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { ClassIdentifier } from "../ids/class";
@@ -108,6 +109,10 @@ export class Creature extends AbstractCreature implements BaseCreature {
 
   setAdjustments(adjustments: PartialCreatureAdjustment[]) {
     creatureFactory.setAdjustments(this, adjustments);
+  }
+
+  seeInvisible() {
+    return utils.hasImmunity(this.data.immunities, "seeInvisible");
   }
 
   override addSpell(spell: PartialSpell): Spell {

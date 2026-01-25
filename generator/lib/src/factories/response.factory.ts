@@ -1,4 +1,4 @@
-import { GLOBAL_CONFIG } from "../../config/generate";
+import { ScriptTarget } from "../model/constants";
 import { CreatureAttackAction } from "../model/creature/attack";
 import { WEAPON_SLOTS, WeaponSlot } from "../model/creature/item";
 import { Actions } from "../model/script/actions";
@@ -28,7 +28,7 @@ class ResponseFactory {
       }
       actions.push({
         name: "AttackOneRound",
-        params: [GLOBAL_CONFIG.tokens.target],
+        params: [ScriptTarget.lastSeen],
       });
       if (a.disableInterrupt) {
         actions.unshift(actionFactory.disableInterrupt());

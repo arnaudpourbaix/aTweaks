@@ -1,8 +1,8 @@
 import triggerFactory from "../src/factories/trigger.factory";
+import { ScriptTarget } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { TargetList } from "../src/model/script/target";
-import { GLOBAL_CONFIG } from "./generate";
-import { SPELLS } from "./spell-names";
+import { FNP_SPELLS, SPELLS } from "./spell-names";
 
 export const SPELL_STATES = {
   flying: "JA_FLYING",
@@ -21,12 +21,12 @@ const CHARM_TARGET_LISTS: TargetList[] = [
     triggers: [
       {
         name: "Race",
-        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        params: [ScriptTarget.lastSeen, "ELF"],
         negation: true,
       },
       {
         name: "Race",
-        params: [GLOBAL_CONFIG.tokens.target, "HALF_ELF"],
+        params: [ScriptTarget.lastSeen, "HALF_ELF"],
         negation: true,
       },
     ],
@@ -38,12 +38,12 @@ const CHARM_TARGET_LISTS: TargetList[] = [
     triggers: [
       {
         name: "Race",
-        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        params: [ScriptTarget.lastSeen, "ELF"],
         negation: true,
       },
       {
         name: "Race",
-        params: [GLOBAL_CONFIG.tokens.target, "HALF_ELF"],
+        params: [ScriptTarget.lastSeen, "HALF_ELF"],
         negation: true,
       },
     ],
@@ -55,7 +55,7 @@ const CHARM_TARGET_LISTS: TargetList[] = [
     triggers: [
       {
         name: "Race",
-        params: [GLOBAL_CONFIG.tokens.target, "ELF"],
+        params: [ScriptTarget.lastSeen, "ELF"],
         negation: true,
       },
     ],
@@ -71,7 +71,25 @@ export const PRESET_NAMES = {
   DimensionDoorOffscreen: "DimensionDoorOffscreen",
 };
 
-const SLEEP_TARGET_LISTS: TargetList[] = [...CHARM_TARGET_LISTS];
+const SLEEP_TARGET_LISTS: TargetList[] = [
+  {
+    name: "PCs",
+    includeStatus: ["Able"],
+    randomOrder: true,
+    triggers: [
+      {
+        name: "Race",
+        params: [ScriptTarget.lastSeen, "ELF"],
+        negation: true,
+      },
+      {
+        name: "Race",
+        params: [ScriptTarget.lastSeen, "HALF_ELF"],
+        negation: true,
+      },
+    ],
+  },
+];
 
 const FEAR_TARGET_LISTS: TargetList[] = [
   {
@@ -345,7 +363,7 @@ export const ABILITY_PRESETS: {
           triggers: [
             {
               name: "Range",
-              params: [GLOBAL_CONFIG.tokens.target, 20],
+              params: [ScriptTarget.lastSeen, 20],
               negation: true,
             },
           ],
@@ -472,7 +490,7 @@ export const ABILITY_PRESETS: {
       triggers: [
         {
           name: "StateCheck",
-          params: ["Myself", "STATE_BLIND"],
+          params: [ScriptTarget.myself, "STATE_BLIND"],
           negation: true,
         },
       ],
@@ -534,7 +552,7 @@ export const ABILITY_PRESETS: {
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
-      triggers: [{ name: "HPPercentLT", params: ["Myself", 75] }],
+      triggers: [{ name: "HPPercentLT", params: [ScriptTarget.myself, 75] }],
     },
   },
   {
@@ -622,7 +640,7 @@ export const ABILITY_PRESETS: {
         { name: "Detect", params: ["PC"] },
         {
           name: "CheckSpellState",
-          params: ["Myself", "DETECT_INVISIBILITY"],
+          params: [ScriptTarget.myself, "DETECT_INVISIBILITY"],
           negation: true,
         },
       ],
@@ -660,21 +678,65 @@ export const ABILITY_PRESETS: {
       requireVocal: true,
     },
   },
-  //TODO:
   {
     preset: SPELLS.DispelMagic,
     ability: {
       name: "ability.dispelMagic",
       targets: [
         {
-          name: "FarthestEnemies",
+          name: "Players",
           randomOrder: true,
         },
       ],
       spell: {
         id: "WIZARD_TRUE_DISPEL_MAGIC",
         probability: DEFAULT_SPELL_PROBABILITY,
+        excludeStateChecks: ["STATE_DISABLED"],
       },
+      triggers: [
+        {
+          name: "Allegiance",
+          params: [ScriptTarget.lastSeen, "ENEMY"],
+        },
+        {
+          name: "CheckStatGT",
+          params: [ScriptTarget.lastSeen, 0, "CLERIC_INSECT_PLAGUE"],
+          negation: true,
+        },
+        {
+          name: "Or",
+          triggers: [
+            {
+              name: "StateCheck",
+              params: [ScriptTarget.lastSeen, "STATE_MIRRORIMAGE"],
+            },
+            {
+              name: "CheckStatGT",
+              params: [ScriptTarget.lastSeen, 0, "STONESKINS"],
+            },
+            {
+              name: "CheckStatGT",
+              params: [
+                ScriptTarget.lastSeen,
+                0,
+                "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS",
+              ],
+            },
+            {
+              name: "CheckStatGT",
+              params: [ScriptTarget.lastSeen, 0, "WIZARD_RESIST_FEAR"],
+            },
+            {
+              name: "CheckStatGT",
+              params: [ScriptTarget.lastSeen, 0, "CLERIC_CHAOTIC_COMMANDS"],
+            },
+            {
+              name: "CheckStatGT",
+              params: [ScriptTarget.lastSeen, 49, "RESISTFIRE"],
+            },
+          ],
+        },
+      ],
       requireVocal: true,
     },
   },
@@ -682,9 +744,15 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.PowerWordBlind,
     ability: {
       name: "ability.powerWordBlind",
-      targets: SLEEP_TARGET_LISTS,
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
       spell: {
         id: "WIZARD_POWER_WORD_BLIND",
+        excludeStateChecks: ["STATE_BLIND", "STATE_DISABLED"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -694,9 +762,15 @@ export const ABILITY_PRESETS: {
     preset: SPELLS.PowerWordStun,
     ability: {
       name: "ability.powerWordStun",
-      targets: SLEEP_TARGET_LISTS,
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
       spell: {
         id: "WIZARD_POWER_WORD_STUN",
+        excludeStateChecks: ["STATE_STUNNED", "STATE_DISABLED"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -709,8 +783,106 @@ export const ABILITY_PRESETS: {
       targets: SLEEP_TARGET_LISTS,
       spell: {
         id: "WIZARD_POWER_WORD_KILL",
+        excludeStateChecks: ["STATE_DISABLED"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
+      triggers: [
+        {
+          name: "HPLT",
+          params: [ScriptTarget.lastSeen, 61],
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.CauseDisease.file,
+    ability: {
+      name: "ability.CauseDisease",
+      targets: [
+        {
+          name: "PCsFighters",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        resource: FNP_SPELLS.CauseDisease.file,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "CheckStatGT",
+          params: [ScriptTarget.lastSeen, 12, "STRENGTH_MODIFIER"],
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.CauseLightWounds.file,
+    ability: {
+      name: "ability.CauseLightWounds",
+      spell: {
+        resource: FNP_SPELLS.CauseLightWounds.file,
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      triggers: [
+        {
+          name: "HasItem",
+          params: [ScriptTarget.myself, "LIGHT"],
+          negation: true,
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.Doom.file,
+    ability: {
+      name: "ability.Doom",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        resource: FNP_SPELLS.Doom.file,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "CheckSpellState",
+          params: [ScriptTarget.lastSeen, "DOOM"],
+          negation: true,
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.FrostFingers.file,
+    ability: {
+      name: "ability.FrostFingers",
+      targets: [
+        {
+          name: "NearestEnemies",
+        },
+      ],
+      spell: {
+        resource: FNP_SPELLS.FrostFingers.file,
+        selfTarget: true,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "CheckStat",
+          params: [ScriptTarget.myself, 5, "SCRIPTINGSTATE4"],
+          negation: true,
+        },
+      ],
+      range: 10,
       requireVocal: true,
     },
   },

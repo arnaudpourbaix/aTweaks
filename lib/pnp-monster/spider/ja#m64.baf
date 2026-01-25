@@ -110,18 +110,18 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC],6)
-	!CheckStatGT([PC],0,HELD)
-	!StateCheck([PC],STATE_STUNNED)
-	!StateCheck([PC],STATE_PANIC)
-	!StateCheck([PC],STATE_CONFUSED)
-	!StateCheck([PC],STATE_FEEBLEMINDED)
-	!StateCheck([PC],STATE_SLEEPING)
-	!StateCheck([PC],STATE_HELPLESS)
-	!General([PC],WEAPON)
-	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_REALLY_DEAD)
-	See([PC])
+	!CheckStatGT(Nearest([PC]),0,HELD)
+	!StateCheck(Nearest([PC]),STATE_STUNNED)
+	!StateCheck(Nearest([PC]),STATE_PANIC)
+	!StateCheck(Nearest([PC]),STATE_CONFUSED)
+	!StateCheck(Nearest([PC]),STATE_FEEBLEMINDED)
+	!StateCheck(Nearest([PC]),STATE_SLEEPING)
+	!StateCheck(Nearest([PC]),STATE_HELPLESS)
+	!General(Nearest([PC]),WEAPON)
+	!CheckStatGT(Nearest([PC]),0,SANCTUARY)
+	!StateCheck(Nearest([PC]),STATE_REALLY_DEAD)
+	See(Nearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -132,7 +132,6 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SecondNearest([PC]),6)
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
 	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
 	!StateCheck(SecondNearest([PC]),STATE_PANIC)
@@ -144,6 +143,7 @@ IF
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -154,7 +154,6 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(ThirdNearest([PC]),6)
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
 	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
 	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
@@ -166,6 +165,7 @@ IF
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -176,7 +176,6 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FourthNearest([PC]),6)
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
 	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
 	!StateCheck(FourthNearest([PC]),STATE_PANIC)
@@ -188,6 +187,7 @@ IF
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -198,7 +198,6 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FifthNearest([PC]),6)
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
 	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
 	!StateCheck(FifthNearest([PC]),STATE_PANIC)
@@ -210,6 +209,7 @@ IF
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -220,7 +220,6 @@ IF
 	HaveSpellRES("ja#1m64")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SixthNearest([PC]),6)
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
 	!StateCheck(SixthNearest([PC]),STATE_STUNNED)
 	!StateCheck(SixthNearest([PC]),STATE_PANIC)
@@ -232,6 +231,7 @@ IF
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

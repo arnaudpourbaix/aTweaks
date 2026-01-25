@@ -26,6 +26,8 @@ class SpellService {
     const result: Spell = {
       file,
       doc: spell.doc ?? "both",
+      level: spell.level ?? 1,
+      type: spell.type ?? SpellTypeEnum.Innate,
       effects: [],
       headers: [],
       effectFiles: [],
@@ -45,11 +47,10 @@ class SpellService {
     if (result.icon && /\d{3}$/.test(result.icon)) {
       result.icon = `${result.icon}C`;
     }
-    if (result.spellType === undefined && !result.copyFrom)
-      result.spellType = SpellTypeEnum.Innate;
+    if (result.type === undefined && !result.copyFrom)
+      result.type = SpellTypeEnum.Innate;
     if (result.deleteHeaders === undefined) result.deleteHeaders = false;
-    if (result.spellLevel === undefined && !result.copyFrom)
-      result.spellLevel = 1;
+    if (result.level === undefined && !result.copyFrom) result.level = 1;
     result.effects = this.getEffects(result.effects, result, file);
     if (result.ability?.spell) {
       result.ability.spell.resource = file;

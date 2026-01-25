@@ -76,7 +76,4 @@ export const GLOBAL_CONFIG = {
       "wtrunsgt",
     ],
   },
-  tokens: {
-    target: "{Target}",
-  },
 };

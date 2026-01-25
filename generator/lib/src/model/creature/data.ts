@@ -152,6 +152,8 @@ export interface MemorizedSpell {
   file: string;
 
   memorizedCount?: number;
+
+  level?: number;
 }
 
 export type ScriptLocation =

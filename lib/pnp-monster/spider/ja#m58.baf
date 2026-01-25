@@ -123,18 +123,18 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range([PC],6)
-	!CheckStatGT([PC],0,HELD)
-	!StateCheck([PC],STATE_STUNNED)
-	!StateCheck([PC],STATE_PANIC)
-	!StateCheck([PC],STATE_CONFUSED)
-	!StateCheck([PC],STATE_FEEBLEMINDED)
-	!StateCheck([PC],STATE_SLEEPING)
-	!StateCheck([PC],STATE_HELPLESS)
-	!General([PC],WEAPON)
-	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_REALLY_DEAD)
-	See([PC])
+	!CheckStatGT(Nearest([PC]),0,HELD)
+	!StateCheck(Nearest([PC]),STATE_STUNNED)
+	!StateCheck(Nearest([PC]),STATE_PANIC)
+	!StateCheck(Nearest([PC]),STATE_CONFUSED)
+	!StateCheck(Nearest([PC]),STATE_FEEBLEMINDED)
+	!StateCheck(Nearest([PC]),STATE_SLEEPING)
+	!StateCheck(Nearest([PC]),STATE_HELPLESS)
+	!General(Nearest([PC]),WEAPON)
+	!CheckStatGT(Nearest([PC]),0,SANCTUARY)
+	!StateCheck(Nearest([PC]),STATE_REALLY_DEAD)
+	See(Nearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -145,7 +145,6 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SecondNearest([PC]),6)
 	!CheckStatGT(SecondNearest([PC]),0,HELD)
 	!StateCheck(SecondNearest([PC]),STATE_STUNNED)
 	!StateCheck(SecondNearest([PC]),STATE_PANIC)
@@ -157,6 +156,7 @@ IF
 	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
 	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
 	See(SecondNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -167,7 +167,6 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(ThirdNearest([PC]),6)
 	!CheckStatGT(ThirdNearest([PC]),0,HELD)
 	!StateCheck(ThirdNearest([PC]),STATE_STUNNED)
 	!StateCheck(ThirdNearest([PC]),STATE_PANIC)
@@ -179,6 +178,7 @@ IF
 	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
 	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
 	See(ThirdNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -189,7 +189,6 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FourthNearest([PC]),6)
 	!CheckStatGT(FourthNearest([PC]),0,HELD)
 	!StateCheck(FourthNearest([PC]),STATE_STUNNED)
 	!StateCheck(FourthNearest([PC]),STATE_PANIC)
@@ -201,6 +200,7 @@ IF
 	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
 	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
 	See(FourthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -211,7 +211,6 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(FifthNearest([PC]),6)
 	!CheckStatGT(FifthNearest([PC]),0,HELD)
 	!StateCheck(FifthNearest([PC]),STATE_STUNNED)
 	!StateCheck(FifthNearest([PC]),STATE_PANIC)
@@ -223,6 +222,7 @@ IF
 	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
 	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
 	See(FifthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -233,7 +233,6 @@ IF
 	HaveSpellRES("ja#1m58")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	Range(SixthNearest([PC]),6)
 	!CheckStatGT(SixthNearest([PC]),0,HELD)
 	!StateCheck(SixthNearest([PC]),STATE_STUNNED)
 	!StateCheck(SixthNearest([PC]),STATE_PANIC)
@@ -245,6 +244,7 @@ IF
 	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
 	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
 	See(SixthNearest([PC]))
+	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -329,12 +329,12 @@ THEN
 END
 
 IF
-	CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_POISONED)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -343,12 +343,12 @@ THEN
 END
 
 IF
-	CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_POISONED)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -506,18 +506,18 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_SLOWED)
-	!CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!StateCheck(lastSeenBy(Myself),STATE_PANIC)
-	!StateCheck(lastSeenBy(Myself),STATE_CONFUSED)
-	!StateCheck(lastSeenBy(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!StateCheck(lastSeenBy(Myself),STATE_HELPLESS)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+	!CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
+	!StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -526,18 +526,18 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_SLOWED)
-	!CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!StateCheck(lastSeenBy(Myself),STATE_PANIC)
-	!StateCheck(lastSeenBy(Myself),STATE_CONFUSED)
-	!StateCheck(lastSeenBy(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!StateCheck(lastSeenBy(Myself),STATE_HELPLESS)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+	!CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
+	!StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -691,17 +691,17 @@ THEN
 END
 
 IF
-	!CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!StateCheck(lastSeenBy(Myself),STATE_PANIC)
-	!StateCheck(lastSeenBy(Myself),STATE_CONFUSED)
-	!StateCheck(lastSeenBy(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!StateCheck(lastSeenBy(Myself),STATE_HELPLESS)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
+	!StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -710,17 +710,17 @@ THEN
 END
 
 IF
-	!CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!StateCheck(lastSeenBy(Myself),STATE_PANIC)
-	!StateCheck(lastSeenBy(Myself),STATE_CONFUSED)
-	!StateCheck(lastSeenBy(Myself),STATE_FEEBLEMINDED)
-	!StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!StateCheck(lastSeenBy(Myself),STATE_HELPLESS)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	!CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
+	!StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -813,11 +813,11 @@ THEN
 END
 
 IF
-	CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -826,11 +826,11 @@ THEN
 END
 
 IF
-	CheckStatGT(lastSeenBy(Myself),0,HELD)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	CheckStatGT(LastSeenBy(Myself),0,HELD)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -917,11 +917,11 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -930,11 +930,11 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_STUNNED)
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -1011,10 +1011,10 @@ THEN
 END
 
 IF
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -1023,10 +1023,10 @@ THEN
 END
 
 IF
-	!General(lastSeenBy(Myself),WEAPON)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	!General(LastSeenBy(Myself),WEAPON)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -1082,10 +1082,10 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	!Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100
@@ -1094,10 +1094,10 @@ THEN
 END
 
 IF
-	StateCheck(lastSeenBy(Myself),STATE_SLEEPING)
-	!CheckStatGT(lastSeenBy(Myself),0,SANCTUARY)
-	!StateCheck(lastSeenBy(Myself),STATE_REALLY_DEAD)
-	See(lastSeenBy(Myself))
+	StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	See(LastSeenBy(Myself))
 	Range(LastSeenBy(Myself),5)
 THEN
 	RESPONSE #100

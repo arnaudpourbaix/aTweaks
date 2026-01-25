@@ -88,7 +88,7 @@ class WeiduSpellService extends AbstractWeiduService {
     this.writeStringRef(lines, 0x8, spell.name, tab);
     this.write(lines, 0x10, 8, spell.castingSound, tab);
     this.writeFlag(lines, 0x18, 4, spell.flags, tab);
-    this.write(lines, 0x1c, 2, spell.spellType, tab);
+    this.write(lines, 0x1c, 2, spell.type, tab);
     this.writeFlag(lines, 0x1e, 4, spell.exclusionFlags, tab);
     this.write(lines, 0x22, 2, spell.castingAnimation, tab);
     this.write(lines, 0x25, 1, spell.primaryType, tab);
@@ -97,7 +97,7 @@ class WeiduSpellService extends AbstractWeiduService {
     } else if (typeof spell.secondaryType === "string") {
       this.write(lines, 0x27, 1, `fl#${spell.secondaryType}`, tab);
     }
-    this.write(lines, 0x34, 4, spell.spellLevel, tab);
+    this.write(lines, 0x34, 4, spell.level, tab);
     this.write(lines, 0x3a, 8, spell.icon, tab);
     this.writeStringRef(lines, 0x50, spell.description, tab);
     for (const effect of spell.effects) {
@@ -105,7 +105,7 @@ class WeiduSpellService extends AbstractWeiduService {
         lines,
         tab,
         effect,
-        power: spell.spellLevel ?? 0,
+        power: spell.level ?? 0,
         type: "SPL",
         global: true,
       });
@@ -157,7 +157,7 @@ class WeiduSpellService extends AbstractWeiduService {
         lines,
         tab,
         effect,
-        power: spell.spellLevel ?? 0,
+        power: spell.level ?? 0,
         header: index + 1,
         type: "SPL",
         global: false,

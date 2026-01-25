@@ -1,9 +1,13 @@
+import { ScriptTarget } from "../src/model/constants";
 import { GRAB_DEFAULT_CONFIG } from "../src/model/creature/grab";
 import { TargetStatus } from "../src/model/script/target";
-import { GLOBAL_CONFIG } from "./generate";
 import { TargetListName, TargetStatusName } from "./target-name";
 
-export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
+export const TARGET_LISTS: {
+  name: TargetListName;
+  value: string[];
+  allegianceCheck: boolean;
+}[] = [
   {
     name: "NearestEnemies",
     value: [
@@ -18,6 +22,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       "NinthNearestEnemyOf",
       "TenthNearestEnemyOf",
     ],
+    allegianceCheck: false,
   },
   {
     name: "NearestAllies",
@@ -29,21 +34,24 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       "FifthNearestAllyOf",
       "SixthNearestAllyOf",
     ],
+    allegianceCheck: false,
   },
   {
     name: "Players",
     value: ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6"],
+    allegianceCheck: false,
   },
   {
     name: "PCs",
     value: [
-      `[PC]`,
+      `Nearest([PC])`,
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
       `FourthNearest([PC])`,
       `FifthNearest([PC])`,
       `SixthNearest([PC])`,
     ],
+    allegianceCheck: true,
   },
   {
     name: "PCsFighters",
@@ -58,6 +66,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       `SecondNearest([PC.0.0.PALADIN_ALL])`,
       `ThirdNearest([PC.0.0.PALADIN_ALL])`,
     ],
+    allegianceCheck: true,
   },
   {
     name: "PCsPreferringStrong",
@@ -72,6 +81,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
     ],
+    allegianceCheck: true,
   },
   {
     name: "PCsPreferringWeak",
@@ -87,6 +97,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
     ],
+    allegianceCheck: true,
   },
   {
     name: "PCSpellcasters",
@@ -96,6 +107,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       `[PC.0.0.DRUID_ALL]`,
       `[PC.0.0.BARD]`,
     ],
+    allegianceCheck: true,
   },
   {
     name: "FarthestEnemies",
@@ -105,6 +117,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       "ThirdFarthestEnemyOf(Myself)",
       "FourthFarthestEnemyOf(Myself)",
     ],
+    allegianceCheck: false,
   },
   {
     name: "Animals",
@@ -116,6 +129,7 @@ export const TARGET_LISTS: { name: TargetListName; value: string[] }[] = [
       `SecondNearest([NEUTRAL.ANIMAL])`,
       `ThirdNearest([NEUTRAL.ANIMAL])`,
     ],
+    allegianceCheck: false,
   },
 ];
 
@@ -138,7 +152,7 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "CheckSpellState",
-        params: [GLOBAL_CONFIG.tokens.target, GRAB_DEFAULT_CONFIG.grabbedState],
+        params: [ScriptTarget.token, GRAB_DEFAULT_CONFIG.grabbedState],
       },
     ],
   },
@@ -150,41 +164,41 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLOWED"],
+        params: [ScriptTarget.token, "STATE_SLOWED"],
       },
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        params: [ScriptTarget.token, 0, "HELD"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
+        params: [ScriptTarget.token, "STATE_STUNNED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
+        params: [ScriptTarget.token, "STATE_PANIC"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
+        params: [ScriptTarget.token, "STATE_CONFUSED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
+        params: [ScriptTarget.token, "STATE_FEEBLEMINDED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
+        params: [ScriptTarget.token, "STATE_SLEEPING"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_HELPLESS"],
+        params: [ScriptTarget.token, "STATE_HELPLESS"],
         negation: true,
       },
     ],
@@ -197,37 +211,37 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        params: [ScriptTarget.token, 0, "HELD"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
+        params: [ScriptTarget.token, "STATE_STUNNED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
+        params: [ScriptTarget.token, "STATE_PANIC"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
+        params: [ScriptTarget.token, "STATE_CONFUSED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
+        params: [ScriptTarget.token, "STATE_FEEBLEMINDED"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
+        params: [ScriptTarget.token, "STATE_SLEEPING"],
         negation: true,
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_HELPLESS"],
+        params: [ScriptTarget.token, "STATE_HELPLESS"],
         negation: true,
       },
     ],
@@ -240,7 +254,7 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        params: [ScriptTarget.token, 0, "HELD"],
       },
     ],
   },
@@ -252,11 +266,11 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "CheckStatGT",
-        params: [GLOBAL_CONFIG.tokens.target, 0, "HELD"],
+        params: [ScriptTarget.token, 0, "HELD"],
       },
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_POISONED"],
+        params: [ScriptTarget.token, "STATE_POISONED"],
         negation: true,
       },
     ],
@@ -269,7 +283,7 @@ export const TARGET_STATUS: TargetStatus[] = [
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_STUNNED"],
+        params: [ScriptTarget.token, "STATE_STUNNED"],
       },
     ],
   },
@@ -284,15 +298,15 @@ export const TARGET_STATUS: TargetStatus[] = [
         triggers: [
           {
             name: "StateCheck",
-            params: [GLOBAL_CONFIG.tokens.target, "STATE_PANIC"],
+            params: [ScriptTarget.token, "STATE_PANIC"],
           },
           {
             name: "StateCheck",
-            params: [GLOBAL_CONFIG.tokens.target, "STATE_CONFUSED"],
+            params: [ScriptTarget.token, "STATE_CONFUSED"],
           },
           {
             name: "StateCheck",
-            params: [GLOBAL_CONFIG.tokens.target, "STATE_FEEBLEMINDED"],
+            params: [ScriptTarget.token, "STATE_FEEBLEMINDED"],
           },
         ],
       },
@@ -305,13 +319,13 @@ export const TARGET_STATUS: TargetStatus[] = [
     triggers: [
       {
         name: "Allegiance",
-        params: ["Myself", "ENEMY"],
+        params: [ScriptTarget.myself, "ENEMY"],
       },
     ],
     targetTriggers: [
       {
         name: "StateCheck",
-        params: [GLOBAL_CONFIG.tokens.target, "STATE_SLEEPING"],
+        params: [ScriptTarget.token, "STATE_SLEEPING"],
       },
     ],
   },

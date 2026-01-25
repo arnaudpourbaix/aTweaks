@@ -6,7 +6,7 @@ import actionFactory from "../../factories/action.factory";
 import bafFactory from "../../factories/baf.factory";
 import responseFactory from "../../factories/response.factory";
 import triggerFactory from "../../factories/trigger.factory";
-import { Durations } from "../../model/constants";
+import { Durations, ScriptTarget } from "../../model/constants";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import { WEAPON_SLOTS } from "../../model/creature/item";
@@ -152,17 +152,23 @@ class StatementService {
       else {
         const { triggers, targetTriggers } =
           targetService.getTriggersFromTargetList(statement.target);
-        const targets = targetService.getTargetFromAbility(
+        const list = targetService.getTargetFromAbility(
           statement.target.name,
           statement.target.limit,
           statement.target.randomOrder
-        ) as string[];
+        );
+        if (list.allegianceCheck) {
+          triggers.push({
+            name: "Allegiance",
+            params: [ScriptTarget.myself, "ENEMY"],
+          });
+        }
         bafFactory.addStatementsFromTargetList({
           statements,
           comment: statement.comment,
           triggers: [...statement.triggers, ...triggers, ...targetTriggers],
           responses: statement.responses,
-          targets,
+          targets: list.targets as string[],
           random: statement.target.random,
           reverse: statement.target.reverse,
         });
@@ -180,7 +186,7 @@ class StatementService {
     for (const name of creature.behavior.dialog) {
       nameTriggers.push({
         name: "Name",
-        params: [name, "Myself"],
+        params: [name, ScriptTarget.myself],
       });
     }
     const finalNameTrigger: Triggers.Trigger =
@@ -214,7 +220,7 @@ class StatementService {
       triggers: [
         {
           name: "StateCheck",
-          params: ["Myself", "STATE_PANIC"],
+          params: [ScriptTarget.myself, "STATE_PANIC"],
         },
         {
           name: "Range",
@@ -229,7 +235,7 @@ class StatementService {
       triggers: [
         {
           name: "StateCheck",
-          params: ["Myself", "STATE_PANIC"],
+          params: [ScriptTarget.myself, "STATE_PANIC"],
         },
       ],
       responses: responseFactory.response([{ name: "RandomWalkContinuous" }]),
@@ -286,7 +292,7 @@ class StatementService {
     if (creature.behavior.restHeal)
       actions.push({
         name: "ApplySpell",
-        params: ["Myself", "RESTORE_FULL_HEALTH"],
+        params: [ScriptTarget.myself, "RESTORE_FULL_HEALTH"],
       });
     statements.push({
       comment: "Rest (reset everything and heal if applicable)",
@@ -317,7 +323,7 @@ class StatementService {
       triggers: [
         {
           name: "Allegiance",
-          params: ["Myself", "NEUTRAL"],
+          params: [ScriptTarget.myself, "NEUTRAL"],
         },
         {
           name: "Or",
@@ -375,7 +381,7 @@ class StatementService {
           triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
           {
             name: "Allegiance",
-            params: ["Myself", ea.myself],
+            params: [ScriptTarget.myself, ea.myself],
           },
           { name: "See", params: [ea.enemy] },
         ],
@@ -448,11 +454,17 @@ class StatementService {
           triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
           {
             name: "Allegiance",
-            params: ["Myself", "EVILCUTOFF"],
+            params: [ScriptTarget.myself, "EVILCUTOFF"],
             negation: true,
           },
-          { name: "StateCheck", params: ["Myself", "STATE_IMMOBILE"] },
-          { name: "StateCheck", params: ["Myself", "STATE_REALLY_DEAD"] },
+          {
+            name: "StateCheck",
+            params: [ScriptTarget.myself, "STATE_IMMOBILE"],
+          },
+          {
+            name: "StateCheck",
+            params: [ScriptTarget.myself, "STATE_REALLY_DEAD"],
+          },
         ],
       },
     ];
@@ -463,7 +475,7 @@ class StatementService {
       responses,
     });
     triggers = [
-      { name: "InActiveArea", params: ["Myself"], negation: true },
+      { name: "InActiveArea", params: [ScriptTarget.myself], negation: true },
       { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
     ];
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
@@ -483,7 +495,7 @@ class StatementService {
       triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
       {
         name: "StateCheck",
-        params: ["Myself", "STATE_BLIND"],
+        params: [ScriptTarget.myself, "STATE_BLIND"],
         negation: true,
       },
       { name: "ActionListEmpty" },
@@ -522,31 +534,28 @@ class StatementService {
     const additionals = this.getAdditionals(creature, "trackTargets");
     const allegiance: Triggers.Trigger = {
       name: "Allegiance",
-      params: ["Myself", "GOODCUTOFF"],
+      params: [ScriptTarget.myself, "GOODCUTOFF"],
       negation: true,
     };
     const triggers: Triggers.Trigger[] = [
       {
         name: "StateCheck",
-        params: ["Myself", "STATE_BLIND"],
+        params: [ScriptTarget.myself, "STATE_BLIND"],
         negation: true,
       },
       {
         name: "InMyArea",
-        params: [GLOBAL_CONFIG.tokens.target],
+        params: [ScriptTarget.token],
       },
       {
         name: "Range",
-        params: [
-          GLOBAL_CONFIG.tokens.target,
-          GLOBAL_CONFIG.bafConstants.trackingRange,
-        ],
+        params: [ScriptTarget.token, GLOBAL_CONFIG.bafConstants.trackingRange],
       },
       ...additionals.triggers,
     ];
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     const actions: Actions.Action[] = [
-      { name: "MoveToObject", params: [GLOBAL_CONFIG.tokens.target] },
+      { name: "MoveToObject", params: [ScriptTarget.token] },
       ...additionals.actions,
     ];
     bafFactory.addStatementsFromTargetList({
@@ -557,14 +566,11 @@ class StatementService {
         ...triggers,
         ...triggerFactory.validTrackTarget({
           isTargetPlayer: true,
-          seeInvisible: utils.hasImmunity(
-            creature.data.immunities,
-            "seeInvisible"
-          ),
+          seeInvisible: creature.seeInvisible(),
         }),
       ],
       responses: responseFactory.response(actions),
-      targets: targetService.getList("Players"),
+      targets: targetService.getList("Players").targets,
     });
     bafFactory.addStatementsFromTargetList({
       statements,
@@ -574,14 +580,11 @@ class StatementService {
         ...triggers,
         ...triggerFactory.validTrackTarget({
           isTargetPlayer: false,
-          seeInvisible: utils.hasImmunity(
-            creature.data.immunities,
-            "seeInvisible"
-          ),
+          seeInvisible: creature.seeInvisible(),
         }),
       ],
       responses: responseFactory.response(actions),
-      targets: ["LastSeenBy"],
+      targets: [ScriptTarget.lastSeen],
       random: false,
     });
     if (!!creature.data.intelligence && creature.data.intelligence > 10) {
@@ -593,7 +596,7 @@ class StatementService {
             0,
             "GLOBAL"
           ),
-          { name: "Allegiance", params: ["Myself", "EVILCUTOFF"] },
+          { name: "Allegiance", params: [ScriptTarget.myself, "EVILCUTOFF"] },
           { name: "AreaType", params: ["OUTDOOR"], negation: true },
           { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
           { name: "Range", params: ["NearestDoor", 15] },
@@ -665,33 +668,36 @@ class StatementService {
       triggers: [
         {
           name: "Allegiance",
-          params: ["Myself", "NEUTRAL"],
+          params: [ScriptTarget.myself, "NEUTRAL"],
           negation: true,
         },
         {
           name: "Or",
           triggers: [
             { name: "Detect", params: ["NearestEnemyOf"], negation: true },
-            { name: "Kit", params: ["Myself", "SHADOWDANCER"] },
+            { name: "Kit", params: [ScriptTarget.myself, "SHADOWDANCER"] },
           ],
         },
         {
           name: "StateCheck",
-          params: ["Myself", "STATE_INVISIBLE"],
+          params: [ScriptTarget.myself, "STATE_INVISIBLE"],
           negation: true,
         },
         {
           name: "StateCheck",
-          params: ["Myself", "STATE_BLIND"],
+          params: [ScriptTarget.myself, "STATE_BLIND"],
           negation: true,
         },
-        { name: "CheckStatGT", params: ["Myself", 49, "HIDEINSHADOWS"] },
+        {
+          name: "CheckStatGT",
+          params: [ScriptTarget.myself, 49, "HIDEINSHADOWS"],
+        },
         triggerFactory.globalTimerExpired(hideTimer),
       ],
       responses: responseFactory.response(
         actionFactory.disableInterrupt([
           actionFactory.setGlobalTimer(hideTimer, 6),
-          { name: "DisplayStringHead", params: ["Myself", 66968] }, // *attempts to hide in shadows*
+          { name: "DisplayStringHead", params: [ScriptTarget.myself, 66968] }, // *attempts to hide in shadows*
           { name: "Hide" },
         ])
       ),
@@ -809,15 +815,12 @@ class StatementService {
         throw new Error(`OR triggers not handled currently: ${status}`);
       if (statusDetails.canOnlyTargetPlayer && targetListName !== "Players")
         throw new Error(`Status ${status} must target party`);
-      const targets = targetService.getList(targetListName);
+      const list = targetService.getList(targetListName); //TODO:
       const targetTriggers = [
         ...(statusDetails.targetTriggers as Triggers.Trigger[]),
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
-          seeInvisible: utils.hasImmunity(
-            creature.data.immunities,
-            "seeInvisible"
-          ),
+          seeInvisible: creature.seeInvisible(),
           maxRange: creature.attack.maxRange,
         }),
       ];
@@ -826,7 +829,7 @@ class StatementService {
       // if (creature.canPolymorph) {
       //   const poly: Triggers.Trigger = {
       //     name: "CheckStat",
-      //     params: ["Myself", 0, "POLYMORPHED"],
+      //     params: [ScriptTarget.myself, 0, "POLYMORPHED"],
       //   };
       // }
       let selectWeaponStatements: Statements = [];
@@ -853,7 +856,7 @@ class StatementService {
         triggers,
         targetTriggers,
         responses,
-        targets,
+        targets: list.targets,
         inBetweenStatements: selectWeaponStatements,
       });
     }
@@ -868,7 +871,7 @@ class StatementService {
       { name: "CanEquipRanged" },
       {
         name: "Range",
-        params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
+        params: [ScriptTarget.lastSeen, GLOBAL_CONFIG.bafConstants.meleeRange],
         negation: true,
       },
     ];
@@ -883,7 +886,7 @@ class StatementService {
     triggers = [
       {
         name: "Range",
-        params: ["LastSeenBy", GLOBAL_CONFIG.bafConstants.meleeRange],
+        params: [ScriptTarget.lastSeen, GLOBAL_CONFIG.bafConstants.meleeRange],
       },
     ];
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
@@ -906,7 +909,7 @@ class StatementService {
     for (const select of creature.attack.selectWeapons) {
       let triggers: Triggers.Trigger[] = [
         ...utils.replaceTriggerTokens(targetTriggers, [
-          { key: GLOBAL_CONFIG.tokens.target, value: "lastSeenBy" },
+          { key: ScriptTarget.token, value: ScriptTarget.lastSeen },
         ]),
         ...select.triggers,
       ];
@@ -932,7 +935,7 @@ class StatementService {
     for (const potion of POTIONS) {
       for (const file of potion.files) {
         const triggers: Triggers.Trigger[] = [
-          { name: "HasItem", params: [file, "Myself"] },
+          { name: "HasItem", params: [file, ScriptTarget.myself] },
           triggerFactory.globalRoundTimerExpired(),
           ...(potion.triggers ?? []),
         ];
@@ -941,10 +944,10 @@ class StatementService {
           ...(potion.actions ?? []),
           {
             name: "DisplayStringHead",
-            params: ["Myself", `@3002`], // TODO: should be "common.potion.use", but languages file are generated after
+            params: [ScriptTarget.myself, `@3002`], // TODO: should be "common.potion.use", but languages file are generated after
           },
           actionFactory.setGlobalRoundTimer(),
-          { name: "UseItem", params: [file, "Myself"] },
+          { name: "UseItem", params: [file, ScriptTarget.myself] },
         ];
         statements.push({
           comment: potion.name,
@@ -1017,23 +1020,17 @@ class StatementService {
     triggers.unshift(...ability.triggers);
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     if (ability.isSpell) {
-      targetTriggers.push(
+      targetTriggers.unshift(
         ...triggerFactory.validSpellTarget({
           isTargetPlayer: false,
-          seeInvisible: utils.hasImmunity(
-            creature.data.immunities,
-            "seeInvisible"
-          ),
+          seeInvisible: creature.seeInvisible(),
         })
       );
     } else {
       targetTriggers.push(
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: false,
-          seeInvisible: utils.hasImmunity(
-            creature.data.immunities,
-            "seeInvisible"
-          ),
+          seeInvisible: creature.seeInvisible(),
         })
       );
     }
@@ -1049,46 +1046,52 @@ class StatementService {
       actions.unshift(actionFactory.setGlobalRoundTimer());
     }
     if (ability.range) {
-      targetTriggers.unshift({
+      targetTriggers.push({
         name: "Range",
-        params: [GLOBAL_CONFIG.tokens.target, ability.range],
+        params: [ScriptTarget.lastSeen, ability.range],
       });
     }
     if (ability.minRange) {
-      targetTriggers.unshift({
+      targetTriggers.push({
         name: "Range",
-        params: [GLOBAL_CONFIG.tokens.target, ability.minRange],
+        params: [ScriptTarget.lastSeen, ability.minRange],
         negation: true,
       });
     }
     if (ability.requireVocal) {
       triggers.unshift({
         name: "StateCheck",
-        params: ["Myself", "STATE_SILENCED"],
+        params: [ScriptTarget.myself, "STATE_SILENCED"],
         negation: true,
       });
     }
     if (!ability.canUseWhenPolymorphed && creature.behavior.canPolymorph) {
       triggers.unshift({
         name: "CheckStat",
-        params: ["Myself", 0, "POLYMORPHED"],
+        params: [ScriptTarget.myself, 0, "POLYMORPHED"],
       });
     }
     if (ability.disableInterrupt) {
       actions.unshift(actionFactory.disableInterrupt());
       actions.push(actionFactory.enableInterrupt());
     }
-    const targets = targetService.getTargetFromAbility(
+    const list = targetService.getTargetFromAbility(
       target.name,
       target.limit,
       target.randomOrder
-    ) as string[];
+    );
+    if (list.allegianceCheck) {
+      triggers.push({
+        name: "Allegiance",
+        params: [ScriptTarget.myself, "ENEMY"],
+      });
+    }
     bafFactory.addStatementsFromTargetList({
       statements,
       comment: translationService.from(ability.name),
       triggers: [...triggers, ...targetTriggers],
       responses: responseFactory.response(actions),
-      targets,
+      targets: list.targets as string[],
       random: target.random,
       reverse: target.reverse,
     });
@@ -1116,14 +1119,14 @@ class StatementService {
     if (ability.requireVocal) {
       triggers.unshift({
         name: "StateCheck",
-        params: ["Myself", "STATE_SILENCED"],
+        params: [ScriptTarget.myself, "STATE_SILENCED"],
         negation: true,
       });
     }
     if (!ability.canUseWhenPolymorphed && creature.behavior.canPolymorph) {
       triggers.unshift({
         name: "CheckStat",
-        params: ["Myself", 0, "POLYMORPHED"],
+        params: [ScriptTarget.myself, 0, "POLYMORPHED"],
       });
     }
     if (ability.disableInterrupt) {

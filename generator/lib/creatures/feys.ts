@@ -18,7 +18,7 @@ import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
 import triggerFactory from "../src/factories/trigger.factory";
-import { Durations } from "../src/model/constants";
+import { Durations, ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -676,7 +676,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               triggers: [
                 {
                   name: "StateCheck",
-                  params: ["Myself", "STATE_INVISIBLE"],
+                  params: [ScriptTarget.myself, "STATE_INVISIBLE"],
                 },
                 {
                   name: "HaveSpellRES",
@@ -751,11 +751,11 @@ class FeyFamily extends CreatureFamily<Fey> {
       icon: SPELLS.DireCharm,
       castingSound: "CAS_M05",
       flags: [SpellFlagEnum.BreakSanctuary],
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Enchantment,
       primaryType: ItemAbilityPrimaryTypeEnum.Enchanter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      spellLevel: 1,
+      level: 1,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -795,11 +795,11 @@ class FeyFamily extends CreatureFamily<Fey> {
       description: "monster.fey.ability.speakWithPlants.description",
       icon: "RR#FSPKP",
       castingSound: "CAS_P02",
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      spellLevel: 1,
+      level: 1,
       options: { renew: 1 },
       headers: [
         {
@@ -846,7 +846,9 @@ class FeyFamily extends CreatureFamily<Fey> {
           type: "force",
         },
         disableInterrupt: true,
-        triggers: [{ name: "CheckStatGT", params: ["Myself", 0, "ENTANGLE"] }],
+        triggers: [
+          { name: "CheckStatGT", params: [ScriptTarget.myself, 0, "ENTANGLE"] },
+        ],
         timer: { name: "speakWithPlants", value: 60 },
       },
     });
@@ -868,11 +870,11 @@ class FeyFamily extends CreatureFamily<Fey> {
       description: "monster.fey.ability.entangle.description",
       icon: SPELLS.Entangle,
       castingSound: "CAS_P08",
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      spellLevel: 1,
+      level: 1,
       options: {
         renew: 3,
       },
@@ -978,10 +980,10 @@ class FeyFamily extends CreatureFamily<Fey> {
       icon: SPELLS.CharmPersonOrAnimal,
       flags: [SpellFlagEnum.CastableWhenSilenced],
       castingSound: "CORAN03",
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       primaryType: ItemAbilityPrimaryTypeEnum.Enchanter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      spellLevel: 1,
+      level: 1,
       options: {
         renew: 1,
       },
@@ -1052,7 +1054,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       description: "monster.fey.ability.detectTraps.description",
       castingSound: "CAS_P04",
       flags: [SpellFlagEnum.OutdoorsOnly],
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Divination,
       primaryType: ItemAbilityPrimaryTypeEnum.Diviner,
       secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
@@ -1124,7 +1126,7 @@ class FeyFamily extends CreatureFamily<Fey> {
     const technical = this.addSpell({
       name: "monster.fey.ability.blindingBeauty.name",
       doc: false,
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       icon: SPELLS.BlindingBeauty,
       headers: [
         {
@@ -1162,7 +1164,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       name: "monster.fey.ability.blindingBeauty.name",
       id: Ids.BlindingBeauty,
       description: "monster.fey.ability.blindingBeauty.description",
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       icon: SPELLS.BlindingBeauty,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: {
@@ -1214,7 +1216,7 @@ class FeyFamily extends CreatureFamily<Fey> {
             triggers: [
               {
                 name: "General",
-                params: [GLOBAL_CONFIG.tokens.target, "HUMANOID"],
+                params: [ScriptTarget.lastSeen, "HUMANOID"],
               },
             ],
           },
@@ -1238,11 +1240,11 @@ class FeyFamily extends CreatureFamily<Fey> {
       icon: SPELLS.DireCharm,
       castingSound: "SIRIN05",
       flags: [SpellFlagEnum.BreakSanctuary],
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Enchantment,
       primaryType: ItemAbilityPrimaryTypeEnum.Enchanter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      spellLevel: 1,
+      level: 1,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -1267,7 +1269,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       icon: SPELLS.DireCharm,
       castingSound: "SIRIN05",
       flags: [SpellFlagEnum.BreakSanctuary, SpellFlagEnum.IgnoreDead],
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Enchantment,
       primaryType: ItemAbilityPrimaryTypeEnum.Enchanter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
@@ -1322,11 +1324,11 @@ class FeyFamily extends CreatureFamily<Fey> {
       groups: ["cloud", "blindness"],
       icon: "SPWI204",
       castingSound: "CAS_M08",
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Battleground,
-      spellLevel: 1,
+      level: 1,
       options: {
         removeInvisbilityOnCast: true,
       },
@@ -1374,7 +1376,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       // options: { renew: 1 },
       castingSound: "EFF_P11",
       flags: [SpellFlagEnum.Hostile, SpellFlagEnum.IgnoreDead],
-      spellType: SpellTypeEnum.Innate,
+      type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Battleground,
@@ -1446,7 +1448,7 @@ class FeyFamily extends CreatureFamily<Fey> {
             triggers: [
               {
                 name: "StateCheck",
-                params: [GLOBAL_CONFIG.tokens.target, "STATE_CHARMED"],
+                params: [ScriptTarget.lastSeen, "STATE_CHARMED"],
               },
               {
                 name: "See",
@@ -1461,7 +1463,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           { name: "EquipMostDamagingMelee" },
           {
             name: "MoveToObjectNoInterrupt",
-            params: [GLOBAL_CONFIG.tokens.target],
+            params: [ScriptTarget.lastSeen],
           },
         ],
         disableInterrupt: true,
@@ -1555,7 +1557,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         triggers: [
           {
             name: "Name",
-            params: ["Ulene", "Myself"],
+            params: ["Ulene", ScriptTarget.myself],
           },
           {
             name: "AreaCheck",
@@ -1577,7 +1579,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         triggers: [
           {
             name: "Name",
-            params: ["Ulene", "Myself"],
+            params: ["Ulene", ScriptTarget.myself],
           },
           {
             name: "AreaCheck",
@@ -1609,7 +1611,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         triggers: [
           {
             name: "Name",
-            params: ["VAELASA", "Myself"],
+            params: ["VAELASA", ScriptTarget.myself],
           },
           {
             name: "AreaCheck",
@@ -1632,7 +1634,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         triggers: [
           {
             name: "Name",
-            params: ["VAELASA", "Myself"],
+            params: ["VAELASA", ScriptTarget.myself],
           },
           {
             name: "AreaCheck",
@@ -1666,7 +1668,10 @@ class FeyFamily extends CreatureFamily<Fey> {
           { name: "FaceObject", params: ["PC"] },
           {
             name: "DisplayStringHead",
-            params: ["Myself", BafExistingStringReference.LeaveMyWood],
+            params: [
+              ScriptTarget.myself,
+              BafExistingStringReference.LeaveMyWood,
+            ],
           },
         ]),
       },

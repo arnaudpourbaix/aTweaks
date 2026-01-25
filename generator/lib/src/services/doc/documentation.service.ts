@@ -174,7 +174,7 @@ class DocumentationService {
     } else if (memorized) {
       const rounds = ability.timer
         ? Math.round(ability.timer.value / 6)
-        : infiniteUse;
+        : undefined;
       result = `<h5>${translationService.from(
         ability.name
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
