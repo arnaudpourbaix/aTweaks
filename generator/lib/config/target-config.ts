@@ -44,14 +44,14 @@ export const TARGET_LISTS: {
   {
     name: "PCs",
     value: [
-      `Nearest([PC])`,
+      `[PC]`,
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
       `FourthNearest([PC])`,
       `FifthNearest([PC])`,
       `SixthNearest([PC])`,
     ],
-    allegianceCheck: true,
+    allegianceCheck: false,
   },
   {
     name: "PCsFighters",
@@ -66,7 +66,7 @@ export const TARGET_LISTS: {
       `SecondNearest([PC.0.0.PALADIN_ALL])`,
       `ThirdNearest([PC.0.0.PALADIN_ALL])`,
     ],
-    allegianceCheck: true,
+    allegianceCheck: false,
   },
   {
     name: "PCsPreferringStrong",
@@ -81,7 +81,7 @@ export const TARGET_LISTS: {
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
     ],
-    allegianceCheck: true,
+    allegianceCheck: false,
   },
   {
     name: "PCsPreferringWeak",
@@ -97,7 +97,7 @@ export const TARGET_LISTS: {
       `SecondNearest([PC])`,
       `ThirdNearest([PC])`,
     ],
-    allegianceCheck: true,
+    allegianceCheck: false,
   },
   {
     name: "PCSpellcasters",
@@ -107,7 +107,7 @@ export const TARGET_LISTS: {
       `[PC.0.0.DRUID_ALL]`,
       `[PC.0.0.BARD]`,
     ],
-    allegianceCheck: true,
+    allegianceCheck: false,
   },
   {
     name: "FarthestEnemies",
