@@ -20,11 +20,11 @@ class WeiduFamilyService extends AbstractWeiduService {
       let content = `LAM load_secondary_types${CR}`;
       const commonFile = path.join(
         State.modFolder,
-        `${utils.getFamilyFolder(family)}/common.tpa`
+        `${utils.getFamilyFolder(family)}/common.tpa`,
       );
       if (fs.existsSync(commonFile)) {
         content += `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(
-          family
+          family,
         )}/common.tpa"${CR}`;
       }
       if (fs.existsSync(file)) fs.rmSync(file);
@@ -34,7 +34,7 @@ class WeiduFamilyService extends AbstractWeiduService {
         file,
         `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(family)}/${
           creature.id
-        }.tpa" // ${translationService.from(creature.name)}${CR}`
+        }.tpa" // ${translationService.from(creature.name)}${CR}`,
       );
     }
   }
@@ -54,7 +54,7 @@ class WeiduFamilyService extends AbstractWeiduService {
   getMainFilename(family: MonsterFamilyEnum) {
     const file = path.join(
       State.modFolder,
-      `${utils.getFamilyFolder(family)}/main.tpa`
+      `${utils.getFamilyFolder(family)}/main.tpa`,
     );
     return file;
   }
@@ -64,7 +64,7 @@ class WeiduFamilyService extends AbstractWeiduService {
     if (
       family.spells.some((s) => typeof s.secondaryType === "string") ||
       family.creatures.some((c) =>
-        c.spells.some((s) => typeof s.secondaryType === "string")
+        c.spells.some((s) => typeof s.secondaryType === "string"),
       )
     ) {
       this.add(lines, "LAF integrate_sectypes END", 0);

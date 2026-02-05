@@ -15,11 +15,6 @@ COPY_EXISTING "INAREANP.pro" ~override/ja#sight.pro~
 	WRITE_SHORT 0x206 470
 ADD_PROJECTILE ~override/ja#sight.pro~ ~Area of Sight Non-party~
 
-OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)
-APPEND ~splprot.2da~ ~JA_NOT_OUTDOOR_CHECK%TAB%0x106%TAB%%value%%TAB%9~ UNLESS ~JA_NOT_OUTDOOR_CHECK~
-OUTER_SET stat=IDS_OF_SYMBOL (~stats~ ~RESISTPOISON~)
-APPEND ~splprot.2da~ ~JA_POISON_IMMUNITY%TAB%%stat%%TAB%100%TAB%4~ UNLESS ~JA_POISON_IMMUNITY~
-
 // cloudSpells
 CREATE ITM "ja#i1"
 	WRITE_LONG 0x64 0x72

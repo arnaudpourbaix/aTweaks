@@ -4,6 +4,22 @@ import { StatsIdentifier } from "../model/ids/stats";
 import { Triggers } from "../model/script/triggers";
 
 class TriggerFactory {
+  haveSpellRES(resources: string[], negation = false): Triggers.Trigger[] {
+    return resources.map((r) => ({
+      name: "HaveSpellRES",
+      params: [r],
+      negation,
+    }));
+  }
+
+  hasItem(resources: string[], negation = false): Triggers.Trigger[] {
+    return resources.map((r) => ({
+      name: "HasItem",
+      params: [r, ScriptTarget.myself],
+      negation,
+    }));
+  }
+
   global(name: string, value: number, area = "LOCALS"): Triggers.Trigger {
     return {
       name: "Global",
@@ -191,7 +207,7 @@ class TriggerFactory {
     return triggers.reduce((acc, trigger) => {
       if ("triggers" in trigger) {
         acc.push(
-          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[])
+          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[]),
         );
       } else {
         acc.push(this.inverseNegation(trigger));

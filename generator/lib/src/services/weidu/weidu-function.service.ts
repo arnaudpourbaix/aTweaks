@@ -15,6 +15,8 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduCoreService from "./weidu-core.service";
 import weiduSpellService from "./weidu-spell.service";
 import weiduUtils from "../utils/weidu.utils";
+import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 
 class WeiduFunctionService extends AbstractWeiduService {
   generateSpellResources(): void {
@@ -25,7 +27,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
       path.join(State.modFolder, GLOBAL_CONFIG.files.spellResources),
-      content
+      content,
     );
   }
 
@@ -38,31 +40,70 @@ class WeiduFunctionService extends AbstractWeiduService {
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
       path.join(State.modFolder, GLOBAL_CONFIG.files.spellFunctions),
-      content
+      content,
     );
   }
 
   generateImmunities(): void {
     const lines = this.initLines();
+    this.generateProtectionSpells(lines);
     for (const immunity of State.immunities) {
       this.generateImmunityFunction(lines, immunity, 0);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     fs.writeFileSync(
       path.join(State.modFolder, GLOBAL_CONFIG.files.immunities),
-      content
+      content,
     );
+  }
+
+  generateProtectionSpells(lines: CodeLine[]) {
+    this.add(lines, `DEFINE_ACTION_MACRO load_splprot BEGIN`, 0);
+    for (const sp of SPELL_PROTECTIONS) {
+      let file = utils.getIdsFileFromSpellProtectionStat(
+        sp.stat as SpellProtectionStat,
+      );
+      let value = `value=${sp.value ?? -1}`;
+      if (typeof sp.value === "string" && !/\d+/.test(sp.value) && file) {
+        this.add(
+          lines,
+          `OUTER_SET value=IDS_OF_SYMBOL (~${file}~ ~${sp.value}~)`,
+          1,
+        );
+        value = "value";
+      }
+      let stat = `stat=${sp.stat}`;
+      if (typeof sp.stat === "string" && !sp.stat.startsWith("0x")) {
+        this.add(
+          lines,
+          `OUTER_SET stat=IDS_OF_SYMBOL (~stats~ ~${sp.stat}~)`,
+          1,
+        );
+        stat = "stat";
+      }
+      this.add(
+        lines,
+        `LAF ADD_SPLPROT_ENTRY INT_VAR ${stat} STR_VAR ${value} relation="${sp.relation}" RET index END`,
+        1,
+      );
+      this.add(lines, `ACTION_IF (index >= 0) BEGIN`, 1);
+      this.add(lines, `OUTER_SET ${sp.name}=index`, 2);
+      this.add(lines, `END`, 1);
+    }
+    this.add(lines, `END`, 0);
+    this.add(lines, `LAM load_splprot`, 0);
+    this.add(lines, ``, 0);
   }
 
   private generateSpellFunction(
     lines: CodeLine[],
     spell: Spell,
-    tab: number
+    tab: number,
   ): void {
     this.add(
       lines,
       `DEFINE_ACTION_FUNCTION ${utils.getSpellFunctionName(spell)} BEGIN`,
-      tab
+      tab,
     );
     weiduSpellService.createSpell(lines, spell, 1);
     this.add(lines, `END`, tab);
@@ -72,7 +113,7 @@ class WeiduFunctionService extends AbstractWeiduService {
   private generateSpellResource(
     lines: CodeLine[],
     group: SpellGroup,
-    tab: number
+    tab: number,
   ): void {
     const spells = group.spells ?? [];
     // add new created spells when a group has been specified
@@ -83,9 +124,9 @@ class WeiduFunctionService extends AbstractWeiduService {
     this.add(
       lines,
       `DEFINE_ACTION_FUNCTION ${utils.getSpellResourceFunctionName(
-        group
+        group,
       )} RET_ARRAY resources BEGIN`,
-      tab
+      tab,
     );
     this.add(lines, `ACTION_DEFINE_ARRAY spells BEGIN`, tab + 1);
     for (const spell of spells) {
@@ -97,12 +138,12 @@ class WeiduFunctionService extends AbstractWeiduService {
       `ACTION_DEFINE_ARRAY ids BEGIN ${idsSpells
         .map((i) => i.id)
         .join(" ")} END`,
-      tab + 1
+      tab + 1,
     );
     this.add(
       lines,
       `LAF MERGE_SPELL_ARRAY_WITH_IDS STR_VAR ids spells RET_ARRAY resources=spells END`,
-      tab + 1
+      tab + 1,
     );
     let index = spells.length + idsSpells.length;
     for (const [i, spell] of idsSpells.entries()) {
@@ -110,13 +151,13 @@ class WeiduFunctionService extends AbstractWeiduService {
         this.add(
           lines,
           `OUTER_SPRINT res $resources(${spells.length + i})`,
-          tab + 1
+          tab + 1,
         );
         for (const suffix of spell.suffixes) {
           this.add(
             lines,
             `OUTER_SPRINT $resources(${index++}) ~%res%${suffix}~`,
-            tab + 1
+            tab + 1,
           );
         }
       }
@@ -128,7 +169,7 @@ class WeiduFunctionService extends AbstractWeiduService {
   generateImmunityFunction(
     lines: CodeLine[],
     immunity: ImmunityConfig,
-    tab: number
+    tab: number,
   ): void {
     const fnName = utils.getImmunityFunctionName(immunity);
     this.add(lines, `DEFINE_PATCH_FUNCTION ${fnName}`, tab);
@@ -153,9 +194,9 @@ class WeiduFunctionService extends AbstractWeiduService {
       this.add(
         lines,
         `LPF ${utils.getImmunityFunctionName(
-          type
+          type,
         )} INT_VAR resist_dispel duration END`,
-        tab + 1
+        tab + 1,
       );
     }
     this.add(lines, `END`, tab);
@@ -167,7 +208,7 @@ class WeiduFunctionService extends AbstractWeiduService {
   callImmunityFunction(
     lines: CodeLine[],
     immunity: ImmunityConfig,
-    tab: number
+    tab: number,
   ): void {
     const spells = this.generateSpells(lines, immunity, tab);
     const effects = immunity.preventEffects.length
@@ -188,7 +229,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     this.add(
       lines,
       `LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration ${display} STR_VAR${effects}${icons}${strings}${animations}${spells} END`,
-      tab
+      tab,
     );
   }
 
@@ -212,7 +253,7 @@ class WeiduFunctionService extends AbstractWeiduService {
   generateSpells(
     lines: CodeLine[],
     immunity: ImmunityConfig,
-    tab: number
+    tab: number,
   ): string {
     if (!immunity.spellGroups.length) return "";
     this.add(lines, `INNER_ACTION BEGIN`, tab);
@@ -222,9 +263,9 @@ class WeiduFunctionService extends AbstractWeiduService {
       this.add(
         lines,
         `LAF ${utils.getSpellResourceFunctionName(
-          immunity.spellGroups[0]
+          immunity.spellGroups[0],
         )} RET_ARRAY spells=resources END`,
-        tab + 1
+        tab + 1,
       );
     } else {
       for (const groupName of immunity.spellGroups) {
@@ -233,17 +274,17 @@ class WeiduFunctionService extends AbstractWeiduService {
         this.add(
           lines,
           `LAF ${utils.getSpellResourceFunctionName(
-            groupName
+            groupName,
           )} RET_ARRAY ${array}=resources END`,
-          tab + 1
+          tab + 1,
         );
       }
       this.add(
         lines,
         `LAF MERGE_ARRAYS STR_VAR ${arrays.join(
-          " "
+          " ",
         )} RET_ARRAY spells=array END`,
-        tab + 1
+        tab + 1,
       );
     }
     this.add(lines, `END`, tab);

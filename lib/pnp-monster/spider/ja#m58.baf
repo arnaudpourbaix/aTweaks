@@ -130,10 +130,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General([PC],WEAPON)
-	!CheckStatGT([PC],0,SANCTUARY)
-	!StateCheck([PC],STATE_REALLY_DEAD)
-	See([PC])
+	!General(NearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(NearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(NearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(NearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
@@ -152,10 +152,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General(SecondNearest([PC]),WEAPON)
-	!CheckStatGT(SecondNearest([PC]),0,SANCTUARY)
-	!StateCheck(SecondNearest([PC]),STATE_REALLY_DEAD)
-	See(SecondNearest([PC]))
+	!General(SecondNearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(SecondNearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(SecondNearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(SecondNearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
@@ -174,10 +174,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General(ThirdNearest([PC]),WEAPON)
-	!CheckStatGT(ThirdNearest([PC]),0,SANCTUARY)
-	!StateCheck(ThirdNearest([PC]),STATE_REALLY_DEAD)
-	See(ThirdNearest([PC]))
+	!General(ThirdNearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(ThirdNearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(ThirdNearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(ThirdNearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
@@ -196,10 +196,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General(FourthNearest([PC]),WEAPON)
-	!CheckStatGT(FourthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FourthNearest([PC]),STATE_REALLY_DEAD)
-	See(FourthNearest([PC]))
+	!General(FourthNearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(FourthNearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(FourthNearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(FourthNearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
@@ -218,10 +218,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General(FifthNearest([PC]),WEAPON)
-	!CheckStatGT(FifthNearest([PC]),0,SANCTUARY)
-	!StateCheck(FifthNearest([PC]),STATE_REALLY_DEAD)
-	See(FifthNearest([PC]))
+	!General(FifthNearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(FifthNearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(FifthNearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(FifthNearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100
@@ -240,10 +240,10 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
 	!StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
 	!StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
-	!General(SixthNearest([PC]),WEAPON)
-	!CheckStatGT(SixthNearest([PC]),0,SANCTUARY)
-	!StateCheck(SixthNearest([PC]),STATE_REALLY_DEAD)
-	See(SixthNearest([PC]))
+	!General(SixthNearestEnemyOfType([PC]),WEAPON)
+	!CheckStatGT(SixthNearestEnemyOfType([PC]),0,SANCTUARY)
+	!StateCheck(SixthNearestEnemyOfType([PC]),STATE_REALLY_DEAD)
+	See(SixthNearestEnemyOfType([PC]))
 	Range(LastSeenBy(Myself),6)
 THEN
 	RESPONSE #100

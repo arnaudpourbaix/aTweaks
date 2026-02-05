@@ -36,7 +36,7 @@ export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
       {
         opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
         target: EffectTargetEnum.Self,
-        type: "JA_NOT_OUTDOOR_CHECK",
+        type: "NOT_OUTDOOR_CHECK",
         timing: EffectTimingEnum.InstantLimited,
         dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
         duration: 1,
@@ -124,5 +124,5 @@ export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
       },
     ],
   },
-  SPELLS.CallWoodlandBeeings
+  SPELLS.CallWoodlandBeeings,
 );

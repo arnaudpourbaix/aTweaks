@@ -4,22 +4,31 @@ import {
   SpellProtectionStat,
 } from "../src/model/spell-item/spell-protection";
 
-export type SpellProtectionName = "JA_NOT_OUTDOOR_CHECK" | "JA_POISON_IMMUNITY";
+export type SpellProtectionName =
+  | "NOT_OUTDOOR_CHECK"
+  | "POISON_IMMUNITY"
+  | "ANYONE";
 
 /**
  * If value is not set, it will generate -1
  */
 export const SPELL_PROTECTIONS: SpellProtection[] = [
   {
-    name: "JA_NOT_OUTDOOR_CHECK",
+    name: "NOT_OUTDOOR_CHECK",
     stat: SpellProtectionStat.Areatype,
     value: "OUTDOOR",
     relation: SpellProtectionRelation.BinaryNotMatch,
   },
   {
-    name: "JA_POISON_IMMUNITY",
+    name: "POISON_IMMUNITY",
     stat: "RESISTPOISON",
     value: 100,
+    relation: SpellProtectionRelation.GreaterOrEqual,
+  },
+  {
+    name: "ANYONE",
+    stat: SpellProtectionStat.Ea,
+    value: "ANYONE",
     relation: SpellProtectionRelation.GreaterOrEqual,
   },
 ];

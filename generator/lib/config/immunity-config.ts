@@ -1,4 +1,7 @@
-import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { JEWEL_SLOTS } from "../src/model/creature/item";
+import { ImmunityConfig } from "../src/model/final/immunity";
+import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
+import { Effect } from "../src/model/spell-item/effect";
 import {
   CastingTimeModifierTypeEnum,
   EffectBonusToEnum,
@@ -9,14 +12,11 @@ import {
   ProtectionFromWeaponsTypeEnum,
   TranslucencyTypeEnum,
 } from "../src/model/spell-item/effect.enums";
-import { MISSILE_WEAPONS } from "../src/model/ids/projectile";
+import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
+import { AtLeast } from "../src/model/utility-types";
+import { StringRefUtils } from "../src/services/utils/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
-import { ImmunityConfig } from "../src/model/final/immunity";
-import { AtLeast } from "../src/model/utility-types";
-import { Effect } from "../src/model/spell-item/effect";
-import { StringRefUtils } from "../src/services/utils/string-ref.utils";
-import { JEWEL_SLOTS } from "../src/model/creature/item";
 
 export const IMMUNITIES: (AtLeast<
   ImmunityConfig,
@@ -349,7 +349,11 @@ export const IMMUNITIES: (AtLeast<
     name: "causeWoundSpells",
     type: "immunity",
     stringRef: "common.immunity.causeWoundSpells",
-    spellGroups: ["causeWounds"],
+    effects: ["LIGHT", "SERIOUS", "CRITICAL"].map((resource) => ({
+      opcode: EffectTypeEnum.ProtectionFromResource,
+      type: "ANYONE",
+      resource,
+    })),
     displaySpellIneffective: true,
   },
   {

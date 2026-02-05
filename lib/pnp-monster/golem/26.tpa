@@ -34,7 +34,7 @@ COPY_EXISTING ~ja#1m26.SPL~  ~override~
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10202)
 	LPF ADD_SPELL_HEADER INT_VAR type=2 location=4 target=5 speed=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~ja#1m26~)) + 1 STR_VAR icon="SPWI502B" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~GENERAL~ ~UNDEAD~) parameter2=3 timing=1 probability1=100 STR_VAR resource="ja#1m26" END
-	LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~JA_POISON_IMMUNITY~ RET row col END
+	LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~POISON_IMMUNITY~ RET row col END
 	PATCH_IF row != "-1" BEGIN
 		LPF ADD_EFFECT INT_VAR header=1 opcode=324 target=2 power=1 parameter2=row duration=1 probability1=100 STR_VAR resource="ja#1m26" END
 	END

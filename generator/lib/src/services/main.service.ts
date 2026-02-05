@@ -20,7 +20,7 @@ class MainService {
       descriptionService.generateCreatureItems(family.items);
       if (families.includes(family.id)) {
         throw new Error(
-          `Family '${MonsterFamilyEnum[family.id]}' already declared`
+          `Family '${MonsterFamilyEnum[family.id]}' already declared`,
         );
       }
       families.push(family.id);
@@ -45,14 +45,14 @@ class MainService {
     if (creature.valid === undefined) {
       console.log(
         `${figureSet.warning} ${translationService.from(
-          creature.name
-        )} has not been validated, you must call validate`
+          creature.name,
+        )} has not been validated, you must call validate`,
       );
     } else if (creature.valid === false) {
       console.log(
         `${figureSet.warning} ${translationService.from(
-          creature.name
-        )} is not valid, please fix it !`
+          creature.name,
+        )} is not valid, please fix it !`,
       );
     }
     return !!creature.valid;
@@ -65,7 +65,6 @@ class MainService {
   generateCommonCode() {
     weiduCoreService.generateSpellStates();
     weiduCoreService.generateProjectiles();
-    weiduCoreService.generateProtectionSpells();
     weiduFunctionService.generateSpellResources();
     weiduFunctionService.generateSpellFunctions();
     weiduFunctionService.generateImmunities();

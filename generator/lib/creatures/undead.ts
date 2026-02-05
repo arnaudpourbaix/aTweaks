@@ -97,7 +97,7 @@ class Undead extends Creature {
   createClaws(
     diceThrown: number,
     diceSize: number,
-    castSpell?: WeaponCastSpell
+    castSpell?: WeaponCastSpell,
   ) {
     return this.addWeapon({
       weapon: {
@@ -120,7 +120,7 @@ class Undead extends Creature {
   createJaws(
     diceThrown: number,
     diceSize: number,
-    castSpells?: WeaponCastSpell[]
+    castSpells?: WeaponCastSpell[],
   ) {
     return this.addWeapon({
       weapon: {
@@ -532,7 +532,7 @@ class Undead extends Creature {
     if (greater) {
       disease.push(
         { type: DiseaseTypeEnum.ReduceStrengthByAmount, amount: 1 },
-        { type: DiseaseTypeEnum.ReduceConstitutionByAmount, amount: 1 }
+        { type: DiseaseTypeEnum.ReduceConstitutionByAmount, amount: 1 },
       );
     }
     const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) =>
@@ -546,8 +546,8 @@ class Undead extends Creature {
             timing: EffectTimingEnum.DelayPermanent,
             duration: (i + 1) * interval,
             dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
-          } as Effect)
-      )
+          }) as Effect,
+      ),
     ).flat();
     return this.addSpell({
       name: "monster.undead.ability.mummyRottingDisease.name",
@@ -1332,7 +1332,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         intelligence: 18,
         wisdom: 22,
         charisma: 20,
-        ac: -2,
+        ac: 10, //FIXME: -2
         apr: 1,
         xpv: 16000,
         alignment: "LAWFUL_EVIL",
@@ -1358,14 +1358,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
           memorized: [
             // level 1 (12):
             { file: FNP_SPELLS.CauseDisease.file, memorizedCount: 3 },
-            { file: SPELLS.Command, memorizedCount: 3 },
             { file: FNP_SPELLS.Doom.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
+            { file: SPELLS.Command, memorizedCount: 6 },
+            // { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
             // level 2 (12):
-            { file: FNP_SPELLS.CauseModerateWounds.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.MiscastMagic.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.RigidThinking.file, memorizedCount: 2 },
+            { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 5 },
+            { file: FNP_SPELLS.RigidThinking.file, memorizedCount: 4 },
             { file: FNP_SPELLS.Shatter.file, memorizedCount: 2 },
             { file: FNP_SPELLS.Shield.file, memorizedCount: 1 },
             // level 3 (12):
@@ -1428,11 +1426,20 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     greater.setBehavior({
       abilities: [
-        this.ability(Ids.GreaterMummyFearAura),
-        this.preset(FNP_SPELLS.CauseDisease.file),
-        this.preset(FNP_SPELLS.Doom.file),
-        this.preset(FNP_SPELLS.FrostFingers.file),
-        this.preset(SPELLS.Command),
+        // this.ability(Ids.GreaterMummyFearAura),
+        // this.preset(FNP_SPELLS.DemiShadowMonsters.file),
+        // this.preset(FNP_SPELLS.AnimateDead.file),
+        // this.preset(FNP_SPELLS.CircleOfBones.file),
+        // this.preset(FNP_SPELLS.CauseCriticalWounds.file),
+        // this.preset(FNP_SPELLS.ShadowMonsters.file),
+        // this.preset(FNP_SPELLS.CauseSeriousWounds.file),
+        // this.preset(FNP_SPELLS.Shield.file),
+        // this.preset(FNP_SPELLS.RigidThinking.file),
+        // this.preset(FNP_SPELLS.Forbiddance.file),
+        // this.preset(FNP_SPELLS.Shatter.file),
+        // this.preset(FNP_SPELLS.CauseDisease.file),
+        // this.preset(FNP_SPELLS.Doom.file),
+        // this.preset(SPELLS.Command),
       ],
       dialog: ["mumgre01"],
     });

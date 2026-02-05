@@ -2,13 +2,11 @@ import * as fs from "fs";
 import path from "path";
 import { SPELL_STATES } from "../../../config/ability-presets";
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
 import { COMMON_PROJECTILES } from "../../../spells/projectiles";
 import { CR, TAB } from "../../model/constants";
 import { EquippedItem, JEWEL_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
-import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { State } from "../../state";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
@@ -23,42 +21,8 @@ class WeiduCoreService extends AbstractWeiduService {
       .join(CR);
     fs.writeFileSync(
       path.join(State.modFolder, GLOBAL_CONFIG.files.coreMonsters),
-      content
+      content,
     );
-  }
-
-  generateProtectionSpells() {
-    for (const sp of SPELL_PROTECTIONS) {
-      let file = utils.getIdsFileFromSpellProtectionStat(
-        sp.stat as SpellProtectionStat
-      );
-      let value: string | number | undefined = sp.value;
-      if (typeof value === "string" && !/\d+/.test(value) && file) {
-        this.add(
-          this.lines,
-          `OUTER_SET value=IDS_OF_SYMBOL (~${file}~ ~${value}~)`,
-          0
-        );
-        value = "%value%";
-      }
-      let stat: string | number = sp.stat;
-      if (typeof sp.stat === "string" && !sp.stat.startsWith("0x")) {
-        this.add(
-          this.lines,
-          `OUTER_SET stat=IDS_OF_SYMBOL (~stats~ ~${stat}~)`,
-          0
-        );
-        stat = "%stat%";
-      }
-      this.add(
-        this.lines,
-        `APPEND ~splprot.2da~ ~${sp.name}%TAB%${stat}%TAB%${value ?? -1}%TAB%${
-          sp.relation
-        }~ UNLESS ~${sp.name}~`,
-        0
-      );
-    }
-    this.add(this.lines, ``, 0);
   }
 
   generateSpellStates() {
@@ -66,7 +30,7 @@ class WeiduCoreService extends AbstractWeiduService {
       this.add(
         this.lines,
         `LAF ADD_IDS_ENTRY STR_VAR idsFile = "splstate.ids" identifier = "${state}" END`,
-        0
+        0,
       );
     }
     this.add(this.lines, ``, 0);
@@ -100,7 +64,7 @@ class WeiduCoreService extends AbstractWeiduService {
     this.add(
       this.lines,
       `LPF ${utils.getImmunityFunctionName(immunity.name)} END`,
-      1
+      1,
     );
     this.add(this.lines, "", 0);
   }

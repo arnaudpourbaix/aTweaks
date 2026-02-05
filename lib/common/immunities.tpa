@@ -1,5 +1,24 @@
 // Generated file (don't edit)
 
+DEFINE_ACTION_MACRO load_splprot BEGIN
+	OUTER_SET value=IDS_OF_SYMBOL (~areatype~ ~OUTDOOR~)
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x106 STR_VAR value relation="9" RET index END
+	ACTION_IF (index >= 0) BEGIN
+		OUTER_SET NOT_OUTDOOR_CHECK=index
+	END
+	OUTER_SET stat=IDS_OF_SYMBOL (~stats~ ~RESISTPOISON~)
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat STR_VAR value=100 relation="4" RET index END
+	ACTION_IF (index >= 0) BEGIN
+		OUTER_SET POISON_IMMUNITY=index
+	END
+	OUTER_SET value=IDS_OF_SYMBOL (~ea~ ~ANYONE~)
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x10a STR_VAR value relation="4" RET index END
+	ACTION_IF (index >= 0) BEGIN
+		OUTER_SET ANYONE=index
+	END
+END
+LAM load_splprot
+
 DEFINE_PATCH_FUNCTION abilityDrain_immunity
 INT_VAR
 	resist_dispel=0
@@ -110,10 +129,9 @@ INT_VAR
 	resist_dispel=0
 	duration=0
 BEGIN
-	INNER_ACTION BEGIN
-		LAF get_causeWounds_resources RET_ARRAY spells=resources END
-	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration  displaySpellIneffective=1 STR_VAR spells END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="LIGHT" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="SERIOUS" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="CRITICAL" END
 END
 
 DEFINE_PATCH_FUNCTION charm_immunity

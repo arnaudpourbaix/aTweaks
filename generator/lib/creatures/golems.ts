@@ -45,7 +45,7 @@ class Golem extends Creature {
     diceThrown: number,
     diceSize: number,
     damageType: AbilityDamageTypeEnum,
-    castSpell?: WeaponCastSpell
+    castSpell?: WeaponCastSpell,
   ) {
     return this.addWeapon({
       weapon: {
@@ -285,7 +285,7 @@ class Golem extends Creature {
             },
             {
               opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
-              type: "JA_POISON_IMMUNITY",
+              type: "POISON_IMMUNITY",
               timing: EffectTimingEnum.InstantLimited,
               duration: 1,
             },
@@ -345,7 +345,7 @@ class Golem extends Creature {
           diceSize: 4,
           amount: 10,
         },
-      })
+      }),
     );
   }
 }
