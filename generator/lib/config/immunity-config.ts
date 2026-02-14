@@ -349,7 +349,7 @@ export const IMMUNITIES: (AtLeast<
     name: "causeWoundSpells",
     type: "immunity",
     stringRef: "common.immunity.causeWoundSpells",
-    effects: ["LIGHT", "SERIOUS", "CRITICAL"].map((resource) => ({
+    effects: ["LIGHT", "SERIOUS", "CRITICAL", "HARM"].map((resource) => ({
       opcode: EffectTypeEnum.ProtectionFromResource,
       type: "ANYONE",
       resource,

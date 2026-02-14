@@ -407,14 +407,14 @@ class FeyFamily extends CreatureFamily<Fey> {
             },
             { file: this.spell(Ids.AnimalFriendship).file, memorizedCount: 1 },
             { file: this.spell(Ids.BlindingBeauty).file, memorizedCount: 1 },
-            { file: SPELLS.CureLightWounds, memorizedCount: 1 },
-            { file: SPELLS.Bless, memorizedCount: 1 },
-            { file: SPELLS.Entangle, memorizedCount: 1 },
-            { file: SPELLS.Barkskin, memorizedCount: 1 },
-            { file: SPELLS.CharmPersonOrAnimal, memorizedCount: 1 },
-            { file: SPELLS.CallLightning, memorizedCount: 1 },
-            { file: SPELLS.SummonInsects, memorizedCount: 1 },
-            { file: SPELLS.CallWoodlandBeeings, memorizedCount: 1 },
+            { file: SPELLS.CureLightWounds.file, memorizedCount: 1 },
+            { file: SPELLS.Bless.file, memorizedCount: 1 },
+            { file: SPELLS.Entangle.file, memorizedCount: 1 },
+            { file: SPELLS.Barkskin.file, memorizedCount: 1 },
+            { file: SPELLS.CharmPersonOrAnimal.file, memorizedCount: 1 },
+            { file: SPELLS.CallLightning.file, memorizedCount: 1 },
+            { file: SPELLS.SummonInsects.file, memorizedCount: 1 },
+            { file: SPELLS.CallWoodlandBeeings.file, memorizedCount: 1 },
           ],
         },
         effects: {
@@ -429,49 +429,49 @@ class FeyFamily extends CreatureFamily<Fey> {
         this.ability(Ids.BlindingBeauty),
         this.ability(Ids.PriestDimensionDoor),
         {
-          preset: SPELLS.CallWoodlandBeeings,
+          preset: SPELLS.CallWoodlandBeeings.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.Bless,
+          preset: SPELLS.Bless.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.Barkskin,
+          preset: SPELLS.Barkskin.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.CallLightning,
+          preset: SPELLS.CallLightning.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.SummonInsects,
+          preset: SPELLS.SummonInsects.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.Entangle,
+          preset: SPELLS.Entangle.file,
           spell: {
             type: "force",
             remove: true,
           },
         },
         {
-          preset: SPELLS.CharmPersonOrAnimal,
+          preset: SPELLS.CharmPersonOrAnimal.file,
           spell: {
             type: "force",
             remove: true,
@@ -479,7 +479,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         },
         this.ability(Ids.AnimalFriendship),
         {
-          preset: SPELLS.CureLightWounds,
+          preset: SPELLS.CureLightWounds.file,
           spell: {
             type: "force",
             remove: true,
@@ -578,8 +578,8 @@ class FeyFamily extends CreatureFamily<Fey> {
           memorized: [
             { file: this.spell(Ids.CharmSong).file, memorizedCount: 1 },
             { file: this.spell(Ids.FogCloud).file, memorizedCount: 1 },
-            { file: SPELLS.PolymorphSelf, memorizedCount: 1 },
-            { file: SPELLS.ImprovedInvisibility, memorizedCount: 1 },
+            { file: SPELLS.PolymorphSelf.file, memorizedCount: 1 },
+            { file: SPELLS.ImprovedInvisibility.file, memorizedCount: 1 },
           ],
         },
         proficiencies: [
@@ -636,7 +636,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       dialog: ["MEIALA", "NTSILUA", "SIL", "LARRIA"],
       abilities: [
         {
-          preset: SPELLS.ImprovedInvisibility,
+          preset: SPELLS.ImprovedInvisibility.file,
           spell: {
             type: "force",
             remove: true,
@@ -660,7 +660,7 @@ class FeyFamily extends CreatureFamily<Fey> {
             },
             {
               name: "HaveSpellRES",
-              params: [SPELLS.ImprovedInvisibility],
+              params: [SPELLS.ImprovedInvisibility.file],
               negation: true,
             },
           ],
@@ -748,7 +748,7 @@ class FeyFamily extends CreatureFamily<Fey> {
     return this.addSpell({
       name: "monster.fey.ability.dryadDireCharm",
       id: Ids.DryadCharm,
-      icon: SPELLS.DireCharm,
+      icon: SPELLS.DireCharm.file,
       castingSound: "CAS_M05",
       flags: [SpellFlagEnum.BreakSanctuary],
       type: SpellTypeEnum.Innate,
@@ -775,7 +775,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         },
       ],
       ability: {
-        preset: SPELLS.DireCharm,
+        preset: SPELLS.DireCharm.file,
         spell: {
           type: "force",
           remove: true,
@@ -868,7 +868,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       name: "monster.fey.ability.entangle.name",
       id: Ids.Entangle,
       description: "monster.fey.ability.entangle.description",
-      icon: SPELLS.Entangle,
+      icon: SPELLS.Entangle.file,
       castingSound: "CAS_P08",
       type: SpellTypeEnum.Innate,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
@@ -901,7 +901,7 @@ class FeyFamily extends CreatureFamily<Fey> {
                   idsEntry: c[1],
                   timing: EffectTimingEnum.InstantLimited,
                   duration: 6,
-                }
+                },
             ),
             {
               opcode: EffectTypeEnum.MovementRateBonus,
@@ -953,7 +953,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         },
       ],
       ability: {
-        preset: SPELLS.Entangle,
+        preset: SPELLS.Entangle.file,
         spell: {
           type: "force",
           remove: true,
@@ -977,7 +977,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       name: "monster.fey.ability.animalFriendship.name",
       id: Ids.AnimalFriendship,
       description: "monster.fey.ability.animalFriendship.description",
-      icon: SPELLS.CharmPersonOrAnimal,
+      icon: SPELLS.CharmPersonOrAnimal.file,
       flags: [SpellFlagEnum.CastableWhenSilenced],
       castingSound: "CORAN03",
       type: SpellTypeEnum.Innate,
@@ -1058,7 +1058,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       castingAnimation: ItemAbilityCastingAnimationEnum.Divination,
       primaryType: ItemAbilityPrimaryTypeEnum.Diviner,
       secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
-      icon: SPELLS.FindTraps,
+      icon: SPELLS.FindTraps.file,
       options: {
         renew: 16,
       },
@@ -1127,7 +1127,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       name: "monster.fey.ability.blindingBeauty.name",
       doc: false,
       type: SpellTypeEnum.Innate,
-      icon: SPELLS.BlindingBeauty,
+      icon: SPELLS.BlindingBeauty.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -1165,7 +1165,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       id: Ids.BlindingBeauty,
       description: "monster.fey.ability.blindingBeauty.description",
       type: SpellTypeEnum.Innate,
-      icon: SPELLS.BlindingBeauty,
+      icon: SPELLS.BlindingBeauty.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: {
         renew: 1,
@@ -1237,7 +1237,7 @@ class FeyFamily extends CreatureFamily<Fey> {
     const technical = this.addSpell({
       name: "monster.fey.ability.charmSong.name",
       doc: false,
-      icon: SPELLS.DireCharm,
+      icon: SPELLS.DireCharm.file,
       castingSound: "SIRIN05",
       flags: [SpellFlagEnum.BreakSanctuary],
       type: SpellTypeEnum.Innate,
@@ -1266,7 +1266,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       name: "monster.fey.ability.charmSong.name",
       id: Ids.CharmSong,
       description: "monster.fey.ability.charmSong.description",
-      icon: SPELLS.DireCharm,
+      icon: SPELLS.DireCharm.file,
       castingSound: "SIRIN05",
       flags: [SpellFlagEnum.BreakSanctuary, SpellFlagEnum.IgnoreDead],
       type: SpellTypeEnum.Innate,
@@ -1303,7 +1303,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         },
       ],
       ability: {
-        preset: SPELLS.DireCharm,
+        preset: SPELLS.DireCharm.file,
         spell: {
           type: "force",
           remove: true,
@@ -1380,7 +1380,7 @@ class FeyFamily extends CreatureFamily<Fey> {
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
       primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
       secondaryType: ItemAbilitySecondaryTypeEnum.Battleground,
-      icon: SPELLS.Feeblemind,
+      icon: SPELLS.Feeblemind.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -1487,9 +1487,9 @@ class FeyFamily extends CreatureFamily<Fey> {
         {
           name: "Or",
           triggers: [
-            { name: "HaveSpellRES", params: [SPELLS.CallLightning] },
-            { name: "HaveSpellRES", params: [SPELLS.CharmPersonOrAnimal] },
-            { name: "HaveSpellRES", params: [SPELLS.SummonInsects] },
+            { name: "HaveSpellRES", params: [SPELLS.CallLightning.file] },
+            { name: "HaveSpellRES", params: [SPELLS.CharmPersonOrAnimal.file] },
+            { name: "HaveSpellRES", params: [SPELLS.SummonInsects.file] },
           ],
         },
       ],

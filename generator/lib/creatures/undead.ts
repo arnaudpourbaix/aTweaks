@@ -149,7 +149,7 @@ class Undead extends Creature {
       description: "monster.undead.ability.bansheeFearAura.description",
       id: Ids.BansheeFearAura,
       memorizedCount: 1,
-      icon: SPELLS.CloakOfFear,
+      icon: SPELLS.CloakOfFear.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 1 },
       headers: [
@@ -167,7 +167,7 @@ class Undead extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.CloakOfFear,
+        preset: SPELLS.CloakOfFear.file,
         spell: {
           type: "force",
           remove: true,
@@ -185,7 +185,7 @@ class Undead extends Creature {
       description: "monster.undead.ability.deathWail.description",
       id: Ids.DeathWail,
       memorizedCount: 1,
-      icon: SPELLS.WailOfTheBanshee,
+      icon: SPELLS.WailOfTheBanshee.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -219,7 +219,7 @@ class Undead extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.WailOfTheBanshee,
+        preset: SPELLS.WailOfTheBanshee.file,
         spell: {
           type: "force",
           remove: true,
@@ -287,7 +287,7 @@ class Undead extends Creature {
         //TODO: level 24 header with 6d10 cold and 3d10 crushing, who is using this one??
       ],
       ability: {
-        preset: SPELLS.IceStorm,
+        preset: SPELLS.IceStorm.file,
         spell: {
           type: "noDec",
         },
@@ -632,7 +632,7 @@ class Undead extends Creature {
       description,
       id: greater ? Ids.GreaterMummyFearAura : Ids.MummyFearAura,
       memorizedCount: 1,
-      icon: SPELLS.CloakOfFear,
+      icon: SPELLS.CloakOfFear.file,
       options: { renew: 2 },
       headers: [
         {
@@ -667,7 +667,7 @@ class Undead extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.CloakOfFear,
+        preset: SPELLS.CloakOfFear.file,
         spell: {
           type: "force",
           remove: true,
@@ -947,11 +947,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
         spells: {
           memorized: [
-            { file: SPELLS.DetectInvisibility, memorizedCount: 1 },
-            { file: SPELLS.DispelMagic, memorizedCount: 2 },
-            { file: SPELLS.PowerWordBlind, memorizedCount: 1 },
-            { file: SPELLS.PowerWordKill, memorizedCount: 1 },
-            { file: SPELLS.PowerWordStun, memorizedCount: 1 },
+            { file: SPELLS.DetectInvisibility.file, memorizedCount: 1 },
+            { file: SPELLS.DispelMagic.file, memorizedCount: 2 },
+            { file: SPELLS.PowerWordBlind.file, memorizedCount: 1 },
+            { file: SPELLS.PowerWordKill.file, memorizedCount: 1 },
+            { file: SPELLS.PowerWordStun.file, memorizedCount: 1 },
             // Symbol of Pain: rr#spain.spl
           ],
         },
@@ -971,7 +971,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     knight.setBehavior({
       restHeal: true,
       abilities: [
-        { preset: SPELLS.DetectInvisibility, spell: { type: "noDec" } },
+        { preset: SPELLS.DetectInvisibility.file, spell: { type: "noDec" } },
         this.ability(Ids.WallOfIce),
       ],
     });
@@ -1239,7 +1239,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Mummy,
       name: "monster.undead.name.mummy",
       files: [
-        // "BDMUMM01", // Mummy //FIXME: just for test!
+        "BDMUMM01", // Mummy
         "BDMUMMY", // Fanegonorom
         "AC#FPMMY", // Bog Mummy
         "mummy",
@@ -1321,7 +1321,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "mumgre01",
         "riftcr03",
         "MUMMYX1", // TDD
-        "BDMUMM01", //FIXME: just for test!
       ],
       data: {
         level1: { pnpValue: 12, value: 20, type: "caster" },
@@ -1332,7 +1331,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         intelligence: 18,
         wisdom: 22,
         charisma: 20,
-        ac: 10, //FIXME: -2
+        ac: -2,
         apr: 1,
         xpv: 16000,
         alignment: "LAWFUL_EVIL",
@@ -1356,10 +1355,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
         spells: {
           memorized: [
+            // TODO: handle different spellbooks depending on installed mods/components (SR, FnP, ...)
             // level 1 (12):
             { file: FNP_SPELLS.CauseDisease.file, memorizedCount: 3 },
             { file: FNP_SPELLS.Doom.file, memorizedCount: 3 },
-            { file: SPELLS.Command, memorizedCount: 6 },
+            { file: SPELLS.Command.file, memorizedCount: 6 },
             // { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
             // level 2 (12):
             { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 5 },
@@ -1368,33 +1368,32 @@ class UndeadFamily extends CreatureFamily<Undead> {
             { file: FNP_SPELLS.Shield.file, memorizedCount: 1 },
             // level 3 (12):
             { file: FNP_SPELLS.CircleOfBones.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.CloakOfFear.file, memorizedCount: 3 },
             { file: FNP_SPELLS.ShadowMonsters.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.CauseSeriousWounds.file, memorizedCount: 3 },
+            { file: FNP_SPELLS.CauseSeriousWounds.file, memorizedCount: 6 },
             // level 4 (11):
             { file: FNP_SPELLS.AnimateDead.file, memorizedCount: 2 },
             { file: FNP_SPELLS.CauseCriticalWounds.file, memorizedCount: 2 },
             { file: FNP_SPELLS.DemiShadowMonsters.file, memorizedCount: 2 },
             { file: FNP_SPELLS.Emotion.file, memorizedCount: 1 },
             { file: FNP_SPELLS.GreaterMalison.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.Poison.file, memorizedCount: 2 },
+            { file: SPELLS.Poison.file, memorizedCount: 2 },
             { file: FNP_SPELLS.WavesOfFatigue.file, memorizedCount: 1 },
             // level 5 (9):
             { file: FNP_SPELLS.Chaos.file, memorizedCount: 1 },
             { file: FNP_SPELLS.CloudOfPestilence.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.MassCauseLightWounds.file, memorizedCount: 1 },
+            { file: SPELLS.MassCauseLightWounds.file, memorizedCount: 1 },
             { file: FNP_SPELLS.Shades.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.SlayLiving.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.WavesOfAgony.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.GreaterCommand.file, memorizedCount: 1 },
+            { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
+            { file: SPELLS.WavesOfAgony.file, memorizedCount: 2 },
+            { file: SPELLS.GreaterCommand.file, memorizedCount: 1 },
             // level 6 (5):
-            { file: FNP_SPELLS.DolorousDecay.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.Harm.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.MagicResistance.file, memorizedCount: 1 },
+            { file: SPELLS.DolorousDecay.file, memorizedCount: 2 },
+            { file: SPELLS.Harm.file, memorizedCount: 1 },
+            { file: SPELLS.MagicResistance.file, memorizedCount: 1 },
             { file: FNP_SPELLS.SummonShadows.file, memorizedCount: 1 },
             // level 7 (2):
-            { file: FNP_SPELLS.FingerOfDeath.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.Wither.file, memorizedCount: 1 },
+            { file: SPELLS.FingerOfDeath.file, memorizedCount: 1 },
+            { file: SPELLS.Wither.file, memorizedCount: 1 },
           ],
         },
       },
@@ -1426,20 +1425,37 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     greater.setBehavior({
       abilities: [
-        // this.ability(Ids.GreaterMummyFearAura),
-        // this.preset(FNP_SPELLS.DemiShadowMonsters.file),
-        // this.preset(FNP_SPELLS.AnimateDead.file),
-        // this.preset(FNP_SPELLS.CircleOfBones.file),
-        // this.preset(FNP_SPELLS.CauseCriticalWounds.file),
-        // this.preset(FNP_SPELLS.ShadowMonsters.file),
-        // this.preset(FNP_SPELLS.CauseSeriousWounds.file),
-        // this.preset(FNP_SPELLS.Shield.file),
-        // this.preset(FNP_SPELLS.RigidThinking.file),
-        // this.preset(FNP_SPELLS.Forbiddance.file),
-        // this.preset(FNP_SPELLS.Shatter.file),
-        // this.preset(FNP_SPELLS.CauseDisease.file),
-        // this.preset(FNP_SPELLS.Doom.file),
-        // this.preset(SPELLS.Command),
+        this.ability(Ids.GreaterMummyFearAura),
+        this.preset(FNP_SPELLS.GreaterMalison.file),
+        this.preset(SPELLS.FingerOfDeath.file),
+        this.preset(SPELLS.Wither.file),
+        this.preset(SPELLS.DolorousDecay.file),
+        this.preset(SPELLS.Harm.file),
+        this.preset(SPELLS.MagicResistance.file),
+        this.preset(FNP_SPELLS.SummonShadows.file),
+        this.preset(FNP_SPELLS.Chaos.file),
+        this.preset(FNP_SPELLS.CloudOfPestilence.file),
+        this.preset(SPELLS.MassCauseLightWounds.file),
+        this.preset(FNP_SPELLS.Shades.file),
+        this.preset(SPELLS.SlayLiving.file),
+        this.preset(SPELLS.WavesOfAgony.file),
+        this.preset(SPELLS.GreaterCommand.file),
+        this.preset(FNP_SPELLS.Emotion.file),
+        this.preset(SPELLS.Poison.file),
+        this.preset(FNP_SPELLS.WavesOfFatigue.file),
+        this.preset(FNP_SPELLS.DemiShadowMonsters.file),
+        this.preset(FNP_SPELLS.CauseCriticalWounds.file),
+        this.preset(FNP_SPELLS.AnimateDead.file),
+        this.preset(FNP_SPELLS.CircleOfBones.file),
+        this.preset(FNP_SPELLS.ShadowMonsters.file),
+        this.preset(FNP_SPELLS.CauseSeriousWounds.file),
+        this.preset(FNP_SPELLS.Shield.file),
+        this.preset(FNP_SPELLS.RigidThinking.file),
+        this.preset(FNP_SPELLS.Forbiddance.file),
+        this.preset(FNP_SPELLS.Shatter.file),
+        this.preset(FNP_SPELLS.CauseDisease.file),
+        this.preset(FNP_SPELLS.Doom.file),
+        this.preset(SPELLS.Command.file),
       ],
       dialog: ["mumgre01"],
     });
@@ -1543,9 +1559,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
     skeleton.setBehavior({
       abilities: [
         {
-          preset: SPELLS.Slow,
+          preset: SPELLS.Slow.file,
           spell: {
-            resource: SPELLS.VortexWeb,
+            resource: SPELLS.VortexWeb.file,
             type: "force",
           },
           timer: { name: "VortexWeb", value: 30 },

@@ -287,7 +287,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       options: {
         renew: 1,
       },
-      icon: SPELLS.FleshToStone,
+      icon: SPELLS.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,
@@ -352,7 +352,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       groups: ["petrification"],
       doc: false,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      icon: SPELLS.FleshToStone,
+      icon: SPELLS.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,
@@ -403,7 +403,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       options: {
         renew: 1,
       },
-      icon: SPELLS.FleshToStone,
+      icon: SPELLS.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,

@@ -86,7 +86,7 @@ class Slime extends Creature {
       id,
       name: "monster.slime.ability.split.name",
       description,
-      icon: SPELLS.MirrorImages,
+      icon: SPELLS.MirrorImages.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Magical,
@@ -863,7 +863,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
       name: "monster.slime.ability.toxicVapors.name",
       description: "monster.slime.ability.toxicVapors.description",
       groups: ["poison"],
-      icon: SPELLS.StinkingCloud,
+      icon: SPELLS.StinkingCloud.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 1 },
       headers: [
@@ -893,7 +893,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
                   idsFile: c[0],
                   idsEntry: c[1],
                   timing: EffectTimingEnum.InstantPermanentUntilDeath,
-                }
+                },
             ),
             {
               opcode: EffectTypeEnum.ModifyAttacksPerRound,

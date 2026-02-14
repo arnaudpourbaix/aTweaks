@@ -1,7 +1,8 @@
-import effectFactory from "../src/factories/effect.factory";
+import presetFactory from "../src/factories/preset.factory";
 import triggerFactory from "../src/factories/trigger.factory";
 import { Durations, ScriptTarget } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
+import { AbilityPreset } from "../src/model/misc";
 import { TargetList } from "../src/model/script/target";
 import { FNP_SPELLS, SPELLS } from "./spell-names";
 
@@ -108,16 +109,12 @@ const HOLD_TARGET_LISTS: TargetList[] = [
   },
 ];
 
-export const ABILITY_PRESETS: {
-  preset: string;
-  ability: RawCreatureAbility;
-}[] = [
+export const ABILITY_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.Invisibility,
+    preset: SPELLS.Invisibility.file,
     ability: {
       name: "ability.invisibility",
       spell: {
-        id: "WIZARD_INVISIBILITY",
         excludeStateChecks: ["STATE_INVISIBLE"],
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
@@ -127,11 +124,10 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.ImprovedInvisibility,
+    preset: SPELLS.ImprovedInvisibility.file,
     ability: {
       name: "ability.improvedInvisibility",
       spell: {
-        id: "WIZARD_IMPROVED_INVISIBILITY",
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
@@ -141,88 +137,93 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Domination,
+    preset: SPELLS.Domination.file,
     ability: {
       name: "ability.domination",
       targets: CHARM_TARGET_LISTS,
       spell: {
-        id: "WIZARD_DOMINATION",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.DireCharm,
+    preset: SPELLS.DireCharm.file,
     ability: {
       name: "ability.direCharm",
       targets: CHARM_TARGET_LISTS,
       spell: {
-        id: "WIZARD_DIRE_CHARM",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
-      triggers: triggerFactory.haveSpellRES([SPELLS.Domination], true),
+      triggers: triggerFactory.haveSpellRES([SPELLS.Domination.file], true),
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.CharmPerson,
+    preset: SPELLS.CharmPerson.file,
     ability: {
       name: "ability.charmPerson",
       targets: CHARM_TARGET_LISTS,
       spell: {
-        id: "WIZARD_CHARM_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: triggerFactory.haveSpellRES(
-        [SPELLS.Domination, SPELLS.DireCharm],
+        [SPELLS.Domination.file, SPELLS.DireCharm.file],
         true,
       ),
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.CharmPersonOrAnimal,
+    preset: SPELLS.CharmPersonOrAnimal.file,
     ability: {
       name: "ability.charmPersonOrAnimal",
       targets: CHARM_TARGET_LISTS,
       spell: {
-        id: "CLERIC_CHARM_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: triggerFactory.haveSpellRES(
-        [SPELLS.Domination, SPELLS.DireCharm],
+        [SPELLS.Domination.file, SPELLS.DireCharm.file],
         true,
       ),
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.PowerWordSleep,
+    preset: SPELLS.PowerWordSleep.file,
     ability: {
       name: "ability.powerWordSleep",
       targets: SLEEP_TARGET_LISTS,
       spell: {
-        id: "WIZARD_POWER_WORD_SLEEP",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Sleep,
+    preset: SPELLS.Sleep.file,
     ability: {
       name: "ability.sleep",
       targets: SLEEP_TARGET_LISTS,
       spell: {
-        id: "WIZARD_SLEEP",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Darkness15Radius,
+    preset: SPELLS.GreaterCommand.file,
+    ability: {
+      name: "ability.sleep",
+      targets: SLEEP_TARGET_LISTS,
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Darkness15Radius.file,
     ability: {
       name: "ability.darkness15Radius",
       targets: [
@@ -234,42 +235,38 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_DARKNESS_15_FOOT",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.ConeOfCold,
+    preset: SPELLS.ConeOfCold.file,
     ability: {
       name: "ability.coneOfCold",
       targets: [{ name: "NearestEnemies", randomOrder: true }],
       spell: {
-        id: "WIZARD_CONE_OF_COLD",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.MagicMissiles,
+    preset: SPELLS.MagicMissiles.file,
     ability: {
       name: "ability.magicMissiles",
       targets: [{ name: "PCSpellcasters", randomOrder: true }],
       spell: {
-        id: "WIZARD_MAGIC_MISSILE",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Bless,
+    preset: SPELLS.Bless.file,
     ability: {
       name: "ability.bless",
       spell: {
-        id: "CLERIC_BLESS",
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
@@ -277,61 +274,44 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Command,
+    preset: SPELLS.Command.file,
     ability: {
       name: "ability.command",
       targets: SLEEP_TARGET_LISTS,
       spell: {
-        id: "CLERIC_COMMAND",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Horror,
+    preset: SPELLS.Horror.file,
     ability: {
       name: "ability.horror",
       targets: FEAR_TARGET_LISTS,
       spell: {
-        id: "WIZARD_HORROR",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
-  {
-    preset: SPELLS.CloakOfFear,
-    ability: {
+  ...presetFactory.create(
+    [SPELLS.CloakOfFear.file, FNP_SPELLS.CloakOfFear.file],
+    {
       name: "ability.cloakOfFear",
       targets: FEAR_TARGET_LISTS,
       spell: {
-        id: "CLERIC_CLOAK_OF_FEAR",
         selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
-  },
+  ),
   {
-    preset: FNP_SPELLS.CloakOfFear.file,
-    ability: {
-      name: "ability.cloakOfFear",
-      targets: FEAR_TARGET_LISTS,
-      spell: {
-        resource: FNP_SPELLS.CloakOfFear.file,
-        selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      requireVocal: true,
-    },
-  },
-  {
-    preset: SPELLS.ResistFear,
+    preset: SPELLS.ResistFear.file,
     ability: {
       name: "ability.resistFear",
       spell: {
-        id: "CLERIC_REMOVE_FEAR",
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
@@ -339,11 +319,10 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Chant,
+    preset: SPELLS.Chant.file,
     ability: {
       name: "ability.chant",
       spell: {
-        id: "CLERIC_CHANT",
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
@@ -351,31 +330,29 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.HoldPerson,
+    preset: SPELLS.HoldPerson.file,
     ability: {
       name: "ability.holdPerson",
       targets: HOLD_TARGET_LISTS,
       spell: {
-        id: "CLERIC_HOLD_PERSON",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.HoldPersonOrAnimal,
+    preset: SPELLS.HoldPersonOrAnimal.file,
     ability: {
       name: "ability.HoldPersonOrAnimal",
       targets: HOLD_TARGET_LISTS,
       spell: {
-        id: "CLERIC_HOLD_ANIMAL",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Silence,
+    preset: SPELLS.Silence.file,
     ability: {
       name: "ability.silence",
       targets: [
@@ -393,14 +370,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_SILENCE_15_FOOT",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.CallLightning,
+    preset: SPELLS.CallLightning.file,
     ability: {
       name: "ability.callLightning",
       targets: [
@@ -416,14 +392,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_CALL_LIGHTNING",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.GlyphOfWarding,
+    preset: SPELLS.GlyphOfWarding.file,
     ability: {
       name: "ability.glyphOfWarding",
       targets: [
@@ -433,14 +408,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_GLYPH_OF_WARDING",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.MiscastMagic,
+    preset: SPELLS.MiscastMagic.file,
     ability: {
       name: "ability.miscastMagic",
       targets: [
@@ -451,14 +425,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_MISCAST_MAGIC",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.RigidThinking,
+    preset: SPELLS.RigidThinking.file,
     ability: {
       name: "ability.rigidThinking",
       targets: [
@@ -469,14 +442,44 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_RIGID_THINKING",
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  ...presetFactory.create([SPELLS.Chaos.file, FNP_SPELLS.Chaos.file], {
+    name: "ability.Chaos",
+    targets: [
+      {
+        name: "NearestEnemies",
+        includeStatus: ["Able"],
+        randomOrder: true,
+      },
+    ],
+    spell: {
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+    requireVocal: true,
+  }),
+  {
+    preset: FNP_SPELLS.Emotion.file,
+    ability: {
+      name: "ability.Emotion",
+      targets: [
+        {
+          name: "NearestEnemies",
+          includeStatus: ["Able"],
+          randomOrder: true,
+        },
+      ],
+      spell: {
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.SummonInsects,
+    preset: SPELLS.SummonInsects.file,
     ability: {
       name: "ability.summonInsects",
       targets: [
@@ -487,14 +490,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_SUMMON_INSECTS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.DimensionDoor,
+    preset: SPELLS.DimensionDoor.file,
     ability: {
       name: "ability.dimensionDoor",
       targets: [
@@ -505,7 +507,6 @@ export const ABILITY_PRESETS: {
       ],
       range: 900,
       spell: {
-        id: "WIZARD_DIMENSION_DOOR",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -533,7 +534,7 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_DIMENSION_DOOR",
+        id: SPELLS.DimensionDoor.id,
         targetName: "RR#TRAT",
       },
       requireVocal: false,
@@ -547,7 +548,7 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Entangle,
+    preset: SPELLS.Entangle.file,
     ability: {
       name: "ability.entangle",
       targets: [
@@ -558,19 +559,17 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "CLERIC_ENTANGLE",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.CureLightWounds,
+    preset: SPELLS.CureLightWounds.file,
     ability: {
       name: "ability.cureLightWounds",
       //TODO: target
       spell: {
-        id: "CLERIC_CURE_LIGHT_WOUNDS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -578,11 +577,10 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Barkskin,
+    preset: SPELLS.Barkskin.file,
     ability: {
       name: "ability.barkskin",
       spell: {
-        id: "CLERIC_BARKSKIN",
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
@@ -590,7 +588,7 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.AnimalSummoning4,
+    preset: SPELLS.AnimalSummoning4.file,
     ability: {
       name: "ability.animalSummoning4",
       targets: [
@@ -600,19 +598,16 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        //id: "CLERIC_ANIMAL_SUMMONING_4", // id depends on installed mods (can be 1 or 4)
-        resource: "SPPR402",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.CallWoodlandBeeings,
+    preset: SPELLS.CallWoodlandBeeings.file,
     ability: {
       name: "ability.callWoodlandBeeings",
       spell: {
-        id: "CLERIC_CALL_WOODLAND_BEINGS",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -625,35 +620,32 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.Slow,
+    preset: SPELLS.Slow.file,
     ability: {
       name: "ability.slow",
       targets: [{ name: "NearestEnemies", limit: 6 }],
       spell: {
-        id: "WIZARD_SLOW",
         excludeStateChecks: ["STATE_SLOWED"],
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.Web,
+    preset: SPELLS.Web.file,
     ability: {
       name: "ability.web",
       targets: HOLD_TARGET_LISTS,
       spell: {
-        id: "WIZARD_WEB",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.DetectInvisibility,
+    preset: SPELLS.DetectInvisibility.file,
     ability: {
       name: "ability.detectInvisibility",
       spell: {
-        id: "WIZARD_DETECT_INVISIBILITY",
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
@@ -670,12 +662,11 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.WailOfTheBanshee,
+    preset: SPELLS.WailOfTheBanshee.file,
     ability: {
       name: "ability.wailOfTheBanshee",
       targets: [{ name: "Players" }],
       spell: {
-        id: "WIZARD_WAIL_OF_THE_BANSHEE",
         selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
@@ -683,7 +674,7 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.IceStorm,
+    preset: SPELLS.IceStorm.file,
     ability: {
       name: "ability.iceStorm",
       targets: [
@@ -694,14 +685,13 @@ export const ABILITY_PRESETS: {
       ],
       minRange: 20,
       spell: {
-        id: "WIZARD_ICE_STORM",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.DispelMagic,
+    preset: SPELLS.DispelMagic.file,
     ability: {
       name: "ability.dispelMagic",
       targets: [
@@ -756,7 +746,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_TRUE_DISPEL_MAGIC",
         probability: DEFAULT_SPELL_PROBABILITY,
         excludeStateChecks: ["STATE_DISABLED"],
       },
@@ -770,7 +759,7 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.PowerWordBlind,
+    preset: SPELLS.PowerWordBlind.file,
     ability: {
       name: "ability.powerWordBlind",
       targets: [
@@ -780,7 +769,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_POWER_WORD_BLIND",
         excludeStateChecks: ["STATE_BLIND", "STATE_DISABLED"],
         probability: DEFAULT_SPELL_PROBABILITY,
       },
@@ -788,7 +776,7 @@ export const ABILITY_PRESETS: {
     },
   },
   {
-    preset: SPELLS.PowerWordStun,
+    preset: SPELLS.PowerWordStun.file,
     ability: {
       name: "ability.powerWordStun",
       targets: [
@@ -799,14 +787,13 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_POWER_WORD_STUN",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
     },
   },
   {
-    preset: SPELLS.PowerWordKill,
+    preset: SPELLS.PowerWordKill.file,
     ability: {
       name: "ability.powerWordKill",
       targets: [
@@ -823,7 +810,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        id: "WIZARD_POWER_WORD_KILL",
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -846,7 +832,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.CauseDisease.file,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -857,17 +842,38 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.CauseLightWounds",
       spell: {
-        resource: FNP_SPELLS.CauseLightWounds.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL"], true),
+        ...triggerFactory.hasItem(
+          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
+          true,
+        ),
         ...triggerFactory.haveSpellRES(
           [
             FNP_SPELLS.CauseSeriousWounds.file,
             FNP_SPELLS.CauseCriticalWounds.file,
+            FNP_SPELLS.Harm.file,
+            SPELLS.SlayLiving.file,
           ],
+          true,
+        ),
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.MassCauseLightWounds.file,
+    ability: {
+      name: "ability.MassCauseLightWounds",
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      triggers: [
+        ...triggerFactory.hasItem(
+          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
           true,
         ),
       ],
@@ -879,14 +885,20 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.CauseSeriousWounds",
       spell: {
-        resource: FNP_SPELLS.CauseSeriousWounds.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL"], true),
+        ...triggerFactory.hasItem(
+          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
+          true,
+        ),
         ...triggerFactory.haveSpellRES(
-          [FNP_SPELLS.CauseCriticalWounds.file],
+          [
+            FNP_SPELLS.CauseCriticalWounds.file,
+            FNP_SPELLS.Harm.file,
+            SPELLS.SlayLiving.file,
+          ],
           true,
         ),
       ],
@@ -898,38 +910,88 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.CauseCriticalWounds",
       spell: {
-        resource: FNP_SPELLS.CauseCriticalWounds.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
-      triggers: triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL"], true),
+      triggers: [
+        ...triggerFactory.hasItem(
+          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
+          true,
+        ),
+        ...triggerFactory.haveSpellRES(
+          [FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file],
+          true,
+        ),
+      ],
       requireVocal: true,
     },
   },
   {
-    preset: FNP_SPELLS.Doom.file,
+    preset: SPELLS.Harm.file,
     ability: {
-      name: "ability.Doom",
-      targets: [
-        {
-          name: "Players",
-          triggers: [
-            {
-              name: "CheckSpellState",
-              params: [ScriptTarget.lastSeen, "DOOM"],
-              negation: true,
-            },
-          ],
-          randomOrder: true,
-        },
-      ],
+      name: "ability.Harm",
       spell: {
-        resource: FNP_SPELLS.Doom.file,
         probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
       },
+      triggers: [
+        ...triggerFactory.hasItem(
+          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
+          true,
+        ),
+        ...triggerFactory.haveSpellRES([SPELLS.SlayLiving.file], true),
+      ],
       requireVocal: true,
     },
   },
+  {
+    preset: SPELLS.SlayLiving.file,
+    ability: {
+      name: "ability.SlayLiving",
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      triggers: triggerFactory.hasItem(
+        ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
+        true,
+      ),
+      requireVocal: true,
+    },
+  },
+  ...presetFactory.create([SPELLS.Doom.file, FNP_SPELLS.Doom.file], {
+    name: "ability.Doom",
+    targets: [
+      {
+        name: "Players",
+        triggers: [
+          {
+            name: "CheckSpellState",
+            params: [ScriptTarget.lastSeen, "DOOM"],
+            negation: true,
+          },
+        ],
+        randomOrder: true,
+      },
+    ],
+    spell: {
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+    requireVocal: true,
+  }),
+  ...presetFactory.create([FNP_SPELLS.GreaterMalison.file], {
+    name: "ability.GreaterMalison",
+    targets: [
+      {
+        name: "Players",
+        randomOrder: true,
+      },
+    ],
+    spell: {
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+    requireVocal: true,
+  }),
   {
     //FIXME: this spell doesn't seem to work at all
     preset: FNP_SPELLS.FrostFingers.file,
@@ -941,7 +1003,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.FrostFingers.file,
         selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
@@ -966,7 +1027,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.Forbiddance.file,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       timer: { name: "Forbiddance", value: 2 * Durations.round },
@@ -990,7 +1050,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.MiscastMagic.file,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -1007,7 +1066,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.RigidThinking.file,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
@@ -1023,7 +1081,6 @@ export const ABILITY_PRESETS: {
         },
       ],
       spell: {
-        resource: FNP_SPELLS.Shatter.file,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
       timer: { name: "Shatter", value: 4 * Durations.round },
@@ -1035,7 +1092,6 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.Shield",
       spell: {
-        resource: FNP_SPELLS.Shield.file,
         selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
@@ -1054,7 +1110,6 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.CircleOfBones",
       spell: {
-        resource: FNP_SPELLS.CircleOfBones.file,
         selfTarget: true,
         probability: DEFAULT_SPELL_PROBABILITY,
       },
@@ -1073,12 +1128,16 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.ShadowMonsters",
       spell: {
-        resource: FNP_SPELLS.ShadowMonsters.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
-        [FNP_SPELLS.DemiShadowMonsters.file, FNP_SPELLS.AnimateDead.file],
+        [
+          FNP_SPELLS.DemiShadowMonsters.file,
+          FNP_SPELLS.AnimateDead.file,
+          FNP_SPELLS.SummonShadows.file,
+          FNP_SPELLS.Shades.file,
+        ],
         true,
       ),
       timer: { name: "Summoning", value: 6 * Durations.round },
@@ -1090,10 +1149,13 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.DemiShadowMonsters",
       spell: {
-        resource: FNP_SPELLS.DemiShadowMonsters.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
+      triggers: triggerFactory.haveSpellRES(
+        [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
+        true,
+      ),
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
     },
@@ -1103,15 +1165,195 @@ export const ABILITY_PRESETS: {
     ability: {
       name: "ability.AnimateDead",
       spell: {
-        resource: FNP_SPELLS.AnimateDead.file,
         probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
-        [FNP_SPELLS.DemiShadowMonsters.file],
+        [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
         true,
       ),
       timer: { name: "Summoning", value: 6 * Durations.round },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.SummonShadows.file,
+    ability: {
+      name: "ability.SummonShadows",
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      triggers: triggerFactory.haveSpellRES([FNP_SPELLS.Shades.file], true),
+      timer: { name: "Summoning", value: 6 * Durations.round },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.Shades.file,
+    ability: {
+      name: "ability.Shades",
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      timer: { name: "Summoning", value: 6 * Durations.round },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.FingerOfDeath.file,
+    ability: {
+      name: "ability.FingerOfDeath",
+      targets: [
+        {
+          name: "Players",
+          includeStatus: ["Able"],
+          randomOrder: true,
+        },
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Wither.file,
+    ability: {
+      name: "ability.Wither",
+      targets: [
+        {
+          name: "Players",
+          includeStatus: ["Able"],
+          randomOrder: true,
+        },
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      range: 10,
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.DolorousDecay.file,
+    ability: {
+      name: "ability.DolorousDecay",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          triggers: [
+            {
+              name: "StateCheck",
+              params: [ScriptTarget.token, "STATE_POISONED"],
+              negation: true,
+            },
+          ],
+        },
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Poison.file,
+    ability: {
+      name: "ability.Poison",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          triggers: [
+            {
+              name: "StateCheck",
+              params: [ScriptTarget.token, "STATE_POISONED"],
+              negation: true,
+            },
+          ],
+        },
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.MagicResistance.file,
+    ability: {
+      name: "ability.MagicResistance",
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+        selfTarget: true,
+      },
+      requireVocal: true,
+    },
+  },
+  ...presetFactory.create(
+    [SPELLS.CloudOfPestilence.file, FNP_SPELLS.CloudOfPestilence.file],
+    {
+      name: "ability.CloudOfPestilence",
+      targets: [
+        {
+          name: "NearestEnemies",
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  ),
+  {
+    preset: SPELLS.WavesOfAgony.file,
+    ability: {
+      name: "ability.WavesOfAgony",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      timer: { name: "WavesOfAgony", value: 3 * Durations.round },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: FNP_SPELLS.WavesOfFatigue.file,
+    ability: {
+      name: "ability.WavesOfFatigue",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
       requireVocal: true,
     },
   },

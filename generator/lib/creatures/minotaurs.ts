@@ -75,7 +75,7 @@ class Minotaur extends Creature {
       name: "monster.minotaur.ability.charge.name",
       description: "monster.minotaur.ability.charge.description",
       memorizedCount: 1,
-      icon: SPELLS.Haste,
+      icon: SPELLS.Haste.file,
       options: { renew: 1 },
       headers: [
         {

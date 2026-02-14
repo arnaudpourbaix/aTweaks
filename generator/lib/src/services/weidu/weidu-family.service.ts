@@ -67,7 +67,8 @@ class WeiduFamilyService extends AbstractWeiduService {
         c.spells.some((s) => typeof s.secondaryType === "string"),
       )
     ) {
-      this.add(lines, "LAF integrate_sectypes END", 0);
+      //FIXME: enable in the end (disabled because it greatly decreases installation time)
+      // this.add(lines, "LAF integrate_sectypes END", 0);
     }
     this.add(lines, "", 0);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);

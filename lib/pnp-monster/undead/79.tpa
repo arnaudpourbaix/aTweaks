@@ -194,36 +194,35 @@ BEGIN
 			ADD_MEMORIZED_SPELL ~b_pr201~ #1 ~priest~ (2) 
 			ADD_MEMORIZED_SPELL ~d5p2114~ #1 ~priest~ (1) 
 			ADD_MEMORIZED_SPELL ~sppr332~ #2 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~d5f1416~ #2 ~priest~ (3) 
 			ADD_MEMORIZED_SPELL ~d5p2433~ #2 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~sppr322~ #2 ~priest~ (3) 
+			ADD_MEMORIZED_SPELL ~sppr322~ #2 ~priest~ (6) 
 			ADD_MEMORIZED_SPELL ~d5p1301~ #3 ~priest~ (2) 
 			ADD_MEMORIZED_SPELL ~sppr414~ #3 ~priest~ (2) 
 			ADD_MEMORIZED_SPELL ~d5p2527~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5f2411~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f2412~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1411~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5f2508~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1709~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1424~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1530~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f2632~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1511~ #4 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5f1533~ #4 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5f1512~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1610~ #5 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5f1608~ #5 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1509~ #5 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5ff422~ #5 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1708~ #6 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5f1740~ #6 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5p2411~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5p2412~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR411~ #3 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~d5p2508~ #3 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5p1709~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5p1424~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR530~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5p2632~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR511~ #4 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~SPPR533~ #4 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~SPPR512~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR610~ #5 ~priest~ (2) 
+			ADD_MEMORIZED_SPELL ~SPPR608~ #5 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR509~ #4 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~d5pp422~ #5 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR708~ #6 ~priest~ (1) 
+			ADD_MEMORIZED_SPELL ~SPPR740~ #6 ~priest~ (1) 
 			ADD_MEMORIZED_SPELL ~ja#3m79~ #0 ~innate~ (1) // Fear Aura
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					xpv=16000
 					hp=147
-					ac=12
+					ac=0
 					thac0=7
 					apr=1
 					saveDeath=6

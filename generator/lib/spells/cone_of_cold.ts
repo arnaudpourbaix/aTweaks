@@ -40,7 +40,7 @@ export const createConeOfCold = ({
   name: "spell.coneOfCold.name",
   description,
   memorizedCount,
-  icon: SPELLS.ConeOfCold,
+  icon: SPELLS.ConeOfCold.file,
   options,
   castingSound: "CAS_M06",
   flags: [SpellFlagEnum.Hostile, SpellFlagEnum.BreakSanctuary],
@@ -76,7 +76,7 @@ export const createConeOfCold = ({
     },
   ],
   ability: {
-    preset: SPELLS.ConeOfCold,
+    preset: SPELLS.ConeOfCold.file,
     spell: {
       id: undefined,
       type: "force",

@@ -74,7 +74,7 @@ class Golem extends Creature {
       id: Ids.Haste,
       memorizedCount: 1,
       castingSound: "CAS_P04",
-      icon: SPELLS.Haste,
+      icon: SPELLS.Haste.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -156,7 +156,7 @@ class Golem extends Creature {
       name: "monster.golem.ability.hideousLaugh",
       id: Ids.HideousLaugh,
       memorizedCount: 1,
-      icon: SPELLS.CloakOfFear,
+      icon: SPELLS.CloakOfFear.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 3 },
       headers: [
@@ -174,7 +174,7 @@ class Golem extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.CloakOfFear,
+        preset: SPELLS.CloakOfFear.file,
         spell: {
           type: "force",
           remove: true,
@@ -201,7 +201,7 @@ class Golem extends Creature {
       description: "monster.golem.ability.charge.description",
       id: Ids.Charge,
       memorizedCount: 1,
-      icon: SPELLS.Haste,
+      icon: SPELLS.Haste.file,
       options: { renew: 5 },
       headers: [
         {
@@ -256,7 +256,7 @@ class Golem extends Creature {
       description: "monster.golem.ability.cloudOfPoisonousGas.description",
       id: Ids.CloudOfPoisonousGas,
       memorizedCount: 1,
-      icon: SPELLS.Cloudkill,
+      icon: SPELLS.Cloudkill.file,
       options: { renew: 7 },
       headers: [
         {
@@ -511,7 +511,7 @@ class GolemFamily extends CreatureFamily<Golem> {
           remove: ["GOLSTO01"],
         },
         spells: {
-          memorized: [{ file: SPELLS.Slow, memorizedCount: 1 }],
+          memorized: [{ file: SPELLS.Slow.file, memorizedCount: 1 }],
         },
       },
     });
@@ -523,7 +523,7 @@ class GolemFamily extends CreatureFamily<Golem> {
       restHeal: true,
       abilities: [
         {
-          preset: SPELLS.Slow,
+          preset: SPELLS.Slow.file,
           spell: {
             type: "reallyForce",
             selfTarget: true,

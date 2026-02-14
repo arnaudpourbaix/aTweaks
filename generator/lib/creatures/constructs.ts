@@ -134,15 +134,15 @@ class ConstructFamily extends CreatureFamily<Construct> {
       xpv: 4000,
       spells: {
         memorized: [
-          { file: SPELLS.MagicMissiles, memorizedCount: 1 },
-          { file: SPELLS.DimensionDoor, memorizedCount: 1 },
+          { file: SPELLS.MagicMissiles.file, memorizedCount: 1 },
+          { file: SPELLS.DimensionDoor.file, memorizedCount: 1 },
         ],
       },
     });
     battleHorror.setBehavior({
       abilities: [
         {
-          preset: SPELLS.MagicMissiles,
+          preset: SPELLS.MagicMissiles.file,
           spell: {
             type: "noDec",
           },
@@ -159,7 +159,7 @@ class ConstructFamily extends CreatureFamily<Construct> {
           type: "insertBefore",
           abilities: [
             {
-              preset: SPELLS.DimensionDoor,
+              preset: SPELLS.DimensionDoor.file,
               range: 180,
               requireVocal: false,
             },

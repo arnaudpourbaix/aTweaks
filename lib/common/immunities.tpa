@@ -132,6 +132,7 @@ BEGIN
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="LIGHT" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="SERIOUS" END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="CRITICAL" END
+	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=318 parameter2=ANYONE STR_VAR resource="HARM" END
 END
 
 DEFINE_PATCH_FUNCTION charm_immunity

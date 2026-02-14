@@ -29,7 +29,7 @@ class Dog extends Creature {
   createJaws(
     diceThrown: number,
     diceSize: number,
-    castSpell?: WeaponCastSpell
+    castSpell?: WeaponCastSpell,
   ) {
     return this.addWeapon({
       weapon: {
@@ -54,7 +54,7 @@ class Dog extends Creature {
    */
   createBlink() {
     return this.addSpell({
-      icon: SPELLS.DimensionDoor,
+      icon: SPELLS.DimensionDoor.file,
       options: {
         renew: 1,
       },

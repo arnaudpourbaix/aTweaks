@@ -108,7 +108,7 @@ class Spider extends Creature {
           value: -4,
           timing: EffectTimingEnum.InstantLimited,
           duration: 2 * Durations.round,
-        }
+        },
       );
     }
     if (p.lightning) {
@@ -229,7 +229,7 @@ class Spider extends Creature {
     }
     if (damageEffect) {
       effects.push(
-        ...effectFactory.damageOverTime(1, { ...damageEffect, ...saves })
+        ...effectFactory.damageOverTime(1, { ...damageEffect, ...saves }),
       );
     }
     if (invisible) {
@@ -245,7 +245,7 @@ class Spider extends Creature {
       name: name ?? "monster.spider.ability.webTangle.name",
       description,
       memorizedCount: 1,
-      icon: SPELLS.Web,
+      icon: SPELLS.Web.file,
       options: { renew: 2 },
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       headers: [
@@ -257,7 +257,7 @@ class Spider extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.Web,
+        preset: SPELLS.Web.file,
         spell: {
           // It can shoot web strands up to 2 feet to bind a foe.
           // Either attack treats the spider's opponent as AC 10 and prevents the spider from making a melee attack that round.
@@ -298,7 +298,7 @@ class Spider extends Creature {
         ? "monster.spider.ability.leapAttack.description"
         : "monster.spider.ability.leap.description",
       memorizedCount: p.memorizedCount,
-      icon: SPELLS.Haste,
+      icon: SPELLS.Haste.file,
       options: { renew: 1 },
       headers: [
         {
@@ -365,7 +365,7 @@ class Spider extends Creature {
       name: "monster.spider.ability.phase.name",
       description: "monster.spider.ability.phase.description",
       memorizedCount: 1,
-      icon: SPELLS.Invisibility,
+      icon: SPELLS.Invisibility.file,
       options: { renew: 1 },
       headers: [
         {
@@ -381,7 +381,7 @@ class Spider extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.Invisibility,
+        preset: SPELLS.Invisibility.file,
         spell: {
           type: "force",
         },
@@ -662,7 +662,9 @@ class SpiderFamily extends CreatureFamily<Spider> {
           remove: ["DW#SPIDG"],
         },
         spells: {
-          memorized: [{ file: SPELLS.DetectInvisibility, memorizedCount: 1 }],
+          memorized: [
+            { file: SPELLS.DetectInvisibility.file, memorizedCount: 1 },
+          ],
         },
       },
     });
@@ -676,7 +678,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
     hairy.setBehavior({
       abilities: [
         {
-          preset: SPELLS.DetectInvisibility,
+          preset: SPELLS.DetectInvisibility.file,
           spell: {
             type: "force",
             probability: 30,
@@ -1016,7 +1018,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
           remove: ["DW#SPIDG", "SPIDVO01"],
         },
         spells: {
-          memorized: [{ file: SPELLS.VortexWeb, memorizedCount: 1 }],
+          memorized: [{ file: SPELLS.VortexWeb.file, memorizedCount: 1 }],
         },
       },
     });
@@ -1038,9 +1040,9 @@ class SpiderFamily extends CreatureFamily<Spider> {
     vortex.setBehavior({
       abilities: [
         {
-          preset: SPELLS.Slow,
+          preset: SPELLS.Slow.file,
           spell: {
-            resource: SPELLS.VortexWeb,
+            resource: SPELLS.VortexWeb.file,
             type: "force",
           },
           timer: { name: "VortexWeb", value: 30 },

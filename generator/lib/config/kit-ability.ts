@@ -9,7 +9,7 @@ export const KITS: KitConfig[] = [
     movement: () => 0,
     abilities: [
       {
-        resource: SPELLS.BerserkerRage,
+        resource: SPELLS.BerserkerRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
           name: "ability.enrage",
@@ -31,7 +31,7 @@ export const KITS: KitConfig[] = [
     movement: () => 2,
     abilities: [
       {
-        resource: SPELLS.BarbarianRage,
+        resource: SPELLS.BarbarianRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
           name: "ability.enrage",

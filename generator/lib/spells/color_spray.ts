@@ -257,8 +257,8 @@ export const SPELL_COLOR_SPRAY: Spell = spellService.getSpell(
     primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
     secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
     level: 1,
-    icon: SPELLS.ColorSpray,
+    icon: SPELLS.ColorSpray.file,
     headers: [...Array(20).keys()].map((i) => header(i + 1)),
   },
-  SPELLS.ColorSpray
+  SPELLS.ColorSpray.file,
 );

@@ -10,6 +10,8 @@ import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
 import weiduFamilyService from "./weidu/weidu-family.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
+import { ABILITY_PRESETS } from "../../config/ability-presets";
+import { SPELLS } from "../../config/spell-names";
 
 class MainService {
   generateCreatures() {
@@ -69,6 +71,27 @@ class MainService {
     weiduFunctionService.generateSpellFunctions();
     weiduFunctionService.generateImmunities();
     weiduCoreService.writeFile();
+  }
+
+  checkPresets() {
+    for (const preset of ABILITY_PRESETS) {
+      if (
+        !preset.ability.spell ||
+        preset.ability.spell.resource ||
+        preset.ability.spell.id
+      ) {
+        continue;
+      }
+      const spell = Object.values(SPELLS).find((s) => s.file === preset.preset);
+      console.log(
+        `Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`,
+      );
+      if (!spell || !("id" in spell)) {
+        preset.ability.spell.resource = preset.preset;
+      } else {
+        preset.ability.spell.id = spell.id;
+      }
+    }
   }
 }
 

@@ -16,7 +16,7 @@ class AbilityService {
     if (!abilities) return [];
     const randomGenerator = this.getNumberGenerator();
     const results: CreatureAbility[] = abilities.map((abil) =>
-      this.getAbility(abil, randomGenerator)
+      this.getAbility(abil, randomGenerator),
     );
     return results;
   }
@@ -41,7 +41,7 @@ class AbilityService {
 
   private getAbility(
     abil: RawCreatureAbility,
-    randomGenerator: Generator<number>
+    randomGenerator: Generator<number>,
   ): CreatureAbility {
     let ability = structuredClone(abil);
     if (ability.preset) ability = this.applyPreset(ability, ability.preset);
@@ -141,7 +141,7 @@ class AbilityService {
 
   private applyPreset(
     ability: RawCreatureAbility,
-    presetName: string
+    presetName: string,
   ): RawCreatureAbility {
     const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
     if (!preset) throw new Error(`Unknown preset ${presetName}`);
@@ -159,7 +159,7 @@ class AbilityService {
 
   private getSpellAction(
     spell: CreatureAbilitySpell,
-    target: string
+    target: string,
   ): Actions.Action {
     if (spell.resource && spell.type === "normal")
       return { name: "SpellRES", params: [spell.resource, target] };

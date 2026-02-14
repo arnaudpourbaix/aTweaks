@@ -48,7 +48,7 @@ export const createDimensionDoor = ({
   primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
   secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
   level: spellLevel,
-  icon: SPELLS.DimensionDoor,
+  icon: SPELLS.DimensionDoor.file,
   options: { renew },
   headers: [
     {
@@ -116,5 +116,5 @@ export const SPELL_DIMENSION_DOOR = spellService.getSpell(
     spellLevel: 4,
     spellType: SpellTypeEnum.Wizard,
   }),
-  SPELLS.DimensionDoor
+  SPELLS.DimensionDoor.file,
 );

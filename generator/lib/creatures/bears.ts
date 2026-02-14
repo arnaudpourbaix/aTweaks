@@ -38,7 +38,7 @@ class Bear extends Creature {
     hug: {
       diceSize: number;
       diceThrown: number;
-    }
+    },
   ) {
     return this.addWeapon({
       weapon: {
@@ -381,7 +381,7 @@ class BearFamily extends CreatureFamily<Bear> {
       description: "monster.bear.improvedStreamOfFrost.description",
       id: Ids.ImprovedStreamOfFrost,
       options: { renew: 3 },
-      icon: SPELLS.Fireburst,
+      icon: SPELLS.Fireburst.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
       headers: [
         {
@@ -494,7 +494,7 @@ class BearFamily extends CreatureFamily<Bear> {
         responses: responseFactory.response(
           actionFactory.disableInterrupt([
             { name: "RunAwayFromNoLeaveArea", params: ["LastAttackerOf", 200] },
-          ])
+          ]),
         ),
       },
     ],
@@ -504,7 +504,7 @@ class BearFamily extends CreatureFamily<Bear> {
   rage: RawCreatureAbility = {
     name: "ability.enrage",
     spell: {
-      resource: SPELLS.BerserkerRage,
+      resource: SPELLS.BerserkerRage.file,
       selfTarget: true,
       probability: 50,
     },

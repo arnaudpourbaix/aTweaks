@@ -20,6 +20,7 @@ async function main() {
   return Promise.resolve()
     .then(() => stateService.init())
     .then(() => {
+      mainService.checkPresets();
       mainService.generateCreatures();
       mainService.generateCommonCode();
       mainService.generateTranslations();

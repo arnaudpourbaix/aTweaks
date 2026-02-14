@@ -117,8 +117,8 @@ export const SPELL_GROUPS: SpellGroup[] = [
   {
     name: "colorSpray",
     spells: [
-      SPELLS.ColorSpray,
-      SPELLS.MephitColorSpray,
+      SPELLS.ColorSpray.file,
+      SPELLS.MephitColorSpray.file,
       // ATWEAKS_SPELLS.ColorSpray,
       // ATWEAKS_SPELLS.ColorSprayRadiant,
     ],
