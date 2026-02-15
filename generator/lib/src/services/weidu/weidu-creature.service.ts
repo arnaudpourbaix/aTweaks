@@ -38,7 +38,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     utils.writeFile(
       `${utils.getFamilyFolder(creature.family)}/${creature.id}.tpa`,
-      content
+      content,
     );
     weiduFamilyService.createOrUpdateMainFile(creature.family, creature);
   }
@@ -49,7 +49,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       `COMPILE ~%MOD_FOLDER%/${this.getScriptName(creature, {
         withPath: true,
         ext: true,
-      })}~`
+      })}~`,
     );
     if (creature.adjustments.some((a) => !!a.summon))
       this.add(
@@ -58,7 +58,7 @@ class WeiduCreatureService extends AbstractWeiduService {
           withPath: true,
           summon: true,
           ext: true,
-        })}~`
+        })}~`,
       );
     this.add(lines, "");
   }
@@ -77,7 +77,7 @@ class WeiduCreatureService extends AbstractWeiduService {
             this.add(
               lines,
               `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef)}`,
-              tab + 1
+              tab + 1,
             );
         }
       }
@@ -87,18 +87,18 @@ class WeiduCreatureService extends AbstractWeiduService {
   private addMovementSpeedToItem(
     lines: CodeLine[],
     tab: number,
-    creature: Creature
+    creature: Creature,
   ) {
     this.add(lines, "// Attach movement speed to item", tab);
     this.add(
       lines,
       `COPY_EXISTING ~${creature.data.movement.itemFile!}.ITM~  ~override~`,
-      tab
+      tab,
     );
     this.add(
       lines,
       `LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 timing=2 parameter1=${creature.data.movement.getGameValue()} parameter2=1 global=1 END`,
-      tab + 1
+      tab + 1,
     );
     this.add(lines, "", tab);
   }
@@ -127,7 +127,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       lines,
       tab,
       creature.data.immunities,
-      creature.adjustments
+      creature.adjustments,
     );
     for (const effect of creature.data.effects.list) {
       weiduEffectService.addEffect({
@@ -170,7 +170,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         (a) =>
           a.files.includes(file) &&
           typeof a.data.effects.remove === "boolean" &&
-          a.data.effects.remove !== defaultValue
+          a.data.effects.remove !== defaultValue,
       );
       const remove = adj?.data.effects.remove ?? defaultValue;
       if (remove) acc.push(file);
@@ -180,7 +180,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       lines,
       tab,
       `LPF REMOVE_MOST_CRE_EFFECTS END`,
-      files
+      files,
     );
   }
 
@@ -192,7 +192,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         lines,
         tab,
         creature.data.effects.remove,
-        creature.files
+        creature.files,
       );
     }
     for (const adjustment of creature.adjustments) {
@@ -201,7 +201,7 @@ class WeiduCreatureService extends AbstractWeiduService {
           lines,
           tab,
           adjustment.data.effects.remove,
-          adjustment.files
+          adjustment.files,
         );
       }
     }
@@ -211,21 +211,21 @@ class WeiduCreatureService extends AbstractWeiduService {
     lines: CodeLine[],
     tab: number,
     opcodes: EffectTypeEnum[],
-    files: string[]
+    files: string[],
   ) {
     const param = opcodes.join(" ");
     this.executeCodeWithIncludedFiles(
       lines,
       tab,
       `LPF DELETE_CRE_EFFECT INT_VAR opcode_to_delete=${param} END`,
-      files
+      files,
     );
   }
 
   private removeKnownSpells(
     lines: CodeLine[],
     tab: number,
-    creature: Creature
+    creature: Creature,
   ) {
     const files = [
       ...creature.adjustments.reduce((acc, adjustement) => {
@@ -241,7 +241,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   private removeMemorizedSpells(
     lines: CodeLine[],
     tab: number,
-    creature: Creature
+    creature: Creature,
   ) {
     const files = [
       ...creature.adjustments.reduce((acc, adjustement) => {
@@ -252,7 +252,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       }, new Set<string>()),
     ];
     const code = this.removeMemorizedSpell(
-      creature.data.spells.removeMemorized
+      creature.data.spells.removeMemorized,
     );
     this.executeCodeWithExcludedFiles(lines, tab, code, files);
   }
@@ -268,7 +268,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         lines,
         `SET_BG2_PROFICIENCY ~${ProficiencyTypeEnum[prof.type]}~ ${prof.value}`,
-        tab
+        tab,
       );
   }
 
@@ -276,11 +276,11 @@ class WeiduCreatureService extends AbstractWeiduService {
     lines: CodeLine[],
     tab: number,
     immunities: ImmunityName[],
-    adjustments: CreatureAdjustment[]
+    adjustments: CreatureAdjustment[],
   ) {
     for (const name of immunities) {
       const immunity = State.immunities.find(
-        (i) => i.name === name
+        (i) => i.name === name,
       ) as ImmunityConfig;
       if (!immunity.itemSlot) {
         const files = immunityService.getOverrides(name, adjustments);
@@ -288,7 +288,7 @@ class WeiduCreatureService extends AbstractWeiduService {
           lines,
           tab,
           `LPF ${utils.getImmunityFunctionName(name)} END`,
-          files
+          files,
         );
       }
     }
@@ -307,13 +307,15 @@ class WeiduCreatureService extends AbstractWeiduService {
           if (a.noWeapon) acc.push(...a.files);
           return acc;
         },
-        [] as string[]
+        [] as string[],
       );
       const slots = itemService.getItemSlots(item.slot);
-      if (!slots.length)
-        throw new Error(`No slot defined for equipped item ${item.file}`);
+      if (!slots.length) {
+        console.warn(`No slot defined for equipped item ${item.file}`);
+        continue;
+      }
       const isWeapon = slots.every((slot) =>
-        WEAPON_SLOTS.some((s) => s.slot === slot)
+        WEAPON_SLOTS.some((s) => s.slot === slot),
       );
       const flagsArray: string[] = [];
       if (item.undroppable === true || item.undroppable === undefined)
@@ -335,7 +337,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   private addMemorizedSpells(
     lines: CodeLine[],
     tab: number,
-    data: CreatureData
+    data: CreatureData,
   ) {
     for (const m of data.spells.memorized) {
       const infos = utils.getSpellInfos(m.file);
@@ -360,9 +362,9 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         p.lines,
         `PATCH_DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(
-          " "
+          " ",
         )} END`,
-        p.tab
+        p.tab,
       );
     }
     this.add(p.lines, `LPF patchCreature`, p.tab);
@@ -391,17 +393,18 @@ class WeiduCreatureService extends AbstractWeiduService {
         creature.adjustments
           .filter((a) => a.summon)
           .map((a) => a.files)
-          .flat()
+          .flat(),
       ),
     ];
     const locationFiles = [
       ...new Set(
         creature.adjustments
           .filter(
-            (a) => !!a.data.script.location && a.data.script.location !== "None"
+            (a) =>
+              !!a.data.script.location && a.data.script.location !== "None",
           )
           .map((a) => a.files)
-          .flat()
+          .flat(),
       ),
     ];
     const noScriptFiles = [
@@ -409,7 +412,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         creature.adjustments
           .filter((a) => a.data.script.location === "None")
           .map((a) => a.files)
-          .flat()
+          .flat(),
       ),
     ];
     const scriptName = this.getScriptName(creature, {});
@@ -487,7 +490,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         p.lines,
         `PATCH_DEFINE_ARRAY removeScripts BEGIN ${scripts.join(" ")} END`,
-        p.tab
+        p.tab,
       );
       removeScripts = " removeScripts";
     }
@@ -495,7 +498,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         p.lines,
         `PATCH_DEFINE_ARRAY skipFiles BEGIN ${p.skipFiles.join(" ")} END`,
-        p.tab
+        p.tab,
       );
       skipFiles = " skipFiles";
     }
@@ -503,7 +506,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.add(
         p.lines,
         `PATCH_DEFINE_ARRAY files BEGIN ${p.files.join(" ")} END`,
-        p.tab
+        p.tab,
       );
       files = " files";
     }
@@ -515,14 +518,14 @@ class WeiduCreatureService extends AbstractWeiduService {
       } STR_VAR${slot}${files}${removeScripts}${skipFiles} script=${
         p.script
       } END`,
-      p.tab
+      p.tab,
     );
   }
 
   private handleAdjustments(
     lines: CodeLine[],
     tab: number,
-    creature: Creature
+    creature: Creature,
   ) {
     for (const adjustment of creature.adjustments) {
       for (const f of adjustment.files)
@@ -538,14 +541,14 @@ class WeiduCreatureService extends AbstractWeiduService {
     lines: CodeLine[],
     tab: number,
     creature: Creature,
-    adjustment: CreatureAdjustment
+    adjustment: CreatureAdjustment,
   ) {
     this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
     if (adjustment.data?.movement) {
       this.add(
         lines,
         `LPF set_movement_speed INT_VAR value=${adjustment.data.movement.getGameValue()} END`,
-        tab
+        tab,
       );
     }
     if (adjustment.data)
@@ -582,9 +585,9 @@ class WeiduCreatureService extends AbstractWeiduService {
             this.add(
               p.lines,
               `${this.getWrite(field.size)} 0x${field.index.toString(
-                16
+                16,
               )} ${value} // ${data.key}`,
-              p.tab
+              p.tab,
             );
           }
         }
@@ -616,7 +619,7 @@ class WeiduCreatureService extends AbstractWeiduService {
 
   private getScriptName(
     creature: Creature,
-    options: { withPath?: boolean; summon?: boolean; ext?: boolean }
+    options: { withPath?: boolean; summon?: boolean; ext?: boolean },
   ) {
     const path = options.withPath
       ? `${utils.getFamilyFolder(creature.family)}/`

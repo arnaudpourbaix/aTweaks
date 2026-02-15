@@ -558,7 +558,7 @@ BEGIN
 	LPF criticalHit_immunity INT_VAR resist_dispel duration END
 	LPF fireResistance_resistance INT_VAR resist_dispel duration END
 	LPF coldResistance_resistance INT_VAR resist_dispel duration END
-	LPF lightningSpells_immunity INT_VAR resist_dispel duration END
+	LPF lightningResistance_resistance INT_VAR resist_dispel duration END
 	LPF acidResistance_resistance INT_VAR resist_dispel duration END
 	LPF poisonResistance_resistance INT_VAR resist_dispel duration END
 	LPF magicDamageResistance_resistance INT_VAR resist_dispel duration END

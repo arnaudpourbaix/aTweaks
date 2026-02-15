@@ -87,13 +87,13 @@ class ItemService {
   private addProjectile(
     item: Item,
     header: ItemHeader,
-    projectile: PartialProjectile
+    projectile: PartialProjectile,
   ) {
     if (!item.projectiles.some((p) => p.file === item.file)) {
       console.log(
         `adding projectile ${
           item.file
-        } for item ${translationService.fromOptional(item.stringRef)}`
+        } for item ${translationService.fromOptional(item.stringRef)}`,
       );
       item.projectiles.push({ file: item.file, ...projectile });
       header.projectile = item.file;
@@ -108,7 +108,7 @@ class ItemService {
 
   isSlotIncluded(
     itemSlots: EquippedItem[],
-    includedSlot: ItemSlot | ItemSlot[]
+    includedSlot: ItemSlot | ItemSlot[],
   ): boolean {
     if (Array.isArray(includedSlot)) return false;
     const list = itemSlots.map((i) => this.getItemSlots(i.slot)).flat(1);

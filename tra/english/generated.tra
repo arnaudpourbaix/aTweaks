@@ -375,65 +375,66 @@ If successful, the charge causes double head-butt damage~
 @10295 = ~Mummy~
 @10296 = ~Greater Mummy~
 @10297 = ~Shadow~
-@10298 = ~Skeleton~
-@10299 = ~Skeleton Warrior~
-@10300 = ~Spectre~
-@10301 = ~Wight~
-@10302 = ~Wraith~
-@10303 = ~Zombie~
-@10304 = ~Zombie Juju~
-@10305 = ~Zombie Sea~
-@10306 = ~Touch~
-@10307 = ~Claws~
-@10308 = ~Jaws~
-@10309 = ~Fear Aura~
-@10310 = ~The mere sight of one causes fear, unless a successful saving throw vs. spell is rolled.
+@10298 = ~Greater Shadow~
+@10299 = ~Skeleton~
+@10300 = ~Skeleton Warrior~
+@10301 = ~Spectre~
+@10302 = ~Wight~
+@10303 = ~Wraith~
+@10304 = ~Zombie~
+@10305 = ~Zombie Juju~
+@10306 = ~Zombie Sea~
+@10307 = ~Touch~
+@10308 = ~Claws~
+@10309 = ~Jaws~
+@10310 = ~Fear Aura~
+@10311 = ~The mere sight of one causes fear, unless a successful saving throw vs. spell is rolled.
 Those who fail must flee in terror for 10 rounds and are 50% likely to drop any items they were carrying in their hands.~
-@10311 = ~Death Wail~
-@10312 = ~Any creature within 30 feet of a groaning spirit when she keens must roll a saving throw vs. death magic.
+@10312 = ~Death Wail~
+@10313 = ~Any creature within 30 feet of a groaning spirit when she keens must roll a saving throw vs. death magic.
 Those who fail die immediately, their faces contorted in horror.~
-@10313 = ~Wall of Ice~
-@10314 = ~This causes a horizontal sheet to fall upon opponents. The sheet covers a 10-foot-square area per caster level.
+@10314 = ~Wall of Ice~
+@10315 = ~This causes a horizontal sheet to fall upon opponents. The sheet covers a 10-foot-square area per caster level.
 The sheet has the same effect as an ice storm's hail stones—3d10 points of damage inflicted to creatures beneath it.~
-@10315 = ~Ghoul's Touch~
-@10316 = ~Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.~
-@10317 = ~Ghast's Touch~
-@10318 = ~Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.~
-@10319 = ~Ghoul Lord's Touch~
-@10320 = ~Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds or until negated by a priest.~
-@10321 = ~Carrion Stench~
-@10322 = ~Ghasts exude a carrion stench in a 10' radius which causes retching and nausea unless a saving throw versus poison is made.
+@10316 = ~Ghoul's Touch~
+@10317 = ~Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.~
+@10318 = ~Ghast's Touch~
+@10319 = ~Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.~
+@10320 = ~Ghoul Lord's Touch~
+@10321 = ~Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds or until negated by a priest.~
+@10322 = ~Carrion Stench~
+@10323 = ~Ghasts exude a carrion stench in a 10' radius which causes retching and nausea unless a saving throw versus poison is made.
 Those failing to make this save will attack at a penalty of -2.~
-@10323 = ~Affected by Ghast's carrion stench~
-@10324 = ~Rotting Disease~
-@10325 = ~Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.~
-@10326 = ~Rotting Disease~
-@10327 = ~The scabrous touch infects the victim with a rotting disease which is fatal in 6 days.
+@10324 = ~Affected by Ghast's carrion stench~
+@10325 = ~Rotting Disease~
+@10326 = ~Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.~
+@10327 = ~Rotting Disease~
+@10328 = ~The scabrous touch infects the victim with a rotting disease which is fatal in 6 days.
 For each day the rot progresses, the victim permanently loses 2 points of Charisma.
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.~
-@10328 = ~The scabrous touch infects the victim with a rotting disease which is fatal in 48 hours.
+@10329 = ~The scabrous touch infects the victim with a rotting disease which is fatal in 48 hours.
 Every 8 hours, the victim permanently loses 2 points of Charisma and 1 point each of Strength and Constitution.
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.~
-@10329 = ~Stricken by mummy rot~
-@10330 = ~Close to dying from mummy rot~
-@10331 = ~Succumbs to mummy rot~
-@10332 = ~Fear Aura~
-@10333 = ~The mere sight of a mummy causes such terror in any creature that a saving throw versus spell must be made or the victim becomes paralyzed with fright for 3 rounds.
+@10330 = ~Stricken by mummy rot~
+@10331 = ~Close to dying from mummy rot~
+@10332 = ~Succumbs to mummy rot~
+@10333 = ~Fear Aura~
+@10334 = ~The mere sight of a mummy causes such terror in any creature that a saving throw versus spell must be made or the victim becomes paralyzed with fright for 3 rounds.
 Humans save against mummies at an additional +2.~
-@10334 = ~The mere sight of a greater mummy causes such terror in any creature that a saving throw versus spell at -3 must be made or the victim becomes paralyzed with fright for 4 rounds.
+@10335 = ~The mere sight of a greater mummy causes such terror in any creature that a saving throw versus spell at -3 must be made or the victim becomes paralyzed with fright for 4 rounds.
 Humans save against mummies at an additional +2.~
-@10335 = ~Frightened~
-@10336 = ~Aura of Evil~
-@10337 = ~Ghoul lords do radiate an aura of evil. In fact, this effect is so potent that those of good alignment suffer a -4 on all attack rolls when within 30 feet of these creatures.~
-@10338 = ~Affected by Ghoul Lord's evil aura~
-@10339 = ~This spell can only be cast outdoor~
-@10340 = ~Restrained~
-@10341 = ~Grab~
-@10342 = ~Grabbed~
-@10343 = ~Call Woodland Beeings~
-@10344 = ~Call Woodland Beings
+@10336 = ~Frightened~
+@10337 = ~Aura of Evil~
+@10338 = ~Ghoul lords do radiate an aura of evil. In fact, this effect is so potent that those of good alignment suffer a -4 on all attack rolls when within 30 feet of these creatures.~
+@10339 = ~Affected by Ghoul Lord's evil aura~
+@10340 = ~This spell can only be cast outdoor~
+@10341 = ~Restrained~
+@10342 = ~Grab~
+@10343 = ~Grabbed~
+@10344 = ~Call Woodland Beeings~
+@10345 = ~Call Woodland Beings
 (Conjuration, Summoning)
 Level: 4
 Sphere: Animal, Summoning
@@ -484,8 +485,8 @@ HP 117, AC 0, THAC0 11, -25% fire resistance
 STR 23, DEX 8, CON 21, INT 12, WIS 16, CHA 12
 HP 142, AC 0, THAC0 9, -25% fire resistance
 2 Attacks Per Round, 4d6 crushing~
-@10345 = ~Color Spray~
-@10346 = ~Color Spray (Alteration)
+@10346 = ~Color Spray~
+@10347 = ~Color Spray (Alteration)
 Level: 1
 Range: 30 feet
 Duration: Special
@@ -499,8 +500,8 @@ Blind or unseeing creatures are not affected.
 Creatures that are not allowed a saving throw, or that fail their saving throw, and whose level is below or equal to the level of the caster are struck unconscious for 4 rounds;
 those whose level is 1 or 2 greater than the level of the caster are struck blind for 2 rounds;
 those that are 3 or more levels above the level of the caster are disoriented and unable to think or act coherently for 1 round.~
-@10347 = ~Dimension Door~
-@10348 = ~Dimension Door (Alteration)
+@10348 = ~Dimension Door~
+@10349 = ~Dimension Door (Alteration)
 Level: 4
 Range: 900
 Duration: Instant
@@ -512,196 +513,196 @@ This spell transports the caster to any designated place that is already known t
 The caster always arrives at exactly the spot desired by simply visualizing an area that he is familiar with.
 When the spell is cast, a dimensional portal opens up in front of the caster, which he immediately steps through.
 Upon passing through the portal, the caster finds himself at his chosen destination.~
-@10349 = ~Cone of Cold~
-@10350 = ~Melee~
-@10351 = ~Ranged~
-@10352 = ~THAC0~
-@10353 = ~damage~
-@10354 = ~Speed Factor~
-@10355 = ~Enchantment~
-@10356 = ~Range~
-@10357 = ~feet~
-@10358 = ~bonus to~
-@10359 = ~Cast spell~
-@10360 = ~Can see invisible creatures~
-@10361 = ~Blur~
-@10362 = ~Translucent~
-@10363 = ~Mirror image~
-@10364 = ~Invisibility~
-@10365 = ~Improved invisibility~
-@10366 = ~Regeneration~
-@10367 = ~hp/second~
-@10368 = ~%/second~
-@10369 = ~hp/round~
-@10370 = ~1 hp/[value] rounds~
-@10371 = ~1 hp/[value] seconds~
-@10372 = ~paralyzes the target for [value] rounds~
-@10373 = ~drain [value] life energy levels~
-@10374 = ~Casting time~
-@10375 = ~Heal~
-@10376 = ~Fall asleep for [value]~
-@10377 = ~wake on damage~
-@10378 = ~Strength~
-@10379 = ~Dexterity~
-@10380 = ~Intelligence~
-@10381 = ~Constitution~
-@10382 = ~Slashing Resistance~
-@10383 = ~Crushing Resistance~
-@10384 = ~Piercing Resistance~
-@10385 = ~Missiles Resistance~
-@10386 = ~Fire Resistance~
-@10387 = ~Cold Resistance~
-@10388 = ~Magic Resistance~
-@10389 = ~Magical Cold Resistance~
-@10390 = ~Magical Fire Resistance~
-@10391 = ~Acid Resistance~
-@10392 = ~Poison Resistance~
-@10393 = ~Electricity Resistance~
-@10394 = ~Magic Damage Resistance~
-@10395 = ~Maximum HP~
-@10396 = ~Morale~
-@10397 = ~Morale Break~
-@10398 = ~Fatigue Bonus~
-@10399 = ~All Saving Throws~
-@10400 = ~Save vs Breath~
-@10401 = ~Save vs Death~
-@10402 = ~Save vs Petrification~
-@10403 = ~Save vs Spell~
-@10404 = ~Save vs Wand~
-@10405 = ~paralyze/poison/death~
-@10406 = ~breath~
-@10407 = ~petrify/polymorph~
-@10408 = ~wand~
-@10409 = ~spell~
-@10410 = ~saves vs~
-@10411 = ~turns~
-@10412 = ~rounds~
-@10413 = ~base AC~
-@10414 = ~vs. [damageType] attacks~
-@10415 = ~crushing~
-@10416 = ~slashing~
-@10417 = ~piercing~
-@10418 = ~missile~
-@10419 = ~*quaffs a potion*~
-@10420 = ~(unknown)~
-@10421 = ~Invisibility~
-@10422 = ~Improved Invisibility~
-@10423 = ~Domination~
-@10424 = ~Dire Charm~
-@10425 = ~Charm Person~
-@10426 = ~Charm Person or Animal~
-@10427 = ~Power Word Sleep~
-@10428 = ~Power Word Blind~
-@10429 = ~Power Word Stun~
-@10430 = ~Power Word Kill~
-@10431 = ~Sleep~
-@10432 = ~Darkness 15' Radius~
-@10433 = ~Cone Of Cold~
-@10434 = ~Magic Missiles~
-@10435 = ~Bless~
-@10436 = ~Command~
-@10437 = ~Resist fear~
-@10438 = ~Chant~
-@10439 = ~Hold Person~
-@10440 = ~Hold person or animal~
-@10441 = ~Silence~
-@10442 = ~Call Lightning~
-@10443 = ~Glyph of Warding~
-@10444 = ~Miscast Magic~
-@10445 = ~Rigid Thinking~
-@10446 = ~Summon Insects~
-@10447 = ~Dimension Door~
-@10448 = ~Entangle~
-@10449 = ~Cure Light Wounds~
-@10450 = ~Barkskin~
-@10451 = ~Animal Summoning 4~
-@10452 = ~Call Woodland Beeings~
-@10453 = ~Slow~
-@10454 = ~Web~
-@10455 = ~Detect Invisibility~
-@10456 = ~Enrage~
-@10457 = ~Polymorph Self~
-@10458 = ~Cloak of Fear~
-@10459 = ~Horror~
-@10460 = ~Wail Of The Banshee~
-@10461 = ~Ice Storm~
-@10462 = ~Dispel Magic~
-@10463 = ~Cause Disease~
-@10464 = ~Cause Light Wounds~
-@10465 = ~Doom~
-@10466 = ~Frost Fingers~
-@10467 = ~Cause Moderate Wounds~
-@10468 = ~Forbiddance~
-@10469 = ~Miscast Magic~
-@10470 = ~Rigid Thinking~
-@10471 = ~Shatter~
-@10472 = ~Shield~
-@10473 = ~Circle of Bones~
-@10474 = ~Cloak of Fear~
-@10475 = ~Shadow Monsters~
-@10476 = ~Cause Serious Wounds~
-@10477 = ~Animate Dead~
-@10478 = ~Cause Critical Wounds~
-@10479 = ~Demi-Shadow Monsters~
-@10480 = ~Emotion~
-@10481 = ~Greater Malison~
-@10482 = ~Poison~
-@10483 = ~Waves of Fatigue~
-@10484 = ~Chaos~
-@10485 = ~Cloud of Pestilence~
-@10486 = ~Mass Cause Light Wounds~
-@10487 = ~Shades~
-@10488 = ~Slay Living~
-@10489 = ~Waves of Agony~
-@10490 = ~Greater Command~
-@10491 = ~Dolorous Decay~
-@10492 = ~Harm~
-@10493 = ~Magic Resistance~
-@10494 = ~Summon Shadows~
-@10495 = ~Finger of Death~
-@10496 = ~Wither~
-@10497 = ~Poison Resistance: 100%~
-@10498 = ~Fire Resistance: 100%
+@10350 = ~Cone of Cold~
+@10351 = ~Melee~
+@10352 = ~Ranged~
+@10353 = ~THAC0~
+@10354 = ~damage~
+@10355 = ~Speed Factor~
+@10356 = ~Enchantment~
+@10357 = ~Range~
+@10358 = ~feet~
+@10359 = ~bonus to~
+@10360 = ~Cast spell~
+@10361 = ~Can see invisible creatures~
+@10362 = ~Blur~
+@10363 = ~Translucent~
+@10364 = ~Mirror image~
+@10365 = ~Invisibility~
+@10366 = ~Improved invisibility~
+@10367 = ~Regeneration~
+@10368 = ~hp/second~
+@10369 = ~%/second~
+@10370 = ~hp/round~
+@10371 = ~1 hp/[value] rounds~
+@10372 = ~1 hp/[value] seconds~
+@10373 = ~paralyzes the target for [value] rounds~
+@10374 = ~drain [value] life energy levels~
+@10375 = ~Casting time~
+@10376 = ~Heal~
+@10377 = ~Fall asleep for [value]~
+@10378 = ~wake on damage~
+@10379 = ~Strength~
+@10380 = ~Dexterity~
+@10381 = ~Intelligence~
+@10382 = ~Constitution~
+@10383 = ~Slashing Resistance~
+@10384 = ~Crushing Resistance~
+@10385 = ~Piercing Resistance~
+@10386 = ~Missiles Resistance~
+@10387 = ~Fire Resistance~
+@10388 = ~Cold Resistance~
+@10389 = ~Magic Resistance~
+@10390 = ~Magical Cold Resistance~
+@10391 = ~Magical Fire Resistance~
+@10392 = ~Acid Resistance~
+@10393 = ~Poison Resistance~
+@10394 = ~Electricity Resistance~
+@10395 = ~Magic Damage Resistance~
+@10396 = ~Maximum HP~
+@10397 = ~Morale~
+@10398 = ~Morale Break~
+@10399 = ~Fatigue Bonus~
+@10400 = ~All Saving Throws~
+@10401 = ~Save vs Breath~
+@10402 = ~Save vs Death~
+@10403 = ~Save vs Petrification~
+@10404 = ~Save vs Spell~
+@10405 = ~Save vs Wand~
+@10406 = ~paralyze/poison/death~
+@10407 = ~breath~
+@10408 = ~petrify/polymorph~
+@10409 = ~wand~
+@10410 = ~spell~
+@10411 = ~saves vs~
+@10412 = ~turns~
+@10413 = ~rounds~
+@10414 = ~base AC~
+@10415 = ~vs. [damageType] attacks~
+@10416 = ~crushing~
+@10417 = ~slashing~
+@10418 = ~piercing~
+@10419 = ~missile~
+@10420 = ~*quaffs a potion*~
+@10421 = ~(unknown)~
+@10422 = ~Invisibility~
+@10423 = ~Improved Invisibility~
+@10424 = ~Domination~
+@10425 = ~Dire Charm~
+@10426 = ~Charm Person~
+@10427 = ~Charm Person or Animal~
+@10428 = ~Power Word Sleep~
+@10429 = ~Power Word Blind~
+@10430 = ~Power Word Stun~
+@10431 = ~Power Word Kill~
+@10432 = ~Sleep~
+@10433 = ~Darkness 15' Radius~
+@10434 = ~Cone Of Cold~
+@10435 = ~Magic Missiles~
+@10436 = ~Bless~
+@10437 = ~Command~
+@10438 = ~Resist fear~
+@10439 = ~Chant~
+@10440 = ~Hold Person~
+@10441 = ~Hold person or animal~
+@10442 = ~Silence~
+@10443 = ~Call Lightning~
+@10444 = ~Glyph of Warding~
+@10445 = ~Miscast Magic~
+@10446 = ~Rigid Thinking~
+@10447 = ~Summon Insects~
+@10448 = ~Dimension Door~
+@10449 = ~Entangle~
+@10450 = ~Cure Light Wounds~
+@10451 = ~Barkskin~
+@10452 = ~Animal Summoning 4~
+@10453 = ~Call Woodland Beeings~
+@10454 = ~Slow~
+@10455 = ~Web~
+@10456 = ~Detect Invisibility~
+@10457 = ~Enrage~
+@10458 = ~Polymorph Self~
+@10459 = ~Cloak of Fear~
+@10460 = ~Horror~
+@10461 = ~Wail Of The Banshee~
+@10462 = ~Ice Storm~
+@10463 = ~Dispel Magic~
+@10464 = ~Cause Disease~
+@10465 = ~Cause Light Wounds~
+@10466 = ~Doom~
+@10467 = ~Frost Fingers~
+@10468 = ~Cause Moderate Wounds~
+@10469 = ~Forbiddance~
+@10470 = ~Miscast Magic~
+@10471 = ~Rigid Thinking~
+@10472 = ~Shatter~
+@10473 = ~Shield~
+@10474 = ~Circle of Bones~
+@10475 = ~Cloak of Fear~
+@10476 = ~Shadow Monsters~
+@10477 = ~Cause Serious Wounds~
+@10478 = ~Animate Dead~
+@10479 = ~Cause Critical Wounds~
+@10480 = ~Demi-Shadow Monsters~
+@10481 = ~Emotion~
+@10482 = ~Greater Malison~
+@10483 = ~Poison~
+@10484 = ~Waves of Fatigue~
+@10485 = ~Chaos~
+@10486 = ~Cloud of Pestilence~
+@10487 = ~Mass Cause Light Wounds~
+@10488 = ~Shades~
+@10489 = ~Slay Living~
+@10490 = ~Waves of Agony~
+@10491 = ~Greater Command~
+@10492 = ~Dolorous Decay~
+@10493 = ~Harm~
+@10494 = ~Magic Resistance~
+@10495 = ~Summon Shadows~
+@10496 = ~Finger of Death~
+@10497 = ~Wither~
+@10498 = ~Poison Resistance: 100%~
+@10499 = ~Fire Resistance: 100%
 Magical Fire Resistance: 100%~
-@10499 = ~Cold Resistance: 100%
+@10500 = ~Cold Resistance: 100%
 Magical Cold Resistance: 100%~
-@10500 = ~Electricity Resistance: 100%~
-@10501 = ~Magic Resistance: 100%~
-@10502 = ~Magic Damage Resistance: 100%~
-@10503 = ~Acid Resistance: 100%~
-@10504 = ~Immune to slashing damage
+@10501 = ~Electricity Resistance: 100%~
+@10502 = ~Magic Resistance: 100%~
+@10503 = ~Magic Damage Resistance: 100%~
+@10504 = ~Acid Resistance: 100%~
+@10505 = ~Immune to slashing damage
 Immune to crushing damage
 Immune to piercing damage
 Immune to missile damage~
-@10505 = ~Slashing Resistance: 100%~
-@10506 = ~Crushing Resistance: 100%~
-@10507 = ~Piercing Resistance: 100%~
-@10508 = ~Missiles Resistance: 100%~
-@10509 = ~Immune to cure wounds spells
+@10506 = ~Slashing Resistance: 100%~
+@10507 = ~Crushing Resistance: 100%~
+@10508 = ~Piercing Resistance: 100%~
+@10509 = ~Missiles Resistance: 100%~
+@10510 = ~Immune to cure wounds spells
 Immune to cause wounds spells~
-@10510 = ~Immune to charm
+@10511 = ~Immune to charm
 Immune to fear and morale failure
 Immune to confusion
 Immune to illusion spells
 Immune to hold
 Immune to stun~
-@10511 = ~Immune to non-magical weapons~
 @10512 = ~Immune to non-magical weapons~
-@10513 = ~Immune to petrification~
-@10514 = ~Darkvision out to 60 feet~
-@10515 = ~Can see invisible creatures.~
-@10516 = ~Immune to web effects
+@10513 = ~Immune to non-magical weapons~
+@10514 = ~Immune to petrification~
+@10515 = ~Darkvision out to 60 feet~
+@10516 = ~Can see invisible creatures.~
+@10517 = ~Immune to web effects
 Poison Resistance: 100%
 Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Darkvision out to 60 feet.~
-@10517 = ~Blur (visual effect only)~
-@10518 = ~Grab and hold your target for 3 rounds.
+@10518 = ~Blur (visual effect only)~
+@10519 = ~Grab and hold your target for 3 rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10519 = ~Mandibles
+@10520 = ~Mandibles
 
 Melee damage: 3D6 (Crushing)
 Speed Factor: 5
@@ -718,15 +719,15 @@ Grabbed creature will suffer these effects:
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10520 = ~Jaws
+@10521 = ~Jaws
 
 Melee damage: 1D10 (Piercing)
 Speed Factor: 5
 Enchantment: 1
 Range: 1 feet~
-@10521 = ~Type K poison~
-@10522 = ~Poison damage: 5 over 10 seconds (saves vs poison/death at +4)~
-@10523 = ~Claws
+@10522 = ~Type K poison~
+@10523 = ~Poison damage: 5 over 10 seconds (saves vs poison/death at +4)~
+@10524 = ~Claws
 
 Melee damage: 1D6 (Slashing)
 Speed Factor: 5
@@ -735,7 +736,7 @@ Range: 2 feet
 
 Cast spell Type K poison:
 Poison damage: 5 over 10 seconds (saves vs poison/death at +4)~
-@10524 = ~Jaws
+@10525 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
 Speed Factor: 5
@@ -744,8 +745,8 @@ Range: 2 feet
 
 Cast spell Foul Breath:
 All creatures within 5 feet must roll successful saving throws vs. poison (with a +2 bonus) or die (check each round of exposure).~
-@10525 = ~Crushing damage: 2D4~
-@10526 = ~Paws
+@10526 = ~Crushing damage: 2D4~
+@10527 = ~Paws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
@@ -753,13 +754,13 @@ Range: 1 feet
 
 Cast spell Hug (10%):
 Crushing damage: 2D4~
-@10527 = ~Jaws
+@10528 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10528 = ~Crushing damage: 2D6~
-@10529 = ~Paws
+@10529 = ~Crushing damage: 2D6~
+@10530 = ~Paws
 
 Melee damage: 1D6 (Slashing)
 Speed Factor: 5
@@ -768,14 +769,14 @@ Range: 2 feet
 
 Cast spell Hug (10%):
 Crushing damage: 2D6~
-@10530 = ~Jaws
+@10531 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10531 = ~Crushing damage: 2D6~
-@10532 = ~Paws
+@10532 = ~Crushing damage: 2D6~
+@10533 = ~Paws
 
 Melee damage: 1D8 (Slashing)
 Speed Factor: 5
@@ -784,14 +785,14 @@ Range: 2 feet
 
 Cast spell Hug (10%):
 Crushing damage: 2D6~
-@10533 = ~Jaws
+@10534 = ~Jaws
 
 Melee damage: 1D12 (Piercing)
 Speed Factor: 3
 Enchantment: 2
 Range: 2 feet~
-@10534 = ~Crushing damage: 3D6~
-@10535 = ~Paws
+@10535 = ~Crushing damage: 3D6~
+@10536 = ~Paws
 
 Melee damage: 1D10 (Slashing)
 Speed Factor: 5
@@ -800,20 +801,20 @@ Range: 2 feet
 
 Cast spell Hug (10%):
 Crushing damage: 3D6~
-@10536 = ~Jaws
+@10537 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
 Speed Factor: 3
 Enchantment: 3
 Range: 2 feet~
-@10537 = ~Tentacles
+@10538 = ~Tentacles
 
 Melee damage: 1D2 (Piercing)
 Speed Factor: 3
 Range: 2 feet~
-@10538 = ~Slashing damage: 1D4
+@10539 = ~Slashing damage: 1D4
 Slashing damage: 1D4~
-@10539 = ~Paws
+@10540 = ~Paws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
@@ -823,15 +824,15 @@ Range: 2 feet
 Cast spell Rear claws attack (20%):
 Slashing damage: 1D4
 Slashing damage: 1D4~
-@10540 = ~Jaws
+@10541 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10541 = ~Slashing damage: 1D4
+@10542 = ~Slashing damage: 1D4
 Slashing damage: 1D4~
-@10542 = ~Paws
+@10543 = ~Paws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
@@ -840,14 +841,14 @@ Range: 1 feet
 Cast spell Rear claws attack (20%):
 Slashing damage: 1D4
 Slashing damage: 1D4~
-@10543 = ~Jaws
+@10544 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10544 = ~Slashing damage: 1D6+1
+@10545 = ~Slashing damage: 1D6+1
 Slashing damage: 1D6+1~
-@10545 = ~Paws
+@10546 = ~Paws
 
 Melee damage: 1D4 (Slashing)
 Speed Factor: 5
@@ -857,15 +858,15 @@ Range: 1 feet
 Cast spell Rear claws attack (20%):
 Slashing damage: 1D6+1
 Slashing damage: 1D6+1~
-@10546 = ~Jaws
+@10547 = ~Jaws
 
 Melee damage: 1D10 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 1 feet~
-@10547 = ~Slashing damage: 1D4+1
+@10548 = ~Slashing damage: 1D4+1
 Slashing damage: 1D4+1~
-@10548 = ~Paws
+@10549 = ~Paws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
@@ -874,20 +875,20 @@ Range: 1 feet
 Cast spell Rear claws attack (20%):
 Slashing damage: 1D4+1
 Slashing damage: 1D4+1~
-@10549 = ~Jaws
+@10550 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10550 = ~Hellcat traits~
-@10551 = ~Slashing damage: 2D4+4
+@10551 = ~Hellcat traits~
+@10552 = ~Slashing damage: 2D4+4
 Slashing damage: 2D4+4~
-@10552 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+@10553 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Immune to non-magical weapons
 Extraplanar
 Magic Resistance: 20%
 Improved invisibility~
-@10553 = ~Paws
+@10554 = ~Paws
 
 Melee damage: 1D4 (Slashing)
 Speed Factor: 5
@@ -897,68 +898,68 @@ Range: 2 feet
 Cast spell Rear claws attack (20%):
 Slashing damage: 2D4+4
 Slashing damage: 2D4+4~
-@10554 = ~Jaws
+@10555 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
 Speed Factor: 3
 Enchantment: 2
 Range: 2 feet~
-@10555 = ~Displacer Beast traits~
-@10556 = ~Immune to magic
+@10556 = ~Displacer Beast traits~
+@10557 = ~Immune to magic
 Immune to fire
 Immune to cold
 +2 AC
 Blur (visual effect only)
 Mirror image (1)~
-@10557 = ~Tentacles
+@10558 = ~Tentacles
 
 Melee damage: 2D4 (PiercingOrCrushing)
 Speed Factor: 3
 Enchantment: 1
 Range: 5 feet~
-@10558 = ~Helmed Horror traits~
-@10559 = ~True sight
+@10559 = ~Helmed Horror traits~
+@10560 = ~True sight
 Immune to fireball spell
 Immune to lightning bolt spell
 Immune to flame arrow spell
 Immune to magic missiles spell
 Hover (flight)~
-@10560 = ~Doom Guard traits~
-@10561 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
+@10561 = ~Doom Guard traits~
+@10562 = ~Immunity to mind-affecting spells and abilities (charms, compulsions, phantasms, patterns, and morale effects)
 Resistance to fire (50%)
 Resistance to cold (50%)~
-@10562 = ~Flaming Greatsword
+@10563 = ~Flaming Greatsword
 
 Melee damage: 2D6 (Slashing)
 Fire damage: 1D6
 Speed Factor: 10
 Enchantment: 1
 Range: 2 feet~
-@10563 = ~Long Sword
+@10564 = ~Long Sword
 
 Melee damage: 1D8 (Slashing)
 Speed Factor: 5
 Enchantment: 1
 Range: 1 feet~
-@10564 = ~Jaws
+@10565 = ~Jaws
 
 Melee damage: 1D4 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10565 = ~Jaws
+@10566 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10566 = ~Teleport to target
+@10567 = ~Teleport to target
 Thac0:+2 for a round~
-@10567 = ~Jaws
+@10568 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10568 = ~Slow target for 6 rounds~
-@10569 = ~Jaws
+@10569 = ~Slow target for 6 rounds~
+@10570 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
 Speed Factor: 3
@@ -967,15 +968,15 @@ Range: 1 feet
 
 Cast spell Astral Plane Shift:
 Slow target for 6 rounds~
-@10570 = ~Type J poison~
-@10571 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
-@10572 = ~Claws
+@10571 = ~Type J poison~
+@10572 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+@10573 = ~Claws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
 Enchantment: 1
 Range: 1 feet~
-@10573 = ~Jaws
+@10574 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 2
@@ -984,17 +985,17 @@ Range: 1 feet
 
 Cast spell Type J poison:
 Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
-@10574 = ~Dryad traits~
-@10575 = ~Resistance to magic (50%)~
-@10576 = ~Hamadryad traits~
-@10577 = ~Immune to entangle effects
+@10575 = ~Dryad traits~
+@10576 = ~Resistance to magic (50%)~
+@10577 = ~Hamadryad traits~
+@10578 = ~Immune to entangle effects
 Magic Resistance: 75%~
-@10578 = ~Nymph traits~
-@10579 = ~Resistance to magic (50%)~
-@10580 = ~Sirine traits~
-@10581 = ~Immune to cloud spells
+@10579 = ~Nymph traits~
+@10580 = ~Resistance to magic (50%)~
+@10581 = ~Sirine traits~
+@10582 = ~Immune to cloud spells
 Magic Resistance: 20%~
-@10582 = ~Sirine Touch
+@10583 = ~Sirine Touch
 
 Melee damage: 1D3 (Crushing)
 Speed Factor: 2
@@ -1002,241 +1003,241 @@ Enchantment: 1
 Range: 1 feet
 
 Cast spell Touch of Tranquility~
-@10583 = ~Dire Charm target for 3 turns (saves vs spell at -3).~
-@10584 = ~~
-@10585 = ~Dire Charm target for 3 turns (saves vs spell).~
-@10586 = ~Flesh Golem traits~
-@10587 = ~Immune to magic
+@10584 = ~Dire Charm target for 3 turns (saves vs spell at -3).~
+@10585 = ~~
+@10586 = ~Dire Charm target for 3 turns (saves vs spell).~
+@10587 = ~Flesh Golem traits~
+@10588 = ~Immune to magic
 Immune to fire
 Immune to cold
 Electricity Resistance: 125%~
-@10588 = ~Fists
+@10589 = ~Fists
 
 Melee damage: 2D8 (Crushing)
 Speed Factor: 4
 Enchantment: 3
 Range: 2 feet~
-@10589 = ~Clay Golem traits~
-@10590 = ~Haste caster for 3 rounds~
-@10591 = ~Immune to magic
+@10590 = ~Clay Golem traits~
+@10591 = ~Haste caster for 3 rounds~
+@10592 = ~Immune to magic
 Immune to non-magical weapons
 Immune to slashing damage
 Immune to piercing damage
 Immune to missile damage~
-@10592 = ~Fists
+@10593 = ~Fists
 
 Melee damage: 3D10 (Crushing)
 Speed Factor: 4
 Enchantment: 4
 Range: 2 feet~
-@10593 = ~Stone Golem traits~
-@10594 = ~Immune to magic
+@10594 = ~Stone Golem traits~
+@10595 = ~Immune to magic
 Immune to all weapons of +1 or less enchantment~
-@10595 = ~Fists
+@10596 = ~Fists
 
 Melee damage: 3D8 (Crushing)
 Speed Factor: 4
 Enchantment: 4
 Range: 2 feet~
-@10596 = ~Iron Golem traits~
-@10597 = ~Immune to magic
+@10597 = ~Iron Golem traits~
+@10598 = ~Immune to magic
 Immune to all weapons of +2 or less enchantment
 Immune to lightning
 Fire Resistance: 125%
 Magical Fire Resistance: 125%~
-@10598 = ~Fists
+@10599 = ~Fists
 
 Melee damage: 4D10 (Crushing)
 Speed Factor: 4
 Enchantment: 4
 Range: 2 feet~
-@10599 = ~Bone Golem traits~
-@10600 = ~~
-@10601 = ~Immune to magic
+@10600 = ~Bone Golem traits~
+@10601 = ~~
+@10602 = ~Immune to magic
 Immune to fire
 Immune to cold
 Electricity Resistance: 125%~
-@10602 = ~Fists
+@10603 = ~Fists
 
 Melee damage: 3D8 (Slashing)
 Speed Factor: 4
 Enchantment: 4
 Range: 1 feet~
-@10603 = ~Juggernaut Golem traits~
-@10604 = ~Immune to magic
+@10604 = ~Juggernaut Golem traits~
+@10605 = ~Immune to magic
 Immune to fire~
-@10605 = ~Fists
+@10606 = ~Fists
 
 Melee damage: 2D6 (Crushing)
 Speed Factor: 4
 Enchantment: 4
 Range: 2 feet~
-@10606 = ~Snow Golem traits~
-@10607 = ~Immune to all weapons of +1 or less enchantment
+@10607 = ~Snow Golem traits~
+@10608 = ~Immune to all weapons of +1 or less enchantment
 Immune to lightning
 Cold Resistance: 125%
 Magical Cold Resistance: 125%~
-@10608 = ~Fists
+@10609 = ~Fists
 
 Melee damage: 2D12 (Crushing)
 Speed Factor: 4
 Enchantment: 4
 Range: 2 feet~
-@10609 = ~Minotaur traits~
-@10610 = ~Infravision
+@10610 = ~Minotaur traits~
+@10611 = ~Infravision
 Immune to maze spells~
-@10611 = ~Headbutt
+@10612 = ~Headbutt
 
 Melee damage: 4D4 (Piercing)
 Speed Factor: 1
 Enchantment: 2
 Range: 2 feet~
-@10612 = ~Fists
+@10613 = ~Fists
 
 Melee damage: 1D10 (Crushing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10613 = ~Fists
+@10614 = ~Fists
 
 Melee damage: 2D6 (Crushing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10614 = ~Fists
+@10615 = ~Fists
 
 Melee damage: 1D6 (Crushing)
 Speed Factor: 3
 Range: 1 feet~
-@10615 = ~Ogre Mage traits~
-@10616 = ~Regeneration: 1 hp/round~
-@10617 = ~Giant Flail
+@10616 = ~Ogre Mage traits~
+@10617 = ~Regeneration: 1 hp/round~
+@10618 = ~Giant Flail
 
 Melee damage: 2D8 (Crushing)
 Speed Factor: 8
 Enchantment: 1
 Range: 2 feet~
-@10618 = ~Treant traits~
-@10619 = ~Branch
+@10619 = ~Treant traits~
+@10620 = ~Branch
 
 Melee damage: 4D6 (Crushing)
 Speed Factor: 8
 Enchantment: 4
 Range: 5 feet~
-@10620 = ~Branch
+@10621 = ~Branch
 
 Melee damage: 3D6 (Crushing)
 Speed Factor: 8
 Enchantment: 4
 Range: 5 feet~
-@10621 = ~Branch
+@10622 = ~Branch
 
 Melee damage: 2D8 (Crushing)
 Speed Factor: 8
 Enchantment: 4
 Range: 5 feet~
-@10622 = ~Branch
+@10623 = ~Branch
 
 Melee damage: 2D6 (Crushing)
 Speed Factor: 8
 Enchantment: 4
 Range: 5 feet~
-@10623 = ~Fire Resistance: -25%
+@10624 = ~Fire Resistance: -25%
 Magical Fire Resistance: -25%~
-@10624 = ~Black Pudding traits~
-@10625 = ~Immune to acid
+@10625 = ~Black Pudding traits~
+@10626 = ~Immune to acid
 Immune to cold
 Immune to poison
 Electricity Resistance: 90%~
-@10626 = ~Pseudopod
+@10627 = ~Pseudopod
 
 Acid damage: 3D8
 Speed Factor: 4
 Enchantment: 3
 Range: 5 feet~
-@10627 = ~White Pudding traits~
-@10628 = ~Immune to acid
+@10628 = ~White Pudding traits~
+@10629 = ~Immune to acid
 Immune to cold
 Immune to poison
 Electricity Resistance: 90%~
-@10629 = ~Pseudopod
+@10630 = ~Pseudopod
 
 Acid damage: 7D4
 Speed Factor: 4
 Enchantment: 3
 Range: 5 feet~
-@10630 = ~Mustard Jelly traits~
-@10631 = ~Immune to lightning
+@10631 = ~Mustard Jelly traits~
+@10632 = ~Immune to lightning
 Immune to non-magical weapons
 Immune to magic missiles spell
 Resistance to cold (50%)
 Magic Resistance: 10%~
-@10632 = ~Pseudopod
+@10633 = ~Pseudopod
 
 Melee damage: 2D4 (Crushing)
 Acid damage: 3D4
 Speed Factor: 4
 Enchantment: 2
 Range: 5 feet~
-@10633 = ~Fission Slime traits~
-@10634 = ~Immune to lightning
+@10634 = ~Fission Slime traits~
+@10635 = ~Immune to lightning
 Immune to non-magical weapons
 Immune to magic missiles spell
 Resistance to cold (50%)
 Magic Resistance: 10%~
-@10635 = ~Pseudopod
+@10636 = ~Pseudopod
 
 Melee damage: 3D6 (Crushing)
 Acid damage: 3D6
 Speed Factor: 4
 Enchantment: 4
 Range: 5 feet~
-@10636 = ~Gray Ooze traits~
-@10637 = ~Immune to magic
+@10637 = ~Gray Ooze traits~
+@10638 = ~Immune to magic
 Immune to fire
 Immune to cold~
-@10638 = ~Pseudopod
+@10639 = ~Pseudopod
 
 Acid damage: 2D8
 Speed Factor: 4
 Range: 5 feet~
-@10639 = ~Green Slime traits~
-@10640 = ~Immune to magic
+@10640 = ~Green Slime traits~
+@10641 = ~Immune to magic
 Immune to physical damage~
-@10641 = ~Pseudopod
+@10642 = ~Pseudopod
 
 Acid damage: 1D4
 Speed Factor: 4
 Range: 5 feet~
-@10642 = ~Ochre Jelly traits~
-@10643 = ~Immune to lightning~
-@10644 = ~Pseudopod
+@10643 = ~Ochre Jelly traits~
+@10644 = ~Immune to lightning~
+@10645 = ~Pseudopod
 
 Acid damage: 1D10+2
 Speed Factor: 4
 Enchantment: 1
 Range: 5 feet~
-@10645 = ~Olive Slime Creature traits~
-@10646 = ~Immune to lightning
+@10646 = ~Olive Slime Creature traits~
+@10647 = ~Immune to lightning
 Immune to entangle effects
 Immune to non-magical weapons~
-@10647 = ~Pseudopod
+@10648 = ~Pseudopod
 
 Melee damage: 2D4 (Crushing)
 Acid damage: 2D4
 Speed Factor: 4
 Enchantment: 4
 Range: 5 feet~
-@10648 = ~Pseudopod
+@10649 = ~Pseudopod
 
 Melee damage: 1D6 (Crushing)
 Acid damage: 4D6
 Speed Factor: 4
 Enchantment: 1
 Range: 5 feet~
-@10649 = ~Type Q poison~
-@10650 = ~Fall into a coma for an hour~
-@10651 = ~Jaws
+@10650 = ~Type Q poison~
+@10651 = ~Fall into a coma for an hour~
+@10652 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
 Speed Factor: 2
@@ -1245,11 +1246,11 @@ Range: 3 feet
 
 Cast spell Type Q poison (saves vs poison/death at -2):
 Fall into a coma for an hour~
-@10652 = ~Ghostwalk Spider traits~
-@10653 = ~Type E poison~
-@10654 = ~Death within 3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
-@10655 = ~True sight~
-@10656 = ~Jaws
+@10653 = ~Ghostwalk Spider traits~
+@10654 = ~Type E poison~
+@10655 = ~Death within 3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
+@10656 = ~True sight~
+@10657 = ~Jaws
 
 Melee damage: 3D10 (Piercing)
 Speed Factor: 2
@@ -1262,7 +1263,7 @@ Has a 50% resistance to every damages.
 Deflection bonus (+3 AC).
 Attacks pass through armor (+4 THAC0).
 Blur (visual effect only)~
-@10657 = ~Jaws
+@10658 = ~Jaws
 
 Melee damage: 3D10 (Piercing)
 Speed Factor: 2
@@ -1271,9 +1272,9 @@ Range: 2 feet
 
 Cast spell Type E poison:
 Death within 3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
-@10658 = ~Type F poison~
-@10659 = ~Death within 3 rounds (saves vs poison/death)~
-@10660 = ~Jaws
+@10659 = ~Type F poison~
+@10660 = ~Death within 3 rounds (saves vs poison/death)~
+@10661 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 2
@@ -1282,20 +1283,20 @@ Range: 2 feet
 
 Cast spell Type F poison:
 Death within 3 rounds (saves vs poison/death)~
-@10661 = ~Type R poison~
-@10662 = ~The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for 4 rounds~
-@10663 = ~Hairy Spider traits~
-@10664 = ~Jaws
+@10662 = ~Type R poison~
+@10663 = ~The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for 4 rounds~
+@10664 = ~Hairy Spider traits~
+@10665 = ~Jaws
 
 Melee damage: 1D1 (Piercing)
 Speed Factor: 2
 
 Cast spell Type R poison (saves vs poison/death at +2):
 The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for 4 rounds~
-@10665 = ~Resistance to crushing damage (50%)~
-@10666 = ~Type A poison~
-@10667 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +1)~
-@10668 = ~Jaws
+@10666 = ~Resistance to crushing damage (50%)~
+@10667 = ~Type A poison~
+@10668 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +1)~
+@10669 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 2
@@ -1303,9 +1304,9 @@ Range: 1 feet
 
 Cast spell Type A poison:
 Poison damage: 15 over 50 seconds (saves vs poison/death at +1)~
-@10669 = ~Type A poison~
-@10670 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +2)~
-@10671 = ~Jaws
+@10670 = ~Type A poison~
+@10671 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +2)~
+@10672 = ~Jaws
 
 Melee damage: 1D3 (Piercing)
 Speed Factor: 2
@@ -1313,11 +1314,11 @@ Range: 2 feet
 
 Cast spell Type A poison:
 Poison damage: 15 over 50 seconds (saves vs poison/death at +2)~
-@10672 = ~Phase Spider traits~
-@10673 = ~Type F poison~
-@10674 = ~Death within 3 rounds (saves vs poison/death at -2)~
-@10675 = ~Invisibility~
-@10676 = ~Jaws
+@10673 = ~Phase Spider traits~
+@10674 = ~Type F poison~
+@10675 = ~Death within 3 rounds (saves vs poison/death at -2)~
+@10676 = ~Invisibility~
+@10677 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 2
@@ -1328,43 +1329,43 @@ Cast spell Phase out
 
 Cast spell Type F poison:
 Death within 3 rounds (saves vs poison/death at -2)~
-@10677 = ~Jaws
+@10678 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 2
 Enchantment: 1
 Range: 2 feet~
-@10678 = ~Leg
+@10679 = ~Leg
 
 Melee damage: 1D12 (Piercing)
 Speed Factor: 1
 Enchantment: 1
 Range: 2 feet~
-@10679 = ~Impaling Attack
+@10680 = ~Impaling Attack
 
 Melee damage: 4D12 (Piercing)
 Speed Factor: 1
 Enchantment: 1
 Range: 2 feet
 Thac0:-4 for 2 rounds~
-@10680 = ~Leg
+@10681 = ~Leg
 
 Melee damage: 1D12 (Piercing)
 Speed Factor: 1
 Enchantment: 1
 Range: 2 feet~
-@10681 = ~Impaling Attack
+@10682 = ~Impaling Attack
 
 Melee damage: 4D12 (Piercing)
 Speed Factor: 1
 Enchantment: 1
 Range: 2 feet
 Thac0:-4 for 2 rounds~
-@10682 = ~Vortex Spider traits~
-@10683 = ~Type F poison~
-@10684 = ~Death within 3 rounds (saves vs poison/death at -2)~
-@10685 = ~Magic Resistance: 15%~
-@10686 = ~Jaws
+@10683 = ~Vortex Spider traits~
+@10684 = ~Type F poison~
+@10685 = ~Death within 3 rounds (saves vs poison/death at -2)~
+@10686 = ~Magic Resistance: 15%~
+@10687 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 2
@@ -1373,14 +1374,14 @@ Range: 2 feet
 
 Cast spell Type F poison:
 Death within 3 rounds (saves vs poison/death at -2)~
-@10687 = ~Wraith Spider traits~
-@10688 = ~Type S poison~
-@10689 = ~This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
+@10688 = ~Wraith Spider traits~
+@10689 = ~Type S poison~
+@10690 = ~This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
 Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.~
-@10690 = ~Immune to cold
+@10691 = ~Immune to cold
 Immune to non-magical and non-silver weapons
 Magic Resistance: 15%~
-@10691 = ~Jaws
+@10692 = ~Jaws
 
 Cold damage: 1D4+1
 Speed Factor: 2
@@ -1390,22 +1391,22 @@ Drain 1 level from target.
 Cast spell Type S poison (saves vs poison/death):
 This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
 Constitution points can be regained at the rate of 1 per week; a heal spell restores 1-4 points per spell.~
-@10692 = ~Jaws
+@10693 = ~Jaws
 
 Melee damage: 1D4 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10693 = ~Jaws
+@10694 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10694 = ~Dread Wolf traits~
-@10695 = ~Sleep for 2 rounds
+@10695 = ~Dread Wolf traits~
+@10696 = ~Sleep for 2 rounds
 Heal: 1
 Heal: 6~
-@10696 = ~Jaws
+@10697 = ~Jaws
 
 Melee damage: 1D10 (Piercing)
 Speed Factor: 3
@@ -1415,14 +1416,14 @@ Range: 1 feet
 Cast spell Rotting Disease (saves vs poison/death):
 Dread wolves cause a nasty rotting disease that can infect a bitten opponent who fails a save vs. poison within one hour of the fight.
 He loses 1 hp per hour until death.~
-@10697 = ~Grab and hold your target for 5 rounds.
+@10698 = ~Grab and hold your target for 5 rounds.
 Grabbed creature will suffer these effects:
 - can not move
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10698 = ~Vampiric Wolf traits~
-@10699 = ~Jaws
+@10699 = ~Vampiric Wolf traits~
+@10700 = ~Jaws
 
 Melee damage: 8 (Piercing)
 Speed Factor: 3
@@ -1430,7 +1431,7 @@ Enchantment: 2
 Range: 1 feet
 Heal: 9
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
-@10700 = ~Jaws
+@10701 = ~Jaws
 
 Melee damage: 8 (Piercing)
 Speed Factor: 3
@@ -1446,7 +1447,7 @@ Grabbed creature will suffer these effects:
 - loose armor class from dexterity bonus
 - -4 AC (opponents get +4 bonus on their attack rolls against grabbed target)
 - -4 THAC0~
-@10701 = ~Jaws
+@10702 = ~Jaws
 
 THAC0: +30
 Melee damage: 8 (Piercing)
@@ -1455,30 +1456,30 @@ Enchantment: 2
 Range: 1 feet
 Heal: 9
 Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
-@10702 = ~Immune to sleep
+@10703 = ~Immune to sleep
 Immune to charm
 Immune to hold
 Immune to non-magical and non-silver weapons~
-@10703 = ~Winter Wolf traits~
-@10704 = ~Immune to cold
+@10704 = ~Winter Wolf traits~
+@10705 = ~Immune to cold
 Fire Resistance: -10%
 Magical Fire Resistance: -10%~
-@10705 = ~Jaws
+@10706 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10706 = ~Jaws
+@10707 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10707 = ~Wyvern traits~
-@10708 = ~Type F poison~
-@10709 = ~Death within 3 rounds (saves vs poison/death)~
-@10710 = ~Hover (flight)~
-@10711 = ~Stinger
+@10708 = ~Wyvern traits~
+@10709 = ~Type F poison~
+@10710 = ~Death within 3 rounds (saves vs poison/death)~
+@10711 = ~Hover (flight)~
+@10712 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
@@ -1487,15 +1488,15 @@ Range: 3 feet
 
 Cast spell Type F poison:
 Death within 3 rounds (saves vs poison/death)~
-@10712 = ~Jaws
+@10713 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
 Speed Factor: 2
 Enchantment: 2
 Range: 3 feet~
-@10713 = ~Type J poison~
-@10714 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
-@10715 = ~Stinger
+@10714 = ~Type J poison~
+@10715 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+@10716 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
@@ -1504,15 +1505,15 @@ Range: 2 feet
 
 Cast spell Type J poison:
 Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
-@10716 = ~Jaws
+@10717 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
 Speed Factor: 2
 Enchantment: 1
 Range: 2 feet~
-@10717 = ~Type F poison~
-@10718 = ~Death within 3 rounds (saves vs poison/death)~
-@10719 = ~Stinger
+@10718 = ~Type F poison~
+@10719 = ~Death within 3 rounds (saves vs poison/death)~
+@10720 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
@@ -1521,25 +1522,25 @@ Range: 3 feet
 
 Cast spell Type F poison:
 Death within 3 rounds (saves vs poison/death)~
-@10720 = ~Jaws
+@10721 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
 Speed Factor: 2
 Enchantment: 4
 Range: 3 feet~
-@10721 = ~Banshee traits~
-@10722 = ~Immune to non-magical weapons
+@10722 = ~Banshee traits~
+@10723 = ~Immune to non-magical weapons
 Resistance to magic (50%)
 Incorporeal
 Immune to cold
 Immune to lightning~
-@10723 = ~Touch
+@10724 = ~Touch
 
 Melee damage: 1D8 (Crushing)
 Speed Factor: 3
 Enchantment: 2
 Range: 1 feet~
-@10724 = ~Claws
+@10725 = ~Claws
 
 Melee damage: 1D3 (Slashing)
 Speed Factor: 5
@@ -1547,7 +1548,7 @@ Range: 1 feet
 
 Cast spell Ghoul's Touch:
 Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.~
-@10725 = ~Jaws
+@10726 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
@@ -1555,7 +1556,7 @@ Range: 1 feet
 
 Cast spell Ghoul's Touch:
 Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.~
-@10726 = ~Claws
+@10727 = ~Claws
 
 Melee damage: 1D4 (Slashing)
 Speed Factor: 5
@@ -1563,7 +1564,7 @@ Range: 1 feet
 
 Cast spell Ghast's Touch:
 Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.~
-@10727 = ~Jaws
+@10728 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
 Speed Factor: 3
@@ -1571,9 +1572,9 @@ Range: 1 feet
 
 Cast spell Ghast's Touch:
 Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.~
-@10728 = ~Ghoul Lord traits~
-@10729 = ~Immune to non-magical and non-silver weapons~
-@10730 = ~Claws
+@10729 = ~Ghoul Lord traits~
+@10730 = ~Immune to non-magical and non-silver weapons~
+@10731 = ~Claws
 
 Melee damage: 1D6 (Slashing)
 Speed Factor: 5
@@ -1582,7 +1583,7 @@ Range: 1 feet
 
 Cast spell Ghoul Lord's Touch:
 Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds or until negated by a priest.~
-@10731 = ~Jaws
+@10732 = ~Jaws
 
 Melee damage: 1D10 (Piercing)
 Speed Factor: 3
@@ -1594,15 +1595,15 @@ Their touch causes humanoids to become rigid unless a saving throw versus paraly
 
 Cast spell Rotting Disease (saves vs poison/death):
 Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.~
-@10732 = ~Mummy traits~
-@10733 = ~~
+@10733 = ~Mummy traits~
 @10734 = ~~
-@10735 = ~Resistance to physical damage (50%)
+@10735 = ~~
+@10736 = ~Resistance to physical damage (50%)
 Immune to cold
 Immune to non-magical weapons
 Fire Resistance: -33%
 Magical Fire Resistance: -33%~
-@10736 = ~Claws
+@10737 = ~Claws
 
 Melee damage: 1D12 (Slashing)
 Speed Factor: 5
@@ -1614,16 +1615,16 @@ The scabrous touch infects the victim with a rotting disease which is fatal in 6
 For each day the rot progresses, the victim permanently loses 2 points of Charisma.
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.~
-@10737 = ~Greater Mummy traits~
-@10738 = ~~
+@10738 = ~Greater Mummy traits~
 @10739 = ~~
-@10740 = ~Resistance to physical damage (50%)
+@10740 = ~~
+@10741 = ~Resistance to physical damage (50%)
 Immune to cold
 Immune to all weapons of +2 or less enchantment
 Magic Resistance: 20%
 Fire Resistance: 100%
 Electricity Resistance: -50%~
-@10741 = ~Claws
+@10742 = ~Claws
 
 Melee damage: 3D6 (Slashing)
 Speed Factor: 5
@@ -1635,3 +1636,34 @@ The scabrous touch infects the victim with a rotting disease which is fatal in 4
 Every 8 hours, the victim permanently loses 2 points of Charisma and 1 point each of Strength and Constitution.
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.~
+@10743 = ~Shadow traits~
+@10744 = ~Immune to cold
+Incorporeal~
+@10745 = ~Claws
+
+Melee damage: 1D4+1 (Slashing)
+Speed Factor: 5
+Range: 1 feet
+Strength: -1 for an hour~
+@10746 = ~Claws
+
+Melee damage: 1D4+1 (Slashing)
+Speed Factor: 5
+Range: 1 feet
+Wisdom: -2 for an hour~
+@10747 = ~Claws
+
+Melee damage: 1D12+1 (Slashing)
+Speed Factor: 5
+Range: 1 feet
+Strength: -2 for an hour~
+@10748 = ~Greater Shadow traits~
+@10749 = ~Immune to cold
+Incorporeal~
+@10750 = ~Claws
+
+Melee damage: 2D6+2 (Slashing)
+Speed Factor: 5
+Enchantment: 3
+Range: 1 feet
+Strength: -3 for an hour~

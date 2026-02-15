@@ -6,3 +6,5 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/75.tpa" // Ghast
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/77.tpa" // Ghoul Lord
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/78.tpa" // Mummy
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/79.tpa" // Greater Mummy
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/80.tpa" // Shadow
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/89.tpa" // Greater Shadow

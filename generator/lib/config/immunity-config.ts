@@ -1027,7 +1027,7 @@ export const TRAITS: (AtLeast<
       "criticalHit",
       "fireResistance",
       "coldResistance",
-      "lightningSpells",
+      "lightningResistance",
       "acidResistance",
       "poisonResistance",
       "magicDamageResistance",

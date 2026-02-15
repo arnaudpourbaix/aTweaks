@@ -2,7 +2,7 @@
  * Development tools
  */
 
-DEFINE_ACTION_FUNCTION makeCreatureList BEGIN
+DEFINE_ACTION_MACRO makeCreatureList BEGIN
     COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
         PATCH_IF (%SOURCE_SIZE% > 0x2d3) BEGIN
             READ_BYTE 0x272 race
@@ -12,15 +12,16 @@ DEFINE_ACTION_FUNCTION makeCreatureList BEGIN
             // PATCH_IF class = 199 BEGIN
             // PATCH_IF race = 119 BEGIN
             // PATCH_IF class = 118 OR animation = 0x7702 BEGIN
-            // PATCH_IF race = 121 OR animation = 0x2300 BEGIN
-            PATCH_IF animation = 0xE080 BEGIN
+            // PATCH_IF race = 132 OR animation = 0x7703 BEGIN
+            PATCH_IF race = 132 OR class = 170 OR animation = 0x7703 BEGIN
+            // PATCH_IF animation = 0xE080 BEGIN
                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
             END
         END
     BUT_ONLY
 END
 
-DEFINE_ACTION_FUNCTION checkSpells BEGIN
+DEFINE_ACTION_MACRO checkSpells BEGIN
     ACTION_FOR_EACH ~file~ IN
         dvbanish.spl
         dvgasfrm.spl

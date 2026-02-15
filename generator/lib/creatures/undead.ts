@@ -1,9 +1,6 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { FNP_SPELLS, SPELLS } from "../config/spell-names";
-import {
-  COMMON_PROJECTILES,
-  CommonProjectileFiles,
-} from "../spells/projectiles";
+import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
 import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
@@ -21,9 +18,7 @@ import {
   EffectIDSFileEnum,
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
-  EffectTargetEnum,
   EffectTimingEnum,
-  InvisibilityTypeEnum,
   ItemAbilityCastingAnimationEnum,
   ItemAbilityFlagEnum,
   ItemAbilityLocationEnum,
@@ -73,6 +68,7 @@ class Undead extends Creature {
   createTouch(p: {
     diceThrown: number;
     diceSize: number;
+    damageBonus?: number;
     effects?: Effect[];
     slot?: ItemSlot;
   }) {
@@ -80,11 +76,12 @@ class Undead extends Creature {
       weapon: {
         stringRef: "monster.undead.weapon.touch",
         icon: MonsterItemIconEnum.Fist,
-        equippedSlot: [p.slot ?? "WEAPON1"],
+        equippedSlot: p.slot ? [p.slot] : [],
         header: {
           type: ItemAbilityTypeEnum.Melee,
           diceThrown: p.diceThrown,
           diceSize: p.diceSize,
+          damageBonus: p.damageBonus,
           damageType: AbilityDamageTypeEnum.Crushing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
@@ -94,26 +91,65 @@ class Undead extends Creature {
     });
   }
 
-  createClaws(
-    diceThrown: number,
-    diceSize: number,
-    castSpell?: WeaponCastSpell,
-  ) {
+  createClaws(p: {
+    diceThrown: number;
+    diceSize: number;
+    damageBonus?: number;
+    effects?: Effect[];
+    castSpell?: WeaponCastSpell;
+    equipped?: boolean;
+  }) {
+    const equipped = p.equipped ?? true;
     return this.addWeapon({
       weapon: {
         stringRef: "monster.undead.weapon.claws",
         icon: MonsterItemIconEnum.Ghoul,
-        equippedSlot: ["WEAPON1"],
+        equippedSlot: equipped ? ["WEAPON1"] : [],
         header: {
           type: ItemAbilityTypeEnum.Melee,
-          diceThrown,
-          diceSize,
+          diceThrown: p.diceThrown,
+          diceSize: p.diceSize,
+          damageBonus: p.damageBonus,
           damageType: AbilityDamageTypeEnum.Slashing,
           speed: 5,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
+          effects: p.effects,
         },
       },
-      castSpells: castSpell ? [castSpell] : undefined,
+      castSpells: p.castSpell ? [p.castSpell] : undefined,
+    });
+  }
+
+  createShadowWeapon(p: {
+    diceThrown: number;
+    diceSize: number;
+    damageBonus: number;
+    opcode: EffectTypeEnum.StrengthBonus | EffectTypeEnum.WisdomBonus;
+    drainValue: number;
+    equipped?: boolean;
+  }) {
+    const baseEffect: BaseEffect = {
+      dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+      duration: 5 * Durations.turn,
+    };
+    return this.createClaws({
+      diceThrown: p.diceThrown,
+      diceSize: p.diceSize,
+      damageBonus: p.damageBonus,
+      equipped: p.equipped,
+      effects: [
+        {
+          opcode: p.opcode,
+          type: EffectStatisticModifierEnum.Increment,
+          value: p.drainValue,
+          ...baseEffect,
+        },
+        {
+          opcode: EffectTypeEnum.DisplayPortraitIcon,
+          icon: PortraitIconEnum.AbilityScoreDrained,
+          ...baseEffect,
+        },
+      ],
     });
   }
 
@@ -811,7 +847,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.ghoulLord());
     this.addCreature(this.mummy());
     this.addCreature(this.greaterMummy());
-    // this.addCreature(this.shadow());
+    this.addCreature(this.shadow());
+    this.addCreature(this.greaterShadow());
     // this.addCreature(this.skeleton());
     // this.addCreature(this.skeletonWarrior());
     // this.addCreature(this.spectre());
@@ -880,6 +917,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     banshee.createTouch({
       diceThrown: 1,
       diceSize: 8,
+      slot: "WEAPON1",
     });
     banshee.setBehavior({
       restHeal: true,
@@ -1045,8 +1083,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
       },
     });
     ghast.createGhastTouch();
-    ghast.createClaws(1, 4, {
-      spell: this.spell(Ids.GhastTouch).file,
+    ghast.createClaws({
+      diceThrown: 1,
+      diceSize: 4,
+      castSpell: {
+        spell: this.spell(Ids.GhastTouch).file,
+      },
     });
     ghast.createJaws(1, 8, [
       {
@@ -1132,8 +1174,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
       },
     });
     ghoul.createGhoulTouch();
-    ghoul.createClaws(1, 3, {
-      spell: this.spell(Ids.GhoulTouch).file,
+    ghoul.createClaws({
+      diceThrown: 1,
+      diceSize: 3,
+      castSpell: {
+        spell: this.spell(Ids.GhoulTouch).file,
+      },
     });
     ghoul.createJaws(1, 6, [
       {
@@ -1204,8 +1250,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
     lord.createGhoulLordTouch();
     lord.createGhoulRottingDisease();
     lord.createAuraOfEvil();
-    lord.createClaws(1, 6, {
-      spell: this.spell(Ids.GhoulLordTouch).file,
+    lord.createClaws({
+      diceThrown: 1,
+      diceSize: 6,
+      castSpell: {
+        spell: this.spell(Ids.GhoulLordTouch).file,
+      },
     });
     lord.createJaws(1, 10, [
       {
@@ -1303,12 +1353,17 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     mummy.createMummyFearAura(false);
     mummy.createMummyRottingDisease(false);
-    mummy.createClaws(1, 12, {
-      spell: this.spell(Ids.MummyRottingDisease).file,
+    mummy.createClaws({
+      diceThrown: 1,
+      diceSize: 12,
+      castSpell: {
+        spell: this.spell(Ids.MummyRottingDisease).file,
+      },
     });
     mummy.setBehavior({ abilities: [this.ability(Ids.MummyFearAura)] });
     return mummy;
   }
+
   /**
    * Greater Mummy
    */
@@ -1420,8 +1475,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     greater.createMummyFearAura(true);
     greater.createMummyRottingDisease(true);
-    greater.createClaws(3, 6, {
-      spell: this.spell(Ids.GreaterMummyRottingDisease).file,
+    greater.createClaws({
+      diceThrown: 3,
+      diceSize: 6,
+      castSpell: {
+        spell: this.spell(Ids.GreaterMummyRottingDisease).file,
+      },
     });
     greater.setBehavior({
       abilities: [
@@ -1461,6 +1520,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     return greater;
   }
+
   /**
    * Shadow
    */
@@ -1469,52 +1529,173 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Shadow,
       name: "monster.undead.name.shadow",
       files: [
-        "BDHELP03", // Sword Spider
-        "BDSPID7L", // Seven-Legged Spider
-        "BPSPID03", // Sword Spider
-        "PLYSPID", // Sword Spider
-        "SPIDSW", // Sword Spider
-        "SPIDSW01", // Sword Spider
-        "SPIDSWSU", // Sword Spider
-        "BPSPID01", // Spider
-        "GV#SPID", // Spider
-        "WISPID01", // Spider
-        "WISPID02", // Spider
-        "WISPID03", // Lightning Sword Spider (+2 electricity damage with leg)
+        "AC#FPSHD", // Shadow
+        "BDSHAD04", // Shadow
+        "BPSHADOW", // Shadow
+        "D5_MASK3", // Shadow
+        "L#GNOSH", // Shadow (SotSC)
+        "WISHADO2", // Shadow
+        "kshadow", //circus
+        "rngsha",
+        "rngsha01", //in shadow temple
+        "rngsha03", //in shadow temple
+        "rngsha04", //Shadow Jailer
+        "sdshadow", //Spawned by area script in shadow temple
+        "sewsha03", //Saradush sewers
+        "shadow01", //regular
+        "shadowsu", //summoned shadow (shadow altar)
+        "sumshad", // summons ?
+        "uhcreat", //with the kids in umar cave
+        "lshadfi", //From BP, apparently
+        "lshadow", //likewise
+        "a#sdsha1", // Song and Silence Shadowdancer summoning
+        "a#sdsha2", // Song and Silence Shadowdancer summoning
+        "a#sdsha3", // Song and Silence Shadowdancer summoning
+        "a#sdsha4", // Song and Silence Shadowdancer summoning
+        //"acq10119", // AC_Quest (this doesn't seem to be a shadow!)
+        "acshad01", //
+        "specx1", // TDD
+        "va#shdgl", // Tower of Deception
+        "AC#FPMDS", // Mindshadow, drain wisdom instead of strength
+        "BDSHAD02", // Angry Spirit
+        "BDSHSOUL", // Shadowed Soul
+        "L#GNOAL", // Shadow Prophet
+        "L#GNOEN", // Shadow Master
+        "SHADOW01", // Shadow Warrior
+        "SHADOWSU", // Never liked that Narlen. In fact, I never cared much for you either!
+        "WISHADO1", // Shadow Demon
       ],
       data: {
-        level1: 5,
-        bonusHp: 5,
-        thac0: 15,
-        strength: 16,
-        dexterity: 18,
-        constitution: 14,
-        intelligence: 9,
-        wisdom: 14,
-        charisma: 4,
-        ac: 3,
-        apr: 2,
-        xpv: 2000,
+        level1: 3,
+        bonusHp: 3,
+        strength: 6,
+        dexterity: 14,
+        constitution: 13,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 8,
+        ac: 7,
+        apr: 1,
+        xpv: 420,
         alignment: "CHAOTIC_EVIL",
-        morale: 13,
+        morale: 20,
         general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_SWORD",
+        race: "SHADOW",
+        class: "SHADOW",
         gender: "NIETHER",
-        size: "Huge",
+        size: "Medium",
         movement: 12,
+        immunities: ["undead"],
+        items: {
+          remove: [
+            "immune1",
+            "undtype",
+            "ring95",
+            "shadowwp",
+            "s1-8",
+            "s1-12m2",
+          ],
+        },
       },
     });
-    shadow.createTouch({
-      diceThrown: 2,
+    shadow.addTrait({ immunities: ["cold", "incorporeal"] });
+    shadow.createShadowWeapon({
+      diceThrown: 1,
       diceSize: 4,
+      damageBonus: 1,
+      opcode: EffectTypeEnum.StrengthBonus,
+      drainValue: -1,
     });
-    shadow.setBehavior({
-      abilities: [this.ability(Ids.BansheeFearAura)],
+    const mindWeapon = shadow.createShadowWeapon({
+      diceThrown: 1,
+      diceSize: 4,
+      damageBonus: 1,
+      opcode: EffectTypeEnum.WisdomBonus,
+      drainValue: -2,
+      equipped: false,
     });
-    shadow.setAdjustments([]);
+    const soulWeapon = shadow.createShadowWeapon({
+      diceThrown: 1,
+      diceSize: 12,
+      damageBonus: 1,
+      opcode: EffectTypeEnum.StrengthBonus,
+      drainValue: -2,
+      equipped: false,
+    });
+    shadow.setAdjustments([
+      {
+        files: ["AC#FPMDS"],
+        data: {
+          items: { equipped: [{ file: mindWeapon.file, slot: "WEAPON1" }] },
+        },
+      },
+      {
+        files: ["BDSHAD02", "L#GNOAL", "L#GNOEN"],
+        data: { level1: 5, xpv: 650, strength: 18 },
+      },
+      {
+        files: ["BDSHSOUL"],
+        data: {
+          level1: 7,
+          xpv: 1100,
+          items: { equipped: [{ file: soulWeapon.file, slot: "WEAPON1" }] },
+        },
+      },
+    ]);
     return shadow;
   }
+
+  /**
+   * Greater Shadow
+   */
+  private greaterShadow() {
+    const shadow = this.create({
+      monster: MonsterEnum.GreaterShadow,
+      name: "monster.undead.name.greaterShadow",
+      files: [
+        "BDSHADGR", // Greater Shadow
+        "BDSHADOW", // Greater Shadow
+      ],
+      data: {
+        level1: 8,
+        bonusHp: 8,
+        strength: 10,
+        dexterity: 16,
+        constitution: 14,
+        intelligence: 11,
+        wisdom: 14,
+        charisma: 12,
+        ac: 5,
+        apr: 1,
+        xpv: 3000,
+        alignment: "CHAOTIC_EVIL",
+        morale: 20,
+        general: "MONSTER",
+        race: "SHADOW",
+        class: "SHADOW",
+        gender: "NIETHER",
+        size: "Medium",
+        movement: 12,
+        immunities: ["undead"],
+        items: {
+          remove: ["BDSHADGR", "immune1", "ring95"],
+        },
+        script: {
+          location: "None",
+        },
+      },
+    });
+    shadow.addTrait({ immunities: ["cold", "incorporeal"] });
+    shadow.createShadowWeapon({
+      diceThrown: 2,
+      diceSize: 6,
+      damageBonus: 2,
+      opcode: EffectTypeEnum.StrengthBonus,
+      drainValue: -3,
+    });
+    return shadow;
+  }
+
   /**
    * Skeleton
    */

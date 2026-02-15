@@ -63,9 +63,9 @@ LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Testing and Extracting
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// BEGIN ~Make creature List~ DESIGNATED 9990
-//     INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
-//     LAM makeCreatureList
+BEGIN ~Make creature List~ DESIGNATED 9990
+    INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
+    LAM makeCreatureList
 
 // BEGIN ~Checking spells~ DESIGNATED 9991
 //     INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
