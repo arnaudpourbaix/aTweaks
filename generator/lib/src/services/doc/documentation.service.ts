@@ -15,15 +15,22 @@ class DocumentationService {
   private monsters: string[] = [];
 
   generate() {
-    let content = fs.readFileSync("lib/templates/index.html").toString();
+    let content: string;
+    try {
+      content = fs.readFileSync("lib/templates/index.html").toString();
+    } catch (e) {
+      throw new Error(`Failed to read template lib/templates/index.html: ${e}`);
+    }
     const template = { text: content };
     this.replace(template, "monsters", this.monsters.join(""));
     this.replace(template, "families", this.families.join(""));
     this.replace(template, "traits", this.getTraits());
-    fs.writeFileSync(
-      path.join(State.modFolder, "docs/monsters.html"),
-      template.text,
-    );
+    const outPath = path.join(State.modFolder, "docs/monsters.html");
+    try {
+      fs.writeFileSync(outPath, template.text);
+    } catch (e) {
+      throw new Error(`Failed to write documentation to ${outPath}: ${e}`);
+    }
   }
 
   addFamily(family: Family) {
@@ -41,7 +48,12 @@ class DocumentationService {
     console.log(
       `Generating documentation for ${translationService.from(creature.name)}`,
     );
-    let content = fs.readFileSync("lib/templates/monster.html").toString();
+    let content: string;
+    try {
+      content = fs.readFileSync("lib/templates/monster.html").toString();
+    } catch (e) {
+      throw new Error(`Failed to read template lib/templates/monster.html: ${e}`);
+    }
     let template = { text: content };
     let str = `${creature.data.strength}`;
     this.replace(template, "id", `m${creature.id}`);
@@ -97,7 +109,7 @@ class DocumentationService {
       if (itemService.isEquippedWeapon(equippedItem)) {
         const weapon = State.items.find((i) => i.file === equippedItem.file);
         if (weapon && weapon.doc) {
-          attacks += !!attacks ? "<hr/>" : "";
+          attacks += attacks ? "<hr/>" : "";
           attacks += `<div class="weapon">${translationService.from(
             weapon.description!,
           )}</div>`;
@@ -112,9 +124,9 @@ class DocumentationService {
 
   getCreatureTraits(template: { text: string }, creature: Creature) {
     let result = "";
-    const immunities = creature.data.immunities.map(
-      (name) => State.immunities.find((i) => i.name === name) as ImmunityConfig,
-    );
+    const immunities = creature.data.immunities
+      .map((name) => State.immunities.find((i) => i.name === name))
+      .filter((i): i is ImmunityConfig => i !== undefined);
     let traits: string[] = [];
     for (const immunity of immunities.filter((i) => i.type === "trait")) {
       traits.push(
@@ -123,7 +135,7 @@ class DocumentationService {
         )}</a>`,
       );
     }
-    if (traits) result += `<h5>${traits.join(", ")}</h5>`;
+    if (traits.length) result += `<h5>${traits.join(", ")}</h5>`;
     for (const equippedItem of creature.data.items.equipped) {
       const item = State.items.find((i) => i.file === equippedItem.file);
       if (item?.trait) {

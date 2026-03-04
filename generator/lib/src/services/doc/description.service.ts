@@ -45,7 +45,7 @@ import translationService from "../translation.service";
 class DescriptionService {
   generateCreatureItems(items: Item[]): void {
     for (const item of items) {
-      if (!item.description && !!item.header)
+      if (!item.description && item.header)
         this.generateWeaponDescription(item as Weapon);
       else if (!item.description && item.trait)
         this.generateItemTraitDescription(item);
@@ -78,12 +78,11 @@ class DescriptionService {
   ): string[] {
     const results: string[] = [];
     for (const name of immunities) {
-      const immunity = State.immunities.find(
-        (i) => i.name === name,
-      ) as ImmunityConfig;
+      const immunity = State.immunities.find((i) => i.name === name);
+      if (!immunity) continue;
       if (!immunity.stringRef && !immunity.description)
         this.generateImmunity(immunity);
-      if (!!immunity.description && !onlyName)
+      if (immunity.description && !onlyName)
         results.push(translationService.from(immunity.description));
       else if (immunity.stringRef)
         results.push(translationService.from(immunity.stringRef));
@@ -311,7 +310,8 @@ class DescriptionService {
         return `${prefix}${count} ${t.plural}`;
       }
     }
-    throw new Error(`unknown duration ${duration}`);
+    console.warn(`unknown duration ${duration}s`);
+    return `${duration}s`;
   }
 
   private getArmorClassBonus(effect: ArmorClassBonusEffect): string[] {
@@ -687,7 +687,6 @@ class DescriptionService {
     return `${opcode.label}: ${value}${duration}${this.getSaveText(effect)}`;
   }
 
-  push() {}
 }
 
 const descriptionService = new DescriptionService();

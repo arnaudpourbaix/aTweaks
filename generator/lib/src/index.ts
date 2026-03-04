@@ -28,4 +28,7 @@ async function main() {
     });
 }
 
-main();
+main().catch((e) => {
+  console.error(chalk.red(`\nError: ${e instanceof Error ? e.message : e}`));
+  process.exit(1);
+});

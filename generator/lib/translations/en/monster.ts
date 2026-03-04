@@ -1,7 +1,3 @@
-import { describe } from "node:test";
-import description from "./description";
-import ability from "./ability";
-
 export default {
   ankheg: {
     name: "Ankheg",
