@@ -19,6 +19,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked

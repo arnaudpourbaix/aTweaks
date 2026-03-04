@@ -1,4 +1,4 @@
-// Shadow
+// Skeleton
 
 // Init
 IF
@@ -29,7 +29,7 @@ IF
 		AttackedBy([GOODCUTOFF],DEFAULT)
 		SpellCastOnMe([GOODCUTOFF],0)
 		TookDamage()
-		Heard([EVILCUTOFF.0.SHADOW],99)
+		Heard([EVILCUTOFF.0.SKELETON],99)
 THEN
 	RESPONSE #100
 		Enemy()
@@ -68,8 +68,8 @@ END
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.SHADOW],99)
-	InMyArea([EVILCUTOFF.0.SHADOW])
+	Heard([EVILCUTOFF.0.SKELETON],99)
+	InMyArea([EVILCUTOFF.0.SKELETON])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -78,8 +78,8 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.SHADOW],99)
-	InMyArea([EVILCUTOFF.0.SHADOW])
+	Heard([EVILCUTOFF.0.SKELETON],99)
+	InMyArea([EVILCUTOFF.0.SKELETON])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100

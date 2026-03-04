@@ -22,7 +22,7 @@ class DocumentationService {
     this.replace(template, "traits", this.getTraits());
     fs.writeFileSync(
       path.join(State.modFolder, "docs/monsters.html"),
-      template.text
+      template.text,
     );
   }
 
@@ -30,7 +30,7 @@ class DocumentationService {
     this.families.push(
       `<li><a href="#m${family.creatures[0].id}">${
         MonsterFamilyEnum[family.id]
-      }</a></li>`
+      }</a></li>`,
     );
     for (const creature of family.creatures) {
       this.addCreature(creature);
@@ -39,7 +39,7 @@ class DocumentationService {
 
   addCreature(creature: Creature) {
     console.log(
-      `Generating documentation for ${translationService.from(creature.name)}`
+      `Generating documentation for ${translationService.from(creature.name)}`,
     );
     let content = fs.readFileSync("lib/templates/monster.html").toString();
     let template = { text: content };
@@ -60,13 +60,13 @@ class DocumentationService {
     this.replace(
       template,
       "hitDice",
-      `${creature.data.level1.pnpValue} (${creature.data.hp} hp)`
+      `${creature.data.level1.pnpValue} (${creature.data.hp} hp)`,
     );
     this.replace(template, "thac0", creature.data.thac0);
     this.replace(
       template,
       "apr",
-      creature.data.apr! * (creature.data.doubleApr ? 2 : 1)
+      creature.data.apr! * (creature.data.doubleApr ? 2 : 1),
     );
     this.replace(template, "size", creature.data.size);
     this.addSpecial(template, creature);
@@ -97,11 +97,15 @@ class DocumentationService {
       if (itemService.isEquippedWeapon(equippedItem)) {
         const weapon = State.items.find((i) => i.file === equippedItem.file);
         if (weapon && weapon.doc) {
+          attacks += !!attacks ? "<hr/>" : "";
           attacks += `<div class="weapon">${translationService.from(
-            weapon.description!
-          )}</div><hr/>`;
+            weapon.description!,
+          )}</div>`;
         }
       }
+    }
+    if (!attacks) {
+      attacks = `<div class="weapon">By weapon</div>`;
     }
     this.replace(template, "attacks", attacks);
   }
@@ -109,14 +113,14 @@ class DocumentationService {
   getCreatureTraits(template: { text: string }, creature: Creature) {
     let result = "";
     const immunities = creature.data.immunities.map(
-      (name) => State.immunities.find((i) => i.name === name) as ImmunityConfig
+      (name) => State.immunities.find((i) => i.name === name) as ImmunityConfig,
     );
     let traits: string[] = [];
     for (const immunity of immunities.filter((i) => i.type === "trait")) {
       traits.push(
         `<a href="#${immunity.name}">${translationService.from(
-          immunity.stringRef!
-        )}</a>`
+          immunity.stringRef!,
+        )}</a>`,
       );
     }
     if (traits) result += `<h5>${traits.join(", ")}</h5>`;
@@ -131,7 +135,7 @@ class DocumentationService {
       let text = translationService.from(immunity.stringRef!);
       if (immunity.description) {
         text = `<h5>${text}</h5><p>${translationService.from(
-          immunity.description
+          immunity.description,
         )}</p>`;
       }
       result += text;
@@ -156,7 +160,7 @@ class DocumentationService {
 
   getCreatureSpell(creature: Creature, ability: CreatureAbility) {
     const memorized = creature.data.spells.memorized.find(
-      (m) => m.file === ability.resource
+      (m) => m.file === ability.resource,
     );
     const spell = State.spells.find((s) => s.file === ability.resource);
     let result = "";
@@ -164,7 +168,7 @@ class DocumentationService {
     if (spell && spell.doc && memorized) {
       const rounds = spell.options?.renew ?? infiniteUse;
       const title = `<h5>${translationService.from(
-        spell.name!
+        spell.name!,
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
       const desc =
         spell.doc !== "name"
@@ -176,7 +180,7 @@ class DocumentationService {
         ? Math.round(ability.timer.value / 6)
         : undefined;
       result = `<h5>${translationService.from(
-        ability.name
+        ability.name,
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
     }
     return result;
@@ -185,11 +189,11 @@ class DocumentationService {
   getTraits() {
     let result = "";
     for (const immunity of State.immunities.sort((a, b) =>
-      a.name > b.name ? 1 : -1
+      a.name > b.name ? 1 : -1,
     )) {
       if (immunity.type === "trait" && immunity.doc) {
         result += `<h5><a id="${immunity.name}">${translationService.from(
-          immunity.stringRef!
+          immunity.stringRef!,
         )}</a></h5>`;
         if (immunity.description)
           result += `<p>${translationService.from(immunity.description!)}</p>`;
@@ -208,14 +212,14 @@ class DocumentationService {
   private replace(
     template: { text: string },
     key: string,
-    value: string | number | undefined
+    value: string | number | undefined,
   ) {
     key = `{{${key}}}`;
     if (!template.text.includes(key))
       throw new Error(`Token ${key} not found !`);
     template.text = template.text.replace(
       new RegExp(key, "g"),
-      `${value ?? ""}`
+      `${value ?? ""}`,
     );
   }
 }

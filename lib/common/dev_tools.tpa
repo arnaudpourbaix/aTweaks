@@ -12,8 +12,8 @@ DEFINE_ACTION_MACRO makeCreatureList BEGIN
             // PATCH_IF class = 199 BEGIN
             // PATCH_IF race = 119 BEGIN
             // PATCH_IF class = 118 OR animation = 0x7702 BEGIN
-            // PATCH_IF race = 132 OR animation = 0x7703 BEGIN
-            PATCH_IF race = 132 OR class = 170 OR animation = 0x7703 BEGIN
+            PATCH_IF class = 135 OR animation = 0xeb10 BEGIN
+            // PATCH_IF race = 115 OR class = 134 OR animation = 0x6403 BEGIN
             // PATCH_IF animation = 0xE080 BEGIN
                 PATCH_PRINT ~"%SOURCE_RES%", // %name%~
             END

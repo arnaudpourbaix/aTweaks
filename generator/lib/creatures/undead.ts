@@ -61,6 +61,7 @@ enum Ids {
   GreaterMummyFearAura,
   MummyFearAura,
   MummyRottingDisease,
+  SkeletonWarriorFearAura,
   WallOfIce,
 }
 
@@ -199,6 +200,43 @@ class Undead extends Creature {
           effects: effectFactory.fear({
             duration: Durations.turn,
             saveType: SaveTypeEnum.Spell,
+          }),
+        },
+      ],
+      ability: {
+        preset: SPELLS.CloakOfFear.file,
+        spell: {
+          type: "force",
+          remove: true,
+        },
+      },
+    });
+  }
+
+  /**
+   * Skeleton Warrior Fear Aura
+   */
+  createSkeletonWarriorFearAura() {
+    return this.addSpell({
+      name: "monster.undead.ability.skeletonWarriorFearAura.name",
+      description: "monster.undead.ability.skeletonWarriorFearAura.description",
+      id: Ids.SkeletonWarriorFearAura,
+      memorizedCount: 1,
+      icon: SPELLS.CloakOfFear.file,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      options: { renew: 1 },
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          speed: 1,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 30,
+          effects: effectFactory.fear({
+            duration: Durations.turn,
+            saveType: SaveTypeEnum.Spell,
+            maxLevel: 5,
           }),
         },
       ],
@@ -849,8 +887,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.greaterMummy());
     this.addCreature(this.shadow());
     this.addCreature(this.greaterShadow());
-    // this.addCreature(this.skeleton());
-    // this.addCreature(this.skeletonWarrior());
+    this.addCreature(this.skeleton());
+    this.addCreature(this.skeletonWarrior());
     // this.addCreature(this.spectre());
     // this.addCreature(this.wight());
     // this.addCreature(this.wraith());
@@ -899,7 +937,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: ["IMMUNE1", "B1-8M2", "IMMCHS"],
         },
         script: {
-          remove: ["BDBANSH"],
+          remove: ["BDBANSH", "banshe01", "f_wailin"],
         },
       },
     });
@@ -926,6 +964,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
         this.ability(Ids.BansheeFearAura),
       ],
     });
+    banshee.setAdjustments([
+      { files: ["dsbanshe"], data: { script: { location: "None" } } },
+    ]);
     return banshee;
   }
   /**
@@ -1075,7 +1116,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: ["ring95", "ghast1"],
         },
         script: {
-          remove: ["movep1"],
+          remove: ["movep1", "ghast", "ghastd", "bpundead"],
         },
         effects: {
           remove: [EffectTypeEnum.ProtectionFromBackstab],
@@ -1101,7 +1142,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
       abilities: [this.ability(Ids.CarrionStench)],
     });
     ghast.setAdjustments([
-      { files: ["GHASTS"], summon: true },
+      { files: ["GHASTS", "ghastgsu"], summon: true },
+      {
+        files: ["CDI4GHST", "GHASTS", "ghastgsu"], // "rr#ghast" ?
+        data: { script: { location: "None" } },
+      },
       {
         files: ["GRAEL"],
         data: {
@@ -1239,7 +1284,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: ["ring95", "ghast1", "BDGHASTG", "ghoul1"],
         },
         script: {
-          remove: ["ghoul", "BDGHASTG"],
+          remove: ["ghoul", "ghast", "BDGHASTG", "gholor01", "riftcr01"],
         },
         effects: {
           remove: [EffectTypeEnum.ProtectionFromBackstab],
@@ -1360,7 +1405,10 @@ class UndeadFamily extends CreatureFamily<Undead> {
         spell: this.spell(Ids.MummyRottingDisease).file,
       },
     });
-    mummy.setBehavior({ abilities: [this.ability(Ids.MummyFearAura)] });
+    mummy.setBehavior({
+      restHeal: true,
+      abilities: [this.ability(Ids.MummyFearAura)],
+    });
     return mummy;
   }
 
@@ -1403,7 +1451,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: ["ring95", "immune2", "immune3", "mumgrew"],
         },
         script: {
-          remove: ["bdmumm01"],
+          remove: ["bdmumm01", "d0mummy", "mummy01"],
         },
         effects: {
           remove: [EffectTypeEnum.ProtectionFromBackstab],
@@ -1483,6 +1531,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       },
     });
     greater.setBehavior({
+      restHeal: true,
       abilities: [
         this.ability(Ids.GreaterMummyFearAura),
         this.preset(FNP_SPELLS.GreaterMalison.file),
@@ -1596,6 +1645,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
             "s1-12m2",
           ],
         },
+        script: {
+          remove: [],
+        },
       },
     });
     shadow.addTrait({ immunities: ["cold", "incorporeal"] });
@@ -1624,6 +1676,24 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     shadow.setAdjustments([
       {
+        files: [
+          "va#shdgl",
+          "sumshad",
+          "a#sdsha1",
+          "a#sdsha2",
+          "a#sdsha3",
+          "a#sdsha4",
+        ],
+        data: {
+          script: { location: "None" },
+        },
+      },
+      {
+        files: ["a#sdsha1", "a#sdsha2", "a#sdsha3", "a#sdsha4"],
+        summon: true,
+        data: { class: "THIEF" },
+      },
+      {
         files: ["AC#FPMDS"],
         data: {
           items: { equipped: [{ file: mindWeapon.file, slot: "WEAPON1" }] },
@@ -1642,6 +1712,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       },
     ]);
+    shadow.setBehavior({
+      restHeal: true,
+    });
     return shadow;
   }
 
@@ -1693,6 +1766,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
       opcode: EffectTypeEnum.StrengthBonus,
       drainValue: -3,
     });
+    shadow.setBehavior({
+      restHeal: true,
+    });
     return shadow;
   }
 
@@ -1704,53 +1780,126 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Skeleton,
       name: "monster.undead.name.skeleton",
       files: [
-        "SMSPID02", // Vortex Spider
+        "AD3SKLM", // Skeleton
+        "APPAR", // Skeleton
+        "BDSKGR00", // Skeleton
+        "CDMHSKEL", // Skeleton
+        "DW#MULSA", // Skeleton
+        "DW#MULSK", // Skeleton
+        "ISKELET", // Skeleton
+        "KRYSKEL", // Skeleton
+        "SKELACI", // Skeleton (shoots acid)
+        "GHASTSU", // Skeleton
+        "SKELDIS", // Skeleton (shoots dispelling arrows)
+        "SKELE2", // Skeleton
+        "SKELET", // Skeleton
+        "SKELET02", // Skeleton
+        "SKELET03", // Skeleton
+        "SKELETB", // Skeleton (with Bassilus)
+        "SKELETS", // Skeleton (throwing daggers)
+        "SKELET_A", // Skeleton
+        "SKELET_B", // Skeleton
+        "SKELET_C", // Skeleton
+        "SKELFIRE", // Skeleton (shoots fire)
+        "SKELICE", // Skeleton (shoots ice)
+        "SKELLESU", // Skeleton
+        "SKELMEL", // Skeleton
+        "SKELPETR", // Skeleton
+        "TTSKEL", // Skeleton
+        "X3RSKEL1", // Skeleton
+        "X3RSKEL2", // Skeleton
+        "WISKEL", // Crumbling Skeleton
+        "SKELGRSU", // Greater Skeleton
+        "BDSKGR01", // Armored Skeleton
+        "BDTEAM62", // Armored Skeleton
+        "BDSKGR02", // Tattered Skeleton
+        "BDSKGR03", // Bladed Skeleton
+        "BDSKGR05", // Burning Skeleton
+        "BDSKGR06", // Burning Skeleton
+        "BDSKGR04", // Skeleton Archer
+        "BDTEAM63", // Skeleton Archer
+        "SKELAR01", // Skeleton Archer (with Vongoethe)
+        "SKELAR02", // Skeleton Archer (with Vongoethe)
+        "BDSKGR07", // Skeletal Mage
+        "BDTEAM60", // Skeletal Mage
+        "L#HAUSK", // Skeletal Captain
+        "L#SKEST", // Skeletal Mother
+        "BPSKEL", // Crumbling Skeleton
+        "BDTEAM61", // Bladed Skeleton
+        "A7!GLBD", // Bone Doll
+        "A7!GXBD", // Golem Servant
+        "BDBONBAT", // Bonebat
+        "BDUNSEN", // Undead Sentry
+        "C#Q06002", // Zombie
+        "DECK622", // Death Shade
+        "DW#SEMSK", // Skeleton Warrior
+        "ICHARY", // Icharyd
+        "KNIGHTSK", // Undead Knight
+        "KRYSKEL1", // Rick
+        "KRYSKEL2", // Shane
+        "KRYSKEL3", // Daryl
+        "KRYSKEL4", // Glenn
+        "KRYSKEL5", // Lori
+        "KRYSKEL6", // Hagar
+        "MS7BGRD", // Boneguard
+        "SKELDED", // <Invalid Strref -1>
+        "YSRSDEAD", // Restless Dead
+        "YSRSTDD1", // Restless Dead
+        "YSRSTDD2", // Restless Dead
+        "YSRSTDD3", // Restless Dead
+        "bpskelar", //BP
+        "CMSKE01", // Dark Horizons
+        "CMSKE02", // Dark Horizons
       ],
       data: {
-        level1: 7,
-        bonusHp: 4,
-        strength: 15,
-        dexterity: 15,
-        constitution: 12,
-        intelligence: 7,
-        wisdom: 10,
-        charisma: 6,
-        ac: 4,
+        level1: 1,
+        strength: 10,
+        dexterity: 14,
+        constitution: 15,
+        intelligence: 1,
+        wisdom: 8,
+        charisma: 5,
+        ac: 7,
         apr: 1,
-        xpv: 2700,
-        alignment: "CHAOTIC_EVIL",
-        morale: 10,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_PHASE",
+        thac0: 19,
+        xpv: 65,
+        alignment: "NEUTRAL",
+        morale: 12,
+        general: "UNDEAD",
+        race: "SKELETON",
+        class: "SKELETON",
         gender: "NIETHER",
-        size: "Large",
+        size: "Medium",
         movement: 12,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95"],
+        },
+        // Enforce proper skeleton colours for all processed creatures (colours courtesy of rskel01)
+        metalColor: 20,
+        minorColor: 67,
+        majorColor: 66,
+        skinColor: 105,
+        leatherColor: 14,
+        armorColor: 20,
+        hairColor: 0,
       },
     });
     skeleton.addTrait({
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 15,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
+      immunities: ["skeletal"],
     });
     skeleton.setBehavior({
-      abilities: [
-        {
-          preset: SPELLS.Slow.file,
-          spell: {
-            resource: SPELLS.VortexWeb.file,
-            type: "force",
-          },
-          timer: { name: "VortexWeb", value: 30 },
-        },
-      ],
+      restHeal: true,
     });
+    skeleton.setAdjustments([
+      {
+        files: ["AD3SKLM"],
+        summon: true,
+      },
+    ]);
     return skeleton;
   }
+
   /**
    * Skeleton Warrior
    */
@@ -1759,53 +1908,107 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.SkeletonWarrior,
       name: "monster.undead.name.skeletonWarrior",
       files: [
-        "C#Q04009", // Wraith Spider
-        "SPIDWR", // Wraith Spider
-        "SPIDWR01", // Wraith Spider
-        "TTSPID", // Wraith Spider
-        // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
+        "BDSKGR08", // Skeleton Warrior
+        "C0DESUM1", // Skeleton Warrior
+        "C0DESUM2", // Skeleton Warrior
+        "C0DESUM3", // Skeleton Warrior
+        "C0DESUM4", // Skeleton Warrior
+        "C0DESUM5", // Skeleton Warrior
+        "DW#ANGSK", // Skeleton Warrior
+        "DW#DIASK", // Skeleton Warrior
+        "SKELSU01", // Skeleton Warrior
+        "SKELSU07", // Skeleton Warrior
+        "SKELSU11", // Skeleton Warrior
+        "SKELWA", // Skeleton Warrior
+        "SKELWA01", // Skeleton Warrior
+        "SKELWA02", // Skeleton Warrior
+        "SKELWA03", // Skeleton Warrior
+        "SKELWASU", // Skeleton Warrior
+        // check:
+        "BDSKGR01", // Armored Skeleton
+        "BDTEAM62", // Armored Skeleton
+        "BDUNSEN", // Undead Sentry
+        "DECK622", // Death Shade
+        "ICHARY", // Icharyd
+        "SKELDED", // <Invalid Strref -1>
+        // atweaks
+        "ar18skel",
+        "ceskel01",
+        "grskel1",
+        "grskel2",
+        "grtomb01",
+        "hgskl04",
+        "nevm2",
+        "riftcr02",
+        "rskel02",
+        "sahskel",
+        "suundead",
+        "tanskw1",
+        "bgskel02", //BG1
+        "bgskelwa", //BG1
+        //"bpduehi",  // BP - Not Tested
+        //"c#ajske2", // Ajantis for BG2 - Not Tested
+        "cmskel01", // Dark Horizons
+        "cmskel02", // Dark Horizons
+        "dw#semsk", // Stratagems
+        "fhlskl1", // The Luxley Family
+        "fhlskl2", // The Luxley Family
+        "jc_ske01", // The Vault
+        "tg#dud1", // Refinements
+        "ranske7", // RoT
+        "ranske9", // RoT
+        "skelwa04", // RoT
+        "skelwax2", // TDD
+        "skelwmod", // PofQuestPack
       ],
       data: {
-        level1: 3,
-        bonusHp: 2,
-        strength: 17,
-        dexterity: 15,
-        constitution: 9,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 1,
-        ac: 5,
+        level1: 9,
+        bonusHp: 8, // +2 to +12
+        strength: 18,
+        dexterity: 14,
+        constitution: 16,
+        intelligence: 16,
+        wisdom: 12,
+        charisma: 4,
+        ac: 2,
         apr: 1,
-        xpv: 1400,
-        alignment: "LAWFUL_EVIL",
+        xpv: 4000,
+        alignment: "NEUTRAL",
         morale: 15,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_WRAITH",
+        general: "UNDEAD",
+        race: "SKELETON",
+        class: "SKELETON_WARRIOR",
         gender: "NIETHER",
         size: "Medium",
-        movement: 12,
+        movement: 6,
+        immunities: ["undead"],
       },
     });
     warrior.addTrait({
-      immunities: ["cold", "nonSilverNonMagicalWeapons"],
+      immunities: ["skeletal", "nonMagicalWeapons", "turnUndead"],
       effects: [
         {
           opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 15,
+          value: 90,
           type: EffectStatisticModifierEnum.Set,
         },
+        {
+          // Skeleton warriors make all weapon attacks with a +3 bonus to their attack roll
+          opcode: EffectTypeEnum.Thac0Bonus,
+          type: EffectModifierTypeEnum.Increment,
+          value: 3,
+        },
       ],
+      // The mere sight of a skeleton warrior causes any creature with fewer than 5 Hit Dice to flee in panic.
     });
+    warrior.createSkeletonWarriorFearAura();
     warrior.setBehavior({
-      dialog: ["C#Q04009", "ttspid"],
+      restHeal: true,
+      abilities: [this.ability(Ids.SkeletonWarriorFearAura)],
     });
     return warrior;
   }
+
   /**
    * Spectre
    */

@@ -409,6 +409,10 @@ If successful, the charge causes double head-butt damage`,
         description: `The mere sight of one causes fear, unless a successful saving throw vs. spell is rolled.
 Those who fail must flee in terror for 10 rounds and are 50% likely to drop any items they were carrying in their hands.`,
       },
+      skeletonWarriorFearAura: {
+        name: "Fear Aura",
+        description: `The mere sight of a skeleton warrior causes any creature with fewer than 5 Hit Dice to flee in panic.`,
+      },
       deathWail: {
         name: "Death Wail",
         description: `Any creature within 30 feet of a groaning spirit when she keens must roll a saving throw vs. death magic.

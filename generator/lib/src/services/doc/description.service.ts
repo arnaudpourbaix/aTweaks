@@ -65,7 +65,7 @@ class DescriptionService {
     results.push(...this.getImmunitiesDescription(immunity.immunities));
     for (const effect of immunity.effects ?? []) {
       results.push(
-        ...this.getEffectDescription(effect, ItemAbilityTargetEnum.Caster)
+        ...this.getEffectDescription(effect, ItemAbilityTargetEnum.Caster),
       );
     }
     if (results.length)
@@ -74,12 +74,12 @@ class DescriptionService {
 
   private getImmunitiesDescription(
     immunities: ImmunityName[],
-    onlyName = false
+    onlyName = false,
   ): string[] {
     const results: string[] = [];
     for (const name of immunities) {
       const immunity = State.immunities.find(
-        (i) => i.name === name
+        (i) => i.name === name,
       ) as ImmunityConfig;
       if (!immunity.stringRef && !immunity.description)
         this.generateImmunity(immunity);
@@ -106,17 +106,17 @@ class DescriptionService {
       desc.push(
         `${type} damage: ${damage} (${
           AbilityDamageTypeEnum[item.header.damageType!]
-        })`
+        })`,
       );
     }
     const damageEffects = item.header.effects.filter(
-      (e) => e.opcode === EffectTypeEnum.Damage
+      (e) => e.opcode === EffectTypeEnum.Damage,
     );
     const otherEffects = item.header.effects.filter(
-      (e) => e.opcode !== EffectTypeEnum.Damage
+      (e) => e.opcode !== EffectTypeEnum.Damage,
     );
     desc.push(
-      ...this.getEffectsDescription(damageEffects, item.header.target!)
+      ...this.getEffectsDescription(damageEffects, item.header.target!),
     );
     if ((damage || damageEffects.length) && item.header.speed !== undefined) {
       desc.push(`Speed Factor: ${item.header.speed}`);
@@ -131,8 +131,8 @@ class DescriptionService {
     desc.push(
       ...this.getEffectsDescription(
         [...item.effects, ...otherEffects],
-        item.header.target!
-      )
+        item.header.target!,
+      ),
     );
     if (desc.length && item.stringRef) {
       desc.unshift(translationService.from(item.stringRef), "");
@@ -145,7 +145,7 @@ class DescriptionService {
     // desc.push(translationService.from(item.stringRef!), "");
     desc.push(...this.getImmunitiesDescription(item.immunities, true));
     desc.push(
-      ...this.getEffectsDescription(item.effects, ItemAbilityTargetEnum.Caster)
+      ...this.getEffectsDescription(item.effects, ItemAbilityTargetEnum.Caster),
     );
     item.description = translationService.addCustomTranslation(desc);
   }
@@ -153,14 +153,14 @@ class DescriptionService {
   private generateSpellDescription(spell: Spell, header: SpellHeader) {
     const desc: string[] = this.getEffectsDescription(
       header.effects,
-      header.target!
+      header.target!,
     );
     spell.description = translationService.addCustomTranslation(desc);
   }
 
   private getEffectsDescription(
     effects: Effect[],
-    target: ItemAbilityTargetEnum
+    target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
     for (const effect of effects) {
@@ -191,7 +191,7 @@ class DescriptionService {
 
   private getEffectDescription(
     effect: Effect,
-    target: ItemAbilityTargetEnum
+    target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
     if (effect.opcode === EffectTypeEnum.Damage) {
@@ -249,7 +249,7 @@ class DescriptionService {
       results.push(...this.getCastingTimeModifier(effect));
     } else if (this.getStatisticText(effect)) {
       results.push(
-        ...this.getStatisticModifier(effect as StatisticModifierEffect)
+        ...this.getStatisticModifier(effect as StatisticModifierEffect),
       );
     }
     return results;
@@ -293,7 +293,7 @@ class DescriptionService {
     }
   }
 
-  getDuration(duration?: number): string {
+  getDuration(duration?: number, prefix?: string): string {
     if (!duration) return "";
     const time = [
       { single: "a day", plural: "days", duration: Durations.day },
@@ -306,9 +306,9 @@ class DescriptionService {
       const count = Math.round(duration / t.duration);
       const modulo = duration % t.duration;
       if (count === 1 && modulo === 0) {
-        return t.single;
+        return `${prefix}${t.single}`;
       } else if (count > 1 && modulo === 0) {
-        return `${count} ${t.plural}`;
+        return `${prefix}${count} ${t.plural}`;
       }
     }
     throw new Error(`unknown duration ${duration}`);
@@ -333,8 +333,8 @@ class DescriptionService {
       : "";
     results.push(
       `${this.getSignedNumber(
-        effect.value
-      )} AC${suffix}${duration}${this.getSaveText(effect)}`
+        effect.value,
+      )} AC${suffix}${duration}${this.getSaveText(effect)}`,
     );
     return results;
   }
@@ -366,21 +366,21 @@ class DescriptionService {
 
   private getParalyze(
     effect: IdsEffect,
-    target: ItemAbilityTargetEnum
+    target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
     //TODO: handle ids entry/id
     results.push(
       `Paralyze ${this.getTarget(target)} for ${this.getDuration(
-        effect.duration
-      )}${this.getSaveText(effect)}.`
+        effect.duration,
+      )}${this.getSaveText(effect)}.`,
     );
     return results;
   }
 
   private getCharm(
     effect: CharmCreatureEffect,
-    target: ItemAbilityTargetEnum
+    target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
     let type: string = "";
@@ -403,8 +403,8 @@ class DescriptionService {
     }
     results.push(
       `${type} ${this.getTarget(target)} for ${this.getDuration(
-        effect.duration
-      )}${this.getSaveText(effect)}.`
+        effect.duration,
+      )}${this.getSaveText(effect)}.`,
     );
     return results;
   }
@@ -412,7 +412,7 @@ class DescriptionService {
   private getLevelDrain(effect: LevelDrainEffect): string[] {
     const results: string[] = [];
     results.push(
-      `Drain ${effect.amount} level from target${this.getSaveText(effect)}.`
+      `Drain ${effect.amount} level from target${this.getSaveText(effect)}.`,
     );
     return results;
   }
@@ -441,8 +441,8 @@ class DescriptionService {
     const wake = effect.wakeOnDamage ? " (wake on damage)" : "";
     results.push(
       `Sleep for ${this.getDuration(effect.duration)}${wake}${this.getSaveText(
-        effect
-      )}`
+        effect,
+      )}`,
     );
     return results;
   }
@@ -450,7 +450,7 @@ class DescriptionService {
   private getSlow(effect: Effect, target: ItemAbilityTargetEnum): string[] {
     return [
       `Slow ${this.getTarget(target)} for ${this.getDuration(
-        effect.duration
+        effect.duration,
       )}${this.getSaveText(effect)}`,
     ];
   }
@@ -458,7 +458,7 @@ class DescriptionService {
   private getHaste(effect: Effect, target: ItemAbilityTargetEnum): string[] {
     return [
       `Haste ${this.getTarget(target)} for ${this.getDuration(
-        effect.duration
+        effect.duration,
       )}${this.getSaveText(effect)}`,
     ];
   }
@@ -486,8 +486,9 @@ class DescriptionService {
       ? `${effect.value}%`
       : this.getSignedNumber(effect.value);
     return [
-      `${type}:${value} for ${this.getDuration(
-        effect.duration
+      `${type}:${value}${this.getDuration(
+        effect.duration,
+        " for ",
       )}${this.getSaveText(effect)}`,
     ];
   }
@@ -499,7 +500,7 @@ class DescriptionService {
       results.push(
         `${EffectDamageTypeEnum[effect.type]} damage: ${effect.diceThrown}D${
           effect.diceSize
-        }${amount}`
+        }${amount}`,
       );
     }
     return results;
@@ -517,8 +518,8 @@ class DescriptionService {
         : "";
     results.push(
       `${level}Poison: deals ${text} for ${this.getDuration(
-        effect.duration
-      )}${this.getSaveText(effect)}.`
+        effect.duration,
+      )}${this.getSaveText(effect)}.`,
     );
     return results;
   }
@@ -572,8 +573,8 @@ class DescriptionService {
     const results: string[] = [];
     results.push(
       `Disease: ${text} for ${this.getDuration(
-        effect.duration
-      )}${this.getSaveText(effect)}.`
+        effect.duration,
+      )}${this.getSaveText(effect)}.`,
     );
     return results;
   }

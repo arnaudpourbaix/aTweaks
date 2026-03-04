@@ -352,7 +352,7 @@ class EffectFactory {
         dispelResistance: params.dispelResistance,
         saveTypes: params.saveType ? [params.saveType] : undefined,
         saveBonus: params.saveBonus,
-      }
+      },
     );
     return effectService.getEffects(effects);
   }
@@ -361,13 +361,15 @@ class EffectFactory {
     duration: number;
     saveType?: SaveTypeEnum;
     saveBonus?: number;
+    maxLevel?: number;
     dispelResistance?: EffectDispelResistanceEnum;
     startSound?: string;
     endSound?: string;
   }) {
-    const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
+    const base: BaseEffect = {
       saveTypes: params.saveType !== undefined ? [params.saveType] : undefined,
       saveBonus: params.saveBonus,
+      maxLevel: params.maxLevel,
     };
     const effects: Effect[] = [
       {
