@@ -1,7 +1,9 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
+import { TargetListName } from "../../config/target-name";
 import { ScriptTarget } from "../model/constants";
 import { StatsIdentifier } from "../model/ids/stats";
 import { Triggers } from "../model/script/triggers";
+import targetService from "../services/baf/target.service";
 
 class TriggerFactory {
   haveSpellRES(resources: string[], negation = false): Triggers.Trigger[] {
@@ -214,6 +216,15 @@ class TriggerFactory {
       }
       return acc;
     }, [] as Triggers.Trigger[]);
+  }
+
+  seeOneInTargetList(targetListName: TargetListName): Triggers.Trigger[] {
+    const list = targetService.getList(targetListName);
+    const triggers = list.targets.map<Triggers.Trigger>((t) => ({
+      name: "See",
+      params: [t],
+    }));
+    return [{ name: "Or", triggers }];
   }
 }
 

@@ -5,7 +5,7 @@ import effectFactory from "../src/factories/effect.factory";
 import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
-import { ItemSlot } from "../src/model/creature/item";
+import { ItemSlot, WeaponSlot } from "../src/model/creature/item";
 import { StringReference } from "../src/model/final/stringref";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
@@ -51,6 +51,7 @@ import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 enum Ids {
   AuraOfEvil,
   BansheeFearAura,
+  BonebatTouch,
   CarrionStench,
   DeathWail,
   GhoulTouch,
@@ -158,12 +159,13 @@ class Undead extends Creature {
     diceThrown: number,
     diceSize: number,
     castSpells?: WeaponCastSpell[],
+    slot: WeaponSlot = "SHIELD",
   ) {
     return this.addWeapon({
       weapon: {
         stringRef: "monster.undead.weapon.jaws",
         icon: MonsterItemIconEnum.Jaws,
-        equippedSlot: ["SHIELD"],
+        equippedSlot: [slot],
         header: {
           type: ItemAbilityTypeEnum.Melee,
           diceThrown: diceThrown,
@@ -465,6 +467,38 @@ class Undead extends Creature {
             },
             ...effectFactory.paralyze({
               duration: Durations.turn,
+              saveType: SaveTypeEnum.ParalyzePoisonDeath,
+            }),
+          ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Bonebat Touch
+   */
+  createBonebatTouch() {
+    return this.addSpell({
+      name: "monster.undead.ability.bonebatTouch.name",
+      description: "monster.undead.ability.bonebatTouch.description",
+      id: Ids.BonebatTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.Race,
+                relation: SpellProtectionRelation.Equal,
+              },
+              value: "ELF",
+            },
+            ...effectFactory.paralyze({
+              duration: 6 * Durations.round,
               saveType: SaveTypeEnum.ParalyzePoisonDeath,
             }),
           ],
@@ -887,6 +921,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.greaterMummy());
     this.addCreature(this.shadow());
     this.addCreature(this.greaterShadow());
+    this.addCreature(this.baneguard());
+    this.addCreature(this.bonebat());
     this.addCreature(this.skeleton());
     this.addCreature(this.skeletonWarrior());
     // this.addCreature(this.spectre());
@@ -1150,7 +1186,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       {
         files: ["GRAEL"],
         data: {
-          // he starts dialog with shoutdlg
+          // he starts dialog with shoutdlg (can't configure in behavior/dialog because it has no script name)
           level1: 11,
           xpv: 5000,
           strength: 18,
@@ -1773,6 +1809,138 @@ class UndeadFamily extends CreatureFamily<Undead> {
   }
 
   /**
+   * Baneguard
+   */
+  private baneguard() {
+    const baneguard = this.create({
+      monster: MonsterEnum.Baneguard,
+      name: "monster.undead.name.baneguard",
+      files: [
+        "BDSKGR03", // Bladed Skeleton
+        "BDTEAM61", // Bladed Skeleton
+      ],
+      data: {
+        level1: 9,
+        level2: 3, // for magic missiles as a level 3 wizard
+        strength: 16, // 19 in vanilla
+        dexterity: 11,
+        constitution: 15,
+        intelligence: 1,
+        wisdom: 8,
+        charisma: 5,
+        ac: 7,
+        apr: 1, // 3 in vanilla
+        thac0: 19,
+        xpv: 975,
+        alignment: "NEUTRAL_EVIL",
+        morale: 12,
+        general: "UNDEAD",
+        race: "SKELETON",
+        class: "FIGHTER_MAGE", // SKELETON_BANEGUARD
+        gender: "NIETHER",
+        size: "Medium",
+        movement: 12,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "ring99"],
+        },
+        spells: {
+          memorized: [
+            { file: SPELLS.MagicMissiles.file, memorizedCount: 1 },
+            // TODO: Blink, 4 rounds duration on a 14 rounds timer
+          ],
+        },
+        // Enforce proper skeleton colours for all processed creatures (colours courtesy of rskel01)
+        metalColor: 20,
+        minorColor: 67,
+        majorColor: 66,
+        skinColor: 105,
+        leatherColor: 14,
+        armorColor: 20,
+        hairColor: 0,
+      },
+    });
+    baneguard.addTrait({
+      immunities: ["skeletal"],
+    });
+    baneguard.setBehavior({
+      restHeal: true,
+      abilities: [
+        {
+          preset: SPELLS.MagicMissiles.file,
+          spell: {
+            type: "noDec",
+          },
+          triggers: [
+            { name: "Range", params: ["NearestEnemyOf", 10], negation: true },
+          ],
+          requireVocal: false,
+          timer: { name: "MagicMissiles", value: 18 },
+        },
+      ],
+    });
+    baneguard.setAttack({
+      ranged: true,
+    });
+    return baneguard;
+  }
+
+  /**
+   * Bonebat
+   */
+  private bonebat() {
+    const bonebat = this.create({
+      monster: MonsterEnum.Bonebat,
+      name: "monster.undead.name.bonebat",
+      files: [
+        "BDBONBAT", // Bonebat
+      ],
+      data: {
+        level1: 4,
+        strength: 12,
+        dexterity: 13,
+        constitution: 15,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 14,
+        ac: 7,
+        apr: 1,
+        xpv: 975,
+        alignment: "NEUTRAL_EVIL",
+        morale: 12,
+        general: "UNDEAD",
+        race: "SKELETON",
+        class: "SKELETON",
+        gender: "NIETHER",
+        size: "Medium",
+        movement: 18,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "bdbonbat"],
+        },
+      },
+    });
+    bonebat.addTrait({
+      immunities: ["skeletal"],
+    });
+    bonebat.createBonebatTouch();
+    bonebat.createJaws(
+      2,
+      4,
+      [
+        {
+          spell: this.spell(Ids.BonebatTouch).file,
+        },
+      ],
+      "WEAPON1",
+    );
+    bonebat.setBehavior({
+      restHeal: true,
+    });
+    return bonebat;
+  }
+
+  /**
    * Skeleton
    */
   private skeleton() {
@@ -1781,11 +1949,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
       name: "monster.undead.name.skeleton",
       files: [
         "AD3SKLM", // Skeleton
-        "APPAR", // Skeleton
+        //"APPAR", // Skeleton (he is just here to talk)
         "BDSKGR00", // Skeleton
-        "CDMHSKEL", // Skeleton
-        "DW#MULSA", // Skeleton
-        "DW#MULSK", // Skeleton
+        "CDMHSKEL", // Skeleton (Mulahey)
+        "DW#MULSA", // Skeleton (Mulahey)
+        "DW#MULSK", // Skeleton (Mulahey)
         "ISKELET", // Skeleton
         "KRYSKEL", // Skeleton
         "SKELACI", // Skeleton (shoots acid)
@@ -1795,7 +1963,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "SKELET", // Skeleton
         "SKELET02", // Skeleton
         "SKELET03", // Skeleton
-        "SKELETB", // Skeleton (with Bassilus)
+        "SKELETB", // Skeleton (with Bassilus): can melee and range
         "SKELETS", // Skeleton (throwing daggers)
         "SKELET_A", // Skeleton
         "SKELET_B", // Skeleton
@@ -1805,15 +1973,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "SKELLESU", // Skeleton
         "SKELMEL", // Skeleton
         "SKELPETR", // Skeleton
-        "TTSKEL", // Skeleton
         "X3RSKEL1", // Skeleton
         "X3RSKEL2", // Skeleton
         "WISKEL", // Crumbling Skeleton
+        "BPSKEL", // Crumbling Skeleton
         "SKELGRSU", // Greater Skeleton
-        "BDSKGR01", // Armored Skeleton
-        "BDTEAM62", // Armored Skeleton
         "BDSKGR02", // Tattered Skeleton
-        "BDSKGR03", // Bladed Skeleton
         "BDSKGR05", // Burning Skeleton
         "BDSKGR06", // Burning Skeleton
         "BDSKGR04", // Skeleton Archer
@@ -1824,11 +1989,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "BDTEAM60", // Skeletal Mage
         "L#HAUSK", // Skeletal Captain
         "L#SKEST", // Skeletal Mother
-        "BPSKEL", // Crumbling Skeleton
-        "BDTEAM61", // Bladed Skeleton
-        "A7!GLBD", // Bone Doll
-        "A7!GXBD", // Golem Servant
-        "BDBONBAT", // Bonebat
+        // Here:
         "BDUNSEN", // Undead Sentry
         "C#Q06002", // Zombie
         "DECK622", // Death Shade
@@ -1873,7 +2034,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
         movement: 12,
         immunities: ["undead"],
         items: {
-          remove: ["ring95"],
+          remove: ["ring95", "ring99"],
+        },
+        spells: {
+          removeMemorized: false,
+          removeKnown: false,
         },
         // Enforce proper skeleton colours for all processed creatures (colours courtesy of rskel01)
         metalColor: 20,
@@ -1890,11 +2055,113 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     skeleton.setBehavior({
       restHeal: true,
+      abilities: [
+        this.preset(SPELLS.Vocalize.file),
+        this.preset(SPELLS.MirrorImages.file),
+        this.preset(SPELLS.GreaterMalison.file),
+        this.preset(SPELLS.Emotion.file),
+        this.preset(SPELLS.MinorSpellDeflection.file),
+        this.preset(SPELLS.Shield.file),
+        this.preset(SPELLS.Haste.file),
+        this.preset(SPELLS.Slow.file),
+        this.preset(SPELLS.SpellThrust.file),
+        this.preset(SPELLS.Spook.file),
+        this.preset(SPELLS.StinkingCloud.file),
+        this.preset(SPELLS.MelfAcidArrow.file),
+        this.preset(SPELLS.MagicMissiles.file),
+        this.preset(SPELLS.ChromaticOrb.file),
+        this.preset(SPELLS.Glitterdust.file),
+      ],
+    });
+    skeleton.setAttack({
+      ranged: true,
     });
     skeleton.setAdjustments([
       {
-        files: ["AD3SKLM"],
+        files: ["AD3SKLM", "GHASTSU", "SKELLESU", "SKELGRSU"],
         summon: true,
+      },
+      {
+        files: ["KRYSKEL"],
+        data: { level1: 2 },
+      },
+      {
+        files: ["SKELLESU"],
+        data: { level1: 3 },
+      },
+      {
+        // greater skeleton
+        files: ["SKELGRSU"],
+        data: { level1: 5, strength: 16, ac: 4 },
+      },
+      {
+        files: ["L#HAUSK"],
+        data: {
+          level1: 13,
+          strength: 19,
+          ac: -1,
+          apr: 3,
+          xpv: 3000,
+        },
+      },
+      {
+        files: ["L#SKEST"],
+        data: {
+          level1: 5,
+          strength: 18,
+          ac: 4,
+          apr: 2,
+          xpv: 750,
+        },
+      },
+      {
+        files: ["SKELPETR"],
+        data: { script: { location: "None" } },
+      },
+      {
+        // Tattered
+        files: ["BDSKGR02"],
+        data: { level1: 6, xpv: 400, strength: 17 },
+      },
+      {
+        files: ["SKELACI", "SKELICE", "SKELFIRE"],
+        // original thac0: 14-15
+        data: { level1: 2, xpv: 120 },
+      },
+      {
+        files: ["BDSKGR05", "BDSKGR06"],
+        data: { level1: 4, xpv: 175 },
+      },
+      {
+        files: ["BDSKGR04", "BDTEAM63"],
+        data: { level1: 5, xpv: 420 },
+      },
+      {
+        files: ["SKELAR01", "SKELAR02"],
+        data: { level1: 6, xpv: 500 },
+      },
+      {
+        files: ["BDSKGR07"],
+        data: {
+          level1: { pnpValue: 2, value: 5, type: "caster" },
+          xpv: 900,
+        },
+      },
+      {
+        files: ["BDTEAM60"],
+        data: {
+          level1: { pnpValue: 4, value: 8, type: "caster" },
+          xpv: 2000,
+        },
+      },
+      {
+        files: ["SKELDIS"],
+        // original thac0: 12
+        data: { level1: 3, xpv: 120 },
+      },
+      {
+        files: ["GHASTSU"],
+        data: { level1: 4, strength: 18 },
       },
     ]);
     return skeleton;

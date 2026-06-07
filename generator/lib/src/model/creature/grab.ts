@@ -1,4 +1,4 @@
-import { SPELL_STATES } from "../../../config/ability-presets";
+import { SPELL_STATES } from "../../../config/common";
 import { TranslationKey } from "../../../translations/i18n";
 import { EffectDamageTypeEnum, SaveTypeEnum } from "../spell-item/effect.enums";
 

@@ -1,7 +1,4 @@
-import {
-  DEFAULT_SPELL_PROBABILITY,
-  PRESET_NAMES,
-} from "../config/ability-presets";
+import { DEFAULT_SPELL_PROBABILITY, PRESET_NAMES } from "../config/common";
 import {
   ATWEAKS_CREATURES,
   GARGANTUAN_CREATURES,

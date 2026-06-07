@@ -856,7 +856,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -873,7 +873,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -890,7 +890,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -907,7 +907,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -924,7 +924,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -941,7 +941,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1650,8 +1650,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -1675,8 +1675,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -1700,8 +1700,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -1725,8 +1725,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -1750,8 +1750,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -1775,8 +1775,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -2032,7 +2032,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2049,7 +2049,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2066,7 +2066,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2083,7 +2083,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2100,7 +2100,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2117,7 +2117,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!StateCheck(LastSeenBy(Myself),STATE_POISONED)
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -2374,7 +2374,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("sppr332")
-	!CheckSpellState(Myself,CIRCLE_OF_BONES)
+	CheckSpellState(Myself,CIRCLE_OF_BONES)
 	RandomNumGT(821,246)
 THEN
 	RESPONSE #100
@@ -2425,7 +2425,7 @@ IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	HaveSpellRES("d5p2114")
-	!CheckStat(Myself,2,SCRIPTINGSTATE5)
+	CheckStat(Myself,2,SCRIPTINGSTATE5)
 	RandomNumGT(824,247)
 THEN
 	RESPONSE #100
@@ -3099,7 +3099,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3116,7 +3116,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3133,7 +3133,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3150,7 +3150,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3167,7 +3167,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3184,7 +3184,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!CheckSpellState(LastSeenBy(Myself),DOOM)
+	CheckSpellState(LastSeenBy(Myself),DOOM)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -3202,8 +3202,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -3227,8 +3227,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -3252,8 +3252,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -3277,8 +3277,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -3302,8 +3302,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)
@@ -3327,8 +3327,8 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
-	!Race(LastSeenBy(Myself),ELF)
-	!Race(LastSeenBy(Myself),HALF_ELF)
+	Race(LastSeenBy(Myself),ELF)
+	Race(LastSeenBy(Myself),HALF_ELF)
 	!CheckStatGT(LastSeenBy(Myself),0,HELD)
 	!StateCheck(LastSeenBy(Myself),STATE_STUNNED)
 	!StateCheck(LastSeenBy(Myself),STATE_PANIC)

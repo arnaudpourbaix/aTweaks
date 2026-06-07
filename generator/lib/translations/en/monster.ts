@@ -380,7 +380,9 @@ If successful, the charge causes double head-butt damage`,
   },
   undead: {
     name: {
+      baneguard: "Baneguard",
       banshee: "Banshee",
+      bonebat: "Bonebat",
       deathKnight: "Death Knight",
       ghast: "Ghast",
       ghoul: "Ghoul",
@@ -426,6 +428,10 @@ The sheet has the same effect as an ice storm's hail stones—3d10 points of dam
       ghastTouch: {
         name: "Ghast's Touch",
         description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.`,
+      },
+      bonebatTouch: {
+        name: "Bonebat's Touch",
+        description: `A bonebat's bite also paralyzes all living creatures except elves for 6 rounds, unless a successful saving throw vs. paralyzation is made.`,
       },
       ghoulLordTouch: {
         name: "Ghoul Lord's Touch",

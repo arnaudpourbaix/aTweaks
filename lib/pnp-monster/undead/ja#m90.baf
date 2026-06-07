@@ -1,4 +1,4 @@
-// Hairy Spider
+// Baneguard
 
 // Init
 IF
@@ -19,6 +19,7 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+		ApplySpell(Myself,RESTORE_FULL_HEALTH)
 END
 
 // Turn hostile if attacked
@@ -28,7 +29,7 @@ IF
 		AttackedBy([GOODCUTOFF],DEFAULT)
 		SpellCastOnMe([GOODCUTOFF],0)
 		TookDamage()
-		Heard([EVILCUTOFF.0.SPIDER],99)
+		Heard([EVILCUTOFF.0.SKELETON],99)
 THEN
 	RESPONSE #100
 		Enemy()
@@ -67,8 +68,8 @@ END
 // React to shouts
 IF
 	Global("JA#COMBAT","LOCALS",0)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard([EVILCUTOFF.0.SKELETON],99)
+	InMyArea([EVILCUTOFF.0.SKELETON])
 THEN
 	RESPONSE #100
 		SetGlobal("JA#COMBAT","LOCALS",1)
@@ -77,8 +78,8 @@ END
 
 IF
 	Global("JA#COMBAT","LOCALS",1)
-	Heard([EVILCUTOFF.0.SPIDER],99)
-	InMyArea([EVILCUTOFF.0.SPIDER])
+	Heard([EVILCUTOFF.0.SKELETON],99)
+	InMyArea([EVILCUTOFF.0.SKELETON])
 	!See([GOODCUTOFF])
 THEN
 	RESPONSE #100
@@ -105,19 +106,90 @@ THEN
 		NoAction()
 END
 
-// Detect Invisibility
+// Magic Missiles
 IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
+	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	!GlobalTimerNotExpired("detectInvisibility","LOCALS")
-	HaveSpell(WIZARD_DETECT_INVISIBILITY)
-	Detect([PC])
-	CheckSpellState(Myself,DETECT_INVISIBILITY)
-	RandomNumGT(800,560)
+	See([PC.0.0.MAGE_ALL])
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpell(Myself,WIZARD_DETECT_INVISIBILITY)
-		SetGlobalTimer("detectInvisibility","LOCALS",18)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	See([PC.0.0.CLERIC_ALL])
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	See([PC.0.0.DRUID_ALL])
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+IF
+	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
+	HaveSpell(WIZARD_MAGIC_MISSILE)
+	!Range(NearestEnemyOf(Myself),10)
+	RandomNumGT(800,240)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	See([PC.0.0.BARD])
+	!CheckStatGT(LastSeenBy(Myself),0,SANCTUARY)
+	!StateCheck(LastSeenBy(Myself),STATE_REALLY_DEAD)
+	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	!General(LastSeenBy(Myself),WEAPON)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SetGlobalTimer("MagicMissiles","LOCALS",18)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+// Try to reposition to use ranged attack
+IF
+	CanEquipRanged()
+	Range(NearestEnemyOf(Myself),4)
+THEN
+	RESPONSE #50
+		SetInterrupt(FALSE)
+		RunAwayFromNoLeaveArea(NearestEnemyOf(Myself),45)
+		SetInterrupt(TRUE)
+	RESPONSE #50
+		Continue()
 END
 
 // Attack NoCheck enemy

@@ -4,12 +4,10 @@ import {
   TARGET_STATUS,
 } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
+import triggerFactory from "../../factories/trigger.factory";
+import { PartialCreatureAttack } from "../../model/creature/attack";
 import { Creature } from "../../model/creature/creature";
-import {
-  TargetList,
-  TargetPriority,
-  TargetStatus,
-} from "../../model/script/target";
+import { GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
 import { AlignIdentifier } from "../../model/ids/align";
 import { AllegianceIdentifier } from "../../model/ids/allegiance";
 import { ClassIdentifier } from "../../model/ids/class";
@@ -18,11 +16,12 @@ import { GeneralIdentifier } from "../../model/ids/general";
 import { ObjectIdentifier } from "../../model/ids/object";
 import { RaceIdentifier } from "../../model/ids/race";
 import { SpecificIdentifier } from "../../model/ids/specific";
+import {
+  TargetList,
+  TargetPriority,
+  TargetStatus,
+} from "../../model/script/target";
 import { Triggers } from "../../model/script/triggers";
-import utils from "../utils/utils.service";
-import { GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
-import { PartialCreatureAttack } from "../../model/creature/attack";
-import triggerFactory from "../../factories/trigger.factory";
 
 class TargetService {
   targetObject(p: {
@@ -52,7 +51,7 @@ class TargetService {
   getTargetFromAbility(
     target: ObjectIdentifier | AllegianceIdentifier | TargetListName,
     limit: number | undefined,
-    randomOrder: boolean | undefined
+    randomOrder: boolean | undefined,
   ): {
     targets: ObjectIdentifier | AllegianceIdentifier | string[];
     allegianceCheck: boolean;
@@ -80,18 +79,18 @@ class TargetService {
     const triggers: Triggers.Trigger[] = [];
     for (const name of target.includeStatus ?? []) {
       const status = TARGET_STATUS.find(
-        (s) => s.status === name
+        (s) => s.status === name,
       ) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(...status.targetTriggers);
     }
     for (const name of target.excludeStatus ?? []) {
       const status = TARGET_STATUS.find(
-        (s) => s.status === name
+        (s) => s.status === name,
       ) as TargetStatus;
       triggers.push(...status.triggers);
       targetTriggers.push(
-        ...triggerFactory.inverseNegations(status.targetTriggers)
+        ...triggerFactory.inverseNegations(status.targetTriggers),
       );
     }
     return { triggers, targetTriggers };
@@ -99,7 +98,7 @@ class TargetService {
 
   getTargetPriorities(
     creature: Creature,
-    attack: PartialCreatureAttack
+    attack: PartialCreatureAttack,
   ): TargetPriority[] {
     const defaults = this.getDefaultStatus(creature);
     const targetPriorities = attack.targetPriorities ?? [];
@@ -126,7 +125,7 @@ class TargetService {
     const defaultTargetStatus = this.getLeftoversStatusList(
       defaults.targetStatus,
       "NearestEnemies",
-      results
+      results,
     );
     if (defaultTargetStatus.length) {
       results.push({
@@ -137,7 +136,7 @@ class TargetService {
     const defaultPlayerStatus = this.getLeftoversStatusList(
       defaults.playerStatus,
       "Players",
-      results
+      results,
     );
     if (defaultPlayerStatus.length) {
       results.push({ targets: ["Players"], status: defaultPlayerStatus });
@@ -149,13 +148,13 @@ class TargetService {
   private getLeftoversStatusList(
     list: TargetStatusName[],
     target: TargetListName,
-    priorities: TargetPriority[]
+    priorities: TargetPriority[],
   ): TargetStatusName[] {
     const results = list.filter(
       (s) =>
         !priorities.some(
-          (p) => p.targets.includes(target) && p.status.includes(s)
-        )
+          (p) => p.targets.includes(target) && p.status.includes(s),
+        ),
     );
     return results;
   }
@@ -176,12 +175,12 @@ class TargetService {
   } {
     const allStatus = DEFAULT_STATUS_ORDER.filter((status) => {
       const statusDetails = TARGET_STATUS.find(
-        (t) => t.status === status
+        (t) => t.status === status,
       ) as TargetStatus;
       const validStatus =
         status !== "Grabbed" ||
         creature.spells.some(
-          (s) => s.name === GRAB_DEFAULT_CONFIG.grabStringRef
+          (s) => s.name === GRAB_DEFAULT_CONFIG.grabStringRef,
         );
       const intelligence =
         !statusDetails.requireIntelligence ||
@@ -194,7 +193,7 @@ class TargetService {
   }
 
   private getTargetPrioritiesFromStatusList(
-    status: TargetStatusName[]
+    status: TargetStatusName[],
   ): TargetPriority[] {
     const results: TargetPriority[] = [];
     const targetStatus = this.getFilteredStatusNameList(status, false);
@@ -213,11 +212,11 @@ class TargetService {
 
   private getFilteredStatusNameList(
     list: TargetStatusName[],
-    canOnlyTargetPlayer: boolean
+    canOnlyTargetPlayer: boolean,
   ): TargetStatusName[] {
     return list.filter((status) => {
       const statusDetails = TARGET_STATUS.find(
-        (t) => t.status === status
+        (t) => t.status === status,
       ) as TargetStatus;
       return statusDetails.canOnlyTargetPlayer === canOnlyTargetPlayer;
     });

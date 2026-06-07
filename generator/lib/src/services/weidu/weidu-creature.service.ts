@@ -105,7 +105,7 @@ class WeiduCreatureService extends AbstractWeiduService {
 
   private patchCreatures(lines: CodeLine[], tab: number, creature: Creature) {
     this.add(lines, "ACTION_FOR_EACH ~file~ IN", tab);
-    for (const file of creature.files) this.add(lines, file, tab + 1);
+    for (const file of creature.files) this.add(lines, `"${file}"`, tab + 1);
     this.add(lines, "BEGIN", tab);
     this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, ++tab);
     this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, ++tab);
@@ -254,11 +254,11 @@ class WeiduCreatureService extends AbstractWeiduService {
     const code = this.removeMemorizedSpell(
       creature.data.spells.removeMemorized,
     );
-    this.executeCodeWithExcludedFiles(lines, tab, code, files);
+    if (code) this.executeCodeWithExcludedFiles(lines, tab, code, files);
   }
 
   private removeMemorizedSpell(value: string[] | boolean | undefined): string {
-    if (!Array.isArray(value)) return "REMOVE_MEMORIZED_SPELLS";
+    if (!Array.isArray(value)) return value ? "REMOVE_MEMORIZED_SPELLS" : "";
     return `REMOVE_MEMORIZED_SPELL ${value.map((v) => `~${v}~`).join(" ")}`;
   }
 

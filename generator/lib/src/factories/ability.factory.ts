@@ -1,4 +1,4 @@
-import { DEFAULT_SPELL_PROBABILITY } from "../../config/ability-presets";
+import { DEFAULT_SPELL_PROBABILITY } from "../../config/common";
 import { RawCreatureAbility } from "../model/creature/ability";
 import { Triggers } from "../model/script/triggers";
 

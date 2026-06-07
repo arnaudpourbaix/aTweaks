@@ -126,7 +126,7 @@ class ConstructFamily extends CreatureFamily<Construct> {
     });
     battleHorror.setData({
       level1: 8,
-      level2: 3,
+      level2: 3, // for magic missiles as a level 3 wizard
       bonusHp: 11,
       strength: 20,
       class: "FIGHTER_MAGE",

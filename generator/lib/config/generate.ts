@@ -23,6 +23,7 @@ export const GLOBAL_CONFIG = {
   tpaConstants: {
     genericScriptsToRemove: [
       "BDANIMN",
+      "BDARCHNI",
       "BDENRAGE",
       "BDENSHTV",
       "BDFIG00",

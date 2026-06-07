@@ -751,7 +751,7 @@ END
 // Dimension Door
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player1)
@@ -768,7 +768,7 @@ END
 
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player2)
@@ -785,7 +785,7 @@ END
 
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player3)
@@ -802,7 +802,7 @@ END
 
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player4)
@@ -819,7 +819,7 @@ END
 
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player5)
@@ -836,7 +836,7 @@ END
 
 IF
 	HaveSpell(WIZARD_DIMENSION_DOOR)
-	!StateCheck(Myself,STATE_BLIND)
+	StateCheck(Myself,STATE_BLIND)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player6)

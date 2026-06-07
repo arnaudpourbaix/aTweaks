@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "path";
-import { SPELL_STATES } from "../../../config/ability-presets";
+import { SPELL_STATES } from "../../../config/common";
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { COMMON_PROJECTILES } from "../../../spells/projectiles";
 import { CR, TAB } from "../../model/constants";

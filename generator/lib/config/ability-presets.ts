@@ -1,115 +1,35 @@
 import presetFactory from "../src/factories/preset.factory";
 import triggerFactory from "../src/factories/trigger.factory";
 import { Durations, ScriptTarget } from "../src/model/constants";
-import { RawCreatureAbility } from "../src/model/creature/ability";
 import { AbilityPreset } from "../src/model/misc";
-import { TargetList } from "../src/model/script/target";
+import {
+  CHARM_TARGET_LISTS,
+  DEFAULT_SPELL_PROBABILITY,
+  FEAR_TARGET_LISTS,
+  HOLD_TARGET_LISTS,
+  PRESET_NAMES,
+  SLEEP_TARGET_LISTS,
+} from "./common";
 import { FNP_SPELLS, SPELLS } from "./spell-names";
 
-export const SPELL_STATES = {
-  flying: "JA_FLYING",
-  grabbed: "JA_GRAPPLED",
-  grabbing: "JA_GRAPPLING",
-  gaseousForm: "JA_GASEOUSFORM",
-};
-
-export const DEFAULT_SPELL_PROBABILITY = 70;
-
-const CHARM_TARGET_LISTS: TargetList[] = [
-  {
-    name: "PCsFighters",
-    randomOrder: true,
-    includeStatus: ["Able"],
-    triggers: [
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "ELF"],
-        negation: true,
-      },
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "HALF_ELF"],
-        negation: true,
-      },
-    ],
-  },
-  {
-    name: "PCs",
-    includeStatus: ["Able"],
-    randomOrder: true,
-    triggers: [
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "ELF"],
-        negation: true,
-      },
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "HALF_ELF"],
-        negation: true,
-      },
-    ],
-  },
-  {
-    name: "PCsFighters",
-    randomOrder: true,
-    includeStatus: ["Able"],
-    triggers: [
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "ELF"],
-        negation: true,
-      },
-    ],
-  },
-  {
-    name: "PCs",
-    includeStatus: ["Able"],
-    randomOrder: true,
-  },
-];
-
-export const PRESET_NAMES = {
-  DimensionDoorOffscreen: "DimensionDoorOffscreen",
-};
-
-const SLEEP_TARGET_LISTS: TargetList[] = [
-  {
-    name: "PCs",
-    includeStatus: ["Able"],
-    randomOrder: true,
-    triggers: [
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "ELF"],
-        negation: true,
-      },
-      {
-        name: "Race",
-        params: [ScriptTarget.lastSeen, "HALF_ELF"],
-        negation: true,
-      },
-    ],
-  },
-];
-
-const FEAR_TARGET_LISTS: TargetList[] = [
-  {
-    name: "PCs",
-    includeStatus: ["Able"],
-    randomOrder: true,
-  },
-];
-
-const HOLD_TARGET_LISTS: TargetList[] = [
-  {
-    name: "PCs",
-    includeStatus: ["Able"],
-    randomOrder: true,
-  },
-];
-
 export const ABILITY_PRESETS: AbilityPreset[] = [
+  {
+    preset: SPELLS.Vocalize.file,
+    ability: {
+      name: "ability.Vocalize",
+      spell: {
+        probability: 100,
+        selfTarget: true,
+      },
+      triggers: [
+        {
+          name: "StateCheck",
+          params: [ScriptTarget.myself, "STATE_SILENCED"],
+        },
+      ],
+      requireVocal: false,
+    },
+  },
   {
     preset: SPELLS.Invisibility.file,
     ability: {
@@ -263,6 +183,17 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
     },
   },
   {
+    preset: SPELLS.ChromaticOrb.file,
+    ability: {
+      name: "ability.ChromaticOrb",
+      targets: [{ name: "PCs", randomOrder: true }],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
     preset: SPELLS.Bless.file,
     ability: {
       name: "ability.bless",
@@ -288,6 +219,17 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
     preset: SPELLS.Horror.file,
     ability: {
       name: "ability.horror",
+      targets: FEAR_TARGET_LISTS,
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Spook.file,
+    ability: {
+      name: "ability.spook",
       targets: FEAR_TARGET_LISTS,
       spell: {
         probability: DEFAULT_SPELL_PROBABILITY,
@@ -363,7 +305,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
             {
               name: "Range",
               params: [ScriptTarget.lastSeen, 20],
-              negation: true,
             },
           ],
           randomOrder: true,
@@ -461,23 +402,20 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
     },
     requireVocal: true,
   }),
-  {
-    preset: FNP_SPELLS.Emotion.file,
-    ability: {
-      name: "ability.Emotion",
-      targets: [
-        {
-          name: "NearestEnemies",
-          includeStatus: ["Able"],
-          randomOrder: true,
-        },
-      ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
+  ...presetFactory.create([SPELLS.Emotion.file, FNP_SPELLS.Emotion.file], {
+    name: "ability.Emotion",
+    targets: [
+      {
+        name: "NearestEnemies",
+        includeStatus: ["Able"],
+        randomOrder: true,
       },
-      requireVocal: true,
+    ],
+    spell: {
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
-  },
+    requireVocal: true,
+  }),
   {
     preset: SPELLS.SummonInsects.file,
     ability: {
@@ -514,7 +452,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
         {
           name: "StateCheck",
           params: [ScriptTarget.myself, "STATE_BLIND"],
-          negation: true,
         },
       ],
     },
@@ -650,12 +587,10 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: [
-        { name: "See", params: ["PC"], negation: true },
         { name: "Detect", params: ["PC"] },
         {
           name: "CheckSpellState",
           params: [ScriptTarget.myself, "DETECT_INVISIBILITY"],
-          negation: true,
         },
       ],
       requireVocal: true,
@@ -702,12 +637,10 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
             {
               name: "Allegiance",
               params: [ScriptTarget.lastSeen, "ENEMY"],
-              negation: true,
             },
             {
               name: "CheckStatGT",
               params: [ScriptTarget.lastSeen, 0, "CLERIC_INSECT_PLAGUE"],
-              negation: true,
             },
             {
               name: "Or",
@@ -968,7 +901,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
           {
             name: "CheckSpellState",
             params: [ScriptTarget.lastSeen, "DOOM"],
-            negation: true,
           },
         ],
         randomOrder: true,
@@ -979,19 +911,22 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
     },
     requireVocal: true,
   }),
-  ...presetFactory.create([FNP_SPELLS.GreaterMalison.file], {
-    name: "ability.GreaterMalison",
-    targets: [
-      {
-        name: "Players",
-        randomOrder: true,
+  ...presetFactory.create(
+    [SPELLS.GreaterMalison.file, FNP_SPELLS.GreaterMalison.file],
+    {
+      name: "ability.GreaterMalison",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
       },
-    ],
-    spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
+      requireVocal: true,
     },
-    requireVocal: true,
-  }),
+  ),
   {
     //FIXME: this spell doesn't seem to work at all
     preset: FNP_SPELLS.FrostFingers.file,
@@ -1010,7 +945,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
         {
           name: "CheckStat",
           params: [ScriptTarget.myself, 5, "SCRIPTINGSTATE4"],
-          negation: true,
         },
       ],
       range: 10,
@@ -1044,7 +978,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
             {
               name: "CheckSpellState",
               params: [ScriptTarget.lastSeen, "MISCAST_MAGIC"],
-              negation: true,
             },
           ],
         },
@@ -1087,24 +1020,20 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
       requireVocal: true,
     },
   },
-  {
-    preset: FNP_SPELLS.Shield.file,
-    ability: {
-      name: "ability.Shield",
-      spell: {
-        selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      triggers: [
-        {
-          name: "CheckStat",
-          params: [ScriptTarget.myself, 2, "SCRIPTINGSTATE5"],
-          negation: true,
-        },
-      ],
-      requireVocal: true,
+  ...presetFactory.create([SPELLS.Shield.file, FNP_SPELLS.Shield.file], {
+    name: "ability.Shield",
+    spell: {
+      selfTarget: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
-  },
+    triggers: [
+      {
+        name: "CheckStat",
+        params: [ScriptTarget.myself, 2, "SCRIPTINGSTATE5"],
+      },
+    ],
+    requireVocal: true,
+  }),
   {
     preset: FNP_SPELLS.CircleOfBones.file,
     ability: {
@@ -1117,7 +1046,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
         {
           name: "CheckSpellState",
           params: [ScriptTarget.myself, "CIRCLE_OF_BONES"],
-          negation: true,
         },
       ],
       requireVocal: true,
@@ -1256,7 +1184,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
             {
               name: "StateCheck",
               params: [ScriptTarget.token, "STATE_POISONED"],
-              negation: true,
             },
           ],
         },
@@ -1283,7 +1210,6 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
             {
               name: "StateCheck",
               params: [ScriptTarget.token, "STATE_POISONED"],
-              negation: true,
             },
           ],
         },
@@ -1346,6 +1272,129 @@ export const ABILITY_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.WavesOfFatigue",
       targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Glitterdust.file,
+    ability: {
+      name: "ability.Glitterdust",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.SpellThrust.file,
+    ability: {
+      name: "ability.SpellThrust",
+      targets: [
+        {
+          name: "PCSpellcasters",
+          randomOrder: true,
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "CheckSpellState",
+          params: [ScriptTarget.lastSeen, "BUFF_PRO_SPELLS"],
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.MinorSpellDeflection.file,
+    ability: {
+      name: "ability.MinorSpellDeflection",
+      spell: {
+        selfTarget: true,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: triggerFactory.seeOneInTargetList("PCSpellcasters"),
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.MirrorImages.file,
+    ability: {
+      name: "ability.MirrorImages",
+      spell: {
+        selfTarget: true,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "StateCheck",
+          params: [ScriptTarget.myself, "STATE_MIRRORIMAGE"],
+          negation: true,
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.Haste.file,
+    ability: {
+      name: "ability.Haste",
+      spell: {
+        selfTarget: true,
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      triggers: [
+        {
+          name: "StateCheck",
+          params: [ScriptTarget.myself, "STATE_HASTED"],
+          negation: true,
+        },
+      ],
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.StinkingCloud.file,
+    ability: {
+      name: "ability.StinkingCloud",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          includeStatus: ["Able"],
+        },
+      ],
+      spell: {
+        probability: DEFAULT_SPELL_PROBABILITY,
+      },
+      requireVocal: true,
+    },
+  },
+  {
+    preset: SPELLS.MelfAcidArrow.file,
+    ability: {
+      name: "ability.MelfAcidArrow",
+      targets: [
+        {
+          name: "PCSpellcasters",
+          randomOrder: true,
+        },
         {
           name: "Players",
           randomOrder: true,

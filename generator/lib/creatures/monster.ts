@@ -109,4 +109,6 @@ export enum MonsterEnum {
   ZombieJuju = 87,
   ZombieSea = 88,
   GreaterShadow = 89,
+  Baneguard = 90,
+  Bonebat = 91,
 }

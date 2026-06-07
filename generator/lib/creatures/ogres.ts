@@ -1,4 +1,4 @@
-import { SPELL_STATES } from "../config/ability-presets";
+import { SPELL_STATES } from "../config/common";
 import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
