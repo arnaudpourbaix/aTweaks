@@ -168,6 +168,16 @@ class TargetService {
     return { targets: list.value, allegianceCheck: list.allegianceCheck };
   }
 
+  combineListWithTriggers(
+    list: TargetList[],
+    triggers: Triggers.Trigger[],
+  ): TargetList[] {
+    return list.map((l) => ({
+      ...l,
+      triggers: [...(l.triggers ?? []), ...triggers],
+    }));
+  }
+
   private getDefaultStatus(creature: Creature): {
     allStatus: TargetStatusName[];
     targetStatus: TargetStatusName[];

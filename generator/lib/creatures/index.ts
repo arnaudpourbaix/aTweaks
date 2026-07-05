@@ -7,6 +7,7 @@ import { createConstructs } from "./constructs";
 import { createCarrionCrawlers } from "./crawlers";
 import { createDogs } from "./dogs";
 import { createEttercaps } from "./ettercaps";
+import { createEttins } from "./ettin";
 import { createFeys } from "./feys";
 import { createGolems } from "./golems";
 import { createMinotaurs } from "./minotaurs";
@@ -27,6 +28,7 @@ export const familyFactories: (() => Family)[] = [
   createConstructs,
   createDogs,
   createEttercaps,
+  createEttins,
   createFeys,
   createGolems,
   createMinotaurs,

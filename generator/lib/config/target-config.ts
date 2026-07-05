@@ -110,6 +110,11 @@ export const TARGET_LISTS: {
     allegianceCheck: false,
   },
   {
+    name: "PCMages",
+    value: [`[PC.0.0.MAGE_ALL]`, `[PC.0.0.BARD]`],
+    allegianceCheck: false,
+  },
+  {
     name: "FarthestEnemies",
     value: [
       "FarthestEnemyOf(Myself)",

@@ -1,3 +1,4 @@
+import { StringReference } from "../model/final/stringref";
 import { RaceIdentifier } from "../model/ids/race";
 import {
   BaseEffect,
@@ -361,14 +362,17 @@ class EffectFactory {
     duration: number;
     saveType?: SaveTypeEnum;
     saveBonus?: number;
+    minLevel?: number;
     maxLevel?: number;
     dispelResistance?: EffectDispelResistanceEnum;
     startSound?: string;
     endSound?: string;
+    stringRef?: StringReference;
   }) {
     const base: BaseEffect = {
       saveTypes: params.saveType !== undefined ? [params.saveType] : undefined,
       saveBonus: params.saveBonus,
+      minLevel: params.minLevel,
       maxLevel: params.maxLevel,
     };
     const effects: Effect[] = [
@@ -405,6 +409,14 @@ class EffectFactory {
         duration: params.duration,
         dispelResistance: params.dispelResistance,
         ...base,
+      });
+    }
+    if (params.stringRef) {
+      effects.push({
+        opcode: EffectTypeEnum.DisplayString,
+        stringRef: params.stringRef,
+        ...base,
+        timing: EffectTimingEnum.InstantPermanentUntilDeath,
       });
     }
     return effectService.getEffects(effects);

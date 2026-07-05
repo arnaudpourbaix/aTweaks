@@ -11,9 +11,13 @@ export interface CreatureAdjustment extends BaseCreature {
    * Don't assign a weapon
    */
   noWeapon: boolean;
+  /**
+   * Script name
+   */
+  scriptName: boolean;
 }
 
 export type PartialCreatureAdjustment = PartialBy<
   Omit<CreatureAdjustment, "data">,
-  "summon" | "noWeapon"
+  "summon" | "noWeapon" | "scriptName"
 > & { data?: InputCreatureData };

@@ -1,7 +1,11 @@
 import effectService from "../../services/effects/effect.service";
 import itemService from "../../services/item.service";
 import spellService from "../../services/spell.service";
-import { getFilename } from "../../services/utils/misc.func";
+import {
+  getItemFilename,
+  getProjectileFilename,
+  getSpellFilename,
+} from "../../services/utils/misc.func";
 import { BaseEffect } from "../spell-item/effect";
 import {
   EffectCastSpellTypeEnum,
@@ -43,7 +47,7 @@ export abstract class AbstractCreature {
 
   spell(id: number | string): Spell {
     const spell = this.spells.find((s) =>
-      typeof id === "string" ? s.file === id : s.id === id
+      typeof id === "string" ? s.file === id : s.id === id,
     );
     if (!spell) throw new Error(`No spell found with id ${id}`);
     return spell;
@@ -62,7 +66,11 @@ export abstract class AbstractCreature {
   }
 
   addProjectile(projectile: PartialProjectile, file?: string): Projectile {
-    file ??= getFilename(this.projectiles.length + 1, this.id, this.fileType);
+    file ??= getProjectileFilename(
+      this.projectiles.length,
+      this.id,
+      this.fileType,
+    );
     const result: Projectile = { ...projectile, file };
     this.projectiles.push(result);
     return result;
@@ -72,7 +80,7 @@ export abstract class AbstractCreature {
     if (spell.id !== undefined && this.spells.some((s) => s.id === spell.id)) {
       throw new Error(`Spell id ${spell.id} already defined`);
     }
-    file ??= getFilename(this.spells.length + 1, this.id, this.fileType);
+    file ??= getSpellFilename(this.spells.length, this.id, this.fileType);
     const result = spellService.getSpell(spell, file);
     this.spells.push(result);
     return result;
@@ -82,7 +90,7 @@ export abstract class AbstractCreature {
     if (item.id !== undefined && this.items.some((i) => i.id === item.id)) {
       throw new Error(`Item id ${item.id} already defined`);
     }
-    file ??= getFilename(this.items.length + 1, this.id, this.fileType);
+    file ??= getItemFilename(this.items.length, this.id, this.fileType);
     const result = itemService.getItem(item, file);
     this.items.push(result);
     return result;
@@ -122,7 +130,7 @@ export abstract class AbstractCreature {
         opcode: EffectTypeEnum.CastSpell,
         type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
         ...baseEffect,
-      })
+      }),
     );
     if (cast.remove) {
       weapon.header.effects.push(
@@ -130,7 +138,7 @@ export abstract class AbstractCreature {
           opcode: EffectTypeEnum.RemoveSpell,
           target: EffectTargetEnum.Self,
           ...baseEffect,
-        })
+        }),
       );
     }
   }

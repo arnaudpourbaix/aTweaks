@@ -7,6 +7,7 @@ import {
 export type SpellProtectionName =
   | "NOT_OUTDOOR_CHECK"
   | "POISON_IMMUNITY"
+  | "CLERIC"
   | "ANYONE";
 
 /**
@@ -30,6 +31,12 @@ export const SPELL_PROTECTIONS: SpellProtection[] = [
     stat: SpellProtectionStat.Ea,
     value: "ANYONE",
     relation: SpellProtectionRelation.GreaterOrEqual,
+  },
+  {
+    name: "CLERIC",
+    stat: SpellProtectionStat.Class,
+    value: "CLERIC_ALL",
+    relation: SpellProtectionRelation.Equal,
   },
 ];
 

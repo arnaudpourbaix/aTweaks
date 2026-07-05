@@ -37,7 +37,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.patchCreatures(lines, 0, creature);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     utils.writeFile(
-      `${utils.getFamilyFolder(creature.family)}/${creature.id}.tpa`,
+      `${utils.getFamilyFolder(creature.family)}/${creature.id.toString(16)}.tpa`,
       content,
     );
     weiduFamilyService.createOrUpdateMainFile(creature.family, creature);
@@ -121,7 +121,9 @@ class WeiduCreatureService extends AbstractWeiduService {
       creature,
     });
     this.addMemorizedSpells(lines, tab, creature.data);
+    // if (creature.data.proficiencies.length) {
     this.add(lines, `LPF clear_proficiencies END`, tab);
+    // }
     this.addProficiencies(lines, tab, creature.data);
     this.addImmunities(
       lines,
@@ -311,7 +313,9 @@ class WeiduCreatureService extends AbstractWeiduService {
       );
       const slots = itemService.getItemSlots(item.slot);
       if (!slots.length) {
-        console.warn(`No slot defined for equipped item ${item.file}`);
+        console.warn(
+          `No slot defined for equipped item ${item.file}, check if it is used by an adjustment`,
+        );
         continue;
       }
       const isWeapon = slots.every((slot) =>
@@ -561,6 +565,13 @@ class WeiduCreatureService extends AbstractWeiduService {
         summon: !!adjustment.summon,
         creature,
       });
+    if (adjustment.scriptName && adjustment.files.length > 1)
+      throw new Error(
+        `Adjustement can't have a script name if it has several files: ${adjustment.files.join(" ")}`,
+      );
+    if (adjustment.scriptName) {
+      this.writeAscii(lines, 0x280, 32, adjustment.files[0]);
+    }
     this.add(lines, "END", --tab);
   }
 
@@ -617,7 +628,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     }
   }
 
-  private getScriptName(
+  getScriptName(
     creature: Creature,
     options: { withPath?: boolean; summon?: boolean; ext?: boolean },
   ) {
@@ -625,7 +636,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       ? `${utils.getFamilyFolder(creature.family)}/`
       : "";
     const ext = options.ext === true ? ".baf" : "";
-    const name = `ja#m${creature.id}${options.summon ? "su" : ""}${ext}`;
+    const name = `ja#m${creature.id.toString(16)}${options.summon ? "su" : ""}${ext}`;
     return `${path}${name}`;
   }
 }

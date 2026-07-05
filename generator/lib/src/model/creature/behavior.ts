@@ -4,6 +4,7 @@ import {
   PartialCustomCode,
 } from "../script/script";
 import { CreatureAbility, RawCreatureAbility } from "./ability";
+import { SpellCaster } from "./spellcaster";
 
 export interface CreatureBehavior {
   /**
@@ -46,6 +47,9 @@ export interface CreatureBehavior {
    */
   hideInShadows: boolean;
 
+  /**
+   * Able to polymorph (default: false)
+   */
   canPolymorph: boolean;
 
   /**
@@ -53,6 +57,7 @@ export interface CreatureBehavior {
    */
   dialog: string[];
   abilities: CreatureAbility[];
+  spellcaster?: SpellCaster;
   customCodes: CustomCode[];
   additionalCodes: AdditionalCode[];
 }

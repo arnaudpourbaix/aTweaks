@@ -556,7 +556,7 @@ export namespace Triggers {
 
   export interface HasImmunityEffects extends BaseTrigger {
     name: "HasImmunityEffects";
-    params: [ParamObject, ClassIdentifier];
+    params: [ParamObject];
   }
 
   export interface ImmuneToSpellLevel extends BaseTrigger {

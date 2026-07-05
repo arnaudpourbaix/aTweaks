@@ -384,7 +384,9 @@ If successful, the charge causes double head-butt damage`,
       banshee: "Banshee",
       bonebat: "Bonebat",
       deathKnight: "Death Knight",
+      deathShade: "Death Shade",
       ghast: "Ghast",
+      ghost: "Ghost",
       ghoul: "Ghoul",
       ghoulLord: "Ghoul Lord",
       mummy: "Mummy",
@@ -423,11 +425,19 @@ The sheet has the same effect as an ice storm's hail stones—3d10 points of dam
       },
       ghoulTouch: {
         name: "Ghoul's Touch",
-        description: `Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds or until negated by a priest.`,
+        description: `Their touch causes humanoids (excluding elves) to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 5 rounds.`,
       },
       ghastTouch: {
         name: "Ghast's Touch",
-        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds or until negated by a priest.`,
+        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 7 rounds.`,
+      },
+      specterTouch: {
+        name: "Specter's Touch",
+        description: `Their touch drains two life energy levels from the victim.`,
+      },
+      ghostTouch: {
+        name: "Ghost's Touch",
+        description: `Their touch drains two life energy levels from the victim.`,
       },
       bonebatTouch: {
         name: "Bonebat's Touch",
@@ -435,7 +445,7 @@ The sheet has the same effect as an ice storm's hail stones—3d10 points of dam
       },
       ghoulLordTouch: {
         name: "Ghoul Lord's Touch",
-        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds or until negated by a priest.`,
+        description: `Their touch causes humanoids to become rigid unless a saving throw versus paralyzation is successful. This paralysis lasts for 10 rounds.`,
       },
       carrionStench: {
         name: "Carrion Stench",
@@ -469,11 +479,23 @@ Humans save against mummies at an additional +2.`,
 Humans save against mummies at an additional +2.`,
         frightened: "Frightened",
       },
+      ghostFearAura: {
+        name: "Fear Aura",
+        description: `The supernatural power of a ghost is such, however, that the mere sight of one causes any humanoid being to age 10 years and flee in panic for 8 turns unless a saving throw versus spell is made.
+Priests above 6th level are immune to this effect, and all other humanoids above 8th level may add +2 to their saving throws.`,
+        frightened: "Frightened",
+      },
       auraOfEvil: {
         name: "Aura of Evil",
         description: `Ghoul lords do radiate an aura of evil. In fact, this effect is so potent that those of good alignment suffer a -4 on all attack rolls when within 30 feet of these creatures.`,
         message: "Affected by Ghoul Lord's evil aura",
       },
     },
+  },
+  ettin: {
+    name: {
+      ettin: "Ettin",
+    },
+    weapon: { largeSpikedClub: "Large Spiked Club" },
   },
 };

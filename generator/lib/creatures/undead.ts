@@ -57,12 +57,15 @@ enum Ids {
   GhoulTouch,
   GhoulLordTouch,
   GhastTouch,
+  GhostFearAura,
+  GhostTouch,
   GhoulRottingDisease,
   GreaterMummyRottingDisease,
   GreaterMummyFearAura,
   MummyFearAura,
   MummyRottingDisease,
   SkeletonWarriorFearAura,
+  SpecterTouch,
   WallOfIce,
 }
 
@@ -235,11 +238,18 @@ class Undead extends Creature {
           speed: 1,
           projectile: CommonProjectileFiles.AreaOfSightNonParty,
           range: 30,
-          effects: effectFactory.fear({
-            duration: Durations.turn,
-            saveType: SaveTypeEnum.Spell,
-            maxLevel: 5,
-          }),
+          effects: [
+            ...effectFactory.fear({
+              duration: Durations.turn,
+              saveType: SaveTypeEnum.Spell,
+              maxLevel: 5,
+            }),
+            {
+              opcode: EffectTypeEnum.ProtectionFromSpell,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: Durations.turn,
+            },
+          ],
         },
       ],
       ability: {
@@ -812,6 +822,11 @@ class Undead extends Creature {
         saveTypes: [saveType],
         saveBonus,
       },
+      {
+        opcode: EffectTypeEnum.ProtectionFromSpell,
+        timing: EffectTimingEnum.InstantLimited,
+        duration: Durations.turn,
+      },
     ];
     const spell: PartialSpell = {
       name: "monster.undead.ability.mummyFearAura.name",
@@ -836,6 +851,82 @@ class Undead extends Creature {
       });
     }
     return this.addSpell(spell);
+  }
+
+  /**
+   * Ghost Fear Aura
+   */
+  createGhostFearAura() {
+    // causes any humanoid being to age 10 years and flee in panic for 8 turns unless a saving throw versus spell is made.
+    // all humanoids above 8th level may add +2 to their saving throws.
+    // Priests above 6th level are immune to this effect,
+    const saveType = SaveTypeEnum.Spell;
+    return this.addSpell({
+      name: "monster.undead.ability.ghostFearAura.name",
+      description: "monster.undead.ability.ghostFearAura.description",
+      id: Ids.GhostFearAura,
+      memorizedCount: 1,
+      icon: SPELLS.CloakOfFear.file,
+      options: { renew: 2 },
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          location: ItemAbilityLocationEnum.Ability,
+          target: ItemAbilityTargetEnum.AnyPointWithinRange,
+          speed: 0,
+          projectile: CommonProjectileFiles.AreaOfSightNonParty,
+          range: 30,
+          effects: [
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: {
+                stat: SpellProtectionStat.General,
+                relation: SpellProtectionRelation.NotEqual,
+              },
+              value: "HUMANOID",
+              timing: EffectTimingEnum.InstantLimited,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              duration: 1,
+            },
+            {
+              opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
+              type: "CLERIC",
+              timing: EffectTimingEnum.InstantLimited,
+              dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
+              minLevel: 7,
+              duration: 1,
+            },
+            ...effectFactory.fear({
+              duration: 8 * Durations.turn,
+              saveType,
+              saveBonus: 0,
+              minLevel: 1,
+              maxLevel: 7,
+              stringRef: "monster.undead.ability.ghostFearAura.frightened",
+            }),
+            ...effectFactory.fear({
+              duration: 8 * Durations.turn,
+              saveType,
+              saveBonus: 2,
+              minLevel: 8,
+              stringRef: "monster.undead.ability.ghostFearAura.frightened",
+            }),
+            {
+              opcode: EffectTypeEnum.ProtectionFromSpell,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: Durations.turn,
+            },
+          ],
+        },
+      ],
+      ability: {
+        preset: SPELLS.CloakOfFear.file,
+        spell: {
+          type: "force",
+          remove: true,
+        },
+      },
+    });
   }
 
   /**
@@ -907,6 +998,60 @@ class Undead extends Creature {
       },
     });
   }
+
+  /**
+   * Specter Touch
+   */
+  createSpecterTouch() {
+    return this.addSpell({
+      name: "monster.undead.ability.specterTouch.name",
+      description: "monster.undead.ability.specterTouch.description",
+      id: Ids.SpecterTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            ...effectFactory.levelDrain({
+              levels: 2,
+            }),
+          ],
+        },
+      ],
+    });
+  }
+
+  /**
+   * Ghost Touch
+   */
+  createGhostTouch() {
+    return this.addSpell({
+      name: "monster.undead.ability.ghostTouch.name",
+      description: "monster.undead.ability.ghostTouch.description",
+      id: Ids.GhostTouch,
+      secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Melee,
+          range: 5,
+          effects: [
+            // TODO: If they strike an opponent it ages him 10-40 (1d4x10) years.
+            ...effectFactory.levelDrain({
+              levels: 2,
+            }),
+            {
+              opcode: EffectTypeEnum.Damage,
+              type: EffectDamageTypeEnum.Magic,
+              amount: 10,
+              dispelResistance:
+                EffectDispelResistanceEnum.NotDispelBypassResistance,
+            },
+          ],
+        },
+      ],
+    });
+  }
 }
 
 class UndeadFamily extends CreatureFamily<Undead> {
@@ -914,6 +1059,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     super(MonsterFamilyEnum.Undead);
     this.addCreature(this.banshee());
     // this.addCreature(this.deathKnight());
+    // this.addCreature(this.deathShade());
     this.addCreature(this.ghoul());
     this.addCreature(this.ghast());
     this.addCreature(this.ghoulLord());
@@ -925,7 +1071,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
     this.addCreature(this.bonebat());
     this.addCreature(this.skeleton());
     this.addCreature(this.skeletonWarrior());
-    // this.addCreature(this.spectre());
+    this.addCreature(this.spectre());
+    this.addCreature(this.ghost());
     // this.addCreature(this.wight());
     // this.addCreature(this.wraith());
     // this.addCreature(this.zombie());
@@ -1086,7 +1233,10 @@ class UndeadFamily extends CreatureFamily<Undead> {
     knight.setBehavior({
       restHeal: true,
       abilities: [
-        { preset: SPELLS.DetectInvisibility.file, spell: { type: "noDec" } },
+        {
+          preset: SPELLS.DetectInvisibility.file,
+          spell: { type: "noDec" },
+        },
         this.ability(Ids.WallOfIce),
       ],
     });
@@ -1110,6 +1260,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "GHASTF01", // Fell Ghast
         "GRAEL", // Grael
         "SEWERF3", // Sewerfolk
+        "L#SKEST", // Skeletal Mother (looks like a ghast)
         "BHGHOUL2",
         "BHGHOUL4",
         "ghast01", // BG2 standard Ghast
@@ -1520,7 +1671,10 @@ class UndeadFamily extends CreatureFamily<Undead> {
             // level 5 (9):
             { file: FNP_SPELLS.Chaos.file, memorizedCount: 1 },
             { file: FNP_SPELLS.CloudOfPestilence.file, memorizedCount: 1 },
-            { file: SPELLS.MassCauseLightWounds.file, memorizedCount: 1 },
+            {
+              file: SPELLS.MassCauseLightWounds.file,
+              memorizedCount: 1,
+            },
             { file: FNP_SPELLS.Shades.file, memorizedCount: 1 },
             { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
             { file: SPELLS.WavesOfAgony.file, memorizedCount: 2 },
@@ -1988,13 +2142,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "BDSKGR07", // Skeletal Mage
         "BDTEAM60", // Skeletal Mage
         "L#HAUSK", // Skeletal Captain
-        "L#SKEST", // Skeletal Mother
-        // Here:
-        "BDUNSEN", // Undead Sentry
-        "C#Q06002", // Zombie
-        "DECK622", // Death Shade
-        "DW#SEMSK", // Skeleton Warrior
-        "ICHARY", // Icharyd
         "KNIGHTSK", // Undead Knight
         "KRYSKEL1", // Rick
         "KRYSKEL2", // Shane
@@ -2002,8 +2149,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "KRYSKEL4", // Glenn
         "KRYSKEL5", // Lori
         "KRYSKEL6", // Hagar
-        "MS7BGRD", // Boneguard
-        "SKELDED", // <Invalid Strref -1>
+        //"MS7BGRD", // Boneguard (unknown monster)
         "YSRSDEAD", // Restless Dead
         "YSRSTDD1", // Restless Dead
         "YSRSTDD2", // Restless Dead
@@ -2055,6 +2201,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     skeleton.setBehavior({
       restHeal: true,
+      dialog: ["KNIGHTSK"],
       abilities: [
         this.preset(SPELLS.Vocalize.file),
         this.preset(SPELLS.MirrorImages.file),
@@ -2105,16 +2252,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         },
       },
       {
-        files: ["L#SKEST"],
-        data: {
-          level1: 5,
-          strength: 18,
-          ac: 4,
-          apr: 2,
-          xpv: 750,
-        },
-      },
-      {
         files: ["SKELPETR"],
         data: { script: { location: "None" } },
       },
@@ -2122,6 +2259,38 @@ class UndeadFamily extends CreatureFamily<Undead> {
         // Tattered
         files: ["BDSKGR02"],
         data: { level1: 6, xpv: 400, strength: 17 },
+      },
+      {
+        files: ["KNIGHTSK"],
+        data: {
+          level1: 9,
+          xpv: 900,
+          strength: 18,
+          exceptionalStrength: 9,
+          apr: 2,
+        },
+        scriptName: true,
+      },
+      {
+        files: [
+          "KRYSKEL1",
+          "KRYSKEL2",
+          "KRYSKEL3",
+          "KRYSKEL4",
+          "KRYSKEL5",
+          "KRYSKEL6",
+        ],
+        data: { level1: 2, xpv: 90 },
+      },
+      {
+        // Restless Dead
+        files: ["YSRSTDD1", "YSRSTDD2", "YSRSTDD3"],
+        data: { script: { location: "None" } },
+      },
+      {
+        // Restless Dead
+        files: ["YSRSDEAD"],
+        data: { level1: 2, xpv: 100, script: { location: "None" } },
       },
       {
         files: ["SKELACI", "SKELICE", "SKELFIRE"],
@@ -2176,6 +2345,11 @@ class UndeadFamily extends CreatureFamily<Undead> {
       name: "monster.undead.name.skeletonWarrior",
       files: [
         "BDSKGR08", // Skeleton Warrior
+        "SKELWA", // Skeleton Warrior
+        "SKELWA01", // Skeleton Warrior
+        "SKELWA02", // Skeleton Warrior
+        "SKELWA03", // Skeleton Warrior
+        "SKELWASU", // Skeleton Warrior
         "C0DESUM1", // Skeleton Warrior
         "C0DESUM2", // Skeleton Warrior
         "C0DESUM3", // Skeleton Warrior
@@ -2183,22 +2357,15 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "C0DESUM5", // Skeleton Warrior
         "DW#ANGSK", // Skeleton Warrior
         "DW#DIASK", // Skeleton Warrior
+        "DW#SEMSK", // Skeleton Warrior
         "SKELSU01", // Skeleton Warrior
         "SKELSU07", // Skeleton Warrior
         "SKELSU11", // Skeleton Warrior
-        "SKELWA", // Skeleton Warrior
-        "SKELWA01", // Skeleton Warrior
-        "SKELWA02", // Skeleton Warrior
-        "SKELWA03", // Skeleton Warrior
-        "SKELWASU", // Skeleton Warrior
-        // check:
+        "ICHARY", // Icharyd
+        "BDUNSEN", // Undead Sentry
         "BDSKGR01", // Armored Skeleton
         "BDTEAM62", // Armored Skeleton
-        "BDUNSEN", // Undead Sentry
-        "DECK622", // Death Shade
-        "ICHARY", // Icharyd
-        "SKELDED", // <Invalid Strref -1>
-        // atweaks
+        // following are from atweaks, not tested:
         "ar18skel",
         "ceskel01",
         "grskel1",
@@ -2217,7 +2384,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         //"c#ajske2", // Ajantis for BG2 - Not Tested
         "cmskel01", // Dark Horizons
         "cmskel02", // Dark Horizons
-        "dw#semsk", // Stratagems
         "fhlskl1", // The Luxley Family
         "fhlskl2", // The Luxley Family
         "jc_ske01", // The Vault
@@ -2232,13 +2398,14 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 9,
         bonusHp: 8, // +2 to +12
         strength: 18,
+        exceptionalStrength: 40,
         dexterity: 14,
         constitution: 16,
         intelligence: 16,
         wisdom: 12,
         charisma: 4,
         ac: 2,
-        apr: 1,
+        apr: 1, // for some reason, they have 2 in vanilla, maybe to emulate apr of a lvl 9 fighter
         xpv: 4000,
         alignment: "NEUTRAL",
         morale: 15,
@@ -2249,6 +2416,12 @@ class UndeadFamily extends CreatureFamily<Undead> {
         size: "Medium",
         movement: 6,
         immunities: ["undead"],
+        effects: {
+          remove: [EffectTypeEnum.Thac0Bonus],
+        },
+        items: {
+          remove: ["ring95", "ring99", "immune1", "helmnoan", "undtype"],
+        },
       },
     });
     warrior.addTrait({
@@ -2266,13 +2439,96 @@ class UndeadFamily extends CreatureFamily<Undead> {
           value: 3,
         },
       ],
-      // The mere sight of a skeleton warrior causes any creature with fewer than 5 Hit Dice to flee in panic.
     });
+    // The mere sight of a skeleton warrior causes any creature with fewer than 5 Hit Dice to flee in panic.
     warrior.createSkeletonWarriorFearAura();
     warrior.setBehavior({
       restHeal: true,
       abilities: [this.ability(Ids.SkeletonWarriorFearAura)],
     });
+    warrior.setAttack({
+      ranged: true,
+    });
+    warrior.setAdjustments([
+      {
+        files: ["SKELWASU"],
+        summon: true,
+      },
+      {
+        files: ["C0DESUM1", "SKELSU01"],
+        summon: true,
+        data: {
+          level1: 3,
+          strength: 16,
+          exceptionalStrength: 0,
+          ac: 6,
+        },
+      },
+      {
+        files: ["C0DESUM2", "SKELSU07"],
+        summon: true,
+        data: {
+          level1: 5,
+          strength: 17,
+          exceptionalStrength: 0,
+          ac: 4,
+        },
+      },
+      {
+        files: ["C0DESUM3", "SKELSU11"],
+        summon: true,
+        data: {
+          level1: 7,
+          strength: 18,
+          exceptionalStrength: 0,
+          ac: 3,
+        },
+      },
+      {
+        files: ["BDUNSEN"],
+        data: {
+          level1: 7,
+          xpv: 3000,
+        },
+      },
+      {
+        files: ["BDSKGR01", "BDTEAM62"],
+        data: {
+          level1: 7,
+          xpv: 3000,
+        },
+      },
+      {
+        files: ["C0DESUM4"],
+        summon: true,
+        data: {
+          level1: 9,
+          ea: "CONTROLLED",
+        },
+      },
+      {
+        files: ["SKELWA03"],
+        data: {
+          level1: 13,
+        },
+      },
+      {
+        files: ["C0DESUM5"],
+        summon: true,
+        data: {
+          level1: 15,
+          strength: 19,
+          exceptionalStrength: 0,
+        },
+      },
+      {
+        files: ["ICHARY"],
+        data: {
+          level1: 15,
+          apr: 3,
+        },
+      },
+    ]);
     return warrior;
   }
 
@@ -2284,53 +2540,185 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Spectre,
       name: "monster.undead.name.spectre",
       files: [
-        "C#Q04009", // Wraith Spider
-        "SPIDWR", // Wraith Spider
-        "SPIDWR01", // Wraith Spider
-        "TTSPID", // Wraith Spider
-        // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
+        "BDSOTUK", // Sotuk
+        "BDSPIRIT", // Restless Spirit
+        "BDWORIS", // Woris
+        "BSPLSPRT", // Drowned Spirit
+        "DURLAGT", // Durlag Trollkiller
+        "ISLA", // Islanne
+        "L#AMBAM", // Amber Flower
+        "L#BASTRE", // Tree of Shades
+        "L#FWMMER", // Long Gone Merchant
+        "L#HIGBO", // Bookshelf
+        "L#ORM1", // Ormyrr Corpse
+        "L#ORM2", // Ormyrr Corpse
+        "L#ORMETT", // Ettin - Revenant
+        "L#ULCC1", // Tomasz
+        "L#ULCC2", // Monarah
+        "L#ULCC3", // Ynak
+        "L#ULCC4", // Peepuu
+        "L#ULCCH", // Czaya
+        "L#ULGEN1", // Captain Gloghaff Mintshow
+        "L#ULGGH", // Moontia
+        "NTBKNIGH", // Knight from the Grave
+        "NTGGHOT1", // General Ghotal
+        "NTGGHOTA", // General Ghotal
+        "SLAYSH01", // Slayer Shadow
+        "X#GARWYL", // Myr'Cutio
       ],
       data: {
-        level1: 3,
-        bonusHp: 2,
-        strength: 17,
-        dexterity: 15,
-        constitution: 9,
-        intelligence: 10,
+        level1: 7,
+        bonusHp: 3,
+        strength: 1,
+        dexterity: 14,
+        constitution: 11,
+        intelligence: 14,
         wisdom: 10,
-        charisma: 1,
-        ac: 5,
+        charisma: 11,
+        ac: 2,
         apr: 1,
-        xpv: 1400,
+        xpv: 3000,
         alignment: "LAWFUL_EVIL",
         morale: 15,
-        general: "MONSTER",
-        race: "SPIDER",
-        class: "SPIDER_WRAITH",
+        general: "UNDEAD",
+        race: "SPECTRE",
+        class: "SPECTRE",
         gender: "NIETHER",
         size: "Medium",
-        movement: 12,
+        movement: 15, // flying 30
+        immunities: ["undead"],
       },
     });
     spectre.addTrait({
-      immunities: ["cold", "nonSilverNonMagicalWeapons"],
-      effects: [
-        {
-          opcode: EffectTypeEnum.MagicResistanceModifier,
-          value: 15,
-          type: EffectStatisticModifierEnum.Set,
-        },
-      ],
+      immunities: ["cold", "incorporeal"],
+    });
+    spectre.createSpecterTouch();
+    spectre.createClaws({
+      diceThrown: 1,
+      diceSize: 8,
+      castSpell: {
+        spell: this.spell(Ids.SpecterTouch).file,
+      },
     });
     spectre.setBehavior({
-      dialog: ["C#Q04009", "ttspid"],
+      dialog: [],
     });
     return spectre;
   }
+
+  /**
+   * Ghost
+   */
+  private ghost() {
+    const ghost = this.create({
+      monster: MonsterEnum.Ghost,
+      name: "monster.undead.name.ghost",
+      files: [
+        "BDGHOSTM", // Ghost
+        "daitel",
+        "BDLITLA", // Litla
+      ],
+      data: {
+        level1: 10,
+        strength: 7,
+        dexterity: 13,
+        constitution: 10,
+        intelligence: 14,
+        wisdom: 12,
+        charisma: 17,
+        ac: 0,
+        apr: 1,
+        xpv: 7000,
+        alignment: "LAWFUL_EVIL",
+        morale: 15,
+        general: "UNDEAD",
+        race: "SPECTRE",
+        class: "SPECTRE",
+        gender: "NIETHER",
+        size: "Medium",
+        movement: 9,
+        immunities: ["undead"],
+        items: {
+          remove: [
+            "bdringgh",
+            "bdghost",
+            "immune1",
+            "ring94",
+            "ghost",
+            "helm15",
+          ],
+        },
+        script: {
+          remove: ["bdghost", "shoutdl2"],
+        },
+      },
+    });
+    ghost.addTrait({
+      immunities: ["cold", "incorporeal"],
+    });
+    ghost.createGhostFearAura();
+    ghost.createGhostTouch();
+    ghost.createClaws({
+      diceThrown: 0,
+      diceSize: 0,
+      castSpell: {
+        spell: this.spell(Ids.GhostTouch).file,
+      },
+    });
+    ghost.setBehavior({
+      dialog: ["daitel"],
+      abilities: [
+        this.ability(Ids.GhostFearAura),
+        this.preset(SPELLS.Vocalize.file),
+        this.preset(SPELLS.ShadowDoor.file),
+        this.preset(SPELLS.ProtectionFromMagicalWeapons.file),
+        this.preset(SPELLS.Stoneskin.file),
+        this.preset(SPELLS.MinorGlobeOfInvulnerability.file),
+        this.preset(SPELLS.ProtectionFromMissiles.file),
+        this.preset(SPELLS.MinorSpellDeflection.file),
+        this.preset(SPELLS.MirrorImages.file),
+        this.preset(SPELLS.Shield.file),
+        this.preset(SPELLS.FireShield.file),
+        this.preset(SPELLS.Breach.file),
+        this.preset(SPELLS.SpellThrust.file),
+        this.preset(SPELLS.DispelMagic.file),
+        this.preset(SPELLS.RemoveMagic.file),
+        this.preset(SPELLS.ChainLightning.file),
+        this.preset(SPELLS.Cloudkill.file),
+        this.preset(SPELLS.Fireburst.file),
+        this.preset(SPELLS.ConeOfCold.file),
+        this.preset(SPELLS.GreaterMalison.file),
+        this.preset(SPELLS.Confusion.file),
+        this.preset(SPELLS.TeleportField.file),
+        this.preset(SPELLS.VitriolicSphere.file),
+        this.preset(SPELLS.MordenkainenForceMissiles.file),
+        this.preset(SPELLS.Slow.file),
+        this.preset(SPELLS.FlameArrow.file),
+        this.preset(SPELLS.LightningBolt.file),
+        this.preset(SPELLS.HoldPersonWizard.file),
+        this.preset(SPELLS.Combust.file),
+        this.preset(SPELLS.MelfAcidArrow.file),
+        this.preset(SPELLS.AgannazarScorcher.file),
+        this.preset(SPELLS.ObscuringMist.file),
+        this.preset(SPELLS.Spook.file),
+        this.preset(SPELLS.MagicMissiles.file),
+        this.preset(SPELLS.BurningHands.file),
+      ],
+      spellcaster: {
+        minorSequencer: {
+          presets: [SPELLS.Web.file, SPELLS.Combust.file],
+        },
+      },
+    });
+    ghost.setAdjustments([
+      {
+        files: ["BDLITLA"],
+        data: {},
+      },
+    ]);
+    return ghost;
+  }
+
   /**
    * Wight
    */
@@ -2440,15 +2828,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
       monster: MonsterEnum.Zombie,
       name: "monster.undead.name.zombie",
       files: [
-        "C#Q04009", // Wraith Spider
-        "SPIDWR", // Wraith Spider
-        "SPIDWR01", // Wraith Spider
-        "TTSPID", // Wraith Spider
-        // "D5DRSSP1", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP2", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP3", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP4", //TODO: Spirit Spider (Faiths and Powers)
-        // "D5DRSSP5", //TODO: Spirit Spider (Faiths and Powers)
+        "C#Q06002", // Zombie
       ],
       data: {
         level1: 3,
@@ -2596,6 +2976,61 @@ class UndeadFamily extends CreatureFamily<Undead> {
       dialog: ["C#Q04009", "ttspid"],
     });
     return wraith;
+  }
+
+  /**
+   * Death Shade
+   */
+  private deathShade() {
+    const shade = this.create({
+      monster: MonsterEnum.DeathShade,
+      name: "monster.undead.name.deathShade",
+      files: [
+        "DECK622", // Death Shade
+      ],
+      data: {
+        level1: 4,
+        strength: 12,
+        dexterity: 13,
+        constitution: 15,
+        intelligence: 7,
+        wisdom: 10,
+        charisma: 14,
+        ac: 7,
+        apr: 1,
+        xpv: 975,
+        alignment: "NEUTRAL_EVIL",
+        morale: 12,
+        general: "UNDEAD",
+        race: "SKELETON",
+        class: "SKELETON",
+        gender: "NIETHER",
+        size: "Medium",
+        movement: 18,
+        immunities: ["undead"],
+        items: {
+          remove: ["ring95", "bdbonbat"],
+        },
+      },
+    });
+    shade.addTrait({
+      immunities: ["skeletal"],
+    });
+    shade.createBonebatTouch();
+    shade.createJaws(
+      2,
+      4,
+      [
+        {
+          spell: this.spell(Ids.BonebatTouch).file,
+        },
+      ],
+      "WEAPON1",
+    );
+    shade.setBehavior({
+      restHeal: true,
+    });
+    return shade;
   }
 }
 

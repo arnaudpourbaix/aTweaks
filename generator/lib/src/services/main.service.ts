@@ -12,6 +12,7 @@ import weiduFamilyService from "./weidu/weidu-family.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
 import { ABILITY_PRESETS } from "../../config/ability-presets";
 import { SPELLS } from "../../config/spell-names";
+import utils from "./utils/utils.service";
 
 class MainService {
   generateCreatures() {
@@ -91,6 +92,25 @@ class MainService {
       } else {
         preset.ability.spell.id = spell.id;
       }
+    }
+  }
+
+  checkSpells() {
+    const files: string[] = [];
+    const identifiers: string[] = [];
+    for (const key of utils.objectKeys(SPELLS)) {
+      const spell = SPELLS[key];
+      if (files.includes(spell.file)) {
+        throw new Error(`Spell file ${spell.file} is declared multiple times.`);
+      }
+      files.push(spell.file);
+      if (!("id" in spell)) continue;
+      if (identifiers.includes(spell.id)) {
+        throw new Error(
+          `Spell identifier ${spell.id} is declared multiple times.`,
+        );
+      }
+      identifiers.push(spell.id);
     }
   }
 }

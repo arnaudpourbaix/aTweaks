@@ -94,7 +94,7 @@ class Wolf extends Creature {
               opcode: EffectTypeEnum.CurrentHPbonus,
               target: EffectTargetEnum.Self,
               timing: EffectTimingEnum.InstantPermanentUntilDeath,
-              value: 8 + creatureService.getStrengthDamageBonus(this.data),
+              value: 8 + creatureService.getStrengthBonus(this.data).damage,
               type: EffectModifierTypeEnum.Increment,
             },
             {
@@ -498,7 +498,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
         timing: EffectTimingEnum.InstantWhileEquipped,
         target: EffectTargetEnum.Self,
         resource: this.spell(Ids.DreadWolfDownState).file,
-      })
+      }),
     );
     dread.createDreadWolfDisease();
     dread.createJaws({

@@ -2,7 +2,7 @@
  *                        aVENGER's Tweak Pack (aTweaks)
  *                              -=by aVENGER=-
  *                 http://www.spellholdstudios.net/ie/atweaks
- *************************************************************************/
+ ************************************************************************ */
 BACKUP ~weidu_external/backup/aTweaks~
 AUTHOR "Wisp, shsforums.net"
 VERSION ~v5.0~
@@ -15,63 +15,34 @@ END
 // README ~%MOD_FOLDER%/doc/readme_atweaks.html~
 // ASK_EVERY_COMPONENT
 
-LANGUAGE ~English~ ~english~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                             ~%MOD_FOLDER%/tra/english/game.tra~
-                             ~%MOD_FOLDER%/tra/english/generated.tra~
+LANGUAGE ~English~ ~english~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~
 
-LANGUAGE ~Francais~ ~french~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                             ~%MOD_FOLDER%/tra/english/game.tra~
-                             ~%MOD_FOLDER%/tra/english/generated.tra~
-                             ~%MOD_FOLDER%/tra/french/setup-%WEIDU_OS%.tra~
-                             ~%MOD_FOLDER%/tra/french/game.tra~
-                             ~%MOD_FOLDER%/tra/french/generated.tra~
+LANGUAGE ~Francais~ ~french~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~ ~%MOD_FOLDER%/tra/french/setup-%WEIDU_OS%.tra~ ~%MOD_FOLDER%/tra/french/game.tra~ ~%MOD_FOLDER%/tra/french/generated.tra~
 
-LANGUAGE ~Espanol~ ~spanish~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                             ~%MOD_FOLDER%/tra/english/game.tra~
-                             ~%MOD_FOLDER%/tra/english/generated.tra~
-                             ~%MOD_FOLDER%/tra/spanish/setup-%WEIDU_OS%.tra~
-                             ~%MOD_FOLDER%/tra/spanish/game.tra~
-                             ~%MOD_FOLDER%/tra/spanish/generated.tra~
+LANGUAGE ~Espanol~ ~spanish~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~ ~%MOD_FOLDER%/tra/spanish/setup-%WEIDU_OS%.tra~ ~%MOD_FOLDER%/tra/spanish/game.tra~ ~%MOD_FOLDER%/tra/spanish/generated.tra~
 
-LANGUAGE ~Deutsch~ ~german~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                            ~%MOD_FOLDER%/tra/english/game.tra~
-                            ~%MOD_FOLDER%/tra/english/generated.tra~
-                            ~%MOD_FOLDER%/tra/german/setup-%WEIDU_OS%.tra~
-                            ~%MOD_FOLDER%/tra/german/game.tra~
-                            ~%MOD_FOLDER%/tra/german/generated.tra~
+LANGUAGE ~Deutsch~ ~german~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~ ~%MOD_FOLDER%/tra/german/setup-%WEIDU_OS%.tra~ ~%MOD_FOLDER%/tra/german/game.tra~ ~%MOD_FOLDER%/tra/german/generated.tra~
 
-LANGUAGE ~Italian~ ~italian~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                             ~%MOD_FOLDER%/tra/english/game.tra~
-                             ~%MOD_FOLDER%/tra/english/generated.tra~
-                             ~%MOD_FOLDER%/tra/italian/setup-%WEIDU_OS%.tra~
-                             ~%MOD_FOLDER%/tra/italian/game.tra~
-                             ~%MOD_FOLDER%/tra/italian/generated.tra~
+LANGUAGE ~Italian~ ~italian~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~ ~%MOD_FOLDER%/tra/italian/setup-%WEIDU_OS%.tra~ ~%MOD_FOLDER%/tra/italian/game.tra~ ~%MOD_FOLDER%/tra/italian/generated.tra~
 
-LANGUAGE ~Russian~ ~russian~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                             ~%MOD_FOLDER%/tra/english/game.tra~
-                             ~%MOD_FOLDER%/tra/russian/game.tra~
-                             ~%MOD_FOLDER%/tra/russian/generated.tra~
+LANGUAGE ~Russian~ ~russian~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/russian/game.tra~ ~%MOD_FOLDER%/tra/russian/generated.tra~
 
-LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~
-                           ~%MOD_FOLDER%/tra/english/game.tra~
-                           ~%MOD_FOLDER%/tra/english/generated.tra~
-                           ~%MOD_FOLDER%/tra/polish/setup.tra~
-                           ~%MOD_FOLDER%/tra/polish/game.tra~
-                           ~%MOD_FOLDER%/tra/polish/generated.tra~
-
+LANGUAGE ~Polish~ ~polish~ ~%MOD_FOLDER%/tra/english/setup.tra~ ~%MOD_FOLDER%/tra/english/game.tra~ ~%MOD_FOLDER%/tra/english/generated.tra~ ~%MOD_FOLDER%/tra/polish/setup.tra~ ~%MOD_FOLDER%/tra/polish/game.tra~ ~%MOD_FOLDER%/tra/polish/generated.tra~
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Testing and Extracting
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-BEGIN ~Make creature List~ DESIGNATED 9990
-    INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
-    LAM makeCreatureList
+// BEGIN ~Make creature List~
+// DESIGNATED 9990
+// INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
+// LAM makeCreatureList
 
 // BEGIN ~Checking spells~ DESIGNATED 9991
-//     INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
-//     LAM checkSpells
+// INCLUDE "%MOD_FOLDER%/lib/common/dev_tools.tpa"
+// LAM checkSpells
 
-BEGIN ~Monsters test~ DESIGNATED 9999
+BEGIN ~Monsters test~
+DESIGNATED 9999
 INCLUDE "%MOD_FOLDER%/lib/pnp-monster/common/common.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ankheg/main.tpa"
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/basilisk/main.tpa"
@@ -215,7 +186,7 @@ INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/main.tpa"
 // REQUIRE_COMPONENT ~%MOD_FOLDER%/atweaks.tp2~ 5000 @5001
 // INCLUDE "%MOD_FOLDER%/lib/pnp-monster/undead/main.tpa"
 
-/*
+/* 
 // PnP Fiends
 BEGIN @152 SUBCOMPONENT @150 DESIGNATED 4010 // PnP Fiends, mod-added fiends are also affected
 // GROUP @6

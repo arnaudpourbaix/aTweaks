@@ -2,6 +2,7 @@ import { CreatureSize } from "../../../config/creatures";
 import weiduUtils from "../../services/utils/weidu.utils";
 import { ImmunityName } from "../final/immunity";
 import { AlignIdentifier } from "../ids/align";
+import { AllegianceIdentifier } from "../ids/allegiance";
 import { AnimationIdentifiers } from "../ids/animate";
 import { ClassIdentifier } from "../ids/class";
 import { GenderIdentifier } from "../ids/gender";
@@ -52,6 +53,7 @@ export interface CreatureData {
   class?: ClassIdentifier;
   kit?: KitIdentifier;
   gender?: GenderIdentifier;
+  ea?: AllegianceIdentifier;
   size?: CreatureSize;
   animation?: AnimationIdentifiers;
   modAnimation?: string;
@@ -424,6 +426,11 @@ export const CREATURE_DATA_FIELDS: {
     key: "morale",
     value: (data) => weiduUtils.getIntegerValue(data.morale),
     fields: [{ index: 0x23f, size: 1 }],
+  },
+  {
+    key: "ea",
+    value: (data) => weiduUtils.getIdsValue("ea", data.ea),
+    fields: [{ index: 0x270, size: 1 }],
   },
   {
     key: "general",

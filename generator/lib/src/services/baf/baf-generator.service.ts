@@ -18,6 +18,7 @@ import { GENDER_IDENTIFIER } from "../../model/ids/gender";
 import { ALIGN_IDENTIFIERS } from "../../model/ids/align";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
+import weiduCreatureService from "../weidu/weidu-creature.service";
 
 class BafGeneratorService {
   generate(creature: Creature): void {
@@ -28,19 +29,34 @@ class BafGeneratorService {
       .map((statement) => this.generateStatement(statement))
       .join("");
     const content = `// ${translationService.from(
-      creature.name
+      creature.name,
     )}${CR}${CR}${code}`;
     const folder = utils.getFamilyFolder(creature.family);
-    utils.writeFile(path.join(folder, `ja#m${creature.id}.baf`), content);
+    utils.writeFile(
+      path.join(
+        folder,
+        weiduCreatureService.getScriptName(creature, { ext: true }),
+      ),
+      content,
+    );
     if (creature.adjustments.some((a) => !!a.summon)) {
       const statements: Statements = statementService.buildStatements(
         creature,
-        { summon: true }
+        { summon: true },
       );
       const content = statements
         .map((statement) => this.generateStatement(statement))
         .join("");
-      utils.writeFile(path.join(folder, `ja#m${creature.id}su.baf`), content);
+      utils.writeFile(
+        path.join(
+          folder,
+          weiduCreatureService.getScriptName(creature, {
+            ext: true,
+            summon: true,
+          }),
+        ),
+        content,
+      );
     }
   }
 
@@ -66,8 +82,8 @@ class BafGeneratorService {
         if (t.triggers.length < 2)
           throw new Error(
             `OR trigger should have at least 2 conditions: ${JSON.stringify(
-              t.triggers
-            )}`
+              t.triggers,
+            )}`,
           );
         lines.push(`${TAB}OR(${t.triggers.length})`);
         lines.push(...this.generateTriggers(t.triggers, true));
@@ -87,18 +103,18 @@ class BafGeneratorService {
         `Not enough parameters for trigger\n ${JSON.stringify(
           trigger,
           null,
-          4
+          4,
         )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(
           paramsRef,
           null,
-          4
-        )})`
+          4,
+        )})`,
       );
     for (const [index, p] of triggerParams.entries()) {
       const paramRef = paramsRef[index];
       if (!paramRef)
         throw new Error(
-          `Unexpected parameter ${p} for trigger ${trigger.name}`
+          `Unexpected parameter ${p} for trigger ${trigger.name}`,
         );
       params.push(this.getParamValue(p, paramRef));
     }
@@ -124,12 +140,12 @@ class BafGeneratorService {
         `Not enough parameters for action\n ${JSON.stringify(
           action,
           null,
-          4
+          4,
         )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(
           paramsRef,
           null,
-          4
-        )})`
+          4,
+        )})`,
       );
     for (const [index, p] of actionParams.entries()) {
       const paramRef = paramsRef[index];
@@ -143,7 +159,7 @@ class BafGeneratorService {
 
   getParamValue(
     value: string | number,
-    param: GenericScriptParameterData
+    param: GenericScriptParameterData,
   ): string {
     const val = typeof value === "string" ? value : value.toString();
     if (param.isNumber) return val;
@@ -153,11 +169,11 @@ class BafGeneratorService {
 
   getObjectParamValue(
     value: string,
-    param: GenericScriptParameterData
+    param: GenericScriptParameterData,
   ): string {
     if (value.startsWith("[") || value.endsWith(")")) return value;
     const startsWithObject = OBJECT_IDENTIFIERS.some((v) =>
-      value.startsWith(v)
+      value.startsWith(v),
     );
     const objectType = this.getObjectType(value);
     if (!startsWithObject && objectType) return objectType;

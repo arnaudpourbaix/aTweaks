@@ -188,6 +188,23 @@ export const SAVING_THROWS = {
   ],
 };
 
+export const StrengthTable = [
+  { str: 17, hit: 1, damage: 1 },
+  { str: 18, strEx: [0, 0], hit: 1, damage: 2 },
+  { str: 18, strEx: [1, 50], hit: 1, damage: 3 },
+  { str: 18, strEx: [51, 75], hit: 2, damage: 3 },
+  { str: 18, strEx: [76, 90], hit: 2, damage: 4 },
+  { str: 18, strEx: [91, 99], hit: 2, damage: 5 },
+  { str: 18, strEx: [100, 100], hit: 3, damage: 6 },
+  { str: 19, hit: 3, damage: 7 },
+  { str: 20, hit: 3, damage: 8 },
+  { str: 21, hit: 4, damage: 9 },
+  { str: 22, hit: 4, damage: 10 },
+  { str: 23, hit: 5, damage: 11 },
+  { str: 24, hit: 6, damage: 12 },
+  { str: 25, hit: 7, damage: 14 },
+];
+
 export const Durations = {
   // 1 turn	= 10 rounds
   // 1 game hour	= 5 turns

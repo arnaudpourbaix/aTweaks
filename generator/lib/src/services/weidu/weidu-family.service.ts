@@ -32,9 +32,9 @@ class WeiduFamilyService extends AbstractWeiduService {
     } else {
       fs.appendFileSync(
         file,
-        `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(family)}/${
-          creature.id
-        }.tpa" // ${translationService.from(creature.name)}${CR}`,
+        `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(family)}/${creature.id.toString(
+          16,
+        )}.tpa" // ${translationService.from(creature.name)}${CR}`,
       );
     }
   }

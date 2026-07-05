@@ -304,6 +304,7 @@ class BearFamily extends CreatureFamily<Bear> {
         "NTBEARPO",
         "SPIRBEAR",
         "BDGHBRSU", // Ghost Polar Bear
+        "BDGHOSTF", // Ghost Polar Bear
         "KALDRAN",
         // "SPBEAR1", //TODO: Spirit Bear
         // "SPBEAR2", //TODO: Spirit Bear
@@ -333,7 +334,7 @@ class BearFamily extends CreatureFamily<Bear> {
         size: "Huge",
         movement: 12,
         items: {
-          remove: ["B1-12", "BEARPOSU", "KALDW1"],
+          remove: ["B1-12", "B1-12M3", "BEARPOSU", "KALDW1"],
         },
         script: {
           remove: ["CBEAR", "BEAR", "kaldran"],
@@ -349,7 +350,8 @@ class BearFamily extends CreatureFamily<Bear> {
       customCodes: [this.turningHostile, this.kaldranInit],
     });
     polar.setAdjustments([
-      { files: ["BEARPOSU", "BDGHBRSU"], summon: true },
+      { files: ["BEARPOSU", "BDGHBRSU", "BDGHOSTF"], summon: true },
+      { files: ["BDGHOSTF"], data: { immunities: ["undead", "incorporeal"] } },
       { files: ["BDGHBRSU"], data: { level1: 9 } },
       {
         files: ["KALDRAN"],

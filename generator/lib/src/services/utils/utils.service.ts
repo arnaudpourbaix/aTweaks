@@ -23,14 +23,14 @@ class UtilsService {
 
   getKeyByValue(
     object: Record<string, unknown>,
-    value: unknown
+    value: unknown,
   ): string | undefined {
     return Object.keys(object).find((key) => object[key] === value);
   }
 
   replaceParamTokens(
     params: (string | number)[],
-    tokens: { key: string; value: string }[]
+    tokens: { key: string; value: string }[],
   ): void {
     for (let i = 0; i < params.length; i++) {
       const p = params[i];
@@ -43,7 +43,7 @@ class UtilsService {
 
   replaceResponseTokens(
     responses: Response[],
-    tokens: { key: string; value: string }[]
+    tokens: { key: string; value: string }[],
   ): Response[] {
     return responses.map((r) => ({
       ...r,
@@ -53,7 +53,7 @@ class UtilsService {
 
   replaceActionTokens(
     actions: Actions.Action[],
-    tokens: { key: string; value: string }[]
+    tokens: { key: string; value: string }[],
   ): Actions.Action[] {
     const results = structuredClone(actions);
     for (const action of results) {
@@ -64,12 +64,12 @@ class UtilsService {
 
   replaceTriggerTokens(
     triggers: Triggers.Trigger[],
-    tokens: { key: string; value: string }[]
+    tokens: { key: string; value: string }[],
   ): Triggers.Trigger[] {
     const results = structuredClone(triggers);
     for (const trigger of results) {
       if ("triggers" in trigger) {
-        this.replaceTriggerTokens(trigger.triggers, tokens);
+        trigger.triggers = this.replaceTriggerTokens(trigger.triggers, tokens);
       } else if ("params" in trigger) {
         this.replaceParamTokens(trigger.params, tokens);
       }
@@ -125,14 +125,14 @@ class UtilsService {
 
   hasImmunity(
     immunities: (ImmunityName | string)[],
-    name: ImmunityName | string
+    name: ImmunityName | string,
   ): boolean {
     let found = false;
     for (let i = 0; i < immunities.length && !found; i++) {
       if (immunities[i] === name) found = true;
       else {
         const immunity = State.immunities.find(
-          (im) => im.name === immunities[i]
+          (im) => im.name === immunities[i],
         );
         if (!immunity) throw new Error(`Immunity ${immunities[i]} not found !`);
         found = this.hasImmunity(immunity.immunities, name);
@@ -247,7 +247,7 @@ class UtilsService {
   }
 
   getSpellInfosByFilename(
-    filename: string
+    filename: string,
   ): { type: MemorizedSpellType; level: number } | null {
     const name = filename.toUpperCase();
     let result: { type: MemorizedSpellType; level: number } | null = null;

@@ -7,6 +7,7 @@ export type TargetListName =
   | "PCsPreferringStrong"
   | "PCsPreferringWeak"
   | "PCSpellcasters"
+  | "PCMages"
   | "FarthestEnemies"
   | "CloseEnemies"
   | "Animals";

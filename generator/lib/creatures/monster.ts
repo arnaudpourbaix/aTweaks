@@ -17,6 +17,7 @@ export enum MonsterFamilyEnum {
   Ettercap = 16,
   Wyvern = 17,
   Undead = 18,
+  Ettin = 19,
 }
 
 export enum MonsterEnum {
@@ -111,4 +112,7 @@ export enum MonsterEnum {
   GreaterShadow = 89,
   Baneguard = 90,
   Bonebat = 91,
+  DeathShade = 92,
+  Ghost = 93,
+  Ettin = 94,
 }

@@ -5,15 +5,12 @@ DEFINE_ACTION_FUNCTION create_spell_callWoodlandBeeings BEGIN
 	COPY_EXISTING ~SPPR410.SPL~  ~override/SPPR410.SPL~
 		LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END
 	COPY_EXISTING ~SPPR410.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10350)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10361)
 		WRITE_SHORT 0x1c 4
 		WRITE_LONG 0x34 1
 		WRITE_ASCII 0x3a ~SPPR410C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10351)
-		LPF GET_2DA_ENTRY_OF INT_VAR col_match=0 STR_VAR file=~splprot~ entry_match=~NOT_OUTDOOR_CHECK~ RET row col END
-		PATCH_IF row != "-1" BEGIN
-			LPF ADD_EFFECT INT_VAR opcode=324 target=1 global=1 power=1 parameter2=row duration=1 probability1=100 STR_VAR resource="SPPR410" END
-		END
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10362)
+		LPF ADD_EFFECT INT_VAR opcode=324 target=1 global=1 power=1 parameter2=NOT_OUTDOOR_CHECK duration=1 probability1=100 STR_VAR resource="SPPR410" END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=25 required_level=7 STR_VAR icon="SPPR410B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=55 STR_VAR resource="ja#dryad" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=1 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 resist_dispel=2 duration=120 probability1=85 probability2=55 STR_VAR resource="ja#hama" END
@@ -40,7 +37,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 	CREATE SPL "SPWI105"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI105.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10352)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10363)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 1024
 		WRITE_SHORT 0x1c 1
@@ -50,7 +47,7 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		WRITE_BYTE 0x27 11
 		WRITE_LONG 0x34 1
 		WRITE_ASCII 0x3a ~SPWI105C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10353)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10364)
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=1 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -62,18 +59,18 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=1 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=2 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=2 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=2 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=2 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=2 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=2 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=4 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=2 dicenumber=3 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=4 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=1 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=4 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=2 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -85,18 +82,18 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=2 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=2 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=3 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=3 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=3 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=3 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=3 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=3 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=5 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=2 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=2 special=14 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=3 dicenumber=4 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=5 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=2 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=5 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=3 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -108,18 +105,18 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=3 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=3 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=4 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=4 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=4 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=6 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=3 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=3 special=14 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=4 dicenumber=5 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=6 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=3 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=6 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=4 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -131,18 +128,18 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=4 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=4 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=5 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=5 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=5 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=7 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=4 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=4 special=14 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=5 dicenumber=6 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=7 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=4 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=7 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=5 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -154,18 +151,18 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=5 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=5 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=6 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=6 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=6 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=8 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=5 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=8 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=5 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=8 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=6 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -177,19 +174,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=6 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=6 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=7 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=7 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=7 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=9 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=6 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=6 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=7 dicenumber=8 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=9 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=6 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=9 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=7 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -201,19 +198,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=7 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=7 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=8 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=8 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=8 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=10 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=7 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=7 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=8 dicenumber=9 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=10 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=7 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=10 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=8 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -225,19 +222,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=8 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=8 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=9 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=9 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=9 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=11 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=8 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=8 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=9 dicenumber=10 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=11 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=8 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=11 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=9 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -249,19 +246,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=9 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=9 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=10 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=10 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=10 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=12 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=9 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=9 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=10 dicenumber=11 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=12 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=9 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=12 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=10 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -273,19 +270,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=10 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=10 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=11 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=11 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=11 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=13 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=10 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=10 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=11 dicenumber=12 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=13 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=10 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=13 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=11 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -297,19 +294,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=11 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=11 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=12 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=12 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=12 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=14 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=11 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=11 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=12 dicenumber=13 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=14 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=11 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=14 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=12 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -321,19 +318,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=12 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=12 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=13 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=13 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=13 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=15 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=12 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=12 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=13 dicenumber=14 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=15 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=12 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=15 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=13 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -345,19 +342,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=13 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=13 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=14 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=14 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=14 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=16 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=13 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=13 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=14 dicenumber=15 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=16 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=13 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=16 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=14 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -369,19 +366,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=14 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=14 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=15 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=15 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=15 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=17 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=14 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=14 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=15 dicenumber=16 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=17 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=14 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=17 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=15 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -393,19 +390,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=15 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=15 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=16 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=16 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=16 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=18 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=15 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=15 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=16 dicenumber=17 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=18 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=15 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=18 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=16 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -417,19 +414,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=16 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=16 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=17 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=17 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=17 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=19 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=16 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=16 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=17 dicenumber=18 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=19 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=16 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=19 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=17 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -441,19 +438,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=17 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=17 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=18 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=18 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=18 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=20 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=17 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=17 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=18 dicenumber=19 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=20 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=17 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=20 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=18 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -465,19 +462,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=18 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=18 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=19 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=19 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=19 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=21 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=18 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=18 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=19 dicenumber=20 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=21 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=18 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=21 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=19 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -489,19 +486,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=19 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=19 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=20 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=20 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=20 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=22 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=22 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=22 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=22 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=19 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=19 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=20 dicenumber=21 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=22 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=19 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=22 savingthrow=1 END
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=30 required_level=20 projectile=(IDS_OF_SYMBOL (~projectl~ ~CSPRAY~)) + 1 STR_VAR icon="SPWI105B" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~ELF~) parameter2=4 duration=1 probability1=90 STR_VAR resource="SPWI105" END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HALF_ELF~) parameter2=4 duration=1 probability1=30 STR_VAR resource="SPWI105" END
@@ -513,19 +510,19 @@ DEFINE_ACTION_FUNCTION create_spell_colorSpray BEGIN
 		LPF ADD_EFFECT INT_VAR header=20 opcode=7 target=2 power=1 parameter1=34 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=7 target=2 power=1 parameter1=35 parameter2=2 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
 		LPF ADD_EFFECT INT_VAR header=20 opcode=7 target=2 power=1 parameter1=34 parameter2=1 resist_dispel=1 duration=6 probability1=100 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 special=14 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=6 savingthrow=1 special=14 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicenumber=21 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=21 savingthrow=1 STR_VAR resource="SPH1HI01" END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicenumber=21 savingthrow=1 STR_VAR resource="SPHLHI02" END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicenumber=23 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicenumber=23 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicenumber=23 savingthrow=1 STR_VAR resource="SPCONFUS" END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicenumber=23 savingthrow=1 END
-		LPF ADD_EFFECT INT_VAR header=20 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicenumber=23 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicenumber=5 special=14 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=39 target=2 power=1 resist_dispel=1 duration=24 probability1=100 dicesize=6 dicenumber=20 savingthrow=1 special=14 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=74 target=2 power=1 resist_dispel=1 duration=12 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=142 target=2 power=1 parameter2=8 resist_dispel=1 duration=12 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=50 target=2 power=1 parameter1=2139062016 parameter2=1310720 resist_dispel=1 duration=1 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=139 target=2 power=1 parameter1=14674 timing=1 resist_dispel=1 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 STR_VAR resource="SPH1HI01" END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=3 probability1=100 dicesize=21 dicenumber=22 savingthrow=1 STR_VAR resource="SPHLHI02" END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=128 target=2 power=1 resist_dispel=1 duration=6 probability1=100 dicesize=23 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=142 target=2 power=1 parameter2=3 resist_dispel=1 duration=6 probability1=100 dicesize=23 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=215 target=2 power=1 parameter2=1 resist_dispel=1 duration=6 probability1=100 dicesize=23 savingthrow=1 STR_VAR resource="SPCONFUS" END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=50 target=2 power=1 parameter1=12058368 parameter2="-6291456" resist_dispel=1 duration=1 probability1=100 dicesize=23 savingthrow=1 END
+		LPF ADD_EFFECT INT_VAR header=20 opcode=139 target=2 power=1 parameter1=14782 timing=1 resist_dispel=1 probability1=100 dicesize=23 savingthrow=1 END
 END
 
 DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
@@ -533,7 +530,7 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 	CREATE SPL "SPWI402"
 		WRITE_LONG 0x64 0x72
 	COPY_EXISTING ~SPWI402.SPL~  ~override~
-		WRITE_LONG 0x8 RESOLVE_STR_REF(@10354)
+		WRITE_LONG 0x8 RESOLVE_STR_REF(@10365)
 		WRITE_ASCII 0x10 ~CAS_M08~ #8
 		WRITE_LONG 0x18 2048
 		WRITE_SHORT 0x1c 1
@@ -543,7 +540,7 @@ DEFINE_ACTION_FUNCTION create_spell_dimensionDoor BEGIN
 		WRITE_BYTE 0x27 13
 		WRITE_LONG 0x34 4
 		WRITE_ASCII 0x3a ~SPWI402C~ #8
-		WRITE_LONG 0x50 RESOLVE_STR_REF(@10355)
+		WRITE_LONG 0x50 RESOLVE_STR_REF(@10366)
 		LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=4 range=900 speed=1 STR_VAR icon="SPWI402B" END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=4 parameter2=38 timing=1 resist_dispel=1 probability1=100 END
 		LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=4 timing=1 resist_dispel=1 probability1=100 STR_VAR resource="EFF_M09" END

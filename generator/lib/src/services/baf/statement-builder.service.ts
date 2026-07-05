@@ -1107,7 +1107,9 @@ class StatementService {
     ability: CreatureAbility,
     options: BuilderOptions,
   ): void {
-    const triggers = [...ability.triggers];
+    const triggers = utils.replaceTriggerTokens(ability.triggers, [
+      { key: ScriptTarget.token, value: ScriptTarget.myself },
+    ]);
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {

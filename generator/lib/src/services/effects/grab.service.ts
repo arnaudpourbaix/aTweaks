@@ -29,20 +29,20 @@ import creatureService from "../creature.service";
 import effectService from "./effect.service";
 import spellService from "../spell.service";
 import translationService from "../translation.service";
-import { getFilename } from "../utils/misc.func";
+import { getSpellFilename } from "../utils/misc.func";
 
 class GrabService {
   attachGrabToWeapon(
     creature: Creature,
     weapon: Weapon,
-    grab: CreatureGrabConfig
+    grab: CreatureGrabConfig,
   ) {
     const spell = this.createGrabSpell(creature, grab);
     this.updateWeapon(creature, grab, weapon, spell);
   }
 
   private createGrabSpell(creature: Creature, grab: CreatureGrabConfig): Spell {
-    const file = getFilename(creature.spells.length + 1, creature.id);
+    const file = getSpellFilename(creature.spells.length + 1, creature.id);
     const effectFile = effectService.getEffect({
       opcode: EffectTypeEnum.ProtectionFromSpell,
       resource: file,
@@ -54,7 +54,7 @@ class GrabService {
       "spell.grab.description",
       {
         duration: grab.rounds!,
-      }
+      },
     );
     const spell = spellService.getSpell(
       {
@@ -70,7 +70,7 @@ class GrabService {
           },
         ],
       },
-      file
+      file,
     );
     creature.spells.push(spell);
     return spell;
@@ -80,11 +80,11 @@ class GrabService {
     creature: Creature,
     grab: CreatureGrabConfig,
     weapon: Weapon,
-    spell: Spell
+    spell: Spell,
   ): void {
-    const strModifier = creatureService.getStrengthDamageBonus(creature.data);
+    const strModifier = creatureService.getStrengthBonus(creature.data).hit;
     const sizeModifier = creatureSizes.find(
-      (s) => s.size === creature.data.size
+      (s) => s.size === creature.data.size,
     )!.grabModifier;
     const calculatedSaveBonus =
       (strModifier + sizeModifier + (grab.onlyGrabProneTarget ? 4 : 0)) * -1;
@@ -104,7 +104,7 @@ class GrabService {
   private getGrabbedEffects(
     creature: Creature,
     grab: CreatureGrabConfig,
-    file: string
+    file: string,
   ): Effect[] {
     const duration = (grab.rounds ?? GRAB_DEFAULT_CONFIG.rounds) * 6;
     const grabEffects: Effect[] = [
@@ -178,7 +178,7 @@ class GrabService {
     const list = [...GRAB_IMMUNE_CREATURES];
     if (!creature.data.size) {
       console.log(
-        `${figureSet.warning} Creature size is needed to add grab immunities!`
+        `${figureSet.warning} Creature size is needed to add grab immunities!`,
       );
     } else {
       if (["Huge", "Large"].includes(creature.data.size)) {

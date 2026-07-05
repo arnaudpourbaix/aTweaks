@@ -7,7 +7,7 @@ import {
 } from "../../config/creatures";
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { MonsterEnum } from "../../creatures/monster";
-import { SAVING_THROWS } from "../model/constants";
+import { SAVING_THROWS, StrengthTable } from "../model/constants";
 import {
   BaseCreature,
   Creature,
@@ -50,11 +50,11 @@ class CreatureService {
     if (p.creature.attack?.dualWielding && !p.isAdjustment) {
       if (!data.apr)
         throw new Error(
-          "Attacks per round need to be set for dual wielding flag"
+          "Attacks per round need to be set for dual wielding flag",
         );
       data.apr -= 1;
       console.log(
-        `${figureSet.arrowRight} setting dual wield: ${data.apr} APR +1 offhand`
+        `${figureSet.arrowRight} setting dual wield: ${data.apr} APR +1 offhand`,
       );
     }
     if (data.dexterity !== undefined && data.ac !== undefined) {
@@ -63,7 +63,7 @@ class CreatureService {
         console.log(
           `${figureSet.arrowRight} AC reduced to ${data.ac - bonus} (was ${
             data.ac
-          }) because of dexterity bonus (${bonus})`
+          }) because of dexterity bonus (${bonus})`,
         );
         data.ac -= bonus;
       }
@@ -84,7 +84,7 @@ class CreatureService {
 
   hasOffhandWeapon(creature: Creature): boolean {
     const equippedItem = creature.data.items.equipped.find((i) =>
-      itemService.isSlotIncluded([i], "SHIELD")
+      itemService.isSlotIncluded([i], "SHIELD"),
     );
     const item = creature.items.find((i) => i.file === equippedItem?.file);
     return item?.header?.location === ItemAbilityLocationEnum.Weapon;
@@ -103,7 +103,7 @@ class CreatureService {
       data.movement = movement.clone();
       data.movement.bonus += 2;
       console.log(
-        `${figureSet.arrowRight} movement increased to ${data.movement} (barbarian): `
+        `${figureSet.arrowRight} movement increased to ${data.movement} (barbarian): `,
       );
     }
   }
@@ -175,7 +175,7 @@ class CreatureService {
     if (!weapon.header.speed) {
       weapon.header.speed = 3;
       console.log(
-        `${figureSet.warning} default speed of ${weapon.header.speed} from weapon ${weapon.file}.`
+        `${figureSet.warning} default speed of ${weapon.header.speed} from weapon ${weapon.file}.`,
       );
     }
     const enchantments = [
@@ -194,7 +194,7 @@ class CreatureService {
           level > e.hd ||
           (level == e.hd &&
             !!creature.data.bonusHp &&
-            creature.data.bonusHp >= e.hp)
+            creature.data.bonusHp >= e.hp),
       );
       if (enchant) {
         // console.log(creature.data.class, 'enchant:', enchant.enchant);
@@ -216,7 +216,7 @@ class CreatureService {
       const range = creatureSizes.find((c) => c.size === creature.data.size);
       if (range) {
         console.log(
-          `${figureSet.arrowRight} Melee range: ${range.attackRange}`
+          `${figureSet.arrowRight} Melee range: ${range.attackRange}`,
         );
         weapon.header.range = range.attackRange;
       }
@@ -246,6 +246,7 @@ class CreatureService {
       25: 7,
     };
     const size: CreatureSize = p.data.size ?? p.parent?.size ?? "Tiny";
+    const general = p.data.general ?? p.parent?.general;
     let bonusHitPoints = p.data.bonusHp ?? p.parent?.bonusHp ?? 0;
     const constructBonusHP = p.creature.data.immunities.includes("construct")
       ? (
@@ -256,12 +257,14 @@ class CreatureService {
         ).hp
       : 0;
     const isPlayerClass = PLAYER_CLASS_IDENTIFIERS.includes(
-      p.data.class ?? p.parent?.class ?? "NO_CLASS"
+      p.data.class ?? p.parent?.class ?? "NO_CLASS",
     );
     const constitution = p.data.constitution ?? p.parent?.constitution ?? 10;
     const conHPPerLevel =
-      GLOBAL_CONFIG.constitutionAffectHitPoint && !isPlayerClass
-        ? constitutionTable[constitution] ?? 0
+      GLOBAL_CONFIG.constitutionAffectHitPoint &&
+      !isPlayerClass &&
+      general !== "UNDEAD"
+        ? (constitutionTable[constitution] ?? 0)
         : 0;
     let hpPerHD = this.getHitDiceSize(p.creature);
     const baseHP = level * hpPerHD;
@@ -286,7 +289,7 @@ class CreatureService {
 
   private autogenerateThac0(
     data: Partial<CreatureData>,
-    parent?: CreatureData
+    parent?: CreatureData,
   ) {
     let level = data.level1?.pnpValue;
     if (!level && !parent)
@@ -295,7 +298,7 @@ class CreatureService {
     if (!!data.bonusHp && data.bonusHp >= 3) {
       level++;
       console.log(
-        `${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`
+        `${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`,
       );
     }
     const thac0Table: { [index: number]: number } = {
@@ -333,8 +336,8 @@ class CreatureService {
     if (data.thac0 !== undefined)
       console.log(
         chalk.yellowBright(
-          `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp}, thac0: ${data.thac0}, calculated: ${thac0Table[level]}`
-        )
+          `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp}, thac0: ${data.thac0}, calculated: ${thac0Table[level]}`,
+        ),
       );
     if (data.thac0 === undefined) data.thac0 = thac0Table[level];
   }
@@ -351,7 +354,7 @@ class CreatureService {
     else if (p.classe === "MAGE") key = "wizard";
     const table = SAVING_THROWS[key];
     const saves = table.find(
-      (t) => p.level >= t.levels[0] && p.level <= t.levels[1]
+      (t) => p.level >= t.levels[0] && p.level <= t.levels[1],
     ) as {
       saveDeath: number;
       saveWand: number;
@@ -363,7 +366,7 @@ class CreatureService {
       console.log(
         `${figureSet.arrowRight} Level: ${p.level}, class: ${
           p.classe
-        }, saving throws table: ${key}, ${JSON.stringify(saves)}`
+        }, saving throws table: ${key}, ${JSON.stringify(saves)}`,
       );
     return {
       saveDeath: saves.saveDeath - (p.bonus?.saveDeath ?? 0),
@@ -400,30 +403,25 @@ class CreatureService {
     data.saveSpell = saves.saveSpell;
   }
 
-  getStrengthDamageBonus(data: Partial<CreatureData>): number {
-    if (!data.strength || data.strength < 17) return 0;
-    const table = [
-      { str: 17, modifier: 1 },
-      { str: 18, strEx: [0, 50], modifier: 1 },
-      { str: 18, strEx: [51, 99], modifier: 2 },
-      { str: 18, strEx: [100, 100], modifier: 3 },
-      { str: 19, modifier: 3 },
-      { str: 20, modifier: 3 },
-      { str: 21, modifier: 4 },
-      { str: 22, modifier: 4 },
-      { str: 23, modifier: 5 },
-      { str: 24, modifier: 6 },
-      { str: 25, modifier: 7 },
-    ];
-    const item = table.find((t) => {
-      const exStrength = data.exceptionalStrength ?? 0;
+  getStrengthBonus(data: Partial<CreatureData>): {
+    hit: number;
+    damage: number;
+  } {
+    if (!data.strength || data.strength < 17) return { hit: 0, damage: 0 };
+    const exStrength = data.exceptionalStrength ?? 0;
+    const item = StrengthTable.find((t) => {
       const checkStr = t.str === data.strength;
       const checkStrEx =
         t.strEx === undefined ||
         (exStrength >= t.strEx[0] && exStrength <= t.strEx[1]);
       return checkStr && checkStrEx;
-    }) as { modifier: number };
-    return item.modifier;
+    });
+    if (!item) {
+      throw new Error(
+        `strength not found in table: ${data.strength}/${exStrength}`,
+      );
+    }
+    return item;
   }
 
   getDexterityArmorClassBonus(data: Partial<CreatureData>): number {
@@ -470,9 +468,11 @@ class CreatureService {
 
   getHitDiceSize(creature: Creature): number {
     let result = 8;
-    if (creature.data.general === "UNDEAD") result = 12; // 3e
-    else if (creature.data.race === "SLIME") result = 10; // 3e
-    else if (creature.id === MonsterEnum.DeathKnight) result = 10; // 2e
+    if (creature.id === MonsterEnum.DeathKnight) result = 10; // 2e
+    // else if (creature.data.general === "UNDEAD")
+    //   result = 12; // 3e
+    // else if (creature.data.race === "SLIME")
+    //   result = 10; // 3e
     return result;
   }
 }

@@ -1118,7 +1118,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
           type: EffectDamageTypeEnum.Cold,
           diceThrown: 1,
           diceSize: 4,
-          amount: creatureService.getStrengthDamageBonus(wraith.data),
+          amount: creatureService.getStrengthBonus(wraith.data).damage,
         },
         ...effectFactory.levelDrain({ levels: 1 }),
       ],

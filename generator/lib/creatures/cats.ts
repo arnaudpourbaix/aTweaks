@@ -25,9 +25,9 @@ class Cat extends Creature {
     rear: {
       diceThrown: number;
       diceSize: number;
-    }
+    },
   ) {
-    const amount = creatureService.getStrengthDamageBonus(this.data);
+    const amount = creatureService.getStrengthBonus(this.data).damage;
     return this.addWeapon({
       weapon: {
         stringRef: "monster.cat.weapon.claws",

@@ -1,17 +1,70 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { TargetListName } from "../../config/target-name";
 import { ScriptTarget } from "../model/constants";
+import { AllegianceIdentifier } from "../model/ids/allegiance";
+import { AStylesIdentifiers } from "../model/ids/astyles";
+import { AreaTypeValue } from "../model/ids/misc";
+import { StateIdentifier } from "../model/ids/state";
 import { StatsIdentifier } from "../model/ids/stats";
+import { ParamObject } from "../model/parameter";
 import { Triggers } from "../model/script/triggers";
 import targetService from "../services/baf/target.service";
 
 class TriggerFactory {
+  or(triggers: Triggers.Trigger[]): Triggers.Trigger {
+    return { name: "Or", triggers };
+  }
+
   haveSpellRES(resources: string[], negation = false): Triggers.Trigger[] {
     return resources.map((r) => ({
       name: "HaveSpellRES",
       params: [r],
       negation,
     }));
+  }
+
+  hplt(value: number, negation = false): Triggers.Trigger {
+    return { name: "HPLT", params: [ScriptTarget.token, value], negation };
+  }
+
+  range(value: number, negation = false): Triggers.Trigger {
+    return { name: "Range", params: [ScriptTarget.token, value], negation };
+  }
+
+  attackedBy(
+    obj: ParamObject,
+    type: AStylesIdentifiers,
+    negation = false,
+  ): Triggers.Trigger {
+    return { name: "AttackedBy", params: [obj, type], negation };
+  }
+
+  detect(value: ParamObject, negation = false): Triggers.Trigger {
+    return {
+      name: "Detect",
+      params: [value],
+      negation,
+    };
+  }
+
+  allegiance(value: AllegianceIdentifier, negation = false): Triggers.Trigger {
+    return {
+      name: "Allegiance",
+      params: [ScriptTarget.token, value],
+      negation,
+    };
+  }
+
+  checkSpellState(spell: string, negation = false): Triggers.Trigger {
+    return {
+      name: "CheckSpellState",
+      params: [ScriptTarget.token, spell],
+      negation,
+    };
+  }
+
+  areaType(type: AreaTypeValue, negation = false): Triggers.Trigger {
+    return { name: "AreaType", params: [type], negation };
   }
 
   hasItem(resources: string[], negation = false): Triggers.Trigger[] {
@@ -52,24 +105,63 @@ class TriggerFactory {
     };
   }
 
-  checkStatGT(value: number, stat: StatsIdentifier): Triggers.Trigger {
+  hasBounceEffects(negation = false): Triggers.Trigger {
+    return {
+      name: "HasBounceEffects",
+      params: [ScriptTarget.token],
+      negation,
+    };
+  }
+
+  hasImmunityEffects(negation = false): Triggers.Trigger {
+    return {
+      name: "HasImmunityEffects",
+      params: [ScriptTarget.token],
+      negation,
+    };
+  }
+
+  checkStatGT(
+    value: number,
+    stat: StatsIdentifier,
+    negation = false,
+  ): Triggers.Trigger {
     return {
       name: "CheckStatGT",
       params: [ScriptTarget.token, value, stat],
+      negation,
     };
   }
 
-  checkStatLT(value: number, stat: StatsIdentifier): Triggers.Trigger {
+  checkStatLT(
+    value: number,
+    stat: StatsIdentifier,
+    negation = false,
+  ): Triggers.Trigger {
     return {
       name: "CheckStatLT",
       params: [ScriptTarget.token, value, stat],
+      negation,
     };
   }
 
-  checkStat(value: number, stat: StatsIdentifier): Triggers.Trigger {
+  checkStat(
+    value: number,
+    stat: StatsIdentifier,
+    negation = false,
+  ): Triggers.Trigger {
     return {
       name: "CheckStat",
       params: [ScriptTarget.token, value, stat],
+      negation,
+    };
+  }
+
+  stateCheck(state: StateIdentifier, negation = false): Triggers.Trigger {
+    return {
+      name: "StateCheck",
+      params: [ScriptTarget.token, state],
+      negation,
     };
   }
 

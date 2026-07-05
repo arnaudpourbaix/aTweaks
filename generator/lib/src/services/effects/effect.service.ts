@@ -33,7 +33,7 @@ class EffectService {
     options?: {
       base?: Required<Pick<BaseEffect, "target" | "timing">>;
       file?: string;
-    }
+    },
   ): Effect[] {
     const results: Effect[] = effects.reduce((acc, effect) => {
       acc.push(this.getEffect(effect, options));
@@ -47,7 +47,7 @@ class EffectService {
     options?: {
       base?: Required<Pick<BaseEffect, "target" | "timing">>;
       file?: string;
-    }
+    },
   ): Effect {
     this.setDefaultEffectValues(effect, options?.base);
     switch (effect.opcode) {
@@ -292,7 +292,7 @@ class EffectService {
         break;
       case EffectTypeEnum.ModifyAttacksPerRound:
         effect.parameter1 = `${creatureService.getAttacksPerRound(
-          effect.value
+          effect.value,
         )}`;
         effect.parameter2 = `${effect.type}`;
         break;
@@ -360,7 +360,7 @@ class EffectService {
   private protectionFromResourceFromName(
     effect: ProtectionFromResourceEffect,
     type: SpellProtectionName,
-    isValueString: boolean
+    isValueString: boolean,
   ) {
     effect.parameter2 = type;
     if (isValueString)
@@ -370,21 +370,21 @@ class EffectService {
   private protectionFromResourceFromObject(
     effect: ProtectionFromResourceEffect,
     type: SpellProtection,
-    isValueString: boolean
+    isValueString: boolean,
   ) {
     type.value = type.value ?? -1;
     const prot = EXISTING_SPELL_PROTECTIONS.find(
       (p) =>
         p.stat === type.stat &&
         p.relation === type.relation &&
-        p.value == type.value
+        p.value == type.value,
     );
     if (!prot)
       throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
     effect.parameter2 = `${prot.index}`;
     if (!isValueString) return;
     let file = utils.getIdsFileFromSpellProtectionStat(
-      prot.stat as SpellProtectionStat
+      prot.stat as SpellProtectionStat,
     );
     if (!file)
       throw new Error(`Can't find IDS file for: ${JSON.stringify(type)}`);
@@ -394,7 +394,7 @@ class EffectService {
   private scriptingStateModifier(effect: ScriptingStateModifierEffect): void {
     if (effect.value < 0 || effect.value > 35)
       throw new Error(
-        `Value for opcode ${EffectTypeEnum.ScriptingStateModifier} must be between 0 and 35, found: ${effect.value}`
+        `Value for opcode ${EffectTypeEnum.ScriptingStateModifier} must be between 0 and 35, found: ${effect.value}`,
       );
     effect.parameter1 = `${effect.value}`;
     effect.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
@@ -402,13 +402,13 @@ class EffectService {
 
   setDefaultEffectValues(
     effect: Effect,
-    base?: Required<Pick<BaseEffect, "target" | "timing">>
+    base?: Required<Pick<BaseEffect, "target" | "timing">>,
   ) {
     effect.target ??= base?.target ?? EffectTargetEnum.PresetTarget;
     effect.timing ??= base?.timing ?? EffectTimingEnum.InstantLimited;
     effect.dispelResistance ??= EffectDispelResistanceEnum.NaturalNonMagical;
     effect.probability1 ??= 100;
-    if (effect.diceSize === undefined) effect.diceThrown = effect.minLevel;
+    if (effect.diceSize === undefined) effect.diceSize = effect.minLevel;
     if (effect.diceThrown === undefined) effect.diceThrown = effect.maxLevel;
   }
 }

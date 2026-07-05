@@ -576,7 +576,10 @@ class FeyFamily extends CreatureFamily<Fey> {
             { file: this.spell(Ids.CharmSong).file, memorizedCount: 1 },
             { file: this.spell(Ids.FogCloud).file, memorizedCount: 1 },
             { file: SPELLS.PolymorphSelf.file, memorizedCount: 1 },
-            { file: SPELLS.ImprovedInvisibility.file, memorizedCount: 1 },
+            {
+              file: SPELLS.ImprovedInvisibility.file,
+              memorizedCount: 1,
+            },
           ],
         },
         proficiencies: [
@@ -1484,9 +1487,18 @@ class FeyFamily extends CreatureFamily<Fey> {
         {
           name: "Or",
           triggers: [
-            { name: "HaveSpellRES", params: [SPELLS.CallLightning.file] },
-            { name: "HaveSpellRES", params: [SPELLS.CharmPersonOrAnimal.file] },
-            { name: "HaveSpellRES", params: [SPELLS.SummonInsects.file] },
+            {
+              name: "HaveSpellRES",
+              params: [SPELLS.CallLightning.file],
+            },
+            {
+              name: "HaveSpellRES",
+              params: [SPELLS.CharmPersonOrAnimal.file],
+            },
+            {
+              name: "HaveSpellRES",
+              params: [SPELLS.SummonInsects.file],
+            },
           ],
         },
       ],

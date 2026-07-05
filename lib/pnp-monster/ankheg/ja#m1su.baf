@@ -113,7 +113,7 @@ END
 // Stream of acidic enzymes
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.MAGE])
@@ -126,14 +126,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.MAGE_THIEF])
@@ -146,14 +146,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.MAGE_ALL])
@@ -166,14 +166,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.THIEF])
@@ -186,14 +186,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.BARD])
@@ -206,14 +206,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.THIEF_ALL])
@@ -226,14 +226,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.CLERIC])
@@ -246,14 +246,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOfType([PC]))
@@ -266,14 +266,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOfType([PC]))
@@ -286,14 +286,14 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 
 IF
 	ActionListEmpty()
-	HaveSpellRES("ja#1m1")
+	HaveSpellRES("ja#s0m1")
 	HPPercentLT(Myself,50)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOfType([PC]))
@@ -306,8 +306,8 @@ THEN
 	RESPONSE #100
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpellRES("ja#1m1",LastSeenBy(Myself))
-		RemoveSpellRES("ja#1m1")
+		ForceSpellRES("ja#s0m1",LastSeenBy(Myself))
+		RemoveSpellRES("ja#s0m1")
 		SetInterrupt(TRUE)
 END
 

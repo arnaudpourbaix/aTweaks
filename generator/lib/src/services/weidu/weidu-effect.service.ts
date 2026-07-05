@@ -15,7 +15,7 @@ class WeiduEffectService extends AbstractWeiduService {
         0x1c,
         4,
         weiduUtils.getIntegerValue(effect.parameter1),
-        tab + 1
+        tab + 1,
       );
       this.write(lines, 0x24, 4, effect.timing, tab + 1);
       this.write(
@@ -23,7 +23,7 @@ class WeiduEffectService extends AbstractWeiduService {
         0x20,
         4,
         weiduUtils.getIntegerValue(effect.parameter2),
-        tab + 1
+        tab + 1,
       );
       this.write(lines, 0x28, 4, effect.duration, tab + 1);
       this.write(lines, 0x2c, 2, effect.probability1, tab + 1);
@@ -34,7 +34,7 @@ class WeiduEffectService extends AbstractWeiduService {
           0x48,
           4,
           weiduUtils.getIntegerValue(effect.special),
-          tab + 1
+          tab + 1,
         );
       }
       this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
@@ -43,14 +43,14 @@ class WeiduEffectService extends AbstractWeiduService {
         0x60,
         4,
         weiduUtils.getIntegerValue(effect.parameter3),
-        tab + 1
+        tab + 1,
       );
       this.write(
         lines,
         0x64,
         4,
         weiduUtils.getIntegerValue(effect.parameter4),
-        tab + 1
+        tab + 1,
       );
       this.add(lines, "", tab);
     }
@@ -90,22 +90,22 @@ class WeiduEffectService extends AbstractWeiduService {
       intVars.push(`power=${effect.power ?? power}`);
     if (effect.parameter1 && effect.parameter1 !== "0") {
       intVars.push(
-        `parameter1=${weiduUtils.getIntegerValue(effect.parameter1)}`
+        `parameter1=${weiduUtils.getIntegerValue(effect.parameter1)}`,
       );
     }
     if (effect.parameter2 && effect.parameter2 !== "0") {
       intVars.push(
-        `parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`
+        `parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`,
       );
     }
     if (effect.parameter3 && effect.parameter3 !== "0") {
       intVars.push(
-        `parameter3=${weiduUtils.getIntegerValue(effect.parameter3)}`
+        `parameter3=${weiduUtils.getIntegerValue(effect.parameter3)}`,
       );
     }
     if (effect.parameter4 && effect.parameter4 !== "0") {
       intVars.push(
-        `parameter4=${weiduUtils.getIntegerValue(effect.parameter4)}`
+        `parameter4=${weiduUtils.getIntegerValue(effect.parameter4)}`,
       );
     }
     if (effect.timing) intVars.push(`timing=${effect.timing}`);
@@ -116,8 +116,12 @@ class WeiduEffectService extends AbstractWeiduService {
       intVars.push(`probability1=${effect.probability1}`);
     if (effect.probability2)
       intVars.push(`probability2=${effect.probability2}`);
-    if (effect.diceSize) intVars.push(`dicesize=${effect.diceSize}`);
-    if (effect.diceThrown) intVars.push(`dicenumber=${effect.diceThrown}`);
+    if (effect.diceSize) {
+      intVars.push(`dicesize=${effect.diceSize}`);
+    }
+    if (effect.diceThrown) {
+      intVars.push(`dicenumber=${effect.diceThrown}`);
+    }
     if (effect.saveTypes) {
       const savingthrow = effect.saveTypes.reduce((sum, save) => {
         sum += 2 ** save;
@@ -161,11 +165,6 @@ class WeiduEffectService extends AbstractWeiduService {
     let param = 2;
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
       file = "msectype";
-    } else if (
-      effect.opcode === EffectTypeEnum.ProtectionFromResourceAndMessage &&
-      !/\d+/.test(effect.parameter2 as string)
-    ) {
-      file = "splprot";
     }
     if (!file) return false;
     this.add(
@@ -173,7 +172,7 @@ class WeiduEffectService extends AbstractWeiduService {
       `LPF GET_2DA_ENTRY_OF INT_VAR col_match=${col} STR_VAR file=~${file}~ entry_match=~${
         param === 1 ? effect.parameter1 : effect.parameter2
       }~ RET row col END`,
-      tab
+      tab,
     );
     if (param === 1) effect.parameter1 = "row";
     else effect.parameter2 = "row";

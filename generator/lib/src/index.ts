@@ -21,6 +21,7 @@ async function main() {
     .then(() => stateService.init())
     .then(() => {
       mainService.checkPresets();
+      mainService.checkSpells();
       mainService.generateCreatures();
       mainService.generateCommonCode();
       mainService.generateTranslations();

@@ -87,7 +87,7 @@ class WeiduFunctionService extends AbstractWeiduService {
         1,
       );
       this.add(lines, `ACTION_IF (index >= 0) BEGIN`, 1);
-      this.add(lines, `OUTER_SET ${sp.name}=index`, 2);
+      this.add(lines, `OUTER_SET ${sp.name}=index - 1`, 2);
       this.add(lines, `END`, 1);
     }
     this.add(lines, `END`, 0);

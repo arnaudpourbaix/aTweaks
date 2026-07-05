@@ -40,7 +40,7 @@ class CreatureFactory {
   getData(
     data: CreatureData | undefined,
     input: InputCreatureData,
-    isAdjustment: boolean
+    isAdjustment: boolean,
   ): CreatureData {
     data ??= this.createEmptyData();
     if (!isAdjustment) {
@@ -82,6 +82,7 @@ class CreatureFactory {
         ...adjustment,
         noWeapon: adjustment.noWeapon ?? false,
         summon: adjustment.summon ?? false,
+        scriptName: adjustment.scriptName ?? false,
         data: adjustment.data
           ? this.getData(undefined, adjustment.data, true)
           : this.createEmptyData(),
@@ -95,12 +96,12 @@ class CreatureFactory {
     slot ??= item.equippedSlot;
     if (!slot) throw new Error(`No slot defined for ${item.stringRef}`);
     const equippedItem = cre.data.items.equipped.find(
-      (e) => slot.length === 1 && e.slot[0] === slot[0]
+      (e) => slot.length === 1 && e.slot[0] === slot[0],
     );
     const duplicate = cre.items.find((i) => i.file === equippedItem?.file);
     if (equippedItem && duplicate) {
       console.log(
-        `${figureSet.warning} Slot ${equippedItem.slot} is already attributed to ${duplicate.stringRef}.`
+        `${figureSet.warning} Slot ${equippedItem.slot} is already attributed to ${duplicate.stringRef}.`,
       );
     }
     cre.data.items.equipped.push({
@@ -120,10 +121,10 @@ class CreatureFactory {
       ...others,
     };
     cre.behavior.abilities.push(
-      ...abilityService.getAbilities(behavior.abilities)
+      ...abilityService.getAbilities(behavior.abilities),
     );
     cre.behavior.customCodes.push(
-      ...abilityService.getCustomCodes(behavior.customCodes)
+      ...abilityService.getCustomCodes(behavior.customCodes),
     );
     cre.behavior.additionalCodes.push(...(behavior.additionalCodes ?? []));
     cre.behavior.dialog.push(...(behavior.dialog ?? []));
@@ -133,8 +134,8 @@ class CreatureFactory {
     if (creature.valid !== undefined)
       throw new Error(
         `Creature ${translationService.from(
-          creature.name
-        )} has already been validated`
+          creature.name,
+        )} has already been validated`,
       );
   }
 
@@ -145,7 +146,7 @@ class CreatureFactory {
     }
     if (creature.family !== family) {
       console.log(
-        `${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`
+        `${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`,
       );
       valid = false;
     }
@@ -154,15 +155,15 @@ class CreatureFactory {
       valid = false;
     }
     const existingFiles = creature.files.filter((f) =>
-      State.creatures.some((c) => c.files.includes(f))
+      State.creatures.some((c) => c.files.includes(f)),
     );
     if (existingFiles.length) {
       console.log(
         `${
           figureSet.warning
         } Those files are already declared in other creatures: ${existingFiles.join(
-          ", "
-        )}`
+          ", ",
+        )}`,
       );
       valid = false;
     }
