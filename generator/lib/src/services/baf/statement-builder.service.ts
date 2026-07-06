@@ -1,5 +1,6 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { POTIONS } from "../../../config/potion";
+import { SpellReference, SPELLS } from "../../../config/spell-names";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
 import actionFactory from "../../factories/action.factory";
@@ -33,6 +34,13 @@ class StatementService {
     this.execute(this.dialog, "dialog", statements, creature, options);
     this.execute(this.init, "init", statements, creature, options);
     this.execute(this.rest, "rest", statements, creature, options);
+    this.execute(
+      this.precastLongDurationSpells,
+      "precastLongDurationSpells",
+      statements,
+      creature,
+      options,
+    );
     this.execute(
       this.turnHostile,
       "turnHostile",
@@ -79,6 +87,13 @@ class StatementService {
     this.execute(
       this.thievesAbilities,
       "thievesAbilities",
+      statements,
+      creature,
+      options,
+    );
+    this.execute(
+      this.precastMidDurationSpells,
+      "precastMidDurationSpells",
       statements,
       creature,
       options,
@@ -262,21 +277,32 @@ class StatementService {
   ): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
-      actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-      // factoryService.setGlobal(GLOBAL_CONFIG.bafConstants.disableSpellcasting, 0),
+      actionFactory.setGlobal(
+        GLOBAL_CONFIG.bafConstants.precastLongDurationSpells,
+        0,
+      ),
+      actionFactory.setGlobal(
+        GLOBAL_CONFIG.bafConstants.precastMidDurationSpells,
+        0,
+      ),
+      // actionFactory.setGlobal(
+      //   GLOBAL_CONFIG.bafConstants.disableSpellcasting,
+      //   0,
+      // ),
       actionFactory.setGlobalTimer(
         GLOBAL_CONFIG.bafConstants.restTimer,
         Durations.eightHours,
       ),
     ];
-    statements.push({
-      comment: "Init",
-      triggers: [
-        triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
-      ],
-      responses: responseFactory.response(actions),
-    });
+    (actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
+      statements.push({
+        comment: "Init",
+        triggers: [
+          triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
+        ],
+        responses: responseFactory.response(actions),
+      }));
   }
 
   private rest(
@@ -956,6 +982,66 @@ class StatementService {
         });
       }
     }
+  }
+
+  private precastLongDurationSpells(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void {
+    this.precastSpells(
+      statements,
+      "long",
+      GLOBAL_CONFIG.bafConstants.precastLongDurationSpells,
+      options,
+    );
+  }
+
+  private precastMidDurationSpells(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void {
+    if (!GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells) return;
+    this.precastSpells(
+      statements,
+      "mid",
+      GLOBAL_CONFIG.bafConstants.precastMidDurationSpells,
+      options,
+    );
+  }
+
+  private precastSpells(
+    statements: Statements,
+    duration: Required<SpellReference["duration"]>,
+    variable: string,
+    options: BuilderOptions,
+  ): void {
+    for (const key of utils.objectKeys(SPELLS)) {
+      const spell = SPELLS[key];
+      if (!("duration" in spell) || spell.duration !== duration) continue;
+      statements.push({
+        comment: `Precast ${key}`,
+        triggers: [
+          triggerFactory.global(variable, 0),
+          { name: "HaveSpellRES", params: [spell.file] },
+        ],
+        responses: responseFactory.response([
+          {
+            name: "ReallyForceSpellRES",
+            params: [spell.file, ScriptTarget.myself],
+          },
+          { name: "RemoveSpellRES", params: [spell.file] },
+          { name: "Continue" },
+        ]),
+      });
+    }
+    statements.push({
+      triggers: [triggerFactory.global(variable, 0)],
+      responses: responseFactory.response([
+        actionFactory.setGlobal(variable, 1),
+      ]),
+    });
   }
 
   private creatureAbilities(

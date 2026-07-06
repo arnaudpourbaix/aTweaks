@@ -33,10 +33,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           // triggerFactory.hasBounceEffects(true),
         ],
       ),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -65,10 +64,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           // triggerFactory.hasBounceEffects(true),
         ],
       ),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -86,10 +84,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -108,10 +105,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -129,10 +125,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -140,7 +135,6 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.CauseLightWounds",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -159,6 +153,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -166,7 +161,6 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.CauseSeriousWounds",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -184,6 +178,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -191,7 +186,6 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.CauseCriticalWounds",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -205,6 +199,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -212,7 +207,6 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.Harm",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -223,6 +217,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ...triggerFactory.haveSpellRES([SPELLS.SlayLiving.file], true),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -230,7 +225,6 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.SlayLiving",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.hasItem(
@@ -238,6 +232,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         true,
       ),
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -253,11 +248,10 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       timer: { name: "Shatter", value: 4 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -281,10 +275,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ],
       ),
       range: 10,
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -307,10 +300,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           // triggerFactory.checkStatLT(50, "RESISTMAGIC")
         ],
       ),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -328,10 +320,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -359,10 +350,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           // triggerFactory.checkStatLT(50, "RESISTACID"),
         ],
       ),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -385,10 +375,9 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -406,11 +395,10 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       range: 5,
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

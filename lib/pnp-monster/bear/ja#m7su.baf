@@ -16,6 +16,35 @@ THEN
 		SetGlobal("Kaldran","GLOBAL",1)
 END
 
+// Precast Stoneskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPWI408")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPWI408",Myself)
+		RemoveSpellRES("SPWI408")
+		Continue()
+END
+
+// Precast Ironskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPPR506")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPPR506",Myself)
+		RemoveSpellRES("SPPR506")
+		Continue()
+END
+
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JA#PRECAST_LONG","LOCALS",1)
+END
+
 // Turn hostile if too close and not druid/ranger
 IF
 	Range([GOODCUTOFF],7)

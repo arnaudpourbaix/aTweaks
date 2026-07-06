@@ -5,8 +5,9 @@ IF
 	Global("JA#INIT","LOCALS",0)
 THEN
 	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",1)
 		SetGlobal("JA#COMBAT","LOCALS",0)
+		SetGlobal("JA#PRECAST_LONG","LOCALS",0)
+		SetGlobal("JA#PRECAST_MID","LOCALS",0)
 		SetGlobalTimer("JA#REST","LOCALS",2400)
 END
 
@@ -20,6 +21,35 @@ THEN
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
 		ApplySpell(Myself,RESTORE_FULL_HEALTH)
+END
+
+// Precast Stoneskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPWI408")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPWI408",Myself)
+		RemoveSpellRES("SPWI408")
+		Continue()
+END
+
+// Precast Ironskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPPR506")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPPR506",Myself)
+		RemoveSpellRES("SPPR506")
+		Continue()
+END
+
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JA#PRECAST_LONG","LOCALS",1)
 END
 
 // Turn hostile if attacked
@@ -109,7 +139,7 @@ END
 // Fear Aura
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOfType([PC]))
@@ -128,12 +158,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOfType([PC]))
@@ -152,12 +182,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOfType([PC]))
@@ -176,12 +206,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FourthNearestEnemyOfType([PC]))
@@ -200,12 +230,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FifthNearestEnemyOfType([PC]))
@@ -224,12 +254,12 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpellRES("ja#s2m4e")
+	HaveSpell(CLERIC_CLOAK_OF_FEAR)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SixthNearestEnemyOfType([PC]))
@@ -248,7 +278,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2m4e",Myself)
-		RemoveSpellRES("ja#s2m4e")
+		RemoveSpell(CLERIC_CLOAK_OF_FEAR)
 END
 
 // Attack NoCheck enemy

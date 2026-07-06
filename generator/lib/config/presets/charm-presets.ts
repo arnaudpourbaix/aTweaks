@@ -12,10 +12,9 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -26,13 +25,12 @@ export const CHARM_PRESETS: AbilityPreset[] = [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES([SPELLS.Domination.file], true),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -43,9 +41,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
           [SPELLS.Domination.file, SPELLS.DireCharm.file],
@@ -53,6 +49,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -63,9 +60,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
           [SPELLS.Domination.file, SPELLS.DireCharm.file],
@@ -73,6 +68,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

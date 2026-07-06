@@ -20,10 +20,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -41,11 +40,11 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
         },
       ],
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       range: 10,
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -62,10 +61,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -83,11 +81,10 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       range: 5,
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -105,10 +102,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
         },
       ],
       minRange: 20,
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -116,7 +112,6 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.MassCauseLightWounds",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -126,6 +121,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -140,7 +136,6 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
       ],
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [
         {
@@ -150,6 +145,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
       ],
       range: 10,
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create(
@@ -164,10 +160,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   ),
   {
@@ -183,11 +178,10 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       timer: { name: "WavesOfAgony", value: 3 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -206,10 +200,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -227,10 +220,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -248,10 +240,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
         },
       ],
       minRange: 20,
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -267,10 +258,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -287,10 +277,9 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

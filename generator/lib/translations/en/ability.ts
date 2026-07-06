@@ -1,5 +1,7 @@
 export default {
   unknown: "(unknown)",
+  MinorSequencer: "Minor Sequencer",
+  Sequencer: "Sequencer",
   invisibility: "Invisibility",
   improvedInvisibility: "Improved Invisibility",
   domination: "Domination",
@@ -107,4 +109,5 @@ export default {
   ShadowDoor: "Shadow Door",
   ChainLightning: "Chain Lightning",
   ProtectionFromMagicalWeapons: "Protection From Magical Weapons",
+  Blur: "Blur",
 };

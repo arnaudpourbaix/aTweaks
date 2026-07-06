@@ -15,20 +15,18 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
     preset: SPELLS.CallWoodlandBeeings.file,
     ability: {
       name: "ability.callWoodlandBeeings",
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [
         {
           name: "AreaType",
@@ -42,7 +40,6 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.ShadowMonsters",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
@@ -56,6 +53,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       ),
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -63,7 +61,6 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.DemiShadowMonsters",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
@@ -72,6 +69,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       ),
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -79,7 +77,6 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.AnimateDead",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
@@ -88,6 +85,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       ),
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -95,12 +93,12 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.SummonShadows",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES([FNP_SPELLS.Shades.file], true),
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -108,11 +106,11 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.Shades",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       timer: { name: "Summoning", value: 6 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

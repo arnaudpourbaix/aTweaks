@@ -7,6 +7,7 @@ import { Item, Spell } from "../spell-item/spell-item";
 import { AbstractCreature } from "./abstract-creature";
 import { Creature, CreatureAutoGenerate, CreatureNewFile } from "./creature";
 import { InputMainCreatureData } from "./data-input";
+import abilityService from "../../services/baf/ability.service";
 
 export interface Family {
   id: number;
@@ -83,9 +84,9 @@ export abstract class CreatureFamily<T extends Creature>
     console.log(
       chalk.bold(
         `\nCreating ${translationService.from(
-          cre.name
-        )} from ${translationService.from(p.from.name)}...`
-      )
+          cre.name,
+        )} from ${translationService.from(p.from.name)}...`,
+      ),
     );
     this.creatures.push(cre);
     return cre;
@@ -105,6 +106,14 @@ export abstract class CreatureFamily<T extends Creature>
     return {
       preset: name,
     };
+  }
+
+  minorSequencer(presets: string[] & { length: 2 }) {
+    return abilityService.getMinorSequencer(presets);
+  }
+
+  sequencer(presets: string[] & { length: 3 }) {
+    return abilityService.getSequencer(presets);
   }
 
   override item(id: number): Item {

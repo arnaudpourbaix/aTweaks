@@ -9,10 +9,9 @@ export const CURE_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.cureLightWounds",
       //TODO: target
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [{ name: "HPPercentLT", params: [ScriptTarget.myself, 75] }],
     },
   },

@@ -2,10 +2,19 @@ import { SpellIdentifier } from "../src/model/ids/spell";
 import { SpellTypeEnum } from "../src/model/spell-item/effect.enums";
 import { BaseSpell } from "../src/model/spell-item/spell-item";
 
+export interface SpellReference {
+  file: string;
+  id?: SpellIdentifier;
+  duration?:
+    | "long" // several hours
+    | "mid" // several turns
+    | "short"; // several rounds to one turn
+}
+
 export const SPELLS = {
   // Wizard
   AgannazarScorcher: { file: "SPWI217", id: "WIZARD_AGANNAZAR_SCORCHER" },
-  Blur: { file: "SPWI201", id: "WIZARD_BLUR" },
+  Blur: { file: "SPWI201", id: "WIZARD_BLUR", duration: "mid" },
   Breach: { file: "SPWI513", id: "WIZARD_BREACH" },
   BurningHands: { file: "SPWI103", id: "WIZARD_BURNING_HANDS" },
   ChainLightning: { file: "SPWI615", id: "WIZARD_CHAIN_LIGHTNING" },
@@ -25,29 +34,42 @@ export const SPELLS = {
   Emotion: { file: "SPWI411", id: "WIZARD_EMOTION_HOPELESSNESS" },
   Feeblemind: { file: "SPWI509", id: "WIZARD_FEEBLEMIND" },
   Fireburst: { file: "SPWI523", id: "WIZARD_SUN_FIRE" },
-  FireShield: { file: "SPWI418", id: "WIZARD_FIRE_SHIELD_RED" },
+  FireShield: {
+    file: "SPWI418",
+    id: "WIZARD_FIRE_SHIELD_RED",
+    duration: "short",
+  },
   FlameArrow: { file: "SPWI303", id: "WIZARD_FLAME_ARROW" },
   FleshToStone: { file: "SPWI604", id: "WIZARD_FLESH_TO_STONE" },
   Glitterdust: { file: "SPWI224", id: "WIZARD_GLITTERDUST" },
   GreaterMalison: { file: "SPWI412", id: "WIZARD_GREATER_MALISON" },
-  Haste: { file: "SPWI305", id: "WIZARD_HASTE" },
+  Haste: { file: "SPWI305", id: "WIZARD_HASTE", duration: "mid" },
   HoldPersonWizard: { file: "SPWI306", id: "WIZARD_HOLD_PERSON" },
   Horror: { file: "SPWI205", id: "WIZARD_HORROR" },
   IceStorm: { file: "SPWI404", id: "WIZARD_ICE_STORM" },
-  ImprovedInvisibility: { file: "SPWI405", id: "WIZARD_IMPROVED_INVISIBILITY" },
-  Invisibility: { file: "SPWI206", id: "WIZARD_INVISIBILITY" },
+  ImprovedInvisibility: {
+    file: "SPWI405",
+    id: "WIZARD_IMPROVED_INVISIBILITY",
+    duration: "short",
+  },
+  Invisibility: {
+    file: "SPWI206",
+    id: "WIZARD_INVISIBILITY",
+  },
   LightningBolt: { file: "SPWI308", id: "WIZARD_LIGHTNING_BOLT" },
   MagicMissiles: { file: "SPWI112", id: "WIZARD_MAGIC_MISSILE" },
   MelfAcidArrow: { file: "SPWI211", id: "WIZARD_MELF_ACID_ARROW" },
   MinorGlobeOfInvulnerability: {
     file: "SPWI406",
     id: "WIZARD_MINOR_GLOBE_OF_INVULNERABILITY",
+    duration: "mid",
   },
   MinorSpellDeflection: {
     file: "SPWI318",
     id: "WIZARD_MINOR_SPELL_DEFLECTION",
+    duration: "mid",
   },
-  MirrorImages: { file: "SPWI212", id: "WIZARD_MIRROR_IMAGE" },
+  MirrorImages: { file: "SPWI212", id: "WIZARD_MIRROR_IMAGE", duration: "mid" },
   MordenkainenForceMissiles: {
     file: "SPWI431",
     id: "WIZARD_MORDENKAINENS_FORCE_MISSILES",
@@ -61,41 +83,52 @@ export const SPELLS = {
   ProtectionFromMissiles: {
     file: "SPWI311",
     id: "WIZARD_PROTECTION_FROM_NORMAL_MISSILES",
+    duration: "short",
   },
   ProtectionFromMagicalWeapons: {
     file: "SPWI611",
     id: "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS",
+    duration: "short",
   },
   RemoveMagic: { file: "SPWI302", id: "WIZARD_REMOVE_MAGIC" },
   ShapeshiftMustardJelly: {
     file: "SPWI496",
     id: "WIZARD_POLYMORPH_MUSTARD_JELLY",
   },
-  Shield: { file: "SPWI114", id: "WIZARD_SHIELD" },
+  Shield: { file: "SPWI114", id: "WIZARD_SHIELD", duration: "mid" },
   ShadowDoor: { file: "SPWI505", id: "WIZARD_SHADOW_DOOR" },
   Sleep: { file: "SPWI116", id: "WIZARD_SLEEP" },
   Slow: { file: "SPWI312", id: "WIZARD_SLOW" },
   SpellThrust: { file: "SPWI321", id: "WIZARD_SPELL_THRUST" },
   Spook: { file: "SPWI125", id: "WIZARD_SPOOK" },
   StinkingCloud: { file: "SPWI213", id: "WIZARD_STINKING_CLOUD" },
-  Stoneskin: { file: "SPWI408", id: "WIZARD_STONE_SKIN" },
+  Stoneskin: { file: "SPWI408", id: "WIZARD_STONE_SKIN", duration: "long" },
   TeleportField: { file: "SPWI421", id: "WIZARD_TELEPORT_FIELD" },
   VitriolicSphere: { file: "SPWI426", id: "WIZARD_VITRIOLIC_SPHERE" },
-  Vocalize: { file: "SPWI219", id: "WIZARD_VOCALIZE" },
+  Vocalize: {
+    file: "SPWI219",
+    id: "WIZARD_VOCALIZE",
+    duration: "short",
+  },
   WailOfTheBanshee: { file: "SPWI913", id: "WIZARD_WAIL_OF_THE_BANSHEE" },
   Web: { file: "SPWI215", id: "WIZARD_WEB" },
+
   // Priest
   AnimalSummoning4: {
     file: "SPPR402",
     // id: "CLERIC_ANIMAL_SUMMONING_1" // id depends on installed mods (can be 1 or 4)
   },
-  Barkskin: { file: "SPPR202", id: "CLERIC_BARKSKIN" },
-  Bless: { file: "SPPR101", id: "CLERIC_BLESS" },
+  Barkskin: { file: "SPPR202", id: "CLERIC_BARKSKIN", duration: "mid" },
+  Bless: { file: "SPPR101", id: "CLERIC_BLESS", duration: "mid" },
   BlindingBeauty: { file: "SPPR704", id: "CLERIC_NATURE_BEAUTY" },
   CallLightning: { file: "SPPR302", id: "CLERIC_CALL_LIGHTNING" },
   CallWoodlandBeeings: { file: "SPPR410", id: "CLERIC_CALL_WOODLAND_BEINGS" },
   CloudOfPestilence: { file: "SPPR424", id: "CLERIC_CLOUD_OF_PESTILENCE" },
-  Chant: { file: "SPPR203", id: "CLERIC_CHANT" },
+  Chant: {
+    file: "SPPR203",
+    id: "CLERIC_CHANT",
+    duration: "short",
+  },
   Chaos: { file: "SPPR709", id: "CLERIC_CONFUSION" },
   CharmPersonOrAnimal: { file: "SPPR204", id: "CLERIC_CHARM_PERSON" },
   CloakOfFear: { file: "SPPR416", id: "CLERIC_CLOAK_OF_FEAR" },
@@ -111,15 +144,19 @@ export const SPELLS = {
   Harm: { file: "SPPR608", id: "CLERIC_HARM" },
   HoldPersonCleric: { file: "SPPR208", id: "CLERIC_HOLD_PERSON" },
   HoldPersonOrAnimal: { file: "SPPR305", id: "CLERIC_HOLD_ANIMAL" },
-  Ironskin: { file: "SPPR506", id: "CLERIC_IRONSKIN" },
-  MagicResistance: { file: "SPPR509", id: "CLERIC_MAGIC_RESISTANCE" },
+  Ironskin: { file: "SPPR506", id: "CLERIC_IRONSKIN", duration: "long" },
+  MagicResistance: {
+    file: "SPPR509",
+    id: "CLERIC_MAGIC_RESISTANCE",
+    duration: "short",
+  },
   MassCauseLightWounds: {
     file: "SPPR530",
     id: "CLERIC_MASS_CAUSE_LIGHT_WOUNDS",
   },
   MiscastMagic: { file: "SPPR310", id: "CLERIC_MISCAST_MAGIC" },
   Poison: { file: "SPPR411", id: "CLERIC_POISON" },
-  ResistFear: { file: "SPPR108", id: "CLERIC_REMOVE_FEAR" },
+  ResistFear: { file: "SPPR108", id: "CLERIC_REMOVE_FEAR", duration: "mid" },
   RigidThinking: { file: "SPPR311", id: "CLERIC_RIGID_THINKING" },
   Silence: { file: "SPPR211", id: "CLERIC_SILENCE_15_FOOT" },
   SlayLiving: { file: "SPPR511", id: "CLERIC_SLAY_LIVING" },
@@ -134,7 +171,7 @@ export const SPELLS = {
   BerserkerRage: { file: "SPCL321", id: "BERSERKER_RAGE" },
   BarbarianRage: { file: "SPCL152", id: "BARBARIAN_RAGE" },
   OffensiveSpin: { file: "SPCL521", id: "BLADE_OFFENSIVE_SPIN" },
-} satisfies Record<string, { file: string; id?: SpellIdentifier }>;
+} satisfies Record<string, SpellReference>;
 
 /**
  * Faiths and Powers

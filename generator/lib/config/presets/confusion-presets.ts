@@ -16,10 +16,9 @@ export const CONFUSION_PRESETS: AbilityPreset[] = [
         ],
       },
     ],
-    spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
-    },
+    spell: {},
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   ...presetFactory.create([SPELLS.Chaos.file, FNP_SPELLS.Chaos.file], {
     name: "ability.Chaos",
@@ -33,9 +32,8 @@ export const CONFUSION_PRESETS: AbilityPreset[] = [
         ],
       },
     ],
-    spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
-    },
+    spell: {},
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
 ];

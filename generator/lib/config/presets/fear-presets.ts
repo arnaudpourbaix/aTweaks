@@ -15,10 +15,9 @@ export const FEAR_PRESETS: AbilityPreset[] = [
         // triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -30,10 +29,9 @@ export const FEAR_PRESETS: AbilityPreset[] = [
         // triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create(
@@ -46,9 +44,9 @@ export const FEAR_PRESETS: AbilityPreset[] = [
       ]),
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   ),
 ];

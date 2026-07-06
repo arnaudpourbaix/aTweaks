@@ -14,10 +14,9 @@ export const HOLD_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   ),
   {
@@ -28,10 +27,9 @@ export const HOLD_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -42,10 +40,9 @@ export const HOLD_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

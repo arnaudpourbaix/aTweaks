@@ -20,9 +20,9 @@ export const DEATH_PRESETS: AbilityPreset[] = [
       ],
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -40,10 +40,9 @@ export const DEATH_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -66,10 +65,9 @@ export const DEATH_PRESETS: AbilityPreset[] = [
           // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
         ],
       ),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

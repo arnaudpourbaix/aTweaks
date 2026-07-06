@@ -10,7 +10,6 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.detectInvisibility",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: [
@@ -18,6 +17,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
         triggerFactory.checkSpellState("DETECT_INVISIBILITY", true),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create([SPELLS.DispelMagic.file, SPELLS.RemoveMagic.file], {
@@ -50,10 +50,10 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
       },
     ],
     spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
       excludeStateChecks: ["STATE_DISABLED"],
     },
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
     preset: SPELLS.Breach.file,
@@ -72,10 +72,10 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
         },
       ],
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         excludeStateChecks: ["STATE_DISABLED"],
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -89,10 +89,9 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
           triggers: [triggerFactory.checkSpellState("BUFF_PRO_SPELLS")],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

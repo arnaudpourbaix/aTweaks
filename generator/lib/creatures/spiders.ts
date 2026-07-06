@@ -263,10 +263,10 @@ class Spider extends Creature {
           // Either attack treats the spider's opponent as AC 10 and prevents the spider from making a melee attack that round.
           type: "force",
           isAttack: true,
-          probability: 70,
         },
         range: 6, // to fix issue with very close range since melee attack is 3 feet
         requireVocal: false,
+        probability: 70,
       },
     });
   }
@@ -681,10 +681,10 @@ class SpiderFamily extends CreatureFamily<Spider> {
           preset: SPELLS.DetectInvisibility.file,
           spell: {
             type: "force",
-            probability: 30,
           },
           timer: { name: "detectInvisibility", value: 18 },
           requireVocal: false,
+          probability: 30,
         },
       ],
     });

@@ -5,8 +5,9 @@ IF
 	Global("JA#INIT","LOCALS",0)
 THEN
 	RESPONSE #100
-		SetGlobal("JA#INIT","LOCALS",1)
 		SetGlobal("JA#COMBAT","LOCALS",0)
+		SetGlobal("JA#PRECAST_LONG","LOCALS",0)
+		SetGlobal("JA#PRECAST_MID","LOCALS",0)
 		SetGlobalTimer("JA#REST","LOCALS",2400)
 END
 
@@ -19,6 +20,35 @@ THEN
 	RESPONSE #100
 		SetGlobal("JA#INIT","LOCALS",0)
 		Rest()
+END
+
+// Precast Stoneskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPWI408")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPWI408",Myself)
+		RemoveSpellRES("SPWI408")
+		Continue()
+END
+
+// Precast Ironskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPPR506")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPPR506",Myself)
+		RemoveSpellRES("SPPR506")
+		Continue()
+END
+
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JA#PRECAST_LONG","LOCALS",1)
 END
 
 // Turn hostile if attacked
@@ -109,7 +139,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOfType([PC.0.0.FIGHTER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOfType([PC.0.0.FIGHTER_ALL]))
@@ -135,7 +165,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOfType([PC.0.0.FIGHTER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOfType([PC.0.0.FIGHTER_ALL]))
@@ -161,7 +191,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOfType([PC.0.0.FIGHTER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOfType([PC.0.0.FIGHTER_ALL]))
@@ -187,7 +217,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOfType([PC.0.0.RANGER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOfType([PC.0.0.RANGER_ALL]))
@@ -213,7 +243,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOfType([PC.0.0.RANGER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOfType([PC.0.0.RANGER_ALL]))
@@ -239,7 +269,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOfType([PC.0.0.RANGER_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOfType([PC.0.0.RANGER_ALL]))
@@ -265,7 +295,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOfType([PC.0.0.PALADIN_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOfType([PC.0.0.PALADIN_ALL]))
@@ -291,7 +321,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOfType([PC.0.0.PALADIN_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOfType([PC.0.0.PALADIN_ALL]))
@@ -317,7 +347,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOfType([PC.0.0.PALADIN_ALL]),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOfType([PC.0.0.PALADIN_ALL]))
@@ -344,7 +374,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(NearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOf(Myself))
@@ -370,7 +400,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SecondNearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOf(Myself))
@@ -396,7 +426,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(ThirdNearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOf(Myself))
@@ -422,7 +452,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FourthNearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FourthNearestEnemyOf(Myself))
@@ -448,7 +478,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(FifthNearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FifthNearestEnemyOf(Myself))
@@ -474,7 +504,7 @@ END
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	!GlobalTimerNotExpired("VortexWeb","LOCALS")
-	HaveSpellRES("SPIN575")
+	HaveSpell(WIZARD_SLOW)
 	!StateCheck(SixthNearestEnemyOf(Myself),STATE_SLOWED)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SixthNearestEnemyOf(Myself))

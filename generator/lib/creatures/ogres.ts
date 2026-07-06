@@ -220,7 +220,6 @@ class Ogre extends Creature {
         spell: {
           type: "noDec",
           excludeSpellStates: [SPELL_STATES.flying],
-          probability: 90,
           selfTarget: true,
         },
         triggers: [
@@ -230,6 +229,7 @@ class Ogre extends Creature {
             params: [ScriptTarget.myself, "STATE_INVISIBLE"],
           },
         ],
+        probability: 90,
       },
     });
   }
@@ -297,9 +297,7 @@ class Ogre extends Creature {
         },
       ],
       ability: {
-        spell: {
-          probability: 80,
-        },
+        spell: {},
         triggers: [
           { name: "Detect", params: ["NearestEnemyOf"] },
           {
@@ -319,6 +317,7 @@ class Ogre extends Creature {
           },
           { name: "HPPercentLT", params: [ScriptTarget.myself, 25] },
         ],
+        probability: 80,
       },
     });
   }

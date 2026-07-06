@@ -18,10 +18,9 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
         randomOrder: true,
       },
     ],
-    spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
-    },
+    spell: {},
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   ...presetFactory.create(
     [SPELLS.GreaterMalison.file, FNP_SPELLS.GreaterMalison.file],
@@ -36,10 +35,9 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   ),
   {
@@ -55,10 +53,24 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.Glitterdust.file,
+    ability: {
+      name: "ability.Glitterdust",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+        },
+      ],
+      spell: {},
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

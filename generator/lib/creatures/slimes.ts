@@ -136,11 +136,11 @@ class Slime extends Creature {
     return {
       spell: {
         type: "force",
-        probability: 100,
         selfTarget: true,
         remove: true,
       },
       triggers: withTriggers ? triggers : [],
+      probability: 100,
     };
   }
 }
@@ -942,10 +942,10 @@ class SlimeFamily extends CreatureFamily<Slime> {
         ],
         spell: {
           type: "force",
-          probability: 100,
           selfTarget: true,
         },
         range: 10,
+        probability: 100,
       },
     });
   }

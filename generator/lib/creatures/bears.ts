@@ -436,10 +436,10 @@ class BearFamily extends CreatureFamily<Bear> {
         ],
         spell: {
           type: "force",
-          probability: 20,
           selfTarget: true,
         },
         range: 10,
+        probability: 20,
       },
     });
   }
@@ -508,7 +508,6 @@ class BearFamily extends CreatureFamily<Bear> {
     spell: {
       resource: SPELLS.BerserkerRage.file,
       selfTarget: true,
-      probability: 50,
     },
     triggers: [
       { name: "See", params: ["NearestEnemyOf"] },
@@ -518,6 +517,7 @@ class BearFamily extends CreatureFamily<Bear> {
       },
       { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
     ],
+    probability: 50,
   };
 
   kaldranInit: CustomCode = {

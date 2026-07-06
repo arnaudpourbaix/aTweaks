@@ -10,11 +10,11 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.Vocalize",
       spell: {
-        probability: 100,
         selfTarget: true,
       },
-      triggers: [triggerFactory.stateCheck("STATE_SILENCED")],
       requireVocal: false,
+      probability: 100,
+      triggers: [triggerFactory.stateCheck("STATE_SILENCED")],
     },
   },
   {
@@ -23,10 +23,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.invisibility",
       spell: {
         excludeStateChecks: ["STATE_INVISIBLE"],
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [triggerFactory.detect("NearestEnemyOf")],
     },
   },
@@ -36,10 +36,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.improvedInvisibility",
       spell: {
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [triggerFactory.detect("NearestEnemyOf")],
     },
   },
@@ -49,10 +49,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.ShadowDoor",
       spell: {
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [
         triggerFactory.detect("NearestEnemyOf"),
         triggerFactory.hplt(75),
@@ -64,10 +64,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.bless",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -75,10 +75,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.resistFear",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -86,10 +86,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.chant",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -103,10 +103,9 @@ export const BUFF_PRESETS: AbilityPreset[] = [
         },
       ],
       range: 900,
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [triggerFactory.stateCheck("STATE_BLIND")],
     },
   },
@@ -140,20 +139,20 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.barkskin",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create([SPELLS.Shield.file, FNP_SPELLS.Shield.file], {
     name: "ability.Shield",
     spell: {
       selfTarget: true,
-      probability: DEFAULT_SPELL_PROBABILITY,
     },
     triggers: [triggerFactory.checkStat(2, "SCRIPTINGSTATE5")],
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
     preset: FNP_SPELLS.CircleOfBones.file,
@@ -161,10 +160,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.CircleOfBones",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [triggerFactory.checkSpellState("CIRCLE_OF_BONES", true)],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -172,26 +171,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     ability: {
       name: "ability.MagicResistance",
       spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       requireVocal: true,
-    },
-  },
-  {
-    preset: SPELLS.Glitterdust.file,
-    ability: {
-      name: "ability.Glitterdust",
-      targets: [
-        {
-          name: "Players",
-          randomOrder: true,
-        },
-      ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
-      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -200,10 +183,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.MinorSpellDeflection",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: triggerFactory.seeOneInTargetList("PCSpellcasters"),
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -212,10 +195,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.FireShield",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [triggerFactory.checkStatGT(0, "WIZARD_FIRE_SHIELD", true)],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -224,10 +207,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.MirrorImages",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
         excludeStateChecks: ["STATE_MIRRORIMAGE"],
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -236,10 +219,10 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.Haste",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
         excludeStateChecks: ["STATE_HASTED"],
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -248,12 +231,12 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.ProtectionFromMissiles",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [
         triggerFactory.checkSpellState("PROTECTION_FROM_NORMAL_MISSILES", true),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -262,19 +245,19 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.MinorGlobeOfInvulnerability",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create([SPELLS.Stoneskin.file, SPELLS.Ironskin.file], {
     name: "ability.Stoneskin",
     spell: {
       selfTarget: true,
-      probability: DEFAULT_SPELL_PROBABILITY,
     },
     triggers: [triggerFactory.checkStatLT(2, "STONESKINS")],
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
     preset: SPELLS.ProtectionFromMagicalWeapons.file,
@@ -282,7 +265,6 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       name: "ability.ProtectionFromMagicalWeapons",
       spell: {
         selfTarget: true,
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       triggers: [
         triggerFactory.checkStatGT(
@@ -292,6 +274,18 @@ export const BUFF_PRESETS: AbilityPreset[] = [
         ),
       ],
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.Blur.file,
+    ability: {
+      name: "ability.Blur",
+      spell: {
+        selfTarget: true,
+      },
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

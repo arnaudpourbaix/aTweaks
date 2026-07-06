@@ -14,10 +14,9 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
         triggerFactory.hplt(20),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -28,10 +27,9 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -41,10 +39,9 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -55,10 +52,9 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

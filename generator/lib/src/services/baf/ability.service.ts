@@ -1,15 +1,20 @@
 import deepmerge from "deepmerge";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
-import { GLOBAL_CONFIG } from "../../../config/generate";
+import { ScriptTarget } from "../../model/constants";
 import {
   CreatureAbility,
   CreatureAbilitySpell,
   RawCreatureAbility,
+  RawCreatureSequencerAbility,
 } from "../../model/creature/ability";
 import { Actions } from "../../model/script/actions";
 import { CustomCode, PartialCustomCode } from "../../model/script/script";
 import { Triggers } from "../../model/script/triggers";
-import { ScriptTarget } from "../../model/constants";
+import triggerFactory from "../../factories/trigger.factory";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import actionFactory from "../../factories/action.factory";
+import { StringReference } from "../../model/final/stringref";
+import { WithRequired } from "../../model/utility-types";
 
 class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
@@ -19,6 +24,50 @@ class AbilityService {
       this.getAbility(abil, randomGenerator),
     );
     return results;
+  }
+
+  getMinorSequencer(
+    presets: string[] & { length: 2 },
+  ): RawCreatureSequencerAbility {
+    return this.generateSequencer(presets, "ability.MinorSequencer");
+  }
+
+  getSequencer(presets: string[] & { length: 3 }): RawCreatureSequencerAbility {
+    return this.generateSequencer(presets, "ability.Sequencer");
+  }
+
+  private generateSequencer(
+    presets: string[] & { length: 2 | 3 },
+    name: StringReference,
+  ): RawCreatureSequencerAbility {
+    const ability: RawCreatureSequencerAbility = {
+      requireVocal: false,
+      name,
+      targets: [],
+      triggers: [
+        triggerFactory.global(GLOBAL_CONFIG.bafConstants.minorSequencer, 0),
+      ],
+      actionsAfter: [
+        actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.minorSequencer, 1),
+      ],
+      probability: 70,
+      spells: [],
+    };
+    for (const preset of presets) {
+      const rawAb = this.applyPreset(
+        {
+          spell: {
+            type: "force",
+            memorizedSpellCheck: false,
+          },
+        },
+        preset,
+      );
+      if (!rawAb.spell) throw new Error(`Sequencer only supports spells`);
+      ability.spells.push(rawAb.spell);
+      if (rawAb.targets) ability.targets?.push(...rawAb.targets);
+    }
+    return ability;
   }
 
   getCustomCodes(customCodes: PartialCustomCode[] | undefined): CustomCode[] {
@@ -40,11 +89,13 @@ class AbilityService {
   }
 
   private getAbility(
-    abil: RawCreatureAbility,
+    abil: RawCreatureAbility | RawCreatureSequencerAbility,
     randomGenerator: Generator<number>,
   ): CreatureAbility {
     let ability = structuredClone(abil);
-    if (ability.preset) ability = this.applyPreset(ability, ability.preset);
+    if ("preset" in ability && ability.preset) {
+      ability = this.applyPreset(ability, ability.preset);
+    }
     const triggers: Triggers.Trigger[] = ability.triggers ?? [];
     let targets =
       !ability.targets || Array.isArray(ability.targets)
@@ -52,7 +103,6 @@ class AbilityService {
         : undefined;
     if (!!ability.targets && !Array.isArray(ability.targets))
       targets = [ability.targets];
-    const actionsAfter: Actions.Action[] = ability.actionsAfter ?? [];
     const result: CreatureAbility = {
       infiniteUse: false,
       requireVocal: false,
@@ -61,81 +111,135 @@ class AbilityService {
       ...ability,
       targets: targets ?? [],
       name: ability.name ?? "ability.unknown",
-      isSpell: !!ability.spell && !ability.spell.isAttack,
+      isSpell: false,
       triggers,
       actions: ability.actionsBefore ?? [],
     };
-    const target = ability.targets ? ScriptTarget.token : ScriptTarget.myself;
-    if (!ability.spell) return result;
-    result.infiniteUse =
-      ability.spell.type !== "normal" && !ability.spell.remove;
-    result.resource = ability.spell.resource ?? ability.preset;
-    ability.spell.type ??= "normal";
-    ability.spell.memorizedSpellCheck ??= true;
-    if (!ability.spell.id && !ability.spell.resource)
-      throw new Error(`No spell specified for ability ${ability.name}`);
-    if (ability.spell.memorizedSpellCheck && ability.spell.id) {
-      triggers.unshift({ name: "HaveSpell", params: [ability.spell.id] });
-    } else if (ability.spell.memorizedSpellCheck && ability.spell.resource) {
-      triggers.unshift({
-        name: "HaveSpellRES",
-        params: [ability.spell.resource],
+    if ("spell" in ability && ability.spell) {
+      this.parseAbilitySpell(result, ability, ability.spell);
+    } else if ("spells" in ability) {
+      this.parseAbilitySpells(result, ability, ability.spells);
+    }
+    result.actions.push(...(ability.actionsAfter ?? []));
+    if (!!ability.probability && ability.probability < 100) {
+      const num = randomGenerator.next().value;
+      result.triggers.push({
+        name: "RandomNumGT",
+        params: [num, Math.round(num * (1 - ability.probability / 100))],
       });
     }
+    return result;
+  }
 
-    for (const state of ability.spell.excludeStateChecks ?? []) {
-      triggers.push({
+  private parseAbilitySpell(
+    result: CreatureAbility,
+    ability: RawCreatureAbility,
+    spell: CreatureAbilitySpell,
+  ): CreatureAbility {
+    const target = ability.targets ? ScriptTarget.token : ScriptTarget.myself;
+    result.isSpell = !spell.isAttack;
+    result.infiniteUse = spell.type !== "normal" && !spell.remove;
+    result.resource = spell.resource ?? ability.preset;
+    spell.type ??= "normal";
+    spell.memorizedSpellCheck ??= true;
+    if (!spell.id && !spell.resource)
+      throw new Error(`No spell specified for ability ${ability.name}`);
+    if (spell.memorizedSpellCheck && spell.id) {
+      result.triggers.unshift({
+        name: "HaveSpell",
+        params: [spell.id],
+      });
+    } else if (spell.memorizedSpellCheck && spell.resource) {
+      result.triggers.unshift({
+        name: "HaveSpellRES",
+        params: [spell.resource],
+      });
+    }
+    for (const state of spell.excludeStateChecks ?? []) {
+      result.triggers.push({
         name: "StateCheck",
         params: [target, state],
         negation: true,
       });
     }
-    for (const stat of ability.spell.excludeStatsChecks ?? []) {
-      triggers.push({
+    for (const stat of spell.excludeStatsChecks ?? []) {
+      result.triggers.push({
         name: "CheckStatGT",
         params: [target, 0, stat],
         negation: true,
       });
     }
-    for (const state of ability.spell.excludeSpellStates ?? []) {
-      triggers.push({
+    for (const state of spell.excludeSpellStates ?? []) {
+      result.triggers.push({
         name: "CheckSpellState",
         params: [target, state],
         negation: true,
       });
     }
-    if (!!ability.spell.probability && ability.spell.probability < 100) {
-      const num = randomGenerator.next().value;
-      triggers.push({
-        name: "RandomNumGT",
-        params: [num, Math.round(num * (1 - ability.spell.probability / 100))],
-      });
-    }
-    let spellTarget: string = ability.spell.selfTarget
+    let spellTarget: string = spell.selfTarget
       ? ScriptTarget.myself
       : ScriptTarget.lastSeen;
-    if (ability.spell.targetName) spellTarget = ability.spell.targetName;
-    result.actions.push(this.getSpellAction(ability.spell, spellTarget));
-    if (
-      ability.spell.remove &&
-      ability.spell.type !== "normal" &&
-      ability.spell.id
-    ) {
+    if (spell.targetName) spellTarget = spell.targetName;
+    result.actions.push(this.getSpellAction(spell, spellTarget));
+    if (spell.remove && spell.type !== "normal" && spell.id) {
       result.actions.push({
         name: "RemoveSpell",
-        params: [ability.spell.id],
+        params: [spell.id],
       });
-    } else if (
-      ability.spell.remove &&
-      ability.spell.type !== "normal" &&
-      ability.spell.resource
-    ) {
+    } else if (spell.remove && spell.type !== "normal" && spell.resource) {
       result.actions.push({
         name: "RemoveSpellRES",
-        params: [ability.spell.resource],
+        params: [spell.resource],
       });
     }
-    result.actions.push(...actionsAfter);
+    return result;
+  }
+
+  private parseAbilitySpells(
+    result: CreatureAbility,
+    ability: RawCreatureAbility,
+    spells: CreatureAbilitySpell[],
+  ): CreatureAbility {
+    const target = ability.targets ? ScriptTarget.token : ScriptTarget.myself;
+    if (
+      spells.some((s) => s.selfTarget) &&
+      !spells.every((s) => s.selfTarget)
+    ) {
+      throw new Error(
+        `Every spells must have the same target in ability ${ability.name}`,
+      );
+    }
+    result.isSpell = true;
+    result.infiniteUse = false;
+    // result.resource = spell.resource ?? ability.preset;
+    for (const spell of spells) {
+      for (const state of spell.excludeStateChecks ?? []) {
+        result.triggers.push({
+          name: "StateCheck",
+          params: [target, state],
+          negation: true,
+        });
+      }
+      for (const stat of spell.excludeStatsChecks ?? []) {
+        result.triggers.push({
+          name: "CheckStatGT",
+          params: [target, 0, stat],
+          negation: true,
+        });
+      }
+      for (const state of spell.excludeSpellStates ?? []) {
+        result.triggers.push({
+          name: "CheckSpellState",
+          params: [target, state],
+          negation: true,
+        });
+      }
+      let spellTarget: string = spell.selfTarget
+        ? ScriptTarget.myself
+        : ScriptTarget.lastSeen;
+      if (spell.targetName) spellTarget = spell.targetName;
+      result.actions.push(this.getSpellAction(spell, spellTarget));
+    }
     return result;
   }
 
@@ -143,17 +247,20 @@ class AbilityService {
     ability: RawCreatureAbility,
     presetName: string,
   ): RawCreatureAbility {
-    const preset = ABILITY_PRESETS.find((p) => p.preset === ability.preset);
+    const preset = ABILITY_PRESETS.find((p) => p.preset === presetName);
     if (!preset) throw new Error(`Unknown preset ${presetName}`);
+    if (Array.isArray(preset.ability.spell))
+      throw new Error(`Preset don't support spell arrays`);
     const result: RawCreatureAbility = deepmerge(preset.ability, ability, {});
-    if (result.spell && preset.ability.spell?.id && ability.spell?.resource)
-      result.spell.id = undefined;
-    else if (
-      result.spell &&
+    if (ability.spell && preset.ability.spell?.id && ability.spell.resource) {
+      ability.spell.id = undefined;
+    } else if (
+      ability.spell &&
       preset.ability.spell?.resource &&
-      ability.spell?.id
-    )
-      result.spell.resource = undefined;
+      ability.spell.id
+    ) {
+      ability.spell.resource = undefined;
+    }
     return result;
   }
 

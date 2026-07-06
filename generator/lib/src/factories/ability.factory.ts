@@ -11,11 +11,11 @@ class AbilityFactory {
       name: "ability.polymorphSelf",
       spell: {
         id: "WIZARD_POLYMORPH_SELF",
-        probability: DEFAULT_SPELL_PROBABILITY,
         selfTarget: true,
       },
       triggers: payload.triggers,
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     });
     // TODO: cover all these creatures
     // Set intelligent form depending on situation

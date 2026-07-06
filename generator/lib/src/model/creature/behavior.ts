@@ -3,7 +3,11 @@ import {
   CustomCode,
   PartialCustomCode,
 } from "../script/script";
-import { CreatureAbility, RawCreatureAbility } from "./ability";
+import {
+  CreatureAbility,
+  RawCreatureAbility,
+  RawCreatureSequencerAbility,
+} from "./ability";
 import { SpellCaster } from "./spellcaster";
 
 export interface CreatureBehavior {
@@ -65,7 +69,10 @@ export interface CreatureBehavior {
 export type PartialCreatureBehavior = Omit<
   Partial<CreatureBehavior>,
   "abilities" | "customCodes"
-> & { abilities?: RawCreatureAbility[]; customCodes?: PartialCustomCode[] };
+> & {
+  abilities?: (RawCreatureAbility | RawCreatureSequencerAbility)[];
+  customCodes?: PartialCustomCode[];
+};
 
 export const BEHAVIOR_DEFAULT: CreatureBehavior = {
   dialog: [],

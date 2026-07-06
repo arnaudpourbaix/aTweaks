@@ -49,6 +49,10 @@ export interface CreatureAbility extends BaseCreatureAbility {
   infiniteUse: boolean;
   actions: Actions.Action[];
   resource?: string;
+  /**
+   * Probability (0-100)
+   */
+  probability?: number;
 }
 
 export type RawCreatureAbility = Partial<BaseCreatureAbility> & {
@@ -65,6 +69,26 @@ export type RawCreatureAbility = Partial<BaseCreatureAbility> & {
    * Actions after casting a spell
    */
   actionsAfter?: Actions.Action[];
+  /**
+   * Probability (0-100)
+   */
+  probability?: number;
+};
+
+export type RawCreatureSequencerAbility = Partial<BaseCreatureAbility> & {
+  spells: CreatureAbilitySpell[];
+  /**
+   * Actions before casting a spell
+   */
+  actionsBefore?: Actions.Action[];
+  /**
+   * Actions after casting a spell
+   */
+  actionsAfter?: Actions.Action[];
+  /**
+   * Probability (0-100)
+   */
+  probability?: number;
 };
 
 export interface CreatureAbilitySpell {
@@ -74,10 +98,6 @@ export interface CreatureAbilitySpell {
   excludeStateChecks?: StateIdentifier[];
   excludeSpellStates?: string[];
   excludeStatsChecks?: StatsIdentifier[];
-  /**
-   * Probability (0-100)
-   */
-  probability?: number;
   /**
    * Target self with spell even if target is set
    */

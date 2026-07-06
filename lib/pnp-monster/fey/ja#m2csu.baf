@@ -6,6 +6,35 @@ THEN
 		DestroySelf()
 END
 
+// Precast Stoneskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPWI408")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPWI408",Myself)
+		RemoveSpellRES("SPWI408")
+		Continue()
+END
+
+// Precast Ironskin
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+	HaveSpellRES("SPPR506")
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("SPPR506",Myself)
+		RemoveSpellRES("SPPR506")
+		Continue()
+END
+
+IF
+	Global("JA#PRECAST_LONG","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JA#PRECAST_LONG","LOCALS",1)
+END
+
 // Detect combat
 IF
 	Global("JA#COMBAT","LOCALS",0)
@@ -285,7 +314,7 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("ja#s1f8")
+	HaveSpell(WIZARD_DIMENSION_DOOR)
 	OR(2)
 		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
@@ -295,7 +324,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("ja#s1f8","RR#TRAT")
-		RemoveSpellRES("ja#s1f8")
+		RemoveSpell(WIZARD_DIMENSION_DOOR)
 		Wait(1)
 		SetInterrupt(TRUE)
 END

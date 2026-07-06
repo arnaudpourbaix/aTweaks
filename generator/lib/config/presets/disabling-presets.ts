@@ -1,6 +1,6 @@
 import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
-import { Durations, ScriptTarget } from "../../src/model/constants";
+import { Durations } from "../../src/model/constants";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
@@ -23,10 +23,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -43,10 +42,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -65,10 +63,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -86,10 +83,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create(
@@ -107,10 +103,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   ),
   {
@@ -128,10 +123,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -149,10 +143,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -198,9 +191,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
       ],
       spell: {
         excludeStateChecks: ["STATE_BLIND", "STATE_DISABLED"],
-        probability: DEFAULT_SPELL_PROBABILITY,
       },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -217,10 +210,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -236,11 +228,10 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       timer: { name: "Forbiddance", value: 2 * Durations.round },
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -257,10 +248,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
@@ -278,10 +268,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           ],
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   ...presetFactory.create([SPELLS.Emotion.file, FNP_SPELLS.Emotion.file], {
@@ -293,10 +282,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
         randomOrder: true,
       },
     ],
-    spell: {
-      probability: DEFAULT_SPELL_PROBABILITY,
-    },
+    spell: {},
     requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
     preset: SPELLS.TeleportField.file,
@@ -308,10 +296,9 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
           randomOrder: true,
         },
       ],
-      spell: {
-        probability: DEFAULT_SPELL_PROBABILITY,
-      },
+      spell: {},
       requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

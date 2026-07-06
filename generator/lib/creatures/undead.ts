@@ -2696,6 +2696,8 @@ class UndeadFamily extends CreatureFamily<Undead> {
         this.preset(SPELLS.FlameArrow.file),
         this.preset(SPELLS.LightningBolt.file),
         this.preset(SPELLS.HoldPersonWizard.file),
+        this.minorSequencer([SPELLS.MirrorImages.file, SPELLS.Blur.file]),
+        this.minorSequencer([SPELLS.Web.file, SPELLS.Combust.file]),
         this.preset(SPELLS.Combust.file),
         this.preset(SPELLS.MelfAcidArrow.file),
         this.preset(SPELLS.AgannazarScorcher.file),
@@ -2704,11 +2706,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         this.preset(SPELLS.MagicMissiles.file),
         this.preset(SPELLS.BurningHands.file),
       ],
-      spellcaster: {
-        minorSequencer: {
-          presets: [SPELLS.Web.file, SPELLS.Combust.file],
-        },
-      },
+      spellcaster: {},
     });
     ghost.setAdjustments([
       {

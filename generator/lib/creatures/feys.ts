@@ -1032,13 +1032,13 @@ class FeyFamily extends CreatureFamily<Fey> {
       ability: {
         spell: {
           type: "force",
-          probability: DEFAULT_SPELL_PROBABILITY,
         },
         targets: [
           {
             name: "Animals",
           },
         ],
+        probability: DEFAULT_SPELL_PROBABILITY,
         disableInterrupt: true,
       },
     });
@@ -1101,9 +1101,9 @@ class FeyFamily extends CreatureFamily<Fey> {
       ability: {
         spell: {
           type: "force",
-          probability: 10,
         },
         disableInterrupt: true,
+        probability: 10,
       },
     });
   }
