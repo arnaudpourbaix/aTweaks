@@ -10,6 +10,8 @@
     "start": "nodemon --watch lib/src/**/*.ts --exec ts-node src/index.ts",
     "atweaks": "ts-node lib/src/index.ts",
     "build": "tsc -p .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "local": "sudo npm i -g && generate",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install"
   },
@@ -39,6 +41,7 @@
     "@types/node": "^18.15.11",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^2.1.9"
   }
 }

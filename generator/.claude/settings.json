@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"console.log\\(require\\('path'\\).resolve\\(process.cwd\\(\\), '..','lib','pnp-monster','ankheg','ja#m1.baf'\\)\\)\")"
+    ]
+  }
+}

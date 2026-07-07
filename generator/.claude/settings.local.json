@@ -3,7 +3,12 @@
     "allow": [
       "Bash(xargs wc -l)",
       "Bash(cd \"c:/Games/Baldur's Gate Enhanced Edition/aTweaks\" && find . -maxdepth 1 -not -path '*/node_modules*' -not -path '*/.git*' | sort)",
-      "Read(//c/Games/Baldur's Gate Enhanced Edition/aTweaks/**)"
+      "Read(//c/Games/Baldur's Gate Enhanced Edition/aTweaks/**)",
+      "Bash(npm -v)",
+      "Bash(npm install *)",
+      "Bash(npm ls *)",
+      "Bash(npx vitest *)",
+      "Read(//c/Games/Baldur's Gate Edition/aTweaks/generator/lib/src/services/baf/**)"
     ]
   }
 }

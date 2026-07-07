@@ -22,31 +22,15 @@ import weiduCreatureService from "../weidu/weidu-creature.service";
 
 class BafGeneratorService {
   generate(creature: Creature): void {
-    const statements: Statements = statementService.buildStatements(creature, {
-      summon: false,
-    });
-    const code = statements
-      .map((statement) => this.generateStatement(statement))
-      .join("");
-    const content = `// ${translationService.from(
-      creature.name,
-    )}${CR}${CR}${code}`;
     const folder = utils.getFamilyFolder(creature.family);
     utils.writeFile(
       path.join(
         folder,
         weiduCreatureService.getScriptName(creature, { ext: true }),
       ),
-      content,
+      this.buildContent(creature, { summon: false }),
     );
     if (creature.adjustments.some((a) => !!a.summon)) {
-      const statements: Statements = statementService.buildStatements(
-        creature,
-        { summon: true },
-      );
-      const content = statements
-        .map((statement) => this.generateStatement(statement))
-        .join("");
       utils.writeFile(
         path.join(
           folder,
@@ -55,9 +39,21 @@ class BafGeneratorService {
             summon: true,
           }),
         ),
-        content,
+        this.buildContent(creature, { summon: true }),
       );
     }
+  }
+
+  buildContent(creature: Creature, options: { summon: boolean }): string {
+    const statements: Statements = statementService.buildStatements(
+      creature,
+      options,
+    );
+    const code = statements
+      .map((statement) => this.generateStatement(statement))
+      .join("");
+    if (options.summon) return code;
+    return `// ${translationService.from(creature.name)}${CR}${CR}${code}`;
   }
 
   generateStatement(statement: ConditionalStatement): string {
