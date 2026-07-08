@@ -161,6 +161,9 @@ class DocumentationService {
       }
       result += text;
     }
+    if (result) {
+      result = `<div class="detail-section"><h4>Traits</h4><div class="traits">${result}</div></div>`;
+    }
     this.replace(template, "traits", result);
   }
 

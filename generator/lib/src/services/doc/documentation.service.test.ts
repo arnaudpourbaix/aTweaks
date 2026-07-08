@@ -1,7 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { Creature } from "../../model/creature/creature";
 import { Family } from "../../model/creature/family";
+import { ImmunityConfig } from "../../model/final/immunity";
+import { State } from "../../state";
 import documentationService from "./documentation.service";
 
 describe("getFamilyMenu", () => {
@@ -70,5 +72,47 @@ describe("addSpecial", () => {
     documentationService.addSpecial(template, creature);
 
     expect(template.text).toBe("");
+  });
+});
+
+describe("getCreatureTraits", () => {
+  const originalImmunities = State.immunities;
+
+  afterEach(() => {
+    State.immunities = originalImmunities;
+  });
+
+  it("renders nothing when the creature has no traits, immunities, or trait items", () => {
+    State.immunities = [];
+    const creature = {
+      data: { immunities: [], items: { equipped: [] } },
+    } as unknown as Creature;
+    const template = { text: "{{traits}}" };
+
+    documentationService.getCreatureTraits(template, creature);
+
+    expect(template.text).toBe("");
+  });
+
+  it("wraps trait content in a detail-section with a Traits heading when present", () => {
+    State.immunities = [
+      {
+        name: "construct",
+        type: "trait",
+        stringRef: "common.traits.construct.name",
+      } as unknown as ImmunityConfig,
+    ];
+    const creature = {
+      data: { immunities: ["construct"], items: { equipped: [] } },
+    } as unknown as Creature;
+    const template = { text: "{{traits}}" };
+
+    documentationService.getCreatureTraits(template, creature);
+
+    expect(template.text).toBe(
+      '<div class="detail-section"><h4>Traits</h4><div class="traits">' +
+        '<h5><a href="#construct">Construct</a></h5>' +
+        "</div></div>",
+    );
   });
 });
