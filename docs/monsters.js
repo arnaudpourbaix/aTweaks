@@ -56,4 +56,60 @@
       observer.observe(creatures[j]);
     }
   }
+
+  function replaceDashLinesInTextNode(textNode) {
+    var lines = textNode.nodeValue.split("\n");
+    var hasDashLine = false;
+    for (var i = 0; i < lines.length; i++) {
+      if (/^- /.test(lines[i])) {
+        hasDashLine = true;
+        break;
+      }
+    }
+    if (!hasDashLine) return;
+
+    var fragment = document.createDocumentFragment();
+    var i = 0;
+    while (i < lines.length) {
+      if (/^- /.test(lines[i])) {
+        var ul = document.createElement("ul");
+        ul.className = "dash-list";
+        while (i < lines.length && /^- /.test(lines[i])) {
+          var li = document.createElement("li");
+          li.textContent = lines[i].replace(/^- /, "");
+          ul.appendChild(li);
+          i++;
+        }
+        fragment.appendChild(ul);
+      } else {
+        var isLast = i === lines.length - 1;
+        fragment.appendChild(
+          document.createTextNode(lines[i] + (isLast ? "" : "\n")),
+        );
+        i++;
+      }
+    }
+    textNode.parentNode.replaceChild(fragment, textNode);
+  }
+
+  function convertDashListsToUl() {
+    var containers = document.querySelectorAll(".weapon, .traits, .abilities");
+    for (var c = 0; c < containers.length; c++) {
+      var walker = document.createTreeWalker(
+        containers[c],
+        NodeFilter.SHOW_TEXT,
+        null,
+      );
+      var textNodes = [];
+      var node;
+      while ((node = walker.nextNode())) {
+        textNodes.push(node);
+      }
+      for (var t = 0; t < textNodes.length; t++) {
+        replaceDashLinesInTextNode(textNodes[t]);
+      }
+    }
+  }
+
+  convertDashListsToUl();
 })();

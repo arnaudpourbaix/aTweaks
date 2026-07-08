@@ -56,12 +56,14 @@ Both are enhancements only — without JS (or if it fails to load), the menu sti
 
 ### 3. Visual design
 
-- **Theme**: system font stack, light/dark support via `prefers-color-scheme`, single accent color for links/active states, generous whitespace replacing the current dense border-heavy look.
+- **Theme**: system font stack, single fixed light theme (no `prefers-color-scheme` dark variant — see Revision below), single accent color for links/active states, generous whitespace replacing the current dense border-heavy look.
 - **Layout**: CSS grid — sticky sidebar + fluid content column on desktop (≥768px); collapses to the drawer-behind-toggle-button pattern described above on narrower viewports.
 - **Creature card**: the current `<table class="statBlock">` (forces `white-space: nowrap`, doesn't reflow) is replaced by a responsive CSS-grid label/value stat block inside a bordered card, showing the same fields in the same order. Column count reduces at narrow widths instead of causing horizontal scroll.
 - **Traits glossary**: keeps its current content and structure, restyled to match the new theme.
 
 This page's presentation becomes independent of `docs/atweaks.css`: new files `docs/monsters.css` and `docs/monsters.js` are introduced (hand-authored static assets, not generated), and the templates reference them instead of `atweaks.css`.
+
+**Revision (post-implementation, during manual verification):** the initial implementation included light/dark theme support via `prefers-color-scheme`. After seeing the page rendered, the requester asked to keep the parchment background image (`docs/bkg_base.jpg`, the same texture used by the legacy `atweaks.css`) always visible behind the new layout, rather than a plain white/dark background. Since that parchment texture only reads well against a light theme, dark-mode support was dropped entirely in favor of always showing the parchment background — `docs/monsters.css`'s `body` rule sets `background-color: #f2ecda; background-image: url(./bkg_base.jpg);` unconditionally, and the `@media (prefers-color-scheme: dark)` block was removed.
 
 ### 4. Files touched
 
