@@ -81,14 +81,6 @@ beforeAll(async () => {
   tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "atweaks-golden-"));
   const pnpMonsterSrc = path.join(MOD_ROOT, "lib/pnp-monster");
   copyRecursive(pnpMonsterSrc, path.join(tempDir, "lib/pnp-monster"));
-  // Unlike utils.writeFile(), documentationService/weiduCoreService/
-  // weiduFunctionService/translationService write these files directly
-  // without creating their parent directory first.
-  fs.mkdirSync(path.join(tempDir, "docs"), { recursive: true });
-  fs.mkdirSync(path.join(tempDir, "lib/common"), { recursive: true });
-  for (const lang of LANGUAGES) {
-    fs.mkdirSync(path.join(tempDir, "tra", lang), { recursive: true });
-  }
 
   await stateService.init();
   State.modFolder = tempDir;

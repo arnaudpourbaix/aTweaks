@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import path from "path";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
@@ -9,6 +8,7 @@ import { State } from "../../state";
 import creatureService from "../creature.service";
 import itemService from "../item.service";
 import translationService from "../translation.service";
+import utils from "../utils/utils.service";
 
 class DocumentationService {
   private families: string[] = [];
@@ -25,11 +25,10 @@ class DocumentationService {
     this.replace(template, "monsters", this.monsters.join(""));
     this.replace(template, "families", this.families.join(""));
     this.replace(template, "traits", this.getTraits());
-    const outPath = path.join(State.modFolder, "docs/monsters.html");
     try {
-      fs.writeFileSync(outPath, template.text);
+      utils.writeFile("docs/monsters.html", template.text);
     } catch (e) {
-      throw new Error(`Failed to write documentation to ${outPath}: ${e}`);
+      throw new Error(`Failed to write documentation to docs/monsters.html: ${e}`);
     }
   }
 

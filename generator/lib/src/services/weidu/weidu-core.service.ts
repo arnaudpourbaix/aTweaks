@@ -1,5 +1,3 @@
-import * as fs from "fs";
-import path from "path";
 import { SPELL_STATES } from "../../../config/common";
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { COMMON_PROJECTILES } from "../../../spells/projectiles";
@@ -7,7 +5,6 @@ import { CR, TAB } from "../../model/constants";
 import { EquippedItem, JEWEL_SLOTS } from "../../model/creature/item";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { ItemFlagEnum } from "../../model/spell-item/effect.enums";
-import { State } from "../../state";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduProjectileService from "./weidu-projectile.service";
@@ -19,10 +16,7 @@ class WeiduCoreService extends AbstractWeiduService {
     const content = this.lines
       .map((l) => `${TAB.repeat(l.tab)}${l.code}`)
       .join(CR);
-    fs.writeFileSync(
-      path.join(State.modFolder, GLOBAL_CONFIG.files.coreMonsters),
-      content,
-    );
+    utils.writeFile(GLOBAL_CONFIG.files.coreMonsters, content);
   }
 
   generateSpellStates() {

@@ -1,5 +1,3 @@
-import * as fs from "fs";
-import path from "path";
 import {
   getTranslationKeys,
   LANG,
@@ -8,7 +6,6 @@ import {
   TranslationKey,
 } from "../../translations/i18n";
 import { CR, TAB } from "../model/constants";
-import { State } from "../state";
 import { AbstractWeiduService } from "./weidu/abstract-weidu.service";
 import { StringReference } from "../model/final/stringref";
 import utils from "./utils/utils.service";
@@ -108,10 +105,7 @@ class TranslationService extends AbstractWeiduService {
       this.add(lines, `@${t.stringRef} = ~${t.text}~`);
     }
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
-    fs.writeFileSync(
-      path.join(State.modFolder, `tra/${lang}/generated.tra`),
-      content
-    );
+    utils.writeFile(`tra/${lang}/generated.tra`, content);
   }
 }
 
