@@ -1,42 +1,46 @@
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8" />
   <title>PnP creatures</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link href="atweaks.css" rel="stylesheet" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="monsters.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-  <h1><acronym title="Pen and Paper">PnP</acronym> creatures</h1>
-
-  <h2><a id="Component_summary">Component summary</a></h2>
-  <div class="section">
+  <div class="topbar">
+    <button class="menu-toggle" type="button" aria-label="Toggle creature menu">☰ Creatures</button>
+  </div>
+  <div class="backdrop"></div>
+  <header class="intro">
+    <h1>PnP creatures</h1>
     <p>
       This component brings all creatures in the game closer to their
-      <acronym title="Pen and Paper">PnP</acronym> counterparts. Legitimately
+      <abbr title="Pen and Paper">PnP</abbr> counterparts. Legitimately
       missing abilities are restored and spuriously granted benefits are
       removed. For this purpose, the AD&amp;D Monstrous Manual and the
       Monstrous Compendium were used as reference. The creatures'
-      <acronym title="Artificial Intelligence">AI</acronym> has been improved
-      as well, and it now allows them to act in accordance to the behavior
-      described in the source books. In effect, these changes may increase or decrease the difficulty of dealing with
-      these creatures.
+      <abbr title="Artificial Intelligence">AI</abbr> has been improved
+      as well, and it now allows them to act in accordance with the
+      behavior described in the source books. In effect, these changes
+      may increase or decrease the difficulty of dealing with these
+      creatures.
     </p>
-  </div>
-  <div class="row">
-    <div class="menu">
+  </header>
+  <div class="layout">
+    <nav class="sidebar">
       <ul>{{families}}</ul>
-    </div>
-    <div class="main">
+    </nav>
+    <main class="content">
       {{monsters}}
-    </div>
+      <section class="traits-glossary">
+        <h2>Traits</h2>
+        <div class="traits">{{traits}}</div>
+      </section>
+    </main>
   </div>
-  <h3>
-    Traits
-  </h3>
-  <div class="traits">{{traits}}</div>
+  <script src="monsters.js" defer></script>
 </body>
 
 </html>

@@ -1,58 +1,25 @@
-<div class="creature">
-  <h3><a id="{{id}}" name="{{name}}">{{name}}</a></h3>
-  <table class="statBlock right" cellspacing="0">
-    <tbody>
-      <tr>
-        <th>Ability Scores</th>
-        <td>STR {{str}}, DEX {{dex}}, CON {{con}}, INT {{int}}, WIS {{wis}}, CHA {{cha}}</td>
-      </tr>
-      <tr>
-        <th>Alignment</th>
-        <td>{{align}}</td>
-      </tr>
-      <tr>
-        <th>Base Armor Class</th>
-        <td>{{ac}}</td>
-      </tr>
-      <tr>
-        <th>Movement</th>
-        <td>{{movement}}</td>
-      </tr>
-      <tr>
-        <th>Hit Dice</th>
-        <td>{{hitDice}}</td>
-      </tr>
-      <tr>
-        <th>THAC0</th>
-        <td>{{thac0}}</td>
-      </tr>
-      <tr>
-        <th>Attacks per Round</th>
-        <td>{{apr}}</td>
-      </tr>
-      <tr>
-        <th>Attacks</th>
-        <td>{{attacks}}</td>
-      </tr>
-      <tr>
-        <th>Traits</th>
-        <td>{{traits}}</td>
-      </tr>
-      {{special}}
-      <tr>
-        <th>Size</th>
-        <td>{{size}}</td>
-      </tr>
-      <tr>
-        <th>Morale</th>
-        <td>{{morale}}</td>
-      </tr>
-      <tr>
-        <th>XP Value</th>
-        <td>{{xp}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="creature" id="{{id}}">
+  <h3>{{name}}</h3>
+  <dl class="stat-grid">
+    <div class="stat"><dt>Ability Scores</dt><dd>STR {{str}}, DEX {{dex}}, CON {{con}}, INT {{int}}, WIS {{wis}}, CHA {{cha}}</dd></div>
+    <div class="stat"><dt>Alignment</dt><dd>{{align}}</dd></div>
+    <div class="stat"><dt>Base Armor Class</dt><dd>{{ac}}</dd></div>
+    <div class="stat"><dt>Movement</dt><dd>{{movement}}</dd></div>
+    <div class="stat"><dt>Hit Dice</dt><dd>{{hitDice}}</dd></div>
+    <div class="stat"><dt>THAC0</dt><dd>{{thac0}}</dd></div>
+    <div class="stat"><dt>Attacks per Round</dt><dd>{{apr}}</dd></div>
+    {{special}}
+    <div class="stat"><dt>Size</dt><dd>{{size}}</dd></div>
+    <div class="stat"><dt>Morale</dt><dd>{{morale}}</dd></div>
+    <div class="stat"><dt>XP Value</dt><dd>{{xp}}</dd></div>
+  </dl>
+  <div class="detail-section">
+    <h4>Attacks</h4>
+    {{attacks}}
+  </div>
+  <div class="detail-section">
+    <h4>Traits</h4>
+    {{traits}}
+  </div>
   {{abilities}}
-  <hr />
 </div>
