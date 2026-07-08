@@ -171,7 +171,8 @@ class UtilsService {
     if (index === -1) index = file.lastIndexOf("\\");
     let folder = file.substring(0, index);
     fs.mkdirSync(folder, { recursive: true });
-    fs.writeFileSync(file, content);
+    const normalized = content.replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
+    fs.writeFileSync(file, normalized);
   }
 
   getFamilyFolder(family: MonsterFamilyEnum): string {

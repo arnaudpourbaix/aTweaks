@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { Spell } from "../../model/spell-item/spell-item";
@@ -5,6 +8,7 @@ import { SpellTypeEnum } from "../../model/spell-item/effect.enums";
 import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { Actions } from "../../model/script/actions";
 import { Triggers } from "../../model/script/triggers";
+import { State } from "../../state";
 import utils from "./utils.service";
 
 describe("objectKeys", () => {
@@ -222,5 +226,27 @@ describe("shuffleArray", () => {
     const input = [1, 2, 3];
     utils.shuffleArray(input);
     expect(input).toEqual([1, 2, 3]);
+  });
+});
+
+describe("writeFile", () => {
+  it("normalizes all line endings to CRLF regardless of the input mix", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "atweaks-writefile-"));
+    const originalModFolder = State.modFolder;
+    State.modFolder = tempDir;
+    try {
+      const file = path.join(tempDir, "mixed.txt");
+      utils.writeFile(
+        file,
+        "line one\r\nline two\nline three\r\nline four\n",
+      );
+      const written = fs.readFileSync(file, "utf-8");
+      expect(written).toBe(
+        "line one\r\nline two\r\nline three\r\nline four\r\n",
+      );
+    } finally {
+      State.modFolder = originalModFolder;
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
   });
 });
