@@ -36,6 +36,14 @@ a {
   color: var(--accent);
 }
 
+.creature a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--text-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 abbr {
   text-decoration-style: dotted;
   cursor: help;
@@ -203,10 +211,12 @@ abbr {
   margin-top: 1rem;
 }
 
-.detail-section h4,
-.abilities h4 {
-  font-size: 1rem;
-  margin: 0 0 .5rem;
+.creature h4 {
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 1rem 0 1rem;
+  padding-bottom: .25rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .detail-section hr {
