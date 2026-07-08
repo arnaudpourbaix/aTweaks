@@ -32,12 +32,22 @@ class DocumentationService {
     }
   }
 
+  getFamilyMenu(family: Family): string {
+    const links = family.creatures
+      .map(
+        (creature) =>
+          `<li><a href="#m${creature.id}">${translationService.from(
+            creature.name,
+          )}</a></li>`,
+      )
+      .join("");
+    return `<li class="family"><details><summary>${
+      MonsterFamilyEnum[family.id]
+    }</summary><ul>${links}</ul></details></li>`;
+  }
+
   addFamily(family: Family) {
-    this.families.push(
-      `<li><a href="#m${family.creatures[0].id}">${
-        MonsterFamilyEnum[family.id]
-      }</a></li>`,
-    );
+    this.families.push(this.getFamilyMenu(family));
     for (const creature of family.creatures) {
       this.addCreature(creature);
     }
@@ -97,7 +107,7 @@ class DocumentationService {
       special += `Turned as a level ${creature.data.level1.value} undead`;
     }
     if (special) {
-      special = `<tr><th>Special</th><td>${special}</td></tr>`;
+      special = `<div class="stat"><dt>Special</dt><dd>${special}</dd></div>`;
     }
     this.replace(template, "special", special);
   }
