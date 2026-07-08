@@ -291,9 +291,12 @@ class EffectService {
         effect.parameter2 = `${effect.animationType}`;
         break;
       case EffectTypeEnum.ModifyAttacksPerRound:
-        effect.parameter1 = `${creatureService.getAttacksPerRound(
-          effect.value,
-        )}`;
+        const apr = creatureService.getAttacksPerRound(effect.value);
+        if (apr.doubleApr)
+          throw new Error(
+            `Can't have more than 5 APR in an effect: ${effect.value}`,
+          );
+        effect.parameter1 = `${apr.value}`;
         effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.DisableSpellcasting:

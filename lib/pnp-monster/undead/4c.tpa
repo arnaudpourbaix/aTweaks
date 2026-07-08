@@ -118,7 +118,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=175
-					hp=16
+					hp=24
 					ac=7
 					thac0=19
 					apr=3
@@ -133,7 +133,7 @@ BEGIN
 					intelligence=7
 					wisdom=10
 					dexterity=15
-					constitution=10
+					constitution=9
 					charisma=6
 					morale=12
 					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
@@ -164,8 +164,8 @@ BEGIN
 				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~KORAX~) BEGIN 
-				WRITE_SHORT 0x24 32 // hp
-				WRITE_SHORT 0x26 32 // hp
+				WRITE_SHORT 0x24 48 // hp
+				WRITE_SHORT 0x26 48 // hp
 				WRITE_BYTE 0x52 17 // thac0
 				WRITE_BYTE 0x54 13 // saveDeath
 				WRITE_BYTE 0x55 15 // saveWand

@@ -1,9 +1,10 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations, ScriptTarget } from "../src/model/constants";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import {
   AbilityDamageTypeEnum,
   EffectDamageTypeEnum,

@@ -3,10 +3,11 @@ import { SPELLS } from "../config/spell-names";
 import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
-import { Durations, ScriptTarget } from "../src/model/constants";
+import { ScriptTarget } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import { CustomCode } from "../src/model/script/script";
 import {
   AbilityDamageTypeEnum,

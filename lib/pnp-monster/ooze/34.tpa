@@ -1,7 +1,7 @@
 // Generated file (don't edit)
 
 // Olive Slime Creature
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m34.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m34.baf~
 
 // Olive Slime Creature traits
 CREATE ITM "ja#i0m34"
@@ -72,7 +72,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=2500
-					hp=150
+					hp=194
 					ac=9
 					thac0=9
 					apr=1

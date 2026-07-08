@@ -882,8 +882,8 @@ Melee damage: 1D8 (Piercing)
 Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
-@10593 = ~Slashing damage: 1D4
-Slashing damage: 1D4~
+@10593 = ~Slashing damage: 1D4+1
+Slashing damage: 1D4+1~
 @10594 = ~Paws
 
 Melee damage: 1D3 (Slashing)
@@ -891,8 +891,8 @@ Speed Factor: 5
 Range: 1 feet
 
 Cast spell Rear claws attack (20%):
-Slashing damage: 1D4
-Slashing damage: 1D4~
+Slashing damage: 1D4+1
+Slashing damage: 1D4+1~
 @10595 = ~Jaws
 
 Melee damage: 1D6 (Piercing)

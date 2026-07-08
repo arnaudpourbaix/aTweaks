@@ -1,8 +1,8 @@
 // Generated file (don't edit)
 
 // Mustard Jelly
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m2e.baf~
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m2esu.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m2e.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m2esu.baf~
 
 // Slime Split
 CREATE SPL "ja#s0m2e"
@@ -99,7 +99,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=4000
-					hp=98
+					hp=126
 					ac=4
 					thac0=13
 					apr=1

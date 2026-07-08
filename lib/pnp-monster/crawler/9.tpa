@@ -61,11 +61,10 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=420
-					hp=30
+					hp=31
 					ac=3
 					thac0=17
 					apr=4
-					doubleApr=1
 					saveDeath=13
 					saveWand=15
 					savePolymorph=14
@@ -84,7 +83,7 @@ BEGIN
 					race=IDS_OF_SYMBOL (~race~ ~CARRIONCRAWLER~)
 					class=IDS_OF_SYMBOL (~class~ ~CARRIONCRAWLER~)
 					alignment=IDS_OF_SYMBOL (~align~ ~NEUTRAL~)
-					movement=5
+					movement=10
 					enforce=1
 			END
 			// Assigning ja#m9
@@ -108,8 +107,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~CRYPTCRA~) BEGIN 
 				WRITE_LONG 0x14 650 // xpv
-				WRITE_SHORT 0x24 60 // hp
-				WRITE_SHORT 0x26 60 // hp
+				WRITE_SHORT 0x24 61 // hp
+				WRITE_SHORT 0x26 61 // hp
 				WRITE_BYTE 0x52 9 // thac0
 				WRITE_BYTE 0x54 11 // saveDeath
 				WRITE_BYTE 0x55 13 // saveWand

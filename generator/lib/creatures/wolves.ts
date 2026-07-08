@@ -1,10 +1,10 @@
 import { MonsterItemIconEnum } from "../config/item";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { CreatureGrabConfig } from "../src/model/creature/grab";
 import { ItemSlot } from "../src/model/creature/item";
+import { Durations } from "../src/model/game-data/durations";
 import { Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -629,6 +629,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
         gender: "MALE",
         size: "Large",
         movement: 18,
+        immunities: ["magicalBeast"],
         items: {
           remove: ["WOLFWI1", "WOLFWI2"],
         },
@@ -689,6 +690,7 @@ class WolfFamily extends CreatureFamily<Wolf> {
         gender: "MALE",
         size: "Medium",
         movement: 18,
+        immunities: ["magicalBeast"],
         items: {
           remove: ["P1-6"],
         },

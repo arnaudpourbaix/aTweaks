@@ -1,11 +1,12 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations, ScriptTarget } from "../src/model/constants";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
 import { ImmunityName } from "../src/model/final/immunity";
+import { Durations } from "../src/model/game-data/durations";
 import {
   BaseEffect,
   DamageEffect,
@@ -829,7 +830,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
         gender: "NIETHER",
         size: "Huge",
         movement: 6, // Web 15
-        immunities: ["spider"],
+        immunities: ["spider", "magicalBeast"],
         items: {
           remove: ["SPIDPH1", "ANTIWEB", "SPIDPHSU"],
         },

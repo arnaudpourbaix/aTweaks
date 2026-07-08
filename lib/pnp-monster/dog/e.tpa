@@ -58,12 +58,13 @@ BEGIN
 			REMOVE_MEMORIZED_SPELLS
 			REMOVE_CRE_ITEM ~P1-6~
 			REPLACE_CRE_ITEM ~ja#i0me~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i12~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_MEMORIZED_SPELL ~ja#s0me~ #0 ~innate~ (1) // Blink
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					xpv=270
-					hp=36
+					hp=44
 					ac=8
 					thac0=17
 					apr=1

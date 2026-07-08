@@ -101,7 +101,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=650
-					hp=68
+					hp=74
 					ac=6
 					thac0=13
 					apr=3
@@ -148,8 +148,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BD328OSO~) BEGIN 
 				WRITE_LONG 0x14 900 // xpv
-				WRITE_SHORT 0x24 80 // hp
-				WRITE_SHORT 0x26 80 // hp
+				WRITE_SHORT 0x24 86 // hp
+				WRITE_SHORT 0x26 86 // hp
 				WRITE_BYTE 0x52 13 // thac0
 				WRITE_BYTE 0x54 10 // saveDeath
 				WRITE_BYTE 0x55 12 // saveWand

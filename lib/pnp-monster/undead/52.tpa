@@ -109,7 +109,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=4000
-					hp=80
+					hp=116
 					ac=2
 					thac0=11
 					apr=1
@@ -125,7 +125,7 @@ BEGIN
 					intelligence=16
 					wisdom=12
 					dexterity=14
-					constitution=16
+					constitution=9
 					charisma=4
 					morale=15
 					general=IDS_OF_SYMBOL (~general~ ~UNDEAD~)
@@ -156,8 +156,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~C0DESUM1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~SKELSU01~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
-				WRITE_SHORT 0x24 32 // hp
-				WRITE_SHORT 0x26 32 // hp
+				WRITE_SHORT 0x24 44 // hp
+				WRITE_SHORT 0x26 44 // hp
 				WRITE_SHORT 0x46 6 // ac
 				WRITE_SHORT 0x48 6 // ac
 				WRITE_BYTE 0x52 17 // thac0
@@ -174,8 +174,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~C0DESUM2~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~SKELSU07~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
-				WRITE_SHORT 0x24 48 // hp
-				WRITE_SHORT 0x26 48 // hp
+				WRITE_SHORT 0x24 68 // hp
+				WRITE_SHORT 0x26 68 // hp
 				WRITE_SHORT 0x46 4 // ac
 				WRITE_SHORT 0x48 4 // ac
 				WRITE_BYTE 0x52 15 // thac0
@@ -192,8 +192,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~C0DESUM3~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~SKELSU11~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
-				WRITE_SHORT 0x24 64 // hp
-				WRITE_SHORT 0x26 64 // hp
+				WRITE_SHORT 0x24 92 // hp
+				WRITE_SHORT 0x26 92 // hp
 				WRITE_SHORT 0x46 3 // ac
 				WRITE_SHORT 0x48 3 // ac
 				WRITE_BYTE 0x52 13 // thac0
@@ -210,8 +210,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDUNSEN~) BEGIN 
 				WRITE_LONG 0x14 3000 // xpv
-				WRITE_SHORT 0x24 64 // hp
-				WRITE_SHORT 0x26 64 // hp
+				WRITE_SHORT 0x24 92 // hp
+				WRITE_SHORT 0x26 92 // hp
 				WRITE_BYTE 0x52 13 // thac0
 				WRITE_BYTE 0x54 10 // saveDeath
 				WRITE_BYTE 0x55 12 // saveWand
@@ -222,8 +222,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDSKGR01~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDTEAM62~) BEGIN 
 				WRITE_LONG 0x14 3000 // xpv
-				WRITE_SHORT 0x24 64 // hp
-				WRITE_SHORT 0x26 64 // hp
+				WRITE_SHORT 0x24 92 // hp
+				WRITE_SHORT 0x26 92 // hp
 				WRITE_BYTE 0x52 13 // thac0
 				WRITE_BYTE 0x54 10 // saveDeath
 				WRITE_BYTE 0x55 12 // saveWand
@@ -234,8 +234,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~C0DESUM4~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
-				WRITE_SHORT 0x24 80 // hp
-				WRITE_SHORT 0x26 80 // hp
+				WRITE_SHORT 0x24 116 // hp
+				WRITE_SHORT 0x26 116 // hp
 				WRITE_BYTE 0x52 11 // thac0
 				WRITE_BYTE 0x54 8 // saveDeath
 				WRITE_BYTE 0x55 10 // saveWand
@@ -248,8 +248,8 @@ BEGIN
 				WRITE_BYTE 0x270 IDS_OF_SYMBOL (~ea~ ~CONTROLLED~) // ea
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~SKELWA03~) BEGIN 
-				WRITE_SHORT 0x24 112 // hp
-				WRITE_SHORT 0x26 112 // hp
+				WRITE_SHORT 0x24 164 // hp
+				WRITE_SHORT 0x26 164 // hp
 				WRITE_BYTE 0x52 7 // thac0
 				WRITE_BYTE 0x54 5 // saveDeath
 				WRITE_BYTE 0x55 7 // saveWand
@@ -260,8 +260,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~C0DESUM5~) BEGIN 
 				WRITE_LONG 0x14 0 // xpv
-				WRITE_SHORT 0x24 128 // hp
-				WRITE_SHORT 0x26 128 // hp
+				WRITE_SHORT 0x24 188 // hp
+				WRITE_SHORT 0x26 188 // hp
 				WRITE_BYTE 0x52 5 // thac0
 				WRITE_BYTE 0x54 4 // saveDeath
 				WRITE_BYTE 0x55 6 // saveWand
@@ -275,8 +275,8 @@ BEGIN
 				WRITE_BYTE 0x239 0 // exceptionalStrength
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~ICHARY~) BEGIN 
-				WRITE_SHORT 0x24 128 // hp
-				WRITE_SHORT 0x26 128 // hp
+				WRITE_SHORT 0x24 188 // hp
+				WRITE_SHORT 0x26 188 // hp
 				WRITE_BYTE 0x52 5 // thac0
 				WRITE_BYTE 0x53 3 // apr
 				WRITE_BYTE 0x54 4 // saveDeath

@@ -101,12 +101,13 @@ BEGIN
 			ADD_CRE_ITEM ~ja#i0m39~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i1m39~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i16~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
+			ADD_CRE_ITEM ~ja#i12~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_MEMORIZED_SPELL ~ja#s0m39~ #0 ~innate~ (1) // Phase out
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					xpv=1400
-					hp=45
+					hp=55
 					ac=8
 					thac0=15
 					apr=1
@@ -152,8 +153,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~SPIDPHAS~) BEGIN 
 				WRITE_LONG 0x14 4000 // xpv
-				WRITE_SHORT 0x24 101 // hp
-				WRITE_SHORT 0x26 101 // hp
+				WRITE_SHORT 0x24 125 // hp
+				WRITE_SHORT 0x26 125 // hp
 				WRITE_BYTE 0x52 9 // thac0
 				WRITE_BYTE 0x54 7 // saveDeath
 				WRITE_BYTE 0x55 9 // saveWand

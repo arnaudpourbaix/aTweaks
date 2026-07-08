@@ -151,7 +151,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=5000
-					hp=139
+					hp=154
 					ac=10
 					thac0=7
 					apr=2

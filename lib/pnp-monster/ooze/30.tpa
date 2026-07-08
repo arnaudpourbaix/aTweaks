@@ -1,7 +1,7 @@
 // Generated file (don't edit)
 
 // Fission Slime
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m30.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m30.baf~
 
 // Fission Slime traits
 CREATE ITM "ja#i0m30"
@@ -77,7 +77,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=5000
-					hp=150
+					hp=206
 					ac=4
 					thac0=7
 					apr=1

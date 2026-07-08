@@ -1,5 +1,5 @@
 import triggerFactory from "../../src/factories/trigger.factory";
-import { Durations } from "../../src/model/constants";
+import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
 import { FNP_SPELLS, SPELLS } from "../spell-names";

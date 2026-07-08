@@ -1,4 +1,4 @@
-import { Durations } from "../src/model/constants";
+import { Durations } from "../src/model/game-data/durations";
 import { PnPPoisonType } from "../src/model/spell-item/effect.enums";
 
 export interface PoisonModel {

@@ -1,0 +1,462 @@
+import { describe, expect, it } from "vitest";
+import { Creature } from "../model/creature/creature";
+import { CreatureData } from "../model/creature/data";
+import { Movement } from "../model/creature/movement";
+import {
+  ItemAbilityLocationEnum,
+  ItemFlagEnum,
+} from "../model/spell-item/effect.enums";
+import { Weapon } from "../model/spell-item/spell-item";
+import creatureService from "./creature.service";
+
+function fakeCreature(p: {
+  data: Partial<CreatureData>;
+  items?: Weapon[];
+  autoGenerate?: Partial<Creature["autoGenerate"]>;
+}): Creature {
+  return {
+    data: { immunities: [], ...p.data },
+    items: p.items ?? [],
+    autoGenerate: {
+      thac0: true,
+      hitPoints: true,
+      enchantment: true,
+      meleeRange: true,
+      ...p.autoGenerate,
+    },
+  } as unknown as Creature;
+}
+
+describe("getAttacksPerRound", () => {
+  it("resolves plain apr entries directly from AttackPerRoundTable", () => {
+    expect(creatureService.getAttacksPerRound(2)).toEqual({
+      apr: 2,
+      value: 2,
+      doubleApr: false,
+    });
+  });
+
+  it("resolves half-attack apr values encoded in the table (1.5 -> engine value 7)", () => {
+    expect(creatureService.getAttacksPerRound(1.5)).toEqual({
+      apr: 1.5,
+      value: 7,
+      doubleApr: false,
+    });
+  });
+
+  it("resolves high attack counts to their double-apr engine value (8 -> 4, doubleApr)", () => {
+    expect(creatureService.getAttacksPerRound(8)).toEqual({
+      apr: 8,
+      value: 4,
+      doubleApr: true,
+    });
+  });
+
+  it("throws for an apr value not present in the table", () => {
+    expect(() => creatureService.getAttacksPerRound(11)).toThrow(
+      /attack per round not found in table: 11/,
+    );
+  });
+});
+
+describe("transformAttackPerRound (private)", () => {
+  const service = creatureService as any;
+
+  it("does nothing when apr is not set", () => {
+    const data: Partial<CreatureData> = {};
+    service.transformAttackPerRound(data);
+    expect(data.apr).toBeUndefined();
+  });
+
+  it("converts data.apr to the table's engine value", () => {
+    const data: Partial<CreatureData> = { apr: 2 };
+    service.transformAttackPerRound(data);
+    expect(data.apr).toBe(2);
+  });
+
+  it("marks movement.hasImprovedHaste when the resolved apr is a double-apr entry", () => {
+    const movement = new Movement(12);
+    const data: Partial<CreatureData> = { apr: 8, movement };
+    service.transformAttackPerRound(data);
+    expect(data.apr).toBe(4);
+    expect(movement.hasImprovedHaste).toBe(true);
+  });
+
+  it("clears hasImprovedHaste when the resolved apr is a single-apr entry", () => {
+    const movement = new Movement(12);
+    movement.hasImprovedHaste = true;
+    const data: Partial<CreatureData> = { apr: 3, movement };
+    service.transformAttackPerRound(data);
+    expect(movement.hasImprovedHaste).toBe(false);
+  });
+});
+
+describe("autogenerateThac0 (private)", () => {
+  const service = creatureService as any;
+
+  it("throws when level1 is unknown and there is no parent", () => {
+    expect(() => service.autogenerateThac0({}, undefined)).toThrow(
+      /level1 is unknown/,
+    );
+  });
+
+  it("does nothing when level1 is unknown but a parent is provided", () => {
+    const data: Partial<CreatureData> = {};
+    service.autogenerateThac0(data, {} as CreatureData);
+    expect(data.thac0).toBeUndefined();
+  });
+
+  it("sets thac0 from the Thac0Table for the creature's level", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 5, value: 5, type: "none" },
+    };
+    service.autogenerateThac0(data, undefined);
+    expect(data.thac0).toBe(15);
+  });
+
+  it("calculates thac0 as one level higher when bonusHp >= 3", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 6, value: 6, type: "none" },
+      bonusHp: 3,
+    };
+    service.autogenerateThac0(data, undefined);
+    expect(data.thac0).toBe(13); // level bumped to 7 (Thac0Table[7]), not 15 (Thac0Table[6])
+  });
+
+  it("throws when the calculated level isn't in Thac0Table", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 31, value: 31, type: "none" },
+    };
+    expect(() => service.autogenerateThac0(data, undefined)).toThrow(
+      /thac0 not found in table for level 31/,
+    );
+  });
+
+  it("does not overwrite an already-set thac0", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 5, value: 5, type: "none" },
+      thac0: 2,
+    };
+    service.autogenerateThac0(data, undefined);
+    expect(data.thac0).toBe(2);
+  });
+});
+
+describe("getSavingThrows", () => {
+  it("returns fighter saves by default", () => {
+    expect(creatureService.getSavingThrows({ level: 5 })).toEqual({
+      saveDeath: 11,
+      saveWand: 13,
+      savePolymorph: 12,
+      saveBreath: 13,
+      saveSpell: 14,
+    });
+  });
+
+  it("returns priest saves for DRUID/CLERIC classes", () => {
+    expect(
+      creatureService.getSavingThrows({ level: 5, classe: "CLERIC" }),
+    ).toEqual({
+      saveDeath: 9,
+      saveWand: 13,
+      savePolymorph: 12,
+      saveBreath: 15,
+      saveSpell: 14,
+    });
+  });
+
+  it("returns wizard saves for MAGE class", () => {
+    expect(
+      creatureService.getSavingThrows({ level: 5, classe: "MAGE" }),
+    ).toEqual({
+      saveDeath: 14,
+      saveWand: 11,
+      savePolymorph: 13,
+      saveBreath: 15,
+      saveSpell: 12,
+    });
+  });
+
+  it("subtracts optional bonus overrides from the table values", () => {
+    expect(
+      creatureService.getSavingThrows({
+        level: 5,
+        bonus: { saveDeath: 2, saveSpell: 1 },
+      }),
+    ).toEqual({
+      saveDeath: 9, // 11 - 2
+      saveWand: 13,
+      savePolymorph: 12,
+      saveBreath: 13,
+      saveSpell: 13, // 14 - 1
+    });
+  });
+});
+
+describe("getStrengthBonus", () => {
+  it("returns zero bonus when strength is undefined", () => {
+    expect(creatureService.getStrengthBonus({})).toEqual({
+      hit: 0,
+      damage: 0,
+    });
+  });
+
+  it("returns hit/damage bonus for a plain strength score", () => {
+    expect(creatureService.getStrengthBonus({ strength: 19 })).toEqual({
+      str: 19,
+      hit: 3,
+      damage: 7,
+    });
+  });
+
+  it("resolves 18/xx exceptional strength bands correctly", () => {
+    expect(
+      creatureService.getStrengthBonus({
+        strength: 18,
+        exceptionalStrength: 75,
+      }),
+    ).toEqual({ str: 18, strEx: [51, 75], hit: 2, damage: 3 });
+  });
+
+  it("throws when strength is not found in the table", () => {
+    expect(() =>
+      creatureService.getStrengthBonus({ strength: 99 }),
+    ).toThrow(/strength not found in table: 99/);
+  });
+});
+
+describe("getDexterityArmorClassBonus", () => {
+  it("returns 0 when dexterity is undefined", () => {
+    expect(creatureService.getDexterityArmorClassBonus({})).toBe(0);
+  });
+
+  it("returns the AC bonus for a given dexterity", () => {
+    expect(
+      creatureService.getDexterityArmorClassBonus({ dexterity: 18 }),
+    ).toBe(-4);
+  });
+
+  it("throws when dexterity is not found in table", () => {
+    expect(() =>
+      creatureService.getDexterityArmorClassBonus({ dexterity: 99 }),
+    ).toThrow(/dexterity not found in table: 99/);
+  });
+});
+
+describe("getFinalArmorClass", () => {
+  it("throws when ac or dexterity is missing", () => {
+    expect(() =>
+      creatureService.getFinalArmorClass({ data: {} } as any),
+    ).toThrow(/missing data/);
+  });
+
+  it("applies the dexterity AC bonus to the base AC", () => {
+    const base = { data: { ac: 10, dexterity: 18 } } as any;
+    expect(creatureService.getFinalArmorClass(base)).toBe(6); // 10 + (-4)
+  });
+});
+
+describe("hasOffhandWeapon", () => {
+  it("returns false when no SHIELD-slot item is equipped", () => {
+    const creature = fakeCreature({ data: { items: { equipped: [] } } });
+    expect(creatureService.hasOffhandWeapon(creature)).toBe(false);
+  });
+
+  it("returns true when the equipped SHIELD item is a Weapon-location item (dual wielding off-hand)", () => {
+    const creature = fakeCreature({
+      data: {
+        items: {
+          equipped: [{ file: "offhand_weapon", slot: "SHIELD" }],
+        },
+      },
+      items: [
+        {
+          file: "offhand_weapon",
+          header: { location: ItemAbilityLocationEnum.Weapon },
+        } as Weapon,
+      ],
+    });
+    expect(creatureService.hasOffhandWeapon(creature)).toBe(true);
+  });
+
+  it("returns false when the equipped SHIELD item is a normal shield (Item location)", () => {
+    const creature = fakeCreature({
+      data: {
+        items: {
+          equipped: [{ file: "shield01", slot: "SHIELD" }],
+        },
+      },
+      items: [
+        {
+          file: "shield01",
+          header: { location: ItemAbilityLocationEnum.Item },
+        } as Weapon,
+      ],
+    });
+    expect(creatureService.hasOffhandWeapon(creature)).toBe(false);
+  });
+});
+
+describe("checkWeapons / checkWeapon", () => {
+  // checkWeapons only processes items whose header.location is "Weapon"
+  it("assigns a default speed of 3 when the weapon has none", () => {
+    const weapon = {
+      file: "w1",
+      header: { location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: { level1: { pnpValue: 1, value: 1, type: "none" } },
+      items: [weapon],
+    });
+    creatureService.checkWeapons(creature);
+    expect(weapon.header.speed).toBe(3);
+  });
+
+  it("computes weapon enchantment from level via EnchantmentTable and flags it Magical", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: { level1: { pnpValue: 10, value: 10, type: "none" } },
+      items: [weapon],
+    });
+    creatureService.checkWeapons(creature);
+    expect(weapon.enchantment).toBe(3); // level 10 exceeds the level:8/enchant:3 entry
+    expect(weapon.flags).toContain(ItemFlagEnum.Magical);
+  });
+
+  it("matches the top enchantment entry exactly when level and bonusHp both match it", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: {
+        level1: { pnpValue: 10, value: 10, type: "none" },
+        bonusHp: 4,
+      },
+      items: [weapon],
+    });
+    creatureService.checkWeapons(creature);
+    expect(weapon.enchantment).toBe(4);
+  });
+
+  it("throws when no enchantment entry matches the level/bonusHp", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: { level1: { pnpValue: 0, value: 0, type: "none" } },
+      items: [weapon],
+    });
+    expect(() => creatureService.checkWeapons(creature)).toThrow(
+      /enchantment not found in table/,
+    );
+  });
+
+  it("does not compute enchantment when creature.autoGenerate.enchantment is false", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: { level1: { pnpValue: 10, value: 10, type: "none" } },
+      items: [weapon],
+      autoGenerate: { enchantment: false },
+    });
+    creatureService.checkWeapons(creature);
+    expect(weapon.enchantment).toBeUndefined();
+  });
+
+  it("assigns melee range from CreatureSizeTable based on creature size", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+    } as Weapon;
+    const creature = fakeCreature({
+      data: {
+        level1: { pnpValue: 0, value: 0, type: "none" },
+        size: "Large",
+      },
+      items: [weapon],
+      autoGenerate: { enchantment: false },
+    });
+    creatureService.checkWeapons(creature);
+    expect(weapon.header.range).toBe(2);
+  });
+});
+
+describe("autogenerateHitPoints (private, delegates to hitPointService)", () => {
+  const service = creatureService as any;
+
+  it("sets data.hp from the real hitPointService calculation", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 5, value: 5, type: "none" },
+    };
+    service.autogenerateHitPoints({
+      data,
+      creature: fakeCreature({ data: {} }),
+    });
+    expect(data.hp).toBe(40); // 5 * 8 default HD
+  });
+
+  it("leaves data.hp unset when hitPointService returns 0 (adjustment without level override)", () => {
+    const data: Partial<CreatureData> = {};
+    service.autogenerateHitPoints({
+      data,
+      creature: fakeCreature({ data: {} }),
+      parent: {} as CreatureData,
+    });
+    expect(data.hp).toBeUndefined();
+  });
+});
+
+describe("checkMovement (private)", () => {
+  const service = creatureService as any;
+
+  it("throws when movement isn't set on a base (non-adjustment) creature", () => {
+    expect(() =>
+      service.checkMovement({
+        creature: fakeCreature({ data: {} }),
+        base: { data: {} },
+        isAdjustment: false,
+      }),
+    ).toThrow(/movement not set/);
+  });
+
+  it("increases movement bonus by 2 for the BARBARIAN kit", () => {
+    const movement = new Movement(12);
+    const base = { data: { movement, kit: "BARBARIAN" } };
+    service.checkMovement({
+      creature: fakeCreature({ data: {} }),
+      base,
+      isAdjustment: false,
+    });
+    expect(base.data.movement.bonus).toBe(2);
+    expect(base.data.movement).not.toBe(movement); // cloned, not mutated in place
+  });
+
+  it("leaves movement untouched for non-barbarian kits", () => {
+    const movement = new Movement(12);
+    const base = { data: { movement, kit: "FIGHTER" } };
+    service.checkMovement({
+      creature: fakeCreature({ data: {} }),
+      base,
+      isAdjustment: false,
+    });
+    expect(base.data.movement).toBe(movement);
+    expect(base.data.movement.bonus).toBe(0);
+  });
+});
+
+describe("convertMovement", () => {
+  it("converts the tabletop movement rate with the 0.8 engine coefficient", () => {
+    expect(creatureService.convertMovement(12)).toBe(10);
+  });
+
+  it("rounds to the nearest engine tick", () => {
+    expect(creatureService.convertMovement(9)).toBe(7); // round(7.2)
+  });
+});

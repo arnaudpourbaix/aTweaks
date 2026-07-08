@@ -72,7 +72,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=3000
-					hp=72
+					hp=104
 					ac=7
 					thac0=11
 					apr=1
@@ -87,7 +87,7 @@ BEGIN
 					intelligence=11
 					wisdom=14
 					dexterity=16
-					constitution=14
+					constitution=9
 					charisma=12
 					morale=20
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)

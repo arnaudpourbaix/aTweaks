@@ -74,6 +74,13 @@ export abstract class CreatureFamily<T extends Creature>
     cre.files = p.files;
     cre.newFiles = p.newFiles ?? [];
     cre.notEnforceFiles = p.notEnforceFiles ?? [];
+    cre.data.hp = undefined;
+    cre.data.thac0 = undefined;
+    cre.data.saveBreath = undefined;
+    cre.data.saveDeath = undefined;
+    cre.data.savePolymorph = undefined;
+    cre.data.saveSpell = undefined;
+    cre.data.saveWand = undefined;
     cre.items = [];
     cre.spells = [];
     cre.effectFiles = [];

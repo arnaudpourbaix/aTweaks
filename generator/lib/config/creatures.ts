@@ -1,19 +1,7 @@
-import { EffectIDSFileEnum } from "../src/model/spell-item/effect.enums";
 import { ClassIdentifier } from "../src/model/ids/class";
 import { GeneralIdentifier } from "../src/model/ids/general";
 import { RaceIdentifier } from "../src/model/ids/race";
-
-export const creatureSizes = [
-  { size: "Tiny", attackRange: 0, grabModifier: -8 },
-  { size: "Small", attackRange: 1, grabModifier: -4 },
-  { size: "Medium", attackRange: 1, grabModifier: 0 },
-  { size: "Large", attackRange: 2, grabModifier: 4 },
-  { size: "Huge", attackRange: 2, grabModifier: 8 },
-  { size: "Gargantuan", attackRange: 3, grabModifier: 12 },
-  { size: "Colossal", attackRange: 4, grabModifier: 16 },
-] as const;
-
-export type CreatureSize = (typeof creatureSizes)[number]["size"];
+import { EffectIDSFileEnum } from "../src/model/spell-item/effect.enums";
 
 export const ATWEAKS_CREATURES = {
   Treant5hd: "ja#trea1",
@@ -29,7 +17,7 @@ export const ATWEAKS_CREATURES = {
 
 export const VAPOR_IMMUNE_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier | GeneralIdentifier
+  ClassIdentifier | RaceIdentifier | GeneralIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "SLIME"],
   [EffectIDSFileEnum.RACE, "ELEMENTAL"],
@@ -39,12 +27,12 @@ export const VAPOR_IMMUNE_CREATURES: [
 
 export const EARTH_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [[EffectIDSFileEnum.CLASS, "ELEMENTAL_EARTH"]];
 
 export const AIR_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "WYVERN"],
   [EffectIDSFileEnum.RACE, "BEHOLDER"],
@@ -62,7 +50,7 @@ export const AIR_CREATURES: [
 
 export const WATER_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "SAHUAGIN"],
   [EffectIDSFileEnum.RACE, "KUO-TOA"],
@@ -72,7 +60,7 @@ export const WATER_CREATURES: [
 
 export const FLYING_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "WILL-O-WISP"],
   [EffectIDSFileEnum.RACE, "WYVERN"],
@@ -80,7 +68,7 @@ export const FLYING_CREATURES: [
 
 export const INCORPOREAL_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "MIST"],
   [EffectIDSFileEnum.RACE, "SHADOW"],
@@ -94,7 +82,7 @@ export const INCORPOREAL_CREATURES: [
 
 export const GARGANTUAN_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "DRAGON"],
   [EffectIDSFileEnum.CLASS, "NEOTHELID"],
@@ -102,7 +90,7 @@ export const GARGANTUAN_CREATURES: [
 
 export const GRAB_IMMUNE_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "MIMIC"],
   [EffectIDSFileEnum.RACE, "SLIME"],
@@ -113,7 +101,7 @@ export const GRAB_IMMUNE_CREATURES: [
 
 export const HUGE_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "ANKHEG"],
   [EffectIDSFileEnum.RACE, "ELEMENTAL"],
@@ -129,7 +117,7 @@ export const HUGE_CREATURES: [
 
 export const LARGE_CREATURES: [
   EffectIDSFileEnum,
-  ClassIdentifier | RaceIdentifier
+  ClassIdentifier | RaceIdentifier,
 ][] = [
   [EffectIDSFileEnum.RACE, "BUGBEAR"],
   [EffectIDSFileEnum.RACE, "CARRIONCRAWLER"],
@@ -155,16 +143,4 @@ export const LARGE_CREATURES: [
   [EffectIDSFileEnum.CLASS, "SPIDER_GIANT"],
   [EffectIDSFileEnum.CLASS, "WOLF_DIRE"],
   [EffectIDSFileEnum.CLASS, "WOLF_WINTER"],
-];
-
-// Because its body is a mass of unliving matter, a construct is hard to destroy.
-// It gains bonus hit points based on size, as shown on the following table.
-export const CONSTRUCT_BONUS_HIT_POINT: { size: CreatureSize; hp: number }[] = [
-  { size: "Tiny", hp: 0 },
-  { size: "Small", hp: 10 },
-  { size: "Medium", hp: 20 },
-  { size: "Large", hp: 30 },
-  { size: "Huge", hp: 40 },
-  { size: "Gargantuan", hp: 60 },
-  { size: "Colossal", hp: 80 },
 ];

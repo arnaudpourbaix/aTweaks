@@ -170,7 +170,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=420
-					hp=27
+					hp=39
 					ac=7
 					thac0=17
 					apr=1
@@ -185,7 +185,7 @@ BEGIN
 					intelligence=7
 					wisdom=10
 					dexterity=14
-					constitution=13
+					constitution=9
 					charisma=8
 					morale=20
 					general=IDS_OF_SYMBOL (~general~ ~MONSTER~)
@@ -222,8 +222,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDSHAD02~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~L#GNOAL~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~L#GNOEN~) BEGIN 
 				WRITE_LONG 0x14 650 // xpv
-				WRITE_SHORT 0x24 43 // hp
-				WRITE_SHORT 0x26 43 // hp
+				WRITE_SHORT 0x24 63 // hp
+				WRITE_SHORT 0x26 63 // hp
 				WRITE_BYTE 0x52 15 // thac0
 				WRITE_BYTE 0x54 11 // saveDeath
 				WRITE_BYTE 0x55 13 // saveWand
@@ -235,8 +235,8 @@ BEGIN
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDSHSOUL~) BEGIN 
 				WRITE_LONG 0x14 1100 // xpv
-				WRITE_SHORT 0x24 59 // hp
-				WRITE_SHORT 0x26 59 // hp
+				WRITE_SHORT 0x24 87 // hp
+				WRITE_SHORT 0x26 87 // hp
 				WRITE_BYTE 0x52 13 // thac0
 				WRITE_BYTE 0x54 10 // saveDeath
 				WRITE_BYTE 0x55 12 // saveWand

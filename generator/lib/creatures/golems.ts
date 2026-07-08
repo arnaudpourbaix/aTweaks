@@ -3,9 +3,9 @@ import { SPELLS } from "../config/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
 import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import {
   AbilityDamageTypeEnum,
   EffectDamageTypeEnum,

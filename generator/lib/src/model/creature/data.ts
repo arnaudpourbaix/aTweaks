@@ -1,6 +1,6 @@
-import { CreatureSize } from "../../../config/creatures";
 import weiduUtils from "../../services/utils/weidu.utils";
 import { ImmunityName } from "../final/immunity";
+import { CreatureSize } from "../game-data/sizes";
 import { AlignIdentifier } from "../ids/align";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { AnimationIdentifiers } from "../ids/animate";

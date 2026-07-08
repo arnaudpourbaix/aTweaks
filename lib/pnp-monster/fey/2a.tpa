@@ -54,7 +54,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=1400
-					hp=32
+					hp=24
 					ac=10
 					thac0=17
 					apr=1
@@ -99,8 +99,8 @@ BEGIN
 				WRITE_BYTE 0x275 IDS_OF_SYMBOL (~gender~ ~SUMMONED~) // gender
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD1~) OR ("%SOURCE_RES%" STRING_EQUAL_CASE ~WIDRYAD2~) BEGIN 
-				WRITE_SHORT 0x24 64 // hp
-				WRITE_SHORT 0x26 64 // hp
+				WRITE_SHORT 0x24 48 // hp
+				WRITE_SHORT 0x26 48 // hp
 				WRITE_BYTE 0x52 13 // thac0
 				WRITE_BYTE 0x54 10 // saveDeath
 				WRITE_BYTE 0x55 12 // saveWand

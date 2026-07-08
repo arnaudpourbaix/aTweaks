@@ -1,6 +1,5 @@
 import figureSet from "figures";
 import {
-  creatureSizes,
   GRAB_IMMUNE_CREATURES,
   HUGE_CREATURES,
   LARGE_CREATURES,
@@ -30,6 +29,7 @@ import effectService from "./effect.service";
 import spellService from "../spell.service";
 import translationService from "../translation.service";
 import { getSpellFilename } from "../utils/misc.func";
+import { CreatureSizeTable } from "../../model/game-data/sizes";
 
 class GrabService {
   attachGrabToWeapon(
@@ -83,7 +83,7 @@ class GrabService {
     spell: Spell,
   ): void {
     const strModifier = creatureService.getStrengthBonus(creature.data).hit;
-    const sizeModifier = creatureSizes.find(
+    const sizeModifier = CreatureSizeTable.find(
       (s) => s.size === creature.data.size,
     )!.grabModifier;
     const calculatedSaveBonus =

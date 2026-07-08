@@ -2,10 +2,10 @@ import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import { Triggers } from "../src/model/script/triggers";
 import { BaseEffect, Effect, IdsEffect } from "../src/model/spell-item/effect";
 import {
@@ -147,7 +147,7 @@ class Slime extends Creature {
 
 class SlimeFamily extends CreatureFamily<Slime> {
   constructor() {
-    super(MonsterFamilyEnum.Slime);
+    super(MonsterFamilyEnum.Ooze);
     this.createToxicVapors();
     this.addCreature(this.blackPudding());
     this.addCreature(this.whitePudding());

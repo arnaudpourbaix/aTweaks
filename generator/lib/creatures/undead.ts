@@ -2,11 +2,11 @@ import { MonsterItemIconEnum } from "../config/item";
 import { FNP_SPELLS, SPELLS } from "../config/spell-names";
 import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
-import { Durations } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot, WeaponSlot } from "../src/model/creature/item";
 import { StringReference } from "../src/model/final/stringref";
+import { Durations } from "../src/model/game-data/durations";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -1100,7 +1100,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: { pnpValue: 7, value: 17, type: "turn" }, // to approximate their "turned as special undead" from PnP
         strength: 9,
         dexterity: 14,
-        constitution: 10,
+        constitution: 9,
         intelligence: 16,
         wisdom: 11,
         charisma: 17,
@@ -1188,7 +1188,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         strength: 18,
         exceptionalStrength: 100,
         dexterity: 11,
-        constitution: 11,
+        constitution: 9,
         intelligence: 18,
         wisdom: 16,
         charisma: 10,
@@ -1283,7 +1283,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 4,
         strength: 16,
         dexterity: 17,
-        constitution: 10,
+        constitution: 9,
         intelligence: 12,
         wisdom: 10,
         charisma: 6,
@@ -1378,7 +1378,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 2,
         strength: 13,
         dexterity: 15,
-        constitution: 10,
+        constitution: 9,
         intelligence: 7,
         wisdom: 10,
         charisma: 6,
@@ -1450,7 +1450,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: { pnpValue: 6, value: 7, type: "turn" },
         strength: 18,
         dexterity: 17,
-        constitution: 13,
+        constitution: 9,
         intelligence: 14,
         wisdom: 11,
         charisma: 13,
@@ -1540,7 +1540,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         bonusHp: 3,
         strength: 16,
         dexterity: 8,
-        constitution: 15,
+        constitution: 9,
         intelligence: 7,
         wisdom: 10,
         charisma: 12,
@@ -1617,7 +1617,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         bonusHp: 3,
         strength: 15,
         dexterity: 16,
-        constitution: 15,
+        constitution: 9,
         intelligence: 18,
         wisdom: 22,
         charisma: 20,
@@ -1809,7 +1809,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         bonusHp: 3,
         strength: 6,
         dexterity: 14,
-        constitution: 13,
+        constitution: 9,
         intelligence: 7,
         wisdom: 10,
         charisma: 8,
@@ -1924,7 +1924,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         bonusHp: 8,
         strength: 10,
         dexterity: 16,
-        constitution: 14,
+        constitution: 9,
         intelligence: 11,
         wisdom: 14,
         charisma: 12,
@@ -1978,7 +1978,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level2: 3, // for magic missiles as a level 3 wizard
         strength: 16, // 19 in vanilla
         dexterity: 11,
-        constitution: 15,
+        constitution: 9,
         intelligence: 1,
         wisdom: 8,
         charisma: 5,
@@ -2053,7 +2053,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 4,
         strength: 12,
         dexterity: 13,
-        constitution: 15,
+        constitution: 9,
         intelligence: 7,
         wisdom: 10,
         charisma: 14,
@@ -2162,7 +2162,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 1,
         strength: 10,
         dexterity: 14,
-        constitution: 15,
+        constitution: 9,
         intelligence: 1,
         wisdom: 8,
         charisma: 5,
@@ -2400,7 +2400,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         strength: 18,
         exceptionalStrength: 40,
         dexterity: 14,
-        constitution: 16,
+        constitution: 9,
         intelligence: 16,
         wisdom: 12,
         charisma: 4,
@@ -2571,7 +2571,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         bonusHp: 3,
         strength: 1,
         dexterity: 14,
-        constitution: 11,
+        constitution: 9,
         intelligence: 14,
         wisdom: 10,
         charisma: 11,
@@ -2622,7 +2622,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 10,
         strength: 7,
         dexterity: 13,
-        constitution: 10,
+        constitution: 9,
         intelligence: 14,
         wisdom: 12,
         charisma: 17,
@@ -2990,7 +2990,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         level1: 4,
         strength: 12,
         dexterity: 13,
-        constitution: 15,
+        constitution: 9,
         intelligence: 7,
         wisdom: 10,
         charisma: 14,

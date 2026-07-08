@@ -1,8 +1,8 @@
 // Generated file (don't edit)
 
 // Green Slime
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m33.baf~
-COMPILE ~%MOD_FOLDER%/lib/pnp-monster/slime/ja#m33su.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m33.baf~
+COMPILE ~%MOD_FOLDER%/lib/pnp-monster/ooze/ja#m33su.baf~
 
 // Green Slime traits
 CREATE ITM "ja#i0m33"
@@ -71,7 +71,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=65
-					hp=16
+					hp=20
 					ac=9
 					thac0=19
 					apr=1

@@ -10,7 +10,7 @@ export enum MonsterFamilyEnum {
   Golem = 9,
   Ogre = 10,
   Plant = 11,
-  Slime = 12,
+  Ooze = 12,
   Spider = 13,
   Wolf = 14,
   Minotaur = 15,
@@ -18,6 +18,7 @@ export enum MonsterFamilyEnum {
   Wyvern = 17,
   Undead = 18,
   Ettin = 19,
+  Dragon = 20,
 }
 
 export enum MonsterEnum {

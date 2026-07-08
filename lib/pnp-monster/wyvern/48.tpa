@@ -108,15 +108,15 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=2000
-					hp=70
+					hp=121
 					ac=1
-					thac0=13
+					thac0=9
 					apr=2
-					saveDeath=10
-					saveWand=12
-					savePolymorph=11
-					saveBreath=12
-					saveSpell=13
+					saveDeath=7
+					saveWand=9
+					savePolymorph=8
+					saveBreath=8
+					saveSpell=10
 					level1=11
 					gender=IDS_OF_SYMBOL (~gender~ ~NIETHER~)
 					strength=20

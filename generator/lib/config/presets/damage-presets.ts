@@ -1,5 +1,5 @@
 import triggerFactory from "../../src/factories/trigger.factory";
-import { Durations, ScriptTarget } from "../../src/model/constants";
+import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";

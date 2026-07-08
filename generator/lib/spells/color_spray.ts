@@ -1,5 +1,5 @@
 import { SPELLS } from "../config/spell-names";
-import { Durations } from "../src/model/constants";
+import { Durations } from "../src/model/game-data/durations";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
   ColorEnum,

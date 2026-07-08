@@ -92,12 +92,13 @@ BEGIN
 			REMOVE_CRE_ITEM ~WOLFWI2~
 			ADD_CRE_ITEM ~ja#i0m14~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i1m14~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+			ADD_CRE_ITEM ~ja#i12~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			ADD_MEMORIZED_SPELL ~ja#s0m14~ #0 ~innate~ (1) // Stream of frost
 			LPF clear_proficiencies END
 			LPF patchCreature
 				INT_VAR
 					xpv=975
-					hp=48
+					hp=60
 					ac=5
 					thac0=15
 					apr=1

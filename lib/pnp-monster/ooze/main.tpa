@@ -42,12 +42,12 @@ COPY_EXISTING ~ja#s0fc.SPL~  ~override~
 	LPF ADD_EFFECT INT_VAR header=1 opcode=206 target=2 power=1 duration=6 probability1=100 STR_VAR resource="ja#s0fc" END
 	LPF CHANGE_SPELL INT_VAR    renew=1 END
 	
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/2f.tpa" // Black Pudding
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/36.tpa" // White Pudding
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/2e.tpa" // Mustard Jelly
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/30.tpa" // Fission Slime
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/32.tpa" // Gray Ooze
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/33.tpa" // Green Slime
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/31.tpa" // Ochre Jelly
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/34.tpa" // Olive Slime Creature
-INCLUDE "%MOD_FOLDER%/lib/pnp-monster/slime/35.tpa" // Slithering Tracker
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/2f.tpa" // Black Pudding
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/36.tpa" // White Pudding
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/2e.tpa" // Mustard Jelly
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/30.tpa" // Fission Slime
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/32.tpa" // Gray Ooze
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/33.tpa" // Green Slime
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/31.tpa" // Ochre Jelly
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/34.tpa" // Olive Slime Creature
+INCLUDE "%MOD_FOLDER%/lib/pnp-monster/ooze/35.tpa" // Slithering Tracker

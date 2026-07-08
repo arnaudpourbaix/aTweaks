@@ -147,7 +147,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=975
-					hp=64
+					hp=80
 					ac=2
 					thac0=13
 					apr=1
@@ -188,8 +188,8 @@ BEGIN
 			LPF patchCreatureScript INT_VAR logging=0 STR_VAR slot=Race files removeScripts script=ja#m1su END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDANKH01~) BEGIN 
 				WRITE_LONG 0x14 1400 // xpv
-				WRITE_SHORT 0x24 80 // hp
-				WRITE_SHORT 0x26 80 // hp
+				WRITE_SHORT 0x24 100 // hp
+				WRITE_SHORT 0x26 100 // hp
 				WRITE_BYTE 0x52 11 // thac0
 				WRITE_BYTE 0x54 8 // saveDeath
 				WRITE_BYTE 0x55 10 // saveWand

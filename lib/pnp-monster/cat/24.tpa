@@ -14,8 +14,8 @@ COPY_EXISTING ~ja#s0m24.SPL~  ~override~
 	WRITE_LONG 0x34 1
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10593)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=4 target=1 range=5 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=12 target=2 power=1 parameter1=1 parameter2=16777216 probability1=100 dicesize=4 dicenumber=1 END
 	
 	// Paws
 CREATE ITM "ja#i0m24"
@@ -93,7 +93,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=270
-					hp=27
+					hp=29
 					ac=10
 					thac0=17
 					apr=3

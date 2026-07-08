@@ -4,7 +4,6 @@ import {
   GARGANTUAN_CREATURES,
   INCORPOREAL_CREATURES,
 } from "../config/creatures";
-import { GLOBAL_CONFIG } from "../config/generate";
 import { ITEMS, MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
 import { BafExistingStringReference } from "../config/stringRef";
@@ -15,9 +14,10 @@ import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
 import triggerFactory from "../src/factories/trigger.factory";
-import { Durations, ScriptTarget } from "../src/model/constants";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import {
   AdditionalCode,
   ConditionalStatement,
@@ -52,10 +52,7 @@ import {
   SpellTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
-import {
-  AreaProjectileEnum,
-  BamProjectileFlagsEnum,
-} from "../src/model/spell-item/projectile";
+import { AreaProjectileEnum } from "../src/model/spell-item/projectile";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,

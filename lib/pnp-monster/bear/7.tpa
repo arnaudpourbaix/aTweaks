@@ -110,7 +110,7 @@ BEGIN
 			LPF patchCreature
 				INT_VAR
 					xpv=1400
-					hp=92
+					hp=100
 					ac=6
 					thac0=11
 					apr=3
@@ -161,8 +161,8 @@ BEGIN
 				REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~BDGHBRSU~) BEGIN 
-				WRITE_SHORT 0x24 90 // hp
-				WRITE_SHORT 0x26 90 // hp
+				WRITE_SHORT 0x24 98 // hp
+				WRITE_SHORT 0x26 98 // hp
 				WRITE_BYTE 0x52 11 // thac0
 				WRITE_BYTE 0x54 8 // saveDeath
 				WRITE_BYTE 0x55 10 // saveWand
@@ -172,8 +172,8 @@ BEGIN
 				WRITE_BYTE 0x234 9 // level1
 			END
 			PATCH_IF ("%SOURCE_RES%" STRING_EQUAL_CASE ~KALDRAN~) BEGIN 
-				WRITE_SHORT 0x24 114 // hp
-				WRITE_SHORT 0x26 114 // hp
+				WRITE_SHORT 0x24 128 // hp
+				WRITE_SHORT 0x26 128 // hp
 				WRITE_BYTE 0x52 9 // thac0
 				WRITE_BYTE 0x54 7 // saveDeath
 				WRITE_BYTE 0x55 9 // saveWand

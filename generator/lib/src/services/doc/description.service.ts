@@ -1,5 +1,5 @@
-import { Durations } from "../../model/constants";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
+import { Durations } from "../../model/game-data/durations";
 import {
   ArmorClassBonusEffect,
   CastingTimeModifierEffect,
@@ -686,7 +686,6 @@ class DescriptionService {
       : this.getSignedNumber(eff.value);
     return `${opcode.label}: ${value}${duration}${this.getSaveText(effect)}`;
   }
-
 }
 
 const descriptionService = new DescriptionService();

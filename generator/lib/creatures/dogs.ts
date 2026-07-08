@@ -1,8 +1,9 @@
 import { MonsterItemIconEnum } from "../config/item";
 import { SPELLS } from "../config/spell-names";
-import { Durations, ScriptTarget } from "../src/model/constants";
+import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
+import { Durations } from "../src/model/game-data/durations";
 import { BaseEffect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -240,6 +241,7 @@ class DogFamily extends CreatureFamily<Dog> {
         gender: "MALE",
         size: "Medium",
         movement: 12,
+        immunities: ["magicalBeast"],
         items: { remove: ["P1-6"] },
         script: { remove: ["PSPIDER"], location: "Default" },
       },
