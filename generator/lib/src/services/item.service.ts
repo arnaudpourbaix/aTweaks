@@ -116,15 +116,11 @@ class ItemService {
   }
 
   isEquippedWeapon(item: EquippedItem): boolean {
-    //TODO handle case where you have an array of WEAPON slots
-    if (
-      Array.isArray(item.slot) &&
-      !item.slot.every((s) => WEAPON_SLOTS.map((w) => w.slot).includes(s)) &&
-      item.slot.length !== 1
-    )
-      return false;
-    const slot = Array.isArray(item.slot) ? item.slot[0] : item.slot;
-    return WEAPON_SLOTS.map((s) => s.slot).includes(slot);
+    const slots = Array.isArray(item.slot) ? item.slot : [item.slot];
+    return (
+      slots.length > 0 &&
+      slots.every((s) => WEAPON_SLOTS.map((w) => w.slot).includes(s))
+    );
   }
 }
 

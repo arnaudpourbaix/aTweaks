@@ -86,7 +86,7 @@ output changes. Added tests for the restricted-race/general cases and for
 `toPascalCase()` directly in `description.service.test.ts` (verified they fail
 against the old code, pass with the fix).
 
-### 3. ☐ `item.service.ts:118-127` `isEquippedWeapon()` — multi-slot weapon arrays under-handled
+### 3. ✅ `item.service.ts:118-127` `isEquippedWeapon()` — multi-slot weapon arrays under-handled
 
 ```ts
 isEquippedWeapon(item: EquippedItem): boolean {
@@ -103,12 +103,26 @@ isEquippedWeapon(item: EquippedItem): boolean {
 ```
 
 Companion to the already-reviewed `isSlotIncluded()` (`BUGFIX_ROADMAP.md` #8, left
-as-is). Here, when `item.slot` is a multi-entry array that's *entirely* weapon slots,
-the guard clause is skipped and the function falls through to checking only
-`item.slot[0]` — the rest of the array is ignored, not validated. Needs a decision
-(same as #8): is silently checking only the first slot acceptable, or should it
-check `.some()`/`.every()` across the array? Worth resolving both TODOs together
-since they're the same underlying "array of weapon/jewel slots" gap.
+as-is).
+
+**Decision (from the maintainer):** a weapon is "equipped" if *all* of its slots
+are weapon slots.
+
+**Investigation result — this was already correct, just confusingly written:**
+tracing every input through the old guard clause (single slot, all-weapon array,
+mixed array with length > 1, mixed single-element array, empty array) shows it
+already produced exactly the "all slots must be weapon slots" result in every
+case — the `item.slot.length !== 1` clause never actually changed the outcome,
+it was dead complexity that made the function look buggier than it was. This
+was a readability fix, not a behavior fix.
+
+**Fix applied:** replaced the guard-clause version with a direct
+`slots.every(...)` check (plus an explicit empty-array guard, since
+`[].every()` is vacuously `true`). Added `item.service.test.ts` (this service
+had zero test coverage before) — 6 tests covering single slot,
+all-weapon/mixed/empty arrays. All 6 pass unchanged against both the old and
+new implementation, confirming no behavior change; kept as a regression net
+for the simplified logic.
 
 ### 4. ☐ `target.service.ts:62` `getTargetFromAbility()` — random-order targeting disabled
 
