@@ -35,7 +35,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.GreaterCommand.file,
     ability: {
-      name: "ability.sleep",
+      name: "ability.GreaterCommand",
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),

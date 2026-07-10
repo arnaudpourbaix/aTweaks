@@ -1670,7 +1670,7 @@ THEN
 		Spell(LastSeenBy(Myself),CLERIC_WAVES_OF_AGONY)
 END
 
-// Sleep
+// Greater Command
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(CLERIC_GREATER_COMMAND)

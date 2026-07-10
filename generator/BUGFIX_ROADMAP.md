@@ -82,7 +82,7 @@ block confirms it fails against the old code and passes with the fix.
 
 ---
 
-### 2. ☐ `sleep-presets.ts` — `GreaterCommand` preset mislabeled as "Sleep"
+### 2. ✅ `sleep-presets.ts` — `GreaterCommand` preset mislabeled as "Sleep"
 
 **File:** `lib/config/presets/sleep-presets.ts:23-40`
 
@@ -109,8 +109,17 @@ dedicated, otherwise-unused translation key `ability.GreaterCommand` in
 was the intended value. Any creature using the `GreaterCommand` preset currently
 gets "Sleep" as its generated script comment and documentation heading.
 
-**Likely fix:** change `name: "ability.sleep"` to `name: "ability.GreaterCommand"`
+**Fix applied:** changed `name: "ability.sleep"` to `name: "ability.GreaterCommand"`
 in the `GreaterCommand` preset entry.
+
+**Confirmed real impact:** `lib/creatures/undead.ts:1740` uses this preset (Greater
+Mummy). Regenerated output changed the script comment from `// Sleep` to
+`// Greater Command` in `lib/pnp-monster/undead/ja#m4f.baf`, and the documentation
+heading from `<h5>Sleep (1/day)</h5>` to `<h5>Greater Command (1/day)</h5>` in
+`docs/monsters.html`. Added `lib/config/presets/sleep-presets.test.ts` (verified
+fails against the old data, passes with the fix) — also asserts no two presets in
+`SLEEP_PRESETS` share an ability name, guarding against the same copy-paste
+mistake recurring.
 
 ---
 
