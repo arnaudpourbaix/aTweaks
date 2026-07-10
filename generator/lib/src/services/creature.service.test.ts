@@ -2,10 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Creature } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
 import { Movement } from "../model/creature/movement";
-import {
-  ItemAbilityLocationEnum,
-  ItemFlagEnum,
-} from "../model/spell-item/effect.enums";
+import { ItemAbilityLocationEnum } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
 import creatureService from "./creature.service";
 
@@ -142,9 +139,11 @@ describe("autogenerateThac0 (private)", () => {
   });
 });
 
-describe("getSavingThrows", () => {
+describe("getSavingThrows (private)", () => {
+  const service = creatureService as any;
+
   it("returns fighter saves by default", () => {
-    expect(creatureService.getSavingThrows({ level: 5 })).toEqual({
+    expect(service.getSavingThrows({ level: 5 })).toEqual({
       saveDeath: 11,
       saveWand: 13,
       savePolymorph: 12,
@@ -154,9 +153,7 @@ describe("getSavingThrows", () => {
   });
 
   it("returns priest saves for DRUID/CLERIC classes", () => {
-    expect(
-      creatureService.getSavingThrows({ level: 5, classe: "CLERIC" }),
-    ).toEqual({
+    expect(service.getSavingThrows({ level: 5, classe: "CLERIC" })).toEqual({
       saveDeath: 9,
       saveWand: 13,
       savePolymorph: 12,
@@ -166,9 +163,7 @@ describe("getSavingThrows", () => {
   });
 
   it("returns wizard saves for MAGE class", () => {
-    expect(
-      creatureService.getSavingThrows({ level: 5, classe: "MAGE" }),
-    ).toEqual({
+    expect(service.getSavingThrows({ level: 5, classe: "MAGE" })).toEqual({
       saveDeath: 14,
       saveWand: 11,
       savePolymorph: 13,
@@ -179,7 +174,7 @@ describe("getSavingThrows", () => {
 
   it("subtracts optional bonus overrides from the table values", () => {
     expect(
-      creatureService.getSavingThrows({
+      service.getSavingThrows({
         level: 5,
         bonus: { saveDeath: 2, saveSpell: 1 },
       }),
@@ -225,21 +220,43 @@ describe("getStrengthBonus", () => {
   });
 });
 
-describe("getDexterityArmorClassBonus", () => {
+describe("getDexterityArmorClassBonus (private)", () => {
+  const service = creatureService as any;
+
   it("returns 0 when dexterity is undefined", () => {
-    expect(creatureService.getDexterityArmorClassBonus({})).toBe(0);
+    expect(service.getDexterityArmorClassBonus({})).toBe(0);
   });
 
   it("returns the AC bonus for a given dexterity", () => {
-    expect(
-      creatureService.getDexterityArmorClassBonus({ dexterity: 18 }),
-    ).toBe(-4);
+    expect(service.getDexterityArmorClassBonus({ dexterity: 18 })).toBe(-4);
   });
 
   it("throws when dexterity is not found in table", () => {
     expect(() =>
-      creatureService.getDexterityArmorClassBonus({ dexterity: 99 }),
+      service.getDexterityArmorClassBonus({ dexterity: 99 }),
     ).toThrow(/dexterity not found in table: 99/);
+  });
+});
+
+describe("checkDexterityArmorClassBonus (private)", () => {
+  const service = creatureService as any;
+
+  it("does nothing when dexterity or ac is undefined", () => {
+    const data: Partial<CreatureData> = { dexterity: 18 };
+    service.checkDexterityArmorClassBonus(data);
+    expect(data.ac).toBeUndefined();
+  });
+
+  it("subtracts the dexterity bonus from ac", () => {
+    const data: Partial<CreatureData> = { ac: 10, dexterity: 18 };
+    service.checkDexterityArmorClassBonus(data);
+    expect(data.ac).toBe(14); // 10 - (-4)
+  });
+
+  it("leaves ac untouched when the dexterity bonus is zero", () => {
+    const data: Partial<CreatureData> = { ac: 10, dexterity: 9 };
+    service.checkDexterityArmorClassBonus(data);
+    expect(data.ac).toBe(10);
   });
 });
 
@@ -256,10 +273,12 @@ describe("getFinalArmorClass", () => {
   });
 });
 
-describe("hasOffhandWeapon", () => {
+describe("hasOffhandWeapon (private)", () => {
+  const service = creatureService as any;
+
   it("returns false when no SHIELD-slot item is equipped", () => {
     const creature = fakeCreature({ data: { items: { equipped: [] } } });
-    expect(creatureService.hasOffhandWeapon(creature)).toBe(false);
+    expect(service.hasOffhandWeapon(creature)).toBe(false);
   });
 
   it("returns true when the equipped SHIELD item is a Weapon-location item (dual wielding off-hand)", () => {
@@ -276,7 +295,7 @@ describe("hasOffhandWeapon", () => {
         } as Weapon,
       ],
     });
-    expect(creatureService.hasOffhandWeapon(creature)).toBe(true);
+    expect(service.hasOffhandWeapon(creature)).toBe(true);
   });
 
   it("returns false when the equipped SHIELD item is a normal shield (Item location)", () => {
@@ -293,13 +312,78 @@ describe("hasOffhandWeapon", () => {
         } as Weapon,
       ],
     });
-    expect(creatureService.hasOffhandWeapon(creature)).toBe(false);
+    expect(service.hasOffhandWeapon(creature)).toBe(false);
   });
 });
 
-describe("checkWeapons / checkWeapon", () => {
-  // checkWeapons only processes items whose header.location is "Weapon"
-  it("assigns a default speed of 3 when the weapon has none", () => {
+describe("checkDualWielding (private)", () => {
+  const service = creatureService as any;
+
+  it("detects dual wielding from an equipped offhand weapon and decrements apr by 1", () => {
+    const creature = fakeCreature({
+      data: {
+        items: { equipped: [{ file: "offhand_weapon", slot: "SHIELD" }] },
+      },
+      items: [
+        {
+          file: "offhand_weapon",
+          header: { location: ItemAbilityLocationEnum.Weapon },
+        } as Weapon,
+      ],
+    });
+    creature.attack = { dualWielding: false } as Creature["attack"];
+    const data: Partial<CreatureData> = { apr: 2 };
+    service.checkDualWielding({
+      creature,
+      base: { data } as any,
+      isAdjustment: false,
+      data,
+    });
+    expect(creature.attack.dualWielding).toBe(true);
+    expect(data.apr).toBe(1);
+  });
+
+  it("throws when dual wielding is set but apr is missing", () => {
+    const creature = fakeCreature({ data: { items: { equipped: [] } } });
+    creature.attack = { dualWielding: true } as Creature["attack"];
+    const data: Partial<CreatureData> = {};
+    expect(() =>
+      service.checkDualWielding({
+        creature,
+        base: { data } as any,
+        isAdjustment: false,
+        data,
+      }),
+    ).toThrow(/Attacks per round need to be set for dual wielding flag/);
+  });
+
+  it("does not detect dual wielding or adjust apr for adjustments", () => {
+    const creature = fakeCreature({
+      data: {
+        items: { equipped: [{ file: "offhand_weapon", slot: "SHIELD" }] },
+      },
+      items: [
+        {
+          file: "offhand_weapon",
+          header: { location: ItemAbilityLocationEnum.Weapon },
+        } as Weapon,
+      ],
+    });
+    creature.attack = { dualWielding: false } as Creature["attack"];
+    const data: Partial<CreatureData> = { apr: 2 };
+    service.checkDualWielding({
+      creature,
+      base: { data } as any,
+      isAdjustment: true,
+      data,
+    });
+    expect(creature.attack.dualWielding).toBe(false);
+    expect(data.apr).toBe(2);
+  });
+});
+
+describe("checkWeapons", () => {
+  it("delegates to weaponService for items whose header.location is Weapon", () => {
     const weapon = {
       file: "w1",
       header: { location: ItemAbilityLocationEnum.Weapon },
@@ -309,82 +393,20 @@ describe("checkWeapons / checkWeapon", () => {
       items: [weapon],
     });
     creatureService.checkWeapons(creature);
-    expect(weapon.header.speed).toBe(3);
+    expect(weapon.header.speed).toBe(3); // real weaponService.checkWeapon default-speed behavior
   });
 
-  it("computes weapon enchantment from level via EnchantmentTable and flags it Magical", () => {
-    const weapon = {
-      file: "w1",
-      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
+  it("ignores items whose header.location is not Weapon", () => {
+    const item = {
+      file: "shield01",
+      header: { location: ItemAbilityLocationEnum.Item },
     } as Weapon;
     const creature = fakeCreature({
-      data: { level1: { pnpValue: 10, value: 10, type: "none" } },
-      items: [weapon],
+      data: { level1: { pnpValue: 1, value: 1, type: "none" } },
+      items: [item],
     });
     creatureService.checkWeapons(creature);
-    expect(weapon.enchantment).toBe(3); // level 10 exceeds the level:8/enchant:3 entry
-    expect(weapon.flags).toContain(ItemFlagEnum.Magical);
-  });
-
-  it("matches the top enchantment entry exactly when level and bonusHp both match it", () => {
-    const weapon = {
-      file: "w1",
-      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
-    } as Weapon;
-    const creature = fakeCreature({
-      data: {
-        level1: { pnpValue: 10, value: 10, type: "none" },
-        bonusHp: 4,
-      },
-      items: [weapon],
-    });
-    creatureService.checkWeapons(creature);
-    expect(weapon.enchantment).toBe(4);
-  });
-
-  it("throws when no enchantment entry matches the level/bonusHp", () => {
-    const weapon = {
-      file: "w1",
-      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
-    } as Weapon;
-    const creature = fakeCreature({
-      data: { level1: { pnpValue: 0, value: 0, type: "none" } },
-      items: [weapon],
-    });
-    expect(() => creatureService.checkWeapons(creature)).toThrow(
-      /enchantment not found in table/,
-    );
-  });
-
-  it("does not compute enchantment when creature.autoGenerate.enchantment is false", () => {
-    const weapon = {
-      file: "w1",
-      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
-    } as Weapon;
-    const creature = fakeCreature({
-      data: { level1: { pnpValue: 10, value: 10, type: "none" } },
-      items: [weapon],
-      autoGenerate: { enchantment: false },
-    });
-    creatureService.checkWeapons(creature);
-    expect(weapon.enchantment).toBeUndefined();
-  });
-
-  it("assigns melee range from CreatureSizeTable based on creature size", () => {
-    const weapon = {
-      file: "w1",
-      header: { speed: 3, location: ItemAbilityLocationEnum.Weapon },
-    } as Weapon;
-    const creature = fakeCreature({
-      data: {
-        level1: { pnpValue: 0, value: 0, type: "none" },
-        size: "Large",
-      },
-      items: [weapon],
-      autoGenerate: { enchantment: false },
-    });
-    creatureService.checkWeapons(creature);
-    expect(weapon.header.range).toBe(2);
+    expect(item.header.speed).toBeUndefined();
   });
 });
 

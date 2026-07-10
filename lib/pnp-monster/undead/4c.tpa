@@ -121,7 +121,7 @@ BEGIN
 					hp=24
 					ac=7
 					thac0=19
-					apr=3
+					apr=2
 					saveDeath=14
 					saveWand=16
 					savePolymorph=15
