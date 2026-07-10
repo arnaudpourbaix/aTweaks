@@ -124,7 +124,7 @@ all-weapon/mixed/empty arrays. All 6 pass unchanged against both the old and
 new implementation, confirming no behavior change; kept as a regression net
 for the simplified logic.
 
-### 4. ☐ `target.service.ts:62` `getTargetFromAbility()` — random-order targeting disabled
+### 4. ✅ `target.service.ts:62` `getTargetFromAbility()` — random-order targeting disabled
 
 ```ts
 if (randomOrder) {
@@ -134,9 +134,39 @@ if (randomOrder) {
 
 `randomOrder` is accepted as a parameter but does nothing — commented out because
 shuffling would make regenerated `.baf` output non-deterministic (bad for a repo
-that commits generated sources). Needs: either seed the shuffle deterministically
-(e.g. from the creature/ability id) so regeneration is stable, or remove the dead
-`randomOrder` parameter/plumbing if it's not actually used by any caller.
+that commits generated sources).
+
+**Context (from the maintainer):** the generator was originally a separate repo
+from the mod, so `randomOrder`'s `Math.random()` shuffle was fine. After
+merging the two repos, every regeneration reshuffled and churned the
+committed `.baf` files, so it was disabled as a stopgap. The actual intent:
+`randomOrder` should use real, non-deterministic shuffling, but stay off
+during day-to-day development and only be switched on deliberately for a
+final release build.
+
+`TARGET_LISTS` entries (e.g. `"FarthestEnemies"`) are a fixed, ordered list of
+WeiDU object identifiers (`"FarthestEnemyOf(Myself)"`,
+`"SecondFarthestEnemyOf(Myself)"`, ...); `addStatementsFromTargetList()` turns
+each into its own top-level block in the generated `.baf`, and since IE scripts
+run blocks top-to-bottom and act on the first one whose triggers pass, this
+order is what determines real in-game target preference once generated —
+confirmed this isn't about per-cast runtime randomness, it's about not
+defaulting every `randomOrder` ability to strict nearest/farthest-first.
+
+**Fix applied:** restored the real shuffle (`utils.shuffleArray`), gated
+behind a new `GLOBAL_CONFIG.enableRandomTargetOrder` flag (default `false`),
+following the same plain-boolean pattern as `constitutionAffectHitPoint` /
+`spellcasterPrecastMidDurationSpells` already in `lib/config/generate.ts`.
+With the flag off (today's default), behavior and output are byte-for-byte
+identical to before. Flipping it to `true` and regenerating once is the
+"activate before release" step the maintainer described.
+
+**Confirmed no current impact with the flag off:** full regeneration produced
+zero file changes beyond the code/test edits themselves. Added a
+`randomOrder` test block to `target.service.test.ts` (this function had no
+coverage of the `randomOrder` behavior before) — covers flag-off (no
+shuffle), `randomOrder: false` (no shuffle even with the flag on), shuffle
+invoked with both true, and shuffle applied before `limit`.
 
 ### 5. ☐ `statement-builder.service.ts:852` `attackTargetWithStatuses()` — unlabeled TODO
 

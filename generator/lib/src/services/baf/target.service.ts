@@ -1,3 +1,4 @@
+import { GLOBAL_CONFIG } from "../../../config/generate";
 import {
   DEFAULT_STATUS_ORDER,
   TARGET_LISTS,
@@ -22,6 +23,7 @@ import {
   TargetStatus,
 } from "../../model/script/target";
 import { Triggers } from "../../model/script/triggers";
+import utils from "../utils/utils.service";
 
 class TargetService {
   targetObject(p: {
@@ -58,8 +60,8 @@ class TargetService {
   } {
     try {
       let result = this.getList(target as TargetListName);
-      if (randomOrder) {
-        // result.targets = utils.shuffleArray(result.targets); // TODO: disable to prevent file changes (since generated sources are committed)
+      if (randomOrder && GLOBAL_CONFIG.enableRandomTargetOrder) {
+        result.targets = utils.shuffleArray(result.targets);
       }
       if (limit) result.targets = result.targets.slice(0, limit);
       return result;

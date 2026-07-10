@@ -1,6 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { GLOBAL_CONFIG } from "../../../config/generate";
 import { Creature } from "../../model/creature/creature";
 import { TargetList } from "../../model/script/target";
+import utils from "../utils/utils.service";
 import targetService from "./target.service";
 
 describe("targetObject", () => {
@@ -155,6 +157,70 @@ describe("getTargetFromAbility", () => {
     ).toEqual({
       targets: "GOODCUTOFF",
       allegianceCheck: false,
+    });
+  });
+
+  describe("randomOrder", () => {
+    afterEach(() => {
+      GLOBAL_CONFIG.enableRandomTargetOrder = false;
+      vi.restoreAllMocks();
+    });
+
+    it("does not shuffle when enableRandomTargetOrder is disabled (default), even if randomOrder is true", () => {
+      const shuffleSpy = vi.spyOn(utils, "shuffleArray");
+      const result = targetService.getTargetFromAbility("Players", undefined, true);
+      expect(shuffleSpy).not.toHaveBeenCalled();
+      expect(result.targets).toEqual([
+        "Player1",
+        "Player2",
+        "Player3",
+        "Player4",
+        "Player5",
+        "Player6",
+      ]);
+    });
+
+    it("does not shuffle when randomOrder is falsy, even if enableRandomTargetOrder is enabled", () => {
+      GLOBAL_CONFIG.enableRandomTargetOrder = true;
+      const shuffleSpy = vi.spyOn(utils, "shuffleArray");
+      targetService.getTargetFromAbility("Players", undefined, false);
+      expect(shuffleSpy).not.toHaveBeenCalled();
+    });
+
+    it("shuffles the resolved list when both enableRandomTargetOrder and randomOrder are true", () => {
+      GLOBAL_CONFIG.enableRandomTargetOrder = true;
+      const shuffleSpy = vi.spyOn(utils, "shuffleArray");
+      const result = targetService.getTargetFromAbility("Players", undefined, true);
+      expect(shuffleSpy).toHaveBeenCalledWith([
+        "Player1",
+        "Player2",
+        "Player3",
+        "Player4",
+        "Player5",
+        "Player6",
+      ]);
+      expect([...(result.targets as string[])].sort()).toEqual([
+        "Player1",
+        "Player2",
+        "Player3",
+        "Player4",
+        "Player5",
+        "Player6",
+      ]);
+    });
+
+    it("shuffles before applying limit", () => {
+      GLOBAL_CONFIG.enableRandomTargetOrder = true;
+      vi.spyOn(utils, "shuffleArray").mockReturnValue([
+        "Player6",
+        "Player5",
+        "Player4",
+        "Player3",
+        "Player2",
+        "Player1",
+      ]);
+      const result = targetService.getTargetFromAbility("Players", 2, true);
+      expect(result.targets).toEqual(["Player6", "Player5"]);
     });
   });
 });

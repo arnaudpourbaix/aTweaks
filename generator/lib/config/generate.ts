@@ -7,6 +7,13 @@ export const GLOBAL_CONFIG = {
   },
   constitutionAffectHitPoint: true,
   spellcasterPrecastMidDurationSpells: false,
+  /**
+   * Keep disabled during development: shuffling target order on every
+   * regeneration would churn the committed .baf files with no real
+   * config change behind it. Enable once, right before a release build,
+   * to bake in the intended non-nearest-first target variety.
+   */
+  enableRandomTargetOrder: false,
   bafConstants: {
     combatStarted: "JA#COMBAT",
     disableSpellcasting: "JA#DISABLE_SPELLCASTING",
