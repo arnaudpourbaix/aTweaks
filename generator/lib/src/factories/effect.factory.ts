@@ -105,7 +105,7 @@ class EffectFactory {
         ...base,
       });
     }
-    if (params.races) {
+    if (params.races?.length) {
       for (const race of params.races) {
         effects.unshift({
           opcode: EffectTypeEnum.Hold,

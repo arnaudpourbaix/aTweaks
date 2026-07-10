@@ -237,7 +237,7 @@ against the old code.
 
 ---
 
-### 6. ☐ `effect.factory.ts` `paralyze()` — `races: []` truthy check skips the Hold effect entirely
+### 6. ✅ `effect.factory.ts` `paralyze()` — `races: []` truthy check skips the Hold effect entirely
 
 **File:** `lib/src/factories/effect.factory.ts:108` (approx.)
 
@@ -256,10 +256,17 @@ undefined`. The branch is chosen by truthiness, not `.length`. If `races: []` is
 ever passed, the loop runs zero times *and* the `else` fallback never runs
 either — the core `Hold` opcode is missing entirely from the effect list, so the
 creature would visually appear paralyzed (icon/animation effects still fire) but
-not actually be immobilized. Currently latent: all current call sites pass
-`races` either omitted or non-empty.
+not actually be immobilized. Currently latent: every current call site
+(bears, crawlers, slimes, undead, poison.service.ts) omits `races` entirely.
 
-**Likely fix:** change `if (params.races)` to `if (params.races?.length)`.
+**Fix applied:** changed `if (params.races)` to `if (params.races?.length)`.
+
+**Confirmed no current impact:** no caller passes `races` at all today
+(confirmed via grep and a full regeneration — no `.baf` output changed). Added
+`lib/src/factories/effect.factory.test.ts` (this factory had no test coverage
+before) — the empty-array case fails against the old code (produces no `Hold`
+effect at all), and passes with the fix (falls back to the generic `ANYONE`
+Hold effect, matching the omitted-`races` case).
 
 ---
 
