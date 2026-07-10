@@ -863,7 +863,8 @@ Range: 2 feet~
 
 Melee damage: 1D2 (Piercing)
 Speed Factor: 3
-Range: 2 feet~
+Range: 2 feet
+Paralyze target for 7 rounds (saves vs poison/death).~
 @10590 = ~Slashing damage: 1D4
 Slashing damage: 1D4~
 @10591 = ~Paws
@@ -1301,7 +1302,8 @@ Melee damage: 1D6 (Crushing)
 Acid damage: 4D6
 Speed Factor: 4
 Enchantment: 1
-Range: 5 feet~
+Range: 5 feet
+Paralyze target for a turn (saves vs poison/death).~
 @10705 = ~Type Q poison~
 @10706 = ~Fall into a coma for an hour~
 @10707 = ~Jaws
@@ -1663,8 +1665,8 @@ Their touch causes humanoids to become rigid unless a saving throw versus paraly
 Cast spell Rotting Disease (saves vs poison/death):
 Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.~
 @10788 = ~Mummy traits~
-@10789 = ~~
-@10790 = ~~
+@10789 = ~Paralyze target for 3 rounds (saves vs spell at +2).~
+@10790 = ~Paralyze target for 3 rounds (saves vs spell).~
 @10791 = ~Resistance to physical damage (50%)
 Immune to cold
 Immune to non-magical weapons
@@ -1683,8 +1685,8 @@ For each day the rot progresses, the victim permanently loses 2 points of Charis
 The disease can be cured only with a cure disease spell.
 Cure wounds spells have no effect on a person inflicted with mummy rot.~
 @10793 = ~Greater Mummy traits~
-@10794 = ~~
-@10795 = ~~
+@10794 = ~Paralyze target for 3 rounds (saves vs spell at -1).~
+@10795 = ~Paralyze target for 3 rounds (saves vs spell at -3).~
 @10796 = ~Resistance to physical damage (50%)
 Immune to cold
 Immune to all weapons of +2 or less enchantment

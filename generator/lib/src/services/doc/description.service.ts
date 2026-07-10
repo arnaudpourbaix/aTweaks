@@ -202,7 +202,10 @@ class DescriptionService {
       results.push(...this.getDisease(effect));
     } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
       results.push(...this.getArmorClassBonus(effect));
-    } else if (effect.opcode === EffectTypeEnum.Paralyze) {
+    } else if (
+      effect.opcode === EffectTypeEnum.Paralyze ||
+      effect.opcode === EffectTypeEnum.Hold
+    ) {
       results.push(...this.getParalyze(effect, target));
     } else if (effect.opcode === EffectTypeEnum.InvisibilityDetection) {
       results.push("Can see invisible creatures.");

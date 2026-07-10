@@ -216,7 +216,7 @@ case EffectTypeEnum.CurrentHPbonus:
 several closed bugfix items — still worth a test locking in current behavior before
 extending.
 
-### 11. ☐ `description.service.ts` `getEffectDescription()` — `EffectTypeEnum.Hold` is never documented
+### 11. ✅ `description.service.ts` `getEffectDescription()` — `EffectTypeEnum.Hold` is never documented
 
 Found while working item #2. `getEffectDescription()`'s `if`/`else if` dispatch
 chain (`description.service.ts:192-254`) has no branch for
@@ -226,18 +226,32 @@ match. That matters because `effectFactory.paralyze()`
 #6) — the helper actually used by real paralysis abilities across `undead.ts`,
 `slimes.ts`, `crawlers.ts`, `bears.ts`, and `poison.service.ts` — emits its
 core effect as `opcode: EffectTypeEnum.Hold`, not `EffectTypeEnum.Paralyze`.
-Every one of those abilities currently produces **zero lines of documentation**
-for the actual paralyze/hold effect (confirmed: the string "Paralyze" does not
-appear anywhere in the generated `docs/monsters.html` today).
+Every one of those abilities currently produced **zero lines of documentation**
+for the actual paralyze/hold effect (confirmed: the string "Paralyze" did not
+appear anywhere in the generated `docs/monsters.html` before this fix).
 
-This is a bigger fix than #2: it needs a decision on what the rendered
-sentence should say (likely close to `getParalyze()`'s output — target,
-duration, restriction, save text — since `Hold` and `Paralyze` share the same
-`IdsEffect` shape), and on whether `getParalyze()`'s logic should be
-generalized/reused for both opcodes rather than duplicated. Also worth
-checking the other `IdsEffect` opcodes (`Slay`, `UseEFFFile`,
-`DamageVsCreatureTypeModifier`, `Thac0VsCreatureTypeModifier`) — none of them
-have a case in the dispatch chain either, so they're likely undocumented too.
+**Fix applied:** per direction from the maintainer — Hold and Paralyze are
+kept as distinct effect opcodes (gameplay-wise they must remain separate), but
+they are described identically to the player, so `getEffectDescription()` now
+routes both `EffectTypeEnum.Paralyze` and `EffectTypeEnum.Hold` to the same
+`getParalyze()` renderer. No new function needed since `getParalyze()` already
+operates on the shared `IdsEffect` shape (target/duration/restriction/save
+text) regardless of which of the two opcodes it's called for.
+
+**Confirmed real impact (this was a live bug, not dormant):** regenerating
+output changed `docs/monsters.html` (2 creatures gained a `"Paralyze target
+for ..."` line where there was previously none) and all 7
+`tra/*/generated.tra` files. Most notably, Mummy and Greater Mummy's
+paralyzing-touch ability string refs (`@10789`, `@10790`, `@10794`, `@10795`
+in `tra/english/generated.tra`) went from **literally blank** (`~~`) to their
+correct text, e.g. `"Paralyze target for 3 rounds (saves vs spell at +2)."`
+Added a routing test to the `getEffectDescription (private, dispatcher)` block
+in `description.service.test.ts` (verified it fails against the old code,
+passes with the fix).
+
+The other `IdsEffect` opcodes (`Slay`, `UseEFFFile`,
+`DamageVsCreatureTypeModifier`, `Thac0VsCreatureTypeModifier`) still have no
+case in the dispatch chain — not addressed here, worth checking separately.
 
 ---
 

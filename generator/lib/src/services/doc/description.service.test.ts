@@ -874,6 +874,15 @@ describe("getEffectDescription (private, dispatcher)", () => {
     ).toEqual(["Paralyze target for a turn."]);
   });
 
+  it("routes Hold to getParalyze (identical in-game effect, same description)", () => {
+    expect(
+      service.getEffectDescription(
+        { opcode: EffectTypeEnum.Hold, duration: 60 },
+        target,
+      ),
+    ).toEqual(["Paralyze target for a turn."]);
+  });
+
   it("returns a constant line for InvisibilityDetection", () => {
     expect(
       service.getEffectDescription(
