@@ -150,6 +150,13 @@ class StatementService {
     }
     if (!custom || custom.type !== "replace") {
       fn.apply(this, [statements, creature, options]);
+    } else if (custom && custom.type === "replace") {
+      this.parseAbilities(
+        statements,
+        creature,
+        options,
+        custom.abilities ?? [],
+      );
     }
     if (custom && custom.type === "insertAfter") {
       this.processStatements(statements, custom.statements ?? []);
@@ -860,7 +867,7 @@ class StatementService {
       //   };
       // }
       let selectWeaponStatements: Statements = [];
-      if (creature.attack.selectWeapons) {
+      if (creature.attack.selectWeapons.length) {
         selectWeaponStatements = this.selectWeaponStatements(
           creature,
           targetTriggers,

@@ -596,7 +596,7 @@ describe("attackTargetWithStatuses (private)", () => {
     expect(statements[0].comment).toBe("Attack Able enemy");
   });
 
-  it("never reaches the melee+ranged auto weapon-select branch because `if (creature.attack.selectWeapons)` checks array truthiness, not length (real Creatures always have selectWeapons=[], which is truthy)", () => {
+  it("inserts weapon-selection statements between the guard and attack blocks when melee+ranged are both available and no explicit selectWeapons is configured", () => {
     const statements: Statements = [];
     service.attackTargetWithStatuses(
       statements,
@@ -605,9 +605,25 @@ describe("attackTargetWithStatuses (private)", () => {
       "NearestEnemies",
       ["Able"],
     );
-    // Same length as the plain case: selectWeaponMeleeRangeStatements is dead
-    // code for any Creature built through Creature.setAttack().
-    expect(statements).toHaveLength(2);
+    expect(statements).toHaveLength(4); // guard, 2 weapon-select, final attack
+  });
+
+  it("prefers explicit selectWeapons config over the melee+ranged auto-select fallback", () => {
+    const statements: Statements = [];
+    service.attackTargetWithStatuses(
+      statements,
+      fakeCreature({
+        attack: {
+          melee: true,
+          ranged: true,
+          selectWeapons: [{ slot: "WEAPON2", triggers: [] }],
+        },
+      }),
+      options(),
+      "NearestEnemies",
+      ["Able"],
+    );
+    expect(statements).toHaveLength(3); // guard, 1 weapon-select, final attack
   });
 });
 
@@ -924,7 +940,7 @@ describe("execute (private, custom-code dispatch)", () => {
     expect(called).toBe(true);
   });
 
-  it("suppresses the default function AND drops the custom statements for a 'replace' custom code (documents current behavior)", () => {
+  it("suppresses the default function for a 'replace' custom code, applying its abilities but not its statements", () => {
     const statements: Statements = [];
     let called = false;
     const creature = fakeCreature({
@@ -934,7 +950,7 @@ describe("execute (private, custom-code dispatch)", () => {
             location: "rest",
             type: "replace",
             statements: [{ triggers: [], responses: [], comment: "custom" }],
-            abilities: [],
+            abilities: [fakeAbility()],
           },
         ],
       } as any,
@@ -949,7 +965,9 @@ describe("execute (private, custom-code dispatch)", () => {
       options(),
     );
     expect(called).toBe(false);
-    expect(statements).toEqual([]);
+    // custom.statements are dropped for "replace" - only custom.abilities are applied.
+    expect(statements.some((s) => s.comment === "custom")).toBe(false);
+    expect(statements).toHaveLength(1);
   });
 
   it("runs custom statements before the default function for 'insertBefore'", () => {
@@ -1029,16 +1047,25 @@ describe("buildStatements (integration)", () => {
     expect(result.length).toBeGreaterThan(0);
   });
 
-  it("suppresses the built-in rest statement when a 'replace' custom code targets 'rest' (regression guard for execute()'s current behavior)", () => {
+  it("suppresses the built-in rest statement and applies custom abilities (not custom statements) for a 'replace' custom code targeting 'rest'", () => {
     const creature = fakeCreature({
       behavior: {
         customCodes: [
-          { location: "rest", type: "replace", statements: [], abilities: [] },
+          {
+            location: "rest",
+            type: "replace",
+            statements: [
+              { triggers: [], responses: [], comment: "custom-rest" },
+            ],
+            abilities: [fakeAbility({ name: "ability.unknown" })],
+          },
         ],
       } as any,
     });
     const result = statementService.buildStatements(creature, options());
     expect(result.some((s) => s.comment?.startsWith("Rest"))).toBe(false);
+    expect(result.some((s) => s.comment === "custom-rest")).toBe(false);
+    expect(result.some((s) => s.comment === "(unknown)")).toBe(true);
   });
 
   it("inserts custom statements for 'insertBefore' immediately ahead of the built-in dialog statement", () => {
