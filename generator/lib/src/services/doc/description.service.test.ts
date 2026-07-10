@@ -7,6 +7,7 @@ import {
   DiseaseTypeEnum,
   EffectBonusToEnum,
   EffectDamageTypeEnum,
+  EffectIDSFileEnum,
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
   InvisibilityTypeEnum,
@@ -543,6 +544,67 @@ describe("getParalyze (private)", () => {
         ItemAbilityTargetEnum.LivingActor,
       ),
     ).toEqual(["Paralyze target for a turn (saves vs poison/death)."]);
+  });
+
+  it("omits the restriction when idsFile/idsEntry target anyone (EA/ANYONE)", () => {
+    expect(
+      service.getParalyze(
+        {
+          duration: 60,
+          saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+          idsFile: EffectIDSFileEnum.EA,
+          idsEntry: "ANYONE",
+        },
+        ItemAbilityTargetEnum.LivingActor,
+      ),
+    ).toEqual(["Paralyze target for a turn (saves vs poison/death)."]);
+  });
+
+  it("mentions the pascal-cased ids entry when restricted to a race", () => {
+    expect(
+      service.getParalyze(
+        {
+          duration: 60,
+          saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+          idsFile: EffectIDSFileEnum.RACE,
+          idsEntry: "HALF_ELF",
+        },
+        ItemAbilityTargetEnum.LivingActor,
+      ),
+    ).toEqual([
+      "Paralyze target for a turn (only affects Half Elf) (saves vs poison/death).",
+    ]);
+  });
+
+  it("mentions the pascal-cased ids entry when restricted by general type", () => {
+    expect(
+      service.getParalyze(
+        {
+          duration: 60,
+          saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
+          idsFile: EffectIDSFileEnum.GENERAL,
+          idsEntry: "UNDEAD",
+        },
+        ItemAbilityTargetEnum.LivingActor,
+      ),
+    ).toEqual([
+      "Paralyze target for a turn (only affects Undead) (saves vs poison/death).",
+    ]);
+  });
+});
+
+describe("toPascalCase (private)", () => {
+  it("capitalizes a single all-caps word", () => {
+    expect(service.toPascalCase("HUMAN")).toBe("Human");
+  });
+
+  it("joins underscore-separated words with a space", () => {
+    expect(service.toPascalCase("HALF_ELF")).toBe("Half Elf");
+    expect(service.toPascalCase("GENERAL_ITEM")).toBe("General Item");
+  });
+
+  it("joins hyphen-separated words with a space", () => {
+    expect(service.toPascalCase("WILL-O-WISP")).toBe("Will O Wisp");
   });
 });
 

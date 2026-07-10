@@ -46,7 +46,7 @@ Added 2 tests to the existing `getProbability` block in
 `description.service.test.ts` (verified they fail against the old code, pass
 with the fix).
 
-### 2. ☐ `description.service.ts:373` `getParalyze()` — IDS entry/id not reflected in text
+### 2. ✅ `description.service.ts:373` `getParalyze()` — IDS entry/id not reflected in text
 
 ```ts
 private getParalyze(effect: IdsEffect, target: ItemAbilityTargetEnum): string[] {
@@ -60,9 +60,31 @@ private getParalyze(effect: IdsEffect, target: ItemAbilityTargetEnum): string[] 
 `IdsEffect` carries an IDS file/entry (e.g. race- or class-restricted paralyze), but
 the generated sentence never mentions the restriction — documentation reads as an
 unconditional paralyze even when the effect only triggers against a specific race/
-class. Needs: confirm which paralyze effects actually set an IDS entry, then extend
-the sentence (mirrors the pattern already used for race-restricted `Hold` in
-`effect.factory.ts`, see #6 in the closed bugfix roadmap).
+class.
+
+**Fix applied:** the generic `EA`/`"ANYONE"` (unrestricted) case is unchanged. Any
+other `idsFile`/`idsEntry` combination (most likely `GENERAL` or `RACE`) now
+appends `" (only affects ${entry})"` before the save-text clause, with `entry`
+run through a new `toPascalCase()` helper for readability — e.g. `idsEntry:
+"HALF_ELF"` renders as `"Half Elf"`, not `"HALF_ELF"`. `toPascalCase()` splits
+on any run of non-alphanumeric characters (`_`, `-`, etc.), capitalizes each
+word, and joins with a space.
+
+**Investigation note:** the literal `Paralyze` opcode this function renders is
+distinct from `EffectTypeEnum.Hold`, which is what the widely-used
+`effectFactory.paralyze()` helper actually generates (see `BUGFIX_ROADMAP.md`
+#6). `Hold` currently has **no case at all** in `getEffectDescription()`'s
+dispatch chain, so the real, race-restrictable paralysis abilities (undead,
+slimes, crawlers, bears) produce no doc text for that effect regardless of this
+fix. That's a separate, larger gap — tracked as new item #11 below rather than
+folded into this one.
+
+**Confirmed no current impact on today's output:** the only shipped `Paralyze`-
+opcode effect (`lib/creatures/spiders.ts:173-179`) already uses the generic
+`EA`/`ANYONE` case — full regeneration (golden/pipeline tests) produced no
+output changes. Added tests for the restricted-race/general cases and for
+`toPascalCase()` directly in `description.service.test.ts` (verified they fail
+against the old code, pass with the fix).
 
 ### 3. ☐ `item.service.ts:118-127` `isEquippedWeapon()` — multi-slot weapon arrays under-handled
 
@@ -193,6 +215,29 @@ case EffectTypeEnum.CurrentHPbonus:
 `undefined` today it's the same "confirmed no current impact, dormant" shape as
 several closed bugfix items — still worth a test locking in current behavior before
 extending.
+
+### 11. ☐ `description.service.ts` `getEffectDescription()` — `EffectTypeEnum.Hold` is never documented
+
+Found while working item #2. `getEffectDescription()`'s `if`/`else if` dispatch
+chain (`description.service.ts:192-254`) has no branch for
+`EffectTypeEnum.Hold` — search the file for `"Hold"` and there isn't a single
+match. That matters because `effectFactory.paralyze()`
+(`lib/src/factories/effect.factory.ts:64-125`, see closed `BUGFIX_ROADMAP.md`
+#6) — the helper actually used by real paralysis abilities across `undead.ts`,
+`slimes.ts`, `crawlers.ts`, `bears.ts`, and `poison.service.ts` — emits its
+core effect as `opcode: EffectTypeEnum.Hold`, not `EffectTypeEnum.Paralyze`.
+Every one of those abilities currently produces **zero lines of documentation**
+for the actual paralyze/hold effect (confirmed: the string "Paralyze" does not
+appear anywhere in the generated `docs/monsters.html` today).
+
+This is a bigger fix than #2: it needs a decision on what the rendered
+sentence should say (likely close to `getParalyze()`'s output — target,
+duration, restriction, save text — since `Hold` and `Paralyze` share the same
+`IdsEffect` shape), and on whether `getParalyze()`'s logic should be
+generalized/reused for both opcodes rather than duplicated. Also worth
+checking the other `IdsEffect` opcodes (`Slay`, `UseEFFFile`,
+`DamageVsCreatureTypeModifier`, `Thac0VsCreatureTypeModifier`) — none of them
+have a case in the dispatch chain either, so they're likely undocumented too.
 
 ---
 

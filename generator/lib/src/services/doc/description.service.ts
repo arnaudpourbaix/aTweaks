@@ -24,6 +24,7 @@ import {
   DiseaseTypeEnum,
   EffectBonusToEnum,
   EffectDamageTypeEnum,
+  EffectIDSFileEnum,
   EffectModifierTypeEnum,
   InvisibilityTypeEnum,
   ItemAbilityTargetEnum,
@@ -376,13 +377,26 @@ class DescriptionService {
     target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
-    //TODO: handle ids entry/id
+    const isUnrestricted =
+      effect.idsFile === EffectIDSFileEnum.EA && effect.idsEntry === "ANYONE";
+    const restriction =
+      effect.idsEntry && !isUnrestricted
+        ? ` (only affects ${this.toPascalCase(effect.idsEntry)})`
+        : "";
     results.push(
       `Paralyze ${this.getTarget(target)} for ${this.getDuration(
         effect.duration,
-      )}${this.getSaveText(effect)}.`,
+      )}${restriction}${this.getSaveText(effect)}.`,
     );
     return results;
+  }
+
+  private toPascalCase(value: string): string {
+    return value
+      .split(/[^a-zA-Z0-9]+/)
+      .filter(Boolean)
+      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   }
 
   private getCharm(
