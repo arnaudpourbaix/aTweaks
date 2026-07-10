@@ -3,5 +3,6 @@ backup
 TAGS
 node_modules
 generator/log.txt
+generator/coverage
 
 .worktrees

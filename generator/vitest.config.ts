@@ -15,5 +15,15 @@ export default defineConfig({
   test: {
     include: ["lib/**/*.test.ts"],
     silent: "passed-only",
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text-summary", "html"],
+      include: ["lib/**/*.ts"],
+      exclude: [
+        "lib/**/*.test.ts",
+        "lib/config/**",
+        "lib/creatures/**",
+      ],
+    },
   },
 });
