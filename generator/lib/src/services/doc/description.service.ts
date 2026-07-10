@@ -590,7 +590,7 @@ class DescriptionService {
         ? `${payload.diceThrown}D${payload.diceSize}`
         : "";
     const value = payload.value ? `${this.getSignedNumber(payload.value)}` : "";
-    return dice ? `${dice}${value}` : `${value.substring(1)}`;
+    return dice ? `${dice}${value}` : value.replace(/^\+/, "");
   }
 
   private getSignedNumber(value: number | null | undefined): string {

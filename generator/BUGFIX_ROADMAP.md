@@ -270,7 +270,7 @@ Hold effect, matching the omitted-`races` case).
 
 ---
 
-### 7. ☐ `description.service.ts` `getDiceValue()` — negative diceless value loses its sign
+### 7. ✅ `description.service.ts` `getDiceValue()` — negative diceless value loses its sign
 
 **File:** `lib/src/services/doc/description.service.ts:583-594` (approx.)
 
@@ -289,8 +289,16 @@ returns negative numbers unchanged (e.g. `"-3"`), so `"-3".substring(1)` yields
 positive value in generated documentation. Currently latent: no shipped config
 has a negative diceless value in this path.
 
-**Likely fix:** don't blanket-strip the first character; only strip a leading
-`+`, e.g. `value.replace(/^\+/, "")`.
+**Fix applied:** don't blanket-strip the first character; only strip a leading
+`+` via `value.replace(/^\+/, "")`.
+
+**Confirmed no current impact:** no shipped item/effect config has a negative
+diceless value in this path (confirmed via grep of `damageBonus`/`CurrentHPbonus`
+usages and a full regeneration — no output changed). Added
+`description.service.test.ts` (this service had no test coverage before) —
+covers dice-only, dice+bonus (positive/negative), and diceless (positive
+stripped, negative preserved) cases; the negative-diceless case fails against
+the old code.
 
 ---
 
