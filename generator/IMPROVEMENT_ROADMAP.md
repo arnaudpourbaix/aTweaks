@@ -1,0 +1,240 @@
+# Improvement Roadmap
+
+Follow-up to `BUGFIX_ROADMAP.md` (closed out 2026-07-10, all 11 findings resolved).
+That audit's bugs were all hiding in untested branches — a truthy check instead of
+`.length`, an `if/else` whose side effect landed on the wrong object. Two gaps remain
+that are likely to keep producing that same shape of bug:
+
+1. **Known, self-documented gaps** — 9 `TODO`/`FIXME` comments already left in the
+   code marking deliberately incomplete or disabled logic.
+2. **Untested branches in complex logic files** — overall branch coverage is 88.8%
+   against 94.75% statement coverage (`npm test`, 2026-07-10). Every file already
+   fixed in the bugfix roadmap (`creature.ts`, `effect.factory.ts`, `item.service.ts`)
+   sits in the lower half of this list, which is why the rest are worth auditing with
+   the same method rather than assuming they're fine.
+
+Status legend: ☐ not started · ▶ in progress · ✅ fixed & committed ·
+🟡 reviewed & decided not to change
+
+---
+
+## Tier 1 — known gaps (`TODO`/`FIXME` already in code)
+
+### 1. ✅ `description.service.ts:276` `getProbability()` — `probability2` never rendered
+
+```ts
+getProbability(effect: Effect): string {
+  //TODO: handle probability2
+  return effect.probability1 && effect.probability1 < 100
+    ? ` (${effect.probability1}%)`
+    : "";
+}
+```
+
+Only `probability1` is ever shown in generated documentation. If any effect config
+sets a meaningful `probability2` (dual-probability effects, e.g. different chance
+per save-vs-fail outcome), it's silently dropped from the docs.
+
+**Fix applied:** when `probability2` is set, it must be greater than
+`probability1` (throws otherwise) and the displayed percentage becomes
+`probability2 - probability1` (e.g. `probability1: 20, probability2: 60` →
+`" (40%)"`). When `probability2` is absent, behavior is unchanged.
+
+**Confirmed no current impact:** no shipped effect config sets `probability2`
+today — full regeneration (golden/pipeline tests) produced no output changes.
+Added 2 tests to the existing `getProbability` block in
+`description.service.test.ts` (verified they fail against the old code, pass
+with the fix).
+
+### 2. ☐ `description.service.ts:373` `getParalyze()` — IDS entry/id not reflected in text
+
+```ts
+private getParalyze(effect: IdsEffect, target: ItemAbilityTargetEnum): string[] {
+  const results: string[] = [];
+  //TODO: handle ids entry/id
+  results.push(`Paralyze ${this.getTarget(target)} for ${this.getDuration(effect.duration)}${this.getSaveText(effect)}.`);
+  return results;
+}
+```
+
+`IdsEffect` carries an IDS file/entry (e.g. race- or class-restricted paralyze), but
+the generated sentence never mentions the restriction — documentation reads as an
+unconditional paralyze even when the effect only triggers against a specific race/
+class. Needs: confirm which paralyze effects actually set an IDS entry, then extend
+the sentence (mirrors the pattern already used for race-restricted `Hold` in
+`effect.factory.ts`, see #6 in the closed bugfix roadmap).
+
+### 3. ☐ `item.service.ts:118-127` `isEquippedWeapon()` — multi-slot weapon arrays under-handled
+
+```ts
+isEquippedWeapon(item: EquippedItem): boolean {
+  //TODO handle case where you have an array of WEAPON slots
+  if (
+    Array.isArray(item.slot) &&
+    !item.slot.every((s) => WEAPON_SLOTS.map((w) => w.slot).includes(s)) &&
+    item.slot.length !== 1
+  )
+    return false;
+  const slot = Array.isArray(item.slot) ? item.slot[0] : item.slot;
+  return WEAPON_SLOTS.map((s) => s.slot).includes(slot);
+}
+```
+
+Companion to the already-reviewed `isSlotIncluded()` (`BUGFIX_ROADMAP.md` #8, left
+as-is). Here, when `item.slot` is a multi-entry array that's *entirely* weapon slots,
+the guard clause is skipped and the function falls through to checking only
+`item.slot[0]` — the rest of the array is ignored, not validated. Needs a decision
+(same as #8): is silently checking only the first slot acceptable, or should it
+check `.some()`/`.every()` across the array? Worth resolving both TODOs together
+since they're the same underlying "array of weapon/jewel slots" gap.
+
+### 4. ☐ `target.service.ts:62` `getTargetFromAbility()` — random-order targeting disabled
+
+```ts
+if (randomOrder) {
+  // result.targets = utils.shuffleArray(result.targets); // TODO: disable to prevent file changes (since generated sources are committed)
+}
+```
+
+`randomOrder` is accepted as a parameter but does nothing — commented out because
+shuffling would make regenerated `.baf` output non-deterministic (bad for a repo
+that commits generated sources). Needs: either seed the shuffle deterministically
+(e.g. from the creature/ability id) so regeneration is stable, or remove the dead
+`randomOrder` parameter/plumbing if it's not actually used by any caller.
+
+### 5. ☐ `statement-builder.service.ts:852` `attackTargetWithStatuses()` — unlabeled TODO
+
+```ts
+const list = targetService.getList(targetListName); //TODO:
+```
+
+Bare `//TODO:` with no description — needs the original author's intent recovered
+(check git blame/history) or, if it's stale, just delete the marker.
+
+### 6. ☐ `statement-builder.service.ts:981` — potion-use message hardcoded to `@3002` instead of a translation key
+
+```ts
+{
+  name: "DisplayStringHead",
+  params: [ScriptTarget.myself, `@3002`], // TODO: should be "common.potion.use", but languages file are generated after
+},
+```
+
+Every other display string in this codebase goes through the translation system;
+this one is a hardcoded strref because language files are generated in a later
+pipeline stage than this one runs. Needs: either resolve the strref via a
+post-generation patch pass, or generate the languages file earlier so this can use
+`common.potion.use` like everything else.
+
+### 7. ☐ `baf.factory.ts:28-38` `addStatementsFromTargetList()` — `random` targeting disabled, biased distribution
+
+```ts
+if (p.random && index < targets.length - 1) {
+  // FIXME: random is disabled because it has a critical issue.
+  // let's say it targets 6 nearest enemies, each enemy has an equal chance to be selected
+  // if there are 6 enemies, this is working as intended
+  // if there are 3 enemies, there is 50% of no target selection, which is not intended
+  // NumCreatureGT could help but it would make code more complex
+}
+```
+
+Same underlying disabled-shuffle theme as #4, different layer: the `random` flag on
+statement generation is fully inert. The documented issue is real — a flat
+`RandomNumLT(max, max/(targets.length - index))` chance-per-target under-fires when
+fewer targets exist than the design assumes. Needs: the `NumCreatureGT`-based fix
+the comment already sketches, or an explicit decision to drop `random` from the
+`BafFactory` API if no caller needs it.
+
+### 8. ☐ `ability.factory.ts:20-35` `polymorphSelf()` — situational form selection not implemented
+
+```ts
+// TODO: cover all these creatures
+// Set intelligent form depending on situation
+// Fast form to run away or track players
+// Strong melee form in melee
+// Strong range in ranged
+```
+
+Currently all 9 polymorph forms are added with equal, unconditional probability —
+none of the "pick fast form to flee / strong melee in melee / strong ranged at
+range" situational logic described in the comment exists. This is a feature gap,
+not a bug: needs a design decision on whether this is worth the trigger complexity
+before implementing, since `statement-builder.service.ts` already has to reject "OR
+triggers not handled currently" in nearby code (line 848).
+
+### 9. ☐ `weidu-family.service.ts:69-72` `generateFinalCode()` — `integrate_sectypes` disabled for install-time cost
+
+```ts
+if (family.spells.some(...) || family.creatures.some(...)) {
+  //FIXME: enable in the end (disabled because it greatly decreases installation time)
+  // this.add(lines, "LAF integrate_sectypes END", 0);
+}
+```
+
+The condition to call `integrate_sectypes` is still evaluated and presumably
+intended to matter (secondary spell types not integrated into IDS otherwise), but
+the actual call is commented out repo-wide because it tanks install time. Needs:
+confirm whether skipping this causes any visible in-game issue with secondary spell
+types today; if not, either remove the dead condition+comment or find a
+cheaper/conditional way to run `integrate_sectypes` only when actually needed.
+
+### 10. ☐ `effect.service.ts:263-266` `CurrentHPbonus` — unhandled `flag` field
+
+```ts
+case EffectTypeEnum.CurrentHPbonus:
+  effect.parameter1 = `${effect.value}`;
+  effect.parameter2 = `${effect.type}`; //TODO: handle flag if necessary
+  break;
+```
+
+`CurrentHPbonus` effects may carry a `flag` (opcode 428 supports flags like
+"instant/no visual"), but nothing reads or emits it here. Needs: check if
+`effect.flag` is ever set on a `CurrentHPbonus` config entry; if it's always
+`undefined` today it's the same "confirmed no current impact, dormant" shape as
+several closed bugfix items — still worth a test locking in current behavior before
+extending.
+
+---
+
+## Tier 2 — branch-coverage audit candidates (no known TODO, but low branch coverage)
+
+Overall: **88.8% branches / 94.75% statements** (`npm test`, 2026-07-10). The files
+below have real conditional logic (not data tables) and sit well below that average.
+Ordered lowest branch % first; each is a candidate for the same treatment the
+bugfix roadmap gave `ability.service.ts`, `effect.factory.ts`, and `creature.ts` —
+add tests for the untested branches first, *then* decide whether any exposed
+behavior is a bug.
+
+| Branch % | Stmt % | File |
+|---|---|---|
+| 11% | 100% | `lib/src/factories/ability.factory.ts` |
+| 13% | 100% | `lib/src/services/utils/weidu.utils.ts` |
+| 25% | 96% | `lib/src/services/state.service.ts` |
+| 28% | 100% | `lib/src/services/weapon.service.ts` |
+| 32% | 100% | `lib/src/services/weidu/weidu-family.service.ts` |
+| 33% | 100% | `lib/src/services/effects/grab.service.ts` |
+| 33% | 100% | `lib/src/services/effects/immunity.service.ts` |
+| 35% | 74% | `lib/src/services/kit.service.ts` |
+| 36% | 92% | `lib/src/services/weidu/weidu-core.service.ts` |
+| 47% | 98% | `lib/src/services/hit-point.service.ts` |
+| 50% | 88% | `lib/src/services/item.service.ts` |
+| 52% | 90% | `lib/src/model/creature/abstract-creature.ts` |
+| 53% | 89% | `lib/src/services/main.service.ts` |
+| 53% | 89% | `lib/src/services/weidu/weidu-projectile.service.ts` |
+
+`kit.service.ts` stands out — it's the only file here with statement coverage
+meaningfully below the project average (74%) *and* low branch coverage, meaning
+whole code paths, not just branches, are unexercised. Suggest starting there.
+
+Files already covered by the closed bugfix audit (`creature.ts` 43%,
+`effect.factory.ts` 49%, `weidu-core.service.ts` 36%) are listed for reference, not
+re-investigation — they already went through this process and either got fixed
+(#5, #6) or reviewed and left as-is (#10).
+
+---
+
+## Process
+
+Same as `BUGFIX_ROADMAP.md`: for each item, add/extend tests to lock in current
+behavior → decide fix vs. leave-as-is → apply fix if needed → regenerate affected
+`.baf`/doc output if it changes → review → commit.

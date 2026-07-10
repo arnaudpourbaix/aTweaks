@@ -243,6 +243,22 @@ describe("getProbability", () => {
   it("renders the percentage when below 100", () => {
     expect(service.getProbability({ probability1: 50 })).toBe(" (50%)");
   });
+
+  it("renders the difference between probability2 and probability1 when probability2 is set", () => {
+    expect(
+      service.getProbability({ probability1: 20, probability2: 60 }),
+    ).toBe(" (40%)");
+  });
+
+  it("throws when probability2 is not greater than probability1", () => {
+    expect(() =>
+      service.getProbability({ probability1: 60, probability2: 60 }),
+    ).toThrow();
+    expect(() =>
+      service.getProbability({ probability1: 60, probability2: 20 }),
+    ).toThrow();
+    expect(() => service.getProbability({ probability2: 60 })).toThrow();
+  });
 });
 
 describe("getStatisticText", () => {

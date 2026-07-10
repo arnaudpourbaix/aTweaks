@@ -273,7 +273,13 @@ class DescriptionService {
   }
 
   getProbability(effect: Effect): string {
-    //TODO: handle probability2
+    if (effect.probability2) {
+      if (!effect.probability1 || effect.probability2 <= effect.probability1)
+        throw new Error(
+          `probability2 (${effect.probability2}) must be greater than probability1 (${effect.probability1})`,
+        );
+      return ` (${effect.probability2 - effect.probability1}%)`;
+    }
     return effect.probability1 && effect.probability1 < 100
       ? ` (${effect.probability1}%)`
       : "";
