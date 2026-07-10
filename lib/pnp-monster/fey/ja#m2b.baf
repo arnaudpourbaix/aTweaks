@@ -26,6 +26,7 @@ THEN
 		SetGlobal("JA#PRECAST_LONG","LOCALS",0)
 		SetGlobal("JA#PRECAST_MID","LOCALS",0)
 		SetGlobalTimer("JA#REST","LOCALS",2400)
+		SetGlobal("JA#INIT","LOCALS",1)
 END
 
 // Rest (reset everything and heal if applicable)

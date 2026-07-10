@@ -295,15 +295,15 @@ class StatementService {
         GLOBAL_CONFIG.bafConstants.restTimer,
         Durations.eightHours,
       ),
+      actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
     ];
-    (actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
-      statements.push({
-        comment: "Init",
-        triggers: [
-          triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
-        ],
-        responses: responseFactory.response(actions),
-      }));
+    statements.push({
+      comment: "Init",
+      triggers: [
+        triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
+      ],
+      responses: responseFactory.response(actions),
+    });
   }
 
   private rest(
