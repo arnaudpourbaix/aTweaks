@@ -151,7 +151,7 @@ END
 
 // Web Tangle
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
@@ -174,7 +174,7 @@ THEN
 END
 
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
@@ -197,7 +197,7 @@ THEN
 END
 
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
@@ -220,7 +220,7 @@ THEN
 END
 
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
@@ -243,7 +243,7 @@ THEN
 END
 
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
@@ -266,7 +266,7 @@ THEN
 END
 
 IF
-	HaveSpell(WIZARD_WEB)
+	HaveSpellRES("ja#s0m3a")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)

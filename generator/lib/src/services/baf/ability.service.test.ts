@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { PRESET_NAMES } from "../../../config/common";
 import { RawCreatureAbility, RawCreatureSequencerAbility } from "../../model/creature/ability";
 import abilityService from "./ability.service";
 
@@ -203,6 +204,45 @@ describe("getAbilities - multi-spell (spells array)", () => {
         } as any,
       ]),
     ).toThrow(/Every spells must have the same target in ability ability.unknown/);
+  });
+});
+
+describe("getAbilities - preset id/resource conflict resolution (applyPreset)", () => {
+  it("drops the preset's spell.id when the override supplies spell.resource, so the have-spell trigger matches the resource actually cast", () => {
+    const [ability] = abilityService.getAbilities([
+      {
+        preset: PRESET_NAMES.DimensionDoorOffscreen,
+        spell: { resource: "MISC7F" },
+      },
+    ]);
+    // Before the fix, the merged spell kept BOTH the preset's id and the
+    // override's resource: getSpellAction() always casts via the resource
+    // (it checks `spell.resource` before `spell.id`), but the "have spell"
+    // trigger checked spell.id first and would have emitted HaveSpell(id)
+    // instead of HaveSpellRES(resource) - an incoherent, mismatched pair.
+    expect(ability.resource).toBe("MISC7F");
+    expect(ability.actions).toContainEqual({
+      name: "SpellRES",
+      params: ["MISC7F", "RR#TRAT"],
+    });
+    expect(ability.triggers).toContainEqual({
+      name: "HaveSpellRES",
+      params: ["MISC7F"],
+    });
+    expect(ability.triggers.some((t) => t.name === "HaveSpell")).toBe(false);
+  });
+
+  it("leaves the preset's own spell.id untouched when the override sets neither id nor resource", () => {
+    const [ability] = abilityService.getAbilities([
+      {
+        preset: PRESET_NAMES.DimensionDoorOffscreen,
+        spell: { memorizedSpellCheck: false },
+      },
+    ]);
+    expect(ability.actions).toContainEqual({
+      name: "Spell",
+      params: expect.arrayContaining(["RR#TRAT"]),
+    });
   });
 });
 

@@ -316,7 +316,7 @@ END
 // Dimension Door
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpell(WIZARD_DIMENSION_DOOR)
+	HaveSpellRES("ja#s1f8")
 	OR(2)
 		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
@@ -326,7 +326,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("ja#s1f8","RR#TRAT")
-		RemoveSpell(WIZARD_DIMENSION_DOOR)
+		RemoveSpellRES("ja#s1f8")
 		Wait(1)
 		SetInterrupt(TRUE)
 END

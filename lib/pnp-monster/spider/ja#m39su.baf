@@ -127,7 +127,7 @@ END
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpell(WIZARD_INVISIBILITY)
+	HaveSpellRES("ja#s0m39")
 	Detect(NearestEnemyOf(Myself))
 	!StateCheck(Myself,STATE_INVISIBLE)
 	RandomNumGT(800,240)

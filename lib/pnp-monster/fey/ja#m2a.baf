@@ -227,7 +227,7 @@ END
 // Dimension Door
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
-	HaveSpell(WIZARD_DIMENSION_DOOR)
+	HaveSpellRES("ja#s0f8")
 	OR(2)
 		Range(NearestEnemyOf(Myself),15)
 		AttackedBy([ANYONE],DEFAULT)
@@ -237,7 +237,7 @@ THEN
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		CreateCreatureOffscreen("RR#TRAT",0)
 		ForceSpellRES("ja#s0f8","RR#TRAT")
-		RemoveSpell(WIZARD_DIMENSION_DOOR)
+		RemoveSpellRES("ja#s0f8")
 		Wait(1)
 		SetInterrupt(TRUE)
 END
@@ -260,7 +260,7 @@ END
 // Entangle
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NearestEnemyOf(Myself))
@@ -282,13 +282,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SecondNearestEnemyOf(Myself))
@@ -310,13 +310,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(ThirdNearestEnemyOf(Myself))
@@ -338,13 +338,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FourthNearestEnemyOf(Myself))
@@ -366,13 +366,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(FifthNearestEnemyOf(Myself))
@@ -394,13 +394,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SixthNearestEnemyOf(Myself))
@@ -422,13 +422,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(SeventhNearestEnemyOf(Myself))
@@ -450,13 +450,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(EighthNearestEnemyOf(Myself))
@@ -478,13 +478,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(NinthNearestEnemyOf(Myself))
@@ -506,13 +506,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(CLERIC_ENTANGLE)
+	HaveSpellRES("ja#s4f8")
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(TenthNearestEnemyOf(Myself))
@@ -534,14 +534,14 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s4f8",LastSeenBy(Myself))
-		RemoveSpell(CLERIC_ENTANGLE)
+		RemoveSpellRES("ja#s4f8")
 		SetInterrupt(TRUE)
 END
 
 // Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -565,13 +565,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -595,13 +595,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -625,13 +625,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -655,13 +655,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -685,13 +685,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -715,13 +715,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -745,13 +745,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -775,13 +775,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -805,14 +805,14 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 // Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -836,13 +836,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -866,13 +866,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -896,13 +896,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -926,13 +926,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -956,13 +956,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -986,14 +986,14 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 // Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1016,13 +1016,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1045,13 +1045,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1074,13 +1074,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1103,13 +1103,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1132,13 +1132,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1161,13 +1161,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1190,13 +1190,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1219,13 +1219,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1248,14 +1248,14 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 // Dryad Charm
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1277,13 +1277,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1305,13 +1305,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1333,13 +1333,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1361,13 +1361,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1389,13 +1389,13 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 
 IF
 	!StateCheck(Myself,STATE_SILENCED)
-	HaveSpell(WIZARD_DIRE_CHARM)
+	HaveSpellRES("ja#s2f8")
 	!HaveSpellRES("SPWI506")
 	RandomNumGT(801,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
@@ -1417,7 +1417,7 @@ THEN
 		SetInterrupt(FALSE)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		ForceSpellRES("ja#s2f8",LastSeenBy(Myself))
-		RemoveSpell(WIZARD_DIRE_CHARM)
+		RemoveSpellRES("ja#s2f8")
 		SetInterrupt(TRUE)
 END
 

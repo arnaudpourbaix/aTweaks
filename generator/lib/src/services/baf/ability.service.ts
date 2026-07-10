@@ -252,13 +252,13 @@ class AbilityService {
       throw new Error(`Preset don't support spell arrays`);
     const result: RawCreatureAbility = deepmerge(preset.ability, ability, {});
     if (ability.spell && preset.ability.spell?.id && ability.spell.resource) {
-      ability.spell.id = undefined;
+      result.spell!.id = undefined;
     } else if (
       ability.spell &&
       preset.ability.spell?.resource &&
       ability.spell.id
     ) {
-      ability.spell.resource = undefined;
+      result.spell!.resource = undefined;
     }
     return result;
   }
