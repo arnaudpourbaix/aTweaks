@@ -199,7 +199,7 @@ the landmine for any future caller that passes 2+ tokens.
 
 ---
 
-### 5. ☐ `creature.ts` `addSpell()` — truthy check drops the `memorizedCount: 0` removal sentinel
+### 5. ✅ `creature.ts` `addSpell()` — truthy check drops the `memorizedCount: 0` removal sentinel
 
 **File:** `lib/src/model/creature/creature.ts:118-127`
 
@@ -226,8 +226,14 @@ memorizedCount: 0 })` never pushes an entry, silently producing neither
 creature calls `addSpell` with `memorizedCount: 0` (the sibling `memorizeSpell()`
 method has no such guard and works correctly).
 
-**Likely fix:** change `if (spell.memorizedCount)` to
+**Fix applied:** changed `if (spell.memorizedCount)` to
 `if (spell.memorizedCount !== undefined)`.
+
+**Confirmed no current impact:** no shipped creature calls `addSpell` with
+`memorizedCount: 0` (confirmed via grep and a full regeneration — no `.baf`
+output changed). Added `lib/src/model/creature/creature.test.ts` (this model
+class had no test coverage before), verified the `memorizedCount: 0` case fails
+against the old code.
 
 ---
 

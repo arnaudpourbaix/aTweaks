@@ -117,7 +117,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
 
   override addSpell(spell: PartialSpell): Spell {
     const result = super.addSpell(spell);
-    if (spell.memorizedCount) {
+    if (spell.memorizedCount !== undefined) {
       this.data.spells.memorized.push({
         file: result.file,
         memorizedCount: spell.memorizedCount,
