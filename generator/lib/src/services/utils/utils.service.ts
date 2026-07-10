@@ -33,10 +33,9 @@ class UtilsService {
     tokens: { key: string; value: string }[],
   ): void {
     for (let i = 0; i < params.length; i++) {
-      const p = params[i];
-      if (typeof p === "string") {
+      if (typeof params[i] === "string") {
         for (const token of tokens)
-          params[i] = p.replace(token.key, token.value);
+          params[i] = (params[i] as string).replace(token.key, token.value);
       }
     }
   }

@@ -33,6 +33,15 @@ describe("replaceParamTokens", () => {
     utils.replaceParamTokens(params, [{ key: "$NAME", value: "world" }]);
     expect(params).toEqual(["hello world", 42, "world again"]);
   });
+
+  it("compounds multiple token replacements in a single param instead of only keeping the last", () => {
+    const params: (string | number)[] = ["$A $B"];
+    utils.replaceParamTokens(params, [
+      { key: "$A", value: "1" },
+      { key: "$B", value: "2" },
+    ]);
+    expect(params).toEqual(["1 2"]);
+  });
 });
 
 describe("replaceActionTokens", () => {

@@ -163,7 +163,7 @@ verified the new tests fail against the old code and pass with the fix).
 
 ## Tier 2 — dormant bugs (correct bug pattern, no current config triggers them — landmines for later)
 
-### 4. ☐ `utils.service.ts` `replaceParamTokens()` — multi-token replacement only keeps the last substitution
+### 4. ✅ `utils.service.ts` `replaceParamTokens()` — multi-token replacement only keeps the last substitution
 
 **File:** `lib/src/services/utils/utils.service.ts:31-42`
 
@@ -187,8 +187,15 @@ applied to `"$A $B"` yields `"$A 2"` instead of `"1 2"`. Currently latent: every
 call site (`baf.factory.ts`, `statement-builder.service.ts`) happens to pass
 single-element token arrays.
 
-**Likely fix:** replace on `params[i]` (the running value) instead of the
+**Fix applied:** replace on `params[i]` (the running value) instead of the
 original `p` inside the inner loop.
+
+**Confirmed no current impact, but real logic bug:** all existing call sites
+(`baf.factory.ts`, `statement-builder.service.ts`) pass single-element token
+arrays, so no `.baf`/generated output changed after regenerating. Added a
+multi-token test to the existing `replaceParamTokens` block in
+`utils.service.test.ts` (verified fails against the old code) — this closes off
+the landmine for any future caller that passes 2+ tokens.
 
 ---
 
