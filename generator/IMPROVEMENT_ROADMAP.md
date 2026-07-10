@@ -208,7 +208,7 @@ files across the `ogre/` family (creatures with `usePotions: true`) — each
 `DisplayStringHead(Myself,@3002)` (an unresolved, dead placeholder) became
 `DisplayStringHead(Myself,10110)` (the real, working strref).
 
-### 7. ☐ `baf.factory.ts:28-38` `addStatementsFromTargetList()` — `random` targeting disabled, biased distribution
+### 7. ✅ `baf.factory.ts:28-38` `addStatementsFromTargetList()` — `random` targeting disabled, biased distribution
 
 ```ts
 if (p.random && index < targets.length - 1) {
@@ -220,12 +220,37 @@ if (p.random && index < targets.length - 1) {
 }
 ```
 
-Same underlying disabled-shuffle theme as #4, different layer: the `random` flag on
-statement generation is fully inert. The documented issue is real — a flat
-`RandomNumLT(max, max/(targets.length - index))` chance-per-target under-fires when
-fewer targets exist than the design assumes. Needs: the `NumCreatureGT`-based fix
-the comment already sketches, or an explicit decision to drop `random` from the
-`BafFactory` API if no caller needs it.
+**Confirmed root cause:** each generated per-target block includes a
+`See(target)` trigger (via `triggerFactory.validAttackTarget`), which fails
+when that ranked target (e.g. `FourthNearestEnemyOf`) doesn't exist. The
+`RandomNumLT` formula computes its decline probability from the *static*
+`targets.length`, assuming all `N` slots are eventually reachable. When fewer
+real enemies exist, the decline-probability mass reserved for the
+never-reachable trailing slots is wasted — nothing forces a pick among the
+real candidates once you run past them. Traced the exact numbers in the
+FIXME: 3 real enemies against a 6-slot list gives `(5/6)(4/5)(3/4) = 50%`
+chance nothing is picked, exactly matching the comment. A correct fix needs a
+*runtime* enemy count (`NumCreatureGT` or similar) to compute the probability
+dynamically — not something guessable without WeiDU trigger expertise.
+
+**Also found:** this `random` flag (`TargetList.random`, distinct from item
+#4's `randomOrder`) was set to `true` by **zero** shipped creatures or
+presets — fully dead, unlike `randomOrder`'s 60+ usages.
+
+**Decision (from the maintainer):** since it's unused today and a correct fix
+needs runtime trigger logic beyond what's safe to guess at, remove the dead
+machinery rather than leave it half-disabled.
+
+**Fix applied:** removed `random?: boolean` from `TargetList`
+(`model/script/target.ts`), from `addStatementsFromTargetList()`'s param type
+and body (including the disabled `RandomNumLT` block) in `baf.factory.ts`,
+and from all three call sites in `statement-builder.service.ts`. Left
+`addOneBlockTargetList()` (a different function in the same file) untouched —
+it has its own, *not* disabled `RandomNumGT`-based random implementation
+unrelated to this TODO.
+
+**Confirmed no impact:** full regeneration produced zero file changes beyond
+the code edits themselves.
 
 ### 8. ☐ `ability.factory.ts:20-35` `polymorphSelf()` — situational form selection not implemented
 

@@ -8,10 +8,6 @@ export interface TargetList {
    */
   reverse?: boolean;
   /**
-   * Random targetting (default: false). Will equally select one target in the list
-   */
-  random?: boolean;
-  /**
    * Randomize target list order (default: false)
    */
   randomOrder?: boolean;

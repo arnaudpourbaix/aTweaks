@@ -1,6 +1,4 @@
-import { GLOBAL_CONFIG } from "../../config/generate";
 import { ScriptTarget } from "../model/constants";
-import { ObjectIdentifier } from "../model/ids/object";
 import { Response, Statements } from "../model/script/script";
 import { Triggers } from "../model/script/triggers";
 import utils from "../services/utils/utils.service";
@@ -14,28 +12,14 @@ class BafFactory {
     targets: string[];
     responses: Response[];
     reverse?: boolean;
-    random?: boolean;
     comment?: string;
   }): void => {
     p.reverse = p.reverse ?? false;
-    p.random = p.random ?? false;
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
-    const max = 1000;
     for (const [index, target] of targets.entries()) {
       const triggers = utils.replaceTriggerTokens(p.triggers, [
         { key: ScriptTarget.token, value: target },
       ]);
-      if (p.random && index < targets.length - 1) {
-        // FIXME: random is disabled because it has a critical issue.
-        // let's say it targets 6 nearest enemies, each enemy has an equal chance to be selected
-        // if there are 6 enemies, this is working as intended
-        // if there are 3 enemies, there is 50% of no target selection, which is not intended
-        // NumCreatureGT could help but it would make code more complex
-        // triggers.push({
-        //   name: "RandomNumLT",
-        //   params: [max, Math.round(max / (targets.length - index))],
-        // });
-      }
       const actionTarget =
         target === ScriptTarget.myself
           ? ScriptTarget.myself

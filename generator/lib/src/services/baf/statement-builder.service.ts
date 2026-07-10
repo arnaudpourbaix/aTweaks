@@ -192,7 +192,6 @@ class StatementService {
           triggers: [...statement.triggers, ...triggers, ...targetTriggers],
           responses: statement.responses,
           targets: list.targets as string[],
-          random: statement.target.random,
           reverse: statement.target.reverse,
         });
       }
@@ -619,7 +618,6 @@ class StatementService {
       ],
       responses: responseFactory.response(actions),
       targets: [ScriptTarget.lastSeen],
-      random: false,
     });
     if (!!creature.data.intelligence && creature.data.intelligence > 10) {
       statements.push({
@@ -1193,7 +1191,6 @@ class StatementService {
       triggers: [...triggers, ...targetTriggers],
       responses: responseFactory.response(actions),
       targets: list.targets as string[],
-      random: target.random,
       reverse: target.reverse,
     });
   }
