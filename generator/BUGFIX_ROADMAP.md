@@ -18,7 +18,8 @@ Process for each item below: fix → update/add the test that locks in correct
 behavior → regenerate affected `.baf` files if generated output changes → review →
 commit.
 
-Status legend: ☐ not started · ▶ in progress · ✅ fixed & committed
+Status legend: ☐ not started · ▶ in progress · ✅ fixed & committed ·
+🟡 reviewed & decided not to change
 
 ---
 
@@ -304,7 +305,7 @@ the old code.
 
 ## Tier 3 — lower confidence / needs a judgment call
 
-### 8. ☐ `item.service.ts` `isSlotIncluded()` — array short-circuit may be intentional
+### 8. 🟡 `item.service.ts` `isSlotIncluded()` — array short-circuit may be intentional (decided: leave as-is)
 
 **File:** `lib/src/services/item.service.ts:109-116`
 
@@ -325,9 +326,16 @@ TODO in `isEquippedWeapon` acknowledging arrays aren't fully handled — **needs
 decision on whether this is a known/accepted gap or an actual bug** before
 touching it.
 
+**Decision: leave as-is.** Not a hard functional break — WeiDU's `ADD_CRE_ITEM`
+still resolves *a* free slot from the alternatives at build time regardless of
+this JS-side check; the only loss is the "slot already assigned" console
+warning not firing for jewel-slot immunities, which only matters in the corner
+case of a creature stacking enough jewel-slot immunities/items to exhaust all 6
+`JEWEL_SLOTS` alternatives. Not changed.
+
 ---
 
-### 9. ☐ `potion.ts` — duplicate `POTN08` entries
+### 9. ✅ `potion.ts` — duplicate `POTN08` entries
 
 **File:** `lib/config/potion.ts:29-52` (approx.)
 
@@ -336,6 +344,16 @@ reference item file `POTN08` with identical trigger conditions. This produces tw
 functionally-identical (redundant, not incorrect) statement blocks in generated
 scripts. Likely a copy-paste where the second entry's `files` should reference a
 different item code.
+
+**Fix applied (by user):** "Exilir of health" now uses its own distinct item
+file (`POTN17`), and its trigger also fires on `STATE_POISONED` (in addition to
+low HP), matching the real potion's cure-poison property. `POTN08` remains
+"Potion of healing" only.
+
+**Confirmed real impact:** regenerated 10 `.baf` files across the `ogre/`
+family (creatures with `usePotions: true`). Added `lib/config/potion.test.ts`
+guarding against reusing the same item file across different `POTIONS` entries
+(verified it fails against the pre-fix duplicate data).
 
 ---
 

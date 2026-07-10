@@ -1,3 +1,4 @@
+import triggerFactory from "../src/factories/trigger.factory";
 import { ScriptTarget } from "../src/model/constants";
 import { PotionConfig } from "../src/model/spell-item/potion";
 
@@ -28,14 +29,17 @@ export const POTIONS: PotionConfig[] = [
   },
   {
     name: "Exilir of health (10hp)",
-    files: ["POTN08"],
+    files: ["POTN17"],
     triggers: [
       {
         name: "General",
         params: [ScriptTarget.myself, "UNDEAD"],
         negation: true,
       },
-      { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
+      triggerFactory.or([
+        { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
+        { name: "StateCheck", params: [ScriptTarget.myself, "STATE_POISONED"] },
+      ]),
     ],
   },
   {

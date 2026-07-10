@@ -4080,15 +4080,17 @@ END
 // Exilir of health (10hp)
 IF
 	ActionListEmpty()
-	HasItem("POTN08",Myself)
+	HasItem("POTN17",Myself)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	!General(Myself,UNDEAD)
-	HPPercentLT(Myself,75)
+	OR(2)
+		HPPercentLT(Myself,75)
+		StateCheck(Myself,STATE_POISONED)
 THEN
 	RESPONSE #100
 		DisplayStringHead(Myself,@3002)
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		UseItem("POTN08",Myself)
+		UseItem("POTN17",Myself)
 END
 
 // Potion of healing (10hp)
