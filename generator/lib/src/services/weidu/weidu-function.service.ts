@@ -206,6 +206,9 @@ class WeiduFunctionService extends AbstractWeiduService {
     const icons = immunity.preventIcons.length
       ? ` prevent_icons="${immunity.preventIcons.join(" ")}"`
       : "";
+    const displayIcons = immunity.displayIcons.length
+      ? ` display_icons="${immunity.displayIcons.join(" ")}"`
+      : "";
     const strings = immunity.strings.length
       ? ` strings="${immunity.strings.join(" ")}"`
       : "";
@@ -217,7 +220,7 @@ class WeiduFunctionService extends AbstractWeiduService {
       : "";
     this.add(
       lines,
-      `LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration ${display} STR_VAR${effects}${icons}${strings}${animations}${spells} END`,
+      `LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration ${display} STR_VAR${effects}${icons}${displayIcons}${strings}${animations}${spells} END`,
       tab,
     );
   }

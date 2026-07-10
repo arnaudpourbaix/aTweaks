@@ -913,7 +913,7 @@ BEGIN
 	INNER_ACTION BEGIN
 		LAF get_poison_resources RET_ARRAY spells=resources END
 	END
-	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration  STR_VAR effects="25" prevent_icons="6" strings="14017 26215 14662 25425" spells END
+	LPF ADD_IMMUNITY_CRE_ITM_SPL INT_VAR resist_dispel duration  STR_VAR effects="25" prevent_icons="6" display_icons="30" strings="14017 26215 14662 25425" spells END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=173 parameter1=100 END
 	LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=328 parameter2=(IDS_OF_SYMBOL (~splstate~ ~ITEM_POISON~)) special=1 END
 END

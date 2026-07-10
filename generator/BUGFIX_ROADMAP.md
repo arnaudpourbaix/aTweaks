@@ -123,7 +123,7 @@ mistake recurring.
 
 ---
 
-### 3. ☐ `weidu-function.service.ts` — immunity `displayIcons` never emitted
+### 3. ✅ `weidu-function.service.ts` — immunity `displayIcons` never emitted
 
 **File:** `lib/src/services/weidu/weidu-function.service.ts:197-223` (`callImmunityFunction`)
 
@@ -147,8 +147,17 @@ icon effect — it's just never passed. The poison-immunity portrait icon (and a
 future immunity's `displayIcons`) is silently never added to generated
 creatures/items.
 
-**Likely fix:** add a `displayIcons` STR_VAR param, mirroring the
-`preventIcons`/`icons` pattern already present.
+**Fix applied:** added a `displayIcons` STR_VAR param (`display_icons="..."`),
+mirroring the `preventIcons`/`icons` pattern already present, and confirmed the
+WeiDU macro's parameter name (`lib/common/effect.tpa:11`, opcode 142 "Display
+portrait icon") to make sure the name matched exactly.
+
+**Confirmed real impact:** the `poison` immunity is the only config currently
+setting `displayIcons`. Regenerated `lib/common/immunities.tpa` now emits
+`display_icons="30"` (Protection from Poison icon) alongside the existing
+`prevent_icons="6"`, where before it was silently dropped. Added
+`weidu-function.service.test.ts` (this service had zero test coverage before —
+verified the new tests fail against the old code and pass with the fix).
 
 ---
 
