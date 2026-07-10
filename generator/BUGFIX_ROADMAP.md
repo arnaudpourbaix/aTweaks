@@ -357,9 +357,9 @@ guarding against reusing the same item file across different `POTIONS` entries
 
 ---
 
-### 10. ☐ `weidu-core.service.ts` `getIcon()` — reference-equality check on `JEWEL_SLOTS`
+### 10. 🟡 `weidu-core.service.ts` `getIcon()` — reference-equality check on `JEWEL_SLOTS` (decided: not a bug)
 
-**File:** `lib/src/services/weidu/weidu-core.service.ts:66-67` (approx.)
+**File:** `lib/src/services/weidu/weidu-core.service.ts:66-67`
 
 ```ts
 getIcon(itemSlot) {
@@ -369,16 +369,30 @@ getIcon(itemSlot) {
 
 Compares `itemSlot.slot` to the imported array constant by reference. Works today
 only because every config entry needing this fallback passes the literal
-`JEWEL_SLOTS` reference itself. The `switch` never handles `"BELT"`, `"GLOVES"`,
-or `"CLOAK"` individually — a future config using an equivalent-but-different
-array (or a single slot like `"BELT"`) would silently get no icon at all
-(`write()`'s `if (!value) return;` guard swallows it).
+`JEWEL_SLOTS` reference itself.
+
+**Initially flagged this as fragile and changed it to `Array.isArray(itemSlot.slot)`
+— this was wrong, reverted.** `JEWEL_SLOTS` isn't "an array" in general, it's a
+specific, deliberate constant meaning "these particular slots → ring icon." If a
+different array is added later for a different slot grouping, it should map to
+its own icon — `Array.isArray()` would incorrectly give it the ring icon too,
+silently. The original reference check fails more safely: an unrecognized array
+returns `undefined` (a visibly blank icon), not a wrong-but-present one. This
+codebase's convention is to import and reuse shared constants directly (like
+`WEAPON_SLOTS`, `TARGET_LISTS` elsewhere), so the reference-equality pattern
+matches that convention rather than being an accident.
+
+**Decision: leave as-is** (reverted to the original `=== JEWEL_SLOTS` check).
+Kept `weidu-core.service.test.ts` (this service had no coverage before), rewritten
+to document the actual intended behavior: the exact `JEWEL_SLOTS` reference maps
+to `IRING16`, a value-equal-but-distinct array does not (returns `undefined`, by
+design), and known single slots map correctly.
 
 ---
 
-### 11. ☐ `effect.service.ts` — dead no-op statement
+### 11. ✅ `effect.service.ts` — dead no-op statement
 
-**File:** `lib/src/services/effects/effect.service.ts:219-222` (approx.)
+**File:** `lib/src/services/effects/effect.service.ts:219-222`
 
 ```ts
 case EffectTypeEnum.ProtectionFromProjectile:
@@ -388,6 +402,15 @@ case EffectTypeEnum.ProtectionFromProjectile:
 ```
 
 `effect.opcode;` reads a property and discards it — a no-op expression statement.
-Likely inert leftover code rather than a functional defect (this effect type's
-format doesn't appear to need `parameter1`), but worth a second look in case a
-`parameter1` assignment was intended and lost.
+
+**Fix applied (by user):** removed the dead statement. Confirmed inert — full
+suite (including golden/pipeline tests) passes unchanged before and after, so
+this was pure leftover code with no functional effect.
+
+---
+
+## Summary
+
+All 11 findings reviewed. 9 fixed (7 confirmed bugs + 2 data/config issues),
+2 reviewed and deliberately left unchanged (#8, #10) after concluding the
+"fix" would have been worse than the original code.

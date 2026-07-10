@@ -217,7 +217,6 @@ class EffectService {
         effect.parameter2 = `${effect.charmType}`;
         break;
       case EffectTypeEnum.ProtectionFromProjectile:
-        effect.opcode;
         effect.parameter2 = `${effect.projectile}`;
         break;
       case EffectTypeEnum.PolymorphIntoSpecific:
