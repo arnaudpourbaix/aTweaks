@@ -168,14 +168,17 @@ coverage of the `randomOrder` behavior before) — covers flag-off (no
 shuffle), `randomOrder: false` (no shuffle even with the flag on), shuffle
 invoked with both true, and shuffle applied before `limit`.
 
-### 5. ☐ `statement-builder.service.ts:852` `attackTargetWithStatuses()` — unlabeled TODO
+### 5. ✅ `statement-builder.service.ts:852` `attackTargetWithStatuses()` — unlabeled TODO
 
 ```ts
 const list = targetService.getList(targetListName); //TODO:
 ```
 
-Bare `//TODO:` with no description — needs the original author's intent recovered
-(check git blame/history) or, if it's stale, just delete the marker.
+Bare `//TODO:` with no description. Git history traced it to a large multi-file
+"wip: triggers" refactor commit (`09cf5c81`) with no note on what it was
+flagging. Per the maintainer: stale, no specific concern remembered.
+
+**Fix applied:** removed the comment. No behavior change.
 
 ### 6. ☐ `statement-builder.service.ts:981` — potion-use message hardcoded to `@3002` instead of a translation key
 

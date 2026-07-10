@@ -849,7 +849,7 @@ class StatementService {
         throw new Error(`OR triggers not handled currently: ${status}`);
       if (statusDetails.canOnlyTargetPlayer && targetListName !== "Players")
         throw new Error(`Status ${status} must target party`);
-      const list = targetService.getList(targetListName); //TODO:
+      const list = targetService.getList(targetListName);
       const targetTriggers = [
         ...(statusDetails.targetTriggers as Triggers.Trigger[]),
         ...triggerFactory.validAttackTarget({
