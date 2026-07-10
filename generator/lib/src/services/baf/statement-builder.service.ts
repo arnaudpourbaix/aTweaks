@@ -978,7 +978,10 @@ class StatementService {
           ...(potion.actions ?? []),
           {
             name: "DisplayStringHead",
-            params: [ScriptTarget.myself, `@3002`], // TODO: should be "common.potion.use", but languages file are generated after
+            params: [
+              ScriptTarget.myself,
+              `@${translationService.stringRef("common.potion.use")}`,
+            ],
           },
           actionFactory.setGlobalRoundTimer(),
           { name: "UseItem", params: [file, ScriptTarget.myself] },

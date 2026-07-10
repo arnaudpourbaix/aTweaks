@@ -180,7 +180,7 @@ flagging. Per the maintainer: stale, no specific concern remembered.
 
 **Fix applied:** removed the comment. No behavior change.
 
-### 6. ☐ `statement-builder.service.ts:981` — potion-use message hardcoded to `@3002` instead of a translation key
+### 6. ✅ `statement-builder.service.ts:981` — potion-use message hardcoded to `@3002` instead of a translation key
 
 ```ts
 {
@@ -190,10 +190,23 @@ flagging. Per the maintainer: stale, no specific concern remembered.
 ```
 
 Every other display string in this codebase goes through the translation system;
-this one is a hardcoded strref because language files are generated in a later
-pipeline stage than this one runs. Needs: either resolve the strref via a
-post-generation patch pass, or generate the languages file earlier so this can use
-`common.potion.use` like everything else.
+this one was hardcoded, supposedly because language files are generated in a
+later pipeline stage than this one runs.
+
+**Investigation result — the stated reason was stale, same shape as #3 and #5:**
+`translationService`'s constructor calls `generateStringRefs()` immediately,
+which walks every static translation key and assigns it a strref number
+upfront — before any creature generation runs. So `translationService.stringRef(key)`
+already works at this point in the pipeline regardless of when the `.tra` file
+is *written* to disk; there was no real ordering constraint. The
+`common.potion.use` key (`"*quaffs a potion*"`) already existed in
+`lib/translations/en/common.ts` — it just wasn't being used.
+
+**Fix applied (by the maintainer):** replaced `` `@3002` `` with
+`translationService.stringRef("common.potion.use")`. Regenerated 10 `.baf`
+files across the `ogre/` family (creatures with `usePotions: true`) — each
+`DisplayStringHead(Myself,@3002)` (an unresolved, dead placeholder) became
+`DisplayStringHead(Myself,10110)` (the real, working strref).
 
 ### 7. ☐ `baf.factory.ts:28-38` `addStatementsFromTargetList()` — `random` targeting disabled, biased distribution
 
