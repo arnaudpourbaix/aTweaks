@@ -13,7 +13,6 @@ import {
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
   EffectTimingEnum,
-  ItemAbilitySecondaryTypeEnum,
   ItemAbilityTypeEnum,
   LightingEffectEnum,
   LightingEffectTargetEnum,
@@ -67,7 +66,7 @@ class PoisonService {
     saveBonus?: number;
   }): Effect[] {
     const poison = POISONS.find(
-      (p) => p.type === payload.poisonType
+      (p) => p.type === payload.poisonType,
     ) as PoisonModel;
     const effects: Effect[] = [];
     if (poison.saveDamage) {
@@ -96,7 +95,7 @@ class PoisonService {
     saveBonus?: number;
   }): string {
     const poison = POISONS.find(
-      (p) => p.type === payload.poisonType
+      (p) => p.type === payload.poisonType,
     ) as PoisonModel;
     const save = descriptionService.getSaveText({
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
@@ -106,7 +105,7 @@ class PoisonService {
     if (payload.poisonType >= "O") {
       return translationService.interpolate(
         `common.poison.type${payload.poisonType}` as TranslationKey,
-        { duration, save }
+        { duration, save },
       );
     }
     const death = translationService.interpolate("common.poison.death", {
@@ -120,7 +119,7 @@ class PoisonService {
       "common.poison.saveDamage",
       {
         damage: poison.saveDamage,
-      }
+      },
     );
     const description = translationService.interpolate(
       "common.poison.description",
@@ -128,7 +127,7 @@ class PoisonService {
         damage: poison.damage === poisonFatalDamage ? death : damage,
         save,
         saveDamage: poison.saveDamage > 0 ? saveDamage : "",
-      }
+      },
     );
     return description;
   }
@@ -148,7 +147,7 @@ class PoisonService {
 
   private getImmediateDeathEffects(
     poison: PoisonModel,
-    saveBonus?: number
+    saveBonus?: number,
   ): Effect[] {
     const levels = [
       { min: 1, max: 2 },
@@ -243,7 +242,7 @@ class PoisonService {
     console.log(
       `poison (1dmg/x seconds) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
         newDuration - duration
-      })`
+      })`,
     );
     return { type, amount, duration: newDuration };
   }
@@ -327,7 +326,7 @@ class PoisonService {
             type: EffectStatisticModifierEnum.Percentage,
             value: 50,
             ...base,
-          } as Effect)
+          }) as Effect,
       ),
       {
         opcode: EffectTypeEnum.MovementRateBonus2,

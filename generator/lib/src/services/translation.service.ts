@@ -47,10 +47,13 @@ class TranslationService extends AbstractWeiduService {
 
   interpolate(
     key: TranslationKey,
-    vars: Record<string, string | number>
+    vars: Record<string, string | number>,
   ): string {
     let text = this.fromKey(key);
     for (const key of utils.objectKeys(vars)) {
+      if (vars[key] === undefined) {
+        throw new Error(`Found undefined in key for var ${key}`);
+      }
       text = text.replace(new RegExp(`{{${key}}}`, "g"), `${vars[key]}`);
     }
     return text;
@@ -66,7 +69,7 @@ class TranslationService extends AbstractWeiduService {
 
   private fromStringRef(stringRef: number, lang = LANG): string {
     const translation = this.customTranslations.find(
-      (t) => t.stringRef === stringRef
+      (t) => t.stringRef === stringRef,
     );
     if (!translation) throw new Error(`stringRef not found: ${stringRef}`);
     return translation.text;

@@ -294,6 +294,7 @@ class DescriptionService {
 
   getDuration(duration?: number, prefix?: string): string {
     if (!duration) return "";
+    prefix ??= "";
     const time = [
       { single: "a day", plural: "days", duration: Durations.day },
       { single: "an hour", plural: "hours", duration: Durations.hour },

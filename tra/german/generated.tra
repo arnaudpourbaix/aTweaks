@@ -778,7 +778,7 @@ Speed Factor: 5
 Enchantment: 1
 Range: 1 feet~
 @10573 = ~Type K poison~
-@10574 = ~Poison damage: 5 over undefined10 seconds (saves vs poison/death at +4)~
+@10574 = ~Poison damage: 5 over 10 seconds (saves vs poison/death at +4)~
 @10575 = ~Claws
 
 Melee damage: 1D6 (Slashing)
@@ -787,7 +787,7 @@ Enchantment: 3
 Range: 2 feet
 
 Cast spell Type K poison:
-Poison damage: 5 over undefined10 seconds (saves vs poison/death at +4)~
+Poison damage: 5 over 10 seconds (saves vs poison/death at +4)~
 @10576 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
@@ -1010,7 +1010,7 @@ Thac0:+2 for a round~
 Melee damage: 1D6 (Piercing)
 Speed Factor: 3
 Range: 1 feet~
-@10620 = ~Slow target for undefined6 rounds~
+@10620 = ~Slow target for 6 rounds~
 @10621 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
@@ -1019,9 +1019,9 @@ Enchantment: 1
 Range: 1 feet
 
 Cast spell Astral Plane Shift:
-Slow target for undefined6 rounds~
+Slow target for 6 rounds~
 @10622 = ~Type J poison~
-@10623 = ~Death within undefined5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+@10623 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
 @10624 = ~Claws
 
 Melee damage: 1D3 (Slashing)
@@ -1036,7 +1036,7 @@ Enchantment: 1
 Range: 1 feet
 
 Cast spell Type J poison:
-Death within undefined5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
 @10626 = ~Banshee traits~
 @10627 = ~Large Spiked Club
 
@@ -1070,9 +1070,9 @@ Enchantment: 1
 Range: 1 feet
 
 Cast spell Touch of Tranquility~
-@10639 = ~Dire Charm target for undefined3 turns (saves vs spell at -3).~
+@10639 = ~Dire Charm target for 3 turns (saves vs spell at -3).~
 @10640 = ~~
-@10641 = ~Dire Charm target for undefined3 turns (saves vs spell).~
+@10641 = ~Dire Charm target for 3 turns (saves vs spell).~
 @10642 = ~Flesh Golem traits~
 @10643 = ~Immune to magic
 Immune to fire
@@ -1085,7 +1085,7 @@ Speed Factor: 4
 Enchantment: 3
 Range: 2 feet~
 @10645 = ~Clay Golem traits~
-@10646 = ~Haste caster for undefined3 rounds~
+@10646 = ~Haste caster for 3 rounds~
 @10647 = ~Immune to magic
 Immune to non-magical weapons
 Immune to slashing damage
@@ -1303,7 +1303,7 @@ Speed Factor: 4
 Enchantment: 1
 Range: 5 feet~
 @10705 = ~Type Q poison~
-@10706 = ~Fall into a coma for undefinedan hour~
+@10706 = ~Fall into a coma for an hour~
 @10707 = ~Jaws
 
 Melee damage: 2D6 (Piercing)
@@ -1312,10 +1312,10 @@ Enchantment: 3
 Range: 3 feet
 
 Cast spell Type Q poison (saves vs poison/death at -2):
-Fall into a coma for undefinedan hour~
+Fall into a coma for an hour~
 @10708 = ~Ghostwalk Spider traits~
 @10709 = ~Type E poison~
-@10710 = ~Death within undefined3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
+@10710 = ~Death within 3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
 @10711 = ~True sight~
 @10712 = ~Jaws
 
@@ -1338,9 +1338,9 @@ Enchantment: 4
 Range: 2 feet
 
 Cast spell Type E poison:
-Death within undefined3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
+Death within 3 rounds (saves vs poison/death at -2); 20 damage if the saving throw is successful~
 @10714 = ~Type F poison~
-@10715 = ~Death within undefined3 rounds (saves vs poison/death)~
+@10715 = ~Death within 3 rounds (saves vs poison/death)~
 @10716 = ~Jaws
 
 Melee damage: 1D8 (Piercing)
@@ -1349,9 +1349,9 @@ Enchantment: 1
 Range: 2 feet
 
 Cast spell Type F poison:
-Death within undefined3 rounds (saves vs poison/death)~
+Death within 3 rounds (saves vs poison/death)~
 @10717 = ~Type R poison~
-@10718 = ~The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for undefined4 rounds~
+@10718 = ~The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for 4 rounds~
 @10719 = ~Hairy Spider traits~
 @10720 = ~Jaws
 
@@ -1359,10 +1359,10 @@ Melee damage: 1D1 (Piercing)
 Speed Factor: 2
 
 Cast spell Type R poison (saves vs poison/death at +2):
-The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for undefined4 rounds~
+The victim's AC and attack rolls are penalized by 1, and Dexterity is penalized by -3 for 4 rounds~
 @10721 = ~Resistance to crushing damage (50%)~
 @10722 = ~Type A poison~
-@10723 = ~Poison damage: 15 over undefined50 seconds (saves vs poison/death at +1)~
+@10723 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +1)~
 @10724 = ~Jaws
 
 Melee damage: 1D6 (Piercing)
@@ -1370,9 +1370,9 @@ Speed Factor: 2
 Range: 1 feet
 
 Cast spell Type A poison:
-Poison damage: 15 over undefined50 seconds (saves vs poison/death at +1)~
+Poison damage: 15 over 50 seconds (saves vs poison/death at +1)~
 @10725 = ~Type A poison~
-@10726 = ~Poison damage: 15 over undefined50 seconds (saves vs poison/death at +2)~
+@10726 = ~Poison damage: 15 over 50 seconds (saves vs poison/death at +2)~
 @10727 = ~Jaws
 
 Melee damage: 1D3 (Piercing)
@@ -1380,10 +1380,10 @@ Speed Factor: 2
 Range: 2 feet
 
 Cast spell Type A poison:
-Poison damage: 15 over undefined50 seconds (saves vs poison/death at +2)~
+Poison damage: 15 over 50 seconds (saves vs poison/death at +2)~
 @10728 = ~Phase Spider traits~
 @10729 = ~Type F poison~
-@10730 = ~Death within undefined3 rounds (saves vs poison/death at -2)~
+@10730 = ~Death within 3 rounds (saves vs poison/death at -2)~
 @10731 = ~Invisibility~
 @10732 = ~Jaws
 
@@ -1395,7 +1395,7 @@ Range: 2 feet
 Cast spell Phase out
 
 Cast spell Type F poison:
-Death within undefined3 rounds (saves vs poison/death at -2)~
+Death within 3 rounds (saves vs poison/death at -2)~
 @10733 = ~Jaws
 
 Melee damage: 2D4 (Piercing)
@@ -1430,7 +1430,7 @@ Range: 2 feet
 Thac0:-4 for 2 rounds~
 @10738 = ~Vortex Spider traits~
 @10739 = ~Type F poison~
-@10740 = ~Death within undefined3 rounds (saves vs poison/death at -2)~
+@10740 = ~Death within 3 rounds (saves vs poison/death at -2)~
 @10741 = ~Magic Resistance: 15%~
 @10742 = ~Jaws
 
@@ -1440,7 +1440,7 @@ Enchantment: 2
 Range: 2 feet
 
 Cast spell Type F poison:
-Death within undefined3 rounds (saves vs poison/death at -2)~
+Death within 3 rounds (saves vs poison/death at -2)~
 @10743 = ~Wraith Spider traits~
 @10744 = ~Type S poison~
 @10745 = ~This poison remains active for 5 rounds and drains 1 point of Constitution each round it is active.
@@ -1470,7 +1470,7 @@ Speed Factor: 3
 Enchantment: 1
 Range: 2 feet~
 @10750 = ~Dread Wolf traits~
-@10751 = ~Sleep for undefined2 rounds
+@10751 = ~Sleep for 2 rounds
 Heal: 1
 Heal: 6~
 @10752 = ~Jaws
@@ -1497,7 +1497,7 @@ Speed Factor: 3
 Enchantment: 2
 Range: 1 feet
 Heal: 10
-Sleep for undefined2 rounds (wake on damage) (saves vs poison/death)~
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
 @10756 = ~Jaws
 
 Melee damage: 8 (Piercing)
@@ -1505,7 +1505,7 @@ Speed Factor: 3
 Enchantment: 2
 Range: 1 feet
 Heal: 10
-Sleep for undefined2 rounds (wake on damage) (saves vs poison/death)
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)
 
 Cast spell Grab (saves vs poison/death at -1):
 Grab and hold your target for 5 rounds.
@@ -1522,7 +1522,7 @@ Speed Factor: 3
 Enchantment: 2
 Range: 1 feet
 Heal: 10
-Sleep for undefined2 rounds (wake on damage) (saves vs poison/death)~
+Sleep for 2 rounds (wake on damage) (saves vs poison/death)~
 @10758 = ~Immune to sleep
 Immune to charm
 Immune to hold
@@ -1544,7 +1544,7 @@ Speed Factor: 3
 Range: 1 feet~
 @10763 = ~Wyvern traits~
 @10764 = ~Type F poison~
-@10765 = ~Death within undefined3 rounds (saves vs poison/death)~
+@10765 = ~Death within 3 rounds (saves vs poison/death)~
 @10766 = ~Hover (flight)~
 @10767 = ~Stinger
 
@@ -1554,7 +1554,7 @@ Enchantment: 2
 Range: 3 feet
 
 Cast spell Type F poison:
-Death within undefined3 rounds (saves vs poison/death)~
+Death within 3 rounds (saves vs poison/death)~
 @10768 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
@@ -1562,7 +1562,7 @@ Speed Factor: 2
 Enchantment: 2
 Range: 3 feet~
 @10769 = ~Type J poison~
-@10770 = ~Death within undefined5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+@10770 = ~Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
 @10771 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
@@ -1571,7 +1571,7 @@ Enchantment: 1
 Range: 2 feet
 
 Cast spell Type J poison:
-Death within undefined5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
+Death within 5 seconds (saves vs poison/death); 20 damage if the saving throw is successful~
 @10772 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
@@ -1579,7 +1579,7 @@ Speed Factor: 2
 Enchantment: 1
 Range: 2 feet~
 @10773 = ~Type F poison~
-@10774 = ~Death within undefined3 rounds (saves vs poison/death)~
+@10774 = ~Death within 3 rounds (saves vs poison/death)~
 @10775 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
@@ -1588,7 +1588,7 @@ Enchantment: 4
 Range: 3 feet
 
 Cast spell Type F poison:
-Death within undefined3 rounds (saves vs poison/death)~
+Death within 3 rounds (saves vs poison/death)~
 @10776 = ~Jaws
 
 Melee damage: 2D8 (Piercing)
@@ -1711,19 +1711,19 @@ Incorporeal~
 Melee damage: 1D4+1 (Slashing)
 Speed Factor: 5
 Range: 1 feet
-Strength: -1 for undefinedan hour~
+Strength: -1 for an hour~
 @10801 = ~Claws
 
 Melee damage: 1D4+1 (Slashing)
 Speed Factor: 5
 Range: 1 feet
-Wisdom: -2 for undefinedan hour~
+Wisdom: -2 for an hour~
 @10802 = ~Claws
 
 Melee damage: 1D12+1 (Slashing)
 Speed Factor: 5
 Range: 1 feet
-Strength: -2 for undefinedan hour~
+Strength: -2 for an hour~
 @10803 = ~Greater Shadow traits~
 @10804 = ~Immune to cold
 Incorporeal~
@@ -1733,7 +1733,7 @@ Melee damage: 2D6+2 (Slashing)
 Speed Factor: 5
 Enchantment: 3
 Range: 1 feet
-Strength: -3 for undefinedan hour~
+Strength: -3 for an hour~
 @10806 = ~Baneguard traits~
 @10807 = ~Skeletal~
 @10808 = ~Bonebat traits~
