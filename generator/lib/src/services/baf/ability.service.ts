@@ -1,5 +1,8 @@
 import deepmerge from "deepmerge";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
+import { GLOBAL_CONFIG } from "../../../config/generate";
+import actionFactory from "../../factories/action.factory";
+import triggerFactory from "../../factories/trigger.factory";
 import { ScriptTarget } from "../../model/constants";
 import {
   CreatureAbility,
@@ -7,14 +10,10 @@ import {
   RawCreatureAbility,
   RawCreatureSequencerAbility,
 } from "../../model/creature/ability";
+import { StringReference } from "../../model/final/stringref";
 import { Actions } from "../../model/script/actions";
 import { CustomCode, PartialCustomCode } from "../../model/script/script";
 import { Triggers } from "../../model/script/triggers";
-import triggerFactory from "../../factories/trigger.factory";
-import { GLOBAL_CONFIG } from "../../../config/generate";
-import actionFactory from "../../factories/action.factory";
-import { StringReference } from "../../model/final/stringref";
-import { WithRequired } from "../../model/utility-types";
 
 class AbilityService {
   getAbilities(abilities: RawCreatureAbility[] | undefined): CreatureAbility[] {
