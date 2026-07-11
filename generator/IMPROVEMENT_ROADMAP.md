@@ -427,6 +427,26 @@ adjustment in `lib/creatures/ogres.ts:797`, overriding the root creature's
 `TRUECLASS`) is commented out. Tests cover this path (locking in current
 behavior) in case it's re-enabled later, but nothing was changed here.
 
+### ✅ `ability.factory.ts` `polymorphSelf()` — audited, no bug found
+
+Added `ability.factory.test.ts` (no coverage before) — 6 tests covering the
+cast-trigger entry and all 9 polymorph-form entries.
+
+**No bug found — the reservoir-sampling math checks out.** Each of the first
+8 forms gets a `RandomNumLT(1000, round(1000/(9-index)))` trigger with a
+correctly *decreasing* threshold (111, 125, 143, 167, 200, 250, 333, 500),
+and the 9th/last form has no trigger at all — an unconditional fallback if
+every earlier roll declines. That's the textbook unbiased sequential-selection
+formula, verified by test. Notably, this is the same formula item #7's
+disabled `baf.factory.ts` code was trying to use — it works correctly *here*
+because these are all self-targeted abilities with no `See(target)`-style
+existence check that could make a later slot systematically unreachable (the
+complication that made item #7's version biased).
+
+The only real gap here remains the already-deferred item #8: no situational
+form selection (flee/melee/ranged), just uniform random among all 9 forms.
+Not touched — that's a feature decision, not a correctness bug.
+
 ---
 
 ## Process
