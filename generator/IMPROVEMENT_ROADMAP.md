@@ -388,6 +388,45 @@ Files already covered by the closed bugfix audit (`creature.ts` 43%,
 re-investigation — they already went through this process and either got fixed
 (#5, #6) or reviewed and left as-is (#10).
 
+### ✅ `kit.service.ts` — audited
+
+Added `kit.service.test.ts` (no coverage before) — 18 tests covering
+`applyKit()`, `removeKit()`, `applyKitImmunities()`, and `applyKitAbilities()`.
+
+**Bug found and fixed — `applyKitImmunities()` deduped against the wrong
+object:**
+
+```ts
+applyKitImmunities(creature, baseCreature, immunities) {
+  baseCreature.data.immunities ??= [];
+  for (const name of immunities) {
+    if (!creature.data.immunities.includes(name)) {
+      baseCreature.data.immunities.push(name);
+    }
+  }
+}
+```
+
+It checked whether an immunity was already present on `creature.data.immunities`
+(the root creature) before pushing, but pushed onto `baseCreature.data.immunities`
+— a *separate* array when `baseCreature` is an adjustment. If the adjustment's
+own `data.immunities` already independently listed that immunity, this pushed a
+literal duplicate entry rather than checking against `baseCreature` itself.
+
+**Fix applied:** the guard now checks both `creature.data.immunities` and
+`baseCreature.data.immunities` before pushing, preserving the original
+cross-creature dedup while adding the missing same-object dedup. Confirmed no
+current impact: full regeneration produced zero output changes (no shipped
+ogre/adjustment combination currently overlaps this way) — the same dormant
+shape as several closed bugfix items.
+
+**Also found, not changed:** `removeKit()` — the "adjustment overrides with a
+different kit" path in `applyKit()` — is 100% dead in shipped config today.
+The one place that would exercise it (`kit: "BERSERKER"` on a Tazok
+adjustment in `lib/creatures/ogres.ts:797`, overriding the root creature's
+`TRUECLASS`) is commented out. Tests cover this path (locking in current
+behavior) in case it's re-enabled later, but nothing was changed here.
+
 ---
 
 ## Process

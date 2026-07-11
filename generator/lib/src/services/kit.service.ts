@@ -25,7 +25,10 @@ class KitService {
   ) {
     baseCreature.data.immunities ??= [];
     for (const name of immunities) {
-      if (!creature.data.immunities.includes(name)) {
+      if (
+        !creature.data.immunities.includes(name) &&
+        !baseCreature.data.immunities.includes(name)
+      ) {
         baseCreature.data.immunities.push(name);
       }
     }
