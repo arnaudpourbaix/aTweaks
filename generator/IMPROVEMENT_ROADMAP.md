@@ -455,6 +455,20 @@ figure in the original Tier 2 table was wrong — a leftover from the
 regex-based HTML scraping used to build that table, which was already flagged
 as having some false positives. Nothing to do here.
 
+### ✅ `state.service.ts` — audited, no bug found
+
+Added `state.service.test.ts` (no coverage before) — 7 tests covering
+`buildParameters()`'s parsing of every real parameter prefix shape found in
+`Actions.ACTIONS`/`Triggers.TRIGGERS` (`O:`, `I:`, `S:`, the `I:Object*`
+special case that's an object despite the `I:` prefix, and the
+`I:DmgType*Damages`-style trailing qualifier after the `*`). All pass against
+the current implementation — no bug found in any reachable path.
+
+Now at 100% branches / 100% statements (up from 25%/96%). The one remaining
+gap is `Promise.reject(error)` inside `init()`'s `catch` block — an
+untested defensive error-propagation path with no bug risk, not worth
+mocking a forced failure for. No fix needed.
+
 ---
 
 ## Process
