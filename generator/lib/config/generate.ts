@@ -14,6 +14,11 @@ export const GLOBAL_CONFIG = {
    * to bake in the intended non-nearest-first target variety.
    */
   enableRandomTargetOrder: false,
+  /**
+   * Keep disabled during development because it increases installation time.
+   * Enable once, right before a release build.
+   */
+  enableSecondaryTypes: false,
   bafConstants: {
     combatStarted: "JA#COMBAT",
     disableSpellcasting: "JA#DISABLE_SPELLCASTING",

@@ -271,7 +271,7 @@ not a bug: needs a design decision on whether this is worth the trigger complexi
 before implementing, since `statement-builder.service.ts` already has to reject "OR
 triggers not handled currently" in nearby code (line 848).
 
-### 9. ☐ `weidu-family.service.ts:69-72` `generateFinalCode()` — `integrate_sectypes` disabled for install-time cost
+### 9. ✅ `weidu-family.service.ts:69-72` `generateFinalCode()` — `integrate_sectypes` disabled for install-time cost
 
 ```ts
 if (family.spells.some(...) || family.creatures.some(...)) {
@@ -282,10 +282,22 @@ if (family.spells.some(...) || family.creatures.some(...)) {
 
 The condition to call `integrate_sectypes` is still evaluated and presumably
 intended to matter (secondary spell types not integrated into IDS otherwise), but
-the actual call is commented out repo-wide because it tanks install time. Needs:
-confirm whether skipping this causes any visible in-game issue with secondary spell
-types today; if not, either remove the dead condition+comment or find a
-cheaper/conditional way to run `integrate_sectypes` only when actually needed.
+the actual call is commented out repo-wide because it tanks install time.
+
+**Fix applied:** same pattern as item #4/#7 (per the maintainer) — gated the
+`LAF integrate_sectypes END` call behind a new
+`GLOBAL_CONFIG.enableSecondaryTypes` flag (default `false`). Keeps install
+time fast during day-to-day development; flip to `true` and regenerate once
+for a release build so secondary spell types actually get integrated. The
+existing condition (only run when a family/creature spell has a
+`secondaryType`) is preserved unchanged.
+
+**Confirmed no current impact with the flag off:** full regeneration produced
+zero file changes beyond the code/test edits. Added
+`weidu-family.service.test.ts` (this service had no test coverage before) —
+4 tests covering flag-off (no emit), flag-on with a family-level secondary
+type, flag-on with a creature-level secondary type, and flag-on with no
+secondary type anywhere (condition still respected).
 
 ### 10. ☐ `effect.service.ts:263-266` `CurrentHPbonus` — unhandled `flag` field
 

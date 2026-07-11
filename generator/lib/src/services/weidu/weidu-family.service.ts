@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import path from "path";
+import { GLOBAL_CONFIG } from "../../../config/generate";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { CR, TAB } from "../../model/constants";
 import { Creature } from "../../model/creature/creature";
@@ -67,8 +68,9 @@ class WeiduFamilyService extends AbstractWeiduService {
         c.spells.some((s) => typeof s.secondaryType === "string"),
       )
     ) {
-      //FIXME: enable in the end (disabled because it greatly decreases installation time)
-      // this.add(lines, "LAF integrate_sectypes END", 0);
+      if (GLOBAL_CONFIG.enableSecondaryTypes) {
+        this.add(lines, "LAF integrate_sectypes END", 0);
+      }
     }
     this.add(lines, "", 0);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
