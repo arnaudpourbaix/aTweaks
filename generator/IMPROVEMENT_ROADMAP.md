@@ -365,7 +365,7 @@ behavior is a bug.
 | Branch % | Stmt % | File |
 |---|---|---|
 | 11% | 100% | `lib/src/factories/ability.factory.ts` |
-| 13% | 100% | `lib/src/services/utils/weidu.utils.ts` |
+| ~~13%~~ 100% | 100% | ~~`lib/src/services/utils/weidu.utils.ts`~~ (stale figure, see below) |
 | 25% | 96% | `lib/src/services/state.service.ts` |
 | 28% | 100% | `lib/src/services/weapon.service.ts` |
 | 32% | 100% | `lib/src/services/weidu/weidu-family.service.ts` |
@@ -446,6 +446,14 @@ complication that made item #7's version biased).
 The only real gap here remains the already-deferred item #8: no situational
 form selection (flee/melee/ranged), just uniform random among all 9 forms.
 Not touched — that's a feature decision, not a correctness bug.
+
+### 🟡 `weidu.utils.ts` — table figure was stale, no work needed
+
+Re-checked before starting: this file is already at **100% branches / 100%
+statements**, fully covered by its existing 7-test file. The "13%" branch
+figure in the original Tier 2 table was wrong — a leftover from the
+regex-based HTML scraping used to build that table, which was already flagged
+as having some false positives. Nothing to do here.
 
 ---
 
