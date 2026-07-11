@@ -299,7 +299,7 @@ zero file changes beyond the code/test edits. Added
 type, flag-on with a creature-level secondary type, and flag-on with no
 secondary type anywhere (condition still respected).
 
-### 10. ☐ `effect.service.ts:263-266` `CurrentHPbonus` — unhandled `flag` field
+### 10. ✅ `effect.service.ts:263-266` `CurrentHPbonus` — unhandled `flag` field
 
 ```ts
 case EffectTypeEnum.CurrentHPbonus:
@@ -309,11 +309,10 @@ case EffectTypeEnum.CurrentHPbonus:
 ```
 
 `CurrentHPbonus` effects may carry a `flag` (opcode 428 supports flags like
-"instant/no visual"), but nothing reads or emits it here. Needs: check if
-`effect.flag` is ever set on a `CurrentHPbonus` config entry; if it's always
-`undefined` today it's the same "confirmed no current impact, dormant" shape as
-several closed bugfix items — still worth a test locking in current behavior before
-extending.
+"instant/no visual"), but nothing reads or emits it here.
+
+**Decision (from the maintainer):** nothing to do here — removed the TODO
+comment. No behavior change.
 
 ### 11. ✅ `description.service.ts` `getEffectDescription()` — `EffectTypeEnum.Hold` is never documented
 

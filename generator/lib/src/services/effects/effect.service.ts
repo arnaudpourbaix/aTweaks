@@ -262,7 +262,7 @@ class EffectService {
         break;
       case EffectTypeEnum.CurrentHPbonus:
         effect.parameter1 = `${effect.value}`;
-        effect.parameter2 = `${effect.type}`; //TODO: handle flag if necessary
+        effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.CreateItemInSlot:
         effect.parameter1 = `IDS_OF_SYMBOL (~slots~ ~${effect.slot}~)`;
