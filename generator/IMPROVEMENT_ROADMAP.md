@@ -14,7 +14,7 @@ that are likely to keep producing that same shape of bug:
    the same method rather than assuming they're fine.
 
 Status legend: ☐ not started · ▶ in progress · ✅ fixed & committed ·
-🟡 reviewed & decided not to change
+🟡 reviewed & decided not to change · ⏸ deferred (deliberately postponed)
 
 ---
 
@@ -252,7 +252,9 @@ unrelated to this TODO.
 **Confirmed no impact:** full regeneration produced zero file changes beyond
 the code edits themselves.
 
-### 8. ☐ `ability.factory.ts:20-35` `polymorphSelf()` — situational form selection not implemented
+### 8. ⏸ `ability.factory.ts:20-35` `polymorphSelf()` — situational form selection not implemented
+
+**Deferred by the maintainer — low priority, revisit later.**
 
 ```ts
 // TODO: cover all these creatures
