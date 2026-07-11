@@ -469,6 +469,16 @@ gap is `Promise.reject(error)` inside `init()`'s `catch` block — an
 untested defensive error-propagation path with no bug risk, not worth
 mocking a forced failure for. No fix needed.
 
+### ✅ `weapon.service.ts` — table figure was stale (same issue as `weidu.utils.ts`)
+
+This file already had 12 tests before this audit — the "28%" table figure was
+wrong for the same reason as `weidu.utils.ts` above. Real number: 96.55%
+branches (28/29), one gap: the `else` path of
+`if (item.enchant && (!weapon.flags || !weapon.flags.includes(ItemFlagEnum.Magical)))`
+in `checkEnchantment()` — never tested with a weapon that already has the
+`Magical` flag. Added one test for that case; confirmed correct (no duplicate
+flag pushed). Now 100% branches. No bug found.
+
 ---
 
 ## Process

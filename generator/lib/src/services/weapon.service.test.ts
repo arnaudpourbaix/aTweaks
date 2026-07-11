@@ -90,6 +90,19 @@ describe("checkEnchantment", () => {
     weaponService.checkEnchantment(creature, weapon);
     expect(weapon.enchantment).toBe(1);
   });
+
+  it("does not push a duplicate Magical flag when the weapon already has one", () => {
+    const weapon = {
+      file: "w1",
+      header: { speed: 3 },
+      flags: [ItemFlagEnum.Magical],
+    } as Weapon;
+    const creature = fakeCreature({
+      data: { level1: { pnpValue: 10, value: 10, type: "none" } },
+    });
+    weaponService.checkEnchantment(creature, weapon);
+    expect(weapon.flags).toEqual([ItemFlagEnum.Magical]);
+  });
 });
 
 describe("checkRange", () => {
