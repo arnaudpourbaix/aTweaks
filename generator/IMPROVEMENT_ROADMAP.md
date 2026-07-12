@@ -552,6 +552,23 @@ the cycle entirely. Every other `Weidu*Service` class still extends the full
 `AbstractWeiduService` unchanged. Confirmed no behavior change: full
 regeneration produced zero output diff, all 577 tests pass (up from 571).
 
+### ✅ `main.service.ts` — partially audited, no bug found
+
+Added `main.service.test.ts` (no coverage before) — 4 tests covering
+`isCreatureValid()`'s three states (`undefined`/`false`/`true`) and
+`generateCreature()`'s early-return for an invalid creature. Branches
+86.95% (20/23), up from 73.9%.
+
+**Stopped short of 100% deliberately:** the remaining 3 uncovered branches
+(`generateCreatures()`'s "family already declared" throw,
+`checkSpells()`'s "spell file declared multiple times" and "spell identifier
+declared multiple times" throws) all read real global module-level config
+(`familyFactories`, `SPELLS`) rather than taking parameters. Testing them
+would need `vi.mock()`-ing those imports — disproportionate effort for
+guards that are simple, obviously-correct `if (list.includes(x)) throw;
+list.push(x);` duplicate-detection patterns with no bug risk on inspection.
+No fix needed; not pursued further.
+
 ---
 
 ## Process
