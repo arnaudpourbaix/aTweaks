@@ -69,9 +69,7 @@ class WeiduItemService extends AbstractWeiduService {
       if (item.header.projectile) {
         if (typeof item.header.projectile !== "string")
           throw new Error(`Unhandled projectile!`);
-        const projectile = item.header.projectile
-          ? `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`
-          : "";
+        const projectile = `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`;
         this.write(lines, 0x9c, 2, projectile, 2);
       }
     }

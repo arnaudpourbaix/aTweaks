@@ -479,6 +479,39 @@ in `checkEnchantment()` — never tested with a weapon that already has the
 `Magical` flag. Added one test for that case; confirmed correct (no duplicate
 flag pushed). Now 100% branches. No bug found.
 
+**Note:** at this point the original Tier 2 table above was confirmed
+unreliable in several places (also true for `weidu.utils.ts` and
+`weapon.service.ts`) — a fresh, accurate branch-coverage pass was taken
+instead of continuing down the stale table. New leader:
+`weidu-item.service.ts` at 50% (20/40).
+
+### ✅ `weidu-item.service.ts` — audited, one dead branch simplified away
+
+Added `weidu-item.service.test.ts` (no coverage before) — 15 tests covering
+`createItem()` (stringRef comment, `copyFrom`-via-immunity vs. plain file
+name, the "immunity has no itemSlot" throw, header presence, the projectile
+type guard, immunities) and `createItemHeader()` (Melee/Ranged/neither swing
+animation defaults, `abilityflags`).
+
+**Confirmed-dead branch, simplified rather than tested (it's untestable):**
+
+```ts
+if (item.header.projectile) {
+  if (typeof item.header.projectile !== "string")
+    throw new Error(`Unhandled projectile!`);
+  const projectile = item.header.projectile
+    ? `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`
+    : "";
+  this.write(lines, 0x9c, 2, projectile, 2);
+}
+```
+
+The inner ternary re-checks `item.header.projectile` truthiness, but the
+outer `if` already guarantees it's truthy — the `: ""` branch is provably
+unreachable, not just untriggered by current config. Simplified to a plain
+template string with no ternary. No behavior change (confirmed via full
+regeneration — zero output diff). Now 100% branches/statements.
+
 ---
 
 ## Process
