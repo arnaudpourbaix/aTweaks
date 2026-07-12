@@ -9,6 +9,7 @@ import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { Actions } from "../../model/script/actions";
 import { Triggers } from "../../model/script/triggers";
 import { State } from "../../state";
+import translationService from "../translation.service";
 import utils from "./utils.service";
 
 describe("objectKeys", () => {
@@ -112,11 +113,146 @@ describe("getSpellFunctionName", () => {
     expect(utils.getSpellFunctionName(spell)).toBe("create_spell_desc");
   });
 
+  it("uses the last segment as-is when it isn't 'name'", () => {
+    const spell = { name: "spell.fireball" } as unknown as Spell;
+    expect(utils.getSpellFunctionName(spell)).toBe("create_spell_fireball");
+  });
+
   it("throws if the spell name is a numeric string reference", () => {
     const spell = { name: 12345 } as unknown as Spell;
     expect(() => utils.getSpellFunctionName(spell)).toThrow(
       "can't handle a number in name!",
     );
+  });
+});
+
+describe("resolveStringRef", () => {
+  it("returns undefined for undefined input", () => {
+    expect(utils.resolveStringRef(undefined)).toBeUndefined();
+  });
+
+  it("resolves a translation-key string to RESOLVE_STR_REF(@ref)", () => {
+    const ref = utils.resolveStringRef("common.potion.use");
+    expect(ref).toMatch(/^RESOLVE_STR_REF\(@\d+\)$/);
+  });
+
+  it("wraps a resolvable numeric stringRef in RESOLVE_STR_REF(@value)", () => {
+    const custom = translationService.addCustomTranslation(["hi"]);
+    expect(utils.resolveStringRef(custom)).toBe(`RESOLVE_STR_REF(@${custom})`);
+  });
+
+  it("falls back to the raw number when it can't be resolved to any translation", () => {
+    expect(utils.resolveStringRef(999999999)).toBe("999999999");
+  });
+});
+
+describe("getImmunityFunctionName", () => {
+  it("builds name_type directly from an ImmunityConfig object", () => {
+    expect(
+      utils.getImmunityFunctionName({
+        name: "poison",
+        type: "immunity",
+      } as any),
+    ).toBe("poison_immunity");
+  });
+
+  it("looks up the ImmunityConfig by name in State.immunities when given a string", () => {
+    const original = State.immunities;
+    State.immunities = [
+      { name: "poison", type: "immunity" },
+    ] as any;
+    try {
+      expect(utils.getImmunityFunctionName("poison")).toBe("poison_immunity");
+    } finally {
+      State.immunities = original;
+    }
+  });
+});
+
+describe("hasImmunity", () => {
+  const original = State.immunities;
+  function restore() {
+    State.immunities = original;
+  }
+
+  it("returns true on a direct name match", () => {
+    expect(utils.hasImmunity(["poison"], "poison")).toBe(true);
+  });
+
+  it("returns false when nothing matches and nothing to recurse into", () => {
+    expect(utils.hasImmunity([], "poison")).toBe(false);
+  });
+
+  it("recurses into a referenced immunity's own immunities list", () => {
+    State.immunities = [
+      { name: "giant", immunities: ["poison"] },
+    ] as any;
+    try {
+      expect(utils.hasImmunity(["giant"], "poison")).toBe(true);
+    } finally {
+      restore();
+    }
+  });
+
+  it("throws when a referenced immunity name isn't registered in State.immunities", () => {
+    State.immunities = [] as any;
+    try {
+      expect(() => utils.hasImmunity(["unknownImmunity"], "poison")).toThrow(
+        /Immunity unknownImmunity not found/,
+      );
+    } finally {
+      restore();
+    }
+  });
+});
+
+describe("hasCriticalHitImmunity", () => {
+  const original = State.immunities;
+  function restore() {
+    State.immunities = original;
+  }
+
+  it("returns true when the immunity's own name is criticalHit", () => {
+    expect(
+      utils.hasCriticalHitImmunity({
+        name: "criticalHit",
+        immunities: [],
+      } as any),
+    ).toBe(true);
+  });
+
+  it("returns true when criticalHit is directly listed in immunities", () => {
+    expect(
+      utils.hasCriticalHitImmunity({
+        name: "giant",
+        immunities: ["criticalHit"],
+      } as any),
+    ).toBe(true);
+  });
+
+  it("recurses through referenced immunities in State.immunities", () => {
+    State.immunities = [
+      { name: "poison", immunities: ["criticalHit"] },
+    ] as any;
+    try {
+      expect(
+        utils.hasCriticalHitImmunity({
+          name: "giant",
+          immunities: ["poison"],
+        } as any),
+      ).toBe(true);
+    } finally {
+      restore();
+    }
+  });
+
+  it("returns false when nothing in the chain grants criticalHit", () => {
+    expect(
+      utils.hasCriticalHitImmunity({
+        name: "fire",
+        immunities: [],
+      } as any),
+    ).toBe(false);
   });
 });
 
@@ -168,6 +304,15 @@ describe("getIdsFileFromSpellProtectionStat", () => {
     expect(
       utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Align),
     ).toBe("align");
+    expect(
+      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Gender),
+    ).toBe("gender");
+    expect(
+      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Specific),
+    ).toBe("specific");
+    expect(
+      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.State),
+    ).toBe("state");
   });
 
   it("returns an empty string for stats with no ids file", () => {
@@ -189,6 +334,105 @@ describe("getMemorizedSpellType", () => {
   it("returns null for types with no memorized-spell equivalent", () => {
     expect(utils.getMemorizedSpellType(SpellTypeEnum.Psionic)).toBeNull();
     expect(utils.getMemorizedSpellType(undefined)).toBeNull();
+  });
+});
+
+describe("getSpellInfos", () => {
+  const original = State.spells;
+  function restore() {
+    State.spells = original;
+  }
+
+  it("returns innate/level 1 when the spell isn't found anywhere (unknown case)", () => {
+    State.spells = [];
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "innate",
+        level: 1,
+      });
+    } finally {
+      restore();
+    }
+  });
+
+  it("resolves type/level directly from a State.spells entry when spell.type is mapped", () => {
+    State.spells = [
+      { file: "XXTEST1", type: SpellTypeEnum.Wizard, level: 5 },
+    ] as any;
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "wizard",
+        level: 5,
+      });
+    } finally {
+      restore();
+    }
+  });
+
+  it("falls back to the copyFrom resref's inferred info when spell.type is unmapped", () => {
+    State.spells = [
+      {
+        file: "XXTEST1",
+        type: SpellTypeEnum.Psionic,
+        level: 9,
+        copyFrom: "SPWI312",
+      },
+    ] as any;
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "wizard",
+        level: 3,
+      });
+    } finally {
+      restore();
+    }
+  });
+
+  it("falls back to spell.options.spellType when spell.type is unmapped and there's no copyFrom", () => {
+    State.spells = [
+      {
+        file: "XXTEST1",
+        type: SpellTypeEnum.Psionic,
+        level: 4,
+        options: { spellType: SpellTypeEnum.Priest },
+      },
+    ] as any;
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "priest",
+        level: 4,
+      });
+    } finally {
+      restore();
+    }
+  });
+
+  it("falls back to innate/spell.level when neither type, copyFrom nor options resolve it", () => {
+    State.spells = [
+      { file: "XXTEST1", type: SpellTypeEnum.Psionic, level: 7 },
+    ] as any;
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "innate",
+        level: 7,
+      });
+    } finally {
+      restore();
+    }
+  });
+
+  it("falls back to level 1 when spell.level is missing (type violation - defensive fallback)", () => {
+    State.spells = [
+      { file: "XXTEST1", type: SpellTypeEnum.Psionic, level: undefined },
+    ] as any;
+    try {
+      expect(utils.getSpellInfos("XXTEST1")).toEqual({
+        type: "innate",
+        level: 1,
+      });
+    } finally {
+      restore();
+    }
   });
 });
 

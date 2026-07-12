@@ -705,6 +705,25 @@ mocking the full downstream creature-processing pipeline
 etc.) — disproportionate effort for warning-only branches with no functional
 impact, same reasoning as `main.service.ts`'s stopped-short gaps.
 
+### ✅ `utils.service.ts` — audited, no bug found
+
+Added 20 tests to the existing `utils.service.test.ts` — `resolveStringRef()`
+(undefined, resolvable key, resolvable/unresolvable numeric stringRef),
+`getImmunityFunctionName()` (object vs. string-lookup forms), `hasImmunity()`
+(direct match, recursion into a referenced immunity, not-found throw),
+`hasCriticalHitImmunity()` (self-name match, direct list match, recursion,
+no-match), the 3 missing `getIdsFileFromSpellProtectionStat()` switch cases
+(`Gender`/`Specific`/`State`), `getSpellFunctionName()`'s no-trailing-"name"
+case, and 6 `getSpellInfos()` cases covering the not-found/direct-type/
+copyFrom-fallback/options-fallback/final-fallback branch chain (including the
+`spell.level ?? 1` fallback, only reachable by violating `Spell.level`'s
+required-field type). All pass — no bug found. Now 98.82% branches (84/85,
+up from 82.35%).
+
+**One gap left alone deliberately:** `writeFile()`'s backslash-path fallback
+(`file.lastIndexOf("/")` returning `-1`, falling back to `lastIndexOf("\\")`)
+is a pure Windows-path-separator edge case with no logic risk — not pursued.
+
 ---
 
 ## Process
