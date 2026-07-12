@@ -917,6 +917,18 @@ No bug found. Now 100% branches/statements (up from 90%).
 
 ---
 
+### ✅ `documentation.service.ts` — audited, no bug found
+
+Added 9 tests to the existing `documentation.service.test.ts` — `getTraits()`
+and `getCreatureTraits()`'s description-paragraph branches, `getSpellQuantity
+()`'s full unknown/X-per-day/at-will/every-N-rounds matrix, `replace()`'s
+missing-token throw and multi-occurrence/undefined-fallback replacement, and
+`addCreature()`'s `doubleApr` multiplier (via a full fake creature and the
+real `lib/templates/monster.html`, verifying the rendered `Attacks per
+Round` value). All pass — no bug found. Now 100% branches (up from 90.47%).
+
+---
+
 ## Process
 
 Same as `BUGFIX_ROADMAP.md`: for each item, add/extend tests to lock in current
