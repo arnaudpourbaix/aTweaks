@@ -16,7 +16,6 @@ import {
   RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
-  TeleportEffect,
 } from "../../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -55,11 +54,7 @@ interface DescriptionServicePrivate {
   getTarget(target: ItemAbilityTargetEnum): string;
   getDuration(duration?: number, prefix?: string): string;
   getStatisticText(effect: Partial<Effect>): string | undefined;
-  getDiceValue(payload: {
-    diceThrown?: number;
-    diceSize?: number;
-    value?: number;
-  }): string;
+  getDiceValue(payload: { diceThrown?: number; diceSize?: number; value?: number }): string;
   getSignedNumber(value: number | null | undefined): string;
   getDamage(effect: Partial<DamageEffect>): string[];
   getPoison(effect: Partial<PoisonEffect>): string[];
@@ -77,7 +72,7 @@ interface DescriptionServicePrivate {
   getSleep(effect: Partial<SleepEffect>): string[];
   getSlow(effect: Partial<Effect>, target: ItemAbilityTargetEnum): string[];
   getHaste(effect: Partial<Effect>, target: ItemAbilityTargetEnum): string[];
-  getTeleport(effect: Partial<TeleportEffect>): string[];
+  getTeleport(): string[];
   getModifierType(effect: LooseEffect): string[];
   getEffectDescription(effect: LooseEffect, target: ItemAbilityTargetEnum): string[];
   getItemSpellDescription(effect: Partial<Effect>): string[];
@@ -183,12 +178,8 @@ describe("getDiceValue (private)", () => {
   });
 
   it("appends a signed bonus after the dice notation", () => {
-    expect(
-      service.getDiceValue({ diceThrown: 2, diceSize: 6, value: 3 }),
-    ).toBe("2D6+3");
-    expect(
-      service.getDiceValue({ diceThrown: 2, diceSize: 6, value: -3 }),
-    ).toBe("2D6-3");
+    expect(service.getDiceValue({ diceThrown: 2, diceSize: 6, value: 3 })).toBe("2D6+3");
+    expect(service.getDiceValue({ diceThrown: 2, diceSize: 6, value: -3 })).toBe("2D6-3");
   });
 
   it("strips the leading + from a positive diceless value", () => {
@@ -219,12 +210,10 @@ describe("getSignedNumber (private)", () => {
 describe("getTarget", () => {
   it("maps known targets to their text", () => {
     expect(service.getTarget(ItemAbilityTargetEnum.Caster)).toBe("caster");
-    expect(service.getTarget(ItemAbilityTargetEnum.LivingActor)).toBe(
-      "target",
+    expect(service.getTarget(ItemAbilityTargetEnum.LivingActor)).toBe("target");
+    expect(service.getTarget(ItemAbilityTargetEnum.AnyPointWithinRange)).toBe(
+      "anyone within range",
     );
-    expect(
-      service.getTarget(ItemAbilityTargetEnum.AnyPointWithinRange),
-    ).toBe("anyone within range");
   });
 
   it("falls back to empty string for unmapped targets", () => {
@@ -281,18 +270,16 @@ describe("getSaveText", () => {
     [SaveTypeEnum.RodStaffWand, "wand"],
     [SaveTypeEnum.Spell, "spell"],
   ])("formats save type %s as %s", (type, text) => {
-    expect(service.getSaveText({ saveTypes: [type] })).toBe(
-      ` (saves vs ${text})`,
-    );
+    expect(service.getSaveText({ saveTypes: [type] })).toBe(` (saves vs ${text})`);
   });
 
   it("appends a signed save bonus when present", () => {
-    expect(
-      service.getSaveText({ saveTypes: [SaveTypeEnum.Breath], saveBonus: -2 }),
-    ).toBe(" (saves vs breath at -2)");
-    expect(
-      service.getSaveText({ saveTypes: [SaveTypeEnum.Spell], saveBonus: 3 }),
-    ).toBe(" (saves vs spell at +3)");
+    expect(service.getSaveText({ saveTypes: [SaveTypeEnum.Breath], saveBonus: -2 })).toBe(
+      " (saves vs breath at -2)",
+    );
+    expect(service.getSaveText({ saveTypes: [SaveTypeEnum.Spell], saveBonus: 3 })).toBe(
+      " (saves vs spell at +3)",
+    );
   });
 });
 
@@ -308,18 +295,12 @@ describe("getProbability", () => {
   });
 
   it("renders the difference between probability2 and probability1 when probability2 is set", () => {
-    expect(
-      service.getProbability({ probability1: 20, probability2: 60 }),
-    ).toBe(" (40%)");
+    expect(service.getProbability({ probability1: 20, probability2: 60 })).toBe(" (40%)");
   });
 
   it("throws when probability2 is not greater than probability1", () => {
-    expect(() =>
-      service.getProbability({ probability1: 60, probability2: 60 }),
-    ).toThrow();
-    expect(() =>
-      service.getProbability({ probability1: 60, probability2: 20 }),
-    ).toThrow();
+    expect(() => service.getProbability({ probability1: 60, probability2: 60 })).toThrow();
+    expect(() => service.getProbability({ probability1: 60, probability2: 20 })).toThrow();
     expect(() => service.getProbability({ probability2: 60 })).toThrow();
   });
 });
@@ -361,9 +342,7 @@ describe("getStatisticText", () => {
 
 describe("getDamage (private)", () => {
   it("returns empty array when dice fields are missing", () => {
-    expect(service.getDamage({ type: EffectDamageTypeEnum.Fire })).toEqual(
-      [],
-    );
+    expect(service.getDamage({ type: EffectDamageTypeEnum.Fire })).toEqual([]);
   });
 
   it("formats dice damage with a positive bonus", () => {
@@ -448,11 +427,7 @@ describe("getPoison (private)", () => {
 describe("getDisease (private)", () => {
   it.each([
     [DiseaseTypeEnum.OneDamagePerSecond, undefined, "one damage per second"],
-    [
-      DiseaseTypeEnum.OneDamagePerAmountSeconds,
-      60,
-      "one damage every a turn",
-    ],
+    [DiseaseTypeEnum.OneDamagePerAmountSeconds, 60, "one damage every a turn"],
     [DiseaseTypeEnum.AmoundDamagePerRound, 5, "5 damage per round"],
     [DiseaseTypeEnum.AmountDamagePerSecond, 5, "5 damage per second"],
     [DiseaseTypeEnum.ReduceCharismaByAmount, 2, "-2 charisma"],
@@ -463,9 +438,9 @@ describe("getDisease (private)", () => {
     [DiseaseTypeEnum.ReduceWisdomByAmount, 2, "-2 wisdom"],
     [DiseaseTypeEnum.SlowEffect, 2, "slow"],
   ])("formats disease type %s", (type, amount, text) => {
-    expect(
-      service.getDisease({ type, amount, duration: 6 }),
-    ).toEqual([`Disease: ${text} for a round.`]);
+    expect(service.getDisease({ type, amount, duration: 6 })).toEqual([
+      `Disease: ${text} for a round.`,
+    ]);
   });
 
   it.each([
@@ -536,30 +511,26 @@ describe("getArmorClassBonus (private)", () => {
 
 describe("getInvisibility (private)", () => {
   it("labels Improved invisibility distinctly", () => {
-    expect(
-      service.getInvisibility({ type: InvisibilityTypeEnum.Improved }),
-    ).toEqual(["Improved invisibility"]);
+    expect(service.getInvisibility({ type: InvisibilityTypeEnum.Improved })).toEqual([
+      "Improved invisibility",
+    ]);
   });
 
   it("falls back to plain Invisibility for Normal and Weak", () => {
-    expect(
-      service.getInvisibility({ type: InvisibilityTypeEnum.Normal }),
-    ).toEqual(["Invisibility"]);
-    expect(
-      service.getInvisibility({ type: InvisibilityTypeEnum.Weak }),
-    ).toEqual(["Invisibility"]);
+    expect(service.getInvisibility({ type: InvisibilityTypeEnum.Normal })).toEqual([
+      "Invisibility",
+    ]);
+    expect(service.getInvisibility({ type: InvisibilityTypeEnum.Weak })).toEqual(["Invisibility"]);
   });
 });
 
 describe("getRegeneration (private)", () => {
-  it.each([
-    RegenerationTypeEnum.AmountHPperSecond,
-    RegenerationTypeEnum.AmountHPperSecondBis,
-  ])("formats hp/second for type %s", (type) => {
-    expect(service.getRegeneration({ type, amount: 2 })).toEqual([
-      "Regeneration: 2 hp/second",
-    ]);
-  });
+  it.each([RegenerationTypeEnum.AmountHPperSecond, RegenerationTypeEnum.AmountHPperSecondBis])(
+    "formats hp/second for type %s",
+    (type) => {
+      expect(service.getRegeneration({ type, amount: 2 })).toEqual(["Regeneration: 2 hp/second"]);
+    },
+  );
 
   it("formats a percentage per second", () => {
     expect(
@@ -633,9 +604,7 @@ describe("getParalyze (private)", () => {
         },
         ItemAbilityTargetEnum.LivingActor,
       ),
-    ).toEqual([
-      "Paralyze target for a turn (only affects Half Elf) (saves vs poison/death).",
-    ]);
+    ).toEqual(["Paralyze target for a turn (only affects Half Elf) (saves vs poison/death)."]);
   });
 
   it("mentions the pascal-cased ids entry when restricted by general type", () => {
@@ -649,9 +618,7 @@ describe("getParalyze (private)", () => {
         },
         ItemAbilityTargetEnum.LivingActor,
       ),
-    ).toEqual([
-      "Paralyze target for a turn (only affects Undead) (saves vs poison/death).",
-    ]);
+    ).toEqual(["Paralyze target for a turn (only affects Undead) (saves vs poison/death)."]);
   });
 });
 
@@ -678,12 +645,9 @@ describe("getCharm (private)", () => {
     [CharmTypeEnum.HostileDomination, "Dire Charm"],
     [CharmTypeEnum.Controlled, "Turn"],
   ])("labels charmType %s as %s", (charmType, label) => {
-    expect(
-      service.getCharm(
-        { charmType, duration: 60 },
-        ItemAbilityTargetEnum.Caster,
-      ),
-    ).toEqual([`${label} caster for a turn.`]);
+    expect(service.getCharm({ charmType, duration: 60 }, ItemAbilityTargetEnum.Caster)).toEqual([
+      `${label} caster for a turn.`,
+    ]);
   });
 
   it("leaves an empty label for an unhandled charmType (e.g. HostileCharm)", () => {
@@ -711,23 +675,19 @@ describe("getCharm (private)", () => {
 
 describe("getLevelDrain (private)", () => {
   it("formats the drained amount", () => {
-    expect(service.getLevelDrain({ amount: 2 })).toEqual([
-      "Drain 2 level from target.",
-    ]);
+    expect(service.getLevelDrain({ amount: 2 })).toEqual(["Drain 2 level from target."]);
   });
 
   it("appends save text", () => {
-    expect(
-      service.getLevelDrain({ amount: 1, saveTypes: [SaveTypeEnum.Spell] }),
-    ).toEqual(["Drain 1 level from target (saves vs spell)."]);
+    expect(service.getLevelDrain({ amount: 1, saveTypes: [SaveTypeEnum.Spell] })).toEqual([
+      "Drain 1 level from target (saves vs spell).",
+    ]);
   });
 });
 
 describe("getCastingTimeModifier (private)", () => {
   it("formats the value and raw type", () => {
-    expect(service.getCastingTimeModifier({ value: 2, type: 1 })).toEqual([
-      "Casting time: 2 (1)",
-    ]);
+    expect(service.getCastingTimeModifier({ value: 2, type: 1 })).toEqual(["Casting time: 2 (1)"]);
   });
 });
 
@@ -748,23 +708,21 @@ describe("getCurrentHPbonus (private)", () => {
   });
 
   it("formats a dice heal amount with a bonus", () => {
-    expect(
-      service.getCurrentHPbonus({ diceThrown: 2, diceSize: 8, value: 3 }),
-    ).toEqual(["Heal: 2D8+3"]);
+    expect(service.getCurrentHPbonus({ diceThrown: 2, diceSize: 8, value: 3 })).toEqual([
+      "Heal: 2D8+3",
+    ]);
   });
 });
 
 describe("getSleep (private)", () => {
   it("formats duration without the wake-on-damage note", () => {
-    expect(
-      service.getSleep({ duration: 6, wakeOnDamage: false }),
-    ).toEqual(["Sleep for a round"]);
+    expect(service.getSleep({ duration: 6, wakeOnDamage: false })).toEqual(["Sleep for a round"]);
   });
 
   it("appends the wake-on-damage note", () => {
-    expect(
-      service.getSleep({ duration: 6, wakeOnDamage: true }),
-    ).toEqual(["Sleep for a round (wake on damage)"]);
+    expect(service.getSleep({ duration: 6, wakeOnDamage: true })).toEqual([
+      "Sleep for a round (wake on damage)",
+    ]);
   });
 
   it("appends save text after the wake-on-damage note", () => {
@@ -802,7 +760,7 @@ describe("getHaste (private)", () => {
 
 describe("getTeleport (private)", () => {
   it("always returns a constant text", () => {
-    expect(service.getTeleport({})).toEqual(["Teleport to target"]);
+    expect(service.getTeleport()).toEqual(["Teleport to target"]);
   });
 });
 
@@ -833,18 +791,18 @@ describe("getModifierType (private)", () => {
     ).toEqual([]);
   });
 
-  it.each([
-    EffectModifierTypeEnum.MultiplyPercent,
-    EffectModifierTypeEnum.SetPercentOf,
-  ])("renders the value as a percentage for modifier type %s", (type) => {
-    expect(
-      service.getModifierType({
-        opcode: EffectTypeEnum.MovementRateBonus,
-        type,
-        value: 150,
-      }),
-    ).toEqual(["Movement rate:150%"]);
-  });
+  it.each([EffectModifierTypeEnum.MultiplyPercent, EffectModifierTypeEnum.SetPercentOf])(
+    "renders the value as a percentage for modifier type %s",
+    (type) => {
+      expect(
+        service.getModifierType({
+          opcode: EffectTypeEnum.MovementRateBonus,
+          type,
+          value: 150,
+        }),
+      ).toEqual(["Movement rate:150%"]);
+    },
+  );
 
   it("renders a signed value for Increment/Set modifier types", () => {
     expect(
@@ -929,52 +887,37 @@ describe("getEffectDescription (private, dispatcher)", () => {
 
   it("routes Paralyze to getParalyze", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.Paralyze, duration: 60 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.Paralyze, duration: 60 }, target),
     ).toEqual(["Paralyze target for a turn."]);
   });
 
   it("routes Hold to getParalyze (identical in-game effect, same description)", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.Hold, duration: 60 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.Hold, duration: 60 }, target),
     ).toEqual(["Paralyze target for a turn."]);
   });
 
   it("returns a constant line for InvisibilityDetection", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.InvisibilityDetection },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.InvisibilityDetection }, target),
     ).toEqual(["Can see invisible creatures."]);
   });
 
   it("returns a constant line for Blur", () => {
-    expect(
-      service.getEffectDescription({ opcode: EffectTypeEnum.Blur }, target),
-    ).toEqual(["Blur (visual effect only)"]);
+    expect(service.getEffectDescription({ opcode: EffectTypeEnum.Blur }, target)).toEqual([
+      "Blur (visual effect only)",
+    ]);
   });
 
   it("routes CurrentHPbonus to getCurrentHPbonus", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.CurrentHPbonus, value: 10 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.CurrentHPbonus, value: 10 }, target),
     ).toEqual(["Heal: 10"]);
   });
 
   it("routes LevelDrain to getLevelDrain", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.LevelDrain, amount: 2 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.LevelDrain, amount: 2 }, target),
     ).toEqual(["Drain 2 level from target."]);
   });
 
@@ -989,26 +932,20 @@ describe("getEffectDescription (private, dispatcher)", () => {
 
   it("routes Slow to getSlow", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.Slow, duration: 60 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.Slow, duration: 60 }, target),
     ).toEqual(["Slow target for a turn"]);
   });
 
   it("routes Haste to getHaste", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.Haste, duration: 60 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.Haste, duration: 60 }, target),
     ).toEqual(["Haste target for a turn"]);
   });
 
   it("routes Teleport to a constant text", () => {
-    expect(
-      service.getEffectDescription({ opcode: EffectTypeEnum.Teleport }, target),
-    ).toEqual(["Teleport to target"]);
+    expect(service.getEffectDescription({ opcode: EffectTypeEnum.Teleport }, target)).toEqual([
+      "Teleport to target",
+    ]);
   });
 
   it.each([EffectTypeEnum.CharmCreature, EffectTypeEnum.CharmControlCreature])(
@@ -1040,20 +977,14 @@ describe("getEffectDescription (private, dispatcher)", () => {
 
   it("formats MirrorImageEffect inline with its amount", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.MirrorImageEffect, amount: 3 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.MirrorImageEffect, amount: 3 }, target),
     ).toEqual(["Mirror image (3)"]);
   });
 
   it("returns a constant line for Infravision", () => {
-    expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.Infravision },
-        target,
-      ),
-    ).toEqual(["Darkvision out to 60 feet"]);
+    expect(service.getEffectDescription({ opcode: EffectTypeEnum.Infravision }, target)).toEqual([
+      "Darkvision out to 60 feet",
+    ]);
   });
 
   it("routes Invisibility to getInvisibility", () => {
@@ -1089,17 +1020,12 @@ describe("getEffectDescription (private, dispatcher)", () => {
 
   it("routes a recognized statistic opcode to getStatisticModifier", () => {
     expect(
-      service.getEffectDescription(
-        { opcode: EffectTypeEnum.DexterityBonus, value: 2 },
-        target,
-      ),
+      service.getEffectDescription({ opcode: EffectTypeEnum.DexterityBonus, value: 2 }, target),
     ).toEqual(["Dexterity: +2"]);
   });
 
   it("returns an empty array for an opcode with no matching branch", () => {
-    expect(
-      service.getEffectDescription({ opcode: EffectTypeEnum.Blindness }, target),
-    ).toEqual([]);
+    expect(service.getEffectDescription({ opcode: EffectTypeEnum.Blindness }, target)).toEqual([]);
   });
 });
 
@@ -1115,9 +1041,7 @@ describe("getItemSpellDescription (private)", () => {
 
   it("uses the spell's translated name and appends its description when doc is falsy", () => {
     const nameRef = translationService.addCustomTranslation(["Fireball"]);
-    const descRef = translationService.addCustomTranslation([
-      "Deals fire damage in an area.",
-    ]);
+    const descRef = translationService.addCustomTranslation(["Deals fire damage in an area."]);
     State.spells = [
       fakeSpell({ file: "fireball", name: nameRef, description: descRef, doc: false }),
     ];
@@ -1127,18 +1051,12 @@ describe("getItemSpellDescription (private)", () => {
         resource: "fireball",
         probability1: 50,
       }),
-    ).toEqual([
-      "",
-      "Cast spell Fireball (50%):",
-      "Deals fire damage in an area.",
-    ]);
+    ).toEqual(["", "Cast spell Fireball (50%):", "Deals fire damage in an area."]);
   });
 
   it("omits the description block when the spell's doc is truthy", () => {
     const nameRef = translationService.addCustomTranslation(["Fireball"]);
-    const descRef = translationService.addCustomTranslation([
-      "Deals fire damage in an area.",
-    ]);
+    const descRef = translationService.addCustomTranslation(["Deals fire damage in an area."]);
     State.spells = [
       fakeSpell({ file: "fireball", name: nameRef, description: descRef, doc: "both" }),
     ];
@@ -1166,9 +1084,7 @@ describe("getItemSpellDescription (private)", () => {
 
 describe("getEffectsDescription (private)", () => {
   it("returns an empty array for no effects", () => {
-    expect(
-      service.getEffectsDescription([], ItemAbilityTargetEnum.LivingActor),
-    ).toEqual([]);
+    expect(service.getEffectsDescription([], ItemAbilityTargetEnum.LivingActor)).toEqual([]);
   });
 
   it("routes CastSpell effects through getItemSpellDescription and others through getEffectDescription", () => {
@@ -1186,11 +1102,7 @@ describe("getEffectsDescription (private)", () => {
       ],
       ItemAbilityTargetEnum.LivingActor,
     );
-    expect(results).toEqual([
-      "",
-      "Cast spell Fireball",
-      "Fire damage: 2D6",
-    ]);
+    expect(results).toEqual(["", "Cast spell Fireball", "Fire damage: 2D6"]);
   });
 });
 
@@ -1203,27 +1115,17 @@ describe("getImmunitiesDescription (private)", () => {
   it("uses the existing description when present", () => {
     const descRef = translationService.addCustomTranslation(["Immune to fire."]);
     State.immunities = [fakeImmunity({ name: "fire", description: descRef })];
-    expect(service.getImmunitiesDescription(["fire"])).toEqual([
-      "Immune to fire.",
-    ]);
+    expect(service.getImmunitiesDescription(["fire"])).toEqual(["Immune to fire."]);
   });
 
   it("falls back to the translated stringRef when onlyName is true", () => {
-    State.immunities = [
-      fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" }),
-    ];
-    expect(service.getImmunitiesDescription(["poison"], true)).toEqual([
-      "Immune to poison",
-    ]);
+    State.immunities = [fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" })];
+    expect(service.getImmunitiesDescription(["poison"], true)).toEqual(["Immune to poison"]);
   });
 
   it("also falls back to stringRef when onlyName is false but there is no description", () => {
-    State.immunities = [
-      fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" }),
-    ];
-    expect(service.getImmunitiesDescription(["poison"])).toEqual([
-      "Immune to poison",
-    ]);
+    State.immunities = [fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" })];
+    expect(service.getImmunitiesDescription(["poison"])).toEqual(["Immune to poison"]);
   });
 
   it("generates the immunity's description on the fly when neither stringRef nor description is set", () => {
@@ -1261,9 +1163,7 @@ describe("generateImmunity (public)", () => {
   });
 
   it("builds a description from nested immunities and its own effects", () => {
-    State.immunities = [
-      fakeImmunity({ name: "cold", stringRef: "common.immunity.cold" }),
-    ];
+    State.immunities = [fakeImmunity({ name: "cold", stringRef: "common.immunity.cold" })];
     const immunity = fakeImmunity({
       name: "elemental",
       immunities: ["cold"],
@@ -1277,10 +1177,7 @@ describe("generateImmunity (public)", () => {
     });
     descriptionService.generateImmunity(immunity);
     expect(immunity.description).toBeDefined();
-    expect(decode(immunity.description as number)).toEqual([
-      "Immune to cold",
-      "-2 base AC",
-    ]);
+    expect(decode(immunity.description as number)).toEqual(["Immune to cold", "-2 base AC"]);
   });
 
   it("leaves the description unset when nothing resolves to any text", () => {
@@ -1290,9 +1187,7 @@ describe("generateImmunity (public)", () => {
   });
 
   it("defaults effects to an empty array when unset (the field is required by the type but the code defends against it anyway)", () => {
-    State.immunities = [
-      fakeImmunity({ name: "cold", stringRef: "common.immunity.cold" }),
-    ];
+    State.immunities = [fakeImmunity({ name: "cold", stringRef: "common.immunity.cold" })];
     const immunity = fakeImmunity({
       name: "elemental",
       immunities: ["cold"],
@@ -1320,9 +1215,7 @@ describe("generateCreatureSpells (public)", () => {
     });
     descriptionService.generateCreatureSpells([spell]);
     expect(spell.description).toBeDefined();
-    expect(decode(spell.description as number)).toEqual([
-      "Regeneration: 2 hp/second",
-    ]);
+    expect(decode(spell.description as number)).toEqual(["Regeneration: 2 hp/second"]);
   });
 
   it("skips a spell that already has a description", () => {
@@ -1423,9 +1316,7 @@ describe("generateCreatureItems (public)", () => {
       },
     });
     descriptionService.generateCreatureItems([weapon]);
-    expect(decode(weapon.description as number)).toContain(
-      "Ranged damage: 1D6 (Piercing)",
-    );
+    expect(decode(weapon.description as number)).toContain("Ranged damage: 1D6 (Piercing)");
   });
 
   it("omits Speed Factor when there is no damage and no damage effects", () => {
@@ -1442,9 +1333,7 @@ describe("generateCreatureItems (public)", () => {
   });
 
   it("generates a trait description from immunity names only and its own effects, targeting the caster", () => {
-    State.immunities = [
-      fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" }),
-    ];
+    State.immunities = [fakeImmunity({ name: "poison", stringRef: "common.immunity.poison" })];
     const item = fakeItem({
       trait: true,
       immunities: ["poison"],

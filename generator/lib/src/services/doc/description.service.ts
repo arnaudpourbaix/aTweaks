@@ -16,7 +16,6 @@ import {
   RegenerationEffect,
   SleepEffect,
   StatisticModifierEffect,
-  TeleportEffect,
 } from "../../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -34,22 +33,15 @@ import {
   SaveTypeEnum,
 } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
-import {
-  Item,
-  Spell,
-  SpellHeader,
-  Weapon,
-} from "../../model/spell-item/spell-item";
+import { Item, Spell, SpellHeader, Weapon } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import translationService from "../translation.service";
 
 class DescriptionService {
   generateCreatureItems(items: Item[]): void {
     for (const item of items) {
-      if (!item.description && item.header)
-        this.generateWeaponDescription(item as Weapon);
-      else if (!item.description && item.trait)
-        this.generateItemTraitDescription(item);
+      if (!item.description && item.header) this.generateWeaponDescription(item as Weapon);
+      else if (!item.description && item.trait) this.generateItemTraitDescription(item);
     }
   }
 
@@ -64,37 +56,30 @@ class DescriptionService {
     if (immunity.description) return; // don't override
     const results: string[] = [];
     results.push(...this.getImmunitiesDescription(immunity.immunities));
+    // effects is required by ImmunityConfig, but defended anyway (deliberate, see IMPROVEMENT_ROADMAP.md)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     for (const effect of immunity.effects ?? []) {
-      results.push(
-        ...this.getEffectDescription(effect, ItemAbilityTargetEnum.Caster),
-      );
+      results.push(...this.getEffectDescription(effect, ItemAbilityTargetEnum.Caster));
     }
-    if (results.length)
-      immunity.description = translationService.addCustomTranslation(results);
+    if (results.length) immunity.description = translationService.addCustomTranslation(results);
   }
 
-  private getImmunitiesDescription(
-    immunities: ImmunityName[],
-    onlyName = false,
-  ): string[] {
+  private getImmunitiesDescription(immunities: ImmunityName[], onlyName = false): string[] {
     const results: string[] = [];
     for (const name of immunities) {
       const immunity = State.immunities.find((i) => i.name === name);
       if (!immunity) continue;
-      if (!immunity.stringRef && !immunity.description)
-        this.generateImmunity(immunity);
+      if (!immunity.stringRef && !immunity.description) this.generateImmunity(immunity);
       if (immunity.description && !onlyName)
         results.push(translationService.from(immunity.description));
-      else if (immunity.stringRef)
-        results.push(translationService.from(immunity.stringRef));
+      else if (immunity.stringRef) results.push(translationService.from(immunity.stringRef));
     }
     return results;
   }
 
   private generateWeaponDescription(item: Weapon) {
     const desc: string[] = [];
-    const type =
-      item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
+    const type = item.header.type === ItemAbilityTypeEnum.Melee ? "Melee" : "Ranged";
     if (item.header.bonusToHit) {
       desc.push(`THAC0: ${this.getSignedNumber(item.header.bonusToHit)}`);
     }
@@ -103,20 +88,17 @@ class DescriptionService {
       value: item.header.damageBonus,
     });
     if (damage) {
-      desc.push(
-        `${type} damage: ${damage} (${
-          AbilityDamageTypeEnum[item.header.damageType!]
-        })`,
-      );
+      const damageTypeLabel =
+        item.header.damageType !== undefined ? AbilityDamageTypeEnum[item.header.damageType] : "";
+      desc.push(`${type} damage: ${damage} (${damageTypeLabel})`);
     }
-    const damageEffects = item.header.effects.filter(
-      (e) => e.opcode === EffectTypeEnum.Damage,
-    );
-    const otherEffects = item.header.effects.filter(
-      (e) => e.opcode !== EffectTypeEnum.Damage,
-    );
+    const damageEffects = item.header.effects.filter((e) => e.opcode === EffectTypeEnum.Damage);
+    const otherEffects = item.header.effects.filter((e) => e.opcode !== EffectTypeEnum.Damage);
     desc.push(
-      ...this.getEffectsDescription(damageEffects, item.header.target!),
+      ...this.getEffectsDescription(
+        damageEffects,
+        item.header.target ?? ItemAbilityTargetEnum.None,
+      ),
     );
     if ((damage || damageEffects.length) && item.header.speed !== undefined) {
       desc.push(`Speed Factor: ${item.header.speed}`);
@@ -131,7 +113,7 @@ class DescriptionService {
     desc.push(
       ...this.getEffectsDescription(
         [...item.effects, ...otherEffects],
-        item.header.target!,
+        item.header.target ?? ItemAbilityTargetEnum.None,
       ),
     );
     if (desc.length && item.stringRef) {
@@ -144,24 +126,19 @@ class DescriptionService {
     const desc: string[] = [];
     // desc.push(translationService.from(item.stringRef!), "");
     desc.push(...this.getImmunitiesDescription(item.immunities, true));
-    desc.push(
-      ...this.getEffectsDescription(item.effects, ItemAbilityTargetEnum.Caster),
-    );
+    desc.push(...this.getEffectsDescription(item.effects, ItemAbilityTargetEnum.Caster));
     item.description = translationService.addCustomTranslation(desc);
   }
 
   private generateSpellDescription(spell: Spell, header: SpellHeader) {
     const desc: string[] = this.getEffectsDescription(
       header.effects,
-      header.target!,
+      header.target ?? ItemAbilityTargetEnum.None,
     );
     spell.description = translationService.addCustomTranslation(desc);
   }
 
-  private getEffectsDescription(
-    effects: Effect[],
-    target: ItemAbilityTargetEnum,
-  ): string[] {
+  private getEffectsDescription(effects: Effect[], target: ItemAbilityTargetEnum): string[] {
     const results: string[] = [];
     for (const effect of effects) {
       if (effect.opcode === EffectTypeEnum.CastSpell) {
@@ -175,12 +152,11 @@ class DescriptionService {
 
   private getItemSpellDescription(effect: Effect): string[] {
     const spell = State.spells.find((s) => s.file === effect.resource);
-    const name = spell ? translationService.from(spell.name) : effect.resource;
+    const name = spell ? translationService.from(spell.name) : (effect.resource ?? "");
     const saveText = this.getSaveText(effect);
     const probability = this.getProbability(effect);
     const condition = saveText || probability;
-    const description =
-      spell?.description && !spell.doc ? spell.description : "";
+    const description = spell?.description && !spell.doc ? spell.description : "";
     const text = `Cast spell ${name}${condition}${description ? ":" : ""}`;
     const results: string[] = ["", text];
     if (description) {
@@ -189,10 +165,7 @@ class DescriptionService {
     return results;
   }
 
-  private getEffectDescription(
-    effect: Effect,
-    target: ItemAbilityTargetEnum,
-  ): string[] {
+  private getEffectDescription(effect: Effect, target: ItemAbilityTargetEnum): string[] {
     const results: string[] = [];
     if (effect.opcode === EffectTypeEnum.Damage) {
       results.push(...this.getDamage(effect));
@@ -202,10 +175,7 @@ class DescriptionService {
       results.push(...this.getDisease(effect));
     } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
       results.push(...this.getArmorClassBonus(effect));
-    } else if (
-      effect.opcode === EffectTypeEnum.Paralyze ||
-      effect.opcode === EffectTypeEnum.Hold
-    ) {
+    } else if (effect.opcode === EffectTypeEnum.Paralyze || effect.opcode === EffectTypeEnum.Hold) {
       results.push(...this.getParalyze(effect, target));
     } else if (effect.opcode === EffectTypeEnum.InvisibilityDetection) {
       results.push("Can see invisible creatures.");
@@ -224,7 +194,7 @@ class DescriptionService {
     } else if (effect.opcode === EffectTypeEnum.Haste) {
       results.push(...this.getHaste(effect, target));
     } else if (effect.opcode === EffectTypeEnum.Teleport) {
-      results.push(...this.getTeleport(effect));
+      results.push(...this.getTeleport());
     } else if (
       effect.opcode === EffectTypeEnum.CharmCreature ||
       effect.opcode === EffectTypeEnum.CharmControlCreature
@@ -251,17 +221,12 @@ class DescriptionService {
     } else if (effect.opcode === EffectTypeEnum.CastingTimeModifier) {
       results.push(...this.getCastingTimeModifier(effect));
     } else if (this.getStatisticText(effect)) {
-      results.push(
-        ...this.getStatisticModifier(effect as StatisticModifierEffect),
-      );
+      results.push(...this.getStatisticModifier(effect as StatisticModifierEffect));
     }
     return results;
   }
 
-  getSaveText(effect: {
-    saveTypes?: SaveTypeEnum[];
-    saveBonus?: number;
-  }): string {
+  getSaveText(effect: { saveTypes?: SaveTypeEnum[]; saveBonus?: number }): string {
     let save = "";
     const type = effect.saveTypes?.[0];
     if (type === SaveTypeEnum.ParalyzePoisonDeath) save = "poison/death";
@@ -269,9 +234,7 @@ class DescriptionService {
     else if (type === SaveTypeEnum.PetrifyPolymorph) save = "petrify/polymorph";
     else if (type === SaveTypeEnum.RodStaffWand) save = "wand";
     else if (type === SaveTypeEnum.Spell) save = "spell";
-    const bonus = effect.saveBonus
-      ? ` at ${this.getSignedNumber(effect.saveBonus)}`
-      : "";
+    const bonus = effect.saveBonus ? ` at ${this.getSignedNumber(effect.saveBonus)}` : "";
     const saveText = save ? ` (saves vs ${save}${bonus})` : "";
     return saveText;
   }
@@ -280,13 +243,11 @@ class DescriptionService {
     if (effect.probability2) {
       if (!effect.probability1 || effect.probability2 <= effect.probability1)
         throw new Error(
-          `probability2 (${effect.probability2}) must be greater than probability1 (${effect.probability1})`,
+          `probability2 (${effect.probability2}) must be greater than probability1 (${effect.probability1 ?? "unset"})`,
         );
       return ` (${effect.probability2 - effect.probability1}%)`;
     }
-    return effect.probability1 && effect.probability1 < 100
-      ? ` (${effect.probability1}%)`
-      : "";
+    return effect.probability1 && effect.probability1 < 100 ? ` (${effect.probability1}%)` : "";
   }
 
   getTarget(target: ItemAbilityTargetEnum): string {
@@ -330,58 +291,43 @@ class DescriptionService {
       return [`${effect.value} base AC`];
     const results: string[] = [];
     let suffix = "";
-    if (effect.bonusTo === EffectBonusToEnum.CrushingWeapons)
-      suffix = "crushing";
-    else if (effect.bonusTo === EffectBonusToEnum.SlashingWeapons)
-      suffix = "slashing";
-    else if (effect.bonusTo === EffectBonusToEnum.PiercingWeapons)
-      suffix = "piercing";
-    else if (effect.bonusTo === EffectBonusToEnum.MissileWeapons)
-      suffix = "missile";
+    if (effect.bonusTo === EffectBonusToEnum.CrushingWeapons) suffix = "crushing";
+    else if (effect.bonusTo === EffectBonusToEnum.SlashingWeapons) suffix = "slashing";
+    else if (effect.bonusTo === EffectBonusToEnum.PiercingWeapons) suffix = "piercing";
+    else if (effect.bonusTo === EffectBonusToEnum.MissileWeapons) suffix = "missile";
     if (suffix) suffix = ` vs. ${suffix} attacks`;
-    const duration = effect.duration
-      ? ` for ${this.getDuration(effect.duration)}`
-      : "";
+    const duration = effect.duration ? ` for ${this.getDuration(effect.duration)}` : "";
     results.push(
-      `${this.getSignedNumber(
-        effect.value,
-      )} AC${suffix}${duration}${this.getSaveText(effect)}`,
+      `${this.getSignedNumber(effect.value)} AC${suffix}${duration}${this.getSaveText(effect)}`,
     );
     return results;
   }
 
   private getInvisibility(effect: InvisibilityEffect): string[] {
     const results: string[] = [];
-    if (effect.type === InvisibilityTypeEnum.Improved)
-      results.push("Improved invisibility");
+    if (effect.type === InvisibilityTypeEnum.Improved) results.push("Improved invisibility");
     else results.push(`Invisibility`);
     return results;
   }
 
   private getRegeneration(effect: RegenerationEffect): string[] {
     if (
-      [
-        RegenerationTypeEnum.AmountHPperSecond,
-        RegenerationTypeEnum.AmountHPperSecondBis,
-      ].includes(effect.type)
+      [RegenerationTypeEnum.AmountHPperSecond, RegenerationTypeEnum.AmountHPperSecondBis].includes(
+        effect.type,
+      )
     )
       return [`Regeneration: ${effect.amount} hp/second`];
     else if (effect.type === RegenerationTypeEnum.AmountHPpercentagePerSecond)
       return [`Regeneration: ${effect.amount}% hp/second`];
     else if (effect.amount === 6) return [`Regeneration: 1 hp/round`];
     const rounds = effect.amount / 6;
-    if (rounds > 1 && effect.amount % 6 === 0)
-      return [`Regeneration: 1 hp/${rounds} rounds`];
+    if (rounds > 1 && effect.amount % 6 === 0) return [`Regeneration: 1 hp/${rounds} rounds`];
     return [`Regeneration: 1 hp/${effect.amount} seconds`];
   }
 
-  private getParalyze(
-    effect: IdsEffect,
-    target: ItemAbilityTargetEnum,
-  ): string[] {
+  private getParalyze(effect: IdsEffect, target: ItemAbilityTargetEnum): string[] {
     const results: string[] = [];
-    const isUnrestricted =
-      effect.idsFile === EffectIDSFileEnum.EA && effect.idsEntry === "ANYONE";
+    const isUnrestricted = effect.idsFile === EffectIDSFileEnum.EA && effect.idsEntry === "ANYONE";
     const restriction =
       effect.idsEntry && !isUnrestricted
         ? ` (only affects ${this.toPascalCase(effect.idsEntry)})`
@@ -402,10 +348,7 @@ class DescriptionService {
       .join(" ");
   }
 
-  private getCharm(
-    effect: CharmCreatureEffect,
-    target: ItemAbilityTargetEnum,
-  ): string[] {
+  private getCharm(effect: CharmCreatureEffect, target: ItemAbilityTargetEnum): string[] {
     const results: string[] = [];
     let type = "";
     switch (effect.charmType) {
@@ -435,9 +378,7 @@ class DescriptionService {
 
   private getLevelDrain(effect: LevelDrainEffect): string[] {
     const results: string[] = [];
-    results.push(
-      `Drain ${effect.amount} level from target${this.getSaveText(effect)}.`,
-    );
+    results.push(`Drain ${effect.amount} level from target${this.getSaveText(effect)}.`);
     return results;
   }
 
@@ -449,7 +390,7 @@ class DescriptionService {
 
   private getStatisticModifier(effect: StatisticModifierEffect): string[] {
     const results: string[] = [];
-    results.push(this.getStatisticText(effect)!);
+    results.push(this.getStatisticText(effect) ?? "");
     return results;
   }
 
@@ -464,9 +405,7 @@ class DescriptionService {
     const results: string[] = [];
     const wake = effect.wakeOnDamage ? " (wake on damage)" : "";
     results.push(
-      `Sleep for ${this.getDuration(effect.duration)}${wake}${this.getSaveText(
-        effect,
-      )}`,
+      `Sleep for ${this.getDuration(effect.duration)}${wake}${this.getSaveText(effect)}`,
     );
     return results;
   }
@@ -487,21 +426,32 @@ class DescriptionService {
     ];
   }
 
-  private getTeleport(effect: TeleportEffect): string[] {
+  private getTeleport(): string[] {
     return [`Teleport to target`];
   }
 
+  // opcode is typed as the full EffectTypeEnum (not ModifierTypeEffect's own narrower opcode
+  // union) so the missing-label default branch stays real: the real dispatcher only ever calls
+  // getModifierType() for opcodes already known to be one of the 4 handled here, but this keeps
+  // the function itself defensive against being called directly with anything else.
+  private getModifierTypeLabel(opcode: EffectTypeEnum): string {
+    switch (opcode) {
+      case EffectTypeEnum.AttackDamageBonus:
+        return "Damage";
+      case EffectTypeEnum.MovementRateBonus:
+      case EffectTypeEnum.MovementRateBonus2:
+        return "Movement rate";
+      case EffectTypeEnum.Thac0Bonus:
+        return "Thac0";
+      case EffectTypeEnum.OffhandThac0Bonus:
+        return "Offhand Thac0";
+      default:
+        return "";
+    }
+  }
+
   private getModifierType(effect: ModifierTypeEffect): string[] {
-    let type = "";
-    if (effect.opcode === EffectTypeEnum.AttackDamageBonus) type = "Damage";
-    else if (
-      effect.opcode === EffectTypeEnum.MovementRateBonus ||
-      effect.opcode === EffectTypeEnum.MovementRateBonus2
-    )
-      type = "Movement rate";
-    else if (effect.opcode === EffectTypeEnum.Thac0Bonus) type = "Thac0";
-    else if (effect.opcode === EffectTypeEnum.OffhandThac0Bonus)
-      type = "Offhand Thac0";
+    const type = this.getModifierTypeLabel(effect.opcode);
     if (!type) return [];
     const value = [
       EffectModifierTypeEnum.MultiplyPercent,
@@ -510,10 +460,7 @@ class DescriptionService {
       ? `${effect.value}%`
       : this.getSignedNumber(effect.value);
     return [
-      `${type}:${value}${this.getDuration(
-        effect.duration,
-        " for ",
-      )}${this.getSaveText(effect)}`,
+      `${type}:${value}${this.getDuration(effect.duration, " for ")}${this.getSaveText(effect)}`,
     ];
   }
 
@@ -531,15 +478,13 @@ class DescriptionService {
   }
 
   private getPoison(effect: PoisonEffect): string[] {
-    let text = "one damage per second";
-    if (effect.type === PoisonTypeEnum.AmountDamagePerSecond)
-      text = `${effect.amount} per second`;
-    else text = `one damage per ${this.getDuration(effect.amount)}`;
+    const text =
+      effect.type === PoisonTypeEnum.AmountDamagePerSecond
+        ? `${effect.amount} per second`
+        : `one damage per ${this.getDuration(effect.amount)}`;
     const results: string[] = [];
     const level =
-      effect.diceSize && effect.diceThrown
-        ? `Level ${effect.diceSize}-${effect.diceThrown}: `
-        : "";
+      effect.diceSize && effect.diceThrown ? `Level ${effect.diceSize}-${effect.diceThrown}: ` : "";
     results.push(
       `${level}Poison: deals ${text} for ${this.getDuration(
         effect.duration,
@@ -596,22 +541,14 @@ class DescriptionService {
     }
     const results: string[] = [];
     results.push(
-      `Disease: ${text} for ${this.getDuration(
-        effect.duration,
-      )}${this.getSaveText(effect)}.`,
+      `Disease: ${text} for ${this.getDuration(effect.duration)}${this.getSaveText(effect)}.`,
     );
     return results;
   }
 
-  private getDiceValue(payload: {
-    diceThrown?: number;
-    diceSize?: number;
-    value?: number;
-  }) {
+  private getDiceValue(payload: { diceThrown?: number; diceSize?: number; value?: number }) {
     const dice =
-      payload.diceThrown && payload.diceSize
-        ? `${payload.diceThrown}D${payload.diceSize}`
-        : "";
+      payload.diceThrown && payload.diceSize ? `${payload.diceThrown}D${payload.diceSize}` : "";
     const value = payload.value ? this.getSignedNumber(payload.value) : "";
     return dice ? `${dice}${value}` : value.replace(/^\+/, "");
   }
@@ -702,9 +639,7 @@ class DescriptionService {
     const opcode = opcodes.find((o) => o.opcode === effect.opcode);
     if (!opcode) return;
     const eff = effect as StatisticModifierEffect;
-    const duration = effect.duration
-      ? ` for ${this.getDuration(effect.duration)}`
-      : "";
+    const duration = effect.duration ? ` for ${this.getDuration(effect.duration)}` : "";
     const value = EffectTypeEnum[opcode.opcode].includes("Resistance")
       ? `${eff.value}%`
       : this.getSignedNumber(eff.value);

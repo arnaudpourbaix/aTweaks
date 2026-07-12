@@ -19,7 +19,9 @@ class DocumentationService {
     try {
       content = fs.readFileSync("lib/templates/index.html").toString();
     } catch (e) {
-      throw new Error(`Failed to read template lib/templates/index.html: ${e}`);
+      throw new Error(`Failed to read template lib/templates/index.html`, {
+        cause: e,
+      });
     }
     const template = { text: content };
     this.replace(template, "monsters", this.monsters.join(""));
@@ -28,7 +30,9 @@ class DocumentationService {
     try {
       utils.writeFile("docs/monsters.html", template.text);
     } catch (e) {
-      throw new Error(`Failed to write documentation to docs/monsters.html: ${e}`);
+      throw new Error(`Failed to write documentation to docs/monsters.html`, {
+        cause: e,
+      });
     }
   }
 
@@ -36,9 +40,7 @@ class DocumentationService {
     const links = family.creatures
       .map(
         (creature) =>
-          `<li><a href="#m${creature.id}">${translationService.from(
-            creature.name,
-          )}</a></li>`,
+          `<li><a href="#m${creature.id}">${translationService.from(creature.name)}</a></li>`,
       )
       .join("");
     return `<li class="family"><details><summary>${
@@ -54,20 +56,19 @@ class DocumentationService {
   }
 
   addCreature(creature: Creature) {
-    console.log(
-      `Generating documentation for ${translationService.from(creature.name)}`,
-    );
+    console.log(`Generating documentation for ${translationService.from(creature.name)}`);
     let content: string;
     try {
       content = fs.readFileSync("lib/templates/monster.html").toString();
     } catch (e) {
-      throw new Error(`Failed to read template lib/templates/monster.html: ${e}`);
+      throw new Error(`Failed to read template lib/templates/monster.html`, {
+        cause: e,
+      });
     }
     const template = { text: content };
     let str = `${creature.data.strength}`;
     this.replace(template, "id", `m${creature.id}`);
-    if (creature.data.exceptionalStrength)
-      str += `/${creature.data.exceptionalStrength}`;
+    if (creature.data.exceptionalStrength) str += `/${creature.data.exceptionalStrength}`;
     this.replace(template, "name", translationService.from(creature.name));
     this.replace(template, "str", str);
     this.replace(template, "dex", creature.data.dexterity);
@@ -81,14 +82,10 @@ class DocumentationService {
     this.replace(
       template,
       "hitDice",
-      `${creature.data.level1.pnpValue} (${creature.data.hp} hp)`,
+      `${creature.data.level1.pnpValue} (${creature.data.hp ?? 0} hp)`,
     );
     this.replace(template, "thac0", creature.data.thac0);
-    this.replace(
-      template,
-      "apr",
-      creature.data.apr * (creature.data.doubleApr ? 2 : 1),
-    );
+    this.replace(template, "apr", creature.data.apr * (creature.data.doubleApr ? 2 : 1));
     this.replace(template, "size", creature.data.size);
     this.addSpecial(template, creature);
     this.replace(template, "morale", creature.data.morale);
@@ -119,8 +116,8 @@ class DocumentationService {
         const weapon = State.items.find((i) => i.file === equippedItem.file);
         if (weapon?.doc) {
           attacks += attacks ? "<hr/>" : "";
-          attacks += `<div class="weapon">${translationService.from(
-            weapon.description!,
+          attacks += `<div class="weapon">${translationService.fromOptional(
+            weapon.description,
           )}</div>`;
         }
       }
@@ -139,25 +136,21 @@ class DocumentationService {
     const traits: string[] = [];
     for (const immunity of immunities.filter((i) => i.type === "trait")) {
       traits.push(
-        `<a href="#${immunity.name}">${translationService.from(
-          immunity.stringRef!,
-        )}</a>`,
+        `<a href="#${immunity.name}">${translationService.fromOptional(immunity.stringRef)}</a>`,
       );
     }
     if (traits.length) result += `<h5>${traits.join(", ")}</h5>`;
     for (const equippedItem of creature.data.items.equipped) {
       const item = State.items.find((i) => i.file === equippedItem.file);
       if (item?.trait) {
-        const desc = translationService.from(item.description!);
+        const desc = translationService.fromOptional(item.description);
         result += `<div>${desc}</div>`;
       }
     }
     for (const immunity of immunities.filter((i) => i.type !== "trait")) {
-      let text = translationService.from(immunity.stringRef!);
+      let text = translationService.fromOptional(immunity.stringRef);
       if (immunity.description) {
-        text = `<h5>${text}</h5><p>${translationService.from(
-          immunity.description,
-        )}</p>`;
+        text = `<h5>${text}</h5><p>${translationService.from(immunity.description)}</p>`;
       }
       result += text;
     }
@@ -183,9 +176,7 @@ class DocumentationService {
   }
 
   getCreatureSpell(creature: Creature, ability: CreatureAbility) {
-    const memorized = creature.data.spells.memorized.find(
-      (m) => m.file === ability.resource,
-    );
+    const memorized = creature.data.spells.memorized.find((m) => m.file === ability.resource);
     const spell = State.spells.find((s) => s.file === ability.resource);
     let result = "";
     const infiniteUse = ability.infiniteUse ? 1 : undefined;
@@ -195,14 +186,10 @@ class DocumentationService {
         spell.name,
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
       const desc =
-        spell.doc !== "name"
-          ? `<p>${translationService.from(spell.description!)}</p>`
-          : "";
+        spell.doc !== "name" ? `<p>${translationService.fromOptional(spell.description)}</p>` : "";
       result = `${title}${desc}`;
     } else if (memorized) {
-      const rounds = ability.timer
-        ? Math.round(ability.timer.value / 6)
-        : undefined;
+      const rounds = ability.timer ? Math.round(ability.timer.value / 6) : undefined;
       result = `<h5>${translationService.from(
         ability.name,
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
@@ -212,12 +199,10 @@ class DocumentationService {
 
   getTraits() {
     let result = "";
-    for (const immunity of State.immunities.sort((a, b) =>
-      a.name > b.name ? 1 : -1,
-    )) {
+    for (const immunity of State.immunities.sort((a, b) => (a.name > b.name ? 1 : -1))) {
       if (immunity.type === "trait" && immunity.doc) {
-        result += `<h5><a id="${immunity.name}">${translationService.from(
-          immunity.stringRef!,
+        result += `<h5><a id="${immunity.name}">${translationService.fromOptional(
+          immunity.stringRef,
         )}</a></h5>`;
         if (immunity.description)
           result += `<p>${translationService.from(immunity.description)}</p>`;
@@ -233,18 +218,10 @@ class DocumentationService {
     return `every ${renew} rounds`;
   }
 
-  private replace(
-    template: { text: string },
-    key: string,
-    value: string | number | undefined,
-  ) {
+  private replace(template: { text: string }, key: string, value: string | number | undefined) {
     key = `{{${key}}}`;
-    if (!template.text.includes(key))
-      throw new Error(`Token ${key} not found !`);
-    template.text = template.text.replace(
-      new RegExp(key, "g"),
-      `${value ?? ""}`,
-    );
+    if (!template.text.includes(key)) throw new Error(`Token ${key} not found !`);
+    template.text = template.text.replace(new RegExp(key, "g"), `${value ?? ""}`);
   }
 }
 

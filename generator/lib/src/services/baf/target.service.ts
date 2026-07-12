@@ -1,9 +1,5 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import {
-  DEFAULT_STATUS_ORDER,
-  TARGET_LISTS,
-  TARGET_STATUS,
-} from "../../../config/target-config";
+import { DEFAULT_STATUS_ORDER, TARGET_LISTS, TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
 import triggerFactory from "../../factories/trigger.factory";
 import { PartialCreatureAttack } from "../../model/creature/attack";
@@ -17,15 +13,18 @@ import { GeneralIdentifier } from "../../model/ids/general";
 import { ObjectIdentifier } from "../../model/ids/object";
 import { RaceIdentifier } from "../../model/ids/race";
 import { SpecificIdentifier } from "../../model/ids/specific";
-import {
-  TargetList,
-  TargetPriority,
-  TargetStatus,
-} from "../../model/script/target";
+import { TargetList, TargetPriority, TargetStatus } from "../../model/script/target";
 import { Triggers } from "../../model/script/triggers";
 import utils from "../utils/utils.service";
 
 class TargetService {
+  // TARGET_STATUS has one entry per TargetStatusName member, so this is always found.
+  private getStatusDetails(status: TargetStatusName): TargetStatus {
+    const details = TARGET_STATUS.find((s) => s.status === status);
+    if (!details) throw new Error(`Target status ${status} is not defined !`);
+    return details;
+  }
+
   targetObject(p: {
     ea?: AllegianceIdentifier;
     general?: GeneralIdentifier;
@@ -80,36 +79,27 @@ class TargetService {
     const targetTriggers: Triggers.Trigger[] = target.triggers ?? [];
     const triggers: Triggers.Trigger[] = [];
     for (const name of target.includeStatus ?? []) {
-      const status = TARGET_STATUS.find(
-        (s) => s.status === name,
-      )!;
+      const status = this.getStatusDetails(name);
       triggers.push(...status.triggers);
       targetTriggers.push(...status.targetTriggers);
     }
     for (const name of target.excludeStatus ?? []) {
-      const status = TARGET_STATUS.find(
-        (s) => s.status === name,
-      )!;
+      const status = this.getStatusDetails(name);
       triggers.push(...status.triggers);
-      targetTriggers.push(
-        ...triggerFactory.inverseNegations(status.targetTriggers),
-      );
+      targetTriggers.push(...triggerFactory.inverseNegations(status.targetTriggers));
     }
     return { triggers, targetTriggers };
   }
 
-  getTargetPriorities(
-    creature: Creature,
-    attack: PartialCreatureAttack,
-  ): TargetPriority[] {
+  getTargetPriorities(creature: Creature, attack: PartialCreatureAttack): TargetPriority[] {
     const defaults = this.getDefaultStatus(creature);
     const targetPriorities = attack.targetPriorities ?? [];
     const results: TargetPriority[] = [];
     for (const t of targetPriorities) {
-      if (!t.status && !t.targets)
-        throw new Error(`Empty targetPriority is not allowed !`);
+      if (!t.status && !t.targets) throw new Error(`Empty targetPriority is not allowed !`);
       else if (!t.targets) {
-        results.push(...this.getTargetPrioritiesFromStatusList(t.status!));
+        if (!t.status) throw new Error(`Empty targetPriority is not allowed !`);
+        results.push(...this.getTargetPrioritiesFromStatusList(t.status));
       } else if (!t.status) {
         results.push({
           targets: t.targets,
@@ -153,10 +143,7 @@ class TargetService {
     priorities: TargetPriority[],
   ): TargetStatusName[] {
     const results = list.filter(
-      (s) =>
-        !priorities.some(
-          (p) => p.targets.includes(target) && p.status.includes(s),
-        ),
+      (s) => !priorities.some((p) => p.targets.includes(target) && p.status.includes(s)),
     );
     return results;
   }
@@ -170,10 +157,7 @@ class TargetService {
     return { targets: list.value, allegianceCheck: list.allegianceCheck };
   }
 
-  combineListWithTriggers(
-    list: TargetList[],
-    triggers: Triggers.Trigger[],
-  ): TargetList[] {
+  combineListWithTriggers(list: TargetList[], triggers: Triggers.Trigger[]): TargetList[] {
     return list.map((l) => ({
       ...l,
       triggers: [...(l.triggers ?? []), ...triggers],
@@ -186,14 +170,10 @@ class TargetService {
     playerStatus: TargetStatusName[];
   } {
     const allStatus = DEFAULT_STATUS_ORDER.filter((status) => {
-      const statusDetails = TARGET_STATUS.find(
-        (t) => t.status === status,
-      )!;
+      const statusDetails = this.getStatusDetails(status);
       const validStatus =
         status !== "Grabbed" ||
-        creature.spells.some(
-          (s) => s.name === GRAB_DEFAULT_CONFIG.grabStringRef,
-        );
+        creature.spells.some((s) => s.name === GRAB_DEFAULT_CONFIG.grabStringRef);
       const intelligence =
         !statusDetails.requireIntelligence ||
         (!!creature.data.intelligence && creature.data.intelligence >= 8);
@@ -204,9 +184,7 @@ class TargetService {
     return { targetStatus, playerStatus, allStatus };
   }
 
-  private getTargetPrioritiesFromStatusList(
-    status: TargetStatusName[],
-  ): TargetPriority[] {
+  private getTargetPrioritiesFromStatusList(status: TargetStatusName[]): TargetPriority[] {
     const results: TargetPriority[] = [];
     const targetStatus = this.getFilteredStatusNameList(status, false);
     const playerStatus = this.getFilteredStatusNameList(status, true);
@@ -227,9 +205,7 @@ class TargetService {
     canOnlyTargetPlayer: boolean,
   ): TargetStatusName[] {
     return list.filter((status) => {
-      const statusDetails = TARGET_STATUS.find(
-        (t) => t.status === status,
-      )!;
+      const statusDetails = this.getStatusDetails(status);
       return statusDetails.canOnlyTargetPlayer === canOnlyTargetPlayer;
     });
   }

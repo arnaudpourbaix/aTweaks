@@ -2,7 +2,6 @@ import * as fs from "fs";
 import path from "path";
 import { SpellGroupName } from "../../../config/spell-group-name";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
-import { TranslationKey } from "../../../translations/i18n";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { StringReference } from "../../model/final/stringref";
 import { Actions } from "../../model/script/actions";
@@ -21,17 +20,11 @@ class UtilsService {
     return Object.keys(obj) as (keyof T)[];
   };
 
-  getKeyByValue(
-    object: Record<string, unknown>,
-    value: unknown,
-  ): string | undefined {
+  getKeyByValue(object: Record<string, unknown>, value: unknown): string | undefined {
     return Object.keys(object).find((key) => object[key] === value);
   }
 
-  replaceParamTokens(
-    params: (string | number)[],
-    tokens: { key: string; value: string }[],
-  ): void {
+  replaceParamTokens(params: (string | number)[], tokens: { key: string; value: string }[]): void {
     for (let i = 0; i < params.length; i++) {
       if (typeof params[i] === "string") {
         for (const token of tokens)
@@ -102,37 +95,32 @@ class UtilsService {
   }
 
   getImmunityFunctionName(immunity: ImmunityConfig | ImmunityName) {
-    immunity =
-      typeof immunity === "string"
-        ? (State.immunities.find((i) => i.name === immunity)!)
-        : immunity;
+    if (typeof immunity === "string") {
+      const found = State.immunities.find((i) => i.name === immunity);
+      if (!found) throw new Error(`Immunity ${immunity} not found !`);
+      immunity = found;
+    }
     return `${immunity.name}_${immunity.type}`;
   }
 
   getSpellFunctionName(spell: Spell) {
-    if (typeof spell.name === "number")
-      throw new Error("can't handle a number in name!");
+    if (typeof spell.name === "number") throw new Error("can't handle a number in name!");
     const names = spell.name.split(".");
     let name = names.pop();
     if (name === "name") name = names.pop();
-    return `create_spell_${name}`;
+    return `create_spell_${name ?? ""}`;
   }
 
   getSpellResourceFunctionName(group: SpellGroupName | SpellGroup) {
     return `get_${typeof group === "string" ? group : group.name}_resources`;
   }
 
-  hasImmunity(
-    immunities: (ImmunityName | string)[],
-    name: ImmunityName | string,
-  ): boolean {
+  hasImmunity(immunities: string[], name: string): boolean {
     let found = false;
     for (let i = 0; i < immunities.length && !found; i++) {
       if (immunities[i] === name) found = true;
       else {
-        const immunity = State.immunities.find(
-          (im) => im.name === immunities[i],
-        );
+        const immunity = State.immunities.find((im) => im.name === immunities[i]);
         if (!immunity) throw new Error(`Immunity ${immunities[i]} not found !`);
         found = this.hasImmunity(immunity.immunities, name);
       }
@@ -142,11 +130,11 @@ class UtilsService {
 
   hasCriticalHitImmunity(immunity: ImmunityConfig): boolean {
     let result =
-      immunity.name === "criticalHit" ||
-      immunity.immunities.some((i) => i === "criticalHit");
+      immunity.name === "criticalHit" || immunity.immunities.some((i) => i === "criticalHit");
     if (result) return true;
     for (const t of immunity.immunities) {
-      const tr = State.immunities.find((i) => i.name === t)!;
+      const tr = State.immunities.find((i) => i.name === t);
+      if (!tr) throw new Error(`Immunity ${t} not found !`);
       result = result || this.hasCriticalHitImmunity(tr);
     }
     return result;
@@ -231,6 +219,9 @@ class UtilsService {
     // console.log(
     //   `getSpellInfos: ${file} => type: ${type}, level: ${spell.spellLevel}`
     // );
+    // level is required by the type but a test deliberately violates that (see
+    // utils.service.test.ts) to prove this fallback still works if it's ever unset at runtime.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return { type: type ?? "innate", level: spell.level ?? 1 };
   }
 
@@ -246,21 +237,17 @@ class UtilsService {
     return null;
   }
 
-  getSpellInfosByFilename(
-    filename: string,
-  ): { type: MemorizedSpellType; level: number } | null {
+  getSpellInfosByFilename(filename: string): { type: MemorizedSpellType; level: number } | null {
     const name = filename.toUpperCase();
     let result: { type: MemorizedSpellType; level: number } | null = null;
     const spell = this.getExternalSpell(filename);
     if (spell)
       result = {
-        type: this.getMemorizedSpellType(spell.type)!,
+        type: this.getMemorizedSpellType(spell.type) ?? "innate",
         level: spell.level,
       };
-    else if (name.startsWith("SPWI"))
-      result = { type: "wizard", level: +(name.at(4)!) };
-    else if (name.startsWith("SPPR"))
-      result = { type: "priest", level: +(name.at(4)!) };
+    else if (name.startsWith("SPWI")) result = { type: "wizard", level: Number(name.at(4) ?? 1) };
+    else if (name.startsWith("SPPR")) result = { type: "priest", level: Number(name.at(4) ?? 1) };
     else if (name.startsWith("SPIN") || name.startsWith("SPCL"))
       result = { type: "innate", level: 1 };
     return result;
