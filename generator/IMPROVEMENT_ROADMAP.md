@@ -1021,6 +1021,17 @@ left as documented rather than "fixed" since there's no requirement to
 decide what the correct default behavior should be. No bug found otherwise.
 Now 100% branches (up from 95.07%).
 
+### ✅ `target.service.ts` — audited, no bug found
+
+Added a test to `target.service.test.ts` covering
+`getTargetPrioritiesFromStatusList()`'s `if (targetStatus.length)` guard: a
+status-only `targetPriority` entry whose statuses are all player-only (e.g.
+`["Sleep"]`, the only `canOnlyTargetPlayer: true` entry in
+`TARGET_STATUS`) resolves to an empty enemy-targetable list, so no
+`NearestEnemies` priority should be pushed for it (the leftover-status
+default fill-in still adds its own, unrelated one). No bug found. Now 100%
+branches (up from 98.36%).
+
 ---
 
 ## Process

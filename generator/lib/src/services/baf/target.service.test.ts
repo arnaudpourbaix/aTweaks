@@ -276,6 +276,16 @@ describe("getTargetPriorities", () => {
     });
   });
 
+  it("omits a NearestEnemies priority for a status-only entry that resolves to no enemy-targetable statuses (e.g. Sleep is player-only)", () => {
+    const result = targetService.getTargetPriorities(fakeCreature(8), {
+      targetPriorities: [{ status: ["Sleep"] }],
+    });
+    expect(result[0]).toEqual({ targets: ["Players"], status: ["Sleep"] });
+    // Only one NearestEnemies entry: the leftover-status default fill-in,
+    // not a second one from this Sleep-only targetPriority entry.
+    expect(result.filter((r) => r.targets[0] === "NearestEnemies")).toHaveLength(1);
+  });
+
   it("does not add default leftover priorities once an explicit entry already covers every status", () => {
     const result = targetService.getTargetPriorities(fakeCreature(8), {
       targetPriorities: [
