@@ -929,6 +929,17 @@ Round` value). All pass — no bug found. Now 100% branches (up from 90.47%).
 
 ---
 
+### ✅ `weidu-function.service.ts` — audited, no bug found
+
+Added 2 tests to the existing `weidu-function.service.test.ts` —
+`generateProtectionSpells()`'s `sp.value ?? -1` fallback (documented in the
+config file's own comment: "If value is not set, it will generate -1"; no
+real `SPELL_PROTECTIONS` entry omits it, so temporarily pushed/popped a fake
+one) and `generateSpellResource()`'s `group.spells ?? []` default. No bug
+found. Now 100% branches/statements (up from 96.15%).
+
+---
+
 ## Process
 
 Same as `BUGFIX_ROADMAP.md`: for each item, add/extend tests to lock in current

@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { PortraitIconEnum } from "../../model/spell-item/effect.enums";
+import { SpellProtectionRelation } from "../../model/spell-item/spell-protection";
 import weiduFunctionService from "./weidu-function.service";
 
 function fakeImmunity(overrides: Partial<ImmunityConfig> = {}): ImmunityConfig {
@@ -55,5 +57,37 @@ describe("callImmunityFunction", () => {
     const lines: CodeLine[] = [];
     weiduFunctionService.callImmunityFunction(lines, fakeImmunity(), 0);
     expect(lines[0].code).not.toContain("display_icons");
+  });
+});
+
+describe("generateProtectionSpells", () => {
+  it("defaults value to -1 when sp.value is undefined (documented behavior; no real config entry omits it)", () => {
+    (SPELL_PROTECTIONS as any).push({
+      name: "TEST_NO_VALUE",
+      stat: "0x0",
+      value: undefined,
+      relation: SpellProtectionRelation.Equal,
+    });
+    try {
+      const lines: CodeLine[] = [];
+      weiduFunctionService.generateProtectionSpells(lines);
+      expect(lines.some((l) => l.code.includes("value=-1"))).toBe(true);
+    } finally {
+      (SPELL_PROTECTIONS as any).pop();
+    }
+  });
+});
+
+describe("generateSpellResource (private)", () => {
+  it("defaults spells to an empty array when group.spells is unset", () => {
+    const lines: CodeLine[] = [];
+    (weiduFunctionService as any).generateSpellResource(
+      lines,
+      { name: "acidSpells" as any, spells: undefined, idsSpells: undefined },
+      0,
+    );
+    expect(lines.some((l) => l.code.includes("ACTION_DEFINE_ARRAY spells"))).toBe(
+      true,
+    );
   });
 });
