@@ -10,7 +10,7 @@ class TestFamily extends CreatureFamily<Creature> {
 }
 
 function fakeFamily(): TestFamily {
-  return new TestFamily(1 as any);
+  return new TestFamily(1);
 }
 
 describe("creature", () => {
@@ -21,7 +21,7 @@ describe("creature", () => {
 
   it("returns the creature with the matching id", () => {
     const family = fakeFamily();
-    const cre = new Creature(5 as any);
+    const cre = new Creature(5);
     family.creatures.push(cre);
     expect(family.creature(5)).toBe(cre);
   });
@@ -42,7 +42,7 @@ describe("sequencer", () => {
 describe("item (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
-    const cre = new Creature(1 as any);
+    const cre = new Creature(1);
     const item = { id: 7, file: "itm01" } as any;
     cre.items.push(item);
     family.creatures.push(cre);
@@ -58,7 +58,7 @@ describe("item (override, family-wide fallback)", () => {
 describe("spell (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
-    const cre = new Creature(1 as any);
+    const cre = new Creature(1);
     const spell = { id: 7, file: "spl01" } as any;
     cre.spells.push(spell);
     family.creatures.push(cre);
@@ -74,7 +74,7 @@ describe("spell (override, family-wide fallback)", () => {
 describe("projectile (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
-    const cre = new Creature(1 as any);
+    const cre = new Creature(1);
     const proj = { id: 7, file: "pro01" } as any;
     cre.projectiles.push(proj);
     family.creatures.push(cre);
@@ -83,8 +83,8 @@ describe("projectile (override, family-wide fallback)", () => {
 
   it("keeps checking later creatures when an earlier one doesn't have it", () => {
     const family = fakeFamily();
-    const first = new Creature(1 as any);
-    const second = new Creature(2 as any);
+    const first = new Creature(1);
+    const second = new Creature(2);
     const proj = { id: 7, file: "pro01" } as any;
     second.projectiles.push(proj);
     family.creatures.push(first, second);

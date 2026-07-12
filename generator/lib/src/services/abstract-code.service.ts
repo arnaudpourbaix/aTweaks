@@ -10,7 +10,7 @@ export class AbstractCodeService {
 
   protected add(lines: CodeLine[], code: string, tab?: number) {
     if (tab === undefined) {
-      tab = lines.length ? (lines.at(-1) as CodeLine).tab : 0;
+      tab = lines.length ? (lines.at(-1)!).tab : 0;
     }
     lines.push({ tab, code });
   }

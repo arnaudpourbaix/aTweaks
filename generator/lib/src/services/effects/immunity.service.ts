@@ -23,19 +23,19 @@ class ImmunityService {
     immunity: ImmunityName,
     adjustments: CreatureAdjustment[]
   ): string[] {
-    const files = adjustments.reduce((acc, a) => {
+    const files = adjustments.reduce<string[]>((acc, a) => {
       const immunities = this.getImmunities(a.data.immunities);
       if (immunities.some((i) => i.overrides.includes(immunity))) {
         acc.push(...a.files);
       }
       return acc;
-    }, [] as string[]);
+    }, []);
     return files;
   }
 
   private getImmunities(names: ImmunityName[]): ImmunityConfig[] {
     return names.map(
-      (n) => State.immunities.find((i) => i.name === n) as ImmunityConfig
+      (n) => State.immunities.find((i) => i.name === n)!
     );
   }
 
@@ -43,7 +43,7 @@ class ImmunityService {
     for (const name of data.immunities) {
       const immunity = State.immunities.find(
         (i) => i.name === name
-      ) as ImmunityConfig;
+      )!;
       if (immunity.itemSlot) {
         this.checkImmunity(immunity.itemSlot, immunity, data, creature);
       }

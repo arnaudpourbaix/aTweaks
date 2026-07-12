@@ -11,7 +11,7 @@ function codes(lines: CodeLine[]): string[] {
 function fakeEffect(p: Partial<Effect> = {}): Effect {
   return {
     opcode: EffectTypeEnum.Damage,
-    target: 1 as any,
+    target: 1,
     ...p,
   } as Effect;
 }
@@ -140,7 +140,7 @@ describe("addEffect", () => {
     weiduEffectService.addEffect({
       lines,
       tab: 0,
-      effect: fakeEffect({ flags: 5 as any }),
+      effect: fakeEffect({ flags: 5 }),
       type: "SPL",
       global: false,
     });
@@ -152,7 +152,7 @@ describe("addEffect", () => {
     weiduEffectService.addEffect({
       lines,
       tab: 0,
-      effect: fakeEffect({ flags: [0, 1] as any }),
+      effect: fakeEffect({ flags: [0, 1] }),
       type: "SPL",
       global: false,
     });

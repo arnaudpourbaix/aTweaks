@@ -20,7 +20,7 @@ class HitPointService {
     const constitutionBonus = this.getConstitutionBonus({ ...p, level });
     const hitPointBonus = this.getHitPointBonus({ ...p, level });
     const specialBonus = this.getSpecialBonus({ ...p, level });
-    let hitDice = this.getHitDiceSize(p.creature);
+    const hitDice = this.getHitDiceSize(p.creature);
     const baseHP = level * hitDice;
     const log = `${figureSet.arrowRight} Level: ${level}, hit points: ${baseHP} (base) ${constitutionBonus.log}${hitPointBonus.log}${specialBonus.log}`;
     const value =

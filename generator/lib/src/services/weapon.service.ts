@@ -49,7 +49,7 @@ class WeaponService {
     weapon.enchantment = item.enchant;
     if (
       item.enchant &&
-      (!weapon.flags || !weapon.flags.includes(ItemFlagEnum.Magical))
+      (!weapon.flags?.includes(ItemFlagEnum.Magical))
     ) {
       weapon.flags = weapon.flags ?? [];
       weapon.flags.push(ItemFlagEnum.Magical);

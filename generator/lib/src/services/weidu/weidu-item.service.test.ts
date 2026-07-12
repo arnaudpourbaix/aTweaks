@@ -23,7 +23,7 @@ function fakeHeader(p: Partial<ItemHeader> = {}): ItemHeader {
     type: ItemAbilityTypeEnum.Melee,
     effects: [],
     ...p,
-  } as ItemHeader;
+  };
 }
 
 function codes(lines: CodeLine[]): string[] {
@@ -79,7 +79,7 @@ describe("createItem", () => {
     ] as unknown as ImmunityConfig[];
     const lines: CodeLine[] = [];
     expect(() =>
-      weiduItemService.createItem(lines, fakeItem({ copyFrom: "poison" })),
+      { weiduItemService.createItem(lines, fakeItem({ copyFrom: "poison" })); },
     ).toThrow(/No file configured for immunity poison/);
   });
 
@@ -116,12 +116,12 @@ describe("createItem", () => {
   it("throws when the header projectile was never resolved to a string", () => {
     const lines: CodeLine[] = [];
     expect(() =>
-      weiduItemService.createItem(
+      { weiduItemService.createItem(
         lines,
         fakeItem({
           header: fakeHeader({ projectile: { file: "p1" } as any }),
         }),
-      ),
+      ); },
     ).toThrow(/Unhandled projectile!/);
   });
 

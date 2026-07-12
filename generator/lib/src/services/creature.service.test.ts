@@ -99,7 +99,7 @@ describe("autogenerateThac0 (private)", () => {
 
   it("does nothing when level1 is unknown but a parent is provided", () => {
     const data: Partial<CreatureData> = {};
-    service.autogenerateThac0(data, {} as CreatureData);
+    service.autogenerateThac0(data, {});
     expect(data.thac0).toBeUndefined();
   });
 

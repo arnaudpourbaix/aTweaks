@@ -98,7 +98,7 @@ describe("generateTrigger", () => {
 
   it("matches the real Allegiance(Myself,EVILCUTOFF) line generated for creatures", () => {
     const [trigger] = utils.replaceTriggerTokens(
-      [triggerFactory.allegiance("EVILCUTOFF" as AllegianceIdentifier)],
+      [triggerFactory.allegiance("EVILCUTOFF")],
       [{ key: ScriptTarget.token, value: ScriptTarget.myself }],
     );
     expect(bafGeneratorService.generateTrigger(trigger, false)).toBe(
@@ -142,8 +142,8 @@ describe("generateTriggers", () => {
     const triggers = [
       triggerFactory.or([
         triggerFactory.attackedBy(
-          "[GOODCUTOFF]" as any,
-          "DEFAULT" as any,
+          "[GOODCUTOFF]",
+          "DEFAULT",
         ),
         triggerFactory.range(10),
       ]),
@@ -171,7 +171,7 @@ describe("generateStatement", () => {
     const triggers = utils.replaceTriggerTokens(
       [
         triggerFactory.global("JA#COMBAT", 0),
-        triggerFactory.allegiance("EVILCUTOFF" as AllegianceIdentifier),
+        triggerFactory.allegiance("EVILCUTOFF"),
       ],
       [{ key: ScriptTarget.token, value: ScriptTarget.myself }],
     );

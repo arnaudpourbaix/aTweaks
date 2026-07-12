@@ -110,13 +110,13 @@ describe("CREATURE_DATA_FIELDS 'effects'", () => {
   });
 
   it("a boolean remove always overwrites the current value", () => {
-    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    const data = baseData({ effects: { remove: [1], list: [] } });
     field("effects").setter!(data, { remove: false });
     expect(data.effects.remove).toBe(false);
   });
 
   it("merges an array remove into an existing array", () => {
-    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    const data = baseData({ effects: { remove: [1], list: [] } });
     field("effects").setter!(data, { remove: [2 as any] });
     expect(data.effects.remove).toEqual([1, 2]);
   });
@@ -128,7 +128,7 @@ describe("CREATURE_DATA_FIELDS 'effects'", () => {
   });
 
   it("leaves remove untouched when not provided", () => {
-    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    const data = baseData({ effects: { remove: [1], list: [] } });
     field("effects").setter!(data, {});
     expect(data.effects.remove).toEqual([1]);
   });

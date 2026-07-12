@@ -103,12 +103,12 @@ describe("removeKit", () => {
   it("throws when removeMemorized is already a boolean", () => {
     const baseCreature = fakeBaseCreature({ removeMemorized: true });
     expect(() =>
-      kitService.removeKit(baseCreature, {
+      { kitService.removeKit(baseCreature, {
         name: "BERSERKER",
         immunities: () => [],
         movement: () => 0,
         abilities: [fakeAbility({ resource: "SPWI999" })],
-      }),
+      }); },
     ).toThrow("removeMemorized already set");
   });
 

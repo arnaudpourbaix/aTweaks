@@ -63,7 +63,7 @@ describe("checkEnchantment", () => {
     const creature = fakeCreature({
       data: { level1: { pnpValue: 0, value: 0, type: "none" } },
     });
-    expect(() => weaponService.checkEnchantment(creature, weapon)).toThrow(
+    expect(() => { weaponService.checkEnchantment(creature, weapon); }).toThrow(
       /enchantment not found in table/,
     );
   });

@@ -4,5 +4,6 @@ TAGS
 node_modules
 generator/log.txt
 generator/coverage
+generator/dist
 
 .worktrees

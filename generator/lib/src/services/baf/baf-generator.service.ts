@@ -185,21 +185,21 @@ class BafGeneratorService {
 
   getObjectType(value: string): string | undefined {
     const tests = [
-      ALLEGIANCE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
-      GENERAL_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
-      RACE_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
-      CLASS_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
-      SPECIFIC_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
-      GENDER_IDENTIFIER.some((v) => value.indexOf(v) !== -1),
-      ALIGN_IDENTIFIERS.some((v) => value.indexOf(v) !== -1),
+      ALLEGIANCE_IDENTIFIERS.some((v) => value.includes(v)),
+      GENERAL_IDENTIFIERS.some((v) => value.includes(v)),
+      RACE_IDENTIFIERS.some((v) => value.includes(v)),
+      CLASS_IDENTIFIERS.some((v) => value.includes(v)),
+      SPECIFIC_IDENTIFIERS.some((v) => value.includes(v)),
+      GENDER_IDENTIFIER.some((v) => value.includes(v)),
+      ALIGN_IDENTIFIERS.some((v) => value.includes(v)),
     ];
     if (!tests.some((t) => t)) return;
     //[EA.GENERAL.RACE.CLASS.SPECIFIC.GENDER.ALIGN]
     const result = tests
-      .reduce((acc, v) => {
+      .reduce<string[]>((acc, v) => {
         if (!acc.some((i) => i !== "0")) acc.push(v ? value : "0");
         return acc;
-      }, [] as string[])
+      }, [])
       .join(".");
     return `[${result}]`;
   }

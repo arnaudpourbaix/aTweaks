@@ -19,7 +19,7 @@ function fakeAdjustment(p: Partial<CreatureAdjustment> = {}): CreatureAdjustment
     scriptName: false,
     data: { effects: { list: [] }, spells: { memorized: [] } } as any,
     ...p,
-  } as CreatureAdjustment;
+  };
 }
 
 function fakeCreature(p: Partial<Creature> = {}): Creature {

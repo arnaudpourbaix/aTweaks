@@ -1132,7 +1132,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           target: ItemAbilityTargetEnum.Caster,
           effects: [
             ...effectFactory.blindness({
-              duration: blindingBeautyEffect.duration as number,
+              duration: blindingBeautyEffect.duration,
               dispelResistance: blindingBeautyEffect.dispelResistance,
               saveType: blindingBeautyEffect.saveTypes[0],
             }),

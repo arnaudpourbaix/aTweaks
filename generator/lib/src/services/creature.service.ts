@@ -150,7 +150,7 @@ class CreatureService {
   }
 
   private transformAttackPerRound(data?: Partial<CreatureData>) {
-    if (!data || !data.apr) return;
+    if (!data?.apr) return;
     const apr = this.getAttacksPerRound(data.apr);
     data.apr = apr.value;
     if (data.movement) {

@@ -17,7 +17,7 @@ import translationService from "./../translation.service";
 import { FNP_SPELLS } from "../../../config/spell-names";
 
 class UtilsService {
-  objectKeys = <T extends Object>(obj: T): (keyof T)[] => {
+  objectKeys = <T extends object>(obj: T): (keyof T)[] => {
     return Object.keys(obj) as (keyof T)[];
   };
 
@@ -79,7 +79,7 @@ class UtilsService {
   resolveStringRef(value: StringReference | undefined): string | undefined {
     if (value === undefined) return;
     else if (typeof value === "string") {
-      const ref = translationService.stringRef(value as TranslationKey);
+      const ref = translationService.stringRef(value);
       return `RESOLVE_STR_REF(@${ref})`; // create a new string ref from language key
     }
     try {
@@ -104,7 +104,7 @@ class UtilsService {
   getImmunityFunctionName(immunity: ImmunityConfig | ImmunityName) {
     immunity =
       typeof immunity === "string"
-        ? (State.immunities.find((i) => i.name === immunity) as ImmunityConfig)
+        ? (State.immunities.find((i) => i.name === immunity)!)
         : immunity;
     return `${immunity.name}_${immunity.type}`;
   }
@@ -146,7 +146,7 @@ class UtilsService {
       immunity.immunities.some((i) => i === "criticalHit");
     if (result) return true;
     for (const t of immunity.immunities) {
-      const tr = State.immunities.find((i) => i.name === t) as ImmunityConfig;
+      const tr = State.immunities.find((i) => i.name === t)!;
       result = result || this.hasCriticalHitImmunity(tr);
     }
     return result;
@@ -168,7 +168,7 @@ class UtilsService {
     }
     let index = file.lastIndexOf("/");
     if (index === -1) index = file.lastIndexOf("\\");
-    let folder = file.substring(0, index);
+    const folder = file.substring(0, index);
     fs.mkdirSync(folder, { recursive: true });
     const normalized = content.replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
     fs.writeFileSync(file, normalized);
@@ -258,9 +258,9 @@ class UtilsService {
         level: spell.level,
       };
     else if (name.startsWith("SPWI"))
-      result = { type: "wizard", level: +(name.at(4) as string) };
+      result = { type: "wizard", level: +(name.at(4)!) };
     else if (name.startsWith("SPPR"))
-      result = { type: "priest", level: +(name.at(4) as string) };
+      result = { type: "priest", level: +(name.at(4)!) };
     else if (name.startsWith("SPIN") || name.startsWith("SPCL"))
       result = { type: "innate", level: 1 };
     return result;

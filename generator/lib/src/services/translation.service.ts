@@ -80,7 +80,7 @@ class TranslationService extends AbstractCodeService {
     this.browseTranslations(translations, "");
   }
 
-  browseTranslations(obj: Object, key: string) {
+  browseTranslations(obj: object, key: string) {
     for (const [k, v] of Object.entries(obj)) {
       const newKey = [key, k].filter((k) => !!k).join(".");
       if (typeof v === "string" && !v.includes("{{")) {

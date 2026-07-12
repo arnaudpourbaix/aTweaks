@@ -195,7 +195,7 @@ describe("hasImmunity", () => {
   });
 
   it("throws when a referenced immunity name isn't registered in State.immunities", () => {
-    State.immunities = [] as any;
+    State.immunities = [];
     try {
       expect(() => utils.hasImmunity(["unknownImmunity"], "poison")).toThrow(
         /Immunity unknownImmunity not found/,

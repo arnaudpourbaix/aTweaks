@@ -166,7 +166,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   }
 
   private removeAllEffects(lines: CodeLine[], tab: number, creature: Creature) {
-    const files = creature.files.reduce((acc, file) => {
+    const files = creature.files.reduce<string[]>((acc, file) => {
       const defaultValue = !!creature.data.effects.remove;
       const adj = creature.adjustments.find(
         (a) =>
@@ -177,7 +177,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       const remove = adj?.data.effects.remove ?? defaultValue;
       if (remove) acc.push(file);
       return acc;
-    }, [] as string[]);
+    }, []);
     this.executeCodeWithIncludedFiles(
       lines,
       tab,
@@ -283,7 +283,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     for (const name of immunities) {
       const immunity = State.immunities.find(
         (i) => i.name === name,
-      ) as ImmunityConfig;
+      )!;
       if (!immunity.itemSlot) {
         const files = immunityService.getOverrides(name, adjustments);
         this.executeCodeWithExcludedFiles(
@@ -304,12 +304,12 @@ class WeiduCreatureService extends AbstractWeiduService {
   }) {
     let isEquip = false;
     for (const item of p.data.items.equipped) {
-      const noWeaponFiles = (p.creature ? p.creature.adjustments : []).reduce(
+      const noWeaponFiles = (p.creature ? p.creature.adjustments : []).reduce<string[]>(
         (acc, a) => {
           if (a.noWeapon) acc.push(...a.files);
           return acc;
         },
-        [] as string[],
+        [],
       );
       const slots = itemService.getItemSlots(item.slot);
       if (!slots.length) {
@@ -328,7 +328,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       if (!flagsArray.length) flagsArray.push("NONE");
       const flags = `~${flagsArray.join("&")}~`;
       const quantity = `#${item.quantity ?? 0}`;
-      const equip = `${isWeapon && !isEquip ? "EQUIP" : ""}`;
+      const equip = isWeapon && !isEquip ? "EQUIP" : "";
       const macro = slots.length > 1 ? "ADD_CRE_ITEM" : "REPLACE_CRE_ITEM";
       const code = `${macro} ~${
         item.file

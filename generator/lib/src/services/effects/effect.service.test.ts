@@ -37,8 +37,8 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Poison,
         amount: 2,
-        type: 1 as any,
-        icon: 6 as any,
+        type: 1,
+        icon: 6,
       };
       effectService.getEffect(effect);
       expect(effect.special).toBe(6);
@@ -48,7 +48,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Poison,
         amount: 2,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.special).toBeUndefined();
@@ -229,7 +229,7 @@ describe("getEffect", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.AttackDamageBonus,
       value: 2,
-      type: 1 as any,
+      type: 1,
     };
     effectService.getEffect(effect);
     expect(effect.parameter1).toBe("2");
@@ -250,8 +250,8 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Regeneration,
         amount: 6,
-        type: 1 as any,
-        icon: 30 as any,
+        type: 1,
+        icon: 30,
       };
       effectService.getEffect(effect);
       expect(effect.special).toBe(30);
@@ -261,7 +261,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Regeneration,
         amount: 6,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.special).toBeUndefined();
@@ -273,7 +273,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Disease,
         amount: 2,
-        type: 1 as any,
+        type: 1,
         frequencyMultiplier: 3,
       };
       effectService.getEffect(effect);
@@ -284,7 +284,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.Disease,
         amount: 2,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.parameter4).toBeUndefined();
@@ -294,7 +294,7 @@ describe("getEffect", () => {
   it("fills parameter2 for PolymorphIntoSpecific", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.PolymorphIntoSpecific,
-      type: 1 as any,
+      type: 1,
     };
     effectService.getEffect(effect);
     expect(effect.parameter2).toBe("1");
@@ -305,7 +305,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.KillTarget,
         displayText: true,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.parameter1).toBe("0");
@@ -315,7 +315,7 @@ describe("getEffect", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.KillTarget,
         displayText: false,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.parameter1).toBe("1");
@@ -325,7 +325,7 @@ describe("getEffect", () => {
   it("fills parameter2 for Berserk", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.Berserk,
-      type: 1 as any,
+      type: 1,
     };
     effectService.getEffect(effect);
     expect(effect.parameter2).toBe("1");
@@ -449,7 +449,7 @@ describe("getEffect", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.OverrideCreatureData,
       value: 5,
-      field: 1 as any,
+      field: 1,
     };
     effectService.getEffect(effect);
     expect(effect.parameter1).toBe("5");
@@ -460,7 +460,7 @@ describe("getEffect", () => {
     it("sets special to 1 when showMessage is explicitly false", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.DisableSpellcasting,
-        type: 1 as any,
+        type: 1,
         showMessage: false,
       };
       effectService.getEffect(effect);
@@ -470,7 +470,7 @@ describe("getEffect", () => {
     it("leaves special unset when showMessage is omitted", () => {
       const effect: Effect = {
         opcode: EffectTypeEnum.DisableSpellcasting,
-        type: 1 as any,
+        type: 1,
       };
       effectService.getEffect(effect);
       expect(effect.special).toBeUndefined();
@@ -480,7 +480,7 @@ describe("getEffect", () => {
   it("fills parameter2 for SetAnimationSequence", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.SetAnimationSequence,
-      sequence: 2 as any,
+      sequence: 2,
     };
     effectService.getEffect(effect);
     expect(effect.parameter2).toBe("2");

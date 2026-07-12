@@ -63,7 +63,7 @@ class DocumentationService {
     } catch (e) {
       throw new Error(`Failed to read template lib/templates/monster.html: ${e}`);
     }
-    let template = { text: content };
+    const template = { text: content };
     let str = `${creature.data.strength}`;
     this.replace(template, "id", `m${creature.id}`);
     if (creature.data.exceptionalStrength)
@@ -87,7 +87,7 @@ class DocumentationService {
     this.replace(
       template,
       "apr",
-      creature.data.apr! * (creature.data.doubleApr ? 2 : 1),
+      creature.data.apr * (creature.data.doubleApr ? 2 : 1),
     );
     this.replace(template, "size", creature.data.size);
     this.addSpecial(template, creature);
@@ -117,7 +117,7 @@ class DocumentationService {
     for (const equippedItem of creature.data.items.equipped) {
       if (itemService.isEquippedWeapon(equippedItem)) {
         const weapon = State.items.find((i) => i.file === equippedItem.file);
-        if (weapon && weapon.doc) {
+        if (weapon?.doc) {
           attacks += attacks ? "<hr/>" : "";
           attacks += `<div class="weapon">${translationService.from(
             weapon.description!,
@@ -136,7 +136,7 @@ class DocumentationService {
     const immunities = creature.data.immunities
       .map((name) => State.immunities.find((i) => i.name === name))
       .filter((i): i is ImmunityConfig => i !== undefined);
-    let traits: string[] = [];
+    const traits: string[] = [];
     for (const immunity of immunities.filter((i) => i.type === "trait")) {
       traits.push(
         `<a href="#${immunity.name}">${translationService.from(
@@ -192,7 +192,7 @@ class DocumentationService {
     if (spell && spell.doc && memorized) {
       const rounds = spell.options?.renew ?? infiniteUse;
       const title = `<h5>${translationService.from(
-        spell.name!,
+        spell.name,
       )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
       const desc =
         spell.doc !== "name"
@@ -220,7 +220,7 @@ class DocumentationService {
           immunity.stringRef!,
         )}</a></h5>`;
         if (immunity.description)
-          result += `<p>${translationService.from(immunity.description!)}</p>`;
+          result += `<p>${translationService.from(immunity.description)}</p>`;
       }
     }
     return result;

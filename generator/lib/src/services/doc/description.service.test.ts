@@ -64,7 +64,7 @@ function fakeWeapon(p: Record<string, any> = {}): Weapon {
       effects: [],
       ...(p.header ?? {}),
     },
-  } as unknown as Weapon;
+  };
 }
 
 function fakeItem(p: Record<string, any> = {}): Item {
@@ -77,7 +77,7 @@ function fakeItem(p: Record<string, any> = {}): Item {
     projectiles: [],
     trait: false,
     ...p,
-  } as unknown as Item;
+  };
 }
 
 function fakeSpell(p: Record<string, any> = {}): Spell {
@@ -102,7 +102,7 @@ function fakeHeader(p: Record<string, any> = {}): SpellHeader {
     target: ItemAbilityTargetEnum.LivingActor,
     effects: [],
     ...p,
-  } as SpellHeader;
+  };
 }
 
 beforeEach(() => {
@@ -1234,7 +1234,7 @@ describe("generateImmunity (public)", () => {
     const immunity = fakeImmunity({
       name: "elemental",
       immunities: ["cold"],
-      effects: undefined as any,
+      effects: undefined,
     });
     descriptionService.generateImmunity(immunity);
     expect(decode(immunity.description as number)).toEqual(["Immune to cold"]);

@@ -69,14 +69,14 @@ describe("setHeader", () => {
       equippedSlot: [],
       projectiles: [],
       trait: false,
-    } as unknown as Item;
+    };
   }
 
   it("defaults location/target/damageType when copyFrom is unset", () => {
     const item = fakeItem();
     itemService.setHeader(
       item,
-      { type: ItemAbilityTypeEnum.Melee } as any,
+      { type: ItemAbilityTypeEnum.Melee },
       "itm01",
     );
     expect(item.header!.location).toBeDefined();
@@ -89,7 +89,7 @@ describe("setHeader", () => {
     item.copyFrom = "ITM01";
     itemService.setHeader(
       item,
-      { type: ItemAbilityTypeEnum.Melee } as any,
+      { type: ItemAbilityTypeEnum.Melee },
       "itm01",
     );
     expect(item.header!.location).toBeUndefined();
@@ -103,8 +103,8 @@ describe("setHeader", () => {
       item,
       {
         type: ItemAbilityTypeEnum.Ranged,
-        projectile: { name: "Test Projectile" } as any,
-      } as any,
+        projectile: { name: "Test Projectile" },
+      },
       "itm01",
     );
     expect(item.projectiles).toHaveLength(1);
@@ -116,12 +116,12 @@ describe("setHeader", () => {
     const proj = { name: "Test Projectile" } as any;
     itemService.setHeader(
       item,
-      { type: ItemAbilityTypeEnum.Ranged, projectile: proj } as any,
+      { type: ItemAbilityTypeEnum.Ranged, projectile: proj },
       "itm01",
     );
     itemService.setHeader(
       item,
-      { type: ItemAbilityTypeEnum.Ranged, projectile: proj } as any,
+      { type: ItemAbilityTypeEnum.Ranged, projectile: proj },
       "itm01",
     );
     expect(item.projectiles).toHaveLength(1);
@@ -131,7 +131,7 @@ describe("setHeader", () => {
     const item = fakeItem();
     itemService.setHeader(
       item,
-      { type: ItemAbilityTypeEnum.Melee } as any,
+      { type: ItemAbilityTypeEnum.Melee },
       "itm01",
     );
     expect(item.projectiles).toHaveLength(0);

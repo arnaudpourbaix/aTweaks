@@ -35,10 +35,10 @@ class EffectService {
       file?: string;
     },
   ): Effect[] {
-    const results: Effect[] = effects.reduce((acc, effect) => {
+    const results: Effect[] = effects.reduce<Effect[]>((acc, effect) => {
       acc.push(this.getEffect(effect, options));
       return acc;
-    }, [] as Effect[]);
+    }, []);
     return results;
   }
 
@@ -238,11 +238,9 @@ class EffectService {
         break;
       case EffectTypeEnum.DispelEffects:
         if (effect.dispelType !== undefined)
-          effect.parameter1 = `${DispelEffectTypeEnum[effect.dispelType]}`;
+          effect.parameter1 = DispelEffectTypeEnum[effect.dispelType];
         if (effect.magicWeaponDispelType !== undefined)
-          effect.parameter2 = `${
-            DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType]
-          }`;
+          effect.parameter2 = DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType];
         break;
       case EffectTypeEnum.ProtectionFromWeapons:
         effect.parameter1 = `${effect.enchantment}`;
@@ -258,7 +256,7 @@ class EffectService {
         break;
       case EffectTypeEnum.RemoveSpellTypeProtections:
         effect.parameter1 = `${effect.maximumLevel}`;
-        effect.parameter2 = `${effect.type}`;
+        effect.parameter2 = effect.type;
         break;
       case EffectTypeEnum.CurrentHPbonus:
         effect.parameter1 = `${effect.value}`;
@@ -385,7 +383,7 @@ class EffectService {
       throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
     effect.parameter2 = `${prot.index}`;
     if (!isValueString) return;
-    let file = utils.getIdsFileFromSpellProtectionStat(
+    const file = utils.getIdsFileFromSpellProtectionStat(
       prot.stat as SpellProtectionStat,
     );
     if (!file)

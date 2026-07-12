@@ -991,7 +991,7 @@ describe("parseAbilities / creatureAbilities (private)", () => {
     const statements: Statements = [];
     service.creatureAbilities(
       statements,
-      fakeCreature({ behavior: { abilities: [fakeAbility()] } as any }),
+      fakeCreature({ behavior: { abilities: [fakeAbility()] } }),
       options(),
     );
     expect(statements).toHaveLength(1);

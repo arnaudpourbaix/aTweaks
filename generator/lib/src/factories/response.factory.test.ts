@@ -6,7 +6,7 @@ import responseFactory from "./response.factory";
 
 describe("response", () => {
   it("wraps the given actions in a single weighted response, defaulting weight to 100", () => {
-    const action: Actions.Action = { name: "Continue" } as Actions.Action;
+    const action: Actions.Action = { name: "Continue" };
     expect(responseFactory.response([action])).toEqual([
       { weight: 100, actions: [action] },
     ]);
@@ -62,7 +62,7 @@ describe("attackResponses", () => {
 
   it("prepends optActions before the weapon selection", () => {
     const optActions: Actions.Action[] = [
-      { name: "Continue" } as Actions.Action,
+      { name: "Continue" },
     ];
     const responses = responseFactory.attackResponses({
       attacks: [{ weaponSlot: "WEAPON1" }],

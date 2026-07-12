@@ -67,7 +67,7 @@ class PoisonService {
   }): Effect[] {
     const poison = POISONS.find(
       (p) => p.type === payload.poisonType,
-    ) as PoisonModel;
+    )!;
     const effects: Effect[] = [];
     if (poison.saveDamage) {
       effects.push(this.getSaveEffect(poison));
@@ -96,7 +96,7 @@ class PoisonService {
   }): string {
     const poison = POISONS.find(
       (p) => p.type === payload.poisonType,
-    ) as PoisonModel;
+    )!;
     const save = descriptionService.getSaveText({
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
       saveBonus: payload.saveBonus,

@@ -126,7 +126,7 @@ export enum CastSpellOnConditionTargetEnum {
 }
 
 export function getCastSpellOnConditionValue(text: CastSpellOnConditionType) {
-  let value: number = 0;
+  let value = 0;
   switch (text) {
     case "HitBy([ANYONE])":
       value = 0;

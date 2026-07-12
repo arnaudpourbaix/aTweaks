@@ -53,7 +53,7 @@ class GrabService {
     const description = translationService.interpolate(
       "spell.grab.description",
       {
-        duration: grab.rounds!,
+        duration: grab.rounds,
       },
     );
     const spell = spellService.getSpell(

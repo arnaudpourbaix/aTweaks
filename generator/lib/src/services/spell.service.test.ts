@@ -140,7 +140,7 @@ describe("addProjectile (private, via header.projectile object)", () => {
         headers: [
           {
             type: ItemAbilityTypeEnum.Magical,
-            projectile: { name: "Test Projectile" } as any,
+            projectile: { name: "Test Projectile" },
           },
         ],
       },

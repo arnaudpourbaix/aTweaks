@@ -49,7 +49,7 @@ class WeiduFunctionService extends AbstractWeiduService {
   generateProtectionSpells(lines: CodeLine[]) {
     this.add(lines, `DEFINE_ACTION_MACRO load_splprot BEGIN`, 0);
     for (const sp of SPELL_PROTECTIONS) {
-      let file = utils.getIdsFileFromSpellProtectionStat(
+      const file = utils.getIdsFileFromSpellProtectionStat(
         sp.stat as SpellProtectionStat,
       );
       let value = `value=${sp.value ?? -1}`;
@@ -136,7 +136,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     );
     let index = spells.length + idsSpells.length;
     for (const [i, spell] of idsSpells.entries()) {
-      if (!!spell.suffixes) {
+      if (spell.suffixes) {
         this.add(
           lines,
           `OUTER_SPRINT res $resources(${spells.length + i})`,
@@ -232,10 +232,10 @@ class WeiduFunctionService extends AbstractWeiduService {
     const parameter2 = effect.parameter2
       ? ` parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`
       : "";
-    const special = !!effect.special
+    const special = effect.special
       ? ` special=${weiduUtils.getIntegerValue(effect.special)}`
       : "";
-    const resource = !!effect.resource
+    const resource = effect.resource
       ? ` STR_VAR resource="${effect.resource}"`
       : "";
     const line = `LPF ADD_EFFECT_CRE_ITM_SPL INT_VAR resist_dispel duration opcode=${effect.opcode}${parameter1}${parameter2}${special}${resource} END`;
@@ -250,7 +250,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     if (!immunity.spellGroups.length) return "";
     this.add(lines, `INNER_ACTION BEGIN`, tab);
     let index = 0;
-    let arrays: string[] = [];
+    const arrays: string[] = [];
     if (immunity.spellGroups.length === 1) {
       this.add(
         lines,

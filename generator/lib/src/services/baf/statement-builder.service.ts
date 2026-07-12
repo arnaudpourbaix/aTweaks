@@ -375,7 +375,7 @@ class StatementService {
             {
               name: "Heard",
               params: [
-                `${"EVILCUTOFF"}.0.${creature.data.race}`,
+                `EVILCUTOFF.0.${creature.data.race}`,
                 GLOBAL_CONFIG.bafConstants.monsterShoutId,
               ],
             },
@@ -448,7 +448,7 @@ class StatementService {
     });
     const heardObject = options.summon
       ? "LastSummonerOf"
-      : `${"EVILCUTOFF"}.0.${creature.data.race}`;
+      : `EVILCUTOFF.0.${creature.data.race}`;
     statements.push({
       comment: "React to shouts",
       triggers: [
@@ -811,7 +811,7 @@ class StatementService {
     options: BuilderOptions,
   ): void {
     if (!creature.attack.melee && !creature.attack.ranged)
-      return this.runAway(statements, creature, options);
+      { this.runAway(statements, creature, options); return; }
     else if (creature.attack.ranged)
       this.reposition(statements, creature, options);
     for (const targetPriority of creature.attack.targetPriorities) {
@@ -848,7 +848,7 @@ class StatementService {
         throw new Error(`Status ${status} must target party`);
       const list = targetService.getList(targetListName);
       const targetTriggers = [
-        ...(statusDetails.targetTriggers as Triggers.Trigger[]),
+        ...(statusDetails.targetTriggers),
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
           seeInvisible: creature.seeInvisible(),
@@ -938,7 +938,7 @@ class StatementService {
   ): Statements {
     const statements: Statements = [];
     for (const select of creature.attack.selectWeapons) {
-      let triggers: Triggers.Trigger[] = [
+      const triggers: Triggers.Trigger[] = [
         ...utils.replaceTriggerTokens(targetTriggers, [
           { key: ScriptTarget.token, value: ScriptTarget.lastSeen },
         ]),

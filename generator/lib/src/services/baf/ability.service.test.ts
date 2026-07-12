@@ -34,7 +34,7 @@ describe("getAbilities", () => {
 
   it("defaults name to 'ability.unknown' when omitted", () => {
     const [ability] = abilityService.getAbilities([
-      { actionsBefore: [], actionsAfter: [] } as any,
+      { actionsBefore: [], actionsAfter: [] },
     ]);
     expect(ability.name).toBe("ability.unknown");
   });
@@ -195,8 +195,8 @@ describe("getAbilities - single spell", () => {
         spell: {
           id: "SPWI001" as any,
           memorizedSpellCheck: false,
-          excludeStateChecks: ["STATE_SILENCED" as any],
-          excludeStatsChecks: ["STR" as any],
+          excludeStateChecks: ["STATE_SILENCED"],
+          excludeStatsChecks: ["STR"],
           excludeSpellStates: ["some_spellstate"],
         },
       },

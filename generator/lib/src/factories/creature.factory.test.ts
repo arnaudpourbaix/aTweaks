@@ -4,7 +4,7 @@ import { Item } from "../model/spell-item/spell-item";
 import creatureFactory from "./creature.factory";
 
 function fakeCreature(): Creature {
-  const creature = new Creature(1 as any);
+  const creature = new Creature(1);
   creature.data = { items: { equipped: [] } } as any;
   creature.items = [];
   return creature;
@@ -14,8 +14,8 @@ describe("checkValidation", () => {
   it("throws when the creature was already validated", () => {
     const creature = fakeCreature();
     creature.valid = true;
-    creature.name = "common.potion.use" as any;
-    expect(() => creatureFactory.checkValidation(creature)).toThrow(
+    creature.name = "common.potion.use";
+    expect(() => { creatureFactory.checkValidation(creature); }).toThrow(
       /has already been validated/,
     );
   });
@@ -23,7 +23,7 @@ describe("checkValidation", () => {
   it("does not throw when valid is still unset", () => {
     const creature = fakeCreature();
     creature.valid = undefined;
-    expect(() => creatureFactory.checkValidation(creature)).not.toThrow();
+    expect(() => { creatureFactory.checkValidation(creature); }).not.toThrow();
   });
 });
 
@@ -31,7 +31,7 @@ describe("equipItem", () => {
   it("throws when no slot is given and the item has no equippedSlot either", () => {
     const creature = fakeCreature();
     const item = { file: "itm01", stringRef: 123 } as unknown as Item;
-    expect(() => creatureFactory.equipItem(creature, item)).toThrow(
+    expect(() => { creatureFactory.equipItem(creature, item); }).toThrow(
       /No slot defined for 123/,
     );
   });

@@ -51,7 +51,7 @@ class MainService {
           creature.name,
         )} has not been validated, you must call validate`,
       );
-    } else if (creature.valid === false) {
+    } else if (!creature.valid) {
       console.log(
         `${figureSet.warning} ${translationService.from(
           creature.name,

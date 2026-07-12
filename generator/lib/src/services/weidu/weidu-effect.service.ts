@@ -160,8 +160,12 @@ class WeiduEffectService extends AbstractWeiduService {
     tab: number;
     effect: Effect;
   }): boolean {
+    // col/param are never reassigned today, but converting to const makes TS treat `param === 1`
+    // below as a compile error against the literal type `2`.
+    // eslint-disable-next-line prefer-const
     let col = 0;
     let file = "";
+    // eslint-disable-next-line prefer-const
     let param = 2;
     if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
       file = "msectype";

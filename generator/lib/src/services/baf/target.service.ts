@@ -47,7 +47,7 @@ class TargetService {
     for (let i = list.length - 1; i >= 0 && list[i] === 0; i--) {
       list.pop();
     }
-    return `${list.join(".")}`;
+    return list.join(".");
   }
 
   getTargetFromAbility(
@@ -59,7 +59,7 @@ class TargetService {
     allegianceCheck: boolean;
   } {
     try {
-      let result = this.getList(target as TargetListName);
+      const result = this.getList(target as TargetListName);
       if (randomOrder && GLOBAL_CONFIG.enableRandomTargetOrder) {
         result.targets = utils.shuffleArray(result.targets);
       }
@@ -82,14 +82,14 @@ class TargetService {
     for (const name of target.includeStatus ?? []) {
       const status = TARGET_STATUS.find(
         (s) => s.status === name,
-      ) as TargetStatus;
+      )!;
       triggers.push(...status.triggers);
       targetTriggers.push(...status.targetTriggers);
     }
     for (const name of target.excludeStatus ?? []) {
       const status = TARGET_STATUS.find(
         (s) => s.status === name,
-      ) as TargetStatus;
+      )!;
       triggers.push(...status.triggers);
       targetTriggers.push(
         ...triggerFactory.inverseNegations(status.targetTriggers),
@@ -188,7 +188,7 @@ class TargetService {
     const allStatus = DEFAULT_STATUS_ORDER.filter((status) => {
       const statusDetails = TARGET_STATUS.find(
         (t) => t.status === status,
-      ) as TargetStatus;
+      )!;
       const validStatus =
         status !== "Grabbed" ||
         creature.spells.some(
@@ -229,7 +229,7 @@ class TargetService {
     return list.filter((status) => {
       const statusDetails = TARGET_STATUS.find(
         (t) => t.status === status,
-      ) as TargetStatus;
+      )!;
       return statusDetails.canOnlyTargetPlayer === canOnlyTargetPlayer;
     });
   }

@@ -298,16 +298,16 @@ class TriggerFactory {
   }
 
   inverseNegations(triggers: Triggers.Trigger[]): Triggers.Trigger[] {
-    return triggers.reduce((acc, trigger) => {
+    return triggers.reduce<Triggers.Trigger[]>((acc, trigger) => {
       if ("triggers" in trigger) {
         acc.push(
-          ...(this.inverseNegations(trigger.triggers) as Triggers.Trigger[]),
+          ...(this.inverseNegations(trigger.triggers)),
         );
       } else {
         acc.push(this.inverseNegation(trigger));
       }
       return acc;
-    }, [] as Triggers.Trigger[]);
+    }, []);
   }
 
   seeOneInTargetList(targetListName: TargetListName): Triggers.Trigger[] {

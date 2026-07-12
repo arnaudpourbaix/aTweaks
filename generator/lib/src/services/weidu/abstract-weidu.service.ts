@@ -114,7 +114,7 @@ export class AbstractWeiduService extends AbstractCodeService {
     files: string[]
   ) {
     if (!files.length) {
-      return this.add(lines, code, tab);
+      this.add(lines, code, tab); return;
     }
     const conditions = files.map(
       (f) => `NOT "%SOURCE_RES%" STRING_EQUAL_CASE ~${f}~`

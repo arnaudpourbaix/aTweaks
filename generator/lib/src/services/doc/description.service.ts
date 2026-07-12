@@ -175,12 +175,12 @@ class DescriptionService {
 
   private getItemSpellDescription(effect: Effect): string[] {
     const spell = State.spells.find((s) => s.file === effect.resource);
-    let name = spell ? translationService.from(spell.name) : effect.resource;
+    const name = spell ? translationService.from(spell.name) : effect.resource;
     const saveText = this.getSaveText(effect);
     const probability = this.getProbability(effect);
     const condition = saveText || probability;
     const description =
-      spell && spell.description && !spell.doc ? spell.description : "";
+      spell?.description && !spell.doc ? spell.description : "";
     const text = `Cast spell ${name}${condition}${description ? ":" : ""}`;
     const results: string[] = ["", text];
     if (description) {
@@ -269,7 +269,7 @@ class DescriptionService {
     else if (type === SaveTypeEnum.PetrifyPolymorph) save = "petrify/polymorph";
     else if (type === SaveTypeEnum.RodStaffWand) save = "wand";
     else if (type === SaveTypeEnum.Spell) save = "spell";
-    let bonus = effect.saveBonus
+    const bonus = effect.saveBonus
       ? ` at ${this.getSignedNumber(effect.saveBonus)}`
       : "";
     const saveText = save ? ` (saves vs ${save}${bonus})` : "";
@@ -407,7 +407,7 @@ class DescriptionService {
     target: ItemAbilityTargetEnum,
   ): string[] {
     const results: string[] = [];
-    let type: string = "";
+    let type = "";
     switch (effect.charmType) {
       case CharmTypeEnum.NeutralCharm:
       case CharmTypeEnum.NeutralCharmNoFeedback:
@@ -449,7 +449,7 @@ class DescriptionService {
 
   private getStatisticModifier(effect: StatisticModifierEffect): string[] {
     const results: string[] = [];
-    results.push(this.getStatisticText(effect) as string);
+    results.push(this.getStatisticText(effect)!);
     return results;
   }
 
@@ -492,7 +492,7 @@ class DescriptionService {
   }
 
   private getModifierType(effect: ModifierTypeEffect): string[] {
-    let type: string = "";
+    let type = "";
     if (effect.opcode === EffectTypeEnum.AttackDamageBonus) type = "Damage";
     else if (
       effect.opcode === EffectTypeEnum.MovementRateBonus ||
@@ -612,7 +612,7 @@ class DescriptionService {
       payload.diceThrown && payload.diceSize
         ? `${payload.diceThrown}D${payload.diceSize}`
         : "";
-    const value = payload.value ? `${this.getSignedNumber(payload.value)}` : "";
+    const value = payload.value ? this.getSignedNumber(payload.value) : "";
     return dice ? `${dice}${value}` : value.replace(/^\+/, "");
   }
 

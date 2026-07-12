@@ -3,7 +3,7 @@ import { Weapon } from "../spell-item/spell-item";
 import { Creature } from "./creature";
 
 function fakeCreature(): Creature {
-  const creature = new Creature(1 as any);
+  const creature = new Creature(1);
   return creature;
 }
 

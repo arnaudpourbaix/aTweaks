@@ -133,7 +133,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
       (i) => i.slot.length === 1 && i.slot[0] === item.equippedSlot![0]
     );
     if (itemInSlot !== -1) {
-      console.log(`replacing item in slot ${item.equippedSlot![0]}`);
+      console.log(`replacing item in slot ${item.equippedSlot[0]}`);
       this.data.items.equipped.splice(itemInSlot, 1);
     }
 
@@ -188,7 +188,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
             ...e,
             timing: EffectTimingEnum.InstantWhileEquipped,
             target: EffectTargetEnum.Self,
-          } as Effect)
+          })
       ),
       immunities: payload.immunities,
       equippedSlot: payload.equippedSlot ? [payload.equippedSlot] : JEWEL_SLOTS,

@@ -39,16 +39,16 @@ export namespace Actions {
     | "SpellPointRES"
     | "ForceSpell"
     | "ForceSpellRES"
-    | "ForceSpellRES"
+     
     | "ForceSpellPoint"
     | "ForceSpellPointRES"
-    | "ForceSpellPointRES"
+     
     | "ForceSpellRange"
     | "ForceSpellRangeRES"
     | "ForceSpellPointRange"
     | "ForceSpellPointRangeRES"
-    | "SpellNoDec"
-    | "SpellNoDecRES"
+     
+     
     | "SpellPointNoDec"
     | "SpellPointNoDecRES"
     | "ReallyForceSpellPoint"
@@ -475,8 +475,8 @@ export namespace Actions {
     | SpellNoDecRES
     | ForceSpell
     | ForceSpellRES
-    | SpellNoDec
-    | SpellNoDecRES
+     
+     
     | ReallyForceSpell
     | ReallyForceSpellRES
     | ApplySpell

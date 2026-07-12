@@ -19,10 +19,10 @@ function fakeSpell(p: Partial<Spell> = {}): Spell {
 
 function fakeHeader(p: Partial<SpellHeader> = {}): SpellHeader {
   return {
-    type: 1 as any,
+    type: 1,
     effects: [],
     ...p,
-  } as SpellHeader;
+  };
 }
 
 function codes(lines: CodeLine[]): string[] {
@@ -73,7 +73,7 @@ describe("createSpell", () => {
     const lines: CodeLine[] = [];
     weiduSpellService.createSpell(
       lines,
-      fakeSpell({ options: { spellType: 1 as any, castingTime: 5 } }),
+      fakeSpell({ options: { spellType: 1, castingTime: 5 } }),
       0,
     );
     const line = codes(lines).find((c) => c.startsWith("LPF CHANGE_SPELL"));
@@ -85,7 +85,7 @@ describe("createSpell", () => {
     const lines: CodeLine[] = [];
     weiduSpellService.createSpell(
       lines,
-      fakeSpell({ level: undefined, effects: [{ opcode: 1, target: 1 } as any] }),
+      fakeSpell({ level: undefined, effects: [{ opcode: 1, target: 1 }] }),
       0,
     );
     const effectLine = codes(lines).find((c) => c.includes("opcode=1"));
@@ -109,7 +109,7 @@ describe("createSpellHeader (private)", () => {
     service.createSpellHeader(
       lines,
       fakeSpell(),
-      fakeHeader({ location: 1 as any, target: 2 as any }),
+      fakeHeader({ location: 1, target: 2 }),
       0,
       1,
     );
@@ -136,7 +136,7 @@ describe("createSpellHeader (private)", () => {
     service.createSpellHeader(
       lines,
       fakeSpell({ level: undefined }),
-      fakeHeader({ effects: [{ opcode: 1, target: 1 } as any] }),
+      fakeHeader({ effects: [{ opcode: 1, target: 1 }] }),
       0,
       1,
     );
@@ -149,7 +149,7 @@ describe("createSpellHeader (private)", () => {
     service.createSpellHeader(
       lines,
       fakeSpell({ level: 5 }),
-      fakeHeader({ effects: [{ opcode: 1, target: 1 } as any] }),
+      fakeHeader({ effects: [{ opcode: 1, target: 1 }] }),
       0,
       1,
     );
