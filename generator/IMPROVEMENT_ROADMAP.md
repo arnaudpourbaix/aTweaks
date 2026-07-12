@@ -850,6 +850,43 @@ from 87.5%).
 
 ---
 
+### ✅ `weidu-effect.service.ts` — audited, no bug found, one dead-scaffolding gap documented
+
+Added `weidu-effect.service.test.ts` (no coverage before) — 14 tests covering
+`createEffectFiles()`'s numeric-`special` write, `addEffect()`'s
+ITM/CRE/global `fn` selection, `parameter3`/`parameter4`'s truthy-and-not-"0"
+guards, and the numeric-vs-array `flags` encoding, plus `has2daLookup()`'s
+no-match/match paths. All pass — no bug found. Now 97.26% branches (71/73,
+up from 87.67%).
+
+**Two gaps left alone — genuinely dead scaffolding, not guessable:**
+
+```ts
+has2daLookup({ lines, tab, effect }) {
+  let col = 0;
+  let file = "";
+  let param = 2;                                    // <- hardcoded, never reassigned
+  if (effect.opcode === EffectTypeEnum.RemoveSpellTypeProtections) {
+    file = "msectype";
+  }
+  if (!file) return false;
+  this.add(lines, `... entry_match=~${
+    param === 1 ? effect.parameter1 : effect.parameter2   // <- param===1 branch unreachable
+  }~ ...`, tab);
+  if (param === 1) effect.parameter1 = "row";              // <- unreachable
+  else effect.parameter2 = "row";
+}
+```
+
+The `param === 1` ternary/if-else scaffolding implies this was meant to
+support a second opcode whose 2da-lookup key lives in `parameter1` instead of
+`parameter2`, but only `RemoveSpellTypeProtections` (→ `parameter2`) is ever
+wired up, and `param` is hardcoded to `2`. There's no way to guess what the
+intended second opcode/condition should be, so left undocumented-but-dead
+rather than fixed.
+
+---
+
 ## Process
 
 Same as `BUGFIX_ROADMAP.md`: for each item, add/extend tests to lock in current
