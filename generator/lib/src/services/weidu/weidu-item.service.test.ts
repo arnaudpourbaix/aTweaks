@@ -6,6 +6,10 @@ import { Item, ItemHeader } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import weiduItemService from "./weidu-item.service";
 
+interface WeiduItemServicePrivate {
+  createItemHeader(lines: CodeLine[], header: ItemHeader, tab: number): void;
+}
+
 function fakeItem(p: Partial<Item> = {}): Item {
   return {
     file: "itm01",
@@ -54,9 +58,7 @@ describe("createItem", () => {
     State.immunities = [];
     const lines: CodeLine[] = [];
     weiduItemService.createItem(lines, fakeItem({ copyFrom: "SOMEITM" }));
-    expect(codes(lines)).toContain(
-      `COPY_EXISTING ~SOMEITM.ITM~  ~override/itm01.ITM~`,
-    );
+    expect(codes(lines)).toContain(`COPY_EXISTING ~SOMEITM.ITM~  ~override/itm01.ITM~`);
     // copyFrom path never CREATE's or does the plain override COPY_EXISTING
     expect(codes(lines)).not.toContain(`CREATE ITM "itm01"`);
     expect(codes(lines)).not.toContain(`COPY_EXISTING ~itm01.itm~ ~override~`);
@@ -68,19 +70,15 @@ describe("createItem", () => {
     ] as unknown as ImmunityConfig[];
     const lines: CodeLine[] = [];
     weiduItemService.createItem(lines, fakeItem({ copyFrom: "poison" }));
-    expect(codes(lines)).toContain(
-      `COPY_EXISTING ~IMMITM.ITM~  ~override/itm01.ITM~`,
-    );
+    expect(codes(lines)).toContain(`COPY_EXISTING ~IMMITM.ITM~  ~override/itm01.ITM~`);
   });
 
   it("throws when copyFrom matches an immunity with no itemSlot configured", () => {
-    State.immunities = [
-      { name: "poison", itemSlot: undefined },
-    ] as unknown as ImmunityConfig[];
+    State.immunities = [{ name: "poison", itemSlot: undefined }] as unknown as ImmunityConfig[];
     const lines: CodeLine[] = [];
-    expect(() =>
-      { weiduItemService.createItem(lines, fakeItem({ copyFrom: "poison" })); },
-    ).toThrow(/No file configured for immunity poison/);
+    expect(() => {
+      weiduItemService.createItem(lines, fakeItem({ copyFrom: "poison" }));
+    }).toThrow(/No file configured for immunity poison/);
   });
 
   it("does not emit the header INSERT_BYTES block when the item has no header", () => {
@@ -100,54 +98,40 @@ describe("createItem", () => {
 
   it("resolves a string projectile into an IDS_OF_SYMBOL expression", () => {
     const lines: CodeLine[] = [];
-    weiduItemService.createItem(
-      lines,
-      fakeItem({ header: fakeHeader({ projectile: "arrow01" }) }),
+    weiduItemService.createItem(lines, fakeItem({ header: fakeHeader({ projectile: "arrow01" }) }));
+    expect(codes(lines).some((c) => c.includes("(IDS_OF_SYMBOL (~projectl~ ~arrow01~)) + 1"))).toBe(
+      true,
     );
-    expect(
-      codes(lines).some((c) =>
-        c.includes(
-          "(IDS_OF_SYMBOL (~projectl~ ~arrow01~)) + 1",
-        ),
-      ),
-    ).toBe(true);
   });
 
   it("throws when the header projectile was never resolved to a string", () => {
     const lines: CodeLine[] = [];
-    expect(() =>
-      { weiduItemService.createItem(
+    expect(() => {
+      weiduItemService.createItem(
         lines,
         fakeItem({
-          header: fakeHeader({ projectile: { file: "p1" } as any }),
+          header: fakeHeader({
+            projectile: { file: "p1" } as unknown as ItemHeader["projectile"],
+          }),
         }),
-      ); },
-    ).toThrow(/Unhandled projectile!/);
+      );
+    }).toThrow(/Unhandled projectile!/);
   });
 
   it("emits an LPF line for each item immunity", () => {
-    State.immunities = [
-      { name: "poison", type: "immunity" },
-    ] as unknown as ImmunityConfig[];
+    State.immunities = [{ name: "poison", type: "immunity" }] as unknown as ImmunityConfig[];
     const lines: CodeLine[] = [];
-    weiduItemService.createItem(
-      lines,
-      fakeItem({ immunities: ["poison"] as any }),
-    );
+    weiduItemService.createItem(lines, fakeItem({ immunities: ["poison"] }));
     expect(codes(lines).some((c) => c.startsWith("LPF "))).toBe(true);
   });
 });
 
 describe("createItemHeader (private)", () => {
-  const service = weiduItemService as any;
+  const service = weiduItemService as unknown as WeiduItemServicePrivate;
 
   it("writes default melee swing animations when animationSwing is unset", () => {
     const lines: CodeLine[] = [];
-    service.createItemHeader(
-      lines,
-      fakeHeader({ type: ItemAbilityTypeEnum.Melee }),
-      1,
-    );
+    service.createItemHeader(lines, fakeHeader({ type: ItemAbilityTypeEnum.Melee }), 1);
     expect(codes(lines)).toContain("WRITE_SHORT 0x9e 34");
     expect(codes(lines)).toContain("WRITE_SHORT 0xa0 33");
     expect(codes(lines)).toContain("WRITE_SHORT 0xa2 33");
@@ -170,11 +154,7 @@ describe("createItemHeader (private)", () => {
 
   it("writes ranged-specific bytes and default swing animations of 0 when animationSwing is unset", () => {
     const lines: CodeLine[] = [];
-    service.createItemHeader(
-      lines,
-      fakeHeader({ type: ItemAbilityTypeEnum.Ranged }),
-      1,
-    );
+    service.createItemHeader(lines, fakeHeader({ type: ItemAbilityTypeEnum.Ranged }), 1);
     expect(codes(lines)).toContain("WRITE_SHORT 0x38 1");
     expect(codes(lines)).toContain("WRITE_SHORT 0xa4 1");
     // defaults of 0 are falsy, so write() no-ops and skips them entirely
@@ -183,11 +163,7 @@ describe("createItemHeader (private)", () => {
 
   it("writes neither melee nor ranged swing bytes for a Magical (neither) header type", () => {
     const lines: CodeLine[] = [];
-    service.createItemHeader(
-      lines,
-      fakeHeader({ type: ItemAbilityTypeEnum.Magical }),
-      1,
-    );
+    service.createItemHeader(lines, fakeHeader({ type: ItemAbilityTypeEnum.Magical }), 1);
     expect(codes(lines).some((c) => c.includes("0x9e"))).toBe(false);
     expect(codes(lines).some((c) => c.includes("0x38"))).toBe(false);
   });

@@ -1,13 +1,45 @@
 import { describe, expect, it } from "vitest";
-import { Creature } from "../model/creature/creature";
-import { CreatureData } from "../model/creature/data";
+import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
+import { CreatureData, CreatureDataItems } from "../model/creature/data";
 import { Movement } from "../model/creature/movement";
 import { ItemAbilityLocationEnum } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
 import creatureService from "./creature.service";
 
+interface CreatureServicePrivate {
+  transformAttackPerRound(data?: Partial<CreatureData>): void;
+  autogenerateThac0(data: Partial<CreatureData>, parent?: CreatureData): void;
+  autogenerateSavingThrows(p: {
+    data: Partial<CreatureData>;
+    parent?: CreatureData;
+    options: CreatureAutoGenerate["savingThrows"];
+  }): void;
+  getSavingThrows(p: Exclude<CreatureAutoGenerate["savingThrows"], undefined>): {
+    saveDeath: number;
+    saveWand: number;
+    savePolymorph: number;
+    saveBreath: number;
+    saveSpell: number;
+  };
+  getDexterityArmorClassBonus(data: Partial<CreatureData>): number;
+  checkDexterityArmorClassBonus(data: Partial<CreatureData>): void;
+  hasOffhandWeapon(creature: Creature): boolean;
+  checkDualWielding(p: {
+    creature: Creature;
+    base: BaseCreature;
+    isAdjustment: boolean;
+    data: CreatureData;
+  }): void;
+  autogenerateHitPoints(p: {
+    data: Partial<CreatureData>;
+    creature: Creature;
+    parent?: CreatureData;
+  }): void;
+  checkMovement(p: { creature: Creature; base: BaseCreature; isAdjustment: boolean }): void;
+}
+
 function fakeCreature(p: {
-  data: Partial<CreatureData>;
+  data: Partial<Omit<CreatureData, "items">> & { items?: Partial<CreatureDataItems> };
   items?: Weapon[];
   autoGenerate?: Partial<Creature["autoGenerate"]>;
 }): Creature {
@@ -22,6 +54,10 @@ function fakeCreature(p: {
       ...p.autoGenerate,
     },
   } as unknown as Creature;
+}
+
+function fakeBase(data: Partial<CreatureData>): BaseCreature {
+  return { data } as unknown as BaseCreature;
 }
 
 describe("getAttacksPerRound", () => {
@@ -57,7 +93,7 @@ describe("getAttacksPerRound", () => {
 });
 
 describe("transformAttackPerRound (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("does nothing when apr is not set", () => {
     const data: Partial<CreatureData> = {};
@@ -89,17 +125,17 @@ describe("transformAttackPerRound (private)", () => {
 });
 
 describe("autogenerateThac0 (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("throws when level1 is unknown and there is no parent", () => {
-    expect(() => service.autogenerateThac0({}, undefined)).toThrow(
-      /level1 is unknown/,
-    );
+    expect(() => {
+      service.autogenerateThac0({}, undefined);
+    }).toThrow(/level1 is unknown/);
   });
 
   it("does nothing when level1 is unknown but a parent is provided", () => {
     const data: Partial<CreatureData> = {};
-    service.autogenerateThac0(data, {});
+    service.autogenerateThac0(data, {} as CreatureData);
     expect(data.thac0).toBeUndefined();
   });
 
@@ -124,9 +160,9 @@ describe("autogenerateThac0 (private)", () => {
     const data: Partial<CreatureData> = {
       level1: { pnpValue: 31, value: 31, type: "none" },
     };
-    expect(() => service.autogenerateThac0(data, undefined)).toThrow(
-      /thac0 not found in table for level 31/,
-    );
+    expect(() => {
+      service.autogenerateThac0(data, undefined);
+    }).toThrow(/thac0 not found in table for level 31/);
   });
 
   it("does not overwrite an already-set thac0", () => {
@@ -140,12 +176,12 @@ describe("autogenerateThac0 (private)", () => {
 });
 
 describe("autogenerateSavingThrows (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("throws when level1 is unknown and there is no parent", () => {
-    expect(() =>
-      service.autogenerateSavingThrows({ data: {}, options: undefined }),
-    ).toThrow(/level1 is unknown/);
+    expect(() => {
+      service.autogenerateSavingThrows({ data: {}, options: undefined });
+    }).toThrow(/level1 is unknown/);
   });
 
   it("does nothing when level1 is unknown but a parent is provided", () => {
@@ -164,15 +200,17 @@ describe("autogenerateSavingThrows (private)", () => {
       class: "CLERIC",
     };
     service.autogenerateSavingThrows({ data, options: undefined });
-    expect(data.saveDeath).toBe(service.getSavingThrows({
-      level: 5,
-      classe: "CLERIC",
-    }).saveDeath);
+    expect(data.saveDeath).toBe(
+      service.getSavingThrows({
+        level: 5,
+        classe: "CLERIC",
+      }).saveDeath,
+    );
   });
 });
 
 describe("getSavingThrows (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("returns fighter saves by default", () => {
     expect(service.getSavingThrows({ level: 5 })).toEqual({
@@ -246,14 +284,14 @@ describe("getStrengthBonus", () => {
   });
 
   it("throws when strength is not found in the table", () => {
-    expect(() =>
-      creatureService.getStrengthBonus({ strength: 99 }),
-    ).toThrow(/strength not found in table: 99/);
+    expect(() => creatureService.getStrengthBonus({ strength: 99 })).toThrow(
+      /strength not found in table: 99/,
+    );
   });
 });
 
 describe("getDexterityArmorClassBonus (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("returns 0 when dexterity is undefined", () => {
     expect(service.getDexterityArmorClassBonus({})).toBe(0);
@@ -264,14 +302,14 @@ describe("getDexterityArmorClassBonus (private)", () => {
   });
 
   it("throws when dexterity is not found in table", () => {
-    expect(() =>
-      service.getDexterityArmorClassBonus({ dexterity: 99 }),
-    ).toThrow(/dexterity not found in table: 99/);
+    expect(() => service.getDexterityArmorClassBonus({ dexterity: 99 })).toThrow(
+      /dexterity not found in table: 99/,
+    );
   });
 });
 
 describe("checkDexterityArmorClassBonus (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("does nothing when dexterity or ac is undefined", () => {
     const data: Partial<CreatureData> = { dexterity: 18 };
@@ -294,19 +332,17 @@ describe("checkDexterityArmorClassBonus (private)", () => {
 
 describe("getFinalArmorClass", () => {
   it("throws when ac or dexterity is missing", () => {
-    expect(() =>
-      creatureService.getFinalArmorClass({ data: {} } as any),
-    ).toThrow(/missing data/);
+    expect(() => creatureService.getFinalArmorClass(fakeBase({}))).toThrow(/missing data/);
   });
 
   it("applies the dexterity AC bonus to the base AC", () => {
-    const base = { data: { ac: 10, dexterity: 18 } } as any;
+    const base = fakeBase({ ac: 10, dexterity: 18 });
     expect(creatureService.getFinalArmorClass(base)).toBe(6); // 10 + (-4)
   });
 });
 
 describe("hasOffhandWeapon (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("returns false when no SHIELD-slot item is equipped", () => {
     const creature = fakeCreature({ data: { items: { equipped: [] } } });
@@ -349,7 +385,7 @@ describe("hasOffhandWeapon (private)", () => {
 });
 
 describe("checkDualWielding (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("detects dual wielding from an equipped offhand weapon and decrements apr by 1", () => {
     const creature = fakeCreature({
@@ -367,9 +403,9 @@ describe("checkDualWielding (private)", () => {
     const data: Partial<CreatureData> = { apr: 2 };
     service.checkDualWielding({
       creature,
-      base: { data } as any,
+      base: fakeBase(data),
       isAdjustment: false,
-      data,
+      data: data as CreatureData,
     });
     expect(creature.attack.dualWielding).toBe(true);
     expect(data.apr).toBe(1);
@@ -379,14 +415,14 @@ describe("checkDualWielding (private)", () => {
     const creature = fakeCreature({ data: { items: { equipped: [] } } });
     creature.attack = { dualWielding: true } as Creature["attack"];
     const data: Partial<CreatureData> = {};
-    expect(() =>
+    expect(() => {
       service.checkDualWielding({
         creature,
-        base: { data } as any,
+        base: fakeBase(data),
         isAdjustment: false,
-        data,
-      }),
-    ).toThrow(/Attacks per round need to be set for dual wielding flag/);
+        data: data as CreatureData,
+      });
+    }).toThrow(/Attacks per round need to be set for dual wielding flag/);
   });
 
   it("does not detect dual wielding or adjust apr for adjustments", () => {
@@ -405,9 +441,9 @@ describe("checkDualWielding (private)", () => {
     const data: Partial<CreatureData> = { apr: 2 };
     service.checkDualWielding({
       creature,
-      base: { data } as any,
+      base: fakeBase(data),
       isAdjustment: true,
-      data,
+      data: data as CreatureData,
     });
     expect(creature.attack.dualWielding).toBe(false);
     expect(data.apr).toBe(2);
@@ -443,7 +479,7 @@ describe("checkWeapons", () => {
 });
 
 describe("autogenerateHitPoints (private, delegates to hitPointService)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("sets data.hp from the real hitPointService calculation", () => {
     const data: Partial<CreatureData> = {
@@ -468,38 +504,40 @@ describe("autogenerateHitPoints (private, delegates to hitPointService)", () => 
 });
 
 describe("checkMovement (private)", () => {
-  const service = creatureService as any;
+  const service = creatureService as unknown as CreatureServicePrivate;
 
   it("throws when movement isn't set on a base (non-adjustment) creature", () => {
-    expect(() =>
+    expect(() => {
       service.checkMovement({
         creature: fakeCreature({ data: {} }),
-        base: { data: {} },
+        base: fakeBase({}),
         isAdjustment: false,
-      }),
-    ).toThrow(/movement not set/);
+      });
+    }).toThrow(/movement not set/);
   });
 
   it("increases movement bonus by 2 for the BARBARIAN kit", () => {
     const movement = new Movement(12);
-    const base = { data: { movement, kit: "BARBARIAN" } };
+    const base = fakeBase({ movement, kit: "BARBARIAN" });
     service.checkMovement({
       creature: fakeCreature({ data: {} }),
       base,
       isAdjustment: false,
     });
+    if (!base.data.movement) throw new Error("expected movement to be set");
     expect(base.data.movement.bonus).toBe(2);
     expect(base.data.movement).not.toBe(movement); // cloned, not mutated in place
   });
 
   it("leaves movement untouched for non-barbarian kits", () => {
     const movement = new Movement(12);
-    const base = { data: { movement, kit: "FIGHTER" } };
+    const base = fakeBase({ movement, kit: "TRUECLASS" });
     service.checkMovement({
       creature: fakeCreature({ data: {} }),
       base,
       isAdjustment: false,
     });
+    if (!base.data.movement) throw new Error("expected movement to be set");
     expect(base.data.movement).toBe(movement);
     expect(base.data.movement.bonus).toBe(0);
   });

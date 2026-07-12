@@ -1,12 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { CodeLine } from "../../model/misc";
+import { Effect } from "../../model/spell-item/effect";
 import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
 import weiduSpellService from "./weidu-spell.service";
+
+interface WeiduSpellServicePrivate {
+  createSpellHeader(
+    lines: CodeLine[],
+    spell: Spell,
+    header: SpellHeader,
+    index: number,
+    tab: number,
+  ): void;
+}
 
 function fakeSpell(p: Partial<Spell> = {}): Spell {
   return {
     file: "spl01",
-    name: "common.potion.use" as any,
+    name: "common.potion.use",
     doc: "both",
     groups: [],
     effects: [],
@@ -37,12 +48,8 @@ describe("createSpell", () => {
       fakeSpell({ copyFrom: "SPWI001", deleteHeaders: [3, 5] }),
       0,
     );
-    expect(codes(lines)).toContain(
-      `LPF DELETE_SPELL_HEADER STR_VAR min_level = 3 END`,
-    );
-    expect(codes(lines)).toContain(
-      `LPF DELETE_SPELL_HEADER STR_VAR min_level = 5 END`,
-    );
+    expect(codes(lines)).toContain(`LPF DELETE_SPELL_HEADER STR_VAR min_level = 3 END`);
+    expect(codes(lines)).toContain(`LPF DELETE_SPELL_HEADER STR_VAR min_level = 5 END`);
   });
 
   it("deletes matching effects by opcode when deleteOpcodes is set", () => {
@@ -52,9 +59,7 @@ describe("createSpell", () => {
       fakeSpell({ copyFrom: "SPWI001", deleteOpcodes: [12] }),
       0,
     );
-    expect(codes(lines)).toContain(
-      `LPF DELETE_EFFECT INT_VAR match_opcode = 12 END`,
-    );
+    expect(codes(lines)).toContain(`LPF DELETE_EFFECT INT_VAR match_opcode = 12 END`);
   });
 
   it("deletes no headers when deleteHeaders is neither true nor an array", () => {
@@ -64,9 +69,7 @@ describe("createSpell", () => {
       fakeSpell({ copyFrom: "SPWI001", deleteHeaders: undefined }),
       0,
     );
-    expect(codes(lines).some((c) => c.includes("DELETE_SPELL_HEADER"))).toBe(
-      false,
-    );
+    expect(codes(lines).some((c) => c.includes("DELETE_SPELL_HEADER"))).toBe(false);
   });
 
   it("includes type/ctime INT_VARs when spellType/castingTime are set", () => {
@@ -85,7 +88,7 @@ describe("createSpell", () => {
     const lines: CodeLine[] = [];
     weiduSpellService.createSpell(
       lines,
-      fakeSpell({ level: undefined, effects: [{ opcode: 1, target: 1 }] }),
+      fakeSpell({ level: undefined, effects: [{ opcode: 1, target: 1 }] as unknown as Effect[] }),
       0,
     );
     const effectLine = codes(lines).find((c) => c.includes("opcode=1"));
@@ -94,7 +97,7 @@ describe("createSpell", () => {
 });
 
 describe("createSpellHeader (private)", () => {
-  const service = weiduSpellService as any;
+  const service = weiduSpellService as unknown as WeiduSpellServicePrivate;
 
   it("omits location/target INT_VARs when unset on the header", () => {
     const lines: CodeLine[] = [];
@@ -106,13 +109,7 @@ describe("createSpellHeader (private)", () => {
 
   it("includes location/target INT_VARs when set on the header", () => {
     const lines: CodeLine[] = [];
-    service.createSpellHeader(
-      lines,
-      fakeSpell(),
-      fakeHeader({ location: 1, target: 2 }),
-      0,
-      1,
-    );
+    service.createSpellHeader(lines, fakeSpell(), fakeHeader({ location: 1, target: 2 }), 0, 1);
     const line = codes(lines).find((c) => c.startsWith("LPF ADD_SPELL_HEADER"));
     expect(line).toContain("location=1");
     expect(line).toContain("target=2");
@@ -120,15 +117,17 @@ describe("createSpellHeader (private)", () => {
 
   it("throws when the header projectile was never resolved to a string", () => {
     const lines: CodeLine[] = [];
-    expect(() =>
+    expect(() => {
       service.createSpellHeader(
         lines,
         fakeSpell(),
-        fakeHeader({ projectile: { file: "p1" } as any }),
+        fakeHeader({
+          projectile: { file: "p1" } as unknown as SpellHeader["projectile"],
+        }),
         0,
         1,
-      ),
-    ).toThrow(/Unhandled projectile!/);
+      );
+    }).toThrow(/Unhandled projectile!/);
   });
 
   it("falls back to power 0 (omitted, since 0 is falsy) when the spell has no level", () => {
@@ -136,7 +135,7 @@ describe("createSpellHeader (private)", () => {
     service.createSpellHeader(
       lines,
       fakeSpell({ level: undefined }),
-      fakeHeader({ effects: [{ opcode: 1, target: 1 }] }),
+      fakeHeader({ effects: [{ opcode: 1, target: 1 }] as unknown as Effect[] }),
       0,
       1,
     );
@@ -149,7 +148,7 @@ describe("createSpellHeader (private)", () => {
     service.createSpellHeader(
       lines,
       fakeSpell({ level: 5 }),
-      fakeHeader({ effects: [{ opcode: 1, target: 1 }] }),
+      fakeHeader({ effects: [{ opcode: 1, target: 1 }] as unknown as Effect[] }),
       0,
       1,
     );

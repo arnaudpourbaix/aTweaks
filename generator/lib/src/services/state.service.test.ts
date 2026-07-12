@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { GenericScriptParameterData } from "../model/script/data";
 import stateService from "./state.service";
 
-const service = stateService as any;
+interface StateServicePrivate {
+  buildParameters(params: string): GenericScriptParameterData[];
+}
+
+const service = stateService as unknown as StateServicePrivate;
 
 describe("buildParameters (private)", () => {
   it("returns an empty array for an empty parameter string", () => {
@@ -49,9 +54,7 @@ describe("buildParameters (private)", () => {
   });
 
   it("splits multiple comma-separated parameters", () => {
-    expect(
-      service.buildParameters("O:Target*,I:ReevaluationPeriod*"),
-    ).toEqual([
+    expect(service.buildParameters("O:Target*,I:ReevaluationPeriod*")).toEqual([
       { raw: "O:Target*", name: "Target", isNumber: false, isObject: true },
       {
         raw: "I:ReevaluationPeriod*",

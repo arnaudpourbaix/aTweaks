@@ -1,6 +1,23 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CR } from "../../model/constants";
-import { ImmunityConfig } from "../../model/final/immunity";
+import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
+import {
+  ArmorClassBonusEffect,
+  CastingTimeModifierEffect,
+  CharmCreatureEffect,
+  CurrentHPbonusEffect,
+  DamageEffect,
+  DiseaseEffect,
+  Effect,
+  IdsEffect,
+  InvisibilityEffect,
+  LevelDrainEffect,
+  PoisonEffect,
+  RegenerationEffect,
+  SleepEffect,
+  StatisticModifierEffect,
+  TeleportEffect,
+} from "../../model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   CharmTypeEnum,
@@ -9,7 +26,6 @@ import {
   EffectDamageTypeEnum,
   EffectIDSFileEnum,
   EffectModifierTypeEnum,
-  EffectStatisticModifierEnum,
   InvisibilityTypeEnum,
   ItemAbilityTargetEnum,
   ItemAbilityTypeEnum,
@@ -23,7 +39,53 @@ import { State } from "../../state";
 import translationService from "../translation.service";
 import descriptionService from "./description.service";
 
-const service = descriptionService as any;
+// Effect params are Partial<...>: these tests call private renderers directly with
+// minimal fixtures (only the fields that function reads), not a fully-populated Effect.
+//
+// LooseEffect is used for the two dispatcher-style methods whose it.each tests drive a loop
+// variable (opcode) typed as the full EffectTypeEnum across rows that each belong to a different,
+// narrower Effect union member - Partial<Effect> distributes per member and rejects that broadened
+// opcode against any single member's narrower opcode subset, so these two intentionally opt out of
+// the union entirely rather than fight it.
+type LooseEffect = { opcode?: EffectTypeEnum } & Record<string, unknown>;
+
+interface DescriptionServicePrivate {
+  getSaveText(effect: { saveTypes?: SaveTypeEnum[]; saveBonus?: number }): string;
+  getProbability(effect: Partial<Effect>): string;
+  getTarget(target: ItemAbilityTargetEnum): string;
+  getDuration(duration?: number, prefix?: string): string;
+  getStatisticText(effect: Partial<Effect>): string | undefined;
+  getDiceValue(payload: {
+    diceThrown?: number;
+    diceSize?: number;
+    value?: number;
+  }): string;
+  getSignedNumber(value: number | null | undefined): string;
+  getDamage(effect: Partial<DamageEffect>): string[];
+  getPoison(effect: Partial<PoisonEffect>): string[];
+  getDisease(effect: Partial<DiseaseEffect>): string[];
+  getArmorClassBonus(effect: Partial<ArmorClassBonusEffect>): string[];
+  getInvisibility(effect: Partial<InvisibilityEffect>): string[];
+  getRegeneration(effect: Partial<RegenerationEffect>): string[];
+  getParalyze(effect: Partial<IdsEffect>, target: ItemAbilityTargetEnum): string[];
+  toPascalCase(value: string): string;
+  getCharm(effect: Partial<CharmCreatureEffect>, target: ItemAbilityTargetEnum): string[];
+  getLevelDrain(effect: Partial<LevelDrainEffect>): string[];
+  getCastingTimeModifier(effect: Partial<CastingTimeModifierEffect>): string[];
+  getStatisticModifier(effect: Partial<StatisticModifierEffect>): string[];
+  getCurrentHPbonus(effect: Partial<CurrentHPbonusEffect>): string[];
+  getSleep(effect: Partial<SleepEffect>): string[];
+  getSlow(effect: Partial<Effect>, target: ItemAbilityTargetEnum): string[];
+  getHaste(effect: Partial<Effect>, target: ItemAbilityTargetEnum): string[];
+  getTeleport(effect: Partial<TeleportEffect>): string[];
+  getModifierType(effect: LooseEffect): string[];
+  getEffectDescription(effect: LooseEffect, target: ItemAbilityTargetEnum): string[];
+  getItemSpellDescription(effect: Partial<Effect>): string[];
+  getEffectsDescription(effects: Partial<Effect>[], target: ItemAbilityTargetEnum): string[];
+  getImmunitiesDescription(immunities: ImmunityName[], onlyName?: boolean): string[];
+}
+
+const service = descriptionService as unknown as DescriptionServicePrivate;
 
 function decode(ref: number): string[] {
   return translationService.from(ref).split(CR);
@@ -48,7 +110,7 @@ function fakeImmunity(p: Partial<ImmunityConfig> = {}): ImmunityConfig {
   } as unknown as ImmunityConfig;
 }
 
-function fakeWeapon(p: Record<string, any> = {}): Weapon {
+function fakeWeapon(p: Partial<Weapon> = {}): Weapon {
   return {
     file: "wpn01",
     doc: true,
@@ -67,7 +129,7 @@ function fakeWeapon(p: Record<string, any> = {}): Weapon {
   };
 }
 
-function fakeItem(p: Record<string, any> = {}): Item {
+function fakeItem(p: Partial<Item> = {}): Item {
   return {
     file: "itm01",
     doc: true,
@@ -80,7 +142,7 @@ function fakeItem(p: Record<string, any> = {}): Item {
   };
 }
 
-function fakeSpell(p: Record<string, any> = {}): Spell {
+function fakeSpell(p: Partial<Spell> = {}): Spell {
   return {
     file: "spl01",
     type: 1,
@@ -96,7 +158,7 @@ function fakeSpell(p: Record<string, any> = {}): Spell {
   } as unknown as Spell;
 }
 
-function fakeHeader(p: Record<string, any> = {}): SpellHeader {
+function fakeHeader(p: Partial<SpellHeader> = {}): SpellHeader {
   return {
     type: ItemAbilityTypeEnum.Magical,
     target: ItemAbilityTargetEnum.LivingActor,
@@ -108,7 +170,7 @@ function fakeHeader(p: Record<string, any> = {}): SpellHeader {
 beforeEach(() => {
   State.immunities = [];
   State.spells = [];
-  vi.spyOn(console, "warn").mockImplementation(() => {});
+  vi.spyOn(console, "warn").mockImplementation(() => undefined);
 });
 
 describe("getDiceValue (private)", () => {
@@ -209,7 +271,7 @@ describe("getSaveText", () => {
   });
 
   it("returns empty string for an unmapped save type", () => {
-    expect(service.getSaveText({ saveTypes: [99] })).toBe("");
+    expect(service.getSaveText({ saveTypes: [99 as SaveTypeEnum] })).toBe("");
   });
 
   it.each([

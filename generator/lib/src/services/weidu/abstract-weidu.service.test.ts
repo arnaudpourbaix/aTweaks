@@ -2,7 +2,23 @@ import { describe, expect, it } from "vitest";
 import { CodeLine } from "../../model/misc";
 import weiduItemService from "./weidu-item.service";
 
-const service = weiduItemService as any;
+interface AbstractWeiduServiceProtected {
+  addConditionalSourceRes(
+    lines: CodeLine[],
+    codes: string | string[],
+    tab: number,
+    files: string[],
+    exclude: boolean,
+  ): void;
+  executeCodeWithIncludedFiles(
+    lines: CodeLine[],
+    tab: number,
+    code: string,
+    files: string[],
+  ): void;
+}
+
+const service = weiduItemService as unknown as AbstractWeiduServiceProtected;
 
 function codes(lines: CodeLine[]): string[] {
   return lines.map((l) => l.code);

@@ -1,10 +1,19 @@
 import { describe, expect, it, vi } from "vitest";
 import { ABILITY_PRESETS } from "../../../config/ability-presets";
 import { PRESET_NAMES } from "../../../config/common";
-import { RawCreatureAbility, RawCreatureSequencerAbility } from "../../model/creature/ability";
+import { RawCreatureAbility } from "../../model/creature/ability";
+import { SpellIdentifier } from "../../model/ids/spell";
+import { Triggers } from "../../model/script/triggers";
 import abilityService from "./ability.service";
 
-const service = abilityService as any;
+interface AbilityServicePrivate {
+  applyPreset(ability: RawCreatureAbility, presetName: string): RawCreatureAbility;
+}
+
+const service = abilityService as unknown as AbilityServicePrivate;
+
+const SPWI001 = "SPWI001" as SpellIdentifier;
+const SPWI002 = "SPWI002" as SpellIdentifier;
 
 describe("getAbilities", () => {
   it("returns an empty array when abilities is undefined", () => {
@@ -41,7 +50,10 @@ describe("getAbilities", () => {
 
   it("wraps a single non-array target into a one-element target list", () => {
     const [ability] = abilityService.getAbilities([
-      { name: "ability.unknown", targets: { name: "Players" } as any },
+      {
+        name: "ability.unknown",
+        targets: { name: "Players" } as unknown as RawCreatureAbility["targets"],
+      },
     ]);
     expect(ability.targets).toEqual([{ name: "Players" }]);
   });
@@ -78,8 +90,8 @@ describe("getAbilities", () => {
       { name: "ability.unknown", probability: 50 },
       { name: "ability.unknown", probability: 30 },
     ]);
-    const [firstNum] = abilities[0].triggers[0].params as number[];
-    const [secondNum] = abilities[1].triggers[0].params as number[];
+    const [firstNum] = (abilities[0].triggers[0] as Triggers.RandomNumGT).params;
+    const [secondNum] = (abilities[1].triggers[0] as Triggers.RandomNumGT).params;
     expect(secondNum).toBeGreaterThan(firstNum);
   });
 });
@@ -89,7 +101,7 @@ describe("getAbilities - single spell", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spell: { id: "SPWI001" as any, memorizedSpellCheck: false },
+        spell: { id: SPWI001, memorizedSpellCheck: false },
       },
     ]);
     expect(ability.isSpell).toBe(true);
@@ -103,7 +115,7 @@ describe("getAbilities - single spell", () => {
       {
         name: "ability.unknown",
         spell: {
-          id: "SPWI001" as any,
+          id: SPWI001,
           memorizedSpellCheck: false,
           selfTarget: true,
         },
@@ -119,7 +131,7 @@ describe("getAbilities - single spell", () => {
       {
         name: "ability.unknown",
         targets: [{ name: "Players" }],
-        spell: { id: "SPWI001" as any },
+        spell: { id: SPWI001 },
       },
     ]);
     expect(ability.triggers[0]).toEqual({
@@ -143,7 +155,7 @@ describe("getAbilities - single spell", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spell: { id: "SPWI001" as any, type: "force" },
+        spell: { id: SPWI001, type: "force" },
       },
     ]);
     expect(ability.infiniteUse).toBe(true);
@@ -153,7 +165,7 @@ describe("getAbilities - single spell", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spell: { id: "SPWI001" as any, type: "force", targetName: "RR#TRAT" },
+        spell: { id: SPWI001, type: "force", targetName: "RR#TRAT" },
       },
     ]);
     expect(ability.actions).toContainEqual({
@@ -166,7 +178,7 @@ describe("getAbilities - single spell", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spell: { id: "SPWI001" as any, type: "reallyForce" },
+        spell: { id: SPWI001, type: "reallyForce" },
       },
     ]);
     expect(ability.actions).toContainEqual({
@@ -179,7 +191,7 @@ describe("getAbilities - single spell", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spell: { id: "SPWI001" as any, type: "force", remove: true },
+        spell: { id: SPWI001, type: "force", remove: true },
       },
     ]);
     expect(ability.actions).toEqual([
@@ -193,7 +205,7 @@ describe("getAbilities - single spell", () => {
       {
         name: "ability.unknown",
         spell: {
-          id: "SPWI001" as any,
+          id: SPWI001,
           memorizedSpellCheck: false,
           excludeStateChecks: ["STATE_SILENCED"],
           excludeStatsChecks: ["STR"],
@@ -215,10 +227,10 @@ describe("getAbilities - multi-spell (spells array)", () => {
       {
         name: "ability.unknown",
         spells: [
-          { id: "SPWI001" as any, type: "normal" },
-          { id: "SPWI002" as any, type: "normal" },
+          { id: SPWI001, type: "normal" },
+          { id: SPWI002, type: "normal" },
         ],
-      } as any,
+      } as unknown as RawCreatureAbility,
     ]);
     expect(ability.isSpell).toBe(true);
     expect(ability.infiniteUse).toBe(false);
@@ -234,10 +246,10 @@ describe("getAbilities - multi-spell (spells array)", () => {
         {
           name: "ability.unknown",
           spells: [
-            { id: "SPWI001" as any, selfTarget: true },
-            { id: "SPWI002" as any, selfTarget: false },
+            { id: SPWI001, selfTarget: true },
+            { id: SPWI002, selfTarget: false },
           ],
-        } as any,
+        } as unknown as RawCreatureAbility,
       ]),
     ).toThrow(/Every spells must have the same target in ability ability.unknown/);
   });
@@ -246,8 +258,8 @@ describe("getAbilities - multi-spell (spells array)", () => {
     const [ability] = abilityService.getAbilities([
       {
         name: "ability.unknown",
-        spells: [{ id: "SPWI001" as any, type: "normal", targetName: "RR#TRAT" }],
-      } as any,
+        spells: [{ id: SPWI001, type: "normal", targetName: "RR#TRAT" }],
+      } as unknown as RawCreatureAbility,
     ]);
     expect(ability.actions).toContainEqual({
       name: "Spell",
@@ -260,8 +272,8 @@ describe("getAbilities - multi-spell (spells array)", () => {
       abilityService.getAbilities([
         {
           name: "ability.unknown",
-          spells: [{ id: "SPWI001" as any }],
-        } as any,
+          spells: [{ id: SPWI001 }],
+        } as unknown as RawCreatureAbility,
       ]),
     ).toThrow(/getSpellAction: unexpected combination/);
   });
@@ -301,6 +313,7 @@ describe("getAbilities - preset id/resource conflict resolution (applyPreset)", 
     ]);
     expect(ability.actions).toContainEqual({
       name: "Spell",
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- vitest's asymmetric matchers are typed `any`
       params: expect.arrayContaining(["RR#TRAT"]),
     });
   });
@@ -309,20 +322,23 @@ describe("getAbilities - preset id/resource conflict resolution (applyPreset)", 
     ABILITY_PRESETS.push({
       preset: "JA#TEST_RESOURCE_PRESET",
       ability: { name: "ability.unknown", spell: { resource: "MISC7F" } },
-    } as any);
+    });
     try {
       const [ability] = abilityService.getAbilities([
         {
           preset: "JA#TEST_RESOURCE_PRESET",
-          spell: { id: "SPWI001" as any },
+          spell: { id: SPWI001 },
         },
       ]);
       expect(ability.actions).toContainEqual({
         name: "Spell",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- vitest's asymmetric matchers are typed `any`
         params: expect.arrayContaining(["SPWI001"]),
       });
       expect(
-        ability.actions.some((a) => "params" in a && a.params.includes("MISC7F")),
+        ability.actions.some(
+          (a) => "params" in a && (a.params as unknown[]).includes("MISC7F"),
+        ),
       ).toBe(false);
     } finally {
       ABILITY_PRESETS.pop();
@@ -335,7 +351,7 @@ describe("getMinorSequencer / getSequencer", () => {
     const ability = abilityService.getMinorSequencer([
       "SPWI219", // Vocalize
       "SPWI206", // Invisibility
-    ] as any);
+    ] as [string, string]);
     expect(ability.name).toBe("ability.MinorSequencer");
     expect(ability.requireVocal).toBe(false);
     expect(ability.probability).toBe(70);
@@ -344,7 +360,7 @@ describe("getMinorSequencer / getSequencer", () => {
 
   it("throws for an unknown preset name", () => {
     expect(() =>
-      abilityService.getMinorSequencer(["not_a_real_preset", "x"] as any),
+      abilityService.getMinorSequencer(["not_a_real_preset", "x"] as [string, string]),
     ).toThrow(/Unknown preset not_a_real_preset/);
   });
 
@@ -352,7 +368,7 @@ describe("getMinorSequencer / getSequencer", () => {
     const spy = vi.spyOn(service, "applyPreset").mockReturnValueOnce({});
     try {
       expect(() =>
-        abilityService.getMinorSequencer(["x", "y"] as any),
+        abilityService.getMinorSequencer(["x", "y"] as [string, string]),
       ).toThrow(/Sequencer only supports spells/);
     } finally {
       spy.mockRestore();
@@ -362,8 +378,11 @@ describe("getMinorSequencer / getSequencer", () => {
   it("throws when a preset's spell is an array (presets don't support spell arrays)", () => {
     ABILITY_PRESETS.push({
       preset: "JA#TEST_ARRAY_SPELL_PRESET",
-      ability: { name: "ability.unknown", spell: [] as any },
-    } as any);
+      ability: {
+        name: "ability.unknown",
+        spell: [] as unknown as RawCreatureAbility["spell"],
+      },
+    });
     try {
       expect(() =>
         abilityService.getAbilities([{ preset: "JA#TEST_ARRAY_SPELL_PRESET" }]),
@@ -385,7 +404,7 @@ describe("getCustomCodes", () => {
         location: "attack",
         type: "insertBefore",
         abilities: [{ name: "ability.unknown" }],
-      } as any,
+      },
     ]);
     expect(customCode.statements).toEqual([]);
     expect(customCode.abilities).toHaveLength(1);

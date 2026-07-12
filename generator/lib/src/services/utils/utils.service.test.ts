@@ -3,7 +3,9 @@ import * as os from "os";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { ImmunityConfig } from "../../model/final/immunity";
 import { Spell } from "../../model/spell-item/spell-item";
+import { SpellGroup } from "../../model/spell-item/spell-group";
 import { SpellTypeEnum } from "../../model/spell-item/effect.enums";
 import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { Actions } from "../../model/script/actions";
@@ -50,11 +52,9 @@ describe("replaceActionTokens", () => {
     const actions: Actions.Action[] = [
       { name: "Wait", params: ["$N"] } as unknown as Actions.Action,
     ];
-    const result = utils.replaceActionTokens(actions, [
-      { key: "$N", value: "5" },
-    ]);
-    expect((result[0] as any).params).toEqual(["5"]);
-    expect((actions[0] as any).params).toEqual(["$N"]);
+    const result = utils.replaceActionTokens(actions, [{ key: "$N", value: "5" }]);
+    expect((result[0] as { params: string[] }).params).toEqual(["5"]);
+    expect((actions[0] as { params: string[] }).params).toEqual(["$N"]);
   });
 });
 
@@ -66,10 +66,8 @@ describe("replaceTriggerTokens", () => {
         triggers: [{ name: "Global", params: ["$FLAG", "LOCALS", 1] }],
       } as unknown as Triggers.Trigger,
     ];
-    const result = utils.replaceTriggerTokens(triggers, [
-      { key: "$FLAG", value: "MY_FLAG" },
-    ]);
-    expect((result[0] as any).triggers[0].params).toEqual([
+    const result = utils.replaceTriggerTokens(triggers, [{ key: "$FLAG", value: "MY_FLAG" }]);
+    expect((result[0] as { triggers: { params: unknown[] }[] }).triggers[0].params).toEqual([
       "MY_FLAG",
       "LOCALS",
       1,
@@ -80,10 +78,8 @@ describe("replaceTriggerTokens", () => {
     const triggers: Triggers.Trigger[] = [
       { name: "Global", params: ["$FLAG", "LOCALS", 1] } as unknown as Triggers.Trigger,
     ];
-    const result = utils.replaceTriggerTokens(triggers, [
-      { key: "$FLAG", value: "MY_FLAG" },
-    ]);
-    expect((result[0] as any).params).toEqual(["MY_FLAG", "LOCALS", 1]);
+    const result = utils.replaceTriggerTokens(triggers, [{ key: "$FLAG", value: "MY_FLAG" }]);
+    expect((result[0] as { params: unknown[] }).params).toEqual(["MY_FLAG", "LOCALS", 1]);
   });
 });
 
@@ -120,9 +116,7 @@ describe("getSpellFunctionName", () => {
 
   it("throws if the spell name is a numeric string reference", () => {
     const spell = { name: 12345 } as unknown as Spell;
-    expect(() => utils.getSpellFunctionName(spell)).toThrow(
-      "can't handle a number in name!",
-    );
+    expect(() => utils.getSpellFunctionName(spell)).toThrow("can't handle a number in name!");
   });
 });
 
@@ -152,15 +146,13 @@ describe("getImmunityFunctionName", () => {
       utils.getImmunityFunctionName({
         name: "poison",
         type: "immunity",
-      } as any),
+      } as unknown as ImmunityConfig),
     ).toBe("poison_immunity");
   });
 
   it("looks up the ImmunityConfig by name in State.immunities when given a string", () => {
     const original = State.immunities;
-    State.immunities = [
-      { name: "poison", type: "immunity" },
-    ] as any;
+    State.immunities = [{ name: "poison", type: "immunity" }] as unknown as ImmunityConfig[];
     try {
       expect(utils.getImmunityFunctionName("poison")).toBe("poison_immunity");
     } finally {
@@ -184,9 +176,7 @@ describe("hasImmunity", () => {
   });
 
   it("recurses into a referenced immunity's own immunities list", () => {
-    State.immunities = [
-      { name: "giant", immunities: ["poison"] },
-    ] as any;
+    State.immunities = [{ name: "giant", immunities: ["poison"] }] as unknown as ImmunityConfig[];
     try {
       expect(utils.hasImmunity(["giant"], "poison")).toBe(true);
     } finally {
@@ -217,7 +207,7 @@ describe("hasCriticalHitImmunity", () => {
       utils.hasCriticalHitImmunity({
         name: "criticalHit",
         immunities: [],
-      } as any),
+      } as unknown as ImmunityConfig),
     ).toBe(true);
   });
 
@@ -226,20 +216,20 @@ describe("hasCriticalHitImmunity", () => {
       utils.hasCriticalHitImmunity({
         name: "giant",
         immunities: ["criticalHit"],
-      } as any),
+      } as unknown as ImmunityConfig),
     ).toBe(true);
   });
 
   it("recurses through referenced immunities in State.immunities", () => {
     State.immunities = [
       { name: "poison", immunities: ["criticalHit"] },
-    ] as any;
+    ] as unknown as ImmunityConfig[];
     try {
       expect(
         utils.hasCriticalHitImmunity({
           name: "giant",
           immunities: ["poison"],
-        } as any),
+        } as unknown as ImmunityConfig),
       ).toBe(true);
     } finally {
       restore();
@@ -251,22 +241,20 @@ describe("hasCriticalHitImmunity", () => {
       utils.hasCriticalHitImmunity({
         name: "fire",
         immunities: [],
-      } as any),
+      } as unknown as ImmunityConfig),
     ).toBe(false);
   });
 });
 
 describe("getSpellResourceFunctionName", () => {
   it("accepts a plain group name string", () => {
-    expect(utils.getSpellResourceFunctionName("poison" as any)).toBe(
-      "get_poison_resources",
-    );
+    expect(utils.getSpellResourceFunctionName("poison")).toBe("get_poison_resources");
   });
 
   it("accepts a SpellGroup object and reads its name", () => {
-    expect(
-      utils.getSpellResourceFunctionName({ name: "disease" } as any),
-    ).toBe("get_disease_resources");
+    expect(utils.getSpellResourceFunctionName({ name: "disease" } as unknown as SpellGroup)).toBe(
+      "get_disease_resources",
+    );
   });
 });
 
@@ -290,37 +278,21 @@ describe("getFile", () => {
 
 describe("getFamilyFolder", () => {
   it("lowercases the family enum name into the pnp-monster path", () => {
-    expect(utils.getFamilyFolder(MonsterFamilyEnum.Bear)).toBe(
-      "lib/pnp-monster/bear",
-    );
+    expect(utils.getFamilyFolder(MonsterFamilyEnum.Bear)).toBe("lib/pnp-monster/bear");
   });
 });
 
 describe("getIdsFileFromSpellProtectionStat", () => {
   it("maps each stat needing an ids lookup to its ids file name", () => {
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Race),
-    ).toBe("race");
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Align),
-    ).toBe("align");
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Gender),
-    ).toBe("gender");
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Specific),
-    ).toBe("specific");
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.State),
-    ).toBe("state");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Race)).toBe("race");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Align)).toBe("align");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Gender)).toBe("gender");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.Specific)).toBe("specific");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.State)).toBe("state");
   });
 
   it("returns an empty string for stats with no ids file", () => {
-    expect(
-      utils.getIdsFileFromSpellProtectionStat(
-        SpellProtectionStat.CircleSize,
-      ),
-    ).toBe("");
+    expect(utils.getIdsFileFromSpellProtectionStat(SpellProtectionStat.CircleSize)).toBe("");
   });
 });
 
@@ -358,7 +330,7 @@ describe("getSpellInfos", () => {
   it("resolves type/level directly from a State.spells entry when spell.type is mapped", () => {
     State.spells = [
       { file: "XXTEST1", type: SpellTypeEnum.Wizard, level: 5 },
-    ] as any;
+    ] as unknown as Spell[];
     try {
       expect(utils.getSpellInfos("XXTEST1")).toEqual({
         type: "wizard",
@@ -377,7 +349,7 @@ describe("getSpellInfos", () => {
         level: 9,
         copyFrom: "SPWI312",
       },
-    ] as any;
+    ] as unknown as Spell[];
     try {
       expect(utils.getSpellInfos("XXTEST1")).toEqual({
         type: "wizard",
@@ -396,7 +368,7 @@ describe("getSpellInfos", () => {
         level: 4,
         options: { spellType: SpellTypeEnum.Priest },
       },
-    ] as any;
+    ] as unknown as Spell[];
     try {
       expect(utils.getSpellInfos("XXTEST1")).toEqual({
         type: "priest",
@@ -410,7 +382,7 @@ describe("getSpellInfos", () => {
   it("falls back to innate/spell.level when neither type, copyFrom nor options resolve it", () => {
     State.spells = [
       { file: "XXTEST1", type: SpellTypeEnum.Psionic, level: 7 },
-    ] as any;
+    ] as unknown as Spell[];
     try {
       expect(utils.getSpellInfos("XXTEST1")).toEqual({
         type: "innate",
@@ -424,7 +396,7 @@ describe("getSpellInfos", () => {
   it("falls back to level 1 when spell.level is missing (type violation - defensive fallback)", () => {
     State.spells = [
       { file: "XXTEST1", type: SpellTypeEnum.Psionic, level: undefined },
-    ] as any;
+    ] as unknown as Spell[];
     try {
       expect(utils.getSpellInfos("XXTEST1")).toEqual({
         type: "innate",
@@ -489,14 +461,9 @@ describe("writeFile", () => {
     State.modFolder = tempDir;
     try {
       const file = path.join(tempDir, "mixed.txt");
-      utils.writeFile(
-        file,
-        "line one\r\nline two\nline three\r\nline four\n",
-      );
+      utils.writeFile(file, "line one\r\nline two\nline three\r\nline four\n");
       const written = fs.readFileSync(file, "utf-8");
-      expect(written).toBe(
-        "line one\r\nline two\r\nline three\r\nline four\r\n",
-      );
+      expect(written).toBe("line one\r\nline two\r\nline three\r\nline four\r\n");
     } finally {
       State.modFolder = originalModFolder;
       fs.rmSync(tempDir, { recursive: true, force: true });

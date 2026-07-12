@@ -1,28 +1,65 @@
 import { describe, expect, it } from "vitest";
 import { CodeLine } from "../../model/misc";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
-import { Creature } from "../../model/creature/creature";
+import { Creature, CreatureAutoGenerate } from "../../model/creature/creature";
 import { CreatureAdjustment } from "../../model/creature/adjustment";
+import { CreatureData } from "../../model/creature/data";
 import weiduCreatureService from "./weidu-creature.service";
 
-const service = weiduCreatureService as any;
+interface WeiduCreatureServicePrivate {
+  removeEffects(lines: CodeLine[], tab: number, creature: Creature): void;
+  removeKnownSpells(lines: CodeLine[], tab: number, creature: Creature): void;
+  removeMemorizedSpells(lines: CodeLine[], tab: number, creature: Creature): void;
+  addMemorizedSpells(lines: CodeLine[], tab: number, data: Partial<CreatureData>): void;
+  patchScript(p: {
+    lines: CodeLine[];
+    tab: number;
+    script: string;
+    slot?: string;
+    removeScripts: string[];
+    files: string[];
+    skipFiles: string[];
+    logging: boolean;
+  }): void;
+  patchCreature(p: {
+    lines: CodeLine[];
+    tab: number;
+    data: Partial<CreatureData>;
+    autoGenerate: Partial<CreatureAutoGenerate>;
+    enforce: boolean;
+    creature: Creature;
+  }): void;
+  handleAdjustments(lines: CodeLine[], tab: number, creature: Creature): void;
+  handleAdjustment(
+    lines: CodeLine[],
+    tab: number,
+    creature: Creature,
+    adjustment: CreatureAdjustment,
+  ): void;
+}
+
+const service = weiduCreatureService as unknown as WeiduCreatureServicePrivate;
 
 function codes(lines: CodeLine[]): string[] {
   return lines.map((l) => l.code);
 }
 
-function fakeAdjustment(p: Partial<CreatureAdjustment> = {}): CreatureAdjustment {
+function fakeAdjustment(
+  p: Partial<Omit<CreatureAdjustment, "data">> & { data?: Partial<CreatureData> } = {},
+): CreatureAdjustment {
   return {
     files: [],
     summon: false,
     noWeapon: false,
     scriptName: false,
-    data: { effects: { list: [] }, spells: { memorized: [] } } as any,
+    data: { effects: { list: [] }, spells: { memorized: [] } },
     ...p,
-  };
+  } as unknown as CreatureAdjustment;
 }
 
-function fakeCreature(p: Partial<Creature> = {}): Creature {
+function fakeCreature(
+  p: Partial<Omit<Creature, "data">> & { data?: Partial<CreatureData> } = {},
+): Creature {
   return {
     id: 1,
     files: [],
@@ -41,37 +78,35 @@ describe("removeEffects (private)", () => {
     const lines: CodeLine[] = [];
     const creature = fakeCreature({
       files: ["FILE1"],
-      data: { effects: { remove: true, list: [] } } as any,
+      data: { effects: { remove: true, list: [] } },
     });
     service.removeEffects(lines, 0, creature);
-    expect(
-      codes(lines).some((c) => c.includes("REMOVE_MOST_CRE_EFFECTS")),
-    ).toBe(true);
+    expect(codes(lines).some((c) => c.includes("REMOVE_MOST_CRE_EFFECTS"))).toBe(true);
   });
 
   it("removes specific opcodes when creature.data.effects.remove is an array", () => {
     const lines: CodeLine[] = [];
     const creature = fakeCreature({
       files: ["FILE1"],
-      data: { effects: { remove: [EffectTypeEnum.Damage], list: [] } } as any,
+      data: { effects: { remove: [EffectTypeEnum.Damage], list: [] } },
     });
     service.removeEffects(lines, 0, creature);
-    expect(
-      codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Damage}`)),
-    ).toBe(true);
+    expect(codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Damage}`))).toBe(
+      true,
+    );
   });
 
   it("removes specific opcodes for an adjustment with an array effects.remove", () => {
     const lines: CodeLine[] = [];
     const adjustment = fakeAdjustment({
       files: ["ADJ1"],
-      data: { effects: { remove: [EffectTypeEnum.Poison], list: [] } } as any,
+      data: { effects: { remove: [EffectTypeEnum.Poison], list: [] } },
     });
     const creature = fakeCreature({ adjustments: [adjustment] });
     service.removeEffects(lines, 0, creature);
-    expect(
-      codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Poison}`)),
-    ).toBe(true);
+    expect(codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Poison}`))).toBe(
+      true,
+    );
   });
 });
 
@@ -80,7 +115,7 @@ describe("removeKnownSpells (private)", () => {
     const lines: CodeLine[] = [];
     const adjustment = fakeAdjustment({
       files: ["ADJ1"],
-      data: { spells: { removeKnown: false, memorized: [] } } as any,
+      data: { spells: { removeKnown: false, memorized: [] } },
     });
     const creature = fakeCreature({ adjustments: [adjustment] });
     service.removeKnownSpells(lines, 0, creature);
@@ -93,14 +128,14 @@ describe("removeMemorizedSpells (private)", () => {
     const lines: CodeLine[] = [];
     const adjustment = fakeAdjustment({
       files: ["ADJ1"],
-      data: { spells: { removeMemorized: false, memorized: [] } } as any,
+      data: { spells: { removeMemorized: false, memorized: [] } },
     });
     const creature = fakeCreature({
       adjustments: [adjustment],
       data: {
         effects: { list: [] },
         spells: { removeMemorized: true, memorized: [] },
-      } as any,
+      },
     });
     service.removeMemorizedSpells(lines, 0, creature);
     expect(codes(lines).some((c) => c.includes("ADJ1"))).toBe(true);
@@ -189,20 +224,20 @@ describe("handleAdjustments (private)", () => {
       files: ["KNOWN1"],
       adjustments: [fakeAdjustment({ files: ["UNKNOWN1"] })],
     });
-    expect(() => service.handleAdjustments([], 0, creature)).toThrow(
-      /Unknown adjustment file UNKNOWN1/,
-    );
+    expect(() => {
+      service.handleAdjustments([], 0, creature);
+    }).toThrow(/Unknown adjustment file UNKNOWN1/);
   });
 
   it("skips adjustments with neither data nor summon", () => {
     const creature = fakeCreature({
       files: ["KNOWN1"],
-      adjustments: [
-        fakeAdjustment({ files: ["KNOWN1"], data: undefined, summon: false }),
-      ],
+      adjustments: [fakeAdjustment({ files: ["KNOWN1"], data: undefined, summon: false })],
     });
     // should not throw and should not attempt to process the adjustment
-    expect(() => service.handleAdjustments([], 0, creature)).not.toThrow();
+    expect(() => {
+      service.handleAdjustments([], 0, creature);
+    }).not.toThrow();
   });
 });
 
@@ -216,8 +251,8 @@ describe("handleAdjustment (private)", () => {
       scriptName: true,
       data: undefined,
     });
-    expect(() =>
-      service.handleAdjustment([], 0, creature, adjustment),
-    ).toThrow(/can't have a script name if it has several files/);
+    expect(() => {
+      service.handleAdjustment([], 0, creature, adjustment);
+    }).toThrow(/can't have a script name if it has several files/);
   });
 });

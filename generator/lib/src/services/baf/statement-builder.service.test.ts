@@ -1,12 +1,23 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { POTIONS } from "../../../config/potion";
+import { TargetListName, TargetStatusName } from "../../../config/target-name";
 import { CreatureAbility } from "../../model/creature/ability";
 import { CreatureAttack } from "../../model/creature/attack";
 import { BEHAVIOR_DEFAULT, CreatureBehavior } from "../../model/creature/behavior";
 import { Creature } from "../../model/creature/creature";
+import { CreatureData } from "../../model/creature/data";
 import { BuilderOptions } from "../../model/misc";
-import { Statements } from "../../model/script/script";
+import { Actions } from "../../model/script/actions";
+import {
+  AdditionalCode,
+  CustomCodeLocation,
+  PartialAdditionalCode,
+  PartialCustomCode,
+  Statements,
+} from "../../model/script/script";
+import { TargetList } from "../../model/script/target";
+import { Triggers } from "../../model/script/triggers";
 import stateService from "../state.service";
 import utils from "../utils/utils.service";
 import targetService from "./target.service";
@@ -18,17 +29,88 @@ beforeAll(async () => {
   await stateService.init();
 });
 
-const service = statementService as any;
+interface StatementServicePrivate {
+  execute(
+    fn: (statements: Statements, creature: Creature, options: BuilderOptions) => void,
+    location: CustomCodeLocation,
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void;
+  processStatements(statements: Statements, newStatements: Statements): void;
+  dialog(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  handlePanic(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  destroyUponDeath(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  init(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  rest(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  turnHostile(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  detectCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  shouts(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  noActionOutsideOfCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  followSummoner(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  trackTargets(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  randomWalkCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  randomWalkNoCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  thievesAbilities(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  avoidMeleeCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  attack(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  attackTargetWithStatuses(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+    targetListName: TargetListName,
+    statusNameList: TargetStatusName[],
+  ): void;
+  selectWeaponMeleeRangeStatements(creature: Creature, options: BuilderOptions): Statements;
+  selectWeaponStatements(
+    creature: Creature,
+    targetTriggers: Triggers.Trigger[],
+    options: BuilderOptions,
+  ): Statements;
+  potions(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  precastLongDurationSpells(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  precastMidDurationSpells(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  creatureAbilities(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  parseAbilities(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+    abilities: CreatureAbility[],
+  ): void;
+  creatureTargetAbility(
+    statements: Statements,
+    creature: Creature,
+    ability: CreatureAbility,
+    target: TargetList,
+    options: BuilderOptions,
+  ): void;
+  creatureSelfAbility(
+    statements: Statements,
+    creature: Creature,
+    ability: CreatureAbility,
+    options: BuilderOptions,
+  ): void;
+  getAdditionals(
+    creature: Creature,
+    location: CustomCodeLocation,
+  ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] };
+}
+
+const service = statementService as unknown as StatementServicePrivate;
 
 function fakeCreature(
   overrides: {
-    data?: Record<string, any>;
-    behavior?: Partial<CreatureBehavior>;
+    data?: Partial<CreatureData>;
+    behavior?: Partial<Omit<CreatureBehavior, "customCodes" | "additionalCodes">> & {
+      customCodes?: PartialCustomCode[];
+      additionalCodes?: PartialAdditionalCode[];
+    };
     attack?: Partial<CreatureAttack>;
   } = {},
 ): Creature {
+  const data = { immunities: [], race: "HUMAN", ...overrides.data };
   return {
-    data: { immunities: [], race: "HUMAN", ...overrides.data },
+    data,
     behavior: { ...BEHAVIOR_DEFAULT, ...overrides.behavior },
     attack: {
       melee: true,
@@ -41,7 +123,7 @@ function fakeCreature(
       ...overrides.attack,
     },
     seeInvisible() {
-      return utils.hasImmunity((this as any).data.immunities ?? [], "seeInvisible");
+      return utils.hasImmunity(data.immunities, "seeInvisible");
     },
   } as unknown as Creature;
 }
@@ -367,7 +449,7 @@ describe("followSummoner (private)", () => {
     const statements: Statements = [];
     service.followSummoner(statements, fakeCreature(), options(true));
     const actionListEmptyCount = statements[0].triggers.filter(
-      (t: any) => t.name === "ActionListEmpty",
+      (t: Triggers.Trigger) => t.name === "ActionListEmpty",
     ).length;
     expect(actionListEmptyCount).toBe(1);
   });
@@ -548,50 +630,50 @@ describe("attack (private)", () => {
       }),
       options(),
     );
-    expect(statements.some((s: any) => s.comment === "Attack Able enemy")).toBe(
-      true,
-    );
+    expect(
+      statements.some((s: Statements[number]) => s.comment === "Attack Able enemy"),
+    ).toBe(true);
   });
 });
 
 describe("attackTargetWithStatuses (private)", () => {
   it("throws for a status name that isn't in TARGET_STATUS", () => {
     const statements: Statements = [];
-    expect(() =>
+    expect(() => {
       service.attackTargetWithStatuses(
         statements,
         fakeCreature(),
         options(),
         "NearestEnemies",
-        ["NotAStatus"],
-      ),
-    ).toThrow(/Target status details NotAStatus not found/);
+        ["NotAStatus"] as unknown as TargetStatusName[],
+      );
+    }).toThrow(/Target status details NotAStatus not found/);
   });
 
   it("throws for a status whose targetTriggers contain an unhandled Or trigger", () => {
     const statements: Statements = [];
-    expect(() =>
+    expect(() => {
       service.attackTargetWithStatuses(
         statements,
         fakeCreature(),
         options(),
         "NearestEnemies",
         ["PanicConfused"],
-      ),
-    ).toThrow(/OR triggers not handled currently: PanicConfused/);
+      );
+    }).toThrow(/OR triggers not handled currently: PanicConfused/);
   });
 
   it("throws when a player-only status is targeted at a non-Players list", () => {
     const statements: Statements = [];
-    expect(() =>
+    expect(() => {
       service.attackTargetWithStatuses(
         statements,
         fakeCreature(),
         options(),
         "NearestEnemies",
         ["Sleep"],
-      ),
-    ).toThrow(/Status Sleep must target party/);
+      );
+    }).toThrow(/Status Sleep must target party/);
   });
 
   it("emits an attack block (guard statement + final attack statement) for a normal status", () => {
@@ -716,8 +798,8 @@ describe("potions (private)", () => {
       const testStatement = statements.find(
         (s) => s.comment === "Test potion",
       );
-      expect(testStatement).toBeDefined();
-      expect(testStatement!.triggers.map((t: any) => t.name)).toEqual([
+      if (!testStatement) throw new Error("expected a 'Test potion' statement");
+      expect(testStatement.triggers.map((t: Triggers.Trigger) => t.name)).toEqual([
         "HasItem",
         "GlobalTimerNotExpired",
       ]);
@@ -956,13 +1038,13 @@ describe("getAdditionals (private)", () => {
   });
 
   it("returns the matching additionalCodes entry for the location", () => {
-    const additional = {
+    const additional: AdditionalCode = {
       location: "trackTargets",
       triggers: [{ name: "See", params: ["PC"] }],
       actions: [{ name: "Wait", params: [1] }],
     };
     const creature = fakeCreature({
-      behavior: { additionalCodes: [additional] } as any,
+      behavior: { additionalCodes: [additional] },
     });
     expect(service.getAdditionals(creature, "trackTargets")).toEqual(
       additional,
@@ -1027,7 +1109,7 @@ describe("execute (private, custom-code dispatch)", () => {
             abilities: [fakeAbility()],
           },
         ],
-      } as any,
+      },
     });
     service.execute(
       function () {
@@ -1050,7 +1132,7 @@ describe("execute (private, custom-code dispatch)", () => {
     const creature = fakeCreature({
       behavior: {
         customCodes: [{ location: "rest", type: "replace" }],
-      } as any,
+      },
     });
     service.execute(
       function () {
@@ -1077,7 +1159,7 @@ describe("execute (private, custom-code dispatch)", () => {
             abilities: [],
           },
         ],
-      } as any,
+      },
     });
     service.execute(
       function (stmts: Statements) {
@@ -1103,7 +1185,7 @@ describe("execute (private, custom-code dispatch)", () => {
             abilities: [],
           },
         ],
-      } as any,
+      },
     });
     service.execute(
       function (stmts: Statements) {
@@ -1122,7 +1204,7 @@ describe("execute (private, custom-code dispatch)", () => {
     const creature = fakeCreature({
       behavior: {
         customCodes: [{ location: "rest", type: "insertBefore" }],
-      } as any,
+      },
     });
     let called = false;
     service.execute(
@@ -1144,7 +1226,7 @@ describe("execute (private, custom-code dispatch)", () => {
     const creature = fakeCreature({
       behavior: {
         customCodes: [{ location: "rest", type: "insertAfter" }],
-      } as any,
+      },
     });
     service.execute(
       function (stmts: Statements) {
@@ -1214,7 +1296,7 @@ describe("buildStatements (integration)", () => {
             abilities: [fakeAbility({ name: "ability.unknown" })],
           },
         ],
-      } as any,
+      },
     });
     const result = statementService.buildStatements(creature, options());
     expect(result.some((s) => s.comment?.startsWith("Rest"))).toBe(false);
@@ -1236,7 +1318,7 @@ describe("buildStatements (integration)", () => {
             abilities: [],
           },
         ],
-      } as any,
+      },
     });
     const result = statementService.buildStatements(creature, options());
     const idx = result.findIndex((s) => s.comment === "custom-before-dialog");
