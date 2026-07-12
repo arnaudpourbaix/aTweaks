@@ -619,6 +619,19 @@ Added an `addOneBlockTargetList` describe block to `baf.factory.test.ts`
 final statement's `LastSeenBy` resolution, and `reverse`. Now 100%
 branches/statements for this file.
 
+### ✅ `translation.service.ts` — audited, no bug found
+
+Added `translation.service.test.ts` (no coverage before) — 7 tests covering
+`stringRef()`'s unknown-key throw, `fromOptional()`'s undefined case,
+`from()`'s numeric-stringRef-not-found throw, `addCustomTranslation()` +
+resolving it back, `interpolate()`'s undefined-var throw, and (once found)
+private `fromStringRef()`'s `lang` default parameter — which turned out to
+be dead in practice, since its only call site (`from()`) always passes
+`lang` through explicitly, even when `from()` itself used its own default.
+Harmless (no behavior difference either way), closed directly by invoking
+the private method with no second argument. All pass — no bug found. Now
+100% branches/statements for this file.
+
 ---
 
 ## Process
