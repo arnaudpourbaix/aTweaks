@@ -16,6 +16,24 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      // Same as strictTypeChecked's own config for this rule, except allowNumber/allowBoolean
+      // flipped to true (this codebase constantly stringifies typed opcode params/enums into
+      // generated WeiDU output). Every flag must be listed explicitly: flat config replaces a
+      // rule's whole options object rather than merging, so omitting one here would silently
+      // reset it to the rule's own (much more permissive) built-in defaults.
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        {
+          allowAny: false,
+          allowBoolean: true,
+          allowNever: false,
+          allowNullish: false,
+          allowNumber: true,
+          allowRegExp: false,
+        },
+      ],
+    },
   },
   eslintConfigPrettier,
 );
