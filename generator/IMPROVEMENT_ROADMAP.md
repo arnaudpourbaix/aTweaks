@@ -569,6 +569,29 @@ guards that are simple, obviously-correct `if (list.includes(x)) throw;
 list.push(x);` duplicate-detection patterns with no bug risk on inspection.
 No fix needed; not pursued further.
 
+### ✅ `model/creature/data.ts` — audited, no bug found
+
+Added 10 tests to the existing `data.test.ts` — `level2`'s already-built-Level
+passthrough (the other two level setters were already covered, this one
+wasn't), and the full `boolean` / `merge-into-existing-array` /
+`replace-non-array` / `left-untouched` matrix for both the `spells`
+(`removeMemorized`) and `effects` (`remove`) setters. All pass — no bug
+found; the merge logic here is actually a more graceful version of the
+"union-typed remove field" pattern than `kit.service.ts`'s `removeKit()`
+(which just throws on a boolean/array conflict instead of merging). Branches
+90.9% (40/44), up from 75%.
+
+**Two remaining gaps left alone deliberately:** the final `else if
+(Array.isArray(...))` in both the `spells` and `effects` setters is provably
+unreachable — the field type is `boolean | string[] | undefined`, and by
+that point `undefined` and `boolean` are already handled, so TS narrowing
+guarantees an array. Same shape as the `weidu-item.service.ts` dead branch,
+but here "fixing" it means restructuring two related conditions rather than
+deleting one redundant ternary, and the explicit `Array.isArray` checks read
+more defensively than a bare `else` would. Left as-is, consistent with the
+closed bugfix roadmap's item #10 precedent (don't simplify when the fix
+would be worse than the original).
+
 ---
 
 ## Process

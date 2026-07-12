@@ -58,4 +58,78 @@ describe("CREATURE_DATA_FIELDS 'level1'/'level2'/'level3'", () => {
     });
     expect(field("level1").value!(data)).toBe("6");
   });
+
+  it("level2's setter also passes through an already-built Level object unchanged", () => {
+    const data = baseData({});
+    const level: Level = { pnpValue: 9, value: 7, type: "caster" };
+    field("level2").setter!(data, level);
+    expect(data.level2).toBe(level);
+  });
+});
+
+describe("CREATURE_DATA_FIELDS 'spells'", () => {
+  it("a boolean removeMemorized always overwrites the current value", () => {
+    const data = baseData({
+      spells: { removeKnown: undefined, removeMemorized: ["OLD"], memorized: [] },
+    });
+    field("spells").setter!(data, { removeMemorized: false });
+    expect(data.spells.removeMemorized).toBe(false);
+  });
+
+  it("merges an array removeMemorized into an existing array", () => {
+    const data = baseData({
+      spells: { removeKnown: undefined, removeMemorized: ["OLD"], memorized: [] },
+    });
+    field("spells").setter!(data, { removeMemorized: ["NEW"] });
+    expect(data.spells.removeMemorized).toEqual(["OLD", "NEW"]);
+  });
+
+  it("replaces a non-array removeMemorized (e.g. still the boolean default) with the new array", () => {
+    const data = baseData({
+      spells: { removeKnown: undefined, removeMemorized: true, memorized: [] },
+    });
+    field("spells").setter!(data, { removeMemorized: ["NEW"] });
+    expect(data.spells.removeMemorized).toEqual(["NEW"]);
+  });
+
+  it("leaves removeMemorized untouched when not provided", () => {
+    const data = baseData({
+      spells: { removeKnown: undefined, removeMemorized: true, memorized: [] },
+    });
+    field("spells").setter!(data, {});
+    expect(data.spells.removeMemorized).toBe(true);
+  });
+});
+
+describe("CREATURE_DATA_FIELDS 'effects'", () => {
+  it("pushes provided effects onto the list", () => {
+    const data = baseData({ effects: { remove: undefined, list: [] } });
+    const effect = { opcode: 1 } as any;
+    field("effects").setter!(data, { list: [effect] });
+    expect(data.effects.list).toEqual([effect]);
+  });
+
+  it("a boolean remove always overwrites the current value", () => {
+    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    field("effects").setter!(data, { remove: false });
+    expect(data.effects.remove).toBe(false);
+  });
+
+  it("merges an array remove into an existing array", () => {
+    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    field("effects").setter!(data, { remove: [2 as any] });
+    expect(data.effects.remove).toEqual([1, 2]);
+  });
+
+  it("replaces a non-array remove with the new array", () => {
+    const data = baseData({ effects: { remove: undefined, list: [] } });
+    field("effects").setter!(data, { remove: [1 as any] });
+    expect(data.effects.remove).toEqual([1]);
+  });
+
+  it("leaves remove untouched when not provided", () => {
+    const data = baseData({ effects: { remove: [1 as any], list: [] } });
+    field("effects").setter!(data, {});
+    expect(data.effects.remove).toEqual([1]);
+  });
 });
