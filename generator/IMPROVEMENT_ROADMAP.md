@@ -1041,6 +1041,20 @@ calculation, `getSavingThrows`, had tests), mirroring the existing
 parent, no-ops when a parent is provided, and sets the save fields
 otherwise. No bug found. Now 100% branches (up from 99.14%).
 
+### ✅ `description.service.ts` — audited, no bug found
+
+Added 2 tests to `description.service.test.ts`: `generateImmunity()`'s
+`immunity.effects ?? []` fallback (the field is required by `ImmunityConfig`
+but the code defends against it being unset anyway — same
+documented-but-unreachable-via-types pattern as other `?? []` fallbacks
+audited this session), and `generateWeaponDescription()`'s "Ranged" damage
+label for a non-melee weapon type (only "Melee" had a test). No bug found.
+Now 100% branches (up from 99.21%).
+
+This closes out the Tier 2 branch-coverage audit list — every remaining
+candidate has now been reviewed (either fully closed to 100% or
+deliberately stopped short with the gap documented, per the entries above).
+
 ---
 
 ## Process

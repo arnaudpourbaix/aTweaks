@@ -1226,6 +1226,19 @@ describe("generateImmunity (public)", () => {
     descriptionService.generateImmunity(immunity);
     expect(immunity.description).toBeUndefined();
   });
+
+  it("defaults effects to an empty array when unset (the field is required by the type but the code defends against it anyway)", () => {
+    State.immunities = [
+      fakeImmunity({ name: "cold", stringRef: "common.immunity.cold" }),
+    ];
+    const immunity = fakeImmunity({
+      name: "elemental",
+      immunities: ["cold"],
+      effects: undefined as any,
+    });
+    descriptionService.generateImmunity(immunity);
+    expect(decode(immunity.description as number)).toEqual(["Immune to cold"]);
+  });
 });
 
 describe("generateCreatureSpells (public)", () => {
@@ -1334,6 +1347,23 @@ describe("generateCreatureItems (public)", () => {
     const weapon = fakeWeapon({ stringRef: flavor });
     descriptionService.generateCreatureItems([weapon]);
     expect(decode(weapon.description as number)).toEqual([""]);
+  });
+
+  it("labels damage as 'Ranged' for a non-melee weapon type", () => {
+    const weapon = fakeWeapon({
+      header: {
+        type: ItemAbilityTypeEnum.Ranged,
+        target: ItemAbilityTargetEnum.LivingActor,
+        diceThrown: 1,
+        diceSize: 6,
+        damageType: AbilityDamageTypeEnum.Piercing,
+        effects: [],
+      },
+    });
+    descriptionService.generateCreatureItems([weapon]);
+    expect(decode(weapon.description as number)).toContain(
+      "Ranged damage: 1D6 (Piercing)",
+    );
   });
 
   it("omits Speed Factor when there is no damage and no damage effects", () => {
