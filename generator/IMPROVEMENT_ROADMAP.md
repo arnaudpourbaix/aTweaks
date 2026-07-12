@@ -947,6 +947,15 @@ currently unused by real config — the one example in `hp.ts` is commented
 out — tested via a temporarily-pushed/popped fake entry). No bug found. Now
 100% branches/statements (up from 95.91%).
 
+### ✅ `abstract-weidu.service.ts` — audited, no bug found
+
+Added `abstract-weidu.service.test.ts` (no coverage before) — 4 tests
+covering `addConditionalSourceRes()`'s single-string-vs-array `codes`
+parameter and `executeCodeWithIncludedFiles()`'s empty-`files` no-op, called
+via a real subclass (`weiduItemService`, since this is a base class not
+meant to be instantiated directly). No bug found. Now 100% branches (up from
+93.33%).
+
 ---
 
 ## Process
