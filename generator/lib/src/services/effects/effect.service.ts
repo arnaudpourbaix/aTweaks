@@ -237,11 +237,11 @@ class EffectService {
         effect.parameter2 = `${effect.type}`;
         break;
       case EffectTypeEnum.DispelEffects:
-        if (effect.dispelType)
-          effect.parameter1 = `${DispelEffectTypeEnum[effect.dispelType ?? 0]}`;
-        if (effect.magicWeaponDispelType)
+        if (effect.dispelType !== undefined)
+          effect.parameter1 = `${DispelEffectTypeEnum[effect.dispelType]}`;
+        if (effect.magicWeaponDispelType !== undefined)
           effect.parameter2 = `${
-            DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType ?? 0]
+            DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType]
           }`;
         break;
       case EffectTypeEnum.ProtectionFromWeapons:

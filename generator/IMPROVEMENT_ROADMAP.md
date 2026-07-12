@@ -763,6 +763,46 @@ functions). All pass — no bug found. Now 98.55% branches (68/69, up from
 fallback is unreachable via real config (`SPELL_GROUPS` is a fixed
 non-injectable array; all 34 real entries set `spells`) — not pursued.
 
+### ✅ `effect.service.ts` — real bug found and fixed, now 100% branches
+
+This file's `getEffect()` is a large opcode-dispatch switch; ~15 opcodes had
+never been exercised by any test (`AttackDamageBonus`, `ProtectionFromOpcode`,
+`PolymorphIntoSpecific`, `Berserk`, `ProficiencyModifier`, `DispelEffects`,
+`RemoveOpcode`, `MakeUnselectable`, `OverrideCreatureData`,
+`SetAnimationSequence`, plus sub-condition branches on `Regeneration`/
+`Disease`/`Poison`'s `icon`, `KillTarget`'s `displayText`,
+`NoCollisionDetection`'s `passWalls`, `DisableSpellcasting`'s `showMessage`).
+Added ~35 tests to the existing `effect.service.test.ts` covering all of
+them.
+
+**Bug found and fixed — `DispelEffects` truthy-checked a meaningful zero,
+same shape as several closed-roadmap bugs:**
+
+```ts
+case EffectTypeEnum.DispelEffects:
+  if (effect.dispelType)
+    effect.parameter1 = `${DispelEffectTypeEnum[effect.dispelType ?? 0]}`;
+  if (effect.magicWeaponDispelType)
+    effect.parameter2 = `${DispelEffectWeaponTypeEnum[effect.magicWeaponDispelType ?? 0]}`;
+  break;
+```
+
+`DispelEffectTypeEnum.AlwaysDispel` and `DispelEffectWeaponTypeEnum.AlwaysDispel`
+are both `0` — a real, meaningful enum member, not a sentinel for "unset."
+The truthy checks (`if (effect.dispelType)`) treat `0` the same as
+`undefined`, so setting either field to `AlwaysDispel` silently produced no
+`parameter1`/`parameter2` at all. The stray `?? 0` inside each branch was a
+tell: someone clearly anticipated the zero case but guarded it with the
+wrong check, so the fallback could never actually run.
+
+**Fix applied:** changed both checks to `!== undefined` and dropped the
+now-redundant (and, with the fix, truly unreachable) `?? 0` fallbacks.
+
+**Confirmed no current impact:** no shipped creature/spell config uses the
+`DispelEffects` opcode at all — dormant, same shape as several items in the
+closed `BUGFIX_ROADMAP.md`. Full regeneration produced zero output changes.
+Now 100% branches/statements for this file (up from 85.63%).
+
 ---
 
 ## Process

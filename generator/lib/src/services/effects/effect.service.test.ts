@@ -6,6 +6,8 @@ import {
 import { Effect } from "../../model/spell-item/effect";
 import {
   AttackModifierTypeEnum,
+  DispelEffectTypeEnum,
+  DispelEffectWeaponTypeEnum,
   EffectBonusToEnum,
   EffectColorLocationEnum,
   EffectDamageModeEnum,
@@ -28,6 +30,29 @@ describe("getEffect", () => {
     effectService.getEffect(effect);
     expect(effect.parameter1).toBe("3");
     expect(effect.parameter2).toBe(`${EffectStatisticModifierEnum.Increment}`);
+  });
+
+  describe("Poison", () => {
+    it("sets special to the icon when present", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Poison,
+        amount: 2,
+        type: 1 as any,
+        icon: 6 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBe(6);
+    });
+
+    it("leaves special unset when no icon is given", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Poison,
+        amount: 2,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBeUndefined();
+    });
   });
 
   it("builds an IDS_OF_SYMBOL lookup for IDS-file cases (Hold)", () => {
@@ -198,6 +223,267 @@ describe("getEffect", () => {
         /must be between 0 and 35/,
       );
     });
+  });
+
+  it("fills parameter1/parameter2 for the AttackDamageBonus/movement/thac0 modifier group", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.AttackDamageBonus,
+      value: 2,
+      type: 1 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter1).toBe("2");
+    expect(effect.parameter2).toBe("1");
+  });
+
+  it("fills parameter2 for ProtectionFromOpcode", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.ProtectionFromOpcode,
+      type: EffectTypeEnum.Damage,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter2).toBe(`${EffectTypeEnum.Damage}`);
+  });
+
+  describe("Regeneration", () => {
+    it("sets special to the icon when present", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Regeneration,
+        amount: 6,
+        type: 1 as any,
+        icon: 30 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBe(30);
+    });
+
+    it("leaves special unset when no icon is given", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Regeneration,
+        amount: 6,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBeUndefined();
+    });
+  });
+
+  describe("Disease", () => {
+    it("sets parameter4 when frequencyMultiplier is given", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Disease,
+        amount: 2,
+        type: 1 as any,
+        frequencyMultiplier: 3,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter4).toBe("3");
+    });
+
+    it("leaves parameter4 unset when frequencyMultiplier is omitted", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.Disease,
+        amount: 2,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter4).toBeUndefined();
+    });
+  });
+
+  it("fills parameter2 for PolymorphIntoSpecific", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.PolymorphIntoSpecific,
+      type: 1 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter2).toBe("1");
+  });
+
+  describe("KillTarget", () => {
+    it("sets parameter1 to 0 when displayText is true", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.KillTarget,
+        displayText: true,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBe("0");
+    });
+
+    it("sets parameter1 to 1 when displayText is false", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.KillTarget,
+        displayText: false,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBe("1");
+    });
+  });
+
+  it("fills parameter2 for Berserk", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.Berserk,
+      type: 1 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter2).toBe("1");
+  });
+
+  it("fills parameter1/parameter2 for ProficiencyModifier", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.ProficiencyModifier,
+      amount: 2,
+      type: 1 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter1).toBe("2");
+    expect(effect.parameter2).toBe("1");
+  });
+
+  describe("DispelEffects", () => {
+    it("sets parameter1 for dispelType: AlwaysDispel (0) - a meaningful value, not 'unset'", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DispelEffects,
+        level: 1,
+        dispelType: DispelEffectTypeEnum.AlwaysDispel,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBe("AlwaysDispel");
+    });
+
+    it("sets parameter1 for a non-zero dispelType", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DispelEffects,
+        level: 1,
+        dispelType: DispelEffectTypeEnum.UseCasterLevel,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBe("UseCasterLevel");
+    });
+
+    it("sets parameter2 for magicWeaponDispelType: AlwaysDispel (0) - a meaningful value, not 'unset'", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DispelEffects,
+        level: 1,
+        magicWeaponDispelType: DispelEffectWeaponTypeEnum.AlwaysDispel,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter2).toBe("AlwaysDispel");
+    });
+
+    it("sets parameter2 for a non-zero magicWeaponDispelType", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DispelEffects,
+        level: 1,
+        magicWeaponDispelType: DispelEffectWeaponTypeEnum.DoNotDispel,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter2).toBe("DoNotDispel");
+    });
+
+    it("leaves both parameters unset when neither dispelType nor magicWeaponDispelType is given", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DispelEffects,
+        level: 1,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBeUndefined();
+      expect(effect.parameter2).toBeUndefined();
+    });
+  });
+
+  it("fills parameter1/parameter2 for RemoveOpcode", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.RemoveOpcode,
+      param: "some_param",
+      opcodeToRemove: EffectTypeEnum.Damage,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter1).toBe("some_param");
+    expect(effect.parameter2).toBe(`${EffectTypeEnum.Damage}`);
+  });
+
+  describe("MakeUnselectable", () => {
+    it("sets parameter1 when disableDialog is false", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.MakeUnselectable,
+        disableDialog: false,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBe("1");
+    });
+
+    it("leaves parameter1 unset when disableDialog is true", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.MakeUnselectable,
+        disableDialog: true,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter1).toBeUndefined();
+    });
+  });
+
+  describe("NoCollisionDetection", () => {
+    it("sets parameter2 when passWalls is false", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.NoCollisionDetection,
+        passWalls: false,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter2).toBe("1");
+    });
+
+    it("leaves parameter2 unset when passWalls is true", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.NoCollisionDetection,
+        passWalls: true,
+      };
+      effectService.getEffect(effect);
+      expect(effect.parameter2).toBeUndefined();
+    });
+  });
+
+  it("fills parameter1/parameter2 for OverrideCreatureData", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.OverrideCreatureData,
+      value: 5,
+      field: 1 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter1).toBe("5");
+    expect(effect.parameter2).toBe("1");
+  });
+
+  describe("DisableSpellcasting", () => {
+    it("sets special to 1 when showMessage is explicitly false", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DisableSpellcasting,
+        type: 1 as any,
+        showMessage: false,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBe(1);
+    });
+
+    it("leaves special unset when showMessage is omitted", () => {
+      const effect: Effect = {
+        opcode: EffectTypeEnum.DisableSpellcasting,
+        type: 1 as any,
+      };
+      effectService.getEffect(effect);
+      expect(effect.special).toBeUndefined();
+    });
+  });
+
+  it("fills parameter2 for SetAnimationSequence", () => {
+    const effect: Effect = {
+      opcode: EffectTypeEnum.SetAnimationSequence,
+      sequence: 2 as any,
+    };
+    effectService.getEffect(effect);
+    expect(effect.parameter2).toBe("2");
   });
 
   describe("ModifyAttacksPerRound", () => {
