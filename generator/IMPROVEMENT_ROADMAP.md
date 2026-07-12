@@ -907,6 +907,14 @@ condition is always true) or need substantially heavier fixture setup
 disproportionate effort for the largest, most integration-heavy file
 audited so far.
 
+### ✅ `string-ref.utils.ts` — audited, no bug found
+
+Added 1 test to the existing `string-ref.utils.test.ts` — `getStringId()`'s
+"matched entry has an empty `id` array" throw. `EXISTING_STRING_REFERENCES`
+is a fixed array with no real entry lacking an id, so the test temporarily
+pushes a fake entry (cleaned up in a `finally`) rather than skip the gap.
+No bug found. Now 100% branches/statements (up from 90%).
+
 ---
 
 ## Process

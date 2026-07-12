@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { EXISTING_STRING_REFERENCES } from "../../../config/stringRef";
 import { StringRefUtils } from "./string-ref.utils";
 
 describe("getStringId", () => {
@@ -10,6 +11,21 @@ describe("getStringId", () => {
     expect(() =>
       StringRefUtils.getStringId("Not a real string" as any),
     ).toThrow("Stringref Not a real string not found !");
+  });
+
+  it("throws when the matched entry has no id configured", () => {
+    (EXISTING_STRING_REFERENCES as any).push({
+      id: [],
+      str: "NoIdConfigured",
+      group: "poison",
+    });
+    try {
+      expect(() =>
+        StringRefUtils.getStringId("NoIdConfigured" as any),
+      ).toThrow("Stringref NoIdConfigured has been found but no id configured !");
+    } finally {
+      (EXISTING_STRING_REFERENCES as any).pop();
+    }
   });
 });
 
