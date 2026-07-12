@@ -734,6 +734,17 @@ enemies, so the "is a player" case was untested), `validAttackTarget()`'s
 composite (`Or`) triggers vs. leaf triggers. All pass — no bug found. Now
 100% branches/statements (up from 83.33%).
 
+### ✅ `model/creature/family.ts` — audited, no bug found
+
+Added `family.test.ts` (no coverage before) — 10 tests covering
+`creature()`'s not-found throw, `sequencer()` (delegates to
+`abilityService.getSequencer()` — this and `minorSequencer()` were
+apparently never called anywhere in tests before), and the
+`item()`/`spell()`/`projectile()` overrides' family-wide fallback search
+(found on a later creature after an earlier one doesn't have it, and the
+re-throw when nobody in the family has it either). All pass — no bug found.
+Now 100% branches/statements (up from 85%).
+
 ---
 
 ## Process
