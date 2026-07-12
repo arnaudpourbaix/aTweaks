@@ -3,6 +3,7 @@ import { MonsterFamilyEnum, MonsterEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
 import { ImmunityName } from "../model/final/immunity";
+import { HitDiceTable } from "../model/game-data/hp";
 import hitPointService from "./hit-point.service";
 
 function fakeCreature(
@@ -114,6 +115,31 @@ describe("hitPointService.getHitPoints", () => {
       creature: fakeCreature({ immunities: ["construct"] }),
     });
     expect(value).toBe(40); // 1*10 (construct HD) + 30 (size bonus), bonusHp ignored
+  });
+
+  it("throws when constitution is outside the known table range", () => {
+    expect(() =>
+      hitPointService.getHitPoints({
+        data: {
+          level1: { pnpValue: 1, value: 1, type: "none" },
+          constitution: 999,
+        },
+        creature: fakeCreature(),
+      }),
+    ).toThrow(/constitution not found in table: 999/);
+  });
+
+  it("resolves hit dice via a monsterId-keyed HitDiceTable entry (documented but currently unused by real config)", () => {
+    HitDiceTable.push({ monsterId: MonsterEnum.WildDog, hd: 20 });
+    try {
+      const value = hitPointService.getHitPoints({
+        data: { level1: { pnpValue: 2, value: 2, type: "none" } },
+        creature: fakeCreature({ id: MonsterEnum.WildDog }),
+      });
+      expect(value).toBe(40); // 2 * 20
+    } finally {
+      HitDiceTable.pop();
+    }
   });
 
   it("falls back to the parent's constitution/bonusHp/class when the adjustment data doesn't override them", () => {

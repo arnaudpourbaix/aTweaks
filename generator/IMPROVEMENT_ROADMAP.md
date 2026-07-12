@@ -938,6 +938,15 @@ real `SPELL_PROTECTIONS` entry omits it, so temporarily pushed/popped a fake
 one) and `generateSpellResource()`'s `group.spells ?? []` default. No bug
 found. Now 100% branches/statements (up from 96.15%).
 
+### ✅ `hit-point.service.ts` — audited, no bug found
+
+Added 2 tests to the existing `hit-point.service.test.ts` —
+`getConstitutionBonus()`'s "constitution not found in table" throw, and
+`getHitDiceSize()`'s `monsterId`-keyed `HitDiceTable` match (documented but
+currently unused by real config — the one example in `hp.ts` is commented
+out — tested via a temporarily-pushed/popped fake entry). No bug found. Now
+100% branches/statements (up from 95.91%).
+
 ---
 
 ## Process
