@@ -724,6 +724,16 @@ up from 82.35%).
 (`file.lastIndexOf("/")` returning `-1`, falling back to `lastIndexOf("\\")`)
 is a pure Windows-path-separator edge case with no logic risk — not pursued.
 
+### ✅ `trigger.factory.ts` — audited, no bug found
+
+Added `trigger.factory.test.ts` (no coverage before) — 12 tests covering
+`haveSpellRES()`/`hasItem()`'s `negation` default, `validSpellTarget()`/
+`validAttackTarget()`'s `isTargetPlayer` branch (most real call sites target
+enemies, so the "is a player" case was untested), `validAttackTarget()`'s
+`maxRange` presence, and `inverseNegations()`'s recursion into nested
+composite (`Or`) triggers vs. leaf triggers. All pass — no bug found. Now
+100% branches/statements (up from 83.33%).
+
 ---
 
 ## Process
