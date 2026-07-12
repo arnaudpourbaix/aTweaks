@@ -678,6 +678,33 @@ the top of the method already guarantees. Simplified to drop the redundant
 wrapper. Confirmed zero output impact via full regeneration. Now 100%
 branches/statements for this file (up from 81.25%).
 
+### ✅ `creature.factory.ts` — partially audited, one gap confirmed as already-known
+
+Added `creature.factory.test.ts` (no coverage before) — 6 tests covering
+`checkValidation()`'s already-validated throw and `equipItem()`'s no-slot
+throw, the equip push, and the slot-conflict warning. Branches 89.79%
+(44/49), up from 81.63%.
+
+**Found the same "array vs bare-string slot" fragility as
+`item.service.ts`'s `isSlotIncluded()`** (`BUGFIX_ROADMAP.md` #8, reviewed
+and left as-is): `equipItem()`'s conflict check does `e.slot[0]`, but
+`EquippedItem.slot` is typed `ItemSlot | ItemSlot[]`, and real config
+(`lib/creatures/ogres.ts:553`) does store it as a bare string sometimes. When
+that happens, `e.slot[0]` reads the first *character* of the string instead
+of comparing slot names, so the conflict warning silently doesn't fire. Same
+conclusion as the precedent: this is purely a `console.log` warning — the
+item is still equipped either way regardless of whether the check fires — so
+consistent with that decision, locked in as current (imperfect but
+zero-functional-impact) behavior via a test rather than "fixed."
+
+**Stopped short of 100% deliberately:** the remaining 5 branches are all
+inside `validate()` (duplicate-monster-id throw, family-mismatch/no-files/
+existing-files warnings, and the `valid`-push else-path). Testing them needs
+mocking the full downstream creature-processing pipeline
+(`creatureService.check`, `immunityService.handleImmunities`, autogeneration,
+etc.) — disproportionate effort for warning-only branches with no functional
+impact, same reasoning as `main.service.ts`'s stopped-short gaps.
+
 ---
 
 ## Process
