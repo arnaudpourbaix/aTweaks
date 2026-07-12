@@ -3,7 +3,11 @@ import { Creature } from "./creature";
 
 function fakeCreature(): Creature {
   const creature = new Creature(1 as any);
-  creature.data = { spells: { memorized: [] } } as any;
+  creature.data = {
+    spells: { memorized: [] },
+    items: { equipped: [] },
+    intelligence: 10,
+  } as any;
   return creature;
 }
 
@@ -27,6 +31,67 @@ describe("addSpell", () => {
     const spell = creature.addSpell({ memorizedCount: 0 });
     expect(creature.data.spells.memorized).toEqual([
       { file: spell.file, memorizedCount: 0 },
+    ]);
+  });
+});
+
+describe("setAttack", () => {
+  it("falls back to a single default action when no actions are given", () => {
+    const creature = fakeCreature();
+    creature.setAttack({});
+    expect(creature.attack.actions).toEqual([
+      { disableInterrupt: false, responseWeight: 100 },
+    ]);
+  });
+
+  it("uses the given actions, defaulting missing per-action fields", () => {
+    const creature = fakeCreature();
+    creature.setAttack({
+      actions: [{ responseWeight: 50 }, { disableInterrupt: true }],
+    });
+    expect(creature.attack.actions).toEqual([
+      { disableInterrupt: false, responseWeight: 50, weaponSlot: undefined },
+      { disableInterrupt: true, responseWeight: 100, weaponSlot: undefined },
+    ]);
+  });
+
+  it("defaults melee to true and ranged to false", () => {
+    const creature = fakeCreature();
+    creature.setAttack({});
+    expect(creature.attack.melee).toBe(true);
+    expect(creature.attack.ranged).toBe(false);
+  });
+
+  it("honors explicit melee/ranged overrides", () => {
+    const creature = fakeCreature();
+    creature.setAttack({ melee: false, ranged: true });
+    expect(creature.attack.melee).toBe(false);
+    expect(creature.attack.ranged).toBe(true);
+  });
+});
+
+describe("addItem (override)", () => {
+  it("adds the item to equipped when equippedSlot is given", () => {
+    const creature = fakeCreature();
+    const item = creature.addItem({ equippedSlot: ["LRING"] });
+    expect(creature.data.items.equipped).toEqual([
+      { file: item.file, slot: ["LRING"] },
+    ]);
+  });
+
+  it("does not touch equipped items when equippedSlot is omitted", () => {
+    const creature = fakeCreature();
+    creature.addItem({});
+    expect(creature.data.items.equipped).toEqual([]);
+  });
+
+  it("replaces an existing single-slot item already occupying the same slot", () => {
+    const creature = fakeCreature();
+    const first = creature.addItem({ equippedSlot: ["LRING"] });
+    creature.data.items.equipped = [{ file: first.file, slot: ["LRING"] }];
+    const second = creature.addItem({ equippedSlot: ["LRING"] });
+    expect(creature.data.items.equipped).toEqual([
+      { file: second.file, slot: ["LRING"] },
     ]);
   });
 });

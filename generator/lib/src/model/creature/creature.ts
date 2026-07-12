@@ -137,12 +137,10 @@ export class Creature extends AbstractCreature implements BaseCreature {
       this.data.items.equipped.splice(itemInSlot, 1);
     }
 
-    if (item.equippedSlot) {
-      this.data.items.equipped.push({
-        file: result.file,
-        slot: item.equippedSlot,
-      });
-    }
+    this.data.items.equipped.push({
+      file: result.file,
+      slot: item.equippedSlot,
+    });
     return result;
   }
 

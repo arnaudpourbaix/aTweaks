@@ -653,6 +653,31 @@ main effects list and the per-header effects list — same pattern as
 renders as an *omitted* `power=` rather than `power=0`). All pass — no bug
 found. Now 100% branches/statements (up from 80%).
 
+### ✅ `model/creature/creature.ts` — one dead branch simplified, otherwise clean
+
+Added 7 tests to the existing `creature.test.ts` — `setAttack()`'s
+no-actions-given fallback, per-action field defaulting, and melee/ranged
+defaults/overrides; `addItem()`'s equip/no-equip/replace-existing-slot cases.
+
+**Found another provably-dead branch, same shape as `weidu-item.service.ts`'s:**
+
+```ts
+override addItem(item: PartialItem): Item {
+  const result = super.addItem(item);
+  if (!item.equippedSlot) return result;
+  // ...
+  if (item.equippedSlot) {          // <- always true here, already returned above if falsy
+    this.data.items.equipped.push({ file: result.file, slot: item.equippedSlot });
+  }
+  return result;
+}
+```
+
+The second `if (item.equippedSlot)` re-checks something the early return at
+the top of the method already guarantees. Simplified to drop the redundant
+wrapper. Confirmed zero output impact via full regeneration. Now 100%
+branches/statements for this file (up from 81.25%).
+
 ---
 
 ## Process
