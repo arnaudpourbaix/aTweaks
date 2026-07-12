@@ -512,6 +512,46 @@ unreachable, not just untriggered by current config. Simplified to a plain
 template string with no ternary. No behavior change (confirmed via full
 regeneration — zero output diff). Now 100% branches/statements.
 
+### ✅ `weidu-projectile.service.ts` — audited, plus a real architectural bug found and fixed
+
+Added `weidu-projectile.service.test.ts` (no coverage before) — 6 tests
+covering `createProjectile()`'s 4 conditionals (`NoBAM` vs. not, `projectileInfo`
+present/absent, `areaEffectInfo` present/absent). Only one real projectile is
+ever configured in shipped content (`lib/creatures/basilisks.ts:257`,
+`AreaOfEffect`), so 3 of the 4 conditionals' branches were previously
+untriggered by anything — dormant, not buggy; all pass against the current
+implementation once written.
+
+**Found a real, pre-existing circular-import bug while writing the test —
+unrelated to projectile logic, but real:**
+
+```
+abstract-weidu.service.ts -> utils.service.ts -> translation.service.ts -> abstract-weidu.service.ts
+                                                   (class TranslationService extends AbstractWeiduService)
+```
+
+`utils.service.ts`'s `resolveStringRef()` needs `translationService`, and
+`TranslationService` extends `AbstractWeiduService` (for `add()`/`initLines()`
+only — it never used any of `AbstractWeiduService`'s `utils`-dependent
+methods). This cycle happened to never crash in the real generator because
+some other import elsewhere always fully resolved `translation.service.ts`
+before anything imported `abstract-weidu.service.ts` as the *first* link in
+the chain — but it's fragile, and `weidu-projectile.service.test.ts` (the
+first thing to import `abstract-weidu.service.ts` without that lucky
+pre-resolution) crashed immediately with `Class extends value undefined is
+not a constructor` the moment it was added.
+
+**Fix applied:** extracted `add()`/`initLines()` — the only two methods
+`TranslationService` actually used — into a new dependency-free
+`AbstractCodeService` (`lib/src/services/abstract-code.service.ts`, no
+imports beyond the `CodeLine` type). `AbstractWeiduService` now extends
+`AbstractCodeService` and keeps its `utils`-dependent methods
+(`write`/`writeStringRef`/etc.); `TranslationService` now extends
+`AbstractCodeService` directly instead of `AbstractWeiduService`, breaking
+the cycle entirely. Every other `Weidu*Service` class still extends the full
+`AbstractWeiduService` unchanged. Confirmed no behavior change: full
+regeneration produced zero output diff, all 577 tests pass (up from 571).
+
 ---
 
 ## Process

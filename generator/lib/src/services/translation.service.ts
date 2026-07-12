@@ -6,11 +6,11 @@ import {
   TranslationKey,
 } from "../../translations/i18n";
 import { CR, TAB } from "../model/constants";
-import { AbstractWeiduService } from "./weidu/abstract-weidu.service";
+import { AbstractCodeService } from "./abstract-code.service";
 import { StringReference } from "../model/final/stringref";
 import utils from "./utils/utils.service";
 
-class TranslationService extends AbstractWeiduService {
+class TranslationService extends AbstractCodeService {
   private availableStringRef = 10000;
   private translations: { key: TranslationKey; stringRef: number }[] = [];
   private customTranslations: { text: string; stringRef: number }[] = [];

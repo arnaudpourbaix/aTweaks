@@ -2,15 +2,9 @@ import { StringReference } from "../../model/final/stringref";
 import { CodeLine } from "../../model/misc";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import utils from "../utils/utils.service";
+import { AbstractCodeService } from "../abstract-code.service";
 
-export class AbstractWeiduService {
-  protected initLines() {
-    const lines: CodeLine[] = [];
-    this.add(lines, "// Generated file (don't edit)");
-    this.add(lines, "");
-    return lines;
-  }
-
+export class AbstractWeiduService extends AbstractCodeService {
   protected deleteEffect(
     lines: CodeLine[],
     tab: number,
@@ -54,13 +48,6 @@ export class AbstractWeiduService {
       `PATCH_IF ${fileEquals.join(exclude ? " AND " : " OR ")} BEGIN `,
       tab
     );
-  }
-
-  protected add(lines: CodeLine[], code: string, tab?: number) {
-    if (tab === undefined) {
-      tab = lines.length ? (lines.at(-1) as CodeLine).tab : 0;
-    }
-    lines.push({ tab, code });
   }
 
   protected write(
