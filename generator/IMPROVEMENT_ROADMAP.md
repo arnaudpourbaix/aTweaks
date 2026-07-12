@@ -956,6 +956,17 @@ via a real subclass (`weiduItemService`, since this is a base class not
 meant to be instantiated directly). No bug found. Now 100% branches (up from
 93.33%).
 
+### ✅ `baf-generator.service.ts` — audited, no bug found
+
+Extended `baf-generator.service.test.ts` with 5 tests covering
+`generateTrigger()`/`generateAction()`'s parameter-count mismatch throws,
+`getTriggerParameters()`'s unknown-trigger-name throw, and both functions'
+per-parameter "hole in matching-length metadata" guards (tested via a
+temporarily-pushed/popped fake `State.triggers`/`State.actions` entry with an
+`undefined` parameter — real config never has this, but the guard is
+reachable if a trigger/action definition is ever malformed). No bug found.
+Now 100% branches (up from 93.10%).
+
 ---
 
 ## Process

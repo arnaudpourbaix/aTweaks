@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
+import { State } from "../../state";
 import stateService from "../state.service";
 import bafGeneratorService from "./baf-generator.service";
 import actionFactory from "../../factories/action.factory";
@@ -56,6 +57,22 @@ describe("generateAction", () => {
       "Unknown action NotARealAction",
     );
   });
+
+  it("throws when a registered action's parameter metadata has a hole at a matching-length index", () => {
+    State.actions.push({
+      name: "JA#TestHoleAction",
+      parameters: [undefined as any],
+      description: "",
+    });
+    try {
+      const action = { name: "JA#TestHoleAction", params: ["x"] };
+      expect(() => bafGeneratorService.generateAction(action as any)).toThrow(
+        /Unexpected parameter x for action JA#TestHoleAction/,
+      );
+    } finally {
+      State.actions.pop();
+    }
+  });
 });
 
 describe("generateTrigger", () => {
@@ -87,6 +104,36 @@ describe("generateTrigger", () => {
     expect(bafGeneratorService.generateTrigger(trigger, false)).toBe(
       "\tAllegiance(Myself,EVILCUTOFF)",
     );
+  });
+
+  it("throws when the trigger has the wrong number of parameters", () => {
+    const trigger = { name: "Range", params: [30] };
+    expect(() =>
+      bafGeneratorService.generateTrigger(trigger as any, false),
+    ).toThrow(/Not enough parameters/);
+  });
+
+  it("throws for an unregistered trigger name", () => {
+    const trigger = { name: "NotARealTrigger", params: [] };
+    expect(() =>
+      bafGeneratorService.generateTrigger(trigger as any, false),
+    ).toThrow("Unknown trigger NotARealTrigger");
+  });
+
+  it("throws when a registered trigger's parameter metadata has a hole at a matching-length index", () => {
+    State.triggers.push({
+      name: "JA#TestHoleTrigger",
+      parameters: [undefined as any],
+      description: "",
+    });
+    try {
+      const trigger = { name: "JA#TestHoleTrigger", params: ["x"] };
+      expect(() =>
+        bafGeneratorService.generateTrigger(trigger as any, false),
+      ).toThrow(/Unexpected parameter x for trigger JA#TestHoleTrigger/);
+    } finally {
+      State.triggers.pop();
+    }
   });
 });
 
