@@ -745,6 +745,24 @@ apparently never called anywhere in tests before), and the
 re-throw when nobody in the family has it either). All pass — no bug found.
 Now 100% branches/statements (up from 85%).
 
+### ✅ `spell.service.ts` — audited, no bug found
+
+Added `spell.service.test.ts` (no coverage before) — 16 tests covering
+`getSpell()`'s doc/level/type defaulting (including the explicit-`undefined`-
+with/without-`copyFrom` distinction, same shape as `weidu-item.service.ts`'s
+provably-dead-vs-real pattern, but real here since `...others` can genuinely
+carry an explicit `undefined` key), the icon-suffix regex, the header-type
+throw, header field defaults, racial-resistances auto-add (and its
+`addRacialResistances: false` opt-out), `getGroupRessources()`'s not-found
+throw, and `addProjectile()`'s object-projectile handling and duplicate-file
+dedup guard (this whole private method had never been exercised — 0/1
+functions). All pass — no bug found. Now 98.55% branches (68/69, up from
+85.5%).
+
+**One gap left alone:** `getGroupRessources()`'s `group.spells ?? []`
+fallback is unreachable via real config (`SPELL_GROUPS` is a fixed
+non-injectable array; all 34 real entries set `spells`) — not pursued.
+
 ---
 
 ## Process
