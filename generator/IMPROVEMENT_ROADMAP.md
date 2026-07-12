@@ -641,6 +641,18 @@ Added `abstract-creature.test.ts` (no coverage before) — 8 tests covering
 branch). All pass — no bug found. Now 100% branches/statements for this file
 (up from 79.16%).
 
+### ✅ `weidu-spell.service.ts` — audited, no bug found
+
+Added `weidu-spell.service.test.ts` (no coverage before) — 9 tests covering
+`createSpell()`'s `deleteHeaders` (array/neither-true-nor-array) and
+`deleteOpcodes` branches, the `options` block's `spellType`/`castingTime`
+INT_VARs, and `createSpellHeader()`'s `location`/`target` presence, the
+projectile type guard, and the `spell.level ?? 0` power fallback (both in the
+main effects list and the per-header effects list — same pattern as
+`weidu-item.service.ts`'s `power` handling, `0` is falsy so the fallback
+renders as an *omitted* `power=` rather than `power=0`). All pass — no bug
+found. Now 100% branches/statements (up from 80%).
+
 ---
 
 ## Process
