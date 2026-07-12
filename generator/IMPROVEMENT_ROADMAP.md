@@ -632,6 +632,15 @@ Harmless (no behavior difference either way), closed directly by invoking
 the private method with no second argument. All pass — no bug found. Now
 100% branches/statements for this file.
 
+### ✅ `model/creature/abstract-creature.ts` — audited, no bug found
+
+Added `abstract-creature.test.ts` (no coverage before) — 8 tests covering
+`projectile()`'s not-found throw, `ability()`'s no-ability throw,
+`addSpell()`/`addItem()`'s duplicate-id throws, and `attachSpellToWeapon()`'s
+`CastSpell`/`RemoveSpell` effect attachment (including the `cast.remove`
+branch). All pass — no bug found. Now 100% branches/statements for this file
+(up from 79.16%).
+
 ---
 
 ## Process
