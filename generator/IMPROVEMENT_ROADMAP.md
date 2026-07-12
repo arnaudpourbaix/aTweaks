@@ -803,6 +803,17 @@ now-redundant (and, with the fix, truly unreachable) `?? 0` fallbacks.
 closed `BUGFIX_ROADMAP.md`. Full regeneration produced zero output changes.
 Now 100% branches/statements for this file (up from 85.63%).
 
+### ✅ `model/spell-item/effect.enums.ts` — audited, no bug found
+
+Despite the filename, this "model" file has one real function:
+`getCastSpellOnConditionValue()`, a 22-case string→number switch. 20 of the
+22 cases had never been exercised by any test. Added
+`effect.enums.test.ts` (no coverage before) — a parameterized test covering
+every case plus the unmatched-text fallback (`0`, unreachable given
+`CastSpellOnConditionType`'s exhaustive string-literal union, but cheap to
+test via an `as any` cast). All pass — no bug found. Now 100%
+branches/statements (up from 85.91%).
+
 ---
 
 ## Process
