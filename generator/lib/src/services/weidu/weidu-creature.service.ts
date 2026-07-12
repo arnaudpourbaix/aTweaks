@@ -4,7 +4,7 @@ import { CreatureAdjustment } from "../../model/creature/adjustment";
 import { Creature, CreatureAutoGenerate } from "../../model/creature/creature";
 import { CREATURE_DATA_FIELDS, CreatureData } from "../../model/creature/data";
 import { WEAPON_SLOTS } from "../../model/creature/item";
-import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
+import { ImmunityName } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
@@ -24,8 +24,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   generateWeiduScript(creature: Creature): void {
     const lines = this.initLines();
     this.add(lines, `// ${translationService.from(creature.name)}`);
-    if (creature.data.script.location !== "None")
-      this.compileScripts(lines, creature);
+    if (creature.data.script.location !== "None") this.compileScripts(lines, creature);
     weiduProjectileService.createProjectiles(lines, creature.projectiles);
     weiduEffectService.createEffectFiles(lines, creature.effectFiles);
     weiduSpellService.createSpells(lines, creature.spells);
@@ -51,7 +50,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         ext: true,
       })}~`,
     );
-    if (creature.adjustments.some((a) => !!a.summon))
+    if (creature.adjustments.some((a) => a.summon))
       this.add(
         lines,
         `COMPILE ~%MOD_FOLDER%/${this.getScriptName(creature, {
@@ -65,18 +64,18 @@ class WeiduCreatureService extends AbstractWeiduService {
 
   private createNewFiles(lines: CodeLine[], tab: number, creature: Creature) {
     for (const entry of creature.newFiles) {
+      if (!entry.copyFromExisting && !entry.copyFrom)
+        throw new Error(`newFiles entry needs either copyFromExisting or copyFrom !`);
       for (const file of entry.files) {
         const copy = entry.copyFromExisting
           ? `COPY_EXISTING ~${entry.copyFromExisting}.cre~`
-          : `COPY ~%MOD_FOLDER%/${utils.getFamilyFolder(creature.family)}/${
-              entry.copyFrom
-            }.cre~`;
+          : `COPY ~%MOD_FOLDER%/${utils.getFamilyFolder(creature.family)}/${entry.copyFrom ?? ""}.cre~`;
         this.add(lines, `${copy} ~override/${file}.cre~`, tab);
         if (entry.stringRef) {
           for (const offset of ["0x8", "0xc"])
             this.add(
               lines,
-              `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef)}`,
+              `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef) ?? ""}`,
               tab + 1,
             );
         }
@@ -84,17 +83,11 @@ class WeiduCreatureService extends AbstractWeiduService {
     }
   }
 
-  private addMovementSpeedToItem(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature,
-  ) {
+  private addMovementSpeedToItem(lines: CodeLine[], tab: number, creature: Creature) {
+    if (!creature.data.movement.hasItem())
+      throw new Error(`Movement has no item to attach speed to !`);
     this.add(lines, "// Attach movement speed to item", tab);
-    this.add(
-      lines,
-      `COPY_EXISTING ~${creature.data.movement.itemFile!}.ITM~  ~override~`,
-      tab,
-    );
+    this.add(lines, `COPY_EXISTING ~${creature.data.movement.itemFile}.ITM~  ~override~`, tab);
     this.add(
       lines,
       `LPF ADD_ITEM_EQEFFECT INT_VAR opcode=176 target=1 timing=2 parameter1=${creature.data.movement.getGameValue()} parameter2=1 global=1 END`,
@@ -125,12 +118,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, `LPF clear_proficiencies END`, tab);
     // }
     this.addProficiencies(lines, tab, creature.data);
-    this.addImmunities(
-      lines,
-      tab,
-      creature.data.immunities,
-      creature.adjustments,
-    );
+    this.addImmunities(lines, tab, creature.data.immunities, creature.adjustments);
     for (const effect of creature.data.effects.list) {
       weiduEffectService.addEffect({
         lines,
@@ -156,7 +144,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "END ELSE BEGIN", --tab);
     this.add(lines, "PRINT ~====> CRE %file% not found!~", ++tab);
     this.add(lines, "END", --tab);
-    this.add(lines, "END", --tab);
+    this.add(lines, "END", tab - 1);
   }
 
   private removeItems(lines: CodeLine[], tab: number, data: CreatureData) {
@@ -178,33 +166,18 @@ class WeiduCreatureService extends AbstractWeiduService {
       if (remove) acc.push(file);
       return acc;
     }, []);
-    this.executeCodeWithIncludedFiles(
-      lines,
-      tab,
-      `LPF REMOVE_MOST_CRE_EFFECTS END`,
-      files,
-    );
+    this.executeCodeWithIncludedFiles(lines, tab, `LPF REMOVE_MOST_CRE_EFFECTS END`, files);
   }
 
   private removeEffects(lines: CodeLine[], tab: number, creature: Creature) {
     if (typeof creature.data.effects.remove === "boolean") {
       this.removeAllEffects(lines, tab, creature);
     } else if (Array.isArray(creature.data.effects.remove)) {
-      this.removeEffectOpcodes(
-        lines,
-        tab,
-        creature.data.effects.remove,
-        creature.files,
-      );
+      this.removeEffectOpcodes(lines, tab, creature.data.effects.remove, creature.files);
     }
     for (const adjustment of creature.adjustments) {
       if (Array.isArray(adjustment.data.effects.remove)) {
-        this.removeEffectOpcodes(
-          lines,
-          tab,
-          adjustment.data.effects.remove,
-          adjustment.files,
-        );
+        this.removeEffectOpcodes(lines, tab, adjustment.data.effects.remove, adjustment.files);
       }
     }
   }
@@ -224,13 +197,12 @@ class WeiduCreatureService extends AbstractWeiduService {
     );
   }
 
-  private removeKnownSpells(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature,
-  ) {
+  private removeKnownSpells(lines: CodeLine[], tab: number, creature: Creature) {
     const files = [
       ...creature.adjustments.reduce((acc, adjustement) => {
+        // data is required by CreatureAdjustment's type, but defended anyway - real adjustments
+        // can omit it (see handleAdjustments()'s "neither data nor summon" skip below).
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (adjustement.data?.spells.removeKnown === false) {
           for (const f of adjustement.files) acc.add(f);
         }
@@ -240,22 +212,18 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.executeCodeWithExcludedFiles(lines, tab, `REMOVE_KNOWN_SPELLS`, files);
   }
 
-  private removeMemorizedSpells(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature,
-  ) {
+  private removeMemorizedSpells(lines: CodeLine[], tab: number, creature: Creature) {
     const files = [
       ...creature.adjustments.reduce((acc, adjustement) => {
+        // data is required by the type, but defended anyway (same reason as removeKnownSpells above)
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (adjustement.data?.spells.removeMemorized === false) {
           for (const f of adjustement.files) acc.add(f);
         }
         return acc;
       }, new Set<string>()),
     ];
-    const code = this.removeMemorizedSpell(
-      creature.data.spells.removeMemorized,
-    );
+    const code = this.removeMemorizedSpell(creature.data.spells.removeMemorized);
     if (code) this.executeCodeWithExcludedFiles(lines, tab, code, files);
   }
 
@@ -267,11 +235,7 @@ class WeiduCreatureService extends AbstractWeiduService {
   private addProficiencies(lines: CodeLine[], tab: number, data: CreatureData) {
     if (!data.proficiencies.length) return;
     for (const prof of data.proficiencies)
-      this.add(
-        lines,
-        `SET_BG2_PROFICIENCY ~${ProficiencyTypeEnum[prof.type]}~ ${prof.value}`,
-        tab,
-      );
+      this.add(lines, `SET_BG2_PROFICIENCY ~${ProficiencyTypeEnum[prof.type]}~ ${prof.value}`, tab);
   }
 
   private addImmunities(
@@ -281,9 +245,8 @@ class WeiduCreatureService extends AbstractWeiduService {
     adjustments: CreatureAdjustment[],
   ) {
     for (const name of immunities) {
-      const immunity = State.immunities.find(
-        (i) => i.name === name,
-      )!;
+      const immunity = State.immunities.find((i) => i.name === name);
+      if (!immunity) throw new Error(`Immunity ${name} not found !`);
       if (!immunity.itemSlot) {
         const files = immunityService.getOverrides(name, adjustments);
         this.executeCodeWithExcludedFiles(
@@ -318,9 +281,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         );
         continue;
       }
-      const isWeapon = slots.every((slot) =>
-        WEAPON_SLOTS.some((s) => s.slot === slot),
-      );
+      const isWeapon = slots.every((slot) => WEAPON_SLOTS.some((s) => s.slot === slot));
       const flagsArray: string[] = [];
       if (item.undroppable === true || item.undroppable === undefined)
         flagsArray.push("UNDROPPABLE");
@@ -338,17 +299,13 @@ class WeiduCreatureService extends AbstractWeiduService {
     }
   }
 
-  private addMemorizedSpells(
-    lines: CodeLine[],
-    tab: number,
-    data: CreatureData,
-  ) {
+  private addMemorizedSpells(lines: CodeLine[], tab: number, data: CreatureData) {
     for (const m of data.spells.memorized) {
       const infos = utils.getSpellInfos(m.file);
       const level = m.level ?? infos.level - 1;
       const spell = State.spells.find((s) => s.file === m.file);
       const comment = spell ? `// ${translationService.from(spell.name)}` : "";
-      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${level} ~${infos.type}~ (${m.memorizedCount}) ${comment}`;
+      let code = `ADD_MEMORIZED_SPELL ~${m.file}~ #${level} ~${infos.type}~ (${m.memorizedCount ?? 1}) ${comment}`;
       if (m.memorizedCount === 0) code = `REMOVE_MEMORIZED_SPELL ~${m.file}~`;
       this.add(lines, code, tab);
     }
@@ -365,9 +322,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     if (p.creature.notEnforceFiles.length) {
       this.add(
         p.lines,
-        `PATCH_DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(
-          " ",
-        )} END`,
+        `PATCH_DEFINE_ARRAY notEnforceFiles BEGIN ${p.creature.notEnforceFiles.join(" ")} END`,
         p.tab,
       );
     }
@@ -382,8 +337,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       }
     }
     if (p.enforce) this.add(p.lines, `enforce=1`, p.tab + 2);
-    if (p.creature.attack?.dualWielding)
-      this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
+    if (p.creature.attack.dualWielding) this.add(p.lines, `perfect2weapon=1`, p.tab + 2);
     if (p.creature.notEnforceFiles.length) {
       this.add(p.lines, "STR_VAR", p.tab + 1);
       this.add(p.lines, "notEnforceFiles", p.tab + 2);
@@ -403,10 +357,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     const locationFiles = [
       ...new Set(
         creature.adjustments
-          .filter(
-            (a) =>
-              !!a.data.script.location && a.data.script.location !== "None",
-          )
+          .filter((a) => !!a.data.script.location && a.data.script.location !== "None")
           .map((a) => a.files)
           .flat(),
       ),
@@ -444,19 +395,13 @@ class WeiduCreatureService extends AbstractWeiduService {
       });
     }
     for (const adjustment of creature.adjustments) {
-      if (
-        adjustment.data.script.location &&
-        adjustment.data.script.location !== "None"
-      ) {
+      if (adjustment.data.script.location && adjustment.data.script.location !== "None") {
         this.patchScript({
           lines,
           tab,
           script: scriptName,
           slot: adjustment.data.script.location,
-          removeScripts: [
-            ...creature.data.script.remove,
-            ...adjustment.data.script.remove,
-          ],
+          removeScripts: [...creature.data.script.remove, ...adjustment.data.script.remove],
           files: adjustment.files,
           skipFiles: [],
           logging: creature.logging,
@@ -480,38 +425,24 @@ class WeiduCreatureService extends AbstractWeiduService {
     let removeScripts = "";
     let skipFiles = "";
     let files = "";
-    if (
-      p.removeScripts.length ||
-      GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove
-    ) {
-      const scripts = [
-        ...p.removeScripts,
-        ...GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove,
-      ];
+    // genericScriptsToRemove is a real, permanently non-empty ~90-entry array (see
+    // weidu-creature.service.test.ts's audit note), so this condition is always true - kept
+    // as documentation of intent rather than simplified away.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (p.removeScripts.length || GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove) {
+      const scripts = [...p.removeScripts, ...GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove];
       this.add(p.lines, `CLEAR_ARRAY skipFiles`, p.tab);
       this.add(p.lines, `CLEAR_ARRAY removeScripts`, p.tab);
       this.add(p.lines, `CLEAR_ARRAY files`, p.tab);
-      this.add(
-        p.lines,
-        `PATCH_DEFINE_ARRAY removeScripts BEGIN ${scripts.join(" ")} END`,
-        p.tab,
-      );
+      this.add(p.lines, `PATCH_DEFINE_ARRAY removeScripts BEGIN ${scripts.join(" ")} END`, p.tab);
       removeScripts = " removeScripts";
     }
     if (p.skipFiles.length && !p.files.length) {
-      this.add(
-        p.lines,
-        `PATCH_DEFINE_ARRAY skipFiles BEGIN ${p.skipFiles.join(" ")} END`,
-        p.tab,
-      );
+      this.add(p.lines, `PATCH_DEFINE_ARRAY skipFiles BEGIN ${p.skipFiles.join(" ")} END`, p.tab);
       skipFiles = " skipFiles";
     }
     if (p.files.length) {
-      this.add(
-        p.lines,
-        `PATCH_DEFINE_ARRAY files BEGIN ${p.files.join(" ")} END`,
-        p.tab,
-      );
+      this.add(p.lines, `PATCH_DEFINE_ARRAY files BEGIN ${p.files.join(" ")} END`, p.tab);
       files = " files";
     }
     const slot = p.slot ? ` slot=${p.slot}` : "";
@@ -519,22 +450,18 @@ class WeiduCreatureService extends AbstractWeiduService {
       p.lines,
       `LPF patchCreatureScript INT_VAR logging=${
         p.logging ? 1 : 0
-      } STR_VAR${slot}${files}${removeScripts}${skipFiles} script=${
-        p.script
-      } END`,
+      } STR_VAR${slot}${files}${removeScripts}${skipFiles} script=${p.script} END`,
       p.tab,
     );
   }
 
-  private handleAdjustments(
-    lines: CodeLine[],
-    tab: number,
-    creature: Creature,
-  ) {
+  private handleAdjustments(lines: CodeLine[], tab: number, creature: Creature) {
     for (const adjustment of creature.adjustments) {
       for (const f of adjustment.files)
-        if (!creature.files.includes(f))
-          throw new Error(`Unknown adjustment file ${f}`);
+        if (!creature.files.includes(f)) throw new Error(`Unknown adjustment file ${f}`);
+      // data is required by the type, but real adjustments can omit it (see the "skips
+      // adjustments with neither data nor summon" test for this method).
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (adjustment.data || adjustment.summon) {
         this.handleAdjustment(lines, tab, creature, adjustment);
       }
@@ -548,6 +475,8 @@ class WeiduCreatureService extends AbstractWeiduService {
     adjustment: CreatureAdjustment,
   ) {
     this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
+    // data is required by the type, but defended anyway (same reason as handleAdjustments above)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (adjustment.data?.movement) {
       this.add(
         lines,
@@ -555,6 +484,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         tab,
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (adjustment.data)
       this.patchCreatureAdjustement({
         lines,
@@ -562,7 +492,7 @@ class WeiduCreatureService extends AbstractWeiduService {
         data: adjustment.data,
         parent: creature.data,
         autoGenerate: creature.autoGenerate,
-        summon: !!adjustment.summon,
+        summon: adjustment.summon,
         creature,
       });
     if (adjustment.scriptName && adjustment.files.length > 1)
@@ -572,7 +502,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     if (adjustment.scriptName) {
       this.writeAscii(lines, 0x280, 32, adjustment.files[0]);
     }
-    this.add(lines, "END", --tab);
+    this.add(lines, "END", tab - 1);
   }
 
   private patchCreatureAdjustement(p: {
@@ -595,9 +525,7 @@ class WeiduCreatureService extends AbstractWeiduService {
           for (const field of data.fields) {
             this.add(
               p.lines,
-              `${this.getWrite(field.size)} 0x${field.index.toString(
-                16,
-              )} ${value} // ${data.key}`,
+              `${this.getWrite(field.size)} 0x${field.index.toString(16)} ${value} // ${data.key}`,
               p.tab,
             );
           }
@@ -632,9 +560,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     creature: Creature,
     options: { withPath?: boolean; summon?: boolean; ext?: boolean },
   ) {
-    const path = options.withPath
-      ? `${utils.getFamilyFolder(creature.family)}/`
-      : "";
+    const path = options.withPath ? `${utils.getFamilyFolder(creature.family)}/` : "";
     const ext = options.ext === true ? ".baf" : "";
     const name = `ja#m${creature.id.toString(16)}${options.summon ? "su" : ""}${ext}`;
     return `${path}${name}`;

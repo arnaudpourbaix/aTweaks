@@ -25,9 +25,7 @@ class AbilityService {
     return results;
   }
 
-  getMinorSequencer(
-    presets: string[] & { length: 2 },
-  ): RawCreatureSequencerAbility {
+  getMinorSequencer(presets: string[] & { length: 2 }): RawCreatureSequencerAbility {
     return this.generateSequencer(presets, "ability.MinorSequencer");
   }
 
@@ -43,12 +41,8 @@ class AbilityService {
       requireVocal: false,
       name,
       targets: [],
-      triggers: [
-        triggerFactory.global(GLOBAL_CONFIG.bafConstants.minorSequencer, 0),
-      ],
-      actionsAfter: [
-        actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.minorSequencer, 1),
-      ],
+      triggers: [triggerFactory.global(GLOBAL_CONFIG.bafConstants.minorSequencer, 0)],
+      actionsAfter: [actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.minorSequencer, 1)],
       probability: 70,
       spells: [],
     };
@@ -82,26 +76,22 @@ class AbilityService {
     return results;
   }
 
-  private *getNumberGenerator() {
+  private *getNumberGenerator(): Generator<number, void> {
     let num = 800;
     while (num < 10000) yield num++;
   }
 
   private getAbility(
     abil: RawCreatureAbility | RawCreatureSequencerAbility,
-    randomGenerator: Generator<number>,
+    randomGenerator: Generator<number, void>,
   ): CreatureAbility {
     let ability = structuredClone(abil);
     if ("preset" in ability && ability.preset) {
       ability = this.applyPreset(ability, ability.preset);
     }
     const triggers: Triggers.Trigger[] = ability.triggers ?? [];
-    let targets =
-      !ability.targets || Array.isArray(ability.targets)
-        ? ability.targets
-        : undefined;
-    if (!!ability.targets && !Array.isArray(ability.targets))
-      targets = [ability.targets];
+    let targets = !ability.targets || Array.isArray(ability.targets) ? ability.targets : undefined;
+    if (!!ability.targets && !Array.isArray(ability.targets)) targets = [ability.targets];
     const result: CreatureAbility = {
       infiniteUse: false,
       requireVocal: false,
@@ -121,7 +111,7 @@ class AbilityService {
     }
     result.actions.push(...(ability.actionsAfter ?? []));
     if (!!ability.probability && ability.probability < 100) {
-      const num = randomGenerator.next().value;
+      const num = randomGenerator.next().value ?? 0;
       result.triggers.push({
         name: "RandomNumGT",
         params: [num, Math.round(num * (1 - ability.probability / 100))],
@@ -142,7 +132,7 @@ class AbilityService {
     spell.type ??= "normal";
     spell.memorizedSpellCheck ??= true;
     if (!spell.id && !spell.resource)
-      throw new Error(`No spell specified for ability ${ability.name}`);
+      throw new Error(`No spell specified for ability ${ability.name ?? "unknown"}`);
     if (spell.memorizedSpellCheck && spell.id) {
       result.triggers.unshift({
         name: "HaveSpell",
@@ -175,9 +165,7 @@ class AbilityService {
         negation: true,
       });
     }
-    let spellTarget: string = spell.selfTarget
-      ? ScriptTarget.myself
-      : ScriptTarget.lastSeen;
+    let spellTarget: string = spell.selfTarget ? ScriptTarget.myself : ScriptTarget.lastSeen;
     if (spell.targetName) spellTarget = spell.targetName;
     result.actions.push(this.getSpellAction(spell, spellTarget));
     if (spell.remove && spell.type !== "normal" && spell.id) {
@@ -200,12 +188,9 @@ class AbilityService {
     spells: CreatureAbilitySpell[],
   ): CreatureAbility {
     const target = ability.targets ? ScriptTarget.token : ScriptTarget.myself;
-    if (
-      spells.some((s) => s.selfTarget) &&
-      !spells.every((s) => s.selfTarget)
-    ) {
+    if (spells.some((s) => s.selfTarget) && !spells.every((s) => s.selfTarget)) {
       throw new Error(
-        `Every spells must have the same target in ability ${ability.name}`,
+        `Every spells must have the same target in ability ${ability.name ?? "unknown"}`,
       );
     }
     result.isSpell = true;
@@ -233,40 +218,32 @@ class AbilityService {
           negation: true,
         });
       }
-      let spellTarget: string = spell.selfTarget
-        ? ScriptTarget.myself
-        : ScriptTarget.lastSeen;
+      let spellTarget: string = spell.selfTarget ? ScriptTarget.myself : ScriptTarget.lastSeen;
       if (spell.targetName) spellTarget = spell.targetName;
       result.actions.push(this.getSpellAction(spell, spellTarget));
     }
     return result;
   }
 
-  private applyPreset(
-    ability: RawCreatureAbility,
-    presetName: string,
-  ): RawCreatureAbility {
+  private applyPreset(ability: RawCreatureAbility, presetName: string): RawCreatureAbility {
     const preset = ABILITY_PRESETS.find((p) => p.preset === presetName);
     if (!preset) throw new Error(`Unknown preset ${presetName}`);
-    if (Array.isArray(preset.ability.spell))
-      throw new Error(`Preset don't support spell arrays`);
+    if (Array.isArray(preset.ability.spell)) throw new Error(`Preset don't support spell arrays`);
     const result: RawCreatureAbility = deepmerge(preset.ability, ability, {});
-    if (ability.spell && preset.ability.spell?.id && ability.spell.resource) {
-      result.spell!.id = undefined;
+    if (ability.spell && preset.ability.spell?.id && ability.spell.resource && result.spell) {
+      result.spell.id = undefined;
     } else if (
       ability.spell &&
       preset.ability.spell?.resource &&
-      ability.spell.id
+      ability.spell.id &&
+      result.spell
     ) {
-      result.spell!.resource = undefined;
+      result.spell.resource = undefined;
     }
     return result;
   }
 
-  private getSpellAction(
-    spell: CreatureAbilitySpell,
-    target: string,
-  ): Actions.Action {
+  private getSpellAction(spell: CreatureAbilitySpell, target: string): Actions.Action {
     if (spell.resource && spell.type === "normal")
       return { name: "SpellRES", params: [spell.resource, target] };
     else if (spell.resource && spell.type === "noDec")

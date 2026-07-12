@@ -65,6 +65,7 @@ function fakeCreature(
     files: [],
     adjustments: [],
     notEnforceFiles: [],
+    attack: { dualWielding: false },
     data: {
       effects: { list: [] },
       spells: { memorized: [], removeMemorized: undefined },

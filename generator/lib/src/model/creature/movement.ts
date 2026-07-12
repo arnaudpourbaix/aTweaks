@@ -24,7 +24,7 @@ export class Movement {
     return this.pnpValue !== undefined;
   }
 
-  hasItem() {
+  hasItem(): this is Movement & { itemFile: string } {
     return this.itemFile !== undefined;
   }
 
