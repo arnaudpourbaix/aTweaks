@@ -1032,6 +1032,15 @@ status-only `targetPriority` entry whose statuses are all player-only (e.g.
 default fill-in still adds its own, unrelated one). No bug found. Now 100%
 branches (up from 98.36%).
 
+### ✅ `creature.service.ts` — audited, no bug found
+
+Added an `autogenerateSavingThrows (private)` describe block to
+`creature.service.test.ts` (previously untested — only its underlying
+calculation, `getSavingThrows`, had tests), mirroring the existing
+`autogenerateThac0` tests: throws when `level1` is unknown and there's no
+parent, no-ops when a parent is provided, and sets the save fields
+otherwise. No bug found. Now 100% branches (up from 99.14%).
+
 ---
 
 ## Process

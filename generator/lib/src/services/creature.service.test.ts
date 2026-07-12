@@ -139,6 +139,38 @@ describe("autogenerateThac0 (private)", () => {
   });
 });
 
+describe("autogenerateSavingThrows (private)", () => {
+  const service = creatureService as any;
+
+  it("throws when level1 is unknown and there is no parent", () => {
+    expect(() =>
+      service.autogenerateSavingThrows({ data: {}, options: undefined }),
+    ).toThrow(/level1 is unknown/);
+  });
+
+  it("does nothing when level1 is unknown but a parent is provided", () => {
+    const data: Partial<CreatureData> = {};
+    service.autogenerateSavingThrows({
+      data,
+      parent: {} as CreatureData,
+      options: undefined,
+    });
+    expect(data.saveDeath).toBeUndefined();
+  });
+
+  it("sets the save fields from getSavingThrows for the creature's level/class", () => {
+    const data: Partial<CreatureData> = {
+      level1: { pnpValue: 5, value: 5, type: "none" },
+      class: "CLERIC",
+    };
+    service.autogenerateSavingThrows({ data, options: undefined });
+    expect(data.saveDeath).toBe(service.getSavingThrows({
+      level: 5,
+      classe: "CLERIC",
+    }).saveDeath);
+  });
+});
+
 describe("getSavingThrows (private)", () => {
   const service = creatureService as any;
 
