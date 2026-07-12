@@ -998,6 +998,29 @@ exercise its `?? []` fallback, `selectWeaponStatements()`'s summon-prepended
 `ActionListEmpty`, and the followSummoner duplicate-trigger fix above. Now
 100% branches (up from 93.10%).
 
+### ✅ `ability.service.ts` — audited, no bug found
+
+Extended `ability.service.test.ts` with 11 tests covering: the `name ??
+"ability.unknown"` fallback, an individual spell's `targetName` override in
+both the single-spell (`parseAbilitySpell`) and multi-spell
+(`parseAbilitySpells`) code paths, a `reallyForce`-type spell cast by id,
+`generateSequencer()`'s "preset resolved without a spell" guard (via a
+spy on `applyPreset`, since no real preset can produce this — every preset
+merges into a base object that always has a `spell`), `applyPreset()`'s
+"preset doesn't support spell arrays" guard and its resource-drops-id
+mirror of the already-tested id-drops-resource case (both via temporarily
+pushed/popped fake `ABILITY_PRESETS` entries, since no real preset sets
+`spell.resource`), and `getSpellAction()`'s final "unexpected combination"
+throw for a multi-spell entry with no `type` — noted as a real, if
+currently harmless, inconsistency: the single-spell path defaults a missing
+`spell.type` to `"normal"` (`spell.type ??= "normal"`) but the multi-spell
+`parseAbilitySpells` loop never does, so an omitted `type` in a `spells[]`
+entry throws instead of defaulting. No monster config currently uses the
+multi-spell array feature at all, so this has zero real-world impact today;
+left as documented rather than "fixed" since there's no requirement to
+decide what the correct default behavior should be. No bug found otherwise.
+Now 100% branches (up from 95.07%).
+
 ---
 
 ## Process

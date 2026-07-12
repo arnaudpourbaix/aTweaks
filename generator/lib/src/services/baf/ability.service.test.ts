@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { ABILITY_PRESETS } from "../../../config/ability-presets";
 import { PRESET_NAMES } from "../../../config/common";
 import { RawCreatureAbility, RawCreatureSequencerAbility } from "../../model/creature/ability";
 import abilityService from "./ability.service";
+
+const service = abilityService as any;
 
 describe("getAbilities", () => {
   it("returns an empty array when abilities is undefined", () => {
@@ -27,6 +30,13 @@ describe("getAbilities", () => {
       { name: "SetGlobal", params: ["A", "LOCALS", 1] },
       { name: "SetGlobal", params: ["B", "LOCALS", 1] },
     ]);
+  });
+
+  it("defaults name to 'ability.unknown' when omitted", () => {
+    const [ability] = abilityService.getAbilities([
+      { actionsBefore: [], actionsAfter: [] } as any,
+    ]);
+    expect(ability.name).toBe("ability.unknown");
   });
 
   it("wraps a single non-array target into a one-element target list", () => {
@@ -139,6 +149,32 @@ describe("getAbilities - single spell", () => {
     expect(ability.infiniteUse).toBe(true);
   });
 
+  it("casts at the spell's explicit targetName instead of the default LastSeenBy/Myself target", () => {
+    const [ability] = abilityService.getAbilities([
+      {
+        name: "ability.unknown",
+        spell: { id: "SPWI001" as any, type: "force", targetName: "RR#TRAT" },
+      },
+    ]);
+    expect(ability.actions).toContainEqual({
+      name: "ForceSpell",
+      params: ["RR#TRAT", "SPWI001"],
+    });
+  });
+
+  it("casts a reallyForce-type spell by id via ReallyForceSpell", () => {
+    const [ability] = abilityService.getAbilities([
+      {
+        name: "ability.unknown",
+        spell: { id: "SPWI001" as any, type: "reallyForce" },
+      },
+    ]);
+    expect(ability.actions).toContainEqual({
+      name: "ReallyForceSpell",
+      params: ["LastSeenBy", "SPWI001"],
+    });
+  });
+
   it("emits a RemoveSpell action when a non-normal spell is marked remove", () => {
     const [ability] = abilityService.getAbilities([
       {
@@ -205,6 +241,30 @@ describe("getAbilities - multi-spell (spells array)", () => {
       ]),
     ).toThrow(/Every spells must have the same target in ability ability.unknown/);
   });
+
+  it("casts an individual spell at its explicit targetName instead of the default target", () => {
+    const [ability] = abilityService.getAbilities([
+      {
+        name: "ability.unknown",
+        spells: [{ id: "SPWI001" as any, type: "normal", targetName: "RR#TRAT" }],
+      } as any,
+    ]);
+    expect(ability.actions).toContainEqual({
+      name: "Spell",
+      params: ["RR#TRAT", "SPWI001"],
+    });
+  });
+
+  it("throws for an unrecognized spell.id/type combination (unlike the single-spell path, the spells array never defaults a missing type to 'normal')", () => {
+    expect(() =>
+      abilityService.getAbilities([
+        {
+          name: "ability.unknown",
+          spells: [{ id: "SPWI001" as any }],
+        } as any,
+      ]),
+    ).toThrow(/getSpellAction: unexpected combination/);
+  });
 });
 
 describe("getAbilities - preset id/resource conflict resolution (applyPreset)", () => {
@@ -244,6 +304,30 @@ describe("getAbilities - preset id/resource conflict resolution (applyPreset)", 
       params: expect.arrayContaining(["RR#TRAT"]),
     });
   });
+
+  it("drops the preset's spell.resource when the override supplies spell.id (mirror of the resource-drops-id case; no real preset currently sets spell.resource)", () => {
+    ABILITY_PRESETS.push({
+      preset: "JA#TEST_RESOURCE_PRESET",
+      ability: { name: "ability.unknown", spell: { resource: "MISC7F" } },
+    } as any);
+    try {
+      const [ability] = abilityService.getAbilities([
+        {
+          preset: "JA#TEST_RESOURCE_PRESET",
+          spell: { id: "SPWI001" as any },
+        },
+      ]);
+      expect(ability.actions).toContainEqual({
+        name: "Spell",
+        params: expect.arrayContaining(["SPWI001"]),
+      });
+      expect(
+        ability.actions.some((a) => "params" in a && a.params.includes("MISC7F")),
+      ).toBe(false);
+    } finally {
+      ABILITY_PRESETS.pop();
+    }
+  });
 });
 
 describe("getMinorSequencer / getSequencer", () => {
@@ -262,6 +346,31 @@ describe("getMinorSequencer / getSequencer", () => {
     expect(() =>
       abilityService.getMinorSequencer(["not_a_real_preset", "x"] as any),
     ).toThrow(/Unknown preset not_a_real_preset/);
+  });
+
+  it("throws when a preset resolves without a spell (documented guard; no real preset currently triggers this)", () => {
+    const spy = vi.spyOn(service, "applyPreset").mockReturnValueOnce({});
+    try {
+      expect(() =>
+        abilityService.getMinorSequencer(["x", "y"] as any),
+      ).toThrow(/Sequencer only supports spells/);
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+  it("throws when a preset's spell is an array (presets don't support spell arrays)", () => {
+    ABILITY_PRESETS.push({
+      preset: "JA#TEST_ARRAY_SPELL_PRESET",
+      ability: { name: "ability.unknown", spell: [] as any },
+    } as any);
+    try {
+      expect(() =>
+        abilityService.getAbilities([{ preset: "JA#TEST_ARRAY_SPELL_PRESET" }]),
+      ).toThrow(/Preset don't support spell arrays/);
+    } finally {
+      ABILITY_PRESETS.pop();
+    }
   });
 });
 
