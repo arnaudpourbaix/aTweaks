@@ -967,6 +967,37 @@ temporarily-pushed/popped fake `State.triggers`/`State.actions` entry with an
 reachable if a trigger/action definition is ever malformed). No bug found.
 Now 100% branches (up from 93.10%).
 
+### ✅ `statement-builder.service.ts` — real bug found and fixed, now 100% branches
+
+`followSummoner()` had `if (options.summon) triggers.unshift({ name:
+"ActionListEmpty" })` at the end of building its trigger list — but the
+function already returns early via `if (!options.summon) return;`, so the
+condition was always true (the now-familiar confirmed-dead-branch pattern),
+*and* the trigger array literal already explicitly included `{ name:
+"ActionListEmpty" }`. The unshift was therefore just pushing a duplicate.
+Confirmed on real output: every summon creature's committed `.baf` had
+`ActionListEmpty()` listed twice in the "Summon follow summoner" `IF` block.
+Fixed by deleting the redundant unshift; regenerating updated 41 committed
+`ja#*su.baf` files (one duplicate line removed each, diff verified to
+contain nothing else).
+
+Also simplified a second confirmed-dead branch in `execute()`: the `else if
+(custom && custom.type === "replace")` following `if (!custom ||
+custom.type !== "replace")` is the exact negation of the prior condition,
+so it's always true when reached — collapsed to a plain `else` (6th
+occurrence of this pattern this session).
+
+Extended `statement-builder.service.test.ts` with 12 new tests: the
+`execute()` `?? []` fallbacks for `insertBefore`/`insertAfter`/`replace`
+custom codes, `processStatements()`/`creatureTargetAbility()`'s
+`allegianceCheck` trigger (currently unused by any real target list —
+covered via a `targetService.getTargetFromAbility` spy), enabling
+`GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells` to exercise
+`precastMidDurationSpells()`'s body, a `POTIONS` entry without `triggers` to
+exercise its `?? []` fallback, `selectWeaponStatements()`'s summon-prepended
+`ActionListEmpty`, and the followSummoner duplicate-trigger fix above. Now
+100% branches (up from 93.10%).
+
 ---
 
 ## Process

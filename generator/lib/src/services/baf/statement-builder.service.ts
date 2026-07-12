@@ -150,7 +150,7 @@ class StatementService {
     }
     if (!custom || custom.type !== "replace") {
       fn.apply(this, [statements, creature, options]);
-    } else if (custom && custom.type === "replace") {
+    } else {
       this.parseAbilities(
         statements,
         creature,
@@ -548,7 +548,6 @@ class StatementService {
         params: ["LastSummonerOf", GLOBAL_CONFIG.bafConstants.trackingRange],
       },
     ];
-    if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       comment: "Summon follow summoner",
       triggers,

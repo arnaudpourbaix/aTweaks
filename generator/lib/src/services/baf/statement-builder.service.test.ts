@@ -1,5 +1,6 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { POTIONS } from "../../../config/potion";
 import { CreatureAbility } from "../../model/creature/ability";
 import { CreatureAttack } from "../../model/creature/attack";
 import { BEHAVIOR_DEFAULT, CreatureBehavior } from "../../model/creature/behavior";
@@ -8,6 +9,7 @@ import { BuilderOptions } from "../../model/misc";
 import { Statements } from "../../model/script/script";
 import stateService from "../state.service";
 import utils from "../utils/utils.service";
+import targetService from "./target.service";
 import statementService from "./statement-builder.service";
 
 // hasImmunity/State.immunities backed lookups (e.g. handlePanic's fear check for
@@ -355,10 +357,19 @@ describe("followSummoner (private)", () => {
     const statements: Statements = [];
     service.followSummoner(statements, fakeCreature(), options(true));
     expect(statements).toHaveLength(1);
-    expect(statements[0].triggers[0]).toEqual({ name: "ActionListEmpty" });
+    expect(statements[0].triggers).toContainEqual({ name: "ActionListEmpty" });
     expect(statements[0].responses[0].actions).toEqual([
       { name: "MoveToObject", params: ["LastSummonerOf"] },
     ]);
+  });
+
+  it("does not duplicate the ActionListEmpty trigger (it's already unconditionally present since this function only ever runs for summons)", () => {
+    const statements: Statements = [];
+    service.followSummoner(statements, fakeCreature(), options(true));
+    const actionListEmptyCount = statements[0].triggers.filter(
+      (t: any) => t.name === "ActionListEmpty",
+    ).length;
+    expect(actionListEmptyCount).toBe(1);
   });
 });
 
@@ -662,6 +673,14 @@ describe("selectWeaponStatements (private)", () => {
       params: ["SLOT_WEAPON1", 0],
     });
   });
+
+  it("prepends an ActionListEmpty trigger for a summon", () => {
+    const creature = fakeCreature({
+      attack: { selectWeapons: [{ slot: "WEAPON2", triggers: [] }] },
+    });
+    const result = service.selectWeaponStatements(creature, [], options(true));
+    expect(result[0].triggers[0]).toEqual({ name: "ActionListEmpty" });
+  });
 });
 
 describe("potions (private)", () => {
@@ -684,6 +703,28 @@ describe("potions (private)", () => {
       params: [expect.any(String), "Myself"],
     });
   });
+
+  it("defaults triggers to an empty array for a potion config that doesn't set any (every real potion currently does)", () => {
+    POTIONS.push({ name: "Test potion", files: ["JA#TESTPOTION"] });
+    try {
+      const statements: Statements = [];
+      service.potions(
+        statements,
+        fakeCreature({ behavior: { usePotions: true } }),
+        options(),
+      );
+      const testStatement = statements.find(
+        (s) => s.comment === "Test potion",
+      );
+      expect(testStatement).toBeDefined();
+      expect(testStatement!.triggers.map((t: any) => t.name)).toEqual([
+        "HasItem",
+        "GlobalTimerNotExpired",
+      ]);
+    } finally {
+      POTIONS.pop();
+    }
+  });
 });
 
 describe("precastLongDurationSpells / precastMidDurationSpells (private)", () => {
@@ -702,6 +743,17 @@ describe("precastLongDurationSpells / precastMidDurationSpells (private)", () =>
     const statements: Statements = [];
     service.precastMidDurationSpells(statements, fakeCreature(), options());
     expect(statements).toEqual([]);
+  });
+
+  it("precasts mid-duration spells once GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells is enabled", () => {
+    GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells = true;
+    try {
+      const statements: Statements = [];
+      service.precastMidDurationSpells(statements, fakeCreature(), options());
+      expect(statements.length).toBeGreaterThan(0);
+    } finally {
+      GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells = false;
+    }
   });
 });
 
@@ -871,6 +923,28 @@ describe("creatureTargetAbility (private)", () => {
       params: ["LastSeenBy", 20],
     });
   });
+
+  it("adds an Allegiance(Myself,ENEMY) trigger when the resolved target list requires an allegiance check (no real target list currently sets this)", () => {
+    const spy = vi
+      .spyOn(targetService, "getTargetFromAbility")
+      .mockReturnValueOnce({ targets: ["PC"], allegianceCheck: true });
+    try {
+      const statements: Statements = [];
+      service.creatureTargetAbility(
+        statements,
+        fakeCreature(),
+        fakeAbility(),
+        { name: "Players" },
+        options(),
+      );
+      expect(statements[0].triggers).toContainEqual({
+        name: "Allegiance",
+        params: ["Myself", "ENEMY"],
+      });
+    } finally {
+      spy.mockRestore();
+    }
+  });
 });
 
 describe("getAdditionals (private)", () => {
@@ -970,6 +1044,27 @@ describe("execute (private, custom-code dispatch)", () => {
     expect(statements).toHaveLength(1);
   });
 
+  it("defaults abilities to an empty array for 'replace' when omitted", () => {
+    const statements: Statements = [];
+    let called = false;
+    const creature = fakeCreature({
+      behavior: {
+        customCodes: [{ location: "rest", type: "replace" }],
+      } as any,
+    });
+    service.execute(
+      function () {
+        called = true;
+      },
+      "rest",
+      statements,
+      creature,
+      options(),
+    );
+    expect(called).toBe(false);
+    expect(statements).toEqual([]);
+  });
+
   it("runs custom statements before the default function for 'insertBefore'", () => {
     const statements: Statements = [];
     const creature = fakeCreature({
@@ -1021,6 +1116,47 @@ describe("execute (private, custom-code dispatch)", () => {
     );
     expect(statements.map((s) => s.comment)).toEqual(["default", "custom"]);
   });
+
+  it("defaults statements/abilities to empty arrays for 'insertBefore' when omitted", () => {
+    const statements: Statements = [];
+    const creature = fakeCreature({
+      behavior: {
+        customCodes: [{ location: "rest", type: "insertBefore" }],
+      } as any,
+    });
+    let called = false;
+    service.execute(
+      function (stmts: Statements) {
+        called = true;
+        stmts.push({ triggers: [], responses: [], comment: "default" });
+      },
+      "rest",
+      statements,
+      creature,
+      options(),
+    );
+    expect(called).toBe(true);
+    expect(statements.map((s) => s.comment)).toEqual(["default"]);
+  });
+
+  it("defaults statements/abilities to empty arrays for 'insertAfter' when omitted", () => {
+    const statements: Statements = [];
+    const creature = fakeCreature({
+      behavior: {
+        customCodes: [{ location: "rest", type: "insertAfter" }],
+      } as any,
+    });
+    service.execute(
+      function (stmts: Statements) {
+        stmts.push({ triggers: [], responses: [], comment: "default" });
+      },
+      "rest",
+      statements,
+      creature,
+      options(),
+    );
+    expect(statements.map((s) => s.comment)).toEqual(["default"]);
+  });
 });
 
 describe("processStatements (private)", () => {
@@ -1038,6 +1174,24 @@ describe("processStatements (private)", () => {
       { triggers: [], responses: [], target: { name: "Players", limit: 2 } },
     ]);
     expect(statements).toHaveLength(2);
+  });
+
+  it("adds an Allegiance(Myself,ENEMY) trigger when the resolved target list requires an allegiance check (no real target list currently sets this)", () => {
+    const spy = vi
+      .spyOn(targetService, "getTargetFromAbility")
+      .mockReturnValueOnce({ targets: ["PC"], allegianceCheck: true });
+    try {
+      const statements: Statements = [];
+      service.processStatements(statements, [
+        { triggers: [], responses: [], target: { name: "Players" } },
+      ]);
+      expect(statements[0].triggers).toContainEqual({
+        name: "Allegiance",
+        params: ["Myself", "ENEMY"],
+      });
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 

@@ -152,7 +152,6 @@ END
 
 // Summon follow summoner
 IF
-	ActionListEmpty()
 	Global("JA#COMBAT","LOCALS",0)
 	!StateCheck(Myself,STATE_BLIND)
 	ActionListEmpty()
