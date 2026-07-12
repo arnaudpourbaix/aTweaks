@@ -838,6 +838,16 @@ since even an empty array is truthy in JS, the `if` can never be false.
 Simplified to an unconditional call. Confirmed zero output impact via full
 regeneration. Now 100% branches/statements for this file (up from 86.95%).
 
+### ✅ `grab.service.ts` — audited, no bug found
+
+Added 2 tests to the existing `grab.service.test.ts` — `attachGrabToWeapon()`
+with an explicit `grab.saveType` (previously only the default was ever
+tested), and `getGrabbedEffects()` (private) with `grab.rounds` unset — that
+fallback is dead in the normal flow (`createGrabSpell()` already mutates
+`grab.rounds` via `??=` before calling it) but reachable calling the private
+method directly. All pass — no bug found. Now 100% branches/statements (up
+from 87.5%).
+
 ---
 
 ## Process

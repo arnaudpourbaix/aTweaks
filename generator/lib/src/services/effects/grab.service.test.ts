@@ -117,6 +117,28 @@ describe("attachGrabToWeapon", () => {
     }
   });
 
+  it("uses an explicit grab.saveType instead of the default", () => {
+    const weapon = fakeWeapon();
+    const creature = fakeCreature({ strength: 10, size: "Medium" });
+    grabService.attachGrabToWeapon(creature, weapon, {
+      saveType: SaveTypeEnum.Breath,
+    });
+    expect(weapon.header.effects[0].saveTypes).toEqual([SaveTypeEnum.Breath]);
+  });
+
+  it("getGrabbedEffects (private) falls back to GRAB_DEFAULT_CONFIG.rounds when grab.rounds is unset", () => {
+    const creature = fakeCreature({ strength: 10, size: "Medium" });
+    const effects = (grabService as any).getGrabbedEffects(
+      creature,
+      {},
+      "spellfile",
+    );
+    const setState = effects.find(
+      (e: any) => "state" in e && "duration" in e,
+    );
+    expect(setState.duration).toBeGreaterThan(0);
+  });
+
   it("getGrabImmuneEffects (private) skips the size-based extras and warns when the creature has no size", () => {
     const creature = fakeCreature({ strength: 10 });
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
