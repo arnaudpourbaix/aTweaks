@@ -814,6 +814,30 @@ every case plus the unmatched-text fallback (`0`, unreachable given
 test via an `as any` cast). All pass — no bug found. Now 100%
 branches/statements (up from 85.91%).
 
+### ✅ `item.service.ts` — third occurrence of the dead-recheck pattern, fixed
+
+Added 12 tests to the existing `item.service.test.ts` — `getItem()`'s
+`equippedSlot` normalization, `setHeader()`'s location/target/damageType
+defaulting (with/without `copyFrom`) and object-projectile handling
+(including the dedup guard), and `isSlotIncluded()`.
+
+**Found the third occurrence of the "redundant re-check after an
+unconditional default" pattern** (after `weidu-item.service.ts`'s projectile
+ternary and `creature.ts`'s `addItem()`):
+
+```ts
+equippedSlot: item.equippedSlot ?? [],
+// ...
+if (result.equippedSlot) {                          // always true - [] is truthy
+  result.equippedSlot = this.getItemSlots(result.equippedSlot);
+}
+```
+
+`result.equippedSlot` is set to `item.equippedSlot ?? []` two lines above —
+since even an empty array is truthy in JS, the `if` can never be false.
+Simplified to an unconditional call. Confirmed zero output impact via full
+regeneration. Now 100% branches/statements for this file (up from 86.95%).
+
 ---
 
 ## Process

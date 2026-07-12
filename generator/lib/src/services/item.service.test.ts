@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { EquippedItem } from "../model/creature/item";
+import { ItemAbilityTypeEnum } from "../model/spell-item/effect.enums";
+import { Item, ItemHeader } from "../model/spell-item/spell-item";
 import itemService from "./item.service";
 
 function fakeEquippedItem(slot: EquippedItem["slot"]): EquippedItem {
@@ -39,5 +41,111 @@ describe("isEquippedWeapon", () => {
 
   it("returns false for an empty slot array", () => {
     expect(itemService.isEquippedWeapon(fakeEquippedItem([]))).toBe(false);
+  });
+});
+
+describe("getItem", () => {
+  it("normalizes equippedSlot to an array via getItemSlots", () => {
+    const result = itemService.getItem(
+      { equippedSlot: "LRING" as any },
+      "itm01",
+    );
+    expect(result.equippedSlot).toEqual(["LRING"]);
+  });
+
+  it("defaults equippedSlot to an empty array when omitted", () => {
+    const result = itemService.getItem({}, "itm02");
+    expect(result.equippedSlot).toEqual([]);
+  });
+});
+
+describe("setHeader", () => {
+  function fakeItem(): Item {
+    return {
+      file: "itm01",
+      doc: true,
+      immunities: [],
+      effects: [],
+      equippedSlot: [],
+      projectiles: [],
+      trait: false,
+    } as unknown as Item;
+  }
+
+  it("defaults location/target/damageType when copyFrom is unset", () => {
+    const item = fakeItem();
+    itemService.setHeader(
+      item,
+      { type: ItemAbilityTypeEnum.Melee } as any,
+      "itm01",
+    );
+    expect(item.header!.location).toBeDefined();
+    expect(item.header!.target).toBeDefined();
+    expect(item.header!.damageType).toBeDefined();
+  });
+
+  it("does not force location/target/damageType when copyFrom is set", () => {
+    const item = fakeItem();
+    item.copyFrom = "ITM01";
+    itemService.setHeader(
+      item,
+      { type: ItemAbilityTypeEnum.Melee } as any,
+      "itm01",
+    );
+    expect(item.header!.location).toBeUndefined();
+    expect(item.header!.target).toBeUndefined();
+    expect(item.header!.damageType).toBeUndefined();
+  });
+
+  it("adds a projectile and sets header.projectile when given an object projectile", () => {
+    const item = fakeItem();
+    itemService.setHeader(
+      item,
+      {
+        type: ItemAbilityTypeEnum.Ranged,
+        projectile: { name: "Test Projectile" } as any,
+      } as any,
+      "itm01",
+    );
+    expect(item.projectiles).toHaveLength(1);
+    expect(item.header!.projectile).toBe("itm01");
+  });
+
+  it("does not add a duplicate projectile when called twice for the same item file", () => {
+    const item = fakeItem();
+    const proj = { name: "Test Projectile" } as any;
+    itemService.setHeader(
+      item,
+      { type: ItemAbilityTypeEnum.Ranged, projectile: proj } as any,
+      "itm01",
+    );
+    itemService.setHeader(
+      item,
+      { type: ItemAbilityTypeEnum.Ranged, projectile: proj } as any,
+      "itm01",
+    );
+    expect(item.projectiles).toHaveLength(1);
+  });
+
+  it("does not add a projectile when the header has none", () => {
+    const item = fakeItem();
+    itemService.setHeader(
+      item,
+      { type: ItemAbilityTypeEnum.Melee } as any,
+      "itm01",
+    );
+    expect(item.projectiles).toHaveLength(0);
+  });
+});
+
+describe("isSlotIncluded", () => {
+  it("finds a slot present on one of the equipped items", () => {
+    const equipped = [fakeEquippedItem("LRING")];
+    expect(itemService.isSlotIncluded(equipped, "LRING")).toBe(true);
+  });
+
+  it("returns false when the slot isn't present on any equipped item", () => {
+    const equipped = [fakeEquippedItem("LRING")];
+    expect(itemService.isSlotIncluded(equipped, "RRING")).toBe(false);
   });
 });

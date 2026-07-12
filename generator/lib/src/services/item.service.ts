@@ -44,9 +44,7 @@ class ItemService {
       projectiles: [],
       trait: false,
     };
-    if (result.equippedSlot) {
-      result.equippedSlot = this.getItemSlots(result.equippedSlot);
-    }
+    result.equippedSlot = this.getItemSlots(result.equippedSlot);
     result.effects = effectService.getEffects(result.effects, {
       file,
       base: {
