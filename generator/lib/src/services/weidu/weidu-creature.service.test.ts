@@ -1,0 +1,223 @@
+import { describe, expect, it } from "vitest";
+import { CodeLine } from "../../model/misc";
+import { EffectTypeEnum } from "../../model/spell-item/effect.type";
+import { Creature } from "../../model/creature/creature";
+import { CreatureAdjustment } from "../../model/creature/adjustment";
+import weiduCreatureService from "./weidu-creature.service";
+
+const service = weiduCreatureService as any;
+
+function codes(lines: CodeLine[]): string[] {
+  return lines.map((l) => l.code);
+}
+
+function fakeAdjustment(p: Partial<CreatureAdjustment> = {}): CreatureAdjustment {
+  return {
+    files: [],
+    summon: false,
+    noWeapon: false,
+    scriptName: false,
+    data: { effects: { list: [] }, spells: { memorized: [] } } as any,
+    ...p,
+  } as CreatureAdjustment;
+}
+
+function fakeCreature(p: Partial<Creature> = {}): Creature {
+  return {
+    id: 1,
+    files: [],
+    adjustments: [],
+    notEnforceFiles: [],
+    data: {
+      effects: { list: [] },
+      spells: { memorized: [], removeMemorized: undefined },
+    },
+    ...p,
+  } as unknown as Creature;
+}
+
+describe("removeEffects (private)", () => {
+  it("removes all effects when creature.data.effects.remove is a boolean", () => {
+    const lines: CodeLine[] = [];
+    const creature = fakeCreature({
+      files: ["FILE1"],
+      data: { effects: { remove: true, list: [] } } as any,
+    });
+    service.removeEffects(lines, 0, creature);
+    expect(
+      codes(lines).some((c) => c.includes("REMOVE_MOST_CRE_EFFECTS")),
+    ).toBe(true);
+  });
+
+  it("removes specific opcodes when creature.data.effects.remove is an array", () => {
+    const lines: CodeLine[] = [];
+    const creature = fakeCreature({
+      files: ["FILE1"],
+      data: { effects: { remove: [EffectTypeEnum.Damage], list: [] } } as any,
+    });
+    service.removeEffects(lines, 0, creature);
+    expect(
+      codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Damage}`)),
+    ).toBe(true);
+  });
+
+  it("removes specific opcodes for an adjustment with an array effects.remove", () => {
+    const lines: CodeLine[] = [];
+    const adjustment = fakeAdjustment({
+      files: ["ADJ1"],
+      data: { effects: { remove: [EffectTypeEnum.Poison], list: [] } } as any,
+    });
+    const creature = fakeCreature({ adjustments: [adjustment] });
+    service.removeEffects(lines, 0, creature);
+    expect(
+      codes(lines).some((c) => c.includes(`opcode_to_delete=${EffectTypeEnum.Poison}`)),
+    ).toBe(true);
+  });
+});
+
+describe("removeKnownSpells (private)", () => {
+  it("excludes an adjustment's files when its removeKnown is explicitly false", () => {
+    const lines: CodeLine[] = [];
+    const adjustment = fakeAdjustment({
+      files: ["ADJ1"],
+      data: { spells: { removeKnown: false, memorized: [] } } as any,
+    });
+    const creature = fakeCreature({ adjustments: [adjustment] });
+    service.removeKnownSpells(lines, 0, creature);
+    expect(codes(lines).some((c) => c.includes("ADJ1"))).toBe(true);
+  });
+});
+
+describe("removeMemorizedSpells (private)", () => {
+  it("excludes an adjustment's files when its removeMemorized is explicitly false", () => {
+    const lines: CodeLine[] = [];
+    const adjustment = fakeAdjustment({
+      files: ["ADJ1"],
+      data: { spells: { removeMemorized: false, memorized: [] } } as any,
+    });
+    const creature = fakeCreature({
+      adjustments: [adjustment],
+      data: {
+        effects: { list: [] },
+        spells: { removeMemorized: true, memorized: [] },
+      } as any,
+    });
+    service.removeMemorizedSpells(lines, 0, creature);
+    expect(codes(lines).some((c) => c.includes("ADJ1"))).toBe(true);
+  });
+});
+
+describe("addMemorizedSpells (private)", () => {
+  it("emits REMOVE_MEMORIZED_SPELL when memorizedCount is 0", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: { memorized: [{ file: "SPWI001", memorizedCount: 0 }] },
+    });
+    expect(codes(lines)[0]).toContain("REMOVE_MEMORIZED_SPELL");
+  });
+
+  it("emits ADD_MEMORIZED_SPELL when memorizedCount is positive", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: { memorized: [{ file: "SPWI001", memorizedCount: 1 }] },
+    });
+    expect(codes(lines)[0]).toContain("ADD_MEMORIZED_SPELL");
+  });
+});
+
+describe("patchScript (private)", () => {
+  it("logs logging=1 when logging is true", () => {
+    const lines: CodeLine[] = [];
+    service.patchScript({
+      lines,
+      tab: 0,
+      script: "SCRIPT",
+      removeScripts: [],
+      files: [],
+      skipFiles: [],
+      logging: true,
+    });
+    expect(codes(lines).some((c) => c.includes("logging=1"))).toBe(true);
+  });
+
+  it("logs logging=0 when logging is false", () => {
+    const lines: CodeLine[] = [];
+    service.patchScript({
+      lines,
+      tab: 0,
+      script: "SCRIPT",
+      removeScripts: [],
+      files: [],
+      skipFiles: [],
+      logging: false,
+    });
+    expect(codes(lines).some((c) => c.includes("logging=0"))).toBe(true);
+  });
+});
+
+describe("patchCreature (private)", () => {
+  it("adds enforce=1 when enforce is true", () => {
+    const lines: CodeLine[] = [];
+    service.patchCreature({
+      lines,
+      tab: 0,
+      data: {},
+      autoGenerate: {},
+      enforce: true,
+      creature: fakeCreature(),
+    });
+    expect(codes(lines).some((c) => c.includes("enforce=1"))).toBe(true);
+  });
+
+  it("does not add enforce=1 when enforce is false", () => {
+    const lines: CodeLine[] = [];
+    service.patchCreature({
+      lines,
+      tab: 0,
+      data: {},
+      autoGenerate: {},
+      enforce: false,
+      creature: fakeCreature(),
+    });
+    expect(codes(lines).some((c) => c.includes("enforce=1"))).toBe(false);
+  });
+});
+
+describe("handleAdjustments (private)", () => {
+  it("throws when an adjustment references a file not in creature.files", () => {
+    const creature = fakeCreature({
+      files: ["KNOWN1"],
+      adjustments: [fakeAdjustment({ files: ["UNKNOWN1"] })],
+    });
+    expect(() => service.handleAdjustments([], 0, creature)).toThrow(
+      /Unknown adjustment file UNKNOWN1/,
+    );
+  });
+
+  it("skips adjustments with neither data nor summon", () => {
+    const creature = fakeCreature({
+      files: ["KNOWN1"],
+      adjustments: [
+        fakeAdjustment({ files: ["KNOWN1"], data: undefined, summon: false }),
+      ],
+    });
+    // should not throw and should not attempt to process the adjustment
+    expect(() => service.handleAdjustments([], 0, creature)).not.toThrow();
+  });
+});
+
+describe("handleAdjustment (private)", () => {
+  it("throws when scriptName is set but the adjustment has multiple files", () => {
+    const creature = fakeCreature();
+    // data: undefined skips patchCreatureAdjustement entirely, isolating the
+    // scriptName/files.length check that follows it
+    const adjustment = fakeAdjustment({
+      files: ["A", "B"],
+      scriptName: true,
+      data: undefined,
+    });
+    expect(() =>
+      service.handleAdjustment([], 0, creature, adjustment),
+    ).toThrow(/can't have a script name if it has several files/);
+  });
+});

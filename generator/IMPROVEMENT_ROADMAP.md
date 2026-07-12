@@ -887,6 +887,28 @@ rather than fixed.
 
 ---
 
+### ✅ `weidu-creature.service.ts` — partially audited, no bug found
+
+Added `weidu-creature.service.test.ts` (no coverage before) — 14 tests
+covering `removeEffects()` (boolean/array `effects.remove` on both the
+creature and an adjustment), `removeKnownSpells()`/`removeMemorizedSpells()`'s
+explicit-`false` opt-out, `addMemorizedSpells()`'s `memorizedCount === 0`
+removal sentinel, `patchScript()`'s `logging` flag, `patchCreature()`'s
+`enforce` flag, and `handleAdjustments()`/`handleAdjustment()`'s validation
+throws. All pass — no bug found. Branches 97.14% (136/140, up from 88.57%).
+
+**Stopped short of 100% deliberately:** the remaining 4 gaps are either
+unreachable via real config (`patchScript()`'s
+`p.removeScripts.length || GLOBAL_CONFIG.tpaConstants.genericScriptsToRemove`
+— the latter is a real, permanently non-empty ~90-entry array, so this
+condition is always true) or need substantially heavier fixture setup
+(`removeAllEffects()`'s per-file adjustment-override logic,
+`patchCreatureAdjustement()`'s `CREATURE_DATA_FIELDS` iteration) —
+disproportionate effort for the largest, most integration-heavy file
+audited so far.
+
+---
+
 ## Process
 
 Same as `BUGFIX_ROADMAP.md`: for each item, add/extend tests to lock in current
