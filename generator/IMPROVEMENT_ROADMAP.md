@@ -592,6 +592,33 @@ more defensively than a bare `else` would. Left as-is, consistent with the
 closed bugfix roadmap's item #10 precedent (don't simplify when the fix
 would be worse than the original).
 
+### ✅ `baf.factory.ts` — second dead random flag found and removed
+
+Continuing the audit of this file (item #7 already removed
+`addStatementsFromTargetList`'s dead `random` machinery). The two remaining
+uncovered branches were both in the *other* function, `addOneBlockTargetList()`.
+
+**Found: `addOneBlockTargetList()`'s `random` flag is also 100% dead.** Its
+one caller (`statement-builder.service.ts:885`, `attackTargetWithStatuses`)
+never passes `random` at all. Unlike item #7's version, this one had no
+FIXME explaining a known defect, and its trigger structure (`RandomNumGT`
+inside an `Or` of inverse-negated per-rank triggers, all AND'd together
+across ranks into one block) is different enough that correctness wasn't
+independently verifiable without deeper domain knowledge.
+
+**Decision (from the maintainer):** remove it, same treatment as item #7.
+
+**Fix applied:** removed `random?: boolean` from the param type, the
+`p.random = p.random ?? false` line, the `max` constant, and the
+`if (p.random && index < targets.length - 1) orTrigger.triggers.push(...)`
+block. Confirmed zero output impact via full regeneration.
+
+Added an `addOneBlockTargetList` describe block to `baf.factory.test.ts`
+(this function had no coverage before) — 5 tests covering the per-target
+`Or`/negation-inversion structure, `inBetweenStatements` present/absent, the
+final statement's `LastSeenBy` resolution, and `reverse`. Now 100%
+branches/statements for this file.
+
 ---
 
 ## Process

@@ -41,16 +41,13 @@ class BafFactory {
     targetTriggers: Triggers.Trigger[];
     responses: Response[];
     reverse?: boolean;
-    random?: boolean;
     comment?: string;
     inBetweenStatements?: Statements;
   }): void => {
     p.reverse = p.reverse ?? false;
-    p.random = p.random ?? false;
     const targets = p.reverse ? [...p.targets].reverse() : [...p.targets];
-    const max = 1000;
     const triggers: Triggers.Trigger[] = [...(p.triggers ?? [])];
-    for (const [index, target] of targets.entries()) {
+    for (const target of targets) {
       const orTrigger: Triggers.Trigger = {
         name: "Or",
         triggers: utils
@@ -59,11 +56,6 @@ class BafFactory {
           ])
           .map(triggerFactory.inverseNegation),
       };
-      if (p.random && index < targets.length - 1)
-        orTrigger.triggers.push({
-          name: "RandomNumGT",
-          params: [max, Math.round(max / (targets.length - index))],
-        });
       triggers.push(orTrigger);
     }
     p.statements.push({
