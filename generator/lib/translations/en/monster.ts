@@ -1,3 +1,7 @@
+// Same displayed ability name shared by the dread wolf, ghoul, and mummy variants below - each
+// has its own mechanical description, but the in-game ability name is identical.
+const ROTTING_DISEASE_NAME = "Rotting Disease";
+
 export default {
   ankheg: {
     name: "Ankheg",
@@ -321,15 +325,14 @@ However, the creature continues to fight until it reaches -10 hp. It then goes d
     ability: {
       dreadWolfDownState: {
         name: "Dread Wolf down state",
-        description:
-          "A down dread wolf is immune to everything but fire and acid.",
+        description: "A down dread wolf is immune to everything but fire and acid.",
       },
       streamOfFrost: {
         name: "Stream of frost",
         description: `Unleash a stream of frost, causing 6d4 points of damage to everything within 10 feet. A save vs. breath weapon is allowed for half damage.`,
       },
       rottingDisease: {
-        name: "Rotting Disease",
+        name: ROTTING_DISEASE_NAME,
         description: `Dread wolves cause a nasty rotting disease that can infect a bitten opponent who fails a save vs. poison within one hour of the fight.
 He loses 1 hp per hour until death.`,
       },
@@ -454,11 +457,11 @@ Those failing to make this save will attack at a penalty of -2.`,
         message: "Affected by Ghast's carrion stench",
       },
       ghoulRottingDisease: {
-        name: "Rotting Disease",
+        name: ROTTING_DISEASE_NAME,
         description: `Loose 10 hit points every 8 hours and 4 point of Constitution and Charisma.`,
       },
       mummyRottingDisease: {
-        name: "Rotting Disease",
+        name: ROTTING_DISEASE_NAME,
         description: `The scabrous touch infects the victim with a rotting disease which is fatal in 6 days.
 For each day the rot progresses, the victim permanently loses 2 points of Charisma.
 The disease can be cured only with a cure disease spell.

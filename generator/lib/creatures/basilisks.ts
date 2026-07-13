@@ -34,6 +34,10 @@ enum Ids {
   Petrification,
 }
 
+// Shared across the multiple rule-edition variants of this ability below - same displayed
+// ability name, different mechanics per edition.
+const PETRIFYING_GAZE_NAME = "monster.basilisk.ability.petrifyingGaze.name";
+
 class Basilisk extends Creature {
   createJaws(p: {
     diceThrown: number;
@@ -130,15 +134,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
     const greater = this.create({
       monster: MonsterEnum.GreaterBasilisk,
       name: "monster.basilisk.name.greater",
-      files: [
-        "AC#BASGR",
-        "BASILG",
-        "BASILGSU",
-        "BASILMUT",
-        "BASILNAD",
-        "BD302BAS",
-        "BPBASG01",
-      ],
+      files: ["AC#BASGR", "BASILG", "BASILGSU", "BASILMUT", "BASILNAD", "BD302BAS", "BPBASG01"],
       data: {
         level1: 10,
         strength: 20,
@@ -229,8 +225,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
                 },
                 {
                   opcode: EffectTypeEnum.PlayVisualEffect,
-                  playWhere:
-                    EffectVisualEffectLocationEnum.OverTargetUnattached,
+                  playWhere: EffectVisualEffectLocationEnum.OverTargetUnattached,
                   resource: "SPFINGER",
                   timing: EffectTimingEnum.InstantPermanentUntilDeath,
                   saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
@@ -256,10 +251,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       id: Ids.Projectile,
       type: ProjectileTypeEnum.AreaOfEffect,
       areaEffectInfo: {
-        areaProjectileFlags: [
-          AreaProjectileEnum.AffectOnlyEnemies,
-          AreaProjectileEnum.Coneshaped,
-        ],
+        areaProjectileFlags: [AreaProjectileEnum.AffectOnlyEnemies, AreaProjectileEnum.Coneshaped],
         triggerRadius: 255,
         areaOfEffect: 255, // cone from basilisk, every creature that can see its eyes
         coneWidth: 60,
@@ -273,13 +265,12 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
    * Petrification (2e)
    */
   private createPetrification2e() {
-    const petrificationSave: { saveTypes: SaveTypeEnum[]; saveBonus: number } =
-      {
-        saveTypes: [SaveTypeEnum.PetrifyPolymorph],
-        saveBonus: -4,
-      };
+    const petrificationSave: { saveTypes: SaveTypeEnum[]; saveBonus: number } = {
+      saveTypes: [SaveTypeEnum.PetrifyPolymorph],
+      saveBonus: -4,
+    };
     return this.addSpell({
-      name: "monster.basilisk.ability.petrifyingGaze.name",
+      name: PETRIFYING_GAZE_NAME,
       description: "monster.basilisk.ability.petrifyingGaze.description",
       id: Ids.Petrification,
       groups: ["petrification"],
@@ -341,13 +332,12 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
    * Petrification (5e)
    */
   private createPetrification5e() {
-    const petrificationSave: { saveTypes: SaveTypeEnum[]; saveBonus: number } =
-      {
-        saveTypes: [SaveTypeEnum.PetrifyPolymorph],
-        saveBonus: -4,
-      };
+    const petrificationSave: { saveTypes: SaveTypeEnum[]; saveBonus: number } = {
+      saveTypes: [SaveTypeEnum.PetrifyPolymorph],
+      saveBonus: -4,
+    };
     const technical = this.addSpell({
-      name: "monster.basilisk.ability.petrifyingGaze.name",
+      name: PETRIFYING_GAZE_NAME,
       description: "monster.basilisk.ability.petrifyingGaze.description5e",
       groups: ["petrification"],
       doc: false,
@@ -395,7 +385,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       ],
     });
     return this.addSpell({
-      name: "monster.basilisk.ability.petrifyingGaze.name",
+      name: PETRIFYING_GAZE_NAME,
       description: "monster.basilisk.ability.petrifyingGaze.description5e",
       id: Ids.Petrification,
       groups: ["petrification"],
@@ -412,8 +402,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
           effects: [
             {
               opcode: EffectTypeEnum.DisplayString,
-              stringRef:
-                "monster.basilisk.ability.petrifyingGaze.turningToStone",
+              stringRef: "monster.basilisk.ability.petrifyingGaze.turningToStone",
               ...petrificationSave,
             },
             ...effectFactory.restrained({

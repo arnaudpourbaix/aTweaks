@@ -517,6 +517,12 @@ export namespace Actions {
     | StartCutSceneMode
     | StartCutScene;
 
+  // This is WeiDU action reference/documentation data, not application logic - many entries
+  // legitimately share the same `parameters` signature or `section` grouping by coincidence of
+  // the domain (dozens of actions take the same param shape or belong to the same category).
+  // Extracting each repeated value to a named constant would replace a self-explanatory inline
+  // string with an indirection that doesn't aid readability here.
+  /* eslint-disable sonarjs/no-duplicate-string */
   export const ACTIONS: GenericScriptRawData[] = [
     {
       name: "Attack",
@@ -1149,4 +1155,5 @@ export namespace Actions {
       section: "Misc",
     },
   ];
+  /* eslint-enable sonarjs/no-duplicate-string */
 }

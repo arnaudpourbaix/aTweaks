@@ -750,6 +750,12 @@ export namespace Triggers {
     | OpenState
     | NearSavedLocation;
 
+  // This is WeiDU trigger reference/documentation data, not application logic - many entries
+  // legitimately share the same `parameters` signature or `section` grouping by coincidence of
+  // the domain (dozens of triggers take the same param shape or belong to the same category).
+  // Extracting each repeated value to a named constant would replace a self-explanatory inline
+  // string with an indirection that doesn't aid readability here.
+  /* eslint-disable sonarjs/no-duplicate-string */
   export const TRIGGERS: GenericScriptRawData[] = [
     {
       name: "HaveSpell",
@@ -1656,4 +1662,5 @@ export namespace Triggers {
       section: "Misc.",
     },
   ];
+  /* eslint-enable sonarjs/no-duplicate-string */
 }
