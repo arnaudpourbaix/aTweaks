@@ -178,6 +178,9 @@ describe("getTargetFromAbility", () => {
         "Player5",
         "Player6",
       ]);
+      // Deterministic ordering of plain ASCII identifiers for comparison only - locale-aware
+      // sorting isn't relevant here.
+      // eslint-disable-next-line sonarjs/no-alphabetical-sort
       expect([...(result.targets as string[])].sort()).toEqual([
         "Player1",
         "Player2",
@@ -213,7 +216,7 @@ function fakeCreature(intelligence?: number): Creature {
 
 describe("getTargetPriorities", () => {
   it("defaults to NoCheck for enemies and Sleep for players when intelligence is unset", () => {
-    expect(targetService.getTargetPriorities(fakeCreature(undefined), {})).toEqual([
+    expect(targetService.getTargetPriorities(fakeCreature(), {})).toEqual([
       { targets: ["NearestEnemies"], status: ["NoCheck"] },
       { targets: ["Players"], status: ["Sleep"] },
     ]);

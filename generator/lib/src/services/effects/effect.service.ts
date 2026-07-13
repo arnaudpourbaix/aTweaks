@@ -57,6 +57,10 @@ class EffectService {
     // Bonus/Resistance-group, CastingFailure vs ProficiencyModifier). Merging them for Sonar's
     // sake would erase that per-opcode correspondence for no benefit - see SONARJS_ROADMAP.md.
     /* eslint-disable sonarjs/no-duplicated-branches */
+    // 58 cases vs. this rule's 30 max - dispatches over EffectTypeEnum, a large real domain (WeiDU
+    // opcodes). Splitting the switch wouldn't reduce real complexity, just relocate it across more
+    // functions/files - see SONARJS_ROADMAP.md.
+    // eslint-disable-next-line sonarjs/max-switch-cases
     switch (effect.opcode) {
       case EffectTypeEnum.ArmorClassBonus:
         effect.parameter1 = `${effect.value}`;

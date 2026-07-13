@@ -239,7 +239,8 @@ class WeiduCreatureService extends AbstractWeiduService {
 
   private removeMemorizedSpell(value: string[] | boolean | undefined): string {
     if (!Array.isArray(value)) return value ? "REMOVE_MEMORIZED_SPELLS" : "";
-    return `REMOVE_MEMORIZED_SPELL ${value.map((v) => `~${v}~`).join(" ")}`;
+    const names = value.map((v) => `~${v}~`).join(" ");
+    return `REMOVE_MEMORIZED_SPELL ${names}`;
   }
 
   private addProficiencies(lines: CodeLine[], tab: number, data: CreatureData) {

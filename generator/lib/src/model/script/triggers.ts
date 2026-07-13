@@ -223,19 +223,23 @@ export namespace Triggers {
     params: [string, ParamObject];
   }
 
+  // `(string & {})` keeps autocomplete on the two well-known scopes while still accepting any
+  // other area name string, without tripping no-redundant-type-constituents.
+  export type GlobalScope = "LOCALS" | "GLOBAL" | (string & {});
+
   export interface Global extends BaseTrigger {
     name: "Global";
-    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
+    params: [string, GlobalScope, number];
   }
 
   export interface GlobalGT extends BaseTrigger {
     name: "GlobalGT";
-    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
+    params: [string, GlobalScope, number];
   }
 
   export interface GlobalLT extends BaseTrigger {
     name: "GlobalLT";
-    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
+    params: [string, GlobalScope, number];
   }
 
   export interface GlobalsEqual extends BaseTrigger {

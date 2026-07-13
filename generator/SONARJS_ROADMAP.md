@@ -1,4 +1,8 @@
-# SonarJS Roadmap
+# SonarJS Roadmap — ✅ COMPLETE (2026-07-13)
+
+`npx eslint .` is at 0 findings (`sonarjs/todo-tag`/`fixme-tag` tracked
+separately in `TODO_ROADMAP.md`, not part of this count). All 4 tiers below
+are done; `npm run build` and `npm test` (831/831) stayed clean throughout.
 
 Follow-up to adding `eslint-plugin-sonarjs`'s `recommended` config on 2026-07-13
 (see `LINT_ROADMAP.md` for the strict-TypeScript-ESLint rollout this builds on).
@@ -129,27 +133,35 @@ All 9 resolved:
   frequencyMultiplier, ...), which is inherent per-opcode behavior, not
   duplication a helper could remove without just relocating it.
 
-## ☐ 4. Everything else (11 findings, low-stakes style)
+## ✅ 4. Everything else (12 findings, low-stakes style)
 
+All resolved:
 - `no-alphabetical-sort` (5, all in test files sorting plain ASCII identifiers
-  like `"Player1"` or file paths for deterministic comparison) - locale
-  correctness is irrelevant for internal test-only ordering of ASCII strings.
-  Leaning toward scoped disables rather than adding a no-op comparator, but
-  not decided yet.
-- `no-undefined-argument` (2, `target.service.test.ts` - explicit
-  `fakeCreature(undefined)` where the param already defaults) - trivial,
-  safe to just drop the argument.
-- `use-type-alias` (1, `triggers.ts:228`) - style preference.
-- `no-nested-template-literals` (1, `weidu-creature.service.ts:232`) - style.
+  like `"Player1"` or file paths for deterministic comparison) - scoped
+  disables in `target.service.test.ts` and `pipeline.golden.test.ts` (locale
+  correctness genuinely doesn't matter for internal ASCII-only ordering); for
+  `utils.service.test.ts`'s `shuffleArray` permutation check, added a real
+  `(a, b) => a - b` comparator instead since it was trivial and removes any
+  fragility around numeric-vs-lexicographic sort order.
+- `no-undefined-argument` (2) - dropped the explicit `undefined` arguments in
+  `target.service.test.ts`'s `fakeCreature(undefined)` and
+  `utils.service.test.ts`'s `getMemorizedSpellType(undefined)` (both optional
+  params with no default - identical behavior, less noise).
+- `use-type-alias` (1, `triggers.ts:228`) - extracted the repeated
+  `"LOCALS" | "GLOBAL" | (string & {})` union (appeared identically in
+  `Global`/`GlobalGT`/`GlobalLT`) into a `Triggers.GlobalScope` type alias.
+- `no-nested-template-literals` (1, `weidu-creature.service.ts`) -
+  `removeMemorizedSpell()`'s inner `.map((v) => \`~${v}~\`)` result now goes
+  through a `names` local before the outer template literal.
 - `no-small-switch` + `prefer-default-last` (2, `i18n.ts:21-22`) -
-  **confirmed intentional**: this project ships English only; the
+  **confirmed intentional** (user: this project ships English only, the
   `default: case "english":` switch is a placeholder for anyone who wants to
-  contribute other-language translations later, not an oversight. Leave as-is;
-  disable both rules for this file.
-- `max-switch-cases` (1, `effect.service.ts:47`, 58 cases vs. a 30 max) - the
-  switch dispatches over `EffectTypeEnum`, a large real domain (WeiDU opcodes);
-  splitting it wouldn't reduce real complexity, just relocate it. Leaning
-  toward raising the threshold or disabling for this file - not decided yet.
+  contribute other-language translations later). Scoped disables with a
+  comment explaining why, rather than restructuring working code.
+- `max-switch-cases` (1, `effect.service.ts`, 58 cases vs. a 30 max) - scoped
+  disable next to the switch; same "structural to the real WeiDU-opcode
+  domain" reasoning as the `cognitive-complexity` disable already on this
+  function.
 
 ---
 

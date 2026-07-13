@@ -61,7 +61,11 @@ function listFilesRecursive(dir: string, base = dir): string[] {
 }
 
 function diffTree(expectedRoot: string, actualRoot: string) {
+  // Deterministic ordering of plain ASCII relative file paths for comparison - locale-aware
+  // sorting isn't relevant here.
+  // eslint-disable-next-line sonarjs/no-alphabetical-sort
   const expectedFiles = listFilesRecursive(expectedRoot).sort();
+  // eslint-disable-next-line sonarjs/no-alphabetical-sort
   const actualFiles = listFilesRecursive(actualRoot).sort();
   const missing = expectedFiles.filter((f) => !actualFiles.includes(f));
   const unexpected = actualFiles.filter((f) => !expectedFiles.includes(f));

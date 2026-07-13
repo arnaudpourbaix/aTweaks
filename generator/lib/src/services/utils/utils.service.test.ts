@@ -305,7 +305,7 @@ describe("getMemorizedSpellType", () => {
 
   it("returns null for types with no memorized-spell equivalent", () => {
     expect(utils.getMemorizedSpellType(SpellTypeEnum.Psionic)).toBeNull();
-    expect(utils.getMemorizedSpellType(undefined)).toBeNull();
+    expect(utils.getMemorizedSpellType()).toBeNull();
   });
 });
 
@@ -444,7 +444,8 @@ describe("shuffleArray", () => {
     const input = [1, 2, 3, 4, 5];
     const result = utils.shuffleArray(input);
     expect(result).toHaveLength(input.length);
-    expect([...result].sort()).toEqual([...input].sort());
+    const byValue = (a: number, b: number) => a - b;
+    expect([...result].sort(byValue)).toEqual([...input].sort(byValue));
   });
 
   it("does not mutate the input array", () => {
