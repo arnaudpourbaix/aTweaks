@@ -1,8 +1,5 @@
 import { CodeLine } from "../../model/misc";
-import {
-  Projectile,
-  ProjectileTypeEnum,
-} from "../../model/spell-item/projectile";
+import { Projectile, ProjectileTypeEnum } from "../../model/spell-item/projectile";
 import { AbstractWeiduService } from "./abstract-weidu.service";
 
 class WeiduProjectileService extends AbstractWeiduService {
@@ -13,10 +10,12 @@ class WeiduProjectileService extends AbstractWeiduService {
   }
 
   createProjectile(lines: CodeLine[], projectile: Projectile) {
+    if (!projectile.copyFromFile)
+      throw new Error(`copyFromFile is required for projectile ${projectile.file}`);
     this.add(
       lines,
       `COPY_EXISTING "${projectile.copyFromFile}.pro" ~override/${projectile.file}.pro~`,
-      0
+      0,
     );
     this.add(lines, `READ_SHORT 0x08 type`, 1);
     if (projectile.type !== ProjectileTypeEnum.NoBAM) {
@@ -69,11 +68,7 @@ class WeiduProjectileService extends AbstractWeiduService {
       this.write(lines, 0x218, 1, info.explosionColor, 1);
       this.write(lines, 0x224, 2, info.coneWidth, 1);
     }
-    this.add(
-      lines,
-      `ADD_PROJECTILE ~override/${projectile.file}.pro~ ~${projectile.name}~`,
-      0
-    );
+    this.add(lines, `ADD_PROJECTILE ~override/${projectile.file}.pro~ ~${projectile.name}~`, 0);
     this.add(lines, "", 0);
   }
 }

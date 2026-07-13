@@ -1,5 +1,6 @@
 import { CodeLine } from "../../model/misc";
 import { Effect, EffectFile } from "../../model/spell-item/effect";
+import { EffectTargetEnum } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import weiduUtils from "../utils/weidu.utils";
 import { AbstractWeiduService } from "./abstract-weidu.service";
@@ -10,48 +11,18 @@ class WeiduEffectService extends AbstractWeiduService {
       this.add(lines, `CREATE EFF "${effect.file}"`, tab);
       this.write(lines, 0x10, 4, effect.opcode, tab + 1);
       this.write(lines, 0x14, 4, effect.target, tab + 1);
-      this.write(
-        lines,
-        0x1c,
-        4,
-        weiduUtils.getIntegerValue(effect.parameter1),
-        tab + 1,
-      );
+      this.write(lines, 0x1c, 4, weiduUtils.getIntegerValue(effect.parameter1), tab + 1);
       this.write(lines, 0x24, 4, effect.timing, tab + 1);
-      this.write(
-        lines,
-        0x20,
-        4,
-        weiduUtils.getIntegerValue(effect.parameter2),
-        tab + 1,
-      );
+      this.write(lines, 0x20, 4, weiduUtils.getIntegerValue(effect.parameter2), tab + 1);
       this.write(lines, 0x28, 4, effect.duration, tab + 1);
       this.write(lines, 0x2c, 2, effect.probability1, tab + 1);
       this.writeAscii(lines, 0x30, 8, effect.resource, tab + 1);
       if (typeof effect.special === "number") {
-        this.write(
-          lines,
-          0x48,
-          4,
-          weiduUtils.getIntegerValue(effect.special),
-          tab + 1,
-        );
+        this.write(lines, 0x48, 4, weiduUtils.getIntegerValue(effect.special), tab + 1);
       }
       this.write(lines, 0x5c, 4, effect.dispelResistance, tab + 1);
-      this.write(
-        lines,
-        0x60,
-        4,
-        weiduUtils.getIntegerValue(effect.parameter3),
-        tab + 1,
-      );
-      this.write(
-        lines,
-        0x64,
-        4,
-        weiduUtils.getIntegerValue(effect.parameter4),
-        tab + 1,
-      );
+      this.write(lines, 0x60, 4, weiduUtils.getIntegerValue(effect.parameter3), tab + 1);
+      this.write(lines, 0x64, 4, weiduUtils.getIntegerValue(effect.parameter4), tab + 1);
       this.add(lines, "", tab);
     }
   }
@@ -82,40 +53,33 @@ class WeiduEffectService extends AbstractWeiduService {
     else if (type === "CRE") fn = "ADD_CRE_EFFECT";
     const intVars: string[] = [
       `opcode=${effect.opcode}`,
-      `target=${effect.target}`,
+      // target is always set by effectService.getEffect()'s setDefaultEffectValues() by the time
+      // a real effect reaches here, but addEffect() is public and doesn't require going through
+      // that path - default matches setDefaultEffectValues()'s own fallback.
+      `target=${effect.target ?? EffectTargetEnum.PresetTarget}`,
     ];
     if (header) intVars.unshift(`header=${header}`);
     if (global) intVars.push("global=1");
-    if (!!effect.power || !!power)
-      intVars.push(`power=${effect.power ?? power}`);
+    // effect.power/power can't both be undefined here (the guard above requires one to be
+    // truthy), but `??` can't prove that to the type checker across two independent operands.
+    if (!!effect.power || !!power) intVars.push(`power=${effect.power ?? power ?? 0}`);
     if (effect.parameter1 && effect.parameter1 !== "0") {
-      intVars.push(
-        `parameter1=${weiduUtils.getIntegerValue(effect.parameter1)}`,
-      );
+      intVars.push(`parameter1=${weiduUtils.getIntegerValue(effect.parameter1) ?? ""}`);
     }
     if (effect.parameter2 && effect.parameter2 !== "0") {
-      intVars.push(
-        `parameter2=${weiduUtils.getIntegerValue(effect.parameter2)}`,
-      );
+      intVars.push(`parameter2=${weiduUtils.getIntegerValue(effect.parameter2) ?? ""}`);
     }
     if (effect.parameter3 && effect.parameter3 !== "0") {
-      intVars.push(
-        `parameter3=${weiduUtils.getIntegerValue(effect.parameter3)}`,
-      );
+      intVars.push(`parameter3=${weiduUtils.getIntegerValue(effect.parameter3) ?? ""}`);
     }
     if (effect.parameter4 && effect.parameter4 !== "0") {
-      intVars.push(
-        `parameter4=${weiduUtils.getIntegerValue(effect.parameter4)}`,
-      );
+      intVars.push(`parameter4=${weiduUtils.getIntegerValue(effect.parameter4) ?? ""}`);
     }
     if (effect.timing) intVars.push(`timing=${effect.timing}`);
-    if (effect.dispelResistance)
-      intVars.push(`resist_dispel=${effect.dispelResistance}`);
+    if (effect.dispelResistance) intVars.push(`resist_dispel=${effect.dispelResistance}`);
     if (effect.duration) intVars.push(`duration=${effect.duration}`);
-    if (effect.probability1)
-      intVars.push(`probability1=${effect.probability1}`);
-    if (effect.probability2)
-      intVars.push(`probability2=${effect.probability2}`);
+    if (effect.probability1) intVars.push(`probability1=${effect.probability1}`);
+    if (effect.probability2) intVars.push(`probability2=${effect.probability2}`);
     if (effect.diceSize) {
       intVars.push(`dicesize=${effect.diceSize}`);
     }
@@ -142,9 +106,7 @@ class WeiduEffectService extends AbstractWeiduService {
     } else if (effect.special) {
       intVars.push(`special=${effect.special}`);
     }
-    const strVar = effect.resource
-      ? ` STR_VAR resource="${effect.resource}"`
-      : "";
+    const strVar = effect.resource ? ` STR_VAR resource="${effect.resource}"` : "";
     this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
     if (has2da) {
       this.add(lines, `END`, --tab);
@@ -174,7 +136,7 @@ class WeiduEffectService extends AbstractWeiduService {
     this.add(
       lines,
       `LPF GET_2DA_ENTRY_OF INT_VAR col_match=${col} STR_VAR file=~${file}~ entry_match=~${
-        param === 1 ? effect.parameter1 : effect.parameter2
+        (param === 1 ? effect.parameter1 : effect.parameter2) ?? ""
       }~ RET row col END`,
       tab,
     );

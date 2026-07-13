@@ -7,7 +7,8 @@ see the commit message). `npm run build` and `npm test` (831/831) are both clean
 Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
 **1,282**; Tier 1 (`as any` private-access rewrite) brought it to **485**; Tier 2
 item 3 (`no-non-null-assertion`, below) has since brought it to **356**; Tier 2
-item 4 (`no-unnecessary-condition`, below) has since brought it to **294**. None
+item 4 (`no-unnecessary-condition`) to **294**; Tier 2 items 5a/5 (pre-existing
+test-file `tsc` errors, then `restrict-template-expressions`) to **281**. None
 of this blocks the build or tests today — `npm run lint` simply isn't green yet.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
@@ -293,13 +294,45 @@ diagnostics). Fixed across:
 
 `npm run build` and `npm test` (831/831) both clean.
 
-### ☐ 5. `restrict-template-expressions` — the 29 `X | undefined` cases (not covered by Tier 0's config change)
+### ✅ 5. `restrict-template-expressions` — the `X | undefined` cases (not covered by Tier 0's config change) — done
 
-Listed above; each one interpolates a possibly-`undefined` value into generated
-output. For each: confirm whether the `undefined` case is reachable from real config
-(same "confirmed no current impact" check used throughout `IMPROVEMENT_ROADMAP.md`)
-and either add a fallback (`?? ""`, `?? 0`, etc.) or narrow the type if it's
-provably always defined by that point.
+Most of the original 29 had already been closed incidentally while auditing Tier 2
+items 3/4 (creature.service.ts, weapon.service.ts, weidu-spell.service.ts, etc.);
+15 remained, all fixed here across index.ts, effect.service.ts,
+weidu-projectile.service.ts, weidu-effect.service.ts, weidu-function.service.ts.
+Same per-hit audit as the rest of Tier 2: is the `undefined` case reachable from
+real config, or provably excluded by a guard the type checker can't see through?
+
+- `weidu-projectile.service.ts`: **the one real bug** — `createProjectile()`
+  unconditionally interpolated `projectile.copyFromFile` (optional on the type)
+  into a `COPY_EXISTING "..."` WeiDU command with no guard at all. Every real
+  creature config that sets a `projectile` object does set `copyFromFile`, but
+  nothing enforced it — an omission would have silently emitted
+  `COPY_EXISTING "undefined.pro" ...` into generated script. Added a real
+  `if (!projectile.copyFromFile) throw` guard.
+- `effect.service.ts`'s stringRef branch had the same silent-`"undefined"` shape:
+  `` `${utils.resolveStringRef(effect.stringRef)}` `` would render the literal
+  text `"undefined"` if the helper ever returned undefined; replaced with
+  `utils.resolveStringRef(...) ?? ""` (traced the helper - given a defined input,
+  as guaranteed by the surrounding `if (effect.stringRef)`, it can't actually
+  return undefined, so this is a no-behavior-change type fix, not a live bug).
+- `weidu-effect.service.ts`/`weidu-function.service.ts`: the bulk of the
+  remaining hits were `weiduUtils.getIntegerValue(effect.parameterN)` calls
+  already sitting inside an `effect.parameterN && ... !== "0"` truthy guard —
+  `getIntegerValue` only returns `undefined` for an undefined/empty input, which
+  the guard already excludes. Added `?? ""` fallbacks (unreachable in practice,
+  satisfies the type). `effect.target` similarly defaulted with
+  `?? EffectTargetEnum.PresetTarget`, matching effect.service.ts's own
+  `setDefaultEffectValues()` default, since `addEffect()` is a public method not
+  guaranteed to only be called after that defaulting runs.
+- `weidu-function.service.ts`'s `OUTER_SET ${sp.name}=...`: `name` is optional on
+  `BaseSpellProtection` generally, but every literal entry in the small,
+  hand-authored `SPELL_PROTECTIONS` config array sets it (the entry is
+  meaningless without it). Added a real `if (!sp.name) throw` guard rather than
+  a silent fallback, since an unnamed entry would be a config-authoring mistake
+  worth surfacing loudly.
+
+`npm run build` and `npm test` (831/831) both clean.
 
 ---
 

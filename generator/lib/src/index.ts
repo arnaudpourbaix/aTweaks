@@ -29,7 +29,7 @@ async function main() {
     });
 }
 
-main().catch((e) => {
-  console.error(chalk.red(`\nError: ${e instanceof Error ? e.message : e}`));
+main().catch((e: unknown) => {
+  console.error(chalk.red(`\nError: ${e instanceof Error ? e.message : String(e)}`));
   process.exit(1);
 });

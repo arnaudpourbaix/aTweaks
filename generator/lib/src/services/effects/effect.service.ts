@@ -1,7 +1,4 @@
-import {
-  EXISTING_SPELL_PROTECTIONS,
-  SpellProtectionName,
-} from "../../../config/spell-protection";
+import { EXISTING_SPELL_PROTECTIONS, SpellProtectionName } from "../../../config/spell-protection";
 import {
   BaseEffect,
   DamageEffect,
@@ -20,10 +17,7 @@ import {
   getCastSpellOnConditionValue,
 } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
-import {
-  SpellProtection,
-  SpellProtectionStat,
-} from "../../model/spell-item/spell-protection";
+import { SpellProtection, SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import creatureService from "../creature.service";
 import utils from "../utils/utils.service";
 
@@ -109,7 +103,7 @@ class EffectService {
       case EffectTypeEnum.ProtectionFromSpell:
       case EffectTypeEnum.ProtectionFromDisplaySpecificString:
         if (effect.stringRef) {
-          effect.parameter1 = `${utils.resolveStringRef(effect.stringRef)}`;
+          effect.parameter1 = utils.resolveStringRef(effect.stringRef) ?? "";
         }
         break;
       case EffectTypeEnum.LightingEffects:
@@ -136,9 +130,7 @@ class EffectService {
       case EffectTypeEnum.CharacterColorPulse:
       case EffectTypeEnum.SetColorGlowPulse:
         effect.parameter1 = `${
-          (effect.color.red << 8) +
-          (effect.color.green << 16) +
-          (effect.color.blue << 24)
+          (effect.color.red << 8) + (effect.color.green << 16) + (effect.color.blue << 24)
         }`;
         effect.parameter2 = `${effect.location + (effect.cycleSpeed << 16)}`;
         break;
@@ -148,9 +140,7 @@ class EffectService {
         break;
       case EffectTypeEnum.SetColorGlowSolid:
         effect.parameter1 = `${
-          (effect.color.red << 8) +
-          (effect.color.green << 16) +
-          (effect.color.blue << 24)
+          (effect.color.red << 8) + (effect.color.green << 16) + (effect.color.blue << 24)
         }`;
         effect.parameter2 = `${effect.location}`;
         break;
@@ -182,9 +172,7 @@ class EffectService {
         break;
       case EffectTypeEnum.CreatureRGBColorFade:
         effect.parameter1 = `${
-          (effect.color.red << 8) +
-          (effect.color.green << 16) +
-          (effect.color.blue << 24)
+          (effect.color.red << 8) + (effect.color.green << 16) + (effect.color.blue << 24)
         }`;
         effect.parameter2 = `${effect.fadeSpeed << 16}`;
         break;
@@ -290,9 +278,7 @@ class EffectService {
       case EffectTypeEnum.ModifyAttacksPerRound:
         const apr = creatureService.getAttacksPerRound(effect.value);
         if (apr.doubleApr)
-          throw new Error(
-            `Can't have more than 5 APR in an effect: ${effect.value}`,
-          );
+          throw new Error(`Can't have more than 5 APR in an effect: ${effect.value}`);
         effect.parameter1 = `${apr.value}`;
         effect.parameter2 = `${effect.type}`;
         break;
@@ -338,23 +324,18 @@ class EffectService {
   }
 
   private damage(effect: DamageEffect) {
-    const mode = effect.damageMode
-      ? effect.damageMode
-      : EffectDamageModeEnum.Normal;
+    const mode = effect.damageMode ? effect.damageMode : EffectDamageModeEnum.Normal;
     const type = effect.type;
     effect.parameter1 = `${effect.amount ?? 0}`;
     effect.parameter2 = `${mode + (type << 16)}`;
   }
 
   private protectionFromResource(effect: ProtectionFromResourceEffect) {
-    const isValueString =
-      typeof effect.value === "string" && !/\d+/.test(effect.value);
-    if (effect.value !== undefined && !isValueString)
-      effect.parameter1 = `${effect.value}`;
+    const isValueString = typeof effect.value === "string" && !/\d+/.test(effect.value);
+    if (effect.value !== undefined && !isValueString) effect.parameter1 = `${effect.value}`;
     if (typeof effect.type === "string")
       this.protectionFromResourceFromName(effect, effect.type, isValueString);
-    else
-      this.protectionFromResourceFromObject(effect, effect.type, isValueString);
+    else this.protectionFromResourceFromObject(effect, effect.type, isValueString);
   }
 
   private protectionFromResourceFromName(
@@ -363,8 +344,7 @@ class EffectService {
     isValueString: boolean,
   ) {
     effect.parameter2 = type;
-    if (isValueString)
-      throw new Error(`Can't determine param1 in ${JSON.stringify(effect)}`);
+    if (isValueString) throw new Error(`Can't determine param1 in ${JSON.stringify(effect)}`);
   }
 
   private protectionFromResourceFromObject(
@@ -374,21 +354,14 @@ class EffectService {
   ) {
     type.value = type.value ?? -1;
     const prot = EXISTING_SPELL_PROTECTIONS.find(
-      (p) =>
-        p.stat === type.stat &&
-        p.relation === type.relation &&
-        p.value == type.value,
+      (p) => p.stat === type.stat && p.relation === type.relation && p.value == type.value,
     );
-    if (!prot)
-      throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
+    if (!prot) throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
     effect.parameter2 = `${prot.index}`;
     if (!isValueString) return;
-    const file = utils.getIdsFileFromSpellProtectionStat(
-      prot.stat as SpellProtectionStat,
-    );
-    if (!file)
-      throw new Error(`Can't find IDS file for: ${JSON.stringify(type)}`);
-    effect.parameter1 = `IDS_OF_SYMBOL (~${file}~ ~${effect.value}~)`;
+    const file = utils.getIdsFileFromSpellProtectionStat(prot.stat as SpellProtectionStat);
+    if (!file) throw new Error(`Can't find IDS file for: ${JSON.stringify(type)}`);
+    effect.parameter1 = `IDS_OF_SYMBOL (~${file}~ ~${effect.value ?? ""}~)`;
   }
 
   private scriptingStateModifier(effect: ScriptingStateModifierEffect): void {
@@ -400,10 +373,7 @@ class EffectService {
     effect.parameter2 = `IDS_OF_SYMBOL (~stat~ ~${effect.state}~) - 156`;
   }
 
-  setDefaultEffectValues(
-    effect: Effect,
-    base?: Required<Pick<BaseEffect, "target" | "timing">>,
-  ) {
+  setDefaultEffectValues(effect: Effect, base?: Required<Pick<BaseEffect, "target" | "timing">>) {
     effect.target ??= base?.target ?? EffectTargetEnum.PresetTarget;
     effect.timing ??= base?.timing ?? EffectTimingEnum.InstantLimited;
     effect.dispelResistance ??= EffectDispelResistanceEnum.NaturalNonMagical;
