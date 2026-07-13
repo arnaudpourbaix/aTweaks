@@ -110,9 +110,12 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "ACTION_FOR_EACH ~file~ IN", tab);
     for (const file of creature.files) this.add(lines, `"${file}"`, tab + 1);
     this.add(lines, "BEGIN", tab);
-    this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, ++tab);
-    this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, ++tab);
-    this.add(lines, `LPF FJ_CRE_VALIDITY END`, ++tab);
+    tab++;
+    this.add(lines, `ACTION_IF FILE_EXISTS_IN_GAME ~%file%.cre~ BEGIN`, tab);
+    tab++;
+    this.add(lines, `COPY_EXISTING ~%file%.cre~ ~override~`, tab);
+    tab++;
+    this.add(lines, `LPF FJ_CRE_VALIDITY END`, tab);
     this.removeEffects(lines, tab, creature);
     this.removeKnownSpells(lines, tab, creature);
     this.removeMemorizedSpells(lines, tab, creature);
@@ -150,10 +153,14 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.patchScripts(lines, tab, creature);
     }
     this.handleAdjustments(lines, tab, creature);
-    this.add(lines, "BUT_ONLY_IF_IT_CHANGES", --tab);
-    this.add(lines, "END ELSE BEGIN", --tab);
-    this.add(lines, "PRINT ~====> CRE %file% not found!~", ++tab);
-    this.add(lines, "END", --tab);
+    tab--;
+    this.add(lines, "BUT_ONLY_IF_IT_CHANGES", tab);
+    tab--;
+    this.add(lines, "END ELSE BEGIN", tab);
+    tab++;
+    this.add(lines, "PRINT ~====> CRE %file% not found!~", tab);
+    tab--;
+    this.add(lines, "END", tab);
     this.add(lines, "END", tab - 1);
   }
 
@@ -489,7 +496,8 @@ class WeiduCreatureService extends AbstractWeiduService {
     creature: Creature,
     adjustment: CreatureAdjustment,
   ) {
-    this.startConditionalSourceRes(lines, tab++, adjustment.files, false);
+    this.startConditionalSourceRes(lines, tab, adjustment.files, false);
+    tab++;
     // data is required by the type, but defended anyway (same reason as handleAdjustments above)
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (adjustment.data?.movement) {
@@ -520,6 +528,24 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.add(lines, "END", tab - 1);
   }
 
+  private writeCreatureDataField(
+    lines: CodeLine[],
+    tab: number,
+    data: CreatureData,
+    field: (typeof CREATURE_DATA_FIELDS)[number],
+  ) {
+    if (!field.value || !field.fields || data[field.key] === undefined) return;
+    const value = field.value(data);
+    if (value === undefined) return;
+    for (const f of field.fields) {
+      this.add(
+        lines,
+        `${this.getWrite(f.size)} 0x${f.index.toString(16)} ${value} // ${field.key}`,
+        tab,
+      );
+    }
+  }
+
   private patchCreatureAdjustement(p: {
     lines: CodeLine[];
     tab: number;
@@ -534,18 +560,7 @@ class WeiduCreatureService extends AbstractWeiduService {
       p.data.gender = "SUMMONED";
     }
     for (const data of CREATURE_DATA_FIELDS) {
-      if (!!data.value && !!data.fields && p.data[data.key] !== undefined) {
-        const value = data.value(p.data);
-        if (value !== undefined) {
-          for (const field of data.fields) {
-            this.add(
-              p.lines,
-              `${this.getWrite(field.size)} 0x${field.index.toString(16)} ${value} // ${data.key}`,
-              p.tab,
-            );
-          }
-        }
-      }
+      this.writeCreatureDataField(p.lines, p.tab, p.data, data);
     }
     this.removeItems(p.lines, p.tab, p.data);
     this.addItemSlots({

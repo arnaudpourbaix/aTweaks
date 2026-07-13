@@ -19,14 +19,9 @@ class WeiduFamilyService extends AbstractWeiduService {
     const file = this.getMainFilename(family);
     if (!creature) {
       let content = `LAM load_secondary_types${CR}`;
-      const commonFile = path.join(
-        State.modFolder,
-        `${utils.getFamilyFolder(family)}/common.tpa`,
-      );
+      const commonFile = path.join(State.modFolder, `${utils.getFamilyFolder(family)}/common.tpa`);
       if (fs.existsSync(commonFile)) {
-        content += `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(
-          family,
-        )}/common.tpa"${CR}`;
+        content += `INCLUDE "%MOD_FOLDER%/${utils.getFamilyFolder(family)}/common.tpa"${CR}`;
       }
       if (fs.existsSync(file)) fs.rmSync(file);
       utils.writeFile(file, content);
@@ -53,24 +48,17 @@ class WeiduFamilyService extends AbstractWeiduService {
   }
 
   getMainFilename(family: MonsterFamilyEnum) {
-    const file = path.join(
-      State.modFolder,
-      `${utils.getFamilyFolder(family)}/main.tpa`,
-    );
-    return file;
+    return path.join(State.modFolder, `${utils.getFamilyFolder(family)}/main.tpa`);
   }
 
   generateFinalCode(family: Family) {
     const lines: CodeLine[] = [];
     if (
-      family.spells.some((s) => typeof s.secondaryType === "string") ||
-      family.creatures.some((c) =>
-        c.spells.some((s) => typeof s.secondaryType === "string"),
-      )
+      GLOBAL_CONFIG.enableSecondaryTypes &&
+      (family.spells.some((s) => typeof s.secondaryType === "string") ||
+        family.creatures.some((c) => c.spells.some((s) => typeof s.secondaryType === "string")))
     ) {
-      if (GLOBAL_CONFIG.enableSecondaryTypes) {
-        this.add(lines, "LAF integrate_sectypes END", 0);
-      }
+      this.add(lines, "LAF integrate_sectypes END", 0);
     }
     this.add(lines, "", 0);
     const content = lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
