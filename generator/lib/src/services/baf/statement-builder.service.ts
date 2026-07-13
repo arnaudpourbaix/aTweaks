@@ -22,7 +22,7 @@ import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 import targetService from "./target.service";
 
-class StatementService {
+class StatementBuilderService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
     const statements: Statements = [];
     // .bind(this) on each handler: execute() re-binds via fn.apply(this, ...) internally, so this
@@ -215,7 +215,7 @@ class StatementService {
 
   private destroyUponDeath(
     statements: Statements,
-    creature: Creature,
+    _creature: Creature,
     options: BuilderOptions,
   ): void {
     if (!options.summon) return;
@@ -226,7 +226,7 @@ class StatementService {
     });
   }
 
-  private init(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private init(statements: Statements, _creature: Creature, options: BuilderOptions): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
@@ -392,7 +392,7 @@ class StatementService {
 
   private noActionOutsideOfCombat(
     statements: Statements,
-    creature: Creature,
+    _creature: Creature,
     options: BuilderOptions,
   ): void {
     const responses = responseFactory.response([{ name: "NoAction" }]);
@@ -436,7 +436,7 @@ class StatementService {
 
   private followSummoner(
     statements: Statements,
-    creature: Creature,
+    _creature: Creature,
     options: BuilderOptions,
   ): void {
     if (!options.summon) return;
@@ -646,7 +646,7 @@ class StatementService {
     });
   }
 
-  private runAway(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private runAway(statements: Statements, _creature: Creature, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       {
         name: "Range",
@@ -663,7 +663,7 @@ class StatementService {
     });
   }
 
-  private reposition(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private reposition(statements: Statements, _creature: Creature, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       { name: "CanEquipRanged" },
       {
@@ -744,7 +744,7 @@ class StatementService {
       if (creature.attack.selectWeapons.length) {
         selectWeaponStatements = this.selectWeaponStatements(creature, targetTriggers, options);
       } else if (creature.attack.melee && creature.attack.ranged) {
-        selectWeaponStatements = this.selectWeaponMeleeRangeStatements(creature, options);
+        selectWeaponStatements = this.selectWeaponMeleeRangeStatements(options);
       }
       const responses = responseFactory.attackResponses({
         attacks: creature.attack.actions,
@@ -763,10 +763,7 @@ class StatementService {
     }
   }
 
-  private selectWeaponMeleeRangeStatements(
-    creature: Creature,
-    options: BuilderOptions,
-  ): Statements {
+  private selectWeaponMeleeRangeStatements(options: BuilderOptions): Statements {
     const statements: Statements = [];
     let triggers: Triggers.Trigger[] = [
       { name: "CanEquipRanged" },
@@ -855,7 +852,7 @@ class StatementService {
 
   private precastLongDurationSpells(
     statements: Statements,
-    creature: Creature,
+    _creature: Creature,
     options: BuilderOptions,
   ): void {
     this.precastSpells(
@@ -868,7 +865,7 @@ class StatementService {
 
   private precastMidDurationSpells(
     statements: Statements,
-    creature: Creature,
+    _creature: Creature,
     options: BuilderOptions,
   ): void {
     if (!GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells) return;
@@ -1080,5 +1077,5 @@ class StatementService {
   }
 }
 
-const statementService = new StatementService();
-export default statementService;
+const statementBuilderService = new StatementBuilderService();
+export default statementBuilderService;

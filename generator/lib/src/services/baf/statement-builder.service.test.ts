@@ -21,7 +21,7 @@ import { Triggers } from "../../model/script/triggers";
 import stateService from "../state.service";
 import utils from "../utils/utils.service";
 import targetService from "./target.service";
-import statementService from "./statement-builder.service";
+import statementBuilderService from "./statement-builder.service";
 
 // hasImmunity/State.immunities backed lookups (e.g. handlePanic's fear check for
 // grouped immunities) need the real immunity config loaded first.
@@ -29,7 +29,7 @@ beforeAll(async () => {
   await stateService.init();
 });
 
-interface StatementServicePrivate {
+interface StatementBuilderServicePrivate {
   execute(
     fn: (statements: Statements, creature: Creature, options: BuilderOptions) => void,
     location: CustomCodeLocation,
@@ -46,7 +46,11 @@ interface StatementServicePrivate {
   turnHostile(statements: Statements, creature: Creature, options: BuilderOptions): void;
   detectCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
   shouts(statements: Statements, creature: Creature, options: BuilderOptions): void;
-  noActionOutsideOfCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  noActionOutsideOfCombat(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void;
   followSummoner(statements: Statements, creature: Creature, options: BuilderOptions): void;
   trackTargets(statements: Statements, creature: Creature, options: BuilderOptions): void;
   randomWalkCombat(statements: Statements, creature: Creature, options: BuilderOptions): void;
@@ -61,15 +65,23 @@ interface StatementServicePrivate {
     targetListName: TargetListName,
     statusNameList: TargetStatusName[],
   ): void;
-  selectWeaponMeleeRangeStatements(creature: Creature, options: BuilderOptions): Statements;
+  selectWeaponMeleeRangeStatements(options: BuilderOptions): Statements;
   selectWeaponStatements(
     creature: Creature,
     targetTriggers: Triggers.Trigger[],
     options: BuilderOptions,
   ): Statements;
   potions(statements: Statements, creature: Creature, options: BuilderOptions): void;
-  precastLongDurationSpells(statements: Statements, creature: Creature, options: BuilderOptions): void;
-  precastMidDurationSpells(statements: Statements, creature: Creature, options: BuilderOptions): void;
+  precastLongDurationSpells(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void;
+  precastMidDurationSpells(
+    statements: Statements,
+    creature: Creature,
+    options: BuilderOptions,
+  ): void;
   creatureAbilities(statements: Statements, creature: Creature, options: BuilderOptions): void;
   parseAbilities(
     statements: Statements,
@@ -96,7 +108,7 @@ interface StatementServicePrivate {
   ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] };
 }
 
-const service = statementService as unknown as StatementServicePrivate;
+const service = statementBuilderService as unknown as StatementBuilderServicePrivate;
 
 function fakeCreature(
   overrides: {
@@ -156,11 +168,7 @@ describe("dialog (private)", () => {
 
   it("uses a single Name trigger (no Or) for one dialog name", () => {
     const statements: Statements = [];
-    service.dialog(
-      statements,
-      fakeCreature({ behavior: { dialog: ["ja#drow"] } }),
-      options(),
-    );
+    service.dialog(statements, fakeCreature({ behavior: { dialog: ["ja#drow"] } }), options());
     expect(statements).toHaveLength(1);
     expect(statements[0].comment).toBe("Initiate dialog");
     expect(statements[0].triggers).toEqual([
@@ -194,11 +202,7 @@ describe("dialog (private)", () => {
 describe("handlePanic (private)", () => {
   it("adds no statements when the creature is immune to fear", () => {
     const statements: Statements = [];
-    service.handlePanic(
-      statements,
-      fakeCreature({ data: { immunities: ["fear"] } }),
-      options(),
-    );
+    service.handlePanic(statements, fakeCreature({ data: { immunities: ["fear"] } }), options());
     expect(statements).toEqual([]);
   });
 
@@ -210,9 +214,7 @@ describe("handlePanic (private)", () => {
     expect(statements[0].responses[0].actions).toEqual([
       { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 15] },
     ]);
-    expect(statements[1].responses[0].actions).toEqual([
-      { name: "RandomWalkContinuous" },
-    ]);
+    expect(statements[1].responses[0].actions).toEqual([{ name: "RandomWalkContinuous" }]);
   });
 });
 
@@ -237,6 +239,10 @@ describe("destroyUponDeath (private)", () => {
 });
 
 describe("init (private)", () => {
+  // Same test description reused across 3 independent describe blocks for analogous
+  // "skip when summoned" behavior on different methods - a shared constant would hurt
+  // searchability in test output for no benefit.
+  // eslint-disable-next-line sonarjs/no-duplicate-string
   it("adds nothing for a summon", () => {
     const statements: Statements = [];
     service.init(statements, fakeCreature(), options(true));
@@ -254,19 +260,11 @@ describe("init (private)", () => {
       },
       {
         name: "SetGlobal",
-        params: [
-          GLOBAL_CONFIG.bafConstants.precastLongDurationSpells,
-          "LOCALS",
-          0,
-        ],
+        params: [GLOBAL_CONFIG.bafConstants.precastLongDurationSpells, "LOCALS", 0],
       },
       {
         name: "SetGlobal",
-        params: [
-          GLOBAL_CONFIG.bafConstants.precastMidDurationSpells,
-          "LOCALS",
-          0,
-        ],
+        params: [GLOBAL_CONFIG.bafConstants.precastMidDurationSpells, "LOCALS", 0],
       },
       {
         name: "SetGlobalTimer",
@@ -302,11 +300,7 @@ describe("rest (private)", () => {
 
   it("adds a full-heal action when behavior.restHeal is set", () => {
     const statements: Statements = [];
-    service.rest(
-      statements,
-      fakeCreature({ behavior: { restHeal: true } }),
-      options(false),
-    );
+    service.rest(statements, fakeCreature({ behavior: { restHeal: true } }), options(false));
     expect(statements[0].responses[0].actions).toContainEqual({
       name: "ApplySpell",
       params: ["Myself", "RESTORE_FULL_HEALTH"],
@@ -323,11 +317,7 @@ describe("turnHostile (private)", () => {
 
   it("turns hostile when attacked while neutral, hearing shouts from its own race", () => {
     const statements: Statements = [];
-    service.turnHostile(
-      statements,
-      fakeCreature({ data: { race: "GNOLL" } }),
-      options(false),
-    );
+    service.turnHostile(statements, fakeCreature({ data: { race: "GNOLL" } }), options(false));
     expect(statements).toHaveLength(1);
     expect(statements[0].responses[0].actions).toEqual([{ name: "Enemy" }]);
     expect(statements[0].triggers[1]).toEqual({
@@ -338,10 +328,7 @@ describe("turnHostile (private)", () => {
         { name: "TookDamage" },
         {
           name: "Heard",
-          params: [
-            "EVILCUTOFF.0.GNOLL",
-            GLOBAL_CONFIG.bafConstants.monsterShoutId,
-          ],
+          params: ["EVILCUTOFF.0.GNOLL", GLOBAL_CONFIG.bafConstants.monsterShoutId],
         },
       ],
     });
@@ -367,21 +354,13 @@ describe("detectCombat (private)", () => {
 describe("shouts (private)", () => {
   it("adds nothing when behavior.help is false", () => {
     const statements: Statements = [];
-    service.shouts(
-      statements,
-      fakeCreature({ behavior: { help: false } }),
-      options(),
-    );
+    service.shouts(statements, fakeCreature({ behavior: { help: false } }), options());
     expect(statements).toEqual([]);
   });
 
   it("shouts with the monster shout id and reacts to the fixed EVILCUTOFF.0.<race> source for a non-summon", () => {
     const statements: Statements = [];
-    service.shouts(
-      statements,
-      fakeCreature({ data: { race: "GNOLL" } }),
-      options(false),
-    );
+    service.shouts(statements, fakeCreature({ data: { race: "GNOLL" } }), options(false));
     expect(statements).toHaveLength(3);
     expect(statements[0].responses[0].actions[0]).toEqual({
       name: "Shout",
@@ -412,12 +391,8 @@ describe("noActionOutsideOfCombat (private)", () => {
     const statements: Statements = [];
     service.noActionOutsideOfCombat(statements, fakeCreature(), options());
     expect(statements).toHaveLength(2);
-    expect(statements[0].responses[0].actions).toEqual([
-      { name: "NoAction" },
-    ]);
-    expect(statements[1].responses[0].actions).toEqual([
-      { name: "NoAction" },
-    ]);
+    expect(statements[0].responses[0].actions).toEqual([{ name: "NoAction" }]);
+    expect(statements[1].responses[0].actions).toEqual([{ name: "NoAction" }]);
   });
 
   it("prefixes both statements with an ActionListEmpty check for summons", () => {
@@ -458,11 +433,7 @@ describe("followSummoner (private)", () => {
 describe("trackTargets (private)", () => {
   it("adds nothing when behavior.tracking is false", () => {
     const statements: Statements = [];
-    service.trackTargets(
-      statements,
-      fakeCreature({ behavior: { tracking: false } }),
-      options(),
-    );
+    service.trackTargets(statements, fakeCreature({ behavior: { tracking: false } }), options());
     expect(statements).toEqual([]);
   });
 
@@ -470,33 +441,21 @@ describe("trackTargets (private)", () => {
     const statements: Statements = [];
     service.trackTargets(statements, fakeCreature(), options());
     expect(statements).toHaveLength(7); // 6 players + 1 last-seen-enemy fallback
-    expect(statements[0].comment).toBe(
-      "Track players if allegiance is not GOODCUTOFF",
-    );
+    expect(statements[0].comment).toBe("Track players if allegiance is not GOODCUTOFF");
     expect(statements[5].comment).toBe("");
-    expect(statements[6].comment).toBe(
-      "Track last seen enemy if allegiance is GOODCUTOFF",
-    );
+    expect(statements[6].comment).toBe("Track last seen enemy if allegiance is GOODCUTOFF");
   });
 
   it("adds a door-opening statement for intelligent creatures", () => {
     const statements: Statements = [];
-    service.trackTargets(
-      statements,
-      fakeCreature({ data: { intelligence: 11 } }),
-      options(),
-    );
+    service.trackTargets(statements, fakeCreature({ data: { intelligence: 11 } }), options());
     expect(statements).toHaveLength(8);
     expect(statements[7].comment).toBe("Open door");
   });
 
   it("does not add a door-opening statement for creatures at or below intelligence 10", () => {
     const statements: Statements = [];
-    service.trackTargets(
-      statements,
-      fakeCreature({ data: { intelligence: 10 } }),
-      options(),
-    );
+    service.trackTargets(statements, fakeCreature({ data: { intelligence: 10 } }), options());
     expect(statements).toHaveLength(7);
   });
 });
@@ -552,11 +511,7 @@ describe("thievesAbilities (private)", () => {
 
   it("adds a hide-in-shadows statement wrapped with disable/enable interrupt", () => {
     const statements: Statements = [];
-    service.thievesAbilities(
-      statements,
-      fakeCreature({ data: { hideShadow: 1 } }),
-      options(),
-    );
+    service.thievesAbilities(statements, fakeCreature({ data: { hideShadow: 1 } }), options());
     expect(statements).toHaveLength(1);
     const actions = statements[0].responses[0].actions;
     expect(actions[0]).toEqual({ name: "SetInterrupt", params: ["FALSE"] });
@@ -630,9 +585,9 @@ describe("attack (private)", () => {
       }),
       options(),
     );
-    expect(
-      statements.some((s: Statements[number]) => s.comment === "Attack Able enemy"),
-    ).toBe(true);
+    expect(statements.some((s: Statements[number]) => s.comment === "Attack Able enemy")).toBe(
+      true,
+    );
   });
 });
 
@@ -640,51 +595,35 @@ describe("attackTargetWithStatuses (private)", () => {
   it("throws for a status name that isn't in TARGET_STATUS", () => {
     const statements: Statements = [];
     expect(() => {
-      service.attackTargetWithStatuses(
-        statements,
-        fakeCreature(),
-        options(),
-        "NearestEnemies",
-        ["NotAStatus"] as unknown as TargetStatusName[],
-      );
+      service.attackTargetWithStatuses(statements, fakeCreature(), options(), "NearestEnemies", [
+        "NotAStatus",
+      ] as unknown as TargetStatusName[]);
     }).toThrow(/Target status details NotAStatus not found/);
   });
 
   it("throws for a status whose targetTriggers contain an unhandled Or trigger", () => {
     const statements: Statements = [];
     expect(() => {
-      service.attackTargetWithStatuses(
-        statements,
-        fakeCreature(),
-        options(),
-        "NearestEnemies",
-        ["PanicConfused"],
-      );
+      service.attackTargetWithStatuses(statements, fakeCreature(), options(), "NearestEnemies", [
+        "PanicConfused",
+      ]);
     }).toThrow(/OR triggers not handled currently: PanicConfused/);
   });
 
   it("throws when a player-only status is targeted at a non-Players list", () => {
     const statements: Statements = [];
     expect(() => {
-      service.attackTargetWithStatuses(
-        statements,
-        fakeCreature(),
-        options(),
-        "NearestEnemies",
-        ["Sleep"],
-      );
+      service.attackTargetWithStatuses(statements, fakeCreature(), options(), "NearestEnemies", [
+        "Sleep",
+      ]);
     }).toThrow(/Status Sleep must target party/);
   });
 
   it("emits an attack block (guard statement + final attack statement) for a normal status", () => {
     const statements: Statements = [];
-    service.attackTargetWithStatuses(
-      statements,
-      fakeCreature(),
-      options(),
-      "NearestEnemies",
-      ["Able"],
-    );
+    service.attackTargetWithStatuses(statements, fakeCreature(), options(), "NearestEnemies", [
+      "Able",
+    ]);
     expect(statements).toHaveLength(2);
     expect(statements[0].comment).toBe("Attack Able enemy");
   });
@@ -722,15 +661,9 @@ describe("attackTargetWithStatuses (private)", () => {
 
 describe("selectWeaponMeleeRangeStatements (private)", () => {
   it("builds an equip-ranged-then-continue and an equip-melee-then-continue statement, when reached directly", () => {
-    const result = service.selectWeaponMeleeRangeStatements(
-      fakeCreature(),
-      options(),
-    );
+    const result = service.selectWeaponMeleeRangeStatements(options());
     expect(result).toHaveLength(2);
-    expect(result[0].responses[0].actions).toEqual([
-      { name: "EquipRanged" },
-      { name: "Continue" },
-    ]);
+    expect(result[0].responses[0].actions).toEqual([{ name: "EquipRanged" }, { name: "Continue" }]);
     expect(result[1].responses[0].actions).toEqual([
       { name: "EquipMostDamagingMelee" },
       { name: "Continue" },
@@ -774,11 +707,7 @@ describe("potions (private)", () => {
 
   it("adds a statement per potion file when behavior.usePotions is true", () => {
     const statements: Statements = [];
-    service.potions(
-      statements,
-      fakeCreature({ behavior: { usePotions: true } }),
-      options(),
-    );
+    service.potions(statements, fakeCreature({ behavior: { usePotions: true } }), options());
     expect(statements.length).toBeGreaterThan(0);
     expect(statements[0].responses[0].actions).toContainEqual({
       name: "UseItem",
@@ -790,14 +719,8 @@ describe("potions (private)", () => {
     POTIONS.push({ name: "Test potion", files: ["JA#TESTPOTION"] });
     try {
       const statements: Statements = [];
-      service.potions(
-        statements,
-        fakeCreature({ behavior: { usePotions: true } }),
-        options(),
-      );
-      const testStatement = statements.find(
-        (s) => s.comment === "Test potion",
-      );
+      service.potions(statements, fakeCreature({ behavior: { usePotions: true } }), options());
+      const testStatement = statements.find((s) => s.comment === "Test potion");
       if (!testStatement) throw new Error("expected a 'Test potion' statement");
       expect(testStatement.triggers.map((t: Triggers.Trigger) => t.name)).toEqual([
         "HasItem",
@@ -842,12 +765,7 @@ describe("precastLongDurationSpells / precastMidDurationSpells (private)", () =>
 describe("creatureSelfAbility (private)", () => {
   it("wraps a self-targeted ability with the shared round timer by default", () => {
     const statements: Statements = [];
-    service.creatureSelfAbility(
-      statements,
-      fakeCreature(),
-      fakeAbility(),
-      options(),
-    );
+    service.creatureSelfAbility(statements, fakeCreature(), fakeAbility(), options());
     expect(statements).toHaveLength(1);
     expect(statements[0].triggers).toContainEqual({
       name: "GlobalTimerNotExpired",
@@ -1046,18 +964,14 @@ describe("getAdditionals (private)", () => {
     const creature = fakeCreature({
       behavior: { additionalCodes: [additional] },
     });
-    expect(service.getAdditionals(creature, "trackTargets")).toEqual(
-      additional,
-    );
+    expect(service.getAdditionals(creature, "trackTargets")).toEqual(additional);
   });
 });
 
 describe("parseAbilities / creatureAbilities (private)", () => {
   it("routes to creatureSelfAbility when the ability has no targets", () => {
     const statements: Statements = [];
-    service.parseAbilities(statements, fakeCreature(), options(), [
-      fakeAbility(),
-    ]);
+    service.parseAbilities(statements, fakeCreature(), options(), [fakeAbility()]);
     expect(statements).toHaveLength(1);
   });
 
@@ -1244,9 +1158,7 @@ describe("execute (private, custom-code dispatch)", () => {
 describe("processStatements (private)", () => {
   it("pushes a statement without a target as-is", () => {
     const statements: Statements = [];
-    service.processStatements(statements, [
-      { triggers: [], responses: [], comment: "x" },
-    ]);
+    service.processStatements(statements, [{ triggers: [], responses: [], comment: "x" }]);
     expect(statements).toEqual([{ triggers: [], responses: [], comment: "x" }]);
   });
 
@@ -1279,7 +1191,7 @@ describe("processStatements (private)", () => {
 
 describe("buildStatements (integration)", () => {
   it("produces a non-empty statement list for a fully-default creature", () => {
-    const result = statementService.buildStatements(fakeCreature(), options());
+    const result = statementBuilderService.buildStatements(fakeCreature(), options());
     expect(result.length).toBeGreaterThan(0);
   });
 
@@ -1290,15 +1202,13 @@ describe("buildStatements (integration)", () => {
           {
             location: "rest",
             type: "replace",
-            statements: [
-              { triggers: [], responses: [], comment: "custom-rest" },
-            ],
+            statements: [{ triggers: [], responses: [], comment: "custom-rest" }],
             abilities: [fakeAbility({ name: "ability.unknown" })],
           },
         ],
       },
     });
-    const result = statementService.buildStatements(creature, options());
+    const result = statementBuilderService.buildStatements(creature, options());
     expect(result.some((s) => s.comment?.startsWith("Rest"))).toBe(false);
     expect(result.some((s) => s.comment === "custom-rest")).toBe(false);
     expect(result.some((s) => s.comment === "(unknown)")).toBe(true);
@@ -1312,15 +1222,13 @@ describe("buildStatements (integration)", () => {
           {
             location: "dialog",
             type: "insertBefore",
-            statements: [
-              { triggers: [], responses: [], comment: "custom-before-dialog" },
-            ],
+            statements: [{ triggers: [], responses: [], comment: "custom-before-dialog" }],
             abilities: [],
           },
         ],
       },
     });
-    const result = statementService.buildStatements(creature, options());
+    const result = statementBuilderService.buildStatements(creature, options());
     const idx = result.findIndex((s) => s.comment === "custom-before-dialog");
     expect(idx).toBeGreaterThanOrEqual(0);
     expect(result[idx + 1].comment).toBe("Initiate dialog");

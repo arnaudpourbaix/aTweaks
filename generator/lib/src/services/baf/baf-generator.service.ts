@@ -1,5 +1,5 @@
 import path from "path";
-import statementService from "./statement-builder.service";
+import statementBuilderService from "./statement-builder.service";
 import { Creature } from "../../model/creature/creature";
 import { ConditionalStatement, Statements } from "../../model/script/script";
 import { CR, TAB } from "../../model/constants";
@@ -41,7 +41,7 @@ class BafGeneratorService {
   }
 
   buildContent(creature: Creature, options: { summon: boolean }): string {
-    const statements: Statements = statementService.buildStatements(creature, options);
+    const statements: Statements = statementBuilderService.buildStatements(creature, options);
     const code = statements.map((statement) => this.generateStatement(statement)).join("");
     if (options.summon) return code;
     return `// ${translationService.from(creature.name)}${CR}${CR}${code}`;
