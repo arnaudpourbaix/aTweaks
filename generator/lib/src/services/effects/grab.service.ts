@@ -1,14 +1,7 @@
 import figureSet from "figures";
-import {
-  GRAB_IMMUNE_CREATURES,
-  HUGE_CREATURES,
-  LARGE_CREATURES,
-} from "../../../config/creatures";
+import { GRAB_IMMUNE_CREATURES, HUGE_CREATURES, LARGE_CREATURES } from "../../../config/creatures";
 import { Creature } from "../../model/creature/creature";
-import {
-  CreatureGrabConfig,
-  GRAB_DEFAULT_CONFIG,
-} from "../../model/creature/grab";
+import { CreatureGrabConfig, GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
 import { Effect, IdsEffect } from "../../model/spell-item/effect";
 import {
   EffectBonusToEnum,
@@ -32,11 +25,7 @@ import { getSpellFilename } from "../utils/misc.func";
 import { CreatureSizeTable } from "../../model/game-data/sizes";
 
 class GrabService {
-  attachGrabToWeapon(
-    creature: Creature,
-    weapon: Weapon,
-    grab: CreatureGrabConfig,
-  ) {
+  attachGrabToWeapon(creature: Creature, weapon: Weapon, grab: CreatureGrabConfig) {
     const spell = this.createGrabSpell(creature, grab);
     this.updateWeapon(creature, grab, weapon, spell);
   }
@@ -50,12 +39,9 @@ class GrabService {
     });
     creature.effectFiles.push({ ...effectFile, file });
     grab.rounds ??= GRAB_DEFAULT_CONFIG.rounds;
-    const description = translationService.interpolate(
-      "spell.grab.description",
-      {
-        duration: grab.rounds,
-      },
-    );
+    const description = translationService.interpolate("spell.grab.description", {
+      duration: grab.rounds,
+    });
     const spell = spellService.getSpell(
       {
         name: GRAB_DEFAULT_CONFIG.grabStringRef,
@@ -83,29 +69,25 @@ class GrabService {
     spell: Spell,
   ): void {
     const strModifier = creatureService.getStrengthBonus(creature.data).hit;
-    const sizeModifier = CreatureSizeTable.find(
-      (s) => s.size === creature.data.size,
-    )!.grabModifier;
+    const sizeEntry = CreatureSizeTable.find((s) => s.size === creature.data.size);
+    if (!sizeEntry) throw new Error(`Size ${creature.data.size} is not defined !`);
+    const sizeModifier = sizeEntry.grabModifier;
     const calculatedSaveBonus =
       (strModifier + sizeModifier + (grab.onlyGrabProneTarget ? 4 : 0)) * -1;
-    const saveBonus =
-      grab.saveBonus === undefined ? calculatedSaveBonus : grab.saveBonus;
+    const saveBonus = grab.saveBonus ?? calculatedSaveBonus;
     const effect = effectService.getEffect({
       opcode: EffectTypeEnum.CastSpell,
       type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
       probability1: grab.probability ?? GRAB_DEFAULT_CONFIG.probability,
-      saveTypes: [grab.saveType ? grab.saveType : GRAB_DEFAULT_CONFIG.saveType],
+      // ?? (not a truthy check): SaveTypeEnum.Spell is 0, a real save type, not "unset".
+      saveTypes: [grab.saveType ?? GRAB_DEFAULT_CONFIG.saveType],
       saveBonus,
       resource: spell.file,
     });
     weapon.header.effects.push(effect);
   }
 
-  private getGrabbedEffects(
-    creature: Creature,
-    grab: CreatureGrabConfig,
-    file: string,
-  ): Effect[] {
+  private getGrabbedEffects(creature: Creature, grab: CreatureGrabConfig, file: string): Effect[] {
     const duration = (grab.rounds ?? GRAB_DEFAULT_CONFIG.rounds) * 6;
     const grabEffects: Effect[] = [
       {
@@ -176,10 +158,11 @@ class GrabService {
 
   private getGrabImmuneEffects(creature: Creature, file: string): Effect[] {
     const list = [...GRAB_IMMUNE_CREATURES];
+    // size is required by MainCreatureData, but defended anyway - see the "warns when the
+    // creature has no size" test, which calls this directly with size unset.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.data.size) {
-      console.log(
-        `${figureSet.warning} Creature size is needed to add grab immunities!`,
-      );
+      console.log(`${figureSet.warning} Creature size is needed to add grab immunities!`);
     } else {
       if (["Huge", "Large"].includes(creature.data.size)) {
         list.push(...HUGE_CREATURES);

@@ -25,13 +25,7 @@ import targetService from "./target.service";
 class StatementService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
     const statements: Statements = [];
-    this.execute(
-      this.destroyUponDeath,
-      "destroyUponDeath",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.destroyUponDeath, "destroyUponDeath", statements, creature, options);
     this.execute(this.dialog, "dialog", statements, creature, options);
     this.execute(this.init, "init", statements, creature, options);
     this.execute(this.rest, "rest", statements, creature, options);
@@ -42,35 +36,11 @@ class StatementService {
       creature,
       options,
     );
-    this.execute(
-      this.turnHostile,
-      "turnHostile",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.detectCombat,
-      "detectCombat",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.turnHostile, "turnHostile", statements, creature, options);
+    this.execute(this.detectCombat, "detectCombat", statements, creature, options);
     this.execute(this.shouts, "shouts", statements, creature, options);
-    this.execute(
-      this.followSummoner,
-      "followSummoner",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.randomWalkNoCombat,
-      "randomWalkNoCombat",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.followSummoner, "followSummoner", statements, creature, options);
+    this.execute(this.randomWalkNoCombat, "randomWalkNoCombat", statements, creature, options);
     this.execute(
       this.noActionOutsideOfCombat,
       "noActionOutsideOfCombat",
@@ -78,20 +48,8 @@ class StatementService {
       creature,
       options,
     );
-    this.execute(
-      this.handlePanic,
-      "handlePanic",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.thievesAbilities,
-      "thievesAbilities",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.handlePanic, "handlePanic", statements, creature, options);
+    this.execute(this.thievesAbilities, "thievesAbilities", statements, creature, options);
     this.execute(
       this.precastMidDurationSpells,
       "precastMidDurationSpells",
@@ -99,73 +57,34 @@ class StatementService {
       creature,
       options,
     );
-    this.execute(
-      this.creatureAbilities,
-      "creatureAbilities",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.creatureAbilities, "creatureAbilities", statements, creature, options);
     this.execute(this.potions, "potions", statements, creature, options);
     this.execute(this.attack, "attack", statements, creature, options);
-    this.execute(
-      this.trackTargets,
-      "trackTargets",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.randomWalkCombat,
-      "randomWalkCombat",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.trackTargets, "trackTargets", statements, creature, options);
+    this.execute(this.randomWalkCombat, "randomWalkCombat", statements, creature, options);
     return statements;
   }
 
   private execute(
-    fn: (
-      statements: Statements,
-      creature: Creature,
-      options: BuilderOptions,
-    ) => void,
+    fn: (statements: Statements, creature: Creature, options: BuilderOptions) => void,
     location: CustomCodeLocation,
     statements: Statements,
     creature: Creature,
     options: BuilderOptions,
   ) {
-    const custom = creature.behavior.customCodes.find(
-      (c) => c.location === location,
-    );
+    const custom = creature.behavior.customCodes.find((c) => c.location === location);
     if (custom && custom.type === "insertBefore") {
       this.processStatements(statements, custom.statements ?? []);
-      this.parseAbilities(
-        statements,
-        creature,
-        options,
-        custom.abilities ?? [],
-      );
+      this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
     if (!custom || custom.type !== "replace") {
       fn.apply(this, [statements, creature, options]);
     } else {
-      this.parseAbilities(
-        statements,
-        creature,
-        options,
-        custom.abilities ?? [],
-      );
+      this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
     if (custom && custom.type === "insertAfter") {
       this.processStatements(statements, custom.statements ?? []);
-      this.parseAbilities(
-        statements,
-        creature,
-        options,
-        custom.abilities ?? [],
-      );
+      this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
   }
 
@@ -173,8 +92,9 @@ class StatementService {
     for (const statement of newStatements) {
       if (!statement.target) statements.push(statement);
       else {
-        const { triggers, targetTriggers } =
-          targetService.getTriggersFromTargetList(statement.target);
+        const { triggers, targetTriggers } = targetService.getTriggersFromTargetList(
+          statement.target,
+        );
         const list = targetService.getTargetFromAbility(
           statement.target.name,
           statement.target.limit,
@@ -198,11 +118,7 @@ class StatementService {
     }
   }
 
-  private dialog(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private dialog(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (!creature.behavior.dialog.length) return;
     const nameTriggers: Triggers.Trigger[] = [];
     for (const name of creature.behavior.dialog) {
@@ -212,9 +128,7 @@ class StatementService {
       });
     }
     const finalNameTrigger: Triggers.Trigger =
-      nameTriggers.length == 1
-        ? nameTriggers[0]
-        : { name: "Or", triggers: nameTriggers };
+      nameTriggers.length == 1 ? nameTriggers[0] : { name: "Or", triggers: nameTriggers };
     statements.push({
       comment: "Initiate dialog",
       triggers: [
@@ -231,11 +145,7 @@ class StatementService {
     });
   }
 
-  private handlePanic(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private handlePanic(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (utils.hasImmunity(creature.data.immunities, "fear")) return;
     statements.push({
       comment: "Handle Panic state",
@@ -277,46 +187,27 @@ class StatementService {
     });
   }
 
-  private init(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private init(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
-      actionFactory.setGlobal(
-        GLOBAL_CONFIG.bafConstants.precastLongDurationSpells,
-        0,
-      ),
-      actionFactory.setGlobal(
-        GLOBAL_CONFIG.bafConstants.precastMidDurationSpells,
-        0,
-      ),
+      actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.precastLongDurationSpells, 0),
+      actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.precastMidDurationSpells, 0),
       // actionFactory.setGlobal(
       //   GLOBAL_CONFIG.bafConstants.disableSpellcasting,
       //   0,
       // ),
-      actionFactory.setGlobalTimer(
-        GLOBAL_CONFIG.bafConstants.restTimer,
-        Durations.eightHours,
-      ),
+      actionFactory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.restTimer, Durations.eightHours),
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
     ];
     statements.push({
       comment: "Init",
-      triggers: [
-        triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
-      ],
+      triggers: [triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 0)],
       responses: responseFactory.response(actions),
     });
   }
 
-  private rest(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private rest(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
@@ -331,9 +222,7 @@ class StatementService {
       comment: "Rest (reset everything and heal if applicable)",
       triggers: [
         triggerFactory.global(GLOBAL_CONFIG.bafConstants.initGlobal, 1),
-        triggerFactory.globalTimerReallyExpired(
-          GLOBAL_CONFIG.bafConstants.restTimer,
-        ),
+        triggerFactory.globalTimerReallyExpired(GLOBAL_CONFIG.bafConstants.restTimer),
         {
           name: "See",
           params: ["GOODCUTOFF"],
@@ -344,11 +233,7 @@ class StatementService {
     });
   }
 
-  private turnHostile(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private turnHostile(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [{ name: "Enemy" }];
     statements.push({
@@ -386,11 +271,7 @@ class StatementService {
     });
   }
 
-  private detectCombat(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private detectCombat(statements: Statements, creature: Creature, options: BuilderOptions): void {
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
@@ -423,11 +304,7 @@ class StatementService {
     }
   }
 
-  private shouts(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private shouts(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (!creature.behavior.help) return;
     const shoutId = options.summon
       ? GLOBAL_CONFIG.bafConstants.summonerShoutId
@@ -446,9 +323,7 @@ class StatementService {
         actionFactory.setGlobalTimer(GLOBAL_CONFIG.bafConstants.helpTimer, 18),
       ]),
     });
-    const heardObject = options.summon
-      ? "LastSummonerOf"
-      : `EVILCUTOFF.0.${creature.data.race}`;
+    const heardObject = options.summon ? "LastSummonerOf" : `EVILCUTOFF.0.${creature.data.race}`;
     statements.push({
       comment: "React to shouts",
       triggers: [
@@ -468,9 +343,7 @@ class StatementService {
         { name: "InMyArea", params: [heardObject] },
         { name: "See", params: ["GOODCUTOFF"], negation: true },
       ],
-      responses: responseFactory.response([
-        { name: "MoveToObject", params: ["LastHeardBy"] },
-      ]),
+      responses: responseFactory.response([{ name: "MoveToObject", params: ["LastHeardBy"] }]),
     });
   }
 
@@ -551,17 +424,11 @@ class StatementService {
     statements.push({
       comment: "Summon follow summoner",
       triggers,
-      responses: responseFactory.response([
-        { name: "MoveToObject", params: ["LastSummonerOf"] },
-      ]),
+      responses: responseFactory.response([{ name: "MoveToObject", params: ["LastSummonerOf"] }]),
     });
   }
 
-  private trackTargets(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private trackTargets(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (!creature.behavior.tracking) return;
     const additionals = this.getAdditionals(creature, "trackTargets");
     const allegiance: Triggers.Trigger = {
@@ -622,11 +489,7 @@ class StatementService {
       statements.push({
         comment: "Open door",
         triggers: [
-          triggerFactory.global(
-            GLOBAL_CONFIG.bafConstants.noOpenDoor,
-            0,
-            "GLOBAL",
-          ),
+          triggerFactory.global(GLOBAL_CONFIG.bafConstants.noOpenDoor, 0, "GLOBAL"),
           { name: "Allegiance", params: [ScriptTarget.myself, "EVILCUTOFF"] },
           { name: "AreaType", params: ["OUTDOOR"], negation: true },
           { name: "Range", params: ["NearestEnemyOf", 30], negation: true },
@@ -660,16 +523,9 @@ class StatementService {
     this.randomWalk(statements, false, options);
   }
 
-  private randomWalk(
-    statements: Statements,
-    combat: boolean,
-    options: BuilderOptions,
-  ): void {
+  private randomWalk(statements: Statements, combat: boolean, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
-      triggerFactory.global(
-        GLOBAL_CONFIG.bafConstants.combatStarted,
-        combat ? 1 : 0,
-      ),
+      triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, combat ? 1 : 0),
       { name: "ActionListEmpty" },
       {
         name: "See",
@@ -680,10 +536,7 @@ class StatementService {
     statements.push({
       comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       triggers,
-      responses: responseFactory.response([
-        { name: "RandomWalk" },
-        { name: "Wait", params: [2] },
-      ]),
+      responses: responseFactory.response([{ name: "RandomWalk" }, { name: "Wait", params: [2] }]),
     });
   }
 
@@ -735,11 +588,7 @@ class StatementService {
     });
   }
 
-  private avoidMeleeCombat(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ) {
+  private avoidMeleeCombat(statements: Statements, creature: Creature, options: BuilderOptions) {
     if (creature.attack.melee || creature.attack.ranged) return;
     statements.push({
       comment: `Random facing`,
@@ -754,11 +603,7 @@ class StatementService {
     });
   }
 
-  private runAway(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private runAway(statements: Statements, creature: Creature, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       {
         name: "Range",
@@ -775,11 +620,7 @@ class StatementService {
     });
   }
 
-  private reposition(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private reposition(statements: Statements, creature: Creature, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       { name: "CanEquipRanged" },
       {
@@ -805,15 +646,11 @@ class StatementService {
     });
   }
 
-  private attack(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
-    if (!creature.attack.melee && !creature.attack.ranged)
-      { this.runAway(statements, creature, options); return; }
-    else if (creature.attack.ranged)
-      this.reposition(statements, creature, options);
+  private attack(statements: Statements, creature: Creature, options: BuilderOptions): void {
+    if (!creature.attack.melee && !creature.attack.ranged) {
+      this.runAway(statements, creature, options);
+      return;
+    } else if (creature.attack.ranged) this.reposition(statements, creature, options);
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(
@@ -837,18 +674,16 @@ class StatementService {
     for (const status of statusNameList) {
       const statusDetails = TARGET_STATUS.find((t) => t.status === status);
       const weaponAttackSlot =
-        creature.attack.targetStatusWeaponSlot.find((t) =>
-          t.status.includes(status),
-        )?.slot ?? creature.attack.defaultWeaponSlot;
-      if (!statusDetails)
-        throw new Error(`Target status details ${status} not found!`);
+        creature.attack.targetStatusWeaponSlot.find((t) => t.status.includes(status))?.slot ??
+        creature.attack.defaultWeaponSlot;
+      if (!statusDetails) throw new Error(`Target status details ${status} not found!`);
       if (statusDetails.targetTriggers.some((t) => "triggers" in t))
         throw new Error(`OR triggers not handled currently: ${status}`);
       if (statusDetails.canOnlyTargetPlayer && targetListName !== "Players")
         throw new Error(`Status ${status} must target party`);
       const list = targetService.getList(targetListName);
       const targetTriggers = [
-        ...(statusDetails.targetTriggers),
+        ...statusDetails.targetTriggers,
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
           seeInvisible: creature.seeInvisible(),
@@ -865,16 +700,9 @@ class StatementService {
       // }
       let selectWeaponStatements: Statements = [];
       if (creature.attack.selectWeapons.length) {
-        selectWeaponStatements = this.selectWeaponStatements(
-          creature,
-          targetTriggers,
-          options,
-        );
+        selectWeaponStatements = this.selectWeaponStatements(creature, targetTriggers, options);
       } else if (creature.attack.melee && creature.attack.ranged) {
-        selectWeaponStatements = this.selectWeaponMeleeRangeStatements(
-          creature,
-          options,
-        );
+        selectWeaponStatements = this.selectWeaponMeleeRangeStatements(creature, options);
       }
       const responses = responseFactory.attackResponses({
         attacks: creature.attack.actions,
@@ -909,10 +737,7 @@ class StatementService {
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
       triggers,
-      responses: responseFactory.response([
-        { name: "EquipRanged" },
-        { name: "Continue" },
-      ]),
+      responses: responseFactory.response([{ name: "EquipRanged" }, { name: "Continue" }]),
     });
     triggers = [
       {
@@ -945,7 +770,8 @@ class StatementService {
         ...select.triggers,
       ];
       if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
-      const slot = WEAPON_SLOTS.find((w) => w.slot === select.slot)!;
+      const slot = WEAPON_SLOTS.find((w) => w.slot === select.slot);
+      if (!slot) throw new Error(`Weapon slot ${select.slot} is not defined !`);
       statements.push({
         triggers,
         responses: responseFactory.response([
@@ -957,11 +783,7 @@ class StatementService {
     return statements;
   }
 
-  private potions(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private potions(statements: Statements, creature: Creature, options: BuilderOptions): void {
     if (!creature.behavior.usePotions) return;
     for (const potion of POTIONS) {
       for (const file of potion.files) {
@@ -975,10 +797,7 @@ class StatementService {
           ...(potion.actions ?? []),
           {
             name: "DisplayStringHead",
-            params: [
-              ScriptTarget.myself,
-              `@${translationService.stringRef("common.potion.use")}`,
-            ],
+            params: [ScriptTarget.myself, `@${translationService.stringRef("common.potion.use")}`],
           },
           actionFactory.setGlobalRoundTimer(),
           { name: "UseItem", params: [file, ScriptTarget.myself] },
@@ -1046,9 +865,7 @@ class StatementService {
     }
     statements.push({
       triggers: [triggerFactory.global(variable, 0)],
-      responses: responseFactory.response([
-        actionFactory.setGlobal(variable, 1),
-      ]),
+      responses: responseFactory.response([actionFactory.setGlobal(variable, 1)]),
     });
   }
 
@@ -1057,12 +874,7 @@ class StatementService {
     creature: Creature,
     options: BuilderOptions,
   ): void {
-    this.parseAbilities(
-      statements,
-      creature,
-      options,
-      creature.behavior.abilities,
-    );
+    this.parseAbilities(statements, creature, options, creature.behavior.abilities);
   }
 
   private parseAbilities(
@@ -1073,13 +885,7 @@ class StatementService {
   ): void {
     for (const ability of abilities) {
       if (ability.targets.length)
-        this.creatureTargetsAbility(
-          statements,
-          creature,
-          ability,
-          ability.targets,
-          options,
-        );
+        this.creatureTargetsAbility(statements, creature, ability, ability.targets, options);
       else this.creatureSelfAbility(statements, creature, ability, options);
     }
   }
@@ -1092,13 +898,7 @@ class StatementService {
     options: BuilderOptions,
   ): void {
     for (const [index, target] of targets.entries()) {
-      this.creatureTargetAbility(
-        statements,
-        creature,
-        ability,
-        target,
-        options,
-      );
+      this.creatureTargetAbility(statements, creature, ability, target, options);
     }
   }
 
@@ -1111,10 +911,9 @@ class StatementService {
   ): void {
     const triggerList = targetService.getTriggersFromTargetList(target);
     const triggers = triggerList.triggers;
-    const targetTriggers = utils.replaceTriggerTokens(
-      triggerList.targetTriggers,
-      [{ key: ScriptTarget.token, value: ScriptTarget.lastSeen }],
-    );
+    const targetTriggers = utils.replaceTriggerTokens(triggerList.targetTriggers, [
+      { key: ScriptTarget.token, value: ScriptTarget.lastSeen },
+    ]);
     triggers.unshift(...ability.triggers);
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     if (ability.isSpell) {
@@ -1135,9 +934,7 @@ class StatementService {
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(triggerFactory.globalTimerExpired(ability.timer.name));
-      actions.unshift(
-        actionFactory.setGlobalTimer(ability.timer.name, ability.timer.value),
-      );
+      actions.unshift(actionFactory.setGlobalTimer(ability.timer.name, ability.timer.value));
     }
     if (!ability.noRoundTimer) {
       triggers.push(triggerFactory.globalRoundTimerExpired());
@@ -1173,11 +970,7 @@ class StatementService {
       actions.unshift(actionFactory.disableInterrupt());
       actions.push(actionFactory.enableInterrupt());
     }
-    const list = targetService.getTargetFromAbility(
-      target.name,
-      target.limit,
-      target.randomOrder,
-    );
+    const list = targetService.getTargetFromAbility(target.name, target.limit, target.randomOrder);
     if (list.allegianceCheck) {
       triggers.push({
         name: "Allegiance",
@@ -1207,9 +1000,7 @@ class StatementService {
     const actions: Actions.Action[] = [...ability.actions];
     if (ability.timer) {
       triggers.unshift(triggerFactory.globalTimerExpired(ability.timer.name));
-      actions.push(
-        actionFactory.setGlobalTimer(ability.timer.name, ability.timer.value),
-      );
+      actions.push(actionFactory.setGlobalTimer(ability.timer.name, ability.timer.value));
     }
     if (!ability.noRoundTimer) {
       triggers.unshift(triggerFactory.globalRoundTimerExpired());
@@ -1243,9 +1034,7 @@ class StatementService {
     creature: Creature,
     location: CustomCodeLocation,
   ): { triggers: Triggers.Trigger[]; actions: Actions.Action[] } {
-    const additionals = creature.behavior.additionalCodes.find(
-      (a) => a.location === location,
-    );
+    const additionals = creature.behavior.additionalCodes.find((a) => a.location === location);
     return additionals ?? { triggers: [], actions: [] };
   }
 }

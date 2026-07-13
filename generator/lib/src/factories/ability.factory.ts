@@ -3,9 +3,7 @@ import { RawCreatureAbility } from "../model/creature/ability";
 import { Triggers } from "../model/script/triggers";
 
 class AbilityFactory {
-  polymorphSelf(payload: {
-    triggers: Triggers.Trigger[];
-  }): RawCreatureAbility[] {
+  polymorphSelf(payload: { triggers: Triggers.Trigger[] }): RawCreatureAbility[] {
     const results: RawCreatureAbility[] = [];
     results.push({
       name: "ability.polymorphSelf",
@@ -35,6 +33,13 @@ class AbilityFactory {
     ];
     const max = 1000;
     for (const [index, resource] of resources.entries()) {
+      const triggers: Triggers.Trigger[] = [];
+      if (index < resources.length - 1) {
+        triggers.push({
+          name: "RandomNumLT",
+          params: [max, Math.round(max / (resources.length - index))],
+        });
+      }
       const ability: RawCreatureAbility = {
         name: "ability.polymorphSelf",
         spell: {
@@ -43,18 +48,12 @@ class AbilityFactory {
         },
         noRoundTimer: true,
         canUseWhenPolymorphed: true,
-        triggers: [],
+        triggers,
         timer: {
           name: "polymorph",
           value: 12,
         },
       };
-      if (index < resources.length - 1) {
-        ability.triggers!.push({
-          name: "RandomNumLT",
-          params: [max, Math.round(max / (resources.length - index))],
-        });
-      }
       results.push(ability);
     }
     return results;

@@ -10,11 +10,7 @@ import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
 import { ClassIdentifier } from "../ids/class";
 import { Effect, EffectFile } from "../spell-item/effect";
-import {
-  EffectTargetEnum,
-  EffectTimingEnum,
-  ItemCategoryEnum,
-} from "../spell-item/effect.enums";
+import { EffectTargetEnum, EffectTimingEnum, ItemCategoryEnum } from "../spell-item/effect.enums";
 import {
   Item,
   PartialItem,
@@ -25,11 +21,7 @@ import {
 } from "../spell-item/spell-item";
 import { AbstractCreature } from "./abstract-creature";
 import { CreatureAdjustment, PartialCreatureAdjustment } from "./adjustment";
-import {
-  CreatureAttack,
-  CreatureAttackAction,
-  PartialCreatureAttack,
-} from "./attack";
+import { CreatureAttack, CreatureAttackAction, PartialCreatureAttack } from "./attack";
 import { CreatureBehavior, PartialCreatureBehavior } from "./behavior";
 import { CreatureData, MainCreatureData } from "./data";
 import { InputCreatureData } from "./data-input";
@@ -73,6 +65,9 @@ export class Creature extends AbstractCreature implements BaseCreature {
   };
   valid?: boolean;
 
+  // Not actually useless: narrows the base class's plain `number` id parameter to MonsterEnum,
+  // so `new Creature(id)` only accepts valid monster ids.
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(id: MonsterEnum) {
     super(id);
   }
@@ -129,8 +124,9 @@ export class Creature extends AbstractCreature implements BaseCreature {
   override addItem(item: PartialItem): Item {
     const result = super.addItem(item);
     if (!item.equippedSlot) return result;
+    const equippedSlot = item.equippedSlot;
     const itemInSlot = this.data.items.equipped.findIndex(
-      (i) => i.slot.length === 1 && i.slot[0] === item.equippedSlot![0]
+      (i) => i.slot.length === 1 && i.slot[0] === equippedSlot[0],
     );
     if (itemInSlot !== -1) {
       console.log(`replacing item in slot ${item.equippedSlot[0]}`);
@@ -174,22 +170,17 @@ export class Creature extends AbstractCreature implements BaseCreature {
     equippedSlot?: ItemSlot;
   }): Item {
     const stringRef = translationService.addCustomTranslation([
-      `${translationService.from(this.name)} ${translationService.from(
-        "common.creatureTraits"
-      )}`,
+      `${translationService.from(this.name)} ${translationService.from("common.creatureTraits")}`,
     ]);
     const item = this.addItem({
       id: payload.id,
       stringRef,
       description: payload.description,
-      effects: (payload.effects ?? []).map(
-        (e) =>
-          ({
-            ...e,
-            timing: EffectTimingEnum.InstantWhileEquipped,
-            target: EffectTargetEnum.Self,
-          })
-      ),
+      effects: (payload.effects ?? []).map((e) => ({
+        ...e,
+        timing: EffectTimingEnum.InstantWhileEquipped,
+        target: EffectTargetEnum.Self,
+      })),
       immunities: payload.immunities,
       equippedSlot: payload.equippedSlot ? [payload.equippedSlot] : JEWEL_SLOTS,
       category: ItemCategoryEnum.Rings,
