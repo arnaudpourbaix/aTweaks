@@ -4,6 +4,10 @@ import bafGeneratorService from "./baf/baf-generator.service";
 import mainService from "./main.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
 
+// No default value: every call site deliberately passes undefined/false/true to distinguish
+// the real Creature.valid field's 3 meaningful states ("never validated" vs "invalid" vs
+// "valid") - a default would obscure that this is a tri-state field, not an optional flag.
+// eslint-disable-next-line sonarjs/bool-param-default
 function fakeCreature(valid: boolean | undefined): Creature {
   return { valid, name: "test" } as unknown as Creature;
 }

@@ -52,7 +52,7 @@ class TargetService {
   getTargetFromAbility(
     target: ObjectIdentifier | AllegianceIdentifier | TargetListName,
     limit: number | undefined,
-    randomOrder: boolean | undefined,
+    randomOrder = false,
   ): {
     targets: ObjectIdentifier | AllegianceIdentifier | string[];
     allegianceCheck: boolean;
@@ -142,10 +142,9 @@ class TargetService {
     target: TargetListName,
     priorities: TargetPriority[],
   ): TargetStatusName[] {
-    const results = list.filter(
+    return list.filter(
       (s) => !priorities.some((p) => p.targets.includes(target) && p.status.includes(s)),
     );
-    return results;
   }
 
   getList(name: TargetListName): {

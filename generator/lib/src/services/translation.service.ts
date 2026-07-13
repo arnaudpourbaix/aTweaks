@@ -23,7 +23,8 @@ class TranslationService extends AbstractCodeService {
   }
 
   addCustomTranslation(text: string[]): number {
-    const stringRef = this.availableStringRef++;
+    const stringRef = this.availableStringRef;
+    this.availableStringRef++;
     this.customTranslations.push({ text: text.join(CR), stringRef });
     return stringRef;
   }
@@ -89,8 +90,9 @@ class TranslationService extends AbstractCodeService {
       if (typeof v === "string" && !v.includes("{{")) {
         this.translations.push({
           key: newKey as TranslationKey,
-          stringRef: this.availableStringRef++,
+          stringRef: this.availableStringRef,
         });
+        this.availableStringRef++;
       } else if (typeof v === "object" && v !== null) {
         this.browseTranslations(v as Record<string, unknown>, newKey);
       }

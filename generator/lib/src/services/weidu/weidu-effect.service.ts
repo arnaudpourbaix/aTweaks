@@ -46,7 +46,8 @@ class WeiduEffectService extends AbstractWeiduService {
   }) {
     const has2da = this.has2daLookup({ lines, tab, effect });
     if (has2da) {
-      this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab++);
+      this.add(lines, `PATCH_IF row != "-1" BEGIN`, tab);
+      tab++;
     }
     let fn = "ADD_EFFECT";
     if (global && type === "ITM") fn = "ADD_ITEM_EQEFFECT";

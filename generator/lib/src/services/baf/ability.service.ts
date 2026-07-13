@@ -78,7 +78,10 @@ class AbilityService {
 
   private *getNumberGenerator(): Generator<number, void> {
     let num = 800;
-    while (num < 10000) yield num++;
+    while (num < 10000) {
+      yield num;
+      num++;
+    }
   }
 
   private getAbility(
