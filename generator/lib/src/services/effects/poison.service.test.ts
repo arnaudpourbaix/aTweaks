@@ -9,14 +9,15 @@ function getEffects(
   poisonType: Parameters<typeof poisonService.getSpell>[0]["poisonType"],
   saveBonus?: number,
 ): Effect[] {
-  return poisonService.getSpell({ poisonType, saveBonus }).spell.headers[0]
-    .effects;
+  const { spell } = poisonService.getSpell({ poisonType, saveBonus });
+  if (typeof spell === "string") throw new Error("expected a PartialSpell, got a string");
+  const header = spell.headers?.[0];
+  if (!header) throw new Error("expected the spell to have at least one header");
+  return header.effects ?? [];
 }
 
 function poisonOpcodeEffects(effects: Effect[]): PoisonEffect[] {
-  return effects.filter(
-    (e): e is PoisonEffect => e.opcode === EffectTypeEnum.Poison,
-  );
+  return effects.filter((e): e is PoisonEffect => e.opcode === EffectTypeEnum.Poison);
 }
 
 describe("getSpell", () => {
@@ -43,9 +44,7 @@ describe("getEffects (via getSpell, per poison type)", () => {
   it("type N (damage > duration for both save and normal damage): a save effect and a time effect, both AmountDamagePerSecond", () => {
     const effects = poisonOpcodeEffects(getEffects("N"));
     expect(effects).toHaveLength(2);
-    expect(
-      effects.every((e) => e.type === PoisonTypeEnum.AmountDamagePerSecond),
-    ).toBe(true);
+    expect(effects.every((e) => e.type === PoisonTypeEnum.AmountDamagePerSecond)).toBe(true);
     expect(effects[0].amount).toBe(5); // save: floor(25/5), rounds up to exact multiple
     expect(effects[1].amount).toBe(45); // normal: floor(225/5), already an exact multiple
   });
@@ -67,31 +66,21 @@ describe("getEffects (via getSpell, per poison type)", () => {
   it("type P: six ability-score drains plus a movement penalty and an icon", () => {
     const effects = getEffects("P");
     expect(effects).toHaveLength(8);
-    expect(effects.some((e) => e.opcode === EffectTypeEnum.StrengthBonus)).toBe(
-      true,
-    );
-    expect(
-      effects.some((e) => e.opcode === EffectTypeEnum.MovementRateBonus2),
-    ).toBe(true);
+    expect(effects.some((e) => e.opcode === EffectTypeEnum.StrengthBonus)).toBe(true);
+    expect(effects.some((e) => e.opcode === EffectTypeEnum.MovementRateBonus2)).toBe(true);
   });
 
   it("type R: AC/THAC0/dexterity penalties plus an icon", () => {
     const effects = getEffects("R");
     expect(effects).toHaveLength(4);
-    expect(
-      effects.some((e) => e.opcode === EffectTypeEnum.ArmorClassBonus),
-    ).toBe(true);
-    expect(
-      effects.some((e) => e.opcode === EffectTypeEnum.DexterityBonus),
-    ).toBe(true);
+    expect(effects.some((e) => e.opcode === EffectTypeEnum.ArmorClassBonus)).toBe(true);
+    expect(effects.some((e) => e.opcode === EffectTypeEnum.DexterityBonus)).toBe(true);
   });
 
   it("type S: a constitution drain plus an icon and a protection-from-spell", () => {
     const effects = getEffects("S");
     expect(effects).toHaveLength(3);
-    expect(
-      effects.some((e) => e.opcode === EffectTypeEnum.ConstitutionBonus),
-    ).toBe(true);
+    expect(effects.some((e) => e.opcode === EffectTypeEnum.ConstitutionBonus)).toBe(true);
   });
 
   it("immediate-death duration (type E): a save effect plus one Poison effect per level band", () => {
@@ -109,9 +98,7 @@ describe("getEffects (via getSpell, per poison type)", () => {
       [16, 40],
     ]);
     // getEffect()'s rounding loop only ever grows the duration, never shrinks it
-    expect(
-      deathBands.every((e) => e.duration! >= poisonImmediateDeathDuration),
-    ).toBe(true);
+    expect(deathBands.every((e) => (e.duration ?? 0) >= poisonImmediateDeathDuration)).toBe(true);
     expect(deathBands.every((e) => e.saveBonus === -1)).toBe(true);
   });
 });

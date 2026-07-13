@@ -5,9 +5,9 @@ Follow-up to adding strict, type-aware ESLint (`typescript-eslint`'s
 lint:fix` already applied 247 mechanical autofixes (reverting 3 that broke `tsc` —
 see the commit message). `npm run build` and `npm test` (831/831) are both clean.
 Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
-**1,282**; Tier 1 (`as any` private-access rewrite, below) has since brought it to
-**485**. None of this blocks the build or tests today — `npm run lint` simply isn't
-green yet.
+**1,282**; Tier 1 (`as any` private-access rewrite) brought it to **485**; Tier 2
+item 3 (`no-non-null-assertion`, below) has since brought it to **356**. None of
+this blocks the build or tests today — `npm run lint` simply isn't green yet.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
 92 files affected) showed the errors clustering hard around a small number of root
@@ -18,7 +18,7 @@ causes (counts below are the original baseline, before Tier 0/1's fixes):
 | 803 | `no-unsafe-{call,member-access,assignment,argument,return}` | 98.8% in `*.test.ts` — **fixed, see Tier 1** |
 | 176 | `no-explicit-any` | 98.3% in `*.test.ts` — **fixed, see Tier 1** |
 | 279 | `restrict-template-expressions` | 95.3% in source (numbers/enums in generated script text) — **243 of these fixed, see Tier 0** |
-| 62 | `no-non-null-assertion` | 58% source / 42% test |
+| 62 | `no-non-null-assertion` | 58% source / 42% test — **fixed, see Tier 2 item 3** |
 | 49 | `no-unnecessary-condition` | 86% source |
 | 43 | `no-unused-vars` | mostly source |
 | 25 | `unbound-method` | 80% source |
@@ -143,13 +143,45 @@ just those two dispatcher-style methods, documented inline — see
 Same process as `BUGFIX_ROADMAP.md`/`IMPROVEMENT_ROADMAP.md`: these rules can be
 pointing at a real bug, not just a style nit, so look before fixing.
 
-### ☐ 3. `no-non-null-assertion` (62: 36 source / 26 test)
+### ✅ 3. `no-non-null-assertion` (62: 36 source / 26 test) — done
 
-Every `x!` is a claim "this is never null/undefined" that the compiler can't verify.
-For each occurrence: either prove it via a preceding guard (replace `!` with a
-narrowing `if`/early-return, zero behavior change) or, if it's genuinely unprovable
-from the surrounding code, that's worth flagging rather than silencing — same
-category of finding as the closed bugfix roadmap's dead/wrong-branch bugs.
+All 62 fixed across ~20 files, one at a time: read the surrounding code, decide
+whether the assertion was provable (add a real guard/throw, or restructure so
+TS's own narrowing covers it) or a config-completeness guarantee (e.g.
+`TARGET_STATUS`/`POISONS`/`CreatureSizeTable` each have exactly one entry per
+their corresponding name-union type, confirmed by comparing counts — extracted
+into small shared `getXDetails()` helpers that throw on the
+should-never-happen miss instead of asserting past it).
+
+Two real, previously-dormant bugs found and fixed along the way (both flagged
+by other rules while touching the same lines, not by `no-non-null-assertion`
+itself):
+- `grab.service.ts`: `grab.saveType ? grab.saveType : default` truthy-checked
+  `SaveTypeEnum.Spell` (value `0`, a real save type) — same shape as the
+  `DispelEffects` bug already closed in `IMPROVEMENT_ROADMAP.md`. Fixed with
+  `??`. No shipped creature sets this field, so it was dormant.
+- `ability.service.ts`: a `Generator<number>` with no explicit `TReturn` was
+  silently `any` at its `.next().value`, defeating the type checker across
+  every downstream use.
+
+**Caught three premature-simplification mistakes here, all via the full test
+suite (not lint/tsc, which stayed green)** — each was code that looked
+dead-per-the-type but had a test explicitly naming and exercising the
+defended-against case:
+- `utils.service.ts`'s `spell.level ?? 1` (test: "falls back to level 1 ...
+  (type violation - defensive fallback)").
+- `grab.service.ts`'s "creature has no size" warning branch (test: "...warns
+  when the creature has no size").
+- `weidu-creature.service.ts`'s `p.creature.attack?.dualWielding` — this one
+  went the other way: traced real `Creature` construction
+  (`creatureFactory` → `setAttack()`) to confirm `attack` truly is always set
+  in production, then fixed the test's incomplete fixture instead of
+  re-adding the now-confirmed-unnecessary `?.`.
+
+Net lesson banked for Tier 2 item 4 below: when a "dead" branch's condition
+involves a field the type marks required, check for a test naming that
+specific defensive case before deleting anything — and when in doubt, running
+the full suite (not just lint/tsc) is what actually catches it.
 
 ### ☐ 4. `no-unnecessary-condition` (49: 42 source / 7 test)
 

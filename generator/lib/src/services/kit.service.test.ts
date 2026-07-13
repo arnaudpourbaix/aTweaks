@@ -14,6 +14,7 @@ function fakeCreature(p: {
       kit: p.kit,
       level1: { pnpValue: p.level1 ?? 1, value: p.level1 ?? 1, type: "none" },
       immunities: p.immunities ?? [],
+      spells: { memorized: [] },
     },
     behavior: { abilities: p.abilities ?? [] },
     setBehavior: vi.fn(),

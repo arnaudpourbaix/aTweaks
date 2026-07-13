@@ -27,10 +27,14 @@ import descriptionService from "../doc/description.service";
 import translationService from "../translation.service";
 
 class PoisonService {
-  getSpell(payload: {
-    poisonType: PnPPoisonType;
-    saveBonus?: number;
-  }): WeaponCastSpell {
+  // POISONS has one entry per PnPPoisonType member, so this is always found.
+  private getPoisonModel(poisonType: PnPPoisonType): PoisonModel {
+    const poison = POISONS.find((p) => p.type === poisonType);
+    if (!poison) throw new Error(`Poison type ${poisonType} is not defined !`);
+    return poison;
+  }
+
+  getSpell(payload: { poisonType: PnPPoisonType; saveBonus?: number }): WeaponCastSpell {
     const effects = this.getEffects(payload);
     const name = translationService.interpolate("common.poison.name", {
       type: payload.poisonType,
@@ -61,13 +65,8 @@ class PoisonService {
    * This is not implemented currently. A poison could be protected from itself to prevent further apply, but what target cures poison?
    * It would be immune to this poison for the remaining time, which is definitly not an option
    */
-  private getEffects(payload: {
-    poisonType: PnPPoisonType;
-    saveBonus?: number;
-  }): Effect[] {
-    const poison = POISONS.find(
-      (p) => p.type === payload.poisonType,
-    )!;
+  private getEffects(payload: { poisonType: PnPPoisonType; saveBonus?: number }): Effect[] {
+    const poison = this.getPoisonModel(payload.poisonType);
     const effects: Effect[] = [];
     if (poison.saveDamage) {
       effects.push(this.getSaveEffect(poison));
@@ -90,13 +89,8 @@ class PoisonService {
     return effects;
   }
 
-  private getSpellDescription(payload: {
-    poisonType: PnPPoisonType;
-    saveBonus?: number;
-  }): string {
-    const poison = POISONS.find(
-      (p) => p.type === payload.poisonType,
-    )!;
+  private getSpellDescription(payload: { poisonType: PnPPoisonType; saveBonus?: number }): string {
+    const poison = this.getPoisonModel(payload.poisonType);
     const save = descriptionService.getSaveText({
       saveTypes: [SaveTypeEnum.ParalyzePoisonDeath],
       saveBonus: payload.saveBonus,
@@ -115,20 +109,14 @@ class PoisonService {
       damage: poison.damage,
       duration,
     });
-    const saveDamage = translationService.interpolate(
-      "common.poison.saveDamage",
-      {
-        damage: poison.saveDamage,
-      },
-    );
-    const description = translationService.interpolate(
-      "common.poison.description",
-      {
-        damage: poison.damage === poisonFatalDamage ? death : damage,
-        save,
-        saveDamage: poison.saveDamage > 0 ? saveDamage : "",
-      },
-    );
+    const saveDamage = translationService.interpolate("common.poison.saveDamage", {
+      damage: poison.saveDamage,
+    });
+    const description = translationService.interpolate("common.poison.description", {
+      damage: poison.damage === poisonFatalDamage ? death : damage,
+      save,
+      saveDamage: poison.saveDamage > 0 ? saveDamage : "",
+    });
     return description;
   }
 
@@ -145,10 +133,7 @@ class PoisonService {
     };
   }
 
-  private getImmediateDeathEffects(
-    poison: PoisonModel,
-    saveBonus?: number,
-  ): Effect[] {
+  private getImmediateDeathEffects(poison: PoisonModel, saveBonus?: number): Effect[] {
     const levels = [
       { min: 1, max: 2 },
       { min: 3, max: 4 },
@@ -211,8 +196,7 @@ class PoisonService {
     amount: number;
     duration: number;
   } {
-    if (damage > duration)
-      return this.getAmountDamagePerSecondEffect({ label, damage, duration });
+    if (damage > duration) return this.getAmountDamagePerSecondEffect({ damage, duration });
     else
       return this.getOneDamagePerAmountSecondEffect({
         label,
@@ -248,11 +232,9 @@ class PoisonService {
   }
 
   private getAmountDamagePerSecondEffect({
-    label,
     damage,
     duration,
   }: {
-    label: string;
     damage: number;
     duration: number;
   }): {
