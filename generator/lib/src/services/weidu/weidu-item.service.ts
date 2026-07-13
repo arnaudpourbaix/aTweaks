@@ -1,4 +1,3 @@
-import { Creature } from "../../model/creature/creature";
 import { CodeLine } from "../../model/misc";
 import { ItemAbilityTypeEnum } from "../../model/spell-item/effect.enums";
 import { Item, ItemHeader } from "../../model/spell-item/spell-item";
@@ -17,8 +16,7 @@ class WeiduItemService extends AbstractWeiduService {
   }
 
   createItem(lines: CodeLine[], item: Item) {
-    if (item.stringRef)
-      this.add(lines, `// ${translationService.from(item.stringRef)}`);
+    if (item.stringRef) this.add(lines, `// ${translationService.from(item.stringRef)}`);
     if (item.copyFrom) {
       const immunity = State.immunities.find((i) => i.name === item.copyFrom);
       if (immunity && !immunity.itemSlot)
@@ -28,7 +26,7 @@ class WeiduItemService extends AbstractWeiduService {
         `COPY_EXISTING ~${
           immunity?.itemSlot?.file ?? item.copyFrom
         }.ITM~  ~override/${item.file}.ITM~`,
-        0
+        0,
       );
     } else {
       this.add(lines, `CREATE ITM "${item.file}"`, 0);
@@ -51,8 +49,7 @@ class WeiduItemService extends AbstractWeiduService {
     this.write(lines, 0x60, 4, item.enchantment, 1);
     //this.add(lines, `LPF set_enchantment INT_VAR enchantment = ${item.enchantment} END`, 1);
 
-    if (!item.copyFrom)
-      this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
+    if (!item.copyFrom) this.add(lines, `COPY_EXISTING ~${item.file}.itm~ ~override~`, 0);
     this.add(lines, `READ_SHORT 0x68 abicount`, 1);
     this.add(lines, `PATCH_IF (%abicount% > 0) BEGIN`, 1);
     if (item.header) {
@@ -67,8 +64,7 @@ class WeiduItemService extends AbstractWeiduService {
       this.write(lines, 0x8c, 2, item.header.damageBonus, 2);
       this.write(lines, 0x8e, 2, item.header.damageType, 2);
       if (item.header.projectile) {
-        if (typeof item.header.projectile !== "string")
-          throw new Error(`Unhandled projectile!`);
+        if (typeof item.header.projectile !== "string") throw new Error(`Unhandled projectile!`);
         const projectile = `(IDS_OF_SYMBOL (~projectl~ ~${item.header.projectile}~)) + 1`;
         this.write(lines, 0x9c, 2, projectile, 2);
       }

@@ -8,8 +8,9 @@ Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
 **1,282**; Tier 1 (`as any` private-access rewrite) brought it to **485**; Tier 2
 item 3 (`no-non-null-assertion`, below) has since brought it to **356**; Tier 2
 item 4 (`no-unnecessary-condition`) to **294**; Tier 2 items 5a/5 (pre-existing
-test-file `tsc` errors, then `restrict-template-expressions`) to **281**. None
-of this blocks the build or tests today — `npm run lint` simply isn't green yet.
+test-file `tsc` errors, then `restrict-template-expressions`) to **281**;
+Tier 3 item 6 (`no-unused-vars`) to **254**. None of this blocks the build or
+tests today — `npm run lint` simply isn't green yet.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
 92 files affected) showed the errors clustering hard around a small number of root
@@ -338,10 +339,56 @@ real config, or provably excluded by a guard the type checker can't see through?
 
 ## Tier 3 — mechanical cleanup (low risk, no investigation needed)
 
-### ☐ 6. `no-unused-vars` (43)
+### ✅ 6. `no-unused-vars` (43) — done
 
-Delete or prefix with `_` per existing project convention. Grep-and-fix, no logic
-risk.
+Down to 23 by the time this tier started (rest closed incidentally earlier).
+**The "existing project convention" of prefixing with `_` turned out not to
+exist yet** — probed it directly (a throwaway `_b` param still errored) and
+confirmed the base rule has no `argsIgnorePattern` configured anywhere. Added
+one (`^_` for args/vars/caught errors) to `eslint.config.mjs` before using it,
+since without that option prefixing does nothing.
+
+Two real, previously-dormant bugs found (both parameters that looked used but
+weren't, caught by the rule doing exactly its job):
+
+- **`wyvern.ts`'s `createStinger(poisonType, saveBonus)`**: `saveBonus` was
+  accepted and passed by every caller (`0`, `0`, `-2` for the three wyvern
+  variants) but never threaded into `poisonService.getSpell({ poisonType })` -
+  the greater wyvern's `-2` save penalty was silently dropped from generated
+  output. Fixed by passing it through; **regenerated the real project
+  files** (`npm run atweaks`) and diffed - confirmed the only change was
+  `savebonus="-2"` appearing on the greater wyvern's poison effect and its
+  description text picking up "(saves vs poison/death at -2)", across
+  `lib/pnp-monster/wyvern/48.tpa`, `docs/monsters.html`, and all 7 language
+  `.tra` files (custom translations aren't localized, so the same English
+  text ships in every language file - that's why one content fix touches
+  9 golden fixtures, not a sign of something broader). Committed alongside
+  the fix, same as `IMPROVEMENT_ROADMAP.md`'s established process for a
+  content-changing fix.
+- **`trigger.factory.ts`'s `validAttackTarget()`**: accepted `seeInvisible`
+  but never used it, unlike its two siblings (`validTrackTarget`/
+  `validSpellTarget`), which both exclude invisible targets when the creature
+  can't see invisible. Both real call sites passed a genuine per-creature
+  `creature.seeInvisible()` value, and no test exercised `seeInvisible: false`
+  for this method - flagged to the user before fixing, since it's a
+  generated-script behavior change. **User's call: remove the parameter
+  entirely** (not a bug worth fixing) - removed it from the signature and
+  both call sites instead of adding the missing invisibility check.
+
+Also `main.service.ts`'s `generateCreature(creature, families)` - `families`
+was passed through from `generateCreatures()`'s loop but never read; the
+`main.service.test.ts` call site already called it with `[]`, confirming
+it was genuinely vestigial. Removed the parameter (and the test's `[]` arg).
+
+The rest were the two established shapes from earlier tiers: dead imports/a
+dead local enum (`ettin.ts`'s unused `Ids` didn't even match creature-specific
+member names, looked copy-pasted from another file), and the
+`statement-builder.service.ts` dispatch-handler-signature case (`options`/
+`creature` unused in a specific handler but required by the shared
+`fn.apply(this, [statements, creature, options])` call shape) - prefixed with
+`_` now that the option exists.
+
+`npm run build` and `npm test` (831/831) both clean.
 
 ### ☐ 7. `unbound-method` (25, mostly source)
 

@@ -66,7 +66,11 @@ class TranslationService extends AbstractCodeService {
     return value;
   }
 
-  private fromStringRef(stringRef: number, lang = LANG): string {
+  // lang is accepted for signature symmetry with fromKey() (from() dispatches to either with the
+  // same args), but customTranslations aren't stored per-language - see
+  // translation.service.test.ts's "fromStringRef (private) defaults lang when called without one
+  // directly".
+  private fromStringRef(stringRef: number, _lang = LANG): string {
     const translation = this.customTranslations.find((t) => t.stringRef === stringRef);
     if (!translation) throw new Error(`stringRef not found: ${stringRef}`);
     return translation.text;

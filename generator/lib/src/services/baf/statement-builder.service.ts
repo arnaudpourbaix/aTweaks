@@ -124,7 +124,7 @@ class StatementService {
     }
   }
 
-  private dialog(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private dialog(statements: Statements, creature: Creature, _options: BuilderOptions): void {
     if (!creature.behavior.dialog.length) return;
     const nameTriggers: Triggers.Trigger[] = [];
     for (const name of creature.behavior.dialog) {
@@ -151,7 +151,7 @@ class StatementService {
     });
   }
 
-  private handlePanic(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private handlePanic(statements: Statements, creature: Creature, _options: BuilderOptions): void {
     if (utils.hasImmunity(creature.data.immunities, "fear")) return;
     statements.push({
       comment: "Handle Panic state",
@@ -277,7 +277,11 @@ class StatementService {
     });
   }
 
-  private detectCombat(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private detectCombat(
+    statements: Statements,
+    _creature: Creature,
+    _options: BuilderOptions,
+  ): void {
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
@@ -529,7 +533,7 @@ class StatementService {
     this.randomWalk(statements, false, options);
   }
 
-  private randomWalk(statements: Statements, combat: boolean, options: BuilderOptions): void {
+  private randomWalk(statements: Statements, combat: boolean, _options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, combat ? 1 : 0),
       { name: "ActionListEmpty" },
@@ -549,7 +553,7 @@ class StatementService {
   private thievesAbilities(
     statements: Statements,
     creature: Creature,
-    options: BuilderOptions,
+    _options: BuilderOptions,
   ): void {
     if (!creature.data.hideShadow) return;
     const hideTimer = "BD_HIDE";
@@ -594,7 +598,7 @@ class StatementService {
     });
   }
 
-  private avoidMeleeCombat(statements: Statements, creature: Creature, options: BuilderOptions) {
+  private avoidMeleeCombat(statements: Statements, creature: Creature, _options: BuilderOptions) {
     if (creature.attack.melee || creature.attack.ranged) return;
     statements.push({
       comment: `Random facing`,
@@ -692,7 +696,6 @@ class StatementService {
         ...statusDetails.targetTriggers,
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: statusDetails.canOnlyTargetPlayer,
-          seeInvisible: creature.seeInvisible(),
           maxRange: creature.attack.maxRange,
         }),
       ];
@@ -848,7 +851,7 @@ class StatementService {
     statements: Statements,
     duration: Required<SpellReference["duration"]>,
     variable: string,
-    options: BuilderOptions,
+    _options: BuilderOptions,
   ): void {
     for (const key of utils.objectKeys(SPELLS)) {
       const spell = SPELLS[key];
@@ -903,7 +906,7 @@ class StatementService {
     targets: TargetList[],
     options: BuilderOptions,
   ): void {
-    for (const [index, target] of targets.entries()) {
+    for (const target of targets) {
       this.creatureTargetAbility(statements, creature, ability, target, options);
     }
   }
@@ -933,7 +936,6 @@ class StatementService {
       targetTriggers.push(
         ...triggerFactory.validAttackTarget({
           isTargetPlayer: false,
-          seeInvisible: creature.seeInvisible(),
         }),
       );
     }

@@ -7,7 +7,6 @@ import triggerFactory from "../../factories/trigger.factory";
 import responseFactory from "../../factories/response.factory";
 import { ScriptTarget, CR } from "../../model/constants";
 import utils from "../utils/utils.service";
-import { AllegianceIdentifier } from "../../model/ids/allegiance";
 import { ConditionalStatement } from "../../model/script/script";
 
 // This is the compiler from the typed BAF AST (Actions.Action / Triggers.Trigger)
@@ -21,20 +20,16 @@ beforeAll(async () => {
 describe("generateAction", () => {
   it("quotes string params and leaves numbers bare", () => {
     const action = actionFactory.setGlobal("JA#TEST", 1);
-    expect(bafGeneratorService.generateAction(action)).toBe(
-      '\t\tSetGlobal("JA#TEST","LOCALS",1)',
-    );
+    expect(bafGeneratorService.generateAction(action)).toBe('\t\tSetGlobal("JA#TEST","LOCALS",1)');
   });
 
   it("renders a boolean-typed param unquoted", () => {
     expect(bafGeneratorService.generateAction(actionFactory.enableInterrupt())).toBe(
       "\t\tSetInterrupt(TRUE)",
     );
-    expect(
-      bafGeneratorService.generateAction(
-        actionFactory.disableInterrupt() as any,
-      ),
-    ).toBe("\t\tSetInterrupt(FALSE)");
+    expect(bafGeneratorService.generateAction(actionFactory.disableInterrupt() as any)).toBe(
+      "\t\tSetInterrupt(FALSE)",
+    );
   });
 
   it("wraps a bare object identifier ending in 'By' with (Myself), matching real generated output", () => {
@@ -81,9 +76,7 @@ describe("generateTrigger", () => {
       [triggerFactory.range(30)],
       [{ key: ScriptTarget.token, value: ScriptTarget.myself }],
     );
-    expect(bafGeneratorService.generateTrigger(trigger, false)).toBe(
-      "\tRange(Myself,30)",
-    );
+    expect(bafGeneratorService.generateTrigger(trigger, false)).toBe("\tRange(Myself,30)");
   });
 
   it("prefixes negated triggers with '!'", () => {
@@ -108,16 +101,16 @@ describe("generateTrigger", () => {
 
   it("throws when the trigger has the wrong number of parameters", () => {
     const trigger = { name: "Range", params: [30] };
-    expect(() =>
-      bafGeneratorService.generateTrigger(trigger as any, false),
-    ).toThrow(/Not enough parameters/);
+    expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
+      /Not enough parameters/,
+    );
   });
 
   it("throws for an unregistered trigger name", () => {
     const trigger = { name: "NotARealTrigger", params: [] };
-    expect(() =>
-      bafGeneratorService.generateTrigger(trigger as any, false),
-    ).toThrow("Unknown trigger NotARealTrigger");
+    expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
+      "Unknown trigger NotARealTrigger",
+    );
   });
 
   it("throws when a registered trigger's parameter metadata has a hole at a matching-length index", () => {
@@ -128,9 +121,9 @@ describe("generateTrigger", () => {
     });
     try {
       const trigger = { name: "JA#TestHoleTrigger", params: ["x"] };
-      expect(() =>
-        bafGeneratorService.generateTrigger(trigger as any, false),
-      ).toThrow(/Unexpected parameter x for trigger JA#TestHoleTrigger/);
+      expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
+        /Unexpected parameter x for trigger JA#TestHoleTrigger/,
+      );
     } finally {
       State.triggers.pop();
     }
@@ -141,10 +134,7 @@ describe("generateTriggers", () => {
   it("indents nested Or triggers one level deeper and emits OR(n)", () => {
     const triggers = [
       triggerFactory.or([
-        triggerFactory.attackedBy(
-          "[GOODCUTOFF]",
-          "DEFAULT",
-        ),
+        triggerFactory.attackedBy("[GOODCUTOFF]", "DEFAULT"),
         triggerFactory.range(10),
       ]),
     ];
@@ -169,18 +159,13 @@ describe("generateTriggers", () => {
 describe("generateStatement", () => {
   it("renders a full IF/THEN/END block matching the real 'Detect combat' block generated for creatures", () => {
     const triggers = utils.replaceTriggerTokens(
-      [
-        triggerFactory.global("JA#COMBAT", 0),
-        triggerFactory.allegiance("EVILCUTOFF"),
-      ],
+      [triggerFactory.global("JA#COMBAT", 0), triggerFactory.allegiance("EVILCUTOFF")],
       [{ key: ScriptTarget.token, value: ScriptTarget.myself }],
     );
     const statement: ConditionalStatement = {
       comment: "Detect combat",
       triggers,
-      responses: responseFactory.response([
-        actionFactory.setGlobal("JA#COMBAT", 1),
-      ]),
+      responses: responseFactory.response([actionFactory.setGlobal("JA#COMBAT", 1)]),
     };
 
     const expected = [

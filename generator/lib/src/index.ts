@@ -3,14 +3,6 @@ import { program } from "commander";
 import mainService from "./services/main.service";
 import stateService from "./services/state.service";
 
-const clear = require("clear");
-const figlet = require("figlet");
-
-// clear();
-// console.log(
-//   figlet.textSync("script BAF generator", { horizontalLayout: "full" })
-// );
-
 program
   .version("0.0.1")
   .description("Generate WEIDU code and BAF files for IE games")

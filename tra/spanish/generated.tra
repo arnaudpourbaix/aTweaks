@@ -1581,7 +1581,7 @@ Speed Factor: 2
 Enchantment: 1
 Range: 2 feet~
 @10773 = ~Type F poison~
-@10774 = ~Death within 3 rounds (saves vs poison/death)~
+@10774 = ~Death within 3 rounds (saves vs poison/death at -2)~
 @10775 = ~Stinger
 
 Melee damage: 1D6 (Piercing)
@@ -1590,7 +1590,7 @@ Enchantment: 4
 Range: 3 feet
 
 Cast spell Type F poison:
-Death within 3 rounds (saves vs poison/death)~
+Death within 3 rounds (saves vs poison/death at -2)~
 @10776 = ~Jaws
 
 Melee damage: 2D8 (Piercing)

@@ -33,6 +33,17 @@ export default tseslint.config(
           allowRegExp: false,
         },
       ],
+      // Underscore-prefixed convention for intentionally-unused params/vars/catch bindings - most
+      // common case is a shared handler signature (e.g. statement-builder.service.ts's dispatch
+      // methods) where not every implementation uses every parameter.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
   eslintConfigPrettier,

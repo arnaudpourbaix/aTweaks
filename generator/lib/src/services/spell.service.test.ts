@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import {
   EffectTargetEnum,
   ItemAbilityTypeEnum,
@@ -8,9 +8,16 @@ import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import spellService from "./spell.service";
 import translationService from "./translation.service";
 
-// a registered custom stringRef, since translationService.from() throws for an unregistered one
-// (addProjectile() reads spell.name for its console.log).
-const SPELL_NAME = translationService.addCustomTranslation(["Test Spell"]);
+// a stand-in stringRef: translationService.from() throws for a numeric ref that isn't
+// registered (addProjectile() reads spell.name for its console.log), but registering a real one
+// via addCustomTranslation() would permanently shift translationService's shared, never-reset
+// availableStringRef counter for every other test file in the same run (breaking
+// pipeline.golden.test.ts's exact-stringRef-number fixtures) - mock the lookup instead.
+const SPELL_NAME = 12345;
+const fromOptionalSpy = vi.spyOn(translationService, "fromOptional").mockReturnValue("Test Spell");
+afterAll(() => {
+  fromOptionalSpy.mockRestore();
+});
 
 describe("getSpell", () => {
   it("defaults doc/level/type when omitted", () => {

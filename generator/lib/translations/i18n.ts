@@ -32,7 +32,7 @@ export const getTranslationKeys = (language: Language) => {
   }
 };
 
-const t = getTranslationKeys("english"); // typings is based on reference language
-export type TranslationKey = Leaves<typeof t>;
+const _t = getTranslationKeys("english"); // typings is based on reference language
+export type TranslationKey = Leaves<typeof _t>;
 
 export const LANG: Language = "english";

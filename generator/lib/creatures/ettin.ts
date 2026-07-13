@@ -1,6 +1,6 @@
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
-import { EquippedItem, ItemSlot } from "../src/model/creature/item";
+import { ItemSlot } from "../src/model/creature/item";
 import {
   AbilityDamageTypeEnum,
   ItemAbilityFlagEnum,
@@ -12,34 +12,11 @@ import {
 } from "../src/model/spell-item/effect.enums";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
-enum Ids {
-  AuraOfEvil,
-  BansheeFearAura,
-  BonebatTouch,
-  CarrionStench,
-  DeathWail,
-  GhoulTouch,
-  GhoulLordTouch,
-  GhastTouch,
-  GhoulRottingDisease,
-  GreaterMummyRottingDisease,
-  GreaterMummyFearAura,
-  MummyFearAura,
-  MummyRottingDisease,
-  SkeletonWarriorFearAura,
-  SpecterTouch,
-  WallOfIce,
-}
-
 class Ettin extends Creature {
   /**
    * Large Spiked Club
    */
-  createLargeSpikedClub(p: {
-    diceThrown: number;
-    diceSize: number;
-    slot: ItemSlot;
-  }) {
+  createLargeSpikedClub(p: { diceThrown: number; diceSize: number; slot: ItemSlot }) {
     return this.addWeapon({
       weapon: {
         stringRef: "monster.ettin.weapon.largeSpikedClub",
@@ -118,9 +95,7 @@ class EttinFamily extends CreatureFamily<Ettin> {
       restHeal: true,
       abilities: [],
     });
-    ettin.setAdjustments([
-      { files: ["BDETTIN"], data: { script: { location: "None" } } },
-    ]);
+    ettin.setAdjustments([{ files: ["BDETTIN"], data: { script: { location: "None" } } }]);
     return ettin;
   }
 }

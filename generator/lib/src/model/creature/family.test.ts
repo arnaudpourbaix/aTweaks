@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
+import { MonsterEnum } from "../../../creatures/monster";
 import { CreatureFamily } from "./family";
 import { Creature } from "./creature";
 

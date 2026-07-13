@@ -22,15 +22,13 @@ class MainService {
       descriptionService.generateCreatureSpells(family.spells);
       descriptionService.generateCreatureItems(family.items);
       if (families.includes(family.id)) {
-        throw new Error(
-          `Family '${MonsterFamilyEnum[family.id]}' already declared`,
-        );
+        throw new Error(`Family '${MonsterFamilyEnum[family.id]}' already declared`);
       }
       families.push(family.id);
       weiduFamilyService.createOrUpdateMainFile(family.id);
       weiduFamilyService.generateFamilyData(family);
       for (const creature of family.creatures) {
-        this.generateCreature(creature, families);
+        this.generateCreature(creature);
       }
       weiduFamilyService.generateFinalCode(family);
       documentationService.addFamily(family);
@@ -38,7 +36,7 @@ class MainService {
     documentationService.generate();
   }
 
-  generateCreature(creature: Creature, families: MonsterFamilyEnum[]) {
+  generateCreature(creature: Creature) {
     if (!this.isCreatureValid(creature)) return;
     bafGeneratorService.generate(creature);
     weiduCreatureService.generateWeiduScript(creature);
@@ -76,17 +74,11 @@ class MainService {
 
   checkPresets() {
     for (const preset of ABILITY_PRESETS) {
-      if (
-        !preset.ability.spell ||
-        preset.ability.spell.resource ||
-        preset.ability.spell.id
-      ) {
+      if (!preset.ability.spell || preset.ability.spell.resource || preset.ability.spell.id) {
         continue;
       }
       const spell = Object.values(SPELLS).find((s) => s.file === preset.preset);
-      console.log(
-        `Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`,
-      );
+      console.log(`Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`);
       if (!spell || !("id" in spell)) {
         preset.ability.spell.resource = preset.preset;
       } else {
@@ -106,9 +98,7 @@ class MainService {
       files.push(spell.file);
       if (!("id" in spell)) continue;
       if (identifiers.includes(spell.id)) {
-        throw new Error(
-          `Spell identifier ${spell.id} is declared multiple times.`,
-        );
+        throw new Error(`Spell identifier ${spell.id} is declared multiple times.`);
       }
       identifiers.push(spell.id);
     }

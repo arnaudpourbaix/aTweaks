@@ -31,11 +31,7 @@ class TriggerFactory {
     return { name: "Range", params: [ScriptTarget.token, value], negation };
   }
 
-  attackedBy(
-    obj: ParamObject,
-    type: AStylesIdentifiers,
-    negation = false,
-  ): Triggers.Trigger {
+  attackedBy(obj: ParamObject, type: AStylesIdentifiers, negation = false): Triggers.Trigger {
     return { name: "AttackedBy", params: [obj, type], negation };
   }
 
@@ -121,11 +117,7 @@ class TriggerFactory {
     };
   }
 
-  checkStatGT(
-    value: number,
-    stat: StatsIdentifier,
-    negation = false,
-  ): Triggers.Trigger {
+  checkStatGT(value: number, stat: StatsIdentifier, negation = false): Triggers.Trigger {
     return {
       name: "CheckStatGT",
       params: [ScriptTarget.token, value, stat],
@@ -133,11 +125,7 @@ class TriggerFactory {
     };
   }
 
-  checkStatLT(
-    value: number,
-    stat: StatsIdentifier,
-    negation = false,
-  ): Triggers.Trigger {
+  checkStatLT(value: number, stat: StatsIdentifier, negation = false): Triggers.Trigger {
     return {
       name: "CheckStatLT",
       params: [ScriptTarget.token, value, stat],
@@ -145,11 +133,7 @@ class TriggerFactory {
     };
   }
 
-  checkStat(
-    value: number,
-    stat: StatsIdentifier,
-    negation = false,
-  ): Triggers.Trigger {
+  checkStat(value: number, stat: StatsIdentifier, negation = false): Triggers.Trigger {
     return {
       name: "CheckStat",
       params: [ScriptTarget.token, value, stat],
@@ -253,11 +237,9 @@ class TriggerFactory {
 
   validAttackTarget({
     isTargetPlayer,
-    seeInvisible,
     maxRange,
   }: {
     isTargetPlayer: boolean;
-    seeInvisible: boolean;
     maxRange?: number;
   }): Triggers.Trigger[] {
     const results: Triggers.Trigger[] = [
@@ -300,9 +282,7 @@ class TriggerFactory {
   inverseNegations(triggers: Triggers.Trigger[]): Triggers.Trigger[] {
     return triggers.reduce<Triggers.Trigger[]>((acc, trigger) => {
       if ("triggers" in trigger) {
-        acc.push(
-          ...(this.inverseNegations(trigger.triggers)),
-        );
+        acc.push(...this.inverseNegations(trigger.triggers));
       } else {
         acc.push(this.inverseNegation(trigger));
       }

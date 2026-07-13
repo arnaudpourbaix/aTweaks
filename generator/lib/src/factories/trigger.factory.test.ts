@@ -59,7 +59,6 @@ describe("validAttackTarget", () => {
   it("does not unshift a WEAPON exclusion when the target is a player", () => {
     const results = triggerFactory.validAttackTarget({
       isTargetPlayer: true,
-      seeInvisible: true,
     });
     expect(results.some((t) => t.name === "General")).toBe(false);
   });
@@ -67,7 +66,6 @@ describe("validAttackTarget", () => {
   it("unshifts a WEAPON exclusion when the target is not a player", () => {
     const results = triggerFactory.validAttackTarget({
       isTargetPlayer: false,
-      seeInvisible: true,
     });
     expect(results[0]).toMatchObject({ name: "General" });
   });
@@ -75,7 +73,6 @@ describe("validAttackTarget", () => {
   it("appends a Range trigger when maxRange is given", () => {
     const results = triggerFactory.validAttackTarget({
       isTargetPlayer: true,
-      seeInvisible: true,
       maxRange: 30,
     });
     expect(results[results.length - 1]).toMatchObject({
@@ -87,7 +84,6 @@ describe("validAttackTarget", () => {
   it("appends no Range trigger when maxRange is omitted", () => {
     const results = triggerFactory.validAttackTarget({
       isTargetPlayer: true,
-      seeInvisible: true,
     });
     expect(results.some((t) => t.name === "Range")).toBe(false);
   });
@@ -98,9 +94,7 @@ describe("inverseNegations", () => {
     const result = triggerFactory.inverseNegations([
       { name: "See", params: ["Myself"], negation: false } as any,
     ]);
-    expect(result).toEqual([
-      { name: "See", params: ["Myself"], negation: true },
-    ]);
+    expect(result).toEqual([{ name: "See", params: ["Myself"], negation: true }]);
   });
 
   it("recurses into and flattens nested composite triggers", () => {

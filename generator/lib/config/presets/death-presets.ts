@@ -1,5 +1,4 @@
 import triggerFactory from "../../src/factories/trigger.factory";
-import { ScriptTarget } from "../../src/model/constants";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
