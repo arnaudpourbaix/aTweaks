@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { Triggers } from "../model/script/triggers";
 import triggerFactory from "./trigger.factory";
 
 describe("haveSpellRES", () => {
@@ -92,7 +93,7 @@ describe("validAttackTarget", () => {
 describe("inverseNegations", () => {
   it("flips negation on leaf triggers", () => {
     const result = triggerFactory.inverseNegations([
-      { name: "See", params: ["Myself"], negation: false } as any,
+      { name: "See", params: ["Myself"], negation: false } as unknown as Triggers.Trigger,
     ]);
     expect(result).toEqual([{ name: "See", params: ["Myself"], negation: true }]);
   });
@@ -105,7 +106,7 @@ describe("inverseNegations", () => {
           { name: "See", params: ["A"], negation: false },
           { name: "See", params: ["B"], negation: true },
         ],
-      } as any,
+      } as unknown as Triggers.Trigger,
     ]);
     expect(result).toEqual([
       { name: "See", params: ["A"], negation: true },

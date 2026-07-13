@@ -4,7 +4,9 @@ import * as path from "path";
 import { afterEach, describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { Creature } from "../../model/creature/creature";
 import { Family } from "../../model/creature/family";
+import { Spell } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
 import weiduFamilyService from "./weidu-family.service";
 
@@ -16,9 +18,9 @@ function fakeFamily(p: {
     id: MonsterFamilyEnum.Ankheg,
     items: [],
     projectiles: [],
-    spells: p.spellHasSecondaryType ? [{ secondaryType: "Fear" } as any] : [],
+    spells: p.spellHasSecondaryType ? [{ secondaryType: "Fear" } as unknown as Spell] : [],
     creatures: p.creatureSpellHasSecondaryType
-      ? [{ spells: [{ secondaryType: "Fear" } as any] } as any]
+      ? [{ spells: [{ secondaryType: "Fear" } as unknown as Spell] } as unknown as Creature]
       : [],
   };
 }
@@ -44,9 +46,7 @@ describe("generateFinalCode", () => {
 
   it("does not emit integrate_sectypes when enableIntegrateSectypes is disabled (default), even if a secondary type is present", () => {
     const file = setupTempFamilyFolder();
-    weiduFamilyService.generateFinalCode(
-      fakeFamily({ spellHasSecondaryType: true }),
-    );
+    weiduFamilyService.generateFinalCode(fakeFamily({ spellHasSecondaryType: true }));
     const content = fs.readFileSync(file, "utf-8");
     expect(content).not.toContain("integrate_sectypes");
   });
@@ -54,9 +54,7 @@ describe("generateFinalCode", () => {
   it("emits integrate_sectypes when enableIntegrateSectypes is enabled and a family spell has a secondary type", () => {
     GLOBAL_CONFIG.enableSecondaryTypes = true;
     const file = setupTempFamilyFolder();
-    weiduFamilyService.generateFinalCode(
-      fakeFamily({ spellHasSecondaryType: true }),
-    );
+    weiduFamilyService.generateFinalCode(fakeFamily({ spellHasSecondaryType: true }));
     const content = fs.readFileSync(file, "utf-8");
     expect(content).toContain("LAF integrate_sectypes END");
   });
@@ -64,9 +62,7 @@ describe("generateFinalCode", () => {
   it("emits integrate_sectypes when enableIntegrateSectypes is enabled and a creature spell has a secondary type", () => {
     GLOBAL_CONFIG.enableSecondaryTypes = true;
     const file = setupTempFamilyFolder();
-    weiduFamilyService.generateFinalCode(
-      fakeFamily({ creatureSpellHasSecondaryType: true }),
-    );
+    weiduFamilyService.generateFinalCode(fakeFamily({ creatureSpellHasSecondaryType: true }));
     const content = fs.readFileSync(file, "utf-8");
     expect(content).toContain("LAF integrate_sectypes END");
   });

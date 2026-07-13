@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { TargetListName } from "../../../config/target-name";
 import { Creature } from "../../model/creature/creature";
 import { TargetList } from "../../model/script/target";
 import utils from "../utils/utils.service";
@@ -44,7 +45,7 @@ describe("getList", () => {
   });
 
   it("throws for a name that isn't in TARGET_LISTS", () => {
-    expect(() => targetService.getList("NotARealList" as any)).toThrow(
+    expect(() => targetService.getList("NotARealList" as TargetListName)).toThrow(
       /Target list NotARealList is not defined/,
     );
   });
@@ -132,7 +133,7 @@ describe("getTargetFromAbility", () => {
   });
 
   it("falls back to the raw identifier when it isn't a known target list name", () => {
-    expect(targetService.getTargetFromAbility("GOODCUTOFF" as any, undefined, undefined)).toEqual({
+    expect(targetService.getTargetFromAbility("GOODCUTOFF", undefined, undefined)).toEqual({
       targets: "GOODCUTOFF",
       allegianceCheck: false,
     });
