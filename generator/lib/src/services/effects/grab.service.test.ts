@@ -2,10 +2,17 @@ import { describe, expect, it, vi } from "vitest";
 import { MonsterEnum } from "../../../creatures/monster";
 import { GRAB_IMMUNE_CREATURES, HUGE_CREATURES, LARGE_CREATURES } from "../../../config/creatures";
 import { Creature } from "../../model/creature/creature";
-import { CastSpellEffect, IdsEffect } from "../../model/spell-item/effect";
+import { CreatureGrabConfig } from "../../model/creature/grab";
+import { CastSpellEffect, Effect, IdsEffect } from "../../model/spell-item/effect";
 import { EffectCastSpellTypeEnum, SaveTypeEnum } from "../../model/spell-item/effect.enums";
 import { Weapon } from "../../model/spell-item/spell-item";
 import grabService from "./grab.service";
+
+interface GrabServicePrivate {
+  getGrabbedEffects(creature: Creature, grab: CreatureGrabConfig, file: string): Effect[];
+  getGrabImmuneEffects(creature: Creature, file: string): Effect[];
+}
+const service = grabService as unknown as GrabServicePrivate;
 
 function fakeCreature(
   p: {
@@ -113,15 +120,16 @@ describe("attachGrabToWeapon", () => {
 
   it("getGrabbedEffects (private) falls back to GRAB_DEFAULT_CONFIG.rounds when grab.rounds is unset", () => {
     const creature = fakeCreature({ strength: 10, size: "Medium" });
-    const effects = (grabService as any).getGrabbedEffects(creature, {}, "spellfile");
-    const setState = effects.find((e: any) => "state" in e && "duration" in e);
+    const effects = service.getGrabbedEffects(creature, {}, "spellfile");
+    const setState = effects.find((e) => "state" in e && "duration" in e);
+    if (!setState || !("duration" in setState)) throw new Error("no SetState effect found");
     expect(setState.duration).toBeGreaterThan(0);
   });
 
   it("getGrabImmuneEffects (private) skips the size-based extras and warns when the creature has no size", () => {
     const creature = fakeCreature({ strength: 10 });
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-    const effects = (grabService as any).getGrabImmuneEffects(creature, "spellfile");
+    const effects = service.getGrabImmuneEffects(creature, "spellfile");
     expect(consoleSpy).toHaveBeenCalled();
     expect(effects).toHaveLength(GRAB_IMMUNE_CREATURES.length);
     consoleSpy.mockRestore();

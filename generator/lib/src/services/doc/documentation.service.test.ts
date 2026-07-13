@@ -6,6 +6,12 @@ import { ImmunityConfig } from "../../model/final/immunity";
 import { State } from "../../state";
 import documentationService from "./documentation.service";
 
+interface DocumentationServicePrivate {
+  monsters: string[];
+  replace(template: { text: string }, key: string, value: string | number | undefined): void;
+}
+const service = documentationService as unknown as DocumentationServicePrivate;
+
 function fakeCreatureForAddCreature(doubleApr: boolean): Creature {
   return {
     id: 1,
@@ -39,18 +45,14 @@ function fakeCreatureForAddCreature(doubleApr: boolean): Creature {
 describe("addCreature (doubleApr)", () => {
   it("doubles apr when doubleApr is true", () => {
     documentationService.addCreature(fakeCreatureForAddCreature(true));
-    const html = (documentationService as any).monsters.at(-1) as string;
-    expect(html).toContain(
-      '<div class="stat"><dt>Attacks per Round</dt><dd>4</dd></div>',
-    );
+    const html = service.monsters.at(-1) ?? "";
+    expect(html).toContain('<div class="stat"><dt>Attacks per Round</dt><dd>4</dd></div>');
   });
 
   it("does not double apr when doubleApr is false", () => {
     documentationService.addCreature(fakeCreatureForAddCreature(false));
-    const html = (documentationService as any).monsters.at(-1) as string;
-    expect(html).toContain(
-      '<div class="stat"><dt>Attacks per Round</dt><dd>2</dd></div>',
-    );
+    const html = service.monsters.at(-1) ?? "";
+    expect(html).toContain('<div class="stat"><dt>Attacks per Round</dt><dd>2</dd></div>');
   });
 });
 
@@ -251,23 +253,21 @@ describe("getSpellQuantity", () => {
   });
 
   it("returns 'every N rounds' for a renew value above 1", () => {
-    expect(documentationService.getSpellQuantity(3, 5)).toBe(
-      "every 5 rounds",
-    );
+    expect(documentationService.getSpellQuantity(3, 5)).toBe("every 5 rounds");
   });
 });
 
 describe("replace (private)", () => {
   it("throws when the token isn't present in the template", () => {
     const template = { text: "no tokens here" };
-    expect(() =>
-      (documentationService as any).replace(template, "missing", "x"),
-    ).toThrow(/Token \{\{missing\}\} not found/);
+    expect(() => {
+      service.replace(template, "missing", "x");
+    }).toThrow(/Token \{\{missing\}\} not found/);
   });
 
   it("replaces every occurrence of the token, falling back to empty string for undefined", () => {
     const template = { text: "{{key}} and {{key}} again" };
-    (documentationService as any).replace(template, "key", undefined);
+    service.replace(template, "key", undefined);
     expect(template.text).toBe(" and  again");
   });
 });
