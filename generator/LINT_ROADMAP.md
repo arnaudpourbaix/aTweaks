@@ -1,17 +1,22 @@
-# Lint Roadmap
+# Lint Roadmap — ✅ COMPLETE (2026-07-13)
+
+`npx eslint .` exits 0. `npm run build` and `npm test` (831/831) are both clean.
+This roadmap is kept for the record of what was found and fixed; see each
+tier's notes below for the real bugs, false-positive rules, and judgment calls
+made along the way.
 
 Follow-up to adding strict, type-aware ESLint (`typescript-eslint`'s
 `strict-type-checked` + `stylistic-type-checked` presets) on 2026-07-12. `npm run
 lint:fix` already applied 247 mechanical autofixes (reverting 3 that broke `tsc` —
-see the commit message). `npm run build` and `npm test` (831/831) are both clean.
+see the commit message).
 Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
 **1,282**; Tier 1 (`as any` private-access rewrite) brought it to **485**; Tier 2
-item 3 (`no-non-null-assertion`, below) has since brought it to **356**; Tier 2
+item 3 (`no-non-null-assertion`, below) brought it to **356**; Tier 2
 item 4 (`no-unnecessary-condition`) to **294**; Tier 2 items 5a/5 (pre-existing
 test-file `tsc` errors, then `restrict-template-expressions`) to **281**;
 Tier 3 item 6 (`no-unused-vars`) to **254**; Tier 3 item 7 (`unbound-method`)
-to **230**. None of this blocks the build or tests today — `npm run lint`
-simply isn't green yet.
+to **230**; Tier 3 item 8 (small rules) to **182**; the final pass (Tier 1
+leftovers — 21 files Tier 1 didn't originally reach) to **0**.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
 92 files affected) showed the errors clustering hard around a small number of root
@@ -416,14 +421,65 @@ All three shapes described above showed up, one each:
 
 `npm run build` and `npm test` (831/831) both clean.
 
-### ☐ 8. Everything else (`prefer-nullish-coalescing` 17, `no-redundant-type-constituents`
-14, `no-empty-function` 11, `no-unsafe-enum-comparison` 4, `no-useless-assignment` 4,
-`no-namespace` 3, `no-unnecessary-type-conversion` 3, `prefer-optional-chain` 3,
-`preserve-caught-error` 3, and a handful of 1-2 count rules)
+### ✅ 8. Everything else (small rules) — done
 
-Small enough to sweep in one pass once Tiers 0-2 are done and the noise is gone —
-each of these is a handful of occurrences, straightforward one-line fixes with the
-rule's own `--fix` covering some of them.
+~48 errors: `prefer-nullish-coalescing`, `no-redundant-type-constituents`,
+`no-empty-function`, `no-unsafe-enum-comparison`, `no-unnecessary-type-assertion`,
+`no-namespace`, `prefer-optional-chain`, `no-invalid-void-type`,
+`no-unsafe-function-type`, `no-case-declarations`, `prefer-promise-reject-errors`,
+`no-useless-assignment`, `no-extraneous-class`, plus a pre-existing
+`eslint.config.mjs` parsing error.
+
+Two findings worth flagging for future tiers of work in this codebase:
+
+- **`no-unnecessary-type-assertion` gave false positives three times**
+  (`feys.ts`, `slimes.ts`, `undead.ts`) — removing the flagged assertion broke
+  `tsc` in all three (verified directly against both `tsconfig.eslint.json` and
+  `tsconfig.json`), because a nested arrow-in-`.map()`-in-`.flat()` chain loses
+  the contextual typing that narrows an object literal to its discriminated-union
+  member. **Always verify an "unnecessary" assertion removal against `tsc`
+  directly before trusting the rule** — this one would have shipped a real type
+  hole silently (ESLint's own `no-unsafe-*` rules don't catch it either, since
+  by the time they run the damage is already baked into the inferred type).
+- **`AbstractCreature.id: number`** is deliberately loose — shared between
+  `Creature` (real `MonsterEnum` values) and `CreatureFamily` (real
+  `MonsterFamilyEnum` values) through the same base-class field. Attempting to
+  narrow it to `MonsterEnum` broke `CreatureFamily` immediately. Don't narrow
+  this field; widen the *comparison side* instead when a `no-unsafe-enum-
+  comparison` hit involves it (see `family.ts`'s `creature()`,
+  `hit-point.service.ts`'s `getHitDiceSize()`).
+
+### ✅ Final pass: `no-explicit-any`/`no-unsafe-*` in files Tier 1 didn't reach — done
+
+Tier 2 item 5a's `tsconfig.eslint.json` fix revealed 8 test files Tier 1 never
+touched; a rule-by-rule sweep (Tiers 2-3 item 8) revealed the real count was
+**21 files, 182 errors** — effectively unfinished Tier 1 work that had been
+undercounted in the original baseline table above. Fixed with the same method
+as Tier 1: each `as any` replaced with `as unknown as ConcreteType` (or a
+local `XServicePrivate` interface for protected/private-member access), naming
+the real type instead of opting out of checking. Where the cast turned out to
+be unnecessary once typed (the value already satisfied the real type), it was
+removed instead of narrowed — several of these were found this way (`"acidSpells"`
+already a real `SpellGroupName`, `{ name }` already satisfying `PartialProjectile`,
+`"GOODCUTOFF"` already a real allegiance union member).
+
+One genuine "can't remove the `any`" case: `data.ts`'s `CREATURE_DATA_FIELDS`
+setter table is a heterogeneous callback array (each entry's setter has its own
+specific value type). Neither `never` (breaks calling a retrieved setter with a
+real value - see `data.test.ts`) nor `unknown` (breaks assigning any of the
+individual narrower-typed setters into the table in the first place) works in
+both directions at once; `any` is the correct choice here, not a shortcut -
+documented inline with `eslint-disable-next-line` rather than fought.
+
+Two known-safe, well-documented `eslint-disable` patterns worth reusing rather
+than re-litigating if they recur:
+- `expect(mock).toHaveBeenCalled...` / `expect.any(X)` inside `.toEqual()` -
+  vitest types both as `any` in its own declarations; not fixable from the
+  call site.
+- `no-confusing-void-expression` on `expect(() => voidReturningCall()).toThrow()`
+  - wrap the arrow body in braces.
+
+npm run build and npm test (831/831) both clean. `npx eslint .` exits 0.
 
 ---
 
