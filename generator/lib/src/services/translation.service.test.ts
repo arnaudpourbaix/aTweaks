@@ -1,17 +1,21 @@
 import { describe, expect, it } from "vitest";
+import { TranslationKey } from "../../translations/i18n";
 import translationService from "./translation.service";
+
+interface TranslationServicePrivate {
+  fromStringRef(stringRef: number): string;
+}
+const service = translationService as unknown as TranslationServicePrivate;
 
 describe("stringRef", () => {
   it("throws when the key was never registered", () => {
-    expect(() => translationService.stringRef("not.a.real.key" as any)).toThrow(
+    expect(() => translationService.stringRef("not.a.real.key" as TranslationKey)).toThrow(
       /key not\.a\.real\.key not registered/,
     );
   });
 
   it("returns the registered stringRef for a known key", () => {
-    expect(translationService.stringRef("common.potion.use")).toBeTypeOf(
-      "number",
-    );
+    expect(translationService.stringRef("common.potion.use")).toBeTypeOf("number");
   });
 });
 
@@ -21,17 +25,13 @@ describe("fromOptional", () => {
   });
 
   it("resolves a real reference when provided", () => {
-    expect(translationService.fromOptional("common.potion.use")).toBe(
-      "*quaffs a potion*",
-    );
+    expect(translationService.fromOptional("common.potion.use")).toBe("*quaffs a potion*");
   });
 });
 
 describe("from (numeric stringRef)", () => {
   it("throws when the custom stringRef was never registered", () => {
-    expect(() => translationService.from(999999999)).toThrow(
-      /stringRef not found: 999999999/,
-    );
+    expect(() => translationService.from(999999999)).toThrow(/stringRef not found: 999999999/);
   });
 
   it("resolves a custom translation added via addCustomTranslation", () => {
@@ -41,7 +41,7 @@ describe("from (numeric stringRef)", () => {
 
   it("fromStringRef (private) defaults lang when called without one directly", () => {
     const stringRef = translationService.addCustomTranslation(["hi"]);
-    expect((translationService as any).fromStringRef(stringRef)).toBe("hi");
+    expect(service.fromStringRef(stringRef)).toBe("hi");
   });
 });
 
@@ -49,7 +49,7 @@ describe("interpolate", () => {
   it("throws when a provided var is undefined", () => {
     expect(() =>
       translationService.interpolate("common.potion.use", {
-        foo: undefined as any,
+        foo: undefined as unknown as string,
       }),
     ).toThrow(/Found undefined in key for var foo/);
   });

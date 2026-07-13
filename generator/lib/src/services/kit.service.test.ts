@@ -20,7 +20,7 @@ function fakeCreature(
     },
     behavior: { abilities: p.abilities ?? [] },
     setBehavior: vi.fn(),
-  } as any;
+  } as unknown as Creature;
 }
 
 function fakeBaseCreature(
@@ -39,7 +39,7 @@ function fakeBaseCreature(
       immunities: p.immunities,
       spells: { memorized: [], removeMemorized: p.removeMemorized },
     },
-  } as any;
+  } as unknown as BaseCreature;
 }
 
 function fakeAbility(
@@ -54,7 +54,7 @@ function fakeAbility(
     resource: p.resource ?? "SPWI001",
     count: p.count ?? (() => 1),
     ability: {
-      name: "ability.test" as any,
+      name: 12345,
       spell: p.hasSpell === false ? undefined : { resource: p.spellResource },
     },
   };
@@ -96,6 +96,8 @@ describe("applyKit", () => {
     // BerserkerRage count(level) = 1 + floor((level-1)/4)
     // adjustment (level 9) count=3, minus creature's own level (1) count=1 -> delta of 2
     expect(adjustment.data.spells.memorized).toEqual([
+      // expect.any() is typed `any` by vitest itself.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       { file: expect.any(String), memorizedCount: 2 },
     ]);
   });

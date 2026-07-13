@@ -59,11 +59,13 @@ class TranslationService extends AbstractCodeService {
   }
 
   private fromKey(path: TranslationKey, lang = LANG): string {
-    let value = getTranslationKeys(lang) as any;
-    for (let i = 0, p = path.split("."), len = p.length; i < len; i++) {
-      value = value[p[i]];
+    let value: unknown = getTranslationKeys(lang);
+    for (const segment of path.split(".")) {
+      value = (value as Record<string, unknown>)[segment];
     }
-    return value;
+    // path is a TranslationKey (Leaves<typeof _t> - every dot-path down to a string leaf), so the
+    // walk above always lands on a string.
+    return value as string;
   }
 
   // lang is accepted for signature symmetry with fromKey() (from() dispatches to either with the
@@ -81,7 +83,7 @@ class TranslationService extends AbstractCodeService {
     this.browseTranslations(translations, "");
   }
 
-  browseTranslations(obj: object, key: string) {
+  browseTranslations(obj: Record<string, unknown>, key: string) {
     for (const [k, v] of Object.entries(obj)) {
       const newKey = [key, k].filter((k) => !!k).join(".");
       if (typeof v === "string" && !v.includes("{{")) {
@@ -89,7 +91,9 @@ class TranslationService extends AbstractCodeService {
           key: newKey as TranslationKey,
           stringRef: this.availableStringRef++,
         });
-      } else if (typeof v !== "string") this.browseTranslations(v, newKey);
+      } else if (typeof v === "object" && v !== null) {
+        this.browseTranslations(v as Record<string, unknown>, newKey);
+      }
     }
   }
 
