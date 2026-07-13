@@ -1,3 +1,8 @@
+// Short expected-output/fixture strings recur because the same underlying formatting logic
+// (getStatisticText, translation fixtures, etc.) is deliberately re-exercised from multiple
+// entry points (direct calls and via getEffectDescription/getEffectsDescription wrappers) -
+// not copy-paste. Named constants wouldn't add clarity over the literal itself.
+/* eslint-disable sonarjs/no-duplicate-string */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CR } from "../../model/constants";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";

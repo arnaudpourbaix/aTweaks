@@ -154,8 +154,8 @@ All resolved:
   `"LOCALS" | "GLOBAL" | (string & {})` union (appeared identically in
   `Global`/`GlobalGT`/`GlobalLT`) into a `Triggers.GlobalScope` type alias.
 - `no-nested-template-literals` (1, `weidu-creature.service.ts`) -
-  `removeMemorizedSpell()`'s inner `.map((v) => \`~~${v}~~\`)`result now goes
-through a`names` local before the outer template literal.
+  `removeMemorizedSpell()`'s inner `.map((v) => \`~${v}~\`)` result now goes
+  through a `names` local before the outer template literal.
 - `no-small-switch` + `prefer-default-last` (2, `i18n.ts:21-22`) -
   **confirmed intentional** (user: this project ships English only, the
   `default: case "english":` switch is a placeholder for anyone who wants to
@@ -167,6 +167,64 @@ through a`names` local before the outer template literal.
   function.
 
 ---
+
+## ✅ 5. Stricter-than-`recommended` survey (62 rules `recommended` ships off)
+
+Follow-up requested after Tiers 1-4 above closed out `recommended` itself:
+surveyed every rule `sonarjs/recommended` disables by default, to see whether
+a stricter preset was worth adopting for this codebase specifically.
+
+Enabling all 62 at once surfaced 869 findings, dominated by a handful of
+rules that don't fit this project (see below) - so each rule got an
+individual on/off decision instead of a blanket adoption:
+
+**Turned on with real value found:**
+- `max-union-size` - not "your domain has too many variants" as it first
+  looked; the rule specifically exempts unions already extracted to a
+  `type X = ...` alias, so every hit was really "name this inline union" -
+  extracted 14 (`StatisticModifierOpcode`, `SpellCastType`, etc.).
+- `no-duplicate-string` - found real repeated domain constants worth naming
+  (`PETRIFYING_GAZE_NAME`, `ROTTING_DISEASE_NAME`, `PNP_MONSTER_DIR`, ...) and
+  several test-fixture values worth the same treatment; scoped-disabled only
+  where the "duplication" is either WeiDU trigger/action reference data
+  (`triggers.ts`/`actions.ts` - many entries legitimately share a
+  `parameters`/`section` value) or parallel test descriptions across
+  independent describe blocks (same shape as the Tier 4 `no-alphabetical-sort`
+  false positives).
+- `no-nested-incdec`, `prefer-immediate-return`, `no-unused-function-argument`,
+  `bool-param-default`, `no-tab`, `no-inconsistent-returns`,
+  `expression-complexity`, `nested-control-flow`, `no-collapsible-if`,
+  `file-name-differ-from-class`, `shorthand-property-grouping` - all real,
+  all fixed. Two `bool-param-default` hits were scoped-disabled instead:
+  `main.service.test.ts`'s `fakeCreature(valid)` and `weidu.utils.ts`'s
+  `getBooleanValue(value)` both use `undefined` as a genuine third state
+  (not "never validated" vs `false`/`true`, or "don't write this field at all"
+  vs `"0"`/`"1"`) - a default would silently change behavior, not just style.
+
+**Turned on via configuration instead of fighting the codebase:**
+- `arrow-function-convention` (311 raw hits → 1) - `requireParameterParentheses: true`
+  makes the rule agree with this project's own Prettier default (parens
+  always on single-param arrows) instead of contradicting it.
+- `no-reference-error` (29 raw hits → 0) - was false-positiving on `console`
+  and every other real Node global because the rule does its own scope
+  analysis independent of tsc's types; added `languageOptions.globals:
+  globals.node` (new `globals` devDependency).
+
+**Left off** (`eslint.config.mjs` has the per-rule reasoning inline):
+`no-undefined-assignment` (fights the TS-undefined/optional-property idiom
+used throughout the model), `file-header` (not a convention this project
+uses), `elseif-without-else` (would force empty `else {}` on dispatch-style
+chains), `no-wildcard-import` (conflicts with `import * as fs from "fs"`),
+`cyclomatic-complexity` (redundant with `cognitive-complexity`, which
+deliberately doesn't penalize flat dispatch switches the same way),
+`no-commented-code` (would relitigate `TODO_ROADMAP.md`'s already-tracked
+blocks), `max-lines`/`max-lines-per-function` (large creature-family
+files/functions are large because the domain is large).
+
+**Turned on with no findings** (kept as a zero-cost safety net): the
+remaining ~40 rules, mostly security-oriented checks with no web/cloud
+attack surface in this codebase (AWS IAM, web SQL, OS command injection,
+etc.) plus assorted style rules that happened not to fire here.
 
 ## Process
 

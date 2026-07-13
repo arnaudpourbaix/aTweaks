@@ -27,6 +27,7 @@ import { State } from "../state";
 // companions, lib/common/*.tp(a|h) helpers) that would be noise to copy.
 
 const MOD_ROOT = path.resolve(process.cwd(), "..");
+const PNP_MONSTER_DIR = "lib/pnp-monster";
 
 const FIXED_GENERATED_FILES = [
   "lib/common/spell-resources.tpa",
@@ -83,8 +84,8 @@ let tempDir: string;
 
 beforeAll(async () => {
   tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "atweaks-golden-"));
-  const pnpMonsterSrc = path.join(MOD_ROOT, "lib/pnp-monster");
-  copyRecursive(pnpMonsterSrc, path.join(tempDir, "lib/pnp-monster"));
+  const pnpMonsterSrc = path.join(MOD_ROOT, PNP_MONSTER_DIR);
+  copyRecursive(pnpMonsterSrc, path.join(tempDir, PNP_MONSTER_DIR));
 
   await stateService.init();
   State.modFolder = tempDir;
@@ -102,8 +103,8 @@ afterAll(() => {
 describe("full generator pipeline output", () => {
   it("regenerates lib/pnp-monster identically to what's on disk", () => {
     const result = diffTree(
-      path.join(MOD_ROOT, "lib/pnp-monster"),
-      path.join(tempDir, "lib/pnp-monster"),
+      path.join(MOD_ROOT, PNP_MONSTER_DIR),
+      path.join(tempDir, PNP_MONSTER_DIR),
     );
     expect(result).toEqual({ missing: [], unexpected: [], mismatched: [] });
   });

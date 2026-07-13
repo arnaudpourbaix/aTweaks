@@ -6,22 +6,26 @@ import bafFactory from "./baf.factory";
 import responseFactory from "./response.factory";
 import triggerFactory from "./trigger.factory";
 
+const GOODCUTOFF = "[GOODCUTOFF]";
+const EVILCUTOFF = "[EVILCUTOFF]";
+const ATTACK_NEAREST = "Attack nearest";
+
 describe("addStatementsFromTargetList", () => {
   it("emits one statement per target, resolving the trigger token to each target", () => {
     const statements: Statements = [];
     bafFactory.addStatementsFromTargetList({
       statements,
       triggers: [triggerFactory.range(30)],
-      targets: ["[GOODCUTOFF]", ScriptTarget.myself],
+      targets: [GOODCUTOFF, ScriptTarget.myself],
       responses: responseFactory.response([
         { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
       ]),
-      comment: "Attack nearest",
+      comment: ATTACK_NEAREST,
     });
 
     expect(statements).toHaveLength(2);
     expect(statements[0].triggers[0]).toMatchObject({
-      params: ["[GOODCUTOFF]", 30],
+      params: [GOODCUTOFF, 30],
     });
     expect(statements[1].triggers[0]).toMatchObject({
       params: [ScriptTarget.myself, 30],
@@ -33,12 +37,12 @@ describe("addStatementsFromTargetList", () => {
     bafFactory.addStatementsFromTargetList({
       statements,
       triggers: [triggerFactory.range(30)],
-      targets: ["[GOODCUTOFF]", "[EVILCUTOFF]"],
+      targets: [GOODCUTOFF, EVILCUTOFF],
       responses: responseFactory.response([]),
-      comment: "Attack nearest",
+      comment: ATTACK_NEAREST,
     });
 
-    expect(statements[0].comment).toBe("Attack nearest");
+    expect(statements[0].comment).toBe(ATTACK_NEAREST);
     expect(statements[1].comment).toBe("");
   });
 
@@ -47,7 +51,7 @@ describe("addStatementsFromTargetList", () => {
     bafFactory.addStatementsFromTargetList({
       statements,
       triggers: [triggerFactory.range(30)],
-      targets: ["[GOODCUTOFF]", ScriptTarget.myself],
+      targets: [GOODCUTOFF, ScriptTarget.myself],
       responses: responseFactory.response([
         { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
       ]),
@@ -66,16 +70,16 @@ describe("addStatementsFromTargetList", () => {
     bafFactory.addStatementsFromTargetList({
       statements,
       triggers: [triggerFactory.range(30)],
-      targets: ["[GOODCUTOFF]", "[EVILCUTOFF]"],
+      targets: [GOODCUTOFF, EVILCUTOFF],
       responses: responseFactory.response([]),
       reverse: true,
     });
 
     expect(statements[0].triggers[0]).toMatchObject({
-      params: ["[EVILCUTOFF]", 30],
+      params: [EVILCUTOFF, 30],
     });
     expect(statements[1].triggers[0]).toMatchObject({
-      params: ["[GOODCUTOFF]", 30],
+      params: [GOODCUTOFF, 30],
     });
   });
 });
@@ -85,7 +89,7 @@ describe("addOneBlockTargetList", () => {
     const statements: Statements = [];
     bafFactory.addOneBlockTargetList({
       statements,
-      targets: ["[GOODCUTOFF]", "[EVILCUTOFF]"],
+      targets: [GOODCUTOFF, EVILCUTOFF],
       targetTriggers: [triggerFactory.range(30)],
       responses: responseFactory.response([]),
       comment: "Attack held enemy",
@@ -95,11 +99,11 @@ describe("addOneBlockTargetList", () => {
     expect(statements[0].triggers).toEqual([
       {
         name: "Or",
-        triggers: [{ ...triggerFactory.range(30), params: ["[GOODCUTOFF]", 30], negation: true }],
+        triggers: [{ ...triggerFactory.range(30), params: [GOODCUTOFF, 30], negation: true }],
       },
       {
         name: "Or",
-        triggers: [{ ...triggerFactory.range(30), params: ["[EVILCUTOFF]", 30], negation: true }],
+        triggers: [{ ...triggerFactory.range(30), params: [EVILCUTOFF, 30], negation: true }],
       },
     ]);
   });
@@ -109,7 +113,7 @@ describe("addOneBlockTargetList", () => {
     const inBetween: Statements = [{ triggers: [], responses: responseFactory.response([]) }];
     bafFactory.addOneBlockTargetList({
       statements,
-      targets: ["[GOODCUTOFF]"],
+      targets: [GOODCUTOFF],
       targetTriggers: [],
       responses: responseFactory.response([]),
       inBetweenStatements: inBetween,
@@ -123,7 +127,7 @@ describe("addOneBlockTargetList", () => {
     const statements: Statements = [];
     bafFactory.addOneBlockTargetList({
       statements,
-      targets: ["[GOODCUTOFF]"],
+      targets: [GOODCUTOFF],
       targetTriggers: [],
       responses: responseFactory.response([]),
     });
@@ -135,7 +139,7 @@ describe("addOneBlockTargetList", () => {
     const statements: Statements = [];
     bafFactory.addOneBlockTargetList({
       statements,
-      targets: ["[GOODCUTOFF]"],
+      targets: [GOODCUTOFF],
       targetTriggers: [],
       responses: responseFactory.response([
         { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
@@ -152,17 +156,17 @@ describe("addOneBlockTargetList", () => {
     const statements: Statements = [];
     bafFactory.addOneBlockTargetList({
       statements,
-      targets: ["[GOODCUTOFF]", "[EVILCUTOFF]"],
+      targets: [GOODCUTOFF, EVILCUTOFF],
       targetTriggers: [triggerFactory.range(30)],
       responses: responseFactory.response([]),
       reverse: true,
     });
 
     expect(statements[0].triggers[0]).toMatchObject({
-      triggers: [{ params: ["[EVILCUTOFF]", 30] }],
+      triggers: [{ params: [EVILCUTOFF, 30] }],
     });
     expect(statements[0].triggers[1]).toMatchObject({
-      triggers: [{ params: ["[GOODCUTOFF]", 30] }],
+      triggers: [{ params: [GOODCUTOFF, 30] }],
     });
   });
 });

@@ -14,6 +14,9 @@ const service = abilityService as unknown as AbilityServicePrivate;
 
 const SPWI001 = "SPWI001" as SpellIdentifier;
 const SPWI002 = "SPWI002" as SpellIdentifier;
+// The real default name abilityService falls back to when none is given - reused across many
+// independent test cases below that don't set an explicit name.
+const DEFAULT_ABILITY_NAME = "ability.unknown";
 
 describe("getAbilities", () => {
   it("returns an empty array when abilities is undefined", () => {
@@ -23,7 +26,7 @@ describe("getAbilities", () => {
   it("fills in default flags and pulls actionsBefore/actionsAfter into actions", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         actionsBefore: [{ name: "SetGlobal", params: ["A", "LOCALS", 1] }],
         actionsAfter: [{ name: "SetGlobal", params: ["B", "LOCALS", 1] }],
       },
@@ -42,16 +45,14 @@ describe("getAbilities", () => {
   });
 
   it("defaults name to 'ability.unknown' when omitted", () => {
-    const [ability] = abilityService.getAbilities([
-      { actionsBefore: [], actionsAfter: [] },
-    ]);
-    expect(ability.name).toBe("ability.unknown");
+    const [ability] = abilityService.getAbilities([{ actionsBefore: [], actionsAfter: [] }]);
+    expect(ability.name).toBe(DEFAULT_ABILITY_NAME);
   });
 
   it("wraps a single non-array target into a one-element target list", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         targets: { name: "Players" } as unknown as RawCreatureAbility["targets"],
       },
     ]);
@@ -60,7 +61,7 @@ describe("getAbilities", () => {
 
   it("preserves explicit overrides instead of the defaults", () => {
     const [ability] = abilityService.getAbilities([
-      { name: "ability.unknown", requireVocal: true, disableInterrupt: true },
+      { name: DEFAULT_ABILITY_NAME, requireVocal: true, disableInterrupt: true },
     ]);
     expect(ability.requireVocal).toBe(true);
     expect(ability.disableInterrupt).toBe(true);
@@ -68,7 +69,7 @@ describe("getAbilities", () => {
 
   it("adds a RandomNumGT trigger when probability is below 100", () => {
     const [ability] = abilityService.getAbilities([
-      { name: "ability.unknown", probability: 50 },
+      { name: DEFAULT_ABILITY_NAME, probability: 50 },
     ]);
     expect(ability.triggers).toHaveLength(1);
     expect(ability.triggers[0].name).toBe("RandomNumGT");
@@ -76,19 +77,17 @@ describe("getAbilities", () => {
 
   it("does not add a probability trigger when probability is 100 or unset", () => {
     const [withHundred] = abilityService.getAbilities([
-      { name: "ability.unknown", probability: 100 },
+      { name: DEFAULT_ABILITY_NAME, probability: 100 },
     ]);
-    const [withNone] = abilityService.getAbilities([
-      { name: "ability.unknown" },
-    ]);
+    const [withNone] = abilityService.getAbilities([{ name: DEFAULT_ABILITY_NAME }]);
     expect(withHundred.triggers).toEqual([]);
     expect(withNone.triggers).toEqual([]);
   });
 
   it("assigns increasing RandomNumGT global ids across multiple probabilistic abilities", () => {
     const abilities = abilityService.getAbilities([
-      { name: "ability.unknown", probability: 50 },
-      { name: "ability.unknown", probability: 30 },
+      { name: DEFAULT_ABILITY_NAME, probability: 50 },
+      { name: DEFAULT_ABILITY_NAME, probability: 30 },
     ]);
     const [firstNum] = (abilities[0].triggers[0] as Triggers.RandomNumGT).params;
     const [secondNum] = (abilities[1].triggers[0] as Triggers.RandomNumGT).params;
@@ -100,20 +99,18 @@ describe("getAbilities - single spell", () => {
   it("builds a Spell action targeting LastSeenBy by default (selfTarget not set)", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: { id: SPWI001, memorizedSpellCheck: false },
       },
     ]);
     expect(ability.isSpell).toBe(true);
-    expect(ability.actions).toEqual([
-      { name: "Spell", params: ["LastSeenBy", "SPWI001"] },
-    ]);
+    expect(ability.actions).toEqual([{ name: "Spell", params: ["LastSeenBy", "SPWI001"] }]);
   });
 
   it("targets Myself when the spell has selfTarget set", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: {
           id: SPWI001,
           memorizedSpellCheck: false,
@@ -121,15 +118,13 @@ describe("getAbilities - single spell", () => {
         },
       },
     ]);
-    expect(ability.actions).toEqual([
-      { name: "Spell", params: ["Myself", "SPWI001"] },
-    ]);
+    expect(ability.actions).toEqual([{ name: "Spell", params: ["Myself", "SPWI001"] }]);
   });
 
   it("targets LastSeenBy when the ability has targets and requires a memorized-spell check", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         targets: [{ name: "Players" }],
         spell: { id: SPWI001 },
       },
@@ -138,23 +133,19 @@ describe("getAbilities - single spell", () => {
       name: "HaveSpell",
       params: ["SPWI001"],
     });
-    expect(ability.actions).toEqual([
-      { name: "Spell", params: ["LastSeenBy", "SPWI001"] },
-    ]);
+    expect(ability.actions).toEqual([{ name: "Spell", params: ["LastSeenBy", "SPWI001"] }]);
   });
 
   it("throws when a spell has neither an id nor a resource", () => {
-    expect(() =>
-      abilityService.getAbilities([
-        { name: "ability.unknown", spell: {} },
-      ]),
-    ).toThrow(/No spell specified for ability ability.unknown/);
+    expect(() => abilityService.getAbilities([{ name: DEFAULT_ABILITY_NAME, spell: {} }])).toThrow(
+      /No spell specified for ability ability.unknown/,
+    );
   });
 
   it("marks infiniteUse true for non-normal spell types that aren't removed", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: { id: SPWI001, type: "force" },
       },
     ]);
@@ -164,7 +155,7 @@ describe("getAbilities - single spell", () => {
   it("casts at the spell's explicit targetName instead of the default LastSeenBy/Myself target", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: { id: SPWI001, type: "force", targetName: "RR#TRAT" },
       },
     ]);
@@ -177,7 +168,7 @@ describe("getAbilities - single spell", () => {
   it("casts a reallyForce-type spell by id via ReallyForceSpell", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: { id: SPWI001, type: "reallyForce" },
       },
     ]);
@@ -190,7 +181,7 @@ describe("getAbilities - single spell", () => {
   it("emits a RemoveSpell action when a non-normal spell is marked remove", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: { id: SPWI001, type: "force", remove: true },
       },
     ]);
@@ -203,7 +194,7 @@ describe("getAbilities - single spell", () => {
   it("adds negated exclude-state/stat/spellstate checks as triggers", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: {
           id: SPWI001,
           memorizedSpellCheck: false,
@@ -225,7 +216,7 @@ describe("getAbilities - multi-spell (spells array)", () => {
   it("marks isSpell true and emits one Spell action per spell", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spells: [
           { id: SPWI001, type: "normal" },
           { id: SPWI002, type: "normal" },
@@ -244,7 +235,7 @@ describe("getAbilities - multi-spell (spells array)", () => {
     expect(() =>
       abilityService.getAbilities([
         {
-          name: "ability.unknown",
+          name: DEFAULT_ABILITY_NAME,
           spells: [
             { id: SPWI001, selfTarget: true },
             { id: SPWI002, selfTarget: false },
@@ -257,7 +248,7 @@ describe("getAbilities - multi-spell (spells array)", () => {
   it("casts an individual spell at its explicit targetName instead of the default target", () => {
     const [ability] = abilityService.getAbilities([
       {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spells: [{ id: SPWI001, type: "normal", targetName: "RR#TRAT" }],
       } as unknown as RawCreatureAbility,
     ]);
@@ -271,7 +262,7 @@ describe("getAbilities - multi-spell (spells array)", () => {
     expect(() =>
       abilityService.getAbilities([
         {
-          name: "ability.unknown",
+          name: DEFAULT_ABILITY_NAME,
           spells: [{ id: SPWI001 }],
         } as unknown as RawCreatureAbility,
       ]),
@@ -321,7 +312,7 @@ describe("getAbilities - preset id/resource conflict resolution (applyPreset)", 
   it("drops the preset's spell.resource when the override supplies spell.id (mirror of the resource-drops-id case; no real preset currently sets spell.resource)", () => {
     ABILITY_PRESETS.push({
       preset: "JA#TEST_RESOURCE_PRESET",
-      ability: { name: "ability.unknown", spell: { resource: "MISC7F" } },
+      ability: { name: DEFAULT_ABILITY_NAME, spell: { resource: "MISC7F" } },
     });
     try {
       const [ability] = abilityService.getAbilities([
@@ -336,9 +327,7 @@ describe("getAbilities - preset id/resource conflict resolution (applyPreset)", 
         params: expect.arrayContaining(["SPWI001"]),
       });
       expect(
-        ability.actions.some(
-          (a) => "params" in a && (a.params as unknown[]).includes("MISC7F"),
-        ),
+        ability.actions.some((a) => "params" in a && (a.params as unknown[]).includes("MISC7F")),
       ).toBe(false);
     } finally {
       ABILITY_PRESETS.pop();
@@ -367,9 +356,9 @@ describe("getMinorSequencer / getSequencer", () => {
   it("throws when a preset resolves without a spell (documented guard; no real preset currently triggers this)", () => {
     const spy = vi.spyOn(service, "applyPreset").mockReturnValueOnce({});
     try {
-      expect(() =>
-        abilityService.getMinorSequencer(["x", "y"] as [string, string]),
-      ).toThrow(/Sequencer only supports spells/);
+      expect(() => abilityService.getMinorSequencer(["x", "y"] as [string, string])).toThrow(
+        /Sequencer only supports spells/,
+      );
     } finally {
       spy.mockRestore();
     }
@@ -379,14 +368,14 @@ describe("getMinorSequencer / getSequencer", () => {
     ABILITY_PRESETS.push({
       preset: "JA#TEST_ARRAY_SPELL_PRESET",
       ability: {
-        name: "ability.unknown",
+        name: DEFAULT_ABILITY_NAME,
         spell: [] as unknown as RawCreatureAbility["spell"],
       },
     });
     try {
-      expect(() =>
-        abilityService.getAbilities([{ preset: "JA#TEST_ARRAY_SPELL_PRESET" }]),
-      ).toThrow(/Preset don't support spell arrays/);
+      expect(() => abilityService.getAbilities([{ preset: "JA#TEST_ARRAY_SPELL_PRESET" }])).toThrow(
+        /Preset don't support spell arrays/,
+      );
     } finally {
       ABILITY_PRESETS.pop();
     }
@@ -403,11 +392,11 @@ describe("getCustomCodes", () => {
       {
         location: "attack",
         type: "insertBefore",
-        abilities: [{ name: "ability.unknown" }],
+        abilities: [{ name: DEFAULT_ABILITY_NAME }],
       },
     ]);
     expect(customCode.statements).toEqual([]);
     expect(customCode.abilities).toHaveLength(1);
-    expect(customCode.abilities[0].name).toBe("ability.unknown");
+    expect(customCode.abilities[0].name).toBe(DEFAULT_ABILITY_NAME);
   });
 });

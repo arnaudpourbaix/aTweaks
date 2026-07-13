@@ -1,11 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { EquippedItem, ItemSlot } from "../model/creature/item";
 import { ItemAbilityTypeEnum } from "../model/spell-item/effect.enums";
-import { Item } from "../model/spell-item/spell-item";
+import { Item, ItemHeader } from "../model/spell-item/spell-item";
 import itemService from "./item.service";
 
 function fakeEquippedItem(slot: EquippedItem["slot"]): EquippedItem {
   return { file: "wpn01", slot };
+}
+
+function assertHeader(item: Item): asserts item is Item & { header: ItemHeader } {
+  if (!item.header) throw new Error("expected header to be set");
 }
 
 describe("isEquippedWeapon", () => {
@@ -62,7 +66,7 @@ describe("setHeader", () => {
   it("defaults location/target/damageType when copyFrom is unset", () => {
     const item = fakeItem();
     itemService.setHeader(item, { type: ItemAbilityTypeEnum.Melee }, "itm01");
-    if (!item.header) throw new Error("expected header to be set");
+    assertHeader(item);
     expect(item.header.location).toBeDefined();
     expect(item.header.target).toBeDefined();
     expect(item.header.damageType).toBeDefined();
@@ -72,7 +76,7 @@ describe("setHeader", () => {
     const item = fakeItem();
     item.copyFrom = "ITM01";
     itemService.setHeader(item, { type: ItemAbilityTypeEnum.Melee }, "itm01");
-    if (!item.header) throw new Error("expected header to be set");
+    assertHeader(item);
     expect(item.header.location).toBeUndefined();
     expect(item.header.target).toBeUndefined();
     expect(item.header.damageType).toBeUndefined();
@@ -89,7 +93,7 @@ describe("setHeader", () => {
       "itm01",
     );
     expect(item.projectiles).toHaveLength(1);
-    if (!item.header) throw new Error("expected header to be set");
+    assertHeader(item);
     expect(item.header.projectile).toBe("itm01");
   });
 

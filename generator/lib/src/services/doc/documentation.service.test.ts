@@ -1,3 +1,7 @@
+// Template placeholder/fixture strings ("{{special}}", "{{traits}}", the test immunity's
+// stringRef) recur because many independent test cases exercise the same template-replace
+// contract on different inputs - not copy-paste.
+/* eslint-disable sonarjs/no-duplicate-string */
 import { afterEach, describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { Creature } from "../../model/creature/creature";

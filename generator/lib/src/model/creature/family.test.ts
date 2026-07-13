@@ -38,6 +38,9 @@ describe("sequencer", () => {
 });
 
 describe("item (override, family-wide fallback)", () => {
+  // Same descriptions reused across item/spell/projectile describe blocks below for analogous
+  // family-wide-fallback behavior - a shared constant would hurt searchability in test output.
+  // eslint-disable-next-line sonarjs/no-duplicate-string
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
     const cre = new Creature(1);
@@ -47,6 +50,7 @@ describe("item (override, family-wide fallback)", () => {
     expect(family.item(7)).toBe(item);
   });
 
+  // eslint-disable-next-line sonarjs/no-duplicate-string
   it("re-throws the original error when not found anywhere in the family", () => {
     const family = fakeFamily();
     expect(() => family.item(99)).toThrow(/No item found with id 99/);

@@ -64,30 +64,36 @@ export default tseslint.config(
       // errors - most need game/mod domain knowledge to triage, not a mechanical fix.
       "sonarjs/todo-tag": "off",
       "sonarjs/fixme-tag": "off",
-      // Survey pass (see SONARJS_ROADMAP.md Tier 5): temporarily turning on every rule that
-      // `sonarjs/recommended` ships disabled, to see what a stricter preset actually surfaces
-      // in this codebase before deciding which of these are worth keeping.
+
+      // --- Everything below is `sonarjs/recommended`'s own disabled-by-default rules, reviewed
+      // and turned on deliberately (see SONARJS_ROADMAP.md Tier 5 for the full audit). ---
+
       // requireParameterParentheses matches this project's Prettier default (parens always on
       // single-param arrows) instead of fighting it; requireBodyBraces left at its default
       // (false) to also catch simplifiable `() => { return x; }` bodies.
       "sonarjs/arrow-function-convention": ["error", { requireParameterParentheses: true }],
-      "sonarjs/max-union-size": "error",
-      "sonarjs/no-reference-error": "error",
-      "sonarjs/function-name": "error",
+
+      // The rest of the newly-enabled rules, roughly grouped by what they actually caught this
+      // session (most below found nothing yet - kept on as a safety net for future code):
+      "sonarjs/max-union-size": "error", // caught 14 inline unions that should've been named type aliases
+      "sonarjs/no-duplicate-string": "error", // caught real repeated domain/fixture strings worth naming
+      "sonarjs/no-nested-incdec": "error", // caught increment/decrement hidden inside larger expressions
+      "sonarjs/prefer-immediate-return": "error",
+      "sonarjs/bool-param-default": "error",
+      "sonarjs/no-unused-function-argument": "error",
       "sonarjs/no-tab": "error",
+      "sonarjs/no-inconsistent-returns": "error",
+      "sonarjs/expression-complexity": "error",
+      "sonarjs/nested-control-flow": "error",
+      "sonarjs/no-collapsible-if": "error",
+      "sonarjs/file-name-differ-from-class": "error",
+      "sonarjs/function-name": "error",
       "sonarjs/variable-name": "error",
       "sonarjs/comment-regex": "error",
-      "sonarjs/nested-control-flow": "error",
       "sonarjs/too-many-break-or-continue-in-loop": "error",
-      "sonarjs/no-nested-incdec": "error",
-      "sonarjs/no-collapsible-if": "error",
-      "sonarjs/expression-complexity": "error",
       "sonarjs/no-redundant-parentheses": "error",
       "sonarjs/useless-string-operation": "error",
-      "sonarjs/no-unused-function-argument": "error",
-      "sonarjs/no-duplicate-string": "error",
       "sonarjs/no-sonar-comments": "error",
-      "sonarjs/prefer-immediate-return": "error",
       "sonarjs/no-variable-usage-before-declaration": "error",
       "sonarjs/array-constructor": "error",
       "sonarjs/no-function-declaration-in-block": "error",
@@ -95,11 +101,9 @@ export default tseslint.config(
       "sonarjs/no-nested-switch": "error",
       "sonarjs/no-built-in-override": "error",
       "sonarjs/prefer-object-literal": "error",
-      "sonarjs/web-sql-database": "error",
       "sonarjs/strings-comparison": "error",
-      "sonarjs/file-name-differ-from-class": "error",
       "sonarjs/no-incorrect-string-concat": "error",
-      "sonarjs/shorthand-property-grouping": "error",
+      "sonarjs/shorthand-property-grouping": "error", // caught 44 hits, all fixed
       "sonarjs/arguments-usage": "error",
       "sonarjs/destructuring-assignment-syntax": "error",
       "sonarjs/class-prototype": "error",
@@ -108,13 +112,14 @@ export default tseslint.config(
       "sonarjs/values-not-convertible-to-numbers": "error",
       "sonarjs/non-number-in-arithmetic-expression": "error",
       "sonarjs/declarations-in-global-scope": "error",
-      "sonarjs/no-inconsistent-returns": "error",
       "sonarjs/conditional-indentation": "error",
       "sonarjs/no-for-in-iterable": "error",
       "sonarjs/no-return-type-any": "error",
       "sonarjs/no-implicit-dependencies": "error",
+      // Security-oriented rules with no findings in this codebase (no web app, no cloud infra),
+      // kept on as a zero-cost safety net rather than matched to upstream's disabled default.
+      "sonarjs/no-reference-error": "error", // needs languageOptions.globals below to avoid false positives on real Node globals
       "sonarjs/os-command": "error",
-      "sonarjs/bool-param-default": "error",
       "sonarjs/no-unsafe-unzip": "error",
       "sonarjs/no-intrusive-permissions": "error",
       "sonarjs/hidden-files": "error",
@@ -124,6 +129,8 @@ export default tseslint.config(
       "sonarjs/no-ip-forward": "error",
       "sonarjs/unicode-aware-regex": "error",
       "sonarjs/aws-iam-all-resources-accessible": "error",
+      "sonarjs/web-sql-database": "error",
+
       // Decided off after review (see SONARJS_ROADMAP.md Tier 5): each either fights an
       // established project convention, misfires in this environment, or duplicates ground
       // already covered by another rule/roadmap.

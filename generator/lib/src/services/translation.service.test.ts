@@ -7,6 +7,9 @@ interface TranslationServicePrivate {
 }
 const service = translationService as unknown as TranslationServicePrivate;
 
+// A real, registered translation key reused as test fixture data below.
+const POTION_USE_KEY: TranslationKey = "common.potion.use";
+
 describe("stringRef", () => {
   it("throws when the key was never registered", () => {
     expect(() => translationService.stringRef("not.a.real.key" as TranslationKey)).toThrow(
@@ -15,7 +18,7 @@ describe("stringRef", () => {
   });
 
   it("returns the registered stringRef for a known key", () => {
-    expect(translationService.stringRef("common.potion.use")).toBeTypeOf("number");
+    expect(translationService.stringRef(POTION_USE_KEY)).toBeTypeOf("number");
   });
 });
 
@@ -25,7 +28,7 @@ describe("fromOptional", () => {
   });
 
   it("resolves a real reference when provided", () => {
-    expect(translationService.fromOptional("common.potion.use")).toBe("*quaffs a potion*");
+    expect(translationService.fromOptional(POTION_USE_KEY)).toBe("*quaffs a potion*");
   });
 });
 
@@ -48,7 +51,7 @@ describe("from (numeric stringRef)", () => {
 describe("interpolate", () => {
   it("throws when a provided var is undefined", () => {
     expect(() =>
-      translationService.interpolate("common.potion.use", {
+      translationService.interpolate(POTION_USE_KEY, {
         foo: undefined as unknown as string,
       }),
     ).toThrow(/Found undefined in key for var foo/);

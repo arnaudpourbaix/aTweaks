@@ -8,6 +8,8 @@ interface StateServicePrivate {
 
 const service = stateService as unknown as StateServicePrivate;
 
+const REEVALUATION_PERIOD_PARAM = "I:ReevaluationPeriod*";
+
 describe("buildParameters (private)", () => {
   it("returns an empty array for an empty parameter string", () => {
     expect(service.buildParameters("")).toEqual([]);
@@ -20,9 +22,9 @@ describe("buildParameters (private)", () => {
   });
 
   it("parses a single integer parameter (I: prefix)", () => {
-    expect(service.buildParameters("I:ReevaluationPeriod*")).toEqual([
+    expect(service.buildParameters(REEVALUATION_PERIOD_PARAM)).toEqual([
       {
-        raw: "I:ReevaluationPeriod*",
+        raw: REEVALUATION_PERIOD_PARAM,
         name: "ReevaluationPeriod",
         isNumber: true,
         isObject: false,
@@ -57,7 +59,7 @@ describe("buildParameters (private)", () => {
     expect(service.buildParameters("O:Target*,I:ReevaluationPeriod*")).toEqual([
       { raw: "O:Target*", name: "Target", isNumber: false, isObject: true },
       {
-        raw: "I:ReevaluationPeriod*",
+        raw: REEVALUATION_PERIOD_PARAM,
         name: "ReevaluationPeriod",
         isNumber: true,
         isObject: false,
