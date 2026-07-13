@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  SpellProtectionEa,
   SpellProtectionRelation,
   SpellProtectionStat,
 } from "../../model/spell-item/spell-protection";
@@ -16,6 +17,7 @@ import {
   EffectStatisticModifierEnum,
   EffectTargetEnum,
   EffectTimingEnum,
+  ProficiencyTypeEnum,
 } from "../../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import effectService from "./effect.service";
@@ -140,15 +142,15 @@ describe("getEffect", () => {
     it("resolves an object-type protection to its EXISTING_SPELL_PROTECTIONS index", () => {
       // EXISTING_SPELL_PROTECTIONS stores each protection's already-resolved raw numeric value
       // (see lib/config/spell-protection.ts), not the friendly AllegianceIdentifier string the
-      // SpellProtectionEa type expects for authoring config - `as any` matches that raw index
-      // directly, same as the effect.service.ts matching logic does at runtime.
+      // SpellProtectionEa type expects for authoring config - the cast below matches that raw
+      // index directly, same as the effect.service.ts matching logic does at runtime.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 0,
           relation: SpellProtectionRelation.GreaterOrEqual,
-        } as any,
+        } as unknown as SpellProtectionEa,
         value: 5,
       };
       effectService.getEffect(effect);
@@ -157,14 +159,14 @@ describe("getEffect", () => {
     });
 
     it("builds an IDS_OF_SYMBOL lookup for a string value against an object-type protection", () => {
-      // see the "as any" note in the previous test.
+      // see the cast note in the previous test.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 0,
           relation: SpellProtectionRelation.GreaterOrEqual,
-        } as any,
+        } as unknown as SpellProtectionEa,
         value: "SOME_TEXT",
       };
       effectService.getEffect(effect);
@@ -173,14 +175,14 @@ describe("getEffect", () => {
     });
 
     it("throws when no entry in EXISTING_SPELL_PROTECTIONS matches the object type", () => {
-      // see the "as any" note two tests up.
+      // see the cast note two tests up.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 12345,
           relation: SpellProtectionRelation.Equal,
-        } as any,
+        } as unknown as SpellProtectionEa,
       };
       expect(() => effectService.getEffect(effect)).toThrow(/Unknown spell protection/);
     });
@@ -331,7 +333,9 @@ describe("getEffect", () => {
     const effect: Effect = {
       opcode: EffectTypeEnum.ProficiencyModifier,
       amount: 2,
-      type: 1 as any,
+      // deliberately not a real ProficiencyTypeEnum member - only the raw numeric passthrough
+      // into parameter2 is under test here.
+      type: 1 as unknown as ProficiencyTypeEnum,
     };
     effectService.getEffect(effect);
     expect(effect.parameter1).toBe("2");

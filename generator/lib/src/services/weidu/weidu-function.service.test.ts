@@ -3,8 +3,14 @@ import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { PortraitIconEnum } from "../../model/spell-item/effect.enums";
-import { SpellProtectionRelation } from "../../model/spell-item/spell-protection";
+import { SpellGroup } from "../../model/spell-item/spell-group";
+import { SpellProtection, SpellProtectionRelation } from "../../model/spell-item/spell-protection";
 import weiduFunctionService from "./weidu-function.service";
+
+interface WeiduFunctionServicePrivate {
+  generateSpellResource(lines: CodeLine[], group: SpellGroup, tab: number): void;
+}
+const service = weiduFunctionService as unknown as WeiduFunctionServicePrivate;
 
 function fakeImmunity(overrides: Partial<ImmunityConfig> = {}): ImmunityConfig {
   return {
@@ -62,18 +68,18 @@ describe("callImmunityFunction", () => {
 
 describe("generateProtectionSpells", () => {
   it("defaults value to -1 when sp.value is undefined (documented behavior; no real config entry omits it)", () => {
-    (SPELL_PROTECTIONS as any).push({
+    SPELL_PROTECTIONS.push({
       name: "TEST_NO_VALUE",
       stat: "0x0",
       value: undefined,
       relation: SpellProtectionRelation.Equal,
-    });
+    } as unknown as SpellProtection);
     try {
       const lines: CodeLine[] = [];
       weiduFunctionService.generateProtectionSpells(lines);
       expect(lines.some((l) => l.code.includes("value=-1"))).toBe(true);
     } finally {
-      (SPELL_PROTECTIONS as any).pop();
+      SPELL_PROTECTIONS.pop();
     }
   });
 });
@@ -81,13 +87,11 @@ describe("generateProtectionSpells", () => {
 describe("generateSpellResource (private)", () => {
   it("defaults spells to an empty array when group.spells is unset", () => {
     const lines: CodeLine[] = [];
-    (weiduFunctionService as any).generateSpellResource(
+    service.generateSpellResource(
       lines,
-      { name: "acidSpells" as any, spells: undefined, idsSpells: undefined },
+      { name: "acidSpells", spells: undefined, idsSpells: undefined },
       0,
     );
-    expect(lines.some((l) => l.code.includes("ACTION_DEFINE_ARRAY spells"))).toBe(
-      true,
-    );
+    expect(lines.some((l) => l.code.includes("ACTION_DEFINE_ARRAY spells"))).toBe(true);
   });
 });
