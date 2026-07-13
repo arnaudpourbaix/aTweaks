@@ -20,8 +20,10 @@ export class Movement {
     return result;
   }
 
+  // pnpValue is a required constructor param, so this is always true - kept for API symmetry
+  // with hasItem().
   hasValue() {
-    return this.pnpValue !== undefined;
+    return true;
   }
 
   hasItem(): this is Movement & { itemFile: string } {

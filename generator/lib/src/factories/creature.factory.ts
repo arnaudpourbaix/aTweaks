@@ -1,15 +1,12 @@
 import figureSet from "figures";
 import { MonsterEnum, MonsterFamilyEnum } from "../../creatures/monster";
-import {
-  CreatureAdjustment,
-  PartialCreatureAdjustment,
-} from "../model/creature/adjustment";
+import { CreatureAdjustment, PartialCreatureAdjustment } from "../model/creature/adjustment";
 import {
   BEHAVIOR_DEFAULT,
   CreatureBehavior,
   PartialCreatureBehavior,
 } from "../model/creature/behavior";
-import { BaseCreature, Creature } from "../model/creature/creature";
+import { Creature } from "../model/creature/creature";
 import {
   CREATURE_DATA_FIELDS,
   CreatureData,
@@ -52,12 +49,8 @@ class CreatureFactory {
       if (field.setter && input[field.key] !== undefined) {
         field.setter(data, input[field.key]);
       }
-      if (
-        !field.setter &&
-        field.key in input &&
-        input[field.key] !== undefined
-      ) {
-        (data as any)[field.key] = input[field.key];
+      if (!field.setter && field.key in input && input[field.key] !== undefined) {
+        (data as unknown as Record<string, unknown>)[field.key] = input[field.key];
       }
     }
     return data;
@@ -94,14 +87,20 @@ class CreatureFactory {
   equipItem(cre: Creature, item: Item, slot?: ItemSlot[]): void {
     this.checkValidation(cre);
     slot ??= item.equippedSlot;
-    if (!slot) throw new Error(`No slot defined for ${item.stringRef}`);
+    // equippedSlot is required by Item, but defended anyway - see creature.factory.test.ts's
+    // "throws when no slot is given and the item has no equippedSlot either".
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!slot) throw new Error(`No slot defined for ${item.stringRef ?? "unknown"}`);
     const equippedItem = cre.data.items.equipped.find(
       (e) => slot.length === 1 && e.slot[0] === slot[0],
     );
     const duplicate = cre.items.find((i) => i.file === equippedItem?.file);
     if (equippedItem && duplicate) {
+      const equippedItemSlot = Array.isArray(equippedItem.slot)
+        ? equippedItem.slot.join(",")
+        : equippedItem.slot;
       console.log(
-        `${figureSet.warning} Slot ${equippedItem.slot} is already attributed to ${duplicate.stringRef}.`,
+        `${figureSet.warning} Slot ${equippedItemSlot} is already attributed to ${duplicate.stringRef ?? "unknown"}.`,
       );
     }
     cre.data.items.equipped.push({
@@ -112,20 +111,21 @@ class CreatureFactory {
 
   setBehavior(cre: Creature, behavior: PartialCreatureBehavior) {
     this.checkValidation(cre);
-    const current: CreatureBehavior =
-      cre.behavior ?? structuredClone(BEHAVIOR_DEFAULT);
-    const { abilities, customCodes, additionalCodes, dialog, ...others } =
-      behavior;
+    // behavior is a definite-assignment field (always set by the time a Creature is used), but
+    // this is the method that does that first assignment - cre.behavior is genuinely undefined
+    // here on a creature that hasn't had setBehavior called yet.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const current: CreatureBehavior = cre.behavior ?? structuredClone(BEHAVIOR_DEFAULT);
+    // these four fields are pulled out only to exclude them from the `...others` spread below
+    // (each is merged in separately via its own push()); the destructured names go unused.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { abilities, customCodes, additionalCodes, dialog, ...others } = behavior;
     cre.behavior = {
       ...current,
       ...others,
     };
-    cre.behavior.abilities.push(
-      ...abilityService.getAbilities(behavior.abilities),
-    );
-    cre.behavior.customCodes.push(
-      ...abilityService.getCustomCodes(behavior.customCodes),
-    );
+    cre.behavior.abilities.push(...abilityService.getAbilities(behavior.abilities));
+    cre.behavior.customCodes.push(...abilityService.getCustomCodes(behavior.customCodes));
     cre.behavior.additionalCodes.push(...(behavior.additionalCodes ?? []));
     cre.behavior.dialog.push(...(behavior.dialog ?? []));
   }
@@ -133,9 +133,7 @@ class CreatureFactory {
   checkValidation(creature: Creature) {
     if (creature.valid !== undefined)
       throw new Error(
-        `Creature ${translationService.from(
-          creature.name,
-        )} has already been validated`,
+        `Creature ${translationService.from(creature.name)} has already been validated`,
       );
   }
 
@@ -145,9 +143,7 @@ class CreatureFactory {
       throw new Error(`Monster '${MonsterEnum[creature.id]}' already declared`);
     }
     if (creature.family !== family) {
-      console.log(
-        `${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`,
-      );
+      console.log(`${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`);
       valid = false;
     }
     if (!creature.files.length) {
@@ -161,16 +157,18 @@ class CreatureFactory {
       console.log(
         `${
           figureSet.warning
-        } Those files are already declared in other creatures: ${existingFiles.join(
-          ", ",
-        )}`,
+        } Those files are already declared in other creatures: ${existingFiles.join(", ")}`,
       );
       valid = false;
     }
+    // attack/behavior are definite-assignment fields, but validate() is the fallback for a
+    // creature that never explicitly called setAttack()/setBehavior() - genuinely unset here.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.attack) {
       console.log(`${figureSet.warning} No attack defined, using defaults`);
       creature.setAttack({});
     }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.behavior) {
       console.log(`${figureSet.warning} No behavior defined, using defaults`);
       this.setBehavior(creature, {});

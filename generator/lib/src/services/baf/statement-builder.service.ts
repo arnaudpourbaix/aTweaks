@@ -73,6 +73,11 @@ class StatementService {
     options: BuilderOptions,
   ) {
     const custom = creature.behavior.customCodes.find((c) => c.location === location);
+    // statements/abilities are required by CustomCode, and always filled in by
+    // abilityService.getCustomCodes() in the real config-loading path - but defended anyway,
+    // see statement-builder.service.test.ts's "defaults ... when omitted" tests, which call
+    // execute() directly with a custom code that skips that normalization.
+    /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     if (custom && custom.type === "insertBefore") {
       this.processStatements(statements, custom.statements ?? []);
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
@@ -86,6 +91,7 @@ class StatementService {
       this.processStatements(statements, custom.statements ?? []);
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
+    /* eslint-enable @typescript-eslint/no-unnecessary-condition */
   }
 
   private processStatements(statements: Statements, newStatements: Statements) {

@@ -1,10 +1,6 @@
 import chalk from "chalk";
 import figureSet from "figures";
-import {
-  BaseCreature,
-  Creature,
-  CreatureAutoGenerate,
-} from "../model/creature/creature";
+import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
 import { AttackPerRoundTable } from "../model/game-data/attack-per-round";
 import { DexterityTable } from "../model/game-data/dexterity";
@@ -34,11 +30,7 @@ class CreatureService {
     }
   }
 
-  checkData(p: {
-    creature: Creature;
-    base: BaseCreature;
-    isAdjustment: boolean;
-  }): void {
+  checkData(p: { creature: Creature; base: BaseCreature; isAdjustment: boolean }): void {
     const data = p.base.data;
     console.log(p.base.files);
     kitService.applyKit(p.creature, p.isAdjustment ? p.base : undefined);
@@ -83,14 +75,11 @@ class CreatureService {
     const item = StrengthTable.find((t) => {
       const checkStr = t.str === data.strength;
       const checkStrEx =
-        t.strEx === undefined ||
-        (exStrength >= t.strEx[0] && exStrength <= t.strEx[1]);
+        t.strEx === undefined || (exStrength >= t.strEx[0] && exStrength <= t.strEx[1]);
       return checkStr && checkStrEx;
     });
     if (!item) {
-      throw new Error(
-        `strength not found in table: ${data.strength}/${exStrength}`,
-      );
+      throw new Error(`strength not found in table: ${data.strength}/${exStrength}`);
     }
     return item;
   }
@@ -113,14 +102,10 @@ class CreatureService {
     }
     if (!p.creature.attack.dualWielding || p.isAdjustment) return;
     if (!p.data.apr) {
-      throw new Error(
-        "Attacks per round need to be set for dual wielding flag",
-      );
+      throw new Error("Attacks per round need to be set for dual wielding flag");
     }
     p.data.apr -= 1;
-    console.log(
-      `${figureSet.arrowRight} setting dual wield: ${p.data.apr} APR +1 offhand`,
-    );
+    console.log(`${figureSet.arrowRight} setting dual wield: ${p.data.apr} APR +1 offhand`);
   }
 
   private hasOffhandWeapon(creature: Creature): boolean {
@@ -131,20 +116,15 @@ class CreatureService {
     return item?.header?.location === ItemAbilityLocationEnum.Weapon;
   }
 
-  private checkMovement(p: {
-    creature: Creature;
-    base: BaseCreature;
-    isAdjustment: boolean;
-  }) {
+  private checkMovement(p: { creature: Creature; base: BaseCreature; isAdjustment: boolean }) {
     const data = p.base.data;
-    if (!data.movement && !p.isAdjustment)
-      throw new Error("movement not set !");
+    if (!data.movement && !p.isAdjustment) throw new Error("movement not set !");
     const movement = data.movement ?? p.creature.data.movement;
-    if (data.kit === "BARBARIAN" && movement) {
+    if (data.kit === "BARBARIAN") {
       data.movement = movement.clone();
       data.movement.bonus += 2;
       console.log(
-        `${figureSet.arrowRight} movement increased to ${data.movement} (barbarian): `,
+        `${figureSet.arrowRight} movement increased to ${data.movement.getGameValue()} (barbarian): `,
       );
     }
   }
@@ -192,19 +172,13 @@ class CreatureService {
     if (value) p.data.hp = value;
   }
 
-  private autogenerateThac0(
-    data: Partial<CreatureData>,
-    parent?: CreatureData,
-  ) {
+  private autogenerateThac0(data: Partial<CreatureData>, parent?: CreatureData) {
     let level = data.level1?.pnpValue;
-    if (!level && !parent)
-      throw new Error(`Can't generate thac0 because level1 is unknown`);
+    if (!level && !parent) throw new Error(`Can't generate thac0 because level1 is unknown`);
     else if (!level) return;
     if (!!data.bonusHp && data.bonusHp >= 3) {
       level++;
-      console.log(
-        `${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`,
-      );
+      console.log(`${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`);
     }
     const item = Thac0Table.find((t) => t.level === level);
     if (!item) {
@@ -213,7 +187,7 @@ class CreatureService {
     if (data.thac0 !== undefined)
       console.log(
         chalk.yellowBright(
-          `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
+          `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
         ),
       );
     else data.thac0 = item.thac0;
@@ -225,16 +199,12 @@ class CreatureService {
     return result;
   }
 
-  private getSavingThrows(
-    p: Exclude<CreatureAutoGenerate["savingThrows"], undefined>,
-  ) {
+  private getSavingThrows(p: Exclude<CreatureAutoGenerate["savingThrows"], undefined>) {
     let key: keyof typeof SAVING_THROWS = "fighter";
     if (p.classe === "DRUID" || p.classe === "CLERIC") key = "priest";
     else if (p.classe === "MAGE") key = "wizard";
     const table = SAVING_THROWS[key];
-    const saves = table.find(
-      (t) => p.level >= t.levels[0] && p.level <= t.levels[1],
-    ) as {
+    const saves = table.find((t) => p.level >= t.levels[0] && p.level <= t.levels[1]) as {
       saveDeath: number;
       saveWand: number;
       savePolymorph: number;
@@ -244,7 +214,7 @@ class CreatureService {
     if (key !== "fighter")
       console.log(
         `${figureSet.arrowRight} Level: ${p.level}, class: ${
-          p.classe
+          p.classe ?? "none"
         }, saving throws table: ${key}, ${JSON.stringify(saves)}`,
       );
     return {

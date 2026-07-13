@@ -3,12 +3,14 @@ import { BaseCreature, Creature } from "../model/creature/creature";
 import { KitAbility } from "../model/creature/kit";
 import kitService from "./kit.service";
 
-function fakeCreature(p: {
-  kit?: string;
-  level1?: number;
-  immunities?: string[];
-  abilities?: { resource: string }[];
-} = {}): Creature {
+function fakeCreature(
+  p: {
+    kit?: string;
+    level1?: number;
+    immunities?: string[];
+    abilities?: { resource: string }[];
+  } = {},
+): Creature {
   return {
     data: {
       kit: p.kit,
@@ -21,31 +23,33 @@ function fakeCreature(p: {
   } as any;
 }
 
-function fakeBaseCreature(p: {
-  kit?: string;
-  level1?: number;
-  immunities?: string[];
-  removeMemorized?: boolean | string[];
-} = {}): BaseCreature {
+function fakeBaseCreature(
+  p: {
+    kit?: string;
+    level1?: number;
+    immunities?: string[];
+    removeMemorized?: boolean | string[];
+  } = {},
+): BaseCreature {
   return {
     data: {
       kit: p.kit,
       level1:
-        p.level1 !== undefined
-          ? { pnpValue: p.level1, value: p.level1, type: "none" }
-          : undefined,
+        p.level1 !== undefined ? { pnpValue: p.level1, value: p.level1, type: "none" } : undefined,
       immunities: p.immunities,
       spells: { memorized: [], removeMemorized: p.removeMemorized },
     },
   } as any;
 }
 
-function fakeAbility(p: {
-  resource?: string;
-  count?: (level: number) => number;
-  spellResource?: string;
-  hasSpell?: boolean;
-} = {}): KitAbility {
+function fakeAbility(
+  p: {
+    resource?: string;
+    count?: (level: number) => number;
+    spellResource?: string;
+    hasSpell?: boolean;
+  } = {},
+): KitAbility {
   return {
     resource: p.resource ?? "SPWI001",
     count: p.count ?? (() => 1),
@@ -84,7 +88,7 @@ describe("applyKit", () => {
     kitService.applyKit(creature, adjustment);
     // BerserkerRage count(level) = 1 + floor((level-1)/4)
     // adjustment (level 9) count=3, minus creature's own level (1) count=1 -> delta of 2
-    expect(adjustment.data.spells?.memorized).toEqual([
+    expect(adjustment.data.spells.memorized).toEqual([
       { file: expect.any(String), memorizedCount: 2 },
     ]);
   });
@@ -93,9 +97,7 @@ describe("applyKit", () => {
     const creature = fakeCreature({ kit: "BERSERKER", level1: 5 });
     const adjustment = fakeBaseCreature({ kit: "BARBARIAN", level1: 5 });
     kitService.applyKit(creature, adjustment);
-    expect(adjustment.data.spells?.removeMemorized).toEqual([
-      expect.any(String),
-    ]);
+    expect(adjustment.data.spells.removeMemorized).toEqual([expect.any(String)]);
     expect(adjustment.data.immunities).toContain("backstab");
   });
 });
@@ -103,14 +105,14 @@ describe("applyKit", () => {
 describe("removeKit", () => {
   it("throws when removeMemorized is already a boolean", () => {
     const baseCreature = fakeBaseCreature({ removeMemorized: true });
-    expect(() =>
-      { kitService.removeKit(baseCreature, {
+    expect(() => {
+      kitService.removeKit(baseCreature, {
         name: "BERSERKER",
         immunities: () => [],
         movement: () => 0,
         abilities: [fakeAbility({ resource: "SPWI999" })],
-      }); },
-    ).toThrow("removeMemorized already set");
+      });
+    }).toThrow("removeMemorized already set");
   });
 
   it("initializes removeMemorized to an array and pushes ability resources when unset", () => {
@@ -119,15 +121,9 @@ describe("removeKit", () => {
       name: "BERSERKER",
       immunities: () => [],
       movement: () => 0,
-      abilities: [
-        fakeAbility({ resource: "SPWI001" }),
-        fakeAbility({ resource: "SPWI002" }),
-      ],
+      abilities: [fakeAbility({ resource: "SPWI001" }), fakeAbility({ resource: "SPWI002" })],
     });
-    expect(baseCreature.data.spells?.removeMemorized).toEqual([
-      "SPWI001",
-      "SPWI002",
-    ]);
+    expect(baseCreature.data.spells.removeMemorized).toEqual(["SPWI001", "SPWI002"]);
   });
 
   it("pushes onto an existing removeMemorized array", () => {
@@ -138,10 +134,7 @@ describe("removeKit", () => {
       movement: () => 0,
       abilities: [fakeAbility({ resource: "SPWI001" })],
     });
-    expect(baseCreature.data.spells?.removeMemorized).toEqual([
-      "SPWI000",
-      "SPWI001",
-    ]);
+    expect(baseCreature.data.spells.removeMemorized).toEqual(["SPWI000", "SPWI001"]);
   });
 });
 
@@ -178,9 +171,7 @@ describe("applyKitAbilities", () => {
       [fakeAbility({ resource: "SPWI001", count: (level) => level })],
       9,
     );
-    expect(baseCreature.data.spells?.memorized).toEqual([
-      { file: "SPWI001", memorizedCount: 9 },
-    ]);
+    expect(baseCreature.data.spells.memorized).toEqual([{ file: "SPWI001", memorizedCount: 9 }]);
   });
 
   it("subtracts the creature's own-level count when baseCreature has no kit (adjustment inheriting root kit)", () => {
@@ -193,9 +184,7 @@ describe("applyKitAbilities", () => {
       9,
     );
     // count(9) - count(creature's level1.pnpValue=1) = 9 - 1 = 8
-    expect(baseCreature.data.spells?.memorized).toEqual([
-      { file: "SPWI001", memorizedCount: 8 },
-    ]);
+    expect(baseCreature.data.spells.memorized).toEqual([{ file: "SPWI001", memorizedCount: 8 }]);
   });
 
   it("does not push a memorized entry when the resulting count is not positive", () => {
@@ -208,7 +197,7 @@ describe("applyKitAbilities", () => {
       9,
     );
     // count(9) - count(9) = 0, not > 0
-    expect(baseCreature.data.spells?.memorized).toEqual([]);
+    expect(baseCreature.data.spells.memorized).toEqual([]);
   });
 
   it("defaults the ability's spell resource when the spell has no resource of its own", () => {
@@ -233,12 +222,7 @@ describe("applyKitAbilities", () => {
   it("skips setBehavior when the creature already has an ability with this resource", () => {
     const creature = fakeCreature({ abilities: [{ resource: "SPWI001" }] });
     const baseCreature = fakeBaseCreature({ kit: "BARBARIAN", level1: 1 });
-    kitService.applyKitAbilities(
-      creature,
-      baseCreature,
-      [fakeAbility({ resource: "SPWI001" })],
-      1,
-    );
+    kitService.applyKitAbilities(creature, baseCreature, [fakeAbility({ resource: "SPWI001" })], 1);
     expect(creature.setBehavior).not.toHaveBeenCalled();
   });
 

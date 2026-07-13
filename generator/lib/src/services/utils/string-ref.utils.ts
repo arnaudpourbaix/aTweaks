@@ -5,13 +5,9 @@ import {
 } from "../../../config/stringRef";
 
 export namespace StringRefUtils {
-  export function getStringIds(
-    groups: StringReferenceGroup | StringReferenceGroup[]
-  ): string[] {
+  export function getStringIds(groups: StringReferenceGroup | StringReferenceGroup[]): string[] {
     groups = typeof groups === "string" ? [groups] : groups;
-    const results = EXISTING_STRING_REFERENCES.filter(
-      (s) => !!s.group && groups.includes(s.group)
-    )
+    const results = EXISTING_STRING_REFERENCES.filter((s) => groups.includes(s.group))
       .map((s) => s.id.map((i) => `${i}`))
       .flat();
     return results;
@@ -19,8 +15,11 @@ export namespace StringRefUtils {
   export function getStringId(str: ExistingStringReference): number {
     const result = EXISTING_STRING_REFERENCES.find((s) => s.str === str);
     if (!result) throw new Error(`Stringref ${str} not found !`);
-    if (!result.id[0])
-      throw new Error(`Stringref ${str} has been found but no id configured !`);
+    // every entry's `id` tuple is non-empty by construction today, but this guards a future
+    // config entry authored with an empty id array - see string-ref.utils.test.ts's "throws
+    // when the matched entry has no id configured", which mutates the config to exercise it.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!result.id[0]) throw new Error(`Stringref ${str} has been found but no id configured !`);
     return result.id[0];
   }
 }

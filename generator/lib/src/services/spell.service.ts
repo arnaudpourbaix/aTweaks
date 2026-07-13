@@ -22,6 +22,10 @@ import translationService from "./translation.service";
 
 class SpellService {
   getSpell(spell: PartialSpell, file: string): Spell {
+    // headers/effectFiles are pulled out only to exclude them from the `...others` spread below
+    // (each is built up separately below via addHeader()/the effectFiles loop); the destructured
+    // names go unused.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { headers, effectFiles, ...others } = spell;
     const result: Spell = {
       file,
@@ -47,9 +51,14 @@ class SpellService {
     if (result.icon && /\d{3}$/.test(result.icon)) {
       result.icon = `${result.icon}C`;
     }
-    if (result.type === undefined && !result.copyFrom)
-      result.type = SpellTypeEnum.Innate;
-    if (result.deleteHeaders === undefined) result.deleteHeaders = false;
+    // result.type/result.level are typed as always-set (defaulted above), but the `...others`
+    // spread that follows those defaults re-copies the caller's raw `type`/`level` - including an
+    // explicit `undefined` - back over them. See spell.service.test.ts's "forces type back to
+    // Innate when explicitly undefined and there's no copyFrom" and the equivalent level test.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (result.type === undefined && !result.copyFrom) result.type = SpellTypeEnum.Innate;
+    result.deleteHeaders ??= false;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (result.level === undefined && !result.copyFrom) result.level = 1;
     result.effects = this.getEffects(result.effects, result, file);
     if (result.ability?.spell) {
@@ -66,25 +75,21 @@ class SpellService {
     return group.spells ?? [];
   }
 
-  private addHeader(
-    header: PartialSpellHeader,
-    spell: Spell,
-    file: string
-  ): void {
+  private addHeader(header: PartialSpellHeader, spell: Spell, file: string): void {
     const result: SpellHeader = { ...header, effects: header.effects ?? [] };
+    // type is required by SpellHeader, but defended anyway - see spell.service.test.ts's
+    // "throws when a header has no type", which bypasses the type with `{} as any`.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!result.type) throw new Error(`Header type is required!`);
     if (!result.icon && spell.icon && /\d{3}$/.test(spell.icon)) {
       result.icon = `${spell.icon}B`;
     }
-    if (result.range === undefined) result.range = 0;
-    if (result.speed === undefined) result.speed = 0;
-    if (result.minLevel === undefined) result.minLevel = 0;
-    if (result.location === undefined)
-      result.location = ItemAbilityLocationEnum.Ability;
-    if (result.target === undefined)
-      result.target = ItemAbilityTargetEnum.LivingActor;
-    if (spell.options?.addRacialResistances !== false)
-      this.addRacialResistances(result, spell);
+    result.range ??= 0;
+    result.speed ??= 0;
+    result.minLevel ??= 0;
+    result.location ??= ItemAbilityLocationEnum.Ability;
+    result.target ??= ItemAbilityTargetEnum.LivingActor;
+    if (spell.options?.addRacialResistances !== false) this.addRacialResistances(result, spell);
     if (typeof result.projectile === "object") {
       this.addProjectile(spell, result, result.projectile);
     }
@@ -95,11 +100,9 @@ class SpellService {
   private addRacialResistances(header: SpellHeader, spell: Spell): void {
     if (
       header.effects.some((e) =>
-        [
-          EffectTypeEnum.CharmCreature,
-          EffectTypeEnum.Sleep,
-          EffectTypeEnum.Sleep20HP,
-        ].includes(e.opcode)
+        [EffectTypeEnum.CharmCreature, EffectTypeEnum.Sleep, EffectTypeEnum.Sleep20HP].includes(
+          e.opcode,
+        ),
       )
     ) {
       this.useEffectFile(header, spell, [
@@ -112,7 +115,7 @@ class SpellService {
   useEffectFile(
     header: SpellHeader,
     spell: Spell,
-    entries: { file: EffectIDSFileEnum; entry: string; probability: number }[]
+    entries: { file: EffectIDSFileEnum; entry: string; probability: number }[],
   ): void {
     const effects: Effect[] = [];
     for (const entry of entries) {
@@ -148,16 +151,10 @@ class SpellService {
     }
   }
 
-  private addProjectile(
-    spell: Spell,
-    header: SpellHeader,
-    projectile: PartialProjectile
-  ) {
+  private addProjectile(spell: Spell, header: SpellHeader, projectile: PartialProjectile) {
     if (!spell.projectiles.some((p) => p.file === spell.file)) {
       console.log(
-        `adding projectile ${
-          spell.file
-        } for spell ${translationService.fromOptional(spell.name)}`
+        `adding projectile ${spell.file} for spell ${translationService.fromOptional(spell.name)}`,
       );
       spell.projectiles.push({ file: spell.file, ...projectile });
       header.projectile = spell.file;
@@ -177,8 +174,7 @@ class SpellService {
         ].includes(effect.opcode) &&
         !effect.resource
       ) {
-        needEffectFile =
-          needEffectFile || effect.opcode === EffectTypeEnum.UseEFFFile;
+        needEffectFile = needEffectFile || effect.opcode === EffectTypeEnum.UseEFFFile;
         effect.resource = spell.file;
       }
     }

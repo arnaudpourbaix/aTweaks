@@ -1,4 +1,5 @@
 import { CodeLine } from "../../model/misc";
+import { EffectDispelResistanceEnum } from "../../model/spell-item/effect.enums";
 import { Spell, SpellHeader } from "../../model/spell-item/spell-item";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
@@ -21,31 +22,15 @@ class WeiduSpellService extends AbstractWeiduService {
       weiduProjectileService.createProjectile(lines, projectile);
     }
     if (spell.copyFrom) {
-      this.add(
-        lines,
-        `COPY_EXISTING ~${spell.copyFrom}.SPL~  ~override/${spell.file}.SPL~`,
-        tab
-      );
+      this.add(lines, `COPY_EXISTING ~${spell.copyFrom}.SPL~  ~override/${spell.file}.SPL~`, tab);
       if (spell.deleteHeaders === true) {
-        this.add(
-          lines,
-          `LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END`,
-          tab + 1
-        );
+        this.add(lines, `LPF DELETE_SPELL_HEADER INT_VAR header_type="-1" END`, tab + 1);
       } else if (Array.isArray(spell.deleteHeaders)) {
         for (const level of spell.deleteHeaders)
-          this.add(
-            lines,
-            `LPF DELETE_SPELL_HEADER STR_VAR min_level = ${level} END`,
-            tab + 1
-          );
+          this.add(lines, `LPF DELETE_SPELL_HEADER STR_VAR min_level = ${level} END`, tab + 1);
       }
       for (const opcode of spell.deleteOpcodes ?? [])
-        this.add(
-          lines,
-          `LPF DELETE_EFFECT INT_VAR match_opcode = ${opcode} END`,
-          tab + 1
-        );
+        this.add(lines, `LPF DELETE_EFFECT INT_VAR match_opcode = ${opcode} END`, tab + 1);
     } else {
       this.add(lines, `CREATE SPL "${spell.file}"`, tab);
       this.write(lines, 0x64, 4, "0x72", tab + 1);
@@ -53,20 +38,11 @@ class WeiduSpellService extends AbstractWeiduService {
     this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
     this.createSpellCommon(lines, spell, tab + 1);
     if (spell.options) {
-      const type =
-        spell.options.spellType !== undefined
-          ? `type=${spell.options.spellType}`
-          : "";
+      const type = spell.options.spellType !== undefined ? `type=${spell.options.spellType}` : "";
       const ctime = spell.options.castingTime !== undefined ? "ctime=1" : "";
-      const rinvs =
-        spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
-      const renew =
-        spell.options.renew !== undefined ? `renew=${spell.options.renew}` : "";
-      this.add(
-        lines,
-        `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`,
-        tab + 1
-      );
+      const rinvs = spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
+      const renew = spell.options.renew !== undefined ? `renew=${spell.options.renew}` : "";
+      this.add(lines, `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`, tab + 1);
     }
     if (typeof spell.secondaryType === "string") {
       this.writeOpcodeType(lines, spell, 0);
@@ -77,11 +53,7 @@ class WeiduSpellService extends AbstractWeiduService {
     let type = "PoisonSecType";
     if (spell.secondaryType === "Disease") type = "DiseaseSecType";
     else if (spell.secondaryType === "Fear") type = "FearSecType";
-    this.add(
-      lines,
-      `OUTER_SET $f_AddSecType(${spell.file}.spl) = ${type}`,
-      tab
-    );
+    this.add(lines, `OUTER_SET $f_AddSecType(${spell.file}.spl) = ${type}`, tab);
   }
 
   private createSpellCommon(lines: CodeLine[], spell: Spell, tab: number) {
@@ -105,6 +77,10 @@ class WeiduSpellService extends AbstractWeiduService {
         lines,
         tab,
         effect,
+        // spell.level is typed as always-set, but spellService.getSpell() leaves it genuinely
+        // undefined for a copyFrom spell - see weidu-spell.service.test.ts's "level: undefined"
+        // cases.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         power: spell.level ?? 0,
         type: "SPL",
         global: true,
@@ -120,7 +96,7 @@ class WeiduSpellService extends AbstractWeiduService {
     spell: Spell,
     header: SpellHeader,
     index: number,
-    tab: number
+    tab: number,
   ) {
     const intVars: string[] = [`type=${header.type}`];
     if (header.location) intVars.push(`location=${header.location}`);
@@ -129,26 +105,21 @@ class WeiduSpellService extends AbstractWeiduService {
     if (header.minLevel) intVars.push(`required_level=${header.minLevel}`);
     if (header.speed) intVars.push(`speed=${header.speed}`);
     if (header.projectile) {
-      if (typeof header.projectile !== "string")
-        throw new Error(`Unhandled projectile!`);
-      intVars.push(
-        `projectile=(IDS_OF_SYMBOL (~projectl~ ~${header.projectile}~)) + 1`
-      );
+      if (typeof header.projectile !== "string") throw new Error(`Unhandled projectile!`);
+      intVars.push(`projectile=(IDS_OF_SYMBOL (~projectl~ ~${header.projectile}~)) + 1`);
     }
     const icon = header.icon ? ` STR_VAR icon="${header.icon}"` : "";
-    this.add(
-      lines,
-      `LPF ADD_SPELL_HEADER INT_VAR ${intVars.join(" ")}${icon} END`,
-      tab
-    );
+    this.add(lines, `LPF ADD_SPELL_HEADER INT_VAR ${intVars.join(" ")}${icon} END`, tab);
     if (header.immunityEffect) {
       for (const name of header.immunityEffect.names) {
         this.add(
           lines,
           `LPF ${utils.getImmunityFunctionName(name)} INT_VAR duration=${
             header.immunityEffect.duration
-          } dispelResistance=${header.immunityEffect.dispelResistance} END`,
-          tab
+          } dispelResistance=${
+            header.immunityEffect.dispelResistance ?? EffectDispelResistanceEnum.NaturalNonMagical
+          } END`,
+          tab,
         );
       }
     }
@@ -157,6 +128,8 @@ class WeiduSpellService extends AbstractWeiduService {
         lines,
         tab,
         effect,
+        // same reasoning as createSpell()'s power fallback above.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         power: spell.level ?? 0,
         header: index + 1,
         type: "SPL",

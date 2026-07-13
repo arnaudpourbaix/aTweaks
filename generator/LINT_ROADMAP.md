@@ -6,8 +6,9 @@ lint:fix` already applied 247 mechanical autofixes (reverting 3 that broke `tsc`
 see the commit message). `npm run build` and `npm test` (831/831) are both clean.
 Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
 **1,282**; Tier 1 (`as any` private-access rewrite) brought it to **485**; Tier 2
-item 3 (`no-non-null-assertion`, below) has since brought it to **356**. None of
-this blocks the build or tests today — `npm run lint` simply isn't green yet.
+item 3 (`no-non-null-assertion`, below) has since brought it to **356**; Tier 2
+item 4 (`no-unnecessary-condition`, below) has since brought it to **294**. None
+of this blocks the build or tests today — `npm run lint` simply isn't green yet.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
 92 files affected) showed the errors clustering hard around a small number of root
@@ -183,16 +184,56 @@ involves a field the type marks required, check for a test naming that
 specific defensive case before deleting anything — and when in doubt, running
 the full suite (not just lint/tsc) is what actually catches it.
 
-### ☐ 4. `no-unnecessary-condition` (49: 42 source / 7 test)
+### ✅ 4. `no-unnecessary-condition` (49: 42 source / 7 test) — done
 
-ESLint is saying a condition is always-truthy or always-falsy given the inferred
-types — i.e. structurally the same shape as several confirmed bugs already found and
-fixed in `IMPROVEMENT_ROADMAP.md` (the `weidu-item.service.ts` dead ternary, the
-`creature.ts`/`item.service.ts` redundant re-checks, `statement-builder.service.ts`'s
-duplicate `ActionListEmpty`). Audit each hit the same way: is this a leftover guard
-that's now provably dead (simplify, no behavior change), or is it flagging that a
-type is narrower than the runtime data actually is (real bug — the guard exists
-because the type is wrong, not because the guard is redundant)?
+All 49 fixed across creature.service.ts, item.service.ts, translation.service.ts,
+string-ref.utils.ts, weapon.service.ts, spell.service.ts, weidu-spell.service.ts,
+kit.service.test.ts (plus the ones already closed incidentally while auditing
+`no-non-null-assertion`: creature.factory.ts, movement.ts, baf-generator.service.ts,
+statement-builder.service.ts). Same audit-before-fixing process as item 3: for each
+hit, checked whether the flagged condition's field is genuinely always-set per the
+type (simplify) or whether a test names and exercises the specific case the type
+says can't happen (keep the guard, add `eslint-disable-next-line` with a comment
+citing the test).
+
+Two real, previously-dormant issues found along the way:
+- `creature.service.ts`'s `checkMovement()`: the `&& movement` half of `if
+  (data.kit === "BARBARIAN" && movement)` was genuinely dead — traced the
+  `!data.movement && !isAdjustment throw` guard two lines up to prove
+  `p.creature.data.movement` is unconditionally set by the time any adjustment's
+  `checkMovement` runs (the base creature's call already would have thrown
+  otherwise). Simplified: `if (data.kit === "BARBARIAN")`.
+- `item.service.ts`'s `setHeader()`: **caught a real bug by the full test
+  suite, not by lint/tsc** (both stayed green). Simplifying `result.header.effects
+  ? ... : (result.header.effects = [])` to always call `getEffects` broke
+  `pipeline.golden.test.ts` — `Spider.createJaws` in `lib/creatures/spiders.ts`
+  constructs `header: { ..., effects: p.effects }` where `p.effects` is an
+  optional param, so when omitted the object literal has an *explicit* `effects:
+  undefined` key. `{ effects: [], ...header }`'s spread then overwrites the `[]`
+  default with that `undefined` at runtime — even though TS's spread-type
+  inference says the merged `effects` field is always `Effect[]` (never
+  undefined), which is exactly why ESLint flagged the guard as unnecessary in the
+  first place. This is the same failure shape as the `no-non-null-assertion`
+  premature-simplifications (type says required, reality says otherwise) but from
+  a *different* root cause: TS's object-spread type inference doesn't account for
+  a spread source's optional property being explicitly assigned `undefined`, not
+  just omitted. Fixed by keeping the fallback (`result.header.effects ?? []`)
+  with an `eslint-disable-next-line` documenting the real gap.
+- Same "optional prop explicitly passed as `undefined` survives a defaulting
+  spread" shape recurred in `spell.service.ts`'s `getSpell()`
+  (`type`/`level`, both covered by tests literally named "forces type/level back
+  to ... when explicitly undefined") and `weidu-spell.service.ts` (`spell.level`
+  read downstream of that same spread) — once recognized, these were identified
+  by reading the surrounding code rather than by breaking tests again.
+
+**Lesson for future tiers:** "the type says this field is always set" has two
+independent ways to be wrong here, not one — (1) a test fixture/config
+intentionally violates the type to exercise defensive code (the Tier 2 item 3
+shape), or (2) an object-spread default gets silently overwritten by an
+explicit-`undefined` property from the spread source, which no static analysis
+in this project currently catches. Grep for `...others`/`...header`-style spreads
+sitting after a `field: x ?? default` in the same literal before trusting "no
+test names this case" as proof a guard is dead.
 
 ### ☐ 5a. Pre-existing test-file type errors, unrelated to lint (found via the `tsconfig.eslint.json` fix)
 

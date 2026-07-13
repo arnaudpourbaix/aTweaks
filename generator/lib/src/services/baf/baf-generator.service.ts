@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import path from "path";
 import statementService from "./statement-builder.service";
 import { Creature } from "../../model/creature/creature";
@@ -24,13 +23,10 @@ class BafGeneratorService {
   generate(creature: Creature): void {
     const folder = utils.getFamilyFolder(creature.family);
     utils.writeFile(
-      path.join(
-        folder,
-        weiduCreatureService.getScriptName(creature, { ext: true }),
-      ),
+      path.join(folder, weiduCreatureService.getScriptName(creature, { ext: true })),
       this.buildContent(creature, { summon: false }),
     );
-    if (creature.adjustments.some((a) => !!a.summon)) {
+    if (creature.adjustments.some((a) => a.summon)) {
       utils.writeFile(
         path.join(
           folder,
@@ -45,13 +41,8 @@ class BafGeneratorService {
   }
 
   buildContent(creature: Creature, options: { summon: boolean }): string {
-    const statements: Statements = statementService.buildStatements(
-      creature,
-      options,
-    );
-    const code = statements
-      .map((statement) => this.generateStatement(statement))
-      .join("");
+    const statements: Statements = statementService.buildStatements(creature, options);
+    const code = statements.map((statement) => this.generateStatement(statement)).join("");
     if (options.summon) return code;
     return `// ${translationService.from(creature.name)}${CR}${CR}${code}`;
   }
@@ -77,9 +68,7 @@ class BafGeneratorService {
       if ("triggers" in t) {
         if (t.triggers.length < 2)
           throw new Error(
-            `OR trigger should have at least 2 conditions: ${JSON.stringify(
-              t.triggers,
-            )}`,
+            `OR trigger should have at least 2 conditions: ${JSON.stringify(t.triggers)}`,
           );
         lines.push(`${TAB}OR(${t.triggers.length})`);
         lines.push(...this.generateTriggers(t.triggers, true));
@@ -100,18 +89,15 @@ class BafGeneratorService {
           trigger,
           null,
           4,
-        )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(
-          paramsRef,
-          null,
-          4,
-        )})`,
+        )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(paramsRef, null, 4)})`,
       );
     for (const [index, p] of triggerParams.entries()) {
       const paramRef = paramsRef[index];
-      if (!paramRef)
-        throw new Error(
-          `Unexpected parameter ${p} for trigger ${trigger.name}`,
-        );
+      // paramsRef[index] is always in-bounds given the length check above for real config, but
+      // this guards a malformed trigger definition (a hole in matching-length metadata) - see
+      // baf-generator.service.test.ts's "Unexpected parameter x for trigger" test.
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!paramRef) throw new Error(`Unexpected parameter ${p} for trigger ${trigger.name}`);
       params.push(this.getParamValue(p, paramRef));
     }
     return `${TAB.repeat(isOr ? 2 : 1)}${trigger.negation ? "!" : ""}${
@@ -137,47 +123,34 @@ class BafGeneratorService {
           action,
           null,
           4,
-        )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(
-          paramsRef,
-          null,
-          4,
-        )})`,
+        )}\nExpected: ${paramsRef.length} from\n${JSON.stringify(paramsRef, null, 4)})`,
       );
     for (const [index, p] of actionParams.entries()) {
       const paramRef = paramsRef[index];
-      if (!paramRef)
-        throw new Error(`Unexpected parameter ${p} for action ${action.name}`);
+      // same reasoning as generateTrigger()'s guard above.
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!paramRef) throw new Error(`Unexpected parameter ${p} for action ${action.name}`);
       const value = this.getParamValue(p, paramRef);
       params.push(value);
     }
     return `${TAB.repeat(2)}${action.name}(${params.join(",")})`;
   }
 
-  getParamValue(
-    value: string | number,
-    param: GenericScriptParameterData,
-  ): string {
+  getParamValue(value: string | number, param: GenericScriptParameterData): string {
     const val = typeof value === "string" ? value : value.toString();
     if (param.isNumber) return val;
-    else if (param.isObject) return this.getObjectParamValue(val, param);
+    else if (param.isObject) return this.getObjectParamValue(val);
     return `"${val}"`;
   }
 
-  getObjectParamValue(
-    value: string,
-    param: GenericScriptParameterData,
-  ): string {
+  getObjectParamValue(value: string): string {
     if (value.startsWith("[") || value.endsWith(")")) return value;
-    const startsWithObject = OBJECT_IDENTIFIERS.some((v) =>
-      value.startsWith(v),
-    );
+    const startsWithObject = OBJECT_IDENTIFIERS.some((v) => value.startsWith(v));
     const objectType = this.getObjectType(value);
     if (!startsWithObject && objectType) return objectType;
     else if (this.requireParameter(value as ObjectIdentifier) && !objectType)
       return `${value}(Myself)`;
-    else if (
-      Object.values(OBJECT_IDENTIFIERS).includes(value as ObjectIdentifier)
-    ) {
+    else if (Object.values(OBJECT_IDENTIFIERS).includes(value as ObjectIdentifier)) {
       return value;
     }
     return `"${value}"`;

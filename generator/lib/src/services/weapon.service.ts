@@ -23,34 +23,21 @@ class WeaponService {
 
   checkEnchantment(creature: Creature, weapon: Weapon) {
     const level = creature.data.level1.pnpValue;
-    if (
-      level === undefined ||
-      weapon.enchantment !== undefined ||
-      !creature.autoGenerate.enchantment
-    ) {
+    if (weapon.enchantment !== undefined || !creature.autoGenerate.enchantment) {
       return;
     }
     const item = EnchantmentTable.find(
       (e) =>
         level > e.level ||
-        (level == e.level &&
-          !!creature.data.bonusHp &&
-          creature.data.bonusHp >= e.bonusHp),
+        (level == e.level && !!creature.data.bonusHp && creature.data.bonusHp >= e.bonusHp),
     );
     if (!item) {
-      throw new Error(
-        `enchantment not found in table: ${level}/${creature.data.bonusHp}`,
-      );
+      throw new Error(`enchantment not found in table: ${level}/${creature.data.bonusHp ?? 0}`);
     }
     if (item.enchant === 0) return;
-    console.log(
-      `${figureSet.arrowRight} ${weapon.file} enchant: ${item.enchant}`,
-    );
+    console.log(`${figureSet.arrowRight} ${weapon.file} enchant: ${item.enchant}`);
     weapon.enchantment = item.enchant;
-    if (
-      item.enchant &&
-      (!weapon.flags?.includes(ItemFlagEnum.Magical))
-    ) {
+    if (item.enchant && !weapon.flags?.includes(ItemFlagEnum.Magical)) {
       weapon.flags = weapon.flags ?? [];
       weapon.flags.push(ItemFlagEnum.Magical);
     }

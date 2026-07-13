@@ -35,9 +35,7 @@ class TranslationService extends AbstractCodeService {
   }
 
   from(ref: StringReference, lang = LANG): string {
-    return typeof ref === "string"
-      ? this.fromKey(ref, lang)
-      : this.fromStringRef(ref, lang);
+    return typeof ref === "string" ? this.fromKey(ref, lang) : this.fromStringRef(ref, lang);
   }
 
   fromOptional(ref: StringReference | undefined): string {
@@ -45,12 +43,13 @@ class TranslationService extends AbstractCodeService {
     return this.from(ref);
   }
 
-  interpolate(
-    key: TranslationKey,
-    vars: Record<string, string | number>,
-  ): string {
+  interpolate(key: TranslationKey, vars: Record<string, string | number>): string {
     let text = this.fromKey(key);
     for (const key of utils.objectKeys(vars)) {
+      // vars is typed Record<string, string | number> (never undefined), but callers can still
+      // pass an undefined value at runtime (JS callers, or an `as any` cast) - see
+      // translation.service.test.ts's "throws when a provided var is undefined".
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (vars[key] === undefined) {
         throw new Error(`Found undefined in key for var ${key}`);
       }
@@ -68,9 +67,7 @@ class TranslationService extends AbstractCodeService {
   }
 
   private fromStringRef(stringRef: number, lang = LANG): string {
-    const translation = this.customTranslations.find(
-      (t) => t.stringRef === stringRef,
-    );
+    const translation = this.customTranslations.find((t) => t.stringRef === stringRef);
     if (!translation) throw new Error(`stringRef not found: ${stringRef}`);
     return translation.text;
   }
