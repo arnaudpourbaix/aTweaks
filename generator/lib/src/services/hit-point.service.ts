@@ -23,11 +23,7 @@ class HitPointService {
     const hitDice = this.getHitDiceSize(p.creature);
     const baseHP = level * hitDice;
     const log = `${figureSet.arrowRight} Level: ${level}, hit points: ${baseHP} (base) ${constitutionBonus.log}${hitPointBonus.log}${specialBonus.log}`;
-    const value =
-      baseHP +
-      constitutionBonus.value +
-      hitPointBonus.value +
-      specialBonus.value;
+    const value = baseHP + constitutionBonus.value + hitPointBonus.value + specialBonus.value;
     console.log(`${log} = ${value}`);
     return value;
   }
@@ -39,9 +35,7 @@ class HitPointService {
     parent?: CreatureData;
   }): { value: number; log: string } {
     const constitution = p.data.constitution ?? p.parent?.constitution ?? 10;
-    const constitutionHp = ConstitutionTable.find(
-      (t) => t.con === constitution,
-    );
+    const constitutionHp = ConstitutionTable.find((t) => t.con === constitution);
     if (!constitutionHp) {
       throw new Error(`constitution not found in table: ${constitution}`);
     }
@@ -49,9 +43,7 @@ class HitPointService {
       p.data.class ?? p.parent?.class ?? "NO_CLASS",
     );
     const hpPerLevel =
-      GLOBAL_CONFIG.constitutionAffectHitPoint && !isPlayerClass
-        ? constitutionHp.warriorHp
-        : 0;
+      GLOBAL_CONFIG.constitutionAffectHitPoint && !isPlayerClass ? constitutionHp.warriorHp : 0;
     const value = p.level * hpPerLevel;
     const log = value > 0 ? `+${value} (con) ` : "";
     return { value, log };
@@ -110,7 +102,12 @@ class HitPointService {
     const item = HitDiceTable.find(
       (e) =>
         ("familyId" in e && e.familyId === creature.family) ||
-        ("monsterId" in e && e.monsterId === creature.id) ||
+        // creature.id is typed as plain `number` (AbstractCreature.id is shared with
+        // CreatureFamily's own MonsterFamilyEnum-typed id) - widen monsterId to match.
+        // no-unnecessary-type-assertion disagrees the cast changes anything, but removing it
+        // brings back no-unsafe-enum-comparison - see family.ts's creature() for the same fix.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        ("monsterId" in e && (e.monsterId as number | undefined) === creature.id) ||
         ("type" in e && !!e.type && creature.data.immunities.includes(e.type)),
     );
     if (item) result = item.hd;

@@ -275,13 +275,14 @@ class EffectService {
         effect.parameter1 = `IDS_OF_SYMBOL (~animate~ ~${effect.animationId}~)`;
         effect.parameter2 = `${effect.animationType}`;
         break;
-      case EffectTypeEnum.ModifyAttacksPerRound:
+      case EffectTypeEnum.ModifyAttacksPerRound: {
         const apr = creatureService.getAttacksPerRound(effect.value);
         if (apr.doubleApr)
           throw new Error(`Can't have more than 5 APR in an effect: ${effect.value}`);
         effect.parameter1 = `${apr.value}`;
         effect.parameter2 = `${effect.type}`;
         break;
+      }
       case EffectTypeEnum.DisableSpellcasting:
         effect.parameter2 = `${effect.type}`;
         if (effect.showMessage === false) effect.special = 1;
@@ -324,7 +325,7 @@ class EffectService {
   }
 
   private damage(effect: DamageEffect) {
-    const mode = effect.damageMode ? effect.damageMode : EffectDamageModeEnum.Normal;
+    const mode = effect.damageMode ?? EffectDamageModeEnum.Normal;
     const type = effect.type;
     effect.parameter1 = `${effect.amount ?? 0}`;
     effect.parameter2 = `${mode + (type << 16)}`;
@@ -353,9 +354,15 @@ class EffectService {
     isValueString: boolean,
   ) {
     type.value = type.value ?? -1;
-    const prot = EXISTING_SPELL_PROTECTIONS.find(
-      (p) => p.stat === type.stat && p.relation === type.relation && p.value == type.value,
-    );
+    // EXISTING_SPELL_PROTECTIONS's stat/relation fields are typed as plain string/number
+    // (inferred, no `as const`) - widen type's enum-typed fields to match rather than loosen the
+    // shared config table's inferred types.
+    const prot = EXISTING_SPELL_PROTECTIONS.find((p) => {
+      const statMatches = p.stat === (type.stat as string);
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const relationMatches = p.relation === (type.relation as number);
+      return statMatches && relationMatches && p.value == type.value;
+    });
     if (!prot) throw new Error(`Unknown spell protection: ${JSON.stringify(type)}`);
     effect.parameter2 = `${prot.index}`;
     if (!isValueString) return;
@@ -378,8 +385,8 @@ class EffectService {
     effect.timing ??= base?.timing ?? EffectTimingEnum.InstantLimited;
     effect.dispelResistance ??= EffectDispelResistanceEnum.NaturalNonMagical;
     effect.probability1 ??= 100;
-    if (effect.diceSize === undefined) effect.diceSize = effect.minLevel;
-    if (effect.diceThrown === undefined) effect.diceThrown = effect.maxLevel;
+    effect.diceSize ??= effect.minLevel;
+    effect.diceThrown ??= effect.maxLevel;
   }
 }
 

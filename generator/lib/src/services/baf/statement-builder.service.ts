@@ -111,16 +111,16 @@ class StatementService {
     // see statement-builder.service.test.ts's "defaults ... when omitted" tests, which call
     // execute() directly with a custom code that skips that normalization.
     /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-    if (custom && custom.type === "insertBefore") {
+    if (custom?.type === "insertBefore") {
       this.processStatements(statements, custom.statements ?? []);
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
-    if (!custom || custom.type !== "replace") {
+    if (custom?.type !== "replace") {
       fn.apply(this, [statements, creature, options]);
     } else {
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
-    if (custom && custom.type === "insertAfter") {
+    if (custom?.type === "insertAfter") {
       this.processStatements(statements, custom.statements ?? []);
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }

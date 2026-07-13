@@ -178,9 +178,7 @@ export type ModifierTypeEffect = BaseEffect & {
 };
 
 export type IconEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.DisplayPortraitIcon
-    | EffectTypeEnum.PreventPortraitIcon;
+  opcode: EffectTypeEnum.DisplayPortraitIcon | EffectTypeEnum.PreventPortraitIcon;
   icon: PortraitIconEnum;
 };
 
@@ -239,9 +237,7 @@ export type PoisonResistanceModifierEffect = BaseEffect & {
 };
 
 export type ProtectionFromResourceEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.ProtectionFromResource
-    | EffectTypeEnum.ProtectionFromResourceAndMessage;
+  opcode: EffectTypeEnum.ProtectionFromResource | EffectTypeEnum.ProtectionFromResourceAndMessage;
   type: SpellProtectionName | SpellProtection;
   value?: string | number;
 };
@@ -254,7 +250,7 @@ export type ScriptingStateModifierEffect = BaseEffect & {
 
 export type SetExtendedSpellStateEffect = BaseEffect & {
   opcode: EffectTypeEnum.SetExtendedSpellState;
-  state: SplStateIdentifier | string;
+  state: SplStateIdentifier | (string & {});
 };
 
 export type CreatureRGBColorFadeEffect = BaseEffect & {

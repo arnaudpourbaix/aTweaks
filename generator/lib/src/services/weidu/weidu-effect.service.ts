@@ -109,7 +109,7 @@ class WeiduEffectService extends AbstractWeiduService {
     const strVar = effect.resource ? ` STR_VAR resource="${effect.resource}"` : "";
     this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
     if (has2da) {
-      this.add(lines, `END`, --tab);
+      this.add(lines, `END`, tab - 1);
     }
   }
 

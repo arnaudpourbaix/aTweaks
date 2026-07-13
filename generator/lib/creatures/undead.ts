@@ -38,10 +38,7 @@ import {
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
 import { ProjectileBehaviorEnum } from "../src/model/spell-item/projectile";
-import {
-  PartialSpell,
-  WeaponCastSpell,
-} from "../src/model/spell-item/spell-item";
+import { PartialSpell, WeaponCastSpell } from "../src/model/spell-item/spell-item";
 import {
   SpellProtectionRelation,
   SpellProtectionStat,
@@ -656,6 +653,12 @@ class Undead extends Creature {
     const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) =>
       disease.map(
         (e) =>
+          // no-unnecessary-type-assertion is wrong here (verified against tsc directly): without
+          // this cast, the object literal's `opcode` widens to `EffectTypeEnum` instead of
+          // narrowing to the `EffectTypeEnum.Disease` literal DiseaseEffect needs - the nested
+          // arrow-in-.map()-in-.flat() chain breaks the contextual typing that would otherwise
+          // narrow it from the outer `Effect[]` annotation.
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           ({
             opcode: EffectTypeEnum.Disease,
             type: e.type,
@@ -1044,8 +1047,7 @@ class Undead extends Creature {
               opcode: EffectTypeEnum.Damage,
               type: EffectDamageTypeEnum.Magic,
               amount: 10,
-              dispelResistance:
-                EffectDispelResistanceEnum.NotDispelBypassResistance,
+              dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
             },
           ],
         },
@@ -1127,13 +1129,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     banshee.createBansheeFearAura();
     banshee.createDeathWail();
     banshee.addTrait({
-      immunities: [
-        "nonMagicalWeapons",
-        "magicResistance",
-        "incorporeal",
-        "cold",
-        "lightning",
-      ],
+      immunities: ["nonMagicalWeapons", "magicResistance", "incorporeal", "cold", "lightning"],
     });
     banshee.createTouch({
       diceThrown: 1,
@@ -1142,14 +1138,9 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     banshee.setBehavior({
       restHeal: true,
-      abilities: [
-        this.ability(Ids.DeathWail),
-        this.ability(Ids.BansheeFearAura),
-      ],
+      abilities: [this.ability(Ids.DeathWail), this.ability(Ids.BansheeFearAura)],
     });
-    banshee.setAdjustments([
-      { files: ["dsbanshe"], data: { script: { location: "None" } } },
-    ]);
+    banshee.setAdjustments([{ files: ["dsbanshe"], data: { script: { location: "None" } } }]);
     return banshee;
   }
   /**
@@ -1826,14 +1817,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         movement: 12,
         immunities: ["undead"],
         items: {
-          remove: [
-            "immune1",
-            "undtype",
-            "ring95",
-            "shadowwp",
-            "s1-8",
-            "s1-12m2",
-          ],
+          remove: ["immune1", "undtype", "ring95", "shadowwp", "s1-8", "s1-12m2"],
         },
         script: {
           remove: [],
@@ -1866,14 +1850,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     });
     shadow.setAdjustments([
       {
-        files: [
-          "va#shdgl",
-          "sumshad",
-          "a#sdsha1",
-          "a#sdsha2",
-          "a#sdsha3",
-          "a#sdsha4",
-        ],
+        files: ["va#shdgl", "sumshad", "a#sdsha1", "a#sdsha2", "a#sdsha3", "a#sdsha4"],
         data: {
           script: { location: "None" },
         },
@@ -2025,9 +2002,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           spell: {
             type: "noDec",
           },
-          triggers: [
-            { name: "Range", params: ["NearestEnemyOf", 10], negation: true },
-          ],
+          triggers: [{ name: "Range", params: ["NearestEnemyOf", 10], negation: true }],
           requireVocal: false,
           timer: { name: "MagicMissiles", value: 18 },
         },
@@ -2272,14 +2247,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         scriptName: true,
       },
       {
-        files: [
-          "KRYSKEL1",
-          "KRYSKEL2",
-          "KRYSKEL3",
-          "KRYSKEL4",
-          "KRYSKEL5",
-          "KRYSKEL6",
-        ],
+        files: ["KRYSKEL1", "KRYSKEL2", "KRYSKEL3", "KRYSKEL4", "KRYSKEL5", "KRYSKEL6"],
         data: { level1: 2, xpv: 90 },
       },
       {
@@ -2639,14 +2607,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         movement: 9,
         immunities: ["undead"],
         items: {
-          remove: [
-            "bdringgh",
-            "bdghost",
-            "immune1",
-            "ring94",
-            "ghost",
-            "helm15",
-          ],
+          remove: ["bdringgh", "bdghost", "immune1", "ring94", "ghost", "helm15"],
         },
         script: {
           remove: ["bdghost", "shoutdl2"],

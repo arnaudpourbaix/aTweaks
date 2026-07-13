@@ -104,7 +104,14 @@ export abstract class CreatureFamily<T extends Creature>
   }
 
   creature(id: MonsterEnum): T {
-    const creature = this.creatures.find((s) => s.id === id);
+    // s.id is typed as plain `number` (AbstractCreature.id is shared with CreatureFamily's own
+    // MonsterFamilyEnum-typed id, so it can't be narrowed to MonsterEnum at the base class) -
+    // widen id to number for the comparison rather than loosen a shared field. no-unnecessary-
+    // type-assertion disagrees the cast changes anything (enums structurally widen to number for
+    // comparison), but removing it brings back no-unsafe-enum-comparison - the two rules
+    // conflict here, so this one loses.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const creature = this.creatures.find((s) => s.id === (id as number));
     if (!creature) throw new Error(`No creature found with id ${id}`);
     return creature;
   }

@@ -6,6 +6,6 @@
     "module": "preserve",
     "moduleResolution": "bundler"
   },
-  "include": ["lib/**/*.ts", "eslint.config.mjs", "vitest.config.ts"],
+  "include": ["lib/**/*.ts", "vitest.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

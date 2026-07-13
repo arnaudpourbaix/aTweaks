@@ -4,7 +4,10 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['node_modules', 'dist', 'coverage'],
+    // eslint.config.mjs itself: type-aware parsing needs it in tsconfig.eslint.json's `include`,
+    // but tsc's project service doesn't recognize .mjs without `allowJs`, which this project
+    // doesn't otherwise need - simplest to just exclude the one file from type-aware linting.
+    ignores: ['node_modules', 'dist', 'coverage', 'eslint.config.mjs'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
@@ -44,6 +47,13 @@ export default tseslint.config(
           caughtErrorsIgnorePattern: '^_',
         },
       ],
+      // `.mockImplementation(() => {})`/`vi.fn(() => {})`-style no-op stubs are the standard way
+      // to silence a spied method (console.log, etc.) in a test - not a sign of missing logic.
+      '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
+      // allowAsThisParameter: `this: void` on a method that's deliberately called detached from
+      // its instance (see trigger.factory.ts's inverseNegation(), fixed for unbound-method) is
+      // exactly what this syntax is for.
+      '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
     },
   },
   eslintConfigPrettier,

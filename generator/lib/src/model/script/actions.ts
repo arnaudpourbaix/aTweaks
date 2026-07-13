@@ -5,6 +5,10 @@ import { SlotIdentifier } from "../ids/slot";
 import { SpellIdentifier } from "../ids/spell";
 import { ParamObject } from "../parameter";
 
+// Converting to a plain module would mean updating every `Actions.X` reference across ~24 files
+// (baf-generator.service.ts, statement-builder.service.ts, action.factory.ts, etc.) - out of
+// scope for this pass; the namespace groups a large set of related types under one qualified name.
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Actions {
   export type ActionName =
     | "Attack"
@@ -39,16 +43,12 @@ export namespace Actions {
     | "SpellPointRES"
     | "ForceSpell"
     | "ForceSpellRES"
-     
     | "ForceSpellPoint"
     | "ForceSpellPointRES"
-     
     | "ForceSpellRange"
     | "ForceSpellRangeRES"
     | "ForceSpellPointRange"
     | "ForceSpellPointRangeRES"
-     
-     
     | "SpellPointNoDec"
     | "SpellPointNoDecRES"
     | "ReallyForceSpellPoint"
@@ -190,7 +190,7 @@ export namespace Actions {
 
   export interface SetGlobal {
     name: "SetGlobal";
-    params: [string, "LOCALS" | "GLOBAL" | string, number];
+    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
   }
 
   export interface AddGlobals {
@@ -475,8 +475,6 @@ export namespace Actions {
     | SpellNoDecRES
     | ForceSpell
     | ForceSpellRES
-     
-     
     | ReallyForceSpell
     | ReallyForceSpellRES
     | ApplySpell
@@ -873,8 +871,7 @@ export namespace Actions {
     {
       name: "EquipItem",
       parameters: "S:Object*",
-      description:
-        "This action instructs the active creature to equip the specified item.",
+      description: "This action instructs the active creature to equip the specified item.",
       section: "Item",
     },
     {
@@ -929,8 +926,7 @@ export namespace Actions {
     {
       name: "Panic",
       parameters: "",
-      description:
-        "This action causes the active creature to move randomly around the screen.",
+      description: "This action causes the active creature to move randomly around the screen.",
       section: "Misc",
     },
     {
@@ -1082,8 +1078,7 @@ export namespace Actions {
     {
       name: "CreateCreatureObject",
       parameters: "S:ResRef*,O:Object*",
-      description:
-        "This action will create the specified creature next to the specified object.",
+      description: "This action will create the specified creature next to the specified object.",
       section: "Misc",
     },
     {
@@ -1096,8 +1091,7 @@ export namespace Actions {
     {
       name: "FaceObject",
       parameters: "O:Object*",
-      description:
-        "This action instructs the active creature to face the target object.",
+      description: "This action instructs the active creature to face the target object.",
       section: "Misc",
     },
     {
@@ -1117,8 +1111,7 @@ export namespace Actions {
     {
       name: "JumpToPoint",
       parameters: "P:Target*",
-      description:
-        "This action instantly moves the active creature to the specified point.",
+      description: "This action instantly moves the active creature to the specified point.",
       section: "Misc",
     },
     {
@@ -1131,8 +1124,7 @@ export namespace Actions {
     {
       name: "RandomTurn",
       parameters: "",
-      description:
-        "This action causes the active creature to turn in a random direction.",
+      description: "This action causes the active creature to turn in a random direction.",
       section: "Misc",
     },
     {

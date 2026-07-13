@@ -5,23 +5,18 @@ import { Actions } from "../model/script/actions";
 import { Triggers } from "../model/script/triggers";
 import { State } from "../state";
 import effectService from "./effects/effect.service";
-import {
-  EffectTargetEnum,
-  EffectTimingEnum,
-} from "../model/spell-item/effect.enums";
+import { EffectTargetEnum, EffectTimingEnum } from "../model/spell-item/effect.enums";
 import descriptionService from "./doc/description.service";
 
 class StateService {
-  init(): Promise<void> {
-    try {
-      State.modFolder = "..";
-      this.loadActions();
-      this.loadTriggers();
-      this.loadImmunities();
-      return Promise.resolve();
-    } catch (error) {
-      return Promise.reject(error);
-    }
+  // async so a synchronous throw below becomes a proper promise rejection (with the original
+  // error, not a wrapped one).
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async init(): Promise<void> {
+    State.modFolder = "..";
+    this.loadActions();
+    this.loadTriggers();
+    this.loadImmunities();
   }
 
   private loadActions(): void {

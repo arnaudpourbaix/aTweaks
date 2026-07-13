@@ -29,10 +29,7 @@ import {
   SummonCreatureModeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
-import {
-  AreaProjectileEnum,
-  ParticleColorEnum,
-} from "../src/model/spell-item/projectile";
+import { AreaProjectileEnum, ParticleColorEnum } from "../src/model/spell-item/projectile";
 import { TranslationKey } from "../translations/i18n";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 
@@ -397,19 +394,12 @@ class SlimeFamily extends CreatureFamily<Slime> {
           remove: ["IMMUNE1", "RING95", "JELLMU1", "DW#JELMU"],
         },
         spells: {
-          memorized: [
-            { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-          ],
+          memorized: [{ file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 }],
         },
       },
     });
     mustard.addTrait({
-      immunities: [
-        "lightning",
-        "nonMagicalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
+      immunities: ["lightning", "nonMagicalWeapons", "magicMissile", "coldResistance"],
       // 5e: Immunity to magic damage
       effects: [
         {
@@ -436,10 +426,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
     ]);
     mustard.setBehavior({
       restHeal: true,
-      abilities: [
-        this.ability(Ids.MustardJellySplit),
-        this.ability(Ids.ToxicVapors),
-      ],
+      abilities: [this.ability(Ids.MustardJellySplit), this.ability(Ids.ToxicVapors)],
     });
     mustard.setAdjustments([
       { files: ["JELLMUSU"], summon: true },
@@ -495,9 +482,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
           location: "Race",
         },
         spells: {
-          memorized: [
-            { file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 },
-          ],
+          memorized: [{ file: this.spell(Ids.ToxicVapors).file, memorizedCount: 1 }],
         },
         effects: {
           remove: true,
@@ -505,12 +490,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
       },
     });
     fission.addTrait({
-      immunities: [
-        "lightning",
-        "nonMagicalWeapons",
-        "magicMissile",
-        "coldResistance",
-      ],
+      immunities: ["lightning", "nonMagicalWeapons", "magicMissile", "coldResistance"],
       // 5e: Immunity to magic damage
       effects: [
         {
@@ -888,12 +868,17 @@ class SlimeFamily extends CreatureFamily<Slime> {
           effects: [
             ...[...VAPOR_IMMUNE_CREATURES].map(
               (c) =>
-                <IdsEffect>{
+                // no-unnecessary-type-assertion is wrong here (verified against tsc directly):
+                // without this cast, opcode/idsFile widen instead of narrowing to IdsEffect's
+                // literal types, which then breaks inference for the array literal's other
+                // (sibling) elements below too.
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+                ({
                   opcode: EffectTypeEnum.UseEFFFile,
                   idsFile: c[0],
                   idsEntry: c[1],
                   timing: EffectTimingEnum.InstantPermanentUntilDeath,
-                },
+                }) as IdsEffect,
             ),
             {
               opcode: EffectTypeEnum.ModifyAttacksPerRound,

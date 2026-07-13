@@ -30,8 +30,3 @@ export type Paths<T> = T extends object
 export type Leaves<T> = T extends object
   ? { [K in keyof T]-?: Join<K, Leaves<T[K]>> }[keyof T]
   : "";
-
-export type NonFunctionPropertyNames<T> = {
-  [K in keyof T]: T[K] extends Function ? never : K;
-}[keyof T];
-export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;

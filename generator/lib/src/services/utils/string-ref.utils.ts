@@ -4,15 +4,15 @@ import {
   StringReferenceGroup,
 } from "../../../config/stringRef";
 
-export namespace StringRefUtils {
-  export function getStringIds(groups: StringReferenceGroup | StringReferenceGroup[]): string[] {
+export const StringRefUtils = {
+  getStringIds(groups: StringReferenceGroup | StringReferenceGroup[]): string[] {
     groups = typeof groups === "string" ? [groups] : groups;
     const results = EXISTING_STRING_REFERENCES.filter((s) => groups.includes(s.group))
       .map((s) => s.id.map((i) => `${i}`))
       .flat();
     return results;
-  }
-  export function getStringId(str: ExistingStringReference): number {
+  },
+  getStringId(str: ExistingStringReference): number {
     const result = EXISTING_STRING_REFERENCES.find((s) => s.str === str);
     if (!result) throw new Error(`Stringref ${str} not found !`);
     // every entry's `id` tuple is non-empty by construction today, but this guards a future
@@ -21,5 +21,5 @@ export namespace StringRefUtils {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!result.id[0]) throw new Error(`Stringref ${str} has been found but no id configured !`);
     return result.id[0];
-  }
-}
+  },
+};

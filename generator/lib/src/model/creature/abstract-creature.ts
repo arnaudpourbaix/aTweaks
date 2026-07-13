@@ -7,10 +7,7 @@ import {
   getSpellFilename,
 } from "../../services/utils/misc.func";
 import { BaseEffect } from "../spell-item/effect";
-import {
-  EffectCastSpellTypeEnum,
-  EffectTargetEnum,
-} from "../spell-item/effect.enums";
+import { EffectCastSpellTypeEnum, EffectTargetEnum } from "../spell-item/effect.enums";
 import { EffectTypeEnum } from "../spell-item/effect.type";
 import { PartialProjectile, Projectile } from "../spell-item/projectile";
 import {
@@ -46,9 +43,7 @@ export abstract class AbstractCreature {
   }
 
   spell(id: number | string): Spell {
-    const spell = this.spells.find((s) =>
-      typeof id === "string" ? s.file === id : s.id === id,
-    );
+    const spell = this.spells.find((s) => (typeof id === "string" ? s.file === id : s.id === id));
     if (!spell) throw new Error(`No spell found with id ${id}`);
     return spell;
   }
@@ -66,11 +61,7 @@ export abstract class AbstractCreature {
   }
 
   addProjectile(projectile: PartialProjectile, file?: string): Projectile {
-    file ??= getProjectileFilename(
-      this.projectiles.length,
-      this.id,
-      this.fileType,
-    );
+    file ??= getProjectileFilename(this.projectiles.length, this.id, this.fileType);
     const result: Projectile = { ...projectile, file };
     this.projectiles.push(result);
     return result;
@@ -96,13 +87,7 @@ export abstract class AbstractCreature {
     return result;
   }
 
-  addWeapon({
-    weapon,
-    castSpells,
-  }: {
-    weapon: PartialWeapon;
-    castSpells?: WeaponCastSpell[];
-  }) {
+  addWeapon({ weapon, castSpells }: { weapon: PartialWeapon; castSpells?: WeaponCastSpell[] }) {
     const result = this.addItem(weapon) as Weapon;
     if (castSpells) {
       for (const castSpell of castSpells) {
@@ -114,9 +99,7 @@ export abstract class AbstractCreature {
 
   protected attachSpellToWeapon(weapon: Weapon, cast: WeaponCastSpell) {
     const spell =
-      typeof cast.spell === "string"
-        ? this.spell(cast.spell)
-        : this.addSpell(cast.spell);
+      typeof cast.spell === "string" ? this.spell(cast.spell) : this.addSpell(cast.spell);
     spell.doc = false;
     const baseEffect: WithRequired<Omit<BaseEffect, "opcode">, "resource"> = {
       resource: spell.file,

@@ -18,10 +18,7 @@ import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import { Durations } from "../src/model/game-data/durations";
-import {
-  AdditionalCode,
-  ConditionalStatement,
-} from "../src/model/script/script";
+import { AdditionalCode, ConditionalStatement } from "../src/model/script/script";
 import { BaseEffect, IdsEffect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
@@ -177,9 +174,7 @@ class FeyFamily extends CreatureFamily<Fey> {
             },
           ],
         },
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 }],
       },
     });
     dryad.addTrait({ immunities: ["magicResistance"] });
@@ -197,10 +192,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         {
           location: "init",
           type: "insertBefore",
-          statements: [
-            ...this.dryadWildernessAbilities(),
-            ...this.irenicusCode(),
-          ],
+          statements: [...this.dryadWildernessAbilities(), ...this.irenicusCode()],
         },
       ],
     });
@@ -292,14 +284,9 @@ class FeyFamily extends CreatureFamily<Fey> {
           ],
         },
         effects: {
-          remove: [
-            EffectTypeEnum.CastingTimeModifier,
-            EffectTypeEnum.ProtectionFromSpell,
-          ],
+          remove: [EffectTypeEnum.CastingTimeModifier, EffectTypeEnum.ProtectionFromSpell],
         },
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 }],
       },
     });
     hamadryad.addTrait({
@@ -579,9 +566,7 @@ class FeyFamily extends CreatureFamily<Fey> {
             },
           ],
         },
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYDAGGER, value: 2 }],
       },
       autoGenerate: {
         savingThrows: {
@@ -764,8 +749,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
             duration: 3 * Durations.turn,
-            dispelResistance:
-              EffectDispelResistanceEnum.DispelNotBypassResistance,
+            dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
             saveBonus: -3,
           }),
@@ -813,8 +797,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               resource: ITEMS.EntangleImmunity,
               timing: EffectTimingEnum.InstantLimited,
               duration: Durations.turn,
-              dispelResistance:
-                EffectDispelResistanceEnum.DispelBypassResistance,
+              dispelResistance: EffectDispelResistanceEnum.DispelBypassResistance,
             },
             {
               opcode: EffectTypeEnum.CharacterColorPulse,
@@ -823,8 +806,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               cycleSpeed: 30,
               timing: EffectTimingEnum.InstantLimited,
               duration: 1,
-              dispelResistance:
-                EffectDispelResistanceEnum.DispelBypassResistance,
+              dispelResistance: EffectDispelResistanceEnum.DispelBypassResistance,
             },
             {
               opcode: EffectTypeEnum.PlayVisualEffect,
@@ -832,8 +814,7 @@ class FeyFamily extends CreatureFamily<Fey> {
               resource: "SPRMCURS",
               timing: EffectTimingEnum.InstantLimited,
               duration: 2,
-              dispelResistance:
-                EffectDispelResistanceEnum.DispelBypassResistance,
+              dispelResistance: EffectDispelResistanceEnum.DispelBypassResistance,
             },
           ],
         },
@@ -843,9 +824,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           type: "force",
         },
         disableInterrupt: true,
-        triggers: [
-          { name: "CheckStatGT", params: [ScriptTarget.myself, 0, "ENTANGLE"] },
-        ],
+        triggers: [{ name: "CheckStatGT", params: [ScriptTarget.myself, 0, "ENTANGLE"] }],
         timer: { name: "speakWithPlants", value: 60 },
       },
     });
@@ -892,13 +871,18 @@ class FeyFamily extends CreatureFamily<Fey> {
           effects: [
             ...[...GARGANTUAN_CREATURES, ...INCORPOREAL_CREATURES].map(
               (c) =>
-                <IdsEffect>{
+                // no-unnecessary-type-assertion is wrong here (verified against tsc directly):
+                // without this cast, opcode/idsFile widen instead of narrowing to IdsEffect's
+                // literal types, which then breaks inference for the array literal's other
+                // (sibling) elements below too.
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+                ({
                   opcode: EffectTypeEnum.UseEFFFile,
                   idsFile: c[0],
                   idsEntry: c[1],
                   timing: EffectTimingEnum.InstantLimited,
                   duration: 6,
-                },
+                }) as IdsEffect,
             ),
             {
               opcode: EffectTypeEnum.MovementRateBonus,
@@ -1252,8 +1236,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           effects: effectFactory.charm({
             charmType: CharmTypeEnum.NeutralDireCharm,
             duration: 3 * Durations.turn,
-            dispelResistance:
-              EffectDispelResistanceEnum.DispelNotBypassResistance,
+            dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
             saveType: SaveTypeEnum.Spell,
           }),
         },
@@ -1339,8 +1322,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           speed: 1,
           effects: effectFactory.blindness({
             duration: 7,
-            dispelResistance:
-              EffectDispelResistanceEnum.DispelNotBypassResistance,
+            dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
           }),
         },
       ],
@@ -1516,9 +1498,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           { name: "AreaType", params: ["CITY"], negation: true },
           { name: "AreaType", params: ["DUNGEON"], negation: true },
         ],
-        responses: responseFactory.response([
-          actionFactory.setGlobal(globals.Wilderness, 1),
-        ]),
+        responses: responseFactory.response([actionFactory.setGlobal(globals.Wilderness, 1)]),
       },
       {
         triggers: [
@@ -1674,10 +1654,7 @@ class FeyFamily extends CreatureFamily<Fey> {
           { name: "FaceObject", params: ["PC"] },
           {
             name: "DisplayStringHead",
-            params: [
-              ScriptTarget.myself,
-              BafExistingStringReference.LeaveMyWood,
-            ],
+            params: [ScriptTarget.myself, BafExistingStringReference.LeaveMyWood],
           },
         ]),
       },

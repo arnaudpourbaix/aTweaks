@@ -15,6 +15,9 @@ import { StateIdentifier } from "../ids/state";
 import { StatsIdentifier } from "../ids/stats";
 import { ParamObject } from "../parameter";
 
+// Converting to a plain module would mean updating every `Triggers.X` reference across ~24 files
+// (same reasoning as actions.ts's Actions namespace) - out of scope for this pass.
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Triggers {
   export type TriggerName =
     | "HaveSpell"
@@ -222,17 +225,17 @@ export namespace Triggers {
 
   export interface Global extends BaseTrigger {
     name: "Global";
-    params: [string, "LOCALS" | "GLOBAL" | string, number];
+    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
   }
 
   export interface GlobalGT extends BaseTrigger {
     name: "GlobalGT";
-    params: [string, "LOCALS" | "GLOBAL" | string, number];
+    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
   }
 
   export interface GlobalLT extends BaseTrigger {
     name: "GlobalLT";
-    params: [string, "LOCALS" | "GLOBAL" | string, number];
+    params: [string, "LOCALS" | "GLOBAL" | (string & {}), number];
   }
 
   export interface GlobalsEqual extends BaseTrigger {
@@ -516,7 +519,7 @@ export namespace Triggers {
 
   export interface CheckSpellState extends BaseTrigger {
     name: "CheckSpellState";
-    params: [ParamObject, SplStateIdentifier | string];
+    params: [ParamObject, SplStateIdentifier | (string & {})];
   }
 
   export interface Alignment extends BaseTrigger {
@@ -760,8 +763,7 @@ export namespace Triggers {
     {
       name: "HaveAnySpells",
       parameters: "",
-      description:
-        "Returns true if the active CRE has at least one spell memorised.",
+      description: "Returns true if the active CRE has at least one spell memorised.",
       section: "Spell",
     },
     {
@@ -832,8 +834,7 @@ export namespace Triggers {
     {
       name: "HasWeaponEquiped",
       parameters: "O:Object*",
-      description:
-        "Returns true only if the specified object has a weapon in a quickslot.",
+      description: "Returns true only if the specified object has a weapon in a quickslot.",
       section: "Item",
     },
     {
@@ -942,8 +943,7 @@ export namespace Triggers {
     {
       name: "GlobalsEqual",
       parameters: "S:Name1*,S:Name2*",
-      description:
-        "Returns true only if the 2 global variables specified have equal values.",
+      description: "Returns true only if the 2 global variables specified have equal values.",
       section: "Variable",
     },
     {
@@ -963,8 +963,7 @@ export namespace Triggers {
     {
       name: "LocalsEqual",
       parameters: "S:Name1*,S:Name2*",
-      description:
-        "Returns true only if the 2 local variables specified have equal values.",
+      description: "Returns true only if the 2 local variables specified have equal values.",
       section: "Variable",
     },
     {
@@ -977,8 +976,7 @@ export namespace Triggers {
     {
       name: "LocalsLT",
       parameters: "S:Name1*,S:Name2*",
-      description:
-        "Returns true only if the 1st local variable has a value less than the 2nd one.",
+      description: "Returns true only if the 1st local variable has a value less than the 2nd one.",
       section: "Variable",
     },
     {
@@ -1255,8 +1253,7 @@ export namespace Triggers {
     {
       name: "BecameVisible",
       parameters: "",
-      description:
-        "Returns true only if the active CRE turned visible in the last script round.",
+      description: "Returns true only if the active CRE turned visible in the last script round.",
     },
     {
       name: "Range",
@@ -1355,8 +1352,7 @@ export namespace Triggers {
     {
       name: "Died",
       parameters: "O:Object*",
-      description:
-        "Returns true only if the specified object died in the last script round.",
+      description: "Returns true only if the specified object died in the last script round.",
       section: "Death",
     },
     {
@@ -1390,15 +1386,13 @@ export namespace Triggers {
     {
       name: "StateCheck",
       parameters: "O:Object*,I:State*State",
-      description:
-        "Returns true only if the specified object is in the state specified.",
+      description: "Returns true only if the specified object is in the state specified.",
       section: "State",
     },
     {
       name: "NotStateCheck",
       parameters: "O:Object*,I:State*State",
-      description:
-        "Returns true only if the specified object is not in the state specified.",
+      description: "Returns true only if the specified object is not in the state specified.",
       section: "State",
     },
     {
@@ -1467,8 +1461,7 @@ export namespace Triggers {
     {
       name: "Kit",
       parameters: "O:Object*,I:Kit*KIT",
-      description:
-        "Returns true only if the specified object is of the kit specified.",
+      description: "Returns true only if the specified object is of the kit specified.",
       section: "Creature checks",
     },
     {
@@ -1634,8 +1627,7 @@ export namespace Triggers {
     {
       name: "AreaCheck",
       parameters: "S:ResRef*",
-      description:
-        "Returns true only if the active CRE is in the area specified.",
+      description: "Returns true only if the active CRE is in the area specified.",
       section: "Misc.",
     },
     {

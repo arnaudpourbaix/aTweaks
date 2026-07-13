@@ -19,7 +19,7 @@ class ResponseFactory {
     const responses: Response[] = p.attacks.map((a) => {
       const actions: Actions.Action[] = [...(p.optActions ?? [])];
       let slot = WEAPON_SLOTS.find((s) => s.slot === a.weaponSlot);
-      if (!slot) slot = WEAPON_SLOTS.find((s) => s.slot === p.weaponAttackSlot);
+      slot ??= WEAPON_SLOTS.find((s) => s.slot === p.weaponAttackSlot);
       if (slot) {
         actions.push({
           name: "SelectWeaponAbility",

@@ -3,12 +3,12 @@ import { ImmunityConfig } from "./model/final/immunity";
 import { Creature } from "./model/creature/creature";
 import { Item, Spell } from "./model/spell-item/spell-item";
 
-export class State {
-  static actions: GenericScriptData[] = [];
-  static triggers: GenericScriptData[] = [];
-  static immunities: ImmunityConfig[] = [];
-  static modFolder: string;
-  static creatures: Creature[] = [];
-  static spells: Spell[] = [];
-  static items: Item[] = [];
-}
+export const State = {
+  actions: [] as GenericScriptData[],
+  triggers: [] as GenericScriptData[],
+  immunities: [] as ImmunityConfig[],
+  modFolder: "" as string,
+  creatures: [] as Creature[],
+  spells: [] as Spell[],
+  items: [] as Item[],
+};
