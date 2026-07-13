@@ -44,6 +44,14 @@ class EffectService {
     },
   ): Effect {
     this.setDefaultEffectValues(effect, options?.base);
+    // Several case groups below share an identical body (e.g. `parameter1 = value/amount;
+    // parameter2 = type` alone) purely by coincidence of the WeiDU opcode format - each group is
+    // still keyed on a distinct EffectTypeEnum opcode/discriminated-union member (verified per
+    // pair: AttackDamageBonus-group vs the Bonus/Resistance-group, Regeneration vs Poison,
+    // Translucency vs ProficiencyModifier, CurrentHPbonus and CastingTimeModifier vs the
+    // Bonus/Resistance-group, CastingFailure vs ProficiencyModifier). Merging them for Sonar's
+    // sake would erase that per-opcode correspondence for no benefit - see SONARJS_ROADMAP.md.
+    /* eslint-disable sonarjs/no-duplicated-branches */
     switch (effect.opcode) {
       case EffectTypeEnum.ArmorClassBonus:
         effect.parameter1 = `${effect.value}`;
@@ -321,6 +329,7 @@ class EffectService {
         effect.parameter2 = `${effect.direction}`;
         break;
     }
+    /* eslint-enable sonarjs/no-duplicated-branches */
     return effect;
   }
 

@@ -55,10 +55,10 @@ class SpellService {
     // spread that follows those defaults re-copies the caller's raw `type`/`level` - including an
     // explicit `undefined` - back over them. See spell.service.test.ts's "forces type back to
     // Innate when explicitly undefined and there's no copyFrom" and the equivalent level test.
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, sonarjs/different-types-comparison
     if (result.type === undefined && !result.copyFrom) result.type = SpellTypeEnum.Innate;
     result.deleteHeaders ??= false;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, sonarjs/different-types-comparison
     if (result.level === undefined && !result.copyFrom) result.level = 1;
     result.effects = this.getEffects(result.effects, result, file);
     if (result.ability?.spell) {

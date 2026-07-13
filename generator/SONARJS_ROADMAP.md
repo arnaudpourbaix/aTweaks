@@ -11,7 +11,7 @@ Status legend: ☐ not started · ✅ fixed & committed ·
 
 ---
 
-## ☐ 1. False-positive-shaped rules (10 findings, 4 rules) — needs per-instance audit
+## ✅ 1. False-positive-shaped rules (10 findings, 4 rules) — audited & scoped-disabled
 
 Same audit-before-fixing approach as `LINT_ROADMAP.md`'s Tier 2: for each hit,
 confirm whether it's a real issue or a pattern Sonar's static analysis can't
@@ -26,8 +26,8 @@ Re-flags `result.type === undefined` / `result.level === undefined` as
 Tier 2 item 4 (`@typescript-eslint/no-unnecessary-condition`'s own false
 positive on the same lines), already verified via the full test suite to be
 genuinely reachable (the `...others` spread re-copies an explicit `undefined`
-over the default). **Plan: scoped `eslint-disable-next-line` citing the
-existing comment/tests already on those lines, not a second investigation.**
+over the default). **Done: added to the existing scoped
+`eslint-disable-next-line` on those lines, no new investigation needed.**
 
 ### `sonarjs/no-duplicated-branches` (6, `effect.service.ts` — lines 94/86,
 193/154, 237/223, 249/86, 290/223, 309/86)
@@ -39,11 +39,16 @@ and `ModifierTypeEffect` opcodes, for instance) purely by coincidence — they'r
 separate groups because they map to *different* TS discriminated-union effect
 types, not because someone copy-pasted a case by mistake. Merging them for
 Sonar's sake would erase that correspondence.
-**Plan: verify each of the 6 pairs individually (don't assume "one confirmed
-instance of this shape ⇒ all 6 are fine" — check each pair maps to genuinely
-distinct opcodes/types), then a single file-scoped disable comment at the top
-of the switch rather than 6 line-disables, since this is a structural property
-of the whole dispatch table, not 6 independent judgment calls.**
+**Done: verified each of the 6 pairs individually** — all map to genuinely
+distinct `EffectTypeEnum` opcodes that just happen to share a body shape
+(`AttackDamageBonus`-group vs the `DexterityBonus`/resistance-group, and
+`CurrentHPbonus` and `CastingTimeModifier` vs that same group, all sharing
+`parameter1 = value; parameter2 = type`; `Regeneration` vs `Poison` sharing
+`amount`/`type`/`icon→special`; `Translucency` and `CastingFailure` vs
+`ProficiencyModifier` sharing `amount`/`type`). Applied one
+`/* eslint-disable */` / `/* eslint-enable */` pair bracketing the whole
+switch rather than 6 line-disables, since the duplication is a structural
+property of the whole dispatch table.
 
 ### `sonarjs/function-return-type` (1, `action.factory.ts:35`)
 
@@ -51,14 +56,14 @@ of the whole dispatch table, not 6 independent judgment calls.**
 (`(): Action` / `(actions: Action[]): Action[]`) and an implementation
 returning `Action | Action[]` — a standard, correct TS overload pattern.
 Sonar's return-type-consistency check doesn't appear to special-case
-overloaded signatures. **Plan: scoped disable, citing the overload.**
+overloaded signatures. **Done: scoped disable, citing the overload.**
 
 ### `sonarjs/pseudo-random` (1, `utils.service.ts:268`)
 
 `Math.random()` inside `shuffleArray()`'s Fisher–Yates shuffle, used to
 randomize BAF target order (a gameplay feature) — not a security context
 (tokens, credentials, etc.), which is what this rule exists to catch.
-**Plan: scoped disable, noting the non-security context.**
+**Done: scoped disable, noting the non-security context.**
 
 ---
 

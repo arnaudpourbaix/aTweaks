@@ -32,9 +32,10 @@ class ActionFactory {
 
   disableInterrupt(actions: Actions.Action[]): Actions.Action[];
   disableInterrupt(): Actions.Action;
-  disableInterrupt(
-    actions?: Actions.Action[]
-  ): Actions.Action | Actions.Action[] {
+  // Standard TS overload pattern: the two signatures above each return a single, consistent
+  // type; this implementation signature's union return type is required to satisfy both.
+  // eslint-disable-next-line sonarjs/function-return-type
+  disableInterrupt(actions?: Actions.Action[]): Actions.Action | Actions.Action[] {
     if (!actions) return { name: "SetInterrupt", params: ["FALSE"] };
     return [this.disableInterrupt(), ...actions, this.enableInterrupt()];
   }
