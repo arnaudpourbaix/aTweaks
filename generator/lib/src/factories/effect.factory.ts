@@ -1,11 +1,6 @@
 import { StringReference } from "../model/final/stringref";
 import { RaceIdentifier } from "../model/ids/race";
-import {
-  BaseEffect,
-  DamageEffect,
-  Effect,
-  ModifierTypeEffect,
-} from "../model/spell-item/effect";
+import { BaseEffect, DamageEffect, Effect, ModifierTypeEffect } from "../model/spell-item/effect";
 import {
   CharmTypeEnum,
   EffectBonusToEnum,
@@ -30,9 +25,7 @@ import { StringRefUtils } from "../services/utils/string-ref.utils";
 
 class EffectFactory {
   damageOverTime(rounds: number, effect: DamageEffect): DamageEffect[] {
-    const results: DamageEffect[] = [
-      { ...effect, timing: EffectTimingEnum.InstantPermanent },
-    ];
+    const results: DamageEffect[] = [{ ...effect, timing: EffectTimingEnum.InstantPermanent }];
     for (let i = 1; i < rounds; i++) {
       results.push({
         ...effect,
@@ -128,11 +121,7 @@ class EffectFactory {
     return effectService.getEffects(effects);
   }
 
-  restrained(params: {
-    duration: number;
-    saveType?: SaveTypeEnum;
-    saveBonus?: number;
-  }) {
+  restrained(params: { duration: number; saveType?: SaveTypeEnum; saveBonus?: number }) {
     const base: { saveTypes?: SaveTypeEnum[]; saveBonus?: number } = {
       saveTypes: params.saveType ? [params.saveType] : undefined,
       saveBonus: params.saveBonus,
@@ -261,8 +250,7 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: payload.duration,
         dispelResistance: payload.dispelResistance,
-        saveTypes:
-          payload.saveType !== undefined ? [payload.saveType] : undefined,
+        saveTypes: payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -270,8 +258,7 @@ class EffectFactory {
         stringRef: StringRefUtils.getStringId("Dire charmed"),
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         dispelResistance: payload.dispelResistance,
-        saveTypes:
-          payload.saveType !== undefined ? [payload.saveType] : undefined,
+        saveTypes: payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -282,8 +269,7 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: 1,
         dispelResistance: payload.dispelResistance,
-        saveTypes:
-          payload.saveType !== undefined ? [payload.saveType] : undefined,
+        saveTypes: payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -293,8 +279,7 @@ class EffectFactory {
         timing: EffectTimingEnum.InstantLimited,
         duration: 3,
         dispelResistance: payload.dispelResistance,
-        saveTypes:
-          payload.saveType !== undefined ? [payload.saveType] : undefined,
+        saveTypes: payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
       {
@@ -303,8 +288,7 @@ class EffectFactory {
         timing: EffectTimingEnum.DelayLimited,
         duration: payload.duration,
         dispelResistance: payload.dispelResistance,
-        saveTypes:
-          payload.saveType !== undefined ? [payload.saveType] : undefined,
+        saveTypes: payload.saveType !== undefined ? [payload.saveType] : undefined,
         saveBonus: payload.saveBonus,
       },
     ];
@@ -317,17 +301,15 @@ class EffectFactory {
     saveBonus?: number;
     dispelResistance?: EffectDispelResistanceEnum;
   }) {
-    const effects: Effect[] = spellService
-      .getGroupRessources("colorSpray")
-      .map((s) => ({
-        opcode: EffectTypeEnum.ProtectionFromSpell,
-        resource: s,
-        timing: EffectTimingEnum.InstantLimited,
-        duration: params.duration,
-        dispelResistance: params.dispelResistance,
-        saveTypes: params.saveType ? [params.saveType] : undefined,
-        saveBonus: params.saveBonus,
-      }));
+    const effects: Effect[] = spellService.getGroupRessources("colorSpray").map((s) => ({
+      opcode: EffectTypeEnum.ProtectionFromSpell,
+      resource: s,
+      timing: EffectTimingEnum.InstantLimited,
+      duration: params.duration,
+      dispelResistance: params.dispelResistance,
+      saveTypes: params.saveType ? [params.saveType] : undefined,
+      saveBonus: params.saveBonus,
+    }));
     effects.push(
       {
         opcode: EffectTypeEnum.Blindness,
@@ -422,11 +404,7 @@ class EffectFactory {
     return effectService.getEffects(effects);
   }
 
-  levelDrain(params: {
-    levels: number;
-    saveType?: SaveTypeEnum;
-    saveBonus?: number;
-  }) {
+  levelDrain(params: { levels: number; saveType?: SaveTypeEnum; saveBonus?: number }) {
     let stringRef = StringRefUtils.getStringId("One Level Drained");
     if (params.levels === 2) {
       stringRef = StringRefUtils.getStringId("Two Levels Drained");
@@ -442,8 +420,8 @@ class EffectFactory {
         saveBonus: params.saveBonus,
       },
       {
-        opcode: EffectTypeEnum.DisplayString,
         stringRef,
+        opcode: EffectTypeEnum.DisplayString,
         timing: EffectTimingEnum.InstantPermanentUntilDeath,
         saveTypes: params.saveType ? [params.saveType] : undefined,
         saveBonus: params.saveBonus,

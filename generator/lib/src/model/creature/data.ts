@@ -88,8 +88,7 @@ export interface CreatureData {
   effects: CreatureDataEffects;
 }
 
-export type MainCreatureData = WithRequired<
-  CreatureData,
+export type MainCreatureDataRequiredKeys =
   | "level1"
   | "movement"
   | "strength"
@@ -101,8 +100,9 @@ export type MainCreatureData = WithRequired<
   | "general"
   | "race"
   | "class"
-  | "size"
->;
+  | "size";
+
+export type MainCreatureData = WithRequired<CreatureData, MainCreatureDataRequiredKeys>;
 
 export class CreatureDataScript {
   /**
@@ -350,7 +350,7 @@ export const CREATURE_DATA_FIELDS: {
     fields: [{ index: 0x234, size: 1 }],
     setter: (data, value: Level | number) => {
       if (typeof value === "number") {
-        data.level1 = { pnpValue: value, value, type: "none" };
+        data.level1 = { pnpValue: value, type: "none", value };
       } else {
         data.level1 = value;
       }
@@ -362,7 +362,7 @@ export const CREATURE_DATA_FIELDS: {
     fields: [{ index: 0x235, size: 1 }],
     setter: (data, value: Level | number) => {
       if (typeof value === "number") {
-        data.level2 = { pnpValue: value, value, type: "none" };
+        data.level2 = { pnpValue: value, type: "none", value };
       } else {
         data.level2 = value;
       }
@@ -374,7 +374,7 @@ export const CREATURE_DATA_FIELDS: {
     fields: [{ index: 0x236, size: 1 }],
     setter: (data, value: Level | number) => {
       if (typeof value === "number") {
-        data.level3 = { pnpValue: value, value, type: "none" };
+        data.level3 = { pnpValue: value, type: "none", value };
       } else {
         data.level3 = value;
       }

@@ -126,36 +126,38 @@ export type SetColorGlowEffect = BaseEffect & {
   location: EffectColorLocationEnum;
 };
 
+export type StatisticModifierOpcode =
+  | EffectTypeEnum.DexterityBonus
+  | EffectTypeEnum.IntelligenceBonus
+  | EffectTypeEnum.StrengthBonus
+  | EffectTypeEnum.CharismaBonus
+  | EffectTypeEnum.ConstitutionBonus
+  | EffectTypeEnum.WisdomBonus
+  | EffectTypeEnum.SlashingResistanceModifier
+  | EffectTypeEnum.CrushingResistanceModifier
+  | EffectTypeEnum.PiercingResistanceModifier
+  | EffectTypeEnum.MissilesResistanceModifier
+  | EffectTypeEnum.FireResistanceModifier
+  | EffectTypeEnum.ColdResistanceModifier
+  | EffectTypeEnum.MagicResistanceModifier
+  | EffectTypeEnum.MagicalColdResistanceModifier
+  | EffectTypeEnum.MagicalFireResistanceModifier
+  | EffectTypeEnum.AcidResistanceModifier
+  | EffectTypeEnum.ElectricityResistanceModifier
+  | EffectTypeEnum.MagicDamageResistanceModifier
+  | EffectTypeEnum.MaximumHPModifier
+  | EffectTypeEnum.MoraleModifier
+  | EffectTypeEnum.MoraleBreakModifier
+  | EffectTypeEnum.FatigueBonus
+  | EffectTypeEnum.AllSavingThrowsBonus
+  | EffectTypeEnum.SaveVsBreathModifier
+  | EffectTypeEnum.SaveVsDeathModifier
+  | EffectTypeEnum.SaveVsPetrificationModifier
+  | EffectTypeEnum.SaveVsSpellModifier
+  | EffectTypeEnum.SaveVsWandModifier;
+
 export type StatisticModifierEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.DexterityBonus
-    | EffectTypeEnum.IntelligenceBonus
-    | EffectTypeEnum.StrengthBonus
-    | EffectTypeEnum.CharismaBonus
-    | EffectTypeEnum.ConstitutionBonus
-    | EffectTypeEnum.WisdomBonus
-    | EffectTypeEnum.SlashingResistanceModifier
-    | EffectTypeEnum.CrushingResistanceModifier
-    | EffectTypeEnum.PiercingResistanceModifier
-    | EffectTypeEnum.MissilesResistanceModifier
-    | EffectTypeEnum.FireResistanceModifier
-    | EffectTypeEnum.ColdResistanceModifier
-    | EffectTypeEnum.MagicResistanceModifier
-    | EffectTypeEnum.MagicalColdResistanceModifier
-    | EffectTypeEnum.MagicalFireResistanceModifier
-    | EffectTypeEnum.AcidResistanceModifier
-    | EffectTypeEnum.ElectricityResistanceModifier
-    | EffectTypeEnum.MagicDamageResistanceModifier
-    | EffectTypeEnum.MaximumHPModifier
-    | EffectTypeEnum.MoraleModifier
-    | EffectTypeEnum.MoraleBreakModifier
-    | EffectTypeEnum.FatigueBonus
-    | EffectTypeEnum.AllSavingThrowsBonus
-    | EffectTypeEnum.SaveVsBreathModifier
-    | EffectTypeEnum.SaveVsDeathModifier
-    | EffectTypeEnum.SaveVsPetrificationModifier
-    | EffectTypeEnum.SaveVsSpellModifier
-    | EffectTypeEnum.SaveVsWandModifier;
+  opcode: StatisticModifierOpcode;
   value: number;
   type: EffectStatisticModifierEnum;
 };
@@ -166,13 +168,15 @@ export type CastingTimeModifierEffect = BaseEffect & {
   type: CastingTimeModifierTypeEnum;
 };
 
+export type ModifierTypeOpcode =
+  | EffectTypeEnum.AttackDamageBonus
+  | EffectTypeEnum.MovementRateBonus
+  | EffectTypeEnum.MovementRateBonus2
+  | EffectTypeEnum.Thac0Bonus
+  | EffectTypeEnum.OffhandThac0Bonus;
+
 export type ModifierTypeEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.AttackDamageBonus
-    | EffectTypeEnum.MovementRateBonus
-    | EffectTypeEnum.MovementRateBonus2
-    | EffectTypeEnum.Thac0Bonus
-    | EffectTypeEnum.OffhandThac0Bonus;
+  opcode: ModifierTypeOpcode;
   value: number;
   type: EffectModifierTypeEnum;
 };
@@ -202,14 +206,16 @@ export type PlayVisualEffect = BaseEffect & {
   resource: string;
 };
 
+export type IdsEffectOpcode =
+  | EffectTypeEnum.Slay
+  | EffectTypeEnum.UseEFFFile
+  | EffectTypeEnum.Paralyze
+  | EffectTypeEnum.Hold
+  | EffectTypeEnum.DamageVsCreatureTypeModifier
+  | EffectTypeEnum.Thac0VsCreatureTypeModifier;
+
 export type IdsEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.Slay
-    | EffectTypeEnum.UseEFFFile
-    | EffectTypeEnum.Paralyze
-    | EffectTypeEnum.Hold
-    | EffectTypeEnum.DamageVsCreatureTypeModifier
-    | EffectTypeEnum.Thac0VsCreatureTypeModifier;
+  opcode: IdsEffectOpcode;
   idsEntry: string;
   idsFile: EffectIDSFileEnum;
 };
@@ -467,47 +473,49 @@ export type WingBuffetEffect = BaseEffect & {
   direction: WingBuffetDirectionEnum;
 };
 
+export type ParamLessOpcode =
+  | EffectTypeEnum.Blindness
+  | EffectTypeEnum.Confusion
+  | EffectTypeEnum.CureBerserk
+  | EffectTypeEnum.CureBlindness
+  | EffectTypeEnum.CureConfusion
+  | EffectTypeEnum.CureDeafness
+  | EffectTypeEnum.CureDisease
+  | EffectTypeEnum.CureFeeblemindedness
+  | EffectTypeEnum.CurePoison
+  | EffectTypeEnum.CureSleep
+  | EffectTypeEnum.CureStun
+  | EffectTypeEnum.Blur
+  | EffectTypeEnum.DeathKill60HP
+  | EffectTypeEnum.EntangleOverlay
+  | EffectTypeEnum.Feeblemindedness
+  | EffectTypeEnum.FindTraps
+  | EffectTypeEnum.ForceVisible
+  | EffectTypeEnum.GiveAbility
+  | EffectTypeEnum.ImmunityToTurnUndead
+  | EffectTypeEnum.Infravision
+  | EffectTypeEnum.InvisibilityDetection
+  | EffectTypeEnum.ModifyCollisionBehavior
+  | EffectTypeEnum.Panic
+  | EffectTypeEnum.PauseTarget
+  | EffectTypeEnum.Petrification
+  | EffectTypeEnum.PlaySound
+  | EffectTypeEnum.ProtectionFromAnimation
+  | EffectTypeEnum.ProtectionFromBackstab
+  | EffectTypeEnum.RemoveCreature
+  | EffectTypeEnum.RemoveFear
+  | EffectTypeEnum.RemoveItem
+  | EffectTypeEnum.RemoveParalysis
+  | EffectTypeEnum.RemoveSpecificAreaEffect
+  | EffectTypeEnum.RemoveSpell
+  | EffectTypeEnum.SelectionCircleRemoval
+  | EffectTypeEnum.Slow
+  | EffectTypeEnum.Stun
+  | EffectTypeEnum.Stun90HP
+  | EffectTypeEnum.Web;
+
 export type ParamLessEffect = BaseEffect & {
-  opcode:
-    | EffectTypeEnum.Blindness
-    | EffectTypeEnum.Confusion
-    | EffectTypeEnum.CureBerserk
-    | EffectTypeEnum.CureBlindness
-    | EffectTypeEnum.CureConfusion
-    | EffectTypeEnum.CureDeafness
-    | EffectTypeEnum.CureDisease
-    | EffectTypeEnum.CureFeeblemindedness
-    | EffectTypeEnum.CurePoison
-    | EffectTypeEnum.CureSleep
-    | EffectTypeEnum.CureStun
-    | EffectTypeEnum.Blur
-    | EffectTypeEnum.DeathKill60HP
-    | EffectTypeEnum.EntangleOverlay
-    | EffectTypeEnum.Feeblemindedness
-    | EffectTypeEnum.FindTraps
-    | EffectTypeEnum.ForceVisible
-    | EffectTypeEnum.GiveAbility
-    | EffectTypeEnum.ImmunityToTurnUndead
-    | EffectTypeEnum.Infravision
-    | EffectTypeEnum.InvisibilityDetection
-    | EffectTypeEnum.ModifyCollisionBehavior
-    | EffectTypeEnum.Panic
-    | EffectTypeEnum.PauseTarget
-    | EffectTypeEnum.Petrification
-    | EffectTypeEnum.PlaySound
-    | EffectTypeEnum.ProtectionFromAnimation
-    | EffectTypeEnum.ProtectionFromBackstab
-    | EffectTypeEnum.RemoveCreature
-    | EffectTypeEnum.RemoveFear
-    | EffectTypeEnum.RemoveItem
-    | EffectTypeEnum.RemoveParalysis
-    | EffectTypeEnum.RemoveSpecificAreaEffect
-    | EffectTypeEnum.RemoveSpell
-    | EffectTypeEnum.SelectionCircleRemoval
-    | EffectTypeEnum.Slow
-    | EffectTypeEnum.Stun
-    | EffectTypeEnum.Stun90HP
-    | EffectTypeEnum.Web;
+  opcode: ParamLessOpcode;
 };
 
 export type Effect =

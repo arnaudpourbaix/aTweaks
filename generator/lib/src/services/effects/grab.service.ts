@@ -76,12 +76,12 @@ class GrabService {
       (strModifier + sizeModifier + (grab.onlyGrabProneTarget ? 4 : 0)) * -1;
     const saveBonus = grab.saveBonus ?? calculatedSaveBonus;
     const effect = effectService.getEffect({
+      saveBonus,
       opcode: EffectTypeEnum.CastSpell,
       type: EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
       probability1: grab.probability ?? GRAB_DEFAULT_CONFIG.probability,
       // ?? (not a truthy check): SaveTypeEnum.Spell is 0, a real save type, not "unset".
       saveTypes: [grab.saveType ?? GRAB_DEFAULT_CONFIG.saveType],
-      saveBonus,
       resource: spell.file,
     });
     weapon.header.effects.push(effect);

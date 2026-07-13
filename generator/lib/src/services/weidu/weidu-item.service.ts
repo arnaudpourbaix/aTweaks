@@ -38,8 +38,8 @@ class WeiduItemService extends AbstractWeiduService {
     for (const effect of item.effects) {
       weiduEffectService.addEffect({
         lines,
-        tab: 1,
         effect,
+        tab: 1,
         type: "ITM",
         global: true,
       });

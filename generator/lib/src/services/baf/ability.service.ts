@@ -38,8 +38,8 @@ class AbilityService {
     name: StringReference,
   ): RawCreatureSequencerAbility {
     const ability: RawCreatureSequencerAbility = {
-      requireVocal: false,
       name,
+      requireVocal: false,
       targets: [],
       triggers: [triggerFactory.global(GLOBAL_CONFIG.bafConstants.minorSequencer, 0)],
       actionsAfter: [actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.minorSequencer, 1)],

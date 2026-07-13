@@ -671,8 +671,8 @@ class Undead extends Creature {
       ),
     ).flat();
     return this.addSpell({
-      name: "monster.undead.ability.mummyRottingDisease.name",
       description,
+      name: "monster.undead.ability.mummyRottingDisease.name",
       id: greater ? Ids.GreaterMummyRottingDisease : Ids.MummyRottingDisease,
       secondaryType: "Disease",
       headers: [
@@ -749,8 +749,8 @@ class Undead extends Creature {
     const humans = this.createMummyFearAuraTechnical(humanBonus, false);
     const others = this.createMummyFearAuraTechnical(othersBonus, true);
     return this.addSpell({
-      name: "monster.undead.ability.mummyFearAura.name",
       description,
+      name: "monster.undead.ability.mummyFearAura.name",
       id: greater ? Ids.GreaterMummyFearAura : Ids.MummyFearAura,
       memorizedCount: 1,
       icon: SPELLS.CloakOfFear.file,
@@ -900,16 +900,16 @@ class Undead extends Creature {
               duration: 1,
             },
             ...effectFactory.fear({
-              duration: 8 * Durations.turn,
               saveType,
+              duration: 8 * Durations.turn,
               saveBonus: 0,
               minLevel: 1,
               maxLevel: 7,
               stringRef: "monster.undead.ability.ghostFearAura.frightened",
             }),
             ...effectFactory.fear({
-              duration: 8 * Durations.turn,
               saveType,
+              duration: 8 * Durations.turn,
               saveBonus: 2,
               minLevel: 8,
               stringRef: "monster.undead.ability.ghostFearAura.frightened",

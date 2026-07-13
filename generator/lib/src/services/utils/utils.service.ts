@@ -16,9 +16,7 @@ import translationService from "./../translation.service";
 import { FNP_SPELLS } from "../../../config/spell-names";
 
 class UtilsService {
-  objectKeys = <T extends object>(obj: T): (keyof T)[] => {
-    return Object.keys(obj) as (keyof T)[];
-  };
+  objectKeys = <T extends object>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[];
 
   getKeyByValue(object: Record<string, unknown>, value: unknown): string | undefined {
     return Object.keys(object).find((key) => object[key] === value);

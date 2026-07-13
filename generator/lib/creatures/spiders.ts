@@ -7,11 +7,7 @@ import { CreatureFamily } from "../src/model/creature/family";
 import { ItemSlot } from "../src/model/creature/item";
 import { ImmunityName } from "../src/model/final/immunity";
 import { Durations } from "../src/model/game-data/durations";
-import {
-  BaseEffect,
-  DamageEffect,
-  Effect,
-} from "../src/model/spell-item/effect";
+import { BaseEffect, DamageEffect, Effect } from "../src/model/spell-item/effect";
 import {
   AbilityDamageTypeEnum,
   EffectCastSpellTypeEnum,
@@ -90,12 +86,7 @@ class Spider extends Creature {
     });
   }
 
-  createLegWeapon(p: {
-    id: number;
-    impale?: boolean;
-    lightning?: boolean;
-    equipped?: boolean;
-  }) {
+  createLegWeapon(p: { id: number; impale?: boolean; lightning?: boolean; equipped?: boolean }) {
     const effects: Effect[] = [];
     if (p.impale) {
       effects.push(
@@ -121,9 +112,7 @@ class Spider extends Creature {
     }
     return this.addItem({
       id: p.id,
-      stringRef: p.impale
-        ? "monster.spider.ability.impale.name"
-        : "monster.spider.weapon.leg",
+      stringRef: p.impale ? "monster.spider.ability.impale.name" : "monster.spider.weapon.leg",
       icon: MonsterItemIconEnum.Wolf,
       equippedSlot: p.equipped ? ["SHIELD"] : undefined,
       header: {
@@ -220,18 +209,16 @@ class Spider extends Creature {
     for (const protection of protections) {
       for (const value of protection.values) {
         effects.unshift({
+          value,
           opcode: EffectTypeEnum.ProtectionFromResourceAndMessage,
           type: protection.type,
-          value,
           timing: EffectTimingEnum.InstantLimited,
           duration: 1,
         });
       }
     }
     if (damageEffect) {
-      effects.push(
-        ...effectFactory.damageOverTime(1, { ...damageEffect, ...saves }),
-      );
+      effects.push(...effectFactory.damageOverTime(1, { ...damageEffect, ...saves }));
     }
     if (invisible) {
       effects.push({
@@ -243,8 +230,8 @@ class Spider extends Creature {
     }
     return this.addSpell({
       id,
-      name: name ?? "monster.spider.ability.webTangle.name",
       description,
+      name: name ?? "monster.spider.ability.webTangle.name",
       memorizedCount: 1,
       icon: SPELLS.Web.file,
       options: { renew: 2 },
@@ -275,11 +262,7 @@ class Spider extends Creature {
   /**
    * Leap attack
    */
-  createLeapSpell(p: {
-    id: number;
-    memorizedCount?: number;
-    effects?: Effect[];
-  }) {
+  createLeapSpell(p: { id: number; memorizedCount?: number; effects?: Effect[] }) {
     const effects: Effect[] = [
       {
         opcode: EffectTypeEnum.WingBuffet,
@@ -317,9 +300,7 @@ class Spider extends Creature {
           isAttack: true,
         },
         disableInterrupt: true,
-        actionsAfter: [
-          { name: "AttackOneRound", params: [ScriptTarget.lastSeen] },
-        ],
+        actionsAfter: [{ name: "AttackOneRound", params: [ScriptTarget.lastSeen] }],
       },
     });
   }
@@ -327,11 +308,7 @@ class Spider extends Creature {
   /**
    * Leap attack
    */
-  createLeapImpalingSpell(p: {
-    id: number;
-    lightning?: boolean;
-    memorizedCount?: number;
-  }) {
+  createLeapImpalingSpell(p: { id: number; lightning?: boolean; memorizedCount?: number }) {
     this.createLegWeapon({
       id: p.id,
       impale: true,
@@ -663,9 +640,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
           remove: ["DW#SPIDG"],
         },
         spells: {
-          memorized: [
-            { file: SPELLS.DetectInvisibility.file, memorizedCount: 1 },
-          ],
+          memorized: [{ file: SPELLS.DetectInvisibility.file, memorizedCount: 1 }],
         },
       },
     });
@@ -689,9 +664,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
         },
       ],
     });
-    hairy.setAdjustments([
-      { files: ["BDSPIDER"], data: { script: { location: "None" } } },
-    ]);
+    hairy.setAdjustments([{ files: ["BDSPIDER"], data: { script: { location: "None" } } }]);
     return hairy;
   }
 
@@ -971,9 +944,7 @@ class SpiderFamily extends CreatureFamily<Spider> {
             ],
           },
           items: {
-            equipped: [
-              { file: this.item(Ids.LightningLeg).file, slot: "SHIELD" },
-            ],
+            equipped: [{ file: this.item(Ids.LightningLeg).file, slot: "SHIELD" }],
           },
         },
       },

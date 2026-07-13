@@ -57,9 +57,9 @@ class Ogre extends Creature {
         icon: MonsterItemIconEnum.Fist,
         equippedSlot: ["WEAPON1"],
         header: {
-          type: ItemAbilityTypeEnum.Melee,
           diceThrown,
           diceSize,
+          type: ItemAbilityTypeEnum.Melee,
           damageType: AbilityDamageTypeEnum.Crushing,
           speed: 3,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
@@ -461,9 +461,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         size: "Large",
         movement: 9,
         immunities: ["giant"],
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 }],
         items: {
           remove: ["OGRE1", "B1-2", "B3-12", "B2-16", "BLUN07", "SHLD03"],
         },
@@ -504,25 +502,14 @@ class OgreFamily extends CreatureFamily<Ogre> {
           exceptionalStrength: 50,
           xpv: 650,
           items: {
-            equipped: [
-              { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
-            ],
+            equipped: [{ file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" }],
           },
         },
       },
       {
         // chieftain is a 7+4 Hit Dice monster with Armor Class 2, Strenth 18/100, XP 975
         // He inflicts 2d6+6 points of damage per attack.
-        files: [
-          "AC#WRIM1",
-          "AC#FP2O2",
-          "BDSOGR1",
-          "BDSOGR2",
-          "ACQ13002",
-          "GORF",
-          "HACK",
-          "LARZE",
-        ],
+        files: ["AC#WRIM1", "AC#FP2O2", "BDSOGR1", "BDSOGR2", "ACQ13002", "GORF", "HACK", "LARZE"],
         data: {
           level1: 7,
           bonusHp: 4,
@@ -530,9 +517,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
           exceptionalStrength: 100,
           xpv: 975,
           items: {
-            equipped: [
-              { file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" },
-            ],
+            equipped: [{ file: this.item(Ids.OgreLeader).file, slot: "WEAPON1" }],
           },
         },
       },
@@ -540,9 +525,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         files: ["NTOGREDA"],
         data: {
           class: "FIGHTER",
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 4 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 4 }],
         },
       },
       {
@@ -551,18 +534,14 @@ class OgreFamily extends CreatureFamily<Ogre> {
         noWeapon: true,
         data: {
           items: { equipped: [{ file: "BLUN07", slot: "WEAPON1" }] },
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 2 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 2 }],
         },
       },
       {
         files: ["BDSOGR1", "BDSOGR2"],
         data: {
           class: "FIGHTER",
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 }],
         },
       },
       {
@@ -797,9 +776,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         //   kit: "BERSERKER",
         // },
         data: {
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 }],
           // memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
         },
       },
@@ -818,9 +795,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         files: ["L#CHIEN"],
         data: {
           immunities: ["fireResistance", "coldResistance", "missileDamage"],
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYLONGSWORD, value: 5 }],
         },
       },
     ]);
@@ -884,9 +859,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         size: "Large",
         movement: 9,
         immunities: ["giant"],
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 2 }],
         items: {
           remove: [
             "REGHP1",
@@ -980,9 +953,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
           xpv: 1400,
           class: "FIGHTER_MAGE",
           script: { location: "General" },
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 4 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 4 }],
           spells: {
             memorized: [
               { file: SPELLS.DireCharm.file, memorizedCount: 1 },
@@ -1000,9 +971,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
           level2: 9,
           xpv: 2000,
           class: "FIGHTER_MAGE",
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 }],
           spells: {
             memorized: [
               { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
@@ -1022,9 +991,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
           strength: 19,
           class: "FIGHTER_MAGE",
           xpv: 3500,
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 }],
           spells: {
             memorized: [
               { file: SPELLS.Domination.file, memorizedCount: 1 },
@@ -1041,9 +1008,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         files: ["KAHRK"],
         noWeapon: true,
         data: {
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYKATANA, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYKATANA, value: 5 }],
         },
       },
       {
@@ -1101,19 +1066,9 @@ class OgreFamily extends CreatureFamily<Ogre> {
         size: "Large",
         movement: 9,
         immunities: ["giant"],
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 3 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 3 }],
         items: {
-          remove: [
-            "BDOGRE02",
-            "BDOGRE06",
-            "BLUN06",
-            "SW2H01",
-            "OGREGRSU",
-            "OGRE1",
-            "BDSLUG",
-          ],
+          remove: ["BDOGRE02", "BDOGRE06", "BLUN06", "SW2H01", "OGREGRSU", "OGRE1", "BDSLUG"],
         },
         script: {
           remove: ["DVBRSKER"],
@@ -1157,9 +1112,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
           xpv: 1400,
           strength: 19,
           exceptionalStrength: 0,
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 4 }],
         },
       },
       {
@@ -1167,9 +1120,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         data: {
           level1: 9,
           xpv: 2000,
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 }],
         },
       },
       {
@@ -1177,9 +1128,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         data: {
           level1: 11,
           xpv: 2000,
-          proficiencies: [
-            { type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 },
-          ],
+          proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYFLAILMORNINGSTAR, value: 5 }],
         },
       },
       {
@@ -1234,9 +1183,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         size: "Large",
         movement: 9,
         immunities: ["giant"],
-        proficiencies: [
-          { type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 },
-        ],
+        proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 2 }],
         items: {
           remove: ["BLUN01"],
         },

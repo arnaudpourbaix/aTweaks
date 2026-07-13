@@ -36,6 +36,9 @@ export interface BaseSpell {
   level: number;
 }
 
+export type SpellDocOption = "both" | "name" | "desc" | false;
+export type SpellSecondaryType = ItemAbilitySecondaryTypeEnum | "Fear" | "Disease" | "Poison";
+
 export interface Spell extends BaseSpell {
   /**
    * Used for retrieving a spell inside family factories
@@ -52,7 +55,7 @@ export interface Spell extends BaseSpell {
   /**
    * Will appear in documentation (default: both)
    */
-  doc: "both" | "name" | "desc" | false;
+  doc: SpellDocOption;
 
   /**
    * Will be used to add these new spells to various immunities
@@ -67,7 +70,7 @@ export interface Spell extends BaseSpell {
   castingSound?: string;
   castingAnimation?: ItemAbilityCastingAnimationEnum;
   primaryType?: ItemAbilityPrimaryTypeEnum;
-  secondaryType?: ItemAbilitySecondaryTypeEnum | "Fear" | "Disease" | "Poison";
+  secondaryType?: SpellSecondaryType;
   flags?: SpellFlagEnum[];
   exclusionFlags?: SpellExclusionFlagEnum[];
   effects: Effect[];
@@ -176,22 +179,28 @@ export type MemorizedSpellType = "priest" | "wizard" | "innate";
 
 export type PartialSpellHeader = PartialBy<SpellHeader, "effects">;
 
+export type PartialSpellOptionalKeys =
+  "icon" | "effects" | "projectiles" | "doc" | "groups" | "level" | "type";
+
 export type PartialSpell = PartialBy<
   Omit<Spell, "file" | "headers" | "effectFiles">,
-  "icon" | "effects" | "projectiles" | "doc" | "groups" | "level" | "type"
+  PartialSpellOptionalKeys
 > & { headers?: PartialSpellHeader[]; effectFiles?: PartialEffectFile[] };
 
 export type PartialItemHeader = PartialBy<ItemHeader, "effects">;
 
-export type PartialItem = PartialBy<
-  Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "projectiles" | "equippedSlot" | "doc" | "trait"
-> & { header?: PartialItemHeader };
+export type PartialItemOptionalKeys =
+  "immunities" | "effects" | "projectiles" | "equippedSlot" | "doc" | "trait";
 
-export type PartialWeapon = PartialBy<
-  Omit<Item, "file" | "header">,
-  "immunities" | "effects" | "projectiles" | "doc" | "trait"
-> & { header: PartialItemHeader };
+export type PartialItem = PartialBy<Omit<Item, "file" | "header">, PartialItemOptionalKeys> & {
+  header?: PartialItemHeader;
+};
+
+export type PartialWeaponOptionalKeys = "immunities" | "effects" | "projectiles" | "doc" | "trait";
+
+export type PartialWeapon = PartialBy<Omit<Item, "file" | "header">, PartialWeaponOptionalKeys> & {
+  header: PartialItemHeader;
+};
 
 export type Weapon = WithRequired<Item, "header">;
 

@@ -91,10 +91,12 @@ export type RawCreatureSequencerAbility = Partial<BaseCreatureAbility> & {
   probability?: number;
 };
 
+export type SpellCastType = "normal" | "noDec" | "force" | "reallyForce";
+
 export interface CreatureAbilitySpell {
   id?: SpellIdentifier;
   resource?: string;
-  type?: "normal" | "noDec" | "force" | "reallyForce";
+  type?: SpellCastType;
   excludeStateChecks?: StateIdentifier[];
   excludeSpellStates?: string[];
   excludeStatsChecks?: StatsIdentifier[];

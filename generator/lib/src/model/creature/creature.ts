@@ -173,8 +173,8 @@ export class Creature extends AbstractCreature implements BaseCreature {
       `${translationService.from(this.name)} ${translationService.from("common.creatureTraits")}`,
     ]);
     const item = this.addItem({
-      id: payload.id,
       stringRef,
+      id: payload.id,
       description: payload.description,
       effects: (payload.effects ?? []).map((e) => ({
         ...e,

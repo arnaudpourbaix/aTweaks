@@ -19,21 +19,15 @@ function fakeEffect(p: Partial<Effect> = {}): Effect {
 describe("createEffectFiles", () => {
   it("writes the special field when it's a number", () => {
     const lines: CodeLine[] = [];
-    weiduEffectService.createEffectFiles(
-      lines,
-      [{ file: "eff01", special: 5 } as unknown as EffectFile],
-    );
-    expect(codes(lines).some((c) => c.includes("0x48") && c.includes("5"))).toBe(
-      true,
-    );
+    weiduEffectService.createEffectFiles(lines, [
+      { file: "eff01", special: 5 } as unknown as EffectFile,
+    ]);
+    expect(codes(lines).some((c) => c.includes("0x48") && c.includes("5"))).toBe(true);
   });
 
   it("does not write the special field when it's not a number", () => {
     const lines: CodeLine[] = [];
-    weiduEffectService.createEffectFiles(
-      lines,
-      [{ file: "eff01" } as unknown as EffectFile],
-    );
+    weiduEffectService.createEffectFiles(lines, [{ file: "eff01" } as unknown as EffectFile]);
     expect(codes(lines).some((c) => c.includes("0x48"))).toBe(false);
   });
 });
@@ -178,7 +172,7 @@ describe("has2daLookup", () => {
       opcode: EffectTypeEnum.RemoveSpellTypeProtections,
       parameter2: "ABJURATION",
     });
-    const result = weiduEffectService.has2daLookup({ lines, tab: 0, effect });
+    const result = weiduEffectService.has2daLookup({ lines, effect, tab: 0 });
     expect(result).toBe(true);
     expect(codes(lines)[0]).toContain("entry_match=~ABJURATION~");
     expect(effect.parameter2).toBe("row");

@@ -113,8 +113,8 @@ class PoisonService {
       damage: poison.saveDamage,
     });
     const description = translationService.interpolate("common.poison.description", {
-      damage: poison.damage === poisonFatalDamage ? death : damage,
       save,
+      damage: poison.damage === poisonFatalDamage ? death : damage,
       saveDamage: poison.saveDamage > 0 ? saveDamage : "",
     });
     return description;

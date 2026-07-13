@@ -120,8 +120,8 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.addItemSlots({
       lines,
       tab,
-      data: creature.data,
       creature,
+      data: creature.data,
     });
     this.addMemorizedSpells(lines, tab, creature.data);
     // if (creature.data.proficiencies.length) {
@@ -141,10 +141,10 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.patchCreature({
       lines,
       tab,
+      creature,
       data: creature.data,
       autoGenerate: creature.autoGenerate,
       enforce: true,
-      creature,
     });
     if (creature.data.script.location !== "None") {
       this.patchScripts(lines, tab, creature);
@@ -504,11 +504,11 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.patchCreatureAdjustement({
         lines,
         tab,
+        creature,
         data: adjustment.data,
         parent: creature.data,
         autoGenerate: creature.autoGenerate,
         summon: adjustment.summon,
-        creature,
       });
     if (adjustment.scriptName && adjustment.files.length > 1)
       throw new Error(
@@ -562,9 +562,9 @@ class WeiduCreatureService extends AbstractWeiduService {
     this.addProficiencies(p.lines, p.tab, p.data);
     for (const effect of p.data.effects.list) {
       weiduEffectService.addEffect({
+        effect,
         lines: p.lines,
         tab: p.tab,
-        effect,
         type: "CRE",
         global: true,
       });

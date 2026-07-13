@@ -24,10 +24,7 @@ import {
   SaveTypeEnum,
 } from "../src/model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../src/model/spell-item/effect.type";
-import {
-  AreaProjectileEnum,
-  ParticleColorEnum,
-} from "../src/model/spell-item/projectile";
+import { AreaProjectileEnum, ParticleColorEnum } from "../src/model/spell-item/projectile";
 import { WeaponCastSpell } from "../src/model/spell-item/spell-item";
 import { StringRefUtils } from "../src/services/utils/string-ref.utils";
 import { MonsterEnum, MonsterFamilyEnum } from "./monster";
@@ -53,10 +50,10 @@ class Golem extends Creature {
         icon: MonsterItemIconEnum.Fist,
         equippedSlot: ["WEAPON1"],
         header: {
-          type: ItemAbilityTypeEnum.Melee,
           diceThrown,
           diceSize,
           damageType,
+          type: ItemAbilityTypeEnum.Melee,
           speed: 4,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
         },
@@ -240,9 +237,7 @@ class Golem extends Creature {
           selfTarget: true,
           remove: true,
         },
-        triggers: [
-          { name: "Range", params: ["NearestEnemyOf", 5], negation: true },
-        ],
+        triggers: [{ name: "Range", params: ["NearestEnemyOf", 5], negation: true }],
       },
     });
   }

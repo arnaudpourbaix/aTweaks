@@ -166,8 +166,8 @@ describe("generateStatement", () => {
       [{ key: ScriptTarget.token, value: ScriptTarget.myself }],
     );
     const statement: ConditionalStatement = {
-      comment: "Detect combat",
       triggers,
+      comment: "Detect combat",
       responses: responseFactory.response([actionFactory.setGlobal("JA#COMBAT", 1)]),
     };
 

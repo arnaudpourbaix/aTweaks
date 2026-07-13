@@ -47,9 +47,9 @@ class Bear extends Creature {
         icon: MonsterItemIconEnum.Wolf,
         equippedSlot: ["WEAPON1"],
         header: {
-          type: ItemAbilityTypeEnum.Melee,
           diceThrown,
           diceSize,
+          type: ItemAbilityTypeEnum.Melee,
           damageType: AbilityDamageTypeEnum.Slashing,
           speed: 5,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
@@ -121,14 +121,7 @@ class BearFamily extends CreatureFamily<Bear> {
     const black = this.create({
       monster: MonsterEnum.BlackBear,
       name: "monster.bear.name.black",
-      files: [
-        "BDBEARBL",
-        "BEARBL",
-        "BEARBLSU",
-        "PLYBEAR2",
-        "RSBEARBL",
-        "UBDBEAR",
-      ],
+      files: ["BDBEARBL", "BEARBL", "BEARBLSU", "PLYBEAR2", "RSBEARBL", "UBDBEAR"],
       data: {
         level1: 3,
         bonusHp: 3,
@@ -465,16 +458,12 @@ class BearFamily extends CreatureFamily<Bear> {
           },
           {
             name: "See",
-            params: [
-              targetService.targetObject({ ea: "PC", clazz: "FIGHTER_DRUID" }),
-            ],
+            params: [targetService.targetObject({ ea: "PC", clazz: "FIGHTER_DRUID" })],
             negation: true,
           },
           {
             name: "See",
-            params: [
-              targetService.targetObject({ ea: "PC", clazz: "CLERIC_RANGER" }),
-            ],
+            params: [targetService.targetObject({ ea: "PC", clazz: "CLERIC_RANGER" })],
             negation: true,
           },
           {

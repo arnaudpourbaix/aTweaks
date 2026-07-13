@@ -48,16 +48,16 @@ class Slime extends Creature {
         icon: MonsterItemIconEnum.Jelly,
         equippedSlot: ["WEAPON1"],
         header: {
-          type: ItemAbilityTypeEnum.Melee,
           diceThrown,
           diceSize,
+          effects,
+          type: ItemAbilityTypeEnum.Melee,
           damageType: AbilityDamageTypeEnum.Crushing,
           speed: 4,
           range: 5,
           animationSwing: { backhand: 100, overhand: 0, thrust: 0 },
           projectile: "ACIDBLMU",
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
-          effects,
         },
       },
     });
@@ -81,8 +81,8 @@ class Slime extends Creature {
   }) {
     return this.addSpell({
       id,
-      name: "monster.slime.ability.split.name",
       description,
+      name: "monster.slime.ability.split.name",
       icon: SPELLS.MirrorImages.file,
       headers: [
         {

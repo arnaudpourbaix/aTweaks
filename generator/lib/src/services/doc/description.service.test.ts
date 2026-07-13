@@ -796,8 +796,8 @@ describe("getModifierType (private)", () => {
     (type) => {
       expect(
         service.getModifierType({
-          opcode: EffectTypeEnum.MovementRateBonus,
           type,
+          opcode: EffectTypeEnum.MovementRateBonus,
           value: 150,
         }),
       ).toEqual(["Movement rate:150%"]);

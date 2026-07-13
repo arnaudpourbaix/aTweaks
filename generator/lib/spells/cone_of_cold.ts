@@ -37,11 +37,11 @@ export const createConeOfCold = ({
   };
 }): PartialSpell => ({
   id,
-  name: "spell.coneOfCold.name",
   description,
   memorizedCount,
-  icon: SPELLS.ConeOfCold.file,
   options,
+  name: "spell.coneOfCold.name",
+  icon: SPELLS.ConeOfCold.file,
   castingSound: "CAS_M06",
   flags: [SpellFlagEnum.Hostile, SpellFlagEnum.BreakSanctuary],
   type: SpellTypeEnum.Wizard,

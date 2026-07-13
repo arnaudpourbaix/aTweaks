@@ -17,6 +17,7 @@ function fakeCreatureForAddCreature(doubleApr: boolean): Creature {
     id: 1,
     name: "common.potion.use",
     data: {
+      doubleApr,
       strength: 18,
       exceptionalStrength: undefined,
       dexterity: 12,
@@ -31,7 +32,6 @@ function fakeCreatureForAddCreature(doubleApr: boolean): Creature {
       hp: 40,
       thac0: 15,
       apr: 2,
-      doubleApr,
       size: "Large",
       morale: 12,
       xpv: 500,

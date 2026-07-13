@@ -34,9 +34,9 @@ class Cat extends Creature {
         icon: MonsterItemIconEnum.Wolf,
         equippedSlot: ["WEAPON1"],
         header: {
-          type: ItemAbilityTypeEnum.Melee,
           diceThrown,
           diceSize,
+          type: ItemAbilityTypeEnum.Melee,
           damageType: AbilityDamageTypeEnum.Slashing,
           speed: 5,
           abilityflags: [ItemAbilityFlagEnum.AddStrengthBonus],
@@ -399,27 +399,23 @@ class CatFamily extends CreatureFamily<Cat> {
           opcode: EffectTypeEnum.ArmorClassBonus,
           bonusTo: EffectBonusToEnum.AllWeapons,
           value: 2,
-          dispelResistance:
-            EffectDispelResistanceEnum.NotDispelBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
         },
         {
           opcode: EffectTypeEnum.Blur,
-          dispelResistance:
-            EffectDispelResistanceEnum.NotDispelBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
         },
         {
           opcode: EffectTypeEnum.MirrorImageEffect,
           amount: 1,
-          dispelResistance:
-            EffectDispelResistanceEnum.NotDispelBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
         },
         {
           opcode: EffectTypeEnum.CastSpellOnCondition,
           condition: "AttackedBy([ANYONE])",
           conditionTarget: CastSpellOnConditionTargetEnum.Myself,
           resource: "BDDISPLC",
-          dispelResistance:
-            EffectDispelResistanceEnum.NotDispelBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.NotDispelBypassResistance,
         },
       ],
     });

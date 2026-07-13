@@ -21,12 +21,10 @@ class BafFactory {
         { key: ScriptTarget.token, value: target },
       ]);
       const actionTarget =
-        target === ScriptTarget.myself
-          ? ScriptTarget.myself
-          : ScriptTarget.lastSeen;
+        target === ScriptTarget.myself ? ScriptTarget.myself : ScriptTarget.lastSeen;
       p.statements.push({
-        comment: index === 0 ? p.comment : "",
         triggers,
+        comment: index === 0 ? p.comment : "",
         responses: utils.replaceResponseTokens(p.responses, [
           { key: ScriptTarget.token, value: actionTarget },
         ]),
@@ -51,16 +49,14 @@ class BafFactory {
       const orTrigger: Triggers.Trigger = {
         name: "Or",
         triggers: utils
-          .replaceTriggerTokens(p.targetTriggers, [
-            { key: ScriptTarget.token, value: target },
-          ])
+          .replaceTriggerTokens(p.targetTriggers, [{ key: ScriptTarget.token, value: target }])
           .map(triggerFactory.inverseNegation),
       };
       triggers.push(orTrigger);
     }
     p.statements.push({
-      comment: p.comment,
       triggers,
+      comment: p.comment,
       responses: responseFactory.response([{ name: "Continue" }]),
     });
     if (p.inBetweenStatements) p.statements.push(...p.inBetweenStatements);

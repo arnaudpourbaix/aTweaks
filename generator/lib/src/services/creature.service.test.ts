@@ -520,8 +520,8 @@ describe("checkMovement (private)", () => {
     const movement = new Movement(12);
     const base = fakeBase({ movement, kit: "BARBARIAN" });
     service.checkMovement({
-      creature: fakeCreature({ data: {} }),
       base,
+      creature: fakeCreature({ data: {} }),
       isAdjustment: false,
     });
     if (!base.data.movement) throw new Error("expected movement to be set");
@@ -533,8 +533,8 @@ describe("checkMovement (private)", () => {
     const movement = new Movement(12);
     const base = fakeBase({ movement, kit: "TRUECLASS" });
     service.checkMovement({
-      creature: fakeCreature({ data: {} }),
       base,
+      creature: fakeCreature({ data: {} }),
       isAdjustment: false,
     });
     if (!base.data.movement) throw new Error("expected movement to be set");

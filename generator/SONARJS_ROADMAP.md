@@ -34,13 +34,14 @@ over the default). **Done: added to the existing scoped
 `eslint-disable-next-line` on those lines, no new investigation needed.**
 
 ### `sonarjs/no-duplicated-branches` (6, `effect.service.ts` — lines 94/86,
+
 193/154, 237/223, 249/86, 290/223, 309/86)
 
 `getEffect()`'s big switch groups `case` labels by shared handling code, and
 several groups happen to produce identical bodies today
 (`` `${effect.value}` ``/`` `${effect.type}` `` for both `StatisticModifierEffect`
 and `ModifierTypeEffect` opcodes, for instance) purely by coincidence — they're
-separate groups because they map to *different* TS discriminated-union effect
+separate groups because they map to _different_ TS discriminated-union effect
 types, not because someone copy-pasted a case by mistake. Merging them for
 Sonar's sake would erase that correspondence.
 **Done: verified each of the 6 pairs individually** — all map to genuinely
@@ -79,7 +80,7 @@ randomize BAF target order (a gameplay feature) — not a security context
   mutating the shared global `State.immunities` order. Sorting a copy instead
   (the obvious fix) **broke `pipeline.golden.test.ts`**: `main.service.ts` calls
   `generateCreatures()` (→ `documentationService.generate()` → this method)
-  *before* `generateCommonCode()` (→ `weiduFunctionService.generateImmunities()`,
+  _before_ `generateCommonCode()` (→ `weiduFunctionService.generateImmunities()`,
   which iterates `State.immunities` in whatever order it's currently in) - so
   this "local" sort was silently controlling the order of
   `DEFINE_PATCH_FUNCTION` blocks in generated WeiDU output the entire time.
@@ -93,7 +94,7 @@ randomize BAF target order (a gameplay feature) — not a security context
   `LINT_ROADMAP.md` - same lesson, different tool.**
 - `sonarjs/no-redundant-assignments` → `effect.enums.ts`'s
   `getCastSpellOnConditionValue()` has `let value = 0;` then a `case
-  "HitBy([ANYONE])": value = 0;` that redundantly reassigns the same value.
+"HitBy([ANYONE])": value = 0;` that redundantly reassigns the same value.
   This one really was just that - fixed, verified against
   `pipeline.golden.test.ts` (unaffected, as expected for a genuinely-dead
   reassignment).
@@ -101,6 +102,7 @@ randomize BAF target order (a gameplay feature) — not a security context
 ## ✅ 3. Cognitive complexity (9 functions over the 15-point threshold)
 
 All 9 resolved:
+
 - `weidu-effect.service.ts`'s `addEffect()` (30→ under threshold): extracted
   `addParameterIntVars`/`addSimpleIntVars`/`addSaveAndFlagIntVars` - each was
   a genuinely separable group of INT_VAR fields.
@@ -136,6 +138,7 @@ All 9 resolved:
 ## ✅ 4. Everything else (12 findings, low-stakes style)
 
 All resolved:
+
 - `no-alphabetical-sort` (5, all in test files sorting plain ASCII identifiers
   like `"Player1"` or file paths for deterministic comparison) - scoped
   disables in `target.service.test.ts` and `pipeline.golden.test.ts` (locale
@@ -151,8 +154,8 @@ All resolved:
   `"LOCALS" | "GLOBAL" | (string & {})` union (appeared identically in
   `Global`/`GlobalGT`/`GlobalLT`) into a `Triggers.GlobalScope` type alias.
 - `no-nested-template-literals` (1, `weidu-creature.service.ts`) -
-  `removeMemorizedSpell()`'s inner `.map((v) => \`~${v}~\`)` result now goes
-  through a `names` local before the outer template literal.
+  `removeMemorizedSpell()`'s inner `.map((v) => \`~~${v}~~\`)`result now goes
+through a`names` local before the outer template literal.
 - `no-small-switch` + `prefer-default-last` (2, `i18n.ts:21-22`) -
   **confirmed intentional** (user: this project ships English only, the
   `default: case "english":` switch is a placeholder for anyone who wants to

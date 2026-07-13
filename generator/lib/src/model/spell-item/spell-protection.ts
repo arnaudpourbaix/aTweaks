@@ -94,16 +94,18 @@ export interface SpellProtectionSplstate extends BaseSpellProtection {
   value?: SplStateIdentifier;
 }
 
+export type SpellProtectionNumberStat =
+  | SpellProtectionStat.SourceEqualsTarget
+  | SpellProtectionStat.SourceIsNotTarget
+  | SpellProtectionStat.CircleSize
+  | SpellProtectionStat.SourceAndTargetMoraleMatch
+  | SpellProtectionStat.SourceAndTargetAllies
+  | SpellProtectionStat.SourceAndTargetEnemies
+  | SpellProtectionStat.SummonCreatureLimit
+  | SpellProtectionStat.ChapterCheck;
+
 export interface SpellProtectionNumber extends BaseSpellProtection {
-  stat:
-    | SpellProtectionStat.SourceEqualsTarget
-    | SpellProtectionStat.SourceIsNotTarget
-    | SpellProtectionStat.CircleSize
-    | SpellProtectionStat.SourceAndTargetMoraleMatch
-    | SpellProtectionStat.SourceAndTargetAllies
-    | SpellProtectionStat.SourceAndTargetEnemies
-    | SpellProtectionStat.SummonCreatureLimit
-    | SpellProtectionStat.ChapterCheck;
+  stat: SpellProtectionNumberStat;
   value?: number;
 }
 

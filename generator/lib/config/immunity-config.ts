@@ -18,10 +18,7 @@ import { StringRefUtils } from "../src/services/utils/string-ref.utils";
 import { AIR_CREATURES, WATER_CREATURES } from "./creatures";
 import { ITEMS } from "./item";
 
-export const IMMUNITIES: (AtLeast<
-  ImmunityConfig,
-  "name" | "type" | "stringRef"
-> & {
+export const IMMUNITIES: (AtLeast<ImmunityConfig, "name" | "type" | "stringRef"> & {
   type: "immunity";
 })[] = [
   {
@@ -143,15 +140,8 @@ export const IMMUNITIES: (AtLeast<
     name: "charm",
     type: "immunity",
     stringRef: "common.immunity.charm",
-    preventEffects: [
-      EffectTypeEnum.CharmCreature,
-      EffectTypeEnum.CharmControlCreature,
-    ],
-    preventIcons: [
-      PortraitIconEnum.Charm,
-      PortraitIconEnum.DireCharm,
-      PortraitIconEnum.Domination,
-    ],
+    preventEffects: [EffectTypeEnum.CharmCreature, EffectTypeEnum.CharmControlCreature],
+    preventIcons: [PortraitIconEnum.Charm, PortraitIconEnum.DireCharm, PortraitIconEnum.Domination],
     strings: StringRefUtils.getStringIds("charm"),
     animations: ["SPNWCHRM"],
     effects: [
@@ -439,12 +429,7 @@ export const IMMUNITIES: (AtLeast<
     name: "physicalDamage",
     type: "immunity",
     stringRef: "common.immunity.physicalDamage",
-    immunities: [
-      "slashingDamage",
-      "crushingDamage",
-      "piercingDamage",
-      "missileDamage",
-    ],
+    immunities: ["slashingDamage", "crushingDamage", "piercingDamage", "missileDamage"],
     overrides: ["physicalDamageResistance"],
   },
   {
@@ -533,11 +518,7 @@ export const IMMUNITIES: (AtLeast<
     name: "deathEffects",
     type: "immunity",
     stringRef: "common.immunity.deathEffects",
-    preventEffects: [
-      EffectTypeEnum.DeathKill60HP,
-      EffectTypeEnum.KillTarget,
-      EffectTypeEnum.Slay,
-    ],
+    preventEffects: [EffectTypeEnum.DeathKill60HP, EffectTypeEnum.KillTarget, EffectTypeEnum.Slay],
     effects: [
       {
         opcode: EffectTypeEnum.SetExtendedSpellState,
@@ -656,10 +637,7 @@ export const IMMUNITIES: (AtLeast<
   },
 ];
 
-export const RESISTANCES: (AtLeast<
-  ImmunityConfig,
-  "name" | "type" | "stringRef"
-> & {
+export const RESISTANCES: (AtLeast<ImmunityConfig, "name" | "type" | "stringRef"> & {
   type: "resistance";
 })[] = [
   {
@@ -816,10 +794,9 @@ export const RESISTANCES: (AtLeast<
   },
 ];
 
-export const TRAITS: (AtLeast<
-  ImmunityConfig,
-  "name" | "type" | "stringRef" | "description"
-> & {
+type TraitImmunityKeys = "name" | "type" | "stringRef" | "description";
+
+export const TRAITS: (AtLeast<ImmunityConfig, TraitImmunityKeys> & {
   type: "trait";
 })[] = [
   {

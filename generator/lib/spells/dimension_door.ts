@@ -36,10 +36,10 @@ export const createDimensionDoor = ({
   memorizedCount?: number;
   effects?: Effect[];
 }): PartialSpell => ({
+  memorizedCount,
   name: "spell.dimensionDoor.name",
   description: "spell.dimensionDoor.description",
   doc: "name",
-  memorizedCount,
   castingSound: "CAS_M08",
   flags: [SpellFlagEnum.NoLOSRequired],
   type: spellType,
@@ -66,16 +66,14 @@ export const createDimensionDoor = ({
           lightingTarget: LightingEffectTargetEnum.SpellTarget,
           effect: LightingEffectEnum.HitDoor,
           timing: EffectTimingEnum.InstantPermanentUntilDeath,
-          dispelResistance:
-            EffectDispelResistanceEnum.DispelNotBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
         },
         {
           opcode: EffectTypeEnum.PlaySound,
           target: EffectTargetEnum.Self,
           resource: "EFF_M09",
           timing: EffectTimingEnum.InstantPermanentUntilDeath,
-          dispelResistance:
-            EffectDispelResistanceEnum.DispelNotBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
         },
         {
           opcode: EffectTypeEnum.PlayVisualEffect,
@@ -84,8 +82,7 @@ export const createDimensionDoor = ({
           resource: "SPDIMNDR",
           timing: EffectTimingEnum.InstantLimited,
           duration: 1,
-          dispelResistance:
-            EffectDispelResistanceEnum.DispelNotBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
         },
         {
           opcode: EffectTypeEnum.Teleport,
@@ -93,8 +90,7 @@ export const createDimensionDoor = ({
           type: EffectTeleportTypeEnum.Default,
           timing: EffectTimingEnum.DelayPermanent,
           duration: 1,
-          dispelResistance:
-            EffectDispelResistanceEnum.DispelNotBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
         },
         {
           opcode: EffectTypeEnum.Invisibility,
@@ -102,8 +98,7 @@ export const createDimensionDoor = ({
           target: EffectTargetEnum.Self,
           timing: EffectTimingEnum.InstantLimited,
           duration: 1,
-          dispelResistance:
-            EffectDispelResistanceEnum.DispelNotBypassResistance,
+          dispelResistance: EffectDispelResistanceEnum.DispelNotBypassResistance,
         },
         ...(effects ?? []),
       ],

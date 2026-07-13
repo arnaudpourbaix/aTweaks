@@ -41,6 +41,7 @@ class AbilityFactory {
         });
       }
       const ability: RawCreatureAbility = {
+        triggers,
         name: "ability.polymorphSelf",
         spell: {
           resource,
@@ -48,7 +49,6 @@ class AbilityFactory {
         },
         noRoundTimer: true,
         canUseWhenPolymorphed: true,
-        triggers,
         timer: {
           name: "polymorph",
           value: 12,

@@ -1,9 +1,12 @@
 import { DeepPartialBy, WithRequired } from "../utility-types";
 import { CreatureData, Level } from "./data";
 
+export type InputCreatureDataOptionalKeys =
+  "proficiencies" | "immunities" | "script" | "items" | "spells" | "effects";
+
 export type InputCreatureData = DeepPartialBy<
   Omit<CreatureData, "movement" | "level1" | "level2" | "level3">,
-  "proficiencies" | "immunities" | "script" | "items" | "spells" | "effects"
+  InputCreatureDataOptionalKeys
 > & {
   movement?: number;
   level1?: Level | number;
@@ -11,7 +14,4 @@ export type InputCreatureData = DeepPartialBy<
   level3?: Level | number;
 };
 
-export type InputMainCreatureData = WithRequired<
-  InputCreatureData,
-  "movement" | "level1"
->;
+export type InputMainCreatureData = WithRequired<InputCreatureData, "movement" | "level1">;

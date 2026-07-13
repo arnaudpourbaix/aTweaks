@@ -465,8 +465,8 @@ class StatementService {
       },
     ];
     statements.push({
-      comment: "Summon follow summoner",
       triggers,
+      comment: "Summon follow summoner",
       responses: responseFactory.response([{ name: "MoveToObject", params: ["LastSummonerOf"] }]),
     });
   }
@@ -577,8 +577,8 @@ class StatementService {
       },
     ];
     statements.push({
-      comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       triggers,
+      comment: `Random walking (${combat ? "in combat" : "not in combat"}) `,
       responses: responseFactory.response([{ name: "RandomWalk" }, { name: "Wait", params: [2] }]),
     });
   }
@@ -655,8 +655,8 @@ class StatementService {
     ];
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
-      comment: `Run away from enemies`,
       triggers,
+      comment: `Run away from enemies`,
       responses: responseFactory.response([
         { name: "RunAwayFromNoLeaveArea", params: ["NearestEnemyOf", 45] },
       ]),
@@ -673,8 +673,8 @@ class StatementService {
     ];
     if (options.summon) triggers.unshift({ name: "ActionListEmpty" });
     statements.push({
-      comment: `Try to reposition to use ranged attack`,
       triggers,
+      comment: `Try to reposition to use ranged attack`,
       responses: [
         {
           weight: 50,
@@ -753,10 +753,10 @@ class StatementService {
       });
       bafFactory.addOneBlockTargetList({
         statements,
-        comment: `Attack ${statusDetails.status} enemy`,
         triggers,
         targetTriggers,
         responses,
+        comment: `Attack ${statusDetails.status} enemy`,
         targets: list.targets,
         inBetweenStatements: selectWeaponStatements,
       });
@@ -845,8 +845,8 @@ class StatementService {
           { name: "UseItem", params: [file, ScriptTarget.myself] },
         ];
         statements.push({
-          comment: potion.name,
           triggers,
+          comment: potion.name,
           responses: responseFactory.response(actions),
         });
       }
@@ -1065,8 +1065,8 @@ class StatementService {
       actions.push(actionFactory.enableInterrupt());
     }
     statements.push({
-      comment: translationService.from(ability.name),
       triggers,
+      comment: translationService.from(ability.name),
       responses: responseFactory.response(actions),
     });
   }
