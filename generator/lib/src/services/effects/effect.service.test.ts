@@ -134,19 +134,21 @@ describe("getEffect", () => {
         type: "CLERIC",
         value: "not-a-number",
       };
-      expect(() => effectService.getEffect(effect)).toThrow(
-        /Can't determine param1/,
-      );
+      expect(() => effectService.getEffect(effect)).toThrow(/Can't determine param1/);
     });
 
     it("resolves an object-type protection to its EXISTING_SPELL_PROTECTIONS index", () => {
+      // EXISTING_SPELL_PROTECTIONS stores each protection's already-resolved raw numeric value
+      // (see lib/config/spell-protection.ts), not the friendly AllegianceIdentifier string the
+      // SpellProtectionEa type expects for authoring config - `as any` matches that raw index
+      // directly, same as the effect.service.ts matching logic does at runtime.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 0,
           relation: SpellProtectionRelation.GreaterOrEqual,
-        },
+        } as any,
         value: 5,
       };
       effectService.getEffect(effect);
@@ -155,13 +157,14 @@ describe("getEffect", () => {
     });
 
     it("builds an IDS_OF_SYMBOL lookup for a string value against an object-type protection", () => {
+      // see the "as any" note in the previous test.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 0,
           relation: SpellProtectionRelation.GreaterOrEqual,
-        },
+        } as any,
         value: "SOME_TEXT",
       };
       effectService.getEffect(effect);
@@ -170,17 +173,16 @@ describe("getEffect", () => {
     });
 
     it("throws when no entry in EXISTING_SPELL_PROTECTIONS matches the object type", () => {
+      // see the "as any" note two tests up.
       const effect: Effect = {
         opcode: EffectTypeEnum.ProtectionFromResource,
         type: {
           stat: SpellProtectionStat.Ea,
           value: 12345,
           relation: SpellProtectionRelation.Equal,
-        },
+        } as any,
       };
-      expect(() => effectService.getEffect(effect)).toThrow(
-        /Unknown spell protection/,
-      );
+      expect(() => effectService.getEffect(effect)).toThrow(/Unknown spell protection/);
     });
 
     it("throws when the matched protection's stat has no known IDS file", () => {
@@ -193,9 +195,7 @@ describe("getEffect", () => {
         },
         value: "not-numeric",
       };
-      expect(() => effectService.getEffect(effect)).toThrow(
-        /Can't find IDS file for/,
-      );
+      expect(() => effectService.getEffect(effect)).toThrow(/Can't find IDS file for/);
     });
   });
 
@@ -208,9 +208,7 @@ describe("getEffect", () => {
       };
       effectService.getEffect(effect);
       expect(effect.parameter1).toBe("10");
-      expect(effect.parameter2).toBe(
-        "IDS_OF_SYMBOL (~stat~ ~SOME_STATE~) - 156",
-      );
+      expect(effect.parameter2).toBe("IDS_OF_SYMBOL (~stat~ ~SOME_STATE~) - 156");
     });
 
     it("throws when value is outside 0-35", () => {
@@ -219,9 +217,7 @@ describe("getEffect", () => {
         value: 36,
         state: "SOME_STATE" as never,
       };
-      expect(() => effectService.getEffect(effect)).toThrow(
-        /must be between 0 and 35/,
-      );
+      expect(() => effectService.getEffect(effect)).toThrow(/must be between 0 and 35/);
     });
   });
 
@@ -504,9 +500,7 @@ describe("getEffect", () => {
         value: 8,
         type: AttackModifierTypeEnum.Set,
       };
-      expect(() => effectService.getEffect(effect)).toThrow(
-        /Can't have more than 5 APR/,
-      );
+      expect(() => effectService.getEffect(effect)).toThrow(/Can't have more than 5 APR/);
     });
   });
 });
@@ -541,11 +535,9 @@ describe("getEffects", () => {
       },
     });
     expect(results.every((e) => e.target === EffectTargetEnum.Self)).toBe(true);
-    expect(
-      results.every(
-        (e) => e.timing === EffectTimingEnum.InstantPermanentUntilDeath,
-      ),
-    ).toBe(true);
+    expect(results.every((e) => e.timing === EffectTimingEnum.InstantPermanentUntilDeath)).toBe(
+      true,
+    );
   });
 });
 

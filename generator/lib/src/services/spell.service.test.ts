@@ -6,60 +6,68 @@ import {
 } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import spellService from "./spell.service";
+import translationService from "./translation.service";
+
+// a registered custom stringRef, since translationService.from() throws for an unregistered one
+// (addProjectile() reads spell.name for its console.log).
+const SPELL_NAME = translationService.addCustomTranslation(["Test Spell"]);
 
 describe("getSpell", () => {
   it("defaults doc/level/type when omitted", () => {
-    const result = spellService.getSpell({}, "spl01");
+    const result = spellService.getSpell({ name: SPELL_NAME }, "spl01");
     expect(result.doc).toBe("both");
     expect(result.level).toBe(1);
     expect(result.type).toBe(SpellTypeEnum.Innate);
   });
 
   it("forces type back to Innate when explicitly undefined and there's no copyFrom", () => {
-    const result = spellService.getSpell({ type: undefined }, "spl02");
+    const result = spellService.getSpell({ name: SPELL_NAME, type: undefined }, "spl02");
     expect(result.type).toBe(SpellTypeEnum.Innate);
   });
 
   it("leaves type undefined when explicitly undefined but copyFrom is set", () => {
     const result = spellService.getSpell(
-      { type: undefined, copyFrom: "SPWI100" },
+      { name: SPELL_NAME, type: undefined, copyFrom: "SPWI100" },
       "spl03",
     );
     expect(result.type).toBeUndefined();
   });
 
   it("forces level back to 1 when explicitly undefined and there's no copyFrom", () => {
-    const result = spellService.getSpell({ level: undefined }, "spl04");
+    const result = spellService.getSpell({ name: SPELL_NAME, level: undefined }, "spl04");
     expect(result.level).toBe(1);
   });
 
   it("leaves level undefined when explicitly undefined but copyFrom is set", () => {
     const result = spellService.getSpell(
-      { level: undefined, copyFrom: "SPWI100" },
+      { name: SPELL_NAME, level: undefined, copyFrom: "SPWI100" },
       "spl05",
     );
     expect(result.level).toBeUndefined();
   });
 
   it("appends C to a 3-digit icon", () => {
-    const result = spellService.getSpell({ icon: "SPL123" }, "spl06");
+    const result = spellService.getSpell({ name: SPELL_NAME, icon: "SPL123" }, "spl06");
     expect(result.icon).toBe("SPL123C");
   });
 
   it("leaves an icon not ending in 3 digits untouched", () => {
-    const result = spellService.getSpell({ icon: "SPL12A" }, "spl07");
+    const result = spellService.getSpell({ name: SPELL_NAME, icon: "SPL12A" }, "spl07");
     expect(result.icon).toBe("SPL12A");
   });
 
   it("throws when a header has no type", () => {
     expect(() =>
-      spellService.getSpell({ headers: [{} as any] }, "spl08"),
+      spellService.getSpell({ name: SPELL_NAME, headers: [{} as any] }, "spl08"),
     ).toThrow(/Header type is required!/);
   });
 
   it("defaults header range/speed/minLevel/location/target when omitted", () => {
     const result = spellService.getSpell(
-      { headers: [{ type: ItemAbilityTypeEnum.Magical }] },
+      {
+        name: SPELL_NAME,
+        headers: [{ type: ItemAbilityTypeEnum.Magical }],
+      },
       "spl09",
     );
     expect(result.headers[0]).toMatchObject({
@@ -72,13 +80,14 @@ describe("getSpell", () => {
   it("adds racial resistances when a header has a Charm/Sleep effect and addRacialResistances isn't disabled", () => {
     const result = spellService.getSpell(
       {
+        name: SPELL_NAME,
         headers: [
           {
             type: ItemAbilityTypeEnum.Magical,
             effects: [
               {
                 opcode: EffectTypeEnum.CharmCreature,
-                target: EffectTargetEnum.Preset,
+                target: EffectTargetEnum.PresetTarget,
               } as any,
             ],
           },
@@ -86,16 +95,15 @@ describe("getSpell", () => {
       },
       "spl10",
     );
-    expect(
-      result.headers[0].effects.some(
-        (e) => e.opcode === EffectTypeEnum.UseEFFFile,
-      ),
-    ).toBe(true);
+    expect(result.headers[0].effects.some((e) => e.opcode === EffectTypeEnum.UseEFFFile)).toBe(
+      true,
+    );
   });
 
   it("does not add racial resistances when addRacialResistances is explicitly false", () => {
     const result = spellService.getSpell(
       {
+        name: SPELL_NAME,
         options: { addRacialResistances: false },
         headers: [
           {
@@ -103,7 +111,7 @@ describe("getSpell", () => {
             effects: [
               {
                 opcode: EffectTypeEnum.CharmCreature,
-                target: EffectTargetEnum.Preset,
+                target: EffectTargetEnum.PresetTarget,
               } as any,
             ],
           },
@@ -111,25 +119,21 @@ describe("getSpell", () => {
       },
       "spl11",
     );
-    expect(
-      result.headers[0].effects.some(
-        (e) => e.opcode === EffectTypeEnum.UseEFFFile,
-      ),
-    ).toBe(false);
+    expect(result.headers[0].effects.some((e) => e.opcode === EffectTypeEnum.UseEFFFile)).toBe(
+      false,
+    );
   });
 });
 
 describe("getGroupRessources", () => {
   it("throws when the group is not defined", () => {
-    expect(() =>
-      spellService.getGroupRessources("not-a-real-group" as any),
-    ).toThrow(/Group not-a-real-group is not defined/);
+    expect(() => spellService.getGroupRessources("not-a-real-group" as any)).toThrow(
+      /Group not-a-real-group is not defined/,
+    );
   });
 
   it("returns the group's spell resrefs when the group is defined", () => {
-    expect(
-      spellService.getGroupRessources("acidSpells" as any),
-    ).toBeInstanceOf(Array);
+    expect(spellService.getGroupRessources("acidSpells" as any)).toBeInstanceOf(Array);
   });
 });
 
@@ -137,6 +141,7 @@ describe("addProjectile (private, via header.projectile object)", () => {
   it("adds a projectile and sets header.projectile to the spell file", () => {
     const result = spellService.getSpell(
       {
+        name: SPELL_NAME,
         headers: [
           {
             type: ItemAbilityTypeEnum.Magical,
@@ -154,6 +159,7 @@ describe("addProjectile (private, via header.projectile object)", () => {
     const proj = { name: "Test Projectile" } as any;
     const result = spellService.getSpell(
       {
+        name: SPELL_NAME,
         headers: [
           { type: ItemAbilityTypeEnum.Magical, projectile: proj },
           { type: ItemAbilityTypeEnum.Ranged, projectile: proj },
@@ -169,10 +175,11 @@ describe("useEffectFile (racial resistance skip-add dedup)", () => {
   it("does not push a duplicate effect file when two headers both trigger racial resistances", () => {
     const charmEffect = {
       opcode: EffectTypeEnum.CharmCreature,
-      target: EffectTargetEnum.Preset,
+      target: EffectTargetEnum.PresetTarget,
     } as any;
     const result = spellService.getSpell(
       {
+        name: SPELL_NAME,
         headers: [
           { type: ItemAbilityTypeEnum.Magical, effects: [charmEffect] },
           { type: ItemAbilityTypeEnum.Magical, effects: [charmEffect] },
@@ -180,9 +187,7 @@ describe("useEffectFile (racial resistance skip-add dedup)", () => {
       },
       "spl12",
     );
-    const fileCount = result.effectFiles.filter(
-      (e) => e.file === "spl12",
-    ).length;
+    const fileCount = result.effectFiles.filter((e) => e.file === "spl12").length;
     expect(fileCount).toBe(1);
   });
 });

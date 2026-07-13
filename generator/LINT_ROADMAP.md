@@ -235,29 +235,63 @@ in this project currently catches. Grep for `...others`/`...header`-style spread
 sitting after a `field: x ?? default` in the same literal before trusting "no
 test names this case" as proof a guard is dead.
 
-### ☐ 5a. Pre-existing test-file type errors, unrelated to lint (found via the `tsconfig.eslint.json` fix)
+### ✅ 5a. Pre-existing test-file type errors, unrelated to lint (found via the `tsconfig.eslint.json` fix) — done
 
-Not a lint rule — raw `tsc` errors ESLint's type-aware rules don't surface (they use
-type info for their own checks, they don't replicate generic "is this assignable"
-compiler diagnostics). These predate this whole lint effort and were invisible to
-everything that exists today: `npm run build` excludes `*.test.ts`, `vitest` type-
-checks nothing (esbuild transpile-only), and ESLint doesn't either. Confirmed via
-`npx tsc -p tsconfig.eslint.json` (only usable after the `rootDir` fix above) in
-files this roadmap's Tier 1 didn't touch:
+`npx tsc -p tsconfig.eslint.json` is now fully clean (0 errors). Not a lint rule —
+these were raw `tsc` errors ESLint's type-aware rules don't surface, invisible to
+everything that existed before this effort (`npm run build` excludes `*.test.ts`,
+`vitest` type-checks nothing, ESLint doesn't replicate generic assignability
+diagnostics). Fixed across:
 
-- `lib/src/model/creature/abstract-creature.test.ts`
-- `lib/src/model/creature/creature.test.ts`
-- `lib/src/model/creature/family.test.ts`
-- `lib/src/services/baf/target.service.test.ts`
-- `lib/src/services/effects/effect.service.test.ts`
-- `lib/src/services/effects/grab.service.test.ts`
-- `lib/src/services/effects/poison.service.test.ts`
-- `lib/src/services/spell.service.test.ts`
-- `vitest.config.ts` itself (a `coverage` option typed wrong)
+- `lib/src/model/creature/abstract-creature.test.ts`,
+  `lib/src/model/creature/creature.test.ts`, `lib/src/services/spell.service.test.ts`:
+  **the dominant cluster** — `PartialSpell`/`Spell.name: StringReference` is
+  required (not in `PartialSpell`'s optional-key list), and ~18 call sites across
+  these files omitted it entirely. Added a real `name`. First pass used a bare
+  number literal, which type-checks (`StringReference = TranslationKey | number`)
+  but **broke 2 tests at runtime**: `spell.service.test.ts`'s `addProjectile`
+  path calls `translationService.fromOptional(spell.name)`, which throws for a
+  number that was never registered. Fixed properly by registering it via
+  `translationService.addCustomTranslation(["Test Spell"])` — the same pattern
+  `poison.service.ts` already uses in production for exactly this reason — and
+  reusing the returned stringRef across the file's ~14 `getSpell()` calls.
+- `lib/src/model/creature/family.test.ts`: `family.creature(99)` — `99` isn't a
+  `MonsterEnum` member; this is a deliberate "id that doesn't exist" test value,
+  so cast (`99 as MonsterEnum`) rather than changing the value.
+- `lib/src/services/baf/target.service.test.ts`: **a real typo bug in the test**
+  — `align: "CHAOTICEVIL"` isn't a valid `AlignIdentifier` (missing the
+  underscore); fixed to `"CHAOTIC_EVIL"` in both the input and the expected
+  output string it's asserted against.
+- `lib/src/services/effects/effect.service.test.ts`: three `ProtectionFromResource`
+  tests construct `type: { stat: SpellProtectionStat.Ea, value: 0, ... }` — the
+  `SpellProtectionEa` type declares `value?: AllegianceIdentifier` (a friendly
+  string) for authoring config, but `EXISTING_SPELL_PROTECTIONS` (the resolved
+  table `effect.service.ts` actually matches against) stores each entry's
+  already-resolved *raw numeric* value — `{ index: 0, stat: "0x10a", value: 0,
+  relation: 4 }` is the literal row these tests exercise. Kept the numeric value
+  (it's correct for what's being tested) and added `as any` with a comment
+  explaining the friendly-type-vs-resolved-table mismatch, rather than changing
+  the test's numbers to something that no longer matches the table.
+- `lib/src/services/effects/grab.service.test.ts`: `weapon.header.effects[0].type`
+  — `Effect` is a large discriminated union and `.type` isn't on every member
+  (e.g. `ArmorClassBonusEffect` has none), so indexing into `Effect[]` and
+  reading `.type` doesn't type-check without narrowing. Cast to the concrete
+  `CastSpellEffect` (what `grabService.attachGrabToWeapon` actually constructs).
+- `vitest.config.ts`: `silent: "passed-only"` is a vitest 3.x value; the
+  installed vitest is 2.1.9, whose `silent` option is `boolean` only — worse,
+  since JS doesn't validate config at runtime, the truthy string was silently
+  behaving like `silent: true` (hiding failures too, not just passes). Changed
+  to `silent: false` so failures stay visible.
+- `tsconfig.eslint.json`: separately, `vitest.config.ts`'s own import chain
+  (`vitest/config` → vite → a `rollup/parseAst` subpath export) failed to
+  resolve under this project's `moduleResolution` (inherited `"node"` from the
+  build `tsconfig.json`, which predates subpath-exports support). Fixed by
+  overriding `"module": "preserve"` / `"moduleResolution": "bundler"` inside
+  `tsconfig.eslint.json` only — it's a `noEmit` type-check-only config, so this
+  doesn't touch the real build (`tsconfig.json`, which excludes
+  `vitest.config.ts` and `*.test.ts` entirely).
 
-Worth its own pass — likely the same `Partial<Effect>`-shaped fixture mismatches
-fixed in Tier 1, but scope/count not yet assessed. Run
-`npx tsc -p tsconfig.eslint.json` to get the current list.
+`npm run build` and `npm test` (831/831) both clean.
 
 ### ☐ 5. `restrict-template-expressions` — the 29 `X | undefined` cases (not covered by Tier 0's config change)
 

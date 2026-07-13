@@ -11,15 +11,13 @@ describe("targetObject", () => {
   });
 
   it("returns just the allegiance when it's the only field set", () => {
-    expect(targetService.targetObject({ ea: "EVILCUTOFF" })).toBe(
-      "EVILCUTOFF",
-    );
+    expect(targetService.targetObject({ ea: "EVILCUTOFF" })).toBe("EVILCUTOFF");
   });
 
   it("keeps zero placeholders between two set fields but trims trailing zeros", () => {
-    expect(
-      targetService.targetObject({ ea: "EVILCUTOFF", clazz: "FIGHTER_ALL" }),
-    ).toBe("EVILCUTOFF.0.0.FIGHTER_ALL");
+    expect(targetService.targetObject({ ea: "EVILCUTOFF", clazz: "FIGHTER_ALL" })).toBe(
+      "EVILCUTOFF.0.0.FIGHTER_ALL",
+    );
   });
 
   it("joins every field in order when all are set", () => {
@@ -31,11 +29,9 @@ describe("targetObject", () => {
         clazz: "FIGHTER_ALL",
         specific: "GNOLL",
         gender: "MALE",
-        align: "CHAOTICEVIL",
+        align: "CHAOTIC_EVIL",
       }),
-    ).toBe(
-      "EVILCUTOFF.HUMANOID.HUMAN.FIGHTER_ALL.GNOLL.MALE.CHAOTICEVIL",
-    );
+    ).toBe("EVILCUTOFF.HUMANOID.HUMAN.FIGHTER_ALL.GNOLL.MALE.CHAOTIC_EVIL");
   });
 });
 
@@ -80,9 +76,7 @@ describe("combineListWithTriggers", () => {
 
   it("does not mutate the original target list objects", () => {
     const original: TargetList = { name: "Players" };
-    targetService.combineListWithTriggers([original], [
-      { name: "Range", params: ["Myself", 30] },
-    ]);
+    targetService.combineListWithTriggers([original], [{ name: "Range", params: ["Myself", 30] }]);
     expect(original.triggers).toBeUndefined();
   });
 });
@@ -101,11 +95,8 @@ describe("getTriggersFromTargetList", () => {
 
   it("adds a status's own triggers and targetTriggers for includeStatus", () => {
     const target: TargetList = { name: "Players", includeStatus: ["Sleep"] };
-    const { triggers, targetTriggers } =
-      targetService.getTriggersFromTargetList(target);
-    expect(triggers).toEqual([
-      { name: "Allegiance", params: ["Myself", "ENEMY"] },
-    ]);
+    const { triggers, targetTriggers } = targetService.getTriggersFromTargetList(target);
+    expect(triggers).toEqual([{ name: "Allegiance", params: ["Myself", "ENEMY"] }]);
     expect(targetTriggers).toEqual([
       { name: "StateCheck", params: ["{Target}", "STATE_SLEEPING"] },
     ]);
@@ -113,11 +104,8 @@ describe("getTriggersFromTargetList", () => {
 
   it("negates a status's targetTriggers for excludeStatus, leaving its own triggers untouched", () => {
     const target: TargetList = { name: "Players", excludeStatus: ["Sleep"] };
-    const { triggers, targetTriggers } =
-      targetService.getTriggersFromTargetList(target);
-    expect(triggers).toEqual([
-      { name: "Allegiance", params: ["Myself", "ENEMY"] },
-    ]);
+    const { triggers, targetTriggers } = targetService.getTriggersFromTargetList(target);
+    expect(triggers).toEqual([{ name: "Allegiance", params: ["Myself", "ENEMY"] }]);
     expect(targetTriggers).toEqual([
       {
         name: "StateCheck",
@@ -130,31 +118,21 @@ describe("getTriggersFromTargetList", () => {
 
 describe("getTargetFromAbility", () => {
   it("resolves a known target list name to its target strings", () => {
-    expect(
-      targetService.getTargetFromAbility("Players", undefined, undefined),
-    ).toEqual({
+    expect(targetService.getTargetFromAbility("Players", undefined, undefined)).toEqual({
       targets: ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6"],
       allegianceCheck: false,
     });
   });
 
   it("limits the resolved list when limit is provided", () => {
-    expect(
-      targetService.getTargetFromAbility("Players", 2, undefined),
-    ).toEqual({
+    expect(targetService.getTargetFromAbility("Players", 2, undefined)).toEqual({
       targets: ["Player1", "Player2"],
       allegianceCheck: false,
     });
   });
 
   it("falls back to the raw identifier when it isn't a known target list name", () => {
-    expect(
-      targetService.getTargetFromAbility(
-        "GOODCUTOFF" as any,
-        undefined,
-        undefined,
-      ),
-    ).toEqual({
+    expect(targetService.getTargetFromAbility("GOODCUTOFF" as any, undefined, undefined)).toEqual({
       targets: "GOODCUTOFF",
       allegianceCheck: false,
     });
@@ -234,18 +212,14 @@ function fakeCreature(intelligence?: number): Creature {
 
 describe("getTargetPriorities", () => {
   it("defaults to NoCheck for enemies and Sleep for players when intelligence is unset", () => {
-    expect(
-      targetService.getTargetPriorities(fakeCreature(undefined), {}),
-    ).toEqual([
+    expect(targetService.getTargetPriorities(fakeCreature(undefined), {})).toEqual([
       { targets: ["NearestEnemies"], status: ["NoCheck"] },
       { targets: ["Players"], status: ["Sleep"] },
     ]);
   });
 
   it("includes intelligence-gated statuses once intelligence reaches 8", () => {
-    expect(
-      targetService.getTargetPriorities(fakeCreature(8), {}),
-    ).toEqual([
+    expect(targetService.getTargetPriorities(fakeCreature(8), {})).toEqual([
       {
         targets: ["NearestEnemies"],
         status: ["Slowed", "Able", "Held", "Stunned", "NoCheck"],

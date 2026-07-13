@@ -16,7 +16,7 @@ function fakeFamily(): TestFamily {
 describe("creature", () => {
   it("throws when no creature in the family has the given id", () => {
     const family = fakeFamily();
-    expect(() => family.creature(99)).toThrow(/No creature found with id 99/);
+    expect(() => family.creature(99 as MonsterEnum)).toThrow(/No creature found with id 99/);
   });
 
   it("returns the creature with the matching id", () => {
@@ -30,11 +30,7 @@ describe("creature", () => {
 describe("sequencer", () => {
   it("delegates to abilityService.getSequencer", () => {
     const family = fakeFamily();
-    const result = family.sequencer([
-      "SPWI219",
-      "SPWI219",
-      "SPWI219",
-    ] as any);
+    const result = family.sequencer(["SPWI219", "SPWI219", "SPWI219"] as any);
     expect(result).toBeDefined();
   });
 });
@@ -93,8 +89,6 @@ describe("projectile (override, family-wide fallback)", () => {
 
   it("re-throws the original error when not found anywhere in the family", () => {
     const family = fakeFamily();
-    expect(() => family.projectile(99)).toThrow(
-      /No projectile found with id 99/,
-    );
+    expect(() => family.projectile(99)).toThrow(/No projectile found with id 99/);
   });
 });

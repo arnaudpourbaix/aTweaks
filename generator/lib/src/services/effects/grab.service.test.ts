@@ -1,16 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { MonsterEnum } from "../../../creatures/monster";
-import {
-  GRAB_IMMUNE_CREATURES,
-  HUGE_CREATURES,
-  LARGE_CREATURES,
-} from "../../../config/creatures";
+import { GRAB_IMMUNE_CREATURES, HUGE_CREATURES, LARGE_CREATURES } from "../../../config/creatures";
 import { Creature } from "../../model/creature/creature";
-import { IdsEffect } from "../../model/spell-item/effect";
-import {
-  EffectCastSpellTypeEnum,
-  SaveTypeEnum,
-} from "../../model/spell-item/effect.enums";
+import { CastSpellEffect, IdsEffect } from "../../model/spell-item/effect";
+import { EffectCastSpellTypeEnum, SaveTypeEnum } from "../../model/spell-item/effect.enums";
 import { Weapon } from "../../model/spell-item/spell-item";
 import grabService from "./grab.service";
 
@@ -38,10 +31,8 @@ describe("attachGrabToWeapon", () => {
     const creature = fakeCreature({ strength: 19, size: "Large" });
     grabService.attachGrabToWeapon(creature, weapon, {});
     expect(weapon.header.effects).toHaveLength(1);
-    const effect = weapon.header.effects[0];
-    expect(effect.type).toBe(
-      EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel,
-    );
+    const effect = weapon.header.effects[0] as CastSpellEffect;
+    expect(effect.type).toBe(EffectCastSpellTypeEnum.CastInstantlyAtCasterLevel);
     expect(effect.saveBonus).toBe(-7); // -(str hit:3 + size grabModifier:4)
     expect(effect.saveTypes).toEqual([SaveTypeEnum.ParalyzePoisonDeath]);
   });
@@ -76,9 +67,7 @@ describe("attachGrabToWeapon", () => {
     const creature = fakeCreature({ strength: 10, size: "Medium" });
     grabService.attachGrabToWeapon(creature, weapon, {});
     const spell = creature.spells[0];
-    const idsEffects = spell.headers[0].effects.filter(
-      (e): e is IdsEffect => "idsEntry" in e,
-    );
+    const idsEffects = spell.headers[0].effects.filter((e): e is IdsEffect => "idsEntry" in e);
     const entries = idsEffects.map((e) => e.idsEntry);
     for (const [, entry] of GRAB_IMMUNE_CREATURES) {
       expect(entries).toContain(entry);
@@ -91,9 +80,7 @@ describe("attachGrabToWeapon", () => {
     const creature = fakeCreature({ strength: 10, size: "Huge" });
     grabService.attachGrabToWeapon(creature, weapon, {});
     const spell = creature.spells[0];
-    const idsEffects = spell.headers[0].effects.filter(
-      (e): e is IdsEffect => "idsEntry" in e,
-    );
+    const idsEffects = spell.headers[0].effects.filter((e): e is IdsEffect => "idsEntry" in e);
     const entries = idsEffects.map((e) => e.idsEntry);
     for (const [, entry] of HUGE_CREATURES) {
       expect(entries).toContain(entry);
@@ -108,9 +95,7 @@ describe("attachGrabToWeapon", () => {
     const creature = fakeCreature({ strength: 10, size: "Large" });
     grabService.attachGrabToWeapon(creature, weapon, {});
     const spell = creature.spells[0];
-    const idsEffects = spell.headers[0].effects.filter(
-      (e): e is IdsEffect => "idsEntry" in e,
-    );
+    const idsEffects = spell.headers[0].effects.filter((e): e is IdsEffect => "idsEntry" in e);
     const entries = idsEffects.map((e) => e.idsEntry);
     for (const [, entry] of [...HUGE_CREATURES, ...LARGE_CREATURES]) {
       expect(entries).toContain(entry);
@@ -128,24 +113,15 @@ describe("attachGrabToWeapon", () => {
 
   it("getGrabbedEffects (private) falls back to GRAB_DEFAULT_CONFIG.rounds when grab.rounds is unset", () => {
     const creature = fakeCreature({ strength: 10, size: "Medium" });
-    const effects = (grabService as any).getGrabbedEffects(
-      creature,
-      {},
-      "spellfile",
-    );
-    const setState = effects.find(
-      (e: any) => "state" in e && "duration" in e,
-    );
+    const effects = (grabService as any).getGrabbedEffects(creature, {}, "spellfile");
+    const setState = effects.find((e: any) => "state" in e && "duration" in e);
     expect(setState.duration).toBeGreaterThan(0);
   });
 
   it("getGrabImmuneEffects (private) skips the size-based extras and warns when the creature has no size", () => {
     const creature = fakeCreature({ strength: 10 });
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-    const effects = (grabService as any).getGrabImmuneEffects(
-      creature,
-      "spellfile",
-    );
+    const effects = (grabService as any).getGrabImmuneEffects(creature, "spellfile");
     expect(consoleSpy).toHaveBeenCalled();
     expect(effects).toHaveLength(GRAB_IMMUNE_CREATURES.length);
     consoleSpy.mockRestore();

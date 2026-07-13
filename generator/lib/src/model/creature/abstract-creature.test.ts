@@ -10,9 +10,7 @@ function fakeCreature(): Creature {
 describe("projectile", () => {
   it("throws when no projectile has the given id", () => {
     const creature = fakeCreature();
-    expect(() => creature.projectile(99)).toThrow(
-      /No projectile found with id 99/,
-    );
+    expect(() => creature.projectile(99)).toThrow(/No projectile found with id 99/);
   });
 
   it("returns the projectile with the matching id", () => {
@@ -26,9 +24,7 @@ describe("ability", () => {
   it("throws when the spell has no ability", () => {
     const creature = fakeCreature();
     creature.spells.push({ id: 5, file: "spl01" } as any);
-    expect(() => creature.ability(5)).toThrow(
-      /No ability found for spell id 5/,
-    );
+    expect(() => creature.ability(5)).toThrow(/No ability found for spell id 5/);
   });
 
   it("returns the spell's ability when present", () => {
@@ -43,9 +39,7 @@ describe("addSpell", () => {
   it("throws when a spell with the same id is already defined", () => {
     const creature = fakeCreature();
     creature.spells.push({ id: 7, file: "spl01" } as any);
-    expect(() => creature.addSpell({ id: 7 })).toThrow(
-      /Spell id 7 already defined/,
-    );
+    expect(() => creature.addSpell({ id: 7, name: 12345 })).toThrow(/Spell id 7 already defined/);
   });
 });
 
@@ -53,9 +47,7 @@ describe("addItem", () => {
   it("throws when an item with the same id is already defined", () => {
     const creature = fakeCreature();
     creature.items.push({ id: 3, file: "itm01" } as any);
-    expect(() => creature.addItem({ id: 3 })).toThrow(
-      /Item id 3 already defined/,
-    );
+    expect(() => creature.addItem({ id: 3 })).toThrow(/Item id 3 already defined/);
   });
 });
 
