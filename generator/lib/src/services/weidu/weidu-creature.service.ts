@@ -1,9 +1,9 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { CR, TAB } from "../../model/constants";
 import { CreatureAdjustment } from "../../model/creature/adjustment";
-import { Creature, CreatureAutoGenerate } from "../../model/creature/creature";
+import { Creature, CreatureAutoGenerate, CreatureNewFile } from "../../model/creature/creature";
 import { CREATURE_DATA_FIELDS, CreatureData } from "../../model/creature/data";
-import { WEAPON_SLOTS } from "../../model/creature/item";
+import { EquippedItem, WEAPON_SLOTS } from "../../model/creature/item";
 import { ImmunityName } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { ProficiencyTypeEnum } from "../../model/spell-item/effect.enums";
@@ -67,19 +67,29 @@ class WeiduCreatureService extends AbstractWeiduService {
       if (!entry.copyFromExisting && !entry.copyFrom)
         throw new Error(`newFiles entry needs either copyFromExisting or copyFrom !`);
       for (const file of entry.files) {
-        const copy = entry.copyFromExisting
-          ? `COPY_EXISTING ~${entry.copyFromExisting}.cre~`
-          : `COPY ~%MOD_FOLDER%/${utils.getFamilyFolder(creature.family)}/${entry.copyFrom ?? ""}.cre~`;
-        this.add(lines, `${copy} ~override/${file}.cre~`, tab);
-        if (entry.stringRef) {
-          for (const offset of ["0x8", "0xc"])
-            this.add(
-              lines,
-              `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef) ?? ""}`,
-              tab + 1,
-            );
-        }
+        this.addNewFile(lines, tab, creature, entry, file);
       }
+    }
+  }
+
+  private addNewFile(
+    lines: CodeLine[],
+    tab: number,
+    creature: Creature,
+    entry: CreatureNewFile,
+    file: string,
+  ) {
+    const copy = entry.copyFromExisting
+      ? `COPY_EXISTING ~${entry.copyFromExisting}.cre~`
+      : `COPY ~%MOD_FOLDER%/${utils.getFamilyFolder(creature.family)}/${entry.copyFrom ?? ""}.cre~`;
+    this.add(lines, `${copy} ~override/${file}.cre~`, tab);
+    if (entry.stringRef) {
+      for (const offset of ["0x8", "0xc"])
+        this.add(
+          lines,
+          `WRITE_LONG ${offset} ${utils.resolveStringRef(entry.stringRef) ?? ""}`,
+          tab + 1,
+        );
     }
   }
 
@@ -267,13 +277,6 @@ class WeiduCreatureService extends AbstractWeiduService {
   }) {
     let isEquip = false;
     for (const item of p.data.items.equipped) {
-      const noWeaponFiles = (p.creature ? p.creature.adjustments : []).reduce<string[]>(
-        (acc, a) => {
-          if (a.noWeapon) acc.push(...a.files);
-          return acc;
-        },
-        [],
-      );
       const slots = itemService.getItemSlots(item.slot);
       if (!slots.length) {
         console.warn(
@@ -282,12 +285,8 @@ class WeiduCreatureService extends AbstractWeiduService {
         continue;
       }
       const isWeapon = slots.every((slot) => WEAPON_SLOTS.some((s) => s.slot === slot));
-      const flagsArray: string[] = [];
-      if (item.undroppable === true || item.undroppable === undefined)
-        flagsArray.push("UNDROPPABLE");
-      if (item.unstealable === true) flagsArray.push("UNSTEALABLE");
-      if (!flagsArray.length) flagsArray.push("NONE");
-      const flags = `~${flagsArray.join("&")}~`;
+      const noWeaponFiles = this.getNoWeaponFiles(p.creature);
+      const flags = this.getItemFlags(item);
       const quantity = `#${item.quantity ?? 0}`;
       const equip = isWeapon && !isEquip ? "EQUIP" : "";
       const macro = slots.length > 1 ? "ADD_CRE_ITEM" : "REPLACE_CRE_ITEM";
@@ -297,6 +296,21 @@ class WeiduCreatureService extends AbstractWeiduService {
       this.addConditionalSourceRes(p.lines, code, p.tab, noWeaponFiles, true);
       if (isWeapon) isEquip = true;
     }
+  }
+
+  private getNoWeaponFiles(creature?: Creature): string[] {
+    return (creature ? creature.adjustments : []).reduce<string[]>((acc, a) => {
+      if (a.noWeapon) acc.push(...a.files);
+      return acc;
+    }, []);
+  }
+
+  private getItemFlags(item: EquippedItem): string {
+    const flagsArray: string[] = [];
+    if (item.undroppable === true || item.undroppable === undefined) flagsArray.push("UNDROPPABLE");
+    if (item.unstealable === true) flagsArray.push("UNSTEALABLE");
+    if (!flagsArray.length) flagsArray.push("NONE");
+    return `~${flagsArray.join("&")}~`;
   }
 
   private addMemorizedSpells(lines: CodeLine[], tab: number, data: CreatureData) {

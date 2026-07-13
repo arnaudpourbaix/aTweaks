@@ -36,6 +36,11 @@ class EffectService {
     return results;
   }
 
+  // Per-opcode special-casing (a handful of case bodies have their own nested `if`, e.g. Poison's
+  // icon->special or Disease's frequencyMultiplier) keeps this over threshold even as a flat
+  // switch. Splitting those into more functions would relocate the complexity, not reduce it -
+  // same reasoning as SONARJS_ROADMAP.md's Tier 1 already documents for this exact function.
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   getEffect(
     effect: Effect,
     options?: {

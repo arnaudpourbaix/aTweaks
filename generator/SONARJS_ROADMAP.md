@@ -94,14 +94,40 @@ randomize BAF target order (a gameplay feature) — not a security context
   `pipeline.golden.test.ts` (unaffected, as expected for a genuinely-dead
   reassignment).
 
-## ☐ 3. Cognitive complexity (9 functions over the 15-point threshold)
+## ✅ 3. Cognitive complexity (9 functions over the 15-point threshold)
 
-Audit and refactor the worst ones, same one-file-at-a-time treatment as the
-rest of this project's lint work - extract helpers where it genuinely
-clarifies, leave alone where the complexity is inherent to the domain (e.g. a
-large WeiDU opcode dispatch that's already organized as a flat switch, which
-is arguably more readable *as* a switch than split across several
-indirection layers).
+All 9 resolved:
+- `weidu-effect.service.ts`'s `addEffect()` (30→ under threshold): extracted
+  `addParameterIntVars`/`addSimpleIntVars`/`addSaveAndFlagIntVars` - each was
+  a genuinely separable group of INT_VAR fields.
+- `weidu-spell.service.ts`'s `createSpell()` (21): extracted
+  `createSpellFileHeader()` (the copyFrom-vs-CREATE branch) and
+  `addChangeSpellOptions()`.
+- `weidu-item.service.ts`'s `createItem()` (18): extracted
+  `createItemFileHeader()` and `writeItemAbilityHeaderPatch()`.
+- `weidu-creature.service.ts`'s `createNewFiles()` (16) and `addItemSlots()`
+  (18): extracted `addNewFile()`, `getNoWeaponFiles()`, `getItemFlags()`.
+- `ability.service.ts`'s `parseAbilitySpell()` (17): extracted
+  `addExclusionTriggers()` - turned out to be byte-for-byte duplicated in
+  `parseAbilitySpells()` too, so this also deduped real repeated code, not
+  just moved it around.
+- `ability.service.ts`'s `getSpellAction()` (16): **left as-is, scoped
+  disable.** A resource/id × cast-type lookup table would lose the
+  discriminated-union narrowing between each `name` and its `params` shape
+  without a cast - same reasoning as the two switches below.
+- `description.service.ts`'s `getEffectDescription()` (21): **converted the
+  if/else-if opcode chain to a `switch`** - Sonar's metric counts a switch as
+  one flat construct rather than one increment per branch, so this dropped
+  under threshold with no logic change. Bonus: the switch's case-based
+  narrowing made one `as ModifierTypeEffect` cast genuinely redundant
+  (confirmed via `tsc` against both tsconfigs, unlike the false positives
+  earlier in `LINT_ROADMAP.md` - this one really was over-asserted) - removed it.
+- `effect.service.ts`'s `getEffect()` (27): **left as-is, scoped disable.**
+  This is the function the top of this section already used as the
+  "flat switch domain complexity" example - several case bodies carry their
+  own small nested `if` (Poison's icon→special, Disease's
+  frequencyMultiplier, ...), which is inherent per-opcode behavior, not
+  duplication a helper could remove without just relocating it.
 
 ## ☐ 4. Everything else (11 findings, low-stakes style)
 

@@ -63,6 +63,17 @@ class WeiduEffectService extends AbstractWeiduService {
     // effect.power/power can't both be undefined here (the guard above requires one to be
     // truthy), but `??` can't prove that to the type checker across two independent operands.
     if (!!effect.power || !!power) intVars.push(`power=${effect.power ?? power ?? 0}`);
+    this.addParameterIntVars(intVars, effect);
+    this.addSimpleIntVars(intVars, effect);
+    this.addSaveAndFlagIntVars(intVars, effect);
+    const strVar = effect.resource ? ` STR_VAR resource="${effect.resource}"` : "";
+    this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
+    if (has2da) {
+      this.add(lines, `END`, tab - 1);
+    }
+  }
+
+  private addParameterIntVars(intVars: string[], effect: Effect) {
     if (effect.parameter1 && effect.parameter1 !== "0") {
       intVars.push(`parameter1=${weiduUtils.getIntegerValue(effect.parameter1) ?? ""}`);
     }
@@ -75,22 +86,21 @@ class WeiduEffectService extends AbstractWeiduService {
     if (effect.parameter4 && effect.parameter4 !== "0") {
       intVars.push(`parameter4=${weiduUtils.getIntegerValue(effect.parameter4) ?? ""}`);
     }
+  }
+
+  private addSimpleIntVars(intVars: string[], effect: Effect) {
     if (effect.timing) intVars.push(`timing=${effect.timing}`);
     if (effect.dispelResistance) intVars.push(`resist_dispel=${effect.dispelResistance}`);
     if (effect.duration) intVars.push(`duration=${effect.duration}`);
     if (effect.probability1) intVars.push(`probability1=${effect.probability1}`);
     if (effect.probability2) intVars.push(`probability2=${effect.probability2}`);
-    if (effect.diceSize) {
-      intVars.push(`dicesize=${effect.diceSize}`);
-    }
-    if (effect.diceThrown) {
-      intVars.push(`dicenumber=${effect.diceThrown}`);
-    }
+    if (effect.diceSize) intVars.push(`dicesize=${effect.diceSize}`);
+    if (effect.diceThrown) intVars.push(`dicenumber=${effect.diceThrown}`);
+  }
+
+  private addSaveAndFlagIntVars(intVars: string[], effect: Effect) {
     if (effect.saveTypes) {
-      const savingthrow = effect.saveTypes.reduce((sum, save) => {
-        sum += 2 ** save;
-        return sum;
-      }, 0);
+      const savingthrow = effect.saveTypes.reduce((sum, save) => sum + 2 ** save, 0);
       intVars.push(`savingthrow=${savingthrow}`);
     }
     if (effect.saveBonus) intVars.push(`savebonus="${effect.saveBonus}"`);
@@ -98,18 +108,10 @@ class WeiduEffectService extends AbstractWeiduService {
       const special =
         typeof effect.flags === "number"
           ? effect.flags
-          : effect.flags.reduce((sum, save) => {
-              sum += 2 ** save;
-              return sum;
-            }, 0);
+          : effect.flags.reduce((sum, save) => sum + 2 ** save, 0);
       intVars.push(`special=${special}`);
     } else if (effect.special) {
       intVars.push(`special=${effect.special}`);
-    }
-    const strVar = effect.resource ? ` STR_VAR resource="${effect.resource}"` : "";
-    this.add(lines, `LPF ${fn} INT_VAR ${intVars.join(" ")}${strVar} END`, tab);
-    if (has2da) {
-      this.add(lines, `END`, tab - 1);
     }
   }
 

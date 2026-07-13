@@ -144,6 +144,29 @@ class AbilityService {
         params: [spell.resource],
       });
     }
+    this.addExclusionTriggers(result, target, spell);
+    let spellTarget: string = spell.selfTarget ? ScriptTarget.myself : ScriptTarget.lastSeen;
+    if (spell.targetName) spellTarget = spell.targetName;
+    result.actions.push(this.getSpellAction(spell, spellTarget));
+    if (spell.remove && spell.type !== "normal" && spell.id) {
+      result.actions.push({
+        name: "RemoveSpell",
+        params: [spell.id],
+      });
+    } else if (spell.remove && spell.type !== "normal" && spell.resource) {
+      result.actions.push({
+        name: "RemoveSpellRES",
+        params: [spell.resource],
+      });
+    }
+    return result;
+  }
+
+  private addExclusionTriggers(
+    result: CreatureAbility,
+    target: string,
+    spell: CreatureAbilitySpell,
+  ) {
     for (const state of spell.excludeStateChecks ?? []) {
       result.triggers.push({
         name: "StateCheck",
@@ -165,21 +188,6 @@ class AbilityService {
         negation: true,
       });
     }
-    let spellTarget: string = spell.selfTarget ? ScriptTarget.myself : ScriptTarget.lastSeen;
-    if (spell.targetName) spellTarget = spell.targetName;
-    result.actions.push(this.getSpellAction(spell, spellTarget));
-    if (spell.remove && spell.type !== "normal" && spell.id) {
-      result.actions.push({
-        name: "RemoveSpell",
-        params: [spell.id],
-      });
-    } else if (spell.remove && spell.type !== "normal" && spell.resource) {
-      result.actions.push({
-        name: "RemoveSpellRES",
-        params: [spell.resource],
-      });
-    }
-    return result;
   }
 
   private parseAbilitySpells(
@@ -197,27 +205,7 @@ class AbilityService {
     result.infiniteUse = false;
     // result.resource = spell.resource ?? ability.preset;
     for (const spell of spells) {
-      for (const state of spell.excludeStateChecks ?? []) {
-        result.triggers.push({
-          name: "StateCheck",
-          params: [target, state],
-          negation: true,
-        });
-      }
-      for (const stat of spell.excludeStatsChecks ?? []) {
-        result.triggers.push({
-          name: "CheckStatGT",
-          params: [target, 0, stat],
-          negation: true,
-        });
-      }
-      for (const state of spell.excludeSpellStates ?? []) {
-        result.triggers.push({
-          name: "CheckSpellState",
-          params: [target, state],
-          negation: true,
-        });
-      }
+      this.addExclusionTriggers(result, target, spell);
       let spellTarget: string = spell.selfTarget ? ScriptTarget.myself : ScriptTarget.lastSeen;
       if (spell.targetName) spellTarget = spell.targetName;
       result.actions.push(this.getSpellAction(spell, spellTarget));
@@ -243,6 +231,11 @@ class AbilityService {
     return result;
   }
 
+  // A lookup-table rewrite would lose the discriminated-union narrowing between each `name` and
+  // its `params` shape (Actions.Action) without a cast - this flat resource/id x type dispatch is
+  // the clearest way to keep that type safety, same reasoning as effect.service.ts's opcode
+  // switch in SONARJS_ROADMAP.md.
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   private getSpellAction(spell: CreatureAbilitySpell, target: string): Actions.Action {
     if (spell.resource && spell.type === "normal")
       return { name: "SpellRES", params: [spell.resource, target] };

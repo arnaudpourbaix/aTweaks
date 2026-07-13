@@ -165,65 +165,67 @@ class DescriptionService {
     return results;
   }
 
+  // Same shape as effect.service.ts's getEffect() opcode dispatch (see SONARJS_ROADMAP.md):
+  // switched from an if/else-if chain to a switch, which Sonar's cognitive-complexity metric
+  // counts as a single flat construct rather than one increment per branch - the domain
+  // complexity (one branch per WeiDU opcode) is inherent and not something splitting into more
+  // functions would reduce, just relocate.
   private getEffectDescription(effect: Effect, target: ItemAbilityTargetEnum): string[] {
-    const results: string[] = [];
-    if (effect.opcode === EffectTypeEnum.Damage) {
-      results.push(...this.getDamage(effect));
-    } else if (effect.opcode === EffectTypeEnum.Poison) {
-      results.push(...this.getPoison(effect));
-    } else if (effect.opcode === EffectTypeEnum.Disease) {
-      results.push(...this.getDisease(effect));
-    } else if (effect.opcode === EffectTypeEnum.ArmorClassBonus) {
-      results.push(...this.getArmorClassBonus(effect));
-    } else if (effect.opcode === EffectTypeEnum.Paralyze || effect.opcode === EffectTypeEnum.Hold) {
-      results.push(...this.getParalyze(effect, target));
-    } else if (effect.opcode === EffectTypeEnum.InvisibilityDetection) {
-      results.push("Can see invisible creatures.");
-    } else if (effect.opcode === EffectTypeEnum.Blur) {
-      results.push("Blur (visual effect only)");
-      // } else if (effect.opcode === EffectTypeEnum.Translucency) {
-      //   results.push("Translucent");
-    } else if (effect.opcode === EffectTypeEnum.CurrentHPbonus) {
-      results.push(...this.getCurrentHPbonus(effect));
-    } else if (effect.opcode === EffectTypeEnum.LevelDrain) {
-      results.push(...this.getLevelDrain(effect));
-    } else if (effect.opcode === EffectTypeEnum.Sleep) {
-      results.push(...this.getSleep(effect));
-    } else if (effect.opcode === EffectTypeEnum.Slow) {
-      results.push(...this.getSlow(effect, target));
-    } else if (effect.opcode === EffectTypeEnum.Haste) {
-      results.push(...this.getHaste(effect, target));
-    } else if (effect.opcode === EffectTypeEnum.Teleport) {
-      results.push(...this.getTeleport());
-    } else if (
-      effect.opcode === EffectTypeEnum.CharmCreature ||
-      effect.opcode === EffectTypeEnum.CharmControlCreature
-    ) {
-      results.push(...this.getCharm(effect, target));
-    } else if (
-      [
-        EffectTypeEnum.AttackDamageBonus,
-        EffectTypeEnum.MovementRateBonus,
-        EffectTypeEnum.MovementRateBonus2,
-        EffectTypeEnum.Thac0Bonus,
-        EffectTypeEnum.OffhandThac0Bonus,
-      ].includes(effect.opcode)
-    ) {
-      results.push(...this.getModifierType(effect as ModifierTypeEffect));
-    } else if (effect.opcode === EffectTypeEnum.MirrorImageEffect) {
-      results.push(`Mirror image (${effect.amount})`);
-    } else if (effect.opcode === EffectTypeEnum.Infravision) {
-      results.push(`Darkvision out to 60 feet`);
-    } else if (effect.opcode === EffectTypeEnum.Invisibility) {
-      results.push(...this.getInvisibility(effect));
-    } else if (effect.opcode === EffectTypeEnum.Regeneration) {
-      results.push(...this.getRegeneration(effect));
-    } else if (effect.opcode === EffectTypeEnum.CastingTimeModifier) {
-      results.push(...this.getCastingTimeModifier(effect));
-    } else if (this.getStatisticText(effect)) {
-      results.push(...this.getStatisticModifier(effect as StatisticModifierEffect));
+    switch (effect.opcode) {
+      case EffectTypeEnum.Damage:
+        return this.getDamage(effect);
+      case EffectTypeEnum.Poison:
+        return this.getPoison(effect);
+      case EffectTypeEnum.Disease:
+        return this.getDisease(effect);
+      case EffectTypeEnum.ArmorClassBonus:
+        return this.getArmorClassBonus(effect);
+      case EffectTypeEnum.Paralyze:
+      case EffectTypeEnum.Hold:
+        return this.getParalyze(effect, target);
+      case EffectTypeEnum.InvisibilityDetection:
+        return ["Can see invisible creatures."];
+      case EffectTypeEnum.Blur:
+        return ["Blur (visual effect only)"];
+      // case EffectTypeEnum.Translucency:
+      //   return ["Translucent"];
+      case EffectTypeEnum.CurrentHPbonus:
+        return this.getCurrentHPbonus(effect);
+      case EffectTypeEnum.LevelDrain:
+        return this.getLevelDrain(effect);
+      case EffectTypeEnum.Sleep:
+        return this.getSleep(effect);
+      case EffectTypeEnum.Slow:
+        return this.getSlow(effect, target);
+      case EffectTypeEnum.Haste:
+        return this.getHaste(effect, target);
+      case EffectTypeEnum.Teleport:
+        return this.getTeleport();
+      case EffectTypeEnum.CharmCreature:
+      case EffectTypeEnum.CharmControlCreature:
+        return this.getCharm(effect, target);
+      case EffectTypeEnum.AttackDamageBonus:
+      case EffectTypeEnum.MovementRateBonus:
+      case EffectTypeEnum.MovementRateBonus2:
+      case EffectTypeEnum.Thac0Bonus:
+      case EffectTypeEnum.OffhandThac0Bonus:
+        return this.getModifierType(effect);
+      case EffectTypeEnum.MirrorImageEffect:
+        return [`Mirror image (${effect.amount})`];
+      case EffectTypeEnum.Infravision:
+        return [`Darkvision out to 60 feet`];
+      case EffectTypeEnum.Invisibility:
+        return this.getInvisibility(effect);
+      case EffectTypeEnum.Regeneration:
+        return this.getRegeneration(effect);
+      case EffectTypeEnum.CastingTimeModifier:
+        return this.getCastingTimeModifier(effect);
+      default:
+        if (this.getStatisticText(effect)) {
+          return this.getStatisticModifier(effect as StatisticModifierEffect);
+        }
+        return [];
     }
-    return results;
   }
 
   getSaveText(effect: { saveTypes?: SaveTypeEnum[]; saveBonus?: number }): string {

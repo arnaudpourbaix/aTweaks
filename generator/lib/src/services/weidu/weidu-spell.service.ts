@@ -21,6 +21,16 @@ class WeiduSpellService extends AbstractWeiduService {
     for (const projectile of spell.projectiles) {
       weiduProjectileService.createProjectile(lines, projectile);
     }
+    this.createSpellFileHeader(lines, spell, tab);
+    this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
+    this.createSpellCommon(lines, spell, tab + 1);
+    this.addChangeSpellOptions(lines, spell, tab + 1);
+    if (typeof spell.secondaryType === "string") {
+      this.writeOpcodeType(lines, spell, 0);
+    }
+  }
+
+  private createSpellFileHeader(lines: CodeLine[], spell: Spell, tab: number) {
     if (spell.copyFrom) {
       this.add(lines, `COPY_EXISTING ~${spell.copyFrom}.SPL~  ~override/${spell.file}.SPL~`, tab);
       if (spell.deleteHeaders === true) {
@@ -35,18 +45,15 @@ class WeiduSpellService extends AbstractWeiduService {
       this.add(lines, `CREATE SPL "${spell.file}"`, tab);
       this.write(lines, 0x64, 4, "0x72", tab + 1);
     }
-    this.add(lines, `COPY_EXISTING ~${spell.file}.SPL~  ~override~`, tab);
-    this.createSpellCommon(lines, spell, tab + 1);
-    if (spell.options) {
-      const type = spell.options.spellType !== undefined ? `type=${spell.options.spellType}` : "";
-      const ctime = spell.options.castingTime !== undefined ? "ctime=1" : "";
-      const rinvs = spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
-      const renew = spell.options.renew !== undefined ? `renew=${spell.options.renew}` : "";
-      this.add(lines, `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`, tab + 1);
-    }
-    if (typeof spell.secondaryType === "string") {
-      this.writeOpcodeType(lines, spell, 0);
-    }
+  }
+
+  private addChangeSpellOptions(lines: CodeLine[], spell: Spell, tab: number) {
+    if (!spell.options) return;
+    const type = spell.options.spellType !== undefined ? `type=${spell.options.spellType}` : "";
+    const ctime = spell.options.castingTime !== undefined ? "ctime=1" : "";
+    const rinvs = spell.options.removeInvisbilityOnCast !== undefined ? "rinvs=1" : "";
+    const renew = spell.options.renew !== undefined ? `renew=${spell.options.renew}` : "";
+    this.add(lines, `LPF CHANGE_SPELL INT_VAR ${type} ${ctime} ${rinvs} ${renew} END`, tab);
   }
 
   private writeOpcodeType(lines: CodeLine[], spell: Spell, tab: number) {
