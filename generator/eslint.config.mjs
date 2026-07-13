@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import sonarjs from 'eslint-plugin-sonarjs';
 
 export default tseslint.config(
   {
@@ -12,6 +13,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  sonarjs.configs.recommended,
   {
     languageOptions: {
       parserOptions: {
@@ -54,6 +56,10 @@ export default tseslint.config(
       // its instance (see trigger.factory.ts's inverseNegation(), fixed for unbound-method) is
       // exactly what this syntax is for.
       '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
+      // Outstanding TODOs/FIXMEs are tracked in TODO_ROADMAP.md instead of as blocking lint
+      // errors - most need game/mod domain knowledge to triage, not a mechanical fix.
+      'sonarjs/todo-tag': 'off',
+      'sonarjs/fixme-tag': 'off',
     },
   },
   eslintConfigPrettier,

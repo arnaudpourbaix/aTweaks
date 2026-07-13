@@ -1,0 +1,106 @@
+# TODO / FIXME Roadmap
+
+Extracted from `eslint-plugin-sonarjs`'s `todo-tag`/`fixme-tag` scan (2026-07-13) —
+47 hits total. Cataloged here instead of left as blocking lint errors, since most
+of these need game/mod domain knowledge to triage, not a mechanical fix.
+`sonarjs/todo-tag` and `sonarjs/fixme-tag` are off in `eslint.config.mjs`; this
+file is the tracking mechanism instead. When one of these is resolved, remove
+the source comment and check it off here.
+
+Status legend: 🔴 reported broken · 🟡 missing mechanic/feature gap ·
+🔵 needs investigation (unclear from the code alone) · ⚪ acknowledged low priority ·
+☐ not started · ✅ resolved
+
+---
+
+## 🔴 Reported broken (FIXME, active code)
+
+### ☐ `damage-aoe-presets.ts:129` — FrostFingers doesn't work at all
+```ts
+{
+  //FIXME: this spell doesn't seem to work at all
+  preset: FNP_SPELLS.FrostFingers.file,
+  ...
+```
+This is live, non-commented-out code (unlike the `common.ts` one below) — worth
+checking first since it's actually wired into `AbilityPreset`s and would affect
+real generated output.
+
+### ☐ `common.ts:9` — hunterCustomCode statements don't work properly
+```ts
+statements: [
+  // FIXME: these statements don't work properly
+  // { triggers: [...] ...
+```
+Lower urgency than the one above — the statements themselves are already
+commented out, so nothing broken is currently shipping. The FIXME is really
+"don't uncomment this without fixing it first."
+
+---
+
+## 🟡 Missing mechanics / feature gaps (TODO)
+
+- `cure-presets.ts:11` — `ability.cureLightWounds.spell` is `{}` (empty) with a
+  `//TODO: target` comment; looks like the spell/targeting was never filled in.
+- `slimes.ts:233` — black pudding's acid attack should also degrade the
+  target's nonmagical armor by -1 AC per hit, cumulative, destroying it at AC 10.
+  Not implemented.
+- `undead.ts:1042` — an attack that should age the target 10-40 years (1d4×10)
+  isn't implemented.
+- `undead.ts:1981` — a Blink effect (4-round duration, 14-round timer) isn't
+  implemented.
+- `undead.ts:1639` — spellbook should vary by installed mod/component (SR,
+  Faiths & Powers, ...); currently one fixed spellbook.
+- `feys.ts:1092` — Quench Fire ability not implemented.
+- `ability.factory.ts:18` — a commented-out design note for a
+  situational-intelligence system (form changes based on combat state); no
+  creature currently uses this path per the comment.
+
+---
+
+## 🔵 Needs investigation (unclear without more context)
+
+- `spell-group.ts:54` — `// TODO: check these:` above 4 SpellPack b6 entries in
+  a spell-immunity group; unclear what "check" means (verify they belong? verify
+  opcodes? verify they exist in the target game install?).
+- `undead.ts:370` — `// who is using this one??` on a level-24 header (6d10
+  cold, 3d10 crushing) — sounds like the original author wasn't sure this
+  header is reachable/used. Worth checking if it's dead code.
+- `undead.ts:1150` — bare `//TODO:` with no text, on `deathKnight()`. No hint
+  what was intended.
+
+---
+
+## ⚪ Acknowledged low priority
+
+- `golems.ts:190` — charge mechanic is "a very basic idea... many improvements
+  can be done but since this golem is only used once by a mod, it is a low
+  priority" (author's own words).
+
+---
+
+## Commented-out "spirit variant" creature files (34 hits, one recurring idea)
+
+Every one of these is the same shape: a creature family has a block of
+commented-out `files: [...]` entries for a "Spirit" or mod-specific variant
+(Faiths & Powers' Spirit Spider), each tagged `//TODO: <variant name>`. These
+read as "this variant exists in some mod/game install but isn't confirmed
+supported yet," not bugs — flagging as one decision rather than 34 individual
+ones:
+
+| File | Lines | Variant |
+|---|---|---|
+| `bears.ts` | 187, 310-314 | Spirit Bear |
+| `cats.ts` | 123, 209-214 | Panther Spirit / Spirit Lion |
+| `spiders.ts` | 1068-1072 | Spirit Spider (Faiths & Powers) |
+| `undead.ts` | 2841-2845 **and** 2896-2900 | Spirit Spider (Faiths & Powers) — **listed twice, identically** |
+| `wolves.ts` | 605-610 | Spirit Wolf |
+
+The `undead.ts` duplication (same 5-line list appears twice, ~55 lines apart)
+is worth a look on its own — likely a copy-paste artifact from splitting or
+merging creature blocks, independent of whether the Spirit Spider variant
+itself ever gets implemented.
+
+**Decision needed:** are these "someday, if I get to it" (leave as comments,
+maybe consolidate the duplicate undead.ts block) or "not planned" (delete the
+dead commented code)? Either way, they don't need 34 separate line items.

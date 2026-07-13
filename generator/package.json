@@ -48,6 +48,7 @@
     "@vitest/coverage-istanbul": "^2.1.9",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-sonarjs": "^4.1.0",
     "nodemon": "^2.0.22",
     "prettier": "^3.9.5",
     "ts-node": "^10.9.1",
