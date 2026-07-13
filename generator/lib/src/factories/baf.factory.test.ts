@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ScriptTarget } from "../model/constants";
+import { Actions } from "../model/script/actions";
 import { Statements } from "../model/script/script";
 import bafFactory from "./baf.factory";
 import responseFactory from "./response.factory";
@@ -13,7 +14,7 @@ describe("addStatementsFromTargetList", () => {
       triggers: [triggerFactory.range(30)],
       targets: ["[GOODCUTOFF]", ScriptTarget.myself],
       responses: responseFactory.response([
-        { name: "AttackOneRound", params: [ScriptTarget.token] } as any,
+        { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
       ]),
       comment: "Attack nearest",
     });
@@ -48,16 +49,16 @@ describe("addStatementsFromTargetList", () => {
       triggers: [triggerFactory.range(30)],
       targets: ["[GOODCUTOFF]", ScriptTarget.myself],
       responses: responseFactory.response([
-        { name: "AttackOneRound", params: [ScriptTarget.token] } as any,
+        { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
       ]),
     });
 
-    expect((statements[0].responses[0].actions[0] as any).params).toEqual([
-      ScriptTarget.lastSeen,
-    ]);
-    expect((statements[1].responses[0].actions[0] as any).params).toEqual([
-      ScriptTarget.myself,
-    ]);
+    expect(
+      (statements[0].responses[0].actions[0] as Actions.Action & { params: unknown[] }).params,
+    ).toEqual([ScriptTarget.lastSeen]);
+    expect(
+      (statements[1].responses[0].actions[0] as Actions.Action & { params: unknown[] }).params,
+    ).toEqual([ScriptTarget.myself]);
   });
 
   it("reverses target order when reverse is set", () => {
@@ -94,24 +95,18 @@ describe("addOneBlockTargetList", () => {
     expect(statements[0].triggers).toEqual([
       {
         name: "Or",
-        triggers: [
-          { ...triggerFactory.range(30), params: ["[GOODCUTOFF]", 30], negation: true },
-        ],
+        triggers: [{ ...triggerFactory.range(30), params: ["[GOODCUTOFF]", 30], negation: true }],
       },
       {
         name: "Or",
-        triggers: [
-          { ...triggerFactory.range(30), params: ["[EVILCUTOFF]", 30], negation: true },
-        ],
+        triggers: [{ ...triggerFactory.range(30), params: ["[EVILCUTOFF]", 30], negation: true }],
       },
     ]);
   });
 
   it("inserts inBetweenStatements between the leading Or block and the final action statement", () => {
     const statements: Statements = [];
-    const inBetween: Statements = [
-      { triggers: [], responses: responseFactory.response([]) },
-    ];
+    const inBetween: Statements = [{ triggers: [], responses: responseFactory.response([]) }];
     bafFactory.addOneBlockTargetList({
       statements,
       targets: ["[GOODCUTOFF]"],
@@ -143,14 +138,14 @@ describe("addOneBlockTargetList", () => {
       targets: ["[GOODCUTOFF]"],
       targetTriggers: [],
       responses: responseFactory.response([
-        { name: "AttackOneRound", params: [ScriptTarget.token] } as any,
+        { name: "AttackOneRound", params: [ScriptTarget.token] } as unknown as Actions.Action,
       ]),
     });
 
     const final = statements[statements.length - 1];
-    expect((final.responses[0].actions[0] as any).params).toEqual([
-      ScriptTarget.lastSeen,
-    ]);
+    expect(
+      (final.responses[0].actions[0] as Actions.Action & { params: unknown[] }).params,
+    ).toEqual([ScriptTarget.lastSeen]);
   });
 
   it("reverses target order when reverse is set", () => {

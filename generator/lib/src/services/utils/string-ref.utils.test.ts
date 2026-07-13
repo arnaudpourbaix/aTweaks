@@ -1,6 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { EXISTING_STRING_REFERENCES } from "../../../config/stringRef";
+import {
+  EXISTING_STRING_REFERENCES,
+  ExistingStringReference,
+  StringReferenceGroup,
+} from "../../../config/stringRef";
 import { StringRefUtils } from "./string-ref.utils";
+
+// EXISTING_STRING_REFERENCES is declared `as const` (a readonly tuple with no push/pop) - this
+// mutable view lets "throws when the matched entry has no id configured" temporarily append a
+// malformed entry to exercise that guard.
+const mutableStringReferences = EXISTING_STRING_REFERENCES as unknown as {
+  id: number[];
+  str: string;
+  group: string;
+}[];
 
 describe("getStringId", () => {
   it("returns the first configured id for a known string", () => {
@@ -9,22 +22,22 @@ describe("getStringId", () => {
 
   it("throws for an unknown string reference", () => {
     expect(() =>
-      StringRefUtils.getStringId("Not a real string" as any),
+      StringRefUtils.getStringId("Not a real string" as ExistingStringReference),
     ).toThrow("Stringref Not a real string not found !");
   });
 
   it("throws when the matched entry has no id configured", () => {
-    (EXISTING_STRING_REFERENCES as any).push({
+    mutableStringReferences.push({
       id: [],
       str: "NoIdConfigured",
       group: "poison",
     });
     try {
-      expect(() =>
-        StringRefUtils.getStringId("NoIdConfigured" as any),
-      ).toThrow("Stringref NoIdConfigured has been found but no id configured !");
+      expect(() => StringRefUtils.getStringId("NoIdConfigured" as ExistingStringReference)).toThrow(
+        "Stringref NoIdConfigured has been found but no id configured !",
+      );
     } finally {
-      (EXISTING_STRING_REFERENCES as any).pop();
+      mutableStringReferences.pop();
     }
   });
 });
@@ -41,6 +54,6 @@ describe("getStringIds", () => {
   });
 
   it("returns an empty array for a group with no entries", () => {
-    expect(StringRefUtils.getStringIds("not-a-group" as any)).toEqual([]);
+    expect(StringRefUtils.getStringIds("not-a-group" as StringReferenceGroup)).toEqual([]);
   });
 });

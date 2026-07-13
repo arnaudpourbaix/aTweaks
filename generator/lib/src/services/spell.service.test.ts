@@ -1,9 +1,12 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
+import { SpellGroupName } from "../../config/spell-group-name";
 import {
   EffectTargetEnum,
   ItemAbilityTypeEnum,
   SpellTypeEnum,
 } from "../model/spell-item/effect.enums";
+import { Effect } from "../model/spell-item/effect";
+import { PartialSpellHeader } from "../model/spell-item/spell-item";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import spellService from "./spell.service";
 import translationService from "./translation.service";
@@ -65,7 +68,10 @@ describe("getSpell", () => {
 
   it("throws when a header has no type", () => {
     expect(() =>
-      spellService.getSpell({ name: SPELL_NAME, headers: [{} as any] }, "spl08"),
+      spellService.getSpell(
+        { name: SPELL_NAME, headers: [{} as unknown as PartialSpellHeader] },
+        "spl08",
+      ),
     ).toThrow(/Header type is required!/);
   });
 
@@ -95,7 +101,7 @@ describe("getSpell", () => {
               {
                 opcode: EffectTypeEnum.CharmCreature,
                 target: EffectTargetEnum.PresetTarget,
-              } as any,
+              } as unknown as Effect,
             ],
           },
         ],
@@ -119,7 +125,7 @@ describe("getSpell", () => {
               {
                 opcode: EffectTypeEnum.CharmCreature,
                 target: EffectTargetEnum.PresetTarget,
-              } as any,
+              } as unknown as Effect,
             ],
           },
         ],
@@ -134,13 +140,13 @@ describe("getSpell", () => {
 
 describe("getGroupRessources", () => {
   it("throws when the group is not defined", () => {
-    expect(() => spellService.getGroupRessources("not-a-real-group" as any)).toThrow(
+    expect(() => spellService.getGroupRessources("not-a-real-group" as SpellGroupName)).toThrow(
       /Group not-a-real-group is not defined/,
     );
   });
 
   it("returns the group's spell resrefs when the group is defined", () => {
-    expect(spellService.getGroupRessources("acidSpells" as any)).toBeInstanceOf(Array);
+    expect(spellService.getGroupRessources("acidSpells")).toBeInstanceOf(Array);
   });
 });
 
@@ -163,7 +169,7 @@ describe("addProjectile (private, via header.projectile object)", () => {
   });
 
   it("does not add a duplicate projectile when two headers both reference an object projectile", () => {
-    const proj = { name: "Test Projectile" } as any;
+    const proj = { name: "Test Projectile" };
     const result = spellService.getSpell(
       {
         name: SPELL_NAME,
@@ -183,7 +189,7 @@ describe("useEffectFile (racial resistance skip-add dedup)", () => {
     const charmEffect = {
       opcode: EffectTypeEnum.CharmCreature,
       target: EffectTargetEnum.PresetTarget,
-    } as any;
+    } as unknown as Effect;
     const result = spellService.getSpell(
       {
         name: SPELL_NAME,
