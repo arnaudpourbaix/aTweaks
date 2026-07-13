@@ -22,89 +22,48 @@ import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 import targetService from "./target.service";
 
+// Shared shape for every handler dispatched through execute() below. Each handler destructures
+// only the fields it uses (via Pick<HandlerParams, ...>) instead of taking 3 positional
+// parameters - unused fields are simply omitted from the destructure, with no _prefix or
+// disable comment needed, and no risk of values shifting into the wrong slot the way dropping a
+// middle positional parameter would.
+export interface HandlerParams {
+  statements: Statements;
+  creature: Creature;
+  options: BuilderOptions;
+}
+
 class StatementBuilderService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
     const statements: Statements = [];
+    const p: HandlerParams = { statements, creature, options };
     // .bind(this) on each handler: execute() re-binds via fn.apply(this, ...) internally, so this
     // is a no-op at runtime, but satisfies unbound-method - a bare `this.foo` method reference is
     // otherwise indistinguishable, to the type checker, from one that will be called detached.
-    this.execute(
-      this.destroyUponDeath.bind(this),
-      "destroyUponDeath",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(this.dialog.bind(this), "dialog", statements, creature, options);
-    this.execute(this.init.bind(this), "init", statements, creature, options);
-    this.execute(this.rest.bind(this), "rest", statements, creature, options);
-    this.execute(
-      this.precastLongDurationSpells.bind(this),
-      "precastLongDurationSpells",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(this.turnHostile.bind(this), "turnHostile", statements, creature, options);
-    this.execute(this.detectCombat.bind(this), "detectCombat", statements, creature, options);
-    this.execute(this.shouts.bind(this), "shouts", statements, creature, options);
-    this.execute(this.followSummoner.bind(this), "followSummoner", statements, creature, options);
-    this.execute(
-      this.randomWalkNoCombat.bind(this),
-      "randomWalkNoCombat",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.noActionOutsideOfCombat.bind(this),
-      "noActionOutsideOfCombat",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(this.handlePanic.bind(this), "handlePanic", statements, creature, options);
-    this.execute(
-      this.thievesAbilities.bind(this),
-      "thievesAbilities",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.precastMidDurationSpells.bind(this),
-      "precastMidDurationSpells",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(
-      this.creatureAbilities.bind(this),
-      "creatureAbilities",
-      statements,
-      creature,
-      options,
-    );
-    this.execute(this.potions.bind(this), "potions", statements, creature, options);
-    this.execute(this.attack.bind(this), "attack", statements, creature, options);
-    this.execute(this.trackTargets.bind(this), "trackTargets", statements, creature, options);
-    this.execute(
-      this.randomWalkCombat.bind(this),
-      "randomWalkCombat",
-      statements,
-      creature,
-      options,
-    );
+    this.execute(this.destroyUponDeath.bind(this), "destroyUponDeath", p);
+    this.execute(this.dialog.bind(this), "dialog", p);
+    this.execute(this.init.bind(this), "init", p);
+    this.execute(this.rest.bind(this), "rest", p);
+    this.execute(this.precastLongDurationSpells.bind(this), "precastLongDurationSpells", p);
+    this.execute(this.turnHostile.bind(this), "turnHostile", p);
+    this.execute(this.detectCombat.bind(this), "detectCombat", p);
+    this.execute(this.shouts.bind(this), "shouts", p);
+    this.execute(this.followSummoner.bind(this), "followSummoner", p);
+    this.execute(this.randomWalkNoCombat.bind(this), "randomWalkNoCombat", p);
+    this.execute(this.noActionOutsideOfCombat.bind(this), "noActionOutsideOfCombat", p);
+    this.execute(this.handlePanic.bind(this), "handlePanic", p);
+    this.execute(this.thievesAbilities.bind(this), "thievesAbilities", p);
+    this.execute(this.precastMidDurationSpells.bind(this), "precastMidDurationSpells", p);
+    this.execute(this.creatureAbilities.bind(this), "creatureAbilities", p);
+    this.execute(this.potions.bind(this), "potions", p);
+    this.execute(this.attack.bind(this), "attack", p);
+    this.execute(this.trackTargets.bind(this), "trackTargets", p);
+    this.execute(this.randomWalkCombat.bind(this), "randomWalkCombat", p);
     return statements;
   }
 
-  private execute(
-    fn: (statements: Statements, creature: Creature, options: BuilderOptions) => void,
-    location: CustomCodeLocation,
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ) {
+  private execute(fn: (p: HandlerParams) => void, location: CustomCodeLocation, p: HandlerParams) {
+    const { statements, creature, options } = p;
     const custom = creature.behavior.customCodes.find((c) => c.location === location);
     // statements/abilities are required by CustomCode, and always filled in by
     // abilityService.getCustomCodes() in the real config-loading path - but defended anyway,
@@ -116,7 +75,7 @@ class StatementBuilderService {
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
     if (custom?.type !== "replace") {
-      fn.apply(this, [statements, creature, options]);
+      fn(p);
     } else {
       this.parseAbilities(statements, creature, options, custom.abilities ?? []);
     }
@@ -157,7 +116,7 @@ class StatementBuilderService {
     }
   }
 
-  private dialog(statements: Statements, creature: Creature, _options: BuilderOptions): void {
+  private dialog({ statements, creature }: Pick<HandlerParams, "statements" | "creature">): void {
     if (!creature.behavior.dialog.length) return;
     const nameTriggers: Triggers.Trigger[] = [];
     for (const name of creature.behavior.dialog) {
@@ -184,7 +143,10 @@ class StatementBuilderService {
     });
   }
 
-  private handlePanic(statements: Statements, creature: Creature, _options: BuilderOptions): void {
+  private handlePanic({
+    statements,
+    creature,
+  }: Pick<HandlerParams, "statements" | "creature">): void {
     if (utils.hasImmunity(creature.data.immunities, "fear")) return;
     statements.push({
       comment: "Handle Panic state",
@@ -213,11 +175,10 @@ class StatementBuilderService {
     });
   }
 
-  private destroyUponDeath(
-    statements: Statements,
-    _creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private destroyUponDeath({
+    statements,
+    options,
+  }: Pick<HandlerParams, "statements" | "options">): void {
     if (!options.summon) return;
     statements.push({
       comment: "Summons are destroyed on death",
@@ -226,7 +187,7 @@ class StatementBuilderService {
     });
   }
 
-  private init(statements: Statements, _creature: Creature, options: BuilderOptions): void {
+  private init({ statements, options }: Pick<HandlerParams, "statements" | "options">): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
@@ -246,7 +207,7 @@ class StatementBuilderService {
     });
   }
 
-  private rest(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private rest({ statements, creature, options }: HandlerParams): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.initGlobal, 0),
@@ -272,7 +233,7 @@ class StatementBuilderService {
     });
   }
 
-  private turnHostile(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private turnHostile({ statements, creature, options }: HandlerParams): void {
     if (options.summon) return;
     const actions: Actions.Action[] = [{ name: "Enemy" }];
     statements.push({
@@ -310,11 +271,7 @@ class StatementBuilderService {
     });
   }
 
-  private detectCombat(
-    statements: Statements,
-    _creature: Creature,
-    _options: BuilderOptions,
-  ): void {
+  private detectCombat({ statements }: Pick<HandlerParams, "statements">): void {
     const actions: Actions.Action[] = [
       actionFactory.setGlobal(GLOBAL_CONFIG.bafConstants.combatStarted, 1),
     ];
@@ -347,7 +304,7 @@ class StatementBuilderService {
     }
   }
 
-  private shouts(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private shouts({ statements, creature, options }: HandlerParams): void {
     if (!creature.behavior.help) return;
     const shoutId = options.summon
       ? GLOBAL_CONFIG.bafConstants.summonerShoutId
@@ -390,11 +347,10 @@ class StatementBuilderService {
     });
   }
 
-  private noActionOutsideOfCombat(
-    statements: Statements,
-    _creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private noActionOutsideOfCombat({
+    statements,
+    options,
+  }: Pick<HandlerParams, "statements" | "options">): void {
     const responses = responseFactory.response([{ name: "NoAction" }]);
     let triggers: Triggers.Trigger[] = [
       {
@@ -434,11 +390,10 @@ class StatementBuilderService {
     });
   }
 
-  private followSummoner(
-    statements: Statements,
-    _creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private followSummoner({
+    statements,
+    options,
+  }: Pick<HandlerParams, "statements" | "options">): void {
     if (!options.summon) return;
     const triggers: Triggers.Trigger[] = [
       triggerFactory.global(GLOBAL_CONFIG.bafConstants.combatStarted, 0),
@@ -471,7 +426,7 @@ class StatementBuilderService {
     });
   }
 
-  private trackTargets(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private trackTargets({ statements, creature, options }: HandlerParams): void {
     if (!creature.behavior.tracking) return;
     const additionals = this.getAdditionals(creature, "trackTargets");
     const allegiance: Triggers.Trigger = {
@@ -547,21 +502,13 @@ class StatementBuilderService {
     }
   }
 
-  private randomWalkCombat(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private randomWalkCombat({ statements, creature, options }: HandlerParams): void {
     if (!creature.behavior.combatWalk || options.summon) return;
     this.randomWalk(statements, true, options);
     this.avoidMeleeCombat(statements, creature, options);
   }
 
-  private randomWalkNoCombat(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private randomWalkNoCombat({ statements, creature, options }: HandlerParams): void {
     if (!creature.behavior.walk || options.summon) return;
     this.randomWalk(statements, false, options);
   }
@@ -583,11 +530,10 @@ class StatementBuilderService {
     });
   }
 
-  private thievesAbilities(
-    statements: Statements,
-    creature: Creature,
-    _options: BuilderOptions,
-  ): void {
+  private thievesAbilities({
+    statements,
+    creature,
+  }: Pick<HandlerParams, "statements" | "creature">): void {
     if (!creature.data.hideShadow) return;
     const hideTimer = "BD_HIDE";
     statements.push({
@@ -646,7 +592,7 @@ class StatementBuilderService {
     });
   }
 
-  private runAway(statements: Statements, _creature: Creature, options: BuilderOptions): void {
+  private runAway(statements: Statements, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       {
         name: "Range",
@@ -663,7 +609,7 @@ class StatementBuilderService {
     });
   }
 
-  private reposition(statements: Statements, _creature: Creature, options: BuilderOptions): void {
+  private reposition(statements: Statements, options: BuilderOptions): void {
     const triggers: Triggers.Trigger[] = [
       { name: "CanEquipRanged" },
       {
@@ -689,11 +635,11 @@ class StatementBuilderService {
     });
   }
 
-  private attack(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private attack({ statements, creature, options }: HandlerParams): void {
     if (!creature.attack.melee && !creature.attack.ranged) {
-      this.runAway(statements, creature, options);
+      this.runAway(statements, options);
       return;
-    } else if (creature.attack.ranged) this.reposition(statements, creature, options);
+    } else if (creature.attack.ranged) this.reposition(statements, options);
     for (const targetPriority of creature.attack.targetPriorities) {
       for (const targetList of targetPriority.targets) {
         this.attackTargetWithStatuses(
@@ -822,7 +768,7 @@ class StatementBuilderService {
     return statements;
   }
 
-  private potions(statements: Statements, creature: Creature, options: BuilderOptions): void {
+  private potions({ statements, creature, options }: HandlerParams): void {
     if (!creature.behavior.usePotions) return;
     for (const potion of POTIONS) {
       for (const file of potion.files) {
@@ -850,11 +796,10 @@ class StatementBuilderService {
     }
   }
 
-  private precastLongDurationSpells(
-    statements: Statements,
-    _creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private precastLongDurationSpells({
+    statements,
+    options,
+  }: Pick<HandlerParams, "statements" | "options">): void {
     this.precastSpells(
       statements,
       "long",
@@ -863,11 +808,10 @@ class StatementBuilderService {
     );
   }
 
-  private precastMidDurationSpells(
-    statements: Statements,
-    _creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private precastMidDurationSpells({
+    statements,
+    options,
+  }: Pick<HandlerParams, "statements" | "options">): void {
     if (!GLOBAL_CONFIG.spellcasterPrecastMidDurationSpells) return;
     this.precastSpells(
       statements,
@@ -908,11 +852,7 @@ class StatementBuilderService {
     });
   }
 
-  private creatureAbilities(
-    statements: Statements,
-    creature: Creature,
-    options: BuilderOptions,
-  ): void {
+  private creatureAbilities({ statements, creature, options }: HandlerParams): void {
     this.parseAbilities(statements, creature, options, creature.behavior.abilities);
   }
 
