@@ -179,8 +179,7 @@ class GrabService {
       target: EffectTargetEnum.PresetTarget,
       resource: file,
     }));
-    const effects = effectService.getEffects(rawEffects);
-    return effects;
+    return effectService.getEffects(rawEffects);
   }
 }
 

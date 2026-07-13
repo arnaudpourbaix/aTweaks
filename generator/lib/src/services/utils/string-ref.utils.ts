@@ -7,10 +7,9 @@ import {
 export const StringRefUtils = {
   getStringIds(groups: StringReferenceGroup | StringReferenceGroup[]): string[] {
     groups = typeof groups === "string" ? [groups] : groups;
-    const results = EXISTING_STRING_REFERENCES.filter((s) => groups.includes(s.group))
+    return EXISTING_STRING_REFERENCES.filter((s) => groups.includes(s.group))
       .map((s) => s.id.map((i) => `${i}`))
       .flat();
-    return results;
   },
   getStringId(str: ExistingStringReference): number {
     const result = EXISTING_STRING_REFERENCES.find((s) => s.str === str);

@@ -23,14 +23,13 @@ class ImmunityService {
   }
 
   getOverrides(immunity: ImmunityName, adjustments: CreatureAdjustment[]): string[] {
-    const files = adjustments.reduce<string[]>((acc, a) => {
+    return adjustments.reduce<string[]>((acc, a) => {
       const immunities = this.getImmunities(a.data.immunities);
       if (immunities.some((i) => i.overrides.includes(immunity))) {
         acc.push(...a.files);
       }
       return acc;
     }, []);
-    return files;
   }
 
   private getImmunities(names: ImmunityName[]): ImmunityConfig[] {

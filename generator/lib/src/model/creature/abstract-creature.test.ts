@@ -9,8 +9,7 @@ interface CreatureProtectedMethods {
 }
 
 function fakeCreature(): Creature {
-  const creature = new Creature(1);
-  return creature;
+  return new Creature(1);
 }
 
 describe("projectile", () => {
