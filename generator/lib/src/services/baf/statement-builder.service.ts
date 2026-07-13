@@ -25,43 +25,76 @@ import targetService from "./target.service";
 class StatementService {
   buildStatements(creature: Creature, options: BuilderOptions): Statements {
     const statements: Statements = [];
-    this.execute(this.destroyUponDeath, "destroyUponDeath", statements, creature, options);
-    this.execute(this.dialog, "dialog", statements, creature, options);
-    this.execute(this.init, "init", statements, creature, options);
-    this.execute(this.rest, "rest", statements, creature, options);
+    // .bind(this) on each handler: execute() re-binds via fn.apply(this, ...) internally, so this
+    // is a no-op at runtime, but satisfies unbound-method - a bare `this.foo` method reference is
+    // otherwise indistinguishable, to the type checker, from one that will be called detached.
     this.execute(
-      this.precastLongDurationSpells,
+      this.destroyUponDeath.bind(this),
+      "destroyUponDeath",
+      statements,
+      creature,
+      options,
+    );
+    this.execute(this.dialog.bind(this), "dialog", statements, creature, options);
+    this.execute(this.init.bind(this), "init", statements, creature, options);
+    this.execute(this.rest.bind(this), "rest", statements, creature, options);
+    this.execute(
+      this.precastLongDurationSpells.bind(this),
       "precastLongDurationSpells",
       statements,
       creature,
       options,
     );
-    this.execute(this.turnHostile, "turnHostile", statements, creature, options);
-    this.execute(this.detectCombat, "detectCombat", statements, creature, options);
-    this.execute(this.shouts, "shouts", statements, creature, options);
-    this.execute(this.followSummoner, "followSummoner", statements, creature, options);
-    this.execute(this.randomWalkNoCombat, "randomWalkNoCombat", statements, creature, options);
+    this.execute(this.turnHostile.bind(this), "turnHostile", statements, creature, options);
+    this.execute(this.detectCombat.bind(this), "detectCombat", statements, creature, options);
+    this.execute(this.shouts.bind(this), "shouts", statements, creature, options);
+    this.execute(this.followSummoner.bind(this), "followSummoner", statements, creature, options);
     this.execute(
-      this.noActionOutsideOfCombat,
+      this.randomWalkNoCombat.bind(this),
+      "randomWalkNoCombat",
+      statements,
+      creature,
+      options,
+    );
+    this.execute(
+      this.noActionOutsideOfCombat.bind(this),
       "noActionOutsideOfCombat",
       statements,
       creature,
       options,
     );
-    this.execute(this.handlePanic, "handlePanic", statements, creature, options);
-    this.execute(this.thievesAbilities, "thievesAbilities", statements, creature, options);
+    this.execute(this.handlePanic.bind(this), "handlePanic", statements, creature, options);
     this.execute(
-      this.precastMidDurationSpells,
+      this.thievesAbilities.bind(this),
+      "thievesAbilities",
+      statements,
+      creature,
+      options,
+    );
+    this.execute(
+      this.precastMidDurationSpells.bind(this),
       "precastMidDurationSpells",
       statements,
       creature,
       options,
     );
-    this.execute(this.creatureAbilities, "creatureAbilities", statements, creature, options);
-    this.execute(this.potions, "potions", statements, creature, options);
-    this.execute(this.attack, "attack", statements, creature, options);
-    this.execute(this.trackTargets, "trackTargets", statements, creature, options);
-    this.execute(this.randomWalkCombat, "randomWalkCombat", statements, creature, options);
+    this.execute(
+      this.creatureAbilities.bind(this),
+      "creatureAbilities",
+      statements,
+      creature,
+      options,
+    );
+    this.execute(this.potions.bind(this), "potions", statements, creature, options);
+    this.execute(this.attack.bind(this), "attack", statements, creature, options);
+    this.execute(this.trackTargets.bind(this), "trackTargets", statements, creature, options);
+    this.execute(
+      this.randomWalkCombat.bind(this),
+      "randomWalkCombat",
+      statements,
+      creature,
+      options,
+    );
     return statements;
   }
 

@@ -64,12 +64,18 @@ describe("applyKit", () => {
   it("does nothing when neither the creature nor base has a kit registered in KITS", () => {
     const creature = fakeCreature({ kit: "TRUECLASS" });
     kitService.applyKit(creature, undefined);
+    // creature.setBehavior is a vi.fn() mock (see fakeCreature()), not a bound Creature method -
+    // the rule can't see past the static Creature type to know that.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(creature.setBehavior).not.toHaveBeenCalled();
   });
 
   it("does nothing when data.kit is unset", () => {
     const creature = fakeCreature();
     kitService.applyKit(creature, undefined);
+    // creature.setBehavior is a vi.fn() mock (see fakeCreature()), not a bound Creature method -
+    // the rule can't see past the static Creature type to know that.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(creature.setBehavior).not.toHaveBeenCalled();
   });
 
@@ -77,6 +83,7 @@ describe("applyKit", () => {
     const creature = fakeCreature({ kit: "BARBARIAN", level1: 5 });
     kitService.applyKit(creature, undefined);
     expect(creature.data.immunities).toContain("backstab");
+    // eslint-disable-next-line @typescript-eslint/unbound-method -- see the note above.
     expect(creature.setBehavior).toHaveBeenCalledWith({
       abilities: [expect.objectContaining({ name: "ability.enrage" })],
     });
@@ -223,6 +230,9 @@ describe("applyKitAbilities", () => {
     const creature = fakeCreature({ abilities: [{ resource: "SPWI001" }] });
     const baseCreature = fakeBaseCreature({ kit: "BARBARIAN", level1: 1 });
     kitService.applyKitAbilities(creature, baseCreature, [fakeAbility({ resource: "SPWI001" })], 1);
+    // creature.setBehavior is a vi.fn() mock (see fakeCreature()), not a bound Creature method -
+    // the rule can't see past the static Creature type to know that.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(creature.setBehavior).not.toHaveBeenCalled();
   });
 
@@ -231,6 +241,7 @@ describe("applyKitAbilities", () => {
     const baseCreature = fakeBaseCreature({ kit: "BARBARIAN", level1: 1 });
     const ability = fakeAbility({ resource: "SPWI001" });
     kitService.applyKitAbilities(creature, baseCreature, [ability], 1);
+    // eslint-disable-next-line @typescript-eslint/unbound-method -- see the note above.
     expect(creature.setBehavior).toHaveBeenCalledWith({
       abilities: [ability.ability],
     });

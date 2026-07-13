@@ -9,8 +9,9 @@ Baseline was **1,525 lint errors**. Tier 0 (rule-config fix) brought that to
 item 3 (`no-non-null-assertion`, below) has since brought it to **356**; Tier 2
 item 4 (`no-unnecessary-condition`) to **294**; Tier 2 items 5a/5 (pre-existing
 test-file `tsc` errors, then `restrict-template-expressions`) to **281**;
-Tier 3 item 6 (`no-unused-vars`) to **254**. None of this blocks the build or
-tests today — `npm run lint` simply isn't green yet.
+Tier 3 item 6 (`no-unused-vars`) to **254**; Tier 3 item 7 (`unbound-method`)
+to **230**. None of this blocks the build or tests today — `npm run lint`
+simply isn't green yet.
 
 This was never 1,525 independent problems. A `-f json` dump (`npx eslint . -f json`,
 92 files affected) showed the errors clustering hard around a small number of root
@@ -390,14 +391,30 @@ member names, looked copy-pasted from another file), and the
 
 `npm run build` and `npm test` (831/831) both clean.
 
-### ☐ 7. `unbound-method` (25, mostly source)
+### ✅ 7. `unbound-method` (25, mostly source) — done
 
-Flags a method reference passed around detached from its instance (e.g.
-`array.map(someService.method)` — loses `this` if `method` uses it). Fix per call
-site: bind (`someService.method.bind(someService)`), wrap in an arrow
-(`(x) => someService.method(x)`), or confirm the method never uses `this` and is
-safe as-is (some of these may be false-positive-shaped, e.g. static-like methods —
-verify before wrapping).
+All three shapes described above showed up, one each:
+
+- `baf.factory.ts`'s `.map(triggerFactory.inverseNegation)`: the method
+  genuinely never uses `this` - annotated `inverseNegation(this: void, ...)`
+  at the declaration instead of wrapping at the one call site, so the
+  contract is documented permanently rather than re-verified per caller.
+- `kit.service.test.ts` (5): `expect(creature.setBehavior).toHaveBeenCalled...`
+  - a well-known false-positive shape for typed `vi.fn()` mocks assigned to a
+    real class's method-typed property (confirmed `vi.mocked(...)` doesn't
+    suppress it either - tested directly). `eslint-disable-next-line` per
+    occurrence, since it's inherent to how TS types a mock through the
+    original class's method signature, not a real unbound-`this` risk.
+- `statement-builder.service.ts` (19): the `execute()` dispatch table -
+  `this.execute(this.destroyUponDeath, "destroyUponDeath", ...)` passes 19
+  bare method references, all safe in practice because `execute()` calls
+  `fn.apply(this, [statements, creature, options])` internally, but the type
+  checker can't see through that indirection from the call site. Added
+  `.bind(this)` at all 19 call sites (the rule's own suggested fix) - a
+  runtime no-op given the existing `.apply(this, ...)`, but it makes each
+  reference provably safe independent of `execute()`'s implementation.
+
+`npm run build` and `npm test` (831/831) both clean.
 
 ### ☐ 8. Everything else (`prefer-nullish-coalescing` 17, `no-redundant-type-constituents`
 14, `no-empty-function` 11, `no-unsafe-enum-comparison` 4, `no-useless-assignment` 4,

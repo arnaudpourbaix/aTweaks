@@ -275,7 +275,9 @@ class TriggerFactory {
     return results;
   }
 
-  inverseNegation(trigger: Triggers.Trigger): Triggers.Trigger {
+  // this: void - doesn't use `this`, and is passed around unbound (e.g. baf.factory.ts's
+  // `.map(triggerFactory.inverseNegation)`).
+  inverseNegation(this: void, trigger: Triggers.Trigger): Triggers.Trigger {
     return { ...trigger, negation: !trigger.negation };
   }
 
