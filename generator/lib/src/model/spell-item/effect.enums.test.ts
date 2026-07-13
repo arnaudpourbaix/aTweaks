@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCastSpellOnConditionValue } from "./effect.enums";
+import { CastSpellOnConditionType, getCastSpellOnConditionValue } from "./effect.enums";
 
 describe("getCastSpellOnConditionValue", () => {
   it.each([
@@ -30,7 +30,7 @@ describe("getCastSpellOnConditionValue", () => {
   });
 
   it("returns 0 for an unrecognized condition text", () => {
-    expect(getCastSpellOnConditionValue("not-a-real-condition" as any)).toBe(
+    expect(getCastSpellOnConditionValue("not-a-real-condition" as CastSpellOnConditionType)).toBe(
       0,
     );
   });

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { MainCreatureData } from "./data";
 import { Creature } from "./creature";
 
 function fakeCreature(): Creature {
@@ -7,7 +8,7 @@ function fakeCreature(): Creature {
     spells: { memorized: [] },
     items: { equipped: [] },
     intelligence: 10,
-  } as any;
+  } as unknown as MainCreatureData;
   return creature;
 }
 

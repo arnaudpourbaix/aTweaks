@@ -158,13 +158,7 @@ export interface MemorizedSpell {
   level?: number;
 }
 
-export type ScriptLocation =
-  | "Override"
-  | "Class"
-  | "Race"
-  | "General"
-  | "Default"
-  | "None";
+export type ScriptLocation = "Override" | "Class" | "Race" | "General" | "Default" | "None";
 
 export const DATA_DEFAULT: Partial<CreatureData> = {
   immunities: [],
@@ -210,6 +204,13 @@ export const CREATURE_DATA_FIELDS: {
   /**
    * Default setter overrides current value if new value is defined
    */
+  // `any` is genuinely necessary here, not just convenient: this table is heterogeneous (each
+  // entry's setter has its own specific value type), and neither alternative works in both
+  // directions at once - `never` lets narrower setters be assigned into the table but makes them
+  // uncallable with a real value (see data.test.ts, which calls each field's setter directly with
+  // its own real type); `unknown` allows calling but rejects assigning any narrower setter into
+  // the table in the first place (see the individual entries below, e.g. `value: Level | number`).
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setter?: (data: CreatureData, value: any) => void;
 }[] = [
   {
@@ -596,10 +597,7 @@ export const CREATURE_DATA_FIELDS: {
       if (value.remove === undefined) return;
       if (typeof value.remove === "boolean") {
         data.effects.remove = value.remove;
-      } else if (
-        Array.isArray(data.effects.remove) &&
-        Array.isArray(value.remove)
-      ) {
+      } else if (Array.isArray(data.effects.remove) && Array.isArray(value.remove)) {
         data.effects.remove.push(...value.remove);
       } else if (Array.isArray(value.remove)) {
         data.effects.remove = value.remove;

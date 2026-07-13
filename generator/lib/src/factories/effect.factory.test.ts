@@ -18,7 +18,7 @@ describe("paralyze", () => {
   it("adds a Hold effect per race when races is a non-empty list, instead of the generic fallback", () => {
     const effects = effectFactory.paralyze({
       duration: 6,
-      races: ["HUMAN", "GNOLL"] as any,
+      races: ["HUMAN", "GNOLL"],
     });
     expect(effects).toContainEqual(
       expect.objectContaining({
@@ -34,9 +34,7 @@ describe("paralyze", () => {
         idsEntry: "GNOLL",
       }),
     );
-    expect(effects).not.toContainEqual(
-      expect.objectContaining({ idsEntry: "ANYONE" }),
-    );
+    expect(effects).not.toContainEqual(expect.objectContaining({ idsEntry: "ANYONE" }));
   });
 
   it("falls back to the generic ANYONE Hold effect when races is an empty array, instead of adding no Hold effect at all", () => {
