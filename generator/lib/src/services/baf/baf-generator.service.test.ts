@@ -8,6 +8,9 @@ import responseFactory from "../../factories/response.factory";
 import { ScriptTarget, CR } from "../../model/constants";
 import utils from "../utils/utils.service";
 import { ConditionalStatement } from "../../model/script/script";
+import { GenericScriptParameterData } from "../../model/script/data";
+import { Actions } from "../../model/script/actions";
+import { Triggers } from "../../model/script/triggers";
 
 // This is the compiler from the typed BAF AST (Actions.Action / Triggers.Trigger)
 // to the actual WeiDU script text. State.actions/State.triggers (parameter
@@ -27,28 +30,28 @@ describe("generateAction", () => {
     expect(bafGeneratorService.generateAction(actionFactory.enableInterrupt())).toBe(
       "\t\tSetInterrupt(TRUE)",
     );
-    expect(bafGeneratorService.generateAction(actionFactory.disableInterrupt() as any)).toBe(
+    expect(bafGeneratorService.generateAction(actionFactory.disableInterrupt())).toBe(
       "\t\tSetInterrupt(FALSE)",
     );
   });
 
   it("wraps a bare object identifier ending in 'By' with (Myself), matching real generated output", () => {
     const action = { name: "AttackOneRound", params: [ScriptTarget.lastSeen] };
-    expect(bafGeneratorService.generateAction(action as any)).toBe(
+    expect(bafGeneratorService.generateAction(action as unknown as Actions.Action)).toBe(
       "\t\tAttackOneRound(LastSeenBy(Myself))",
     );
   });
 
   it("throws when the action has the wrong number of parameters", () => {
     const action = { name: "SetGlobal", params: ["JA#TEST"] };
-    expect(() => bafGeneratorService.generateAction(action as any)).toThrow(
+    expect(() => bafGeneratorService.generateAction(action as unknown as Actions.Action)).toThrow(
       /Not enough parameters/,
     );
   });
 
   it("throws for an unregistered action name", () => {
     const action = { name: "NotARealAction", params: [] };
-    expect(() => bafGeneratorService.generateAction(action as any)).toThrow(
+    expect(() => bafGeneratorService.generateAction(action as unknown as Actions.Action)).toThrow(
       "Unknown action NotARealAction",
     );
   });
@@ -56,12 +59,12 @@ describe("generateAction", () => {
   it("throws when a registered action's parameter metadata has a hole at a matching-length index", () => {
     State.actions.push({
       name: "JA#TestHoleAction",
-      parameters: [undefined as any],
+      parameters: [undefined as unknown as GenericScriptParameterData],
       description: "",
     });
     try {
       const action = { name: "JA#TestHoleAction", params: ["x"] };
-      expect(() => bafGeneratorService.generateAction(action as any)).toThrow(
+      expect(() => bafGeneratorService.generateAction(action as unknown as Actions.Action)).toThrow(
         /Unexpected parameter x for action JA#TestHoleAction/,
       );
     } finally {
@@ -101,29 +104,29 @@ describe("generateTrigger", () => {
 
   it("throws when the trigger has the wrong number of parameters", () => {
     const trigger = { name: "Range", params: [30] };
-    expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
-      /Not enough parameters/,
-    );
+    expect(() =>
+      bafGeneratorService.generateTrigger(trigger as unknown as Triggers.Trigger, false),
+    ).toThrow(/Not enough parameters/);
   });
 
   it("throws for an unregistered trigger name", () => {
     const trigger = { name: "NotARealTrigger", params: [] };
-    expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
-      "Unknown trigger NotARealTrigger",
-    );
+    expect(() =>
+      bafGeneratorService.generateTrigger(trigger as unknown as Triggers.Trigger, false),
+    ).toThrow("Unknown trigger NotARealTrigger");
   });
 
   it("throws when a registered trigger's parameter metadata has a hole at a matching-length index", () => {
     State.triggers.push({
       name: "JA#TestHoleTrigger",
-      parameters: [undefined as any],
+      parameters: [undefined as unknown as GenericScriptParameterData],
       description: "",
     });
     try {
       const trigger = { name: "JA#TestHoleTrigger", params: ["x"] };
-      expect(() => bafGeneratorService.generateTrigger(trigger as any, false)).toThrow(
-        /Unexpected parameter x for trigger JA#TestHoleTrigger/,
-      );
+      expect(() =>
+        bafGeneratorService.generateTrigger(trigger as unknown as Triggers.Trigger, false),
+      ).toThrow(/Unexpected parameter x for trigger JA#TestHoleTrigger/);
     } finally {
       State.triggers.pop();
     }

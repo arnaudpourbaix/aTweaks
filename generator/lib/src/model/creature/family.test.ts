@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { MonsterEnum } from "../../../creatures/monster";
+import { Item, Spell } from "../spell-item/spell-item";
+import { Projectile } from "../spell-item/projectile";
 import { CreatureFamily } from "./family";
 import { Creature } from "./creature";
 
@@ -30,7 +32,7 @@ describe("creature", () => {
 describe("sequencer", () => {
   it("delegates to abilityService.getSequencer", () => {
     const family = fakeFamily();
-    const result = family.sequencer(["SPWI219", "SPWI219", "SPWI219"] as any);
+    const result = family.sequencer(["SPWI219", "SPWI219", "SPWI219"] as string[] & { length: 3 });
     expect(result).toBeDefined();
   });
 });
@@ -39,7 +41,7 @@ describe("item (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
     const cre = new Creature(1);
-    const item = { id: 7, file: "itm01" } as any;
+    const item = { id: 7, file: "itm01" } as unknown as Item;
     cre.items.push(item);
     family.creatures.push(cre);
     expect(family.item(7)).toBe(item);
@@ -55,7 +57,7 @@ describe("spell (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
     const cre = new Creature(1);
-    const spell = { id: 7, file: "spl01" } as any;
+    const spell = { id: 7, file: "spl01" } as unknown as Spell;
     cre.spells.push(spell);
     family.creatures.push(cre);
     expect(family.spell(7)).toBe(spell);
@@ -71,7 +73,7 @@ describe("projectile (override, family-wide fallback)", () => {
   it("falls back to searching creatures in the family when not found directly", () => {
     const family = fakeFamily();
     const cre = new Creature(1);
-    const proj = { id: 7, file: "pro01" } as any;
+    const proj = { id: 7, file: "pro01" } as unknown as Projectile;
     cre.projectiles.push(proj);
     family.creatures.push(cre);
     expect(family.projectile(7)).toBe(proj);
@@ -81,7 +83,7 @@ describe("projectile (override, family-wide fallback)", () => {
     const family = fakeFamily();
     const first = new Creature(1);
     const second = new Creature(2);
-    const proj = { id: 7, file: "pro01" } as any;
+    const proj = { id: 7, file: "pro01" } as unknown as Projectile;
     second.projectiles.push(proj);
     family.creatures.push(first, second);
     expect(family.projectile(7)).toBe(proj);

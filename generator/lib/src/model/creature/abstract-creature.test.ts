@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { Weapon } from "../spell-item/spell-item";
+import { Item, Spell, Weapon, WeaponCastSpell } from "../spell-item/spell-item";
+import { PartialProjectile } from "../spell-item/projectile";
 import { Creature } from "./creature";
+
+interface CreatureProtectedMethods {
+  spells: Spell[];
+  attachSpellToWeapon(weapon: Weapon, cast: WeaponCastSpell): void;
+}
 
 function fakeCreature(): Creature {
   const creature = new Creature(1);
@@ -15,7 +21,7 @@ describe("projectile", () => {
 
   it("returns the projectile with the matching id", () => {
     const creature = fakeCreature();
-    const proj = creature.addProjectile({ id: 1 } as any, "p1");
+    const proj = creature.addProjectile({ id: 1 } as unknown as PartialProjectile, "p1");
     expect(creature.projectile(1)).toBe(proj);
   });
 });
@@ -23,14 +29,14 @@ describe("projectile", () => {
 describe("ability", () => {
   it("throws when the spell has no ability", () => {
     const creature = fakeCreature();
-    creature.spells.push({ id: 5, file: "spl01" } as any);
+    creature.spells.push({ id: 5, file: "spl01" } as unknown as Spell);
     expect(() => creature.ability(5)).toThrow(/No ability found for spell id 5/);
   });
 
   it("returns the spell's ability when present", () => {
     const creature = fakeCreature();
     const ability = { name: "ability.test" };
-    creature.spells.push({ id: 5, file: "spl01", ability } as any);
+    creature.spells.push({ id: 5, file: "spl01", ability } as unknown as Spell);
     expect(creature.ability(5)).toBe(ability);
   });
 });
@@ -38,7 +44,7 @@ describe("ability", () => {
 describe("addSpell", () => {
   it("throws when a spell with the same id is already defined", () => {
     const creature = fakeCreature();
-    creature.spells.push({ id: 7, file: "spl01" } as any);
+    creature.spells.push({ id: 7, file: "spl01" } as unknown as Spell);
     expect(() => creature.addSpell({ id: 7, name: 12345 })).toThrow(/Spell id 7 already defined/);
   });
 });
@@ -46,7 +52,7 @@ describe("addSpell", () => {
 describe("addItem", () => {
   it("throws when an item with the same id is already defined", () => {
     const creature = fakeCreature();
-    creature.items.push({ id: 3, file: "itm01" } as any);
+    creature.items.push({ id: 3, file: "itm01" } as unknown as Item);
     expect(() => creature.addItem({ id: 3 })).toThrow(/Item id 3 already defined/);
   });
 });
@@ -60,8 +66,8 @@ describe("attachSpellToWeapon (protected)", () => {
   }
 
   it("attaches a CastSpell effect referencing an existing spell by file", () => {
-    const creature = fakeCreature() as any;
-    creature.spells.push({ file: "spl01" });
+    const creature = fakeCreature() as unknown as CreatureProtectedMethods;
+    creature.spells.push({ file: "spl01" } as unknown as Spell);
     const weapon = fakeWeapon();
     creature.attachSpellToWeapon(weapon, { spell: "spl01" });
     expect(weapon.header.effects).toHaveLength(1);
@@ -69,8 +75,8 @@ describe("attachSpellToWeapon (protected)", () => {
   });
 
   it("also attaches a RemoveSpell effect when remove is set", () => {
-    const creature = fakeCreature() as any;
-    creature.spells.push({ file: "spl01" });
+    const creature = fakeCreature() as unknown as CreatureProtectedMethods;
+    creature.spells.push({ file: "spl01" } as unknown as Spell);
     const weapon = fakeWeapon();
     creature.attachSpellToWeapon(weapon, { spell: "spl01", remove: true });
     expect(weapon.header.effects).toHaveLength(2);
