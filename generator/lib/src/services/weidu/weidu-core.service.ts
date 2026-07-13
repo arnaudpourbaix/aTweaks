@@ -13,9 +13,7 @@ class WeiduCoreService extends AbstractWeiduService {
   private lines = this.initLines();
 
   writeFile(): void {
-    const content = this.lines
-      .map((l) => `${TAB.repeat(l.tab)}${l.code}`)
-      .join(CR);
+    const content = this.lines.map((l) => `${TAB.repeat(l.tab)}${l.code}`).join(CR);
     utils.writeFile(GLOBAL_CONFIG.files.coreMonsters, content);
   }
 
@@ -55,11 +53,7 @@ class WeiduCoreService extends AbstractWeiduService {
       this.writeStringRef(this.lines, 0x50, immunity.description, 1);
     }
     this.add(this.lines, `COPY_EXISTING ~${itemSlot.file}.itm~ ~override~`, 0);
-    this.add(
-      this.lines,
-      `LPF ${utils.getImmunityFunctionName(immunity.name)} END`,
-      1,
-    );
+    this.add(this.lines, `LPF ${utils.getImmunityFunctionName(immunity.name)} END`, 1);
     this.add(this.lines, "", 0);
   }
 
@@ -77,6 +71,8 @@ class WeiduCoreService extends AbstractWeiduService {
         return "IRING16";
       case "BOOTS":
         return "IBOOT01";
+      default:
+        return undefined;
     }
   }
 }

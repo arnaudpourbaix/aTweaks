@@ -650,7 +650,7 @@ class Undead extends Creature {
         { type: DiseaseTypeEnum.ReduceConstitutionByAmount, amount: 1 },
       );
     }
-    const diseaseEffects: Effect[] = Array.from(Array(count), (e, i) =>
+    const diseaseEffects: Effect[] = Array.from(Array(count), (_e, i) =>
       disease.map(
         (e) =>
           // no-unnecessary-type-assertion is wrong here (verified against tsc directly): without

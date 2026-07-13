@@ -101,17 +101,29 @@ class HitPointService {
     let result = 8;
     const item = HitDiceTable.find(
       (e) =>
-        ("familyId" in e && e.familyId === creature.family) ||
-        // creature.id is typed as plain `number` (AbstractCreature.id is shared with
-        // CreatureFamily's own MonsterFamilyEnum-typed id) - widen monsterId to match.
-        // no-unnecessary-type-assertion disagrees the cast changes anything, but removing it
-        // brings back no-unsafe-enum-comparison - see family.ts's creature() for the same fix.
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        ("monsterId" in e && (e.monsterId as number | undefined) === creature.id) ||
-        ("type" in e && !!e.type && creature.data.immunities.includes(e.type)),
+        this.matchesFamily(e, creature) ||
+        this.matchesMonster(e, creature) ||
+        this.matchesImmunityType(e, creature),
     );
     if (item) result = item.hd;
     return result;
+  }
+
+  private matchesFamily(entry: (typeof HitDiceTable)[number], creature: Creature): boolean {
+    return "familyId" in entry && entry.familyId === creature.family;
+  }
+
+  private matchesMonster(entry: (typeof HitDiceTable)[number], creature: Creature): boolean {
+    // creature.id is typed as plain `number` (AbstractCreature.id is shared with
+    // CreatureFamily's own MonsterFamilyEnum-typed id) - widen monsterId to match.
+    // no-unnecessary-type-assertion disagrees the cast changes anything, but removing it
+    // brings back no-unsafe-enum-comparison - see family.ts's creature() for the same fix.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return "monsterId" in entry && (entry.monsterId as number | undefined) === creature.id;
+  }
+
+  private matchesImmunityType(entry: (typeof HitDiceTable)[number], creature: Creature): boolean {
+    return "type" in entry && !!entry.type && creature.data.immunities.includes(entry.type);
   }
 }
 

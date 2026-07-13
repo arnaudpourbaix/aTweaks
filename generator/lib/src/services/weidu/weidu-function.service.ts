@@ -118,7 +118,8 @@ class WeiduFunctionService extends AbstractWeiduService {
       if (spell.suffixes) {
         this.add(lines, `OUTER_SPRINT res $resources(${spells.length + i})`, tab + 1);
         for (const suffix of spell.suffixes) {
-          this.add(lines, `OUTER_SPRINT $resources(${index++}) ~%res%${suffix}~`, tab + 1);
+          this.add(lines, `OUTER_SPRINT $resources(${index}) ~%res%${suffix}~`, tab + 1);
+          index++;
         }
       }
     }
@@ -133,13 +134,7 @@ class WeiduFunctionService extends AbstractWeiduService {
     this.add(lines, `resist_dispel=0`, tab + 1);
     this.add(lines, `duration=0`, tab + 1);
     this.add(lines, `BEGIN`, tab);
-    if (
-      immunity.preventEffects.length ||
-      immunity.preventIcons.length ||
-      immunity.strings.length ||
-      immunity.spellGroups.length ||
-      immunity.animations.length
-    ) {
+    if (this.hasImmunityFunctionCallContent(immunity)) {
       // this.add(lines, `PATCH_PRINT ~${fnName}~`, tab + 1);
       this.callImmunityFunction(lines, immunity, tab + 1);
     }
@@ -156,6 +151,17 @@ class WeiduFunctionService extends AbstractWeiduService {
     this.add(lines, `END`, tab);
     this.add(lines, ``);
     if (immunity.itemSlot) weiduCoreService.generateItem(immunity.itemSlot, immunity);
+  }
+
+  private hasImmunityFunctionCallContent(immunity: ImmunityConfig): boolean {
+    const lists = [
+      immunity.preventEffects,
+      immunity.preventIcons,
+      immunity.strings,
+      immunity.spellGroups,
+      immunity.animations,
+    ];
+    return lists.some((list) => list.length > 0);
   }
 
   callImmunityFunction(lines: CodeLine[], immunity: ImmunityConfig, tab: number): void {
@@ -211,7 +217,8 @@ class WeiduFunctionService extends AbstractWeiduService {
       );
     } else {
       for (const groupName of immunity.spellGroups) {
-        const array = `array${++index}`;
+        index++;
+        const array = `array${index}`;
         arrays.push(array);
         this.add(
           lines,

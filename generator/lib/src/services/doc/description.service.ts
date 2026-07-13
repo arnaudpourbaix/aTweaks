@@ -237,8 +237,7 @@ class DescriptionService {
     else if (type === SaveTypeEnum.RodStaffWand) save = "wand";
     else if (type === SaveTypeEnum.Spell) save = "spell";
     const bonus = effect.saveBonus ? ` at ${this.getSignedNumber(effect.saveBonus)}` : "";
-    const saveText = save ? ` (saves vs ${save}${bonus})` : "";
-    return saveText;
+    return save ? ` (saves vs ${save}${bonus})` : "";
   }
 
   getProbability(effect: Effect): string {
@@ -639,7 +638,7 @@ class DescriptionService {
       { opcode: EffectTypeEnum.SaveVsWandModifier, label: "Save vs Wand" },
     ];
     const opcode = opcodes.find((o) => o.opcode === effect.opcode);
-    if (!opcode) return;
+    if (!opcode) return undefined;
     const eff = effect as StatisticModifierEffect;
     const duration = effect.duration ? ` for ${this.getDuration(effect.duration)}` : "";
     const value = EffectTypeEnum[opcode.opcode].includes("Resistance")
