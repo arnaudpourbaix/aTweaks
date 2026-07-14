@@ -43,21 +43,43 @@ place to say so.
 
 ## 🟡 Missing mechanics / feature gaps (TODO)
 
-- `cure-presets.ts:11` — `ability.cureLightWounds.spell` is `{}` (empty) with a
-  `//TODO: target` comment; looks like the spell/targeting was never filled in.
-- `slimes.ts:233` — black pudding's acid attack should also degrade the
+- ✅ `cure-presets.ts:11` — was a real, live bug, not just an unfilled
+  placeholder: `spell: {}` had no `selfTarget: true`, so `parseAbilitySpell()`
+  defaulted the cast target to `ScriptTarget.lastSeen`. The fey using this
+  preset (`feys.ts:463`) was casting Cure Light Wounds — triggered by its own
+  HP dropping below 75% — at its last-seen target instead of itself. Fixed;
+  confirmed via regenerated output: `ForceSpell(LastSeenBy(Myself),...)` →
+  `ForceSpell(Myself,...)` in `fey/ja#m2c.baf` and `ja#m2csu.baf`.
+- ☐ `slimes.ts:233` — black pudding's acid attack should also degrade the
   target's nonmagical armor by -1 AC per hit, cumulative, destroying it at AC 10.
-  Not implemented.
-- `undead.ts:1042` — an attack that should age the target 10-40 years (1d4×10)
-  isn't implemented.
-- `undead.ts:1981` — a Blink effect (4-round duration, 14-round timer) isn't
-  implemented.
-- `undead.ts:1639` — spellbook should vary by installed mod/component (SR,
-  Faiths & Powers, ...); currently one fixed spellbook.
-- `feys.ts:1092` — Quench Fire ability not implemented.
-- `ability.factory.ts:18` — a commented-out design note for a
-  situational-intelligence system (form changes based on combat state); no
-  creature currently uses this path per the comment.
+  Not implemented. **Investigated:** no existing stacking/cumulative-penalty
+  mechanic in this codebase to reuse - would need new design (likely a
+  scripted-state-tracked cumulative `ArmorClassBonus` effect, since IE has no
+  native "cumulative permanent AC penalty" opcode).
+- ☐ `undead.ts:1042` — an attack that should age the target 10-40 years (1d4×10)
+  isn't implemented. **Investigated:** no "age"/`SetAge`-equivalent opcode
+  exists anywhere in this codebase's `EffectTypeEnum` model - implementing
+  this means adding a brand-new opcode end-to-end (enum value, `Effect`
+  subtype, WeiDU writer, docs/description generation), not just a creature
+  tweak.
+- ☐ `undead.ts:1981` — a Blink effect (4-round duration, 14-round timer) isn't
+  implemented. **Investigated:** `dogs.ts`'s `createBlink()` exists but isn't
+  a reusable template - it's an aggressive teleport-strike-in-melee mechanic
+  (Thac0 bonus + `Teleport` opcode targeting `FarthestEnemies`), whereas this
+  wants a defensive self-buff (blink-out-of-harm status for a fixed duration
+  on a cooldown). Needs its own design.
+- ☐ `undead.ts:1639` — spellbook should vary by installed mod/component (SR,
+  Faiths & Powers, ...); currently one fixed spellbook. Needs a mod-detection/
+  conditional-spellbook mechanism that doesn't exist yet in this generator.
+- ☐ `feys.ts:1092` — Quench Fire ability not implemented. Zero code exists,
+  just the D&D 5e ritual description as a comment. No obvious IE-engine
+  effect equivalent for "extinguish nonmagical fire in an area, counter
+  magical fire from lower-level spells" - would need creative reinterpretation
+  of what this even means in WeiDU/IE terms, not just a translation.
+- ☐ `ability.factory.ts:18` — not a single ability: a design note for a whole
+  "situational polymorph form selection" AI system (pick a form based on
+  combat state - fleeing, melee, ranged). No creature currently uses this
+  path. Substantial feature, not a quick addition.
 
 ---
 

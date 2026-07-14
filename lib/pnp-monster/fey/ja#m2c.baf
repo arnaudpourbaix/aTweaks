@@ -1890,7 +1890,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		ForceSpell(LastSeenBy(Myself),CLERIC_CURE_LIGHT_WOUNDS)
+		ForceSpell(Myself,CLERIC_CURE_LIGHT_WOUNDS)
 		RemoveSpell(CLERIC_CURE_LIGHT_WOUNDS)
 END
 
