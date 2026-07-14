@@ -6,7 +6,11 @@ export const hunterCustomCode: CustomCode = {
   location: "init",
   type: "insertBefore",
   statements: [
-    // FIXME: these statements don't work properly
+    // These patrol/return-to-post statements aren't universal - not every creature sharing
+    // this hunterCustomCode object should get them (bears, jaguar, and mountain lion all
+    // reuse this same object directly), so left disabled here rather than shipping them for
+    // everyone. Would need to become per-creature/conditional rather than baked into this
+    // shared object to be re-enabled correctly.
     // {
     //   triggers: [
     //     { name: "Allegiance", params: [ScriptTarget.myself, "NEUTRAL"] },

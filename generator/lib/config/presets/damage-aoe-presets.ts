@@ -116,17 +116,17 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(
-          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-          true,
-        ),
+        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
-    //FIXME: this spell doesn't seem to work at all
+    // Frost Fingers itself is broken in the Faiths & Powers mod that provides it (confirmed:
+    // not a bug in this generator or this preset) - can't be fixed from here. Currently unused
+    // (the one spellbook slot that referenced it, undead.ts's mummy, was switched to Command
+    // instead), kept for whenever FNP fixes the underlying spell.
     preset: FNP_SPELLS.FrostFingers.file,
     ability: {
       name: "ability.FrostFingers",
@@ -149,23 +149,20 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create(
-    [SPELLS.CloudOfPestilence.file, FNP_SPELLS.CloudOfPestilence.file],
-    {
-      name: "ability.CloudOfPestilence",
-      targets: [
-        {
-          name: "NearestEnemies",
-          triggers: [
-            // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
-          ],
-        },
-      ],
-      spell: {},
-      requireVocal: true,
-      probability: DEFAULT_SPELL_PROBABILITY,
-    },
-  ),
+  ...presetFactory.create([SPELLS.CloudOfPestilence.file, FNP_SPELLS.CloudOfPestilence.file], {
+    name: "ability.CloudOfPestilence",
+    targets: [
+      {
+        name: "NearestEnemies",
+        triggers: [
+          // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
+        ],
+      },
+    ],
+    spell: {},
+    requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
+  }),
   {
     preset: SPELLS.WavesOfAgony.file,
     ability: {

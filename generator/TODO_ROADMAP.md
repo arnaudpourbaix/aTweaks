@@ -13,28 +13,29 @@ Status legend: 🔴 reported broken · 🟡 missing mechanic/feature gap ·
 
 ---
 
-## 🔴 Reported broken (FIXME, active code)
+## ✅ Reported broken (FIXME) — investigated, both resolved as "understood, won't fix from here"
 
-### ☐ `damage-aoe-presets.ts:129` — FrostFingers doesn't work at all
-```ts
-{
-  //FIXME: this spell doesn't seem to work at all
-  preset: FNP_SPELLS.FrostFingers.file,
-  ...
-```
-This is live, non-commented-out code (unlike the `common.ts` one below) — worth
-checking first since it's actually wired into `AbilityPreset`s and would affect
-real generated output.
+### ✅ `damage-aoe-presets.ts:129` — FrostFingers doesn't work at all
+Investigated: the preset is unused (its one reference, a mummy spellbook slot
+in `undead.ts:1644`, is commented out and was replaced by `Command`). Traced
+the generator's handling of the preset's `CheckStat(SCRIPTINGSTATE4)` trigger
+end-to-end and confirmed it's correctly wired through to generated output —
+not a bug in this codebase. **Confirmed by the maintainer: the underlying
+Frost Fingers spell is broken in the Faiths & Powers mod itself.** Not
+fixable from the generator side. Comment updated in place to say so; kept
+(unused) for whenever FNP fixes it.
 
-### ☐ `common.ts:9` — hunterCustomCode statements don't work properly
-```ts
-statements: [
-  // FIXME: these statements don't work properly
-  // { triggers: [...] ...
-```
-Lower urgency than the one above — the statements themselves are already
-commented out, so nothing broken is currently shipping. The FIXME is really
-"don't uncomment this without fixing it first."
+### ✅ `common.ts:9` — hunterCustomCode statements don't work properly
+Investigated: `hunterCustomCode` itself is live (bears, jaguar, mountain
+lion), but the two broken statement blocks were already commented out, so
+nothing broken ships today. Ruled out a suspected typo (`MoveToSavedLocationn`
+with a double "n") — it's a real, separately-documented WeiDU action in this
+codebase's own reference table, identical to `MoveToSavedLocation`, not a
+mistake. **Confirmed by the maintainer: not every creature sharing this
+object should get this patrol behavior** — it would need to be per-creature/
+conditional rather than baked into the shared `hunterCustomCode` object to be
+re-enabled correctly, not a simple trigger-logic bug. Comment updated in
+place to say so.
 
 ---
 
