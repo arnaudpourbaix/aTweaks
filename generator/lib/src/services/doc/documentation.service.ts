@@ -199,19 +199,11 @@ class DocumentationService {
 
   getTraits() {
     let result = "";
-    // This sort mutates the shared State.immunities array in place - sorting a copy instead
-    // (the "correct" fix for sonarjs/no-misleading-array-reverse) changes real generated output:
-    // main.service.ts calls generateCreatures() (which calls documentationService.generate(),
-    // which calls this method) *before* generateCommonCode() (which calls
-    // weiduFunctionService.generateImmunities(), which iterates State.immunities in whatever
-    // order it's currently in). Sorting a copy here leaves State.immunities in insertion order for
-    // that later pass, reordering the DEFINE_PATCH_FUNCTION blocks it writes - confirmed via
-    // pipeline.golden.test.ts. Likely harmless (WeiDU doesn't care what order independent,
-    // separately-invoked functions appear in a file), but that's a bigger, deliberate change
-    // (making the sort explicit wherever the real dependency is) than a lint-driven cleanup should
-    // make unprompted - see SONARJS_ROADMAP.md.
-    // eslint-disable-next-line sonarjs/no-misleading-array-reverse
-    for (const immunity of State.immunities.sort((a, b) => (a.name > b.name ? 1 : -1))) {
+    // State.immunities is sorted once when loaded (see stateService.loadImmunities()) - both
+    // this trait listing and weiduFunctionService's generated function order rely on that same
+    // invariant rather than either one re-sorting (or silently depending on the other having
+    // sorted first).
+    for (const immunity of State.immunities) {
       if (immunity.type === "trait" && immunity.doc) {
         result += `<h5><a id="${immunity.name}">${translationService.fromOptional(
           immunity.stringRef,

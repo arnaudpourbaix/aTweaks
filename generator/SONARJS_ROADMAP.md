@@ -84,14 +84,23 @@ randomize BAF target order (a gameplay feature) — not a security context
   which iterates `State.immunities` in whatever order it's currently in) - so
   this "local" sort was silently controlling the order of
   `DEFINE_PATCH_FUNCTION` blocks in generated WeiDU output the entire time.
-  Reverted to the mutating sort, documented the real dependency inline with a
-  comment + scoped `eslint-disable-next-line`, and left the actual fix (making
-  the sort explicit wherever the real ordering dependency lives, since this
-  doc-generation-has-code-gen-side-effects coupling is real technical debt) as
-  a deliberate future decision rather than something a lint cleanup should
-  make unprompted. **This is exactly the "looks like dead code/harmless smell,
-  but the full test suite catches a real dependency" pattern from
-  `LINT_ROADMAP.md` - same lesson, different tool.**
+  Reverted to the mutating sort at the time, documented the real dependency
+  inline with a comment + scoped `eslint-disable-next-line`, and left the
+  actual fix as a deliberate future decision rather than something a lint
+  cleanup should make unprompted. **This is exactly the "looks like dead
+  code/harmless smell, but the full test suite catches a real dependency"
+  pattern from `LINT_ROADMAP.md` - same lesson, different tool.**
+  **Follow-up (resolved 2026-07-14):** moved the sort into
+  `stateService.loadImmunities()`, right after `State.immunities` is built -
+  sorted once there, establishing it as an invariant for every later reader
+  instead of an incidental side effect of whichever one happened to run
+  first. `getTraits()` no longer sorts (or needs the disable comment) at
+  all. One subtlety the first attempt at this missed: the sort has to run
+  *after* `loadImmunities()`'s `descriptionService.generateImmunity()` loop,
+  not before - that loop mints new translation stringRefs in iteration
+  order, so sorting first would've shifted every stringRef number in the
+  generated `.tra` files (caught by `pipeline.golden.test.ts`, same
+  verify-by-diffing-real-output discipline as everywhere else in this repo).
 - `sonarjs/no-redundant-assignments` → `effect.enums.ts`'s
   `getCastSpellOnConditionValue()` has `let value = 0;` then a `case
 "HitBy([ANYONE])": value = 0;` that redundantly reassigns the same value.

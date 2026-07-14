@@ -66,11 +66,22 @@ class StateService {
       };
       return result;
     });
+    // Must run in this (insertion) order, before the sort below: generateImmunity() mints new
+    // translation stringRefs for generated descriptions via translationService's sequential
+    // counter, so this loop's iteration order determines which immunity gets which stringRef
+    // number in the generated .tra files.
     for (const i of State.immunities) {
       if (i.type !== "resistance") {
         descriptionService.generateImmunity(i);
       }
     }
+    // Sorted once here (after stringRef assignment above, which must stay in insertion order),
+    // establishing State.immunities' order as an invariant for every later consumer
+    // (documentationService.getTraits()'s trait listing, weiduFunctionService's generated
+    // DEFINE_PATCH_FUNCTION block order). Previously this sort only happened as an incidental
+    // side effect of getTraits() itself, which meant WeiDU codegen's output order was silently
+    // controlled by whether/when documentation generation ran first in the pipeline.
+    State.immunities.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 }
 
