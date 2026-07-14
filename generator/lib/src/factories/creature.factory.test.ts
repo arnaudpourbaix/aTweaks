@@ -1,9 +1,15 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Creature } from "../model/creature/creature";
 import { EquippedItem } from "../model/creature/item";
 import { MainCreatureData } from "../model/creature/data";
 import { Item } from "../model/spell-item/spell-item";
 import creatureFactory from "./creature.factory";
+
+// Several tests below spy on console.log without restoring it themselves, relying on getting a
+// fresh spy (no leftover call history) in the next test.
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 function fakeCreature(): Creature {
   const creature = new Creature(1);

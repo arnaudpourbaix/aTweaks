@@ -1,8 +1,14 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
 import mainService from "./main.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
+
+// Several tests below spy on console.log without restoring it themselves, relying on getting a
+// fresh spy (no leftover call history) in the next test.
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 // No default value: every call site deliberately passes undefined/false/true to distinguish
 // the real Creature.valid field's 3 meaningful states ("never validated" vs "invalid" vs
@@ -42,7 +48,5 @@ describe("generateCreature", () => {
     mainService.generateCreature(fakeCreature(false));
     expect(bafSpy).not.toHaveBeenCalled();
     expect(weiduSpy).not.toHaveBeenCalled();
-    bafSpy.mockRestore();
-    weiduSpy.mockRestore();
   });
 });

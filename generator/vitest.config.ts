@@ -4,18 +4,12 @@ export default defineConfig({
   build: {
     target: "es2022",
   },
-  esbuild: {
-    target: "es2022",
-    tsconfigRaw: {
-      compilerOptions: {
-        target: "es2022",
-      },
-    },
-  },
   test: {
     include: ["lib/**/*.test.ts"],
-    // "passed-only" is a vitest 3.x value; the installed vitest 2.1.9 only accepts a boolean
-    // (and would otherwise silently treat the truthy string as `true`, hiding failures too).
+    // Explicitly false rather than "passed-only" (which suppresses console output for passing
+    // tests) - this codebase's production code paths log real diagnostics during generation
+    // (e.g. documentationService's "Generating documentation for X"), and hiding those for
+    // passing runs isn't worth the tradeoff versus just seeing everything.
     silent: false,
     coverage: {
       provider: "istanbul",
