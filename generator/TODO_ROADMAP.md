@@ -16,6 +16,7 @@ Status legend: 🔴 reported broken · 🟡 missing mechanic/feature gap ·
 ## ✅ Reported broken (FIXME) — investigated, both resolved as "understood, won't fix from here"
 
 ### ✅ `damage-aoe-presets.ts:129` — FrostFingers doesn't work at all
+
 Investigated: the preset is unused (its one reference, a mummy spellbook slot
 in `undead.ts:1644`, is commented out and was replaced by `Command`). Traced
 the generator's handling of the preset's `CheckStat(SCRIPTINGSTATE4)` trigger
@@ -26,6 +27,7 @@ fixable from the generator side. Comment updated in place to say so; kept
 (unused) for whenever FNP fixes it.
 
 ### ✅ `common.ts:9` — hunterCustomCode statements don't work properly
+
 Investigated: `hunterCustomCode` itself is live (bears, jaguar, mountain
 lion), but the two broken statement blocks were already commented out, so
 nothing broken ships today. Ruled out a suspected typo (`MoveToSavedLocationn`
@@ -61,14 +63,19 @@ place to say so.
 
 ## 🔵 Needs investigation (unclear without more context)
 
-- `spell-group.ts:54` — `// TODO: check these:` above 4 SpellPack b6 entries in
-  a spell-immunity group; unclear what "check" means (verify they belong? verify
-  opcodes? verify they exist in the target game install?).
-- `undead.ts:370` — `// who is using this one??` on a level-24 header (6d10
-  cold, 3d10 crushing) — sounds like the original author wasn't sure this
-  header is reachable/used. Worth checking if it's dead code.
-- `undead.ts:1150` — bare `//TODO:` with no text, on `deathKnight()`. No hint
-  what was intended.
+- ☐ `spell-group.ts:54` — `// TODO: check these:` above 4 "SpellPack b6" and 3
+  "IR/IRR" spell resource entries in the `blindness` spell-immunity group;
+  needs verifying those resource names actually exist/are correct against
+  the SpellPack and Item Revisions mods themselves - not verifiable from
+  this codebase alone. Still open.
+- ✅ `undead.ts:370` — investigated: the level-24 header (6d10 cold, 3d10
+  crushing) this comment refers to no longer exists in the code, only the
+  question remains. The only current caller of `createWallOfIce()` is the
+  Death Knight, which casts at `level1: 9` - so today, nobody would reach a
+  level-24 tier. **Kept intentionally** (maintainer: might be used later by
+  a new creature) rather than deleted as dead-code cleanup.
+- ☐ `undead.ts:1150` — bare `//TODO:` with no text, on `deathKnight()`.
+  **Kept** (maintainer: this creature is a work in progress).
 
 ---
 
@@ -89,13 +96,13 @@ read as "this variant exists in some mod/game install but isn't confirmed
 supported yet," not bugs — flagging as one decision rather than 34 individual
 ones:
 
-| File | Lines | Variant |
-|---|---|---|
-| `bears.ts` | 187, 310-314 | Spirit Bear |
-| `cats.ts` | 123, 209-214 | Panther Spirit / Spirit Lion |
-| `spiders.ts` | 1068-1072 | Spirit Spider (Faiths & Powers) |
-| `undead.ts` | 2841-2845 **and** 2896-2900 | Spirit Spider (Faiths & Powers) — **listed twice, identically** |
-| `wolves.ts` | 605-610 | Spirit Wolf |
+| File         | Lines                       | Variant                                                         |
+| ------------ | --------------------------- | --------------------------------------------------------------- |
+| `bears.ts`   | 187, 310-314                | Spirit Bear                                                     |
+| `cats.ts`    | 123, 209-214                | Panther Spirit / Spirit Lion                                    |
+| `spiders.ts` | 1068-1072                   | Spirit Spider (Faiths & Powers)                                 |
+| `undead.ts`  | 2841-2845 **and** 2896-2900 | Spirit Spider (Faiths & Powers) — **listed twice, identically** |
+| `wolves.ts`  | 605-610                     | Spirit Wolf                                                     |
 
 The `undead.ts` duplication (same 5-line list appears twice, ~55 lines apart)
 is worth a look on its own — likely a copy-paste artifact from splitting or

@@ -1158,7 +1158,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         "DEATHK1", // Demon Knight
         "DECK615", // Demon Knight
         "DVDEATHK", // Death Knight
-        "NTDEATH1", // Demonknight
         "NTDEATHK", // Demonknight
         "deathkni", // Plain Death Knight used in ToB
         "deck615", // DoMT hitman
