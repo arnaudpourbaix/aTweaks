@@ -24,6 +24,7 @@ async function main() {
       mainService.generateCommonCode();
       logService.section("Generating translations");
       mainService.generateTranslations();
+      logService.summary();
       logService.log("Finished!");
       console.log(chalk.green(`\nFinished!`));
     });
