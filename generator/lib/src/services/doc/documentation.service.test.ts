@@ -4,6 +4,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { afterEach, describe, expect, it } from "vitest";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import { Family } from "../../model/creature/family";
 import { ImmunityConfig } from "../../model/final/immunity";
@@ -41,6 +42,7 @@ function fakeCreatureForAddCreature(doubleApr: boolean): Creature {
       xpv: 500,
       items: { equipped: [] },
       immunities: [],
+      spells: { memorized: [] },
     },
     behavior: { abilities: [], customCodes: [] },
   } as unknown as Creature;
@@ -258,6 +260,176 @@ describe("getSpellQuantity", () => {
 
   it("returns 'every N rounds' for a renew value above 1", () => {
     expect(documentationService.getSpellQuantity(3, 5)).toBe("every 5 rounds");
+  });
+});
+
+function fakeAbility(
+  resource: string,
+  timer?: { name: string; value: number },
+  infiniteUse = false,
+): CreatureAbility {
+  return { name: "ability.test", resource, timer, infiniteUse } as unknown as CreatureAbility;
+}
+
+function fakeCreatureForSpells(
+  behavior: Partial<Creature["behavior"]>,
+  spells: Partial<Creature["data"]["spells"]>,
+): Creature {
+  return {
+    id: 79,
+    behavior: { abilities: [], customCodes: [], ...behavior },
+    data: { spells: { memorized: [], ...spells } },
+  } as unknown as Creature;
+}
+
+describe("getCreatureSpell", () => {
+  it("finds a spell in the given memorized list", () => {
+    const html = documentationService.getCreatureSpell(fakeAbility("SPPR101"), [
+      { file: "SPPR101", memorizedCount: 3 },
+    ]);
+    expect(html).toContain("3/day");
+  });
+
+  it("wraps a found entry in .ability-entry so multi-column layout keeps it intact", () => {
+    const html = documentationService.getCreatureSpell(fakeAbility("SPPR101"), [
+      { file: "SPPR101", memorizedCount: 3 },
+    ]);
+    expect(html).toMatch(/^<div class="ability-entry">.*<\/div>$/);
+  });
+
+  it("renders nothing when the resource isn't in the given list", () => {
+    const html = documentationService.getCreatureSpell(fakeAbility("SPPR101"), []);
+    expect(html).toBe("");
+  });
+
+  it("ignores the recast cooldown timer entirely when there's a real daily memorized count", () => {
+    const ability = fakeAbility("SPPR101", { name: "Summoning", value: 2 * 6 });
+    const html = documentationService.getCreatureSpell(ability, [
+      { file: "SPPR101", memorizedCount: 2 },
+    ]);
+    // The bug: a timer used to fully replace "2/day" with "every 2 rounds", hiding the real
+    // daily cap. A real count is authoritative, so the timer must not show at all.
+    expect(html).toContain("2/day");
+    expect(html).not.toContain("every 2 rounds");
+    expect(html).not.toContain("round");
+  });
+
+  it("still ignores the timer even when infiniteUse is true, as long as a real count was found", () => {
+    // parseAbilitySpell() defaults spell.type to "normal" *after* computing infiniteUse, so
+    // infiniteUse ends up true for most presets regardless of intent - it isn't a reliable
+    // signal here, so this branch must not special-case it.
+    const ability = fakeAbility("SPPR101", { name: "Summoning", value: 2 * 6 }, true);
+    const html = documentationService.getCreatureSpell(ability, [
+      { file: "SPPR101", memorizedCount: 2 },
+    ]);
+    expect(html).toContain("2/day");
+    expect(html).not.toContain("round");
+  });
+});
+
+describe("getCreatureSpells", () => {
+  it("renders only abilities backed by the base memorized list, not any spellbook variant", () => {
+    const creature = fakeCreatureForSpells(
+      { abilities: [fakeAbility("SPPR101"), fakeAbility("SPPR102")] },
+      {
+        memorized: [{ file: "SPPR101", memorizedCount: 3 }],
+        spellbooks: [
+          { mod: "FaithsAndPowers", memorized: [{ file: "SPPR102", memorizedCount: 1 }] },
+        ],
+      },
+    );
+    const template = { text: "{{abilities}}" };
+
+    documentationService.getCreatureSpells(template, creature);
+
+    expect(template.text).toContain("3/day");
+    expect(template.text).not.toContain("1/day");
+  });
+
+  it("renders nothing when the base memorized list has no matching abilities", () => {
+    const creature = fakeCreatureForSpells({ abilities: [fakeAbility("SPPR101")] }, {});
+    const template = { text: "{{abilities}}" };
+
+    documentationService.getCreatureSpells(template, creature);
+
+    expect(template.text).toBe("");
+  });
+});
+
+describe("getCreatureSpellbooks", () => {
+  it("renders a labeled section per spellbook variant that has matching abilities", () => {
+    const creature = fakeCreatureForSpells(
+      { abilities: [fakeAbility("SPPR101"), fakeAbility("SPPR102")] },
+      {
+        spellbooks: [
+          { mod: "FaithsAndPowers", memorized: [{ file: "SPPR101", memorizedCount: 2 }] },
+          { mod: "SpellRevisions", memorized: [{ file: "SPPR102", memorizedCount: 5 }] },
+        ],
+      },
+    );
+    const template = { text: "{{spellbooks}}" };
+
+    documentationService.getCreatureSpellbooks(template, creature);
+
+    expect(template.text).toContain("Faiths & Powers");
+    expect(template.text).toContain("2/day");
+    expect(template.text).toContain("Spell Revisions");
+    expect(template.text).toContain("5/day");
+  });
+
+  it("renders one tab button per variant, linked to its panel via data-tab/id, first tab active", () => {
+    const creature = fakeCreatureForSpells(
+      { abilities: [fakeAbility("SPPR101"), fakeAbility("SPPR102")] },
+      {
+        spellbooks: [
+          { mod: "FaithsAndPowers", memorized: [{ file: "SPPR101", memorizedCount: 2 }] },
+          { mod: "SpellRevisions", memorized: [{ file: "SPPR102", memorizedCount: 5 }] },
+        ],
+      },
+    );
+    const template = { text: "{{spellbooks}}" };
+
+    documentationService.getCreatureSpellbooks(template, creature);
+
+    expect(template.text).toContain(
+      '<button type="button" class="spellbook-tab-button active" data-tab="spellbook-m79-0">Faiths & Powers</button>',
+    );
+    expect(template.text).toContain(
+      '<button type="button" class="spellbook-tab-button" data-tab="spellbook-m79-1">Spell Revisions</button>',
+    );
+    expect(template.text).toContain(
+      '<div class="spellbook-tab-panel abilities active" id="spellbook-m79-0">',
+    );
+    expect(template.text).toContain(
+      '<div class="spellbook-tab-panel abilities" id="spellbook-m79-1">',
+    );
+  });
+
+  it("skips a spellbook variant with no matching abilities", () => {
+    const creature = fakeCreatureForSpells(
+      { abilities: [fakeAbility("SPPR101")] },
+      {
+        spellbooks: [
+          { mod: "FaithsAndPowers", memorized: [{ file: "SPPR101", memorizedCount: 2 }] },
+          { mod: "Vanilla", memorized: [] },
+        ],
+      },
+    );
+    const template = { text: "{{spellbooks}}" };
+
+    documentationService.getCreatureSpellbooks(template, creature);
+
+    expect(template.text).toContain("Faiths & Powers");
+    expect(template.text).not.toContain("Vanilla");
+  });
+
+  it("renders nothing when the creature has no spellbooks", () => {
+    const creature = fakeCreatureForSpells({ abilities: [fakeAbility("SPPR101")] }, {});
+    const template = { text: "{{spellbooks}}" };
+
+    documentationService.getCreatureSpellbooks(template, creature);
+
+    expect(template.text).toBe("");
   });
 });
 

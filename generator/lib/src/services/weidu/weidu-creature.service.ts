@@ -1,8 +1,9 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
+import { SPELLBOOK_MODS } from "../../../config/mods";
 import { CR, TAB } from "../../model/constants";
 import { CreatureAdjustment } from "../../model/creature/adjustment";
 import { Creature, CreatureAutoGenerate, CreatureNewFile } from "../../model/creature/creature";
-import { CREATURE_DATA_FIELDS, CreatureData } from "../../model/creature/data";
+import { CREATURE_DATA_FIELDS, CreatureData, MemorizedSpell } from "../../model/creature/data";
 import { EquippedItem, WEAPON_SLOTS } from "../../model/creature/item";
 import { ImmunityName } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
@@ -322,7 +323,40 @@ class WeiduCreatureService extends AbstractWeiduService {
   }
 
   private addMemorizedSpells(lines: CodeLine[], tab: number, data: CreatureData) {
-    for (const m of data.spells.memorized) {
+    const spellbooks = data.spells.spellbooks;
+    if (spellbooks?.length) {
+      // A spellbook variant with no weiduCheck (e.g. Vanilla) is the mutually-exclusive fallback
+      // of the chain below - used only when none of the mod-gated variants match - not an extra
+      // variant stacked on top of whichever one did match.
+      const fallback = spellbooks.find((sb) => !SPELLBOOK_MODS[sb.mod].weiduCheck);
+      const conditional = spellbooks
+        .map((sb) => ({ spellbook: sb, weiduCheck: SPELLBOOK_MODS[sb.mod].weiduCheck }))
+        .filter((sb): sb is typeof sb & { weiduCheck: string } => !!sb.weiduCheck);
+
+      if (conditional.length) {
+        conditional.forEach(({ spellbook, weiduCheck }, index) => {
+          const keyword = index === 0 ? "PATCH_IF" : "END ELSE PATCH_IF";
+          this.add(lines, `${keyword} ${weiduCheck} BEGIN`, tab);
+          this.addMemorizedSpellList(lines, tab + 1, spellbook.memorized);
+        });
+        if (fallback) {
+          this.add(lines, "END ELSE BEGIN", tab);
+          this.addMemorizedSpellList(lines, tab + 1, fallback.memorized);
+        }
+        this.add(lines, "END", tab);
+      } else if (fallback) {
+        this.addMemorizedSpellList(lines, tab, fallback.memorized);
+      }
+    }
+    // The base `memorized` list is always installed regardless of which spellbook variant (if
+    // any) matched - it may hold content unrelated to this feature entirely, e.g. kit-injected
+    // innate abilities (see kit.service.ts's applyKitAbilities), which must never be gated
+    // behind a PATCH_IF/ELSE branch.
+    this.addMemorizedSpellList(lines, tab, data.spells.memorized);
+  }
+
+  private addMemorizedSpellList(lines: CodeLine[], tab: number, list: MemorizedSpell[]) {
+    for (const m of list) {
       const infos = utils.getSpellInfos(m.file);
       const level = m.level ?? infos.level - 1;
       const spell = State.spells.find((s) => s.file === m.file);

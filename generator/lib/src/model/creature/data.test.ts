@@ -109,6 +109,38 @@ describe("CREATURE_DATA_FIELDS 'spells'", () => {
     fieldSetter("spells")(data, {});
     expect(data.spells.removeMemorized).toBe(true);
   });
+
+  it("initializes spellbooks when none exist yet", () => {
+    const data = baseData({
+      spells: { removeKnown: undefined, removeMemorized: undefined, memorized: [] },
+    });
+    fieldSetter("spells")(data, {
+      spellbooks: [{ mod: "SpellRevisions", memorized: [{ file: "SPWI002", memorizedCount: 2 }] }],
+    });
+    expect(data.spells.spellbooks).toEqual([
+      { mod: "SpellRevisions", memorized: [{ file: "SPWI002", memorizedCount: 2 }] },
+    ]);
+  });
+
+  it("appends onto an existing spellbooks list rather than replacing it", () => {
+    const data = baseData({
+      spells: {
+        removeKnown: undefined,
+        removeMemorized: undefined,
+        memorized: [],
+        spellbooks: [
+          { mod: "SpellRevisions", memorized: [{ file: "SPWI002", memorizedCount: 2 }] },
+        ],
+      },
+    });
+    fieldSetter("spells")(data, {
+      spellbooks: [{ mod: "FaithsAndPowers", memorized: [{ file: "SPWI003", memorizedCount: 3 }] }],
+    });
+    expect(data.spells.spellbooks).toEqual([
+      { mod: "SpellRevisions", memorized: [{ file: "SPWI002", memorizedCount: 2 }] },
+      { mod: "FaithsAndPowers", memorized: [{ file: "SPWI003", memorizedCount: 3 }] },
+    ]);
+  });
 });
 
 describe("CREATURE_DATA_FIELDS 'effects'", () => {

@@ -1200,7 +1200,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         spells: {
           memorized: [
             { file: SPELLS.DetectInvisibility.file, memorizedCount: 1 },
-            { file: SPELLS.DispelMagic.file, memorizedCount: 2 },
+            { file: SPELLS.DispelMagicWizard.file, memorizedCount: 2 },
             { file: SPELLS.PowerWordBlind.file, memorizedCount: 1 },
             { file: SPELLS.PowerWordKill.file, memorizedCount: 1 },
             { file: SPELLS.PowerWordStun.file, memorizedCount: 1 },
@@ -1634,49 +1634,136 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: [EffectTypeEnum.ProtectionFromBackstab],
         },
         spells: {
-          memorized: [
-            // TODO: handle different spellbooks depending on installed mods/components (SR, FnP, ...)
-            // level 1 (12):
-            { file: FNP_SPELLS.CauseDisease.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.Doom.file, memorizedCount: 3 },
-            { file: SPELLS.Command.file, memorizedCount: 6 },
-            // { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
-            // level 2 (12):
-            { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 5 },
-            { file: FNP_SPELLS.RigidThinking.file, memorizedCount: 4 },
-            { file: FNP_SPELLS.Shatter.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.Shield.file, memorizedCount: 1 },
-            // level 3 (12):
-            { file: FNP_SPELLS.CircleOfBones.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.ShadowMonsters.file, memorizedCount: 3 },
-            { file: FNP_SPELLS.CauseSeriousWounds.file, memorizedCount: 6 },
-            // level 4 (11):
-            { file: FNP_SPELLS.AnimateDead.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.CauseCriticalWounds.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.DemiShadowMonsters.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.Emotion.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.GreaterMalison.file, memorizedCount: 1 },
-            { file: SPELLS.Poison.file, memorizedCount: 2 },
-            { file: FNP_SPELLS.WavesOfFatigue.file, memorizedCount: 1 },
-            // level 5 (9):
-            { file: FNP_SPELLS.Chaos.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.CloudOfPestilence.file, memorizedCount: 1 },
+          spellbooks: [
             {
-              file: SPELLS.MassCauseLightWounds.file,
-              memorizedCount: 1,
+              mod: "FaithsAndPowers",
+              memorized: [
+                // level 1 (12):
+                { file: FNP_SPELLS.CauseDisease.file, memorizedCount: 3 },
+                { file: FNP_SPELLS.Doom.file, memorizedCount: 3 },
+                { file: SPELLS.Command.file, memorizedCount: 6 },
+                // { file: FNP_SPELLS.FrostFingers.file, memorizedCount: 6 },
+                // level 2 (12):
+                { file: FNP_SPELLS.Forbiddance.file, memorizedCount: 5 },
+                { file: FNP_SPELLS.RigidThinking.file, memorizedCount: 4 },
+                { file: FNP_SPELLS.Shatter.file, memorizedCount: 2 },
+                { file: FNP_SPELLS.Shield.file, memorizedCount: 1 },
+                // level 3 (12):
+                { file: FNP_SPELLS.CircleOfBones.file, memorizedCount: 3 },
+                { file: FNP_SPELLS.ShadowMonsters.file, memorizedCount: 3 },
+                { file: FNP_SPELLS.CauseSeriousWounds.file, memorizedCount: 6 },
+                // level 4 (11):
+                { file: FNP_SPELLS.AnimateDead.file, memorizedCount: 2 },
+                { file: FNP_SPELLS.CauseCriticalWounds.file, memorizedCount: 2 },
+                { file: FNP_SPELLS.DemiShadowMonsters.file, memorizedCount: 2 },
+                { file: FNP_SPELLS.Emotion.file, memorizedCount: 1 },
+                { file: FNP_SPELLS.GreaterMalison.file, memorizedCount: 1 },
+                { file: SPELLS.Poison.file, memorizedCount: 2 },
+                { file: FNP_SPELLS.WavesOfFatigue.file, memorizedCount: 1 },
+                // level 5 (9):
+                { file: FNP_SPELLS.Chaos.file, memorizedCount: 1 },
+                { file: FNP_SPELLS.CloudOfPestilence.file, memorizedCount: 1 },
+                {
+                  file: SPELLS.MassCauseLightWounds.file,
+                  memorizedCount: 1,
+                },
+                { file: FNP_SPELLS.Shades.file, memorizedCount: 1 },
+                { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
+                { file: SPELLS.WavesOfAgony.file, memorizedCount: 1 },
+                { file: SPELLS.GreaterCommand.file, memorizedCount: 1 },
+                { file: SPELLS.MagicResistance.file, memorizedCount: 1 },
+                // level 6 (5):
+                { file: SPELLS.DolorousDecay.file, memorizedCount: 3 },
+                { file: SPELLS.Harm.file, memorizedCount: 1 },
+                { file: FNP_SPELLS.SummonShadows.file, memorizedCount: 1 },
+                // level 7 (2):
+                { file: SPELLS.FingerOfDeath.file, memorizedCount: 1 },
+                { file: SPELLS.Wither.file, memorizedCount: 1 },
+              ],
             },
-            { file: FNP_SPELLS.Shades.file, memorizedCount: 1 },
-            { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
-            { file: SPELLS.WavesOfAgony.file, memorizedCount: 2 },
-            { file: SPELLS.GreaterCommand.file, memorizedCount: 1 },
-            // level 6 (5):
-            { file: SPELLS.DolorousDecay.file, memorizedCount: 2 },
-            { file: SPELLS.Harm.file, memorizedCount: 1 },
-            { file: SPELLS.MagicResistance.file, memorizedCount: 1 },
-            { file: FNP_SPELLS.SummonShadows.file, memorizedCount: 1 },
-            // level 7 (2):
-            { file: SPELLS.FingerOfDeath.file, memorizedCount: 1 },
-            { file: SPELLS.Wither.file, memorizedCount: 1 },
+            {
+              mod: "SpellRevisions",
+              memorized: [
+                // TODO: use SR spells
+                // level 1 (12):
+                { file: SPELLS.Doom.file, memorizedCount: 5 },
+                { file: SPELLS.Command.file, memorizedCount: 5 },
+                { file: SPELLS.Bless.file, memorizedCount: 1 },
+                { file: SPELLS.Sanctuary.file, memorizedCount: 1 },
+                // level 2 (12):
+                { file: SPELLS.Silence.file, memorizedCount: 3 },
+                { file: SPELLS.HoldPersonCleric.file, memorizedCount: 5 },
+                { file: SPELLS.Chant.file, memorizedCount: 1 },
+                { file: SPELLS.DrawUponHolyMight.file, memorizedCount: 3 },
+                // level 3 (12):
+                { file: SPELLS.AnimateDead.file, memorizedCount: 4 },
+                { file: SPELLS.GlyphOfWarding.file, memorizedCount: 3 },
+                { file: SPELLS.DispelMagicCleric.file, memorizedCount: 2 },
+                { file: SPELLS.UnholyBlight.file, memorizedCount: 3 },
+                // level 4 (11):
+                { file: SPELLS.MentalDomination.file, memorizedCount: 3 },
+                { file: SPELLS.CauseSeriousWounds.file, memorizedCount: 2 },
+                { file: SPELLS.Poison.file, memorizedCount: 3 },
+                { file: SPELLS.ProtectionFromLightning.file, memorizedCount: 1 },
+                { file: SPELLS.HolyPower.file, memorizedCount: 2 },
+                // level 5 (9):
+                { file: SPELLS.FlameStrike.file, memorizedCount: 3 },
+                { file: SPELLS.RighteousMagic.file, memorizedCount: 1 },
+                { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
+                { file: SPELLS.TrueSeeing.file, memorizedCount: 1 },
+                { file: SPELLS.GreaterCommand.file, memorizedCount: 1 },
+                { file: SPELLS.MagicResistance.file, memorizedCount: 1 },
+                // level 6 (5):
+                { file: SPELLS.DolorousDecay.file, memorizedCount: 2 },
+                { file: SPELLS.Harm.file, memorizedCount: 1 },
+                { file: SPELLS.BladeBarrier.file, memorizedCount: 1 },
+                { file: SPELLS.AerialServant.file, memorizedCount: 1 },
+                // level 7 (2):
+                { file: SPELLS.FingerOfDeath.file, memorizedCount: 1 },
+                { file: SPELLS.SymbolDeath.file, memorizedCount: 1 },
+              ],
+            },
+            {
+              mod: "Vanilla",
+              memorized: [
+                // level 1 (12):
+                { file: SPELLS.Doom.file, memorizedCount: 5 },
+                { file: SPELLS.Command.file, memorizedCount: 5 },
+                { file: SPELLS.Bless.file, memorizedCount: 1 },
+                { file: SPELLS.Sanctuary.file, memorizedCount: 1 },
+                // level 2 (12):
+                { file: SPELLS.Silence.file, memorizedCount: 3 },
+                { file: SPELLS.HoldPersonCleric.file, memorizedCount: 5 },
+                { file: SPELLS.Chant.file, memorizedCount: 1 },
+                { file: SPELLS.DrawUponHolyMight.file, memorizedCount: 3 },
+                // level 3 (12):
+                { file: SPELLS.AnimateDead.file, memorizedCount: 4 },
+                { file: SPELLS.GlyphOfWarding.file, memorizedCount: 3 },
+                { file: SPELLS.DispelMagicCleric.file, memorizedCount: 2 },
+                { file: SPELLS.UnholyBlight.file, memorizedCount: 3 },
+                // level 4 (11):
+                { file: SPELLS.MentalDomination.file, memorizedCount: 3 },
+                { file: SPELLS.CauseSeriousWounds.file, memorizedCount: 2 },
+                { file: SPELLS.Poison.file, memorizedCount: 3 },
+                { file: SPELLS.ProtectionFromLightning.file, memorizedCount: 1 },
+                { file: SPELLS.HolyPower.file, memorizedCount: 2 },
+                // level 5 (9):
+                { file: SPELLS.FlameStrike.file, memorizedCount: 3 },
+                { file: SPELLS.RighteousMagic.file, memorizedCount: 1 },
+                { file: SPELLS.SlayLiving.file, memorizedCount: 2 },
+                { file: SPELLS.TrueSeeing.file, memorizedCount: 1 },
+                { file: SPELLS.GreaterCommand.file, memorizedCount: 1 },
+                { file: SPELLS.MagicResistance.file, memorizedCount: 1 },
+                // level 6 (5):
+                { file: SPELLS.DolorousDecay.file, memorizedCount: 2 },
+                { file: SPELLS.Harm.file, memorizedCount: 1 },
+                { file: SPELLS.BladeBarrier.file, memorizedCount: 1 },
+                { file: SPELLS.AerialServant.file, memorizedCount: 1 },
+                // level 7 (2):
+                { file: SPELLS.FingerOfDeath.file, memorizedCount: 1 },
+                { file: SPELLS.SymbolDeath.file, memorizedCount: 1 },
+              ],
+            },
           ],
         },
       },
@@ -2641,7 +2728,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
         this.preset(SPELLS.FireShield.file),
         this.preset(SPELLS.Breach.file),
         this.preset(SPELLS.SpellThrust.file),
-        this.preset(SPELLS.DispelMagic.file),
+        this.preset(SPELLS.DispelMagicWizard.file),
         this.preset(SPELLS.RemoveMagic.file),
         this.preset(SPELLS.ChainLightning.file),
         this.preset(SPELLS.Cloudkill.file),

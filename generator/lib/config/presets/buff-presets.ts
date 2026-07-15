@@ -53,10 +53,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       },
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
-      triggers: [
-        triggerFactory.detect("NearestEnemyOf"),
-        triggerFactory.hplt(75),
-      ],
+      triggers: [triggerFactory.detect("NearestEnemyOf"), triggerFactory.hplt(75)],
     },
   },
   {
@@ -232,9 +229,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       spell: {
         selfTarget: true,
       },
-      triggers: [
-        triggerFactory.checkSpellState("PROTECTION_FROM_NORMAL_MISSILES", true),
-      ],
+      triggers: [triggerFactory.checkSpellState("PROTECTION_FROM_NORMAL_MISSILES", true)],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
@@ -266,13 +261,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       spell: {
         selfTarget: true,
       },
-      triggers: [
-        triggerFactory.checkStatGT(
-          0,
-          "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS",
-          true,
-        ),
-      ],
+      triggers: [triggerFactory.checkStatGT(0, "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS", true)],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
@@ -284,6 +273,77 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       spell: {
         selfTarget: true,
       },
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.BladeBarrier.file,
+    ability: {
+      name: "ability.BladeBarrier",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [triggerFactory.checkStatGT(0, "CLERIC_BLADE_BARRIER", true)],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.RighteousMagic.file,
+    ability: {
+      name: "ability.RighteousMagic",
+      spell: {
+        selfTarget: true,
+      },
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.TrueSeeing.file,
+    ability: {
+      name: "ability.TrueSeeing",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [triggerFactory.checkStatGT(0, "TRUE_SIGHT", true)],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.HolyPower.file,
+    ability: {
+      name: "ability.HolyPower",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [triggerFactory.checkStatLT(100, "STR")],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.ProtectionFromLightning.file,
+    ability: {
+      name: "ability.ProtectionFromLightning",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [triggerFactory.checkStatLT(100, "RESISTELECTRICITY")],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.DrawUponHolyMight.file,
+    ability: {
+      name: "ability.DrawUponHolyMight",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [triggerFactory.checkStat(4, "SCRIPTINGSTATE6", true)],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },

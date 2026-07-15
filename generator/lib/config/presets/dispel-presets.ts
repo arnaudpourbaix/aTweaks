@@ -20,41 +20,41 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.DispelMagic.file, SPELLS.RemoveMagic.file], {
-    name: "ability.dispelMagic",
-    targets: [
-      {
-        name: "Players",
-        randomOrder: true,
-        triggers: [
-          triggerFactory.stateCheck("STATE_CHARMED", true),
-          triggerFactory.checkStatGT(0, "CLERIC_INSECT_PLAGUE", true),
-          {
-            name: "Or",
-            triggers: [
-              triggerFactory.checkStatGT(0, "MINORGLOBE"),
-              triggerFactory.checkStatGT(0, "STONESKINS"),
-              triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR"),
-              triggerFactory.checkStatGT(0, "CLERIC_CHAOTIC_COMMANDS"),
-              triggerFactory.checkStatGT(49, "RESISTFIRE"),
-              triggerFactory.checkStatGT(
-                0,
-                "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS",
-              ),
-              triggerFactory.stateCheck("STATE_MIRRORIMAGE"),
-              triggerFactory.stateCheck("STATE_HASTED"),
-              triggerFactory.stateCheck("STATE_DRAWUPONHOLYMIGHT"),
-            ],
-          },
-        ],
+  ...presetFactory.create(
+    [SPELLS.DispelMagicWizard.file, SPELLS.DispelMagicCleric.file, SPELLS.RemoveMagic.file],
+    {
+      name: "ability.dispelMagic",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          triggers: [
+            triggerFactory.stateCheck("STATE_CHARMED", true),
+            triggerFactory.checkStatGT(0, "CLERIC_INSECT_PLAGUE", true),
+            {
+              name: "Or",
+              triggers: [
+                triggerFactory.checkStatGT(0, "MINORGLOBE"),
+                triggerFactory.checkStatGT(0, "STONESKINS"),
+                triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR"),
+                triggerFactory.checkStatGT(0, "CLERIC_CHAOTIC_COMMANDS"),
+                triggerFactory.checkStatGT(49, "RESISTFIRE"),
+                triggerFactory.checkStatGT(0, "WIZARD_PROTECTION_FROM_MAGIC_WEAPONS"),
+                triggerFactory.stateCheck("STATE_MIRRORIMAGE"),
+                triggerFactory.stateCheck("STATE_HASTED"),
+                triggerFactory.stateCheck("STATE_DRAWUPONHOLYMIGHT"),
+              ],
+            },
+          ],
+        },
+      ],
+      spell: {
+        excludeStateChecks: ["STATE_DISABLED"],
       },
-    ],
-    spell: {
-      excludeStateChecks: ["STATE_DISABLED"],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
-    requireVocal: true,
-    probability: DEFAULT_SPELL_PROBABILITY,
-  }),
+  ),
   {
     preset: SPELLS.Breach.file,
     ability: {

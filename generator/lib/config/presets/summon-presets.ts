@@ -1,21 +1,30 @@
+import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
 import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
 import { FNP_SPELLS, SPELLS } from "../spell-names";
 
+const summoningTrigger = (rounds = 2) => ({ name: "Summoning", value: rounds * Durations.round });
+
 export const SUMMON_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.AnimalSummoning4.file,
+    preset: FNP_SPELLS.ShadowMonsters.file,
     ability: {
-      name: "ability.animalSummoning4",
-      targets: [
-        {
-          name: "PCsPreferringWeak",
-          randomOrder: true,
-        },
-      ],
-      spell: {},
+      name: "ability.ShadowMonsters",
+      spell: {
+        selfTarget: true,
+      },
+      triggers: triggerFactory.haveSpellRES(
+        [
+          FNP_SPELLS.DemiShadowMonsters.file,
+          FNP_SPELLS.AnimateDead.file,
+          FNP_SPELLS.SummonShadows.file,
+          FNP_SPELLS.Shades.file,
+        ],
+        true,
+      ),
+      timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
@@ -33,27 +42,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
           params: ["OUTDOOR"],
         },
       ],
-    },
-  },
-  {
-    preset: FNP_SPELLS.ShadowMonsters.file,
-    ability: {
-      name: "ability.ShadowMonsters",
-      spell: {
-        selfTarget: true,
-      },
-      triggers: triggerFactory.haveSpellRES(
-        [
-          FNP_SPELLS.DemiShadowMonsters.file,
-          FNP_SPELLS.AnimateDead.file,
-          FNP_SPELLS.SummonShadows.file,
-          FNP_SPELLS.Shades.file,
-        ],
-        true,
-      ),
-      timer: { name: "Summoning", value: 6 * Durations.round },
-      requireVocal: true,
-      probability: DEFAULT_SPELL_PROBABILITY,
+      timer: summoningTrigger(),
     },
   },
   {
@@ -67,27 +56,40 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
         [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
         true,
       ),
-      timer: { name: "Summoning", value: 6 * Durations.round },
+      timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
-    preset: FNP_SPELLS.AnimateDead.file,
+    preset: SPELLS.AnimalSummoning4.file,
     ability: {
-      name: "ability.AnimateDead",
-      spell: {
-        selfTarget: true,
-      },
-      triggers: triggerFactory.haveSpellRES(
-        [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
-        true,
-      ),
-      timer: { name: "Summoning", value: 6 * Durations.round },
+      name: "ability.animalSummoning4",
+      targets: [
+        {
+          name: "PCsPreferringWeak",
+          randomOrder: true,
+        },
+      ],
+      spell: {},
+      timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
+  ...presetFactory.create([SPELLS.AnimateDead.file, FNP_SPELLS.AnimateDead.file], {
+    name: "ability.AnimateDead",
+    spell: {
+      selfTarget: true,
+    },
+    triggers: triggerFactory.haveSpellRES(
+      [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
+      true,
+    ),
+    timer: summoningTrigger(),
+    requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
+  }),
   {
     preset: FNP_SPELLS.SummonShadows.file,
     ability: {
@@ -96,7 +98,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES([FNP_SPELLS.Shades.file], true),
-      timer: { name: "Summoning", value: 6 * Durations.round },
+      timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
@@ -108,7 +110,19 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       spell: {
         selfTarget: true,
       },
-      timer: { name: "Summoning", value: 6 * Durations.round },
+      timer: summoningTrigger(),
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.AerialServant.file,
+    ability: {
+      name: "ability.AerialServant",
+      spell: {
+        selfTarget: true,
+      },
+      timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },

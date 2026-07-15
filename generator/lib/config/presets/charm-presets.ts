@@ -18,6 +18,18 @@ export const CHARM_PRESETS: AbilityPreset[] = [
     },
   },
   {
+    preset: SPELLS.MentalDomination.file,
+    ability: {
+      name: "ability.MentalDomination",
+      targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
+        // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
+      ]),
+      spell: {},
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
     preset: SPELLS.DireCharm.file,
     ability: {
       name: "ability.direCharm",
@@ -27,7 +39,10 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       ]),
       spell: {},
       triggers: [
-        ...triggerFactory.haveSpellRES([SPELLS.Domination.file], true),
+        ...triggerFactory.haveSpellRES(
+          [SPELLS.Domination.file, SPELLS.MentalDomination.file],
+          true,
+        ),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
@@ -44,7 +59,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
-          [SPELLS.Domination.file, SPELLS.DireCharm.file],
+          [SPELLS.Domination.file, SPELLS.MentalDomination.file, SPELLS.DireCharm.file],
           true,
         ),
       ],
@@ -63,7 +78,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
-          [SPELLS.Domination.file, SPELLS.DireCharm.file],
+          [SPELLS.Domination.file, SPELLS.MentalDomination.file, SPELLS.DireCharm.file],
           true,
         ),
       ],

@@ -242,6 +242,48 @@ abbr {
   margin: .15rem 0;
 }
 
+.spellbook-tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: .75rem;
+}
+
+.spellbook-tab-button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: .4rem .75rem;
+  font: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.spellbook-tab-button:hover {
+  color: var(--text);
+}
+
+.spellbook-tab-button.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.spellbook-tab-panel {
+  display: none;
+}
+
+.spellbook-tab-panel.active {
+  display: block;
+  column-width: 220px;
+  column-gap: 1.5rem;
+}
+
+.spellbook-tab-panel .ability-entry {
+  break-inside: avoid-column;
+}
+
 .traits-glossary {
   margin-top: 2rem;
   border-top: 1px solid var(--border);

@@ -69,4 +69,22 @@ export const DEATH_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
+  {
+    preset: SPELLS.SymbolDeath.file,
+    ability: {
+      name: "ability.SymbolDeath",
+      targets: [
+        {
+          name: "Players",
+          triggers: [
+            triggerFactory.hplt(61),
+            // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
+          ],
+        },
+      ],
+      spell: {},
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
 ];

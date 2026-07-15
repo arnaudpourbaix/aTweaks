@@ -112,4 +112,29 @@
   }
 
   convertDashListsToUl();
+
+  function initSpellbookTabGroup(group) {
+    var buttons = group.querySelectorAll(".spellbook-tab-button");
+    var panels = group.querySelectorAll(".spellbook-tab-panel");
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener("click", function (event) {
+        var target = event.currentTarget.getAttribute("data-tab");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.toggle("active", buttons[i] === event.currentTarget);
+        }
+        for (var i = 0; i < panels.length; i++) {
+          panels[i].classList.toggle("active", panels[i].id === target);
+        }
+      });
+    }
+  }
+
+  function initSpellbookTabs() {
+    var groups = document.querySelectorAll(".spellbook-tabs");
+    for (var g = 0; g < groups.length; g++) {
+      initSpellbookTabGroup(groups[g]);
+    }
+  }
+
+  initSpellbookTabs();
 })();

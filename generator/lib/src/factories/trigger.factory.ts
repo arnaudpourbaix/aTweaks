@@ -1,6 +1,7 @@
 import { GLOBAL_CONFIG } from "../../config/generate";
 import { TargetListName } from "../../config/target-name";
 import { ScriptTarget } from "../model/constants";
+import { AlignIdentifier } from "../model/ids/align";
 import { AllegianceIdentifier } from "../model/ids/allegiance";
 import { AStylesIdentifiers } from "../model/ids/astyles";
 import { AreaTypeValue } from "../model/ids/misc";
@@ -33,6 +34,10 @@ class TriggerFactory {
 
   attackedBy(obj: ParamObject, type: AStylesIdentifiers, negation = false): Triggers.Trigger {
     return { name: "AttackedBy", params: [obj, type], negation };
+  }
+
+  alignment(value: AlignIdentifier, negation = false): Triggers.Trigger {
+    return { name: "Alignment", params: [ScriptTarget.token, value], negation };
   }
 
   detect(value: ParamObject, negation = false): Triggers.Trigger {

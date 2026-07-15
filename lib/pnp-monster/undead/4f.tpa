@@ -11,7 +11,7 @@ COPY_EXISTING ~ja#s0m4f.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 fl#Fear
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10794)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10805)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=175 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=1 savebonus="-1" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=142 target=2 power=1 parameter2=13 duration=18 probability1=100 savingthrow=1 savebonus="-1" END
@@ -40,7 +40,7 @@ COPY_EXISTING ~ja#s1m4f.SPL~  ~override~
 	WRITE_SHORT 0x1c 4
 	WRITE_BYTE 0x27 fl#Fear
 	WRITE_LONG 0x34 1
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10795)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10806)
 	LPF ADD_SPELL_HEADER INT_VAR type=1 location=2 target=1 END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=177 target=2 power=1 parameter1=IDS_OF_SYMBOL (~RACE~ ~HUMAN~) parameter2=4 duration=1 probability1=100 STR_VAR resource="ja#s1m4f" END
 	LPF ADD_EFFECT INT_VAR header=1 opcode=175 target=2 power=1 parameter1=IDS_OF_SYMBOL (~EA~ ~ANYONE~) parameter2=2 duration=18 probability1=100 savingthrow=1 savebonus="-3" END
@@ -119,11 +119,11 @@ OUTER_SET $f_AddSecType(ja#s3m4f.spl) = DiseaseSecType
 // Greater Mummy traits
 CREATE ITM "ja#i0m4f"
 	WRITE_LONG 0x64 0x72
-	WRITE_LONG 0x8 RESOLVE_STR_REF(@10793)
-	WRITE_LONG 0xc RESOLVE_STR_REF(@10793)
+	WRITE_LONG 0x8 RESOLVE_STR_REF(@10804)
+	WRITE_LONG 0xc RESOLVE_STR_REF(@10804)
 	WRITE_SHORT 0x1c 10
 	WRITE_ASCII 0x3a ~IRING15~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10796)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10807)
 COPY_EXISTING ~ja#i0m4f.itm~ ~override~
 	READ_SHORT 0x68 abicount
 	PATCH_IF (%abicount% > 0) BEGIN
@@ -146,7 +146,7 @@ CREATE ITM "ja#i1m4f"
 	WRITE_LONG 0xc RESOLVE_STR_REF(@10312)
 	WRITE_LONG 0x18 64
 	WRITE_ASCII 0x3a ~IGHOUL~ #8
-	WRITE_LONG 0x50 RESOLVE_STR_REF(@10797)
+	WRITE_LONG 0x50 RESOLVE_STR_REF(@10808)
 	WRITE_LONG 0x60 4
 COPY_EXISTING ~ja#i1m4f.itm~ ~override~
 	READ_SHORT 0x68 abicount
@@ -187,36 +187,98 @@ BEGIN
 			REPLACE_CRE_ITEM ~ja#i1m4f~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
 			ADD_CRE_ITEM ~ja#i17~ #0 #0 #0 ~UNDROPPABLE~ ~LRING RRING AMULET BELT GLOVES CLOAK~ 
 			REPLACE_CRE_ITEM ~ja#i3~ #0 #0 #0 ~UNDROPPABLE~ ~HELMET~ 
-			ADD_MEMORIZED_SPELL ~d5p1329~ #0 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~SPPR113~ #0 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (6) 
-			ADD_MEMORIZED_SPELL ~b_c201~ #1 ~priest~ (5) 
-			ADD_MEMORIZED_SPELL ~d5p1311~ #1 ~priest~ (4) 
-			ADD_MEMORIZED_SPELL ~b_pr201~ #1 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5p2114~ #1 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~sppr332~ #2 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~d5p2433~ #2 ~priest~ (3) 
-			ADD_MEMORIZED_SPELL ~sppr322~ #2 ~priest~ (6) 
-			ADD_MEMORIZED_SPELL ~d5p1301~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~sppr414~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5p2527~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5p2411~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5p2412~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR411~ #3 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~d5p2508~ #3 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5p1709~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5p1424~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR530~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5p2632~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR511~ #4 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~SPPR533~ #4 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~SPPR512~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR610~ #5 ~priest~ (2) 
-			ADD_MEMORIZED_SPELL ~SPPR608~ #5 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR509~ #4 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~d5pp422~ #5 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR708~ #6 ~priest~ (1) 
-			ADD_MEMORIZED_SPELL ~SPPR740~ #6 ~priest~ (1) 
+			PATCH_IF MOD_IS_INSTALLED Faiths_and_Powers.tp2 80 BEGIN
+				ADD_MEMORIZED_SPELL ~d5p1329~ #0 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR113~ #0 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (6) 
+				ADD_MEMORIZED_SPELL ~b_c201~ #1 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~d5p1311~ #1 ~priest~ (4) 
+				ADD_MEMORIZED_SPELL ~b_pr201~ #1 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~d5p2114~ #1 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~sppr332~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~d5p2433~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~sppr322~ #2 ~priest~ (6) 
+				ADD_MEMORIZED_SPELL ~d5p1301~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~sppr414~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~d5p2527~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~d5p2411~ #3 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~d5p2412~ #3 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR411~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~d5p2508~ #3 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~d5p1709~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~d5p1424~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR530~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~d5p2632~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR511~ #4 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR533~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR512~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR509~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR610~ #5 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR608~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~d5pp422~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR708~ #6 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR740~ #6 ~priest~ (1) 
+			END ELSE PATCH_IF MOD_IS_INSTALLED spell_rev.tp2 0 BEGIN
+				ADD_MEMORIZED_SPELL ~SPPR113~ #0 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR109~ #0 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR211~ #1 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR208~ #1 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR203~ #1 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR214~ #1 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR301~ #2 ~priest~ (4) 
+				ADD_MEMORIZED_SPELL ~SPPR304~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR303~ #2 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR314~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR405~ #3 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR414~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR411~ #3 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR407~ #3 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR412~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR503~ #4 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR513~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR511~ #4 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR505~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR512~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR509~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR610~ #5 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR608~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR603~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR601~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR708~ #6 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR719~ #6 ~priest~ (1) 
+			END ELSE BEGIN
+				ADD_MEMORIZED_SPELL ~SPPR113~ #0 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR102~ #0 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR101~ #0 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR109~ #0 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR211~ #1 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR208~ #1 ~priest~ (5) 
+				ADD_MEMORIZED_SPELL ~SPPR203~ #1 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR214~ #1 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR301~ #2 ~priest~ (4) 
+				ADD_MEMORIZED_SPELL ~SPPR304~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR303~ #2 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR314~ #2 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR405~ #3 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR414~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR411~ #3 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR407~ #3 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR412~ #3 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR503~ #4 ~priest~ (3) 
+				ADD_MEMORIZED_SPELL ~SPPR513~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR511~ #4 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR505~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR512~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR509~ #4 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR610~ #5 ~priest~ (2) 
+				ADD_MEMORIZED_SPELL ~SPPR608~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR603~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR601~ #5 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR708~ #6 ~priest~ (1) 
+				ADD_MEMORIZED_SPELL ~SPPR719~ #6 ~priest~ (1) 
+			END
 			ADD_MEMORIZED_SPELL ~ja#s2m4f~ #0 ~innate~ (1) // Fear Aura
 			LPF clear_proficiencies END
 			LPF patchCreature

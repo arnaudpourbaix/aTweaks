@@ -1118,7 +1118,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellRES("d5pp422",Myself)
-		SetGlobalTimer("Summoning","LOCALS",36)
+		SetGlobalTimer("Summoning","LOCALS",12)
 END
 
 // Chaos
@@ -1541,7 +1541,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellRES("d5p2632",Myself)
-		SetGlobalTimer("Summoning","LOCALS",36)
+		SetGlobalTimer("Summoning","LOCALS",12)
 END
 
 // Slay Living
@@ -2265,7 +2265,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellRES("d5p2527",Myself)
-		SetGlobalTimer("Summoning","LOCALS",36)
+		SetGlobalTimer("Summoning","LOCALS",12)
 END
 
 // Cause Critical Wounds
@@ -2300,7 +2300,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellRES("d5p1301",Myself)
-		SetGlobalTimer("Summoning","LOCALS",36)
+		SetGlobalTimer("Summoning","LOCALS",12)
 END
 
 // Circle of Bones
@@ -2331,7 +2331,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
 		SpellRES("d5p2433",Myself)
-		SetGlobalTimer("Summoning","LOCALS",36)
+		SetGlobalTimer("Summoning","LOCALS",12)
 END
 
 // Cause Serious Wounds

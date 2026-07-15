@@ -44,6 +44,8 @@ function codes(lines: CodeLine[]): string[] {
   return lines.map((l) => l.code);
 }
 
+const SPELL_REVISIONS_PATCH_IF = "PATCH_IF MOD_IS_INSTALLED spell_rev.tp2 0 BEGIN";
+
 function fakeAdjustment(
   p: Partial<Omit<CreatureAdjustment, "data">> & { data?: Partial<CreatureData> } = {},
 ): CreatureAdjustment {
@@ -158,6 +160,111 @@ describe("addMemorizedSpells (private)", () => {
       spells: { memorized: [{ file: "SPWI001", memorizedCount: 1 }] },
     });
     expect(codes(lines)[0]).toContain("ADD_MEMORIZED_SPELL");
+  });
+
+  it("wraps a single conditional spellbook variant in PATCH_IF, then always adds memorized after", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: {
+        memorized: [{ file: "SPWI001", memorizedCount: 1 }],
+        spellbooks: [
+          {
+            mod: "SpellRevisions",
+            memorized: [{ file: "SPWI002", memorizedCount: 2 }],
+          },
+        ],
+      },
+    });
+    const result = codes(lines);
+    expect(result[0]).toBe(SPELL_REVISIONS_PATCH_IF);
+    expect(result.some((c) => c.includes("SPWI002"))).toBe(true);
+    expect(result).not.toContain("END ELSE BEGIN");
+    expect(result[result.length - 2]).toBe("END");
+    expect(result[result.length - 1]).toContain("SPWI001");
+  });
+
+  it("chains multiple conditional spellbook variants with END ELSE PATCH_IF", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: {
+        memorized: [{ file: "SPWI001", memorizedCount: 1 }],
+        spellbooks: [
+          {
+            mod: "SpellRevisions",
+            memorized: [{ file: "SPWI002", memorizedCount: 2 }],
+          },
+          {
+            mod: "FaithsAndPowers",
+            memorized: [{ file: "SPWI003", memorizedCount: 3 }],
+          },
+        ],
+      },
+    });
+    const result = codes(lines);
+    expect(result[0]).toBe(SPELL_REVISIONS_PATCH_IF);
+    expect(result).toContain("END ELSE PATCH_IF MOD_IS_INSTALLED Faiths_and_Powers.tp2 80 BEGIN");
+    expect(result.some((c) => c.includes("SPWI002"))).toBe(true);
+    expect(result.some((c) => c.includes("SPWI003"))).toBe(true);
+    // The chain closes exactly once, then the always-on memorized list follows unconditionally.
+    expect(result.filter((c) => c === "END")).toHaveLength(1);
+    expect(result.some((c) => c.includes("SPWI001"))).toBe(true);
+  });
+
+  it("emits a lone unconditional (Vanilla) spellbook variant with no PATCH_IF wrapper", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: {
+        memorized: [],
+        spellbooks: [
+          {
+            mod: "Vanilla",
+            memorized: [{ file: "SPWI004", memorizedCount: 4 }],
+          },
+        ],
+      },
+    });
+    const result = codes(lines);
+    expect(result.some((c) => c.includes("PATCH_IF"))).toBe(false);
+    expect(result.some((c) => c.includes("SPWI004"))).toBe(true);
+  });
+
+  it("uses the unconditional (Vanilla) variant as the mutually-exclusive ELSE fallback, not an addition", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: {
+        memorized: [{ file: "SPWI001", memorizedCount: 1 }],
+        spellbooks: [
+          {
+            mod: "SpellRevisions",
+            memorized: [{ file: "SPWI002", memorizedCount: 2 }],
+          },
+          {
+            mod: "Vanilla",
+            memorized: [{ file: "SPWI004", memorizedCount: 4 }],
+          },
+        ],
+      },
+    });
+    const result = codes(lines);
+    expect(result[0]).toBe(SPELL_REVISIONS_PATCH_IF);
+    expect(result).toContain("END ELSE BEGIN");
+    expect(result.some((c) => c.includes("SPWI002"))).toBe(true);
+    // The Vanilla variant only fires inside the ELSE branch - it must never appear alongside
+    // the conditional branch's spells, since only one branch of the chain ever executes.
+    expect(result.some((c) => c.includes("SPWI004"))).toBe(true);
+    // The always-on base memorized list still runs regardless of which branch matched.
+    expect(result.some((c) => c.includes("SPWI001"))).toBe(true);
+    expect(result[result.length - 1]).toContain("SPWI001");
+  });
+
+  it("skips the PATCH_IF chain entirely when spellbooks is unset", () => {
+    const lines: CodeLine[] = [];
+    service.addMemorizedSpells(lines, 0, {
+      spells: { memorized: [{ file: "SPWI001", memorizedCount: 1 }] },
+    });
+    const result = codes(lines);
+    expect(result.some((c) => c.includes("PATCH_IF"))).toBe(false);
+    expect(result).toHaveLength(1);
   });
 });
 

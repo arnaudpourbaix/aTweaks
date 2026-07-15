@@ -280,4 +280,24 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
+  {
+    preset: SPELLS.UnholyBlight.file,
+    ability: {
+      name: "ability.UnholyBlight",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          triggers: [
+            triggerFactory.checkStatGT(0, "MINORGLOBE", true),
+            triggerFactory.alignment("MASK_GOOD"),
+            // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
+          ],
+        },
+      ],
+      spell: {},
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
 ];

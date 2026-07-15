@@ -1,7 +1,9 @@
 import * as fs from "fs";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
+import { SPELLBOOK_MODS } from "../../../config/mods";
 import { CreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
+import { MemorizedSpell } from "../../model/creature/data";
 import { Family } from "../../model/creature/family";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { State } from "../../state";
@@ -93,6 +95,7 @@ class DocumentationService {
     this.getCreatureAttacks(template, creature);
     this.getCreatureTraits(template, creature);
     this.getCreatureSpells(template, creature);
+    this.getCreatureSpellbooks(template, creature);
     this.monsters.push(template.text);
   }
 
@@ -162,12 +165,8 @@ class DocumentationService {
 
   getCreatureSpells(template: { text: string }, creature: Creature) {
     let spells = "";
-    const abilities = [
-      ...creature.behavior.abilities,
-      ...creature.behavior.customCodes.map((c) => c.abilities).flat(),
-    ].filter((a) => a.resource);
-    for (const ability of abilities) {
-      spells += this.getCreatureSpell(creature, ability);
+    for (const ability of this.getResourceAbilities(creature)) {
+      spells += this.getCreatureSpell(ability, creature.data.spells.memorized);
     }
     if (spells) {
       spells = `<h4>Abilities</h4><div class="abilities">${spells}</div>`;
@@ -175,8 +174,54 @@ class DocumentationService {
     this.replace(template, "abilities", spells);
   }
 
-  getCreatureSpell(creature: Creature, ability: CreatureAbility) {
-    const memorized = creature.data.spells.memorized.find((m) => m.file === ability.resource);
+  // A tabbed section per mod-conditional spellbook variant (see CreatureDataSpells.spellbooks) -
+  // only one of these is ever actually installed for a given end user, so each is labeled by its
+  // mod and shown one at a time (see monsters.js) rather than merged into a single
+  // undifferentiated list.
+  getCreatureSpellbooks(template: { text: string }, creature: Creature) {
+    const abilities = this.getResourceAbilities(creature);
+    const tabs = (creature.data.spells.spellbooks ?? [])
+      .map((spellbook, index) => {
+        let spells = "";
+        for (const ability of abilities) {
+          spells += this.getCreatureSpell(ability, spellbook.memorized);
+        }
+        return {
+          id: `spellbook-m${creature.id}-${index}`,
+          name: SPELLBOOK_MODS[spellbook.mod].name,
+          spells,
+        };
+      })
+      .filter((tab) => tab.spells);
+
+    let result = "";
+    if (tabs.length) {
+      const buttons = tabs
+        .map(
+          (tab, i) =>
+            `<button type="button" class="spellbook-tab-button${i === 0 ? " active" : ""}" data-tab="${tab.id}">${tab.name}</button>`,
+        )
+        .join("");
+      const panels = tabs
+        .map(
+          (tab, i) =>
+            `<div class="spellbook-tab-panel abilities${i === 0 ? " active" : ""}" id="${tab.id}">${tab.spells}</div>`,
+        )
+        .join("");
+      result = `<h4>Spellbooks</h4><div class="spellbook-tabs"><div class="spellbook-tab-buttons" role="tablist">${buttons}</div>${panels}</div>`;
+    }
+    this.replace(template, "spellbooks", result);
+  }
+
+  private getResourceAbilities(creature: Creature): CreatureAbility[] {
+    return [
+      ...creature.behavior.abilities,
+      ...creature.behavior.customCodes.map((c) => c.abilities).flat(),
+    ].filter((a) => a.resource);
+  }
+
+  getCreatureSpell(ability: CreatureAbility, memorizedList: MemorizedSpell[]) {
+    const memorized = memorizedList.find((m) => m.file === ability.resource);
     const spell = State.spells.find((s) => s.file === ability.resource);
     let result = "";
     const infiniteUse = ability.infiniteUse ? 1 : undefined;
@@ -189,12 +234,17 @@ class DocumentationService {
         spell.doc !== "name" ? `<p>${translationService.fromOptional(spell.description)}</p>` : "";
       result = `${title}${desc}`;
     } else if (memorized) {
-      const rounds = ability.timer ? Math.round(ability.timer.value / 6) : undefined;
+      // A real daily memorized count (spellbook-granted spells always have one) is authoritative
+      // - ability.timer is a re-cast cooldown, not a substitute for it, so it's ignored here.
+      // The renew/infiniteUse-driven "every N rounds" phrasing above is for the innate-ability
+      // case instead, where casts aren't capped by a memorized daily count at all.
       result = `<h5>${translationService.from(
         ability.name,
-      )} (${this.getSpellQuantity(memorized.memorizedCount, rounds)})</h5>`;
+      )} (${this.getSpellQuantity(memorized.memorizedCount)})</h5>`;
     }
-    return result;
+    // Wrapped so a multi-column layout (see .spellbook-tab-panel in monsters.css) can keep each
+    // ability's title and description together instead of splitting them across columns.
+    return result ? `<div class="ability-entry">${result}</div>` : "";
   }
 
   getTraits() {

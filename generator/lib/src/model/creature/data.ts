@@ -1,4 +1,5 @@
 import weiduUtils from "../../services/utils/weidu.utils";
+import { SpellbookModName } from "../../../config/spellbook-mod-name";
 import { ImmunityName } from "../final/immunity";
 import { CreatureSize } from "../game-data/sizes";
 import { AlignIdentifier } from "../ids/align";
@@ -123,9 +124,21 @@ export class CreatureDataItems {
 }
 
 export class CreatureDataSpells {
+  /**
+   * Mod-conditional spellbook variants, checked in order at install time via each mod's
+   * `weiduCheck` - the first one whose mod is detected installed is used instead of
+   * `memorized`. Falls back to `memorized` if none match (or if this is unset).
+   */
+  spellbooks?: SpellbookVariant[];
   memorized: MemorizedSpell[] = [];
   removeKnown?: boolean;
   removeMemorized?: boolean | string[];
+}
+
+export interface SpellbookVariant {
+  /** Key into SPELLBOOK_MODS (lib/config/mods.ts), which resolves the actual WeiDU check. */
+  mod: SpellbookModName;
+  memorized: MemorizedSpell[];
 }
 
 export type CreatureDataProficiencies = {
@@ -569,6 +582,10 @@ export const CREATURE_DATA_FIELDS: {
   {
     key: "spells",
     setter: (data, value: Partial<CreatureDataSpells>) => {
+      if (value.spellbooks) {
+        data.spells.spellbooks ??= [];
+        data.spells.spellbooks.push(...value.spellbooks);
+      }
       if (value.memorized) {
         data.spells.memorized.push(...value.memorized);
       }

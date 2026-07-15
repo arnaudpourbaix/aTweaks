@@ -1,3 +1,4 @@
+import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
 import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
@@ -138,10 +139,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(
-          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-          true,
-        ),
+        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
         ...triggerFactory.haveSpellRES(
           [
             FNP_SPELLS.CauseSeriousWounds.file,
@@ -156,31 +154,21 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  {
-    preset: FNP_SPELLS.CauseSeriousWounds.file,
-    ability: {
-      name: "ability.CauseSeriousWounds",
-      spell: {
-        selfTarget: true,
-      },
-      triggers: [
-        ...triggerFactory.hasItem(
-          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-          true,
-        ),
-        ...triggerFactory.haveSpellRES(
-          [
-            FNP_SPELLS.CauseCriticalWounds.file,
-            FNP_SPELLS.Harm.file,
-            SPELLS.SlayLiving.file,
-          ],
-          true,
-        ),
-      ],
-      requireVocal: true,
-      probability: DEFAULT_SPELL_PROBABILITY,
+  ...presetFactory.create([SPELLS.CauseSeriousWounds.file, FNP_SPELLS.CauseSeriousWounds.file], {
+    name: "ability.CauseSeriousWounds",
+    spell: {
+      selfTarget: true,
     },
-  },
+    triggers: [
+      ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
+      ...triggerFactory.haveSpellRES(
+        [FNP_SPELLS.CauseCriticalWounds.file, FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file],
+        true,
+      ),
+    ],
+    requireVocal: true,
+    probability: DEFAULT_SPELL_PROBABILITY,
+  }),
   {
     preset: FNP_SPELLS.CauseCriticalWounds.file,
     ability: {
@@ -189,14 +177,8 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(
-          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-          true,
-        ),
-        ...triggerFactory.haveSpellRES(
-          [FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file],
-          true,
-        ),
+        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
+        ...triggerFactory.haveSpellRES([FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file], true),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
@@ -210,10 +192,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         selfTarget: true,
       },
       triggers: [
-        ...triggerFactory.hasItem(
-          ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-          true,
-        ),
+        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
         ...triggerFactory.haveSpellRES([SPELLS.SlayLiving.file], true),
       ],
       requireVocal: true,
@@ -227,10 +206,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       spell: {
         selfTarget: true,
       },
-      triggers: triggerFactory.hasItem(
-        ["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"],
-        true,
-      ),
+      triggers: triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
@@ -342,10 +318,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ],
         [
           triggerFactory.checkStatGT(0, "MINORGLOBE", true),
-          triggerFactory.checkSpellState(
-            "PROTECTION_FROM_NORMAL_MISSILES",
-            true,
-          ),
+          triggerFactory.checkSpellState("PROTECTION_FROM_NORMAL_MISSILES", true),
           // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
           // triggerFactory.checkStatLT(50, "RESISTACID"),
         ],
@@ -365,13 +338,29 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           randomOrder: true,
           triggers: [
             triggerFactory.checkStatGT(0, "MINORGLOBE", true),
-            triggerFactory.checkSpellState(
-              "PROTECTION_FROM_NORMAL_MISSILES",
-              true,
-            ),
+            triggerFactory.checkSpellState("PROTECTION_FROM_NORMAL_MISSILES", true),
             // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
             // triggerFactory.checkStatLT(50, "RESISTFIRE"),
             // triggerFactory.hasBounceEffects(true),
+          ],
+        },
+      ],
+      spell: {},
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.FlameStrike.file,
+    ability: {
+      name: "ability.FlameStrike",
+      targets: [
+        {
+          name: "Players",
+          randomOrder: true,
+          triggers: [
+            // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
+            // triggerFactory.checkStatLT(50, "RESISTFIRE"),
           ],
         },
       ],
