@@ -25,6 +25,10 @@ async function main() {
       logService.section("Generating translations");
       mainService.generateTranslations();
       logService.summary();
+      if (logService.hasErrors()) {
+        console.error(chalk.red(`\nGenerator finished with errors, see generator.log`));
+        process.exit(1);
+      }
       logService.log("Finished!");
       console.log(chalk.green(`\nFinished!`));
     });
