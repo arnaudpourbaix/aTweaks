@@ -1,5 +1,5 @@
 import { ATWEAKS_CREATURES } from "../config/creatures";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { Durations } from "../src/model/game-data/durations";
 import { Effect } from "../src/model/spell-item/effect";
 import {
@@ -29,8 +29,8 @@ export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
   {
     name: "spell.callWoodlandBeeings.name",
     description: "spell.callWoodlandBeeings.description",
-    copyFrom: SPELLS.CallWoodlandBeeings.file,
-    icon: SPELLS.CallWoodlandBeeings.file,
+    copyFrom: SPELLS.Priest.CallWoodlandBeeings.file,
+    icon: SPELLS.Priest.CallWoodlandBeeings.file,
     deleteHeaders: true,
     effects: [
       {
@@ -40,7 +40,7 @@ export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
         timing: EffectTimingEnum.InstantLimited,
         dispelResistance: EffectDispelResistanceEnum.NaturalNonMagical,
         duration: 1,
-        resource: SPELLS.CallWoodlandBeeings.file,
+        resource: SPELLS.Priest.CallWoodlandBeeings.file,
       },
     ],
     headers: [
@@ -124,5 +124,5 @@ export const SPELL_CALL_WOODLAND_BEEINGS: Spell = spellService.getSpell(
       },
     ],
   },
-  SPELLS.CallWoodlandBeeings.file,
+  SPELLS.Priest.CallWoodlandBeeings.file,
 );

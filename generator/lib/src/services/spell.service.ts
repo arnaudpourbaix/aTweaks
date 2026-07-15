@@ -1,5 +1,5 @@
-import { SPELL_GROUPS } from "../../config/spell-group";
-import { SpellGroupName } from "../../config/spell-group-name";
+import { SPELL_GROUPS } from "../../config/spells/spell-group";
+import { SpellGroupName } from "../../config/spells/spell-group-name";
 import { Effect } from "../model/spell-item/effect";
 import {
   EffectIDSFileEnum,

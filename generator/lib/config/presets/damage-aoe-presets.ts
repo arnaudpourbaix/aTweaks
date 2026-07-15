@@ -4,11 +4,12 @@ import { ScriptTarget } from "../../src/model/constants";
 import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.ConeOfCold.file,
+    preset: SPELLS.Wizard.ConeOfCold.file,
     ability: {
       name: "ability.coneOfCold",
       targets: [
@@ -27,7 +28,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Fireburst.file,
+    preset: SPELLS.Wizard.Fireburst.file,
     ability: {
       name: "ability.Fireburst",
       targets: [
@@ -49,7 +50,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.GlyphOfWarding.file,
+    preset: SPELLS.Priest.GlyphOfWarding.file,
     ability: {
       name: "ability.glyphOfWarding",
       targets: [
@@ -68,7 +69,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.BurningHands.file,
+    preset: SPELLS.Wizard.BurningHands.file,
     ability: {
       name: "ability.BurningHands",
       targets: [
@@ -89,7 +90,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.IceStorm.file,
+    preset: SPELLS.Wizard.IceStorm.file,
     ability: {
       name: "ability.iceStorm",
       targets: [
@@ -109,7 +110,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MassCauseLightWounds.file,
+    preset: SPELLS.Priest.MassCauseLightWounds.file,
     ability: {
       name: "ability.MassCauseLightWounds",
       spell: {
@@ -127,7 +128,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     // not a bug in this generator or this preset) - can't be fixed from here. Currently unused
     // (the one spellbook slot that referenced it, undead.ts's mummy, was switched to Command
     // instead), kept for whenever FNP fixes the underlying spell.
-    preset: FNP_SPELLS.FrostFingers.file,
+    preset: FNP_SPELLS.Priest.FrostFingers.file,
     ability: {
       name: "ability.FrostFingers",
       targets: [
@@ -149,7 +150,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.CloudOfPestilence.file, FNP_SPELLS.CloudOfPestilence.file], {
+  ...presetFactory.create([SPELLS.Priest.CloudOfPestilence.file, FNP_SPELLS.Priest.CloudOfPestilence.file], {
     name: "ability.CloudOfPestilence",
     targets: [
       {
@@ -164,7 +165,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: SPELLS.WavesOfAgony.file,
+    preset: SPELLS.Priest.WavesOfAgony.file,
     ability: {
       name: "ability.WavesOfAgony",
       targets: [
@@ -183,7 +184,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.LightningBolt.file,
+    preset: SPELLS.Wizard.LightningBolt.file,
     ability: {
       name: "ability.LightningBolt",
       targets: [
@@ -204,7 +205,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.AgannazarScorcher.file,
+    preset: SPELLS.Wizard.AgannazarScorcher.file,
     ability: {
       name: "ability.AgannazarScorcher",
       targets: [
@@ -224,7 +225,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.VitriolicSphere.file,
+    preset: SPELLS.Wizard.VitriolicSphere.file,
     ability: {
       name: "ability.VitriolicSphere",
       targets: [
@@ -244,7 +245,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Cloudkill.file,
+    preset: SPELLS.Wizard.Cloudkill.file,
     ability: {
       name: "ability.Cloudkill",
       targets: [
@@ -262,7 +263,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ChainLightning.file,
+    preset: SPELLS.Wizard.ChainLightning.file,
     ability: {
       name: "ability.ChainLightning",
       targets: [
@@ -281,7 +282,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.UnholyBlight.file,
+    preset: SPELLS.Priest.UnholyBlight.file,
     ability: {
       name: "ability.UnholyBlight",
       targets: [

@@ -2,11 +2,11 @@ import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DISPEL_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.DetectInvisibility.file,
+    preset: SPELLS.Wizard.DetectInvisibility.file,
     ability: {
       name: "ability.detectInvisibility",
       spell: {
@@ -21,7 +21,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create(
-    [SPELLS.DispelMagicWizard.file, SPELLS.DispelMagicCleric.file, SPELLS.RemoveMagic.file],
+    [SPELLS.Wizard.DispelMagicWizard.file, SPELLS.Priest.DispelMagicCleric.file, SPELLS.Wizard.RemoveMagic.file],
     {
       name: "ability.dispelMagic",
       targets: [
@@ -56,7 +56,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
     },
   ),
   {
-    preset: SPELLS.Breach.file,
+    preset: SPELLS.Wizard.Breach.file,
     ability: {
       name: "ability.Breach",
       targets: [
@@ -79,7 +79,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.SpellThrust.file,
+    preset: SPELLS.Wizard.SpellThrust.file,
     ability: {
       name: "ability.SpellThrust",
       targets: [

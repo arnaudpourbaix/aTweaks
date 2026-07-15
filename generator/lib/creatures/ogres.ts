@@ -1,6 +1,6 @@
 import { SPELL_STATES } from "../config/common";
 import { ITEMS, MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
 import effectFactory from "../src/factories/effect.factory";
 import { ScriptTarget } from "../src/model/constants";
@@ -165,7 +165,7 @@ class Ogre extends Creature {
       name: "monster.ogre.ability.fly.name",
       description: "monster.ogre.ability.fly.description",
       memorizedCount: 1,
-      icon: SPELLS.Haste.file,
+      icon: SPELLS.Wizard.Haste.file,
       castingSound: "CAS_M08",
       type: SpellTypeEnum.Wizard,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
@@ -245,7 +245,7 @@ class Ogre extends Creature {
       description: "monster.ogre.ability.gaseousForm.description",
       memorizedCount: 1,
       id: Ids.GaseousForm,
-      icon: SPELLS.PolymorphSelf.file,
+      icon: SPELLS.Wizard.PolymorphSelf.file,
       castingSound: "CAS_M08",
       type: SpellTypeEnum.Wizard,
       castingAnimation: ItemAbilityCastingAnimationEnum.Alteration,
@@ -307,12 +307,12 @@ class Ogre extends Creature {
           },
           {
             name: "HaveSpellRES",
-            params: [SPELLS.Sleep.file],
+            params: [SPELLS.Wizard.Sleep.file],
             negation: true,
           },
           {
             name: "HaveSpellRES",
-            params: [SPELLS.CharmPerson.file],
+            params: [SPELLS.Wizard.CharmPerson.file],
             negation: true,
           },
           { name: "HPPercentLT", params: [ScriptTarget.myself, 25] },
@@ -777,7 +777,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
         // },
         data: {
           proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYTWOHANDEDSWORD, value: 5 }],
-          // memorizedSpells: [{ file: SPELLS.BerserkerRage, memorizedCount: 1 }],
+          // memorizedSpells: [{ file: SPELLS.Class.BerserkerRage, memorizedCount: 1 }],
         },
       },
       {
@@ -879,10 +879,10 @@ class OgreFamily extends CreatureFamily<Ogre> {
         },
         spells: {
           memorized: [
-            { file: SPELLS.Invisibility.file, memorizedCount: 1 },
-            { file: SPELLS.Darkness15Radius.file, memorizedCount: 1 },
-            { file: SPELLS.CharmPerson.file, memorizedCount: 1 },
-            { file: SPELLS.Sleep.file, memorizedCount: 1 },
+            { file: SPELLS.Wizard.Invisibility.file, memorizedCount: 1 },
+            { file: SPELLS.Wizard.Darkness15Radius.file, memorizedCount: 1 },
+            { file: SPELLS.Wizard.CharmPerson.file, memorizedCount: 1 },
+            { file: SPELLS.Wizard.Sleep.file, memorizedCount: 1 },
           ],
         },
       },
@@ -906,7 +906,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
       usePotions: true,
       abilities: [
         {
-          preset: SPELLS.Invisibility.file,
+          preset: SPELLS.Wizard.Invisibility.file,
           spell: {
             type: "noDec",
           },
@@ -916,19 +916,19 @@ class OgreFamily extends CreatureFamily<Ogre> {
           },
         },
         this.ability(Ids.Fly),
-        this.preset(SPELLS.Domination.file),
+        this.preset(SPELLS.Wizard.Domination.file),
         this.ability(Ids.ConeOfCold),
-        this.preset(SPELLS.DireCharm.file),
+        this.preset(SPELLS.Wizard.DireCharm.file),
         {
-          preset: SPELLS.Darkness15Radius.file,
+          preset: SPELLS.Wizard.Darkness15Radius.file,
           spell: {
             type: "noDec",
           },
           timer: { name: "darkness", value: 60 },
         },
-        this.preset(SPELLS.PowerWordSleep.file),
-        this.preset(SPELLS.Sleep.file),
-        this.preset(SPELLS.CharmPerson.file),
+        this.preset(SPELLS.Wizard.PowerWordSleep.file),
+        this.preset(SPELLS.Wizard.Sleep.file),
+        this.preset(SPELLS.Wizard.CharmPerson.file),
         this.ability(Ids.GaseousForm),
       ],
     });
@@ -956,10 +956,10 @@ class OgreFamily extends CreatureFamily<Ogre> {
           proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 4 }],
           spells: {
             memorized: [
-              { file: SPELLS.DireCharm.file, memorizedCount: 1 },
-              { file: SPELLS.PowerWordSleep.file, memorizedCount: 2 },
-              { file: SPELLS.CharmPerson.file, memorizedCount: 1 },
-              { file: SPELLS.Sleep.file, memorizedCount: 1 },
+              { file: SPELLS.Wizard.DireCharm.file, memorizedCount: 1 },
+              { file: SPELLS.Wizard.PowerWordSleep.file, memorizedCount: 2 },
+              { file: SPELLS.Wizard.CharmPerson.file, memorizedCount: 1 },
+              { file: SPELLS.Wizard.Sleep.file, memorizedCount: 1 },
             ],
           },
         },
@@ -975,10 +975,10 @@ class OgreFamily extends CreatureFamily<Ogre> {
           spells: {
             memorized: [
               { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 1 },
-              { file: SPELLS.DireCharm.file, memorizedCount: 2 },
-              { file: SPELLS.PowerWordSleep.file, memorizedCount: 2 },
-              { file: SPELLS.CharmPerson.file, memorizedCount: 2 },
-              { file: SPELLS.Sleep.file, memorizedCount: 2 },
+              { file: SPELLS.Wizard.DireCharm.file, memorizedCount: 2 },
+              { file: SPELLS.Wizard.PowerWordSleep.file, memorizedCount: 2 },
+              { file: SPELLS.Wizard.CharmPerson.file, memorizedCount: 2 },
+              { file: SPELLS.Wizard.Sleep.file, memorizedCount: 2 },
             ],
           },
         },
@@ -994,12 +994,12 @@ class OgreFamily extends CreatureFamily<Ogre> {
           proficiencies: [{ type: ProficiencyTypeEnum.PROFICIENCYHALBERD, value: 5 }],
           spells: {
             memorized: [
-              { file: SPELLS.Domination.file, memorizedCount: 1 },
+              { file: SPELLS.Wizard.Domination.file, memorizedCount: 1 },
               { file: this.spell(Ids.ConeOfCold).file, memorizedCount: 2 },
-              { file: SPELLS.DireCharm.file, memorizedCount: 4 },
-              { file: SPELLS.PowerWordSleep.file, memorizedCount: 4 },
-              { file: SPELLS.CharmPerson.file, memorizedCount: 3 },
-              { file: SPELLS.Sleep.file, memorizedCount: 3 },
+              { file: SPELLS.Wizard.DireCharm.file, memorizedCount: 4 },
+              { file: SPELLS.Wizard.PowerWordSleep.file, memorizedCount: 4 },
+              { file: SPELLS.Wizard.CharmPerson.file, memorizedCount: 3 },
+              { file: SPELLS.Wizard.Sleep.file, memorizedCount: 3 },
             ],
           },
         },
@@ -1189,10 +1189,10 @@ class OgreFamily extends CreatureFamily<Ogre> {
         },
         spells: {
           memorized: [
-            { file: SPELLS.Bless.file, memorizedCount: 1 },
-            { file: SPELLS.Command.file, memorizedCount: 2 },
-            { file: SPELLS.Chant.file, memorizedCount: 1 },
-            { file: SPELLS.HoldPersonCleric.file, memorizedCount: 1 },
+            { file: SPELLS.Priest.Bless.file, memorizedCount: 1 },
+            { file: SPELLS.Priest.Command.file, memorizedCount: 2 },
+            { file: SPELLS.Priest.Chant.file, memorizedCount: 1 },
+            { file: SPELLS.Priest.HoldPersonCleric.file, memorizedCount: 1 },
           ],
         },
       },
@@ -1202,12 +1202,12 @@ class OgreFamily extends CreatureFamily<Ogre> {
       restHeal: true,
       usePotions: true,
       abilities: [
-        this.preset(SPELLS.Bless.file),
-        this.preset(SPELLS.Command.file),
-        this.preset(SPELLS.Chant.file),
-        this.preset(SPELLS.HoldPersonCleric.file),
-        this.preset(SPELLS.ResistFear.file),
-        this.preset(SPELLS.CallLightning.file),
+        this.preset(SPELLS.Priest.Bless.file),
+        this.preset(SPELLS.Priest.Command.file),
+        this.preset(SPELLS.Priest.Chant.file),
+        this.preset(SPELLS.Priest.HoldPersonCleric.file),
+        this.preset(SPELLS.Priest.ResistFear.file),
+        this.preset(SPELLS.Priest.CallLightning.file),
       ],
     });
     shaman.setAttack({

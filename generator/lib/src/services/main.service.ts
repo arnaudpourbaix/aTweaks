@@ -11,7 +11,7 @@ import weiduCreatureService from "./weidu/weidu-creature.service";
 import weiduFamilyService from "./weidu/weidu-family.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
 import { ABILITY_PRESETS } from "../../config/ability-presets";
-import { SPELLS } from "../../config/spell-names";
+import { getAllSpells } from "../../config/spells/spell-names";
 import utils from "./utils/utils.service";
 
 class MainService {
@@ -77,7 +77,7 @@ class MainService {
       if (!preset.ability.spell || preset.ability.spell.resource || preset.ability.spell.id) {
         continue;
       }
-      const spell = Object.values(SPELLS).find((s) => s.file === preset.preset);
+      const spell = Object.values(getAllSpells()).find((s) => s.file === preset.preset);
       console.log(`Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`);
       if (!spell || !("id" in spell)) {
         preset.ability.spell.resource = preset.preset;
@@ -90,8 +90,9 @@ class MainService {
   checkSpells() {
     const files: string[] = [];
     const identifiers: string[] = [];
-    for (const key of utils.objectKeys(SPELLS)) {
-      const spell = SPELLS[key];
+    const allSpells = getAllSpells();
+    for (const key of utils.objectKeys(allSpells)) {
+      const spell = allSpells[key];
       if (files.includes(spell.file)) {
         throw new Error(`Spell file ${spell.file} is declared multiple times.`);
       }

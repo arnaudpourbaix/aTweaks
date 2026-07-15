@@ -1,4 +1,4 @@
-import { SpellGroupName } from "../../../config/spell-group-name";
+import { SpellGroupName } from "../../../config/spells/spell-group-name";
 import { RawCreatureAbility } from "../creature/ability";
 import { ItemSlot } from "../creature/item";
 import { ImmunityName } from "../final/immunity";

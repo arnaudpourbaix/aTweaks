@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import effectFactory from "../src/factories/effect.factory";
 import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
@@ -34,7 +34,7 @@ class Ankheg extends Creature {
       memorizedCount: 1,
       id: Ids.Stream,
       secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
-      icon: SPELLS.MelfAcidArrow.file,
+      icon: SPELLS.Wizard.MelfAcidArrow.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,

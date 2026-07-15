@@ -2,11 +2,11 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DEATH_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.WailOfTheBanshee.file,
+    preset: SPELLS.Wizard.WailOfTheBanshee.file,
     ability: {
       name: "ability.wailOfTheBanshee",
       targets: [
@@ -25,7 +25,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.PowerWordKill.file,
+    preset: SPELLS.Wizard.PowerWordKill.file,
     ability: {
       name: "ability.powerWordKill",
       targets: [
@@ -45,7 +45,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.FingerOfDeath.file,
+    preset: SPELLS.Priest.FingerOfDeath.file,
     ability: {
       name: "ability.FingerOfDeath",
       targets: targetService.combineListWithTriggers(
@@ -70,7 +70,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.SymbolDeath.file,
+    preset: SPELLS.Priest.SymbolDeath.file,
     ability: {
       name: "ability.SymbolDeath",
       targets: [

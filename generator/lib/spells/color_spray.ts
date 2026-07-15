@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { Durations } from "../src/model/game-data/durations";
 import { BaseEffect, Effect } from "../src/model/spell-item/effect";
 import {
@@ -257,8 +257,8 @@ export const SPELL_COLOR_SPRAY: Spell = spellService.getSpell(
     primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
     secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
     level: 1,
-    icon: SPELLS.ColorSpray.file,
+    icon: SPELLS.Wizard.ColorSpray.file,
     headers: [...Array(20).keys()].map((i) => header(i + 1)),
   },
-  SPELLS.ColorSpray.file,
+  SPELLS.Wizard.ColorSpray.file,
 );

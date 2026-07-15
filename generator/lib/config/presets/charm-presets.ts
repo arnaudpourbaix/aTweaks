@@ -2,11 +2,11 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { CHARM_TARGET_LISTS, DEFAULT_SPELL_PROBABILITY } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const CHARM_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.Domination.file,
+    preset: SPELLS.Wizard.Domination.file,
     ability: {
       name: "ability.domination",
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
@@ -18,7 +18,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MentalDomination.file,
+    preset: SPELLS.Priest.MentalDomination.file,
     ability: {
       name: "ability.MentalDomination",
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
@@ -30,7 +30,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.DireCharm.file,
+    preset: SPELLS.Wizard.DireCharm.file,
     ability: {
       name: "ability.direCharm",
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
@@ -40,7 +40,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
-          [SPELLS.Domination.file, SPELLS.MentalDomination.file],
+          [SPELLS.Wizard.Domination.file, SPELLS.Priest.MentalDomination.file],
           true,
         ),
       ],
@@ -49,7 +49,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.CharmPerson.file,
+    preset: SPELLS.Wizard.CharmPerson.file,
     ability: {
       name: "ability.charmPerson",
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
@@ -59,7 +59,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
-          [SPELLS.Domination.file, SPELLS.MentalDomination.file, SPELLS.DireCharm.file],
+          [SPELLS.Wizard.Domination.file, SPELLS.Priest.MentalDomination.file, SPELLS.Wizard.DireCharm.file],
           true,
         ),
       ],
@@ -68,7 +68,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.CharmPersonOrAnimal.file,
+    preset: SPELLS.Priest.CharmPersonOrAnimal.file,
     ability: {
       name: "ability.charmPersonOrAnimal",
       targets: targetService.combineListWithTriggers(CHARM_TARGET_LISTS, [
@@ -78,7 +78,7 @@ export const CHARM_PRESETS: AbilityPreset[] = [
       spell: {},
       triggers: [
         ...triggerFactory.haveSpellRES(
-          [SPELLS.Domination.file, SPELLS.MentalDomination.file, SPELLS.DireCharm.file],
+          [SPELLS.Wizard.Domination.file, SPELLS.Priest.MentalDomination.file, SPELLS.Wizard.DireCharm.file],
           true,
         ),
       ],

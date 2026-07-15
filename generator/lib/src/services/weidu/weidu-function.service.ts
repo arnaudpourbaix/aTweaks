@@ -1,5 +1,5 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
-import { SPELL_GROUPS } from "../../../config/spell-group";
+import { SPELL_GROUPS } from "../../../config/spells/spell-group";
 import { SPELL_FUNCTIONS } from "../../../spells";
 import { CR, TAB } from "../../model/constants";
 import { ImmunityConfig } from "../../model/final/immunity";
@@ -13,7 +13,7 @@ import { AbstractWeiduService } from "./abstract-weidu.service";
 import weiduCoreService from "./weidu-core.service";
 import weiduSpellService from "./weidu-spell.service";
 import weiduUtils from "../utils/weidu.utils";
-import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { SPELL_PROTECTIONS } from "../../../config/spells/spell-protection";
 import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 
 class WeiduFunctionService extends AbstractWeiduService {

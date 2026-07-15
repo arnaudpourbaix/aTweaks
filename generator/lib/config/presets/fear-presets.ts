@@ -3,11 +3,12 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY, FEAR_TARGET_LISTS } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const FEAR_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.Horror.file,
+    preset: SPELLS.Wizard.Horror.file,
     ability: {
       name: "ability.horror",
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [
@@ -21,7 +22,7 @@ export const FEAR_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Spook.file,
+    preset: SPELLS.Wizard.Spook.file,
     ability: {
       name: "ability.spook",
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [
@@ -35,7 +36,7 @@ export const FEAR_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create(
-    [SPELLS.CloakOfFear.file, FNP_SPELLS.CloakOfFear.file],
+    [SPELLS.Priest.CloakOfFear.file, FNP_SPELLS.Priest.CloakOfFear.file],
     {
       name: "ability.cloakOfFear",
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [

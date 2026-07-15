@@ -1,5 +1,5 @@
 import weiduUtils from "../../services/utils/weidu.utils";
-import { SpellbookModName } from "../../../config/spellbook-mod-name";
+import { SpellbookModName } from "../../../config/spells/spellbook-mod-name";
 import { ImmunityName } from "../final/immunity";
 import { CreatureSize } from "../game-data/sizes";
 import { AlignIdentifier } from "../ids/align";

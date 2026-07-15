@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "path";
-import { SpellGroupName } from "../../../config/spell-group-name";
+import { SpellGroupName } from "../../../config/spells/spell-group-name";
 import { MonsterFamilyEnum } from "../../../creatures/monster";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { StringReference } from "../../model/final/stringref";
@@ -13,7 +13,7 @@ import { MemorizedSpellType, Spell } from "../../model/spell-item/spell-item";
 import { SpellProtectionStat } from "../../model/spell-item/spell-protection";
 import { State } from "../../state";
 import translationService from "./../translation.service";
-import { FNP_SPELLS } from "../../../config/spell-names";
+import { getAllFnpSpells } from "../../../config/spells/fnp-spell-names";
 
 class UtilsService {
   objectKeys = <T extends object>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[];
@@ -252,7 +252,7 @@ class UtilsService {
   }
 
   getExternalSpell(filename: string) {
-    const spells = [...Object.values(FNP_SPELLS)];
+    const spells = [...Object.values(getAllFnpSpells())];
     return spells.find((s) => s.file === filename);
   }
 

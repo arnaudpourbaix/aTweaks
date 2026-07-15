@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -55,7 +55,7 @@ class Dog extends Creature {
    */
   createBlink() {
     return this.addSpell({
-      icon: SPELLS.DimensionDoor.file,
+      icon: SPELLS.Wizard.DimensionDoor.file,
       options: {
         renew: 1,
       },

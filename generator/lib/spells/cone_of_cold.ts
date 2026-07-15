@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import {
   EffectDamageTypeEnum,
   EffectFlagsEnum,
@@ -41,7 +41,7 @@ export const createConeOfCold = ({
   memorizedCount,
   options,
   name: "spell.coneOfCold.name",
-  icon: SPELLS.ConeOfCold.file,
+  icon: SPELLS.Wizard.ConeOfCold.file,
   castingSound: "CAS_M06",
   flags: [SpellFlagEnum.Hostile, SpellFlagEnum.BreakSanctuary],
   type: SpellTypeEnum.Wizard,
@@ -76,7 +76,7 @@ export const createConeOfCold = ({
     },
   ],
   ability: {
-    preset: SPELLS.ConeOfCold.file,
+    preset: SPELLS.Wizard.ConeOfCold.file,
     spell: {
       id: undefined,
       type: "force",

@@ -2,11 +2,11 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY, SLEEP_TARGET_LISTS } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const SLEEP_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.PowerWordSleep.file,
+    preset: SPELLS.Wizard.PowerWordSleep.file,
     ability: {
       name: "ability.powerWordSleep",
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
@@ -20,7 +20,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Sleep.file,
+    preset: SPELLS.Wizard.Sleep.file,
     ability: {
       name: "ability.sleep",
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
@@ -33,7 +33,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.GreaterCommand.file,
+    preset: SPELLS.Priest.GreaterCommand.file,
     ability: {
       name: "ability.GreaterCommand",
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
@@ -45,7 +45,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Command.file,
+    preset: SPELLS.Priest.Command.file,
     ability: {
       name: "ability.command",
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [

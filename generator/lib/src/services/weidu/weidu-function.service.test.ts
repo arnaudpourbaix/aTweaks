@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SPELL_PROTECTIONS } from "../../../config/spell-protection";
+import { SPELL_PROTECTIONS } from "../../../config/spells/spell-protection";
 import { ImmunityConfig } from "../../model/final/immunity";
 import { CodeLine } from "../../model/misc";
 import { PortraitIconEnum } from "../../model/spell-item/effect.enums";

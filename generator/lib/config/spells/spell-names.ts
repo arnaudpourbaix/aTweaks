@@ -1,6 +1,4 @@
-import { SpellIdentifier } from "../src/model/ids/spell";
-import { SpellTypeEnum } from "../src/model/spell-item/effect.enums";
-import { BaseSpell } from "../src/model/spell-item/spell-item";
+import { SpellIdentifier } from "../../src/model/ids/spell";
 
 export interface SpellReference {
   file: string;
@@ -11,8 +9,7 @@ export interface SpellReference {
     | "short"; // several rounds to one turn
 }
 
-export const SPELLS = {
-  // Wizard
+const WIZARD_SPELLS = {
   AgannazarScorcher: { file: "SPWI217", id: "WIZARD_AGANNAZAR_SCORCHER" },
   Blur: { file: "SPWI201", id: "WIZARD_BLUR", duration: "mid" },
   Breach: { file: "SPWI513", id: "WIZARD_BREACH" },
@@ -112,8 +109,9 @@ export const SPELLS = {
   },
   WailOfTheBanshee: { file: "SPWI913", id: "WIZARD_WAIL_OF_THE_BANSHEE" },
   Web: { file: "SPWI215", id: "WIZARD_WEB" },
+} satisfies Record<string, SpellReference>;
 
-  // Priest
+const PRIEST_SPELLS = {
   AerialServant: { file: "SPPR601", id: "CLERIC_AERIAL_SERVANT" },
   AnimalSummoning4: {
     file: "SPPR402",
@@ -178,65 +176,27 @@ export const SPELLS = {
   UnholyBlight: { file: "SPPR314", id: "CLERIC_UNHOLY_BLIGHT" },
   WavesOfAgony: { file: "SPPR533", id: "CLERIC_WAVES_OF_AGONY" },
   Wither: { file: "SPPR740", id: "CLERIC_WITHER" },
-  // Innates
+} satisfies Record<string, SpellReference>;
+
+const INNATE_SPELLS = {
   MephitColorSpray: { file: "SPIN937", id: "MEPHIT_COLOR_SPRAY" },
   SpiderSingleTargetWeb: { file: "BDSPIDGA" },
   VortexWeb: { file: "SPIN575", id: "VORTEX_WEB" },
-  // Class
+} satisfies Record<string, SpellReference>;
+
+const CLASS_SPELLS = {
   BerserkerRage: { file: "SPCL321", id: "BERSERKER_RAGE" },
   BarbarianRage: { file: "SPCL152", id: "BARBARIAN_RAGE" },
   OffensiveSpin: { file: "SPCL521", id: "BLADE_OFFENSIVE_SPIN" },
 } satisfies Record<string, SpellReference>;
 
-/**
- * Faiths and Powers
- */
-export const FNP_SPELLS = {
-  AnimateDead: { file: "d5p1301", level: 4, type: SpellTypeEnum.Priest },
-  CauseDisease: { file: "d5p1329", level: 1, type: SpellTypeEnum.Priest },
-  CauseCriticalWounds: {
-    file: "sppr414",
-    level: 4,
-    type: SpellTypeEnum.Priest,
-  },
-  CauseLightWounds: { file: "SPPR121", level: 1, type: SpellTypeEnum.Priest },
-  CauseModerateWounds: {
-    file: "SPPR220",
-    level: 2,
-    type: SpellTypeEnum.Priest,
-  },
-  CauseSeriousWounds: { file: "sppr322", level: 3, type: SpellTypeEnum.Priest },
-  CircleOfBones: { file: "sppr332", level: 3, type: SpellTypeEnum.Priest },
-  CloakOfFear: { file: "d5p1416", level: 3, type: SpellTypeEnum.Priest },
-  DemiShadowMonsters: { file: "d5p2527", level: 4, type: SpellTypeEnum.Priest },
-  Doom: { file: "SPPR113", level: 1, type: SpellTypeEnum.Priest },
-  Emotion: { file: "d5p2411", level: 4, type: SpellTypeEnum.Priest },
-  GreaterMalison: { file: "d5p2412", level: 4, type: SpellTypeEnum.Priest },
-  Forbiddance: { file: "b_c201", level: 2, type: SpellTypeEnum.Priest },
-  FrostFingers: { file: "B_PR101", level: 1, type: SpellTypeEnum.Priest },
-  MiscastMagic: { file: "d5p1310", level: 2, type: SpellTypeEnum.Priest },
-  Poison: { file: "d5p1411", level: 4, type: SpellTypeEnum.Priest },
-  RigidThinking: { file: "d5p1311", level: 2, type: SpellTypeEnum.Priest },
-  Shatter: { file: "b_pr201", level: 2, type: SpellTypeEnum.Priest },
-  Shield: { file: "d5p2114", level: 2, type: SpellTypeEnum.Priest },
-  ShadowMonsters: { file: "d5p2433", level: 3, type: SpellTypeEnum.Priest },
-  WavesOfFatigue: { file: "d5p2508", level: 4, type: SpellTypeEnum.Priest },
-  Chaos: { file: "d5p1709", level: 5, type: SpellTypeEnum.Priest },
-  CloudOfPestilence: { file: "d5p1424", level: 5, type: SpellTypeEnum.Priest },
-  GreaterCommand: { file: "d5p1512", level: 5, type: SpellTypeEnum.Priest },
-  MassCauseLightWounds: {
-    file: "d5p1530",
-    level: 5,
-    type: SpellTypeEnum.Priest,
-  },
-  Shades: { file: "d5p2632", level: 5, type: SpellTypeEnum.Priest },
-  SlayLiving: { file: "d5p1511", level: 5, type: SpellTypeEnum.Priest },
-  WavesOfAgony: { file: "d5p1533", level: 5, type: SpellTypeEnum.Priest },
-  DolorousDecay: { file: "d5f1610", level: 6, type: SpellTypeEnum.Priest },
-  Harm: { file: "d5f1608", level: 6, type: SpellTypeEnum.Priest },
-  MagicResistance: { file: "d5f1509", level: 6, type: SpellTypeEnum.Priest },
-  SummonShadows: { file: "d5pp422", level: 6, type: SpellTypeEnum.Priest },
-  TrueSeeing: { file: "d5f1505", level: 6, type: SpellTypeEnum.Priest },
-  FingerOfDeath: { file: "d5f1708", level: 7, type: SpellTypeEnum.Priest },
-  Wither: { file: "d5f1740", level: 7, type: SpellTypeEnum.Priest },
-} satisfies Record<string, BaseSpell>;
+export const SPELLS = {
+  Wizard: WIZARD_SPELLS,
+  Priest: PRIEST_SPELLS,
+  Class: CLASS_SPELLS,
+  Innate: INNATE_SPELLS,
+};
+
+export function getAllSpells() {
+  return { ...WIZARD_SPELLS, ...PRIEST_SPELLS, ...CLASS_SPELLS, ...INNATE_SPELLS };
+}

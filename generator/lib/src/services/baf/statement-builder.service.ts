@@ -1,6 +1,6 @@
 import { GLOBAL_CONFIG } from "../../../config/generate";
 import { POTIONS } from "../../../config/potion";
-import { SpellReference, SPELLS } from "../../../config/spell-names";
+import { getAllSpells, SpellReference } from "../../../config/spells/spell-names";
 import { TARGET_STATUS } from "../../../config/target-config";
 import { TargetListName, TargetStatusName } from "../../../config/target-name";
 import actionFactory from "../../factories/action.factory";
@@ -827,8 +827,9 @@ class StatementBuilderService {
     variable: string,
     _options: BuilderOptions,
   ): void {
-    for (const key of utils.objectKeys(SPELLS)) {
-      const spell = SPELLS[key];
+    const allSpells = getAllSpells();
+    for (const key of utils.objectKeys(allSpells)) {
+      const spell = allSpells[key];
       if (!("duration" in spell) || spell.duration !== duration) continue;
       statements.push({
         comment: `Precast ${key}`,

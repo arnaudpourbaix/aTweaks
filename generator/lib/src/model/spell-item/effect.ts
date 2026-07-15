@@ -1,4 +1,4 @@
-import { SpellProtectionName } from "../../../config/spell-protection";
+import { SpellProtectionName } from "../../../config/spells/spell-protection";
 import { StringReference } from "../final/stringref";
 import { AnimationIdentifiers } from "../ids/animate";
 import { GeneralIdentifier } from "../ids/general";

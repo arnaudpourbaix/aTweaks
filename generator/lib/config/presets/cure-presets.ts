@@ -1,11 +1,11 @@
 import { ScriptTarget } from "../../src/model/constants";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const CURE_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.CureLightWounds.file,
+    preset: SPELLS.Priest.CureLightWounds.file,
     ability: {
       name: "ability.cureLightWounds",
       // selfTarget: without it, parseAbilitySpell() defaults an untargeted spell's cast target

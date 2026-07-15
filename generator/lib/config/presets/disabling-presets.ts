@@ -4,11 +4,12 @@ import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DISABLING_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.Darkness15Radius.file,
+    preset: SPELLS.Wizard.Darkness15Radius.file,
     ability: {
       name: "ability.darkness15Radius",
       targets: [
@@ -29,7 +30,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ObscuringMist.file,
+    preset: SPELLS.Wizard.ObscuringMist.file,
     ability: {
       name: "ability.ObscuringMist",
       targets: [
@@ -48,7 +49,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Silence.file,
+    preset: SPELLS.Priest.Silence.file,
     ability: {
       name: "ability.silence",
       targets: [
@@ -69,7 +70,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MiscastMagic.file,
+    preset: SPELLS.Priest.MiscastMagic.file,
     ability: {
       name: "ability.miscastMagic",
       targets: [
@@ -89,7 +90,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create(
-    [SPELLS.RigidThinking.file, FNP_SPELLS.RigidThinking.file],
+    [SPELLS.Priest.RigidThinking.file, FNP_SPELLS.Priest.RigidThinking.file],
     {
       name: "ability.rigidThinking",
       targets: [
@@ -109,7 +110,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   ),
   {
-    preset: SPELLS.SummonInsects.file,
+    preset: SPELLS.Priest.SummonInsects.file,
     ability: {
       name: "ability.summonInsects",
       targets: [
@@ -129,7 +130,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Entangle.file,
+    preset: SPELLS.Priest.Entangle.file,
     ability: {
       name: "ability.entangle",
       targets: [
@@ -149,7 +150,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Slow.file,
+    preset: SPELLS.Wizard.Slow.file,
     ability: {
       name: "ability.slow",
       targets: targetService.combineListWithTriggers(
@@ -176,7 +177,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.PowerWordBlind.file,
+    preset: SPELLS.Wizard.PowerWordBlind.file,
     ability: {
       name: "ability.powerWordBlind",
       targets: [
@@ -197,7 +198,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.PowerWordStun.file,
+    preset: SPELLS.Wizard.PowerWordStun.file,
     ability: {
       name: "ability.powerWordStun",
       targets: [
@@ -216,7 +217,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.Forbiddance.file,
+    preset: FNP_SPELLS.Priest.Forbiddance.file,
     ability: {
       name: "ability.Forbiddance",
       targets: [
@@ -235,7 +236,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.MiscastMagic.file,
+    preset: FNP_SPELLS.Priest.MiscastMagic.file,
     ability: {
       name: "ability.MiscastMagic",
       targets: [
@@ -254,7 +255,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.StinkingCloud.file,
+    preset: SPELLS.Wizard.StinkingCloud.file,
     ability: {
       name: "ability.StinkingCloud",
       targets: [
@@ -273,7 +274,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.Emotion.file, FNP_SPELLS.Emotion.file], {
+  ...presetFactory.create([SPELLS.Wizard.Emotion.file, FNP_SPELLS.Priest.Emotion.file], {
     name: "ability.Emotion",
     targets: [
       {
@@ -287,7 +288,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: SPELLS.TeleportField.file,
+    preset: SPELLS.Wizard.TeleportField.file,
     ability: {
       name: "ability.TeleportField",
       targets: [

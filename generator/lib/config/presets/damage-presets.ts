@@ -4,11 +4,12 @@ import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DAMAGE_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.MagicMissiles.file,
+    preset: SPELLS.Wizard.MagicMissiles.file,
     ability: {
       name: "ability.magicMissiles",
       targets: targetService.combineListWithTriggers(
@@ -40,7 +41,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MordenkainenForceMissiles.file,
+    preset: SPELLS.Wizard.MordenkainenForceMissiles.file,
     ability: {
       name: "ability.MordenkainenForceMissiles",
       targets: targetService.combineListWithTriggers(
@@ -71,7 +72,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ChromaticOrb.file,
+    preset: SPELLS.Wizard.ChromaticOrb.file,
     ability: {
       name: "ability.ChromaticOrb",
       targets: [
@@ -91,7 +92,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.CallLightning.file,
+    preset: SPELLS.Priest.CallLightning.file,
     ability: {
       name: "ability.callLightning",
       targets: [
@@ -112,7 +113,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.CauseDisease.file,
+    preset: FNP_SPELLS.Priest.CauseDisease.file,
     ability: {
       name: "ability.CauseDisease",
       targets: [
@@ -132,7 +133,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.CauseLightWounds.file,
+    preset: FNP_SPELLS.Priest.CauseLightWounds.file,
     ability: {
       name: "ability.CauseLightWounds",
       spell: {
@@ -142,10 +143,10 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
         ...triggerFactory.haveSpellRES(
           [
-            FNP_SPELLS.CauseSeriousWounds.file,
-            FNP_SPELLS.CauseCriticalWounds.file,
-            FNP_SPELLS.Harm.file,
-            SPELLS.SlayLiving.file,
+            FNP_SPELLS.Priest.CauseSeriousWounds.file,
+            FNP_SPELLS.Priest.CauseCriticalWounds.file,
+            FNP_SPELLS.Priest.Harm.file,
+            SPELLS.Priest.SlayLiving.file,
           ],
           true,
         ),
@@ -154,7 +155,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.CauseSeriousWounds.file, FNP_SPELLS.CauseSeriousWounds.file], {
+  ...presetFactory.create([SPELLS.Priest.CauseSeriousWounds.file, FNP_SPELLS.Priest.CauseSeriousWounds.file], {
     name: "ability.CauseSeriousWounds",
     spell: {
       selfTarget: true,
@@ -162,7 +163,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     triggers: [
       ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
       ...triggerFactory.haveSpellRES(
-        [FNP_SPELLS.CauseCriticalWounds.file, FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file],
+        [FNP_SPELLS.Priest.CauseCriticalWounds.file, FNP_SPELLS.Priest.Harm.file, SPELLS.Priest.SlayLiving.file],
         true,
       ),
     ],
@@ -170,7 +171,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: FNP_SPELLS.CauseCriticalWounds.file,
+    preset: FNP_SPELLS.Priest.CauseCriticalWounds.file,
     ability: {
       name: "ability.CauseCriticalWounds",
       spell: {
@@ -178,14 +179,14 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       },
       triggers: [
         ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
-        ...triggerFactory.haveSpellRES([FNP_SPELLS.Harm.file, SPELLS.SlayLiving.file], true),
+        ...triggerFactory.haveSpellRES([FNP_SPELLS.Priest.Harm.file, SPELLS.Priest.SlayLiving.file], true),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
-    preset: SPELLS.Harm.file,
+    preset: SPELLS.Priest.Harm.file,
     ability: {
       name: "ability.Harm",
       spell: {
@@ -193,14 +194,14 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       },
       triggers: [
         ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
-        ...triggerFactory.haveSpellRES([SPELLS.SlayLiving.file], true),
+        ...triggerFactory.haveSpellRES([SPELLS.Priest.SlayLiving.file], true),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
-    preset: SPELLS.SlayLiving.file,
+    preset: SPELLS.Priest.SlayLiving.file,
     ability: {
       name: "ability.SlayLiving",
       spell: {
@@ -212,7 +213,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.Shatter.file,
+    preset: FNP_SPELLS.Priest.Shatter.file,
     ability: {
       name: "ability.Shatter",
       targets: [
@@ -231,7 +232,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Wither.file,
+    preset: SPELLS.Priest.Wither.file,
     ability: {
       name: "ability.Wither",
       targets: targetService.combineListWithTriggers(
@@ -257,7 +258,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.DolorousDecay.file,
+    preset: SPELLS.Priest.DolorousDecay.file,
     ability: {
       name: "ability.DolorousDecay",
       targets: targetService.combineListWithTriggers(
@@ -282,7 +283,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Poison.file,
+    preset: SPELLS.Priest.Poison.file,
     ability: {
       name: "ability.Poison",
       targets: [
@@ -302,7 +303,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MelfAcidArrow.file,
+    preset: SPELLS.Wizard.MelfAcidArrow.file,
     ability: {
       name: "ability.MelfAcidArrow",
       targets: targetService.combineListWithTriggers(
@@ -329,7 +330,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.FlameArrow.file,
+    preset: SPELLS.Wizard.FlameArrow.file,
     ability: {
       name: "ability.FlameArrow",
       targets: [
@@ -351,7 +352,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.FlameStrike.file,
+    preset: SPELLS.Priest.FlameStrike.file,
     ability: {
       name: "ability.FlameStrike",
       targets: [
@@ -370,7 +371,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Combust.file,
+    preset: SPELLS.Wizard.Combust.file,
     ability: {
       name: "ability.Combust",
       targets: [

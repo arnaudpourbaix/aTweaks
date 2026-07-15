@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { createConeOfCold } from "../spells/cone_of_cold";
 import { CommonProjectileFiles } from "../spells/projectiles";
 import effectFactory from "../src/factories/effect.factory";
@@ -71,7 +71,7 @@ class Golem extends Creature {
       id: Ids.Haste,
       memorizedCount: 1,
       castingSound: "CAS_P04",
-      icon: SPELLS.Haste.file,
+      icon: SPELLS.Wizard.Haste.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Melee,
@@ -153,7 +153,7 @@ class Golem extends Creature {
       name: "monster.golem.ability.hideousLaugh",
       id: Ids.HideousLaugh,
       memorizedCount: 1,
-      icon: SPELLS.CloakOfFear.file,
+      icon: SPELLS.Priest.CloakOfFear.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 3 },
       headers: [
@@ -171,7 +171,7 @@ class Golem extends Creature {
         },
       ],
       ability: {
-        preset: SPELLS.CloakOfFear.file,
+        preset: SPELLS.Priest.CloakOfFear.file,
         spell: {
           type: "force",
           remove: true,
@@ -198,7 +198,7 @@ class Golem extends Creature {
       description: "monster.golem.ability.charge.description",
       id: Ids.Charge,
       memorizedCount: 1,
-      icon: SPELLS.Haste.file,
+      icon: SPELLS.Wizard.Haste.file,
       options: { renew: 5 },
       headers: [
         {
@@ -251,7 +251,7 @@ class Golem extends Creature {
       description: "monster.golem.ability.cloudOfPoisonousGas.description",
       id: Ids.CloudOfPoisonousGas,
       memorizedCount: 1,
-      icon: SPELLS.Cloudkill.file,
+      icon: SPELLS.Wizard.Cloudkill.file,
       options: { renew: 7 },
       headers: [
         {
@@ -506,7 +506,7 @@ class GolemFamily extends CreatureFamily<Golem> {
           remove: ["GOLSTO01"],
         },
         spells: {
-          memorized: [{ file: SPELLS.Slow.file, memorizedCount: 1 }],
+          memorized: [{ file: SPELLS.Wizard.Slow.file, memorizedCount: 1 }],
         },
       },
     });
@@ -518,7 +518,7 @@ class GolemFamily extends CreatureFamily<Golem> {
       restHeal: true,
       abilities: [
         {
-          preset: SPELLS.Slow.file,
+          preset: SPELLS.Wizard.Slow.file,
           spell: {
             type: "reallyForce",
             selfTarget: true,

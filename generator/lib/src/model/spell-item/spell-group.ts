@@ -1,4 +1,4 @@
-import { SpellGroupName } from "../../../config/spell-group-name";
+import { SpellGroupName } from "../../../config/spells/spell-group-name";
 import { SpellIdentifier } from "../ids/spell";
 
 export interface SpellGroup {

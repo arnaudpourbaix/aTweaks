@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
 import {
@@ -134,15 +134,15 @@ class ConstructFamily extends CreatureFamily<Construct> {
       xpv: 4000,
       spells: {
         memorized: [
-          { file: SPELLS.MagicMissiles.file, memorizedCount: 1 },
-          { file: SPELLS.DimensionDoor.file, memorizedCount: 1 },
+          { file: SPELLS.Wizard.MagicMissiles.file, memorizedCount: 1 },
+          { file: SPELLS.Wizard.DimensionDoor.file, memorizedCount: 1 },
         ],
       },
     });
     battleHorror.setBehavior({
       abilities: [
         {
-          preset: SPELLS.MagicMissiles.file,
+          preset: SPELLS.Wizard.MagicMissiles.file,
           spell: {
             type: "noDec",
           },
@@ -159,7 +159,7 @@ class ConstructFamily extends CreatureFamily<Construct> {
           type: "insertBefore",
           abilities: [
             {
-              preset: SPELLS.DimensionDoor.file,
+              preset: SPELLS.Wizard.DimensionDoor.file,
               range: 180,
               requireVocal: false,
             },

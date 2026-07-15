@@ -2,11 +2,12 @@ import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY, PRESET_NAMES } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const BUFF_PRESETS: AbilityPreset[] = [
   {
-    preset: SPELLS.Vocalize.file,
+    preset: SPELLS.Wizard.Vocalize.file,
     ability: {
       name: "ability.Vocalize",
       spell: {
@@ -18,7 +19,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Invisibility.file,
+    preset: SPELLS.Wizard.Invisibility.file,
     ability: {
       name: "ability.invisibility",
       spell: {
@@ -31,7 +32,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ImprovedInvisibility.file,
+    preset: SPELLS.Wizard.ImprovedInvisibility.file,
     ability: {
       name: "ability.improvedInvisibility",
       spell: {
@@ -44,7 +45,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ShadowDoor.file,
+    preset: SPELLS.Wizard.ShadowDoor.file,
     ability: {
       name: "ability.ShadowDoor",
       spell: {
@@ -57,7 +58,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Bless.file,
+    preset: SPELLS.Priest.Bless.file,
     ability: {
       name: "ability.bless",
       spell: {
@@ -68,7 +69,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ResistFear.file,
+    preset: SPELLS.Priest.ResistFear.file,
     ability: {
       name: "ability.resistFear",
       spell: {
@@ -79,7 +80,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Chant.file,
+    preset: SPELLS.Priest.Chant.file,
     ability: {
       name: "ability.chant",
       spell: {
@@ -90,7 +91,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.DimensionDoor.file,
+    preset: SPELLS.Wizard.DimensionDoor.file,
     ability: {
       name: "ability.dimensionDoor",
       targets: [
@@ -118,7 +119,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
         ]),
       ],
       spell: {
-        id: SPELLS.DimensionDoor.id,
+        id: SPELLS.Wizard.DimensionDoor.id,
         targetName: "RR#TRAT",
       },
       requireVocal: false,
@@ -132,7 +133,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Barkskin.file,
+    preset: SPELLS.Priest.Barkskin.file,
     ability: {
       name: "ability.barkskin",
       spell: {
@@ -142,7 +143,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.Shield.file, FNP_SPELLS.Shield.file], {
+  ...presetFactory.create([SPELLS.Wizard.Shield.file, FNP_SPELLS.Priest.Shield.file], {
     name: "ability.Shield",
     spell: {
       selfTarget: true,
@@ -152,7 +153,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: FNP_SPELLS.CircleOfBones.file,
+    preset: FNP_SPELLS.Priest.CircleOfBones.file,
     ability: {
       name: "ability.CircleOfBones",
       spell: {
@@ -164,7 +165,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MagicResistance.file,
+    preset: SPELLS.Priest.MagicResistance.file,
     ability: {
       name: "ability.MagicResistance",
       spell: {
@@ -175,7 +176,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MinorSpellDeflection.file,
+    preset: SPELLS.Wizard.MinorSpellDeflection.file,
     ability: {
       name: "ability.MinorSpellDeflection",
       spell: {
@@ -187,7 +188,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.FireShield.file,
+    preset: SPELLS.Wizard.FireShield.file,
     ability: {
       name: "ability.FireShield",
       spell: {
@@ -199,7 +200,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MirrorImages.file,
+    preset: SPELLS.Wizard.MirrorImages.file,
     ability: {
       name: "ability.MirrorImages",
       spell: {
@@ -211,7 +212,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Haste.file,
+    preset: SPELLS.Wizard.Haste.file,
     ability: {
       name: "ability.Haste",
       spell: {
@@ -223,7 +224,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ProtectionFromMissiles.file,
+    preset: SPELLS.Wizard.ProtectionFromMissiles.file,
     ability: {
       name: "ability.ProtectionFromMissiles",
       spell: {
@@ -235,7 +236,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.MinorGlobeOfInvulnerability.file,
+    preset: SPELLS.Wizard.MinorGlobeOfInvulnerability.file,
     ability: {
       name: "ability.MinorGlobeOfInvulnerability",
       spell: {
@@ -245,7 +246,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.Stoneskin.file, SPELLS.Ironskin.file], {
+  ...presetFactory.create([SPELLS.Wizard.Stoneskin.file, SPELLS.Priest.Ironskin.file], {
     name: "ability.Stoneskin",
     spell: {
       selfTarget: true,
@@ -255,7 +256,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: SPELLS.ProtectionFromMagicalWeapons.file,
+    preset: SPELLS.Wizard.ProtectionFromMagicalWeapons.file,
     ability: {
       name: "ability.ProtectionFromMagicalWeapons",
       spell: {
@@ -267,7 +268,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Blur.file,
+    preset: SPELLS.Wizard.Blur.file,
     ability: {
       name: "ability.Blur",
       spell: {
@@ -278,7 +279,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.BladeBarrier.file,
+    preset: SPELLS.Priest.BladeBarrier.file,
     ability: {
       name: "ability.BladeBarrier",
       spell: {
@@ -290,7 +291,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.RighteousMagic.file,
+    preset: SPELLS.Priest.RighteousMagic.file,
     ability: {
       name: "ability.RighteousMagic",
       spell: {
@@ -301,7 +302,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.TrueSeeing.file,
+    preset: SPELLS.Priest.TrueSeeing.file,
     ability: {
       name: "ability.TrueSeeing",
       spell: {
@@ -313,7 +314,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.HolyPower.file,
+    preset: SPELLS.Priest.HolyPower.file,
     ability: {
       name: "ability.HolyPower",
       spell: {
@@ -325,7 +326,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.ProtectionFromLightning.file,
+    preset: SPELLS.Priest.ProtectionFromLightning.file,
     ability: {
       name: "ability.ProtectionFromLightning",
       spell: {
@@ -337,7 +338,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.DrawUponHolyMight.file,
+    preset: SPELLS.Priest.DrawUponHolyMight.file,
     ability: {
       name: "ability.DrawUponHolyMight",
       spell: {

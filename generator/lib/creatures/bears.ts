@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import actionFactory from "../src/factories/action.factory";
 import effectFactory from "../src/factories/effect.factory";
 import responseFactory from "../src/factories/response.factory";
@@ -377,7 +377,7 @@ class BearFamily extends CreatureFamily<Bear> {
       description: "monster.bear.improvedStreamOfFrost.description",
       id: Ids.ImprovedStreamOfFrost,
       options: { renew: 3 },
-      icon: SPELLS.Fireburst.file,
+      icon: SPELLS.Wizard.Fireburst.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.OffensiveDamage,
       headers: [
         {
@@ -496,7 +496,7 @@ class BearFamily extends CreatureFamily<Bear> {
   rage: RawCreatureAbility = {
     name: "ability.enrage",
     spell: {
-      resource: SPELLS.BerserkerRage.file,
+      resource: SPELLS.Class.BerserkerRage.file,
       selfTarget: true,
     },
     triggers: [

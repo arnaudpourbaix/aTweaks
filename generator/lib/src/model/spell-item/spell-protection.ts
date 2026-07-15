@@ -1,4 +1,4 @@
-import { SpellProtectionName } from "../../../config/spell-protection";
+import { SpellProtectionName } from "../../../config/spells/spell-protection";
 import { AlignIdentifier } from "../ids/align";
 import { AllegianceIdentifier } from "../ids/allegiance";
 import { ClassIdentifier } from "../ids/class";

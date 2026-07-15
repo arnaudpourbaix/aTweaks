@@ -1,4 +1,4 @@
-import { SpellbookModName } from "./spellbook-mod-name";
+import { SpellbookModName } from "./spells/spellbook-mod-name";
 
 interface SpellbookMod {
   /** Display label used to distinguish this variant's section in the generated documentation. */

@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { Effect } from "../src/model/spell-item/effect";
 import {
   EffectDispelResistanceEnum,
@@ -48,7 +48,7 @@ export const createDimensionDoor = ({
   primaryType: ItemAbilityPrimaryTypeEnum.Transmuter,
   secondaryType: ItemAbilitySecondaryTypeEnum.NonCombat,
   level: spellLevel,
-  icon: SPELLS.DimensionDoor.file,
+  icon: SPELLS.Wizard.DimensionDoor.file,
   options: { renew },
   headers: [
     {
@@ -111,5 +111,5 @@ export const SPELL_DIMENSION_DOOR = spellService.getSpell(
     spellLevel: 4,
     spellType: SpellTypeEnum.Wizard,
   }),
-  SPELLS.DimensionDoor.file,
+  SPELLS.Wizard.DimensionDoor.file,
 );

@@ -1,6 +1,6 @@
 import { ATWEAKS_CREATURES, VAPOR_IMMUNE_CREATURES } from "../config/creatures";
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import effectFactory from "../src/factories/effect.factory";
 import { RawCreatureAbility } from "../src/model/creature/ability";
 import { Creature } from "../src/model/creature/creature";
@@ -83,7 +83,7 @@ class Slime extends Creature {
       id,
       description,
       name: "monster.slime.ability.split.name",
-      icon: SPELLS.MirrorImages.file,
+      icon: SPELLS.Wizard.MirrorImages.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Magical,
@@ -843,7 +843,7 @@ class SlimeFamily extends CreatureFamily<Slime> {
       name: "monster.slime.ability.toxicVapors.name",
       description: "monster.slime.ability.toxicVapors.description",
       groups: ["poison"],
-      icon: SPELLS.StinkingCloud.file,
+      icon: SPELLS.Wizard.StinkingCloud.file,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
       options: { renew: 1 },
       headers: [

@@ -1,4 +1,4 @@
-import { SpellGroup } from "../src/model/spell-item/spell-group";
+import { SpellGroup } from "../../src/model/spell-item/spell-group";
 import { SPELLS } from "./spell-names";
 
 export const SPELL_GROUPS: SpellGroup[] = [
@@ -117,8 +117,8 @@ export const SPELL_GROUPS: SpellGroup[] = [
   {
     name: "colorSpray",
     spells: [
-      SPELLS.ColorSpray.file,
-      SPELLS.MephitColorSpray.file,
+      SPELLS.Wizard.ColorSpray.file,
+      SPELLS.Innate.MephitColorSpray.file,
       // ATWEAKS_SPELLS.ColorSpray,
       // ATWEAKS_SPELLS.ColorSprayRadiant,
     ],

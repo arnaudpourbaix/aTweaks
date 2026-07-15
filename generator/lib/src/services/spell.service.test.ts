@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
-import { SpellGroupName } from "../../config/spell-group-name";
+import { SpellGroupName } from "../../config/spells/spell-group-name";
 import {
   EffectTargetEnum,
   ItemAbilityTypeEnum,

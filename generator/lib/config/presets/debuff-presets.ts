@@ -2,10 +2,11 @@ import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const DEBUFF_PRESETS: AbilityPreset[] = [
-  ...presetFactory.create([SPELLS.Doom.file, FNP_SPELLS.Doom.file], {
+  ...presetFactory.create([SPELLS.Priest.Doom.file, FNP_SPELLS.Priest.Doom.file], {
     name: "ability.Doom",
     targets: [
       {
@@ -23,7 +24,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   ...presetFactory.create(
-    [SPELLS.GreaterMalison.file, FNP_SPELLS.GreaterMalison.file],
+    [SPELLS.Wizard.GreaterMalison.file, FNP_SPELLS.Priest.GreaterMalison.file],
     {
       name: "ability.GreaterMalison",
       targets: [
@@ -41,7 +42,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
     },
   ),
   {
-    preset: FNP_SPELLS.WavesOfFatigue.file,
+    preset: FNP_SPELLS.Priest.WavesOfFatigue.file,
     ability: {
       name: "ability.WavesOfFatigue",
       targets: [
@@ -59,7 +60,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Glitterdust.file,
+    preset: SPELLS.Wizard.Glitterdust.file,
     ability: {
       name: "ability.Glitterdust",
       targets: [

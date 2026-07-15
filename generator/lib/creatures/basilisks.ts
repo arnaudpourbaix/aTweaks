@@ -1,5 +1,5 @@
 import { MonsterItemIconEnum } from "../config/item";
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import effectFactory from "../src/factories/effect.factory";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -278,7 +278,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       options: {
         renew: 1,
       },
-      icon: SPELLS.FleshToStone.file,
+      icon: SPELLS.Wizard.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,
@@ -342,7 +342,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       groups: ["petrification"],
       doc: false,
       secondaryType: ItemAbilitySecondaryTypeEnum.Disabling,
-      icon: SPELLS.FleshToStone.file,
+      icon: SPELLS.Wizard.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,
@@ -393,7 +393,7 @@ class BasiliskFamily extends CreatureFamily<Basilisk> {
       options: {
         renew: 1,
       },
-      icon: SPELLS.FleshToStone.file,
+      icon: SPELLS.Wizard.FleshToStone.file,
       headers: [
         {
           type: ItemAbilityTypeEnum.Ranged,

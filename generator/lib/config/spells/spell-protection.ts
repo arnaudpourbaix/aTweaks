@@ -2,7 +2,7 @@ import {
   SpellProtection,
   SpellProtectionRelation,
   SpellProtectionStat,
-} from "../src/model/spell-item/spell-protection";
+} from "../../src/model/spell-item/spell-protection";
 
 export type SpellProtectionName =
   | "NOT_OUTDOOR_CHECK"

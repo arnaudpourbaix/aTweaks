@@ -1,10 +1,11 @@
 import presetFactory from "../../src/factories/preset.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const CONFUSION_PRESETS: AbilityPreset[] = [
-  ...presetFactory.create([SPELLS.Confusion.file], {
+  ...presetFactory.create([SPELLS.Wizard.Confusion.file], {
     name: "ability.Confusion",
     targets: [
       {
@@ -20,7 +21,7 @@ export const CONFUSION_PRESETS: AbilityPreset[] = [
     requireVocal: true,
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
-  ...presetFactory.create([SPELLS.Chaos.file, FNP_SPELLS.Chaos.file], {
+  ...presetFactory.create([SPELLS.Priest.Chaos.file, FNP_SPELLS.Priest.Chaos.file], {
     name: "ability.Chaos",
     targets: [
       {

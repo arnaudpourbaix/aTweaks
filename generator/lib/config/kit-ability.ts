@@ -1,6 +1,6 @@
 import { ScriptTarget } from "../src/model/constants";
 import { KitConfig } from "../src/model/creature/kit";
-import { SPELLS } from "./spell-names";
+import { SPELLS } from "./spells/spell-names";
 
 export const KITS: KitConfig[] = [
   {
@@ -9,7 +9,7 @@ export const KITS: KitConfig[] = [
     movement: () => 0,
     abilities: [
       {
-        resource: SPELLS.BerserkerRage.file,
+        resource: SPELLS.Class.BerserkerRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
           name: "ability.enrage",
@@ -31,7 +31,7 @@ export const KITS: KitConfig[] = [
     movement: () => 2,
     abilities: [
       {
-        resource: SPELLS.BarbarianRage.file,
+        resource: SPELLS.Class.BarbarianRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
           name: "ability.enrage",

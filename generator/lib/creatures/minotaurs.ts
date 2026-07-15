@@ -1,4 +1,4 @@
-import { SPELLS } from "../config/spell-names";
+import { SPELLS } from "../config/spells/spell-names";
 import { ScriptTarget } from "../src/model/constants";
 import { Creature } from "../src/model/creature/creature";
 import { CreatureFamily } from "../src/model/creature/family";
@@ -75,7 +75,7 @@ class Minotaur extends Creature {
       name: "monster.minotaur.ability.charge.name",
       description: "monster.minotaur.ability.charge.description",
       memorizedCount: 1,
-      icon: SPELLS.Haste.file,
+      icon: SPELLS.Wizard.Haste.file,
       options: { renew: 1 },
       headers: [
         {

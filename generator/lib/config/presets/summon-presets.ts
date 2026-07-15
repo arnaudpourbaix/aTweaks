@@ -3,13 +3,14 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { Durations } from "../../src/model/game-data/durations";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY } from "../common";
-import { FNP_SPELLS, SPELLS } from "../spell-names";
+import { FNP_SPELLS } from "../spells/fnp-spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 const summoningTrigger = (rounds = 2) => ({ name: "Summoning", value: rounds * Durations.round });
 
 export const SUMMON_PRESETS: AbilityPreset[] = [
   {
-    preset: FNP_SPELLS.ShadowMonsters.file,
+    preset: FNP_SPELLS.Priest.ShadowMonsters.file,
     ability: {
       name: "ability.ShadowMonsters",
       spell: {
@@ -17,10 +18,10 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       },
       triggers: triggerFactory.haveSpellRES(
         [
-          FNP_SPELLS.DemiShadowMonsters.file,
-          FNP_SPELLS.AnimateDead.file,
-          FNP_SPELLS.SummonShadows.file,
-          FNP_SPELLS.Shades.file,
+          FNP_SPELLS.Priest.DemiShadowMonsters.file,
+          FNP_SPELLS.Priest.AnimateDead.file,
+          FNP_SPELLS.Priest.SummonShadows.file,
+          FNP_SPELLS.Priest.Shades.file,
         ],
         true,
       ),
@@ -30,7 +31,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.CallWoodlandBeeings.file,
+    preset: SPELLS.Priest.CallWoodlandBeeings.file,
     ability: {
       name: "ability.callWoodlandBeeings",
       spell: {},
@@ -46,14 +47,14 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: FNP_SPELLS.DemiShadowMonsters.file,
+    preset: FNP_SPELLS.Priest.DemiShadowMonsters.file,
     ability: {
       name: "ability.DemiShadowMonsters",
       spell: {
         selfTarget: true,
       },
       triggers: triggerFactory.haveSpellRES(
-        [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
+        [FNP_SPELLS.Priest.SummonShadows.file, FNP_SPELLS.Priest.Shades.file],
         true,
       ),
       timer: summoningTrigger(),
@@ -62,7 +63,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.AnimalSummoning4.file,
+    preset: SPELLS.Priest.AnimalSummoning4.file,
     ability: {
       name: "ability.animalSummoning4",
       targets: [
@@ -77,13 +78,13 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.AnimateDead.file, FNP_SPELLS.AnimateDead.file], {
+  ...presetFactory.create([SPELLS.Priest.AnimateDead.file, FNP_SPELLS.Priest.AnimateDead.file], {
     name: "ability.AnimateDead",
     spell: {
       selfTarget: true,
     },
     triggers: triggerFactory.haveSpellRES(
-      [FNP_SPELLS.SummonShadows.file, FNP_SPELLS.Shades.file],
+      [FNP_SPELLS.Priest.SummonShadows.file, FNP_SPELLS.Priest.Shades.file],
       true,
     ),
     timer: summoningTrigger(),
@@ -91,20 +92,20 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   {
-    preset: FNP_SPELLS.SummonShadows.file,
+    preset: FNP_SPELLS.Priest.SummonShadows.file,
     ability: {
       name: "ability.SummonShadows",
       spell: {
         selfTarget: true,
       },
-      triggers: triggerFactory.haveSpellRES([FNP_SPELLS.Shades.file], true),
+      triggers: triggerFactory.haveSpellRES([FNP_SPELLS.Priest.Shades.file], true),
       timer: summoningTrigger(),
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
   {
-    preset: FNP_SPELLS.Shades.file,
+    preset: FNP_SPELLS.Priest.Shades.file,
     ability: {
       name: "ability.Shades",
       spell: {
@@ -116,7 +117,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.AerialServant.file,
+    preset: SPELLS.Priest.AerialServant.file,
     ability: {
       name: "ability.AerialServant",
       spell: {

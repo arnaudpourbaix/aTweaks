@@ -3,11 +3,11 @@ import triggerFactory from "../../src/factories/trigger.factory";
 import { AbilityPreset } from "../../src/model/misc";
 import targetService from "../../src/services/baf/target.service";
 import { DEFAULT_SPELL_PROBABILITY, HOLD_TARGET_LISTS } from "../common";
-import { SPELLS } from "../spell-names";
+import { SPELLS } from "../spells/spell-names";
 
 export const HOLD_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
-    [SPELLS.HoldPersonCleric.file, SPELLS.HoldPersonWizard.file],
+    [SPELLS.Priest.HoldPersonCleric.file, SPELLS.Wizard.HoldPersonWizard.file],
     {
       name: "ability.holdPerson",
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
@@ -20,7 +20,7 @@ export const HOLD_PRESETS: AbilityPreset[] = [
     },
   ),
   {
-    preset: SPELLS.HoldPersonOrAnimal.file,
+    preset: SPELLS.Priest.HoldPersonOrAnimal.file,
     ability: {
       name: "ability.HoldPersonOrAnimal",
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
@@ -33,7 +33,7 @@ export const HOLD_PRESETS: AbilityPreset[] = [
     },
   },
   {
-    preset: SPELLS.Web.file,
+    preset: SPELLS.Wizard.Web.file,
     ability: {
       name: "ability.web",
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
