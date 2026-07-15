@@ -5,6 +5,7 @@ import { Creature } from "../model/creature/creature";
 import bafGeneratorService from "./baf/baf-generator.service";
 import descriptionService from "./doc/description.service";
 import documentationService from "./doc/documentation.service";
+import logService from "./log.service";
 import translationService from "./translation.service";
 import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
@@ -44,13 +45,13 @@ class MainService {
 
   isCreatureValid(creature: Creature) {
     if (creature.valid === undefined) {
-      console.log(
+      logService.log(
         `${figureSet.warning} ${translationService.from(
           creature.name,
         )} has not been validated, you must call validate`,
       );
     } else if (!creature.valid) {
-      console.log(
+      logService.log(
         `${figureSet.warning} ${translationService.from(
           creature.name,
         )} is not valid, please fix it !`,
@@ -78,7 +79,7 @@ class MainService {
         continue;
       }
       const spell = Object.values(getAllSpells()).find((s) => s.file === preset.preset);
-      console.log(`Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`);
+      logService.log(`Checking ${preset.preset}, spell found: ${JSON.stringify(spell)}`);
       if (!spell || !("id" in spell)) {
         preset.ability.spell.resource = preset.preset;
       } else {
