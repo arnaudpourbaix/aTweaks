@@ -1,5 +1,6 @@
 import figureSet from "figures";
 import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
+import { CreatureAbility } from "../model/creature/ability";
 import { CreatureData } from "../model/creature/data";
 import { AttackPerRoundTable } from "../model/game-data/attack-per-round";
 import { DexterityTable } from "../model/game-data/dexterity";
@@ -12,6 +13,7 @@ import hitPointService from "./hit-point.service";
 import itemService from "./item.service";
 import kitService from "./kit.service";
 import logService from "./log.service";
+import translationService from "./translation.service";
 import weaponService from "./weapon.service";
 
 class CreatureService {
@@ -52,6 +54,45 @@ class CreatureService {
         weaponService.checkWeapon(creature, item as Weapon);
       }
     }
+  }
+
+  checkSpellAbilities(creature: Creature): void {
+    const groups = this.getSpellGroups(creature);
+    const abilityResources = new Set(
+      creature.behavior.abilities
+        .filter((a): a is CreatureAbility & { resource: string } => a.resource !== undefined)
+        .map((a) => a.resource),
+    );
+    const memorizedFiles = new Set(groups.flatMap((g) => g.files));
+    for (const group of groups) {
+      for (const file of group.files) {
+        if (abilityResources.has(file)) continue;
+        logService.error(
+          `${figureSet.cross} ${translationService.from(creature.name)}: spell '${file}' is memorized in '${group.label}' but has no matching ability - it will never be cast.`,
+        );
+      }
+    }
+    for (const resource of abilityResources) {
+      if (memorizedFiles.has(resource)) continue;
+      logService.warn(
+        `${figureSet.warning} ${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized in any spellbook variant.`,
+      );
+    }
+  }
+
+  private getSpellGroups(creature: Creature): { label: string; files: string[] }[] {
+    const groups: { label: string; files: string[] }[] = [];
+    const defaultFiles = [...new Set(creature.data.spells.memorized.map((s) => s.file))];
+    if (defaultFiles.length) groups.push({ label: "default", files: defaultFiles });
+    for (const variant of creature.data.spells.spellbooks ?? []) {
+      const files = [...new Set(variant.memorized.map((s) => s.file))];
+      if (files.length) groups.push({ label: variant.mod, files });
+    }
+    creature.adjustments.forEach((adjustment, index) => {
+      const files = [...new Set(adjustment.data.spells.memorized.map((s) => s.file))];
+      if (files.length) groups.push({ label: `adjustment #${index}`, files });
+    });
+    return groups;
   }
 
   getAttacksPerRound(value: number): {

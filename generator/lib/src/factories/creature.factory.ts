@@ -176,6 +176,7 @@ class CreatureFactory {
     }
     if (valid) State.creatures.push(creature);
     creatureService.check(creature);
+    creatureService.checkSpellAbilities(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);
     descriptionService.generateCreatureSpells(creature.spells);

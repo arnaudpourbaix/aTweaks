@@ -1,10 +1,17 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
-import { CreatureData, CreatureDataItems } from "../model/creature/data";
+import {
+  CreatureData,
+  CreatureDataItems,
+  MemorizedSpell,
+  SpellbookVariant,
+} from "../model/creature/data";
 import { Movement } from "../model/creature/movement";
 import { ItemAbilityLocationEnum } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
+import { CreatureAbility } from "../model/creature/ability";
 import creatureService from "./creature.service";
+import logService from "./log.service";
 
 interface CreatureServicePrivate {
   transformAttackPerRound(data?: Partial<CreatureData>): void;
@@ -550,5 +557,112 @@ describe("convertMovement", () => {
 
   it("rounds to the nearest engine tick", () => {
     expect(creatureService.convertMovement(9)).toBe(7); // round(7.2)
+  });
+});
+
+function fakeAbility(resource: string | undefined): CreatureAbility {
+  return { resource } as unknown as CreatureAbility;
+}
+
+function fakeSpellCreature(p: {
+  memorized?: MemorizedSpell[];
+  spellbooks?: SpellbookVariant[];
+  adjustmentsMemorized?: MemorizedSpell[][];
+  abilities?: CreatureAbility[];
+}): Creature {
+  return {
+    name: "test",
+    data: {
+      spells: {
+        memorized: p.memorized ?? [],
+        spellbooks: p.spellbooks,
+      },
+    },
+    adjustments: (p.adjustmentsMemorized ?? []).map((memorized) => ({
+      data: { spells: { memorized } },
+    })),
+    behavior: { abilities: p.abilities ?? [] },
+  } as unknown as Creature;
+}
+
+describe("checkSpellAbilities", () => {
+  it("does not log when every memorized spell has a matching ability", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [fakeAbility("sppr101")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    expect(warnSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+    warnSpy.mockRestore();
+  });
+
+  it("errors when a spell in the default memorized list has no matching ability", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("sppr101"));
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("default"));
+    errorSpy.mockRestore();
+  });
+
+  it("errors once per spellbook variant missing an ability, naming the variant's mod", () => {
+    const creature = fakeSpellCreature({
+      spellbooks: [
+        { mod: "FaithsAndPowers", memorized: [{ file: "sppr201" }] },
+        { mod: "Vanilla", memorized: [{ file: "sppr301" }] },
+      ],
+      abilities: [fakeAbility("sppr201")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("sppr301"));
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("Vanilla"));
+    errorSpy.mockRestore();
+  });
+
+  it("errors when an adjustment's memorized spell has no matching ability, naming the adjustment", () => {
+    const creature = fakeSpellCreature({
+      adjustmentsMemorized: [[{ file: "sppr401" }]],
+      abilities: [],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("sppr401"));
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("adjustment #0"));
+    errorSpy.mockRestore();
+  });
+
+  it("warns once when an ability references a spell that isn't memorized anywhere", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [fakeAbility("sppr101"), fakeAbility("sppr999")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("sppr999"));
+    errorSpy.mockRestore();
+    warnSpy.mockRestore();
+  });
+
+  it("does not warn about an ability with no resource (e.g. a non-spell ability)", () => {
+    const creature = fakeSpellCreature({
+      memorized: [],
+      abilities: [fakeAbility(undefined)],
+    });
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
   });
 });
