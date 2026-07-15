@@ -75,7 +75,7 @@ class CreatureService {
     for (const resource of abilityResources) {
       if (memorizedFiles.has(resource)) continue;
       logService.warn(
-        `${figureSet.warning} ${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized in any spellbook variant.`,
+        `${figureSet.warning} ${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized anywhere.`,
       );
     }
   }

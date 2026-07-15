@@ -665,4 +665,26 @@ describe("checkSpellAbilities", () => {
     expect(warnSpy).not.toHaveBeenCalled();
     warnSpy.mockRestore();
   });
+
+  it("errors only once for a duplicate memorized spell file within the same group", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }, { file: "sppr101" }],
+      abilities: [],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    errorSpy.mockRestore();
+  });
+
+  it("warns only once when two abilities share the same unmatched resource", () => {
+    const creature = fakeSpellCreature({
+      memorized: [],
+      abilities: [fakeAbility("sppr999"), fakeAbility("sppr999")],
+    });
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    warnSpy.mockRestore();
+  });
 });
