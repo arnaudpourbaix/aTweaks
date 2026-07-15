@@ -80,4 +80,43 @@ describe("LogService", () => {
     logService.log("line one\nline two");
     expect(readLog()).toBe(`\n${CREATING_OGRE}\n    line one\n    line two\n`);
   });
+
+  it("warn writes the same as log (indent-prefixed by the current context)", () => {
+    logService.init();
+    logService.header(CREATING_OGRE);
+    logService.warn("something looks off");
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    something looks off\n`);
+  });
+
+  it("warn increments the warning count while log does not", () => {
+    logService.init();
+    logService.log("informational line");
+    logService.warn("a warning");
+    logService.summary();
+    expect(readLog()).toBe("informational line\na warning\n\nSummary\n-------\n1 warning\n");
+  });
+
+  it("summary reports no warnings when none were logged", () => {
+    logService.init();
+    logService.summary();
+    expect(readLog()).toBe("\nSummary\n-------\nNo warnings\n");
+  });
+
+  it("summary reports a plural warning count", () => {
+    logService.init();
+    logService.warn("first warning");
+    logService.warn("second warning");
+    logService.summary();
+    expect(readLog()).toBe(
+      "first warning\nsecond warning\n\nSummary\n-------\n2 warnings\n",
+    );
+  });
+
+  it("init resets the warning count across runs", () => {
+    logService.init();
+    logService.warn("first run warning");
+    logService.init();
+    logService.summary();
+    expect(readLog()).toBe("\nSummary\n-------\nNo warnings\n");
+  });
 });

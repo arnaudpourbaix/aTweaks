@@ -5,9 +5,11 @@ class LogService {
   filePath = path.join(process.cwd(), "generator.log");
   enabled = false;
   private indent = "";
+  private warningCount = 0;
 
   init(): void {
     this.indent = "";
+    this.warningCount = 0;
     this.enabled = true;
     fs.writeFileSync(this.filePath, "");
   }
@@ -29,6 +31,18 @@ class LogService {
     for (const line of message.split("\n")) {
       this.write(`${this.indent}${line}`);
     }
+  }
+
+  warn(message: string): void {
+    this.warningCount++;
+    this.log(message);
+  }
+
+  summary(): void {
+    this.section("Summary");
+    if (this.warningCount === 0) this.log("No warnings");
+    else if (this.warningCount === 1) this.log("1 warning");
+    else this.log(`${this.warningCount} warnings`);
   }
 
   private write(line: string): void {
