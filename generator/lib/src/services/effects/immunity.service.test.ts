@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Creature } from "../../model/creature/creature";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { State } from "../../state";
+import logService from "../log.service";
 import immunityService from "./immunity.service";
 
 function fakeImmunity(p: Partial<ImmunityConfig>): ImmunityConfig {
@@ -33,7 +34,7 @@ function fakeCreature(
 
 beforeEach(() => {
   State.immunities = [];
-  vi.spyOn(console, "log").mockImplementation(() => {});
+  vi.spyOn(logService, "log").mockImplementation(() => {});
 });
 
 describe("handleImmunities", () => {

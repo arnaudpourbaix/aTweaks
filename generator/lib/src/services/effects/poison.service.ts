@@ -24,6 +24,7 @@ import {
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { WeaponCastSpell } from "../../model/spell-item/spell-item";
 import descriptionService from "../doc/description.service";
+import logService from "../log.service";
 import translationService from "../translation.service";
 
 class PoisonService {
@@ -222,7 +223,7 @@ class PoisonService {
     let newDuration = duration;
     while (damage > newDuration / amount) newDuration++;
     const total = newDuration / amount;
-    console.log(
+    logService.log(
       `poison (1dmg/x seconds) (${label}) => ${damage}/${duration} ==> ${type}: ${amount}/${newDuration} (total=${total}, diff duration=${
         newDuration - duration
       })`,

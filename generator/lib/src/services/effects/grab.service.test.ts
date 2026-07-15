@@ -6,6 +6,7 @@ import { CreatureGrabConfig } from "../../model/creature/grab";
 import { CastSpellEffect, Effect, IdsEffect } from "../../model/spell-item/effect";
 import { EffectCastSpellTypeEnum, SaveTypeEnum } from "../../model/spell-item/effect.enums";
 import { Weapon } from "../../model/spell-item/spell-item";
+import logService from "../log.service";
 import grabService from "./grab.service";
 
 interface GrabServicePrivate {
@@ -128,7 +129,7 @@ describe("attachGrabToWeapon", () => {
 
   it("getGrabImmuneEffects (private) skips the size-based extras and warns when the creature has no size", () => {
     const creature = fakeCreature({ strength: 10 });
-    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
     const effects = service.getGrabImmuneEffects(creature, "spellfile");
     expect(consoleSpy).toHaveBeenCalled();
     expect(effects).toHaveLength(GRAB_IMMUNE_CREATURES.length);

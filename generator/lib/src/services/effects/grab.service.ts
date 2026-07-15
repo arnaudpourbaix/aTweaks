@@ -19,6 +19,7 @@ import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { Spell, Weapon } from "../../model/spell-item/spell-item";
 import creatureService from "../creature.service";
 import effectService from "./effect.service";
+import logService from "../log.service";
 import spellService from "../spell.service";
 import translationService from "../translation.service";
 import { getSpellFilename } from "../utils/misc.func";
@@ -162,7 +163,7 @@ class GrabService {
     // creature has no size" test, which calls this directly with size unset.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.data.size) {
-      console.log(`${figureSet.warning} Creature size is needed to add grab immunities!`);
+      logService.log(`${figureSet.warning} Creature size is needed to add grab immunities!`);
     } else {
       if (["Huge", "Large"].includes(creature.data.size)) {
         list.push(...HUGE_CREATURES);

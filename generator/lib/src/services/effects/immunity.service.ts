@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import figureSet from "figures";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { State } from "../../state";
@@ -6,6 +5,7 @@ import { Creature } from "../../model/creature/creature";
 import { EquippedItem } from "../../model/creature/item";
 import utils from "../utils/utils.service";
 import itemService from "../item.service";
+import logService from "../log.service";
 import { CreatureAdjustment } from "../../model/creature/adjustment";
 import { CreatureData } from "../../model/creature/data";
 
@@ -62,10 +62,8 @@ class ImmunityService {
       "HELMET",
     );
     if (hasCriticalHitImmunity && itemSlot.slot !== "HELMET" && !hasHelmet) {
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.arrowRight} ${immunity.name} needs a helmet to cover immunity from critical hits. Adding a helmet to cover it.`,
-        ),
+      logService.log(
+        `${figureSet.arrowRight} ${immunity.name} needs a helmet to cover immunity from critical hits. Adding a helmet to cover it.`,
       );
       data.immunities.push("criticalHit");
     }
@@ -75,18 +73,14 @@ class ImmunityService {
       itemSlot.slot,
     );
     if (overwrittingItem)
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.arrowRight} skipping ${itemSlot.file} because ${overwrittingItem.file} overwrites it`,
-        ),
+      logService.log(
+        `${figureSet.arrowRight} skipping ${itemSlot.file} because ${overwrittingItem.file} overwrites it`,
       );
     else if (overwrittingSlot)
-      console.log(
-        chalk.redBright(
-          `${figureSet.arrowRight} skipping ${immunity.name} (${itemSlot.file}) because slot ${
-            Array.isArray(itemSlot.slot) ? itemSlot.slot.join(",") : itemSlot.slot
-          } is already assigned`,
-        ),
+      logService.log(
+        `${figureSet.arrowRight} skipping ${immunity.name} (${itemSlot.file}) because slot ${
+          Array.isArray(itemSlot.slot) ? itemSlot.slot.join(",") : itemSlot.slot
+        } is already assigned`,
       );
     else
       data.items.equipped.push({
