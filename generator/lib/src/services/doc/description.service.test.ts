@@ -171,7 +171,7 @@ function fakeHeader(p: Partial<SpellHeader> = {}): SpellHeader {
 beforeEach(() => {
   State.immunities = [];
   State.spells = [];
-  vi.spyOn(logService, "log").mockImplementation(() => undefined);
+  vi.spyOn(logService, "warn").mockImplementation(() => undefined);
 });
 
 describe("getDiceValue (private)", () => {
@@ -253,7 +253,7 @@ describe("getDuration", () => {
   });
 
   it("warns and falls back to raw seconds for a non-integer duration", () => {
-    const warnSpy = vi.spyOn(logService, "log").mockImplementation(() => undefined);
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => undefined);
     expect(service.getDuration(0.5)).toBe("0.5s");
     expect(warnSpy).toHaveBeenCalledWith("unknown duration 0.5s");
   });

@@ -284,7 +284,7 @@ class DescriptionService {
         return `${prefix}${count} ${t.plural}`;
       }
     }
-    logService.log(`unknown duration ${duration}s`);
+    logService.warn(`unknown duration ${duration}s`);
     return `${duration}s`;
   }
 
