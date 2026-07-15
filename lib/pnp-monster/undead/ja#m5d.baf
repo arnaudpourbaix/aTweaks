@@ -1420,7 +1420,7 @@ THEN
 		Spell(Myself,WIZARD_SUN_FIRE)
 END
 
-// Cone Of Cold
+// Cone of Cold
 IF
 	!StateCheck(Myself,STATE_SILENCED)
 	HaveSpell(WIZARD_CONE_OF_COLD)
