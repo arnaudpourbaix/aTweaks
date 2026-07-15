@@ -309,7 +309,7 @@ class FeyFamily extends CreatureFamily<Fey> {
         this.ability(Ids.Entangle),
         this.ability(Ids.DryadCharm),
         this.ability(Ids.AnimalFriendship),
-        // this.ability(SpellIds.DetectTraps), // probably useless most of the times, can still be cast manually
+        this.ability(Ids.DetectTraps),
       ],
       additionalCodes: [this.dryadTrackTarget()],
       customCodes: [
@@ -1080,11 +1080,11 @@ class FeyFamily extends CreatureFamily<Fey> {
         },
       ],
       ability: {
+        preset: SPELLS.Priest.FindTraps.file,
         spell: {
+          id: undefined,
           type: "force",
         },
-        disableInterrupt: true,
-        probability: 10,
       },
     });
   }

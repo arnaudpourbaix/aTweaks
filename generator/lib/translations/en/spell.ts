@@ -155,6 +155,9 @@ Upon passing through the portal, the caster finds himself at his chosen destinat
   Emotion: { name: "Emotion" },
   GreaterMalison: { name: "Greater Malison" },
   Shield: { name: "Shield" },
+  Feeblemind: { name: "Feeblemind" },
+  FleshToStone: { name: "Flesh to Stone" },
+  ShapeshiftMustardJelly: { name: "Shapeshift: Mustard Jelly" },
 
   // Priest
   CharmPersonOrAnimal: { name: "Charm Person or Animal" },
@@ -201,6 +204,18 @@ Upon passing through the portal, the caster finds himself at his chosen destinat
   AnimateDead: { name: "Animate Dead" },
   Chaos: { name: "Chaos" },
   CloudOfPestilence: { name: "Cloud of Pestilence" },
+  BlindingBeauty: { name: "Blinding Beauty" },
+  Ironskin: { name: "Ironskin" },
+
+  // Innate
+  MephitColorSpray: { name: "Mephit Color Spray" },
+  SpiderSingleTargetWeb: { name: "Spider Single Target Web" },
+  VortexWeb: { name: "Vortex Web" },
+
+  // Class
+  BerserkerRage: { name: "Berserker Rage" },
+  BarbarianRage: { name: "Barbarian Rage" },
+  OffensiveSpin: { name: "Offensive Spin" },
 
   // Faiths & Powers only
   CauseDisease: { name: "Cause Disease" },
@@ -216,4 +231,7 @@ Upon passing through the portal, the caster finds himself at his chosen destinat
   Shades: { name: "Shades" },
   SummonShadows: { name: "Summon Shadows" },
   PolymorphSelf: { name: "Polymorph Self" },
+  FindTraps: { name: "Find Traps" },
+  Sanctuary: { name: "Sanctuary" },
+  CauseModerateWounds: { name: "Cause Moderate Wounds" },
 };

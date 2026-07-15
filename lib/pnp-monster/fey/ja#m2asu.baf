@@ -1867,6 +1867,19 @@ THEN
 		SetInterrupt(TRUE)
 END
 
+// Detect snares and pits
+IF
+	!StateCheck(Myself,STATE_SILENCED)
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	ActionListEmpty()
+	HaveSpellRES("ja#s6f8")
+	False()
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		ForceSpellRES("ja#s6f8",Myself)
+END
+
 // Run away from enemies
 IF
 	ActionListEmpty()

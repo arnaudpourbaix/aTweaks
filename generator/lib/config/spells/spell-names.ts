@@ -12,6 +12,9 @@ export interface SpellReference {
     | "short"; // several rounds to one turn
 }
 
+/** Shared display name for DispelMagicWizard, RemoveMagic, and DispelMagicCleric - all resolve to "Dispel Magic". */
+const DISPEL_MAGIC_NAME = "spell.DispelMagicWizard.name" as const;
+
 const WIZARD_SPELLS = {
   AgannazarScorcher: {
     file: "SPWI217",
@@ -29,7 +32,7 @@ const WIZARD_SPELLS = {
   CharmPerson: { file: "SPWI104", id: "WIZARD_CHARM_PERSON", name: "spell.CharmPerson.name" },
   ChromaticOrb: { file: "SPWI118", id: "WIZARD_CHROMATIC_ORB", name: "spell.ChromaticOrb.name" },
   Cloudkill: { file: "SPWI502", id: "WIZARD_CLOUDKILL", name: "spell.Cloudkill.name" },
-  ColorSpray: { file: "SPWI105", id: "WIZARD_COLOR_SPRAY" },
+  ColorSpray: { file: "SPWI105", id: "WIZARD_COLOR_SPRAY", name: "spell.colorSpray.name" },
   Combust: { file: "SPWI232", id: "WIZARD_COMBUST", name: "spell.Combust.name" },
   ConeOfCold: { file: "SPWI503", id: "WIZARD_CONE_OF_COLD", name: "spell.coneOfCold.name" },
   Confusion: { file: "SPWI401", id: "WIZARD_CONFUSION", name: "spell.Confusion.name" },
@@ -52,7 +55,7 @@ const WIZARD_SPELLS = {
   DispelMagicWizard: {
     file: "SPWI326",
     id: "WIZARD_TRUE_DISPEL_MAGIC",
-    name: "spell.DispelMagicWizard.name",
+    name: DISPEL_MAGIC_NAME,
   },
   Domination: { file: "SPWI506", id: "WIZARD_DOMINATION", name: "spell.Domination.name" },
   Emotion: {
@@ -60,7 +63,7 @@ const WIZARD_SPELLS = {
     id: "WIZARD_EMOTION_HOPELESSNESS",
     name: "spell.Emotion.name",
   },
-  Feeblemind: { file: "SPWI509", id: "WIZARD_FEEBLEMIND" },
+  Feeblemind: { file: "SPWI509", id: "WIZARD_FEEBLEMIND", name: "spell.Feeblemind.name" },
   Fireburst: { file: "SPWI523", id: "WIZARD_SUN_FIRE", name: "spell.Fireburst.name" },
   FireShield: {
     file: "SPWI418",
@@ -69,7 +72,7 @@ const WIZARD_SPELLS = {
     name: "spell.FireShield.name",
   },
   FlameArrow: { file: "SPWI303", id: "WIZARD_FLAME_ARROW", name: "spell.FlameArrow.name" },
-  FleshToStone: { file: "SPWI604", id: "WIZARD_FLESH_TO_STONE" },
+  FleshToStone: { file: "SPWI604", id: "WIZARD_FLESH_TO_STONE", name: "spell.FleshToStone.name" },
   Glitterdust: { file: "SPWI224", id: "WIZARD_GLITTERDUST", name: "spell.Glitterdust.name" },
   GreaterMalison: {
     file: "SPWI412",
@@ -77,7 +80,11 @@ const WIZARD_SPELLS = {
     name: "spell.GreaterMalison.name",
   },
   Haste: { file: "SPWI305", id: "WIZARD_HASTE", duration: "mid", name: "spell.Haste.name" },
-  HoldPersonWizard: { file: "SPWI306", id: "WIZARD_HOLD_PERSON" },
+  HoldPersonWizard: {
+    file: "SPWI306",
+    id: "WIZARD_HOLD_PERSON",
+    name: "spell.HoldPersonCleric.name",
+  },
   Horror: { file: "SPWI205", id: "WIZARD_HORROR", name: "spell.Horror.name" },
   IceStorm: { file: "SPWI404", id: "WIZARD_ICE_STORM", name: "spell.IceStorm.name" },
   ImprovedInvisibility: {
@@ -167,10 +174,15 @@ const WIZARD_SPELLS = {
     duration: "short",
     name: "spell.ProtectionFromMagicalWeapons.name",
   },
-  RemoveMagic: { file: "SPWI302", id: "WIZARD_REMOVE_MAGIC" },
+  RemoveMagic: {
+    file: "SPWI302",
+    id: "WIZARD_REMOVE_MAGIC",
+    name: DISPEL_MAGIC_NAME,
+  },
   ShapeshiftMustardJelly: {
     file: "SPWI496",
     id: "WIZARD_POLYMORPH_MUSTARD_JELLY",
+    name: "spell.ShapeshiftMustardJelly.name",
   },
   Shield: {
     file: "SPWI114",
@@ -243,7 +255,11 @@ const PRIEST_SPELLS = {
     name: "spell.BladeBarrier.name",
   },
   Bless: { file: "SPPR101", id: "CLERIC_BLESS", duration: "mid", name: "spell.Bless.name" },
-  BlindingBeauty: { file: "SPPR704", id: "CLERIC_NATURE_BEAUTY" },
+  BlindingBeauty: {
+    file: "SPPR704",
+    id: "CLERIC_NATURE_BEAUTY",
+    name: "spell.BlindingBeauty.name",
+  },
   CallLightning: {
     file: "SPPR302",
     id: "CLERIC_CALL_LIGHTNING",
@@ -283,7 +299,11 @@ const PRIEST_SPELLS = {
     id: "CLERIC_CURE_LIGHT_WOUNDS",
     name: "spell.CureLightWounds.name",
   },
-  DispelMagicCleric: { file: "SPPR303", id: "CLERIC_DISPEL_MAGIC" },
+  DispelMagicCleric: {
+    file: "SPPR303",
+    id: "CLERIC_DISPEL_MAGIC",
+    name: DISPEL_MAGIC_NAME,
+  },
   DolorousDecay: {
     file: "SPPR610",
     id: "CLERIC_DOLOROUS_DECAY",
@@ -297,7 +317,7 @@ const PRIEST_SPELLS = {
     name: "spell.DrawUponHolyMight.name",
   },
   Entangle: { file: "SPPR105", id: "CLERIC_ENTANGLE", name: "spell.Entangle.name" },
-  FindTraps: { file: "SPPR205", id: "CLERIC_FIND_TRAPS" },
+  FindTraps: { file: "SPPR205", id: "CLERIC_FIND_TRAPS", name: "spell.FindTraps.name" },
   FingerOfDeath: {
     file: "SPPR708",
     id: "CLERIC_FINGER_OF_DEATH",
@@ -331,7 +351,12 @@ const PRIEST_SPELLS = {
     duration: "short",
     name: "spell.HolyPower.name",
   },
-  Ironskin: { file: "SPPR506", id: "CLERIC_IRONSKIN", duration: "long" },
+  Ironskin: {
+    file: "SPPR506",
+    id: "CLERIC_IRONSKIN",
+    duration: "long",
+    name: "spell.Ironskin.name",
+  },
   MagicResistance: {
     file: "SPPR509",
     id: "CLERIC_MAGIC_RESISTANCE",
@@ -376,7 +401,7 @@ const PRIEST_SPELLS = {
     id: "CLERIC_RIGID_THINKING",
     name: "spell.RigidThinking.name",
   },
-  Sanctuary: { file: "SPPR109", id: "CLERIC_SANCTUARY" },
+  Sanctuary: { file: "SPPR109", id: "CLERIC_SANCTUARY", name: "spell.Sanctuary.name" },
   Silence: { file: "SPPR211", id: "CLERIC_SILENCE_15_FOOT", name: "spell.Silence.name" },
   SlayLiving: { file: "SPPR511", id: "CLERIC_SLAY_LIVING", name: "spell.SlayLiving.name" },
   SummonInsects: {
@@ -392,15 +417,19 @@ const PRIEST_SPELLS = {
 } satisfies Record<string, SpellReference>;
 
 const INNATE_SPELLS = {
-  MephitColorSpray: { file: "SPIN937", id: "MEPHIT_COLOR_SPRAY" },
-  SpiderSingleTargetWeb: { file: "BDSPIDGA" },
-  VortexWeb: { file: "SPIN575", id: "VORTEX_WEB" },
+  MephitColorSpray: {
+    file: "SPIN937",
+    id: "MEPHIT_COLOR_SPRAY",
+    name: "spell.MephitColorSpray.name",
+  },
+  SpiderSingleTargetWeb: { file: "BDSPIDGA", name: "spell.SpiderSingleTargetWeb.name" },
+  VortexWeb: { file: "SPIN575", id: "VORTEX_WEB", name: "spell.VortexWeb.name" },
 } satisfies Record<string, SpellReference>;
 
 const CLASS_SPELLS = {
-  BerserkerRage: { file: "SPCL321", id: "BERSERKER_RAGE" },
-  BarbarianRage: { file: "SPCL152", id: "BARBARIAN_RAGE" },
-  OffensiveSpin: { file: "SPCL521", id: "BLADE_OFFENSIVE_SPIN" },
+  BerserkerRage: { file: "SPCL321", id: "BERSERKER_RAGE", name: "spell.BerserkerRage.name" },
+  BarbarianRage: { file: "SPCL152", id: "BARBARIAN_RAGE", name: "spell.BarbarianRage.name" },
+  OffensiveSpin: { file: "SPCL521", id: "BLADE_OFFENSIVE_SPIN", name: "spell.OffensiveSpin.name" },
 } satisfies Record<string, SpellReference>;
 
 export const SPELLS = {

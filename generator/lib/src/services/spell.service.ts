@@ -1,5 +1,8 @@
+import { getAllFnpSpells } from "../../config/spells/fnp-spell-names";
 import { SPELL_GROUPS } from "../../config/spells/spell-group";
 import { SpellGroupName } from "../../config/spells/spell-group-name";
+import { getAllSpells, SpellReference } from "../../config/spells/spell-names";
+import { StringReference } from "../model/final/stringref";
 import { Effect } from "../model/spell-item/effect";
 import {
   EffectIDSFileEnum,
@@ -11,6 +14,7 @@ import {
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import { PartialProjectile } from "../model/spell-item/projectile";
 import {
+  BaseSpell,
   PartialSpell,
   PartialSpellHeader,
   Spell,
@@ -183,6 +187,27 @@ class SpellService {
       this.addProtectionFromSpellEffect(spell);
     }
     return results;
+  }
+
+  getSpellName(file: string): string | null {
+    const spell = State.spells.find((s) => s.file === file);
+    if (!spell || !spell.name) return this.getExistingSpellName(file);
+    return translationService.from(spell.name);
+  }
+
+  private getExistingSpellName(file: string): string | null {
+    const spells = this.getAllSpellNames();
+    const spell = spells.find((s) => s.file === file);
+    if (!spell) return null;
+    return translationService.from(spell.name);
+  }
+
+  getAllSpellNames(): { file: string; name: StringReference }[] {
+    const spells = [
+      ...(Object.values(getAllSpells()) as SpellReference[]),
+      ...(Object.values(getAllFnpSpells()) as BaseSpell[]),
+    ];
+    return spells.flatMap((spell) => (spell.name ? [{ file: spell.file, name: spell.name }] : []));
   }
 }
 

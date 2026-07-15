@@ -1,7 +1,7 @@
-import figureSet from "figures";
 import { GRAB_IMMUNE_CREATURES, HUGE_CREATURES, LARGE_CREATURES } from "../../../config/creatures";
 import { Creature } from "../../model/creature/creature";
 import { CreatureGrabConfig, GRAB_DEFAULT_CONFIG } from "../../model/creature/grab";
+import { CreatureSizeTable } from "../../model/game-data/sizes";
 import { Effect, IdsEffect } from "../../model/spell-item/effect";
 import {
   EffectBonusToEnum,
@@ -18,12 +18,11 @@ import {
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { Spell, Weapon } from "../../model/spell-item/spell-item";
 import creatureService from "../creature.service";
-import effectService from "./effect.service";
 import logService from "../log.service";
 import spellService from "../spell.service";
 import translationService from "../translation.service";
 import { getSpellFilename } from "../utils/misc.func";
-import { CreatureSizeTable } from "../../model/game-data/sizes";
+import effectService from "./effect.service";
 
 class GrabService {
   attachGrabToWeapon(creature: Creature, weapon: Weapon, grab: CreatureGrabConfig) {
@@ -163,7 +162,7 @@ class GrabService {
     // creature has no size" test, which calls this directly with size unset.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.data.size) {
-      logService.warn(`${figureSet.warning} Creature size is needed to add grab immunities!`);
+      logService.warn(`Creature size is needed to add grab immunities!`);
     } else {
       if (["Huge", "Large"].includes(creature.data.size)) {
         list.push(...HUGE_CREATURES);

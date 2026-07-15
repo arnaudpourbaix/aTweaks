@@ -17,6 +17,8 @@ import kitService from "./kit.service";
 import logService from "./log.service";
 import translationService from "./translation.service";
 import weaponService from "./weapon.service";
+import { State } from "../state";
+import spellService from "./spell.service";
 
 const ID_CAST_ACTION_NAMES = new Set(["Spell", "SpellNoDec", "ForceSpell", "ReallyForceSpell"]);
 type IdCastAction = Extract<
@@ -75,15 +77,19 @@ class CreatureService {
     for (const group of groups) {
       for (const file of group.files) {
         if (abilityResources.has(file)) continue;
+        const spellName = spellService.getSpellName(file);
+        const spellText = spellName ? ` (${spellName})` : "";
         logService.error(
-          `${translationService.from(creature.name)}: spell '${file}' is memorized in '${group.label}' but has no matching ability - it will never be cast.`,
+          `${translationService.from(creature.name)}: spell '${file}'${spellText} is memorized in '${group.label}' but has no matching ability - it will never be cast.`,
         );
       }
     }
     for (const resource of abilityResources) {
       if (memorizedFiles.has(resource)) continue;
+      const spellName = spellService.getSpellName(resource);
+      const spellText = spellName ? ` (${spellName})` : "";
       logService.warn(
-        `${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized anywhere.`,
+        `${translationService.from(creature.name)}: ability references spell '${resource}'${spellText} which isn't memorized anywhere.`,
       );
     }
   }

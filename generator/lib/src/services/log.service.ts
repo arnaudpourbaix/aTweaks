@@ -37,12 +37,12 @@ class LogService {
 
   warn(message: string): void {
     this.warningCount++;
-    this.log(message);
+    this.log(`warning: ${message}`);
   }
 
   error(message: string): void {
     this.errorCount++;
-    this.log(message);
+    this.log(`error: ${message}`);
   }
 
   hasErrors(): boolean {

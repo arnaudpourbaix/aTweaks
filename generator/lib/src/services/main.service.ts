@@ -1,4 +1,5 @@
-import figureSet from "figures";
+import { ABILITY_PRESETS } from "../../config/ability-presets";
+import { getAllSpells } from "../../config/spells/spell-names";
 import { familyFactories } from "../../creatures";
 import { MonsterFamilyEnum } from "../../creatures/monster";
 import { Creature } from "../model/creature/creature";
@@ -7,13 +8,11 @@ import descriptionService from "./doc/description.service";
 import documentationService from "./doc/documentation.service";
 import logService from "./log.service";
 import translationService from "./translation.service";
+import utils from "./utils/utils.service";
 import weiduCoreService from "./weidu/weidu-core.service";
 import weiduCreatureService from "./weidu/weidu-creature.service";
 import weiduFamilyService from "./weidu/weidu-family.service";
 import weiduFunctionService from "./weidu/weidu-function.service";
-import { ABILITY_PRESETS } from "../../config/ability-presets";
-import { getAllSpells } from "../../config/spells/spell-names";
-import utils from "./utils/utils.service";
 
 class MainService {
   generateCreatures() {
@@ -46,16 +45,10 @@ class MainService {
   isCreatureValid(creature: Creature) {
     if (creature.valid === undefined) {
       logService.warn(
-        `${figureSet.warning} ${translationService.from(
-          creature.name,
-        )} has not been validated, you must call validate`,
+        `${translationService.from(creature.name)} has not been validated, you must call validate`,
       );
     } else if (!creature.valid) {
-      logService.warn(
-        `${figureSet.warning} ${translationService.from(
-          creature.name,
-        )} is not valid, please fix it !`,
-      );
+      logService.warn(`${translationService.from(creature.name)} is not valid, please fix it !`);
     }
     return !!creature.valid;
   }

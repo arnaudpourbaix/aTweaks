@@ -21,7 +21,11 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create(
-    [SPELLS.Wizard.DispelMagicWizard.file, SPELLS.Priest.DispelMagicCleric.file, SPELLS.Wizard.RemoveMagic.file],
+    [
+      SPELLS.Wizard.DispelMagicWizard.file,
+      SPELLS.Priest.DispelMagicCleric.file,
+      SPELLS.Wizard.RemoveMagic.file,
+    ],
     {
       name: SPELLS.Wizard.DispelMagicWizard.name,
       targets: [
@@ -92,6 +96,17 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
       spell: {},
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.Priest.FindTraps.file,
+    ability: {
+      name: SPELLS.Priest.FindTraps.name,
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [{ name: "False" }], // leave it as a manual cast
+      requireVocal: true,
     },
   },
 ];
