@@ -9,6 +9,7 @@ import { ImmunityConfig } from "../../model/final/immunity";
 import { State } from "../../state";
 import creatureService from "../creature.service";
 import itemService from "../item.service";
+import logService from "../log.service";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 
@@ -58,7 +59,7 @@ class DocumentationService {
   }
 
   addCreature(creature: Creature) {
-    console.log(`Generating documentation for ${translationService.from(creature.name)}`);
+    logService.log(`Generating documentation for ${translationService.from(creature.name)}`);
     let content: string;
     try {
       content = fs.readFileSync("lib/templates/monster.html").toString();

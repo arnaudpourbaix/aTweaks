@@ -1,3 +1,4 @@
+import logService from "../log.service";
 import { ImmunityConfig, ImmunityName } from "../../model/final/immunity";
 import { Durations } from "../../model/game-data/durations";
 import {
@@ -283,7 +284,7 @@ class DescriptionService {
         return `${prefix}${count} ${t.plural}`;
       }
     }
-    console.warn(`unknown duration ${duration}s`);
+    logService.log(`unknown duration ${duration}s`);
     return `${duration}s`;
   }
 

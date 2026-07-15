@@ -12,6 +12,7 @@ import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { State } from "../../state";
 import immunityService from "../effects/immunity.service";
 import itemService from "../item.service";
+import logService from "../log.service";
 import translationService from "../translation.service";
 import utils from "../utils/utils.service";
 import { AbstractWeiduService } from "./abstract-weidu.service";
@@ -288,7 +289,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     for (const item of p.data.items.equipped) {
       const slots = itemService.getItemSlots(item.slot);
       if (!slots.length) {
-        console.warn(
+        logService.log(
           `No slot defined for equipped item ${item.file}, check if it is used by an adjustment`,
         );
         continue;

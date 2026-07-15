@@ -40,6 +40,7 @@ import {
 import { EffectTypeEnum } from "../../model/spell-item/effect.type";
 import { Item, Spell, SpellHeader, Weapon } from "../../model/spell-item/spell-item";
 import { State } from "../../state";
+import logService from "../log.service";
 import translationService from "../translation.service";
 import descriptionService from "./description.service";
 
@@ -170,7 +171,7 @@ function fakeHeader(p: Partial<SpellHeader> = {}): SpellHeader {
 beforeEach(() => {
   State.immunities = [];
   State.spells = [];
-  vi.spyOn(console, "warn").mockImplementation(() => undefined);
+  vi.spyOn(logService, "log").mockImplementation(() => undefined);
 });
 
 describe("getDiceValue (private)", () => {
@@ -252,7 +253,7 @@ describe("getDuration", () => {
   });
 
   it("warns and falls back to raw seconds for a non-integer duration", () => {
-    const warnSpy = vi.spyOn(console, "warn");
+    const warnSpy = vi.spyOn(logService, "log").mockImplementation(() => undefined);
     expect(service.getDuration(0.5)).toBe("0.5s");
     expect(warnSpy).toHaveBeenCalledWith("unknown duration 0.5s");
   });
