@@ -4,6 +4,8 @@ import * as path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import logService from "./log.service";
 
+const CREATING_OGRE = "Creating Ogre...";
+
 describe("LogService", () => {
   let tempDir: string;
 
@@ -53,20 +55,20 @@ describe("LogService", () => {
 
   it("header writes a blank line then the title, and indents subsequent log lines", () => {
     logService.init();
-    logService.header("Creating Ogre...");
+    logService.header(CREATING_OGRE);
     logService.log("dual wielding detected");
-    expect(readLog()).toBe("\nCreating Ogre...\n    dual wielding detected\n");
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    dual wielding detected\n`);
   });
 
   it("section resets the indent back to top-level after a header", () => {
     logService.init();
-    logService.header("Creating Ogre...");
+    logService.header(CREATING_OGRE);
     logService.log("dual wielding detected");
     const title = "Generating common code";
     logService.section(title);
     logService.log("writing core.tpa");
     expect(readLog()).toBe(
-      `\nCreating Ogre...\n    dual wielding detected\n\n${title}\n${"-".repeat(
+      `\n${CREATING_OGRE}\n    dual wielding detected\n\n${title}\n${"-".repeat(
         title.length,
       )}\nwriting core.tpa\n`,
     );
@@ -74,8 +76,8 @@ describe("LogService", () => {
 
   it("log indents every line of a multi-line message", () => {
     logService.init();
-    logService.header("Creating Ogre...");
+    logService.header(CREATING_OGRE);
     logService.log("line one\nline two");
-    expect(readLog()).toBe("\nCreating Ogre...\n    line one\n    line two\n");
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    line one\n    line two\n`);
   });
 });
