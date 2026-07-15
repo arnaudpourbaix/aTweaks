@@ -7,7 +7,7 @@ describe("SLEEP_PRESETS", () => {
     const greaterCommand = SLEEP_PRESETS.find(
       (p) => p.preset === SPELLS.Priest.GreaterCommand.file,
     );
-    expect(greaterCommand?.ability.name).toBe("ability.GreaterCommand");
+    expect(greaterCommand?.ability.name).toBe(SPELLS.Priest.GreaterCommand.name);
   });
 
   it("doesn't reuse the same ability name across different spell presets", () => {

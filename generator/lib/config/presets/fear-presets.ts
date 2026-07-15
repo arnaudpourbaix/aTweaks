@@ -10,7 +10,7 @@ export const FEAR_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Horror.file,
     ability: {
-      name: "ability.horror",
+      name: SPELLS.Wizard.Horror.name,
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR", true),
@@ -24,7 +24,7 @@ export const FEAR_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Spook.file,
     ability: {
-      name: "ability.spook",
+      name: SPELLS.Wizard.Spook.name,
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR", true),
@@ -38,7 +38,7 @@ export const FEAR_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
     [SPELLS.Priest.CloakOfFear.file, FNP_SPELLS.Priest.CloakOfFear.file],
     {
-      name: "ability.cloakOfFear",
+      name: SPELLS.Priest.CloakOfFear.name,
       targets: targetService.combineListWithTriggers(FEAR_TARGET_LISTS, [
         // triggerFactory.checkStatGT(0, "WIZARD_RESIST_FEAR", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),

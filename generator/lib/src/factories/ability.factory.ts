@@ -6,7 +6,7 @@ class AbilityFactory {
   polymorphSelf(payload: { triggers: Triggers.Trigger[] }): RawCreatureAbility[] {
     const results: RawCreatureAbility[] = [];
     results.push({
-      name: "ability.polymorphSelf",
+      name: "spell.PolymorphSelf.name",
       spell: {
         id: "WIZARD_POLYMORPH_SELF",
         selfTarget: true,
@@ -42,7 +42,7 @@ class AbilityFactory {
       }
       const ability: RawCreatureAbility = {
         triggers,
-        name: "ability.polymorphSelf",
+        name: "spell.PolymorphSelf.name",
         spell: {
           resource,
           selfTarget: true,

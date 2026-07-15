@@ -9,7 +9,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Vocalize.file,
     ability: {
-      name: "ability.Vocalize",
+      name: SPELLS.Wizard.Vocalize.name,
       spell: {
         selfTarget: true,
       },
@@ -21,7 +21,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Invisibility.file,
     ability: {
-      name: "ability.invisibility",
+      name: SPELLS.Wizard.Invisibility.name,
       spell: {
         excludeStateChecks: ["STATE_INVISIBLE"],
         selfTarget: true,
@@ -34,7 +34,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ImprovedInvisibility.file,
     ability: {
-      name: "ability.improvedInvisibility",
+      name: SPELLS.Wizard.ImprovedInvisibility.name,
       spell: {
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         selfTarget: true,
@@ -47,7 +47,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ShadowDoor.file,
     ability: {
-      name: "ability.ShadowDoor",
+      name: SPELLS.Wizard.ShadowDoor.name,
       spell: {
         excludeStateChecks: ["STATE_IMPROVEDINVISIBILITY"],
         selfTarget: true,
@@ -60,7 +60,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Bless.file,
     ability: {
-      name: "ability.bless",
+      name: SPELLS.Priest.Bless.name,
       spell: {
         selfTarget: true,
       },
@@ -71,7 +71,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.ResistFear.file,
     ability: {
-      name: "ability.resistFear",
+      name: SPELLS.Priest.ResistFear.name,
       spell: {
         selfTarget: true,
       },
@@ -82,7 +82,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Chant.file,
     ability: {
-      name: "ability.chant",
+      name: SPELLS.Priest.Chant.name,
       spell: {
         selfTarget: true,
       },
@@ -93,7 +93,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.DimensionDoor.file,
     ability: {
-      name: "ability.dimensionDoor",
+      name: SPELLS.Wizard.DimensionDoor.name,
       targets: [
         {
           name: "Players",
@@ -110,7 +110,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: PRESET_NAMES.DimensionDoorOffscreen,
     ability: {
-      name: "ability.dimensionDoor",
+      name: SPELLS.Wizard.DimensionDoor.name,
       disableInterrupt: true,
       triggers: [
         triggerFactory.or([
@@ -135,7 +135,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Barkskin.file,
     ability: {
-      name: "ability.barkskin",
+      name: SPELLS.Priest.Barkskin.name,
       spell: {
         selfTarget: true,
       },
@@ -144,7 +144,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create([SPELLS.Wizard.Shield.file, FNP_SPELLS.Priest.Shield.file], {
-    name: "ability.Shield",
+    name: SPELLS.Wizard.Shield.name,
     spell: {
       selfTarget: true,
     },
@@ -155,7 +155,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.CircleOfBones.file,
     ability: {
-      name: "ability.CircleOfBones",
+      name: FNP_SPELLS.Priest.CircleOfBones.name,
       spell: {
         selfTarget: true,
       },
@@ -167,7 +167,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.MagicResistance.file,
     ability: {
-      name: "ability.MagicResistance",
+      name: SPELLS.Priest.MagicResistance.name,
       spell: {
         selfTarget: true,
       },
@@ -178,7 +178,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.MinorSpellDeflection.file,
     ability: {
-      name: "ability.MinorSpellDeflection",
+      name: SPELLS.Wizard.MinorSpellDeflection.name,
       spell: {
         selfTarget: true,
       },
@@ -190,7 +190,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.FireShield.file,
     ability: {
-      name: "ability.FireShield",
+      name: SPELLS.Wizard.FireShield.name,
       spell: {
         selfTarget: true,
       },
@@ -202,7 +202,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.MirrorImages.file,
     ability: {
-      name: "ability.MirrorImages",
+      name: SPELLS.Wizard.MirrorImages.name,
       spell: {
         selfTarget: true,
         excludeStateChecks: ["STATE_MIRRORIMAGE"],
@@ -214,7 +214,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Haste.file,
     ability: {
-      name: "ability.Haste",
+      name: SPELLS.Wizard.Haste.name,
       spell: {
         selfTarget: true,
         excludeStateChecks: ["STATE_HASTED"],
@@ -226,7 +226,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ProtectionFromMissiles.file,
     ability: {
-      name: "ability.ProtectionFromMissiles",
+      name: SPELLS.Wizard.ProtectionFromMissiles.name,
       spell: {
         selfTarget: true,
       },
@@ -238,7 +238,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.MinorGlobeOfInvulnerability.file,
     ability: {
-      name: "ability.MinorGlobeOfInvulnerability",
+      name: SPELLS.Wizard.MinorGlobeOfInvulnerability.name,
       spell: {
         selfTarget: true,
       },
@@ -247,7 +247,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create([SPELLS.Wizard.Stoneskin.file, SPELLS.Priest.Ironskin.file], {
-    name: "ability.Stoneskin",
+    name: SPELLS.Wizard.Stoneskin.name,
     spell: {
       selfTarget: true,
     },
@@ -258,7 +258,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ProtectionFromMagicalWeapons.file,
     ability: {
-      name: "ability.ProtectionFromMagicalWeapons",
+      name: SPELLS.Wizard.ProtectionFromMagicalWeapons.name,
       spell: {
         selfTarget: true,
       },
@@ -270,7 +270,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Blur.file,
     ability: {
-      name: "ability.Blur",
+      name: SPELLS.Wizard.Blur.name,
       spell: {
         selfTarget: true,
       },
@@ -281,7 +281,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.BladeBarrier.file,
     ability: {
-      name: "ability.BladeBarrier",
+      name: SPELLS.Priest.BladeBarrier.name,
       spell: {
         selfTarget: true,
       },
@@ -293,7 +293,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.RighteousMagic.file,
     ability: {
-      name: "ability.RighteousMagic",
+      name: SPELLS.Priest.RighteousMagic.name,
       spell: {
         selfTarget: true,
       },
@@ -304,7 +304,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.TrueSeeing.file,
     ability: {
-      name: "ability.TrueSeeing",
+      name: SPELLS.Priest.TrueSeeing.name,
       spell: {
         selfTarget: true,
       },
@@ -316,7 +316,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.HolyPower.file,
     ability: {
-      name: "ability.HolyPower",
+      name: SPELLS.Priest.HolyPower.name,
       spell: {
         selfTarget: true,
       },
@@ -328,7 +328,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.ProtectionFromLightning.file,
     ability: {
-      name: "ability.ProtectionFromLightning",
+      name: SPELLS.Priest.ProtectionFromLightning.name,
       spell: {
         selfTarget: true,
       },
@@ -340,7 +340,7 @@ export const BUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.DrawUponHolyMight.file,
     ability: {
-      name: "ability.DrawUponHolyMight",
+      name: SPELLS.Priest.DrawUponHolyMight.name,
       spell: {
         selfTarget: true,
       },

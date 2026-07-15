@@ -8,7 +8,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.PowerWordSleep.file,
     ability: {
-      name: "ability.powerWordSleep",
+      name: SPELLS.Wizard.PowerWordSleep.name,
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         triggerFactory.hplt(20),
@@ -22,7 +22,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Sleep.file,
     ability: {
-      name: "ability.sleep",
+      name: SPELLS.Wizard.Sleep.name,
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
@@ -35,7 +35,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.GreaterCommand.file,
     ability: {
-      name: "ability.GreaterCommand",
+      name: SPELLS.Priest.GreaterCommand.name,
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
       ]),
@@ -47,7 +47,7 @@ export const SLEEP_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Command.file,
     ability: {
-      name: "ability.command",
+      name: SPELLS.Priest.Command.name,
       targets: targetService.combineListWithTriggers(SLEEP_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),

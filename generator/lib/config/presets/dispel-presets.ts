@@ -8,7 +8,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.DetectInvisibility.file,
     ability: {
-      name: "ability.detectInvisibility",
+      name: SPELLS.Wizard.DetectInvisibility.name,
       spell: {
         selfTarget: true,
       },
@@ -23,7 +23,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
     [SPELLS.Wizard.DispelMagicWizard.file, SPELLS.Priest.DispelMagicCleric.file, SPELLS.Wizard.RemoveMagic.file],
     {
-      name: "ability.dispelMagic",
+      name: SPELLS.Wizard.DispelMagicWizard.name,
       targets: [
         {
           name: "Players",
@@ -58,7 +58,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Breach.file,
     ability: {
-      name: "ability.Breach",
+      name: SPELLS.Wizard.Breach.name,
       targets: [
         {
           name: "PCSpellcasters",
@@ -81,7 +81,7 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.SpellThrust.file,
     ability: {
-      name: "ability.SpellThrust",
+      name: SPELLS.Wizard.SpellThrust.name,
       targets: [
         {
           name: "PCSpellcasters",

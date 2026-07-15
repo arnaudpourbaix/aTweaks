@@ -13,7 +13,7 @@ describe("polymorphSelf", () => {
   it("the first entry is the WIZARD_POLYMORPH_SELF cast trigger using the given triggers", () => {
     expect(results[0]).toMatchObject({
       triggers,
-      name: "ability.polymorphSelf",
+      name: "spell.PolymorphSelf.name",
       spell: { id: "WIZARD_POLYMORPH_SELF", selfTarget: true },
       requireVocal: true,
     });

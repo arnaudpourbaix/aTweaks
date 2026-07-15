@@ -6,7 +6,7 @@ import { SPELLS } from "../spells/spell-names";
 
 export const CONFUSION_PRESETS: AbilityPreset[] = [
   ...presetFactory.create([SPELLS.Wizard.Confusion.file], {
-    name: "ability.Confusion",
+    name: SPELLS.Wizard.Confusion.name,
     targets: [
       {
         name: "NearestEnemies",
@@ -22,7 +22,7 @@ export const CONFUSION_PRESETS: AbilityPreset[] = [
     probability: DEFAULT_SPELL_PROBABILITY,
   }),
   ...presetFactory.create([SPELLS.Priest.Chaos.file, FNP_SPELLS.Priest.Chaos.file], {
-    name: "ability.Chaos",
+    name: SPELLS.Priest.Chaos.name,
     targets: [
       {
         name: "NearestEnemies",

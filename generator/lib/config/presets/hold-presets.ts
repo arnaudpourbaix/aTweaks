@@ -9,7 +9,7 @@ export const HOLD_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
     [SPELLS.Priest.HoldPersonCleric.file, SPELLS.Wizard.HoldPersonWizard.file],
     {
-      name: "ability.holdPerson",
+      name: SPELLS.Priest.HoldPersonCleric.name,
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
@@ -22,7 +22,7 @@ export const HOLD_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.HoldPersonOrAnimal.file,
     ability: {
-      name: "ability.HoldPersonOrAnimal",
+      name: SPELLS.Priest.HoldPersonOrAnimal.name,
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
@@ -35,7 +35,7 @@ export const HOLD_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Web.file,
     ability: {
-      name: "ability.web",
+      name: SPELLS.Wizard.Web.name,
       targets: targetService.combineListWithTriggers(HOLD_TARGET_LISTS, [
         triggerFactory.checkStatGT(0, "MINORGLOBE", true),
         // triggerFactory.checkStatLT(50, "RESISTMAGIC"),

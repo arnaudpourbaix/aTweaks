@@ -11,7 +11,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ConeOfCold.file,
     ability: {
-      name: "ability.coneOfCold",
+      name: SPELLS.Wizard.ConeOfCold.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -30,7 +30,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Fireburst.file,
     ability: {
-      name: "ability.Fireburst",
+      name: SPELLS.Wizard.Fireburst.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -52,7 +52,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.GlyphOfWarding.file,
     ability: {
-      name: "ability.glyphOfWarding",
+      name: SPELLS.Priest.GlyphOfWarding.name,
       targets: [
         {
           name: "FarthestEnemies",
@@ -71,7 +71,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.BurningHands.file,
     ability: {
-      name: "ability.BurningHands",
+      name: SPELLS.Wizard.BurningHands.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -92,7 +92,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.IceStorm.file,
     ability: {
-      name: "ability.iceStorm",
+      name: SPELLS.Wizard.IceStorm.name,
       targets: [
         {
           name: "FarthestEnemies",
@@ -112,7 +112,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.MassCauseLightWounds.file,
     ability: {
-      name: "ability.MassCauseLightWounds",
+      name: SPELLS.Priest.MassCauseLightWounds.name,
       spell: {
         selfTarget: true,
       },
@@ -130,7 +130,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     // instead), kept for whenever FNP fixes the underlying spell.
     preset: FNP_SPELLS.Priest.FrostFingers.file,
     ability: {
-      name: "ability.FrostFingers",
+      name: FNP_SPELLS.Priest.FrostFingers.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -151,7 +151,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create([SPELLS.Priest.CloudOfPestilence.file, FNP_SPELLS.Priest.CloudOfPestilence.file], {
-    name: "ability.CloudOfPestilence",
+    name: SPELLS.Priest.CloudOfPestilence.name,
     targets: [
       {
         name: "NearestEnemies",
@@ -167,7 +167,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.WavesOfAgony.file,
     ability: {
-      name: "ability.WavesOfAgony",
+      name: SPELLS.Priest.WavesOfAgony.name,
       targets: [
         {
           name: "Players",
@@ -186,7 +186,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.LightningBolt.file,
     ability: {
-      name: "ability.LightningBolt",
+      name: SPELLS.Wizard.LightningBolt.name,
       targets: [
         {
           name: "Players",
@@ -207,7 +207,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.AgannazarScorcher.file,
     ability: {
-      name: "ability.AgannazarScorcher",
+      name: SPELLS.Wizard.AgannazarScorcher.name,
       targets: [
         {
           name: "Players",
@@ -227,7 +227,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.VitriolicSphere.file,
     ability: {
-      name: "ability.VitriolicSphere",
+      name: SPELLS.Wizard.VitriolicSphere.name,
       targets: [
         {
           name: "FarthestEnemies",
@@ -247,7 +247,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Cloudkill.file,
     ability: {
-      name: "ability.Cloudkill",
+      name: SPELLS.Wizard.Cloudkill.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -265,7 +265,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ChainLightning.file,
     ability: {
-      name: "ability.ChainLightning",
+      name: SPELLS.Wizard.ChainLightning.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -284,7 +284,7 @@ export const DAMAGE_AOE_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.UnholyBlight.file,
     ability: {
-      name: "ability.UnholyBlight",
+      name: SPELLS.Priest.UnholyBlight.name,
       targets: [
         {
           name: "Players",

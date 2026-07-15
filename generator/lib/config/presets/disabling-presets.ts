@@ -11,7 +11,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Darkness15Radius.file,
     ability: {
-      name: "ability.darkness15Radius",
+      name: SPELLS.Wizard.Darkness15Radius.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -32,7 +32,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.ObscuringMist.file,
     ability: {
-      name: "ability.ObscuringMist",
+      name: SPELLS.Wizard.ObscuringMist.name,
       targets: [
         {
           name: "PCsFighters",
@@ -51,7 +51,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Silence.file,
     ability: {
-      name: "ability.silence",
+      name: SPELLS.Priest.Silence.name,
       targets: [
         {
           name: "PCSpellcasters",
@@ -72,7 +72,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.MiscastMagic.file,
     ability: {
-      name: "ability.miscastMagic",
+      name: SPELLS.Priest.MiscastMagic.name,
       targets: [
         {
           name: "PCSpellcasters",
@@ -92,7 +92,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
     [SPELLS.Priest.RigidThinking.file, FNP_SPELLS.Priest.RigidThinking.file],
     {
-      name: "ability.rigidThinking",
+      name: SPELLS.Priest.RigidThinking.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -112,7 +112,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.SummonInsects.file,
     ability: {
-      name: "ability.summonInsects",
+      name: SPELLS.Priest.SummonInsects.name,
       targets: [
         {
           name: "PCSpellcasters",
@@ -132,7 +132,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.Entangle.file,
     ability: {
-      name: "ability.entangle",
+      name: SPELLS.Priest.Entangle.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -152,7 +152,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Slow.file,
     ability: {
-      name: "ability.slow",
+      name: SPELLS.Wizard.Slow.name,
       targets: targetService.combineListWithTriggers(
         [
           {
@@ -179,7 +179,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.PowerWordBlind.file,
     ability: {
-      name: "ability.powerWordBlind",
+      name: SPELLS.Wizard.PowerWordBlind.name,
       targets: [
         {
           name: "Players",
@@ -200,7 +200,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.PowerWordStun.file,
     ability: {
-      name: "ability.powerWordStun",
+      name: SPELLS.Wizard.PowerWordStun.name,
       targets: [
         {
           name: "Players",
@@ -219,7 +219,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.Forbiddance.file,
     ability: {
-      name: "ability.Forbiddance",
+      name: FNP_SPELLS.Priest.Forbiddance.name,
       targets: [
         {
           name: "NearestEnemies",
@@ -238,7 +238,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.MiscastMagic.file,
     ability: {
-      name: "ability.MiscastMagic",
+      name: FNP_SPELLS.Priest.MiscastMagic.name,
       targets: [
         {
           name: "PCSpellcasters",
@@ -257,7 +257,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.StinkingCloud.file,
     ability: {
-      name: "ability.StinkingCloud",
+      name: SPELLS.Wizard.StinkingCloud.name,
       targets: [
         {
           name: "Players",
@@ -275,7 +275,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create([SPELLS.Wizard.Emotion.file, FNP_SPELLS.Priest.Emotion.file], {
-    name: "ability.Emotion",
+    name: SPELLS.Wizard.Emotion.name,
     targets: [
       {
         name: "NearestEnemies",
@@ -290,7 +290,7 @@ export const DISABLING_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.TeleportField.file,
     ability: {
-      name: "ability.TeleportField",
+      name: SPELLS.Wizard.TeleportField.name,
       targets: [
         {
           name: "Players",

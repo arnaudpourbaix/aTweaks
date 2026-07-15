@@ -7,7 +7,7 @@ import { SPELLS } from "../spells/spell-names";
 
 export const DEBUFF_PRESETS: AbilityPreset[] = [
   ...presetFactory.create([SPELLS.Priest.Doom.file, FNP_SPELLS.Priest.Doom.file], {
-    name: "ability.Doom",
+    name: SPELLS.Priest.Doom.name,
     targets: [
       {
         name: "Players",
@@ -26,7 +26,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
   ...presetFactory.create(
     [SPELLS.Wizard.GreaterMalison.file, FNP_SPELLS.Priest.GreaterMalison.file],
     {
-      name: "ability.GreaterMalison",
+      name: SPELLS.Wizard.GreaterMalison.name,
       targets: [
         {
           name: "Players",
@@ -44,7 +44,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.WavesOfFatigue.file,
     ability: {
-      name: "ability.WavesOfFatigue",
+      name: FNP_SPELLS.Priest.WavesOfFatigue.name,
       targets: [
         {
           name: "Players",
@@ -62,7 +62,7 @@ export const DEBUFF_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.Glitterdust.file,
     ability: {
-      name: "ability.Glitterdust",
+      name: SPELLS.Wizard.Glitterdust.name,
       targets: [
         {
           name: "Players",

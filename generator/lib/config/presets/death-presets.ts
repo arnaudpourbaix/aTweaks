@@ -8,7 +8,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.WailOfTheBanshee.file,
     ability: {
-      name: "ability.wailOfTheBanshee",
+      name: SPELLS.Wizard.WailOfTheBanshee.name,
       targets: [
         {
           name: "Players",
@@ -27,7 +27,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Wizard.PowerWordKill.file,
     ability: {
-      name: "ability.powerWordKill",
+      name: SPELLS.Wizard.PowerWordKill.name,
       targets: [
         {
           name: "Players",
@@ -47,7 +47,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.FingerOfDeath.file,
     ability: {
-      name: "ability.FingerOfDeath",
+      name: SPELLS.Priest.FingerOfDeath.name,
       targets: targetService.combineListWithTriggers(
         [
           {
@@ -72,7 +72,7 @@ export const DEATH_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.SymbolDeath.file,
     ability: {
-      name: "ability.SymbolDeath",
+      name: SPELLS.Priest.SymbolDeath.name,
       targets: [
         {
           name: "Players",

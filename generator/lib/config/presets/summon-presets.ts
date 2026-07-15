@@ -12,7 +12,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.ShadowMonsters.file,
     ability: {
-      name: "ability.ShadowMonsters",
+      name: FNP_SPELLS.Priest.ShadowMonsters.name,
       spell: {
         selfTarget: true,
       },
@@ -33,7 +33,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.CallWoodlandBeeings.file,
     ability: {
-      name: "ability.callWoodlandBeeings",
+      name: SPELLS.Priest.CallWoodlandBeeings.name,
       spell: {},
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
@@ -49,7 +49,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.DemiShadowMonsters.file,
     ability: {
-      name: "ability.DemiShadowMonsters",
+      name: FNP_SPELLS.Priest.DemiShadowMonsters.name,
       spell: {
         selfTarget: true,
       },
@@ -65,7 +65,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.AnimalSummoning4.file,
     ability: {
-      name: "ability.animalSummoning4",
+      name: SPELLS.Priest.AnimalSummoning4.name,
       targets: [
         {
           name: "PCsPreferringWeak",
@@ -79,7 +79,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
     },
   },
   ...presetFactory.create([SPELLS.Priest.AnimateDead.file, FNP_SPELLS.Priest.AnimateDead.file], {
-    name: "ability.AnimateDead",
+    name: SPELLS.Priest.AnimateDead.name,
     spell: {
       selfTarget: true,
     },
@@ -94,7 +94,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.SummonShadows.file,
     ability: {
-      name: "ability.SummonShadows",
+      name: FNP_SPELLS.Priest.SummonShadows.name,
       spell: {
         selfTarget: true,
       },
@@ -107,7 +107,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: FNP_SPELLS.Priest.Shades.file,
     ability: {
-      name: "ability.Shades",
+      name: FNP_SPELLS.Priest.Shades.name,
       spell: {
         selfTarget: true,
       },
@@ -119,7 +119,7 @@ export const SUMMON_PRESETS: AbilityPreset[] = [
   {
     preset: SPELLS.Priest.AerialServant.file,
     ability: {
-      name: "ability.AerialServant",
+      name: SPELLS.Priest.AerialServant.name,
       spell: {
         selfTarget: true,
       },
