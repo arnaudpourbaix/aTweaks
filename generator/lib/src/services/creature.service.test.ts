@@ -561,7 +561,14 @@ describe("convertMovement", () => {
 });
 
 function fakeAbility(resource: string | undefined): CreatureAbility {
-  return { resource } as unknown as CreatureAbility;
+  return { resource, actions: [] } as unknown as CreatureAbility;
+}
+
+function fakeIdCastAbility(id: string): CreatureAbility {
+  return {
+    resource: undefined,
+    actions: [{ name: "Spell", params: ["Myself", id] }],
+  } as unknown as CreatureAbility;
 }
 
 function fakeSpellCreature(p: {
@@ -569,6 +576,7 @@ function fakeSpellCreature(p: {
   spellbooks?: SpellbookVariant[];
   adjustmentsMemorized?: MemorizedSpell[][];
   abilities?: CreatureAbility[];
+  customCodeAbilities?: CreatureAbility[][];
 }): Creature {
   return {
     name: "test",
@@ -581,7 +589,10 @@ function fakeSpellCreature(p: {
     adjustments: (p.adjustmentsMemorized ?? []).map((memorized) => ({
       data: { spells: { memorized } },
     })),
-    behavior: { abilities: p.abilities ?? [] },
+    behavior: {
+      abilities: p.abilities ?? [],
+      customCodes: (p.customCodeAbilities ?? []).map((abilities) => ({ abilities })),
+    },
   } as unknown as Creature;
 }
 
@@ -686,5 +697,51 @@ describe("checkSpellAbilities", () => {
     creatureService.checkSpellAbilities(creature);
     expect(warnSpy).toHaveBeenCalledTimes(1);
     warnSpy.mockRestore();
+  });
+
+  it("does not error when a memorized spell's only matching ability lives inside a customCodes block", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [],
+      customCodeAbilities: [[fakeAbility("sppr101")]],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("does not warn about a customCodes ability whose resource is memorized in the default list", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [],
+      customCodeAbilities: [[fakeAbility("sppr101")]],
+    });
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
+  });
+
+  it("resolves an ability that casts by spell id (no resource/preset) to its spell file", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "SPWI416" }],
+      abilities: [fakeIdCastAbility("WIZARD_POLYMORPH_SELF")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("does not resolve an unknown spell id, so an unmatched memorized spell still errors", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [fakeIdCastAbility("NOT_A_REAL_SPELL_ID")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("sppr101"));
+    errorSpy.mockRestore();
   });
 });

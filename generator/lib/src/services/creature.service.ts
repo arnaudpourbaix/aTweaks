@@ -1,12 +1,14 @@
 import figureSet from "figures";
-import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
+import { getAllSpells, SpellReference } from "../../config/spells/spell-names";
 import { CreatureAbility } from "../model/creature/ability";
+import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
 import { AttackPerRoundTable } from "../model/game-data/attack-per-round";
 import { DexterityTable } from "../model/game-data/dexterity";
 import { SAVING_THROWS } from "../model/game-data/saving-throws";
 import { StrengthTable } from "../model/game-data/strength";
 import { Thac0Table } from "../model/game-data/thac0";
+import { Actions } from "../model/script/actions";
 import { ItemAbilityLocationEnum } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
 import hitPointService from "./hit-point.service";
@@ -15,6 +17,12 @@ import kitService from "./kit.service";
 import logService from "./log.service";
 import translationService from "./translation.service";
 import weaponService from "./weapon.service";
+
+const ID_CAST_ACTION_NAMES = new Set(["Spell", "SpellNoDec", "ForceSpell", "ReallyForceSpell"]);
+type IdCastAction = Extract<
+  Actions.Action,
+  { name: "Spell" | "SpellNoDec" | "ForceSpell" | "ReallyForceSpell" }
+>;
 
 class CreatureService {
   check(creature: Creature) {
@@ -58,26 +66,39 @@ class CreatureService {
 
   checkSpellAbilities(creature: Creature): void {
     const groups = this.getSpellGroups(creature);
-    const abilityResources = new Set(
-      creature.behavior.abilities
-        .filter((a): a is CreatureAbility & { resource: string } => a.resource !== undefined)
-        .map((a) => a.resource),
-    );
+    const allAbilities = [
+      ...creature.behavior.abilities,
+      ...creature.behavior.customCodes.flatMap((c) => c.abilities),
+    ];
+    const abilityResources = new Set(allAbilities.flatMap((a) => this.getAbilityCastFiles(a)));
     const memorizedFiles = new Set(groups.flatMap((g) => g.files));
     for (const group of groups) {
       for (const file of group.files) {
         if (abilityResources.has(file)) continue;
         logService.error(
-          `${figureSet.cross} ${translationService.from(creature.name)}: spell '${file}' is memorized in '${group.label}' but has no matching ability - it will never be cast.`,
+          `${translationService.from(creature.name)}: spell '${file}' is memorized in '${group.label}' but has no matching ability - it will never be cast.`,
         );
       }
     }
     for (const resource of abilityResources) {
       if (memorizedFiles.has(resource)) continue;
       logService.warn(
-        `${figureSet.warning} ${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized anywhere.`,
+        `${translationService.from(creature.name)}: ability references spell '${resource}' which isn't memorized anywhere.`,
       );
     }
+  }
+
+  private getAbilityCastFiles(ability: CreatureAbility): string[] {
+    if (ability.resource !== undefined) return [ability.resource];
+    return ability.actions
+      .filter((a): a is IdCastAction => ID_CAST_ACTION_NAMES.has(a.name))
+      .map((a) => this.resolveSpellIdToFile(a.params[1]))
+      .filter((file): file is string => file !== undefined);
+  }
+
+  private resolveSpellIdToFile(id: string): string | undefined {
+    const spells = Object.values(getAllSpells()) as SpellReference[];
+    return spells.find((s) => s.id === id)?.file;
   }
 
   private getSpellGroups(creature: Creature): { label: string; files: string[] }[] {
@@ -227,7 +248,7 @@ class CreatureService {
     }
     if (data.thac0 !== undefined)
       logService.warn(
-        `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
+        `level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
       );
     else data.thac0 = item.thac0;
   }
