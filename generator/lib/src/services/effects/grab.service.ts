@@ -163,7 +163,7 @@ class GrabService {
     // creature has no size" test, which calls this directly with size unset.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.data.size) {
-      logService.log(`${figureSet.warning} Creature size is needed to add grab immunities!`);
+      logService.warn(`${figureSet.warning} Creature size is needed to add grab immunities!`);
     } else {
       if (["Huge", "Large"].includes(creature.data.size)) {
         list.push(...HUGE_CREATURES);

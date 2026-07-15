@@ -129,7 +129,7 @@ describe("attachGrabToWeapon", () => {
 
   it("getGrabImmuneEffects (private) skips the size-based extras and warns when the creature has no size", () => {
     const creature = fakeCreature({ strength: 10 });
-    const consoleSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     const effects = service.getGrabImmuneEffects(creature, "spellfile");
     expect(consoleSpy).toHaveBeenCalled();
     expect(effects).toHaveLength(GRAB_IMMUNE_CREATURES.length);
