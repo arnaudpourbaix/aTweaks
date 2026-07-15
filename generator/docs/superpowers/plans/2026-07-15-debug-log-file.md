@@ -864,10 +864,20 @@ EOF
 
 ### Task 6: Migrate `effects/immunity.service.ts` + `effects/grab.service.ts` + `effects/poison.service.ts`
 
+**Correction (found during implementation):** the original plan text claimed
+this task's companion test files needed no changes. That's wrong for two of
+them — `vi.spyOn(console, "log")` (comma-separated arguments) doesn't contain
+the literal substring `console.log`, so the plan's research missed it.
+`immunity.service.test.ts` and `grab.service.test.ts` both spy on `console`
+directly and must be retargeted to `logService.log`, same pattern as Tasks
+3/4. `poison.service.test.ts` has no such spy and genuinely needs no changes.
+
 **Files:**
 - Modify: `lib/src/services/effects/immunity.service.ts`
 - Modify: `lib/src/services/effects/grab.service.ts`
 - Modify: `lib/src/services/effects/poison.service.ts`
+- Modify: `lib/src/services/effects/immunity.service.test.ts`
+- Modify: `lib/src/services/effects/grab.service.test.ts`
 
 **Interfaces:**
 - Consumes: `logService.log(message: string): void` (from Task 1).
@@ -1017,15 +1027,58 @@ with:
     );
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [ ] **Step 4: Update `effects/immunity.service.test.ts`**
+
+Add the logService import (alongside the existing relative imports):
+
+```ts
+import logService from "../log.service";
+```
+
+Replace (in the top-level `beforeEach`):
+
+```ts
+  vi.spyOn(console, "log").mockImplementation(() => {});
+```
+
+with:
+
+```ts
+  vi.spyOn(logService, "log").mockImplementation(() => {});
+```
+
+- [ ] **Step 5: Update `effects/grab.service.test.ts`**
+
+Add the logService import (alongside the existing relative imports):
+
+```ts
+import logService from "../log.service";
+```
+
+Replace (in the "warns when the creature has no size" test):
+
+```ts
+    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+```
+
+with:
+
+```ts
+    const consoleSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+```
+
+(keep the variable name `consoleSpy` as-is — the existing
+`expect(consoleSpy).toHaveBeenCalled()` assertion works unchanged.)
+
+- [ ] **Step 6: Run the tests to verify they pass**
 
 Run: `npx vitest run lib/src/services/effects/immunity.service.test.ts lib/src/services/effects/grab.service.test.ts lib/src/services/effects/poison.service.test.ts`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add lib/src/services/effects/immunity.service.ts lib/src/services/effects/grab.service.ts lib/src/services/effects/poison.service.ts
+git add lib/src/services/effects/immunity.service.ts lib/src/services/effects/grab.service.ts lib/src/services/effects/poison.service.ts lib/src/services/effects/immunity.service.test.ts lib/src/services/effects/grab.service.test.ts
 git commit -m "$(cat <<'EOF'
 refactor(generator): move immunity/grab/poison debug logs to LogService
 
@@ -1170,10 +1223,22 @@ EOF
 
 ### Task 8: Migrate `doc/documentation.service.ts` + `doc/description.service.ts` + `weidu/weidu-creature.service.ts`
 
+**Correction (found during Task 6 implementation):** the original plan text
+claimed these test files needed no changes. That's wrong for one of
+them — `vi.spyOn(console, "warn")` (comma-separated arguments) doesn't
+contain the literal substring `console.warn`, so the plan's research missed
+it. `description.service.test.ts` spies on `console.warn` in two places (a
+blanket `beforeEach` silencer, and a real assertion in the "warns and falls
+back to raw seconds" test) and both must be retargeted to `logService.log`,
+same pattern as Tasks 3/4/6. `documentation.service.test.ts` and
+`weidu-creature.service.test.ts` have no such spy and genuinely need no
+changes (confirmed via `vi.spyOn(console` search across the whole test tree).
+
 **Files:**
 - Modify: `lib/src/services/doc/documentation.service.ts`
 - Modify: `lib/src/services/doc/description.service.ts`
 - Modify: `lib/src/services/weidu/weidu-creature.service.ts`
+- Modify: `lib/src/services/doc/description.service.test.ts`
 
 **Interfaces:**
 - Consumes: `logService.log(message: string): void` (from Task 1).
@@ -1250,15 +1315,56 @@ with:
         );
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [ ] **Step 4: Update `doc/description.service.test.ts`**
+
+Add the logService import (alongside the existing relative imports):
+
+```ts
+import logService from "../log.service";
+```
+
+Replace (in the top-level `beforeEach`):
+
+```ts
+  vi.spyOn(console, "warn").mockImplementation(() => undefined);
+```
+
+with:
+
+```ts
+  vi.spyOn(logService, "log").mockImplementation(() => undefined);
+```
+
+Replace (in the "warns and falls back to raw seconds for a non-integer duration" test):
+
+```ts
+    const warnSpy = vi.spyOn(console, "warn");
+    expect(service.getDuration(0.5)).toBe("0.5s");
+    expect(warnSpy).toHaveBeenCalledWith("unknown duration 0.5s");
+```
+
+with:
+
+```ts
+    const warnSpy = vi.spyOn(logService, "log").mockImplementation(() => undefined);
+    expect(service.getDuration(0.5)).toBe("0.5s");
+    expect(warnSpy).toHaveBeenCalledWith("unknown duration 0.5s");
+```
+
+(`logService.log`'s real implementation is already a no-op here regardless —
+`enabled` defaults to `false` and no test calls `init()` — so the added
+`mockImplementation` isn't required for safety; it's added purely so this
+spy matches the style of the other retargeted spies in this file.)
+
+- [ ] **Step 5: Run the tests to verify they pass**
 
 Run: `npx vitest run lib/src/services/doc/documentation.service.test.ts lib/src/services/doc/description.service.test.ts lib/src/services/weidu/weidu-creature.service.test.ts`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add lib/src/services/doc/documentation.service.ts lib/src/services/doc/description.service.ts lib/src/services/weidu/weidu-creature.service.ts
+git add lib/src/services/doc/documentation.service.ts lib/src/services/doc/description.service.ts lib/src/services/weidu/weidu-creature.service.ts lib/src/services/doc/description.service.test.ts
 git commit -m "$(cat <<'EOF'
 refactor(generator): move documentation/description/weidu-creature debug logs to LogService
 
