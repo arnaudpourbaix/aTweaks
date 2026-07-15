@@ -16,7 +16,7 @@ class WeaponService {
   checkWeaponSpeed(weapon: Weapon) {
     if (!weapon.header.speed) {
       weapon.header.speed = 3;
-      logService.log(
+      logService.warn(
         `${figureSet.warning} default speed of ${weapon.header.speed} from weapon ${weapon.file}.`,
       );
     }

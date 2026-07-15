@@ -289,7 +289,7 @@ class WeiduCreatureService extends AbstractWeiduService {
     for (const item of p.data.items.equipped) {
       const slots = itemService.getItemSlots(item.slot);
       if (!slots.length) {
-        logService.log(
+        logService.warn(
           `No slot defined for equipped item ${item.file}, check if it is used by an adjustment`,
         );
         continue;

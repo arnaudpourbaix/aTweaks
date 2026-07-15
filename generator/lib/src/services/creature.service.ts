@@ -185,7 +185,7 @@ class CreatureService {
       throw new Error(`thac0 not found in table for level ${level}`);
     }
     if (data.thac0 !== undefined)
-      logService.log(
+      logService.warn(
         `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
       );
     else data.thac0 = item.thac0;
