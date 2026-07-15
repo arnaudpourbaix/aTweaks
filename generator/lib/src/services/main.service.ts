@@ -45,13 +45,13 @@ class MainService {
 
   isCreatureValid(creature: Creature) {
     if (creature.valid === undefined) {
-      logService.log(
+      logService.warn(
         `${figureSet.warning} ${translationService.from(
           creature.name,
         )} has not been validated, you must call validate`,
       );
     } else if (!creature.valid) {
-      logService.log(
+      logService.warn(
         `${figureSet.warning} ${translationService.from(
           creature.name,
         )} is not valid, please fix it !`,

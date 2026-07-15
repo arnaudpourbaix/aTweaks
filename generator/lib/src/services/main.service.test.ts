@@ -21,19 +21,19 @@ function fakeCreature(valid: boolean | undefined): Creature {
 
 describe("isCreatureValid", () => {
   it("returns false and warns when valid is undefined (not yet validated)", () => {
-    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     expect(mainService.isCreatureValid(fakeCreature(undefined))).toBe(false);
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("has not been validated"));
   });
 
   it("returns false and warns when valid is explicitly false", () => {
-    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     expect(mainService.isCreatureValid(fakeCreature(false))).toBe(false);
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("is not valid"));
   });
 
   it("returns true without warning when valid is true", () => {
-    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     expect(mainService.isCreatureValid(fakeCreature(true))).toBe(true);
     expect(logSpy).not.toHaveBeenCalled();
   });
@@ -41,7 +41,7 @@ describe("isCreatureValid", () => {
 
 describe("generateCreature", () => {
   it("skips baf/weidu generation for an invalid creature", () => {
-    vi.spyOn(logService, "log").mockImplementation(() => {});
+    vi.spyOn(logService, "warn").mockImplementation(() => {});
     const bafSpy = vi.spyOn(bafGeneratorService, "generate").mockImplementation(() => {});
     const weiduSpy = vi
       .spyOn(weiduCreatureService, "generateWeiduScript")
