@@ -5,6 +5,7 @@ import creatureFactory from "../../factories/creature.factory";
 import targetService from "../../services/baf/target.service";
 import grabService from "../../services/effects/grab.service";
 import translationService from "../../services/translation.service";
+import logService from "../../services/log.service";
 import utils from "../../services/utils/utils.service";
 import { ImmunityName } from "../final/immunity";
 import { StringReference } from "../final/stringref";
@@ -129,7 +130,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
       (i) => i.slot.length === 1 && i.slot[0] === equippedSlot[0],
     );
     if (itemInSlot !== -1) {
-      console.log(`replacing item in slot ${item.equippedSlot[0]}`);
+      logService.log(`replacing item in slot ${item.equippedSlot[0]}`);
       this.data.items.equipped.splice(itemInSlot, 1);
     }
 

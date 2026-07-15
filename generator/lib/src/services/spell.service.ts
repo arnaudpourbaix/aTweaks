@@ -18,6 +18,7 @@ import {
 } from "../model/spell-item/spell-item";
 import { State } from "../state";
 import effectService from "./effects/effect.service";
+import logService from "./log.service";
 import translationService from "./translation.service";
 
 class SpellService {
@@ -143,7 +144,7 @@ class SpellService {
 
   private addEffectFile(spell: Spell, effect: Effect) {
     if (!spell.effectFiles.some((e) => e.file === spell.file)) {
-      console.log(`adding effect file ${spell.file} for spell ${spell.name}`);
+      logService.log(`adding effect file ${spell.file} for spell ${spell.name}`);
       spell.effectFiles.push({
         file: spell.file,
         ...effectService.getEffect(effect),
@@ -153,7 +154,7 @@ class SpellService {
 
   private addProjectile(spell: Spell, header: SpellHeader, projectile: PartialProjectile) {
     if (!spell.projectiles.some((p) => p.file === spell.file)) {
-      console.log(
+      logService.log(
         `adding projectile ${spell.file} for spell ${translationService.fromOptional(spell.name)}`,
       );
       spell.projectiles.push({ file: spell.file, ...projectile });

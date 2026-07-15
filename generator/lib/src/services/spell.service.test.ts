@@ -12,7 +12,7 @@ import spellService from "./spell.service";
 import translationService from "./translation.service";
 
 // a stand-in stringRef: translationService.from() throws for a numeric ref that isn't
-// registered (addProjectile() reads spell.name for its console.log), but registering a real one
+// registered (addProjectile() reads spell.name for its logService.log call), but registering a real one
 // via addCustomTranslation() would permanently shift translationService's shared, never-reset
 // availableStringRef counter for every other test file in the same run (breaking
 // pipeline.golden.test.ts's exact-stringRef-number fixtures) - mock the lookup instead.

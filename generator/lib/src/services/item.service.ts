@@ -10,6 +10,7 @@ import { PartialProjectile } from "../model/spell-item/projectile";
 import { Item, ItemHeader, PartialItem, PartialItemHeader } from "../model/spell-item/spell-item";
 import { State } from "../state";
 import effectService from "./effects/effect.service";
+import logService from "./log.service";
 import translationService from "./translation.service";
 
 class ItemService {
@@ -73,7 +74,7 @@ class ItemService {
 
   private addProjectile(item: Item, header: ItemHeader, projectile: PartialProjectile) {
     if (!item.projectiles.some((p) => p.file === item.file)) {
-      console.log(
+      logService.log(
         `adding projectile ${
           item.file
         } for item ${translationService.fromOptional(item.stringRef)}`,
