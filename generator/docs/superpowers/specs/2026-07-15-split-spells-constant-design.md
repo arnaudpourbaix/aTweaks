@@ -13,13 +13,15 @@ actually cares about, making the file harder to navigate as it grows.
 ### `spell-names.ts` restructure
 
 Replace the single `SPELLS` object with four section constants, composed into
-a nested `SPELLS` export:
+a nested `SPELLS` export. The section constants stay module-private (not
+`export`ed) so nothing outside this file can reach in and use e.g.
+`WIZARD_SPELLS` directly by mistake — `SPELLS.Wizard` is the only path in:
 
 ```ts
-export const WIZARD_SPELLS = { AgannazarScorcher: {...}, ... } satisfies Record<string, SpellReference>;
-export const PRIEST_SPELLS = { AerialServant: {...}, ... } satisfies Record<string, SpellReference>;
-export const CLASS_SPELLS  = { BerserkerRage: {...}, ... } satisfies Record<string, SpellReference>;
-export const INNATE_SPELLS = { MephitColorSpray: {...}, ... } satisfies Record<string, SpellReference>;
+const WIZARD_SPELLS = { AgannazarScorcher: {...}, ... } satisfies Record<string, SpellReference>;
+const PRIEST_SPELLS = { AerialServant: {...}, ... } satisfies Record<string, SpellReference>;
+const CLASS_SPELLS  = { BerserkerRage: {...}, ... } satisfies Record<string, SpellReference>;
+const INNATE_SPELLS = { MephitColorSpray: {...}, ... } satisfies Record<string, SpellReference>;
 
 export const SPELLS = {
   Wizard: WIZARD_SPELLS,
@@ -35,16 +37,24 @@ every existing key is exactly what the current `// Wizard` / `// Priest` /
 `// Innates` / `// Class` comments in the file already mark. No spell name
 collides across sections, so the mapping from key to section is unambiguous.
 
-`FNP_SPELLS` gets the same treatment, currently with a single populated
-section:
+`FNP_SPELLS` moves out to its own file, `lib/config/fnp-spell-names.ts`, for
+clarity — it's a distinct (mod-specific) spell catalog, not a section of the
+base game's spell list. It gets the same private-section-constant treatment,
+currently with a single populated section:
 
 ```ts
-export const FNP_PRIEST_SPELLS = { AnimateDead: {...}, ... } satisfies Record<string, BaseSpell>;
-export const FNP_SPELLS = { Priest: FNP_PRIEST_SPELLS };
+// lib/config/fnp-spell-names.ts
+const FNP_PRIEST_SPELLS = { AnimateDead: {...}, ... } satisfies Record<string, BaseSpell>;
+
+export const FNP_SPELLS = {
+  Priest: FNP_PRIEST_SPELLS,
+};
 ```
 
-Both imports (`SPELLS`, `FNP_SPELLS`) keep their existing exported names, so
-no import statements need to change — only property access at each call site.
+`SPELLS` keeps its existing exported name and location, so files that only
+use `SPELLS` need no import change — only property access. Files importing
+`FNP_SPELLS` need their import path repointed from `spell-names` to
+`fnp-spell-names`.
 
 ### Flattened iteration helpers
 
@@ -61,13 +71,16 @@ and would silently break under the nested shape:
   — looks up a Faiths & Powers spell by filename via
   `Object.values(FNP_SPELLS)`.
 
-Add two helpers in `spell-names.ts` and point these three call sites at them:
+Add a helper in each file (next to the constants it flattens, so it can see
+the private section constants) and point these three call sites at them:
 
 ```ts
+// spell-names.ts
 export function getAllSpells(): Record<string, SpellReference> {
   return { ...WIZARD_SPELLS, ...PRIEST_SPELLS, ...CLASS_SPELLS, ...INNATE_SPELLS };
 }
 
+// fnp-spell-names.ts
 export function getAllFnpSpells(): Record<string, BaseSpell> {
   return { ...FNP_PRIEST_SPELLS };
 }
@@ -81,6 +94,10 @@ Roughly 30 other files access `SPELLS.<Name>` / `FNP_SPELLS.<Name>` directly
 the section segment inserted based on the key's section membership
 established above (all `FNP_SPELLS.<Name>` accesses become
 `FNP_SPELLS.Priest.<Name>`, since that's the only section populated today).
+The ~10 files that import `FNP_SPELLS` also get that import repointed to
+`fnp-spell-names` (some of these import `SPELLS` from the same statement
+today, e.g. `import { FNP_SPELLS, SPELLS } from "../spell-names"`, which
+splits into two import statements).
 
 This is mechanical and will be done as a scripted find/replace keyed off the
 per-key section mapping, run once across `lib/`, followed by:
