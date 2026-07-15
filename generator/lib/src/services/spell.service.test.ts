@@ -6,8 +6,9 @@ import {
   SpellTypeEnum,
 } from "../model/spell-item/effect.enums";
 import { Effect } from "../model/spell-item/effect";
-import { PartialSpellHeader } from "../model/spell-item/spell-item";
+import { PartialSpellHeader, Spell } from "../model/spell-item/spell-item";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
+import { State } from "../state";
 import spellService from "./spell.service";
 import translationService from "./translation.service";
 
@@ -202,5 +203,39 @@ describe("useEffectFile (racial resistance skip-add dedup)", () => {
     );
     const fileCount = result.effectFiles.filter((e) => e.file === "spl12").length;
     expect(fileCount).toBe(1);
+  });
+});
+
+describe("getAllSpellNames", () => {
+  it("includes a named spell from the base spell-names list", () => {
+    const result = spellService.getAllSpellNames();
+    expect(result).toContainEqual({ file: "SPWI118", name: "spell.ChromaticOrb.name" });
+  });
+
+  it("includes a named spell from the Faiths & Powers spell list", () => {
+    const result = spellService.getAllSpellNames();
+    expect(result).toContainEqual({ file: "d5p1301", name: "spell.AnimateDead.name" });
+  });
+});
+
+describe("getSpellName", () => {
+  const CHROMATIC_ORB = "Chromatic Orb";
+
+  it("resolves the name from a spell already processed into State.spells", () => {
+    State.spells.push({ file: "getspellname-in-state", name: "spell.ChromaticOrb.name" } as Spell);
+    expect(spellService.getSpellName("getspellname-in-state")).toBe(CHROMATIC_ORB);
+  });
+
+  it("falls back to the static config list when the file isn't in State.spells", () => {
+    expect(spellService.getSpellName("SPWI118")).toBe(CHROMATIC_ORB);
+  });
+
+  it("falls back to the static config list when the State.spells entry has no name", () => {
+    State.spells.push({ file: "SPWI118", name: undefined } as unknown as Spell);
+    expect(spellService.getSpellName("SPWI118")).toBe(CHROMATIC_ORB);
+  });
+
+  it("returns null when the file is unknown to both State.spells and the static config", () => {
+    expect(spellService.getSpellName("no-such-spell-file")).toBeNull();
   });
 });

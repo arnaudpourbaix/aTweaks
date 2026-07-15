@@ -677,6 +677,39 @@ describe("checkSpellAbilities", () => {
     warnSpy.mockRestore();
   });
 
+  it("includes the resolved spell name in the error when the missing-ability file is a known spell", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "SPWI118" }],
+      abilities: [],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("SPWI118' (Chromatic Orb)"));
+    errorSpy.mockRestore();
+  });
+
+  it("omits the parenthesized spell name in the error when the file isn't a known spell", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }],
+      abilities: [],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("spell 'sppr101' is memorized"));
+    errorSpy.mockRestore();
+  });
+
+  it("includes the resolved spell name in the warning when the unmemorized-ability file is a known spell", () => {
+    const creature = fakeSpellCreature({
+      memorized: [],
+      abilities: [fakeAbility("SPWI118")],
+    });
+    const warnSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
+    creatureService.checkSpellAbilities(creature);
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("SPWI118' (Chromatic Orb)"));
+    warnSpy.mockRestore();
+  });
+
   it("errors only once for a duplicate memorized spell file within the same group", () => {
     const creature = fakeSpellCreature({
       memorized: [{ file: "sppr101" }, { file: "sppr101" }],

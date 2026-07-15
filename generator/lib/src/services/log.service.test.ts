@@ -81,11 +81,11 @@ describe("LogService", () => {
     expect(readLog()).toBe(`\n${CREATING_OGRE}\n    line one\n    line two\n`);
   });
 
-  it("warn writes the same as log (indent-prefixed by the current context)", () => {
+  it("warn writes the message prefixed with 'warning: ' (indent-prefixed by the current context)", () => {
     logService.init();
     logService.header(CREATING_OGRE);
     logService.warn("something looks off");
-    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    something looks off\n`);
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    warning: something looks off\n`);
   });
 
   it("warn increments the warning count while log does not", () => {
@@ -94,7 +94,7 @@ describe("LogService", () => {
     logService.warn("a warning");
     logService.summary();
     expect(readLog()).toBe(
-      "informational line\na warning\n\nSummary\n-------\nNo errors\n1 warning\n",
+      "informational line\nwarning: a warning\n\nSummary\n-------\nNo errors\n1 warning\n",
     );
   });
 
@@ -110,7 +110,7 @@ describe("LogService", () => {
     logService.warn("second warning");
     logService.summary();
     expect(readLog()).toBe(
-      "first warning\nsecond warning\n\nSummary\n-------\nNo errors\n2 warnings\n",
+      "warning: first warning\nwarning: second warning\n\nSummary\n-------\nNo errors\n2 warnings\n",
     );
   });
 
@@ -122,11 +122,11 @@ describe("LogService", () => {
     expect(readLog()).toBe("\nSummary\n-------\nNo errors\nNo warnings\n");
   });
 
-  it("error writes the same as log (indent-prefixed by the current context)", () => {
+  it("error writes the message prefixed with 'error: ' (indent-prefixed by the current context)", () => {
     logService.init();
     logService.header(CREATING_OGRE);
     logService.error("something is definitely broken");
-    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    something is definitely broken\n`);
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    error: something is definitely broken\n`);
   });
 
   it("error increments the error count while log does not", () => {
@@ -135,7 +135,7 @@ describe("LogService", () => {
     logService.error("an error");
     logService.summary();
     expect(readLog()).toBe(
-      "informational line\nan error\n\nSummary\n-------\n1 error\nNo warnings\n",
+      "informational line\nerror: an error\n\nSummary\n-------\n1 error\nNo warnings\n",
     );
   });
 
@@ -145,7 +145,7 @@ describe("LogService", () => {
     logService.error("second error");
     logService.summary();
     expect(readLog()).toBe(
-      "first error\nsecond error\n\nSummary\n-------\n2 errors\nNo warnings\n",
+      "error: first error\nerror: second error\n\nSummary\n-------\n2 errors\nNo warnings\n",
     );
   });
 
