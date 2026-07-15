@@ -3,6 +3,7 @@ backup
 TAGS
 node_modules
 generator/log.txt
+generator/generator.log
 generator/coverage
 generator/dist
 
