@@ -59,7 +59,7 @@ describe("equipItem", () => {
     const existingItem = { file: "old01", stringRef: 456 } as unknown as Item;
     creature.items.push(existingItem);
     creature.data.items.equipped.push({ file: "old01", slot: ["LRING"] });
-    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     const newItem = { file: "new01" } as unknown as Item;
     creatureFactory.equipItem(creature, newItem, ["LRING"]);
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("already attributed to"));
@@ -74,7 +74,7 @@ describe("equipItem", () => {
       file: "old01",
       slot: "LRING",
     } as unknown as EquippedItem);
-    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "warn").mockImplementation(() => {});
     const newItem = { file: "new01" } as unknown as Item;
     creatureFactory.equipItem(creature, newItem, ["LRING"]);
     expect(logSpy).not.toHaveBeenCalled();
