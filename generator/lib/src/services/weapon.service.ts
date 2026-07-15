@@ -4,6 +4,7 @@ import { EnchantmentTable } from "../model/game-data/enchantement";
 import { CreatureSizeTable } from "../model/game-data/sizes";
 import { ItemFlagEnum } from "../model/spell-item/effect.enums";
 import { Weapon } from "../model/spell-item/spell-item";
+import logService from "./log.service";
 
 class WeaponService {
   checkWeapon(creature: Creature, weapon: Weapon) {
@@ -15,7 +16,7 @@ class WeaponService {
   checkWeaponSpeed(weapon: Weapon) {
     if (!weapon.header.speed) {
       weapon.header.speed = 3;
-      console.log(
+      logService.log(
         `${figureSet.warning} default speed of ${weapon.header.speed} from weapon ${weapon.file}.`,
       );
     }
@@ -35,7 +36,7 @@ class WeaponService {
       throw new Error(`enchantment not found in table: ${level}/${creature.data.bonusHp ?? 0}`);
     }
     if (item.enchant === 0) return;
-    console.log(`${figureSet.arrowRight} ${weapon.file} enchant: ${item.enchant}`);
+    logService.log(`${figureSet.arrowRight} ${weapon.file} enchant: ${item.enchant}`);
     weapon.enchantment = item.enchant;
     if (item.enchant && !weapon.flags?.includes(ItemFlagEnum.Magical)) {
       weapon.flags = weapon.flags ?? [];
@@ -53,7 +54,7 @@ class WeaponService {
     }
     const range = CreatureSizeTable.find((c) => c.size === creature.data.size);
     if (range) {
-      console.log(`${figureSet.arrowRight} Melee range: ${range.attackRange}`);
+      logService.log(`${figureSet.arrowRight} Melee range: ${range.attackRange}`);
       weapon.header.range = range.attackRange;
     }
   }

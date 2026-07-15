@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import figureSet from "figures";
 import { BaseCreature, Creature, CreatureAutoGenerate } from "../model/creature/creature";
 import { CreatureData } from "../model/creature/data";
@@ -12,6 +11,7 @@ import { Weapon } from "../model/spell-item/spell-item";
 import hitPointService from "./hit-point.service";
 import itemService from "./item.service";
 import kitService from "./kit.service";
+import logService from "./log.service";
 import weaponService from "./weapon.service";
 
 class CreatureService {
@@ -32,7 +32,7 @@ class CreatureService {
 
   checkData(p: { creature: Creature; base: BaseCreature; isAdjustment: boolean }): void {
     const data = p.base.data;
-    console.log(p.base.files);
+    logService.log(`base files: ${JSON.stringify(p.base.files)}`);
     kitService.applyKit(p.creature, p.isAdjustment ? p.base : undefined);
     this.checkDualWielding({ ...p, data });
     this.checkDexterityArmorClassBonus(data);
@@ -97,7 +97,7 @@ class CreatureService {
     data: CreatureData;
   }): void {
     if (!p.isAdjustment && this.hasOffhandWeapon(p.creature)) {
-      console.log(`${figureSet.arrowRight} dual wielding detected`);
+      logService.log(`${figureSet.arrowRight} dual wielding detected`);
       p.creature.attack.dualWielding = true;
     }
     if (!p.creature.attack.dualWielding || p.isAdjustment) return;
@@ -105,7 +105,7 @@ class CreatureService {
       throw new Error("Attacks per round need to be set for dual wielding flag");
     }
     p.data.apr -= 1;
-    console.log(`${figureSet.arrowRight} setting dual wield: ${p.data.apr} APR +1 offhand`);
+    logService.log(`${figureSet.arrowRight} setting dual wield: ${p.data.apr} APR +1 offhand`);
   }
 
   private hasOffhandWeapon(creature: Creature): boolean {
@@ -123,7 +123,7 @@ class CreatureService {
     if (data.kit === "BARBARIAN") {
       data.movement = movement.clone();
       data.movement.bonus += 2;
-      console.log(
+      logService.log(
         `${figureSet.arrowRight} movement increased to ${data.movement.getGameValue()} (barbarian): `,
       );
     }
@@ -178,17 +178,15 @@ class CreatureService {
     else if (!level) return;
     if (!!data.bonusHp && data.bonusHp >= 3) {
       level++;
-      console.log(`${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`);
+      logService.log(`${figureSet.arrowRight} calculating THAC0 as a level ${level} creature`);
     }
     const item = Thac0Table.find((t) => t.level === level);
     if (!item) {
       throw new Error(`thac0 not found in table for level ${level}`);
     }
     if (data.thac0 !== undefined)
-      console.log(
-        chalk.yellowBright(
-          `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
-        ),
+      logService.log(
+        `${figureSet.warning} level: ${level}, hp bonus: ${data.bonusHp ?? 0}, thac0: ${data.thac0}, calculated: ${item.thac0}`,
       );
     else data.thac0 = item.thac0;
   }
@@ -211,7 +209,7 @@ class CreatureService {
       saveSpell: number;
     };
     if (key !== "fighter")
-      console.log(
+      logService.log(
         `${figureSet.arrowRight} Level: ${p.level}, class: ${
           p.classe ?? "none"
         }, saving throws table: ${key}, ${JSON.stringify(saves)}`,
@@ -255,7 +253,7 @@ class CreatureService {
     if (data.dexterity === undefined || data.ac === undefined) return;
     const bonus = this.getDexterityArmorClassBonus(data);
     if (bonus) {
-      console.log(
+      logService.log(
         `${figureSet.arrowRight} AC reduced to ${data.ac - bonus} (was ${
           data.ac
         }) because of dexterity bonus (${bonus})`,

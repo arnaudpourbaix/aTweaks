@@ -6,6 +6,7 @@ import { ConstitutionTable } from "../model/game-data/constitution";
 import { HitDiceTable, SizeBonusHitPointTable } from "../model/game-data/hp";
 import { CreatureSize } from "../model/game-data/sizes";
 import { PLAYER_CLASS_IDENTIFIERS } from "../model/ids/class";
+import logService from "./log.service";
 
 class HitPointService {
   getHitPoints(p: {
@@ -24,7 +25,7 @@ class HitPointService {
     const baseHP = level * hitDice;
     const log = `${figureSet.arrowRight} Level: ${level}, hit points: ${baseHP} (base) ${constitutionBonus.log}${hitPointBonus.log}${specialBonus.log}`;
     const value = baseHP + constitutionBonus.value + hitPointBonus.value + specialBonus.value;
-    console.log(`${log} = ${value}`);
+    logService.log(`${log} = ${value}`);
     return value;
   }
 
