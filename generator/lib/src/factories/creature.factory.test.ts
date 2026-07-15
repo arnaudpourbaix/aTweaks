@@ -4,8 +4,9 @@ import { EquippedItem } from "../model/creature/item";
 import { MainCreatureData } from "../model/creature/data";
 import { Item } from "../model/spell-item/spell-item";
 import creatureFactory from "./creature.factory";
+import logService from "../services/log.service";
 
-// Several tests below spy on console.log without restoring it themselves, relying on getting a
+// Several tests below spy on logService.log without restoring it themselves, relying on getting a
 // fresh spy (no leftover call history) in the next test.
 afterEach(() => {
   vi.restoreAllMocks();
@@ -58,7 +59,7 @@ describe("equipItem", () => {
     const existingItem = { file: "old01", stringRef: 456 } as unknown as Item;
     creature.items.push(existingItem);
     creature.data.items.equipped.push({ file: "old01", slot: ["LRING"] });
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
     const newItem = { file: "new01" } as unknown as Item;
     creatureFactory.equipItem(creature, newItem, ["LRING"]);
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("already attributed to"));
@@ -73,7 +74,7 @@ describe("equipItem", () => {
       file: "old01",
       slot: "LRING",
     } as unknown as EquippedItem);
-    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const logSpy = vi.spyOn(logService, "log").mockImplementation(() => {});
     const newItem = { file: "new01" } as unknown as Item;
     creatureFactory.equipItem(creature, newItem, ["LRING"]);
     expect(logSpy).not.toHaveBeenCalled();

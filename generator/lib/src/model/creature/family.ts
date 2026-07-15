@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { MonsterEnum, MonsterFamilyEnum } from "../../../creatures/monster";
 import { TranslationKey } from "../../../translations/i18n";
 import translationService from "../../services/translation.service";
@@ -8,6 +7,7 @@ import { AbstractCreature } from "./abstract-creature";
 import { Creature, CreatureAutoGenerate, CreatureNewFile } from "./creature";
 import { InputMainCreatureData } from "./data-input";
 import abilityService from "../../services/baf/ability.service";
+import logService from "../../services/log.service";
 
 export interface Family {
   id: number;
@@ -41,7 +41,7 @@ export abstract class CreatureFamily<T extends Creature>
     data: InputMainCreatureData;
     autoGenerate?: CreatureAutoGenerate;
   }): T {
-    console.log(chalk.bold(`\nCreating ${translationService.from(p.name)}...`));
+    logService.header(`Creating ${translationService.from(p.name)}...`);
     const cre = this.createCreature(p.monster);
     cre.name = p.name;
     cre.family = this.id;
@@ -52,7 +52,7 @@ export abstract class CreatureFamily<T extends Creature>
     cre.logging = this.logging;
     if (p.autoGenerate) {
       cre.autoGenerate = { ...cre.autoGenerate, ...p.autoGenerate };
-      console.log("autogenerate", cre.autoGenerate);
+      logService.log(`autogenerate: ${JSON.stringify(cre.autoGenerate)}`);
     }
     this.creatures.push(cre);
     return cre;
@@ -88,12 +88,10 @@ export abstract class CreatureFamily<T extends Creature>
     cre.adjustments = [];
     cre.valid = undefined;
     if (p.from.attack.dualWielding) cre.data.apr++;
-    console.log(
-      chalk.bold(
-        `\nCreating ${translationService.from(
-          cre.name,
-        )} from ${translationService.from(p.from.name)}...`,
-      ),
+    logService.header(
+      `Creating ${translationService.from(cre.name)} from ${translationService.from(
+        p.from.name,
+      )}...`,
     );
     this.creatures.push(cre);
     return cre;

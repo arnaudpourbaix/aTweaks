@@ -24,6 +24,7 @@ import abilityService from "../services/baf/ability.service";
 import creatureService from "../services/creature.service";
 import descriptionService from "../services/doc/description.service";
 import immunityService from "../services/effects/immunity.service";
+import logService from "../services/log.service";
 import translationService from "../services/translation.service";
 import { State } from "../state";
 import { ImmunityName } from "../model/final/immunity";
@@ -99,7 +100,7 @@ class CreatureFactory {
       const equippedItemSlot = Array.isArray(equippedItem.slot)
         ? equippedItem.slot.join(",")
         : equippedItem.slot;
-      console.log(
+      logService.log(
         `${figureSet.warning} Slot ${equippedItemSlot} is already attributed to ${duplicate.stringRef ?? "unknown"}.`,
       );
     }
@@ -143,18 +144,18 @@ class CreatureFactory {
       throw new Error(`Monster '${MonsterEnum[creature.id]}' already declared`);
     }
     if (creature.family !== family) {
-      console.log(`${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`);
+      logService.log(`${figureSet.warning} Family doesn't match: ${creature.family} <-> ${family}`);
       valid = false;
     }
     if (!creature.files.length) {
-      console.log(`${figureSet.warning} No files defined`);
+      logService.log(`${figureSet.warning} No files defined`);
       valid = false;
     }
     const existingFiles = creature.files.filter((f) =>
       State.creatures.some((c) => c.files.includes(f)),
     );
     if (existingFiles.length) {
-      console.log(
+      logService.log(
         `${
           figureSet.warning
         } Those files are already declared in other creatures: ${existingFiles.join(", ")}`,
@@ -165,12 +166,12 @@ class CreatureFactory {
     // creature that never explicitly called setAttack()/setBehavior() - genuinely unset here.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.attack) {
-      console.log(`${figureSet.warning} No attack defined, using defaults`);
+      logService.log(`${figureSet.warning} No attack defined, using defaults`);
       creature.setAttack({});
     }
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!creature.behavior) {
-      console.log(`${figureSet.warning} No behavior defined, using defaults`);
+      logService.log(`${figureSet.warning} No behavior defined, using defaults`);
       this.setBehavior(creature, {});
     }
     if (valid) State.creatures.push(creature);
