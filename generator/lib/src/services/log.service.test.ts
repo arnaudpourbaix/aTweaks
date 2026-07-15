@@ -93,13 +93,15 @@ describe("LogService", () => {
     logService.log("informational line");
     logService.warn("a warning");
     logService.summary();
-    expect(readLog()).toBe("informational line\na warning\n\nSummary\n-------\n1 warning\n");
+    expect(readLog()).toBe(
+      "informational line\na warning\n\nSummary\n-------\nNo errors\n1 warning\n",
+    );
   });
 
   it("summary reports no warnings when none were logged", () => {
     logService.init();
     logService.summary();
-    expect(readLog()).toBe("\nSummary\n-------\nNo warnings\n");
+    expect(readLog()).toBe("\nSummary\n-------\nNo errors\nNo warnings\n");
   });
 
   it("summary reports a plural warning count", () => {
@@ -108,7 +110,7 @@ describe("LogService", () => {
     logService.warn("second warning");
     logService.summary();
     expect(readLog()).toBe(
-      "first warning\nsecond warning\n\nSummary\n-------\n2 warnings\n",
+      "first warning\nsecond warning\n\nSummary\n-------\nNo errors\n2 warnings\n",
     );
   });
 
@@ -117,6 +119,60 @@ describe("LogService", () => {
     logService.warn("first run warning");
     logService.init();
     logService.summary();
-    expect(readLog()).toBe("\nSummary\n-------\nNo warnings\n");
+    expect(readLog()).toBe("\nSummary\n-------\nNo errors\nNo warnings\n");
+  });
+
+  it("error writes the same as log (indent-prefixed by the current context)", () => {
+    logService.init();
+    logService.header(CREATING_OGRE);
+    logService.error("something is definitely broken");
+    expect(readLog()).toBe(`\n${CREATING_OGRE}\n    something is definitely broken\n`);
+  });
+
+  it("error increments the error count while log does not", () => {
+    logService.init();
+    logService.log("informational line");
+    logService.error("an error");
+    logService.summary();
+    expect(readLog()).toBe(
+      "informational line\nan error\n\nSummary\n-------\n1 error\nNo warnings\n",
+    );
+  });
+
+  it("summary reports a plural error count", () => {
+    logService.init();
+    logService.error("first error");
+    logService.error("second error");
+    logService.summary();
+    expect(readLog()).toBe(
+      "first error\nsecond error\n\nSummary\n-------\n2 errors\nNo warnings\n",
+    );
+  });
+
+  it("init resets the error count across runs", () => {
+    logService.init();
+    logService.error("first run error");
+    logService.init();
+    logService.summary();
+    expect(readLog()).toBe("\nSummary\n-------\nNo errors\nNo warnings\n");
+  });
+
+  it("hasErrors is false when no errors were logged", () => {
+    logService.init();
+    logService.warn("just a warning");
+    expect(logService.hasErrors()).toBe(false);
+  });
+
+  it("hasErrors is true after at least one error was logged", () => {
+    logService.init();
+    logService.error("something is definitely broken");
+    expect(logService.hasErrors()).toBe(true);
+  });
+
+  it("init resets hasErrors across runs", () => {
+    logService.init();
+    logService.error("first run error");
+    logService.init();
+    expect(logService.hasErrors()).toBe(false);
   });
 });

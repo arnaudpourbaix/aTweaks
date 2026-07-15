@@ -6,10 +6,12 @@ class LogService {
   enabled = false;
   private indent = "";
   private warningCount = 0;
+  private errorCount = 0;
 
   init(): void {
     this.indent = "";
     this.warningCount = 0;
+    this.errorCount = 0;
     this.enabled = true;
     fs.writeFileSync(this.filePath, "");
   }
@@ -38,8 +40,20 @@ class LogService {
     this.log(message);
   }
 
+  error(message: string): void {
+    this.errorCount++;
+    this.log(message);
+  }
+
+  hasErrors(): boolean {
+    return this.errorCount > 0;
+  }
+
   summary(): void {
     this.section("Summary");
+    if (this.errorCount === 0) this.log("No errors");
+    else if (this.errorCount === 1) this.log("1 error");
+    else this.log(`${this.errorCount} errors`);
     if (this.warningCount === 0) this.log("No warnings");
     else if (this.warningCount === 1) this.log("1 warning");
     else this.log(`${this.warningCount} warnings`);
