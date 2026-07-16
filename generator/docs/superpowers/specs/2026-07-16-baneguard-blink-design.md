@@ -53,6 +53,7 @@ this.addSpell({
   headers: [
     {
       type: ItemAbilityTypeEnum.Magical,
+      speed: 1,
       target: ItemAbilityTargetEnum.Caster,
       effects: [
         {
@@ -66,36 +67,35 @@ this.addSpell({
     },
   ],
   ability: {
-    spell: { type: "noDec" },
+    spell: { },
     requireVocal: false,
     triggers: [{ name: "Range", params: ["NearestEnemyOf", 5] }],
-    timer: { name: "Blink", value: 14 * Durations.round },
   },
 });
 ```
 
 - **Header**: `Magical`/`Caster` (self-cast, no attack component) — the
-  `slimes.ts:89` pattern, not the Dog's `Melee` header.
+  `slimes.ts:89` pattern, not the Dog's `Melee` header. `speed: 1` casts it
+  as close to instantly as possible, appropriate for a defensive reaction.
 - **Effect**: `InstantLimited` + `duration` is this codebase's "active for N
   seconds" pattern (same shape as the Dog's Thac0Bonus effect). `maxRange:
   10` is the random-teleport escape distance (your call, no prior
   `TeleportField`-as-creature-effect precedent existed to match against).
-- **`spell: { type: "noDec" }`**: recasts without consuming memorization,
-  matching Baneguard's existing Magic Missiles ability — the timer alone
-  gates recast, not the memorized count.
-- **`options: { renew: 14 }`**: documentation-only value (`documentation
-  .service.ts`'s `getSpellQuantity()`, unrelated to the actual in-script
-  recast gate) — set to match the real 14-round timer so the generated docs
-  read "every 14 rounds" instead of Dog Blink's borrowed `renew: 1`
-  ("at will"), which wouldn't be accurate here.
+- **`options: { renew: 14 }`**: this is the actual recast mechanism, not
+  just a documentation value — `SpellOptions.renew` ("Spell will be removed
+  and added again after set rounds, so you only need to memorize it once.
+  (only work for innates)", `spell-item.ts:102`) compiles to a real
+  `CHANGE_SPELL ... renew=14` macro call (`weidu-spell.service.ts:55`). This
+  is what makes a plain `memorizedCount: 1` + `spell: {}` (normal type, no
+  `noDec`) sufficient: the engine itself re-grants the spell every 14 rounds,
+  which is why the separate `timer`/`noDec` pattern Magic Missiles uses
+  (a script-side cooldown wrapper) isn't needed here.
 - **`requireVocal: false`**: matches Magic Missiles — a skeleton has no
   verbal component to interrupt.
 - **Trigger**: `Range(NearestEnemyOf, 5)`, no negation — casts only when an
   enemy has closed to melee range (your call; matched to `golems.ts:240`'s
   existing "close" cutoff, used there as a negated ranged-attack gate,
   here used positively).
-- **Timer**: `14 * Durations.round` seconds (`Durations.round = 6`) between
-  casts.
 
 ### Translation
 
