@@ -51,14 +51,18 @@ export const SPELL_GROUPS: SpellGroup[] = [
       "sorb.itm", // Searing Orb
       "sw1h51.itm", // Celestial Fury +3
       "wand19.itm", // Wand of Cursing
-      // TODO: check these:
+      "wand19.spl", // IR/IRR
+      "wand19d.spl", // IR/IRR
       "sppr313.spl", // SpellPack b6
+      // TODO: check these - not found in any installed mod (SpellPack itself isn't installed
+      // locally to check directly; sppr614c.spl exists as a same-named resource inside
+      // Stratagems' own files, but that doesn't confirm it's actually SpellPack's - see
+      // TODO_ROADMAP.md):
       "sppr614c.spl", // SpellPack b6
       "sppr614d.spl", // SpellPack b6
       "spwi224c.spl", // SpellPack b6
       "halb06.spl", // IR/IRR
       "sw1h51.spl", // IR/IRR
-      "wand19.spl", // IR/IRR
     ],
   },
   {

@@ -85,11 +85,33 @@ place to say so.
 
 ## 🔵 Needs investigation (unclear without more context)
 
-- ☐ `spell-group.ts:54` — `// TODO: check these:` above 4 "SpellPack b6" and 3
-  "IR/IRR" spell resource entries in the `blindness` spell-immunity group;
-  needs verifying those resource names actually exist/are correct against
-  the SpellPack and Item Revisions mods themselves - not verifiable from
-  this codebase alone. Still open.
+- 🔵 `spell-group.ts:54` — `// TODO: check these:` above 4 "SpellPack b6" and 3
+  "IR/IRR" spell resource entries in the `blindness` spell-immunity group.
+  **Partially resolved:** the actual game install this mod targets
+  (`c:\Games\Baldur's Gate Enhanced Edition\`) has Item Revisions, Stratagems,
+  Spell Revisions, and Faiths & Powers installed, giving real evidence to
+  check against instead of guessing.
+  - ✅ `wand19.spl` and `wand19d.spl` (IR/IRR) — confirmed real (both present
+    in the live `override/` folder). Moved out of the TODO block.
+  - ✅ `sppr313.spl` (SpellPack b6) — confirmed real (present in the live
+    `override/`, plus Spell Revisions/Faiths & Powers/Stratagems backups).
+    Moved out of the TODO block.
+  - ☐ `halb06.spl`, `sw1h51.spl` (IR/IRR) — **no evidence found anywhere** in
+    this install, unlike `wand19.spl`/`wand19d.spl` which Item Revisions
+    (v4beta10sd19) does generate — only `halb06.itm`/`sw1h51.itm` exist. Not
+    removed (this install's absence isn't proof against every IR version),
+    but worth a second look.
+  - ☐ `sppr614c.spl`, `sppr614d.spl`, `spwi224c.spl` (SpellPack b6) — no
+    evidence found either. Note: `sppr614c.spl` does exist as a same-named
+    file inside Stratagems' own resource folder, but OlvynChuru's actual
+    "Spell Pack" mod (which Stratagems' readme references as a separate,
+    third-party mod) isn't installed locally to confirm the two are the same
+    resource — inconclusive, left flagged rather than assumed.
+  - These entries are harmless either way if wrong: `weidu-function.service.ts`
+    writes them as plain strings into a WeiDU array with no
+    `RESOURCE_EXISTS` check (`generateSpellResource()`), so an incorrect
+    entry just means blindness-immunity silently doesn't cover a spell that
+    doesn't exist in a given install — not a broken one.
 - ✅ `undead.ts:370` — investigated: the level-24 header (6d10 cold, 3d10
   crushing) this comment refers to no longer exists in the code, only the
   question remains. The only current caller of `createWallOfIce()` is the

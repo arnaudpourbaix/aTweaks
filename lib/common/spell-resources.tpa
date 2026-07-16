@@ -43,13 +43,14 @@ DEFINE_ACTION_FUNCTION get_blindness_resources RET_ARRAY resources BEGIN
 		"sorb.itm"
 		"sw1h51.itm"
 		"wand19.itm"
+		"wand19.spl"
+		"wand19d.spl"
 		"sppr313.spl"
 		"sppr614c.spl"
 		"sppr614d.spl"
 		"spwi224c.spl"
 		"halb06.spl"
 		"sw1h51.spl"
-		"wand19.spl"
 		"ja#sbf8"
 	END
 	ACTION_DEFINE_ARRAY ids BEGIN CLERIC_CLOUD_OF_PESTILENCE CLERIC_SUNSCORCH END
