@@ -141,7 +141,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.MAGE_ALL])
@@ -151,7 +150,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -162,7 +161,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.CLERIC_ALL])
@@ -172,7 +170,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -183,7 +181,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.DRUID_ALL])
@@ -193,7 +190,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -204,7 +201,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.BARD])
@@ -214,7 +210,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -226,7 +222,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.MAGE_ALL])
@@ -235,7 +230,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -246,7 +241,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.CLERIC_ALL])
@@ -255,7 +249,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -266,7 +260,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.DRUID_ALL])
@@ -275,7 +268,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -286,7 +279,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See([PC.0.0.BARD])
@@ -295,7 +287,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -307,7 +299,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player1)
@@ -316,7 +307,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -327,7 +318,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player2)
@@ -336,7 +326,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -347,7 +337,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player3)
@@ -356,7 +345,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -367,7 +356,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player4)
@@ -376,7 +364,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -387,7 +375,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player5)
@@ -396,7 +383,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -407,7 +394,6 @@ END
 IF
 	!GlobalTimerNotExpired("MagicMissiles","LOCALS")
 	HaveSpell(WIZARD_MAGIC_MISSILE)
-	!Range(NearestEnemyOf(Myself),10)
 	RandomNumGT(800,240)
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	See(Player6)
@@ -416,7 +402,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -432,7 +418,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SpellRES("ja#s0m5a",LastSeenBy(Myself))
+		SpellRES("ja#s0m5a",Myself)
 END
 
 // Try to reposition to use ranged attack

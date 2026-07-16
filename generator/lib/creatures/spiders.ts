@@ -218,7 +218,8 @@ class Spider extends Creature {
       }
     }
     if (damageEffect) {
-      effects.push(...effectFactory.damageOverTime(1, { ...damageEffect, ...saves }));
+      const rounds = Math.floor(duration / Durations.round);
+      effects.push(...effectFactory.repeatEffect(rounds, [{ ...damageEffect, ...saves }]));
     }
     if (invisible) {
       effects.push({

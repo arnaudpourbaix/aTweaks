@@ -1,6 +1,6 @@
 import { StringReference } from "../model/final/stringref";
 import { RaceIdentifier } from "../model/ids/race";
-import { BaseEffect, DamageEffect, Effect, ModifierTypeEffect } from "../model/spell-item/effect";
+import { BaseEffect, Effect, ModifierTypeEffect } from "../model/spell-item/effect";
 import {
   CharmTypeEnum,
   EffectBonusToEnum,
@@ -24,14 +24,23 @@ import spellService from "../services/spell.service";
 import { StringRefUtils } from "../services/utils/string-ref.utils";
 
 class EffectFactory {
-  damageOverTime(rounds: number, effect: DamageEffect): DamageEffect[] {
-    const results: DamageEffect[] = [{ ...effect, timing: EffectTimingEnum.InstantPermanent }];
+  /**
+   * Repeat the effects for the next rounds.
+   * Limitations: each effect must be instant, meaning no duration at all
+   */
+  repeatEffect(rounds: number, effects: Effect[]): Effect[] {
+    const results: Effect[] = effects.map((e) => ({
+      ...e,
+      timing: EffectTimingEnum.InstantPermanent,
+    }));
     for (let i = 1; i < rounds; i++) {
-      results.push({
-        ...effect,
-        timing: EffectTimingEnum.DelayPermanent,
-        duration: i * 6,
-      });
+      for (const effect of effects) {
+        results.push({
+          ...effect,
+          timing: EffectTimingEnum.DelayPermanent,
+          duration: i * 6,
+        });
+      }
     }
     return results;
   }

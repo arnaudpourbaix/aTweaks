@@ -1,7 +1,68 @@
 import { describe, expect, it } from "vitest";
-import { EffectIDSFileEnum } from "../model/spell-item/effect.enums";
+import { Effect } from "../model/spell-item/effect";
+import { EffectIDSFileEnum, EffectTimingEnum } from "../model/spell-item/effect.enums";
 import { EffectTypeEnum } from "../model/spell-item/effect.type";
 import effectFactory from "./effect.factory";
+
+describe("repeatEffect", () => {
+  it("returns each effect once, InstantPermanent, for a single round", () => {
+    const effects: Effect[] = [{ opcode: EffectTypeEnum.Regeneration, amount: 1 }];
+    const result = effectFactory.repeatEffect(1, effects);
+    expect(result).toEqual([
+      { opcode: EffectTypeEnum.Regeneration, amount: 1, timing: EffectTimingEnum.InstantPermanent },
+    ]);
+  });
+
+  it("repeats a single effect once per round, delaying each subsequent round by 6 seconds", () => {
+    const effects: Effect[] = [{ opcode: EffectTypeEnum.Regeneration, amount: 1 }];
+    const result = effectFactory.repeatEffect(3, effects);
+    expect(result).toEqual([
+      { opcode: EffectTypeEnum.Regeneration, amount: 1, timing: EffectTimingEnum.InstantPermanent },
+      {
+        opcode: EffectTypeEnum.Regeneration,
+        amount: 1,
+        timing: EffectTimingEnum.DelayPermanent,
+        duration: 6,
+      },
+      {
+        opcode: EffectTypeEnum.Regeneration,
+        amount: 1,
+        timing: EffectTimingEnum.DelayPermanent,
+        duration: 12,
+      },
+    ]);
+  });
+
+  it("repeats every effect in a multi-effect group together each round, preserving group order", () => {
+    const effects: Effect[] = [
+      { opcode: EffectTypeEnum.Regeneration, amount: 1 },
+      { opcode: EffectTypeEnum.PlaySound, resource: "EFF_M08" },
+    ];
+    const result = effectFactory.repeatEffect(2, effects);
+    expect(result).toEqual([
+      { opcode: EffectTypeEnum.Regeneration, amount: 1, timing: EffectTimingEnum.InstantPermanent },
+      { opcode: EffectTypeEnum.PlaySound, resource: "EFF_M08", timing: EffectTimingEnum.InstantPermanent },
+      {
+        opcode: EffectTypeEnum.Regeneration,
+        amount: 1,
+        timing: EffectTimingEnum.DelayPermanent,
+        duration: 6,
+      },
+      {
+        opcode: EffectTypeEnum.PlaySound,
+        resource: "EFF_M08",
+        timing: EffectTimingEnum.DelayPermanent,
+        duration: 6,
+      },
+    ]);
+  });
+
+  it("does not mutate the input effects array", () => {
+    const effects: Effect[] = [{ opcode: EffectTypeEnum.Regeneration, amount: 1 }];
+    effectFactory.repeatEffect(2, effects);
+    expect(effects).toEqual([{ opcode: EffectTypeEnum.Regeneration, amount: 1 }]);
+  });
+});
 
 describe("paralyze", () => {
   it("adds a generic ANYONE Hold effect when races is omitted", () => {

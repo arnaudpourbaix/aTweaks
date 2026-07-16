@@ -13,7 +13,18 @@ COPY_EXISTING ~ja#s0m5a.SPL~  ~override~
 	WRITE_ASCII 0x3a ~SPWI421C~ #8
 	WRITE_LONG 0x50 RESOLVE_STR_REF(@10825)
 	LPF ADD_SPELL_HEADER INT_VAR type=3 location=4 target=5 speed=1 STR_VAR icon="SPWI421B" END
-	LPF ADD_EFFECT INT_VAR header=1 opcode=222 target=1 power=1 parameter1=10 duration=24 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=222 target=1 power=1 parameter1=100 timing=9 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=6 timing=9 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=9 probability1=100 STR_VAR resource="EFF_M08" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=222 target=1 power=1 parameter1=100 timing=4 duration=6 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=6 timing=4 duration=6 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=4 duration=6 probability1=100 STR_VAR resource="EFF_M08" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=222 target=1 power=1 parameter1=100 timing=4 duration=12 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=6 timing=4 duration=12 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=4 duration=12 probability1=100 STR_VAR resource="EFF_M08" END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=222 target=1 power=1 parameter1=100 timing=4 duration=18 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=141 target=1 power=1 parameter2=6 timing=4 duration=18 probability1=100 END
+	LPF ADD_EFFECT INT_VAR header=1 opcode=174 target=1 power=1 timing=4 duration=18 probability1=100 STR_VAR resource="EFF_M08" END
 	LPF CHANGE_SPELL INT_VAR    renew=14 END
 	
 	// Baneguard traits

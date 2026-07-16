@@ -157,12 +157,14 @@ class AnkhegFamily extends CreatureFamily<Ankheg> {
                     icon: PortraitIconEnum.Acid,
                     duration: 4 * Durations.round,
                   },
-                  ...effectFactory.damageOverTime(4, {
-                    opcode: EffectTypeEnum.Damage,
-                    type: EffectDamageTypeEnum.Acid,
-                    diceThrown: 1,
-                    diceSize: 4,
-                  }),
+                  ...effectFactory.repeatEffect(4, [
+                    {
+                      opcode: EffectTypeEnum.Damage,
+                      type: EffectDamageTypeEnum.Acid,
+                      diceThrown: 1,
+                      diceSize: 4,
+                    },
+                  ]),
                   {
                     opcode: EffectTypeEnum.ProtectionFromSpell,
                     duration: 4 * Durations.round,

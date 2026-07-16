@@ -30,7 +30,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
         ],
         [
           triggerFactory.checkStatGT(0, "MINORGLOBE", true),
-          triggerFactory.checkStat(2, "SCRIPTINGSTATE5", false), // Shield
+          triggerFactory.checkStat(2, "SCRIPTINGSTATE5", true), // Shield
           // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
           // triggerFactory.hasBounceEffects(true),
         ],
@@ -155,21 +155,28 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
-  ...presetFactory.create([SPELLS.Priest.CauseSeriousWounds.file, FNP_SPELLS.Priest.CauseSeriousWounds.file], {
-    name: SPELLS.Priest.CauseSeriousWounds.name,
-    spell: {
-      selfTarget: true,
+  ...presetFactory.create(
+    [SPELLS.Priest.CauseSeriousWounds.file, FNP_SPELLS.Priest.CauseSeriousWounds.file],
+    {
+      name: SPELLS.Priest.CauseSeriousWounds.name,
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [
+        ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
+        ...triggerFactory.haveSpellRES(
+          [
+            FNP_SPELLS.Priest.CauseCriticalWounds.file,
+            FNP_SPELLS.Priest.Harm.file,
+            SPELLS.Priest.SlayLiving.file,
+          ],
+          true,
+        ),
+      ],
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
-    triggers: [
-      ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
-      ...triggerFactory.haveSpellRES(
-        [FNP_SPELLS.Priest.CauseCriticalWounds.file, FNP_SPELLS.Priest.Harm.file, SPELLS.Priest.SlayLiving.file],
-        true,
-      ),
-    ],
-    requireVocal: true,
-    probability: DEFAULT_SPELL_PROBABILITY,
-  }),
+  ),
   {
     preset: FNP_SPELLS.Priest.CauseCriticalWounds.file,
     ability: {
@@ -179,7 +186,10 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
       },
       triggers: [
         ...triggerFactory.hasItem(["LIGHT", "SERIOUS", "CRITICAL", "HARM", "SLAYLIVE"], true),
-        ...triggerFactory.haveSpellRES([FNP_SPELLS.Priest.Harm.file, SPELLS.Priest.SlayLiving.file], true),
+        ...triggerFactory.haveSpellRES(
+          [FNP_SPELLS.Priest.Harm.file, SPELLS.Priest.SlayLiving.file],
+          true,
+        ),
       ],
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,

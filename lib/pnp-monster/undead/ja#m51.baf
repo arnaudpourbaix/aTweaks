@@ -1461,7 +1461,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1480,7 +1480,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1499,7 +1499,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1518,7 +1518,7 @@ IF
 	!General(LastSeenBy(Myself),WEAPON)
 	StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1537,7 +1537,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1555,7 +1555,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1573,7 +1573,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1591,7 +1591,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1610,7 +1610,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1628,7 +1628,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1646,7 +1646,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1664,7 +1664,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1682,7 +1682,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
@@ -1700,7 +1700,7 @@ IF
 	!StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
 	!General(LastSeenBy(Myself),WEAPON)
 	!CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
-	CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
+	!CheckStat(LastSeenBy(Myself),2,SCRIPTINGSTATE5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)

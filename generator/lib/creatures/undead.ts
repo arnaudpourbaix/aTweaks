@@ -1057,6 +1057,50 @@ class Undead extends Creature {
       ],
     });
   }
+
+  createBlink() {
+    return this.addSpell({
+      icon: SPELLS.Wizard.TeleportField.file,
+      options: { renew: 14 },
+      name: "monster.undead.ability.blink",
+      id: Ids.Blink,
+      memorizedCount: 1,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Magical,
+          speed: 1,
+          target: ItemAbilityTargetEnum.Caster,
+          effects: [
+            ...effectFactory.repeatEffect(4, [
+              {
+                opcode: EffectTypeEnum.TeleportField,
+                target: EffectTargetEnum.Self,
+                maxRange: 100,
+              },
+              {
+                opcode: EffectTypeEnum.LightingEffects,
+                target: EffectTargetEnum.Self,
+                effect: LightingEffectEnum.AlterationWater,
+                lightingTarget: LightingEffectTargetEnum.SpellTarget,
+              },
+              {
+                opcode: EffectTypeEnum.PlaySound,
+                target: EffectTargetEnum.Self,
+                resource: "EFF_M08",
+              },
+            ]),
+          ],
+        },
+      ],
+      ability: {
+        spell: {
+          selfTarget: true,
+        },
+        requireVocal: false,
+        triggers: [{ name: "Range", params: ["NearestEnemyOf", 5] }],
+      },
+    });
+  }
 }
 
 class UndeadFamily extends CreatureFamily<Undead> {
@@ -2065,9 +2109,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           remove: ["ring95", "ring99"],
         },
         spells: {
-          memorized: [
-            { file: SPELLS.Wizard.MagicMissiles.file, memorizedCount: 1 },
-          ],
+          memorized: [{ file: SPELLS.Wizard.MagicMissiles.file, memorizedCount: 1 }],
         },
         // Enforce proper skeleton colours for all processed creatures (colours courtesy of rskel01)
         metalColor: 20,
@@ -2082,34 +2124,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
     baneguard.addTrait({
       immunities: ["skeletal"],
     });
-    baneguard.addSpell({
-      icon: SPELLS.Wizard.TeleportField.file,
-      options: { renew: 14 },
-      name: "monster.undead.ability.blink",
-      id: Ids.Blink,
-      memorizedCount: 1,
-      headers: [
-        {
-          type: ItemAbilityTypeEnum.Magical,
-          speed: 1,
-          target: ItemAbilityTargetEnum.Caster,
-          effects: [
-            {
-              opcode: EffectTypeEnum.TeleportField,
-              target: EffectTargetEnum.Self,
-              timing: EffectTimingEnum.InstantLimited,
-              duration: 4 * Durations.round,
-              maxRange: 10,
-            },
-          ],
-        },
-      ],
-      ability: {
-        spell: {},
-        requireVocal: false,
-        triggers: [{ name: "Range", params: ["NearestEnemyOf", 5] }],
-      },
-    });
+    baneguard.createBlink();
     baneguard.setBehavior({
       restHeal: true,
       abilities: [
@@ -2118,7 +2133,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
           spell: {
             type: "noDec",
           },
-          triggers: [{ name: "Range", params: ["NearestEnemyOf", 10], negation: true }],
           requireVocal: false,
           timer: { name: "MagicMissiles", value: 18 },
         },
