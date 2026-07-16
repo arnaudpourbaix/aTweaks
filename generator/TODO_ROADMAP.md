@@ -62,12 +62,12 @@ place to say so.
   this means adding a brand-new opcode end-to-end (enum value, `Effect`
   subtype, WeiDU writer, docs/description generation), not just a creature
   tweak.
-- ☐ `undead.ts:1981` — a Blink effect (4-round duration, 14-round timer) isn't
-  implemented. **Investigated:** `dogs.ts`'s `createBlink()` exists but isn't
-  a reusable template - it's an aggressive teleport-strike-in-melee mechanic
-  (Thac0 bonus + `Teleport` opcode targeting `FarthestEnemies`), whereas this
-  wants a defensive self-buff (blink-out-of-harm status for a fixed duration
-  on a cooldown). Needs its own design.
+- ✅ `undead.ts:1981` — Blink effect (4-round duration, 14-round timer)
+  implemented as a self-contained innate ability using opcode 222
+  (`EffectTypeEnum.TeleportField`), the real IE-engine Blink effect — full
+  design in `docs/superpowers/specs/2026-07-16-baneguard-blink-design.md`.
+  Recasts via the engine's own `CHANGE_SPELL renew=14` mechanism rather than
+  a script-side timer.
 - ☐ `undead.ts:1639` — spellbook should vary by installed mod/component (SR,
   Faiths & Powers, ...); currently one fixed spellbook. Needs a mod-detection/
   conditional-spellbook mechanism that doesn't exist yet in this generator.
