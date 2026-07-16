@@ -56,6 +56,13 @@ export class Creature extends AbstractCreature implements BaseCreature {
   effectFiles: EffectFile[] = [];
 
   /**
+   * Immunity names pushed onto data.immunities purely to satisfy an engine restriction (e.g.
+   * critical-hit immunity requiring a helmet slot) rather than being authored on the creature.
+   * Documentation generation excludes these since the granting trait already covers them.
+   */
+  autoImmunities: ImmunityName[] = [];
+
+  /**
    * Auto-generate some creature data (true by default)
    */
   autoGenerate: CreatureAutoGenerate = {

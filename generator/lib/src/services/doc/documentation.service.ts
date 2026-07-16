@@ -135,6 +135,7 @@ class DocumentationService {
   getCreatureTraits(template: { text: string }, creature: Creature) {
     let result = "";
     const immunities = creature.data.immunities
+      .filter((name) => !creature.autoImmunities?.includes(name))
       .map((name) => State.immunities.find((i) => i.name === name))
       .filter((i): i is ImmunityConfig => i !== undefined);
     const traits: string[] = [];

@@ -66,6 +66,7 @@ class ImmunityService {
         `${figureSet.arrowRight} ${immunity.name} needs a helmet to cover immunity from critical hits. Adding a helmet to cover it.`,
       );
       data.immunities.push("criticalHit");
+      creature.autoImmunities.push("criticalHit");
     }
     const overwrittingItem = creature.items.find((i) => i.copyFrom === immunity.name);
     const overwrittingSlot = itemService.isSlotIncluded(

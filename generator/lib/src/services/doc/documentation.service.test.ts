@@ -209,6 +209,30 @@ describe("getCreatureTraits", () => {
 
     expect(template.text).not.toContain("<p>");
   });
+
+  it("omits an immunity that was auto-added to satisfy an engine restriction (e.g. critical-hit needing a helmet)", () => {
+    State.immunities = [
+      {
+        name: "undead",
+        type: "trait",
+        stringRef: "common.traits.undead.name",
+      } as unknown as ImmunityConfig,
+      {
+        name: "criticalHit",
+        type: "immunity",
+        stringRef: "common.immunity.criticalHit",
+      } as unknown as ImmunityConfig,
+    ];
+    const creature = {
+      data: { immunities: ["undead", "criticalHit"], items: { equipped: [] } },
+      autoImmunities: ["criticalHit"],
+    } as unknown as Creature;
+    const template = { text: "{{traits}}" };
+
+    documentationService.getCreatureTraits(template, creature);
+
+    expect(template.text).not.toContain("critical");
+  });
 });
 
 describe("getTraits", () => {

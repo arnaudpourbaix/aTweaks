@@ -29,6 +29,7 @@ function fakeCreature(
     },
     items: p.items ?? [],
     adjustments: p.adjustments ?? [],
+    autoImmunities: [],
   } as unknown as Creature;
 }
 
@@ -81,6 +82,9 @@ describe("handleImmunities", () => {
       { file: "constructimm", slot: "AMULET" },
       { file: "critimm", slot: "HELMET" },
     ]);
+    // Documentation excludes this - it's an engine restriction (crit immunity needs a
+    // helmet), not something worth mentioning separately from the "construct" trait.
+    expect(creature.autoImmunities).toEqual(["criticalHit"]);
   });
 
   it("skips adding the helmet when the creature already has one for a critical-hit immunity", () => {
