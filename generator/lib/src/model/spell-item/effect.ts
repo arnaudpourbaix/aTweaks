@@ -438,6 +438,11 @@ export type CreateWeaponEffect = BaseEffect & {
   amount: number;
 };
 
+export type TeleportFieldEffect = BaseEffect & {
+  opcode: EffectTypeEnum.TeleportField;
+  maxRange: number;
+};
+
 export type SummonCreatureEffect = BaseEffect & {
   opcode: EffectTypeEnum.SummonCreature;
   mode: SummonCreatureModeEnum;
@@ -512,6 +517,7 @@ export type ParamLessOpcode =
   | EffectTypeEnum.Slow
   | EffectTypeEnum.Stun
   | EffectTypeEnum.Stun90HP
+  | EffectTypeEnum.TeleportToTarget
   | EffectTypeEnum.Web;
 
 export type ParamLessEffect = BaseEffect & {
@@ -575,6 +581,7 @@ export type Effect =
   | StringRefEffect
   | SummonCreatureEffect
   | TeleportEffect
+  | TeleportFieldEffect
   | TranslucencyEffect
   | WingBuffetEffect;
 

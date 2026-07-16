@@ -138,6 +138,8 @@ export enum EffectTypeEnum {
   SummonCreature = 67,
   Thac0VsCreatureTypeModifier = 178,
   Teleport = 124,
+  TeleportToTarget = 274,
+  TeleportField = 222,
   Thac0Bonus = 278,
   Translucency = 66,
   UseEFFFile = 177,

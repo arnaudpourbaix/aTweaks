@@ -1,4 +1,7 @@
-import { EXISTING_SPELL_PROTECTIONS, SpellProtectionName } from "../../../config/spells/spell-protection";
+import {
+  EXISTING_SPELL_PROTECTIONS,
+  SpellProtectionName,
+} from "../../../config/spells/spell-protection";
 import {
   BaseEffect,
   DamageEffect,
@@ -175,6 +178,9 @@ class EffectService {
         break;
       case EffectTypeEnum.PoisonResistanceModifier:
         effect.parameter1 = `${effect.value}`;
+        break;
+      case EffectTypeEnum.TeleportField:
+        effect.parameter1 = `${effect.maxRange}`;
         break;
       case EffectTypeEnum.ProtectionFromResource:
       case EffectTypeEnum.ProtectionFromResourceAndMessage:

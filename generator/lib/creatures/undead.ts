@@ -19,6 +19,7 @@ import {
   EffectIDSFileEnum,
   EffectModifierTypeEnum,
   EffectStatisticModifierEnum,
+  EffectTargetEnum,
   EffectTimingEnum,
   ItemAbilityCastingAnimationEnum,
   ItemAbilityFlagEnum,
@@ -49,6 +50,7 @@ import { MonsterEnum, MonsterFamilyEnum } from "./monster";
 enum Ids {
   AuraOfEvil,
   BansheeFearAura,
+  Blink,
   BonebatTouch,
   CarrionStench,
   DeathWail,
@@ -2065,7 +2067,6 @@ class UndeadFamily extends CreatureFamily<Undead> {
         spells: {
           memorized: [
             { file: SPELLS.Wizard.MagicMissiles.file, memorizedCount: 1 },
-            // TODO: Blink, 4 rounds duration on a 14 rounds timer
           ],
         },
         // Enforce proper skeleton colours for all processed creatures (colours courtesy of rskel01)
@@ -2081,6 +2082,34 @@ class UndeadFamily extends CreatureFamily<Undead> {
     baneguard.addTrait({
       immunities: ["skeletal"],
     });
+    baneguard.addSpell({
+      icon: SPELLS.Wizard.TeleportField.file,
+      options: { renew: 14 },
+      name: "monster.undead.ability.blink",
+      id: Ids.Blink,
+      memorizedCount: 1,
+      headers: [
+        {
+          type: ItemAbilityTypeEnum.Magical,
+          speed: 1,
+          target: ItemAbilityTargetEnum.Caster,
+          effects: [
+            {
+              opcode: EffectTypeEnum.TeleportField,
+              target: EffectTargetEnum.Self,
+              timing: EffectTimingEnum.InstantLimited,
+              duration: 4 * Durations.round,
+              maxRange: 10,
+            },
+          ],
+        },
+      ],
+      ability: {
+        spell: {},
+        requireVocal: false,
+        triggers: [{ name: "Range", params: ["NearestEnemyOf", 5] }],
+      },
+    });
     baneguard.setBehavior({
       restHeal: true,
       abilities: [
@@ -2093,6 +2122,7 @@ class UndeadFamily extends CreatureFamily<Undead> {
           requireVocal: false,
           timer: { name: "MagicMissiles", value: 18 },
         },
+        this.ability(Ids.Blink),
       ],
     });
     baneguard.setAttack({

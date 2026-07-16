@@ -424,6 +424,17 @@ THEN
 		SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
 END
 
+// Blink
+IF
+	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
+	HaveSpellRES("ja#s0m5a")
+	Range(NearestEnemyOf(Myself),5)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("JA#ROUND","LOCALS",6)
+		SpellRES("ja#s0m5a",LastSeenBy(Myself))
+END
+
 // Try to reposition to use ranged attack
 IF
 	CanEquipRanged()
