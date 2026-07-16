@@ -349,4 +349,17 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
+  {
+    preset: SPELLS.Priest.Sanctuary.file,
+    ability: {
+      name: SPELLS.Priest.Sanctuary.name,
+      spell: {
+        excludeStateChecks: ["STATE_INVISIBLE"],
+        selfTarget: true,
+      },
+      requireVocal: true,
+      probability: DEFAULT_SPELL_PROBABILITY,
+      triggers: [triggerFactory.detect("NearestEnemyOf")],
+    },
+  },
 ];

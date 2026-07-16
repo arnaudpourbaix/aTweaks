@@ -120,7 +120,7 @@ Upon passing through the portal, the caster finds himself at his chosen destinat
   Spook: { name: "Spook" },
   WailOfTheBanshee: { name: "Wail Of The Banshee" },
   IceStorm: { name: "Ice Storm" },
-  DispelMagicWizard: { name: "Dispel Magic" },
+  DispelMagic: { name: "Dispel Magic" },
   MagicMissiles: { name: "Magic Missiles" },
   ChromaticOrb: { name: "Chromatic Orb" },
   Vocalize: { name: "Vocalize" },
@@ -161,7 +161,7 @@ Upon passing through the portal, the caster finds himself at his chosen destinat
 
   // Priest
   CharmPersonOrAnimal: { name: "Charm Person or Animal" },
-  HoldPersonCleric: { name: "Hold Person" },
+  HoldPerson: { name: "Hold Person" },
   HoldPersonOrAnimal: { name: "Hold person or animal" },
   Silence: { name: "Silence" },
   CallLightning: { name: "Call Lightning" },

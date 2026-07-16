@@ -1,5 +1,5 @@
-import { SpellIdentifier } from "../../src/model/ids/spell";
 import { StringReference } from "../../src/model/final/stringref";
+import { SpellIdentifier } from "../../src/model/ids/spell";
 
 export interface SpellReference {
   file: string;
@@ -11,9 +11,6 @@ export interface SpellReference {
     | "mid" // several turns
     | "short"; // several rounds to one turn
 }
-
-/** Shared display name for DispelMagicWizard, RemoveMagic, and DispelMagicCleric - all resolve to "Dispel Magic". */
-const DISPEL_MAGIC_NAME = "spell.DispelMagicWizard.name" as const;
 
 const WIZARD_SPELLS = {
   AgannazarScorcher: {
@@ -52,10 +49,10 @@ const WIZARD_SPELLS = {
     id: "WIZARD_DIMENSION_DOOR",
     name: "spell.dimensionDoor.name",
   },
-  DispelMagicWizard: {
+  DispelMagic: {
     file: "SPWI326",
     id: "WIZARD_TRUE_DISPEL_MAGIC",
-    name: DISPEL_MAGIC_NAME,
+    name: "spell.DispelMagic.name",
   },
   Domination: { file: "SPWI506", id: "WIZARD_DOMINATION", name: "spell.Domination.name" },
   Emotion: {
@@ -80,10 +77,10 @@ const WIZARD_SPELLS = {
     name: "spell.GreaterMalison.name",
   },
   Haste: { file: "SPWI305", id: "WIZARD_HASTE", duration: "mid", name: "spell.Haste.name" },
-  HoldPersonWizard: {
+  HoldPerson: {
     file: "SPWI306",
     id: "WIZARD_HOLD_PERSON",
-    name: "spell.HoldPersonCleric.name",
+    name: "spell.HoldPerson.name",
   },
   Horror: { file: "SPWI205", id: "WIZARD_HORROR", name: "spell.Horror.name" },
   IceStorm: { file: "SPWI404", id: "WIZARD_ICE_STORM", name: "spell.IceStorm.name" },
@@ -177,7 +174,7 @@ const WIZARD_SPELLS = {
   RemoveMagic: {
     file: "SPWI302",
     id: "WIZARD_REMOVE_MAGIC",
-    name: DISPEL_MAGIC_NAME,
+    name: "spell.DispelMagic.name",
   },
   ShapeshiftMustardJelly: {
     file: "SPWI496",
@@ -299,10 +296,10 @@ const PRIEST_SPELLS = {
     id: "CLERIC_CURE_LIGHT_WOUNDS",
     name: "spell.CureLightWounds.name",
   },
-  DispelMagicCleric: {
+  DispelMagic: {
     file: "SPPR303",
     id: "CLERIC_DISPEL_MAGIC",
-    name: DISPEL_MAGIC_NAME,
+    name: "spell.DispelMagic.name",
   },
   DolorousDecay: {
     file: "SPPR610",
@@ -335,10 +332,10 @@ const PRIEST_SPELLS = {
     name: "spell.GreaterCommand.name",
   },
   Harm: { file: "SPPR608", id: "CLERIC_HARM", name: "spell.Harm.name" },
-  HoldPersonCleric: {
+  HoldPerson: {
     file: "SPPR208",
     id: "CLERIC_HOLD_PERSON",
-    name: "spell.HoldPersonCleric.name",
+    name: "spell.HoldPerson.name",
   },
   HoldPersonOrAnimal: {
     file: "SPPR305",

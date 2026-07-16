@@ -22,12 +22,12 @@ export const DISPEL_PRESETS: AbilityPreset[] = [
   },
   ...presetFactory.create(
     [
-      SPELLS.Wizard.DispelMagicWizard.file,
-      SPELLS.Priest.DispelMagicCleric.file,
+      SPELLS.Wizard.DispelMagic.file,
+      SPELLS.Priest.DispelMagic.file,
       SPELLS.Wizard.RemoveMagic.file,
     ],
     {
-      name: SPELLS.Wizard.DispelMagicWizard.name,
+      name: SPELLS.Wizard.DispelMagic.name,
       targets: [
         {
           name: "Players",
