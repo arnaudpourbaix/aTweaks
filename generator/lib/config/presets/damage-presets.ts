@@ -61,7 +61,7 @@ export const DAMAGE_PRESETS: AbilityPreset[] = [
           },
         ],
         [
-          triggerFactory.checkStat(2, "SCRIPTINGSTATE5", false), // Shield
+          triggerFactory.checkStat(2, "SCRIPTINGSTATE5", true), // Shield
           // triggerFactory.checkStatLT(50, "RESISTMAGIC"),
           // triggerFactory.hasBounceEffects(true),
         ],

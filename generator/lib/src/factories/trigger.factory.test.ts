@@ -38,6 +38,24 @@ describe("hasItem", () => {
   });
 });
 
+describe("global", () => {
+  it("defaults area to LOCALS and negation to false", () => {
+    expect(triggerFactory.global("some_global", 1)).toEqual({
+      name: "Global",
+      params: ["some_global", "LOCALS", 1],
+      negation: false,
+    });
+  });
+
+  it("honors an explicit area and negation", () => {
+    expect(triggerFactory.global("some_global", 1, "GLOBAL", true)).toEqual({
+      name: "Global",
+      params: ["some_global", "GLOBAL", 1],
+      negation: true,
+    });
+  });
+});
+
 describe("validSpellTarget", () => {
   it("does not push a WEAPON exclusion when the target is a player", () => {
     const results = triggerFactory.validSpellTarget({

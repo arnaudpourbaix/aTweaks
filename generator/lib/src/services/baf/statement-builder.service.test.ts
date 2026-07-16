@@ -159,6 +159,7 @@ describe("dialog (private)", () => {
       {
         name: "Global",
         params: [GLOBAL_CONFIG.bafConstants.dialog, "LOCALS", 0],
+        negation: false,
       },
       { name: "Name", params: ["ja#drow", "Myself"] },
       { name: "NumTimesTalkedTo", params: [0] },

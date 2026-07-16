@@ -76,10 +76,11 @@ class TriggerFactory {
     }));
   }
 
-  global(name: string, value: number, area = "LOCALS"): Triggers.Trigger {
+  global(name: string, value: number, area = "LOCALS", negation = false): Triggers.Trigger {
     return {
       name: "Global",
       params: [name, area, value],
+      negation,
     };
   }
 
