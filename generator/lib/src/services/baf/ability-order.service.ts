@@ -2,6 +2,8 @@ import { SPELL_PRIORITY_ORDER } from "../../../config/spell-priority-order";
 import { AbilityAnchor, AbilityEntry, RawCreatureAbility } from "../../model/creature/ability";
 import { Creature } from "../../model/creature/creature";
 import creatureService from "../creature.service";
+import logService from "../log.service";
+import translationService from "../translation.service";
 
 interface OrderedAbility {
   identity: string;
@@ -11,6 +13,7 @@ interface OrderedAbility {
 class AbilityOrderService {
   resolve(creature: Creature): RawCreatureAbility[] {
     const entries = creature.pendingAbilityEntries ?? [];
+    this.validateEntries(entries);
     const explicitFiles = new Set(
       entries.filter((e) => e.spell).map((e) => e.spell!.file),
     );
@@ -19,7 +22,14 @@ class AbilityOrderService {
 
     const ordered: OrderedAbility[] = autoFiles
       .map((file) => ({ identity: file, index: SPELL_PRIORITY_ORDER.indexOf(file) }))
-      .filter(({ index }) => index !== -1)
+      .filter(({ identity, index }) => {
+        if (index === -1) {
+          logService.error(
+            `${translationService.from(creature.name)}: spell '${identity}' is memorized but is missing from SPELL_PRIORITY_ORDER - add it there to auto-order this ability.`,
+          );
+        }
+        return index !== -1;
+      })
       .sort((a, b) => a.index - b.index)
       .map(({ identity }): OrderedAbility => ({ identity, ability: { preset: identity } }));
 
@@ -32,6 +42,22 @@ class AbilityOrderService {
     }
 
     return ordered.map((o) => o.ability);
+  }
+
+  private validateEntries(entries: AbilityEntry[]): void {
+    for (const entry of entries) {
+      if ((entry.spell !== undefined) === (entry.abilityId !== undefined)) {
+        throw new Error(
+          `Ability entry must set exactly one of 'spell' or 'abilityId': ${JSON.stringify(entry)}`,
+        );
+      }
+      const positions = [entry.insertBefore, entry.insertAfter, entry.insertFirst, entry.insertLast];
+      if (positions.filter((p) => p !== undefined).length > 1) {
+        throw new Error(
+          `Ability entry must set at most one of insertBefore/insertAfter/insertFirst/insertLast: ${JSON.stringify(entry)}`,
+        );
+      }
+    }
   }
 
   private splice(
@@ -51,6 +77,13 @@ class AbilityOrderService {
     }
     const anchorIdentity = this.resolveAnchor(anchor, creature);
     const anchorIndex = ordered.findIndex((o) => o.identity === anchorIdentity);
+    if (anchorIndex === -1) {
+      logService.error(
+        `${translationService.from(creature.name)}: ability anchor '${anchorIdentity}' not found - appending '${item.identity}' at the end instead.`,
+      );
+      ordered.push(item);
+      return;
+    }
     ordered.splice(entry.insertBefore !== undefined ? anchorIndex : anchorIndex + 1, 0, item);
   }
 

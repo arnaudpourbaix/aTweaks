@@ -1,9 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Creature } from "../../model/creature/creature";
 import { MainCreatureData } from "../../model/creature/data";
 import { AbilityEntry, RawCreatureAbility } from "../../model/creature/ability";
 import abilityOrderService from "./ability-order.service";
 import { SPELL_PRIORITY_ORDER } from "../../../config/spell-priority-order";
+import logService from "../log.service";
 
 function fakeCreature(
   p: {
@@ -133,5 +134,44 @@ describe("resolve", () => {
       { preset: "one-preset" },
       { preset: "zero-preset" },
     ]);
+  });
+
+  it("errors and skips a memorized spell missing from SPELL_PRIORITY_ORDER", () => {
+    const creature = fakeCreature({ memorized: [{ file: "not-in-priority-order" }] });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    expect(abilityOrderService.resolve(creature)).toEqual([]);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("not-in-priority-order"));
+    errorSpy.mockRestore();
+  });
+
+  it("errors and appends at the end when an insertBefore anchor doesn't resolve", () => {
+    const creature = fakeCreature({
+      memorized: [],
+      customSpells: [{ id: 20, file: "custom-file", ability: { preset: "custom-preset" } }],
+      entries: [{ abilityId: 20, insertBefore: "does-not-exist" }],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    expect(abilityOrderService.resolve(creature)).toEqual([{ preset: "custom-preset" }]);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("does-not-exist"));
+    errorSpy.mockRestore();
+  });
+
+  it("throws when an entry sets neither spell nor abilityId", () => {
+    const creature = fakeCreature({ entries: [{ insertFirst: true }] });
+    expect(() => abilityOrderService.resolve(creature)).toThrow(/exactly one/);
+  });
+
+  it("throws when an entry sets both spell and abilityId", () => {
+    const creature = fakeCreature({
+      entries: [{ spell: { file: "x" }, abilityId: 1, insertFirst: true }],
+    });
+    expect(() => abilityOrderService.resolve(creature)).toThrow(/exactly one/);
+  });
+
+  it("throws when an entry sets more than one position directive", () => {
+    const creature = fakeCreature({
+      entries: [{ spell: { file: "x" }, insertFirst: true, insertLast: true }],
+    });
+    expect(() => abilityOrderService.resolve(creature)).toThrow(/at most one/);
   });
 });
