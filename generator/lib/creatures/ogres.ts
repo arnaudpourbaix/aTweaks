@@ -1201,14 +1201,12 @@ class OgreFamily extends CreatureFamily<Ogre> {
     shaman.setBehavior({
       restHeal: true,
       usePotions: true,
-      abilities: [
-        this.preset(SPELLS.Priest.Bless.file),
-        this.preset(SPELLS.Priest.Command.file),
-        this.preset(SPELLS.Priest.Chant.file),
-        this.preset(SPELLS.Priest.HoldPerson.file),
-        this.preset(SPELLS.Priest.ResistFear.file),
-        this.preset(SPELLS.Priest.CallLightning.file),
-      ],
+      abilities: {
+        entries: [
+          { spell: SPELLS.Priest.ResistFear, insertLast: true },
+          { spell: SPELLS.Priest.CallLightning, insertLast: true },
+        ],
+      },
     });
     shaman.setAttack({
       targetPriorities: [
