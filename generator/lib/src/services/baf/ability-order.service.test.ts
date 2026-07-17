@@ -117,4 +117,21 @@ describe("resolve", () => {
       SPELL_PRIORITY_ORDER.pop();
     }
   });
+
+  it("resolves an anchor value of 0 correctly instead of treating it as unset", () => {
+    const creature = fakeCreature({
+      customSpells: [
+        { id: 0, file: "custom-spell-file-zero", ability: { preset: "zero-preset" } },
+        { id: 1, file: "custom-spell-file-one", ability: { preset: "one-preset" } },
+      ],
+      entries: [
+        { abilityId: 0, insertFirst: true },
+        { abilityId: 1, insertBefore: 0 },
+      ],
+    });
+    expect(abilityOrderService.resolve(creature)).toEqual([
+      { preset: "one-preset" },
+      { preset: "zero-preset" },
+    ]);
+  });
 });
