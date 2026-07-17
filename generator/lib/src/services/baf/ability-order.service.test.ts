@@ -1,14 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { Creature } from "../../model/creature/creature";
 import { MainCreatureData } from "../../model/creature/data";
+import { AbilityEntry, RawCreatureAbility } from "../../model/creature/ability";
 import abilityOrderService from "./ability-order.service";
 import { SPELL_PRIORITY_ORDER } from "../../../config/spell-priority-order";
 
-function fakeCreature(p: { memorized?: { file: string }[] } = {}): Creature {
+function fakeCreature(
+  p: {
+    memorized?: { file: string }[];
+    entries?: AbilityEntry[];
+    customSpells?: { id: number; file: string; ability: RawCreatureAbility }[];
+  } = {},
+): Creature {
   const creature = new Creature(1);
   creature.name = "common.potion.use";
   creature.data = { spells: { memorized: p.memorized ?? [] } } as unknown as MainCreatureData;
   creature.adjustments = [];
+  creature.pendingAbilityEntries = p.entries;
+  creature.spells = (p.customSpells ?? []).map((s) => ({
+    id: s.id,
+    file: s.file,
+    ability: s.ability,
+  })) as unknown as Creature["spells"];
   return creature;
 }
 
@@ -32,5 +45,76 @@ describe("resolve", () => {
   it("returns an empty array when nothing is memorized", () => {
     const creature = fakeCreature();
     expect(abilityOrderService.resolve(creature)).toEqual([]);
+  });
+
+  it("excludes a spell-exception's file from the auto block and inserts it via its own directive", () => {
+    SPELL_PRIORITY_ORDER.push("test-priority-c", "test-priority-d");
+    try {
+      const creature = fakeCreature({
+        memorized: [{ file: "test-priority-c" }, { file: "test-priority-d" }],
+        entries: [{ spell: { file: "test-priority-d" }, insertFirst: true }],
+      });
+      expect(abilityOrderService.resolve(creature)).toEqual([
+        { preset: "test-priority-d" },
+        { preset: "test-priority-c" },
+      ]);
+    } finally {
+      SPELL_PRIORITY_ORDER.pop();
+      SPELL_PRIORITY_ORDER.pop();
+    }
+  });
+
+  it("appends a custom abilityId entry at the end with insertLast", () => {
+    const creature = fakeCreature({
+      memorized: [],
+      customSpells: [{ id: 7, file: "custom-spell-file", ability: { preset: "custom-ability-preset" } }],
+      entries: [{ abilityId: 7, insertLast: true }],
+    });
+    expect(abilityOrderService.resolve(creature)).toEqual([{ preset: "custom-ability-preset" }]);
+  });
+
+  it("inserts a custom abilityId entry before a memorized spell via insertBefore", () => {
+    SPELL_PRIORITY_ORDER.push("test-priority-e");
+    try {
+      const creature = fakeCreature({
+        memorized: [{ file: "test-priority-e" }],
+        customSpells: [
+          { id: 9, file: "custom-spell-file-2", ability: { preset: "custom-ability-preset" } },
+        ],
+        entries: [{ abilityId: 9, insertBefore: "test-priority-e" }],
+      });
+      expect(abilityOrderService.resolve(creature)).toEqual([
+        { preset: "custom-ability-preset" },
+        { preset: "test-priority-e" },
+      ]);
+    } finally {
+      SPELL_PRIORITY_ORDER.pop();
+    }
+  });
+
+  it("resolves an insertAfter anchor pointing at a custom abilityId entry by its own spell file, not its ability's preset field", () => {
+    SPELL_PRIORITY_ORDER.push("test-priority-h");
+    try {
+      const creature = fakeCreature({
+        memorized: [{ file: "test-priority-h" }],
+        customSpells: [
+          // this custom ability's own generated file differs from what it actually casts
+          // (preset borrows another spell's config) - the GreaterMummyFearAura pattern.
+          { id: 13, file: "custom-spell-file-a", ability: { preset: "unrelated-borrowed-preset" } },
+          { id: 14, file: "custom-spell-file-b", ability: { preset: "second-custom-preset" } },
+        ],
+        entries: [
+          { abilityId: 13, insertFirst: true },
+          { abilityId: 14, insertAfter: 13 },
+        ],
+      });
+      expect(abilityOrderService.resolve(creature)).toEqual([
+        { preset: "unrelated-borrowed-preset" },
+        { preset: "second-custom-preset" },
+        { preset: "test-priority-h" },
+      ]);
+    } finally {
+      SPELL_PRIORITY_ORDER.pop();
+    }
   });
 });
