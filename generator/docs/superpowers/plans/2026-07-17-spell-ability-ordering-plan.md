@@ -512,13 +512,13 @@ class AbilityOrderService {
       return;
     }
     const anchor = entry.insertBefore ?? entry.insertAfter;
-    if (!anchor) {
+    if (anchor === undefined) {
       ordered.push(item);
       return;
     }
     const anchorIdentity = this.resolveAnchor(anchor, creature);
     const anchorIndex = ordered.findIndex((o) => o.identity === anchorIdentity);
-    ordered.splice(entry.insertBefore ? anchorIndex : anchorIndex + 1, 0, item);
+    ordered.splice(entry.insertBefore !== undefined ? anchorIndex : anchorIndex + 1, 0, item);
   }
 
   private resolveAnchor(anchor: AbilityAnchor, creature: Creature): string {
@@ -682,7 +682,7 @@ Replace the `splice` method:
       return;
     }
     const anchor = entry.insertBefore ?? entry.insertAfter;
-    if (!anchor) {
+    if (anchor === undefined) {
       ordered.push(item);
       return;
     }
@@ -695,7 +695,7 @@ Replace the `splice` method:
       ordered.push(item);
       return;
     }
-    ordered.splice(entry.insertBefore ? anchorIndex : anchorIndex + 1, 0, item);
+    ordered.splice(entry.insertBefore !== undefined ? anchorIndex : anchorIndex + 1, 0, item);
   }
 ```
 
