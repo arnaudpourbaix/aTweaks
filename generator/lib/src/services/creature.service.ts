@@ -98,6 +98,26 @@ class CreatureService {
     }
   }
 
+  checkDuplicateAbilities(creature: Creature): void {
+    const seen = new Set<string>();
+    for (const ability of creature.behavior.abilities) {
+      const signature = JSON.stringify({
+        resource: ability.resource,
+        triggers: ability.triggers,
+        targets: ability.targets,
+      });
+      if (seen.has(signature)) {
+        const spellName = ability.resource ? spellService.getSpellName(ability.resource) : undefined;
+        const spellText = spellName ? ` (${spellName})` : "";
+        logService.error(
+          `${translationService.from(creature.name)}: duplicate ability for '${ability.resource ?? ability.name}'${spellText} - the same spell and trigger context is listed twice.`,
+        );
+        continue;
+      }
+      seen.add(signature);
+    }
+  }
+
   private getAbilityCastFiles(ability: CreatureAbility): string[] {
     if (ability.resource !== undefined) return [ability.resource];
     return ability.actions

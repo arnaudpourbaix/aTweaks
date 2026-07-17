@@ -571,6 +571,14 @@ function fakeIdCastAbility(id: string): CreatureAbility {
   } as unknown as CreatureAbility;
 }
 
+function fakeFullAbility(
+  resource: string | undefined,
+  triggers: unknown[] = [],
+  targets: unknown[] = [],
+): CreatureAbility {
+  return { resource, actions: [], triggers, targets } as unknown as CreatureAbility;
+}
+
 function fakeSpellCreature(p: {
   memorized?: MemorizedSpell[];
   spellbooks?: SpellbookVariant[];
@@ -792,5 +800,41 @@ describe("memorizedSpellFiles", () => {
   it("returns an empty array when nothing is memorized", () => {
     const creature = fakeSpellCreature({});
     expect(creatureService.memorizedSpellFiles(creature)).toEqual([]);
+  });
+});
+
+describe("checkDuplicateAbilities", () => {
+  it("errors when two abilities share the same resource and the same trigger/target signature", () => {
+    const creature = fakeSpellCreature({
+      abilities: [fakeFullAbility("sppr101", [{ name: "Global" }]), fakeFullAbility("sppr101", [{ name: "Global" }])],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("sppr101"));
+    errorSpy.mockRestore();
+  });
+
+  it("does not error when the same spell has a different trigger signature", () => {
+    const creature = fakeSpellCreature({
+      abilities: [
+        fakeFullAbility("sppr101", [{ name: "Global" }]),
+        fakeFullAbility("sppr101", [{ name: "SpellCastOnMe" }]),
+      ],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("does not error when abilities are all distinct", () => {
+    const creature = fakeSpellCreature({
+      abilities: [fakeFullAbility("sppr101"), fakeFullAbility("sppr102")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
