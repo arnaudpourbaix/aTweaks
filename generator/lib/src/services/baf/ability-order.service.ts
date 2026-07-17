@@ -15,7 +15,13 @@ class AbilityOrderService {
     const entries = creature.pendingAbilityEntries ?? [];
     this.validateEntries(entries);
     const explicitFiles = new Set(
-      entries.filter((e) => e.spell).map((e) => e.spell!.file),
+      entries
+        .map((e) => {
+          if (e.spell) return e.spell.file;
+          if (e.abilityId !== undefined) return creature.spell(e.abilityId).file;
+          return undefined;
+        })
+        .filter((f) => f !== undefined) as string[],
     );
     const memorizedFiles = creatureService.memorizedSpellFiles(creature);
     const autoFiles = memorizedFiles.filter((file) => !explicitFiles.has(file));

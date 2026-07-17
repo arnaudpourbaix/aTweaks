@@ -74,6 +74,25 @@ describe("resolve", () => {
     expect(abilityOrderService.resolve(creature)).toEqual([{ preset: "custom-ability-preset" }]);
   });
 
+  it("excludes a custom abilityId entry's own memorized file from the auto block (memorizedCount auto-push case)", () => {
+    // Creature.addSpell pushes to data.spells.memorized whenever memorizedCount is set,
+    // even for custom addSpell-created abilities - so a custom ability's own generated
+    // file can legitimately appear in memorizedSpellFiles(). It must not be double-processed
+    // (once via its entries position, once via auto-derivation, which would also spuriously
+    // error since custom files are never registered in SPELL_PRIORITY_ORDER).
+    const creature = fakeCreature({
+      memorized: [{ file: "custom-spell-file-x" }],
+      customSpells: [
+        { id: 5, file: "custom-spell-file-x", ability: { preset: "custom-ability-preset" } },
+      ],
+      entries: [{ abilityId: 5, insertFirst: true }],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    expect(abilityOrderService.resolve(creature)).toEqual([{ preset: "custom-ability-preset" }]);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
   it("inserts a custom abilityId entry before a memorized spell via insertBefore", () => {
     SPELL_PRIORITY_ORDER.push("test-priority-e");
     try {
