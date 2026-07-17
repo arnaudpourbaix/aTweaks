@@ -5,6 +5,7 @@ import { MainCreatureData } from "../model/creature/data";
 import { Item } from "../model/spell-item/spell-item";
 import creatureFactory from "./creature.factory";
 import logService from "../services/log.service";
+import abilityOrderService from "../services/baf/ability-order.service";
 
 // Several tests below spy on logService.log without restoring it themselves, relying on getting a
 // fresh spy (no leftover call history) in the next test.
@@ -83,5 +84,46 @@ describe("equipItem", () => {
       file: "new01",
       slot: ["LRING"],
     });
+  });
+});
+
+describe("setBehavior", () => {
+  it("stores entries as pendingAbilityEntries without resolving them immediately", () => {
+    const creature = fakeCreature();
+    const entries = [{ spell: { file: "sppr101" }, insertFirst: true as const }];
+    creatureFactory.setBehavior(creature, { abilities: { entries } });
+    expect(creature.pendingAbilityEntries).toBe(entries);
+    expect(creature.behavior.abilities).toEqual([]);
+  });
+
+  it("still resolves a plain array eagerly, unchanged from today", () => {
+    const creature = fakeCreature();
+    creatureFactory.setBehavior(creature, {
+      abilities: [{ name: "common.potion.use", triggers: [], targets: [] }],
+    });
+    expect(creature.behavior.abilities).toHaveLength(1);
+    expect(creature.pendingAbilityEntries).toBeUndefined();
+  });
+});
+
+describe("resolvePendingAbilities", () => {
+  it("does nothing when there are no pending entries", () => {
+    const creature = fakeCreature();
+    creature.behavior = { abilities: [] } as unknown as Creature["behavior"];
+    creatureFactory.resolvePendingAbilities(creature);
+    expect(creature.behavior.abilities).toEqual([]);
+  });
+
+  it("resolves pending entries via AbilityOrderService and appends them to behavior.abilities", () => {
+    const creature = fakeCreature();
+    creature.behavior = { abilities: [] } as unknown as Creature["behavior"];
+    creature.pendingAbilityEntries = [{ spell: { file: "sppr101" }, insertFirst: true }];
+    const resolveSpy = vi
+      .spyOn(abilityOrderService, "resolve")
+      .mockReturnValue([{ name: "common.potion.use", triggers: [], targets: [] }]);
+    creatureFactory.resolvePendingAbilities(creature);
+    expect(resolveSpy).toHaveBeenCalledWith(creature);
+    expect(creature.behavior.abilities).toHaveLength(1);
+    resolveSpy.mockRestore();
   });
 });

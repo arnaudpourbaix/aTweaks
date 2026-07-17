@@ -21,6 +21,7 @@ import { InputCreatureData } from "../model/creature/data-input";
 import { ItemSlot } from "../model/creature/item";
 import { ImmunityName } from "../model/final/immunity";
 import { Item } from "../model/spell-item/spell-item";
+import abilityOrderService from "../services/baf/ability-order.service";
 import abilityService from "../services/baf/ability.service";
 import creatureService from "../services/creature.service";
 import descriptionService from "../services/doc/description.service";
@@ -125,10 +126,19 @@ class CreatureFactory {
       ...current,
       ...others,
     };
-    cre.behavior.abilities.push(...abilityService.getAbilities(behavior.abilities));
+    if (abilities && !Array.isArray(abilities)) {
+      cre.pendingAbilityEntries = abilities.entries;
+    } else {
+      cre.behavior.abilities.push(...abilityService.getAbilities(abilities));
+    }
     cre.behavior.customCodes.push(...abilityService.getCustomCodes(behavior.customCodes));
     cre.behavior.additionalCodes.push(...(behavior.additionalCodes ?? []));
     cre.behavior.dialog.push(...(behavior.dialog ?? []));
+  }
+
+  resolvePendingAbilities(cre: Creature): void {
+    if (!cre.pendingAbilityEntries) return;
+    cre.behavior.abilities.push(...abilityService.getAbilities(abilityOrderService.resolve(cre)));
   }
 
   checkValidation(creature: Creature) {
@@ -176,7 +186,9 @@ class CreatureFactory {
     }
     if (valid) State.creatures.push(creature);
     creatureService.check(creature);
+    this.resolvePendingAbilities(creature);
     creatureService.checkSpellAbilities(creature);
+    creatureService.checkDuplicateAbilities(creature);
     immunityService.handleImmunities(creature);
     creatureService.checkWeapons(creature);
     descriptionService.generateCreatureSpells(creature.spells);

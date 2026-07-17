@@ -3,11 +3,7 @@ import {
   CustomCode,
   PartialCustomCode,
 } from "../script/script";
-import {
-  CreatureAbility,
-  RawCreatureAbility,
-  RawCreatureSequencerAbility,
-} from "./ability";
+import { AbilityEntry, CreatureAbility, RawCreatureAbility, RawCreatureSequencerAbility } from "./ability";
 import { SpellCaster } from "./spellcaster";
 
 export interface CreatureBehavior {
@@ -70,7 +66,7 @@ export type PartialCreatureBehavior = Omit<
   Partial<CreatureBehavior>,
   "abilities" | "customCodes"
 > & {
-  abilities?: (RawCreatureAbility | RawCreatureSequencerAbility)[];
+  abilities?: (RawCreatureAbility | RawCreatureSequencerAbility)[] | { entries: AbilityEntry[] };
   customCodes?: PartialCustomCode[];
 };
 
