@@ -132,7 +132,7 @@ class CreatureService {
     );
   }
 
-  private getAbilityCastFiles(ability: CreatureAbility): string[] {
+  getAbilityCastFiles(ability: CreatureAbility): string[] {
     if (ability.resource !== undefined) return [ability.resource];
     return ability.actions
       .filter((a): a is IdCastAction => ID_CAST_ACTION_NAMES.has(a.name))

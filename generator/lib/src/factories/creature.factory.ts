@@ -136,8 +136,7 @@ class CreatureFactory {
     cre.behavior.dialog.push(...(behavior.dialog ?? []));
   }
 
-  resolvePendingAbilities(cre: Creature): void {
-    if (!cre.pendingAbilityEntries) return;
+  resolveAbilities(cre: Creature): void {
     cre.behavior.abilities.push(...abilityService.getAbilities(abilityOrderService.resolve(cre)));
   }
 
@@ -186,7 +185,7 @@ class CreatureFactory {
     }
     if (valid) State.creatures.push(creature);
     creatureService.check(creature);
-    this.resolvePendingAbilities(creature);
+    this.resolveAbilities(creature);
     creatureService.checkSpellAbilities(creature);
     creatureService.checkDuplicateAbilities(creature);
     immunityService.handleImmunities(creature);

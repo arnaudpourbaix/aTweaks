@@ -106,22 +106,39 @@ describe("setBehavior", () => {
   });
 });
 
-describe("resolvePendingAbilities", () => {
-  it("does nothing when there are no pending entries", () => {
+describe("resolveAbilities", () => {
+  it("appends nothing when there is nothing to auto-derive (no pending entries, nothing memorized)", () => {
     const creature = fakeCreature();
-    creature.behavior = { abilities: [] } as unknown as Creature["behavior"];
-    creatureFactory.resolvePendingAbilities(creature);
+    creature.data = {
+      items: { equipped: [] },
+      spells: { memorized: [] },
+    } as unknown as MainCreatureData;
+    creature.behavior = { abilities: [], customCodes: [] } as unknown as Creature["behavior"];
+    creatureFactory.resolveAbilities(creature);
     expect(creature.behavior.abilities).toEqual([]);
   });
 
-  it("resolves pending entries via AbilityOrderService and appends them to behavior.abilities", () => {
+  it("always calls AbilityOrderService.resolve and appends the result to behavior.abilities, with or without pending entries", () => {
     const creature = fakeCreature();
-    creature.behavior = { abilities: [] } as unknown as Creature["behavior"];
+    creature.behavior = { abilities: [], customCodes: [] } as unknown as Creature["behavior"];
     creature.pendingAbilityEntries = [{ spell: { file: "sppr101" }, insertFirst: true }];
     const resolveSpy = vi
       .spyOn(abilityOrderService, "resolve")
       .mockReturnValue([{ name: "common.potion.use", triggers: [], targets: [] }]);
-    creatureFactory.resolvePendingAbilities(creature);
+    creatureFactory.resolveAbilities(creature);
+    expect(resolveSpy).toHaveBeenCalledWith(creature);
+    expect(creature.behavior.abilities).toHaveLength(1);
+    resolveSpy.mockRestore();
+  });
+
+  it("auto-derives a memorized spell even for a creature that never used the entries form", () => {
+    const creature = fakeCreature();
+    creature.behavior = { abilities: [], customCodes: [] } as unknown as Creature["behavior"];
+    const resolveSpy = vi
+      .spyOn(abilityOrderService, "resolve")
+      .mockReturnValue([{ name: "common.potion.use", triggers: [], targets: [] }]);
+    creatureFactory.resolveAbilities(creature);
+    expect(creature.pendingAbilityEntries).toBeUndefined();
     expect(resolveSpy).toHaveBeenCalledWith(creature);
     expect(creature.behavior.abilities).toHaveLength(1);
     resolveSpy.mockRestore();

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { Creature } from "../../model/creature/creature";
 import { MainCreatureData } from "../../model/creature/data";
-import { AbilityEntry, RawCreatureAbility } from "../../model/creature/ability";
+import { AbilityEntry, CreatureAbility, RawCreatureAbility } from "../../model/creature/ability";
 import abilityOrderService from "./ability-order.service";
 import { SPELL_PRIORITY_ORDER } from "../../../config/spell-priority-order";
 import logService from "../log.service";
@@ -11,6 +11,8 @@ function fakeCreature(
     memorized?: { file: string }[];
     entries?: AbilityEntry[];
     customSpells?: { id: number; file: string; ability: RawCreatureAbility }[];
+    behaviorAbilities?: CreatureAbility[];
+    customCodeAbilities?: CreatureAbility[][];
   } = {},
 ): Creature {
   const creature = new Creature(1);
@@ -23,7 +25,15 @@ function fakeCreature(
     file: s.file,
     ability: s.ability,
   })) as unknown as Creature["spells"];
+  creature.behavior = {
+    abilities: p.behaviorAbilities ?? [],
+    customCodes: (p.customCodeAbilities ?? []).map((abilities) => ({ abilities })),
+  } as unknown as Creature["behavior"];
   return creature;
+}
+
+function fakeAbility(resource: string): CreatureAbility {
+  return { resource, actions: [], triggers: [], targets: [] } as unknown as CreatureAbility;
 }
 
 describe("resolve", () => {
@@ -192,5 +202,43 @@ describe("resolve", () => {
       entries: [{ spell: { file: "x" }, insertFirst: true, insertLast: true }],
     });
     expect(() => abilityOrderService.resolve(creature)).toThrow(/at most one/);
+  });
+
+  it("excludes a memorized spell already covered by an existing plain-array ability, with no entries at all", () => {
+    // A creature that only ever used the legacy plain-array form (no `entries`, so
+    // pendingAbilityEntries stays undefined) must still get its already-covered memorized
+    // spells excluded from auto-derivation - resolve() now runs unconditionally.
+    const creature = fakeCreature({
+      memorized: [{ file: "test-priority-covered" }],
+      behaviorAbilities: [fakeAbility("test-priority-covered")],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    expect(abilityOrderService.resolve(creature)).toEqual([]);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("excludes a memorized spell whose ability lives in customCodes[].abilities", () => {
+    const creature = fakeCreature({
+      memorized: [{ file: "test-priority-customcode" }],
+      customCodeAbilities: [[fakeAbility("test-priority-customcode")]],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    expect(abilityOrderService.resolve(creature)).toEqual([]);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("auto-derives only the leftover memorized spell when another is already covered by a plain-array ability", () => {
+    SPELL_PRIORITY_ORDER.push("test-priority-leftover");
+    try {
+      const creature = fakeCreature({
+        memorized: [{ file: "test-priority-leftover" }, { file: "test-priority-covered-2" }],
+        behaviorAbilities: [fakeAbility("test-priority-covered-2")],
+      });
+      expect(abilityOrderService.resolve(creature)).toEqual([{ preset: "test-priority-leftover" }]);
+    } finally {
+      SPELL_PRIORITY_ORDER.pop();
+    }
   });
 });

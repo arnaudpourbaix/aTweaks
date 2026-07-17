@@ -14,15 +14,20 @@ class AbilityOrderService {
   resolve(creature: Creature): RawCreatureAbility[] {
     const entries = creature.pendingAbilityEntries ?? [];
     this.validateEntries(entries);
-    const explicitFiles = new Set(
-      entries
+    const alreadyCastFiles = [
+      ...creature.behavior.abilities,
+      ...creature.behavior.customCodes.flatMap((c) => c.abilities),
+    ].flatMap((a) => creatureService.getAbilityCastFiles(a));
+    const explicitFiles = new Set([
+      ...alreadyCastFiles,
+      ...(entries
         .map((e) => {
           if (e.spell) return e.spell.file;
           if (e.abilityId !== undefined) return creature.spell(e.abilityId).file;
           return undefined;
         })
-        .filter((f) => f !== undefined) as string[],
-    );
+        .filter((f) => f !== undefined) as string[]),
+    ]);
     const memorizedFiles = creatureService.memorizedSpellFiles(creature);
     const autoFiles = memorizedFiles.filter((file) => !explicitFiles.has(file));
 
