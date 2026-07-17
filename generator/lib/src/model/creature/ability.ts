@@ -5,6 +5,7 @@ import { Actions } from "../script/actions";
 import { Triggers } from "../script/triggers";
 import { TargetList } from "../script/target";
 import { StringReference } from "../final/stringref";
+import { SpellReference } from "../../../config/spells/spell-names";
 
 export interface BaseCreatureAbility {
   name: StringReference;
@@ -121,4 +122,23 @@ export interface CreatureAbilitySpell {
    * Remove spell after use, only relevant is type is different than normal
    */
   remove?: boolean;
+}
+
+export type AbilityAnchor = SpellReference | number | string;
+
+export interface AbilityEntry {
+  /**
+   * A registry (SPELLS/FNP_SPELLS) spell: overrides its auto-derived position and/or config.
+   * Exactly one of `spell`/`abilityId` must be set.
+   */
+  spell?: SpellReference;
+  /**
+   * A local Ids enum value for a custom addSpell-created ability, resolved via
+   * creature.spell(id)/creature.ability(id). Exactly one of `spell`/`abilityId` must be set.
+   */
+  abilityId?: number;
+  insertBefore?: AbilityAnchor;
+  insertAfter?: AbilityAnchor;
+  insertFirst?: true;
+  insertLast?: true;
 }

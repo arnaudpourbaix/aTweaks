@@ -28,6 +28,7 @@ import { CreatureData, MainCreatureData } from "./data";
 import { InputCreatureData } from "./data-input";
 import { CreatureGrabConfig } from "./grab";
 import { ItemSlot, JEWEL_SLOTS } from "./item";
+import { AbilityEntry } from "./ability";
 
 export interface BaseCreature {
   files: string[];
@@ -72,6 +73,7 @@ export class Creature extends AbstractCreature implements BaseCreature {
     meleeRange: true,
   };
   valid?: boolean;
+  pendingAbilityEntries?: AbilityEntry[];
 
   // Not actually useless: narrows the base class's plain `number` id parameter to MonsterEnum,
   // so `new Creature(id)` only accepts valid monster ids.
