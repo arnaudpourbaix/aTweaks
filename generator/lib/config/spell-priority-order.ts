@@ -1,19 +1,6 @@
 import { SPELLS } from "./spells/spell-names";
 import { FNP_SPELLS } from "./spells/fnp-spell-names";
-import { BUFF_PRESETS } from "./presets/buff-presets";
-import { CURE_PRESETS } from "./presets/cure-presets";
-import { CHARM_PRESETS } from "./presets/charm-presets";
-import { CONFUSION_PRESETS } from "./presets/confusion-presets";
-import { DISABLING_PRESETS } from "./presets/disabling-presets";
-import { HOLD_PRESETS } from "./presets/hold-presets";
-import { SLEEP_PRESETS } from "./presets/sleep-presets";
-import { FEAR_PRESETS } from "./presets/fear-presets";
-import { DEBUFF_PRESETS } from "./presets/debuff-presets";
-import { DAMAGE_PRESETS } from "./presets/damage-presets";
-import { DAMAGE_AOE_PRESETS } from "./presets/damage-aoe-presets";
-import { DEATH_PRESETS } from "./presets/death-presets";
-import { DISPEL_PRESETS } from "./presets/dispel-presets";
-import { SUMMON_PRESETS } from "./presets/summon-presets";
+import { PRESET_NAMES } from "./common";
 
 // Greater Mummy's hand-tuned cast order (the most-scrutinized spellbook in the mod) seeds the
 // default - everything else is appended below, unsorted, for manual arrangement over time.
@@ -70,25 +57,90 @@ const GREATER_MUMMY_ORDER: string[] = [
   SPELLS.Priest.Command.file,
 ];
 
-const REMAINING_PRESET_FILES: string[] = [
-  ...BUFF_PRESETS,
-  ...CURE_PRESETS,
-  ...CHARM_PRESETS,
-  ...CONFUSION_PRESETS,
-  ...DISABLING_PRESETS,
-  ...HOLD_PRESETS,
-  ...SLEEP_PRESETS,
-  ...FEAR_PRESETS,
-  ...DEBUFF_PRESETS,
-  ...DAMAGE_PRESETS,
-  ...DAMAGE_AOE_PRESETS,
-  ...DEATH_PRESETS,
-  ...DISPEL_PRESETS,
-  ...SUMMON_PRESETS,
-]
-  .map((p) => p.preset)
-  .filter((file) => !GREATER_MUMMY_ORDER.includes(file));
+// Every other spell with an ABILITY_PRESETS entry, not yet in GREATER_MUMMY_ORDER above -
+// unsorted (category order from the old preset-file grouping), arrange by hand as needed.
+const REMAINING_SPELLS: string[] = [
+  SPELLS.Wizard.Vocalize.file,
+  SPELLS.Wizard.Invisibility.file,
+  SPELLS.Wizard.ImprovedInvisibility.file,
+  SPELLS.Wizard.ShadowDoor.file,
+  SPELLS.Priest.ResistFear.file,
+  SPELLS.Wizard.DimensionDoor.file,
+  PRESET_NAMES.DimensionDoorOffscreen,
+  SPELLS.Priest.Barkskin.file,
+  SPELLS.Wizard.Shield.file,
+  SPELLS.Wizard.MinorSpellDeflection.file,
+  SPELLS.Wizard.FireShield.file,
+  SPELLS.Wizard.MirrorImages.file,
+  SPELLS.Wizard.Haste.file,
+  SPELLS.Wizard.ProtectionFromMissiles.file,
+  SPELLS.Wizard.MinorGlobeOfInvulnerability.file,
+  SPELLS.Wizard.Stoneskin.file,
+  SPELLS.Priest.Ironskin.file,
+  SPELLS.Wizard.ProtectionFromMagicalWeapons.file,
+  SPELLS.Wizard.Blur.file,
+  SPELLS.Priest.CureLightWounds.file,
+  SPELLS.Wizard.Domination.file,
+  SPELLS.Wizard.DireCharm.file,
+  SPELLS.Wizard.CharmPerson.file,
+  SPELLS.Priest.CharmPersonOrAnimal.file,
+  SPELLS.Wizard.Confusion.file,
+  SPELLS.Priest.Chaos.file,
+  SPELLS.Wizard.Darkness15Radius.file,
+  SPELLS.Wizard.ObscuringMist.file,
+  SPELLS.Priest.MiscastMagic.file,
+  SPELLS.Priest.RigidThinking.file,
+  SPELLS.Priest.SummonInsects.file,
+  SPELLS.Priest.Entangle.file,
+  SPELLS.Wizard.Slow.file,
+  SPELLS.Wizard.PowerWordBlind.file,
+  SPELLS.Wizard.PowerWordStun.file,
+  FNP_SPELLS.Priest.MiscastMagic.file,
+  SPELLS.Wizard.StinkingCloud.file,
+  SPELLS.Wizard.Emotion.file,
+  SPELLS.Wizard.TeleportField.file,
+  SPELLS.Wizard.HoldPerson.file,
+  SPELLS.Priest.HoldPersonOrAnimal.file,
+  SPELLS.Wizard.Web.file,
+  SPELLS.Wizard.PowerWordSleep.file,
+  SPELLS.Wizard.Sleep.file,
+  SPELLS.Wizard.Horror.file,
+  SPELLS.Wizard.Spook.file,
+  SPELLS.Priest.CloakOfFear.file,
+  FNP_SPELLS.Priest.CloakOfFear.file,
+  SPELLS.Wizard.GreaterMalison.file,
+  SPELLS.Wizard.Glitterdust.file,
+  SPELLS.Wizard.MagicMissiles.file,
+  SPELLS.Wizard.MordenkainenForceMissiles.file,
+  SPELLS.Wizard.ChromaticOrb.file,
+  SPELLS.Priest.CallLightning.file,
+  FNP_SPELLS.Priest.CauseLightWounds.file,
+  SPELLS.Wizard.MelfAcidArrow.file,
+  SPELLS.Wizard.FlameArrow.file,
+  SPELLS.Wizard.Combust.file,
+  SPELLS.Wizard.ConeOfCold.file,
+  SPELLS.Wizard.Fireburst.file,
+  SPELLS.Wizard.BurningHands.file,
+  SPELLS.Wizard.IceStorm.file,
+  FNP_SPELLS.Priest.FrostFingers.file,
+  SPELLS.Priest.CloudOfPestilence.file,
+  SPELLS.Wizard.LightningBolt.file,
+  SPELLS.Wizard.AgannazarScorcher.file,
+  SPELLS.Wizard.VitriolicSphere.file,
+  SPELLS.Wizard.Cloudkill.file,
+  SPELLS.Wizard.ChainLightning.file,
+  SPELLS.Wizard.WailOfTheBanshee.file,
+  SPELLS.Wizard.PowerWordKill.file,
+  SPELLS.Wizard.DetectInvisibility.file,
+  SPELLS.Wizard.DispelMagic.file,
+  SPELLS.Wizard.RemoveMagic.file,
+  SPELLS.Wizard.Breach.file,
+  SPELLS.Wizard.SpellThrust.file,
+  SPELLS.Priest.FindTraps.file,
+  SPELLS.Priest.CallWoodlandBeeings.file,
+  SPELLS.Priest.AnimalSummoning4.file,
+];
 
 // Hand-tune this list directly to change cast order - AbilityOrderService sorts every
 // auto-derived registry-spell ability by each spell's index here.
-export const SPELL_PRIORITY_ORDER: string[] = [...GREATER_MUMMY_ORDER, ...REMAINING_PRESET_FILES];
+export const SPELL_PRIORITY_ORDER: string[] = [...GREATER_MUMMY_ORDER, ...REMAINING_SPELLS];
