@@ -1201,6 +1201,7 @@ class OgreFamily extends CreatureFamily<Ogre> {
     shaman.setBehavior({
       restHeal: true,
       usePotions: true,
+      abilities: { entries: [] },
     });
     shaman.setAttack({
       targetPriorities: [
