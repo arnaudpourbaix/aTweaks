@@ -778,3 +778,19 @@ describe("checkSpellAbilities", () => {
     errorSpy.mockRestore();
   });
 });
+
+describe("memorizedSpellFiles", () => {
+  it("returns the deduped union of default memorized, spellbook variants, and adjustment spells", () => {
+    const creature = fakeSpellCreature({
+      memorized: [{ file: "sppr101" }, { file: "sppr101" }],
+      spellbooks: [{ mod: "FaithsAndPowers", memorized: [{ file: "sppr201" }] }],
+      adjustmentsMemorized: [[{ file: "sppr301" }]],
+    });
+    expect(creatureService.memorizedSpellFiles(creature)).toEqual(["sppr101", "sppr201", "sppr301"]);
+  });
+
+  it("returns an empty array when nothing is memorized", () => {
+    const creature = fakeSpellCreature({});
+    expect(creatureService.memorizedSpellFiles(creature)).toEqual([]);
+  });
+});

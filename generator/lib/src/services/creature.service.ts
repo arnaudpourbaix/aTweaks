@@ -66,6 +66,10 @@ class CreatureService {
     }
   }
 
+  memorizedSpellFiles(creature: Creature): string[] {
+    return [...new Set(this.getSpellGroups(creature).flatMap((g) => g.files))];
+  }
+
   checkSpellAbilities(creature: Creature): void {
     const groups = this.getSpellGroups(creature);
     const allAbilities = [
