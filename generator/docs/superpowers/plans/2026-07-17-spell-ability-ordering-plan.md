@@ -653,7 +653,7 @@ Replace the `resolve` method:
 
   private validateEntries(entries: AbilityEntry[]): void {
     for (const entry of entries) {
-      if (!entry.spell === !entry.abilityId) {
+      if ((entry.spell !== undefined) === (entry.abilityId !== undefined)) {
         throw new Error(
           `Ability entry must set exactly one of 'spell' or 'abilityId': ${JSON.stringify(entry)}`,
         );
