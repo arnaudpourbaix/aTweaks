@@ -101,8 +101,9 @@ class CreatureService {
   checkDuplicateAbilities(creature: Creature): void {
     const seen = new Set<string>();
     for (const ability of creature.behavior.abilities) {
-      const signature = JSON.stringify({
-        resource: ability.resource,
+      const resolvedFile = this.getAbilityCastFiles(ability)[0];
+      const signature = this.stableStringify({
+        resource: resolvedFile,
         triggers: ability.triggers,
         targets: ability.targets,
       });
@@ -116,6 +117,19 @@ class CreatureService {
       }
       seen.add(signature);
     }
+  }
+
+  private stableStringify(value: unknown): string {
+    return JSON.stringify(value, (_key, val) =>
+      val && typeof val === "object" && !Array.isArray(val)
+        ? Object.keys(val)
+            .sort()
+            .reduce((sorted: Record<string, unknown>, k) => {
+              sorted[k] = (val as Record<string, unknown>)[k];
+              return sorted;
+            }, {})
+        : val,
+    );
   }
 
   private getAbilityCastFiles(ability: CreatureAbility): string[] {

@@ -837,4 +837,41 @@ describe("checkDuplicateAbilities", () => {
     expect(errorSpy).not.toHaveBeenCalled();
     errorSpy.mockRestore();
   });
+
+  it("errors when two id-cast abilities resolve to the same spell file and share a trigger signature", () => {
+    const first = { ...fakeIdCastAbility("WIZARD_POLYMORPH_SELF"), triggers: [{ name: "Global" }] } as CreatureAbility;
+    const second = { ...fakeIdCastAbility("WIZARD_POLYMORPH_SELF"), triggers: [{ name: "Global" }] } as CreatureAbility;
+    const creature = fakeSpellCreature({
+      abilities: [first, second],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    errorSpy.mockRestore();
+  });
+
+  it("does not error when two id-cast abilities resolve to different spell files despite sharing a trigger signature", () => {
+    const first = { ...fakeIdCastAbility("WIZARD_POLYMORPH_SELF"), triggers: [{ name: "Global" }] } as CreatureAbility;
+    const second = { ...fakeIdCastAbility("WIZARD_CHROMATIC_ORB"), triggers: [{ name: "Global" }] } as CreatureAbility;
+    const creature = fakeSpellCreature({
+      abilities: [first, second],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it("errors on a duplicate even when the trigger/target objects have differently ordered keys", () => {
+    const creature = fakeSpellCreature({
+      abilities: [
+        fakeFullAbility("sppr101", [{ name: "Global", params: [1] }]),
+        fakeFullAbility("sppr101", [{ params: [1], name: "Global" }]),
+      ],
+    });
+    const errorSpy = vi.spyOn(logService, "error").mockImplementation(() => {});
+    creatureService.checkDuplicateAbilities(creature);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    errorSpy.mockRestore();
+  });
 });
