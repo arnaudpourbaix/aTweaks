@@ -494,19 +494,8 @@ class BearFamily extends CreatureFamily<Bear> {
   };
 
   rage: RawCreatureAbility = {
-    name: "ability.enrage",
-    spell: {
-      resource: SPELLS.Class.BerserkerRage.file,
-      selfTarget: true,
-    },
-    triggers: [
-      { name: "See", params: ["NearestEnemyOf"] },
-      {
-        name: "CheckStat",
-        params: [ScriptTarget.myself, 0, "OFFENSIVE_MODIFIER"],
-      },
-      { name: "HPPercentLT", params: [ScriptTarget.myself, 75] },
-    ],
+    preset: SPELLS.Class.BerserkerRage.file,
+    triggers: [{ name: "HPPercentLT", params: [ScriptTarget.myself, 75] }],
     probability: 50,
   };
 

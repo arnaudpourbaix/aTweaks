@@ -12,7 +12,7 @@ export const KITS: KitConfig[] = [
         resource: SPELLS.Class.BerserkerRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
-          name: "ability.enrage",
+          name: "spell.BerserkerRage.name",
           spell: { selfTarget: true },
           triggers: [
             {
@@ -34,7 +34,7 @@ export const KITS: KitConfig[] = [
         resource: SPELLS.Class.BarbarianRage.file,
         count: (level) => 1 + Math.floor((level - 1) / 4),
         ability: {
-          name: "ability.enrage",
+          name: "spell.BarbarianRage.name",
           spell: { selfTarget: true },
           triggers: [
             {

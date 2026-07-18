@@ -28,6 +28,10 @@ class TriggerFactory {
     return { name: "HPLT", params: [ScriptTarget.token, value], negation };
   }
 
+  hpPercentLt(value: number, negation = false): Triggers.Trigger {
+    return { name: "HPPercentLT", params: [ScriptTarget.token, value], negation };
+  }
+
   range(value: number, negation = false): Triggers.Trigger {
     return { name: "Range", params: [ScriptTarget.token, value], negation };
   }

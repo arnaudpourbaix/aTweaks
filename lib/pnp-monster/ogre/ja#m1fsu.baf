@@ -138,7 +138,7 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Enrage
+// Berserker Rage
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()

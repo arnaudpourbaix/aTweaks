@@ -1,5 +1,6 @@
 import presetFactory from "../../src/factories/preset.factory";
 import triggerFactory from "../../src/factories/trigger.factory";
+import { ScriptTarget } from "../../src/model/constants";
 import { AbilityPreset } from "../../src/model/misc";
 import { DEFAULT_SPELL_PROBABILITY, PRESET_NAMES } from "../common";
 import { FNP_SPELLS } from "../spells/fnp-spell-names";
@@ -360,6 +361,34 @@ export const BUFF_PRESETS: AbilityPreset[] = [
       requireVocal: true,
       probability: DEFAULT_SPELL_PROBABILITY,
       triggers: [triggerFactory.detect("NearestEnemyOf")],
+    },
+  },
+  {
+    preset: SPELLS.Class.BerserkerRage.file,
+    ability: {
+      name: SPELLS.Class.BerserkerRage.name,
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [
+        { name: "See", params: ["NearestEnemyOf"] },
+        triggerFactory.checkSpellState("BERSERKER_RAGE", false),
+      ],
+      probability: DEFAULT_SPELL_PROBABILITY,
+    },
+  },
+  {
+    preset: SPELLS.Class.BarbarianRage.file,
+    ability: {
+      name: SPELLS.Class.BarbarianRage.name,
+      spell: {
+        selfTarget: true,
+      },
+      triggers: [
+        { name: "See", params: ["NearestEnemyOf"] },
+        triggerFactory.checkSpellState("BARBARIAN_RAGE", false),
+      ],
+      probability: DEFAULT_SPELL_PROBABILITY,
     },
   },
 ];

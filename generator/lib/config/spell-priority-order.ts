@@ -2,10 +2,13 @@ import { SPELLS } from "./spells/spell-names";
 import { FNP_SPELLS } from "./spells/fnp-spell-names";
 import { PRESET_NAMES } from "./common";
 
-// Greater Mummy's hand-tuned cast order (the most-scrutinized spellbook in the mod) seeds the
-// default - everything else is appended below, unsorted, for manual arrangement over time.
-const GREATER_MUMMY_ORDER: string[] = [
+export const SPELL_PRIORITY_ORDER: string[] = [
+  SPELLS.Wizard.Vocalize.file,
+  SPELLS.Wizard.ShadowDoor.file,
+  SPELLS.Wizard.ImprovedInvisibility.file,
+  SPELLS.Wizard.Invisibility.file,
   FNP_SPELLS.Priest.GreaterMalison.file,
+  SPELLS.Wizard.GreaterMalison.file,
   SPELLS.Priest.Sanctuary.file,
   SPELLS.Priest.FingerOfDeath.file,
   SPELLS.Priest.Wither.file,
@@ -31,6 +34,7 @@ const GREATER_MUMMY_ORDER: string[] = [
   FNP_SPELLS.Priest.ShadowMonsters.file,
   FNP_SPELLS.Priest.CauseSeriousWounds.file,
   FNP_SPELLS.Priest.Shield.file,
+  SPELLS.Wizard.Shield.file,
   SPELLS.Priest.SymbolDeath.file,
   SPELLS.Priest.AerialServant.file,
   SPELLS.Priest.BladeBarrier.file,
@@ -55,20 +59,11 @@ const GREATER_MUMMY_ORDER: string[] = [
   FNP_SPELLS.Priest.CauseDisease.file,
   FNP_SPELLS.Priest.Doom.file,
   SPELLS.Priest.Command.file,
-];
-
-// Every other spell with an ABILITY_PRESETS entry, not yet in GREATER_MUMMY_ORDER above -
-// unsorted (category order from the old preset-file grouping), arrange by hand as needed.
-const REMAINING_SPELLS: string[] = [
-  SPELLS.Wizard.Vocalize.file,
-  SPELLS.Wizard.Invisibility.file,
-  SPELLS.Wizard.ImprovedInvisibility.file,
-  SPELLS.Wizard.ShadowDoor.file,
+  // TODO: to sort
   SPELLS.Priest.ResistFear.file,
   SPELLS.Wizard.DimensionDoor.file,
   PRESET_NAMES.DimensionDoorOffscreen,
   SPELLS.Priest.Barkskin.file,
-  SPELLS.Wizard.Shield.file,
   SPELLS.Wizard.MinorSpellDeflection.file,
   SPELLS.Wizard.FireShield.file,
   SPELLS.Wizard.MirrorImages.file,
@@ -108,7 +103,6 @@ const REMAINING_SPELLS: string[] = [
   SPELLS.Wizard.Spook.file,
   SPELLS.Priest.CloakOfFear.file,
   FNP_SPELLS.Priest.CloakOfFear.file,
-  SPELLS.Wizard.GreaterMalison.file,
   SPELLS.Wizard.Glitterdust.file,
   SPELLS.Wizard.MagicMissiles.file,
   SPELLS.Wizard.MordenkainenForceMissiles.file,
@@ -140,7 +134,3 @@ const REMAINING_SPELLS: string[] = [
   SPELLS.Priest.CallWoodlandBeeings.file,
   SPELLS.Priest.AnimalSummoning4.file,
 ];
-
-// Hand-tune this list directly to change cast order - AbilityOrderService sorts every
-// auto-derived registry-spell ability by each spell's index here.
-export const SPELL_PRIORITY_ORDER: string[] = [...GREATER_MUMMY_ORDER, ...REMAINING_SPELLS];

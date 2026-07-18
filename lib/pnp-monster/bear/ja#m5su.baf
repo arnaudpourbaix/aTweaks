@@ -161,11 +161,11 @@ THEN
 		RandomWalkContinuous()
 END
 
-// Enrage
+// Berserker Rage
 IF
 	!GlobalTimerNotExpired("JA#ROUND","LOCALS")
 	ActionListEmpty()
-	HaveSpellRES("SPCL321")
+	HaveSpell(BERSERKER_RAGE)
 	See(NearestEnemyOf(Myself))
 	CheckStat(Myself,0,OFFENSIVE_MODIFIER)
 	HPPercentLT(Myself,75)
@@ -173,7 +173,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("JA#ROUND","LOCALS",6)
-		SpellRES("SPCL321",Myself)
+		Spell(Myself,BERSERKER_RAGE)
 END
 
 // Attack NoCheck enemy
